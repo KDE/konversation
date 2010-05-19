@@ -269,12 +269,19 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("close_tab", action);
 
     action=new KAction(this);
+    action->setText(i18n("Last Focused Tab"));
+    action->setShortcut(KShortcut("Alt+Space"));
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showLastFocusedView()));
+    actionCollection()->addAction("last_focused_tab", action);
+    
+    action=new KAction(this);
     action->setText(i18n("Next Active Tab"));
     action->setShortcut(KShortcut("Ctrl+Alt+Space"));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction("next_active_tab", action);
-
+    
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
         action=new KAction(this);

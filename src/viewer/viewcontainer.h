@@ -104,12 +104,13 @@ class ViewContainer : public QObject
         void toggleViewNotifications();
         void toggleAutoJoin();
 
-        void switchView(int newIndex);
         void showView(ChatWindow* view);
-
         void goToView(int page);
         void showNextView();
         void showPreviousView();
+        void showNextActiveView();
+        void showLastFocusedView();
+
         void moveViewLeft();
         void moveViewRight();
 
@@ -181,8 +182,6 @@ class ViewContainer : public QObject
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();
 
-        void showNextActiveView();
-
     signals:
         void viewChanged(ChatWindow* view);
         void removeView(ChatWindow* view);
@@ -202,7 +201,10 @@ class ViewContainer : public QObject
         void removeStatusBarSSLLabel();
         void autoJoinToggled(const Konversation::ServerGroupSettingsPtr);
 
-        void frontServerChanging(Server *);
+        void frontServerChanging(Server*);
+
+    private slots:
+        void viewSwitched(int newIndex);
 
     private:
         void setupTabWidget();
@@ -213,7 +215,6 @@ class ViewContainer : public QObject
         void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
 
         void updateViewActions(int index);
-        void updateSwitchViewAction();
         void updateFrontView();
 
         void setFrontServer(Server *);
@@ -235,6 +236,9 @@ class ViewContainer : public QObject
         QPointer<Server> m_contextServer;
         QPointer<ChatWindow> m_frontView;
         QPointer<ChatWindow> m_searchView;
+
+        QPointer<ChatWindow> m_currentView;
+        QPointer<ChatWindow> m_lastFocusedView;
 
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;

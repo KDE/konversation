@@ -178,7 +178,7 @@ void ViewContainer::setupTabWidget()
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
 
-    connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (switchView(int)));
+    connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (viewSwitched(int)));
     connect(m_tabWidget, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showViewContextMenu(QWidget*, const QPoint&)));
     connect(m_tabWidget, SIGNAL(mouseMiddleClick(QWidget*)), this, SLOT(closeViewMiddleClick(QWidget*)));
@@ -686,6 +686,9 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("close_queries");
         if (action) action->setEnabled(false);
     }
+
+    action = actionCollection()->action("last_focused_tab");
+    if (action) action->setEnabled(m_lastFocusedView != 0);
 }
 
 void ViewContainer::updateFrontView()
@@ -1382,10 +1385,13 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     updateViewActions(m_tabWidget->currentIndex());
 }
 
-void ViewContainer::switchView(int newIndex)
+void ViewContainer::viewSwitched(int newIndex)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
     if (!view) return;
+
+    m_lastFocusedView = m_currentView;
+    m_currentView = view;
 
     emit viewChanged(view);
 
@@ -1470,6 +1476,32 @@ void ViewContainer::showPreviousView()
 {
     goToView(m_tabWidget->currentIndex()-1);
 }
+
+void ViewContainer::showNextActiveView()
+{
+    if (!m_activeViewOrderList.isEmpty())
+    {
+        ChatWindow* prev = m_activeViewOrderList.first();
+        ChatWindow* view = prev;
+
+        QList<ChatWindow*>::ConstIterator it;
+
+        for (it = m_activeViewOrderList.constBegin(); it != m_activeViewOrderList.constEnd(); ++it)
+        {
+            if ((*it)->currentTabNotification() < prev->currentTabNotification())
+                view = (*it);
+        }
+
+        m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(view));
+    }
+}
+
+void ViewContainer::showLastFocusedView()
+{
+    if (m_lastFocusedView)
+        showView(m_lastFocusedView);
+}
+
 
 void ViewContainer::moveViewLeft()
 {
@@ -1561,6 +1593,12 @@ void ViewContainer::closeView(ChatWindow* view)
 void ViewContainer::cleanupAfterClose(ChatWindow* view)
 {
     if (view == m_frontView) m_frontView = 0;
+
+    if (view == m_lastFocusedView)
+    {
+        QAction* action = actionCollection()->action("last_focused_tab");
+        if (action) action->setEnabled(false);
+    }
 
     if (m_tabWidget)
     {
@@ -2193,8 +2231,8 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
     connect(statusView, SIGNAL(sendFile()), server, SLOT(requestDccSend()));
     connect(server, SIGNAL(awayState(bool)), statusView, SLOT(indicateAway(bool)) );
 
-    // make sure that m_frontServer gets set on adding the first status panel, too,
-    // since there won't be a switchView happening
+    // Make sure that m_frontServer gets set on adding the first status panel, too,
+    // since there won't be a viewSwitched happening.
     if (!m_frontServer) setFrontServer(server);
 
     return statusView;
@@ -2511,25 +2549,6 @@ void ViewContainer::closeNicksOnlinePanel()
     delete m_nicksOnlinePanel;
     m_nicksOnlinePanel = 0;
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
-}
-
-void ViewContainer::showNextActiveView()
-{
-    if (!m_activeViewOrderList.isEmpty())
-    {
-        ChatWindow* prev = m_activeViewOrderList.first();
-        ChatWindow* view = prev;
-
-        QList<ChatWindow*>::ConstIterator it;
-
-        for (it = m_activeViewOrderList.constBegin(); it != m_activeViewOrderList.constEnd(); ++it)
-        {
-            if ((*it)->currentTabNotification() < prev->currentTabNotification())
-                view = (*it);
-        }
-
-        m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(view));
-    }
 }
 
 /*!

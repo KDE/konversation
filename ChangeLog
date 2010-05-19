@@ -117,6 +117,9 @@ Changes since 1.2.3:
   frontends other than KDE's. Other frontends could previously show
   empty notification message contents due to non-standard content in
   the messages.
+* Added an action to switch to the last focused tab, making it possi-
+  ble to quickly switch forth and back between two tabs. The default
+  keyboard shortcut for this new action is Alt+Space.
 
 
 Changes from 1.2.2 to 1.2.3:
