@@ -15,13 +15,9 @@
 
 #include "application.h"
 #include "version.h"
-#include "commit.h"
 
 #include <KCmdLineArgs>
 #include <KAboutData>
-
-#define HACKSTR(x) #x
-#define STRHACK(x) HACKSTR(x)
 
 /*
   Don't use i18n() here, use ki18n() instead!
@@ -33,7 +29,7 @@ int main(int argc, char* argv[])
     KAboutData aboutData("konversation",
         "",
         ki18n("Konversation"),
-        KONVI_VERSION " #" STRHACK(COMMIT),
+        KONVI_VERSION,
         ki18n("A user-friendly IRC client"),
         KAboutData::License_GPL,
         ki18n("(C) 2002-2010 by the Konversation team"),
