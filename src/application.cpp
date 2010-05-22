@@ -401,6 +401,7 @@ void Application::readOptions()
         QStringList::iterator it;
         QStringList tmp1;
         QStringList::iterator it2;
+        int index = 0;
         Konversation::ChannelList channelHistory;
         Konversation::ServerSettings server;
         Konversation::ChannelSettings channel;
@@ -410,6 +411,7 @@ void Application::readOptions()
             KConfigGroup cgServerGroup(KGlobal::config()->group(*it));
             Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
             serverGroup->setName(cgServerGroup.readEntry("Name"));
+            serverGroup->setSortIndex(index);
             serverGroup->setIdentityId(Preferences::identityByName(cgServerGroup.readEntry("Identity"))->id());
             serverGroup->setConnectCommands(cgServerGroup.readEntry("ConnectCommands"));
             serverGroup->setAutoConnectEnabled(cgServerGroup.readEntry("AutoConnect", false));
@@ -465,6 +467,8 @@ void Application::readOptions()
 
             serverGroups.insert(serverGroup->id(), serverGroup);
             sgKeys.append(serverGroup->id());
+
+            index++;
         }
 
         Preferences::setServerGroupHash(serverGroups);
@@ -726,11 +730,24 @@ void Application::saveOptions(bool updateGUI)
 
     // Add the new servergroups to the config
     Konversation::ServerGroupHash serverGroupHash = Preferences::serverGroupHash();
-    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroupHash);
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> hashIt(serverGroupHash);
+
+    QMap<int, Konversation::ServerGroupSettingsPtr> sortedServerGroupMap;
+
+    // Make the indices in the group headers reflect the server list dialog sorting.
+    while (hashIt.hasNext())
+    {
+        hashIt.next();
+
+        sortedServerGroupMap.insert(hashIt.value()->sortIndex(), hashIt.value());
+    }
+
+    QMapIterator<int, Konversation::ServerGroupSettingsPtr> it(sortedServerGroupMap);
+
     index = 0;
     int index2 = 0;
     int index3 = 0;
-    int width=0;
+    int width = 0;
     QList<int> keys = serverGroupHash.keys();
     for(int i=0; i<keys.count(); i++)
         if(width < keys.at(i)) width = keys.at(i);
