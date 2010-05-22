@@ -51,7 +51,7 @@ tion now depends on KDE 4.3 and Qt 4.5.
   status in the channel.
 * Fixed a crash when selecting more than one completed, failed or
   aborted outbound transfer in the "DCC Status" tab and clicking "Re-
-  send" in ther context menu.
+  send" in their context menu.
 * Fixed a bug causing the human-readable mode descriptions used by
   default in channel chat text views as well as the Channel Settings
   dialog's Advanced Modes list not to be translated.
