@@ -409,7 +409,7 @@ void ViewContainer::updateTabWidgetAppearance()
     else
         m_tabWidget->cornerWidget()->hide();
 
-    m_tabWidget->tabBar()->setTabsClosable(true);
+    m_tabWidget->tabBar()->setTabsClosable(Preferences::self()->closeButtons());
 
     m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
 }
