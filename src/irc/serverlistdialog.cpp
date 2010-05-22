@@ -302,6 +302,9 @@ namespace Konversation
         {
             item = m_serverList->topLevelItem(i);
             Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
+
+            item->setExpanded(serverGroup->expanded());
+
             serverGroup->setSortIndex(sort);
 
             newServerGroupHash.insert(item->data(0,ServerGroupId).toInt(),serverGroup);
