@@ -2,12 +2,12 @@ Changes from 1.2.3 to 1.3-beta1:
 Konversation 1.3-beta1 debuts a major new feature in the area of Direct
 Client-to-Client (DCC) support: An implementation of the DCC Whiteboard
 extension that brings collaborative drawing - think two-player Kolour-
-paint - to IRC. It also brings back the integration with KDE's SSL cert-
-ificate store the KDE 3 version enjoyed and expands support for auto-
-away to the Windows and Mac OS X platforms thanks to recent advances in
-KDE 4's libraries. Interface tweaks, new keyboard shortcuts and many
-bugfixes round things out. Finally, Konversation now depends on KDE 4.3
-and Qt 4.5.
+paint - to IRC. It also brings back the integration with KDE's SSL certi-
+ficate store the KDE 3 version enjoyed and expands support for auto-away
+to the Windows and Mac OS X platforms thanks to both recent advances in
+the KDE 4 platform and new code in Konversation. Interface tweaks, new
+keyboard shortcuts and many bugfixes round things out. Finally, Konversa-
+tion now depends on KDE 4.3 and Qt 4.5.
 
 
 * Konversation now depends on Qt 4.5 and KDE 4.3.
