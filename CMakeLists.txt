@@ -27,10 +27,12 @@ macro_ensure_version("4.3.80" ${KDE_VERSION} HAVEKDE4_4)
 #check for KDE greater than 4.4.3 (usable version of KIdleTime)
 macro_ensure_version("4.4.3" ${KDE_VERSION} HAVEKDE4_4_3)
 
-option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." ON)
-macro_bool_to_01(USE_KIDLETIME HAVE_KIDLETIME)
+if (HAVEKDE4_4_3)
+    option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." ON)
+endif (HAVEKDE4_4_3)
 
 if (HAVEKDE4_4_3 AND USE_KIDLETIME)
+    macro_bool_to_01(USE_KIDLETIME HAVE_KIDLETIME)
     #only log the status of the feature if the user wants to build with KIdleTime support
     macro_log_feature(HAVE_KIDLETIME "KIdleTime" "KDE Idle Time" "http://www.kde.org/" FALSE "" "KIdleTime based user inactivity detection for the auto-away functionality")
 endif (HAVEKDE4_4_3 AND USE_KIDLETIME)
