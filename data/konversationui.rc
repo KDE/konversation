@@ -20,7 +20,7 @@
       <Action name="clear_tabs" />
     </Menu>
     <Menu name="insert">
-      <text>&amp;Insert</text>
+      <text context="Menu title">&amp;Insert</text>
       <Action name="irc_colors" />
       <Action name="insert_marker_line" />
       <Action name="insert_character" />
