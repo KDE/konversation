@@ -58,7 +58,7 @@ namespace Konversation
         connect(m_mainWidget->m_addServerButton, SIGNAL(clicked()), this, SLOT(addServer()));
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
         connect(m_mainWidget->m_removeServerButton, SIGNAL(clicked()), this, SLOT(deleteServer()));
-        connect(m_mainWidget->m_serverLBox, SIGNAL(currentRowChanged(int)), this, SLOT(updateServerArrows()));
+        connect(m_mainWidget->m_serverLBox, SIGNAL(itemSelectionChanged()), this, SLOT(updateServerArrows()));
         connect(m_mainWidget->m_upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
         connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
@@ -69,7 +69,7 @@ namespace Konversation
         connect(m_mainWidget->m_addChannelButton, SIGNAL(clicked()), this, SLOT(addChannel()));
         connect(m_mainWidget->m_changeChannelButton, SIGNAL(clicked()), this, SLOT(editChannel()));
         connect(m_mainWidget->m_removeChannelButton, SIGNAL(clicked()), this, SLOT(deleteChannel()));
-        connect(m_mainWidget->m_channelLBox, SIGNAL(currentRowChanged(int)), this, SLOT(updateChannelArrows()));
+        connect(m_mainWidget->m_channelLBox, SIGNAL(itemSelectionChanged()), this, SLOT(updateChannelArrows()));
         connect(m_mainWidget->m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
         connect(m_mainWidget->m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
@@ -164,8 +164,8 @@ namespace Konversation
         {
             ServerSettings server = dlg->serverSettings();
             m_mainWidget->m_serverLBox->addItem(server.host());
+            m_mainWidget->m_serverLBox->item(m_mainWidget->m_serverLBox->count() - 1)->setSelected(true);
             m_serverList.append(server);
-            updateServerArrows();
         }
         delete dlg;
     }
@@ -219,13 +219,24 @@ namespace Konversation
 
     void ServerGroupDialog::updateServerArrows()
     {
-        m_mainWidget->m_upServerBtn->setEnabled( m_mainWidget->m_serverLBox->count()>1 && m_mainWidget->m_serverLBox->currentRow()>0 );
+        QList<QListWidgetItem*> serverBoxSelection = m_mainWidget->m_serverLBox->selectedItems();
 
-        m_mainWidget->m_downServerBtn->setEnabled( m_mainWidget->m_serverLBox->count()>1 &&
-            m_mainWidget->m_serverLBox->currentRow()<m_mainWidget->m_serverLBox->count()-1 );
-        bool enabled = m_mainWidget->m_serverLBox->currentRow() >= 0;
-        m_mainWidget->m_removeServerButton->setEnabled(enabled);
-        m_mainWidget->m_changeServerButton->setEnabled(enabled);
+        if (m_mainWidget->m_serverLBox->count() && serverBoxSelection.count())
+        {
+            QListWidgetItem* selectedServer = serverBoxSelection.first();
+            int selectedServerRow = m_mainWidget->m_serverLBox->row(selectedServer);
+
+            m_mainWidget->m_upServerBtn->setEnabled(selectedServerRow > 0);
+            m_mainWidget->m_downServerBtn->setEnabled(selectedServerRow < m_mainWidget->m_serverLBox->count() - 1);
+        }
+        else
+        {
+            m_mainWidget->m_upServerBtn->setEnabled(false);
+            m_mainWidget->m_downServerBtn->setEnabled(false);
+        }
+
+        m_mainWidget->m_removeServerButton->setEnabled(serverBoxSelection.count());
+        m_mainWidget->m_changeServerButton->setEnabled(serverBoxSelection.count());
     }
 
     void ServerGroupDialog::moveServerUp()
@@ -276,8 +287,8 @@ namespace Konversation
         {
             ChannelSettings channel = dlg->channelSettings();
             m_mainWidget->m_channelLBox->addItem(channel.name());
+            m_mainWidget->m_channelLBox->item(m_mainWidget->m_channelLBox->count() - 1)->setSelected(true);
             m_channelList.append(channel);
-            updateChannelArrows();
         }
         delete dlg;
     }
@@ -315,13 +326,24 @@ namespace Konversation
 
     void ServerGroupDialog::updateChannelArrows()
     {
-        m_mainWidget->m_upChannelBtn->setEnabled( m_mainWidget->m_channelLBox->count()>1 && m_mainWidget->m_channelLBox->currentRow()>0 );
+        QList<QListWidgetItem*> channelBoxSelection = m_mainWidget->m_channelLBox->selectedItems();
 
-        m_mainWidget->m_downChannelBtn->setEnabled( m_mainWidget->m_channelLBox->count()>1 &&
-            m_mainWidget->m_channelLBox->currentRow()<m_mainWidget->m_channelLBox->count()-1 );
-        bool selected = m_mainWidget->m_channelLBox->currentRow() >= 0;
-        m_mainWidget->m_removeChannelButton->setEnabled(selected);
-        m_mainWidget->m_changeChannelButton->setEnabled(selected);
+        if (m_mainWidget->m_channelLBox->count() && channelBoxSelection.count())
+        {
+            QListWidgetItem* selectedChannel = channelBoxSelection.first();
+            int selectedChannelRow = m_mainWidget->m_channelLBox->row(selectedChannel);
+
+            m_mainWidget->m_upChannelBtn->setEnabled(selectedChannelRow > 0);
+            m_mainWidget->m_downChannelBtn->setEnabled(selectedChannelRow < m_mainWidget->m_channelLBox->count() - 1);
+        }
+        else
+        {
+            m_mainWidget->m_upChannelBtn->setEnabled(false);
+            m_mainWidget->m_downChannelBtn->setEnabled(false);
+        }
+
+        m_mainWidget->m_removeChannelButton->setEnabled(channelBoxSelection.count());
+        m_mainWidget->m_changeChannelButton->setEnabled(channelBoxSelection.count());   
     }
 
     void ServerGroupDialog::moveChannelUp()
