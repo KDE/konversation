@@ -19,6 +19,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include <KFileDialog>
 #include <KLocale>
 #include <KUrl>
 #include <KUrlRequester>
@@ -80,6 +81,8 @@ namespace Konversation
             labelMessage->setText(message);
 
             m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().prettyUrl(), page);
+            m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
+            m_urlreqFileURL->fileDialog()->setKeepLocation(true);
             connect(m_urlreqFileURL, SIGNAL(textChanged(const QString&)), this, SLOT(updateDialogButtons()));
 
             pageLayout->addWidget(labelMessage);
