@@ -1,4 +1,5 @@
 Changes since 1.3-beta1:
+* Fixed build with KDE 4.3.
 * When opening an "Edit Network" dialog and adding a new item to one of
   the server or channel lists, provided they already contain at least one
   item and no selection is made before clicking "Add...", the "Move Down"
