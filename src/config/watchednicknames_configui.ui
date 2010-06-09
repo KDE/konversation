@@ -120,15 +120,18 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="kcfg_NotifyDelay">
+      <widget class="KIntSpinBox" name="kcfg_NotifyDelay">
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="whatsThis">
         <string>Konversation will check the status of the nicknames listed below at this interval.</string>
-       </property>
-       <property name="suffix">
-        <string> seconds</string>
        </property>
        <property name="minimum">
         <number>5</number>
@@ -298,9 +301,14 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -308,9 +316,9 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

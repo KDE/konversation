@@ -79,9 +79,6 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="maximum">
          <number>9999</number>
         </property>
-        <property name="suffix">
-         <string> seconds</string>
-        </property>
        </widget>
       </item>
       <item row="1" column="1">

@@ -97,15 +97,18 @@
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QSpinBox" name="kcfg_ScrollbackMax">
+       <widget class="KIntSpinBox" name="kcfg_ScrollbackMax">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="whatsThis">
          <string>How many lines to keep in buffers, 0 = unlimited</string>
         </property>
         <property name="specialValueText">
          <string>Unlimited</string>
-        </property>
-        <property name="suffix">
-         <string> lines</string>
         </property>
         <property name="maximum">
          <number>10000</number>
@@ -248,9 +251,12 @@
        </widget>
       </item>
       <item row="0" column="1" rowspan="2">
-       <widget class="QSpinBox" name="kcfg_AutoWhoNicksLimit">
-        <property name="suffix">
-         <string> nicks</string>
+       <widget class="KIntSpinBox" name="kcfg_AutoWhoNicksLimit">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="minimum">
          <number>0</number>
@@ -264,12 +270,15 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="kcfg_AutoWhoContinuousInterval">
+       <widget class="KIntSpinBox" name="kcfg_AutoWhoContinuousInterval">
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="suffix">
-         <string> seconds</string>
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="prefix">
          <string/>
@@ -316,6 +325,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
