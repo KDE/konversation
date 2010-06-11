@@ -37,6 +37,7 @@ namespace Konversation
         SSNeverConnected,
         SSDeliberatelyDisconnected,
         SSInvoluntarilyDisconnected,
+        SSScheduledToConnect,
         SSConnecting,
         SSConnected
     };

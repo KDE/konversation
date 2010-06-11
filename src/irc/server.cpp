@@ -249,8 +249,9 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(requestDccSend(const QString&)), this, SLOT(requestDccSend(const QString&)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(getOutputFilter(), SIGNAL(reconnectServer()), this, SLOT(reconnectServer()));
-    connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnectServer()));
+    connect(getOutputFilter(), SIGNAL(reconnectServer(const QString&)), this, SLOT(reconnectServer(const QString&)));
+    connect(getOutputFilter(), SIGNAL(disconnectServer(const QString&)), this, SLOT(disconnectServer(const QString&)));
+    connect(getOutputFilter(), SIGNAL(quitServer(const QString&)), this, SLOT(quitServer(const QString&)));
     connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccWBoard(const QString &)), this, SLOT(openDccWBoard(const QString &)), Qt::QueuedConnection);
@@ -440,6 +441,8 @@ void Server::connectToIRCServerIn(uint delay)
 {
     m_delayedConnectTimer->setInterval(delay * 1000);
     m_delayedConnectTimer->start();
+
+    updateConnectionState(Konversation::SSScheduledToConnect);
 }
 
 void Server::showSSLDialog()
@@ -764,7 +767,53 @@ void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
         kDebug() << "Got error: " << res.errorString();
 }
 
-void Server::quitServer()
+bool Server::isSocketConnected() const
+{
+    if (!m_socket) return false;
+
+    return (m_socket->state() == KTcpSocket::ConnectedState);
+}
+
+void Server::updateConnectionState(Konversation::ConnectionState state)
+{
+    if (state != m_connectionState)
+    {
+        m_connectionState = state;
+
+        if (m_connectionState == Konversation::SSConnected)
+            emit serverOnline(true);
+        else if (m_connectionState != Konversation::SSConnecting)
+            emit serverOnline(false);
+
+       emit connectionStateChanged(this, state);
+    }
+}
+
+void Server::reconnectServer(const QString& quitMessage)
+{
+    if (isConnecting() || isSocketConnected()) quitServer(quitMessage);
+
+    // Use asynchronous invocation so that the broken() that the above
+    // quitServer might cause is delivered before connectToIRCServer
+    // sets SSConnecting and broken() announces a deliberate disconnect
+    // due to the failure allegedly occurring during SSConnecting.
+    QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
+}
+
+void Server::disconnectServer(const QString& quitMessage)
+{
+    getConnectionSettings().setReconnectCount(0);
+
+    if (isScheduledToConnect())
+    {
+        m_delayedConnectTimer->stop();
+        getStatusView()->appendServerMessage(i18n("Info"), i18n("Delayed connect aborted."));
+    }
+
+    if (isSocketConnected()) quitServer(quitMessage);
+}
+
+void Server::quitServer(const QString& quitMessage)
 {
     // Make clear this is deliberate even if the QUIT never actually goes through the queue
     // (i.e. this is not redundant with _send_internal()'s updateConnectionState() call for
@@ -773,10 +822,15 @@ void Server::quitServer()
 
     if (!m_socket) return;
 
-    QString command(Preferences::self()->commandChar()+"QUIT");
-    Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
-    queue(result.toServer, HighPriority);
+    QString toServer = "QUIT :";
 
+    if (quitMessage.isEmpty())
+        toServer += getIdentity()->getQuitReason();
+    else
+        toServer += quitMessage;
+
+    queue(toServer, HighPriority);
+    
     flushQueues();
 
     // Close the socket to allow a dead connection to be reconnected before the socket timeout.
@@ -3565,52 +3619,6 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
     {
         query->sendQueryText(text);
     }
-}
-
-bool Server::isSocketConnected() const
-{
-    if (!m_socket) return false;
-
-    return (m_socket->state() == KTcpSocket::ConnectedState);
-}
-
-void Server::updateConnectionState(Konversation::ConnectionState state)
-{
-    if (state != m_connectionState)
-    {
-        m_connectionState = state;
-
-        if (m_connectionState == Konversation::SSConnected)
-            emit serverOnline(true);
-        else if (m_connectionState != Konversation::SSConnecting)
-            emit serverOnline(false);
-
-       emit connectionStateChanged(this, state);
-    }
-}
-
-void Server::reconnectServer()
-{
-    if (isConnecting() || isSocketConnected()) quitServer();
-
-    // Use asynchronous invocation so that the broken() that the above
-    // quitServer might cause is delivered before connectToIRCServer
-    // sets SSConnecting and broken() announces a deliberate disconnect
-    // due to the failure allegedly occurring during SSConnecting.
-    QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
-}
-
-void Server::disconnectServer()
-{
-    getConnectionSettings().setReconnectCount(0);
-
-    if (m_delayedConnectTimer->isActive())
-    {
-        m_delayedConnectTimer->stop();
-        getStatusView()->appendServerMessage(i18n("Info"), i18n("Delayed connect aborted."));
-    }
-
-    if (isSocketConnected()) quitServer();
 }
 
 void Server::requestAway(const QString& reason)

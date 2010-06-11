@@ -104,6 +104,7 @@ void resetNickSelection();
 
         bool isConnected() { return (m_connectionState == Konversation::SSConnected); }
         bool isConnecting() { return (m_connectionState == Konversation::SSConnecting); }
+        bool isScheduledToConnect() { return (m_connectionState == Konversation::SSScheduledToConnect); }
 
         bool getUseSSL() const;
         QString getSSLInfo() const;
@@ -453,7 +454,9 @@ void resetNickSelection();
         Query *addQuery(const NickInfoPtr & nickInfo, bool weinitiated);
         void closeQuery(const QString &name);
         void closeChannel(const QString &name);
-        void quitServer();
+        void reconnectServer(const QString& quitMessage = QString());
+        void disconnectServer(const QString& quitMessage = QString());
+        void quitServer(const QString& quitMessage = QString());
         void openDccChat(const QString& nickname);
         void openDccWBoard(const QString& nickname);
         void requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort);
@@ -478,8 +481,6 @@ void resetNickSelection();
         void updateChannelQuickButtons();
         void sendMultiServerCommand(const QString& command, const QString& parameter);
         void executeMultiServerCommand(const QString& command, const QString& parameter);
-        void reconnectServer();
-        void disconnectServer();
         void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void sendToAllChannelsAndQueries(const QString& text);

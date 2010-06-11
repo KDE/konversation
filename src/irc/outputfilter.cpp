@@ -618,18 +618,25 @@ namespace Konversation
         return result;
     }
 
+    OutputFilterResult OutputFilter::command_reconnect(const OutputFilterInput& input)
+    {
+        emit reconnectServer(input.parameter);
+
+        return OutputFilterResult();
+    }
+
+    OutputFilterResult OutputFilter::command_disconnect(const OutputFilterInput& input)
+    {
+        emit disconnectServer(input.parameter);
+
+        return OutputFilterResult();
+    }
+
     OutputFilterResult OutputFilter::command_quit(const OutputFilterInput& input)
     {
-        OutputFilterResult result;
+        emit disconnectServer(input.parameter);
 
-        result.toServer = "QUIT :";
-        // if no reason given, take default reason
-        if (input.parameter.isEmpty())
-            result.toServer += m_server->getIdentity()->getQuitReason();
-        else
-            result.toServer += input.parameter;
-
-        return result;
+        return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_notice(const OutputFilterInput& input)
@@ -1586,7 +1593,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_server(const OutputFilterInput& input)
     {
         if (input.parameter.isEmpty() && !m_server->isConnected() && !m_server->isConnecting())
-            emit reconnectServer();
+            emit reconnectServer(QString());
         else
         {
             QStringList splitString = input.parameter.split(' ');
@@ -1605,20 +1612,6 @@ namespace Konversation
             else
                 emit connectTo(Konversation::CreateNewConnection, splitString[0]);
         }
-
-        return OutputFilterResult();
-    }
-
-    OutputFilterResult OutputFilter::command_reconnect(const OutputFilterInput& /* input */)
-    {
-        emit reconnectServer();
-
-        return OutputFilterResult();
-    }
-
-    OutputFilterResult OutputFilter::command_disconnect(const OutputFilterInput& /* input */)
-    {
-        emit disconnectServer();
 
         return OutputFilterResult();
     }

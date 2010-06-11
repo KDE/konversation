@@ -110,9 +110,10 @@ namespace Konversation
             void banUsers(const QStringList& userList,const QString& channel,const QString& option);
             void unbanUsers(const QString& mask,const QString& channel);
             void multiServerCommand(const QString& command, const QString& parameter);
-            void reconnectServer();
-            void disconnectServer();
-
+            void reconnectServer(const QString& quitMessage);
+            void disconnectServer(const QString& quitMessage);
+            void quitServer(const QString& quitMessage);
+            
             void connectTo(Konversation::ConnectionFlag flag,
                            const QString& hostName,
                            const QString& port = "",
@@ -151,6 +152,8 @@ namespace Konversation
             OutputFilterResult command_aback(const OutputFilterInput& input);
             OutputFilterResult command_names(const OutputFilterInput& input);
             OutputFilterResult command_close(const OutputFilterInput& _input);
+            OutputFilterResult command_reconnect(const OutputFilterInput& input);
+            OutputFilterResult command_disconnect(const OutputFilterInput& input);
             OutputFilterResult command_quit(const OutputFilterInput& input);
             OutputFilterResult command_notice(const OutputFilterInput& input);
             OutputFilterResult command_me(const OutputFilterInput& input);
@@ -178,8 +181,6 @@ namespace Konversation
             OutputFilterResult command_ignore(const OutputFilterInput& input);
             OutputFilterResult command_unignore(const OutputFilterInput& input);
             OutputFilterResult command_server(const OutputFilterInput& input);
-            OutputFilterResult command_reconnect(const OutputFilterInput& input);
-            OutputFilterResult command_disconnect(const OutputFilterInput& input);
             OutputFilterResult command_charset(const OutputFilterInput& input);
             OutputFilterResult command_encoding(const OutputFilterInput& input);
             OutputFilterResult command_setkey(const OutputFilterInput& input);

@@ -454,7 +454,7 @@ void ViewContainer::updateViewActions(int index)
 
 
             action = actionCollection()->action("disconnect_server");
-            if (action) action->setEnabled(server->isConnected());
+            if (action) action->setEnabled(server->isConnected() || server->isConnecting() || server->isScheduledToConnect());
 
 
             action = actionCollection()->action("join_channel");
@@ -2274,7 +2274,7 @@ void ViewContainer::disconnectFrontServer()
     else
         server = m_frontServer;
 
-    if (server && server->isConnected())
+    if (server && (server->isConnected() || server->isConnecting() || server->isScheduledToConnect()))
         server->disconnectServer();
 }
 
@@ -2315,7 +2315,7 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
     {
         QAction* action = actionCollection()->action("disconnect_server");
         if (action)
-            action->setEnabled(state == Konversation::SSConnected);
+            action->setEnabled(state == Konversation::SSConnected || state == Konversation::SSConnecting || state == Konversation::SSScheduledToConnect);
 
         action = actionCollection()->action("join_channel");
         if (action)
