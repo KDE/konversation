@@ -115,6 +115,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   confChatwindowBehaviour.setupUi(w);
   confChatwindowBehaviour.kcfg_ScrollbackMax->setToolTip(i18np("Maximum scrollback limit: 1 line.",
       "Maximum scrollback limit: %1 lines.", confChatwindowBehaviour.kcfg_ScrollbackMax->maximum()));
+  confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines"));
+  confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks"));
+  confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds"));
   addPage(w, behaviorGroup, "view-list-text", i18n("Chat Window"));
 
   //Behaviour/Nickname List

@@ -516,10 +516,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         int dateArrived=QDateTime::currentDateTime().toTime_t();
                         int dateSent=reply.toInt();
                         int time = dateArrived-dateSent;
-                        QString unit = "seconds";
-
-                        if (time==1)
-                            unit = "second";
+                        QString unit = i18np("second", "seconds", time);
 
                         server->appendMessageToFrontmost(i18n("CTCP"),
                             i18n("Received CTCP-PING reply from %1: %2 %3.",

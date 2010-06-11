@@ -26,6 +26,8 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
 
   reloadSettings();
 
+  kcfg_NotifyDelay->setSuffix(ki18np(" second", " seconds"));
+
   connect(kcfg_UseNotify,SIGNAL (toggled(bool)),this,SLOT (checkIfEmptyListview(bool)) );
   connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
