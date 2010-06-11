@@ -164,7 +164,7 @@ namespace Konversation
         {
             ServerSettings server = dlg->serverSettings();
             m_mainWidget->m_serverLBox->addItem(server.host());
-            m_mainWidget->m_serverLBox->item(m_mainWidget->m_serverLBox->count() - 1)->setSelected(true);
+            m_mainWidget->m_serverLBox->setCurrentItem(m_mainWidget->m_serverLBox->item(m_mainWidget->m_serverLBox->count() - 1));
             m_serverList.append(server);
         }
         delete dlg;
@@ -287,7 +287,7 @@ namespace Konversation
         {
             ChannelSettings channel = dlg->channelSettings();
             m_mainWidget->m_channelLBox->addItem(channel.name());
-            m_mainWidget->m_channelLBox->item(m_mainWidget->m_channelLBox->count() - 1)->setSelected(true);
+            m_mainWidget->m_channelLBox->setCurrentItem(m_mainWidget->m_channelLBox->item(m_mainWidget->m_channelLBox->count() - 1));
             m_channelList.append(channel);
         }
         delete dlg;
