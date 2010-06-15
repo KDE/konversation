@@ -737,6 +737,8 @@ void resetNickSelection();
         KProcess m_preShellCommand;
 
     private:
+        void purgeData();
+
         /// Recovers the filename from the dccArguments list from pos 0 to size-offset-1
         /// joining with a space and cleans the filename using cleanDccFileName.
         /// The filename only needs to be recovered if it contains a space, in case

@@ -183,6 +183,18 @@ Server::~Server()
     qDeleteAll(m_queryList);
     m_queryList.clear();
 
+    purgeData();
+
+    //Delete the queues
+    qDeleteAll(m_queues);
+
+    emit destroyed(m_connectionId);
+
+    kDebug() << "~Server done";
+}
+
+void Server::purgeData()
+{
     // Delete all the NickInfos and ChannelNick structures.
     m_allNicks.clear();
 
@@ -197,13 +209,6 @@ Server::~Server()
     m_unjoinedChannels.clear();
 
     m_queryNicks.clear();
-
-    //Delete the queues
-    qDeleteAll(m_queues);
-
-    emit destroyed(m_connectionId);
-
-    kDebug() << "~Server done";
 }
 
 //... so called to match the ChatWindow derivatives.
@@ -614,6 +619,8 @@ void Server::broken(KTcpSocket::Error error)
     m_pingResponseTimer.stop();
     m_inputFilter.setLagMeasuring(false);
     m_currentLag = -1;
+
+    purgeData();
 
     // HACK Only show one nick change dialog at connection time.
     // This hack is a bit nasty as it assumes that the only KDialog

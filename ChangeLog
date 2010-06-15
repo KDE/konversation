@@ -12,6 +12,8 @@ Changes since 1.3:
   in the "New Network"/"Edit Network" dialogs to edit the previously selec-
   ted list items rather than the ones shown as selected after adding a new
   server or channel.
+* Fixed a bug that could cause outdated status information for nicks to be
+  displayed in channel nickname lists after a reconnect.
 
 
 Changes from 1.3-beta1 to 1.3:
