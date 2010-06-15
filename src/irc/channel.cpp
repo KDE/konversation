@@ -84,6 +84,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     //HACK I needed the channel name at time of setServer, but setName needs m_server..
     //     This effectively assigns the name twice, but none of the other logic has been moved or updated.
     name=_name;
+    m_ownChannelNick = 0;
     m_processingTimer = 0;
     m_optionsDialog = NULL;
     m_delayedSortTimer = 0;
@@ -436,6 +437,8 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
 
 void Channel::purgeNicks()
 {
+    m_ownChannelNick = 0;
+
     // Purge nickname list
     qDeleteAll(nicknameList);
     nicknameList.clear();

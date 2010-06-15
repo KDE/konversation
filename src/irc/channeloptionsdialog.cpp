@@ -234,10 +234,10 @@ namespace Konversation
 
     void ChannelOptionsDialog::refreshEnableModes(bool forceUpdate)
     {
-        if(m_channel->getOwnChannelNick()->isChanged() || forceUpdate)
+        if(!m_channel->getOwnChannelNick() || m_channel->getOwnChannelNick()->isChanged() || forceUpdate)
         {
             // cache the value
-            m_isAnyTypeOfOp = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
+            m_isAnyTypeOfOp = m_channel->getOwnChannelNick() ? m_channel->getOwnChannelNick()->isAnyTypeOfOp() : false;
 
             m_ui.topicEdit->setReadOnly(!m_isAnyTypeOfOp && m_ui.topicModeChBox->isChecked());
 

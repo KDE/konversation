@@ -38,6 +38,7 @@ ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const QString& channel)
 
 ChannelNick::~ChannelNick()
 {
+    kDebug() << "Nick" << getNickname() << "going down";
 }
 
 bool ChannelNick::isOp() const
