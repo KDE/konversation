@@ -2488,12 +2488,6 @@ void Channel::changeNickname(const QString& newNickname)
         m_server->queue("NICK "+newNickname);
 }
 
-void Channel::resetNickList()
-{
-    nicknameListView->setUpdatesEnabled(false);
-    purgeNicks();
-}
-
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
     if(pendingChannelNickList.isEmpty())

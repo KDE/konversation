@@ -139,7 +139,6 @@ class Channel : public ChatWindow
         void kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason);
         void addNickname(ChannelNickPtr channelNick);
         void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
-        void resetNickList();
         void addPendingNickList(const QStringList& pendingChannelNickList);
         Nick *getNickByName(const QString& lookname);
         NickList getNickList() { return nicknameList; }

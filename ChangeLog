@@ -14,6 +14,7 @@ Changes since 1.3:
   server or channel.
 * Fixed a bug that could cause outdated status information for nicks to be
   displayed in channel nickname lists after a reconnect.
+* Efficiency improvements for channel join.
 
 
 Changes from 1.3-beta1 to 1.3:

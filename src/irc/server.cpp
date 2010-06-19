@@ -2511,6 +2511,7 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
         connect(this, SIGNAL(nicknameChanged(const QString&)), channel, SLOT(setNickname(const QString&)));
     }
+
     // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
     ChannelNickPtr channelNick = addNickToJoinedChannelsList(name, getNickname());
 
@@ -2632,12 +2633,6 @@ Query* Server::getQueryByName(const QString& name)
     }
     // No query by that name found? Must be a new query request. Return 0
     return 0;
-}
-
-void Server::resetNickList(const QString& channelName)
-{
-    Channel* outChannel=getChannelByName(channelName);
-    if(outChannel) outChannel->resetNickList();
 }
 
 void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)

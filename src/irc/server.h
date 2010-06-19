@@ -70,7 +70,7 @@ class Server : public QObject
     Q_OBJECT
     friend class IRCQueue;
     friend class QueueTuner;
-void resetNickSelection();
+
     public:
         enum QueuePriority
         {
@@ -116,7 +116,7 @@ void resetNickSelection();
         QStringList generateJoinCommand(const Konversation::ChannelList &tmpList);
 
         QAbstractItemModel* nickListModel() const;
-        void resetNickList(const QString& channelName);
+        void resetNickSelection();
         void addPendingNickList(const QString& channelName,const QStringList& nickList);
         void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
         Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
