@@ -1376,6 +1376,9 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         refreshModeButtons();
         setActive(true);
 
+        // Prepare for impending NAMES.
+        nicknameListView->setUpdatesEnabled(false);
+
         //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
         if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
             Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
