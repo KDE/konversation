@@ -240,6 +240,7 @@ void Server::initTimers()
     m_notifyTimer.setObjectName("notify_timer");
     m_notifyTimer.setSingleShot(true);
     m_incomingTimer.setObjectName("incoming_timer");
+    m_pingSendTimer.setSingleShot(true);
 }
 
 void Server::connectSignals()
@@ -248,6 +249,7 @@ void Server::connectSignals()
     connect(&m_incomingTimer, SIGNAL(timeout()), this, SLOT(processIncomingData()));
     connect(&m_notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
     connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
+    connect(&m_pingSendTimer, SIGNAL(timeout()), this, SLOT(sendPing()));
 
     // OutputFilter
     connect(getOutputFilter(), SIGNAL(requestDccSend()), this,SLOT(requestDccSend()), Qt::QueuedConnection);
@@ -732,7 +734,7 @@ void Server::connectionEstablished(const QString& ownHost)
     requestUserhost(getNickname());
 
     // Start the PINGPONG match
-    QTimer::singleShot(1000 /*1 sec*/, this, SLOT(sendPing()));
+    m_pingSendTimer.start(1000 /*1 sec*/);
 
     // Recreate away state if we were set away prior to a reconnect.
     if (m_away)
@@ -3792,14 +3794,18 @@ void Server::sendPing()
 
 void Server::pongReceived()
 {
+    // ignore unrequested PONGs
+    if (m_pingSendTimer.isActive())
+        return;
+
     m_currentLag = m_lagTime.elapsed();
     m_inputFilter.setLagMeasuring(false);
     m_pingResponseTimer.stop();
 
     emit serverLag(this, m_currentLag);
 
-    // Send another PING in 60 seconds
-    QTimer::singleShot(60000 /*60 sec*/, this, SLOT(sendPing()));
+    // Send another PING in 60 seconds 
+    m_pingSendTimer.start(60000 /*60 sec*/);
 }
 
 void Server::updateLongPongLag()

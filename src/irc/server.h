@@ -801,6 +801,8 @@ class Server : public QObject
         QTime m_lagTime;
         /// Updates the gui when the lag gets too high
         QTimer m_pingResponseTimer;
+        /// Wait before sending the next PING
+        QTimer m_pingSendTimer;
 
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
