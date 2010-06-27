@@ -84,15 +84,11 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
         void saveLinkAs();
         void contextMenu(const QPoint& p);
 
-        //TODO removable in 4.2 see constructor
-        void filterChanged();
-        void updateFilter();
+        void updateButtons();
 
     protected:
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
-
-        QTimer* m_filterTimer;
 
         UrlCatcherModel* m_urlListModel;
         QSortFilterProxyModel* m_proxyModel;

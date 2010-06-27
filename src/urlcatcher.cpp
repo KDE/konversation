@@ -190,12 +190,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_urlListView->setModel(m_proxyModel);
 
     m_proxyModel->setDynamicSortFilter(true);
-    m_proxyModel->setFilterKeyColumn(-1);
 
     Preferences::restoreColumnState(m_urlListView, "UrlCatcher ViewSettings");
-
-    m_filterTimer = new QTimer(this);
-    m_filterTimer->setSingleShot(true);
 
     connect(m_urlListView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
             this, SLOT(urlSelected(const QItemSelection&)));
@@ -204,9 +200,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     connect(m_urlListView, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(contextMenu(const QPoint&)) );
 
-    //TODO remove this by turning the klineedit into a kfilterproxysearchline when we req. 4.2
-    connect(m_filterLine, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged()));
-    connect(m_filterTimer, SIGNAL(timeout()), this, SLOT(updateFilter()));
+    m_filterLine->setProxy(m_proxyModel);
+    connect(m_proxyModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(updateButtons()));
+    connect(m_proxyModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(updateButtons()));
 }
 
 
@@ -215,14 +211,8 @@ UrlCatcher::~UrlCatcher()
     Preferences::saveColumnState(m_urlListView, "UrlCatcher ViewSettings");
 }
 
-void UrlCatcher::filterChanged()
+void UrlCatcher::updateButtons()
 {
-    m_filterTimer->start(300);
-}
-
-void UrlCatcher::updateFilter()
-{
-    m_proxyModel->setFilterWildcard(m_filterLine->text());
     if(!m_proxyModel->rowCount())
     {
         m_clear->setEnabled(false);
