@@ -294,37 +294,6 @@ void Query::sendQueryText(const QString& sendLine)
     } // for
 }
 
-void Query::updateAppearance()
-{
-    QColor fg, bg;
-
-    if (Preferences::self()->inputFieldsBackgroundColor())
-    {
-        fg = Preferences::self()->color(Preferences::ChannelMessage);
-        bg = Preferences::self()->color(Preferences::TextViewBackground);
-    }
-    else
-    {
-        fg = palette().windowText().color();
-        bg = palette().base().color();
-    }
-
-    QPalette queryInputPalette(queryInput->palette());
-    queryInputPalette.setColor(QPalette::WindowText, fg);
-    queryInputPalette.setColor(QPalette::Text, fg);
-    queryInputPalette.setColor(QPalette::Base, bg);
-
-    queryInput->setPalette(queryInputPalette);
-
-
-    if (Preferences::self()->customTextFont())
-        queryInput->setFont(Preferences::self()->textFont());
-    else
-        queryInput->setFont(KGlobalSettings::generalFont());
-
-    ChatWindow::updateAppearance();
-}
-
 void Query::textPasted(const QString& text)
 {
     if(m_server)

@@ -65,7 +65,7 @@ void Nick::refresh()
         {
             // Brush of the first column will be used for all columns
             setForeground(NicknameColumn,
-                qApp->palette(treeWidget()).brush(QPalette::Disabled, QPalette::WindowText));
+                qApp->palette(treeWidget()).brush(QPalette::Disabled, QPalette::Text));
 
             flags = 1;
         }
@@ -73,7 +73,7 @@ void Nick::refresh()
         {
             // Brush of the first column will be used for all columns
             setForeground(NicknameColumn,
-                treeWidget()->palette().brush(QPalette::Normal, QPalette::WindowText));
+                treeWidget()->palette().brush(QPalette::Normal, QPalette::Text));
         }
 
         Images* images = Application::instance()->images();

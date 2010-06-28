@@ -1072,7 +1072,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         }
 
         QColor textColor = (Preferences::self()->inputFieldsBackgroundColor()
-            ? Preferences::self()->color(Preferences::ChannelMessage) : m_window->palette().windowText().color());
+            ? Preferences::self()->color(Preferences::ChannelMessage) : QColor());
 
         if (view->getType() == ChatWindow::Channel)
         {

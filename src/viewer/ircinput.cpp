@@ -156,6 +156,21 @@ void IRCInput::slotSpellCheckDone(const QString& s)
 
 void IRCInput::updateAppearance()
 {
+    QPalette palette;
+
+    if (Preferences::self()->inputFieldsBackgroundColor())
+    {
+        palette.setColor(QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
+        palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
+    }
+
+    setPalette(palette);
+
+    if (Preferences::self()->customTextFont())
+        setFont(Preferences::self()->textFont());
+    else
+        setFont(KGlobalSettings::generalFont());
+
     m_multiRow = Preferences::self()->useMultiRowInputBox();
     setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
 

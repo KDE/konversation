@@ -68,6 +68,8 @@ ViewTree::ViewTree(QWidget *parent)
     connect(this, SIGNAL(aboutToMove()), SLOT(slotAboutToMoveView()));
     connect(this, SIGNAL(moved()), SLOT(slotMovedView()));
 
+    setBackgroundRole(QPalette::Base);
+
     updateAppearance();
 }
 
@@ -83,24 +85,16 @@ void ViewTree::updateAppearance()
     else
         setFont(KGlobalSettings::generalFont());
 
-    QColor fg, bg;
     QPalette palette;
 
     if (Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg = Preferences::self()->color(Preferences::ChannelMessage);
-        bg = Preferences::self()->color(Preferences::TextViewBackground);
-    }
-    else
-    {
-        fg = palette.windowText().color();
-        bg = palette.base().color();
+        // Only override the active color to keep around the disabled text color
+        // for the disconnect label greyout.
+        palette.setColor(QPalette::Active, QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
+        palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
     }
 
-    palette.setColor(QPalette::WindowText, fg);
-    palette.setColor(QPalette::Text, fg);
-    palette.setColor(QPalette::Base, bg);
-    palette.setColor(QPalette::Window, bg);
     setPalette(palette);
 }
 

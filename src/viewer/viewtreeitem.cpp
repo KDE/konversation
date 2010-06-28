@@ -35,9 +35,6 @@ ViewTreeItem::ViewTreeItem(Q3ListView* parent, const QString& name, ChatWindow* 
     setView(view);
     setViewType(view->getType());
 
-    m_color = Application::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
-    m_customColorSet = false;
-
     setOpen(true);
     setDragEnabled(true);
 
@@ -64,16 +61,12 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, const QString& name, ChatWind
     setView(view);
     setViewType(view->getType());
 
-    m_color = Application::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
-    m_customColorSet = false;
-
     setOpen(true);
     setDragEnabled(true);
 
     m_isSeparator = false;
     m_isHighlighted = false;
     m_isTruncated = false;
-    m_customColorSet = false;
 
     images = Application::instance()->images();
     m_closeButtonShown = false;
@@ -89,16 +82,12 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, co
     setView(view);
     setViewType(view->getType());
 
-    m_color = Application::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
-    m_customColorSet = false;
-
     setOpen(true);
     setDragEnabled(true);
 
     m_isSeparator = false;
     m_isHighlighted = false;
     m_isTruncated = false;
-    m_customColorSet = false;
 
     images = Application::instance()->images();
     m_closeButtonShown = false;
@@ -170,22 +159,21 @@ void ViewTreeItem::setColor(QColor color)
     if (color != m_color)
     {
         m_color = color;
-        m_customColorSet = true;
         repaint();
     }
 }
 
 QColor ViewTreeItem::getColor() const
 {
-    if (!m_customColorSet)
+    if (m_color.isValid())
+        return m_color;
+    else
     {
         if (Preferences::self()->inputFieldsBackgroundColor())
             return Preferences::self()->color(Preferences::ChannelMessage);
         else
-            return Application::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
+            return Application::instance()->palette().color(QPalette::Active, QPalette::Text); 
     }
-    else
-        return m_color;
 }
 
 void ViewTreeItem::setIcon(const QPixmap& pm)

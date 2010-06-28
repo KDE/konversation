@@ -48,7 +48,6 @@
 #include <KGlobalSettings>
 #include <KMessageBox>
 #include <KIconLoader>
-#include <KColorScheme>
 #include <KVBox>
 #include <KHBox>
 #include <KComboBox>
@@ -2404,29 +2403,16 @@ void Channel::syncSplitters()
 
 void Channel::updateAppearance()
 {
-    QColor fg,bg,abg;
+    QPalette palette;
 
-    if(Preferences::self()->inputFieldsBackgroundColor())
+    if (Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg=Preferences::self()->color(Preferences::ChannelMessage);
-        bg=Preferences::self()->color(Preferences::TextViewBackground);
-        abg=Preferences::self()->color(Preferences::AlternateBackground);
-    }
-    else
-    {
-        fg = palette().windowText().color();
-        bg = palette().base().color();
-        abg = palette().alternateBase().color();
+        palette.setColor(QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
+        palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
+        palette.setColor(QPalette::AlternateBase, Preferences::self()->color(Preferences::AlternateBackground));
     }
 
-    QPalette newPalette;
-    newPalette.setColor(QPalette::WindowText, fg);
-    newPalette.setColor(QPalette::Text, fg);
-    newPalette.setColor(QPalette::Base, bg);
-    newPalette.setColor(QPalette::AlternateBase, abg);
-
-    channelInput->setPalette(newPalette);
-    limit->setPalette(newPalette);
+    limit->setPalette(palette);
     topicLine->setPalette(QPalette());
 
     if (Preferences::self()->customTextFont())
@@ -2445,7 +2431,8 @@ void Channel::updateAppearance()
     }
 
     nicknameListView->resort();
-    nicknameListView->setPalette(newPalette);
+    nicknameListView->setPalette(palette);
+    nicknameListView->setAlternatingRowColors(Preferences::self()->inputFieldsBackgroundColor());
 
     if (Preferences::self()->customListFont())
         nicknameListView->setFont(Preferences::self()->listFont());

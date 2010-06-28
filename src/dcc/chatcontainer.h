@@ -53,7 +53,6 @@ namespace Konversation
                 virtual void childAdjustFocus();
 
             public slots:
-                void updateAppearance();
                 void appendInputText(const QString &text, bool fromCursor);
             // ChatWindow end
 

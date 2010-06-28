@@ -87,7 +87,6 @@ class Query : public ChatWindow
         void sendQueryText(const QString& text);
         void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
-        void updateAppearance();
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 

@@ -151,38 +151,17 @@ void StatusPanel::textPasted(const QString& text)
 
 void StatusPanel::updateAppearance()
 {
-    QColor fg, bg;
-
-    if (Preferences::self()->inputFieldsBackgroundColor())
+    if (Preferences::self()->showNicknameBox())
     {
-        fg = Preferences::self()->color(Preferences::ChannelMessage);
-        bg = Preferences::self()->color(Preferences::TextViewBackground);
+        if (Preferences::self()->customTextFont())
+            nicknameCombobox->setFont(Preferences::self()->textFont());
+        else
+            nicknameCombobox->setFont(KGlobalSettings::generalFont());
+
+        nicknameCombobox->show();
     }
     else
-    {
-        fg = palette().windowText().color();
-        bg = palette().base().color();
-    }
-
-    QPalette statusInputPalette(statusInput->palette());
-    statusInputPalette.setColor(QPalette::WindowText, fg);
-    statusInputPalette.setColor(QPalette::Text, fg);
-    statusInputPalette.setColor(QPalette::Base, bg);
-    statusInput->setPalette(statusInputPalette);
-
-
-    if (Preferences::self()->customTextFont())
-    {
-        statusInput->setFont(Preferences::self()->textFont());
-        nicknameCombobox->setFont(Preferences::self()->textFont());
-    }
-    else
-    {
-        statusInput->setFont(KGlobalSettings::generalFont());
-        nicknameCombobox->setFont(KGlobalSettings::generalFont());
-    }
-
-    showNicknameBox(Preferences::self()->showNicknameBox());
+        nicknameCombobox->hide();
 
     ChatWindow::updateAppearance();
 }
@@ -349,18 +328,6 @@ void StatusPanel::serverOnline(bool online)
     //statusInput->setEnabled(online);
     getTextView()->setNickAndChannelContextMenusEnabled(online);
     nicknameCombobox->setEnabled(online);
-}
-
-void StatusPanel::showNicknameBox(bool show)
-{
-    if(show)
-    {
-        nicknameCombobox->show();
-    }
-    else
-    {
-        nicknameCombobox->hide();
-    }
 }
 
 void StatusPanel::setServer(Server* server)

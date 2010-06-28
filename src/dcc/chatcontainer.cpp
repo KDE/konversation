@@ -140,6 +140,8 @@ namespace Konversation
                 case Chat::Chatting:
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     m_dccChatInput->setReadOnly(false);
+                    // KTextEdit::setReadOnly(true) from the ChatContainer constructor fucked up the palette.
+                    m_dccChatInput->updateAppearance();
                     break;
                 case Chat::Failed:
                 default:
@@ -245,36 +247,6 @@ namespace Konversation
         bool ChatContainer::searchView()
         {
             return true;
-        }
-
-        void ChatContainer::updateAppearance()
-        {
-            QColor fg, bg;
-
-            if (Preferences::self()->inputFieldsBackgroundColor())
-            {
-                fg = Preferences::self()->color(Preferences::ChannelMessage);
-                bg = Preferences::self()->color(Preferences::TextViewBackground);
-            }
-            else
-            {
-                fg = palette().windowText().color();
-                bg = palette().base().color();
-            }
-
-            QPalette queryInputPalette(m_dccChatInput->palette());
-            queryInputPalette.setColor(QPalette::WindowText, fg);
-            queryInputPalette.setColor(QPalette::Text, fg);
-            queryInputPalette.setColor(QPalette::Base, bg);
-
-            m_dccChatInput->setPalette(queryInputPalette);
-
-            if (Preferences::self()->customTextFont())
-                m_dccChatInput->setFont(Preferences::self()->textFont());
-            else
-                m_dccChatInput->setFont(KGlobalSettings::generalFont());
-
-            ChatWindow::updateAppearance();
         }
 
         void ChatContainer::setChannelEncoding(const QString &encoding)

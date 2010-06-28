@@ -77,7 +77,6 @@ class ViewTreeItem : public Q3ListViewItem
         bool m_isSeparator;
         bool m_isHighlighted;
         bool m_isTruncated;
-        bool m_customColorSet;
 
         Images* images;
 
