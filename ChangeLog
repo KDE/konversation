@@ -22,7 +22,7 @@ Changes since 1.3:
 * Fixed numerous cases in which Konversation would incorrectly apply the
   KDE system color scheme to input lines, nickname lists and the listview
   version of the tab bar. This general overhaul of the relevant code also
-  brought about minor efficiency and memory usage improvements..
+  brought about minor efficiency and memory usage improvements.
 * Fixed nickname lists not respecting the "Alternate Background" setting
   when set to use custom colors.
 * Fixed the listview version of the tab bar not greying out disconnected
