@@ -442,19 +442,25 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             }
             else if (ctcpCommand=="clientinfo" && !isChan)
             {
-                server->appendMessageToFrontmost(i18n("CTCP"),
-                    i18n("Received CTCP-%1 request from %2, sending answer.",
-                         QString::fromLatin1("CLIENTINFO"), sourceNick)
-                    );
-                server->ctcpReply(sourceNick,QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
+                if (!isIgnore(prefix, Ignore::CTCP))
+                {
+                    server->appendMessageToFrontmost(i18n("CTCP"),
+                        i18n("Received CTCP-%1 request from %2, sending answer.",
+                            QString::fromLatin1("CLIENTINFO"), sourceNick)
+                        );
+                    server->ctcpReply(sourceNick,QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
+                }
             }
             else if (ctcpCommand=="time" && !isChan)
             {
-                server->appendMessageToFrontmost(i18n("CTCP"),
-                    i18n("Received CTCP-%1 request from %2, sending answer.",
-                         QString::fromLatin1("TIME"), sourceNick)
-                    );
-                server->ctcpReply(sourceNick,QString("TIME ")+QDateTime::currentDateTime().toString());
+                if (!isIgnore(prefix, Ignore::CTCP))
+                {
+                    server->appendMessageToFrontmost(i18n("CTCP"),
+                        i18n("Received CTCP-%1 request from %2, sending answer.",
+                            QString::fromLatin1("TIME"), sourceNick)
+                        );
+                    server->ctcpReply(sourceNick,QString("TIME ")+QDateTime::currentDateTime().toString());
+                }
             }
 
             // No known CTCP request, give a general message
