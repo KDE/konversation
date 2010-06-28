@@ -45,11 +45,11 @@ IRCColorChooser::IRCColorChooser(QWidget* parent)
 QString IRCColorChooser::color()
 {
     QString s;
-    s = "%C" + QString::number(m_ui.m_fgColorCBox->currentIndex());
+    s = "%C" + QString::number(m_ui.m_fgColorCBox->currentIndex()).rightJustified(2, '0');;
 
     if(m_ui.m_bgColorCBox->currentIndex() > 0)
     {
-        s += ',' + QString::number(m_ui.m_bgColorCBox->currentIndex() - 1);
+        s += ',' + QString::number(m_ui.m_bgColorCBox->currentIndex() - 1).rightJustified(2, '0');;
     }
 
     return s;
