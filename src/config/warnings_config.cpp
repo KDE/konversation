@@ -9,6 +9,7 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2010 Eli Mackenzie <argonel@gmail.com>
 */
 
 
@@ -19,18 +20,18 @@
 
 static const int WarningNameRole = Qt::UserRole + 100;
 
-Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags fl )
+Warnings_Config::Warnings_Config(QWidget* parent, const char* name, Qt::WFlags fl)
     : QWidget(parent, fl)
 {
-  setObjectName(QString::fromLatin1(name));
-  setupUi(this);
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
 
-  dialogListView->header()->setClickable(false);
-  dialogListView->header()->setMovable(false);
+    dialogListView->header()->setClickable(false);
+    dialogListView->header()->setMovable(false);
 
-  loadSettings();
+    loadSettings();
 
-  connect(dialogListView, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SIGNAL(modified()));
+    connect(dialogListView, SIGNAL(itemChanged(QTreeWidgetItem *, int)), SIGNAL(modified()));
 }
 
 Warnings_Config::~Warnings_Config()
@@ -39,36 +40,38 @@ Warnings_Config::~Warnings_Config()
 
 void Warnings_Config::restorePageToDefaults()
 {
-  bool changed=false;
-  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
-  {
-    QTreeWidgetItem *item = dialogListView->topLevelItem(i);
-    if (item->checkState(0) == Qt::Unchecked) {
-      item->setCheckState(0, Qt::Checked);
-      changed=true;
+    bool changed=false;
+    for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
+    {
+        QTreeWidgetItem *item = dialogListView->topLevelItem(i);
+        if (item->checkState(0) == Qt::Unchecked)
+        {
+            item->setCheckState(0, Qt::Checked);
+            changed=true;
+        }
     }
-  }
-  if(changed) {
-    emit modified();
-  }
+    if(changed)
+    {
+        emit modified();
+    }
 }
 
 void Warnings_Config::saveSettings()
 {
-  KSharedConfigPtr config = KGlobal::config();
-  KConfigGroup grp = config->group("Notification Messages");
+    KSharedConfigPtr config = KGlobal::config();
+    KConfigGroup grp = config->group("Notification Messages");
 
-  // prepare list
-  QString warningsChecked;
+    // prepare list
+    QString warningsChecked;
 
-  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
-  {
-    QTreeWidgetItem *item = dialogListView->topLevelItem(i);
-    const bool checked = item->checkState(0) == Qt::Checked;
-    const QString warningName = item->data(0, WarningNameRole).toString();
+    for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
+    {
+        QTreeWidgetItem *item = dialogListView->topLevelItem(i);
+        const bool checked = item->checkState(0) == Qt::Checked;
+        const QString warningName = item->data(0, WarningNameRole).toString();
 
-    // save state of this item in hasChanged() list
-    warningsChecked += checked ? "1" : "0";
+        // save state of this item in hasChanged() list
+        warningsChecked += checked ? "1" : "0";
 
         if (warningName == QLatin1String("LargePaste"))
         {
@@ -109,10 +112,10 @@ void Warnings_Config::saveSettings()
         {
             grp.writeEntry(warningName, checked ? "1" : "0");
         }
-  }
+    }
 
-  // remember checkbox state for hasChanged()
-  m_oldWarningsChecked=warningsChecked;
+    // remember checkbox state for hasChanged()
+    m_oldWarningsChecked=warningsChecked;
 }
 
 void Warnings_Config::loadSettings()
@@ -232,30 +235,27 @@ void Warnings_Config::loadSettings()
 // get a list of checked/unchecked items for hasChanged()
 QString Warnings_Config::currentWarningsChecked()
 {
-  // prepare list
-  QString newList;
+    // prepare list
+    QString newList;
 
-  // get first checklist item
-  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
-  {
-    newList += dialogListView->topLevelItem(i)->checkState(0) == Qt::Checked ? "1" : "0";
-  }
-  // return list
-  return newList;
+    // get first checklist item
+    for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
+    {
+        newList += dialogListView->topLevelItem(i)->checkState(0) == Qt::Checked ? "1" : "0";
+    }
+    // return list
+    return newList;
 }
 
 bool Warnings_Config::hasChanged()
 {
-  return(m_oldWarningsChecked!=currentWarningsChecked());
+    return(m_oldWarningsChecked!=currentWarningsChecked());
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
+// Sets the strings of the subwidgets using the current language.
 void Warnings_Config::languageChange()
 {
-  loadSettings();
+    loadSettings();
 }
 
 #include "warnings_config.moc"
