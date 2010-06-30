@@ -587,11 +587,15 @@ bool MainWindow::queryClose()
 
         if (Preferences::self()->showTrayIcon() && !m_closeApp)
         {
-            KMessageBox::information( this,
-                i18n("<p>Closing the main window will keep Konversation running in the system tray. "
-                "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"),
-                i18n( "Docking in System Tray" ),  "HideOnCloseInfo" );
-            hide();
+            bool doit = KMessageBox::warningContinueCancel(this,
+                        i18n("<p>Closing the main window will keep Konversation running in the system tray. "
+                        "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"),
+                        i18n("Docking in System Tray"),
+                        KStandardGuiItem::cont(),
+                        KStandardGuiItem::cancel(),
+                        QLatin1String("HideOnCloseInfo")) == KMessageBox::Continue;
+            if (doit)
+                hide();
 
             return false;
         }
@@ -702,14 +706,19 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
         menuBar()->show();
     else
     {
+        bool doit = true;
         if (!dontShowWarning)
         {
             QString accel = hideMenuBarAction->shortcut().toString();
-            KMessageBox::information(this,
-                i18n("<qt>This will hide the menu bar completely. You can show it again by typing %1.</qt>",accel),
-                "Hide menu bar","HideMenuBarWarning");
+            doit = KMessageBox::warningContinueCancel(this,
+                    i18n("<qt>This will hide the menu bar completely. You can show it again by typing %1.</qt>", accel),
+                    i18n("Hide menu bar"),
+                    KStandardGuiItem::cont(),
+                    KStandardGuiItem::cancel(),
+                    QLatin1String("HideMenuBarWarning")) == KMessageBox::Continue;
         }
-        menuBar()->hide();
+        if (doit)
+            menuBar()->hide();
     }
 
     Preferences::self()->setShowMenuBar(hideMenuBarAction->isChecked());
