@@ -70,45 +70,45 @@ void Warnings_Config::saveSettings()
     // save state of this item in hasChanged() list
     warningsChecked += checked ? "1" : "0";
 
-    if (warningName == "LargePaste")
-    {
-        if (checked)
+        if (warningName == QLatin1String("LargePaste"))
         {
-            grp.deleteEntry(warningName);
+            if (checked)
+            {
+                grp.deleteEntry(warningName);
+            }
+            else
+            {
+                // Let's keep the old state if we got one.
+                QString state = grp.readEntry(warningName, QString());
+
+                if (!state.isEmpty())
+                    grp.writeEntry(warningName, state);
+                else
+                    grp.writeEntry(warningName, "true");
+            }
+        }
+        else if (warningName == QLatin1String("Invitation"))
+        {
+            if (checked)
+            {
+                grp.writeEntry(warningName, "0");
+            }
+            else
+            {
+                // Let's keep the old state if we got one, or join if
+                // there isn't an old state.
+                QString state = grp.readEntry(warningName, QString());
+
+                if (!state.isEmpty())
+                    grp.writeEntry(warningName, state);
+                else
+                    grp.writeEntry(warningName, "1");
+            }
         }
         else
         {
-            // Let's keep the old state if we got one.
-            QString state = grp.readEntry(warningName, QString());
-
-            if (!state.isEmpty())
-                grp.writeEntry(warningName, state);
-            else
-                grp.writeEntry(warningName, "true");
+            grp.writeEntry(warningName, checked ? "1" : "0");
         }
-    }
-    else if (warningName == "Invitation")
-    {
-	if (checked)
-	{
-	    grp.writeEntry(warningName, "0");
-	}
-	else
-	{
-	    // Let's keep the old state if we got one, or join if
-	    // there isn't an old state.
-	    QString state = grp.readEntry(warningName, QString());
-	    
-	    if (!state.isEmpty())
-		grp.writeEntry(warningName, state);
-	    else
-		grp.writeEntry(warningName, "1");
-	}
-    }
-    else
-    {
-        grp.writeEntry(warningName, checked ? "1" : "0");
-    }
   }
 
   // remember checkbox state for hasChanged()
@@ -117,57 +117,116 @@ void Warnings_Config::saveSettings()
 
 void Warnings_Config::loadSettings()
 {
-  QStringList dialogDefinitions;
-  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectWithDifferentServer,ReuseExistingConnection,QuitServerTab,QuitChannelTab,QuitQueryTab,QuitDCCChatTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick,QuitWithActiveDccTransfers,WarnEncodingConflict";
-  dialogDefinitions.append(i18n("Show channel invitation dialog"));
-  dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
-  dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
-  dialogDefinitions.append(i18n("Ask about closing queries after ignoring the nickname"));
-  dialogDefinitions.append(i18n("Ask before switching a connection to a network to a different server"));
-  dialogDefinitions.append(i18n("Ask before creating another connection to the same network or server"));
-  dialogDefinitions.append(i18n("Close server tab"));
-  dialogDefinitions.append(i18n("Close channel tab"));
-  dialogDefinitions.append(i18n("Close query tab"));
-  dialogDefinitions.append(i18n("Close DCC Chat tab"));
-  dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
-  dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
-  dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
-  dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
-  dialogDefinitions.append(i18n("Warning on quitting Konversation"));
-  dialogDefinitions.append(i18n("Ignore"));
-  dialogDefinitions.append(i18n("Unignore"));
-  dialogDefinitions.append(i18n("Warn before quitting with active DCC file transfers"));
-  dialogDefinitions.append(i18n("Warn when sending characters incompatible with your current encoding"));
-  QTreeWidgetItem *item;
-  dialogListView->clear();
+    // This table is very wide, on purpose, so that the nauseatingly constant context string is
+    // out of the way. The problem is this:
+    // The context string in I18N_NOOP2_NOSTRIP must always be first, and now that it has
+    // semantic markers it is always very long. So, if you want to understand a string
+    // definition, you must repeatedly look at the context string. A macro replacement for it
+    // is not possible as such recent and complicated inventions are not supported by the tools
+    // used to generate the message files.
 
-  KSharedConfigPtr config = KGlobal::config();
-  KConfigGroup grp =  config->group("Notification Messages");
-  QString flagName;
-  for (int i = 0; i < dialogDefinitions.count(); ++i)
-  {
-    item = new QTreeWidgetItem(dialogListView);
-    item->setText(0, dialogDefinitions[i]);
-    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-    flagName = flagNames.section(',',i,i);
-    item->setData(0, WarningNameRole, flagName);
+    static const struct DefinitionItem
+    {
+        const char *flagName;
+        const char *context;
+        const char *message;
+    } warningDialogDefinitions[] = {
+        { "Invitation",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... a channel invitation is received"
+        )},
+        { "SaveLogfileNote",                                                                            I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... saving a log file would save only the visible portion"
+        )},
+        { "ClearLogfileQuestion",                                                                       I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... a log file is about to be deleted"
+        )},
+        { "CloseQueryAfterIgnore",                                                                      I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... an open query exists for a nickname that has just been marked as ignored"
+        )},
+        { "ReconnectWithDifferentServer",                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... before switching servers of an existing connection to a network"
+        )},
+        { "ReuseExistingConnection",                                                                    I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... creating a new connection to an already connected network"
+        )},
+        { "QuitServerTab",                                                                              I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... closing a server tab"
+        )},
+        { "QuitChannelTab",                                                                             I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... closing a channel tab"
+        )},
+        { "QuitQueryTab",                                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... closing a query tab"
+        )},
+        { "QuitDCCChatTab",                                                                             I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... closing a DCC Chat tab"
+        )},
+        { "ChannelListNoServerSelected",                                                                I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... the channel list cannot be retrieved because the current tab is selected"
+        )},
+        { "HideMenuBarWarning",                                                                         I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... you have chosen to hide the menu bar"
+        )},
+        { "ChannelListWarning",                                                                         I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... a channel listing may cause disconnection due to the download size"
+        )},
+        { "LargePaste",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... pasting large portions of text"
+        )},
+        { "systemtrayquitKonversation",                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... quitting Konversation via the tray icon"
+        )},
+        { "IgnoreNick",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... you have chosen to ignore a nickname"
+        )},
+        { "UnignoreNick",                                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... you have chosen to stop ignoring a nickname"
+        )},
+        { "QuitWithActiveDccTransfers",                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... quitting Konversation while DCC file transfers are active"
+        )},
+        { "WarnEncodingConflict",                                                                       I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... some characters in a message are incompatible with the active encoding"
+        )},
+        { "HideOnCloseInfo",                                                                            I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+          "... closing the window will minimize to the system tray"
+        )}
+    };
+    static const int definitionsCount = sizeof(warningDialogDefinitions) / sizeof(warningDialogDefinitions[0]);
 
-    if (flagName == "LargePaste" )
+    dialogListView->clear();
+
+    KSharedConfigPtr config = KGlobal::config();
+    KConfigGroup grp =  config->group("Notification Messages");
+
+    for (int i = 0; i < definitionsCount; ++i)
     {
-        item->setCheckState(0, grp.readEntry(flagName, QString()).isEmpty() ? Qt::Checked : Qt::Unchecked);
+        const QLatin1String flagName(warningDialogDefinitions[i].flagName);
+        const QLatin1String message(warningDialogDefinitions[i].message);
+
+        QTreeWidgetItem *item = new QTreeWidgetItem(dialogListView);
+        item->setText(0, message);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        item->setData(0, WarningNameRole, flagName);
+
+        if (flagName == QLatin1String("LargePaste"))
+        {
+            item->setCheckState(0, grp.readEntry(flagName, QString()).isEmpty() ? Qt::Checked : Qt::Unchecked);
+        }
+        else if (flagName == QLatin1String("Invitation"))
+        {
+            item->setCheckState(0, grp.readEntry(flagName, QString()) == "0" ? Qt::Checked : Qt::Unchecked);
+        }
+        else
+        {
+            item->setCheckState(0, grp.readEntry(flagName, true) ? Qt::Checked : Qt::Unchecked);
+        }
     }
-    else if (flagName == "Invitation")
-    {
-	item->setCheckState(0, grp.readEntry(flagName, QString()) == "0" ? Qt::Checked : Qt::Unchecked);
-    }
-    else
-    {
-        item->setCheckState(0, grp.readEntry(flagName, true) ? Qt::Checked : Qt::Unchecked);
-    }
-  }
-  dialogListView->sortItems(0, Qt::AscendingOrder);
-  // remember checkbox state for hasChanged()
-  m_oldWarningsChecked=currentWarningsChecked();
+
+    dialogListView->sortItems(0, Qt::AscendingOrder);
+
+    // remember checkbox state for hasChanged()
+    m_oldWarningsChecked=currentWarningsChecked();
 }
 
 // get a list of checked/unchecked items for hasChanged()

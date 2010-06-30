@@ -26,7 +26,7 @@
      </property>
      <column>
       <property name="text" >
-       <string>Warning Dialogs to Show</string>
+       <string>Show a warning dialog when...</string>
       </property>
      </column>
     </widget>
