@@ -2601,14 +2601,6 @@ void Server::updateChannelModeWidgets(const QString &channelName, char mode, con
     if(channel) channel->updateModeWidgets(mode,true,parameter);
 }
 
-void Server::updateChannelQuickButtons()
-{
-    foreach (Channel* channel, m_channelList)
-    {
-        channel->updateQuickButtons(Preferences::quickButtonList());
-    }
-}
-
 Channel* Server::getChannelByName(const QString& name)
 {
     // Convert wanted channel name to lowercase

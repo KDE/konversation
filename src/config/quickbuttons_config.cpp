@@ -52,18 +52,20 @@ void QuickButtons_Config::loadSettings()
 // fill listview with button definitions
 void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 {
-  // clear listView
-  buttonListView->clear();
-  // go through the list
-  for(int index=buttonList.count();index!=0;index--)
-  {
-    // get button definition
-    QString definition=buttonList[index-1];
-    // cut definition apart in name and action, and create a new listview item
-    QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList() << definition.section(',',0,0) << definition.section(',',1));
-    item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
-  } // for
-  buttonListView->setCurrentItem(buttonListView->topLevelItem(0));
+    buttonListView->clear();
+
+    QStringListIterator it(buttonList);
+
+    while (it.hasNext())
+    {
+        QString definition = it.next();
+
+        QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList() << definition.section(',',0,0) << definition.section(',',1));
+
+        item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
+    }
+
+    buttonListView->setCurrentItem(buttonListView->topLevelItem(0));
 }
 
 // save quick buttons to configuration
@@ -109,21 +111,17 @@ void QuickButtons_Config::restorePageToDefaults()
 
 QStringList QuickButtons_Config::currentButtonList()
 {
-  // get first item of the button listview
-  QTreeWidgetItem* item=buttonListView->topLevelItem(0);
-  // create empty list
   QStringList newList;
 
-  // go through all items and save them into the configuration
-  while(item)
-  {
-    // remember button in internal list
-    newList.append(item->text(0)+','+item->text(1));
-    // get next item in the listview
-    item=buttonListView->itemBelow(item);
-  } // while
+  QTreeWidgetItem* item = 0;
 
-  // return list
+  for (int index = 0; index < buttonListView->topLevelItemCount(); index++)
+  {
+      item = buttonListView->topLevelItem(index);
+
+      newList.append(item->text(0)+','+item->text(1));
+  }
+
   return newList;
 }
 
