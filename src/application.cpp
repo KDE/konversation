@@ -820,7 +820,7 @@ void Application::saveOptions(bool updateGUI)
         cgServerGroup.writeEntry("ChannelHistory", channelHistory);
         cgServerGroup.writeEntry("EnableNotifications", it.value()->enableNotifications());
         cgServerGroup.writeEntry("Expanded", it.value()->expanded());
-        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupId(it.key()));
+        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupId(it.value()->id()));
         index++;
     }
 

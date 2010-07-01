@@ -33,6 +33,9 @@ Changes since 1.3:
   have single-digit numbers in the '%C...' string it inserts into the input
   line, to allow the text that follows to start with a digit rather than
   such a digit getting interpreted as part of the color number.
+* Fixed a bug causing the Watched Nicknames Online nickname list for a net-
+  work to be stored under the wrong network or lost entirely on application
+  quit.
 
 
 Changes from 1.3-beta1 to 1.3:

@@ -135,7 +135,7 @@ class NicksOnline : public ChatWindow
          * @param name              The name of the network, assumed to be in column 0 of the item.
          * @return                  Pointer to the QListViewItem or 0 if not found.
          */
-        QTreeWidgetItem* findNetworkRoot(const QString& name);
+        QTreeWidgetItem* findNetworkRoot(int serverGroupId);
         /**
          * Refresh the nicklistview for all servers.
          */

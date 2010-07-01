@@ -206,13 +206,16 @@ QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksO
  * @param name              The name of the network.
  * @return                  Pointer to the QListViewItem or 0 if not found.
  */
-QTreeWidgetItem* NicksOnline::findNetworkRoot(const QString& name)
+QTreeWidgetItem* NicksOnline::findNetworkRoot(int serverGroupId)
 {
     for (int i = 0; i < m_nickListView->invisibleRootItem()->childCount(); ++i)
     {
         QTreeWidgetItem* child = m_nickListView->invisibleRootItem()->child(i);
-        if (child->text(nlvcNetwork) == name) return child;
+
+        if (child->data(0, Qt::UserRole).toInt() == serverGroupId)
+            return child;
     }
+
     return 0;
 }
 
@@ -272,11 +275,12 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // Return if connection is an ephemeral one, because
     // we cant watch them anyway.
     if (!servr->getServerGroup())
-      return;
+        return;
+
     bool newNetworkRoot = false;
     QString serverName = servr->getServerName();
     QString networkName = servr->getDisplayName();
-    QTreeWidgetItem* networkRoot = findNetworkRoot(networkName);
+    QTreeWidgetItem* networkRoot = findNetworkRoot(servr->getServerGroup()->id());
     // If network is not in our list, add it.
     if (!networkRoot)
     {
@@ -689,6 +693,7 @@ void NicksOnline::doCommand(QAction* id)
     if ( id == m_addNickname )
     {
         int serverGroupId = -1;
+
         if (m_nickListView->selectedItems().count())
         {
             NicksOnlineItem *networkRoot = dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0));
@@ -696,6 +701,7 @@ void NicksOnline::doCommand(QAction* id)
             {
                 while (networkRoot->type() != NicksOnlineItem::NetworkRootItem)
                     networkRoot = dynamic_cast<NicksOnlineItem*>(networkRoot->parent());
+
                 serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
             }
         }
@@ -1008,8 +1014,8 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
  */
 void NicksOnline::slotAddNickname(int serverGroupId, QString nickname)
 {
-  Preferences::addNotify(serverGroupId, nickname);
-  static_cast<Application*>(kapp)->saveOptions(true);
+    Preferences::addNotify(serverGroupId, nickname);
+    static_cast<Application*>(kapp)->saveOptions(true);
 }
 
 /**
