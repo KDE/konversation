@@ -1,4 +1,15 @@
-Changes since 1.3:
+Changes from 1.3 to 1.3.1:
+Konversation 1.3.1 is a maintenance release that improves program behavior
+and fixes defects, the most serious of which is a regression that unfortu-
+nately suck into v1.3, which causes data corruption or even loss of Watched
+Nicknames Online lists on application quit. Behavioral improvements are
+found in the handling of aborting automatic reconnection attempts after
+connection failure and RFC 1459 PING/PONG exchanges. Further notable bug-
+fixes have been made to the Edit Network dialog, the handling of system
+color schemes and using the ignore List feature to ignore certain CTCP
+events.
+
+
 * In addition to the '/disconnect' command, the graphical 'Disconnect'
   action and the '/quit' command can now be used to cancel an in-progress
   automatic reconnect in the event of connection failure as well.
@@ -38,6 +49,12 @@ Changes since 1.3:
   quit.
 * Fixed a bug causing the order of the Quick Buttons below the nickname
   list in channel tabs to be flipped every time the config dialog was OK'd.
+* Improved consistency of the filter fields in the URL Catcher and Channel
+  List tabs with other KDE applications.
+* Correct use of singular or plural unit suffixes for several numeric pre-
+  ferences in the configuration dialog.
+* It is no longer possible to set the auto-way time to the nonsensical
+  value of zero minutes. Rather, a minimum of one minute is now enforced.
 
 
 Changes from 1.3-beta1 to 1.3:
