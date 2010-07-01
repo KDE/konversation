@@ -6,7 +6,7 @@ Nicknames Online lists on application quit. Behavioral improvements are
 found in the handling of aborting automatic reconnection attempts after
 connection failure and RFC 1459 PING/PONG exchanges. Further notable bug-
 fixes have been made to the Edit Network dialog, the handling of system
-color schemes and using the ignore List feature to ignore certain CTCP
+color schemes and using the ignore list feature to ignore certain CTCP
 events.
 
 
