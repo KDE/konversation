@@ -39,7 +39,6 @@ namespace Konversation
             explicit TrayIcon(QWidget* parent = 0);
             ~TrayIcon();
 
-            void setVisibility(bool visible);
             bool notificationEnabled() { return m_notificationEnabled; }
 
         public slots:
