@@ -260,8 +260,4 @@ if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
 
-if (HAVE_KIDLETIME)
-    target_link_libraries(konversation ${KDE4_KUTILS_LIBS})
-endif (HAVE_KIDLETIME)
-
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
