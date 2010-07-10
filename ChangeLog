@@ -1,6 +1,6 @@
 Changes since 1.3.1:
-* Fixed pipe symbols appearing in the date/time stamp and next to the nick-
-  name in backlog replay.
+* Fixed a bug causing pipe symbols to appear in the date/time stamp and next
+  to the nickname in backlog replay.
 * Added support for UnrealIRCd's 671 numeric.
 
 
