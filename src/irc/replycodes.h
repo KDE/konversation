@@ -157,5 +157,7 @@
 #define ERR_UMODEUNKNOWNFLAG   501
 #define ERR_USERSDONTMATCH     502
 
+#define RPL_WHOISSECURE        671 // used by UnrealIRCd to denote SSL in WHOIS response
+
 #endif // REPLYCODES_H
 

@@ -1464,6 +1464,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case RPL_WHOISSECURE:
+            {
+                if (plHas(2))
+                {
+                    if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 0)
+                        server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is using a secure connection.", parameterList.value(1)));
+                }
+                break;
+            }
             // Sample WHO response
             //"/WHO #lounge"
             //[21:39] [352] #lounge jasmine bots.worldforge.org irc.worldforge.org jasmine H 0 jasmine
