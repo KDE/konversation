@@ -687,7 +687,7 @@ void Server::sslError( const QList<KSslError>& errors )
         m_socket->ignoreSslErrors();
 
         // Show a warning in the chat window that the SSL certificate failed the authenticity check.
-        QString error = i18n("The SSL certificate for the the server %1 (port <numid>%2</numid>) failed the authenticity check.",
+        QString error = i18n("The SSL certificate for the server %1 (port <numid>%2</numid>) failed the authenticity check.",
                             getConnectionSettings().server().host(),
                             QString::number(getConnectionSettings().server().port()));
 
