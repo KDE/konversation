@@ -3966,7 +3966,8 @@ void Server::sendChannelNickChangedSignals()
 
 void Server::involuntaryQuit()
 {
-    if(m_connectionState == Konversation::SSConnected || m_connectionState == Konversation::SSConnecting)
+    if((m_connectionState == Konversation::SSConnected || m_connectionState == Konversation::SSConnecting) &&
+       (m_socket->peerAddress() != QHostAddress(QHostAddress::LocalHost) && m_socket->peerAddress() != QHostAddress(QHostAddress::LocalHostIPv6)))
     {
         quitServer();
         updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
