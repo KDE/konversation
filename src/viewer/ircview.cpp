@@ -1145,8 +1145,6 @@ bool doHighlight, bool parseURL, bool self)
         filteredLine.replace("\x0b", "&");
     }
 
-    filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
-
     // Highlight
     QString ownNick;
 
@@ -1244,6 +1242,8 @@ bool doHighlight, bool parseURL, bool self)
         filteredLine = "<font color=\"" + Preferences::self()->highlightOwnLinesColor().name() +
             "\">" + filteredLine + "</font>";
     }
+
+    filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
 
     // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
     filteredLine.replace("  "," \xA0");
