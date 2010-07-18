@@ -320,7 +320,6 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
 {
     tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
-    bool dirty = false;
     KABC::Picture photo = m_addressee.photo();
     KABC::Picture logo = m_addressee.logo();
     bool isimage=false;
@@ -328,7 +327,6 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     {
         Q3MimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
         tooltip << "<img src=\"photo\">";
-        dirty=true;
         isimage=true;
     }
     else if(!photo.url().isEmpty())
@@ -337,14 +335,12 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
         //Are there security problems with this?  loading from an external refrence?
         //Assuming not.
         tooltip << "<img src=\"" << photo.url() << "\">";
-        dirty=true;
         isimage=true;
     }
     if(logo.isIntern())
     {
         Q3MimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
         tooltip << "<img src=\"logo\">";
-        dirty=true;
         isimage=true;
     }
     else if(!logo.url().isEmpty())
@@ -353,31 +349,26 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
         //Are there security problems with this?  loading from an external refrence?
         //Assuming not.
         tooltip << "<img src=\"" << logo.url() << "\">";
-        dirty=true;
         isimage=true;
     }
     tooltip << "<b>" << (isimage?"":"<center>");
     if(!m_addressee.formattedName().isEmpty())
     {
         tooltip << m_addressee.formattedName();
-        dirty = true;
     }
     else if(!m_addressee.realName().isEmpty())
     {
         tooltip << m_addressee.realName();
-        dirty = true;
     }
     else if(!getRealName().isEmpty() && getRealName().toLower() != loweredNickname())
     {
         QString escapedRealName( getRealName() );
         escapedRealName.replace('<',"&lt;").replace('>',"&gt;");
         tooltip << escapedRealName;
-        dirty = true;
     }
     else
     {
         tooltip << getNickname();
-        //Don't set dirty if all we have is their nickname
     }
     if(m_identified) tooltip << i18n(" (identified)");
     tooltip << (isimage?"":"</center>") << "</b>";
@@ -388,34 +379,28 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
         tooltip << "<tr><td><b>" << i18n("Email") << ": </b></td><td>";
         tooltip << m_addressee.emails().join(", ");
         tooltip << "</td></tr>";
-        dirty=true;
     }
 
     if(!m_addressee.organization().isEmpty())
     {
         tooltip << "<tr><td><b>" << m_addressee.organizationLabel() << ": </b></td><td>" << m_addressee.organization() << "</td></tr>";
-        dirty=true;
     }
     if(!m_addressee.role().isEmpty())
     {
         tooltip << "<tr><td><b>" << m_addressee.roleLabel() << ": </b></td><td>" << m_addressee.role() << "</td></tr>";
-        dirty=true;
     }
     KABC::PhoneNumber::List numbers = m_addressee.phoneNumbers();
     for( KABC::PhoneNumber::List::ConstIterator it = numbers.constBegin(); it != numbers.constEnd(); ++it)
     {
         tooltip << "<tr><td><b>" << (*it).typeLabel() << ": </b></td><td>" << (*it).number() << "</td></tr>";
-        dirty=true;
     }
     if(!m_addressee.birthday().toString().isEmpty() )
     {
         tooltip << "<tr><td><b>" << m_addressee.birthdayLabel() << ": </b></td><td>" << m_addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
-        dirty=true;
     }
     if(!getHostmask().isEmpty())
     {
         tooltip << "<tr><td><b>" << i18n("Hostmask:") << " </b></td><td>" << getHostmask() << "</td></tr>";
-        dirty=true;
     }
     if(isAway())
     {
@@ -425,12 +410,10 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
         else
             tooltip << i18n("(unknown)");
         tooltip << "</td></tr>";
-        dirty=true;
     }
     if(!getOnlineSince().toString().isEmpty())
     {
         tooltip << "<tr><td><b>" << i18n("Online Since:") << " </b></td><td>" << getPrettyOnlineSince() << "</td></tr>";
-        dirty=true;
     }
 
 }
