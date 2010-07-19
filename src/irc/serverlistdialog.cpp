@@ -62,6 +62,7 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerListDialogUI();
         m_mainWidget->setupUi(mainWidget());
+        mainWidget()->layout()->setMargin(0);
         m_serverList = m_mainWidget->m_serverList;
         m_addButton = m_mainWidget->m_addButton;
         m_delButton = m_mainWidget->m_delButton;

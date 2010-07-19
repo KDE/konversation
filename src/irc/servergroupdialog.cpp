@@ -43,6 +43,9 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerGroupDialogUI();
         m_mainWidget->setupUi(mainWidget());
+        mainWidget()->layout()->setMargin(0);
+        m_mainWidget->serverWidget->layout()->setMargin(0);
+        m_mainWidget->channelWidget->layout()->setMargin(0);
 
         connect(m_mainWidget->m_editIdentityButton, SIGNAL(clicked()), this, SLOT(editIdentity()));
 
