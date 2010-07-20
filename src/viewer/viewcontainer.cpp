@@ -1745,6 +1745,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     ChatWindow* view = static_cast<ChatWindow*>(tab);
     KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
     QAction* rejoinAction = actionCollection()->action("rejoin_channel");
+    QAction* closeAction = actionCollection()->action("close_tab");
 
     QAction* renameAct = new QAction(this);
     renameAct->setText(i18n("&Rename Tab..."));
@@ -1765,7 +1766,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             Channel *channel = static_cast<Channel*>(view);
             if (channel->rejoinable() && rejoinAction)
             {
-                menu->addAction(rejoinAction);
+                menu->insertAction(closeAction, rejoinAction);
                 rejoinAction->setEnabled(true);
             }
         }

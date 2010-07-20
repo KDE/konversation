@@ -4,6 +4,10 @@ Changes since 1.3.1:
 * Added support for UnrealIRCd's 671 numeric.
 * Ignore network up/down notifications for localhost connections.
 * Fix WolframAlpha urls.
+* The "Rejoin Channel" context menu action, shown when a channel could not
+  be rejoined automatically on reconnect as well as after having been kicked
+  from a channel, will now appear above the "Close Tab" action rather than
+  at the end of the context menu, so "Close Tab" is always the last item.
 
 Changes from 1.3 to 1.3.1:
 Konversation 1.3.1 is a maintenance release that improves program behavior
