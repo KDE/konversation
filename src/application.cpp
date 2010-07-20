@@ -41,6 +41,7 @@
 #include <QRegExp>
 #include <QtDBus/QDBusConnection>
 #include <QNetworkProxy>
+#include <QWaitCondition>
 
 #include <KRun>
 #include <KCmdLineArgs>
@@ -58,6 +59,7 @@ Application::Application()
 : KUniqueApplication(true, true)
 {
     mainWindow = 0;
+    m_restartScheduled = false;
     m_connectionManager = 0;
     m_awayManager = 0;
     quickConnectDialog = 0;
@@ -90,6 +92,9 @@ Application::~Application()
     delete osd;
     osd = 0;
     closeWallet();
+
+    if (m_restartScheduled)
+        KProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList() << "--startupdelay" << "2000");
 }
 
 int Application::newInstance()
@@ -218,6 +223,14 @@ int Application::newInstance()
         m_notificationHandler = new Konversation::NotificationHandler(this);
 
         connect(this, SIGNAL(appearanceChanged()), this, SLOT(updateProxySettings()));
+    }
+    else if (args->isSet("restart"))
+    {
+        m_restartScheduled = true;
+
+        mainWindow->quitProgram();
+
+        return KUniqueApplication::newInstance();
     }
 
     if (!url.isEmpty())

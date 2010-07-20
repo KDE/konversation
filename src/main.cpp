@@ -17,6 +17,8 @@
 #include "version.h"
 #include "commit.h"
 
+#include <QWaitCondition>
+
 #include <KCmdLineArgs>
 #include <KAboutData>
 
@@ -92,10 +94,28 @@ int main(int argc, char* argv[])
     options.add( "password <password>", ki18n("Password for connection"),"");
     options.add( "ssl", ki18n("Use SSL for connection"),"false");
     options.add( "noautoconnect", ki18n("Disable auto-connecting to any IRC networks"));
-
+    options.add( "startupdelay <msec>", ki18n("Delay D-Bus activity and UI creation by the specified amount of miliseconds"), "2000");
+    options.add( "restart", ki18n("Quits and restarts Konversation (if running, otherwise has no effect)"));
 
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs::addStdCmdLineOptions();
+    KUniqueApplication::addCmdLineOptions();
+
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+
+    if (args->isSet("startupdelay"))
+    {
+        bool ok;
+        ulong delay = args->getOption("startupdelay").toULong(&ok);
+
+        if (ok)
+        {
+            QMutex dummy;
+            dummy.lock();
+            QWaitCondition waitCondition;
+            waitCondition.wait(&dummy, delay);
+        }
+    }
 
     if (!KUniqueApplication::start()) return 0;
 

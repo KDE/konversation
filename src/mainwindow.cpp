@@ -551,6 +551,9 @@ int MainWindow::confirmQuit()
             "systemtrayquitKonversation");
     }
 
+    if (result != KMessageBox::Continue)
+        konvApp->abortScheduledRestart();
+
     return result;
 }
 

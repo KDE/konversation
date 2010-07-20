@@ -1877,6 +1877,13 @@ namespace Konversation
         return result;
     }
 
+    OutputFilterResult OutputFilter::command_restart(const OutputFilterInput& /* input */)
+    {
+        KProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList("--restart"));
+
+        return OutputFilterResult();
+    }
+
     OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,
                                                 char mode, char giveTake)
     {

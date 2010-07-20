@@ -70,6 +70,8 @@ class MainWindow : public KXmlGuiWindow
         void insertMarkerLine();
 
     public slots:
+        void quitProgram();
+
         void updateTrayIcon();
 
         void openServerList();
@@ -107,7 +109,6 @@ class MainWindow : public KXmlGuiWindow
         void openNotifications();
         void notifyAction(int connectionId,const QString& nick);
 
-        void quitProgram();
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void leaveEvent(QEvent* e);

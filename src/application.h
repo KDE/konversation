@@ -135,6 +135,8 @@ class Application : public KUniqueApplication
         /// The wallet used to store passwords. Opens the wallet if it's closed.
         KWallet::Wallet* wallet();
 
+        void abortScheduledRestart() { m_restartScheduled = false; }
+
     signals:
         void catchUrl(const QString& who,const QString& url,const QDateTime &datetime);
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
@@ -178,6 +180,7 @@ class Application : public KUniqueApplication
         Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
         Images* m_images;
+        bool m_restartScheduled;
 
         Konversation::NotificationHandler* m_notificationHandler;
 

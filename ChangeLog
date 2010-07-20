@@ -15,6 +15,11 @@ Changes since 1.3.1:
   be rejoined automatically on reconnect as well as after having been kicked
   from a channel, will now appear above the "Close Tab" action rather than
   at the end of the context menu, so "Close Tab" is always the last item.
+* Added a '--restart' command line argument and a '/restart' command that
+  quits and restarts Konversation (if running, otherwise has no effect).
+* Added a '--startupdelay <msec>' command line argument that causes the app
+  to sleep for the specified amount of miliseconds early during the startup
+  process, delaying D-Bus activity and UI creation.
 
 
 Changes from 1.3 to 1.3.1:
