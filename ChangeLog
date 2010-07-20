@@ -2,12 +2,20 @@ Changes since 1.3.1:
 * Fixed a bug causing pipe symbols to appear in the date/time stamp and next
   to the nickname in backlog replay.
 * Added support for UnrealIRCd's 671 numeric.
-* Ignore network up/down notifications for localhost connections.
-* Fix WolframAlpha urls.
+* Solid network up/down notifications are now ignored for connections to
+  localhost.
+* Fixed WolframAlpha URLs not being turned into links correctly in the chat
+  text view.
+* Resolved a conflict between the highlight system and the graphical emoticon
+  support that was causing unintended highlights when the filesystem path to
+  an emoticon image file shown in the chat text view matched any of the con-
+  figured highlights.
+* Got rid of some too large margins in the "Edit Network" dialog.
 * The "Rejoin Channel" context menu action, shown when a channel could not
   be rejoined automatically on reconnect as well as after having been kicked
   from a channel, will now appear above the "Close Tab" action rather than
   at the end of the context menu, so "Close Tab" is always the last item.
+
 
 Changes from 1.3 to 1.3.1:
 Konversation 1.3.1 is a maintenance release that improves program behavior
