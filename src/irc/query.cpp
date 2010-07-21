@@ -383,7 +383,7 @@ void Query::popup(int id)
                 "CloseQueryAfterIgnore");
 
                 if (rc == KMessageBox::Yes && m_server)
-                    QTimer::singleShot(0, this, SLOT(closeWithoutAsking()));
+                    closeYourself(false);
             }
 
             break;
@@ -613,11 +613,6 @@ bool Query::closeYourself(bool confirm)
         m_recreationScheduled = false;
 
     return false;
-}
-
-void Query::closeWithoutAsking()
-{
-    m_server->removeQuery(this);
 }
 
 void Query::urlsDropped(const KUrl::List urls)

@@ -100,7 +100,6 @@ class Query : public ChatWindow
         void popup(int id);
         void nickInfoChanged();
         void updateNickInfo(Server* server, NickInfoPtr nickInfo);
-        void closeWithoutAsking();
         virtual void serverOnline(bool online);
         void slotActionTriggered(QAction* action);
 
