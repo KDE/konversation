@@ -83,6 +83,11 @@ void StatusPanel::serverSaysClose()
     closeYourself(false);
 }
 
+void StatusPanel::cycle()
+{
+    if (m_server) m_server->cycle();
+}
+
 void StatusPanel::setNickname(const QString& newNickname)
 {
     nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(newNickname));
@@ -110,7 +115,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
         QString output(outList[index]);
 
         // encoding stuff is done in Server()
-        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString());
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString(), this);
 
         if(!result.output.isEmpty())
         {
@@ -261,6 +266,13 @@ bool StatusPanel::closeYourself(bool confirm)
         m_server = 0;
         return true;
     }
+    else
+    {
+        m_recreationScheduled = false;
+
+        m_server->abortScheduledRecration();
+    }
+
     return false;
 }
 

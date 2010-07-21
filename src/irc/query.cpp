@@ -131,6 +131,13 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 
 Query::~Query()
 {
+    if (m_recreationScheduled)
+    {
+        qRegisterMetaType<NickInfoPtr>("NickInfoPtr");
+
+        QMetaObject::invokeMethod(m_server, "addQuery", Qt::QueuedConnection,
+            Q_ARG(NickInfoPtr, m_nickInfo), Q_ARG(bool, true));
+    }
 }
 
 void Query::setServer(Server* newServer)
@@ -254,7 +261,7 @@ void Query::sendQueryText(const QString& sendLine)
         QString output(outList[index]);
 
         // encoding stuff is done in Server()
-        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName());
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName(), this);
 
         if(!result.output.isEmpty())
         {
@@ -586,6 +593,7 @@ QString Query::getChannelEncodingDefaultDesc()    // virtual
 bool Query::closeYourself(bool confirm)
 {
     int result = KMessageBox::Continue;
+
     if (confirm)
         result=KMessageBox::warningContinueCancel(
             this,
@@ -598,8 +606,11 @@ bool Query::closeYourself(bool confirm)
     if (result == KMessageBox::Continue)
     {
         m_server->removeQuery(this);
+
         return true;
     }
+    else
+        m_recreationScheduled = false;
 
     return false;
 }

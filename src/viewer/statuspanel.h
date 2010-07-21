@@ -31,6 +31,8 @@ class StatusPanel : public ChatWindow
         explicit StatusPanel(QWidget* parent);
         ~StatusPanel();
 
+        virtual void cycle();
+
         virtual void setName(const QString& newName);
 
         virtual QString getTextInLine();

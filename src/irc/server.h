@@ -88,6 +88,9 @@ class Server : public QObject
         Server(QObject* parent, ConnectionSettings& settings);
         ~Server();
 
+        void cycle();
+        void abortScheduledRecration() { m_recreationScheduled = false; }
+
         int connectionId() { return m_connectionId; }
 
         ConnectionSettings& getConnectionSettings() { return m_connectionSettings; }
@@ -819,6 +822,8 @@ class Server : public QObject
         QTimer* m_nickInfoChangedTimer;
         QTimer* m_channelNickChangedTimer;
         QStringList m_changedChannels;
+
+        bool m_recreationScheduled;
 };
 
 #endif

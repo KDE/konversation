@@ -68,6 +68,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_connectionState = Konversation::SSNeverConnected;
 
+    m_recreationScheduled = false;
+
     m_delayedConnectTimer = new QTimer(this);
     m_delayedConnectTimer->setSingleShot(true);
     connect(m_delayedConnectTimer, SIGNAL(timeout()), this, SLOT(connectToIRCServer()));
@@ -189,6 +191,18 @@ Server::~Server()
 
     emit destroyed(m_connectionId);
 
+    if (m_recreationScheduled)
+    {
+        qRegisterMetaType<ConnectionSettings>("ConnectionSettings&");
+        qRegisterMetaType<Konversation::ConnectionFlag>("Konversation::ConnectionFlag");
+
+        Application* konvApp = static_cast<Application*>(kapp);
+
+        QMetaObject::invokeMethod(konvApp->getConnectionManager(), "connectTo", Qt::QueuedConnection,
+            Q_ARG(Konversation::ConnectionFlag, Konversation::CreateNewConnection),
+            Q_ARG(ConnectionSettings&, m_connectionSettings));
+    }
+
     kDebug() << "~Server done";
 }
 
@@ -215,6 +229,13 @@ bool Server::closeYourself(bool)
 {
     QTimer::singleShot(0, m_statusView, SLOT(serverSaysClose()));
     return true;
+}
+
+void Server::cycle()
+{
+    m_recreationScheduled = true;
+
+    m_statusView->closeYourself();
 }
 
 void Server::doPreShellCommand()

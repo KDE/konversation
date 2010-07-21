@@ -22,6 +22,7 @@
 #include <QObject>
 #include <QString>
 #include <QSet>
+#include <QPointer>
 
 #include <KUrl>
 #include <kio/global.h>
@@ -46,6 +47,7 @@ namespace Konversation
         QString parameter;
         QString destination;
         QString myNick;
+        QPointer<ChatWindow> context;
     };
 
     struct OutputFilterResult
@@ -69,7 +71,7 @@ namespace Konversation
             static const QSet<QString>& supportedCommands() { return m_commands; }
 
             QStringList splitForEncoding(const QString& destination, const QString& inputLine, int max, int segments = -1);
-            OutputFilterResult parse(const QString& myNick,const QString& line,const QString& destination);
+            OutputFilterResult parse(const QString& myNick, const QString& line, const QString& destination, ChatWindow* inputContext = 0);
 
             // dcc send
             OutputFilterResult sendRequest(const QString &recipient, const QString &fileName, const QString &address, quint16 port,quint64 size);
@@ -193,6 +195,7 @@ namespace Konversation
             OutputFilterResult command_konsole(const OutputFilterInput& input);
             OutputFilterResult command_queuetuner(const OutputFilterInput& input);
             OutputFilterResult command_sayversion(const OutputFilterInput& input);
+            OutputFilterResult command_cycle(const OutputFilterInput& input);
 
         private:
             static void fillCommandList();

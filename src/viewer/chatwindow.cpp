@@ -32,8 +32,9 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 {
     setName("ChatWindowObject");
     setTextView(0);
-    firstLog=true;
-    m_server=0;
+    firstLog = true;
+    m_server = 0;
+    m_recreationScheduled = false;
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
@@ -46,6 +47,21 @@ ChatWindow::~ChatWindow()
 {
     emit closing(this);
     m_server=0;
+}
+
+// reimplement this if your window needs special close treatment
+bool ChatWindow::closeYourself(bool /* askForConfirmation */)
+{
+    deleteLater();
+
+    return true;
+}
+
+void ChatWindow::cycle()
+{
+    m_recreationScheduled = true;
+
+    closeYourself(false);
 }
 
 void ChatWindow::updateAppearance()
@@ -473,14 +489,6 @@ void ChatWindow::indicateAway(bool)
 // reimplement this in all panels that have user input
 void ChatWindow::appendInputText(const QString&, bool)
 {
-}
-
-// reimplement this if your window needs special close treatment
-bool ChatWindow::closeYourself(bool /* askForConfirmation */)
-{
-    deleteLater();
-
-    return true;
 }
 
 bool ChatWindow::eventFilter(QObject* watched, QEvent* e)

@@ -19,6 +19,7 @@
 #include "abstractawaymanager.h"
 #include "ignore.h"
 #include "server.h"
+#include "chatwindow.h"
 #include "scriptlauncher.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
@@ -224,11 +225,12 @@ namespace Konversation
     }
 
     OutputFilterResult OutputFilter::parse(const QString& myNick, const QString& originalLine,
-                                           const QString& destination)
+        const QString& destination, ChatWindow* inputContext)
     {
         OutputFilterInput input;
         input.myNick = myNick;
         input.destination = destination;
+        input.context = inputContext;
 
         OutputFilterResult result;
 
@@ -765,7 +767,7 @@ namespace Konversation
             // We only want to create ('obtain') a new nickinfo if we have done /query
             // or "/msg nick".  Not "/msg nick message".
             NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
-            ::Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
+            Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
 
             // Force focus if the user did not specify any message.
             if (output.isEmpty()) emit showView(query);
@@ -1883,6 +1885,58 @@ namespace Konversation
 
         serverOut << "PRIVMSG " << input.destination << " :" << result.output;
         return result;
+    }
+
+    OutputFilterResult OutputFilter::command_cycle(const OutputFilterInput& input)
+    {
+        if (input.parameter.isEmpty())
+        {
+            if (input.context)
+                input.context->cycle();
+            else
+            {
+                kDebug() << "Parameter-less /cycle without an input context can't work.";
+
+                return OutputFilterResult();
+            }
+        }
+        else
+        {
+            QString lowerParameter = input.parameter.toLower();
+
+            if (lowerParameter == "-app")
+            {
+                Application *konvApp = static_cast<Application*>(KApplication::kApplication());
+
+                konvApp->restart();
+            }
+            else if (lowerParameter == "-server")
+            {
+                if (m_server)
+                    m_server->cycle();
+                else
+                {
+                    kDebug() << "Told to cycle the server, but current context doesn't have one.";
+
+                    return OutputFilterResult();
+                }
+            }
+            else if (m_server)
+            {
+                if (isAChannel(input.parameter))
+                {
+                    Channel* channel = m_server->getChannelByName(input.parameter);
+
+                    if (channel) channel->cycle();
+                }
+                else if (m_server->getQueryByName(input.parameter))
+                    m_server->getQueryByName(input.parameter)->cycle();
+                else
+                    return usage(i18n("%1CYCLE [-APP | -SERVER] [channel | nickname]", Preferences::self()->commandChar()));
+            }
+        }
+
+        return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,

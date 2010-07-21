@@ -402,12 +402,17 @@ Channel::~Channel()
 
     // Purge nickname list
     purgeNicks();
-    kDebug() << "nicks purged";
+    kDebug() << "Nicks purged.";
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
     kDebug() << "Channel removed.";
 
+    if (m_recreationScheduled)
+    {
+        QMetaObject::invokeMethod(m_server, "sendJoinCommand", Qt::QueuedConnection,
+            Q_ARG(QString, getName()), Q_ARG(QString, getPassword()));
+    }
 }
 
 bool Channel::rejoinable()
@@ -1108,7 +1113,7 @@ void Channel::sendChannelText(const QString& sendLine)
         QString output(outList[index]);
 
         // encoding stuff is done in Server()
-        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(),output,getName());
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName(), this);
 
         // Is there something we need to display for ourselves?
         if(!result.output.isEmpty())
@@ -2649,6 +2654,7 @@ void Channel::appendInputText(const QString& s, bool fromCursor)
 bool Channel::closeYourself(bool confirm)
 {
     int result=KMessageBox::Continue;
+
     if (confirm)
         result = KMessageBox::warningContinueCancel(this,
             i18n("Do you want to leave %1?", getName()),
@@ -2661,9 +2667,14 @@ bool Channel::closeYourself(bool confirm)
     {
         m_server->closeChannel(getName());
         m_server->removeChannel(this);
+
         deleteLater();
+
         return true;
     }
+    else
+        m_recreationScheduled = false;
+
     return false;
 }
 
