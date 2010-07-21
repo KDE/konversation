@@ -288,7 +288,7 @@ namespace Konversation
                 }
                 else if (cmd == cc + "close")
                 {
-                    deleteLater();
+                    closeYourself(false);
                 }
                 else
                 {

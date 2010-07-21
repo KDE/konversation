@@ -1605,21 +1605,21 @@ namespace Konversation
             emit reconnectServer(QString());
         else
         {
-            QStringList splitString = input.parameter.split(' ');
-            QString host = splitString[0];
+            QStringList parameterList = input.parameter.split(' ');
+            QString host = parameterList[0];
             QString password;
 
-            if (splitString.count() == 3)
-                emit connectTo(Konversation::CreateNewConnection, splitString[0], splitString[1], splitString[2]);
-            else if (splitString.count() == 2)
+            if (parameterList.count() == 3)
+                emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);
+            else if (parameterList.count() == 2)
             {
-                if (splitString[0].contains(QRegExp(":[0-9]+$")))
-                    emit connectTo(Konversation::CreateNewConnection, splitString[0], 0, splitString[1]);
+                if (parameterList[0].contains(QRegExp(":[0-9]+$")))
+                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], 0, parameterList[1]);
                 else
-                    emit connectTo(Konversation::CreateNewConnection, splitString[0], splitString[1]);
+                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
             }
             else
-                emit connectTo(Konversation::CreateNewConnection, splitString[0]);
+                emit connectTo(Konversation::CreateNewConnection, parameterList[0]);
         }
 
         return OutputFilterResult();
