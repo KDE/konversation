@@ -195,7 +195,7 @@ class ViewContainer : public QObject
         void clearStatusBarInfoLabel();
         void setStatusBarLagLabelShown(bool shown);
         void updateStatusBarLagLabel(Server* server, int msec);
-        void resetStatusBarLagLabel();
+        void resetStatusBarLagLabel(Server* server);
         void setStatusBarLagLabelTooLongLag(Server* server, int msec);
         void updateStatusBarSSLLabel(Server* server);
         void removeStatusBarSSLLabel();

@@ -49,7 +49,7 @@ namespace Konversation
 
             void setLagLabelShown(bool shown);
             void updateLagLabel(Server* lagServer, int msec);
-            void resetLagLabel();
+            void resetLagLabel(Server* lagServer = 0);
             void setTooLongLag(Server* lagServer, int msec);
 
             void updateSSLLabel(Server* server);

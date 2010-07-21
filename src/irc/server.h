@@ -382,7 +382,7 @@ class Server : public QObject
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
         void tooLongLag(Server* server, int msec);/// will be connected to KonversationMainWindow::updateLag()
-        void resetLag(); ///< will be emitted when new 303 came in
+        void resetLag(Server* server); ///< will be emitted when new 303 came in
         void nicksNowOnline(Server* server,const QStringList& list,bool changed);
         void awayState(bool away);                /// will be connected to any user input panel;
         void multiServerCommand(const QString& command, const QString& parameter);

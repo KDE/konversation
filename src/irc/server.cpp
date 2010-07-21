@@ -289,7 +289,7 @@ void Server::connectSignals()
             getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)), Qt::QueuedConnection);
     connect(this, SIGNAL(serverLag(Server*, int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*, int)));
     connect(this, SIGNAL(tooLongLag(Server*, int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)));
-    connect(this, SIGNAL(resetLag()), getViewContainer(), SIGNAL(resetStatusBarLagLabel()));
+    connect(this, SIGNAL(resetLag(Server*)), getViewContainer(), SIGNAL(resetStatusBarLagLabel(Server*)));
     connect(getOutputFilter(), SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(getOutputFilter(), SIGNAL(openKonsolePanel()), getViewContainer(), SLOT(addKonsolePanel()));
     connect(getOutputFilter(), SIGNAL(openChannelList(const QString&, bool)), getViewContainer(), SLOT(openChannelList(const QString&, bool)));
@@ -633,8 +633,8 @@ void Server::broken(KTcpSocket::Error error)
         if (nickChangeDialog) nickChangeDialog->reject();
     }
 
-    emit resetLag();
-    emit nicksNowOnline(this,QStringList(),true);
+    emit resetLag(this);
+    emit nicksNowOnline(this, QStringList(), true);
 
     updateAutoJoin();
 
@@ -838,7 +838,7 @@ void Server::quitServer(const QString& quitMessage)
         toServer += quitMessage;
 
     queue(toServer, HighPriority);
-    
+
     flushQueues();
 
     // Close the socket to allow a dead connection to be reconnected before the socket timeout.
@@ -3795,7 +3795,7 @@ void Server::pongReceived()
 
     emit serverLag(this, m_currentLag);
 
-    // Send another PING in 60 seconds 
+    // Send another PING in 60 seconds
     m_pingSendTimer.start(60000 /*60 sec*/);
 }
 

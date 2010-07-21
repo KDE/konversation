@@ -138,7 +138,7 @@ namespace Konversation
 
     void StatusBar::updateLagLabel(Server* lagServer, int msec)
     {
-        if (lagServer==m_window->getViewContainer()->getFrontServer())
+        if (lagServer == m_window->getViewContainer()->getFrontServer())
         {
             setMainLabelText(i18n("Ready."));
 
@@ -157,9 +157,12 @@ namespace Konversation
         }
     }
 
-    void StatusBar::resetLagLabel()
+    void StatusBar::resetLagLabel(Server* lagServer)
     {
-        m_lagLabel->setText(i18n("Lag: Unknown"));
+        if (!lagServer || lagServer == m_window->getViewContainer()->getFrontServer())
+        {
+            m_lagLabel->setText(i18n("Lag: Unknown"));
+        }
     }
 
     void StatusBar::setTooLongLag(Server* lagServer, int msec)

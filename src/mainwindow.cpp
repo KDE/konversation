@@ -98,7 +98,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(m_viewContainer, SIGNAL(clearStatusBarInfoLabel()), m_statusBar, SLOT(clearInfoLabel()));
     connect(m_viewContainer, SIGNAL(setStatusBarLagLabelShown(bool)), m_statusBar, SLOT(setLagLabelShown(bool)));
     connect(m_viewContainer, SIGNAL(updateStatusBarLagLabel(Server*, int)), m_statusBar, SLOT(updateLagLabel(Server*, int)));
-    connect(m_viewContainer, SIGNAL(resetStatusBarLagLabel()), m_statusBar, SLOT(resetLagLabel()));
+    connect(m_viewContainer, SIGNAL(resetStatusBarLagLabel(Server*)), m_statusBar, SLOT(resetLagLabel(Server*)));
     connect(m_viewContainer, SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)), m_statusBar, SLOT(setTooLongLag(Server*, int)));
     connect(m_viewContainer, SIGNAL(updateStatusBarSSLLabel(Server*)), m_statusBar, SLOT(updateSSLLabel(Server*)));
     connect(m_viewContainer, SIGNAL(removeStatusBarSSLLabel()), m_statusBar, SLOT(removeSSLLabel()));
@@ -274,14 +274,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showLastFocusedView()));
     actionCollection()->addAction("last_focused_tab", action);
-    
+
     action=new KAction(this);
     action->setText(i18n("Next Active Tab"));
     action->setShortcut(KShortcut("Ctrl+Alt+Space"));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction("next_active_tab", action);
-    
+
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
         action=new KAction(this);
