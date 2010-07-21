@@ -766,7 +766,7 @@ namespace Konversation
             // We only want to create ('obtain') a new nickinfo if we have done /query
             // or "/msg nick".  Not "/msg nick message".
             NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
-            Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
+            ::Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
 
             // Force focus if the user did not specify any message.
             if (output.isEmpty()) emit showView(query);
@@ -847,7 +847,7 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AME [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (input.parameter.section(' ', 0, 0).toLower() == "-local")
+        if (isParameter("local", input.parameter.section(' ', 0, 0)))
             m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(' ', 1));
         else
             emit multiServerCommand("me", input.parameter);
@@ -860,7 +860,7 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AMSG [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (input.parameter.section(' ', 0, 0).toLower() == "-local")
+        if (isParameter("local", input.parameter.section(' ', 0, 0)))
             m_server->sendToAllChannelsAndQueries(input.parameter.section(' ', 1));
         else
             emit multiServerCommand("msg", input.parameter);
@@ -1210,7 +1210,7 @@ namespace Konversation
         {
             QStringList parameterList = input.parameter.split(' ');
 
-            if (parameterList[0].toLower() == "-showpath" && !parameterList[1].isEmpty())
+            if (isParameter("showpath", parameterList[0]) && !parameterList[1].isEmpty())
             {
                 result = info(i18nc("%2 is a filesystem path to the script file",
                     "The script file '%1' was found at: %2",
@@ -1339,11 +1339,10 @@ namespace Konversation
             QString channel;
             QString option;
             // check for option
-            QString lowerParameter = parameterList[0].toLower();
-            bool host = (lowerParameter == "-host");
-            bool domain = (lowerParameter == "-domain");
-            bool uhost = (lowerParameter == "-userhost");
-            bool udomain = (lowerParameter == "-userdomain");
+            bool host = isParameter("host", parameterList[0]);
+            bool domain = isParameter("domain", parameterList[0]);
+            bool uhost = isParameter("userhost", parameterList[0]);
+            bool udomain = isParameter("userdomain", parameterList[0]);
 
             // remove possible option
             if (host || domain || uhost || udomain)
@@ -1492,7 +1491,7 @@ namespace Konversation
             int value = Ignore::Channel | Ignore::Query;
 
             // user specified -all option
-            if (parameterList[0].toLower() == "-all")
+            if (isParameter("all", parameterList[0]))
             {
                 // ignore everything
                 value = Ignore::All;
@@ -1901,15 +1900,13 @@ namespace Konversation
         }
         else
         {
-            QString lowerParameter = input.parameter.toLower();
-
-            if (lowerParameter == "-app")
+            if (isParameter("app", input.parameter))
             {
                 Application *konvApp = static_cast<Application*>(KApplication::kApplication());
 
                 konvApp->restart();
             }
-            else if (lowerParameter == "-server")
+            else if (isParameter("server", input.parameter))
             {
                 if (m_server)
                     m_server->cycle();
@@ -2064,6 +2061,13 @@ namespace Konversation
         Q_ASSERT(m_server);
                                                   // XXX if we ever see the assert, we need the ternary
         return m_server? m_server->isAChannel(check) : bool(QString("#&").contains(check.at(0)));
+    }
+
+    bool OutputFilter::isParameter(const QString& parameter, const QString& string)
+    {
+        QRegExp rx(QString("^[\\-]{1,2}%1$").arg(parameter), Qt::CaseInsensitive);
+
+        return rx.exactMatch(string);
     }
 }
 #include "outputfilter.moc"

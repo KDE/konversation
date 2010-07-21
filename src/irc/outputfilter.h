@@ -208,6 +208,7 @@ namespace Konversation
 
             OutputFilterResult changeMode(const QString& parameter, const QString& destination, char mode, char giveTake);
             bool isAChannel(const QString& check);
+            bool isParameter(const QString& parameter, const QString& string);
             OutputFilterResult usage(const QString& check);
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);
