@@ -97,6 +97,8 @@ class Application : public KUniqueApplication
 
         static Application* instance();
 
+        void restart();
+
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
          *  or user\@servergroup or using the unicode separator symbol 0xE120 instead
          *  of the "@".  This function takes a string like the above examples, and

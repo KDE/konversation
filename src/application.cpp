@@ -230,9 +230,7 @@ int Application::newInstance()
     }
     else if (args->isSet("restart"))
     {
-        m_restartScheduled = true;
-
-        mainWindow->quitProgram();
+        restart();
 
         return KUniqueApplication::newInstance();
     }
@@ -256,6 +254,13 @@ int Application::newInstance()
 Application* Application::instance()
 {
     return static_cast<Application*>(KApplication::kApplication());
+}
+
+void Application::restart()
+{
+    m_restartScheduled = true;
+
+    mainWindow->quitProgram();
 }
 
 void Application::prepareShutdown()

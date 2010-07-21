@@ -1887,7 +1887,9 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_restart(const OutputFilterInput& /* input */)
     {
-        KProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList("--restart"));
+        Application *konvApp = static_cast<Application*>(KApplication::kApplication());
+
+        konvApp->restart();
 
         return OutputFilterResult();
     }
