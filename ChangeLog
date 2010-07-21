@@ -15,8 +15,8 @@ Changes since 1.3.1:
   be rejoined automatically on reconnect as well as after having been kicked
   from a channel, will now appear above the "Close Tab" action rather than
   at the end of the context menu, so "Close Tab" is always the last item.
-* Added a '--restart' command line argument and a '/restart' command that
-  quits and restarts Konversation (if running, otherwise has no effect).
+* Added a '--restart' command line argument that quits and restarts Konver-
+  sation (if running, otherwise has no effect).
 * Added a '--startupdelay <msec>' command line argument that causes the app
   to sleep for the specified amount of miliseconds early during the startup
   process, delaying D-Bus activity and UI creation.
@@ -28,6 +28,17 @@ Changes since 1.3.1:
   connection that failed.
 * Commands that accept parameters in the form "-foo" will now also under-
   stand "--foo".
+* The syntax for the '/cycle' command is now '%1CYCLE [-APP | -SERVER]
+  [channel | nickname]'. Whereas '/cycle' previously only allowed you to
+  cycle a channel from the input line of that same channel, you can now
+  specify the target explicitly. '-app' will restart Konversation (see
+  also the new --restart command line argument to the konversation exe-
+  cutable) and '--server' will close all tabs belonging to the currect
+  connection and then create a new connection with the same settings as
+  the old one; both are new abilities for the command. A '/cycle' without
+  parameters issued in server, channel and query tabs is equivalent to
+  specifying '-server' or the current channel or query, respectively --
+  the ability to cycle a query is also new.
 
 
 Changes from 1.3 to 1.3.1:
