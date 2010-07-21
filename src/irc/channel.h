@@ -295,8 +295,6 @@ class Channel : public ChatWindow
         void syncSplitters();
         /// Called from ChatWindow adjustFocus
         virtual void childAdjustFocus();
-        /// Close the channel then come back in
-        void cycleChannel(); ///< TODO this is definately implemented and hooked incorrectly.
 
         bool channelCommand;///< True if nick context menu is executed from IRCView
 

@@ -1063,14 +1063,8 @@ void Channel::channelTextEntered()
     QString line = channelInput->toPlainText();
     channelInput->clear();
 
-    if(line.toLower().trimmed() == Preferences::self()->commandChar()+"clear")
-    {
+    if (line.toLower().trimmed() == Preferences::self()->commandChar()+"clear")
         textView->clear();
-    }
-    else if(line.toLower().trimmed() == Preferences::self()->commandChar()+"cycle")
-    {
-        cycleChannel();
-    }
     else
     {
         if(!line.isEmpty())
@@ -2535,12 +2529,6 @@ void Channel::refreshModeButtons()
     modeK->setToolTip(i18n("Protect channel with a password."));
     modeL->setToolTip(i18n("Set user limit to channel."));
 
-}
-
-void Channel::cycleChannel()
-{
-    closeYourself();
-    m_server->sendJoinCommand(getName(), getPassword());
 }
 
 void Channel::nicknameListViewTextChanged(int textChangedFlags)
