@@ -215,15 +215,10 @@ void Query::setEncryptedOutput(bool e)
 void Query::queryTextEntered()
 {
     QString line=queryInput->toPlainText();
+
     queryInput->clear();
-    if(line.toLower()==Preferences::self()->commandChar()+"clear")
-    {
-        textView->clear();
-    }
-    else if(line.length())
-    {
-         sendQueryText(sterilizeUnicode(line));
-    }
+
+    if (!line.isEmpty()) sendQueryText(sterilizeUnicode(line));
 }
 
 void Query::queryPassthroughCommand()

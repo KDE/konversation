@@ -123,14 +123,11 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
 void StatusPanel::statusTextEntered()
 {
-    QString line=sterilizeUnicode(statusInput->toPlainText());
+    QString line = sterilizeUnicode(statusInput->toPlainText());
+
     statusInput->clear();
 
-    if(line.toLower()==Preferences::self()->commandChar()+"clear") textView->clear();
-    else
-    {
-        if(line.length()) sendStatusText(line);
-    }
+    if (!line.isEmpty()) sendStatusText(line);
 }
 
 void StatusPanel::textPasted(const QString& text)

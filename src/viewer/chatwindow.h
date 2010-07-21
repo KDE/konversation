@@ -89,6 +89,8 @@ class ChatWindow : public KVBox
             bool parseURL = true, bool self = false);
         virtual void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
+        void clear();
+
         virtual QString getTextInLine();
         /** Reimplement this to return true in all classes that /can/ become front view.
          */

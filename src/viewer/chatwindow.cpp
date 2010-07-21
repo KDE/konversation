@@ -239,6 +239,13 @@ void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& 
     textView->appendBacklogMessage(firstColumn,Konversation::sterilizeUnicode(message));
 }
 
+void ChatWindow::clear()
+{
+    if (!textView) return;
+
+    textView->clear();
+}
+
 void ChatWindow::cdIntoLogPath()
 {
     QString home = KUser(KUser::UseRealUserID).homeDir();

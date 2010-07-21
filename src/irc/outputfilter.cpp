@@ -19,7 +19,6 @@
 #include "abstractawaymanager.h"
 #include "ignore.h"
 #include "server.h"
-#include "chatwindow.h"
 #include "scriptlauncher.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
@@ -1935,6 +1934,13 @@ namespace Konversation
                     return usage(i18n("%1CYCLE [-APP | -SERVER] [channel | nickname]", Preferences::self()->commandChar()));
             }
         }
+
+        return OutputFilterResult();
+    }
+
+    OutputFilterResult OutputFilter::command_clear(const OutputFilterInput& input)
+    {
+        if (input.context) input.context->clear();
 
         return OutputFilterResult();
     }

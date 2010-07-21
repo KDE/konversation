@@ -1066,15 +1066,10 @@ void Channel::sendFileMenu()
 void Channel::channelTextEntered()
 {
     QString line = channelInput->toPlainText();
+
     channelInput->clear();
 
-    if (line.toLower().trimmed() == Preferences::self()->commandChar()+"clear")
-        textView->clear();
-    else
-    {
-        if(!line.isEmpty())
-            sendChannelText(sterilizeUnicode(line));
-    }
+    if (!line.isEmpty()) sendChannelText(sterilizeUnicode(line));
 }
 
 void Channel::channelPassthroughCommand()
