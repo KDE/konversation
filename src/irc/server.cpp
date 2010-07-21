@@ -178,6 +178,18 @@ Server::~Server()
     closeRawLog();
     closeChannelListPanel();
 
+    if (m_recreationScheduled)
+    {
+        Konversation::ChannelList channelList;
+
+        foreach (Channel* channel, m_channelList)
+        {
+            channelList << channel->channelSettings();
+        }
+
+        m_connectionSettings.setOneShotChannelList(channelList);
+    }
+
     qDeleteAll(m_channelList);
     m_channelList.clear();
 
