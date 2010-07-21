@@ -1403,10 +1403,10 @@ namespace Konversation
         {
             if (!kick)
                 result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] "
-                                    "[channel] <user|mask>", Preferences::self()->commandChar()));
+                                    "[channel] <nickname | mask>", Preferences::self()->commandChar()));
             else
                 result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] "
-                                    "[channel] <user|mask> [reason]",
+                                    "[channel] <nickname | mask> [reason]",
                                     Preferences::self()->commandChar()));
         }
 
