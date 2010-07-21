@@ -19,6 +19,7 @@
 #include "abstractawaymanager.h"
 #include "ignore.h"
 #include "server.h"
+#include "scriptlauncher.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
@@ -1202,16 +1203,23 @@ namespace Konversation
         OutputFilterResult result;
 
         if (input.parameter.isEmpty())
-            result = usage(i18n("Usage: %1EXEC <script> [parameter list]",
-                                Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1EXEC [-SHOWPATH] <script> [parameter list]",
+                Preferences::self()->commandChar()));
         else
         {
             QStringList parameterList = input.parameter.split(' ');
 
-            if (!parameterList[0].contains("../"))
-                emit launchScript(input.destination, input.parameter);
+            if (parameterList[0].toLower() == "-showpath" && !parameterList[1].isEmpty())
+            {
+                result = info(i18nc("%2 is a filesystem path to the script file",
+                    "The script file '%1' was found at: %2",
+                    parameterList[1],
+                    ScriptLauncher::scriptPath(parameterList[1])));
+            }
+            else if (!parameterList[0].contains("../"))
+                emit launchScript(m_server->connectionId(), input.destination, input.parameter);
             else
-                result = error(i18n("Script name may not contain \"../\"."));
+                result = error(i18n("The script name may not contain \"../\"."));
         }
 
         return result;

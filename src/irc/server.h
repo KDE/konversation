@@ -49,7 +49,6 @@ class Query;
 class Identity;
 class RawLog;
 class ChannelListPanel;
-class ScriptLauncher;
 class ServerISON;
 class ChatWindow;
 class ViewContainer;
@@ -730,8 +729,6 @@ class Server : public QObject
         Konversation::ConnectionState m_connectionState;
         void updateConnectionState(Konversation::ConnectionState state);
         bool isSocketConnected() const;
-
-        ScriptLauncher* m_scriptLauncher;
 
         KProcess m_preShellCommand;
 

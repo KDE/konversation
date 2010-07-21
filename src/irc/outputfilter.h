@@ -106,7 +106,7 @@ namespace Konversation
             void openKonsolePanel();
             void openChannelList(const QString& parameter, bool getList);
             void sendToAllChannels(const QString& text);
-            void launchScript(const QString& target, const QString& parameter);
+            void launchScript(int connectionId, const QString& target, const QString& parameter);
             void banUsers(const QStringList& userList,const QString& channel,const QString& option);
             void unbanUsers(const QString& mask,const QString& channel);
             void multiServerCommand(const QString& command, const QString& parameter);

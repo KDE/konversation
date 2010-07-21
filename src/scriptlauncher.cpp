@@ -21,30 +21,34 @@
 #include <KStandardDirs>
 
 
-ScriptLauncher::ScriptLauncher(Server* server)
-: QObject(server)
+ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
-    m_server = server;
 }
 
 ScriptLauncher::~ScriptLauncher()
 {
 }
 
-void ScriptLauncher::launchScript(const QString& target, const QString &parameter)
+QString ScriptLauncher::scriptPath(const QString& script)
+{
+    return KStandardDirs::locate("data", "konversation/scripts/" + script);
+}
+
+void ScriptLauncher::launchScript(int connectionId, const QString& target, const QString &parameter)
 {
     // send the script all the information it will need
     QStringList parameterList = parameter.split(' ');
     // find script path (could be installed for all users in $KDEDIR/share/apps/ or
     // for one user alone in $HOME/.kde/share/apps/
     QString script(parameterList.takeFirst());
-    QString scriptPath(KStandardDirs::locate("data", "konversation/scripts/" + script));
+    QString path = scriptPath(script);
     parameterList.prepend(target);
-    parameterList.prepend(QString::number(m_server->connectionId()));
-    QFileInfo fileInfo(scriptPath);
-    if (!QProcess::startDetached(scriptPath, parameterList, fileInfo.path()))
+    parameterList.prepend(QString::number(connectionId));
+    QFileInfo fileInfo(path);
+
+    if (!QProcess::startDetached(path, parameterList, fileInfo.path()))
     {
-        if(!fileInfo.exists())
+        if (!fileInfo.exists())
            emit scriptNotFound(script);
         else
            emit scriptExecutionError(script);

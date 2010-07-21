@@ -20,6 +20,9 @@ Changes since 1.3.1:
 * Added a '--startupdelay <msec>' command line argument that causes the app
   to sleep for the specified amount of miliseconds early during the startup
   process, delaying D-Bus activity and UI creation.
+* Added an optional '-showpath' parameter to the '/exec' command that shows
+  the path at which the given script file was found in the chat text view,
+  i.e. '/exec -showpath media'.
 
 
 Changes from 1.3 to 1.3.1:

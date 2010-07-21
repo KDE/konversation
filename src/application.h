@@ -27,6 +27,7 @@
 
 class ConnectionManager;
 class AbstractAwayManager;
+class ScriptLauncher;
 class Server;
 class QuickConnectDialog;
 class Images;
@@ -81,6 +82,7 @@ class Application : public KUniqueApplication
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
         AbstractAwayManager* getAwayManager() { return m_awayManager; }
+        ScriptLauncher* getScriptLauncher() { return m_scriptLauncher; }
         Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
         // HACK
@@ -173,6 +175,7 @@ class Application : public KUniqueApplication
         ConnectionManager* m_connectionManager;
         AbstractAwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;
+        ScriptLauncher* m_scriptLauncher;
         QStringList urlList;
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;

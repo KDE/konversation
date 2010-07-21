@@ -23,17 +23,16 @@ class ScriptLauncher : public QObject
     Q_OBJECT
 
     public:
-        explicit ScriptLauncher(Server* server);
+        explicit ScriptLauncher(QObject* parent);
         ~ScriptLauncher();
 
-        signals:
+        static QString scriptPath(const QString& script);
+
+    signals:
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
 
     public slots:
-        void launchScript(const QString& target, const QString& parameter);
-
-    protected:
-        Server* m_server;
+        void launchScript(int connectionId, const QString& target, const QString& parameter);
 };
 #endif

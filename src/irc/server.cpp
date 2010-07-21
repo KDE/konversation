@@ -33,9 +33,9 @@
 #include "statuspanel.h"
 #include "rawlog.h"
 #include "channellistpanel.h"
-#include "scriptlauncher.h"
 #include "servergroupsettings.h"
 #include "addressbook.h"
+#include "scriptlauncher.h"
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
@@ -120,7 +120,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_inputFilter.setServer(this);
     m_outputFilter = new Konversation::OutputFilter(this);
-    m_scriptLauncher = new ScriptLauncher(this);
 
     // For /msg query completion
     m_completeQueryPosition = 0;
@@ -330,12 +329,12 @@ void Server::connectSignals()
     // Status View
     connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
 
-    // Scripts
-    connect(getOutputFilter(), SIGNAL(launchScript(const QString&, const QString&)),
-        m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
-    connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
+        // Scripts
+    connect(getOutputFilter(), SIGNAL(launchScript(int, const QString&, const QString&)),
+        konvApp->getScriptLauncher(), SLOT(launchScript(int, const QString&, const QString&)));
+    connect(konvApp->getScriptLauncher(), SIGNAL(scriptNotFound(const QString&)),
         this, SLOT(scriptNotFound(const QString&)));
-    connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
+    connect(konvApp->getScriptLauncher(), SIGNAL(scriptExecutionError(const QString&)),
         this, SLOT(scriptExecutionError(const QString&)));
 
     // Stats

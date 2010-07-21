@@ -15,6 +15,7 @@
 
 #include "application.h"
 #include "connectionmanager.h"
+#include "scriptlauncher.h"
 #include "transfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
@@ -62,6 +63,7 @@ Application::Application()
     m_restartScheduled = false;
     m_connectionManager = 0;
     m_awayManager = 0;
+    m_scriptLauncher = 0;
     quickConnectDialog = 0;
     osd = 0;
     m_wallet = NULL;
@@ -118,6 +120,8 @@ int Application::newInstance()
 
         connect(Solid::Networking::notifier(), SIGNAL(shouldDisconnect()), m_connectionManager, SLOT(involuntaryQuitServers()));
         connect(Solid::Networking::notifier(), SIGNAL(shouldConnect()), m_connectionManager, SLOT(reconnectInvoluntary()));
+
+        m_scriptLauncher = new ScriptLauncher(this);
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
         m_dccTransferManager = new DCC::TransferManager(this);
