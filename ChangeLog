@@ -33,12 +33,12 @@ Changes since 1.3.1:
   cycle a channel from the input line of that same channel, you can now
   specify the target explicitly. '-app' will restart Konversation (see
   also the new --restart command line argument to the konversation exe-
-  cutable) and '--server' will close all tabs belonging to the currect
-  connection and then create a new connection with the same settings as
-  the old one; both are new abilities for the command. A '/cycle' without
-  parameters issued in server, channel and query tabs is equivalent to
-  specifying '-server' or the current channel or query, respectively --
-  the ability to cycle a query is also new.
+  cutable mentioned above) and '--server' will close all tabs belonging
+  to the currect connection and then create a new connection with the
+  same settings as the old one; both are new abilities for the command.
+  A '/cycle' without parameters issued in server, channel and query tabs
+  is equivalent to specifying '-server' or the current channel or query,
+  respectively -- the ability to cycle a query is also new.
 * Fixed a bug causing the chat text notification messages originating in
   the Watched Nicknames Online system to be logged in HTML format (and
   thus HTML source to be displayed e.g. in backlog replay).
