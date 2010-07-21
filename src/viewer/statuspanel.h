@@ -60,7 +60,6 @@ class StatusPanel : public ChatWindow
         void updateAppearance();
         virtual void appendInputText(const QString&, bool fromCursor);
         void updateName();
-        void serverSaysClose();
 
     protected slots:
         void sendFileMenu();

@@ -78,11 +78,6 @@ StatusPanel::~StatusPanel()
 {
 }
 
-void StatusPanel::serverSaysClose()
-{
-    closeYourself(false);
-}
-
 void StatusPanel::cycle()
 {
     if (m_server) m_server->cycle();

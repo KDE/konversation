@@ -225,9 +225,10 @@ void Server::purgeData()
 }
 
 //... so called to match the ChatWindow derivatives.
-bool Server::closeYourself(bool)
+bool Server::closeYourself(bool askForConfirmation)
 {
-    QTimer::singleShot(0, m_statusView, SLOT(serverSaysClose()));
+    m_statusView->closeYourself(askForConfirmation);
+
     return true;
 }
 
