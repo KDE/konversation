@@ -1885,15 +1885,6 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_restart(const OutputFilterInput& /* input */)
-    {
-        Application *konvApp = static_cast<Application*>(KApplication::kApplication());
-
-        konvApp->restart();
-
-        return OutputFilterResult();
-    }
-
     OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,
                                                 char mode, char giveTake)
     {

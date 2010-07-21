@@ -113,7 +113,7 @@ namespace Konversation
             void reconnectServer(const QString& quitMessage);
             void disconnectServer(const QString& quitMessage);
             void quitServer(const QString& quitMessage);
-            
+
             void connectTo(Konversation::ConnectionFlag flag,
                            const QString& hostName,
                            const QString& port = "",
@@ -193,7 +193,6 @@ namespace Konversation
             OutputFilterResult command_konsole(const OutputFilterInput& input);
             OutputFilterResult command_queuetuner(const OutputFilterInput& input);
             OutputFilterResult command_sayversion(const OutputFilterInput& input);
-            OutputFilterResult command_restart(const OutputFilterInput& input);
 
         private:
             static void fillCommandList();
