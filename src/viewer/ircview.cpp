@@ -811,7 +811,11 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     if(type != i18n("Notify"))
         line = line.arg(timeStamp(), type, filter(message, serverColor, 0 , true, parseURL));
     else
-        line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
+    {
+        // See Server::setWatchedNickOnline() for the originating call site.
+        line = "<font color=\"" + serverColor + "\"><a class=\"nick\" href=\"#"+message.section(' ', 0, 0)+"\">"
+            +line.arg(timeStamp(), type, message.section(' ', 1))+"</a></font>";
+    }
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
