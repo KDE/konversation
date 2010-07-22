@@ -117,10 +117,17 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     KStandardAction::configureNotifications(this, SLOT(openNotifications()), actionCollection());
 
-    KAction* action;
-
     // NOTE: once kdelibs-4.3 is required, please replace setStatusTip with setHelpText everywhere.
     // It will make toolbar-button tooltips work again (while keeping menuitem statustips working too)
+
+    KAction* action;
+
+    action=new KAction(this);
+    action->setText(i18n("Restart"));
+    action->setIcon(KIcon("system-reboot"));
+    action->setStatusTip(i18n("Quit and restart the application"));
+    connect(action, SIGNAL(triggered()), Application::instance(), SLOT(restart()));
+    actionCollection()->addAction("restart", action);
 
     action=new KAction(this);
     action->setText(i18n("&Server List..."));

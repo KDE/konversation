@@ -15,11 +15,12 @@ Changes since 1.3.1:
   be rejoined automatically on reconnect as well as after having been kicked
   from a channel, will now appear above the "Close Tab" action rather than
   at the end of the context menu, so "Close Tab" is always the last item.
-* Added a '--restart' command line argument that quits and restarts Konver-
-  sation (if running, otherwise has no effect). Note that preservation of
-  command line arguments across restarts only works on KDE Platform 4.6 and
-  higher, as a required library feature is only available as of that ver-
-  sion.
+* Added a 'Restart' action and a '--restart' command line argument that quit
+  and restart Konversation. Notes: If not already running, the command line
+  argument has no effect; startup will occur normally. Also, the preservation
+  of command line arguments across restarts is only supported on KDE Platform
+  4.6 Alpha 1 and higher, as a required library feature is only available as
+  of that version.
 * Added a '--startupdelay <msec>' command line argument that causes the app
   to sleep for the specified amount of miliseconds early during the startup
   process, delaying D-Bus activity and UI creation.
@@ -34,16 +35,16 @@ Changes since 1.3.1:
 * The syntax for the '/cycle' command is now '/CYCLE [-APP | -SERVER]
   [channel | nickname]'. Whereas '/cycle' previously only allowed you to
   cycle a channel from the input line of that same channel, you can now
-  specify the target explicitly. '-app' will restart Konversation (see
-  also the new --restart command line argument to the konversation exe-
-  cutable mentioned above: as with --restart, preservation of the command
-  line arguments the app was started with requires KDE Platform 4.6 or
-  higher) and '--server' will close all tabs belonging to the currect
+  specify the target explicitly. '-app' will restart Konversation (as with
+  the new 'Restart' action mentioned above, preservation of the command line
+  arguments the app was started with requires KDE Platform 4.6 Alpha 1 or
+  higher to work) and '--server' will close all tabs belonging to the current
   connection and then create a new connection with the same settings as the
-  old one. Both are new abilities for the command. A '/cycle' without para--
-  meters issued in server, channel and query tabs is equivalent to specify-
-  ing '-server' or the current channel or query, respectively -- the ability
-  to cycle a query is also new.
+  old one (plus it will attempt to rejoin all previously open channels). Both
+  are new abilities for the command. A '/cycle' without parameters issued in
+  server, channel and query tabs is equivalent to specifying '-server' or the
+  current channel or query, respectively -- the ability to cycle a query is
+  also new.
 * Fixed a bug causing the chat text notification messages originating in
   the Watched Nicknames Online system to be logged in HTML format (and
   thus HTML source to be displayed e.g. in backlog replay).
