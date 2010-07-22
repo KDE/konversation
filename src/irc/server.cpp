@@ -212,7 +212,7 @@ Server::~Server()
 
         QMetaObject::invokeMethod(konvApp->getConnectionManager(), "connectTo", Qt::QueuedConnection,
             Q_ARG(Konversation::ConnectionFlag, Konversation::CreateNewConnection),
-            Q_ARG(ConnectionSettings&, m_connectionSettings));
+            Q_ARG(ConnectionSettings, m_connectionSettings));
     }
 
     kDebug() << "~Server done";
