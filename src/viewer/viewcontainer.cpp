@@ -395,7 +395,7 @@ void ViewContainer::updateTabWidgetAppearance()
     m_tabWidget->setTabBarHidden(noTabBar);
 
     m_tabWidget->setDocumentMode(true);
-    
+
     if (Preferences::self()->customTabFont())
         m_tabWidget->setFont(Preferences::self()->tabFont());
     else

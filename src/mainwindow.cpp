@@ -117,15 +117,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     KStandardAction::configureNotifications(this, SLOT(openNotifications()), actionCollection());
 
-    // NOTE: once kdelibs-4.3 is required, please replace setStatusTip with setHelpText everywhere.
-    // It will make toolbar-button tooltips work again (while keeping menuitem statustips working too)
-
     KAction* action;
 
     action=new KAction(this);
     action->setText(i18n("Restart"));
     action->setIcon(KIcon("system-reboot"));
-    action->setStatusTip(i18n("Quit and restart the application"));
+    action->setHelpText(i18n("Quit and restart the application"));
     connect(action, SIGNAL(triggered()), Application::instance(), SLOT(restart()));
     actionCollection()->addAction("restart", action);
 
@@ -133,7 +130,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Server List..."));
     action->setIcon(KIcon("network-server"));
     action->setShortcut(KShortcut("F2"));
-    action->setStatusTip(i18n("Manage networks and servers"));
+    action->setHelpText(i18n("Manage networks and servers"));
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
     actionCollection()->addAction("open_server_list", action);
 
@@ -141,7 +138,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("Quick &Connect..."));
     action->setIcon(KIcon("network-connect"));
     action->setShortcut(KShortcut("F7"));
-    action->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
+    action->setHelpText(i18n("Type in the address of a new IRC server to connect to"));
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
     actionCollection()->addAction("quick_connect_dialog", action);
 
@@ -149,7 +146,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Reconnect"));
     action->setIcon(KIcon("view-refresh"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Reconnect to the current server."));
+    action->setHelpText(i18n("Reconnect to the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(reconnectFrontServer()));
     actionCollection()->addAction("reconnect_server", action);
 
@@ -158,7 +155,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Disconnect"));
     action->setIcon(KIcon("network-disconnect"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Disconnect from the current server."));
+    action->setHelpText(i18n("Disconnect from the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
     actionCollection()->addAction("disconnect_server", action);
 
@@ -166,7 +163,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Identities..."));
     action->setIcon(KIcon("user-identity"));
     action->setShortcut(KShortcut("F8"));
-    action->setStatusTip(i18n("Manage your nick, away and other identity settings"));
+    action->setHelpText(i18n("Manage your nick, away and other identity settings"));
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
     actionCollection()->addAction("identities_dialog", action);
 
@@ -192,7 +189,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("view-history"));
     action->setShortcut(KShortcut("Ctrl+O"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Open the known history for this channel in a new tab"));
+    action->setHelpText(i18n("Open the known history for this channel in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
     actionCollection()->addAction("open_logfile", action);
 
@@ -200,7 +197,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Channel Settings..."));
     action->setIcon(KIcon("configure"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Open the channel settings dialog for this tab"));
+    action->setHelpText(i18n("Open the channel settings dialog for this tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
     actionCollection()->addAction("channel_settings", action);
 
@@ -209,7 +206,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("view-list-text"));
     action->setShortcut(KShortcut("F5"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Show a list of all the known channels on this server"));
+    action->setHelpText(i18n("Show a list of all the known channels on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
     actionCollection()->addAction("open_channel_list", action);
 
@@ -217,7 +214,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&URL Catcher"));
     action->setIcon(KIcon("text-html"));
     action->setShortcut(KShortcut("F6"));
-    action->setStatusTip(i18n("List all URLs that have been mentioned recently in a new tab"));
+    action->setHelpText(i18n("List all URLs that have been mentioned recently in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
     actionCollection()->addAction("open_url_catcher", action);
 
@@ -226,7 +223,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action=new KAction(this);
         action->setText(i18n("New &Konsole"));
         action->setIcon(KIcon("utilities-terminal"));
-        action->setStatusTip(i18n("Open a terminal in a new tab"));
+        action->setHelpText(i18n("Open a terminal in a new tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addKonsolePanel()));
         actionCollection()->addAction("open_konsole", action);
     }
@@ -296,12 +293,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action->setIcon(KIcon("arrow-up"));
         action->setShortcut(KShortcut("Alt+Shift+Left"));
         action->setEnabled(false);
-        action->setStatusTip("Move this tab");
+        action->setHelpText("Move this tab");
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
         actionCollection()->addAction("move_tab_left", action);
 
         action->setEnabled(false);
-        action->setStatusTip("Move this tab");
+        action->setHelpText("Move this tab");
         action=new KAction(this);
         action->setText(i18n("Move Tab Down"));
         action->setIcon(KIcon("arrow-down"));
@@ -318,7 +315,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
-            action->setStatusTip("Move this tab");
+            action->setHelpText("Move this tab");
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
@@ -327,7 +324,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
-            action->setStatusTip("Move this tab");
+            action->setHelpText("Move this tab");
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
             actionCollection()->addAction("move_tab_right", action);
 
@@ -339,7 +336,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
-            action->setStatusTip("Move this tab");
+            action->setHelpText("Move this tab");
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
@@ -348,7 +345,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
-            action->setStatusTip("Move this tab");
+            action->setHelpText("Move this tab");
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
             actionCollection()->addAction("move_tab_right", action);
 
@@ -404,7 +401,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("Clear &Marker Lines"));
     action->setShortcut(KShortcut("Ctrl+Shift+R"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Clear marker lines in the current tab"));
+    action->setHelpText(i18n("Clear marker lines in the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
     actionCollection()->addAction("clear_lines", action);
 
@@ -412,7 +409,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Clear Window"));
     action->setShortcut(KShortcut("Ctrl+L"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Clear the contents of the current tab"));
+    action->setHelpText(i18n("Clear the contents of the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearView()));
     actionCollection()->addAction("clear_window", action);
 
@@ -420,7 +417,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("Clear &All Windows"));
     action->setShortcut(KShortcut("Ctrl+Shift+L"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Clear the contents of all open tabs"));
+    action->setHelpText(i18n("Clear the contents of all open tabs"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearAllViews()));
     actionCollection()->addAction("clear_tabs", action);
 
@@ -437,7 +434,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("irc-join-channel"));
     action->setShortcut(KShortcut("Ctrl+J"));
     action->setEnabled(false);
-    action->setStatusTip("Join a new channel on this server");
+    action->setHelpText("Join a new channel on this server");
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showJoinChannelDialog()));
     actionCollection()->addAction("join_channel", action);
 
@@ -453,7 +450,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("format-text-color"));
     action->setShortcut(KShortcut("Ctrl+K"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Set the color of your current IRC message"));
+    action->setHelpText(i18n("Set the color of your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertIRCColor()));
     actionCollection()->addAction("irc_colors", action);
 
@@ -461,7 +458,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("&Marker Line"));
     action->setShortcut(KShortcut("Ctrl+R"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Insert a horizontal line into the current tab that only you can see"));
+    action->setHelpText(i18n("Insert a horizontal line into the current tab that only you can see"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertMarkerLine()));
     actionCollection()->addAction("insert_marker_line", action);
 
@@ -470,7 +467,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("character-set"));
     action->setShortcut(KShortcut("Alt+Shift+C"));
     action->setEnabled(false);
-    action->setStatusTip(i18n("Insert any character into your current IRC message"));
+    action->setHelpText(i18n("Insert any character into your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertCharacter()));
     actionCollection()->addAction("insert_character", action);
 
