@@ -112,13 +112,14 @@ void Application::implementRestart()
     if (QCoreApplication::applicationFilePath().endsWith(argumentList.first()))
         argumentList.removeFirst();
 
-    // Don't round-trip --restart.
-    argumentList.removeAll("--restart");
-
-    // FIXME: I shouldn't have to check for the single-dash variant, but
+    // FIXME: I shouldn't have to check for the single-dash variants, but
     // KCmdLineArgs::allArguments() presently doesn't round-trip '--foo'
     // properly and turns it into '-foo' - dfaure is informed.
+    argumentList.replaceInStrings("-restart", "--restart");
     argumentList.replaceInStrings("-startupdelay", "--startupdelay");
+
+    // Don't round-trip --restart.
+    argumentList.removeAll("--restart");
 
     // Avoid accumulating multiple --startupdelay arguments across multiple
     // uses of restart().
