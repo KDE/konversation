@@ -95,8 +95,55 @@ Application::~Application()
     osd = 0;
     closeWallet();
 
-    if (m_restartScheduled)
-        KProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList() << "--startupdelay" << "2000");
+    if (m_restartScheduled) implementRestart();
+}
+
+void Application::implementRestart()
+{
+    QStringList argumentList;
+
+#if KDE_IS_VERSION(4,5,60)
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+
+    argumentList = args->allArguments();
+
+    // Pop off the executable name. May not be the first argument in argv
+    // everywhere, so verify first.
+    if (QCoreApplication::applicationFilePath().endsWith(argumentList.first()))
+        argumentList.removeFirst();
+
+    // Don't round-trip --restart.
+    argumentList.removeAll("--restart");
+
+    // FIXME: I shouldn't have to check for the single-dash variant, but
+    // KCmdLineArgs::allArguments() presently doesn't round-trip '--foo'
+    // properly and turns it into '-foo' - dfaure is informed.
+    argumentList.replaceInStrings("-startupdelay", "--startupdelay");
+
+    // Avoid accumulating multiple --startupdelay arguments across multiple
+    // uses of restart().
+    if (argumentList.contains("--startupdelay"))
+    {
+        int index = argumentList.lastIndexOf("--startupdelay");
+
+        if (index < argumentList.count() - 1 && !argumentList.at(index + 1).startsWith("-"))
+        {
+            QString delayArgument = argumentList.at(index + 1);
+
+            bool ok;
+
+            uint delay = delayArgument.toUInt(&ok, 10);
+
+            // If the argument is invalid or too low, raise to at least 2000 msecs.
+            if (!ok || delay < 2000)
+                argumentList.replace(index + 1, "2000");
+        }
+    }
+    else
+#endif
+        argumentList << "--startupdelay" << "2000";
+
+    KProcess::startDetached(QCoreApplication::applicationFilePath(), argumentList);
 }
 
 int Application::newInstance()

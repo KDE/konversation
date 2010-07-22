@@ -174,6 +174,8 @@ class Application : public KUniqueApplication
         void closeWallet();
 
     private:
+        void implementRestart();
+
         ConnectionManager* m_connectionManager;
         AbstractAwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;
