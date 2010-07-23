@@ -225,9 +225,6 @@ bool StatusPanel::closeYourself(bool confirm)
 {
     int result;
 
-    //FIXME: Show "Do you really want to close ..." warnings in
-    // disconnected state instead of closing directly. Can't do
-    // that due to string freeze at the moment.
     if (confirm && !m_server->isConnected())
     {
         result = KMessageBox::warningContinueCancel(
