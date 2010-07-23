@@ -205,7 +205,7 @@ Server::~Server()
 
     if (m_recreationScheduled)
     {
-        qRegisterMetaType<ConnectionSettings>("ConnectionSettings&");
+        qRegisterMetaType<ConnectionSettings>("ConnectionSettings");
         qRegisterMetaType<Konversation::ConnectionFlag>("Konversation::ConnectionFlag");
 
         Application* konvApp = static_cast<Application*>(kapp);

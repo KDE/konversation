@@ -49,7 +49,7 @@ class ConnectionManager : public QObject
 
         void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
         void connectTo(Konversation::ConnectionFlag flag, const QList<KUrl>& list);
-        void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& settings);
+        void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings settings);
 
         void quitServers();
         void reconnectServers();

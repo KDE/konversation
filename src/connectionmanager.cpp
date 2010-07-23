@@ -127,7 +127,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
     }
 }
 
-void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& settings)
+void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionSettings settings)
 {
     if (!settings.isValid()) return;
 
