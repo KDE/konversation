@@ -59,7 +59,7 @@ namespace Konversation
 
         signals:
             void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
-            void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& connectionSettings);
+            void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings connectionSettings);
             void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
 
         protected slots:
@@ -82,7 +82,7 @@ namespace Konversation
         protected:
             QTreeWidgetItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
-            
+
             int m_lastSortColumn;
             Qt::SortOrder m_lastSortOrder;
 

@@ -773,8 +773,8 @@ void MainWindow::openServerList()
                 m_serverListDialog, SLOT(updateServerList()));
         connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, int)),
                 konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, int)));
-        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, ConnectionSettings&)),
-                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, ConnectionSettings&)));
+        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, ConnectionSettings)),
+                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, ConnectionSettings)));
         connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
