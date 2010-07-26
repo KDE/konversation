@@ -2811,6 +2811,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     // FIXME HACK: Until message routing and the ircview are refactored, there's no better
     // way to pass the nickname down to the ircview than prepending it -- the entire append-
     // MessageToFrontmost callgraph is pretty inflexible in terms of metadata payload, boo.
+    // The same trick is in Server::setWatchedNickOffline() for the offline notification.
     appendMessageToFrontmost(i18n("Notify"), nickname + ' ' + i18n("%1 is online (%2).", nickname, getServerName()), getStatusView());
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
@@ -2828,7 +2829,11 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     emit watchedNickChanged(this, nickname, false);
 
-    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
+    // FIXME HACK: Until message routing and the ircview are refactored, there's no better
+    // way to pass the nickname down to the ircview than prepending it -- the entire append-
+    // MessageToFrontmost callgraph is pretty inflexible in terms of metadata payload, boo.
+    // The same trick is in Server::setWatchedNickOffline() for the online notification.
+    appendMessageToFrontmost(i18n("Notify"), nickname + ' ' + i18n("%1 went online (%2).", nickname, getServerName()), getStatusView());
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
 
