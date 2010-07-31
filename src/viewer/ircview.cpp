@@ -1508,7 +1508,7 @@ void IRCView::openLink(const QUrl& url)
 
     if (!link.isEmpty() && !link.startsWith('#'))
     {
-        if (link.startsWith(QLatin1String("irc://")))
+        if (link.startsWith(QLatin1String("irc://")) || link.startsWith(QLatin1String("ircs://")))
         {
             Application* konvApp = Application::instance();
             konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);

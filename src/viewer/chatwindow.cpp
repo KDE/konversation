@@ -103,6 +103,7 @@ QString ChatWindow::getTitle()
 
 QString ChatWindow::getURI(bool passNetwork)
 {
+    QString protocol;
     QString url;
     QString port;
     QString server;
@@ -123,7 +124,12 @@ QString ChatWindow::getURI(bool passNetwork)
     if (server.contains(':')) // IPv6
         server = '['+server+']';
 
-    url = "irc://"+server+port+'/'+channel;
+    if (getServer()->getUseSSL())
+        protocol = "ircs://";
+    else
+        protocol = "irc://";
+
+    url = protocol+server+port+'/'+channel;
 
     return url;
 }

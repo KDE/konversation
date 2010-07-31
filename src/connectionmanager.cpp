@@ -44,7 +44,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QStri
 {
     ConnectionSettings settings;
 
-    if (target.startsWith(QLatin1String("irc://")))
+    if (target.startsWith(QLatin1String("irc://")) || target.startsWith(QLatin1String("ircs://")))
         decodeIrcUrl(target, settings);
     else
     {
@@ -303,11 +303,11 @@ void ConnectionManager::reconnectServers()
 
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
 {
-    if (!url.startsWith(QLatin1String("irc://"))) return;
+    if (!url.startsWith(QLatin1String("irc://")) && !url.startsWith(QLatin1String("ircs://"))) return;
 
     QString mangledUrl = url;
 
-    mangledUrl.remove(QRegExp("^irc:/+"));
+    mangledUrl.remove(QRegExp("^ircs?:/+"));
 
     if (mangledUrl.isEmpty()) return;
 
@@ -385,6 +385,16 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
         cl << channelSettings;
 
         settings.setOneShotChannelList(cl);
+    }
+
+    // Override SSL setting state with directive from URL.
+    if (url.startsWith(QLatin1String("ircs://")))
+    {
+        Konversation::ServerSettings server = settings.server();
+
+        server.setSSLEnabled(true);
+
+        settings.setServer(server);
     }
 }
 

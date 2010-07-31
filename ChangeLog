@@ -52,6 +52,11 @@ Changes since 1.3.1:
   key segments to be added to the raw format auto-join command (or to the
   last of multiple such auto-join commands when the amount of auto-join
   channels requires multiple commands to be generated).
+* Added support for ircs:// URLs, the 's' standing for 'SSL'. It is supported
+  both for opening and for bookmarking. If an ircs:// URL matches a server
+  configured in the server list or refers to a network name instead of a
+  specific server, the directive from the URL overrides the state of the SSL
+  setting in the configuration.
 
 
 Changes from 1.3 to 1.3.1:
