@@ -3597,6 +3597,8 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
         passwords << password;
     }
 
+    while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
+
     joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
 
     return joinCommands;

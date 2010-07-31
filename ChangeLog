@@ -48,6 +48,10 @@ Changes since 1.3.1:
 * Fixed a bug causing the chat text notification messages originating in
   the Watched Nicknames Online system to be logged in HTML format (and
   thus HTML source to be displayed e.g. in backlog replay).
+* Fixed a (harmless) bug causing unnecessary trailing "." placeholder channel
+  key segments to be added to the raw format auto-join command (or to the
+  last of multiple such auto-join commands when the amount of auto-join
+  channels requires multiple commands to be generated).
 
 
 Changes from 1.3 to 1.3.1:
