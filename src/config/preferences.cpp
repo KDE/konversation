@@ -579,7 +579,7 @@ void Preferences::saveColumnState(QTreeView *treeView, QString name)
     group.writeEntry("ColumnSortDescending", treeView->header()->sortIndicatorOrder() == Qt::DescendingOrder ? true : false );
 }
 
-void Preferences::restoreColumnState(QTreeView *treeView, QString name)
+void Preferences::restoreColumnState(QTreeView* treeView, QString name, int defaultColumn , Qt::SortOrder defaultSortOrder)
 {
     KConfigGroup group(KGlobal::config(), name);
 
@@ -588,10 +588,10 @@ void Preferences::restoreColumnState(QTreeView *treeView, QString name)
         if (columnWidths.at(i))
             treeView->setColumnWidth(i, columnWidths.at(i));
 
-    if (group.readEntry("ColumnSortDescending", false))
-        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", 0), Qt::DescendingOrder);
+    if (group.readEntry("ColumnSortDescending", (defaultSortOrder == Qt::DescendingOrder)))
+        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", defaultColumn), Qt::DescendingOrder);
     else
-        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", 0), Qt::AscendingOrder);
+        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", defaultColumn), Qt::AscendingOrder);
 }
 
 #include "preferences.moc"

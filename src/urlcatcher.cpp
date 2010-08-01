@@ -1,146 +1,77 @@
 /*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation; either version 2 of
+  the License or (at your option) version 3 or any later version
+  accepted by the membership of KDE e.V. (or its successor appro-
+  ved by the membership of KDE e.V.), which shall act as a proxy
+  defined in Section 14 of version 3 of the license.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program. If not, see http://www.gnu.org/licenses/.
 */
 
 /*
-  Shows all URLs found by the client
-
-  Copyright (C) 2003 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2009 Travis McHenry <wordsizzle@gmail.com>
+  Copyright (C) 2010 Eike Hein <hein@kde.org>
 */
 
 #include "urlcatcher.h"
-#include "channel.h"
-#include "server.h"
 #include "application.h"
-#include "viewcontainer.h"
 
-#include <QSortFilterProxyModel>
-#include <QItemSelectionModel>
 #include <QClipboard>
+#include <QTreeView>
 
-#include <KMenu>
+#include <KBookmarkDialog>
 #include <KBookmarkManager>
-#include <kbookmarkdialog.h>
-#include <KUrl>
 #include <KFileDialog>
+#include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
+#include <KMenu>
+#include <KMessageBox>
 #include <KToolBar>
 
-UrlCatcherModel::UrlCatcherModel(QObject* parent) : QAbstractListModel(parent)
+
+UrlDateItem::UrlDateItem(const QDateTime& dateTime)
+{
+    setData(dateTime);
+}
+
+UrlDateItem::~UrlDateItem()
 {
 }
 
-bool operator==(const UrlItem& item, const UrlItem& item2)
+QVariant UrlDateItem::data(int role) const
 {
-    return (item.nick == item2.nick && item.url == item2.url && item.datetime == item2.datetime);
-}
-
-void UrlCatcherModel::append(const UrlItem& item)
-{
-    if(!m_urlList.contains(item))
-        m_urlList.append(item);
-    reset();
-}
-
-bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
-{
-    int last = row+count;
-    beginRemoveRows(parent, row, last);
-
-    QModelIndex topLeft = parent.sibling(row,0);
-    QModelIndex bottomRight = parent.sibling(last,2);
-
-    bool success = true;
-    for(int i=row; i <= last; i++)
-    {
-        UrlItem item;
-        item.nick = parent.sibling(i,0).data().toString();
-        item.url = parent.sibling(i,1).data().toString();
-        item.datetime = parent.sibling(i,2).data().toDateTime();
-        if (success)
-            success = m_urlList.removeOne(item);
-    }
-
-    emit dataChanged(topLeft, bottomRight);
-    endRemoveRows();
-
-    return success;
-}
-
-void UrlCatcherModel::setUrlList(const QList<UrlItem>& list)
-{
-    m_urlList = list;
-    reset();
-}
-
-int UrlCatcherModel::columnCount(const QModelIndex& /*parent*/) const
-{
-    return 3;
-}
-
-int UrlCatcherModel::rowCount(const QModelIndex& /*parent*/) const
-{
-    return m_urlList.count();
-}
-
-QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
-{
-    if (!index.isValid() || index.row() >= m_urlList.count ())
-        return QVariant();
-
-    const UrlItem& item = m_urlList[index.row()];
-
     if (role == Qt::DisplayRole)
-    {
-        switch(index.column())
-        {
-            case 0:
-                return item.nick;
-            case 1:
-                return item.url;
-            case 2:
-                return KGlobal::locale()->formatDateTime(item.datetime, KLocale::ShortDate, true);
-            default:
-                return QVariant();
-        }
-    }
-    if (role == Qt::UserRole)
-    {
-        switch(index.column())
-        {
-            case 0:
-                return item.nick;
-            case 1:
-                return item.url;
-            case 2:
-                return item.datetime;
-            default:
-                return QVariant();
-        }
-    }
-    return QVariant();
+        return KGlobal::locale()->formatDateTime(QStandardItem::data().toDateTime(), KLocale::ShortDate, true);
+
+    return QStandardItem::data(role);
 }
 
-QVariant UrlCatcherModel::headerData (int section, Qt::Orientation orientation, int role) const
+UrlSortFilterProxyModel::UrlSortFilterProxyModel(QObject* parent) : QSortFilterProxyModel(parent)
 {
-    if (orientation == Qt::Vertical || role != Qt::DisplayRole)
-        return QVariant();
+}
 
-    switch (section)
+UrlSortFilterProxyModel::~UrlSortFilterProxyModel()
+{
+}
+
+bool UrlSortFilterProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
+{
+    if (sortColumn() == 2)
     {
-        case 0:
-            return i18n("From");
-        case 1:
-            return i18n("URL");
-        case 2:
-            return i18n("Date");
-        default:
-            return QVariant();
+        QVariant leftData = sourceModel()->data(left, Qt::UserRole + 1);
+        QVariant rightData = sourceModel()->data(right, Qt::UserRole + 1);
+
+        return leftData.toDateTime() < rightData.toDateTime();
     }
+
+    return QSortFilterProxyModel::lessThan(left, right);
 }
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
@@ -149,327 +80,346 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::UrlCatcher);
 
     setSpacing(0);
-    m_toolBar = new KToolBar(this, true, true);
-    m_toolBar->setObjectName("urlcatcher_toolbar");
-    m_open = m_toolBar->addAction(KIcon("window-new"), i18nc("open url", "&Open"), this, SLOT(openUrlClicked()));
-    m_open->setStatusTip(i18n("Open link in external browser."));
-    m_open->setWhatsThis(i18n("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>"));
-    m_open->setEnabled(false);
-    m_saveLink = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveLinkAs()));
-    m_saveLink->setStatusTip(i18n("Save selected link to the disk."));
-    m_saveLink->setEnabled(false);
-    m_toolBar->addSeparator();
-    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyUrlClicked()));
-    m_copy->setStatusTip(i18n("Copy link address to the clipboard."));
-    m_copy->setWhatsThis(i18n("Select a <b>URL</b> above, then click this button to copy the URL to the clipboard."));
-    m_copy->setEnabled(false);
-    m_delete = m_toolBar->addAction(KIcon("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteUrlClicked()));
-    m_delete->setWhatsThis(i18n("Select a <b>URL</b> above, then click this button to delete the URL from the list."));
-    m_delete->setStatusTip(i18n("Delete selected link."));
-    m_delete->setEnabled(false);
-    m_toolBar->addSeparator();
-    m_save = m_toolBar->addAction(KIcon("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveListClicked()));
-    m_save->setStatusTip(i18n("Save list."));
-    m_save->setWhatsThis(i18n("Click to save the entire list to a file."));
-    m_save->setEnabled(false);
-    m_clear = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear List"), this, SLOT(clearListClicked()));
-    m_clear->setStatusTip(i18n("Clear list."));
-    m_clear->setWhatsThis(i18n("Click to erase the entire list."));
-    m_clear->setEnabled(false);
-    m_toolBar->addSeparator();
-    m_bookmarkLink = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkUrl()));
-    m_bookmarkLink->setEnabled(false);
 
-    setupUi(this);
-
-    m_urlListModel = new UrlCatcherModel(this);
-
-    m_proxyModel = new QSortFilterProxyModel(this);
-    m_proxyModel->setSortRole(Qt::UserRole);
-    m_proxyModel->setSourceModel(m_urlListModel);
-    m_urlListView->setModel(m_proxyModel);
-
-    m_proxyModel->setDynamicSortFilter(true);
-
-    Preferences::restoreColumnState(m_urlListView, "UrlCatcher ViewSettings");
-
-    connect(m_urlListView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-            this, SLOT(urlSelected(const QItemSelection&)));
-    connect(m_urlListView, SIGNAL(doubleClicked(const QModelIndex&)),
-            this, SLOT(openUrl(const QModelIndex&)) );
-    connect(m_urlListView, SIGNAL(customContextMenuRequested(const QPoint&)),
-            this, SLOT(contextMenu(const QPoint&)) );
-
-    m_filterLine->setProxy(m_proxyModel);
-    connect(m_proxyModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(updateButtons()));
-    connect(m_proxyModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(updateButtons()));
+    setupActions();
+    setupUrlTree();
 }
-
 
 UrlCatcher::~UrlCatcher()
 {
-    Preferences::saveColumnState(m_urlListView, "UrlCatcher ViewSettings");
+    Preferences::saveColumnState(m_urlTree, "UrlCatcher ViewSettings");
 }
 
-void UrlCatcher::updateButtons()
+void UrlCatcher::setupActions()
 {
-    if(!m_proxyModel->rowCount())
-    {
-        m_clear->setEnabled(false);
-        m_save->setEnabled(false);
-    }
-    else
-    {
-        m_clear->setEnabled(true);
-        m_save->setEnabled(true);
-    }
+    m_toolBar = new KToolBar(this, true, true);
+    m_contextMenu = new KMenu(this);
 
+    QAction* action;
+
+    action = m_toolBar->addAction(KIcon("window-new"), i18nc("open url", "&Open"), this, SLOT(openSelectedUrls()));
+    m_itemActions.append(action);
+    m_contextMenu->addAction(action);
+    action->setStatusTip(i18n("Open URLs in external browser."));
+    action->setWhatsThis(i18n("<p>Select one or several <b>URLs</b> below, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>"));
+    action->setEnabled(false);
+
+    action = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveSelectedUrls()));
+    m_itemActions.append(action);
+    m_contextMenu->addAction(action);
+    action->setStatusTip(i18n("Save selected URLs to the disk."));
+    action->setEnabled(false);
+
+    action = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkSelectedUrls()));
+    m_itemActions.append(action);
+    m_contextMenu->addAction(action);
+    action->setEnabled(false);
+
+    m_toolBar->addSeparator();
+    m_contextMenu->addSeparator();
+
+    action = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copySelectedUrls()));
+    m_itemActions.append(action);
+    m_contextMenu->addAction(action);
+    action->setStatusTip(i18n("Copy URLs to the clipboard."));
+    action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to copy them to the clipboard."));
+    action->setEnabled(false);
+
+    action = m_toolBar->addAction(KIcon("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteSelectedUrls()));
+    m_itemActions.append(action);
+    m_contextMenu->addAction(action);
+    action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to delete them from the list."));
+    action->setStatusTip(i18n("Delete selected link."));
+    action->setEnabled(false);
+
+    m_toolBar->addSeparator();
+    m_contextMenu->addSeparator();
+
+    action = m_toolBar->addAction(KIcon("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveUrlModel()));
+    m_listActions.append(action);
+    action->setStatusTip(i18n("Save list."));
+    action->setWhatsThis(i18n("Click to save the entire list to a file."));
+    action->setEnabled(false);
+
+    action = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear List"), this, SLOT(clearUrlModel()));
+    m_listActions.append(action);
+    action->setStatusTip(i18n("Clear list."));
+    action->setWhatsThis(i18n("Click to erase the entire list."));
+    action->setEnabled(false);
+
+    updateListActionStates();
 }
 
-void UrlCatcher::setUrlList(const QStringList& list)
+void UrlCatcher::setupUrlTree()
 {
-    m_urlListModel = new UrlCatcherModel(this);
+    KFilterProxySearchLine* searchLine = new KFilterProxySearchLine(this);
 
-    if(!list.isEmpty())
-    {
+    m_urlTree = new QTreeView(this);
+    m_urlTree->setWhatsThis(i18n("List of Uniform Resource Locators mentioned in any of the Konversation windows during this session."));
+    m_urlTree->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_urlTree->setSortingEnabled(true);
+    m_urlTree->header()->setMovable(false);
+    m_urlTree->header()->setSortIndicatorShown(true);
+    m_urlTree->setAllColumnsShowFocus(true);
+    m_urlTree->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    m_urlTree->setRootIsDecorated(false);
+    connect(m_urlTree, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu(const QPoint&)));
+    connect(m_urlTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(openUrl(const QModelIndex&)));
 
-        QList<UrlItem> urlList;
-        for (int i=0; i < list.count(); i++)
-        {
-            UrlItem item;
-            item.nick = list.at(i).section(' ',0,0);
-            item.url = list.at(i).section(' ',1,1);
-            item.datetime = QDateTime::fromString(list.at(i).section(' ',2));
-            urlList.append(item);
-        }
+    Application* konvApp = static_cast<Application *>(kapp);
+    QStandardItemModel* urlModel = konvApp->getUrlModel();
+    QStandardItem* item = new QStandardItem(i18n("From"));
+    urlModel->setHorizontalHeaderItem(0, item);
+    item = new QStandardItem(i18n("URL"));
+    urlModel->setHorizontalHeaderItem(1, item);
+    item = new QStandardItem(i18n("Date"));
+    urlModel->setHorizontalHeaderItem(2, item);
+    connect(urlModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(updateListActionStates()));
+    connect(urlModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(updateListActionStates()));
 
-        m_urlListModel->setUrlList(urlList);
+    UrlSortFilterProxyModel* proxyModel = new UrlSortFilterProxyModel(this);
+    proxyModel->setSourceModel(urlModel);
+    proxyModel->setDynamicSortFilter(true);
+    proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    proxyModel->setFilterKeyColumn(-1);
 
-        m_clear->setEnabled(true);
-        m_save->setEnabled(true);
-    }
+    m_urlTree->setModel(proxyModel);
+    connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+        this, SLOT(updateItemActionStates()));
 
-    m_proxyModel->setSourceModel(m_urlListModel);
+    searchLine->setProxy(proxyModel);
 
+    Preferences::restoreColumnState(m_urlTree, "UrlCatcher ViewSettings", 2, Qt::DescendingOrder);
 }
 
-void UrlCatcher::addUrl(const QString& who,const QString& url, const QDateTime &datetime)
+void UrlCatcher::updateItemActionStates()
 {
-    UrlItem item;
-    item.nick = who;
-    item.url = url;
-    item.datetime = datetime;
-    m_urlListModel->append(item);
+    bool enable = m_urlTree->selectionModel()->hasSelection();
 
-    m_clear->setEnabled(true);
-    m_save->setEnabled(true);
+    QAction* action;
+
+    foreach(action, m_itemActions) action->setEnabled(enable);
 }
 
-void UrlCatcher::urlSelected(const QItemSelection& selected)
+void UrlCatcher::updateListActionStates()
 {
-    if(!selected.isEmpty())
-    {
-        m_open->setEnabled(true);
-        m_saveLink->setEnabled(true);
-        m_copy->setEnabled(true);
-        m_delete->setEnabled(true);
-        m_bookmarkLink->setEnabled(true);
-    }
-    else
-    {
-        m_open->setEnabled(false);
-        m_saveLink->setEnabled(false);
-        m_copy->setEnabled(false);
-        m_delete->setEnabled(false);
-        m_bookmarkLink->setEnabled(false);
-    }
+    Application* konvApp = static_cast<Application *>(kapp);
+    bool enable = konvApp->getUrlModel()->rowCount();
+
+    QAction* action;
+
+    foreach(action, m_listActions) action->setEnabled(enable);
+}
+
+void UrlCatcher::openContextMenu(const QPoint& p)
+{
+    QModelIndex index = m_urlTree->indexAt(p);
+    if (!index.isValid()) return;
+
+    m_contextMenu->exec(QCursor::pos());
 }
 
 void UrlCatcher::openUrl(const QModelIndex& index)
 {
-    QString url = index.sibling(index.row(), 1).data().toString();
-
-    Application::openUrl(url);
+    Application::openUrl(index.sibling(index.row(), 1).data().toString());
 }
 
-void UrlCatcher::openUrlClicked()
+void UrlCatcher::openSelectedUrls()
 {
-    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
-    if (index.isValid()) openUrl(index);
-}
+    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
-void UrlCatcher::copyUrlClicked()
-{
-    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
-    if (index.isValid())
+    if (selectedIndexes.count() > 1)
     {
-        QString url = index.sibling(index.row(), 1).data().toString();
-        QClipboard *cb = qApp->clipboard();
-        cb->setText(url, QClipboard::Selection);
-        cb->setText(url, QClipboard::Clipboard);
+        int ret = KMessageBox::warningContinueCancel(this,
+            i18n("You have selected more than one URL. Do you really want to open several URLs at once?"),
+            i18n("Open URLs"),
+            KStandardGuiItem::cont(),
+            KStandardGuiItem::cancel(),
+            QString(),
+            KMessageBox::Notify | KMessageBox::Dangerous);
+
+        if (ret != KMessageBox::Continue) return;
+    }
+
+    QModelIndex index;
+
+    foreach(index, selectedIndexes)
+    {
+        if (index.isValid()) Application::openUrl(index.data().toString());
     }
 }
 
-void UrlCatcher::deleteUrlClicked()
+void UrlCatcher::saveSelectedUrls()
 {
-    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
-    if (index.isValid())
+    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
+
+    if (selectedIndexes.count() > 1)
     {
-        QModelIndex indexAbove;
-        QModelIndex indexBelow;
-        if(index.row()-1 >= 0)
-            indexAbove = index.sibling(index.row()-1, 0);
-        if(index.row()+1 < m_proxyModel->rowCount())
-            indexBelow = index.sibling(index.row()+1, 0);
+        int ret = KMessageBox::warningContinueCancel(this,
+            i18n("You have selected more than one URL. A file dialog to set the destination will open for each. "
+                "Do you really want to save several URLs at once?"),
+            i18n("Open URLs"),
+            KStandardGuiItem::cont(),
+            KStandardGuiItem::cancel(),
+            QString(),
+            KMessageBox::Notify | KMessageBox::Dangerous);
 
-        if (indexAbove.isValid())
+        if (ret != KMessageBox::Continue) return;
+    }
+
+    QModelIndex index;
+
+    foreach(index, selectedIndexes)
+    {
+        if (index.isValid())
         {
-            QItemSelection selection(indexAbove, indexAbove.sibling(indexAbove.row(),2));
-            if(!selection.isEmpty())
-                m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
-        }
-        else if (indexBelow.isValid())
-        {
-            QItemSelection selection(index, index.sibling(index.row(),2));
-            if(!selection.isEmpty())
-                m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
-        }
-        else
-            urlSelected(QItemSelection());
+            KUrl url(index.data().toString());
+            KUrl targetUrl = KFileDialog::getSaveUrl(url.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
 
-        UrlItem item;
-        item.nick = index.sibling(index.row(), 0).data().toString();
-        item.url = index.sibling(index.row(), 1).data().toString();
-        item.datetime = index.sibling(index.row(), 2).data().toDateTime();
+            if (targetUrl.isEmpty() || !targetUrl.isValid())
+                continue;
 
-        m_urlListModel->removeRows(index.row(), 0, index);
-        if(!m_urlListModel->rowCount())
-        {
-            urlSelected(QItemSelection());
-            m_clear->setEnabled(false);
-            m_save->setEnabled(false);
+            KIO::copy(url, targetUrl);
         }
-
-        emit deleteUrl(item.nick, item.url, item.datetime);
     }
 }
 
-void UrlCatcher::clearListClicked()
+void UrlCatcher::bookmarkSelectedUrls()
 {
-    m_urlListModel = new UrlCatcherModel(this);
-    m_proxyModel->setSourceModel(m_urlListModel);
+    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
-    m_save->setEnabled(false);
-    m_clear->setEnabled(false);
-    urlSelected(QItemSelection());
+    KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
+    KBookmarkDialog* dialog = new KBookmarkDialog(manager, this);
 
-    emit clearUrlList();
-}
-
-void UrlCatcher::saveListClicked()
-{
-    // Ask user for file name
-    QString fileName=KFileDialog::getSaveFileName(
-        QString(),
-        QString(),
-        this,
-        i18n("Save URL List"));
-
-    if (!fileName.isEmpty())
+    if (selectedIndexes.count() > 1)
     {
-        int maxNickWidth=0;
+        QList<QPair<QString, QString> > bookmarks;
 
-        int rows = m_proxyModel->rowCount();
-        QModelIndex index = m_proxyModel->index(0,0,QModelIndex());
-        for (int r = 0; r < rows; r++)
+        QModelIndex index;
+
+        foreach(index, selectedIndexes)
         {
-            QString nick = index.sibling(r,0).data().toString();
-
-            if (nick.length()>maxNickWidth)
-            {
-                maxNickWidth = nick.length();
-            }
+            bookmarks << QPair<QString, QString>(index.data().toString(), index.data().toString());
         }
 
-        // now save the list to disk
-        QFile listFile(fileName);
-        listFile.open(QIODevice::WriteOnly);
-        // wrap the file into a stream
-        QTextStream stream(&listFile);
-
-        QString header(i18n("Konversation URL List: %1\n\n",
-                            QDateTime::currentDateTime().toString()));
-        stream << header;
-
-        for (int r = 0; r < rows; r++)
-        {
-            QString nick = index.sibling(r,0).data().toString();
-            QString url = index.sibling(r,1).data().toString();
-
-            QString nickPad;
-            nickPad.fill(' ', maxNickWidth);
-            nickPad.replace(0, nick.length(), nick);
-
-            QString line(nickPad+' '+url+'\n');
-            stream << line;
-        }
-
-        listFile.close();
+        dialog->addBookmarks(bookmarks, i18n("New"));
     }
-}
+    else
+    {
+        QString url = selectedIndexes.first().data().toString();
+        dialog->addBookmark(url, url);
+    }
 
-void UrlCatcher::contextMenu(const QPoint& p)
-{
-    QModelIndex item = m_urlListView->indexAt(p);
-    if (!item.isValid()) return;
-
-    KMenu* menu = new KMenu(this);
-
-    menu->insertAction(0, m_open);
-    menu->insertAction(0, m_saveLink);
-    menu->addSeparator();
-    menu->insertAction(0, m_copy);
-    menu->insertAction(0, m_delete);
-    menu->addSeparator();
-    menu->insertAction(0, m_save);
-    menu->insertAction(0, m_clear);
-    menu->addSeparator();
-    menu->insertAction(0, m_bookmarkLink);
-    menu->exec(QCursor::pos());
-
-    delete menu;
-}
-
-void UrlCatcher::bookmarkUrl()
-{
-    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
-    if (!index.isValid()) return;
-
-    QString url = index.sibling(index.row(), 1).data().toString();
-
-    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-    KBookmarkDialog* dialog = new KBookmarkDialog(bm, this);
-    dialog->addBookmark(url, url);
     delete dialog;
 }
 
-void UrlCatcher::saveLinkAs()
+void UrlCatcher::copySelectedUrls()
 {
-    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
-    if (!index.isValid()) return;
+    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
-    QString url = index.sibling(index.row(), 1).data().toString();
+    QStringList urls;
+    QModelIndex index;
 
-    KUrl srcUrl (url);
-    KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
+    foreach(index, selectedIndexes)
+        if (index.isValid()) urls << index.data().toString();
 
-    if (saveUrl.isEmpty() || !saveUrl.isValid())
-        return;
+    QClipboard* clipboard = qApp->clipboard();
+    clipboard->setText(urls.join("\n"), QClipboard::Clipboard);
+}
 
-    KIO::copy(srcUrl, saveUrl);
+void UrlCatcher::deleteSelectedUrls()
+{
+    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedIndexes();
+
+    QHash<int, QString> origins;
+    QHash<QString, int> urls;
+    QModelIndex index;
+
+    foreach(index, selectedIndexes)
+    {
+        if (index.isValid())
+        {
+            if (index.column() == 0)
+                origins.insert(index.row(), index.data().toString());
+            else if (index.column() == 1)
+                urls.insert(index.data().toString(), index.row());
+        }
+    }
+
+    Application* konvApp = static_cast<Application *>(kapp);
+    QStandardItemModel* urlModel = konvApp->getUrlModel();
+    QString url;
+
+    foreach(url, urls.keys())
+    {
+        QList<QStandardItem*> existing = urlModel->findItems(url, Qt::MatchExactly, 1);
+
+        QStandardItem* item;
+
+        foreach(item, existing)
+        {
+            if (urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origins.value(urls.value(url)))
+                urlModel->removeRow(item->row());
+        }
+
+    }
+}
+
+void UrlCatcher::saveUrlModel()
+{
+    QString target = KFileDialog::getSaveFileName(QString(), QString(), this,
+        i18n("Save URL List"), KFileDialog::ConfirmOverwrite);
+
+    if (!target.isEmpty())
+    {
+        Application* konvApp = static_cast<Application *>(kapp);
+        QStandardItemModel* urlModel = konvApp->getUrlModel();
+
+        int nickColumnWidth = 0;
+
+        QModelIndex index = urlModel->index(0, 0, QModelIndex());
+        int rows = urlModel->rowCount();
+
+        for (int r = 0; r < rows; r++)
+        {
+            int length = index.sibling(r, 0).data().toString().length();
+
+            if (length > nickColumnWidth)
+                nickColumnWidth = length;
+        }
+
+        ++nickColumnWidth;
+
+        QFile file(target);
+        file.open(QIODevice::WriteOnly);
+
+        QTextStream stream(&file);
+
+        stream << i18n("Konversation URL List: %1\n\n",
+            KGlobal::locale()->formatDateTime(QDateTime::currentDateTime(), KLocale::LongDate, true));
+
+        for (int r = 0; r < rows; r++)
+        {
+            QString line = index.sibling(r, 0).data().toString().leftJustified(nickColumnWidth, ' ');
+            line.append(index.sibling(r, 1).data().toString());
+            line.append('\n');
+
+            stream << line;
+        }
+
+        file.close();
+    }
+}
+
+void UrlCatcher::clearUrlModel()
+{
+    Application* konvApp = static_cast<Application *>(kapp);
+    QStandardItemModel* urlModel = konvApp->getUrlModel();
+
+    urlModel->removeRows(0, urlModel->rowCount());
 }
 
 void UrlCatcher::childAdjustFocus()
 {
+    m_urlTree->setFocus();
 }
-#include "urlcatcher.moc"

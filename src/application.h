@@ -23,7 +23,7 @@
 #include "nickinfo.h"
 #include "ircqueue.h"
 
-#include <kuniqueapplication.h>
+#include <KUniqueApplication>
 
 class ConnectionManager;
 class AbstractAwayManager;
@@ -32,6 +32,7 @@ class Server;
 class QuickConnectDialog;
 class Images;
 class ServerGroupSettings;
+class QStandardItemModel;
 
 namespace Konversation
 {
@@ -89,8 +90,8 @@ class Application : public KUniqueApplication
         void showQueueTuner(bool);
 
         // URL-Catcher
-        void storeUrl(const QString& who,const QString& url,const QDateTime& datetime);
-        const QStringList& getUrlList();
+        void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
+        QStandardItemModel* getUrlModel() { return m_urlModel; }
 
         Application();
         ~Application();
@@ -140,7 +141,6 @@ class Application : public KUniqueApplication
         void abortScheduledRestart() { m_restartScheduled = false; }
 
     signals:
-        void catchUrl(const QString& who,const QString& url,const QDateTime &datetime);
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged();
 
@@ -154,9 +154,6 @@ class Application : public KUniqueApplication
         void stashQueueRates(); ///< on application exit
         void resetQueueRates(); ///< when QueueTuner says to
         int countOfQueues() { return Server::_QueueListSize-1; }
-
-        void deleteUrl(const QString& who,const QString& url,const QDateTime& datetime);
-        void clearUrlList();
 
         void prepareShutdown();
 
@@ -180,7 +177,7 @@ class Application : public KUniqueApplication
         AbstractAwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;
         ScriptLauncher* m_scriptLauncher;
-        QStringList urlList;
+        QStandardItemModel* m_urlModel;
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;
         QPointer<MainWindow> mainWindow;

@@ -142,7 +142,8 @@ class Preferences : public PreferencesBase
         static QString webBrowserCmd();
 
         static void saveColumnState(QTreeView *treeView, QString name);
-        static void restoreColumnState(QTreeView *treeView, QString name);
+        static void restoreColumnState(QTreeView *treeView, QString name, int defaultColumn = 0,
+                                       Qt::SortOrder defaultSortOrder = Qt::AscendingOrder);
 
     signals:
         void requestServerConnection(int number);

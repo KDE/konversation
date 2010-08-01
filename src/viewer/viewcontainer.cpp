@@ -2116,20 +2116,10 @@ void ViewContainer::addKonsolePanel()
 
 void ViewContainer::addUrlCatcher()
 {
-    // if the panel wasn't open yet
-    if (m_urlCatcherPanel==0)
+    if (m_urlCatcherPanel == 0)
     {
         m_urlCatcherPanel=new UrlCatcher(m_tabWidget);
         addView(m_urlCatcherPanel, i18n("URL Catcher"));
-        Application *konvApp=static_cast<Application *>(KApplication::kApplication());
-        connect(konvApp,SIGNAL(catchUrl(const QString&,const QString&,const QDateTime&)),
-            m_urlCatcherPanel, SLOT(addUrl(const QString&,const QString&,const QDateTime&)) );
-        connect(m_urlCatcherPanel, SIGNAL(deleteUrl(const QString&,const QString&,const QDateTime&)),
-            konvApp, SLOT(deleteUrl(const QString&,const QString&,const QDateTime&)) );
-        connect(m_urlCatcherPanel, SIGNAL(clearUrlList()),
-            konvApp, SLOT(clearUrlList()));
-
-        m_urlCatcherPanel->setUrlList(konvApp->getUrlList());
 
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
     }
@@ -2139,11 +2129,11 @@ void ViewContainer::addUrlCatcher()
 
 void ViewContainer::closeUrlCatcher()
 {
-    // if there actually is a dcc panel
     if (m_urlCatcherPanel)
     {
         delete m_urlCatcherPanel;
         m_urlCatcherPanel = 0;
+
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
     }
 }

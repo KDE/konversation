@@ -57,6 +57,36 @@ Changes since 1.3.1:
   configured in the server list or refers to a network name instead of a
   specific server, the directive from the URL overrides the state of the SSL
   setting in the configuration.
+* The URL Catcher has been rewritten from scratch, bringing about a number
+  of improvements and bug fixes:
+  - It is now possible to to select multiple list entries, and all of the
+    selection-related actions, such as "Open" or "Add Bookmark", can now
+    operate on multiple selected entries.
+  - Reasonable default sorting: The list is now sorted by the "Date" column
+    in descending order the first time the URL Catcher is opened, so that
+    the newest URLs are found at the top. Previously, the list was sorted by
+    the "From" column in ascending order by default.
+  - The list data is no longer stored in memory twice while the URL Catcher
+    is open. Data handling is generally more efficient.
+  - The list entry context menu has been cleaned up, now showing only the
+    actions applicable to individual entries.
+  - The list now automatically receives keyboard focus when switching to the
+    URL Catcher tab.
+  - When saving the list to disk, the file dialog to pick the destination
+    file will now ask before overwriting an existing file of the same name.
+  - The date and time in the header of a saved list file is now formatted
+    according to the user's locale settings.
+  - Fixed a bug causing the "Date" column to sort alphabetically rather than
+    chronologically.
+  - Fixed a bug causing the deletion of list entries not to work.
+  - Fixed a bug causing a 1px remnant of tree branch lines to be visible
+    along the left edge of list entries.
+  - An unnecessary margin around the toolbar and the search line edit has
+    been removed.
+  - Fixed a bug causing the URL Catcher tab to claim to be elibile to re-
+    ceive chat text messages that have the frontmost eligible tab as their
+    recipient despite it not actually possessing the means to display them,
+    resulting in a crash when such a message occured.
 
 
 Changes from 1.3 to 1.3.1:

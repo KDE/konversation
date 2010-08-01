@@ -38,10 +38,6 @@ set(core_SRCS
     quickconnectdialog.cpp
 )
 
-kde4_add_ui_files(core_SRCS
-    urlcatcherui.ui
-)
-
 set (irc_SRCS
     #== IRC
     irc/server.cpp

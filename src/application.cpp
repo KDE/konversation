@@ -18,6 +18,7 @@
 #include "scriptlauncher.h"
 #include "transfermanager.h"
 #include "viewcontainer.h"
+#include "urlcatcher.h"
 #include "highlight.h"
 #include "server.h"
 #include "sound.h"
@@ -43,6 +44,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QNetworkProxy>
 #include <QWaitCondition>
+#include <QStandardItemModel>
 
 #include <KRun>
 #include <KCmdLineArgs>
@@ -182,6 +184,8 @@ int Application::newInstance()
 
         // Images object providing LEDs, NickIcons
         m_images = new Images();
+
+        m_urlModel = new QStandardItemModel(0, 3, this);
 
         // Auto-alias scripts.  This adds any missing aliases
         QStringList aliasList(Preferences::self()->aliasList());
@@ -975,36 +979,36 @@ void Application::resetQueueRates()
     }
 }
 
-// FIXME: use KUrl maybe?
-void Application::storeUrl(const QString& who,const QString& newUrl, const QDateTime& datetime)
+void Application::storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime)
 {
     QString url(newUrl);
-    // clean up URL to help KRun() in URL catcher interface
-    if(url.startsWith(QLatin1String("www."))) url="http://"+url;
-    else if(url.startsWith(QLatin1String("ftp."))) url="ftp://"+url;
 
-    url=url.replace("&amp;","&");
+    if (url.startsWith(QLatin1String("www."))) url = "http://"+url;
+    else if (url.startsWith(QLatin1String("ftp."))) url = "ftp://"+url;
 
-    // check that we don't add the same URL twice
-    deleteUrl(who,url,datetime);
-    QDateTime date = QDateTime::currentDateTime();
-    urlList.append(who+' '+url+ ' ' + date.toString());
-    emit catchUrl(who,url,date);
-}
+    url = url.replace("&amp;", "&");
 
-const QStringList& Application::getUrlList()
-{
-    return urlList;
-}
+    QTime time;
+    time.start();
 
-void Application::deleteUrl(const QString& who,const QString& url, const QDateTime& datetime)
-{
-    urlList.removeOne(who+' '+url + ' ' + datetime.toString());
-}
+    QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
 
-void Application::clearUrlList()
-{
-    urlList.clear();
+    QStandardItem* item;
+
+    foreach(item, existing)
+    {
+        if (m_urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origin)
+            m_urlModel->removeRow(item->row());
+    }
+
+    kDebug() << "Elimination took:" << time.elapsed();
+
+    m_urlModel->insertRow(0);
+    m_urlModel->setData(m_urlModel->index(0, 0), origin, Qt::DisplayRole);
+    m_urlModel->setData(m_urlModel->index(0, 1), url, Qt::DisplayRole);
+
+    UrlDateItem* dateItem = new UrlDateItem(dateTime);
+    m_urlModel->setItem(0, 2, dateItem);
 }
 
 void Application::openQuickConnectDialog()
