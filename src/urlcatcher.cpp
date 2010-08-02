@@ -61,6 +61,11 @@ UrlSortFilterProxyModel::~UrlSortFilterProxyModel()
 {
 }
 
+Qt::ItemFlags UrlSortFilterProxyModel::flags(const QModelIndex& index) const
+{
+    return QSortFilterProxyModel::flags(index) & ~Qt::ItemIsEditable;
+}
+
 bool UrlSortFilterProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
     if (sortColumn() == 2)

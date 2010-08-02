@@ -53,6 +53,9 @@ class UrlSortFilterProxyModel : public QSortFilterProxyModel
         explicit UrlSortFilterProxyModel(QObject* parent = 0);
         ~UrlSortFilterProxyModel();
 
+        Qt::ItemFlags flags(const QModelIndex& index) const;
+
+
     protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
 };
