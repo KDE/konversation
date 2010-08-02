@@ -92,10 +92,13 @@ namespace Konversation
         refreshModes();
 
         setInitialSize(QSize(450, 380));
+
+        Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
     }
 
     ChannelOptionsDialog::~ChannelOptionsDialog()
     {
+        Preferences::saveColumnState(m_ui.banList, "BanList ViewSettings");
     }
 
     void ChannelOptionsDialog::changeOptions()
