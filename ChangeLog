@@ -83,7 +83,7 @@ Changes since 1.3.1:
     along the left edge of list entries.
   - An unnecessary margin around the toolbar and the search line edit has
     been removed.
-  - Fixed a bug causing the URL Catcher tab to claim to be elibile to re-
+  - Fixed a bug causing the URL Catcher tab to claim to be eligible to re-
     ceive chat text messages that have the frontmost eligible tab as their
     recipient despite it not actually possessing the means to display them,
     resulting in a crash when such a message occured.

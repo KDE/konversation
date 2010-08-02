@@ -988,9 +988,6 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 
     url = url.replace("&amp;", "&");
 
-    QTime time;
-    time.start();
-
     QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
 
     QStandardItem* item;
@@ -1000,8 +997,6 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
         if (m_urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origin)
             m_urlModel->removeRow(item->row());
     }
-
-    kDebug() << "Elimination took:" << time.elapsed();
 
     m_urlModel->insertRow(0);
     m_urlModel->setData(m_urlModel->index(0, 0), origin, Qt::DisplayRole);
