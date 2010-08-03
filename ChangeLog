@@ -4,8 +4,6 @@ Changes since 1.3.1:
 * Added support for UnrealIRCd's 671 numeric.
 * Solid network up/down notifications are now ignored for connections to
   localhost.
-* Fixed WolframAlpha URLs not being turned into links correctly in the chat
-  text view.
 * Resolved a conflict between the highlight system and the graphical emoticon
   support that was causing unintended highlights when the filesystem path to
   an emoticon image file shown in the chat text view matched any of the con-
@@ -96,6 +94,26 @@ Changes since 1.3.1:
 * Fixed a bug causing some user hostmasks in chat text lines about channel
   topic author information to be treated as email addresses and thus turned
   into clickable links. They would also pollute the URL Catcher.
+* Detection of URLs and email addresses in chat text views to turn them into
+  clickable links has been much improved. An incomplete overview of notable
+  cases:
+  - Unicode characters in URLs are now handled properly, enabling support
+    for example for international domain names.
+  - Protocol-less links not starting in "www.", such as the short URLs pop-
+    ular these days ("bit.ly/foo" and similar), are now recognized.
+  - Arbitrary protocols (e.g. "http://" or "message://") are now recognized;
+    previously only a small hand-picked and insufficient set was.
+  - The check that avoids balanced a pair of parenthesis around an URL be-
+    coming part of the link now works for more than one level of balanced
+    parenthesis.
+  - Aside from balanced pairs of parenthesis, also square and other forms
+    of brackets are now handled properly.
+  - Trailing question marks no longer become part of the link.
+  - URLs using uncommon schemas, e.g. Apple message:// URLs or Wolfram
+    Alpha URLs, are now handled properly.
+  - User names containing the plus sign are now handled correctly in the de-
+    tection of email addresses.
+  - Average performance of link detection has improved slightly.
 
 
 Changes from 1.3 to 1.3.1:

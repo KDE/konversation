@@ -27,8 +27,8 @@ namespace Konversation
 {
 
     static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    static QRegExp urlPattern("((www\\.(?!\\.)|(fish|irc|ircs|amarok|(f|sf|ht)tp(|s))://)(\\.?[\\d\\w/,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!\\(\\)\\[\\]\\^]|&)+)|"
-        "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
+    static QRegExp urlPattern("\\b((?:(?:[a-z][\\w-]+:/{1,3}|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+|[a-z0-9.+_]+@[a-z0-9.\\-]+[.][a-z]{2,4})(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!();:'\".,<>?«»“”‘’]))");
+    static QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
 
     void initChanModesHash()
     {
@@ -147,9 +147,6 @@ namespace Konversation
     TextUrlData extractUrlData(const QString& text, const QString& fromNick, bool doUrlRanges,
         bool doHyperlinks, bool useCustomHyperlinkColor)
     {
-        // QTime timer;
-        // timer.start();
-
         TextUrlData data;
         data.htmlText = text;
 
@@ -213,38 +210,8 @@ namespace Konversation
             href = data.htmlText.mid(pos, urlLen);
             append.clear();
 
-            // Don't consider trailing comma part of link.
-            if (href.right(1) == ",")
-            {
-                href.truncate(href.length()-1);
-                append = ',';
-            }
-
-            // Don't consider trailing semicolon part of link.
-            if (href.right(1) == ";")
-            {
-                href.truncate(href.length()-1);
-                append = ';';
-            }
-
-            // Don't consider trailing closing parenthesis part of link when
-            // there's an opening parenthesis preceding the beginning of the
-            // URL or there is no opening parenthesis in the URL at all.
-            if (href.right(1) == ")" && (data.htmlText.mid(pos-1, 1) == "(" || !href.contains("(")))
-            {
-                href.truncate(href.length()-1);
-                append.prepend(")");
-            }
-
             if (doHyperlinks)
             {
-                // Qt doesn't support (?<=pattern) so we do it here
-                if ((pos > 0) && data.htmlText[pos-1].isLetterOrNumber())
-                {
-                    pos++;
-                    continue;
-                }
-
                 if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
                     protocol = "http://";
                 else if (urlPattern.cap(1).isEmpty())
@@ -272,8 +239,6 @@ namespace Konversation
             data.htmlText.replace('&', "&amp;");
             data.htmlText.replace("\x0b", "&");
         }
-
-        // kDebug() << "Took (msecs) : " << timer.elapsed() << " for " << data.htmlText;
 
         return data;
     }
