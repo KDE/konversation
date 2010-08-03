@@ -90,7 +90,6 @@ class Application : public KUniqueApplication
         void showQueueTuner(bool);
 
         // URL-Catcher
-        void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
         QStandardItemModel* getUrlModel() { return m_urlModel; }
 
         Application();
@@ -156,6 +155,8 @@ class Application : public KUniqueApplication
         int countOfQueues() { return Server::_QueueListSize-1; }
 
         void prepareShutdown();
+
+        void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
 
     protected slots:
         void openQuickConnectDialog();

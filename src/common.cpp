@@ -220,7 +220,8 @@ namespace Konversation
 
                 data.htmlText.replace(pos, urlLen, insertText);
 
-                Application::instance()->storeUrl(fromNick, href, QDateTime::currentDateTime());
+                QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
+                    Q_ARG(QString, fromNick), Q_ARG(QString, href), Q_ARG(QDateTime, QDateTime::currentDateTime()));
             }
             else
                 insertText = href + append;
