@@ -115,6 +115,7 @@ Changes since 1.3.1:
     tection of email addresses.
   - Average performance of link detection has improved slightly.
 * Incoming actions (i.e. "/me") without an argument are now handled properly.
+* Fixed a number of crashes on illegal data from the server.
 
 
 Changes from 1.3 to 1.3.1:

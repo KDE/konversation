@@ -153,7 +153,7 @@ void InputFilter::parseLine(const QString& line)
     }
 }
 
-#define trailing parameterList.last()
+#define trailing (parameterList.isEmpty() ? QString() : parameterList.last())
 #define plHas(x) _plHas(parameterList.count(), (x))
 
 bool _plHad=false;

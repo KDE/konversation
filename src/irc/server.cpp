@@ -1100,13 +1100,15 @@ void Server::incoming()
         QTextCodec* codec = getIdentity()->getCodec();
         QByteArray first = bufferLines.first();
 
+        bufferLines.removeFirst();
+
         QStringList lineSplit = codec->toUnicode(first).split(' ', QString::SkipEmptyParts);
 
-        if( lineSplit.count() >= 1 )
+        if (lineSplit.count() >= 1)
         {
-            if( lineSplit[0][0] == ':' )          // does this message have a prefix?
+            if (lineSplit[0][0] == ':')          // does this message have a prefix?
             {
-                if( !lineSplit[0].contains('!') ) // is this a server(global) message?
+                if(!lineSplit[0].contains('!')) // is this a server(global) message?
                     isServerMessage = true;
                 else
                     senderNick = lineSplit[0].mid(1, lineSplit[0].indexOf('!')-1);
@@ -1114,13 +1116,9 @@ void Server::incoming()
                 lineSplit.removeFirst();          // remove prefix
             }
         }
-        else
-        {
-            // The line contained only spaces (other than CRLF, removed above)
-            // and thus there's nothing more we can do with it.
-            bufferLines.removeFirst();
+
+        if (lineSplit.isEmpty())
             continue;
-        }
 
         // BEGIN pre-parse to know where the message belongs to
         QString command = lineSplit[0].toLower();
@@ -1200,8 +1198,10 @@ void Server::incoming()
         #endif
         bool isUtf8 = Konversation::isUtf8(first);
 
+        QString encoded;
+
         if (isUtf8)
-            m_inputBuffer << QString::fromUtf8(first);
+            encoded = QString::fromUtf8(first);
         else
         {
             // check setting
@@ -1223,15 +1223,16 @@ void Server::incoming()
             if (codec->mibEnum() == 106)
                 codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
-            m_inputBuffer << codec->toUnicode(first);
+            encoded = codec->toUnicode(first);
         }
-
-        bufferLines.removeFirst();
 
         // Qt uses 0xFDD0 and 0xFDD1 to mark the beginning and end of text frames. Remove
         // these here to avoid fatal errors encountered in QText* and the event loop pro-
         // cessing.
-        sterilizeUnicode(m_inputBuffer.back());
+        sterilizeUnicode(encoded);
+
+        if (!encoded.isEmpty())
+            m_inputBuffer << encoded;
 
         //FIXME: This has nothing to do with bytes, and it's not raw received bytes either. Bogus number.
         //m_bytesReceived+=m_inputBuffer.back().length();
