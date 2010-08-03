@@ -2,7 +2,7 @@
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License as
-// published by the Free Software Foundation; either version 2 of 
+// published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
@@ -28,6 +28,8 @@ PasteEditor::PasteEditor(QWidget* parent)
 {
     setCaption(i18n("Edit Multiline Paste"));
     setModal(true);
+
+    setButtonText(KDialog::Ok, i18n("&Send"));
 
     QWidget* widget = new QWidget(this);
     setupUi(widget);
@@ -92,7 +94,7 @@ void PasteEditor::removeNewlines()
 
     cursor.endEditBlock();
 }
-       
+
 void PasteEditor::setText(const QString& text)
 {
     m_textEditor->setPlainText(text);

@@ -90,6 +90,9 @@ Changes since 1.3.1:
     resulting in a crash when such a message occurred.
 * The widths of the columns and the sort column and direction in the Channel
   Option dialog's ban list are now remembered across application restarts.
+* The "Ok" button in the "Edit Multiline Paste" editor has been renamed to
+  "Send" to communicate more clearly that clicking it will send the editor
+  contents to the server.
 
 
 Changes from 1.3 to 1.3.1:
