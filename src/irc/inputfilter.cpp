@@ -209,9 +209,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 ctcpArgument = konv_app->doAutoreplace(ctcpArgument, false);
 
             // If it was a ctcp action, build an action string
-            if (ctcpCommand == "action" && isChan && hasArg)
+            if (ctcpCommand == "action" && isChan)
             {
-                if (!isIgnore(prefix,Ignore::Channel))
+                if (!isIgnore(prefix, Ignore::Channel))
                 {
                     Channel* channel = server->getChannelByName( parameterList.value(0) );
 
@@ -224,7 +224,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if (sourceNick != server->getNickname())
                     {
-                        if (ctcpArgument.toLower().contains(QRegExp("(^|[^\\d\\w])"
+                        if (hasArg && ctcpArgument.toLower().contains(QRegExp("(^|[^\\d\\w])"
                             + QRegExp::escape(server->loweredNickname())
                             + "([^\\d\\w]|$)")))
                         {
@@ -238,10 +238,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 }
             }
             // If it was a ctcp action, build an action string
-            else if (ctcpCommand == "action" && !isChan && hasArg)
+            else if (ctcpCommand == "action" && !isChan)
             {
                 // Check if we ignore queries from this nick
-                if (!isIgnore(prefix,Ignore::Query))
+                if (!isIgnore(prefix, Ignore::Query))
                 {
                     NickInfoPtr nickinfo = server->obtainNickInfo(sourceNick);
                     nickinfo->setHostmask(sourceHostmask);
@@ -250,12 +250,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
 
                     // send action to query
-                    query->appendAction(sourceNick,ctcpArgument);
+                    query->appendAction(sourceNick, ctcpArgument);
 
-                    if(sourceNick != server->getNickname() && query)
-                    {
+                    if (sourceNick != server->getNickname() && query)
                         konv_app->notificationHandler()->queryMessage(query, sourceNick, ctcpArgument);
-                    }
                 }
             }
 

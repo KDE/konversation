@@ -750,32 +750,49 @@ void IRCView::appendQueryAction(const QString& nick, const QString& message)
 
 void IRCView::appendAction(const QString& nick, const QString& message)
 {
-    QString actionColor=Preferences::self()->color(Preferences::ActionMessage).name();
+    QString actionColor = Preferences::self()->color(Preferences::ActionMessage).name();
+
+    QString line;
 
     QString nickLine = createNickLine(nick, actionColor, false);
 
-    QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
-
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-        line += "<font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font>";
-    }
-    else
+    if (message.isEmpty())
     {
         if (!QApplication::isLeftToRight())
             line += LRE;
 
-        line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
+        line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + "</font>";
+
+        line = line.arg(timeStamp(), nick);
+
+        emit textToLog(QString("\t * %1").arg(nick));
+
+        doAppend(line, false);
     }
+    else
+    {
+        bool rtl = (basicDirection(message) == QChar::DirR);
 
-    line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
+        if (rtl)
+        {
+            line = RLE;
+            line += LRE;
+            line += "<font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font>";
+        }
+        else
+        {
+            if (!QApplication::isLeftToRight())
+                line += LRE;
 
-    emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
+            line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
+        }
 
-    doAppend(line, rtl);
+        line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
+
+        emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
+
+        doAppend(line, rtl);
+    }
 }
 
 void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
