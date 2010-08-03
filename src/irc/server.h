@@ -155,7 +155,8 @@ class Server : public QObject
         void joinChannel(const QString& name, const QString& hostmask);
         void removeChannel(Channel* channel);
         void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
-        void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message, bool highlight = true);
+        void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message,
+                                           bool highlight = true, bool parseURL = true);
         void appendStatusMessage(const QString& type,const QString& message);
         void appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL = true);
 

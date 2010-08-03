@@ -3266,12 +3266,12 @@ void Server::appendServerMessageToChannel(const QString& channel,const QString& 
     if (outChannel) outChannel->appendServerMessage(type,message);
 }
 
-void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message, bool highlight)
+void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message, bool highlight, bool parseURL)
 {
     Channel* outChannel = getChannelByName(channel);
     if (outChannel)
     {
-        outChannel->appendCommandMessage(command,message,true,true,!highlight);
+        outChannel->appendCommandMessage(command,message,true,parseURL,!highlight);
     }
     else
     {

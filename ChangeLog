@@ -93,6 +93,9 @@ Changes since 1.3.1:
 * The "Ok" button in the "Edit Multiline Paste" editor has been renamed to
   "Send" to communicate more clearly that clicking it will send the editor
   contents to the server.
+* Fixed a bug causing some user hostmasks in chat text lines about channel
+  topic author information to be treated as email addresses and thus turned
+  into clickable links. They would also pollute the URL Catcher.
 
 
 Changes from 1.3 to 1.3.1:

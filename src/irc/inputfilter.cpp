@@ -1126,6 +1126,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->appendCommandMessageToChannel(parameterList.value(1), i18n("Topic"),
                             i18n("The topic was set by %1 on %2.",
                             parameterList.value(2), KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
+                            false,
                             false);
                     }
                     else
@@ -1133,8 +1134,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->appendMessageToFrontmost(i18n("Topic"),i18n("The topic for %1 was set by %2 on %3.",
                             parameterList.value(1),
                             parameterList.value(2),
-                            KGlobal::locale()->formatDateTime(when, KLocale::ShortDate))
-                            );
+                            KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
+                            false);
                         setAutomaticRequest("TOPIC",parameterList.value(1), false);
                     }
                     emit topicAuthor(parameterList.value(1), parameterList.value(2), when);
