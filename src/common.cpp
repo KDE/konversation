@@ -172,8 +172,6 @@ namespace Konversation
 
             if (data.htmlText.contains("#"))
             {
-                QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
-
                 while ((pos = chanExp.indexIn(data.htmlText, pos)) >= 0)
                 {
                     href = chanExp.cap(2);
