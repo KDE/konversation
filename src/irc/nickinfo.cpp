@@ -35,7 +35,6 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     m_loweredNickname = nick.toLower();
     m_owningServer = server;
     m_away = false;
-    m_notified = false;
     m_identified = false;
     m_printedOnline = true;
     m_changed = false;
@@ -77,21 +76,6 @@ bool NickInfo::isAway() const
 QString NickInfo::getAwayMessage() const
 {
     return m_awayMessage;
-}
-
-QString NickInfo::getIdentdInfo() const
-{
-    return m_identdInfo;
-}
-
-QString NickInfo::getVersionInfo() const
-{
-    return m_versionInfo;
-}
-
-bool NickInfo::isNotified() const
-{
-    return m_notified;
 }
 
 QString NickInfo::getRealName() const
@@ -205,28 +189,6 @@ void NickInfo::setAwayMessage(const QString& newMessage)
     if(m_awayMessage == newMessage) return;
     m_awayMessage = newMessage;
 
-    startNickInfoChangedTimer();
-}
-
-void NickInfo::setIdentdInfo(const QString& newIdentdInfo)
-{
-    if(m_identdInfo == newIdentdInfo) return;
-    m_identdInfo = newIdentdInfo;
-    startNickInfoChangedTimer();
-}
-
-void NickInfo::setVersionInfo(const QString& newVersionInfo)
-{
-    if(m_versionInfo == newVersionInfo) return;
-    m_versionInfo = newVersionInfo;
-
-    startNickInfoChangedTimer();
-}
-
-void NickInfo::setNotified(bool state)
-{
-    if(state == m_notified) return;
-    m_notified = state;
     startNickInfoChangedTimer();
 }
 

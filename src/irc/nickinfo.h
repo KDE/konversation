@@ -50,9 +50,6 @@ class NickInfo : public KShared
          */
         bool isAway() const;
         QString getAwayMessage() const;
-        QString getIdentdInfo() const;
-        QString getVersionInfo() const;
-        bool isNotified() const;
         QString getRealName() const;
         QString getNetServer() const;
         QString getNetServerInfo() const;
@@ -81,12 +78,6 @@ class NickInfo : public KShared
         void setAway(bool state);
         /** Set properties of NickInfo object. */
         void setAwayMessage(const QString& newMessage);
-        /** Set properties of NickInfo object. */
-        void setIdentdInfo(const QString& newIdentdInfo);
-        /** Set properties of NickInfo object. */
-        void setVersionInfo(const QString& newVersionInfo);
-        /** Set properties of NickInfo object. */
-        void setNotified(bool state);
         /** Set properties of NickInfo object. */
         void setRealName(const QString& newRealName);
         /** Set properties of NickInfo object. */
@@ -138,9 +129,6 @@ class NickInfo : public KShared
         QString m_hostmask;
         bool m_away;
         QString m_awayMessage;
-        QString m_identdInfo;
-        QString m_versionInfo;
-        bool m_notified;
         QString m_realName;
         /** The server they are connected to. */
         QString m_netServer;
