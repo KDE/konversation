@@ -983,9 +983,6 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 {
     QString url(newUrl);
 
-    if (url.startsWith(QLatin1String("www."))) url = "http://"+url;
-    else if (url.startsWith(QLatin1String("ftp."))) url = "ftp://"+url;
-
     url = url.replace("&amp;", "&");
 
     QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);

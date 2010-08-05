@@ -210,10 +210,12 @@ namespace Konversation
 
             if (doHyperlinks)
             {
-                if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
-                    protocol = "http://";
-                else if (urlPattern.cap(1).isEmpty())
+                if (urlPattern.cap(1).contains('@') && !urlPattern.cap(1).contains("://"))
                     protocol = "mailto:";
+                else if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
+                    protocol = "http://";
+                else if (urlPattern.cap(1).startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
+                    protocol = "ftp://";
 
                 // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
                 insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
@@ -221,7 +223,7 @@ namespace Konversation
                 data.htmlText.replace(pos, urlLen, insertText);
 
                 QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
-                    Q_ARG(QString, fromNick), Q_ARG(QString, href), Q_ARG(QDateTime, QDateTime::currentDateTime()));
+                    Q_ARG(QString, fromNick), Q_ARG(QString, protocol+href), Q_ARG(QDateTime, QDateTime::currentDateTime()));
             }
             else
                 insertText = href + append;
