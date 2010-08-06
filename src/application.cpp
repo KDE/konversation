@@ -123,7 +123,7 @@ void Application::implementRestart()
     {
         int index = argumentList.lastIndexOf("--startupdelay");
 
-        if (index < argumentList.count() - 1 && !argumentList.at(index + 1).startsWith("-"))
+        if (index < argumentList.count() - 1 && !argumentList.at(index + 1).startsWith('-'))
         {
             QString delayArgument = argumentList.at(index + 1);
 
@@ -987,9 +987,7 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 
     QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
 
-    QStandardItem* item;
-
-    foreach(item, existing)
+    foreach(QStandardItem* item, existing)
     {
         if (m_urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origin)
             m_urlModel->removeRow(item->row());

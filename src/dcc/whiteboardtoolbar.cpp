@@ -336,7 +336,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::unCheckOtherButtons(KPushButton* button)
         {
-            foreach (KPushButton* pushButton, m_toggleButtonHash.keys())
+            foreach(KPushButton* pushButton, m_toggleButtonHash.keys())
             {
                 if (pushButton != button && pushButton->isChecked())
                 {

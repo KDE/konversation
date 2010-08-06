@@ -201,9 +201,7 @@ void UrlCatcher::updateItemActionStates()
 {
     bool enable = m_urlTree->selectionModel()->hasSelection();
 
-    QAction* action;
-
-    foreach(action, m_itemActions) action->setEnabled(enable);
+    foreach(QAction* action, m_itemActions) action->setEnabled(enable);
 }
 
 void UrlCatcher::updateListActionStates()
@@ -211,9 +209,7 @@ void UrlCatcher::updateListActionStates()
     Application* konvApp = static_cast<Application *>(kapp);
     bool enable = konvApp->getUrlModel()->rowCount();
 
-    QAction* action;
-
-    foreach(action, m_listActions) action->setEnabled(enable);
+    foreach(QAction* action, m_listActions) action->setEnabled(enable);
 }
 
 void UrlCatcher::openContextMenu(const QPoint& p)
@@ -246,12 +242,8 @@ void UrlCatcher::openSelectedUrls()
         if (ret != KMessageBox::Continue) return;
     }
 
-    QModelIndex index;
-
-    foreach(index, selectedIndexes)
-    {
+    foreach(const QModelIndex& index, selectedIndexes)
         if (index.isValid()) Application::openUrl(index.data().toString());
-    }
 }
 
 void UrlCatcher::saveSelectedUrls()
@@ -272,9 +264,7 @@ void UrlCatcher::saveSelectedUrls()
         if (ret != KMessageBox::Continue) return;
     }
 
-    QModelIndex index;
-
-    foreach(index, selectedIndexes)
+    foreach(const QModelIndex& index, selectedIndexes)
     {
         if (index.isValid())
         {
@@ -300,18 +290,15 @@ void UrlCatcher::bookmarkSelectedUrls()
     {
         QList<QPair<QString, QString> > bookmarks;
 
-        QModelIndex index;
-
-        foreach(index, selectedIndexes)
-        {
+        foreach(const QModelIndex& index, selectedIndexes)
             bookmarks << QPair<QString, QString>(index.data().toString(), index.data().toString());
-        }
 
         dialog->addBookmarks(bookmarks, i18n("New"));
     }
     else
     {
         QString url = selectedIndexes.first().data().toString();
+
         dialog->addBookmark(url, url);
     }
 
@@ -323,9 +310,8 @@ void UrlCatcher::copySelectedUrls()
     QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     QStringList urls;
-    QModelIndex index;
 
-    foreach(index, selectedIndexes)
+    foreach(const QModelIndex& index, selectedIndexes)
         if (index.isValid()) urls << index.data().toString();
 
     QClipboard* clipboard = qApp->clipboard();
@@ -338,9 +324,8 @@ void UrlCatcher::deleteSelectedUrls()
 
     QHash<int, QString> origins;
     QHash<QString, int> urls;
-    QModelIndex index;
 
-    foreach(index, selectedIndexes)
+    foreach(const QModelIndex& index, selectedIndexes)
     {
         if (index.isValid())
         {
@@ -353,15 +338,12 @@ void UrlCatcher::deleteSelectedUrls()
 
     Application* konvApp = static_cast<Application *>(kapp);
     QStandardItemModel* urlModel = konvApp->getUrlModel();
-    QString url;
 
-    foreach(url, urls.keys())
+    foreach(const QString& url, urls.keys())
     {
         QList<QStandardItem*> existing = urlModel->findItems(url, Qt::MatchExactly, 1);
 
-        QStandardItem* item;
-
-        foreach(item, existing)
+        foreach(QStandardItem* item, existing)
         {
             if (urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origins.value(urls.value(url)))
                 urlModel->removeRow(item->row());

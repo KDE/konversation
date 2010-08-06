@@ -56,7 +56,7 @@ namespace Konversation
             {
                 Application* konvApp = static_cast<Application*>(kapp);
 
-                konvApp->osd->show('(' + chatWin->getName() + ") <" + fromNick + ">");
+                konvApp->osd->show('(' + chatWin->getName() + ") <" + fromNick + '>');
             }
         }
         else
