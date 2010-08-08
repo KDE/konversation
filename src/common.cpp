@@ -27,7 +27,7 @@ namespace Konversation
 {
 
     static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    static QRegExp urlPattern(QString("\\b((?:(?:[a-z][\\w-]+:/{1,3}|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|\\}\\]|[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6])|[a-z0-9.\\-+_]+@[a-z0-9.\\-]+[.][a-z]{1,5}[^\\s/`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]))").arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019)));
+    static QRegExp urlPattern(QString("\\b((?:(?:([a-z][\\w-]+:/{1,3})|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|\\}\\]|[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6])|[a-z0-9.\\-+_]+@[a-z0-9.\\-]+[.][a-z]{1,5}[^\\s/`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]))").arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019)));
     static QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
 
     void initChanModesHash()
@@ -210,12 +210,15 @@ namespace Konversation
 
             if (doHyperlinks)
             {
-                if (urlPattern.cap(1).contains('@') && !urlPattern.cap(1).contains("://"))
-                    protocol = "mailto:";
-                else if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
-                    protocol = "http://";
-                else if (urlPattern.cap(1).startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
-                    protocol = "ftp://";
+                if (urlPattern.cap(2).isEmpty())
+                {
+                    if (urlPattern.cap(1).contains('@'))
+                        protocol = "mailto:";
+                    else if (urlPattern.cap(1).startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
+                        protocol = "ftp://";
+                    else
+                        protocol = "http://";
+                }
 
                 // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
                 insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
