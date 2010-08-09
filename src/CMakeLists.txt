@@ -6,10 +6,6 @@ if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
 endif (QCA2_FOUND)
 
-if (LIBKNOTIFICATIONITEM-1_FOUND)
-    include_directories(${KNOTIFICATIONITEM_INCLUDE_DIR})
-endif (LIBKNOTIFICATIONITEM-1_FOUND)
-
 set(core_SRCS
     #====================================
     #=== Application
