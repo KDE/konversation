@@ -147,6 +147,8 @@ class Channel : public ChatWindow
         void adjustOps(int value);
         virtual void emitUpdateInfo();
 
+        void resizeNicknameListViewColumns();
+
     protected slots:
         void purgeNicks();
         void processPendingNicks();

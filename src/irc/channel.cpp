@@ -300,9 +300,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
 
-    // every few seconds try to get more userhosts
-    userhostTimer.start(10000);
-
     m_whoTimer.setSingleShot(true);
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
 
@@ -2556,12 +2553,10 @@ void Channel::autoUserhost()
         if(!nickString.isEmpty()) m_server->requestUserhost(nickString);
     }
 
-    // Resize columns if needed (on regular basis)
-    if (m_nicknameListViewTextChanged & (1 << Nick::NicknameColumn))
-        nicknameListView->resizeColumnToContents(Nick::NicknameColumn);
-    if (m_nicknameListViewTextChanged & (1 << Nick::HostmaskColumn))
-        nicknameListView->resizeColumnToContents(Nick::HostmaskColumn);
-    m_nicknameListViewTextChanged = 0;
+    if(!nicknameList.isEmpty())
+    {
+        resizeNicknameListViewColumns();
+    }
 }
 
 void Channel::setAutoUserhost(bool state)
@@ -2772,6 +2767,9 @@ void Channel::processPendingNicks()
         m_processingTimer->stop();
         sortNickList();
         nicknameListView->setUpdatesEnabled(true);
+
+        if (Preferences::self()->autoUserhost())
+            resizeNicknameListViewColumns();
     }
 }
 
@@ -3006,6 +3004,17 @@ void Channel::updateChannelNicks(const QString& channel)
         }
     }
 }
+
+void Channel::resizeNicknameListViewColumns()
+{
+    // Resize columns if needed (on regular basis)
+    if (m_nicknameListViewTextChanged & (1 << Nick::NicknameColumn))
+        nicknameListView->resizeColumnToContents(Nick::NicknameColumn);
+    if (m_nicknameListViewTextChanged & (1 << Nick::HostmaskColumn))
+        nicknameListView->resizeColumnToContents(Nick::HostmaskColumn);
+    m_nicknameListViewTextChanged = 0;
+}
+
 
 //
 // NickList
