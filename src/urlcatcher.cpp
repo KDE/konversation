@@ -171,7 +171,7 @@ void UrlCatcher::setupUrlTree()
     connect(m_urlTree, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu(const QPoint&)));
     connect(m_urlTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(openUrl(const QModelIndex&)));
 
-    Application* konvApp = static_cast<Application *>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     QStandardItemModel* urlModel = konvApp->getUrlModel();
     QStandardItem* item = new QStandardItem(i18n("From"));
     urlModel->setHorizontalHeaderItem(0, item);
@@ -206,7 +206,7 @@ void UrlCatcher::updateItemActionStates()
 
 void UrlCatcher::updateListActionStates()
 {
-    Application* konvApp = static_cast<Application *>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     bool enable = konvApp->getUrlModel()->rowCount();
 
     foreach(QAction* action, m_listActions) action->setEnabled(enable);
@@ -320,36 +320,15 @@ void UrlCatcher::copySelectedUrls()
 
 void UrlCatcher::deleteSelectedUrls()
 {
-    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedIndexes();
+    QList<QPersistentModelIndex> selectedIndices;
 
-    QHash<int, QString> origins;
-    QHash<QString, int> urls;
+    foreach(const QPersistentModelIndex& index, m_urlTree->selectionModel()->selectedIndexes())
+        selectedIndices << index;
 
-    foreach(const QModelIndex& index, selectedIndexes)
-    {
-        if (index.isValid())
-        {
-            if (index.column() == 0)
-                origins.insert(index.row(), index.data().toString());
-            else if (index.column() == 1)
-                urls.insert(index.data().toString(), index.row());
-        }
-    }
+    Application* konvApp = static_cast<Application*>(kapp);
 
-    Application* konvApp = static_cast<Application *>(kapp);
-    QStandardItemModel* urlModel = konvApp->getUrlModel();
-
-    foreach(const QString& url, urls.keys())
-    {
-        QList<QStandardItem*> existing = urlModel->findItems(url, Qt::MatchExactly, 1);
-
-        foreach(QStandardItem* item, existing)
-        {
-            if (urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origins.value(urls.value(url)))
-                urlModel->removeRow(item->row());
-        }
-
-    }
+    foreach(const QPersistentModelIndex& index, selectedIndices)
+        if (index.isValid()) konvApp->getUrlModel()->removeRow(index.row());
 }
 
 void UrlCatcher::saveUrlModel()
@@ -359,7 +338,7 @@ void UrlCatcher::saveUrlModel()
 
     if (!target.isEmpty())
     {
-        Application* konvApp = static_cast<Application *>(kapp);
+        Application* konvApp = static_cast<Application*>(kapp);
         QStandardItemModel* urlModel = konvApp->getUrlModel();
 
         int nickColumnWidth = 0;
@@ -400,7 +379,7 @@ void UrlCatcher::saveUrlModel()
 
 void UrlCatcher::clearUrlModel()
 {
-    Application* konvApp = static_cast<Application *>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     urlModel->removeRows(0, urlModel->rowCount());

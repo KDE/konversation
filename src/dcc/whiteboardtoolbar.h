@@ -13,7 +13,7 @@
 #define WHITEBOARDTOOLBAR_H
 
 #include <QWidget>
-#include <QHash> 
+#include <QHash>
 
 #include "ui_whiteboardtoolbarui.h"
 
@@ -109,7 +109,7 @@ namespace Konversation
 
                 inline void fillFormOptionList(FormOption form);
 
-                QHash<KPushButton*, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool> m_toggleButtonHash;
+                QHash<Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool, KPushButton*> m_toggleButtonHash;
                 QPixmap m_lineWidthPixmap;
 
                 QPixmap m_rectanglePixmap;
