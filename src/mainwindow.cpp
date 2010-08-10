@@ -855,6 +855,7 @@ void MainWindow::toggleVisibility()
     if (isMinimized())
     {
         KWindowSystem::unminimizeWindow(winId());
+        KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
         KWindowSystem::activateWindow(winId());
     }
     else if (isVisible())
@@ -865,7 +866,10 @@ void MainWindow::toggleVisibility()
             KWindowSystem::minimizeWindow(winId());
     }
     else if (Preferences::self()->showTrayIcon())
+    {
+        KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
         m_trayIcon->restore();
+    }
 }
 
 #include "mainwindow.moc"
