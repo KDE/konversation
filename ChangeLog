@@ -119,7 +119,10 @@ Changes since 1.3.1:
 * Fixed a number of crashes on illegal data from the server.
 * Added a "Show/Hide Konversation" action that can be used to toggle the
   minimized state of the Konversation window or, if the tray icon is enabled,
-  its visibility.
+  its visibility. Additionally, the window will always be moved to the
+  current virtual desktop if shown using this action (if the window is
+  already shown on another desktop, it will be moved to the current desktop
+  rather than hidden).
 
 
 Changes from 1.3 to 1.3.1:

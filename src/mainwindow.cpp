@@ -860,10 +860,20 @@ void MainWindow::toggleVisibility()
     }
     else if (isVisible())
     {
-        if (Preferences::self()->showTrayIcon())
-            hide();
+        bool onCurrentDesktop = KWindowSystem::windowInfo(winId(), NET::WMDesktop).isOnCurrentDesktop();
+
+        if (onCurrentDesktop)
+        {
+            if (Preferences::self()->showTrayIcon())
+                hide();
+            else
+                KWindowSystem::minimizeWindow(winId());
+        }
         else
-            KWindowSystem::minimizeWindow(winId());
+        {
+            KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
+            KWindowSystem::activateWindow(winId());
+        }
     }
     else if (Preferences::self()->showTrayIcon())
     {
