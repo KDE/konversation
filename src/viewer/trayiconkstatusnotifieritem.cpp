@@ -18,7 +18,7 @@ namespace Konversation
         setStatus(Active);
 
         m_notificationEnabled = false;
-        
+
         updateAppearance();
 
         setToolTip("konversation", i18n("Konversation"), i18n("Konversation - IRC Client"));
@@ -26,6 +26,11 @@ namespace Konversation
 
     TrayIcon::~TrayIcon()
     {
+    }
+
+    void TrayIcon::restore()
+    {
+        activate(QPoint());
     }
 
     void TrayIcon::startNotification()
@@ -42,12 +47,12 @@ namespace Konversation
     {
         setStatus(Active);
     }
-    
+
     void TrayIcon::updateAppearance()
     {
         m_nomessagePix = "konversation";
         m_messagePix = "konv_message";
-        
+
         setIconByName(m_nomessagePix);
         setAttentionIconByName(m_messagePix);
     }

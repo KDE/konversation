@@ -486,6 +486,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
     actionCollection()->addAction("hide_nicknamelist", toggleChannelNickListsAction);
 
+    action=new KAction(this);
+    action->setText(i18n("Show/Hide Konversation"));
+    connect(action, SIGNAL(triggered()), this, SLOT(toggleVisibility()));
+    actionCollection()->addAction("toggle_mainwindow_visibility", action);
+    action->setGlobalShortcut(KShortcut());
+
     // Bookmarks
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
     new KonviBookmarkHandler(bookmarkMenu->menu(), this);
@@ -842,6 +848,24 @@ void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/,
 {
     emit nicksNowOnline(notifyServer);
     // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
+}
+
+void MainWindow::toggleVisibility()
+{
+    if (isMinimized())
+    {
+        KWindowSystem::unminimizeWindow(winId());
+        KWindowSystem::activateWindow(winId());
+    }
+    else if (isVisible())
+    {
+        if (Preferences::self()->showTrayIcon())
+            hide();
+        else
+            KWindowSystem::minimizeWindow(winId());
+    }
+    else if (Preferences::self()->showTrayIcon())
+        m_trayIcon->restore();
 }
 
 #include "mainwindow.moc"

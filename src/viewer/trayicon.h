@@ -34,12 +34,14 @@ namespace Konversation
 #endif
     {
         Q_OBJECT
-        
+
         public:
             explicit TrayIcon(QWidget* parent = 0);
             ~TrayIcon();
 
             bool notificationEnabled() { return m_notificationEnabled; }
+
+            void restore();
 
         public slots:
             void startNotification();

@@ -38,6 +38,11 @@ namespace Konversation
     {
     }
 
+    void TrayIcon::restore()
+    {
+        toggleActive();
+    }
+
     void TrayIcon::startNotification()
     {
         if(!m_notificationEnabled)
@@ -80,13 +85,13 @@ namespace Konversation
             setIcon(m_nomessagePix);
         }
     }
-    
+
     void TrayIcon::updateAppearance()
     {
         m_nomessagePix = loadIcon("konversation");
         m_messagePix = loadIcon("konv_message");
         setIcon(m_nomessagePix);
-        
+
         show();
     }
 }

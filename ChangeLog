@@ -117,6 +117,9 @@ Changes since 1.3.1:
   - Average spreed of link detection has improved slightly.
 * Incoming actions (i.e. "/me") without an argument are now handled properly.
 * Fixed a number of crashes on illegal data from the server.
+* Added a "Show/Hide Konversation" action that can be used to toggle the
+  minimized state of the Konversation window or, if the tray icon is enabled,
+  its visibility.
 
 
 Changes from 1.3 to 1.3.1:

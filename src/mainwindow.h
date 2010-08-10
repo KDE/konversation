@@ -109,6 +109,8 @@ class MainWindow : public KXmlGuiWindow
         void openNotifications();
         void notifyAction(int connectionId,const QString& nick);
 
+        void toggleVisibility();
+
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void leaveEvent(QEvent* e);
