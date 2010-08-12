@@ -28,16 +28,16 @@
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */
 
+class IRCInput;
+
 class QActionGroup;
 class QMenu;
 class KAction;
 class QLabel;
 class QSplitter;
 
-class IRCInput;
+class KSqueezedTextLabel;
 
-namespace Konversation {
-  }
 
 class Query : public ChatWindow
 {
@@ -130,7 +130,7 @@ class Query : public ChatWindow
         KAction* m_addNotifyAction;
 
         QSplitter* m_headerSplitter;
-        QLabel* queryHostmask;
+        KSqueezedTextLabel* queryHostmask;
         QLabel* addresseeimage;
         QLabel* addresseelogoimage;
         QLabel* awayLabel;

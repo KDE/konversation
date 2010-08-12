@@ -26,7 +26,7 @@
 #include <QSplitter>
 
 #include <KMessageBox>
-#include <KStringHandler>
+#include <KSqueezedTextLabel>
 #include <KStandardGuiItem>
 #include <KMenu>
 #include <KHBox>
@@ -59,7 +59,8 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseelogoimage->hide();
 
-    queryHostmask=new QLabel(box);
+    queryHostmask=new KSqueezedTextLabel(box);
+    queryHostmask->setTextElideMode(Qt::ElideRight);
     queryHostmask->setObjectName("query_hostmask");
 
     QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Address Book.</p><p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the address book, and for an explanation of what the hostmask is.</p></qt>");
@@ -475,13 +476,13 @@ void Query::nickInfoChanged()
             text += " - ";
         text += m_nickInfo->getHostmask();
         if(m_nickInfo->isAway() && !m_nickInfo->getAwayMessage().isEmpty())
-            text += " (" + KStringHandler::rsqueeze(m_nickInfo->getAwayMessage(),100) + ") ";
+            text += " (" + m_nickInfo->getAwayMessage() + ") ";
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
         KABC::Picture pic = m_nickInfo->getAddressee().photo();
         if(pic.isIntern())
         {
-            QPixmap qpixmap = QPixmap::fromImage(pic.data().scaledToHeight(queryHostmask->height()));
+            QPixmap qpixmap = QPixmap::fromImage(pic.data().scaledToHeight(queryHostmask->height(), Qt::SmoothTransformation));
             if(!qpixmap.isNull())
             {
                 addresseeimage->setPixmap(qpixmap);
@@ -499,7 +500,7 @@ void Query::nickInfoChanged()
         KABC::Picture logo = m_nickInfo->getAddressee().logo();
         if(logo.isIntern())
         {
-            QPixmap qpixmap = QPixmap::fromImage(logo.data().scaledToHeight(queryHostmask->height()));
+            QPixmap qpixmap = QPixmap::fromImage(logo.data().scaledToHeight(queryHostmask->height(), Qt::SmoothTransformation));
             if(!qpixmap.isNull())
             {
                 addresseelogoimage->setPixmap(qpixmap);
