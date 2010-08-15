@@ -521,7 +521,7 @@ void Query::nickInfoChanged()
 
         tooltip << "<qt>";
 
-        tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
+        tooltip << "<table cellspacing=\"5\" cellpadding=\"0\">";
 
         m_nickInfo->tooltipTableData(tooltip);
 

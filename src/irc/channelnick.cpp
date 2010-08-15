@@ -191,7 +191,7 @@ QString ChannelNick::tooltip() const
 
     tooltip << "<qt>";
 
-    tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
+    tooltip << "<table cellspacing=\"5\" cellpadding=\"0\">";
 
     m_nickInfo->tooltipTableData(tooltip);
 
@@ -205,7 +205,7 @@ QString ChannelNick::tooltip() const
     //if(modes.empty()) modes << i18n("A normal user");
     if(!modes.empty())
     {
-        tooltip << "<tr><td><b>" << i18n("Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
+        tooltip << "<tr><td><b>" << i18n("Mode") << ":</b></td><td>" << modes.join(", ") << "</td></tr>";
     }
     tooltip << "</table></qt>";
     //kDebug() << strTooltip ;
