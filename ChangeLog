@@ -123,6 +123,11 @@ Changes since 1.3.1:
   current virtual desktop if shown using this action (if the window is
   already shown on another desktop, it will be moved to the current desktop
   rather than hidden).
+* Fixed a bug causing a very wide minimum window width when a query tab with
+  very long user information in the header area was open.
+* Formatting control codes (e.g. for colors) in user real names are now fil-
+  tered out before the names are shown in the nickname list when the "Show
+  real names in nickname list" option is enabled.
 
 
 Changes from 1.3 to 1.3.1:
