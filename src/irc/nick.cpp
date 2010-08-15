@@ -150,16 +150,18 @@ QString Nick::calculateLabel1() const
     NickInfoPtr nickinfo = getChannelNick()->getNickInfo();
     KABC::Addressee addressee = nickinfo->getAddressee();
 
+    QString retString = nickinfo->getNickname();
+
     if(!addressee.realName().isEmpty())           //if no addressee, realName will be empty
     {
-        return nickinfo->getNickname() + " (" + addressee.realName() + ')';
+        retString += " (" + Konversation::removeIrcMarkup(addressee.realName()) + ')';
     }
     else if(Preferences::self()->showRealNames() && !nickinfo->getRealName().isEmpty())
     {
-        return nickinfo->getNickname() + " (" + nickinfo->getRealName() + ')';
+        retString += " (" + Konversation::removeIrcMarkup(nickinfo->getRealName()) + ')';
     }
 
-    return nickinfo->getNickname();
+    return retString;
 }
 
 QString Nick::calculateLabel2() const
