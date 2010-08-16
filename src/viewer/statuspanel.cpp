@@ -259,7 +259,7 @@ bool StatusPanel::closeYourself(bool confirm)
     {
         m_recreationScheduled = false;
 
-        m_server->abortScheduledRecration();
+        m_server->abortScheduledRecreation();
     }
 
     return false;

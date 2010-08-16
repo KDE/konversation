@@ -89,7 +89,7 @@ class Server : public QObject
         ~Server();
 
         void cycle();
-        void abortScheduledRecration() { m_recreationScheduled = false; }
+        void abortScheduledRecreation() { m_recreationScheduled = false; }
 
         int connectionId() { return m_connectionId; }
 
