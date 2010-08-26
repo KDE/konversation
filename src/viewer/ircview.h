@@ -25,7 +25,6 @@
 class Server;
 class ChatWindow;
 
-
 class KToggleAction;
 class KMenu;
 
@@ -226,6 +225,7 @@ class IRCView : public KTextBrowser
         void copyUrl();
         void slotBookmark();
         void handleContextActions();
+        void handleWebShortcutAction();
 
     protected:
         void openLink(const QUrl &url);
@@ -282,7 +282,9 @@ class IRCView : public KTextBrowser
 
         //// Popup menus
         void setupContextMenu();
+        void updateWebShortcutMenu();
         KMenu* m_popup; ///< text area context menu
+        KMenu* m_webShortcutMenu;
         QAction* copyUrlMenuSeparator;
         QAction* m_copyUrlClipBoard;
         QAction* m_bookmark;

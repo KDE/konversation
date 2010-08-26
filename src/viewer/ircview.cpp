@@ -44,6 +44,7 @@
 #include <QTextCodec>
 
 #include <KUrl>
+#include <KUriFilter>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
 #include <KMenu>
@@ -51,6 +52,7 @@
 #include <KFileDialog>
 #include <KAuthorized>
 #include <KActionCollection>
+#include <KStringHandler>
 #include <KToggleAction>
 #include <KIO/CopyJob>
 
@@ -1679,6 +1681,8 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
             separator = m_popup->insertSeparator(m_copyUrlClipBoard);
         }
 
+        updateWebShortcutMenu();
+
         m_popup->exec(ev->globalPos());
 
         if(separator)
@@ -1694,6 +1698,70 @@ void IRCView::handleContextActions()
     QAction* action = qobject_cast<QAction*>(sender());
 
     emit popupCommand(action->data().toInt());
+}
+
+void IRCView::updateWebShortcutMenu()
+{
+    QString selectedText = textCursor().selectedText();
+
+    if (selectedText.isEmpty())
+    {
+        m_webShortcutMenu->menuAction()->setVisible(false);
+
+        return;
+    }
+
+    m_webShortcutMenu->clear();
+
+    KUriFilterData filterData(selectedText.remove('\n').remove('\r'));
+
+    // Unfortunately if we don't do this here, then KUriFilterData::preferredSearchProviders()
+    // will later return an empty list when the user has his default search engine set to
+    // "None" in the Web Shortcuts configuration. I consider this nonsensical coupling between
+    // the default search engine setting and the list of enabled web shortcuts a bug in
+    // the kuriikwsfilter plugin, considering we don't actually have any interest in the default
+    // search engine. I picked Google because I expect that web shortcut to be around for some
+    // time to come.
+    filterData.setAlternateDefaultSearchProvider("google");
+
+    if (KUriFilter::self()->filterUri(filterData, QStringList() << "kuriikwsfilter"))
+    {
+        QStringList searchProviders = filterData.preferredSearchProviders();
+
+        if (!searchProviders.isEmpty())
+        {
+            const QString squeezedText = KStringHandler::rsqueeze(selectedText, 21);
+            m_webShortcutMenu->setTitle(i18n("Search for '%1' with", squeezedText));
+
+            m_webShortcutMenu->menuAction()->setVisible(true);
+
+            foreach(const QString& searchProvider, searchProviders)
+            {
+                KAction* action = new KAction(searchProvider, m_webShortcutMenu);
+                action->setIcon(KIcon(filterData.iconNameForPreferredSearchProvider(searchProvider)));
+                action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
+                connect(action, SIGNAL(triggered()), this, SLOT(handleWebShortcutAction()));
+                m_webShortcutMenu->addAction(action);
+            }
+
+            return;
+        }
+    }
+
+    m_webShortcutMenu->menuAction()->setVisible(false);
+}
+
+void IRCView::handleWebShortcutAction()
+{
+    KAction* action = qobject_cast<KAction*>(sender());
+
+    if (action)
+    {
+        KUriFilterData filterData(action->data().toString());
+
+        if (KUriFilter::self()->filterUri(filterData, QStringList() << "kurisearchfilter"))
+            Application::instance()->openUrl(filterData.uri().url());
+    }
 }
 
 // For more information about these RTFM
