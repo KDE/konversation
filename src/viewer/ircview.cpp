@@ -10,7 +10,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2010 Eike Hein <hein@kde.org>
   Copyright (C) 2004-2009 Eli Mackenzie <argonel@gmail.com>
 */
 
@@ -54,31 +54,16 @@
 #include <KToggleAction>
 #include <KIO/CopyJob>
 
+class Server;
+class ChatWindow;
+class SearchBar;
+
 class QPixmap;
 class QDropEvent;
 class QDragEnterEvent;
 class QEvent;
 
 class KMenu;
-
-class Server;
-class ChatWindow;
-class SearchBar;
-
-#if 0
-//IRCView::getPopup() const
-//IRCView::searchNext(bool)
-IRCView::clear()
-//IRCView::search(QString const&, bool, bool, bool, bool)
-//IRCView::setNickAndChannelContextMenusEnabled(bool)
-//IRCView::setupNickPopupMenu()
-//IRCView::enableParagraphSpacing()
-//IRCView::setViewBackground(QColor const&, QString const&)
-//IRCView::getContextNick() const
-//IRCView::setupQueryPopupMenu() { m_nickPopup = 0; }
-//IRCView::hasLines()
-//IRCView::setupChannelPopupMenu()
-#endif
 
 using namespace Konversation;
 
@@ -146,7 +131,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
 
     setAcceptDrops(false);
 
-    //// Marker lines
+    // Marker lines
     connect(document(), SIGNAL(contentsChange(int, int, int)), SLOT(cullMarkedLine(int, int, int)));
 
     //This assert is here because a bad build environment can cause this to fail. There is a note
@@ -161,78 +146,19 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     document()->documentLayout()->registerHandler(IRCView::RememberLine, &markerFormatObject);
 
 
-    //// Other Stuff
-
-    //m_disableEnsureCursorVisible = false;
-    //m_wasPainted = false;
-
     connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
     connect( this, SIGNAL( highlighted ( const QString &) ), this, SLOT( highlightedSlot( const QString &) ) );
     setOpenLinks(false);
     setUndoRedoEnabled(0);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-    //setNotifyClick(true); // TODO FIXME import the rest of the link handling
     setFocusPolicy(Qt::ClickFocus);
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
     setTextInteractionFlags(Qt::TextBrowserInteraction);
     viewport()->setMouseTracking(true);
 
-//     // set basic style sheet for <p> to make paragraph spacing possible
-//     Q3StyleSheet* sheet=new Q3StyleSheet(this,"ircview_style_sheet");
-//     new Q3StyleSheetItem(sheet,"p");
-//     setStyleSheet(sheet);
-
-    m_popup = new KMenu(this);
-    m_popup->setObjectName("ircview_context_menu");
-
-    m_popup->addSeparator();
-
-    m_copyUrlClipBoard = new KAction(this);
-    m_copyUrlClipBoard->setIcon(KIcon("edit-copy"));
-    m_copyUrlClipBoard->setText(i18n("Copy Link Address"));
-    connect(m_copyUrlClipBoard, SIGNAL(triggered()), SLOT(copyUrl()));
-    m_popup->addAction(m_copyUrlClipBoard);
-    m_copyUrlClipBoard->setVisible( false );
-
-    m_bookmark = new KAction(this);
-    m_bookmark->setIcon(KIcon("bookmark-new"));
-    m_bookmark->setText(i18n("Add to Bookmarks"));
-    connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
-    m_popup->addAction(m_bookmark);
-    m_bookmark->setVisible( false );
-
-    m_saveUrl = new KAction(this);
-    m_saveUrl->setIcon(KIcon("document-save"));
-    m_saveUrl->setText(i18n("Save Link As..."));
-    connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
-    m_popup->addAction(m_saveUrl);
-    m_saveUrl->setVisible( false );
-
-    QAction * toggleMenuBarSeparator = m_popup->addSeparator();
-    toggleMenuBarSeparator->setVisible(false);
-    copyUrlMenuSeparator = m_popup->addSeparator();
-    copyUrlMenuSeparator->setVisible( false );
-
-    QAction *copyAct = new KAction(this);
-    copyAct->setIcon(KIcon("edit-copy"));
-    copyAct->setText(i18n("&Copy"));
-    connect(copyAct, SIGNAL(triggered()), SLOT(copy()));
-    m_popup->addAction(copyAct);
-    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
-    copyAct->setEnabled( false );
-
-    QAction *selectAllAct = new KAction(this);
-    selectAllAct->setText(i18n("Select All"));
-    connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
-    m_popup->addAction(selectAllAct);
-
-    QAction *findTextAct = new KAction(this);
-    findTextAct->setIcon(KIcon("edit-find"));
-    findTextAct->setText(i18n("Find Text..."));
-    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
-    m_popup->addAction(findTextAct);
+    setupContextMenu();
 
     setServer(newServer);
 
@@ -246,7 +172,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
 
 IRCView::~IRCView()
 {
-    delete m_popup;
 }
 
 void IRCView::setServer(Server* newServer)
@@ -325,7 +250,7 @@ bool IRCView::searchNext(bool reversed)
     return find(m_pattern, m_searchFlags);
 }
 
-//// Marker lines
+// Marker lines
 
 #define _S(x) #x << (x)
 void dump_doc(QTextDocument* document)
@@ -612,7 +537,7 @@ void IRCView::appendLine(IRCView::ObjectFormats type)
 }
 
 
-//// Other stuff
+// Other stuff
 
 void IRCView::enableParagraphSpacing() {}
 
@@ -942,12 +867,9 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
         //don't remove lines if the user has scrolled up to read old lines
         bool atBottom = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
         document()->setMaximumBlockCount(atBottom ? scrollMax : document()->maximumBlockCount() + 1);
-        //setMaximumBlockCount(atBottom ? scrollMax : maximumBlockCount() + 1);
     }
 
     doRawAppend(newLine, rtl);
-
-    //appendHtml(line);
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
@@ -1271,152 +1193,6 @@ bool doHighlight, bool parseURL, bool self)
     return filteredLine;
 }
 
-
-//Context Menu
-
-const QString& IRCView::getContextNick() const
-{
-    return m_currentNick;
-}
-
-void IRCView::clearContextNick()
-{
-    m_currentNick.clear();
-}
-
-KMenu* IRCView::getPopup() const
-{
-    return m_popup;
-}
-
-void IRCView::setNickAndChannelContextMenusEnabled(bool enable)
-{
-    if (m_nickPopup) m_nickPopup->setEnabled(enable);
-    if (m_channelPopup) m_channelPopup->setEnabled(enable);
-}
-
-void IRCView::setupNickPopupMenu(bool isQuery)
-{
-    m_nickPopup = new KMenu(this);
-    m_nickPopup->setObjectName("nicklist_context_menu");
-    m_nickPopup->setTitle(m_currentNick);
-
-    QAction* action = m_nickPopup->addAction(i18n("&Whois"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Whois);
-    action = m_nickPopup->addAction(i18n("&Version"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Version);
-    action = m_nickPopup->addAction(i18n("&Ping"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Ping);
-
-    m_nickPopup->addSeparator();
-
-    if(!isQuery)
-    {
-        QMenu* modes = m_nickPopup->addMenu(i18n("Modes"));
-        action = modes->addAction(i18n("Give Op"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::GiveOp);
-        action->setIcon(KIcon("irc-operator"));
-        action = modes->addAction(i18n("Take Op"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::TakeOp);
-        action->setIcon(KIcon("irc-remove-operator"));
-        action = modes->addAction(i18n("Give Voice"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::GiveVoice);
-        action->setIcon(KIcon("irc-voice"));
-        action = modes->addAction(i18n("Take Voice"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::TakeVoice);
-        action->setIcon(KIcon("irc-unvoice"));
-
-        QMenu* kickban = m_nickPopup->addMenu(i18n("Kick / Ban"));
-        action = kickban->addAction(i18n("Kick"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::Kick);
-        action = kickban->addAction(i18n("Kickban"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBan);
-        action = kickban->addAction(i18n("Ban Nickname"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanNick);
-        kickban->addSeparator();
-        action = kickban->addAction(i18n("Ban *!*@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanHost);
-        action = kickban->addAction(i18n("Ban *!*@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanDomain);
-        action = kickban->addAction(i18n("Ban *!user@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanUserHost);
-        action = kickban->addAction(i18n("Ban *!user@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanUserDomain);
-        kickban->addSeparator();
-        action = kickban->addAction(i18n("Kickban *!*@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanHost);
-        action = kickban->addAction(i18n("Kickban *!*@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanDomain);
-        action = kickban->addAction(i18n("Kickban *!user@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanUserHost);
-        action = kickban->addAction(i18n("Kickban *!user@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanUserDomain);
-    }
-
-    m_ignoreAction = new KToggleAction(i18n("Ignore"), this);
-    m_ignoreAction->setCheckedState(KGuiItem(i18n("Unignore")));
-    m_ignoreAction->setData(Konversation::IgnoreNick);
-    m_nickPopup->addAction(m_ignoreAction);
-    connect(m_ignoreAction, SIGNAL(triggered()), this, SLOT(handleContextActions()));
-
-    m_nickPopup->addSeparator();
-
-    action = m_nickPopup->addAction(i18n("Open Query"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::OpenQuery);
-
-    KConfigGroup config = KGlobal::config()->group("KDE Action Restrictions");
-
-    if(config.readEntry<bool>("allow_downloading", true))
-    {
-        action = m_nickPopup->addAction(SmallIcon("arrow-right-double"),i18n("Send &File..."), this, SLOT(handleContextActions()));
-        action->setData(Konversation::DccSend);
-    }
-
-    m_nickPopup->addSeparator();
-
-    m_addNotifyAction = m_nickPopup->addAction(i18n("Add to Watched Nicks"), this, SLOT(handleContextActions()));
-    m_addNotifyAction->setData(Konversation::AddNotify);
-}
-
-void IRCView::updateNickMenuEntries(const QString& nickname)
-{
-    if (Preferences::isIgnored(nickname))
-    {
-        m_ignoreAction->setChecked(true);
-        m_ignoreAction->setData(Konversation::UnignoreNick);
-    }
-    else
-    {
-        m_ignoreAction->setChecked(false);
-        m_ignoreAction->setData(Konversation::IgnoreNick);
-    }
-
-    if (!m_server || !m_server->getServerGroup() || !m_server->isConnected() || !Preferences::hasNotifyList(m_server->getServerGroup()->id())
-        || Preferences::isNotify(m_server->getServerGroup()->id(), nickname))
-    {
-        m_addNotifyAction->setEnabled(false);
-    }
-    else
-    {
-        m_addNotifyAction->setEnabled(true);
-    }
-}
-
-void IRCView::setupChannelPopupMenu()
-{
-    m_channelPopup = new KMenu(this);
-    m_channelPopup->setObjectName("channel_context_menu");
-    m_channelPopup->setTitle(m_currentChannel);
-
-    QAction* action = m_channelPopup->addAction(i18n("&Join Channel..."), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Join);
-    action->setIcon(KIcon("irc-join-channel"));
-    action = m_channelPopup->addAction(i18n("Get &user list"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Names);
-    action = m_channelPopup->addAction(i18n("Get &topic"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Topic);
-}
-
 void IRCView::resizeEvent(QResizeEvent *event)
 {
     ScrollBarPin b(verticalScrollBar());
@@ -1584,12 +1360,13 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
             emit clearStatusBarTempText();
             m_lastStatusText.clear();
         }
-    } else
+    }
+    else
     {
         m_lastStatusText = link;
     }
 
-    if(!link.startsWith('#'))
+    if (!link.startsWith('#'))
     {
         m_isOnNick = false;
         m_isOnChannel = false;
@@ -1598,33 +1375,31 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
             //link therefore != m_lastStatusText  so emit with this new text
             emit setStatusBarTempText(link);
         }
+
         if (link.isEmpty() && m_copyUrlMenu)
         {
-                m_copyUrlClipBoard->setVisible( false );
-                m_bookmark->setVisible( false );
-                m_saveUrl->setVisible( false );
-            copyUrlMenuSeparator->setVisible( false );
+            m_copyUrlClipBoard->setVisible(false);
+            m_bookmark->setVisible(false);
+            m_saveUrl->setVisible(false);
+            copyUrlMenuSeparator->setVisible(false);
             m_copyUrlMenu = false;
 
         }
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
-                copyUrlMenuSeparator->setVisible( true );
-                m_copyUrlClipBoard->setVisible( true );
-                m_bookmark->setVisible( true );
-                m_saveUrl->setVisible( true );
-            m_copyUrlMenu = true;
-//            m_urlToCopy = link;
+           copyUrlMenuSeparator->setVisible(true);
+           m_copyUrlClipBoard->setVisible(true);
+           m_bookmark->setVisible(true);
+           m_saveUrl->setVisible(true);
+           m_copyUrlMenu = true;
         }
     }
     else if (link.startsWith('#') && !link.startsWith(QLatin1String("##")))
     {
         m_currentNick = link.mid(1);
 
-        if(m_nickPopup)
-        {
+        if (m_nickPopup)
             m_nickPopup->setTitle(m_currentNick);
-        }
 
         m_isOnNick = true;
         emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
@@ -1674,6 +1449,208 @@ void IRCView::slotBookmark()
     delete dialog;
 }
 
+// Context Menu
+
+KMenu* IRCView::getPopup() const
+{
+    return m_popup;
+}
+
+void IRCView::setupContextMenu()
+{
+    m_popup = new KMenu(this);
+    m_popup->setObjectName("ircview_context_menu");
+
+    m_popup->addSeparator();
+
+    m_copyUrlClipBoard = new KAction(this);
+    m_copyUrlClipBoard->setIcon(KIcon("edit-copy"));
+    m_copyUrlClipBoard->setText(i18n("Copy Link Address"));
+    connect(m_copyUrlClipBoard, SIGNAL(triggered()), SLOT(copyUrl()));
+    m_popup->addAction(m_copyUrlClipBoard);
+    m_copyUrlClipBoard->setVisible( false );
+
+    m_bookmark = new KAction(this);
+    m_bookmark->setIcon(KIcon("bookmark-new"));
+    m_bookmark->setText(i18n("Add to Bookmarks"));
+    connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
+    m_popup->addAction(m_bookmark);
+    m_bookmark->setVisible( false );
+
+    m_saveUrl = new KAction(this);
+    m_saveUrl->setIcon(KIcon("document-save"));
+    m_saveUrl->setText(i18n("Save Link As..."));
+    connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
+    m_popup->addAction(m_saveUrl);
+    m_saveUrl->setVisible( false );
+
+    QAction* toggleMenuBarSeparator = m_popup->addSeparator();
+    toggleMenuBarSeparator->setVisible(false);
+    copyUrlMenuSeparator = m_popup->addSeparator();
+    copyUrlMenuSeparator->setVisible( false );
+
+    QAction* copyAct = new KAction(this);
+    copyAct->setIcon(KIcon("edit-copy"));
+    copyAct->setText(i18n("&Copy"));
+    connect(copyAct, SIGNAL(triggered()), SLOT(copy()));
+    m_popup->addAction(copyAct);
+    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
+    copyAct->setEnabled( false );
+
+    QAction* selectAllAct = new KAction(this);
+    selectAllAct->setText(i18n("Select All"));
+    connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
+    m_popup->addAction(selectAllAct);
+
+    QAction* findTextAct = new KAction(this);
+    findTextAct->setIcon(KIcon("edit-find"));
+    findTextAct->setText(i18n("Find Text..."));
+    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
+    m_popup->addAction(findTextAct);
+
+    m_webShortcutMenu = new KMenu(this);
+    m_popup->addMenu(m_webShortcutMenu);
+    m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
+    m_webShortcutMenu->menuAction()->setVisible(false);
+}
+void IRCView::setupNickPopupMenu(bool isQuery)
+{
+    m_nickPopup = new KMenu(this);
+    m_nickPopup->setObjectName("nicklist_context_menu");
+    m_nickPopup->setTitle(m_currentNick);
+
+    QAction* action = m_nickPopup->addAction(i18n("&Whois"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Whois);
+    action = m_nickPopup->addAction(i18n("&Version"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Version);
+    action = m_nickPopup->addAction(i18n("&Ping"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Ping);
+
+    m_nickPopup->addSeparator();
+
+    if(!isQuery)
+    {
+        QMenu* modes = m_nickPopup->addMenu(i18n("Modes"));
+        action = modes->addAction(i18n("Give Op"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::GiveOp);
+        action->setIcon(KIcon("irc-operator"));
+        action = modes->addAction(i18n("Take Op"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::TakeOp);
+        action->setIcon(KIcon("irc-remove-operator"));
+        action = modes->addAction(i18n("Give Voice"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::GiveVoice);
+        action->setIcon(KIcon("irc-voice"));
+        action = modes->addAction(i18n("Take Voice"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::TakeVoice);
+        action->setIcon(KIcon("irc-unvoice"));
+
+        QMenu* kickban = m_nickPopup->addMenu(i18n("Kick / Ban"));
+        action = kickban->addAction(i18n("Kick"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::Kick);
+        action = kickban->addAction(i18n("Kickban"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::KickBan);
+        action = kickban->addAction(i18n("Ban Nickname"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::BanNick);
+        kickban->addSeparator();
+        action = kickban->addAction(i18n("Ban *!*@*.host"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::BanHost);
+        action = kickban->addAction(i18n("Ban *!*@domain"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::BanDomain);
+        action = kickban->addAction(i18n("Ban *!user@*.host"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::BanUserHost);
+        action = kickban->addAction(i18n("Ban *!user@domain"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::BanUserDomain);
+        kickban->addSeparator();
+        action = kickban->addAction(i18n("Kickban *!*@*.host"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::KickBanHost);
+        action = kickban->addAction(i18n("Kickban *!*@domain"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::KickBanDomain);
+        action = kickban->addAction(i18n("Kickban *!user@*.host"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::KickBanUserHost);
+        action = kickban->addAction(i18n("Kickban *!user@domain"), this, SLOT(handleContextActions()));
+        action->setData(Konversation::KickBanUserDomain);
+    }
+
+    m_ignoreAction = new KToggleAction(i18n("Ignore"), this);
+    m_ignoreAction->setCheckedState(KGuiItem(i18n("Unignore")));
+    m_ignoreAction->setData(Konversation::IgnoreNick);
+    m_nickPopup->addAction(m_ignoreAction);
+    connect(m_ignoreAction, SIGNAL(triggered()), this, SLOT(handleContextActions()));
+
+    m_nickPopup->addSeparator();
+
+    action = m_nickPopup->addAction(i18n("Open Query"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::OpenQuery);
+
+    KConfigGroup config = KGlobal::config()->group("KDE Action Restrictions");
+
+    if(config.readEntry<bool>("allow_downloading", true))
+    {
+        action = m_nickPopup->addAction(SmallIcon("arrow-right-double"),i18n("Send &File..."), this, SLOT(handleContextActions()));
+        action->setData(Konversation::DccSend);
+    }
+
+    m_nickPopup->addSeparator();
+
+    m_addNotifyAction = m_nickPopup->addAction(i18n("Add to Watched Nicks"), this, SLOT(handleContextActions()));
+    m_addNotifyAction->setData(Konversation::AddNotify);
+}
+
+void IRCView::setNickAndChannelContextMenusEnabled(bool enable)
+{
+    if (m_nickPopup) m_nickPopup->setEnabled(enable);
+    if (m_channelPopup) m_channelPopup->setEnabled(enable);
+}
+
+const QString& IRCView::getContextNick() const
+{
+    return m_currentNick;
+}
+
+void IRCView::clearContextNick()
+{
+    m_currentNick.clear();
+}
+
+void IRCView::updateNickMenuEntries(const QString& nickname)
+{
+    if (Preferences::isIgnored(nickname))
+    {
+        m_ignoreAction->setChecked(true);
+        m_ignoreAction->setData(Konversation::UnignoreNick);
+    }
+    else
+    {
+        m_ignoreAction->setChecked(false);
+        m_ignoreAction->setData(Konversation::IgnoreNick);
+    }
+
+    if (!m_server || !m_server->getServerGroup() || !m_server->isConnected() || !Preferences::hasNotifyList(m_server->getServerGroup()->id())
+        || Preferences::isNotify(m_server->getServerGroup()->id(), nickname))
+    {
+        m_addNotifyAction->setEnabled(false);
+    }
+    else
+    {
+        m_addNotifyAction->setEnabled(true);
+    }
+}
+
+void IRCView::setupChannelPopupMenu()
+{
+    m_channelPopup = new KMenu(this);
+    m_channelPopup->setObjectName("channel_context_menu");
+    m_channelPopup->setTitle(m_currentChannel);
+
+    QAction* action = m_channelPopup->addAction(i18n("&Join Channel..."), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Join);
+    action->setIcon(KIcon("irc-join-channel"));
+    action = m_channelPopup->addAction(i18n("Get &user list"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Names);
+    action = m_channelPopup->addAction(i18n("Get &topic"), this, SLOT(handleContextActions()));
+    action->setData(Konversation::Topic);
+}
+
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 {
     if (m_nickPopup && m_server && m_isOnNick && m_nickPopup->isEnabled())
@@ -1719,9 +1696,9 @@ void IRCView::handleContextActions()
     emit popupCommand(action->data().toInt());
 }
 
-// for more information about these RTFM
-//    http://www.unicode.org/reports/tr9/
-//    http://www.w3.org/TR/unicode-xml/
+// For more information about these RTFM
+// http://www.unicode.org/reports/tr9/
+// http://www.w3.org/TR/unicode-xml/
 QChar IRCView::LRM = (ushort)0x200e; // Right-to-Left Mark
 QChar IRCView::RLM = (ushort)0x200f; // Left-to-Right Mark
 QChar IRCView::LRE = (ushort)0x202a; // Left-to-Right Embedding
@@ -1779,8 +1756,3 @@ QChar::Direction IRCView::basicDirection(const QString& string)
     else
         return QChar::DirL;
 }
-
-// **WARNING** the selectionChange signal comes BEFORE the selection has actually been changed, hook cursorPositionChanged too
-
-//void IRCView::mouseDoubleClickEvent(QEvent *e, Qt::MouseButton button, const QPointF &pos)
-

@@ -257,8 +257,6 @@ class IRCView : public KTextBrowser
         QString createNickLine(const QString& nick, const QString& defaultColor,
             bool encapsulateNick = true, bool privMsg = false);
 
-
-
         //// Search
         QTextDocument::FindFlags m_searchFlags;
         bool m_forward;
@@ -283,6 +281,7 @@ class IRCView : public KTextBrowser
         Server* m_server; //! FIXME assumes we have a server
 
         //// Popup menus
+        void setupContextMenu();
         KMenu* m_popup; ///< text area context menu
         QAction* copyUrlMenuSeparator;
         QAction* m_copyUrlClipBoard;
