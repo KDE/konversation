@@ -82,11 +82,13 @@ namespace Konversation
         void WhiteBoardColorChooser::setForegroundColor (const QColor& color)
         {
             m_foregroundColor = color;
+            update();
         }
 
         void WhiteBoardColorChooser::setBackgroundColor (const QColor& color)
         {
             m_backgroundColor = color;
+            update();
         }
 
         void WhiteBoardColorChooser::mouseReleaseEvent(QMouseEvent *e)

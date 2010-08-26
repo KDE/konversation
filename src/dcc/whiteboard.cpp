@@ -75,6 +75,9 @@ namespace Konversation
                     this, SLOT(usedText(int, int, const QString&)));
             connect(m_paintArea, SIGNAL(usedTextExtended(int, int, const QFont&, const QColor&, const QColor&, const QString&)),
                     this, SLOT(usedTextExtended(int, int, const QFont&, const QColor&, const QColor&, const QString&)));
+
+            connect(m_paintArea, SIGNAL(colorPicked(const QColor&)),
+                    m_toolbar, SLOT(setForegroundColor(const QColor&)));
         }
 
         WhiteBoard::~WhiteBoard()

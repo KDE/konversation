@@ -53,6 +53,9 @@ namespace Konversation
                 void setSupportedTextType(Konversation::DCC::WhiteBoardToolBar::TextType textType);
                 Konversation::DCC::WhiteBoardToolBar::TextType textType() const;
 
+                void setForegroundColor(const QColor& foregroundColor);
+                void setBackgroundColor(const QColor& backgroundColor);
+
             signals:
                 void toolChanged(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
 
@@ -85,6 +88,7 @@ namespace Konversation
                 void eraseToggled(bool checked);
                 void fillToggled(bool checked);
                 void arrowToggled(bool checked);
+                void colorPickerToggled(bool checked);
 
                 void updateLineWidthPixmap(int lineWidth);
 

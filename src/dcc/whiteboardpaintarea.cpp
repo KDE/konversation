@@ -368,6 +368,7 @@ namespace Konversation
                 case WhiteBoardGlobals::Eraser:
                 case WhiteBoardGlobals::FloodFill:
                 case WhiteBoardGlobals::Stamp:
+                case WhiteBoardGlobals::ColorPicker:
                     break;
 
                 case WhiteBoardGlobals::Rectangle:
@@ -539,6 +540,12 @@ namespace Konversation
                     //handle in mousePressEvent
                     break;
 
+                case WhiteBoardGlobals::ColorPicker:
+                    {
+                        QImage image = m_imagePixmap->toImage();
+                        emit colorPicked(QColor(image.pixel(event->pos().x(), event->pos().y())));
+                    }
+                    break;
                 case WhiteBoardGlobals::Stamp:
                 case WhiteBoardGlobals::Selection:
                     kDebug() << "TODO implement whiteboard Selection/Stamp";

@@ -91,6 +91,11 @@ namespace Konversation
             m_arrowPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Arrow, m_arrowPushButton);
 
+            m_colorPickerPushButton->setIcon(KIcon("color-picker"));
+            m_colorPickerPushButton->setToolTip(i18n("Select a color from the image"));
+            m_colorPickerPushButton->setFlat(true);
+            m_toggleButtonHash.insert(WhiteBoardGlobals::ColorPicker, m_colorPickerPushButton);
+
             m_lineWidthSlider->setMaximum(WhiteBoardGlobals::MaxPenWidth);
 
             connectToggleButtons();
@@ -126,9 +131,19 @@ namespace Konversation
             return m_colorChooser->foregroundColor();
         }
 
+        void WhiteBoardToolBar::setForegroundColor(const QColor& foregroundColor)
+        {
+            m_colorChooser->setForegroundColor(foregroundColor);
+        }
+
         QColor WhiteBoardToolBar::backgroundColor() const
         {
             return m_colorChooser->backgroundColor();
+        }
+
+        void WhiteBoardToolBar::setBackgroundColor(const QColor& backgroundColor)
+        {
+            m_colorChooser->setBackgroundColor(backgroundColor);
         }
 
         void WhiteBoardToolBar::disableTool(WhiteBoardGlobals::WhiteBoardTool tool)
@@ -198,6 +213,7 @@ namespace Konversation
             connect(m_eraserPushButton, SIGNAL(toggled(bool)), this, SLOT(eraseToggled(bool)));
             connect(m_fillPushButton, SIGNAL(toggled(bool)), this, SLOT(fillToggled(bool)));
             connect(m_arrowPushButton, SIGNAL(toggled(bool)), this, SLOT(arrowToggled(bool)));
+            connect(m_colorPickerPushButton, SIGNAL(toggled(bool)), this, SLOT(colorPickerToggled(bool)));
         }
 
         void WhiteBoardToolBar::disconnectToggleButtons()
@@ -212,6 +228,7 @@ namespace Konversation
             disconnect(m_eraserPushButton, 0, 0, 0);
             disconnect(m_fillPushButton, 0, 0, 0);
             disconnect(m_arrowPushButton, 0, 0, 0);
+            disconnect(m_colorPickerPushButton, 0, 0, 0);
         }
 
         void WhiteBoardToolBar::clearClicked()
@@ -234,6 +251,14 @@ namespace Konversation
                 emit save(fileDialog->selectedFile());
             }
             delete fileDialog;
+        }
+
+        void WhiteBoardToolBar::colorPickerToggled(bool checked)
+        {
+            handleToggleButton(m_colorPickerPushButton, checked, WhiteBoardGlobals::ColorPicker);
+            setLineWidthVisible(false);
+            setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::arrowToggled (bool checked)

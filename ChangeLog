@@ -137,6 +137,7 @@ Changes since 1.3.1:
   slightly.
 * Fixed bug causing the opening of URLs via the "Open URL" sub-menu in the
   list entry context menu in Channel List tabs not to work.
+* Added Color Picker tool to DCC WHITEBOARD, to select a color from the image
 
 
 

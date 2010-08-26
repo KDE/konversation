@@ -41,7 +41,8 @@ namespace Konversation
                     Selection       = 64,
                     Text,
                     TextExtended,
-                    Stamp
+                    Stamp,
+                    ColorPicker
                 };
 
                 enum WhiteBoardCommand

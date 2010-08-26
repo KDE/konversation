@@ -87,6 +87,7 @@ namespace Konversation
             void usedFloodFill(int x, int y, const QColor& color);
             void usedText(int x, int y, const QString& text);
             void usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text);
+            void colorPicked(const QColor& color);
 
         protected:
             virtual void paintEvent(QPaintEvent * event);
