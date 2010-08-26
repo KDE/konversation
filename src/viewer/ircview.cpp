@@ -1499,6 +1499,11 @@ void IRCView::setupContextMenu()
     connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
     copyAct->setEnabled( false );
 
+    m_webShortcutMenu = new KMenu(this);
+    m_popup->addMenu(m_webShortcutMenu);
+    m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
+    m_webShortcutMenu->menuAction()->setVisible(false);
+
     QAction* selectAllAct = new KAction(this);
     selectAllAct->setText(i18n("Select All"));
     connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
@@ -1509,11 +1514,6 @@ void IRCView::setupContextMenu()
     findTextAct->setText(i18n("Find Text..."));
     connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
     m_popup->addAction(findTextAct);
-
-    m_webShortcutMenu = new KMenu(this);
-    m_popup->addMenu(m_webShortcutMenu);
-    m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
-    m_webShortcutMenu->menuAction()->setVisible(false);
 }
 void IRCView::setupNickPopupMenu(bool isQuery)
 {
