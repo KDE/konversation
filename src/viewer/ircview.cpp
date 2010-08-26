@@ -1503,10 +1503,12 @@ void IRCView::setupContextMenu()
     connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
     copyAct->setEnabled( false );
 
+#if KDE_IS_VERSION(4,5,0)
     m_webShortcutMenu = new KMenu(this);
     m_popup->addMenu(m_webShortcutMenu);
     m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
     m_webShortcutMenu->menuAction()->setVisible(false);
+#endif
 
     QAction* selectAllAct = new KAction(this);
     selectAllAct->setText(i18n("Select All"));
