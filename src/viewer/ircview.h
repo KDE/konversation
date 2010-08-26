@@ -21,6 +21,7 @@
 
 #include <KTextBrowser>
 #include <KUrl>
+#include <kdeversion.h>
 
 class Server;
 class ChatWindow;
@@ -225,7 +226,9 @@ class IRCView : public KTextBrowser
         void copyUrl();
         void slotBookmark();
         void handleContextActions();
+#if KDE_IS_VERSION(4,5,0)
         void handleWebShortcutAction();
+#endif
 
     protected:
         void openLink(const QUrl &url);
@@ -282,9 +285,7 @@ class IRCView : public KTextBrowser
 
         //// Popup menus
         void setupContextMenu();
-        void updateWebShortcutMenu();
         KMenu* m_popup; ///< text area context menu
-        KMenu* m_webShortcutMenu;
         QAction* copyUrlMenuSeparator;
         QAction* m_copyUrlClipBoard;
         QAction* m_bookmark;
@@ -295,6 +296,10 @@ class IRCView : public KTextBrowser
         KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
         KMenu* m_channelPopup; ///<menu to show when context-click on a channel
 
+#if KDE_IS_VERSION(4,5,0)
+        void updateWebShortcutMenu();
+        KMenu* m_webShortcutMenu;
+#endif
 
         QString m_urlToCopy; ///< the URL we might be about to copy
 

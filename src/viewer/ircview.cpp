@@ -44,7 +44,6 @@
 #include <QTextCodec>
 
 #include <KUrl>
-#include <KUriFilter>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
 #include <KMenu>
@@ -52,9 +51,14 @@
 #include <KFileDialog>
 #include <KAuthorized>
 #include <KActionCollection>
-#include <KStringHandler>
 #include <KToggleAction>
 #include <KIO/CopyJob>
+
+// For the Web Shortcuts context menu sub-menu.
+#if KDE_IS_VERSION(4,5,0)
+#include <KUriFilter>
+#include <KStringHandler>
+#endif
 
 class Server;
 class ChatWindow;
@@ -1681,7 +1685,9 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
             separator = m_popup->insertSeparator(m_copyUrlClipBoard);
         }
 
+#if KDE_IS_VERSION(4,5,0)
         updateWebShortcutMenu();
+#endif
 
         m_popup->exec(ev->globalPos());
 
@@ -1700,6 +1706,7 @@ void IRCView::handleContextActions()
     emit popupCommand(action->data().toInt());
 }
 
+#if KDE_IS_VERSION(4,5,0)
 void IRCView::updateWebShortcutMenu()
 {
     QString selectedText = textCursor().selectedText();
@@ -1763,6 +1770,7 @@ void IRCView::handleWebShortcutAction()
             Application::instance()->openUrl(filterData.uri().url());
     }
 }
+#endif
 
 // For more information about these RTFM
 // http://www.unicode.org/reports/tr9/

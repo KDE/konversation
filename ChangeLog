@@ -139,11 +139,12 @@ Changes since 1.3.1:
   list entry context menu in Channel List tabs not to work.
 * Added a Color Picker tool to DCC WHITEBOARD, to select a color from the
   image.
-* Added support for KDE Web Shortcuts: The context menu for selected text
-  in a chat text view now offers a submenu by which the selected text can
-  be used in a web search with any of the enabled search providers. The
-  resulting search URL is opened in the system's default wen browser after
-  clicking on the search provider in the submenu.
+* Added support for KDE Web Shortcuts when built against KDE Platform 4.5
+  or higher: The context menu for selected text in a chat text view then
+  offers a submenu by which the selected text can be used in a web search
+  with any of the enabled search providers. The resulting search URL is
+  opened in the system's default wen browser after clicking on the search
+  provider in the submenu.
 
 
 Changes from 1.3 to 1.3.1:
