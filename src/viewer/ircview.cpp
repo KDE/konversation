@@ -52,12 +52,12 @@
 #include <KAuthorized>
 #include <KActionCollection>
 #include <KToggleAction>
-#include <KToolInvocation>
 #include <KIO/CopyJob>
 
 // For the Web Shortcuts context menu sub-menu.
 #if KDE_IS_VERSION(4,5,0)
 #include <KStringHandler>
+#include <KToolInvocation>
 #include <KUriFilter>
 #endif
 
@@ -1788,7 +1788,9 @@ void IRCView::handleWebShortcutAction()
 
 void IRCView::configureWebShortcuts()
 {
+#if KDE_IS_VERSION(4,5,0)
     KToolInvocation::kdeinitExec("kcmshell4", QStringList() << "ebrowsing");
+#endif
 }
 
 // For more information about these RTFM
