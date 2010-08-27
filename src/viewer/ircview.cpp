@@ -52,12 +52,12 @@
 #include <KAuthorized>
 #include <KActionCollection>
 #include <KToggleAction>
+#include <KToolInvocation>
 #include <KIO/CopyJob>
 
 // For the Web Shortcuts context menu sub-menu.
 #if KDE_IS_VERSION(4,5,0)
 #include <KStringHandler>
-#include <KToolInvocation>
 #include <KUriFilter>
 #endif
 
