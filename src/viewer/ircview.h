@@ -226,9 +226,8 @@ class IRCView : public KTextBrowser
         void copyUrl();
         void slotBookmark();
         void handleContextActions();
-#if KDE_IS_VERSION(4,5,0)
         void handleWebShortcutAction();
-#endif
+        void configureWebShortcuts();
 
     protected:
         void openLink(const QUrl &url);

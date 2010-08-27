@@ -56,8 +56,9 @@
 
 // For the Web Shortcuts context menu sub-menu.
 #if KDE_IS_VERSION(4,5,0)
-#include <KUriFilter>
 #include <KStringHandler>
+#include <KToolInvocation>
+#include <KUriFilter>
 #endif
 
 class Server;
@@ -1708,9 +1709,9 @@ void IRCView::handleContextActions()
     emit popupCommand(action->data().toInt());
 }
 
-#if KDE_IS_VERSION(4,5,0)
 void IRCView::updateWebShortcutMenu()
 {
+#if KDE_IS_VERSION(4,5,0)
     QString selectedText = textCursor().selectedText();
 
     if (selectedText.isEmpty())
@@ -1744,24 +1745,35 @@ void IRCView::updateWebShortcutMenu()
 
             m_webShortcutMenu->menuAction()->setVisible(true);
 
+            KAction* action = 0;
+
             foreach(const QString& searchProvider, searchProviders)
             {
-                KAction* action = new KAction(searchProvider, m_webShortcutMenu);
+                action = new KAction(searchProvider, m_webShortcutMenu);
                 action->setIcon(KIcon(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
                 connect(action, SIGNAL(triggered()), this, SLOT(handleWebShortcutAction()));
                 m_webShortcutMenu->addAction(action);
             }
 
+            m_webShortcutMenu->addSeparator();
+
+            action = new KAction(i18n("Configure Web Shortcuts..."), m_webShortcutMenu);
+            action->setIcon(KIcon("configure"));
+            connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
+            m_webShortcutMenu->addAction(action);
+
             return;
         }
     }
 
     m_webShortcutMenu->menuAction()->setVisible(false);
+#endif
 }
 
 void IRCView::handleWebShortcutAction()
 {
+#if KDE_IS_VERSION(4,5,0)
     KAction* action = qobject_cast<KAction*>(sender());
 
     if (action)
@@ -1771,8 +1783,13 @@ void IRCView::handleWebShortcutAction()
         if (KUriFilter::self()->filterUri(filterData, QStringList() << "kurisearchfilter"))
             Application::instance()->openUrl(filterData.uri().url());
     }
-}
 #endif
+}
+
+void IRCView::configureWebShortcuts()
+{
+    KToolInvocation::kdeinitExec("kcmshell4", QStringList() << "ebrowsing");
+}
 
 // For more information about these RTFM
 // http://www.unicode.org/reports/tr9/
