@@ -23,6 +23,15 @@
 #include <QModelIndex>
 #include <QItemSelection>
 
+#include <kdeversion.h>
+
+#if KDE_IS_VERSION(4, 5, 0)
+#   include <KDialog>
+#   include <KLocalizedString>
+#   include <kfilemetadatawidget.h>
+#endif
+#include <KDebug>
+
 class QSplitter;
 class KMenu;
 class KToolBar;
@@ -34,6 +43,38 @@ namespace Konversation
         class TransferDetailedInfoPanel;
         class TransferView;
         class Transfer;
+
+#if KDE_IS_VERSION(4, 5, 0)
+        class FileMetaDataDialog : public KDialog
+        {
+            public:
+                FileMetaDataDialog(const KUrl& file, QWidget *parent = 0)
+                    : KDialog(parent)
+                {
+                    setCaption( i18nc("File Information for %1", "%1=filename", file.fileName() ) );
+                    setButtons( KDialog::Ok );
+
+                    m_fileMetaDataWidget = new KFileMetaDataWidget(this);
+
+                    KFileItemList fileList;
+                    fileList.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, file));
+                    m_fileMetaDataWidget->setItems(fileList);
+
+                    setMainWidget(m_fileMetaDataWidget);
+
+                    //known Qt problem, minium size is not set, limitation of X11 window manager
+                    setMinimumSize(QSize(sizeHint().height()*2, sizeHint().width()));
+                }
+
+                ~FileMetaDataDialog()
+                {
+                    delete m_fileMetaDataWidget;
+                }
+
+            private:
+                KFileMetaDataWidget* m_fileMetaDataWidget;
+        };
+#endif
 
         class TransferPanel : public ChatWindow
         {
