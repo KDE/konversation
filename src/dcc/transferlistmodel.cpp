@@ -55,8 +55,11 @@ namespace Konversation
             };
         }
 
-
+#if KDE_IS_VERSION(4, 5, 0)
+        TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawerV3* categoryDrawer, QObject* parent)
+#else
         TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject* parent)
+#endif
             : QItemDelegate(parent)
         {
             m_categoryDrawer = categoryDrawer;

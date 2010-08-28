@@ -23,10 +23,15 @@
 #include <QSortFilterProxyModel>
 
 #include <kio/global.h>
+#include <kdeversion.h>
 
 #include "transfer.h"
 
+#if KDE_IS_VERSION(4, 5, 0)
+class KCategoryDrawerV3;
+#else
 class KCategoryDrawer;
+#endif
 
 namespace Konversation
 {
@@ -78,11 +83,19 @@ namespace Konversation
         class TransferSizeDelegate : public QItemDelegate
         {
         public:
+#if KDE_IS_VERSION(4, 5, 0)
+            explicit TransferSizeDelegate(KCategoryDrawerV3* categoryDrawer, QObject *parent = 0);
+#else
             explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
+#endif
 
             virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
         private:
+#if KDE_IS_VERSION(4, 5, 0)
+            KCategoryDrawerV3* m_categoryDrawer;
+#else
             KCategoryDrawer* m_categoryDrawer;
+#endif
         };
 
         class TransferProgressBarDelegate : public QStyledItemDelegate
