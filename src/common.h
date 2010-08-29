@@ -64,6 +64,7 @@ namespace Konversation
     TextUrlData extractUrlData(const QString& text, const QString& fromNick, bool doUrlRanges,
         bool doHyperlinks, bool useCustomHyperlinkColor);
     bool isUrl(const QString& text);
+    QString stripIrcColorCodes(const QString& text);
 
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
     bool isUtf8(const QByteArray& text);

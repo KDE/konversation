@@ -178,7 +178,7 @@ namespace Konversation
                     urlLen = href.length();
                     pos += chanExp.cap(1).length();
 
-                    insertText = link.arg(href, href);
+                    insertText = link.arg(stripIrcColorCodes(href), href);
                     data.htmlText.replace(pos, urlLen, insertText);
                     pos += insertText.length();
                 }
@@ -221,7 +221,7 @@ namespace Konversation
                 }
 
                 // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
-                insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
+                insertText = link.arg(protocol, QString(stripIrcColorCodes(href)).replace('&', "\x0b"), href) + append;
 
                 data.htmlText.replace(pos, urlLen, insertText);
 
@@ -251,6 +251,13 @@ namespace Konversation
     {
         return urlPattern.exactMatch(text);
     }
+
+    QString stripIrcColorCodes(const QString& text)
+    {
+        static QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
+        return QString(text).remove(colorRegExp);
+    }
+
 
     QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
     {
