@@ -556,8 +556,9 @@ namespace Konversation
             if (transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done)
             {
 #if KDE_IS_VERSION(4, 5, 0)
-                FileMetaDataDialog fileDialog(transfer->getFileURL(), this);
-                fileDialog.exec();
+                QPointer<FileMetaDataDialog> fileDialog = new FileMetaDataDialog(transfer->getFileURL(), this);
+                fileDialog->exec();
+                delete fileDialog;
 #else
                 QStringList infoList;
 

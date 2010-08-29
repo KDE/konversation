@@ -48,7 +48,7 @@ namespace Konversation
         class FileMetaDataDialog : public KDialog
         {
             public:
-                FileMetaDataDialog(const KUrl& file, QWidget *parent = 0)
+                explicit FileMetaDataDialog(const KUrl& file, QWidget *parent = 0)
                     : KDialog(parent)
                 {
                     setCaption( i18nc("File Information for %1", "%1=filename", file.fileName() ) );
@@ -62,7 +62,7 @@ namespace Konversation
 
                     setMainWidget(m_fileMetaDataWidget);
 
-                    //known Qt problem, minium size is not set, limitation of X11 window manager
+                    //known Qt problem, minimum size is not set, limitation of X11 window manager
                     setMinimumSize(QSize(sizeHint().height()*2, sizeHint().width()));
                 }
 
