@@ -1104,7 +1104,7 @@ bool doHighlight, bool parseURL, bool self)
             }
 
             QString bgColor = colorRegExp.cap(3);
-            if (!bgColor.isEmpty() || (bgColor.length() == 1 && bgColor == ","))
+            if (!bgColor.isEmpty() && bgColor != ",")
             {
                 bgColor = bgColor.right(bgColor.length() - 1);
                 int bgColorValue = bgColor.toInt();
