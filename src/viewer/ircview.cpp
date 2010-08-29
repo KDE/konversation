@@ -1028,59 +1028,8 @@ bool doHighlight, bool parseURL, bool self)
         }
     }
 
-    // replace \003 and \017 codes with rich text color codes
-    // captures          1    2                   23 4                   4 3     1
-    QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
-
-    int pos;
-    bool allowColors = Preferences::self()->allowColorCodes();
-    bool firstColor = true;
-    QString colorString;
-
-    while((pos=colorRegExp.indexIn(filteredLine))!=-1)
-    {
-        if(!allowColors)
-        {
-            colorString.clear();
-        }
-        else
-        {
-            colorString = (firstColor) ? QString() : QString("</font>");
-
-            // reset colors on \017 to default value
-            if(colorRegExp.cap(1) == "\017")
-                colorString += "<font color=\""+defaultColor+"\">";
-            else
-            {
-                if(!colorRegExp.cap(2).isEmpty())
-                {
-                    int foregroundColor = colorRegExp.cap(2).toInt();
-                    colorString += "<font color=\"" + Preferences::self()->ircColorCode(foregroundColor).name() + "\">";
-                }
-                else
-                {
-                    colorString += "<font color=\""+defaultColor+"\">";
-                }
-            }
-
-            firstColor = false;
-        }
-
-        filteredLine.replace(pos, colorRegExp.cap(0).length(), colorString);
-    }
-
-    if(!firstColor)
-        filteredLine+="</font>";
-
-    // Replace all text decorations
-    // TODO: \017 should reset all text decorations to plain text
-    replaceDecoration(filteredLine,'\x02','b');
-    replaceDecoration(filteredLine,'\x1d','i');
-    replaceDecoration(filteredLine,'\x13','s');
-    replaceDecoration(filteredLine,'\x15','u');
-    replaceDecoration(filteredLine,'\x16','b');   // should be inverse
-    replaceDecoration(filteredLine,'\x1f','u');
-
+    // parse Urls before replacing color codes with html, as replaced htmlcolors
+    // may cause the url parsing to fail
     if(parseURL)
     {
         if(whoSent.isEmpty())
@@ -1094,6 +1043,101 @@ bool doHighlight, bool parseURL, bool self)
         filteredLine.replace('&', "&amp;");
         filteredLine.replace("\x0b", "&");
     }
+
+    // replace \003 and \017 codes with rich text color codes
+    // captures          1    2                   23 4                   4 3     1
+    QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
+
+    int pos;
+    bool allowColors = Preferences::self()->allowColorCodes();
+    bool firstColor = true;
+    QString colorString;
+    QString lastBgColor;
+
+    while((pos=colorRegExp.indexIn(filteredLine))!=-1)
+    {
+        if(!allowColors)
+        {
+            colorString.clear();
+            lastBgColor.clear();
+        }
+        else
+        {
+            if (firstColor)
+            {
+                colorString.clear();
+            }
+            else
+            {
+                if (lastBgColor.isEmpty())
+                {
+                    colorString = "</font>";
+                }
+                else
+                {
+                    colorString = "</span></font>";
+                }
+            }
+
+            // reset colors on \017 to default value
+            if(colorRegExp.cap(1) == "\017")
+            {
+                colorString += "<font color=\""+defaultColor+"\">";
+                lastBgColor.clear();
+            }
+            // mirc sends it end-custom-color mark
+            else if (colorRegExp.cap(1) == "\003")
+            {
+                lastBgColor.clear();
+            }
+            else
+            {
+                if(!colorRegExp.cap(2).isEmpty())
+                {
+                    int foregroundColor = colorRegExp.cap(2).toInt();
+                    colorString += "<font color=\"" + Preferences::self()->ircColorCode(foregroundColor).name() + "\">";
+                }
+                else
+                {
+                    colorString += "<font color=\""+defaultColor+"\">";
+                }
+            }
+
+            QString bgColor = colorRegExp.cap(3);
+            if (!bgColor.isEmpty() || (bgColor.length() == 1 && bgColor == ","))
+            {
+                bgColor = bgColor.right(bgColor.length() - 1);
+                int bgColorValue = bgColor.toInt();
+                lastBgColor = Preferences::self()->ircColorCode(bgColorValue).name();
+            }
+
+            if (!lastBgColor.isEmpty())
+            {
+                colorString += "<span style=\"background-color:" + lastBgColor + "\">";
+            }
+
+            firstColor = false;
+        }
+
+        filteredLine.replace(pos, colorRegExp.cap(0).length(), colorString);
+    }
+
+    if(!firstColor)
+    {
+        if (!lastBgColor.isEmpty())
+            filteredLine+="</span>";
+
+        filteredLine+="</font>";
+    }
+
+    // Replace all text decorations
+    // TODO: \017 should reset all text decorations to plain text
+    replaceDecoration(filteredLine,'\x02','b');
+    replaceDecoration(filteredLine,'\x1d','i');
+    replaceDecoration(filteredLine,'\x13','s');
+    replaceDecoration(filteredLine,'\x15','u');
+    replaceDecoration(filteredLine,'\x16','b');   // should be inverse
+    replaceDecoration(filteredLine,'\x1f','u');
 
     // Highlight
     QString ownNick;
