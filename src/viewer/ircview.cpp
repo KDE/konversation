@@ -1026,118 +1026,14 @@ bool doHighlight, bool parseURL, bool self)
         {
             kapp->beep();
         }
+        //remove char after beep
+        filteredLine.remove('\x07');
     }
 
-    // parse Urls before replacing color codes with html, as replaced htmlcolors
-    // may cause the url parsing to fail
-    if(parseURL)
-    {
-        if(whoSent.isEmpty())
-            filteredLine = Konversation::tagUrls(filteredLine, m_chatWin->getName());
-        else
-            filteredLine = Konversation::tagUrls(filteredLine, whoSent);
-    }
-    else
-    {
-        // Change & to &amp; to prevent html entities to do strange things to the text
-        filteredLine.replace('&', "&amp;");
-        filteredLine.replace("\x0b", "&");
-    }
-
-    // replace \003 and \017 codes with rich text color codes
-    // captures          1    2                   23 4                   4 3     1
-    QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
-
-    int pos;
-    bool allowColors = Preferences::self()->allowColorCodes();
-    bool firstColor = true;
-    QString colorString;
-    QString lastBgColor;
-
-    while((pos=colorRegExp.indexIn(filteredLine))!=-1)
-    {
-        if(!allowColors)
-        {
-            colorString.clear();
-            lastBgColor.clear();
-        }
-        else
-        {
-            if (firstColor)
-            {
-                colorString.clear();
-            }
-            else
-            {
-                if (lastBgColor.isEmpty())
-                {
-                    colorString = "</font>";
-                }
-                else
-                {
-                    colorString = "</span></font>";
-                }
-            }
-
-            // reset colors on \017 to default value
-            if(colorRegExp.cap(1) == "\017")
-            {
-                colorString += "<font color=\""+defaultColor+"\">";
-                lastBgColor.clear();
-            }
-            // mirc sends it end-custom-color mark
-            else if (colorRegExp.cap(1) == "\003")
-            {
-                lastBgColor.clear();
-            }
-            else
-            {
-                if(!colorRegExp.cap(2).isEmpty())
-                {
-                    int foregroundColor = colorRegExp.cap(2).toInt();
-                    colorString += "<font color=\"" + Preferences::self()->ircColorCode(foregroundColor).name() + "\">";
-                }
-                else
-                {
-                    colorString += "<font color=\""+defaultColor+"\">";
-                }
-            }
-
-            QString bgColor = colorRegExp.cap(3);
-            if (!bgColor.isEmpty() && bgColor != ",")
-            {
-                bgColor = bgColor.right(bgColor.length() - 1);
-                int bgColorValue = bgColor.toInt();
-                lastBgColor = Preferences::self()->ircColorCode(bgColorValue).name();
-            }
-
-            if (!lastBgColor.isEmpty())
-            {
-                colorString += "<span style=\"background-color:" + lastBgColor + "\">";
-            }
-
-            firstColor = false;
-        }
-
-        filteredLine.replace(pos, colorRegExp.cap(0).length(), colorString);
-    }
-
-    if(!firstColor)
-    {
-        if (!lastBgColor.isEmpty())
-            filteredLine+="</span>";
-
-        filteredLine+="</font>";
-    }
-
-    // Replace all text decorations
-    // TODO: \017 should reset all text decorations to plain text
-    replaceDecoration(filteredLine,'\x02','b');
-    replaceDecoration(filteredLine,'\x1d','i');
-    replaceDecoration(filteredLine,'\x13','s');
-    replaceDecoration(filteredLine,'\x15','u');
-    replaceDecoration(filteredLine,'\x16','b');   // should be inverse
-    replaceDecoration(filteredLine,'\x1f','u');
+    QTime time;
+    time.start();
+    filteredLine = ircTextToHtml(filteredLine,  parseURL, defaultColor, whoSent, true);
+    kDebug() << "took" << QString::number(time.elapsed());
 
     // Highlight
     QString ownNick;
@@ -1241,7 +1137,670 @@ bool doHighlight, bool parseURL, bool self)
 
     // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
     filteredLine.replace("  "," \xA0");
+//     kDebug() << "filteredLine-final" << filteredLine;
     return filteredLine;
+}
+
+QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags)
+{
+    TextHtmlData data;
+    data.defaultColor = defaultColor;
+    QString htmlText(text);
+    /// NOTE: it is important to copy it, do not use colorRegExp from common.h directly
+    /// as multiple indexIn may be executed at the same time
+    QRegExp ircRichtextRegExp(colorRegExp);
+
+    int pos = 0;
+    int urlPos = -1;
+    bool allowColors = Preferences::self()->allowColorCodes();
+    QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
+    int urlCount = 0;
+    int channelCount = 0;
+
+    QString fromNick;
+    TextUrlData urlData;
+    TextChannelData channelData;
+    if (parseURL)
+    {
+        // mark urls and channels, we can not replace it afterwards, we have to
+        // generate valid html in one run, as we need to know which tags we have to close
+        // and which ones we must reopen
+        // I use \x11(for urls) and \x12(for channels) for this job, as they are unused
+        //TODO find a less hacky solution
+        QString strippedText(removeIrcMarkup(htmlText));
+        urlData = extractUrlData(strippedText);
+        if (!urlData.urlRanges.isEmpty())
+        {
+            // we detected the urls on a clean richtext-char-less text
+            // to make 100% sure we get the correct urls, but as a result
+            // we have to map them back to the original url
+            adjustUrlRanges(&urlData, htmlText, strippedText);
+
+            insertMarkers(htmlText, urlData.urlRanges, "\x11");
+
+            //Only set fromNick if we actually have a url,
+            //yes this is a ultra-minor-optimization
+            if (whoSent.isEmpty())
+                fromNick = m_chatWin->getName();
+            else
+                fromNick = whoSent;
+        }
+
+        channelData = extractChannelData(htmlText);
+        insertMarkers(htmlText, channelData.channelRanges, "\x12");
+    }
+    else
+    {
+        // Change & to &amp; to prevent html entities to do strange things to the text
+        htmlText.replace('&', "&amp;");
+        htmlText.replace("\x0b", "&");
+    }
+
+//     kDebug() << "prehtmlText" << htmlText;
+
+    QRegExp urlAndChannelMarker("(\x11|\x12)");
+
+//     // find the next most relevant position, for urls or ircrichtexts
+    if (parseURL)
+        urlPos = urlAndChannelMarker.indexIn(htmlText, pos);
+    pos = ircRichtextRegExp.indexIn(htmlText, pos);
+    if (pos > -1 && urlPos > -1)
+    {
+        pos = qMin(pos, urlPos);
+    }
+    else
+    {
+        pos = qMax(pos, urlPos);
+    }
+//     kDebug() << "pos" << pos;
+
+    while (pos > -1 && pos < htmlText.length())
+    {
+//         kDebug() << "htmlText" << htmlText;
+//         kDebug() << "pos:" << pos;
+//         kDebug() << "irc richtext:" << QString::number(htmlText.at(pos).toAscii(), 16);
+        switch (htmlText.at(pos).toAscii())
+        {
+            case '\x02': //bold
+                pos += defaultHtmlReplace(htmlText, &data, pos, "b");
+                break;
+            case '\x1d': //italic
+                pos += defaultHtmlReplace(htmlText, &data, pos, "i");
+                break;
+            case '\x15': //mirc underline
+            case '\x1f': //kvirc underline
+                pos += defaultHtmlReplace(htmlText, &data, pos, "u");
+                break;
+            case '\x13': //strikethru
+                pos += defaultHtmlReplace(htmlText, &data, pos, "s");
+                break;
+            case '\x03': //color
+                {
+                    //NOTE: copy is important as colorOnlyRegExp static from common.h
+                    // and in a subtoutine the indexIn could be used again which leads
+                    // to different cap() and matchedLength() results
+                    QRegExp ircColorRegExp(colorOnlyRegExp);
+                    int index = ircColorRegExp.indexIn(htmlText, pos);
+                    Q_UNUSED(index);
+                    QString colorMatch(ircColorRegExp.cap(0));
+                    if (!allowColors)
+                    {
+                        int colorLen = colorMatch.length();
+                        htmlText.remove(pos, colorLen);
+                        break;
+                    }
+                    QString colorString;
+
+//                     kDebug() << "colorMatch" << colorMatch;
+                    //TODO check if \x11 \017 is really valid here
+                    // check for color reset conditions
+                    if (colorMatch == "\x03" || colorMatch == "\x11")
+                    {
+                        //in reverse mode, just reset both colors
+                        //color tags are already closed before the reverse start
+                        if (data.reverse)
+                        {
+                            data.lastFgColor.clear();
+                            data.lastBgColor.clear();
+                        }
+                        else
+                        {
+                            if (data.openHtmlTags.contains("font") &&
+                                data.openHtmlTags.contains("span"))
+                            {
+                                colorString += closeToTagString(&data, "span");
+                                data.lastBgColor.clear();
+                                colorString += closeToTagString(&data, "font");
+                                data.lastFgColor.clear();
+                            }
+                            else if (data.openHtmlTags.contains("font"))
+                            {
+                                colorString += closeToTagString(&data, "font");
+                                data.lastFgColor.clear();
+                            }
+                        }
+                        htmlText.replace(pos, colorMatch.length(), colorString);
+                        pos += colorString.length();
+                        break;
+                    }
+
+                    //extract foreground and background Color
+                    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(3));
+                    if (!fgColor.isEmpty())
+                    {
+                        int foregroundColor = fgColor.toInt();
+                        fgColor = Preferences::self()->ircColorCode(foregroundColor).name();
+                    }
+                    if (!bgColor.isEmpty())
+                    {
+                        if (bgColor == ",")
+                        {
+                            bgColor.clear();
+                        }
+                        else
+                        {
+                            bgColor = bgColor.right(bgColor.length() - 1);
+                            int backgroundColor = bgColor.toInt();
+                            bgColor = Preferences::self()->ircColorCode(backgroundColor).name();
+                        }
+                    }
+
+//                     kDebug() << "fgColor" << fgColor;
+//                     kDebug() << "bgColor" << bgColor;
+
+                    // if we are in reverse mode, just remember the new colors
+                    if (data.reverse)
+                    {
+                        if (!fgColor.isEmpty())
+                        {
+                            data.lastFgColor = fgColor;
+                            if (!bgColor.isEmpty())
+                            {
+                                data.lastBgColor = bgColor;
+                            }
+                        }
+                    }
+                    // do we have a new fgColor?
+                    // NOTE: there is no new bgColor is there is no fgColor
+                    else if (!fgColor.isEmpty())
+                    {
+                        if (data.openHtmlTags.contains("font") &&
+                            data.openHtmlTags.contains("span"))
+                        {
+                            colorString += closeToTagString(&data, "span");
+                            colorString += closeToTagString(&data, "font");
+                        }
+                        else if (data.openHtmlTags.contains("font"))
+                        {
+                            colorString += closeToTagString(&data, "font");
+                        }
+                        data.lastFgColor = fgColor;
+                        if (!bgColor.isEmpty())
+                            data.lastBgColor = bgColor;
+
+                        if (!data.lastFgColor.isEmpty())
+                        {
+                            colorString += fontColorOpenTag(data.lastFgColor);
+                            data.openHtmlTags.append("font");
+                            if (!data.lastBgColor.isEmpty())
+                            {
+                                colorString += spanColorOpenTag(data.lastBgColor);
+                                data.openHtmlTags.append("span");
+                            }
+                        }
+                    }
+                    htmlText.replace(pos, colorMatch.length(), colorString);
+                    pos += colorString.length();
+                    break;
+                }
+                break;
+            case '\x0f': //reset to default
+                {
+                    QString closeText;
+                    while (!data.openHtmlTags.isEmpty())
+                    {
+                        closeText += "</" + data.openHtmlTags.takeLast() + '>';
+                    }
+                    data.lastBgColor.clear();
+                    data.lastFgColor.clear();
+                    data.reverse = false;
+//                     kDebug() << "closeText" << closeText;
+//                     kDebug() << "replace length" << ircRichtextRegExp.cap(0).length();
+//                     kDebug() << "replace text" << ircRichtextRegExp.cap(0);
+                    htmlText.replace(pos, 1, closeText);
+                    kDebug() << "closeText.length();" << closeText.length();
+                    pos += closeText.length();
+                }
+                break;
+            case '\x16': //reverse
+                {
+                    // treat inverse as color and block it if colors are not allowed
+                    if (!allowColors)
+                    {
+//                         kDebug() << "replace length" << ircRichtextRegExp.cap(0).length();
+//                         kDebug() << "replace text" << ircRichtextRegExp.cap(0);
+                        htmlText.remove(pos, ircRichtextRegExp.cap(0).length());
+                        break;
+                    }
+
+                    QString colorString;
+
+                    // close current color strings and open reverse tags
+                    if (!data.reverse)
+                    {
+                        if (data.openHtmlTags.contains("span"))
+                        {
+                            colorString += closeToTagString(&data, "span");
+                        }
+                        if (data.openHtmlTags.contains("font"))
+                        {
+                            colorString += closeToTagString(&data, "font");
+                        }
+                        data.reverse = true;
+                        colorString += fontColorOpenTag(Preferences::self()->color(Preferences::TextViewBackground).name());
+                        data.openHtmlTags.append("font");
+                        colorString += spanColorOpenTag(defaultColor);
+                        data.openHtmlTags.append("span");
+                    }
+                    else
+                    {
+                        // if reset reverse, close reverse and set old fore- and
+                        // back-groundcolor if set in data
+                        colorString += closeToTagString(&data, "span");
+                        colorString += closeToTagString(&data, "font");
+                        data.reverse = false;
+                        if (!data.lastFgColor.isEmpty())
+                        {
+                            colorString += fontColorOpenTag(data.lastFgColor);
+                            data.openHtmlTags.append("font");
+                            if (!data.lastBgColor.isEmpty())
+                            {
+                                colorString += spanColorOpenTag(data.lastBgColor);
+                                data.openHtmlTags.append("span");
+                            }
+                        }
+                    }
+                    htmlText.replace(pos, 1, colorString);
+                    pos += colorString.length();
+                }
+                break;
+            case '\x11': //url start
+                {
+                    QString fixedUrl = urlData.fixedUrls.at(urlCount);
+                    // if a channel is also an url, like #www.test.de
+                    // we inserted a special marker to find the url again,
+                    // remove the marker and skip the channel, as the text is now cleary marked as url or channel
+                    fixedUrl.remove('\x12');
+
+                    const QPair<int, int>& range = urlData.urlRanges.at(urlCount);
+                    QString oldUrl = htmlText.mid(pos+1, range.second);
+//                     kDebug() << "oldUrl" << oldUrl;
+                    QString strippedUrl = removeIrcMarkup(oldUrl).remove('\x12');
+                    if (strippedUrl.contains('\x12'))
+                    {
+                        ++channelCount;
+                        strippedUrl.remove('\x12');
+                    }
+
+                    QString closeTagsString(closeTags(&data));
+                    QString colorCodes = extractColorCodes(oldUrl);
+                    colorCodes = removeDuplicateCodes(colorCodes, &data);
+
+                    QString link("%1<a href=\"%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+
+                    link = link.arg(closeTagsString, fixedUrl, strippedUrl, openTags(&data, 0), colorCodes);
+//                     kDebug() << link;
+                    htmlText.replace(pos, oldUrl.length() + 1, link);
+
+                    QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
+                                              Q_ARG(QString, fromNick), Q_ARG(QString, fixedUrl), Q_ARG(QDateTime, QDateTime::currentDateTime()));
+
+                    pos += link.length() - colorCodes.length();
+//                     kDebug()  << "pos";
+                    ++urlCount;
+                }
+                break;
+            case '\x12': //channel start
+                {
+                    QString fixedChannel = channelData.fixedChannels.at(channelCount);
+                    // if a channel is also an url, like #www.test.de
+                    // we inserted a special marker to find the url again,
+                    // remove the marker and skip the url, as the text is now cleary marked as url or channel
+                    fixedChannel.remove('\x11');
+
+                    const QPair<int, int>& range = channelData.channelRanges.at(channelCount);
+                    QString oldChannel = htmlText.mid(pos+1, range.second);
+                    QString strippedChannel = removeIrcMarkup(oldChannel);
+                    if (strippedChannel.contains('\x11'))
+                    {
+                        ++urlCount;
+                        strippedChannel.remove('\x11');
+                    }
+                    QString colorCodes = extractColorCodes(oldChannel);
+
+                    QString link("%1<a href=\"#%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+
+                    link = link.arg(closeTags(&data), fixedChannel, strippedChannel, openTags(&data, 0), colorCodes);
+                    htmlText.replace(pos, oldChannel.length() + 1, link);
+                    pos += link.length() - colorCodes.length();
+                    ++channelCount;
+                }
+                break;
+            default:
+//                 kDebug() << "unhandled irc richtext:" << QString::number(htmlText.at(pos).toAscii(), 16);
+//                 kDebug() << "match" << ircRichtextRegExp.cap(0);
+//                 kDebug() << "length" << ircRichtextRegExp.cap(0).length();
+                htmlText.remove(pos, ircRichtextRegExp.cap(0).length());
+        }
+
+//         find the next most relevant position, for urls or ircrichtexts
+        if (parseURL)
+            urlPos = urlAndChannelMarker.indexIn(htmlText, pos);
+        pos = ircRichtextRegExp.indexIn(htmlText, pos);
+        if (pos > -1 && urlPos > -1)
+        {
+            pos = qMin(pos, urlPos);
+        }
+        else
+        {
+            pos = qMax(pos, urlPos);
+        }
+//         kDebug() << "pos" << pos;
+    }
+
+    if (parseURL)
+    {
+        // Change & to &amp; to prevent html entities to do strange things to the text
+        htmlText.replace('&', "&amp;");
+        htmlText.replace("\x0b", "&");
+    }
+
+    if (closeAllTags)
+    {
+        htmlText += closeTags(&data);
+    }
+
+    //data.htmlText = htmlText;
+//     kDebug() << "afthtmlText" << htmlText;
+    return htmlText;
+}
+
+int IRCView::defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, const QString& tag)
+{
+    QString replace;
+    if (data->openHtmlTags.contains(tag))
+    {
+        replace = closeToTagString(data, tag);
+    }
+    else
+    {
+        data->openHtmlTags.append(tag);
+        replace = '<'+tag+'>';
+    }
+    htmlText.replace(pos, 1, replace);
+    kDebug() << "length -1" << replace.length() - 1;
+    return replace.length();
+}
+
+QString IRCView::closeToTagString(TextHtmlData* data, const QString& _tag)
+{
+    QString ret;
+    QString tag;
+    int i = data->openHtmlTags.count() - 1;
+    //close all tags to _tag
+    for ( ; i >= 0 ; --i)
+    {
+        tag = data->openHtmlTags.at(i);
+        ret += "</" + tag + '>';
+        if (tag == _tag)
+        {
+            data->openHtmlTags.removeAt(i);
+            break;
+        }
+    }
+
+    // reopen relevant tags
+    ret += openTags(data, i);
+
+    return ret;
+}
+
+QString IRCView::openTags(TextHtmlData* data, int from)
+{
+    QString ret, tag;
+    int i = from;
+    for ( ;  i < data->openHtmlTags.count(); ++i)
+    {
+        tag = data->openHtmlTags.at(i);
+        if (tag == "font")
+        {
+            if (data->reverse)
+            {
+                ret += fontColorOpenTag(Preferences::self()->color(Preferences::TextViewBackground).name());
+            }
+            else
+            {
+                ret += fontColorOpenTag(data->lastFgColor);
+            }
+        }
+        else if (tag == "span")
+        {
+            if (data->reverse)
+            {
+                ret += spanColorOpenTag(data->defaultColor);
+            }
+            else
+            {
+                ret += spanColorOpenTag(data->lastBgColor);
+            }
+        }
+        else
+        {
+            ret += '<' + tag + '>';
+        }
+    }
+    return ret;
+}
+
+QString IRCView::closeTags(TextHtmlData* data)
+{
+    QString ret;
+    QListIterator< QString > i(data->openHtmlTags);
+    i.toBack();
+    while (i.hasPrevious())
+    {
+        ret += "</" + i.previous() + '>';
+    }
+    return ret;
+}
+
+QString IRCView::fontColorOpenTag(const QString& fgColor)
+{
+    return "<font color=\"" + fgColor + "\">";
+}
+
+QString IRCView::spanColorOpenTag(const QString& bgColor)
+{
+    return "<span style=\"background-color:" + bgColor + "\">";
+}
+
+QString& IRCView::insertMarkers(QString& text, QList< QPair< int, int > > ranges, const QString& marker)
+{
+    QListIterator< QPair< int, int > > i(ranges);
+    i.toBack();
+    while (i.hasPrevious())
+    {
+        text.insert(i.previous().first, marker);
+    }
+    return text;
+}
+
+QString IRCView::removeDuplicateCodes(const QString& _codes, TextHtmlData* data)
+{
+    int pos = 0;
+    QString ret;
+    QString codes(_codes);
+    // NOTE:copy me, do not use me directly from common.h
+    QRegExp ircRichtextRegExp(colorRegExp);
+    while ((pos = ircRichtextRegExp.indexIn(codes)) >= 0)
+    {
+        switch (codes.at(pos).toAscii())
+        {
+            case '\x02': //bold
+                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "b");
+                break;
+            case '\x1d': //italic
+                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "i");
+                break;
+            case '\x15': //mirc underline
+            case '\x1f': //kvirc underline
+                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "u");
+                break;
+            case '\x13': //strikethru
+                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "s");
+                break;
+            case '\x0f': //reset to default
+                data->openHtmlTags.clear();
+                data->lastBgColor.clear();
+                data->lastFgColor.clear();
+                data->reverse = false;
+                codes.remove(pos, ircRichtextRegExp.matchedLength());
+                break;
+
+                // FIXME is not going to work like this, as we we need at least
+                // one tag in out list
+//             case '\x16': //reverse
+//                 data->reverse = !data->reverse;
+//                 codes.remove(pos, colorRegExp.matchedLength());
+//                 break;
+            case '\x03': //color
+                {
+                    //NOTE: copy is important as colorOnlyRegExp static from common.h
+                    // and in a subtoutine the indexIn could be used again which leads
+                    // to different cap() and matchedLength() results
+                    QRegExp ircColorRegExp(colorOnlyRegExp);
+                    int index = ircColorRegExp.indexIn(codes);
+                    Q_UNUSED(index);
+
+                    QString colorMatch(ircColorRegExp.cap(0));
+//                     kDebug() << "colorMatch" << colorMatch;
+                    //TODO check if \x11 \017 is really valid here
+                    // check for color reset conditions
+                    if (colorMatch == "\x03" || colorMatch == "\x11")
+                    {
+//                         kDebug() << "color is reset thing";
+                        if (!data->lastBgColor.isEmpty())
+                        {
+                            data->lastBgColor.clear();
+                            data->openHtmlTags.removeOne("span");
+                        }
+                        if (!data->lastFgColor.isEmpty())
+                        {
+                            data->lastFgColor.clear();
+                            data->openHtmlTags.removeOne("font");
+                        }
+//                         kDebug() << "removelength" << ircRichtextRegExp.matchedLength();
+                        codes.remove(pos, ircRichtextRegExp.matchedLength());
+                        break;
+                    }
+
+                    //extract foreground and background Color
+                    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(3));
+                    if (!fgColor.isEmpty())
+                    {
+                        int foregroundColor = fgColor.toInt();
+                        fgColor = Preferences::self()->ircColorCode(foregroundColor).name();
+                    }
+                    if (!bgColor.isEmpty())
+                    {
+                        if (bgColor == ",")
+                        {
+                            bgColor.clear();
+                        }
+                        else
+                        {
+                            bgColor = bgColor.right(bgColor.length() - 1);
+                            int backgroundColor = bgColor.toInt();
+                            bgColor = Preferences::self()->ircColorCode(backgroundColor).name();
+                        }
+                    }
+
+                    if (!fgColor.isEmpty())
+                    {
+                        data->lastFgColor = fgColor;
+                        data->openHtmlTags.append("font");
+                        if (!bgColor.isEmpty())
+                        {
+                            data->lastBgColor = bgColor;
+                            data->openHtmlTags.append("span");
+                        }
+                    }
+
+                    codes.remove(pos, ircRichtextRegExp.matchedLength());
+                }
+                break;
+            default:
+//                 kDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toAscii(), 16);
+                ret += codes.mid(pos, ircRichtextRegExp.matchedLength());
+                codes.remove(pos, ircRichtextRegExp.matchedLength());
+        }
+    }
+
+    return ret;
+}
+
+void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, QString& codes, int pos, int length, const QString& tag)
+{
+    if (data->openHtmlTags.contains(tag))
+    {
+//         kDebug() << "removing tag" << tag;
+        data->openHtmlTags.removeOne(tag);
+    }
+    else
+    {
+//         kDebug() << "adding tag" << tag;
+        data->openHtmlTags.append(tag);
+    }
+    codes.remove(pos, length);
+}
+
+void IRCView::adjustUrlRanges(TextUrlData* urlData, const QString& richtext, const QString& strippedText)
+{
+    QRegExp ircRichtextRegExp(colorRegExp);
+    int start = 0, j;
+    int i = 0;
+    QString url;
+    int htmlTextLength = richtext.length(), urlRanges = urlData->urlRanges.count();
+    for (int x = 0; x < urlRanges; ++x)
+    {
+        j = 0;
+        const QPair<int, int>& range = urlData->urlRanges.at(x);
+        url = strippedText.mid(range.first, range.second);
+        for ( ; i < htmlTextLength; ++i)
+        {
+            if (richtext.at(i) == url.at(j))
+            {
+                if (j == 0)
+                    start = i;
+                ++j;
+                if (j == url.length())
+                {
+                    urlData->urlRanges[x].first = start;
+                    urlData->urlRanges[x].second = i - start + 1;
+                    break;
+                }
+            }
+            else if (ircRichtextRegExp.exactMatch(richtext.at(i)))
+            {
+                ircRichtextRegExp.indexIn(richtext, i);
+                i += ircRichtextRegExp.matchedLength() - 1;
+            }
+            else
+            {
+                j = 0;
+            }
+        }
+    }
 }
 
 void IRCView::resizeEvent(QResizeEvent *event)

@@ -63,6 +63,8 @@ namespace Konversation
             void saveLinkAs();
 
         private:
+            inline QString tagUrls(const QString& text, const QString& sender);
+
             Server* m_server;
             QString m_channelName;
 

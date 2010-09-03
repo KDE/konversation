@@ -25,11 +25,6 @@
 
 namespace Konversation
 {
-
-    static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    static QRegExp urlPattern(QString("\\b((?:(?:([a-z][\\w-]+:/{1,3})|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|\\}\\]|[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6])|[a-z0-9.\\-+_]+@[a-z0-9.\\-]+[.][a-z]{1,5}[^\\s/`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]))").arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019)));
-    static QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
-
     void initChanModesHash()
     {
         QHash<QChar,QString> myHash;
@@ -59,12 +54,9 @@ namespace Konversation
 
     QString removeIrcMarkup(const QString& text)
     {
-        QString escaped = text;
+        QString escaped(text);
         // Escape text decoration
         escaped.remove(colorRegExp);
-
-        // Remove Mirc's 0x03 characters too, they show up as rectangles
-        escaped.remove(QChar(0x03));
 
         return escaped;
     }
@@ -130,120 +122,101 @@ namespace Konversation
         return line;
     }
 
-    QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor)
-    {
-        TextUrlData data = extractUrlData(text, fromNick, false, true, useCustomColor);
-
-        return data.htmlText;
-    }
-
     QList<QPair<int, int> > getUrlRanges(const QString& text)
     {
-        TextUrlData data = extractUrlData(text, QString(), true, false, false);
+        TextUrlData data = extractUrlData(text, false);
 
         return data.urlRanges;
     }
 
-    TextUrlData extractUrlData(const QString& text, const QString& fromNick, bool doUrlRanges,
-        bool doHyperlinks, bool useCustomHyperlinkColor)
+    QList< QPair< int, int > > getChannelRanges(const QString& text)
+    {
+        TextChannelData data = extractChannelData(text, false);
+
+        return data.channelRanges;
+    }
+
+    TextUrlData extractUrlData(const QString& text, bool doUrlFixup)
     {
         TextUrlData data;
-        data.htmlText = text;
+        QString htmlText(text);
+        urlPattern.setCaseSensitivity(Qt::CaseInsensitive);
 
         int pos = 0;
         int urlLen = 0;
 
-        QString link;
-        QString insertText;
         QString protocol;
         QString href;
-        QString append;
 
-        urlPattern.setCaseSensitivity(Qt::CaseInsensitive);
-
-        if (doHyperlinks)
-        {
-            QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
-
-            if (useCustomHyperlinkColor)
-                link = "<a href=\"#%1\" style=\"color:" + linkColor + "\">%2</a>";
-            else
-                link = "<a href=\"#%1\">%2</a>";
-
-            if (data.htmlText.contains("#"))
-            {
-                while ((pos = chanExp.indexIn(data.htmlText, pos)) >= 0)
-                {
-                    href = chanExp.cap(2);
-                    urlLen = href.length();
-                    pos += chanExp.cap(1).length();
-
-                    insertText = link.arg(stripIrcColorCodes(href), href);
-                    data.htmlText.replace(pos, urlLen, insertText);
-                    pos += insertText.length();
-                }
-            }
-
-            if (useCustomHyperlinkColor)
-                link = "<a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a>";
-            else
-                link = "<a href=\"%1%2\">%3</a>";
-
-            pos = 0;
-            urlLen = 0;
-        }
-
-        while ((pos = urlPattern.indexIn(data.htmlText, pos)) >= 0)
+        while ((pos = urlPattern.indexIn(htmlText, pos)) >= 0)
         {
             urlLen = urlPattern.matchedLength();
+            href = htmlText.mid(pos, urlLen);
 
-            // check if the matched text is already replaced as a channel
-            if (doHyperlinks && data.htmlText.lastIndexOf("<a", pos ) > data.htmlText.lastIndexOf("</a>", pos))
+//             kDebug() << "urlPattern.cap(0)" << urlPattern.cap(0);
+//             kDebug() << "urlPattern.cap(1)" << urlPattern.cap(1);
+//             kDebug() << "urlPattern.cap(2)" << urlPattern.cap(2);
+//             kDebug() << "href" << href;
+
+            data.urlRanges << QPair<int, int>(pos, href.length());
+            pos += href.length();
+
+            if (doUrlFixup)
             {
-                ++pos;
-                continue;
-            }
-
-            protocol.clear();
-            href = data.htmlText.mid(pos, urlLen);
-            append.clear();
-
-            if (doHyperlinks)
-            {
+                protocol.clear();
                 if (urlPattern.cap(2).isEmpty())
                 {
-                    if (urlPattern.cap(1).contains('@'))
+                    QString urlPatternCap1(urlPattern.cap(1));
+                    if (urlPatternCap1.contains('@'))
                         protocol = "mailto:";
-                    else if (urlPattern.cap(1).startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
+                    else if (urlPatternCap1.startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
                         protocol = "ftp://";
                     else
                         protocol = "http://";
                 }
 
-                // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
-                insertText = link.arg(protocol, QString(stripIrcColorCodes(href)).replace('&', "\x0b"), href) + append;
-
-                data.htmlText.replace(pos, urlLen, insertText);
-
-                QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
-                    Q_ARG(QString, fromNick), Q_ARG(QString, protocol+href), Q_ARG(QDateTime, QDateTime::currentDateTime()));
+                href = protocol + removeIrcMarkup(href);
+                data.fixedUrls.append(href);
             }
-            else
-                insertText = href + append;
-
-            if (doUrlRanges)
-                data.urlRanges << QPair<int, int>(pos, href.length());
-
-            pos += insertText.length();
         }
+        return data;
+    }
 
-        if (doHyperlinks)
+    TextChannelData extractChannelData(const QString& text, bool doChannelFixup)
+    {
+        TextChannelData data;
+        QString ircText(text);
+
+        int pos = 0;
+        int chanLen = 0;
+        QString channel;
+
+        while ((pos = chanExp.indexIn(ircText, pos)) >= 0)
         {
-            // Change & to &amp; to prevent html entities to do strange things to the text
-            data.htmlText.replace('&', "&amp;");
-            data.htmlText.replace("\x0b", "&");
-        }
+            channel = chanExp.cap(2);
+            chanLen = channel.length();
 
+//             kDebug() << "chanExp.cap(0)" << chanExp.cap(0);
+//             kDebug() << "chanExp.cap(1)" << chanExp.cap(1);
+//             kDebug() << "chanExp.cap(2)" << chanExp.cap(2);
+//             kDebug() << "text.mid(pos, chanLen)" << text.mid(pos, chanLen);
+
+            // we want the pos where #channel starts
+            // indexIn gives us the first match and the first match may be
+            // "#test", " #test" or " \"test", so the first Index is off by some chars
+            pos = chanExp.pos(2);
+
+//             kDebug() << "pos" << pos;
+
+            data.channelRanges << QPair<int, int>(pos, chanLen);
+            pos += chanLen;
+
+            if (doChannelFixup)
+            {
+                channel = removeIrcMarkup(channel);
+                data.fixedChannels.append(channel);
+            }
+        }
         return data;
     }
 
@@ -252,12 +225,20 @@ namespace Konversation
         return urlPattern.exactMatch(text);
     }
 
-    QString stripIrcColorCodes(const QString& text)
+    QString extractColorCodes(const QString& _text)
     {
-        static QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
-        return QString(text).remove(colorRegExp);
+        QString text(_text);
+        int pos = 0;
+        QString ret;
+        QString match;
+        while ((pos = colorRegExp.indexIn(text, pos)) >= 0)
+        {
+            match = colorRegExp.cap(0);
+            ret += match;
+            text.remove(pos, match.length());
+        }
+        return ret;
     }
-
 
     QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
     {

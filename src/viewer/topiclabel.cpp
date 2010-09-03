@@ -173,7 +173,7 @@ namespace Konversation
         text.replace('<', "\x0blt;"). // tagUrls will replace \x0b with &
             replace('>', "\x0bgt;");
 
-        text = tagUrls(text, m_channelName, false);
+        text = tagUrls(text, m_channelName);
 
         if(height() < (fontMetrics().lineSpacing() * 2))
         {
@@ -331,6 +331,43 @@ namespace Konversation
             return;
 
         KIO::copy(srcUrl, saveUrl);
+    }
+
+    QString TopicLabel::tagUrls(const QString& text, const QString& sender)
+    {
+        QString htmlText(removeIrcMarkup(text));
+        QString link("<a href=\"#%1\">%2</a>");
+
+        QString original;
+        TextChannelData channelData = extractChannelData(htmlText);
+
+        for (int i = channelData.channelRanges.count()-1; i >= 0 ; --i)
+        {
+            const QPair <int, int>& range = channelData.channelRanges.at(i);
+            original = htmlText.mid(range.first, range.second);
+            htmlText.replace(range.first, range.second, link.arg(channelData.fixedChannels.at(i), original));
+        }
+
+        link = "<a href=\"%1\">%2</a>";
+        TextUrlData urlData = extractUrlData(htmlText);
+        for (int i = urlData.urlRanges.count()-1; i >= 0 ; --i)
+        {
+            const QPair <int, int>& range = urlData.urlRanges.at(i);
+
+            int pos = range.first;
+            // check if the matched text is already replaced as a channel
+            if (htmlText.lastIndexOf("<a", pos ) > htmlText.lastIndexOf("</a>", pos))
+            {
+                continue;
+            }
+            original = htmlText.mid(range.first, range.second);
+            QString fixedUrl = urlData.fixedUrls.at(i);
+            htmlText.replace(range.first, range.second, link.arg(fixedUrl, original));
+
+            QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
+                Q_ARG(QString, sender), Q_ARG(QString, fixedUrl), Q_ARG(QDateTime, QDateTime::currentDateTime()));
+        }
+        return htmlText;
     }
 }
 

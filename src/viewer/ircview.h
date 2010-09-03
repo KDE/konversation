@@ -43,6 +43,22 @@ class IrcViewMarkerLine: public QObject, public QTextObjectInterface
         virtual QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format);
 };
 
+/// Helper struct which remembers the openHtmlTags, the fore and
+/// background color, if the reverse char is set and the defaultcolor (for reverse)
+/// while the ircrichtext -> html generation is in progress
+struct TextHtmlData
+{
+    TextHtmlData()
+        : reverse(false)
+    {
+    }
+
+    QList<QString> openHtmlTags;
+    QString lastFgColor;
+    QString lastBgColor;
+    bool reverse;
+    QString defaultColor;
+};
 
 class IRCView : public KTextBrowser
 {
@@ -236,6 +252,62 @@ class IRCView : public KTextBrowser
 
         void replaceDecoration(QString& line,char decoration,char replacement);
 
+    private:
+
+        /// Returns a string where all irc-richtext chars are replaced with proper
+        /// html tags and all urls are parsed if parseURL is true
+        inline QString ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags = true);
+
+        /// Returns a string that closes all open html tags to <parm>tag</parm>
+        /// The closed tag is removed from opentagList in data
+        inline QString closeToTagString(TextHtmlData* data, const QString& tag);
+
+        /// Returns a html open span line with given backgroundcolor style
+        inline QString spanColorOpenTag(const QString& bgColor);
+
+        /// Returns a html open font line with given foregroundcolor
+        inline QString fontColorOpenTag(const QString& fgColor);
+
+        /// Insert a string that closes as open html tags to <parm>tag</parm> and reopen the remaining ones.
+        /// For the next example I will use [b] as boldchar and [i] as italic char
+        /// If are currently working on text like
+        /// "aa<b>bb<i>cc[b]dd[i]ee"
+        /// it would generate for the next [b], "</i></b><i>".
+        /// <i> is reopened as it is still relevant
+        /// Returns the Length of the inserted String - replaced char(s)
+        inline int defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, const QString& tag);
+
+        /// Injects a given <parm>marker</parm> at the beginning of each range in the text.
+        inline QString& insertMarkers(QString& text, QList< QPair< int, int > > ranges, const QString& marker);
+
+        /// Returns a string that opens all tags starting from index <parm>from</parm>
+        inline QString openTags(TextHtmlData* data, int from = 0);
+
+        /// Returns a string that closes all open tags
+        /// but does not remove them from the opentaglist in data
+        inline QString closeTags(TextHtmlData* data);
+
+        /// This function looks in <parm>codes</parm> which tags it open/closes
+        /// and appends/removes them from opentagList in <parm>data</parm>.
+        /// This way we avoid pointless empty tags after the url like "<b></b>"
+        /// The returned string consists of all codes that this function could not deal with,
+        /// which is the best case empty.
+        QString removeDuplicateCodes(const QString& codes, TextHtmlData* data);
+
+        /// Helperfunction for removeDuplicateCodes, for dealing with simple irc richtext
+        /// chars as bold, italic, underline and strikethrou.
+        /// The default behaivor is to look if the <parm>tag</parm> is already in the
+        /// opentagList in <parm>data</parm> and remove it if in case if is in, or
+        /// append it in case it is not.
+        /// And remove the ircchar from <parm>codec</parm>
+        inline void defaultRemoveDuplicateHandling(TextHtmlData* data, QString& codes, int pos, int length, const QString& tag);
+
+        /// Changes the ranges in <parm>urlData</parm>, that are found in
+        /// <parm>strippedText</parm>, to match in <parm>richText</parm>.
+        /// This is needed for cases were the url is tainted by ircrichtext chars
+        inline void adjustUrlRanges(Konversation::TextUrlData* urlData, const QString& richtext, const QString& strippedText);
+
+    protected:
         virtual void resizeEvent(QResizeEvent *event);
         virtual void mouseReleaseEvent(QMouseEvent* ev);
         virtual void mousePressEvent(QMouseEvent* ev);
