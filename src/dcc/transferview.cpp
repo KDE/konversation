@@ -35,6 +35,7 @@ namespace Konversation
             m_categorieFlags = None;
             m_dccModel = new TransferListModel(this);
             m_proxyModel = new TransferListProxyModel(this);
+            m_proxyModel->setDynamicSortFilter(true);
             m_proxyModel->setSourceModel(m_dccModel);
             setModel(m_proxyModel);
 
