@@ -248,15 +248,15 @@ class IRCView : public KTextBrowser
     protected:
         void openLink(const QUrl &url);
 
-        QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL, bool doHighlight=true, bool parseURL=true, bool self=false);
+        QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL, bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = 0);
 
-        void replaceDecoration(QString& line,char decoration,char replacement);
+        void replaceDecoration(QString& line, char decoration, char replacement);
 
     private:
 
         /// Returns a string where all irc-richtext chars are replaced with proper
         /// html tags and all urls are parsed if parseURL is true
-        inline QString ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags = true);
+        inline QString ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags = true, QChar::Direction* direction = 0);
 
         /// Returns a string that closes all open html tags to <parm>tag</parm>
         /// The closed tag is removed from opentagList in data
@@ -274,7 +274,7 @@ class IRCView : public KTextBrowser
         /// "aa<b>bb<i>cc[b]dd[i]ee"
         /// it would generate for the next [b], "</i></b><i>".
         /// <i> is reopened as it is still relevant
-        /// Returns the Length of the inserted String - replaced char(s)
+        /// Returns the Length of the inserted String
         inline int defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, const QString& tag);
 
         /// Injects a given <parm>marker</parm> at the beginning of each range in the text.
@@ -299,13 +299,12 @@ class IRCView : public KTextBrowser
         /// The default behaivor is to look if the <parm>tag</parm> is already in the
         /// opentagList in <parm>data</parm> and remove it if in case if is in, or
         /// append it in case it is not.
-        /// And remove the ircchar from <parm>codec</parm>
-        inline void defaultRemoveDuplicateHandling(TextHtmlData* data, QString& codes, int pos, int length, const QString& tag);
+        inline void defaultRemoveDuplicateHandling(TextHtmlData* data, const QString& tag);
 
-        /// Changes the ranges in <parm>urlData</parm>, that are found in
+        /// Changes the ranges in <parm>urlRanges</parm>, that are found in
         /// <parm>strippedText</parm>, to match in <parm>richText</parm>.
         /// This is needed for cases were the url is tainted by ircrichtext chars
-        inline void adjustUrlRanges(Konversation::TextUrlData* urlData, const QString& richtext, const QString& strippedText);
+        inline void adjustUrlRanges(QList< QPair< int, int > >& urlRanges, const QStringList& fixedUrls, QString& richtext, const QString& strippedText);
 
     protected:
         virtual void resizeEvent(QResizeEvent *event);

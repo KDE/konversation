@@ -588,8 +588,10 @@ void IRCView::append(const QString& nick, const QString& message)
 
     QString nickLine = createNickLine(nick, channelColor);
 
+    QChar::Direction dir;
+    QString text(filter(message, channelColor, nick, true, true, false, &dir));
     QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
+    bool rtl = (dir == QChar::DirR);
 
     if(rtl)
     {
@@ -605,7 +607,7 @@ void IRCView::append(const QString& nick, const QString& message)
         line += "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
     }
 
-    line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
+    line = line.arg(timeStamp(), nick, text);
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
@@ -645,7 +647,9 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     QString nickLine = createNickLine(nick, queryColor, true, inChannel);
 
     QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
+    QChar::Direction dir;
+    QString text(filter(message, queryColor, nick, true, true, false, &dir));
+    bool rtl = (dir == QChar::DirR);
 
     if(rtl)
     {
@@ -661,7 +665,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
         line += "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
     }
 
-    line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
+    line = line.arg(timeStamp(), nick, text);
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
@@ -703,7 +707,9 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     }
     else
     {
-        bool rtl = (basicDirection(message) == QChar::DirR);
+        QChar::Direction dir;
+        QString text(filter(message, actionColor, nick, true,true, false, &dir));
+        bool rtl = (dir == QChar::DirR);
 
         if (rtl)
         {
@@ -719,7 +725,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
             line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
         }
 
-        line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
+        line = line.arg(timeStamp(), nick, text);
 
         emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
 
@@ -741,7 +747,9 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     }
 
     QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
+    QChar::Direction dir;
+    QString text(filter(message, serverColor, 0 , true, parseURL, false, &dir));
+    bool rtl = (dir == QChar::DirR);
 
     if(rtl)
     {
@@ -758,7 +766,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     }
 
     if(type != i18n("Notify"))
-        line = line.arg(timeStamp(), type, filter(message, serverColor, 0 , true, parseURL));
+        line = line.arg(timeStamp(), type, text);
     else
     {
         // See Server::setWatchedNickOnline() for the originating call site.
@@ -793,7 +801,9 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     prefix=Qt::escape(prefix);
 
     QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
+    QChar::Direction dir;
+    QString text(filter(message, commandColor, 0, true, parseURL, self, &dir));
+    bool rtl = (dir == QChar::DirR);
 
     if(rtl)
     {
@@ -809,7 +819,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
         line += "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
     }
 
-    line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
+    line = line.arg(timeStamp(), prefix, text);
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
@@ -839,7 +849,9 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     nick.replace('>',"&gt;");
 
     QString line;
-    bool rtl = (basicDirection(message) == QChar::DirR);
+    QChar::Direction dir;
+    QString text(filter(message, backlogColor, NULL, false, false, false, &dir));
+    bool rtl = (dir == QChar::DirR);
 
     if(rtl)
     {
@@ -855,7 +867,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
         line += "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
     }
 
-    line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
+    line = line.arg(time, nick, text);
 
     doAppend(line, rtl);
 }
@@ -1002,7 +1014,7 @@ void IRCView::replaceDecoration(QString& line, char decoration, char replacement
 }
 
 QString IRCView::filter(const QString& line, const QString& defaultColor, const QString& whoSent,
-bool doHighlight, bool parseURL, bool self)
+bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
 {
     QString filteredLine(line);
     Application* konvApp = static_cast<Application*>(kapp);
@@ -1032,7 +1044,7 @@ bool doHighlight, bool parseURL, bool self)
 
     QTime time;
     time.start();
-    filteredLine = ircTextToHtml(filteredLine,  parseURL, defaultColor, whoSent, true);
+    filteredLine = ircTextToHtml(filteredLine,  parseURL, defaultColor, whoSent, true, direction);
     kDebug() << "took" << QString::number(time.elapsed());
 
     // Highlight
@@ -1141,42 +1153,33 @@ bool doHighlight, bool parseURL, bool self)
     return filteredLine;
 }
 
-QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags)
+QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor,
+                               const QString& whoSent, bool closeAllTags, QChar::Direction* direction)
 {
     TextHtmlData data;
     data.defaultColor = defaultColor;
     QString htmlText(text);
-    /// NOTE: it is important to copy it, do not use colorRegExp from common.h directly
-    /// as multiple indexIn may be executed at the same time
-    QRegExp ircRichtextRegExp(colorRegExp);
 
-    int pos = 0;
-    int urlPos = -1;
     bool allowColors = Preferences::self()->allowColorCodes();
     QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
-    int urlCount = 0;
-    int channelCount = 0;
+
+    unsigned int rtl_chars = 0;
+    unsigned int ltr_chars = 0;
 
     QString fromNick;
     TextUrlData urlData;
     TextChannelData channelData;
     if (parseURL)
     {
-        // mark urls and channels, we can not replace it afterwards, we have to
-        // generate valid html in one run, as we need to know which tags we have to close
-        // and which ones we must reopen
-        // I use \x11(for urls) and \x12(for channels) for this job, as they are unused
-        //TODO find a less hacky solution
         QString strippedText(removeIrcMarkup(htmlText));
         urlData = extractUrlData(strippedText);
         if (!urlData.urlRanges.isEmpty())
         {
+            //kDebug() << "fixing url ranges";
             // we detected the urls on a clean richtext-char-less text
             // to make 100% sure we get the correct urls, but as a result
             // we have to map them back to the original url
-            adjustUrlRanges(&urlData, htmlText, strippedText);
-
-            insertMarkers(htmlText, urlData.urlRanges, "\x11");
+            adjustUrlRanges(urlData.urlRanges, urlData.fixedUrls, htmlText, strippedText);
 
             //Only set fromNick if we actually have a url,
             //yes this is a ultra-minor-optimization
@@ -1186,8 +1189,9 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 fromNick = whoSent;
         }
 
-        channelData = extractChannelData(htmlText);
-        insertMarkers(htmlText, channelData.channelRanges, "\x12");
+        channelData = extractChannelData(strippedText);
+        //kDebug() << "fixing channel ranges";
+        adjustUrlRanges(channelData.channelRanges, channelData.fixedChannels , htmlText, strippedText);
     }
     else
     {
@@ -1196,43 +1200,180 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         htmlText.replace("\x0b", "&");
     }
 
-//     kDebug() << "prehtmlText" << htmlText;
-
-    QRegExp urlAndChannelMarker("(\x11|\x12)");
-
-//     // find the next most relevant position, for urls or ircrichtexts
+    int linkPos = -1;
+    int linkOffset = 0;
+    bool doChannel = false;
     if (parseURL)
-        urlPos = urlAndChannelMarker.indexIn(htmlText, pos);
-    pos = ircRichtextRegExp.indexIn(htmlText, pos);
-    if (pos > -1 && urlPos > -1)
     {
-        pos = qMin(pos, urlPos);
+        if (!urlData.urlRanges.isEmpty() && !channelData.channelRanges.isEmpty())
+        {
+            if (urlData.urlRanges.first() < channelData.channelRanges.first())
+            {
+                doChannel = false;
+                linkPos = urlData.urlRanges.first().first;
+            }
+            else
+            {
+                doChannel = true;
+                linkPos = channelData.channelRanges.first().first;
+            }
+        }
+        else if (!urlData.urlRanges.isEmpty() && channelData.channelRanges.isEmpty())
+        {
+            doChannel = false;
+            linkPos = urlData.urlRanges.first().first;
+        }
+        else if (urlData.urlRanges.isEmpty() && !channelData.channelRanges.isEmpty())
+        {
+            doChannel = true;
+            linkPos = channelData.channelRanges.first().first;
+        }
+        else
+        {
+            linkPos = -1;
+        }
     }
-    else
-    {
-        pos = qMax(pos, urlPos);
-    }
-//     kDebug() << "pos" << pos;
 
-    while (pos > -1 && pos < htmlText.length())
+    int offset;
+    for (int pos = 0; pos < htmlText.length(); ++pos)
     {
+        offset = 0;
 //         kDebug() << "htmlText" << htmlText;
 //         kDebug() << "pos:" << pos;
 //         kDebug() << "irc richtext:" << QString::number(htmlText.at(pos).toAscii(), 16);
+//         kDebug() << "htmlText.at(pos)" << htmlText.at(pos);
+//         kDebug() << "pos" << pos;
+// 
+//         kDebug() << "linkOffset" << linkOffset;
+//         kDebug() << "linkPos" << linkPos;
+
+        //check for next relevant url or channel link to insert
+        if (parseURL && pos == linkPos+linkOffset)
+        {
+            if (doChannel)
+            {
+                QString fixedChannel = channelData.fixedChannels.takeFirst();
+                const QPair<int, int>& range = channelData.channelRanges.takeFirst();
+
+                QString oldChannel = htmlText.mid(pos, range.second);
+                QString strippedChannel = removeIrcMarkup(oldChannel);
+                QString colorCodes = extractColorCodes(oldChannel);
+
+                QString link("%1<a href=\"#%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+
+                link = link.arg(closeTags(&data), fixedChannel, strippedChannel, openTags(&data, 0), colorCodes);
+                htmlText.replace(pos, oldChannel.length(), link);
+
+                pos += link.length() - colorCodes.length() - 1;
+                linkOffset += link.length() - oldChannel.length();
+            }
+            else
+            {
+                QString fixedUrl = urlData.fixedUrls.takeFirst();
+                const QPair<int, int>& range = urlData.urlRanges.takeFirst();
+
+                QString oldUrl = htmlText.mid(pos, range.second);
+                QString strippedUrl = removeIrcMarkup(oldUrl);
+
+                QString closeTagsString(closeTags(&data));
+                QString colorCodes = extractColorCodes(oldUrl);
+                colorCodes = removeDuplicateCodes(colorCodes, &data);
+
+                QString link("%1<a href=\"%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+
+                link = link.arg(closeTagsString, fixedUrl, strippedUrl, openTags(&data, 0), colorCodes);
+                htmlText.replace(pos, oldUrl.length(), link);
+
+                QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
+                                          Q_ARG(QString, fromNick), Q_ARG(QString, fixedUrl), Q_ARG(QDateTime, QDateTime::currentDateTime()));
+
+                pos += link.length() - colorCodes.length() - 1;
+                linkOffset += link.length() - oldUrl.length();
+            }
+
+            bool invalidNextLink = false;
+            do
+            {
+
+                if (!urlData.urlRanges.isEmpty() && !channelData.channelRanges.isEmpty())
+                {
+                    if (urlData.urlRanges.first() < channelData.channelRanges.first())
+                    {
+                        doChannel = false;
+                        linkPos = urlData.urlRanges.first().first;
+                    }
+                    else
+                    {
+                        doChannel = true;
+                        linkPos = channelData.channelRanges.first().first;
+                    }
+                }
+                else if (!urlData.urlRanges.isEmpty() && channelData.channelRanges.isEmpty())
+                {
+                    doChannel = false;
+                    linkPos = urlData.urlRanges.first().first;
+                }
+                else if (urlData.urlRanges.isEmpty() && !channelData.channelRanges.isEmpty())
+                {
+                    doChannel = true;
+                    linkPos = channelData.channelRanges.first().first;
+                }
+                else
+                {
+                    linkPos = -1;
+                }
+
+                //for cases like "#www.some.url" we get first channel
+                //and also url, the channel->clickable-channel replace we are
+                //already after the url, so just forget it, as a clickable
+                //channel is correct in this case
+                if (linkPos > -1 && linkPos+linkOffset < pos)
+                {
+                    invalidNextLink = true;
+                    kDebug() << "INVALID NEXT LINK, NEEDS FIXING!";
+                    if (doChannel)
+                    {
+                        channelData.channelRanges.removeFirst();
+                        channelData.fixedChannels.removeFirst();
+                    }
+                    else
+                    {
+                        urlData.urlRanges.removeFirst();
+                        urlData.fixedUrls.removeFirst();
+                    }
+                }
+                else
+                {
+                    invalidNextLink = false;
+                }
+            } while (invalidNextLink);
+
+            continue;
+        }
+
+
         switch (htmlText.at(pos).toAscii())
         {
             case '\x02': //bold
-                pos += defaultHtmlReplace(htmlText, &data, pos, "b");
+                offset = defaultHtmlReplace(htmlText, &data, pos, "b");
+                pos += offset -1;
+                linkOffset += offset -1;
                 break;
             case '\x1d': //italic
-                pos += defaultHtmlReplace(htmlText, &data, pos, "i");
+                offset = defaultHtmlReplace(htmlText, &data, pos, "i");
+                pos += offset -1;
+                linkOffset += offset -1;
                 break;
             case '\x15': //mirc underline
             case '\x1f': //kvirc underline
-                pos += defaultHtmlReplace(htmlText, &data, pos, "u");
+                offset = defaultHtmlReplace(htmlText, &data, pos, "u");
+                pos += offset -1;
+                linkOffset += offset -1;
                 break;
             case '\x13': //strikethru
-                pos += defaultHtmlReplace(htmlText, &data, pos, "s");
+                offset = defaultHtmlReplace(htmlText, &data, pos, "s");
+                pos += offset -1;
+                linkOffset += offset -1;
                 break;
             case '\x03': //color
                 {
@@ -1245,15 +1386,12 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     QString colorMatch(ircColorRegExp.cap(0));
                     if (!allowColors)
                     {
-                        int colorLen = colorMatch.length();
-                        htmlText.remove(pos, colorLen);
+                        htmlText.remove(pos, colorMatch.length());
                         break;
                     }
                     QString colorString;
-
-//                     kDebug() << "colorMatch" << colorMatch;
-                    //TODO check if \x11 \017 is really valid here
                     // check for color reset conditions
+                    //TODO check if \x11 \017 is really valid here
                     if (colorMatch == "\x03" || colorMatch == "\x11")
                     {
                         //in reverse mode, just reset both colors
@@ -1280,7 +1418,10 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                             }
                         }
                         htmlText.replace(pos, colorMatch.length(), colorString);
-                        pos += colorString.length();
+//                        offset += colorString.length() - 1;
+
+                        pos += colorString.length() - 1;
+                        linkOffset += colorString.length() -colorMatch.length();
                         break;
                     }
 
@@ -1350,7 +1491,9 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         }
                     }
                     htmlText.replace(pos, colorMatch.length(), colorString);
-                    pos += colorString.length();
+                    //offset += colorString.length();
+                    pos += colorString.length() - 1;
+                    linkOffset += colorString.length() -colorMatch.length();
                     break;
                 }
                 break;
@@ -1368,8 +1511,10 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
 //                     kDebug() << "replace length" << ircRichtextRegExp.cap(0).length();
 //                     kDebug() << "replace text" << ircRichtextRegExp.cap(0);
                     htmlText.replace(pos, 1, closeText);
-                    kDebug() << "closeText.length();" << closeText.length();
-                    pos += closeText.length();
+                    //kDebug() << "closeText.length();" << closeText.length();
+                    //-1 for the ++pos
+                    pos += closeText.length() - 1;
+                    linkOffset += closeText.length() - 1;
                 }
                 break;
             case '\x16': //reverse
@@ -1379,7 +1524,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     {
 //                         kDebug() << "replace length" << ircRichtextRegExp.cap(0).length();
 //                         kDebug() << "replace text" << ircRichtextRegExp.cap(0);
-                        htmlText.remove(pos, ircRichtextRegExp.cap(0).length());
+                        htmlText.remove(pos, 1);
                         break;
                     }
 
@@ -1421,91 +1566,45 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         }
                     }
                     htmlText.replace(pos, 1, colorString);
-                    pos += colorString.length();
-                }
-                break;
-            case '\x11': //url start
-                {
-                    QString fixedUrl = urlData.fixedUrls.at(urlCount);
-                    // if a channel is also an url, like #www.test.de
-                    // we inserted a special marker to find the url again,
-                    // remove the marker and skip the channel, as the text is now cleary marked as url or channel
-                    fixedUrl.remove('\x12');
-
-                    const QPair<int, int>& range = urlData.urlRanges.at(urlCount);
-                    QString oldUrl = htmlText.mid(pos+1, range.second);
-//                     kDebug() << "oldUrl" << oldUrl;
-                    QString strippedUrl = removeIrcMarkup(oldUrl).remove('\x12');
-                    if (strippedUrl.contains('\x12'))
-                    {
-                        ++channelCount;
-                        strippedUrl.remove('\x12');
-                    }
-
-                    QString closeTagsString(closeTags(&data));
-                    QString colorCodes = extractColorCodes(oldUrl);
-                    colorCodes = removeDuplicateCodes(colorCodes, &data);
-
-                    QString link("%1<a href=\"%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
-
-                    link = link.arg(closeTagsString, fixedUrl, strippedUrl, openTags(&data, 0), colorCodes);
-//                     kDebug() << link;
-                    htmlText.replace(pos, oldUrl.length() + 1, link);
-
-                    QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
-                                              Q_ARG(QString, fromNick), Q_ARG(QString, fixedUrl), Q_ARG(QDateTime, QDateTime::currentDateTime()));
-
-                    pos += link.length() - colorCodes.length();
-//                     kDebug()  << "pos";
-                    ++urlCount;
-                }
-                break;
-            case '\x12': //channel start
-                {
-                    QString fixedChannel = channelData.fixedChannels.at(channelCount);
-                    // if a channel is also an url, like #www.test.de
-                    // we inserted a special marker to find the url again,
-                    // remove the marker and skip the url, as the text is now cleary marked as url or channel
-                    fixedChannel.remove('\x11');
-
-                    const QPair<int, int>& range = channelData.channelRanges.at(channelCount);
-                    QString oldChannel = htmlText.mid(pos+1, range.second);
-                    QString strippedChannel = removeIrcMarkup(oldChannel);
-                    if (strippedChannel.contains('\x11'))
-                    {
-                        ++urlCount;
-                        strippedChannel.remove('\x11');
-                    }
-                    QString colorCodes = extractColorCodes(oldChannel);
-
-                    QString link("%1<a href=\"#%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
-
-                    link = link.arg(closeTags(&data), fixedChannel, strippedChannel, openTags(&data, 0), colorCodes);
-                    htmlText.replace(pos, oldChannel.length() + 1, link);
-                    pos += link.length() - colorCodes.length();
-                    ++channelCount;
+                    pos += colorString.length() -1;
+                    linkOffset += colorString.length() -1;
                 }
                 break;
             default:
-//                 kDebug() << "unhandled irc richtext:" << QString::number(htmlText.at(pos).toAscii(), 16);
-//                 kDebug() << "match" << ircRichtextRegExp.cap(0);
-//                 kDebug() << "length" << ircRichtextRegExp.cap(0).length();
-                htmlText.remove(pos, ircRichtextRegExp.cap(0).length());
+                {
+                    const QChar& dirChar = htmlText.at(pos);
+                    //kDebug() << dirChar;
+                    if (!(dirChar.isNumber() || dirChar.isSymbol() ||
+                        dirChar.isSpace()  || dirChar.isPunct()  ||
+                        dirChar.isMark()))
+                    {
+                        switch(dirChar.direction())
+                        {
+                            case QChar::DirL:
+                            case QChar::DirLRO:
+                            case QChar::DirLRE:
+                                ltr_chars++;
+                                break;
+                            case QChar::DirR:
+                            case QChar::DirAL:
+                            case QChar::DirRLO:
+                            case QChar::DirRLE:
+                                rtl_chars++;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
         }
+    }
 
-//         find the next most relevant position, for urls or ircrichtexts
-        if (parseURL)
-            urlPos = urlAndChannelMarker.indexIn(htmlText, pos);
-        pos = ircRichtextRegExp.indexIn(htmlText, pos);
-        if (pos > -1 && urlPos > -1)
-        {
-            pos = qMin(pos, urlPos);
-        }
+    if (direction)
+    {
+        if (rtl_chars > ltr_chars)
+            *direction = QChar::DirR;
         else
-        {
-            pos = qMax(pos, urlPos);
-        }
-//         kDebug() << "pos" << pos;
+            *direction = QChar::DirL;
     }
 
     if (parseURL)
@@ -1520,7 +1619,6 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         htmlText += closeTags(&data);
     }
 
-    //data.htmlText = htmlText;
 //     kDebug() << "afthtmlText" << htmlText;
     return htmlText;
 }
@@ -1538,7 +1636,6 @@ int IRCView::defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, 
         replace = '<'+tag+'>';
     }
     htmlText.replace(pos, 1, replace);
-    kDebug() << "length -1" << replace.length() - 1;
     return replace.length();
 }
 
@@ -1635,60 +1732,78 @@ QString& IRCView::insertMarkers(QString& text, QList< QPair< int, int > > ranges
     return text;
 }
 
-QString IRCView::removeDuplicateCodes(const QString& _codes, TextHtmlData* data)
+QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
 {
     int pos = 0;
     QString ret;
-    QString codes(_codes);
-    // NOTE:copy me, do not use me directly from common.h
-    QRegExp ircRichtextRegExp(colorRegExp);
-    while ((pos = ircRichtextRegExp.indexIn(codes)) >= 0)
+    while (pos < codes.length())
     {
         switch (codes.at(pos).toAscii())
         {
             case '\x02': //bold
-                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "b");
+                defaultRemoveDuplicateHandling(data, "b");
+                ++pos;
                 break;
             case '\x1d': //italic
-                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "i");
+                defaultRemoveDuplicateHandling(data, "i");
+                ++pos;
                 break;
             case '\x15': //mirc underline
             case '\x1f': //kvirc underline
-                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "u");
+                defaultRemoveDuplicateHandling(data, "u");
+                ++pos;
                 break;
             case '\x13': //strikethru
-                defaultRemoveDuplicateHandling(data, codes, pos, ircRichtextRegExp.matchedLength(), "s");
+                defaultRemoveDuplicateHandling(data, "s");
+                ++pos;
                 break;
             case '\x0f': //reset to default
                 data->openHtmlTags.clear();
                 data->lastBgColor.clear();
                 data->lastFgColor.clear();
                 data->reverse = false;
-                codes.remove(pos, ircRichtextRegExp.matchedLength());
+                ++pos;
                 break;
 
-                // FIXME is not going to work like this, as we we need at least
-                // one tag in out list
-//             case '\x16': //reverse
-//                 data->reverse = !data->reverse;
-//                 codes.remove(pos, colorRegExp.matchedLength());
-//                 break;
+            case '\x16': //reverse
+                if (data->reverse)
+                {
+                    data->openHtmlTags.removeOne("span");
+                    data->openHtmlTags.removeOne("font");
+                    data->reverse = false;
+                    if (!data->lastFgColor.isEmpty())
+                    {
+                        data->openHtmlTags.append("font");
+                        if (!data->lastBgColor.isEmpty())
+                        {
+                            data->openHtmlTags.append("span");
+                        }
+                    }
+                }
+                else
+                {
+                    data->openHtmlTags.removeOne("span");
+                    data->openHtmlTags.removeOne("font");
+                    data->reverse = true;
+                    data->openHtmlTags.append("font");
+                    data->openHtmlTags.append("span");
+                }
+                ++pos;
+                break;
             case '\x03': //color
                 {
                     //NOTE: copy is important as colorOnlyRegExp static from common.h
                     // and in a subtoutine the indexIn could be used again which leads
                     // to different cap() and matchedLength() results
                     QRegExp ircColorRegExp(colorOnlyRegExp);
-                    int index = ircColorRegExp.indexIn(codes);
+                    int index = ircColorRegExp.indexIn(codes, pos);
                     Q_UNUSED(index);
 
                     QString colorMatch(ircColorRegExp.cap(0));
-//                     kDebug() << "colorMatch" << colorMatch;
-                    //TODO check if \x11 \017 is really valid here
                     // check for color reset conditions
+                    //TODO check if \x11 \017 is really valid here
                     if (colorMatch == "\x03" || colorMatch == "\x11")
                     {
-//                         kDebug() << "color is reset thing";
                         if (!data->lastBgColor.isEmpty())
                         {
                             data->lastBgColor.clear();
@@ -1699,8 +1814,7 @@ QString IRCView::removeDuplicateCodes(const QString& _codes, TextHtmlData* data)
                             data->lastFgColor.clear();
                             data->openHtmlTags.removeOne("font");
                         }
-//                         kDebug() << "removelength" << ircRichtextRegExp.matchedLength();
-                        codes.remove(pos, ircRichtextRegExp.matchedLength());
+                        pos += ircColorRegExp.matchedLength();
                         break;
                     }
 
@@ -1736,20 +1850,20 @@ QString IRCView::removeDuplicateCodes(const QString& _codes, TextHtmlData* data)
                         }
                     }
 
-                    codes.remove(pos, ircRichtextRegExp.matchedLength());
+                    pos += colorMatch.length();
                 }
                 break;
             default:
 //                 kDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toAscii(), 16);
-                ret += codes.mid(pos, ircRichtextRegExp.matchedLength());
-                codes.remove(pos, ircRichtextRegExp.matchedLength());
+                ret += codes.at(pos);
+                ++pos;
         }
     }
 
     return ret;
 }
 
-void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, QString& codes, int pos, int length, const QString& tag)
+void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, const QString& tag)
 {
     if (data->openHtmlTags.contains(tag))
     {
@@ -1761,20 +1875,20 @@ void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, QString& codes,
 //         kDebug() << "adding tag" << tag;
         data->openHtmlTags.append(tag);
     }
-    codes.remove(pos, length);
 }
 
-void IRCView::adjustUrlRanges(TextUrlData* urlData, const QString& richtext, const QString& strippedText)
+void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QStringList& fixedUrls,  QString& richtext, const QString& strippedText)
 {
+    Q_UNUSED(fixedUrls);
     QRegExp ircRichtextRegExp(colorRegExp);
     int start = 0, j;
     int i = 0;
     QString url;
-    int htmlTextLength = richtext.length(), urlRanges = urlData->urlRanges.count();
-    for (int x = 0; x < urlRanges; ++x)
+    int htmlTextLength = richtext.length(), urlCount = urlRanges.count();
+    for (int x = 0; x < urlCount; ++x)
     {
         j = 0;
-        const QPair<int, int>& range = urlData->urlRanges.at(x);
+        const QPair<int, int>& range = urlRanges.at(x);
         url = strippedText.mid(range.first, range.second);
         for ( ; i < htmlTextLength; ++i)
         {
@@ -1785,8 +1899,9 @@ void IRCView::adjustUrlRanges(TextUrlData* urlData, const QString& richtext, con
                 ++j;
                 if (j == url.length())
                 {
-                    urlData->urlRanges[x].first = start;
-                    urlData->urlRanges[x].second = i - start + 1;
+                    urlRanges[x].first = start;
+                    urlRanges[x].second = i - start + 1;
+                    //kDebug() << "new range" << urlRanges[x].first << urlRanges[x].second;
                     break;
                 }
             }
