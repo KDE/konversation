@@ -80,7 +80,7 @@ void IRCColorChooser::initColors(KComboBox* combo)
 
     QPixmap pix(combo->width(), combo->fontMetrics().height());
 
-    for (int i =0; i < 15; i++)
+    for (int i =0; i < 16; i++)
     {
         pix.fill(Preferences::self()->ircColorCode(i));
         combo->insertItem(i, QIcon(pix), QString());
