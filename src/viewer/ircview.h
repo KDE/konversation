@@ -277,9 +277,6 @@ class IRCView : public KTextBrowser
         /// Returns the Length of the inserted String
         inline int defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, const QString& tag);
 
-        /// Injects a given <parm>marker</parm> at the beginning of each range in the text.
-        inline QString& insertMarkers(QString& text, QList< QPair< int, int > > ranges, const QString& marker);
-
         /// Returns a string that opens all tags starting from index <parm>from</parm>
         inline QString openTags(TextHtmlData* data, int from = 0);
 
@@ -306,6 +303,9 @@ class IRCView : public KTextBrowser
         /// This is needed for cases were the url is tainted by ircrichtext chars
         inline void adjustUrlRanges(QList< QPair< int, int > >& urlRanges, const QStringList& fixedUrls, QString& richtext, const QString& strippedText);
 
+        /// Parses the colors in <parm>text</parm> starting from <parm>start</parm>
+        /// and returns them in the given fg and bg string, as well as information
+        /// if the values are valid
         inline QString getColors(const QString text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
 
     protected:
