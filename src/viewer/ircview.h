@@ -306,6 +306,8 @@ class IRCView : public KTextBrowser
         /// This is needed for cases were the url is tainted by ircrichtext chars
         inline void adjustUrlRanges(QList< QPair< int, int > >& urlRanges, const QStringList& fixedUrls, QString& richtext, const QString& strippedText);
 
+        inline QString getColors(const QString text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
+
     protected:
         virtual void resizeEvent(QResizeEvent *event);
         virtual void mouseReleaseEvent(QMouseEvent* ev);

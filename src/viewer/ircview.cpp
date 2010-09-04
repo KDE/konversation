@@ -1377,13 +1377,10 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 break;
             case '\x03': //color
                 {
-                    //NOTE: copy is important as colorOnlyRegExp static from common.h
-                    // and in a subtoutine the indexIn could be used again which leads
-                    // to different cap() and matchedLength() results
-                    QRegExp ircColorRegExp(colorOnlyRegExp);
-                    int index = ircColorRegExp.indexIn(htmlText, pos);
-                    Q_UNUSED(index);
-                    QString colorMatch(ircColorRegExp.cap(0));
+                    QString fgColor, bgColor;
+                    bool fgOK = true, bgOK = true;
+                    QString colorMatch(getColors(htmlText, pos, fgColor, bgColor, &fgOK, &bgOK));
+
                     if (!allowColors)
                     {
                         htmlText.remove(pos, colorMatch.length());
@@ -1392,7 +1389,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     QString colorString;
                     // check for color reset conditions
                     //TODO check if \x11 \017 is really valid here
-                    if (colorMatch == "\x03" || colorMatch == "\x11")
+                    if (colorMatch == "\x03" || colorMatch == "\x11" ||
+                        (fgColor.isEmpty() && bgColor.isEmpty()) || (!fgOK && !bgOK))
                     {
                         //in reverse mode, just reset both colors
                         //color tags are already closed before the reverse start
@@ -1425,29 +1423,14 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         break;
                     }
 
-                    //extract foreground and background Color
-                    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(3));
-                    if (!fgColor.isEmpty())
+                    if (!fgOK)
                     {
-                        int foregroundColor = fgColor.toInt();
-                        fgColor = Preferences::self()->ircColorCode(foregroundColor).name();
+                        fgColor = defaultColor;
                     }
-                    if (!bgColor.isEmpty())
+                    if (!bgOK)
                     {
-                        if (bgColor == ",")
-                        {
-                            bgColor.clear();
-                        }
-                        else
-                        {
-                            bgColor = bgColor.right(bgColor.length() - 1);
-                            int backgroundColor = bgColor.toInt();
-                            bgColor = Preferences::self()->ircColorCode(backgroundColor).name();
-                        }
+                        bgColor = fontColorOpenTag(Preferences::self()->color(Preferences::TextViewBackground).name());
                     }
-
-//                     kDebug() << "fgColor" << fgColor;
-//                     kDebug() << "bgColor" << bgColor;
 
                     // if we are in reverse mode, just remember the new colors
                     if (data.reverse)
@@ -1792,17 +1775,14 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
                 break;
             case '\x03': //color
                 {
-                    //NOTE: copy is important as colorOnlyRegExp static from common.h
-                    // and in a subtoutine the indexIn could be used again which leads
-                    // to different cap() and matchedLength() results
-                    QRegExp ircColorRegExp(colorOnlyRegExp);
-                    int index = ircColorRegExp.indexIn(codes, pos);
-                    Q_UNUSED(index);
+                    QString fgColor, bgColor;
+                    bool fgOK = true, bgOK = true;
+                    QString colorMatch(getColors(codes, pos, fgColor, bgColor, &fgOK, &bgOK));
 
-                    QString colorMatch(ircColorRegExp.cap(0));
                     // check for color reset conditions
                     //TODO check if \x11 \017 is really valid here
-                    if (colorMatch == "\x03" || colorMatch == "\x11")
+                    if (colorMatch == "\x03" || colorMatch == "\x11" ||
+                        (fgColor.isEmpty() && bgColor.isEmpty()) || (!fgOK && !bgOK))
                     {
                         if (!data->lastBgColor.isEmpty())
                         {
@@ -1814,29 +1794,17 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
                             data->lastFgColor.clear();
                             data->openHtmlTags.removeOne("font");
                         }
-                        pos += ircColorRegExp.matchedLength();
+                        pos += colorMatch.length();
                         break;
                     }
 
-                    //extract foreground and background Color
-                    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(3));
-                    if (!fgColor.isEmpty())
+                    if (!fgOK)
                     {
-                        int foregroundColor = fgColor.toInt();
-                        fgColor = Preferences::self()->ircColorCode(foregroundColor).name();
+                        fgColor = data->defaultColor;
                     }
-                    if (!bgColor.isEmpty())
+                    if (!bgOK)
                     {
-                        if (bgColor == ",")
-                        {
-                            bgColor.clear();
-                        }
-                        else
-                        {
-                            bgColor = bgColor.right(bgColor.length() - 1);
-                            int backgroundColor = bgColor.toInt();
-                            bgColor = Preferences::self()->ircColorCode(backgroundColor).name();
-                        }
+                        bgColor = fontColorOpenTag(Preferences::self()->color(Preferences::TextViewBackground).name());
                     }
 
                     if (!fgColor.isEmpty())
@@ -1887,6 +1855,9 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
     int htmlTextLength = richtext.length(), urlCount = urlRanges.count();
     for (int x = 0; x < urlCount; ++x)
     {
+        if (x == 0)
+            i = urlRanges.first().first;
+
         j = 0;
         const QPair<int, int>& range = urlRanges.at(x);
         url = strippedText.mid(range.first, range.second);
@@ -1916,6 +1887,60 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
             }
         }
     }
+}
+
+QString IRCView::getColors(const QString text, int start, QString& _fgColor, QString& _bgColor, bool* fgValueOK, bool* bgValueOK)
+{
+    QRegExp ircColorRegExp("(\003([0-9][0-9]|[0-9]|)(,([0-9][0-9]|[0-9]|)|,|)|\017)");
+    if (ircColorRegExp.indexIn(text,start) == -1)
+        return QString();
+
+    QString ret(ircColorRegExp.cap(0));
+
+    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(4));
+    if (!fgColor.isEmpty())
+    {
+        int foregroundColor = fgColor.toInt();
+        if (foregroundColor > -1 && foregroundColor < 16)
+        {
+            _fgColor = Preferences::self()->ircColorCode(foregroundColor).name();
+            if (fgValueOK)
+                *fgValueOK = true;
+        }
+        else
+        {
+            if (fgValueOK)
+                *fgValueOK = false;
+        }
+    }
+    else
+    {
+        if (fgValueOK)
+            *fgValueOK = true;
+    }
+
+    if (!bgColor.isEmpty())
+    {
+        int backgroundColor = bgColor.toInt();
+        if (backgroundColor > -1 && backgroundColor < 16)
+        {
+            _bgColor = Preferences::self()->ircColorCode(backgroundColor).name();
+            if (bgValueOK)
+                *bgValueOK = true;
+        }
+        else
+        {
+            if (bgValueOK)
+                *bgValueOK = false;
+        }
+    }
+    else
+    {
+        if (bgValueOK)
+            *bgValueOK = true;
+    }
+
+    return ret;
 }
 
 void IRCView::resizeEvent(QResizeEvent *event)
