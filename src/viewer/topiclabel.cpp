@@ -367,6 +367,10 @@ namespace Konversation
             QMetaObject::invokeMethod(Application::instance(), "storeUrl", Qt::QueuedConnection,
                 Q_ARG(QString, sender), Q_ARG(QString, fixedUrl), Q_ARG(QDateTime, QDateTime::currentDateTime()));
         }
+
+        // Change & to &amp; to prevent html entities to do strange things to the text
+        htmlText.replace('&', "&amp;");
+        htmlText.replace("\x0b", "&");
         return htmlText;
     }
 }
