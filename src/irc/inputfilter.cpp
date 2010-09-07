@@ -1092,7 +1092,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(3))
                 {
-                    QString topic = Konversation::removeIrcMarkup(trailing);
+                    QString topic(trailing);
 
                     // FIXME: This is an abuse of the automaticRequest system: We're
                     // using it in an inverted manner, i.e. the automaticRequest is
