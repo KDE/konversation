@@ -122,6 +122,25 @@ namespace Konversation
         return line;
     }
 
+    QString replaceIRCMarkups(const QString& text)
+    {
+        QString line(text);
+
+        line.replace('\x02', "%B");      // replace bold char with %B
+        line.replace('\x03', "%C");       // replace color char with %C
+        line.replace('\x07', "%G");       // replace ASCII BEL 0x07 with %G
+        line.replace('\x1d', "%I");       // replace italics char with %I
+        line.replace('\x0f', "%O");       // replace reset to default char with %O
+        line.replace('\x13', "%S");       // replace strikethru char with %S
+        line.replace('\x16', "%R");       // replace reverse char with %R
+        // underline char send by kvirc
+        line.replace('\x1f', "%U");       // replace underline char with %U
+        // underline char send by mirc
+        line.replace('\x15', "%U");       // replace underline char with %U
+
+        return line;
+    }
+
     QList<QPair<int, int> > getUrlRanges(const QString& text)
     {
         TextUrlData data = extractUrlData(text, false);
@@ -152,11 +171,6 @@ namespace Konversation
         {
             urlLen = urlPattern.matchedLength();
             href = htmlText.mid(pos, urlLen);
-
-//             kDebug() << "urlPattern.cap(0)" << urlPattern.cap(0);
-//             kDebug() << "urlPattern.cap(1)" << urlPattern.cap(1);
-//             kDebug() << "urlPattern.cap(2)" << urlPattern.cap(2);
-//             kDebug() << "href" << href;
 
             data.urlRanges << QPair<int, int>(pos, href.length());
             pos += href.length();
@@ -196,17 +210,10 @@ namespace Konversation
             channel = chanExp.cap(2);
             chanLen = channel.length();
 
-//             kDebug() << "chanExp.cap(0)" << chanExp.cap(0);
-//             kDebug() << "chanExp.cap(1)" << chanExp.cap(1);
-//             kDebug() << "chanExp.cap(2)" << chanExp.cap(2);
-//             kDebug() << "text.mid(pos, chanLen)" << text.mid(pos, chanLen);
-
             // we want the pos where #channel starts
             // indexIn gives us the first match and the first match may be
             // "#test", " #test" or " \"test", so the first Index is off by some chars
             pos = chanExp.pos(2);
-
-//             kDebug() << "pos" << pos;
 
             data.channelRanges << QPair<int, int>(pos, chanLen);
             pos += chanLen;

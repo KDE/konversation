@@ -179,6 +179,9 @@ class Channel : public ChatWindow
         void setTopic(const QString& nickname, const QString& topic);
         void setTopicAuthor(const QString& author, QDateTime t);
 
+    private:
+        inline void prependTopicHistory(const QString& topic, const QString nickname = "unknown", uint time = QDateTime::currentDateTime().toTime_t());
+
     signals:
         void topicHistoryChanged();
         void joined(Channel* channel);

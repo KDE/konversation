@@ -70,6 +70,7 @@ namespace Konversation
     QString removeIrcMarkup(const QString& text);
     QString doVarExpansion(const QString& text);
     QString replaceFormattingCodes(const QString& text);
+    QString replaceIRCMarkups(const QString& text);
 
     QList<QPair<int, int> > getUrlRanges(const QString& text);
     QList<QPair<int, int> > getChannelRanges(const QString& text);

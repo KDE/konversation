@@ -1622,13 +1622,13 @@ void Channel::setTopic(const QString &newTopic)
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
     topicAuthorUnknown=true; // if we only get called with a topic, it was a 332, which usually has a 333 next
-
+    topic = replaceIRCMarkups(newTopic);
     // cut off "nickname" and "time_t" portion of the topic before comparing, otherwise the history
     // list will fill up with the same entries while the user only requests the topic to be seen.
 
-    if(m_topicHistory.isEmpty() || (m_topicHistory.first().section(' ', 2) != newTopic))
+    if(m_topicHistory.isEmpty() || (m_topicHistory.first().section(' ', 2) != topic))
     {
-        m_topicHistory.prepend(QString("%1 "+i18n("unknown")+" %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
+        prependTopicHistory(topic);
         emit topicHistoryChanged();
     }
 }
@@ -1644,11 +1644,17 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
         appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, newTopic));
     }
 
-    m_topicHistory.prepend(QString("%1 %2 %3").arg(QDateTime::currentDateTime().toTime_t()).arg(nickname).arg(newTopic));
+    prependTopicHistory(newTopic, nickname);
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
 
     emit topicHistoryChanged();
+}
+
+void Channel::prependTopicHistory(const QString& topic, const QString nickname, uint time)
+{
+    QString newTopic(replaceIRCMarkups(topic));
+    m_topicHistory.prepend(QString("%1 %2 %3").arg(time).arg(nickname).arg(newTopic));
 }
 
 QStringList Channel::getTopicHistory()
