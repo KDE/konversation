@@ -537,7 +537,6 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
         {
             int result = KMessageBox::warningContinueCancel(
                 mainWindow,
-                //my, isn't this fucking ugly
                 i18n("You are presently connected to %1 via '%2' (port <numid>%3</numid>). Do you want to switch to '%4' (port <numid>%5</numid>) instead?",
                     dupe->getDisplayName(),
                     dupe->getServerName(),
