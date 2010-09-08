@@ -2689,6 +2689,7 @@ void Channel::setActive(bool active)
         topicLine->clear();
         clearModeList();
         clearBanList();
+        m_whoTimer.stop();
     }
 }
 
