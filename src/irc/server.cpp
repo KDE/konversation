@@ -651,6 +651,7 @@ void Server::broken(KTcpSocket::Error error)
     resetQueues();
 
     m_notifyTimer.stop();
+    m_pingSendTimer.stop();
     m_pingResponseTimer.stop();
     m_inputFilter.setLagMeasuring(false);
     m_currentLag = -1;
