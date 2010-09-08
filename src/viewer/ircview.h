@@ -368,8 +368,8 @@ class IRCView : public KTextBrowser
         KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
         KMenu* m_channelPopup; ///<menu to show when context-click on a channel
 
-#if KDE_IS_VERSION(4,5,0)
         void updateWebShortcutMenu();
+#if KDE_IS_VERSION(4,5,0)
         KMenu* m_webShortcutMenu;
 #endif
 
