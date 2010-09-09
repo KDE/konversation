@@ -1651,7 +1651,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
     emit topicHistoryChanged();
 }
 
-void Channel::prependTopicHistory(const QString& topic, const QString nickname, uint time)
+void Channel::prependTopicHistory(const QString& topic, const QString& nickname, uint time)
 {
     QString newTopic(replaceIRCMarkups(topic));
     m_topicHistory.prepend(QString("%1 %2 %3").arg(time).arg(nickname).arg(newTopic));
