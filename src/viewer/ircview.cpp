@@ -557,25 +557,19 @@ void IRCView::updateAppearance()
 
     setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
-    QPalette p;
-
-    p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
-
     if (Preferences::self()->showBackgroundImage())
     {
         KUrl url = Preferences::self()->backgroundImage();
 
         if (!url.isEmpty())
         {
-            QBrush brush;
-
-            brush.setTexture(QPixmap(url.path()));
-
-            p.setBrush(QPalette::Base, brush);
+            setStyleSheet("QTextBrowser { background-image: url("+url.path()+");background-attachment: fixed }");
         }
     }
-
-    setPalette(p);
+    else
+    {
+        setStyleSheet("QTextBrowser { background-color:" + Preferences::self()->color(Preferences::TextViewBackground).name() + " }");
+    }
 }
 
 // Data insertion
