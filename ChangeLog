@@ -180,6 +180,9 @@ Changes since 1.3.1:
   and the time needed to establish the new connection was longer than the
   configured reconnection delay. It would also cause confusing status mes-
   sages to be shown in the connection status tab.
+* Fixed a bug that could cause the "Server found" message to be shown in
+  the connection status tab before the "Looking for server" message if the
+  DNS response was already cached.
 
 
 Changes from 1.3 to 1.3.1:

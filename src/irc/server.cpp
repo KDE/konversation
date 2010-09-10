@@ -453,6 +453,10 @@ void Server::connectToIRCServer()
 
         connect(m_socket, SIGNAL(hostFound()), SLOT (hostFound()));
 
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port <numid>%2</numid>)...",
+            getConnectionSettings().server().host(),
+            QString::number(getConnectionSettings().server().port())));
+
         // connect() will do a async lookup too
         if(!getConnectionSettings().server().SSLEnabled())
         {
@@ -469,9 +473,6 @@ void Server::connectToIRCServer()
 
         // set up the connection details
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port <numid>%2</numid>) ...",
-            getConnectionSettings().server().host(),
-            QString::number(getConnectionSettings().server().port())));
         // reset InputFilter (auto request info, /WHO request info)
         m_inputFilter.reset();
     }
