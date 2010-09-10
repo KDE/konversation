@@ -807,6 +807,8 @@ class Server : public QObject
         /// and /quit.
         QTimer* m_delayedConnectTimer;
 
+        bool m_reconnectImmediately;
+
         static int m_availableConnectionId;
         int m_connectionId;
 

@@ -74,6 +74,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_delayedConnectTimer->setSingleShot(true);
     connect(m_delayedConnectTimer, SIGNAL(timeout()), this, SLOT(connectToIRCServer()));
 
+    m_reconnectImmediately = false;
+
     for (int i=0; i <= Application::instance()->countOfQueues(); i++)
     {
         //QList<int> r=Preferences::queueRate(i);
@@ -673,7 +675,16 @@ void Server::broken(KTcpSocket::Error error)
 
     updateAutoJoin();
 
-    if (getConnectionState() != Konversation::SSDeliberatelyDisconnected)
+    if (getConnectionState() == Konversation::SSDeliberatelyDisconnected)
+    {
+        if (m_reconnectImmediately)
+        {
+            m_reconnectImmediately = false;
+
+            QMetaObject::invokeMethod(this, "connectToIRCServer", Qt::QueuedConnection);
+        }
+    }
+    else
     {
         static_cast<Application*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
@@ -834,13 +845,14 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
 
 void Server::reconnectServer(const QString& quitMessage)
 {
-    if (isConnecting() || isSocketConnected()) quitServer(quitMessage);
+    if (isConnecting() || isSocketConnected())
+    {
+        m_reconnectImmediately = true;
 
-    // Use asynchronous invocation so that the broken() that the above
-    // quitServer might cause is delivered before connectToIRCServer
-    // sets SSConnecting and broken() announces a deliberate disconnect
-    // due to the failure allegedly occurring during SSConnecting.
-    QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
+        quitServer(quitMessage);
+    }
+    else
+        QMetaObject::invokeMethod(this, "connectToIRCServer", Qt::QueuedConnection);
 }
 
 void Server::disconnectServer(const QString& quitMessage)
