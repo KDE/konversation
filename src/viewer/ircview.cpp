@@ -557,6 +557,7 @@ void IRCView::updateAppearance()
 
     setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
+    bool bgImageSet = false;
     if (Preferences::self()->showBackgroundImage())
     {
         KUrl url = Preferences::self()->backgroundImage();
@@ -564,11 +565,19 @@ void IRCView::updateAppearance()
         if (!url.isEmpty())
         {
             setStyleSheet("QTextBrowser { background-image: url("+url.path()+");background-attachment: fixed }");
+            bgImageSet = true;
         }
     }
-    else
+
+    if (!bgImageSet)
     {
-        setStyleSheet("QTextBrowser { background-color:" + Preferences::self()->color(Preferences::TextViewBackground).name() + " }");
+        if (!styleSheet().isEmpty())
+        {
+            setStyleSheet("");
+        }
+        QPalette p;
+        p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
+        setPalette(p);
     }
 }
 
