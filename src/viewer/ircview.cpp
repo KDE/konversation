@@ -2435,6 +2435,11 @@ void IRCView::updateWebShortcutMenu()
 
     KUriFilterData filterData(selectedText.remove('\n').remove('\r'));
 
+#if KDE_IS_VERSION(4,5,57)
+    filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
+
+    if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::NormalTextFilter))
+#else
     // Unfortunately if we don't do this here, then KUriFilterData::preferredSearchProviders()
     // will later return an empty list when the user has his default search engine set to
     // "None" in the Web Shortcuts configuration. I consider this nonsensical coupling between
@@ -2445,6 +2450,7 @@ void IRCView::updateWebShortcutMenu()
     filterData.setAlternateDefaultSearchProvider("google");
 
     if (KUriFilter::self()->filterUri(filterData, QStringList() << "kuriikwsfilter"))
+#endif
     {
         QStringList searchProviders = filterData.preferredSearchProviders();
 
