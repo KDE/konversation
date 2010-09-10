@@ -673,11 +673,6 @@ class Server : public QObject
         QStringList getAutoJoinCommands() const { return m_autoJoinCommands; }
         void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
 
-        /** Quit the server connection with a given connection state
-         * @param state In what connection state was the quit done.
-         */
-        void quitConnection(Konversation::ConnectionState state);
-
         unsigned int m_completeQueryPosition;
         QList<int> m_nickIndices;
         QStringList m_referenceNicklist;
@@ -698,7 +693,6 @@ class Server : public QObject
 
         KTcpSocket* m_socket;
 
-        QTimer m_reconnectTimer;
         QTimer m_incomingTimer;
         QTimer m_notifyTimer;
         QStringList m_notifyCache;                  // List of users found with ISON
@@ -809,7 +803,7 @@ class Server : public QObject
 
         ConnectionSettings m_connectionSettings;
 
-        /// Used by ConnectionManaer to schedule a reconnect; stopped by /disconnect
+        /// Used by ConnectionManager to schedule a reconnect; stopped by /disconnect
         /// and /quit.
         QTimer* m_delayedConnectTimer;
 
