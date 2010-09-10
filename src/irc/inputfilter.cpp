@@ -2072,6 +2072,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case ERR_BADCHANNELKEY:
+            {
+                if (plHas(2))
+                {
+                    server->appendMessageToFrontmost(i18n("Error"), i18n("Cannot join %1: The channel is password-protected and either a wrong or no password was given.", parameterList.value(1)));
+                }
+                break;
+            }
             default:
             {
                 // All yet unknown messages go into the frontmost window without the
