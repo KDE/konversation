@@ -2496,7 +2496,11 @@ void IRCView::handleWebShortcutAction()
     {
         KUriFilterData filterData(action->data().toString());
 
+#if KDE_IS_VERSION(4,5,67)
+        if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::WebShortcutFilter))
+#else
         if (KUriFilter::self()->filterUri(filterData, QStringList() << "kurisearchfilter"))
+#endif
             Application::instance()->openUrl(filterData.uri().url());
     }
 #endif
