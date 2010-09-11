@@ -484,7 +484,7 @@ namespace Konversation
             //TXT x,y,text
             static const QString txtLineCommand("\x01""TXT %1,%2,%3\x01");
 
-            emit rawWhiteBoardCommand(txtLineCommand.arg(QString::number(x)).arg(QString::number(y)).arg(text));
+            emit rawWhiteBoardCommand(txtLineCommand.arg(x).arg(y).arg(text));
         }
 
         void WhiteBoard::usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text)
@@ -496,7 +496,7 @@ namespace Konversation
             QString fontSize = QString::number(font.pointSize());
             QString fontStyle = QString::number(fontToStyle(font));
 
-            emit rawWhiteBoardCommand(txtexLineCommand.arg(QString::number(x)).arg(QString::number(y)).arg(
+            emit rawWhiteBoardCommand(txtexLineCommand.arg(x).arg(y).arg(
                                                            fontname).arg(fontSize).arg(fontStyle).arg(colorToString(textColor)).arg(
                                                            colorToString(background)).arg(text));
         }
@@ -564,9 +564,9 @@ namespace Konversation
             }
 
             QString drLineCommand("\x01""DR %2,%3,%4,%5,%6,%7,%8,%9\x01");
-            drLineCommand = drLineCommand.arg(QString::number(tool)).arg(
-                                          QString::number(lineWidth)).arg(colorToString(penColor)).arg(colorToString(brushColor)).arg(
-                                          QString::number(xFrom)).arg(QString::number(yFrom)).arg(QString::number(xTo)).arg(QString::number(yTo));
+            drLineCommand = drLineCommand.arg(tool).arg(
+                                          lineWidth).arg(colorToString(penColor)).arg(colorToString(brushColor)).arg(
+                                          xFrom).arg(yFrom).arg(xTo).arg(yTo);
             // kDebug() << drLineCommand;
             emit rawWhiteBoardCommand(drLineCommand);
         }

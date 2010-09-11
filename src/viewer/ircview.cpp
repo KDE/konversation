@@ -609,7 +609,7 @@ void IRCView::append(const QString& nick, const QString& message)
 
     line = line.arg(timeStamp(), nick, text);
 
-    emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
+    emit textToLog(QString("<%1>\t%2").arg(nick, message));
 
     doAppend(line, rtl);
 }
@@ -667,7 +667,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
 
     line = line.arg(timeStamp(), nick, text);
 
-    emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
+    emit textToLog(QString("<%1>\t%2").arg(nick, message));
 
     doAppend(line, rtl);
 }
@@ -727,7 +727,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
 
         line = line.arg(timeStamp(), nick, text);
 
-        emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
+        emit textToLog(QString("\t * %1 %2").arg(nick, message));
 
         doAppend(line, rtl);
     }
@@ -774,7 +774,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
             +line.arg(timeStamp(), type, message.section(' ', 1))+"</a></font>";
     }
 
-    emit textToLog(QString("%1\t%2").arg(type).arg(message));
+    emit textToLog(QString("%1\t%2").arg(type, message));
 
     doAppend(line, rtl);
 }
@@ -821,7 +821,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
     line = line.arg(timeStamp(), prefix, text);
 
-    emit textToLog(QString("%1\t%2").arg(type).arg(message));
+    emit textToLog(QString("%1\t%2").arg(type, message));
 
     doAppend(line, rtl, self);
 }
