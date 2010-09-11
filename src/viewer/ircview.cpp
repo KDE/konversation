@@ -2422,18 +2422,18 @@ void IRCView::handleContextActions()
 void IRCView::updateWebShortcutMenu()
 {
 #if KDE_IS_VERSION(4,5,0)
-    QString selectedText = textCursor().selectedText();
-
-    if (selectedText.isEmpty())
-    {
-        m_webShortcutMenu->menuAction()->setVisible(false);
-
-        return;
-    }
-
+    m_webShortcutMenu->menuAction()->setVisible(false);
     m_webShortcutMenu->clear();
 
-    KUriFilterData filterData(selectedText.replace('\n', ' ').replace('\r', ' ').simplified());
+    if (textCursor().selectedText().isEmpty())
+        return;
+
+    QString selectedText = textCursor().selectedText().replace('\n', ' ').replace('\r', ' ').simplified();
+
+    if (selectedText.isEmpty())
+        return;
+
+    KUriFilterData filterData(selectedText);
 
 #if KDE_IS_VERSION(4,5,67)
     filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
@@ -2456,10 +2456,7 @@ void IRCView::updateWebShortcutMenu()
 
         if (!searchProviders.isEmpty())
         {
-            const QString squeezedText = KStringHandler::rsqueeze(selectedText, 21);
-            m_webShortcutMenu->setTitle(i18n("Search for '%1' with", squeezedText));
-
-            m_webShortcutMenu->menuAction()->setVisible(true);
+            m_webShortcutMenu->setTitle(i18n("Search for '%1' with",  KStringHandler::rsqueeze(selectedText, 21)));
 
             KAction* action = 0;
 
@@ -2479,11 +2476,9 @@ void IRCView::updateWebShortcutMenu()
             connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
             m_webShortcutMenu->addAction(action);
 
-            return;
+            m_webShortcutMenu->menuAction()->setVisible(true);
         }
     }
-
-    m_webShortcutMenu->menuAction()->setVisible(false);
 #endif
 }
 
