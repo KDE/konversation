@@ -940,7 +940,7 @@ QString IRCView::timeStamp()
 
         if(!Preferences::self()->showDate())
         {
-            timeString = QString("<font color=\"" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
+            timeString = QString(QLatin1String("<font color=\"") + timeColor + QLatin1String("\">[%1]</font> ")).arg(time.toString(timeFormat));
         }
         else
         {
@@ -984,19 +984,19 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
     else
         nickColor = defaultColor;
 
-    nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
+    nickLine = QLatin1String("<font color=\"") + nickColor + QLatin1String("\">") + nickLine + QLatin1String("</font>");
 
     if (Preferences::self()->useClickableNicks())
         nickLine = "<a class=\"nick\" href=\"#" + nick + "\">" + nickLine + "</a>";
 
     if (privMsg)
-        nickLine.prepend ("-&gt; ");
+        nickLine.prepend(QLatin1String("-&gt; "));
 
     if(encapsulateNick)
-        nickLine = "&lt;" + nickLine + "&gt;";
+        nickLine = QLatin1String("&lt;") + nickLine + QLatin1String("&gt;");
 
     if(Preferences::self()->useBoldNicks())
-        nickLine = "<b>" + nickLine + "</b>";
+        nickLine = QLatin1String("<b>") + nickLine + QLatin1String("</b>");
 
     return nickLine;
 }
@@ -1132,14 +1132,14 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
         // apply found highlight color to line
         if(!highlightColor.isEmpty())
         {
-            filteredLine = "<font color=\"" + highlightColor + "\">" + filteredLine + "</font>";
+            filteredLine = QLatin1String("<font color=\"") + highlightColor + QLatin1String("\">") + filteredLine + QLatin1String("</font>");
         }
     }
     else if(doHighlight && (whoSent == ownNick) && Preferences::self()->highlightOwnLines())
     {
         // highlight own lines
-        filteredLine = "<font color=\"" + Preferences::self()->highlightOwnLinesColor().name() +
-            "\">" + filteredLine + "</font>";
+        filteredLine = QLatin1String("<font color=\"") + Preferences::self()->highlightOwnLinesColor().name() +
+            QLatin1String("\">") + filteredLine + QLatin1String("</font>");
     }
 
     filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
@@ -1342,23 +1342,23 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         switch (htmlText.at(pos).toAscii())
         {
             case '\x02': //bold
-                offset = defaultHtmlReplace(htmlText, &data, pos, "b");
+                offset = defaultHtmlReplace(htmlText, &data, pos, QLatin1String("b"));
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
             case '\x1d': //italic
-                offset = defaultHtmlReplace(htmlText, &data, pos, "i");
+                offset = defaultHtmlReplace(htmlText, &data, pos, QLatin1String("i"));
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
             case '\x15': //mirc underline
             case '\x1f': //kvirc underline
-                offset = defaultHtmlReplace(htmlText, &data, pos, "u");
+                offset = defaultHtmlReplace(htmlText, &data, pos, QLatin1String("u"));
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
             case '\x13': //strikethru
-                offset = defaultHtmlReplace(htmlText, &data, pos, "s");
+                offset = defaultHtmlReplace(htmlText, &data, pos, QLatin1String("s"));
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
@@ -1376,7 +1376,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     QString colorString;
                     // check for color reset conditions
                     //TODO check if \x11 \017 is really valid here
-                    if (colorMatch == "\x03" || colorMatch == "\x11" ||
+                    if (colorMatch == QLatin1String("\x03") || colorMatch == QLatin1String("\x11") ||
                         (fgColor.isEmpty() && bgColor.isEmpty()) || (!fgOK && !bgOK))
                     {
                         //in reverse mode, just reset both colors
@@ -1388,17 +1388,17 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         }
                         else
                         {
-                            if (data.openHtmlTags.contains("font") &&
-                                data.openHtmlTags.contains("span"))
+                            if (data.openHtmlTags.contains(QLatin1String("font")) &&
+                                data.openHtmlTags.contains(QLatin1String("span")))
                             {
-                                colorString += closeToTagString(&data, "span");
+                                colorString += closeToTagString(&data, QLatin1String("span"));
                                 data.lastBgColor.clear();
-                                colorString += closeToTagString(&data, "font");
+                                colorString += closeToTagString(&data, QLatin1String("font"));
                                 data.lastFgColor.clear();
                             }
                             else if (data.openHtmlTags.contains("font"))
                             {
-                                colorString += closeToTagString(&data, "font");
+                                colorString += closeToTagString(&data, QLatin1String("font"));
                                 data.lastFgColor.clear();
                             }
                         }
@@ -1434,15 +1434,15 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // NOTE: there is no new bgColor is there is no fgColor
                     else if (!fgColor.isEmpty())
                     {
-                        if (data.openHtmlTags.contains("font") &&
-                            data.openHtmlTags.contains("span"))
+                        if (data.openHtmlTags.contains(QLatin1String("font")) &&
+                            data.openHtmlTags.contains(QLatin1String("span")))
                         {
-                            colorString += closeToTagString(&data, "span");
-                            colorString += closeToTagString(&data, "font");
+                            colorString += closeToTagString(&data, QLatin1String("span"));
+                            colorString += closeToTagString(&data, QLatin1String("font"));
                         }
-                        else if (data.openHtmlTags.contains("font"))
+                        else if (data.openHtmlTags.contains(QLatin1String("font")))
                         {
-                            colorString += closeToTagString(&data, "font");
+                            colorString += closeToTagString(&data, QLatin1String("font"));
                         }
                         data.lastFgColor = fgColor;
                         if (!bgColor.isEmpty())
@@ -1451,11 +1451,11 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         if (!data.lastFgColor.isEmpty())
                         {
                             colorString += fontColorOpenTag(data.lastFgColor);
-                            data.openHtmlTags.append("font");
+                            data.openHtmlTags.append(QLatin1String("font"));
                             if (!data.lastBgColor.isEmpty())
                             {
                                 colorString += spanColorOpenTag(data.lastBgColor);
-                                data.openHtmlTags.append("span");
+                                data.openHtmlTags.append(QLatin1String("span"));
                             }
                         }
                     }
@@ -1471,7 +1471,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     QString closeText;
                     while (!data.openHtmlTags.isEmpty())
                     {
-                        closeText += "</" + data.openHtmlTags.takeLast() + '>';
+                        closeText += QLatin1String("</") + data.openHtmlTags.takeLast() + QLatin1Char('>');
                     }
                     data.lastBgColor.clear();
                     data.lastFgColor.clear();
@@ -1496,35 +1496,35 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // close current color strings and open reverse tags
                     if (!data.reverse)
                     {
-                        if (data.openHtmlTags.contains("span"))
+                        if (data.openHtmlTags.contains(QLatin1String("span")))
                         {
-                            colorString += closeToTagString(&data, "span");
+                            colorString += closeToTagString(&data, QLatin1String("span"));
                         }
-                        if (data.openHtmlTags.contains("font"))
+                        if (data.openHtmlTags.contains(QLatin1String("font")))
                         {
-                            colorString += closeToTagString(&data, "font");
+                            colorString += closeToTagString(&data, QLatin1String("font"));
                         }
                         data.reverse = true;
                         colorString += fontColorOpenTag(Preferences::self()->color(Preferences::TextViewBackground).name());
-                        data.openHtmlTags.append("font");
+                        data.openHtmlTags.append(QLatin1String("font"));
                         colorString += spanColorOpenTag(defaultColor);
-                        data.openHtmlTags.append("span");
+                        data.openHtmlTags.append(QLatin1String("span"));
                     }
                     else
                     {
                         // if reset reverse, close reverse and set old fore- and
                         // back-groundcolor if set in data
-                        colorString += closeToTagString(&data, "span");
-                        colorString += closeToTagString(&data, "font");
+                        colorString += closeToTagString(&data, QLatin1String("span"));
+                        colorString += closeToTagString(&data, QLatin1String("font"));
                         data.reverse = false;
                         if (!data.lastFgColor.isEmpty())
                         {
                             colorString += fontColorOpenTag(data.lastFgColor);
-                            data.openHtmlTags.append("font");
+                            data.openHtmlTags.append(QLatin1String("font"));
                             if (!data.lastBgColor.isEmpty())
                             {
                                 colorString += spanColorOpenTag(data.lastBgColor);
-                                data.openHtmlTags.append("span");
+                                data.openHtmlTags.append(QLatin1String("span"));
                             }
                         }
                     }
@@ -1597,7 +1597,7 @@ int IRCView::defaultHtmlReplace(QString& htmlText, TextHtmlData* data, int pos, 
     else
     {
         data->openHtmlTags.append(tag);
-        replace = '<'+tag+'>';
+        replace = QLatin1Char('<') + tag + QLatin1Char('>');
     }
     htmlText.replace(pos, 1, replace);
     return replace.length();
@@ -1612,7 +1612,7 @@ QString IRCView::closeToTagString(TextHtmlData* data, const QString& _tag)
     for ( ; i >= 0 ; --i)
     {
         tag = data->openHtmlTags.at(i);
-        ret += "</" + tag + '>';
+        ret += QLatin1String("</") + tag + QLatin1Char('>');
         if (tag == _tag)
         {
             data->openHtmlTags.removeAt(i);
@@ -1633,7 +1633,7 @@ QString IRCView::openTags(TextHtmlData* data, int from)
     for ( ;  i < data->openHtmlTags.count(); ++i)
     {
         tag = data->openHtmlTags.at(i);
-        if (tag == "font")
+        if (tag == QLatin1String("font"))
         {
             if (data->reverse)
             {
@@ -1644,7 +1644,7 @@ QString IRCView::openTags(TextHtmlData* data, int from)
                 ret += fontColorOpenTag(data->lastFgColor);
             }
         }
-        else if (tag == "span")
+        else if (tag == QLatin1String("span"))
         {
             if (data->reverse)
             {
@@ -1657,7 +1657,7 @@ QString IRCView::openTags(TextHtmlData* data, int from)
         }
         else
         {
-            ret += '<' + tag + '>';
+            ret += QLatin1Char('<') + tag + QLatin1Char('>');
         }
     }
     return ret;
@@ -1670,19 +1670,19 @@ QString IRCView::closeTags(TextHtmlData* data)
     i.toBack();
     while (i.hasPrevious())
     {
-        ret += "</" + i.previous() + '>';
+        ret += QLatin1String("</") + i.previous() + QLatin1Char('>');
     }
     return ret;
 }
 
 QString IRCView::fontColorOpenTag(const QString& fgColor)
 {
-    return "<font color=\"" + fgColor + "\">";
+    return QLatin1String("<font color=\"") + fgColor + QLatin1String("\">");
 }
 
 QString IRCView::spanColorOpenTag(const QString& bgColor)
 {
-    return "<span style=\"background-color:" + bgColor + "\">";
+    return QLatin1String("<span style=\"background-color:") + bgColor + QLatin1String("\">");
 }
 
 QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
@@ -1694,20 +1694,20 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
         switch (codes.at(pos).toAscii())
         {
             case '\x02': //bold
-                defaultRemoveDuplicateHandling(data, "b");
+                defaultRemoveDuplicateHandling(data, QLatin1String("b"));
                 ++pos;
                 break;
             case '\x1d': //italic
-                defaultRemoveDuplicateHandling(data, "i");
+                defaultRemoveDuplicateHandling(data, QLatin1String("i"));
                 ++pos;
                 break;
             case '\x15': //mirc underline
             case '\x1f': //kvirc underline
-                defaultRemoveDuplicateHandling(data, "u");
+                defaultRemoveDuplicateHandling(data, QLatin1String("u"));
                 ++pos;
                 break;
             case '\x13': //strikethru
-                defaultRemoveDuplicateHandling(data, "s");
+                defaultRemoveDuplicateHandling(data, QLatin1String("s"));
                 ++pos;
                 break;
             case '\x0f': //reset to default
@@ -1721,25 +1721,25 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
             case '\x16': //reverse
                 if (data->reverse)
                 {
-                    data->openHtmlTags.removeOne("span");
-                    data->openHtmlTags.removeOne("font");
+                    data->openHtmlTags.removeOne(QLatin1String("span"));
+                    data->openHtmlTags.removeOne(QLatin1String("font"));
                     data->reverse = false;
                     if (!data->lastFgColor.isEmpty())
                     {
-                        data->openHtmlTags.append("font");
+                        data->openHtmlTags.append(QLatin1String("font"));
                         if (!data->lastBgColor.isEmpty())
                         {
-                            data->openHtmlTags.append("span");
+                            data->openHtmlTags.append(QLatin1String("span"));
                         }
                     }
                 }
                 else
                 {
-                    data->openHtmlTags.removeOne("span");
-                    data->openHtmlTags.removeOne("font");
+                    data->openHtmlTags.removeOne(QLatin1String("span"));
+                    data->openHtmlTags.removeOne(QLatin1String("font"));
                     data->reverse = true;
-                    data->openHtmlTags.append("font");
-                    data->openHtmlTags.append("span");
+                    data->openHtmlTags.append(QLatin1String("font"));
+                    data->openHtmlTags.append(QLatin1String("span"));
                 }
                 ++pos;
                 break;
@@ -1751,18 +1751,18 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
 
                     // check for color reset conditions
                     //TODO check if \x11 \017 is really valid here
-                    if (colorMatch == "\x03" || colorMatch == "\x11" ||
+                    if (colorMatch == QLatin1String("\x03") || colorMatch == QLatin1String("\x11") ||
                         (fgColor.isEmpty() && bgColor.isEmpty()) || (!fgOK && !bgOK))
                     {
                         if (!data->lastBgColor.isEmpty())
                         {
                             data->lastBgColor.clear();
-                            data->openHtmlTags.removeOne("span");
+                            data->openHtmlTags.removeOne(QLatin1String("span"));
                         }
                         if (!data->lastFgColor.isEmpty())
                         {
                             data->lastFgColor.clear();
-                            data->openHtmlTags.removeOne("font");
+                            data->openHtmlTags.removeOne(QLatin1String("font"));
                         }
                         pos += colorMatch.length();
                         break;
@@ -1780,11 +1780,11 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
                     if (!fgColor.isEmpty())
                     {
                         data->lastFgColor = fgColor;
-                        data->openHtmlTags.append("font");
+                        data->openHtmlTags.append(QLatin1String("font"));
                         if (!bgColor.isEmpty())
                         {
                             data->lastBgColor = bgColor;
-                            data->openHtmlTags.append("span");
+                            data->openHtmlTags.append(QLatin1String("span"));
                         }
                     }
 
@@ -2083,7 +2083,7 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
         m_lastStatusText = link;
     }
 
-    if (!link.startsWith('#'))
+    if (!link.startsWith(QLatin1Char('#')))
     {
         m_isOnNick = false;
         m_isOnChannel = false;
@@ -2111,7 +2111,7 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
            m_copyUrlMenu = true;
         }
     }
-    else if (link.startsWith('#') && !link.startsWith(QLatin1String("##")))
+    else if (link.startsWith(QLatin1Char('#')) && !link.startsWith(QLatin1String("##")))
     {
         m_currentNick = link.mid(1);
 
