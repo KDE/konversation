@@ -2433,7 +2433,7 @@ void IRCView::updateWebShortcutMenu()
 
     m_webShortcutMenu->clear();
 
-    KUriFilterData filterData(selectedText.remove('\n').remove('\r'));
+    KUriFilterData filterData(selectedText.replace('\n', ' ').replace('\r', ' ').simplified());
 
 #if KDE_IS_VERSION(4,5,67)
     filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
