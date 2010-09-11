@@ -82,24 +82,24 @@ namespace Konversation
                     {
                         return wboardCommands;
                     }
-                    wboardCommands.insert("BLT", BLT);
-                    wboardCommands.insert("CAN", CAN);
-                    wboardCommands.insert("CANT", CANT);
-                    wboardCommands.insert("CLIP", CLIP);
-                    wboardCommands.insert("CLS", CLS);
-                    wboardCommands.insert("DR", DR);
-                    wboardCommands.insert("DO", DO);
-                    wboardCommands.insert("DONT", DONT); //krazy:exclude=spelling
-                    wboardCommands.insert("ENTRY", ENTRY);
-                    wboardCommands.insert("IMG", IMG);
-                    wboardCommands.insert("IMGDATE", IMGDATA);
-                    wboardCommands.insert("MAKEIMG", MAKEIMG);
-                    wboardCommands.insert("NOCLIP", NOCLIP);
-                    wboardCommands.insert("SETSTAMP", SETSTAMP);
-                    wboardCommands.insert("SETTOOL", SETTOOL);
-                    wboardCommands.insert("STAMP", STAMP);
-                    wboardCommands.insert("TXT", TXT);
-                    wboardCommands.insert("TXTEX", TXTEX);
+                    wboardCommands.insert(QLatin1String("BLT"), BLT);
+                    wboardCommands.insert(QLatin1String("CAN"), CAN);
+                    wboardCommands.insert(QLatin1String("CANT"), CANT);
+                    wboardCommands.insert(QLatin1String("CLIP"), CLIP);
+                    wboardCommands.insert(QLatin1String("CLS"), CLS);
+                    wboardCommands.insert(QLatin1String("DR"), DR);
+                    wboardCommands.insert(QLatin1String("DO"), DO);
+                    wboardCommands.insert(QLatin1String("DONT"), DONT); //krazy:exclude=spelling
+                    wboardCommands.insert(QLatin1String("ENTRY"), ENTRY);
+                    wboardCommands.insert(QLatin1String("IMG"), IMG);
+                    wboardCommands.insert(QLatin1String("IMGDATE"), IMGDATA);
+                    wboardCommands.insert(QLatin1String("MAKEIMG"), MAKEIMG);
+                    wboardCommands.insert(QLatin1String("NOCLIP"), NOCLIP);
+                    wboardCommands.insert(QLatin1String("SETSTAMP"), SETSTAMP);
+                    wboardCommands.insert(QLatin1String("SETTOOL"), SETTOOL);
+                    wboardCommands.insert(QLatin1String("STAMP"), STAMP);
+                    wboardCommands.insert(QLatin1String("TXT"), TXT);
+                    wboardCommands.insert(QLatin1String("TXTEX"), TXTEX);
                     return wboardCommands;
                 }
 
