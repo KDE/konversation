@@ -2452,7 +2452,7 @@ void IRCView::updateWebShortcutMenu()
     if (KUriFilter::self()->filterUri(filterData, QStringList() << "kuriikwsfilter"))
 #endif
     {
-        QStringList searchProviders = filterData.preferredSearchProviders();
+        const QStringList searchProviders = filterData.preferredSearchProviders();
 
         if (!searchProviders.isEmpty())
         {
