@@ -186,6 +186,7 @@ Changes since 1.3.1:
 * Added support for the 475 numeric (ERR_BADCHANNELKEY).
 * Rewrote chat text view wallpaper image support to avoid rendering pro-
   blems some users were experiencing.
+* Minor UI improvements to the chat text view context menu.
 
 
 Changes from 1.3 to 1.3.1:
