@@ -2187,32 +2187,32 @@ void IRCView::setupContextMenu()
     m_popup->addAction(m_copyUrlClipBoard);
     m_copyUrlClipBoard->setVisible( false );
 
+    // Not using KStandardAction is intentional here since the Ctrl+B
+    // shortcut it would show in the menu is already used by our IRC
+    // wide bookmarking feature.
     m_bookmark = new KAction(this);
     m_bookmark->setIcon(KIcon("bookmark-new"));
     m_bookmark->setText(i18n("Add to Bookmarks"));
     connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
     m_popup->addAction(m_bookmark);
-    m_bookmark->setVisible( false );
+    m_bookmark->setVisible(false);
 
     m_saveUrl = new KAction(this);
     m_saveUrl->setIcon(KIcon("document-save"));
     m_saveUrl->setText(i18n("Save Link As..."));
     connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
     m_popup->addAction(m_saveUrl);
-    m_saveUrl->setVisible( false );
+    m_saveUrl->setVisible(false);
 
     QAction* toggleMenuBarSeparator = m_popup->addSeparator();
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
-    copyUrlMenuSeparator->setVisible( false );
+    copyUrlMenuSeparator->setVisible(false);
 
-    QAction* copyAct = new KAction(this);
-    copyAct->setIcon(KIcon("edit-copy"));
-    copyAct->setText(i18n("&Copy"));
-    connect(copyAct, SIGNAL(triggered()), SLOT(copy()));
+    KAction* copyAct = KStandardAction::copy(this, SLOT(copy()), this);
     m_popup->addAction(copyAct);
-    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
-    copyAct->setEnabled( false );
+    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT(setEnabled(bool)));
+    copyAct->setEnabled(false);
 
     KAction* selectAllAct = KStandardAction::selectAll(this, SLOT(selectAll()), this);
     m_popup->addAction(selectAllAct);
@@ -2224,10 +2224,8 @@ void IRCView::setupContextMenu()
     m_webShortcutMenu->menuAction()->setVisible(false);
 #endif
 
-    QAction* findTextAct = new KAction(this);
-    findTextAct->setIcon(KIcon("edit-find"));
-    findTextAct->setText(i18n("Find Text..."));
-    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
+    KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
+    QAction* findTextAct = actionCollection->action(KStandardAction::name(KStandardAction::Find));
     m_popup->addAction(findTextAct);
 }
 void IRCView::setupNickPopupMenu(bool isQuery)
