@@ -68,7 +68,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     addresseelogoimage->setWhatsThis(whatsthis);
     queryHostmask->setWhatsThis(whatsthis);
 
-    IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
+    IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircBox), 1);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);

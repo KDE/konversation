@@ -35,7 +35,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     awayState=false;
 
     // set up text view, will automatically take care of logging
-    IRCViewBox* ircBox = new IRCViewBox(this, 0); // Server will be set later in setServer()
+    IRCViewBox* ircBox = new IRCViewBox(this); // Server will be set later in setServer()
     setTextView(ircBox->ircView());
 
     KHBox* commandLineBox=new KHBox(this);

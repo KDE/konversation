@@ -17,10 +17,10 @@
 #include <QPixmap>
 #include <KVBox>
 
-IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
+IRCViewBox::IRCViewBox(QWidget* parent)
 : KVBox(parent)
 {
-    m_ircView = new IRCView(this, newServer);
+    m_ircView = new IRCView(this);
     m_searchBar = new SearchBar(this);
     m_searchBar->hide();
     m_matchedOnce = false;

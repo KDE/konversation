@@ -57,7 +57,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     sizeSpin->installEventFilter(this);
     toolBar->addWidget(sizeSpin);
 
-    IRCViewBox* ircBox = new IRCViewBox(this, 0);
+    IRCViewBox* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());
     getTextView()->setWhatsThis(i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 

@@ -124,7 +124,7 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_copyUrlMenu = false;
     m_resetScrollbar = true;
@@ -166,8 +166,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     viewport()->setMouseTracking(true);
 
     setupContextMenu();
-
-    setServer(newServer);
 
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
 
@@ -2377,7 +2375,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 
         m_isOnNick = false;
     }
-    else if(m_channelPopup && m_server && m_isOnChannel && m_channelPopup->isEnabled())
+    else if (m_channelPopup && m_server && m_isOnChannel && m_channelPopup->isEnabled())
     {
         m_channelPopup->exec(ev->globalPos());
         m_isOnChannel = false;
@@ -2388,7 +2386,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
         KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
         QAction* separator = NULL;
 
-        if(toggleMenuBarAction && !toggleMenuBarAction->isChecked())
+        if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
         {
             m_popup->insertAction(m_copyUrlClipBoard, toggleMenuBarAction);
             separator = m_popup->insertSeparator(m_copyUrlClipBoard);

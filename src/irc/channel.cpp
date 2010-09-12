@@ -205,7 +205,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 
     // Server will be set later in setServer()
-    IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
+    IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter);
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(ircViewBox), 1);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
