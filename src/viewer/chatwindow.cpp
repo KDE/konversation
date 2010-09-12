@@ -162,7 +162,7 @@ void ChatWindow::setServer(Server* newServer)
             else kDebug() << "textView==0!";
         }
 
-        emit serverOnline(m_server->isConnected());
+        serverOnline(m_server->isConnected());
     }
 }
 
