@@ -2214,16 +2214,8 @@ void IRCView::setupContextMenu()
     connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
     copyAct->setEnabled( false );
 
-    QAction* selectAllAct = new KAction(this);
-    selectAllAct->setText(i18n("Select All"));
-    connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
+    KAction* selectAllAct = KStandardAction::selectAll(this, SLOT(selectAll()), this);
     m_popup->addAction(selectAllAct);
-
-    QAction* findTextAct = new KAction(this);
-    findTextAct->setIcon(KIcon("edit-find"));
-    findTextAct->setText(i18n("Find Text..."));
-    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
-    m_popup->addAction(findTextAct);
 
 #if KDE_IS_VERSION(4,5,0)
     m_webShortcutMenu = new KMenu(this);
@@ -2231,6 +2223,12 @@ void IRCView::setupContextMenu()
     m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
     m_webShortcutMenu->menuAction()->setVisible(false);
 #endif
+
+    QAction* findTextAct = new KAction(this);
+    findTextAct->setIcon(KIcon("edit-find"));
+    findTextAct->setText(i18n("Find Text..."));
+    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
+    m_popup->addAction(findTextAct);
 }
 void IRCView::setupNickPopupMenu(bool isQuery)
 {
