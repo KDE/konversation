@@ -181,18 +181,23 @@ IRCView::~IRCView()
 
 void IRCView::setServer(Server* newServer)
 {
+    if (m_server == newServer)
+        return;
+
     m_server = newServer;
 
     if (newServer)
     {
-        QAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
-        if(action)
+        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
+
+        QAction* action = actionCollection->action("open_logfile");
+
+        if (action)
         {
-                m_popup->addSeparator();
-                m_popup->addAction( action );
-                action = newServer->getViewContainer()->actionCollection()->action("channel_settings");
-                if ( action )
-                        m_popup->addAction( action );
+            m_popup->insertAction(actionCollection->action("channel_settings"), action);
+            QAction* separator = new QAction(m_popup);
+            separator->setSeparator(true);
+            m_popup->insertAction(action, separator);
         }
     }
 
@@ -202,8 +207,14 @@ void IRCView::setChatWin(ChatWindow* chatWin)
 {
     m_chatWin = chatWin;
 
-    if(m_chatWin->getType()==ChatWindow::Channel)
+    if (m_chatWin->getType()==ChatWindow::Channel)
+    {
         setupNickPopupMenu(false);
+
+        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
+        QAction* action = actionCollection->action("channel_settings");
+        if (action) m_popup->addAction(action);
+    }
     else
         setupNickPopupMenu(true);
 
