@@ -150,7 +150,7 @@ class IrcContextMenus : public QObject
 
         static int extractActionId(QAction* action);
 
-        static inline void commandToServer(Server* server, const QString& command,
+        static void commandToServer(Server* server, const QString& command,
             const QString& destination = QString());
         static inline void commandToServer(Server* server, const QString& command,
             const QStringList& arguments, const QString& destination = QString());
