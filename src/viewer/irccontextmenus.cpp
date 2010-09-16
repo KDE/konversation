@@ -1034,8 +1034,7 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command, co
 {
     Konversation::OutputFilterResult result = server->getOutputFilter()->parse("", Preferences::self()->commandChar() + command, destination);
 
-    if (!result.toServer.isEmpty())
-        server->queue(result.toServer);
+    server->queue(result.toServer);
 
     if (!result.output.isEmpty())
         server->appendMessageToFrontmost(result.typeString, result.output);
