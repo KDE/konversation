@@ -112,7 +112,7 @@ void IrcContextMenus::setupTextMenu()
 
     m_linkActions << createAction(m_textMenu, LinkCopy, KIcon("edit-copy"), i18n("Copy Link Address"));
     // Not using KStandardAction is intentional here since the Ctrl+B
-    // shortcut it would show in the menu is already used by our IRC
+    // shortcut it would show in the menu is already used by our IRC-
     // wide bookmarking feature.
     m_linkActions << createAction(m_textMenu, LinkBookmark, KIcon("bookmark-new"), i18n("Add to Bookmarks"));
     m_linkActions << createAction(m_textMenu, LinkSaveAs, KIcon("document-save"), i18n("Save Link As..."));
