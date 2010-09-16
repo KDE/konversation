@@ -1032,7 +1032,18 @@ int IrcContextMenus::extractActionId(QAction* action)
 
 void IrcContextMenus::commandToServer(Server* server, const QString& command, const QString& destination)
 {
-    server->queue(server->getOutputFilter()->parse("", Preferences::self()->commandChar()+command, destination).toServer);
+    Konversation::OutputFilterResult result = server->getOutputFilter()->parse("", Preferences::self()->commandChar() + command, destination);
+
+    if (!result.toServer.isEmpty())
+        server->queue(result.toServer);
+
+    if (!result.output.isEmpty())
+        server->appendMessageToFrontmost(result.typeString, result.output);
+    else if (!result.outputList.isEmpty())
+    {
+        foreach(const QString& output, result.outputList)
+            server->appendMessageToFrontmost(result.typeString, output);
+    }
 }
 
 void IrcContextMenus::commandToServer(Server* server, const QString& command,

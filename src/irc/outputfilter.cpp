@@ -1583,19 +1583,14 @@ namespace Konversation
             // Print all successful unignores, in case there were any
             if (succeeded.count() >= 1)
             {
-                //FIXME Why is this not just using the OutputFilterResult?
-                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.",
-                                                                       succeeded.join(", ")));
+                result.output = i18n("Removed %1 from your ignore list.", succeeded.join(", "));
+                result.typeString = i18n("Ignore");
+                result.type = Program;
             }
 
             // Any failed unignores
             if (failed.count() >= 1)
-            {
-                //FIXME Why is this not just using the OutputFilterResult?
-                m_server->appendMessageToFrontmost(i18n("Error"),i18np("No such ignore: %2",
-                                                                       "No such ignores: %2",
-                                                                       failed.count(), failed.join(", ")));
-            }
+                result = error(i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(", ")));
         }
 
         return result;
