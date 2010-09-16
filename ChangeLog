@@ -75,6 +75,8 @@ Changes since 1.3.1:
     file will now ask before overwriting an existing file of the same name.
   - The date and time in the header of a saved list file is now formatted
     according to the user's locale settings.
+  - Fixed a bug causing the opening of caught irc:// and ircs:// URLs not to
+    work.
   - Fixed a bug causing the "Date" column to sort alphabetically rather than
     chronologically.
   - Fixed a bug causing the deletion of list entries not to work.

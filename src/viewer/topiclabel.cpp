@@ -77,12 +77,7 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if (link.startsWith(QLatin1String("irc://")) || link.startsWith(QLatin1String("ircs://")))
-            {
-                Application* konvApp = static_cast<Application*>(kapp);
-                konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
-            }
-            else if (link.startsWith('#') && m_server && m_server->isConnected())
+            if (link.startsWith('#') && m_server && m_server->isConnected())
             {
                 QString channel(link);
                 channel.replace("##","#");

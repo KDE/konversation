@@ -1966,15 +1966,7 @@ void IRCView::openLink(const QUrl& url)
     link = link.replace (' ', "%20");
 
     if (!link.isEmpty() && !link.startsWith('#'))
-    {
-        if (link.startsWith(QLatin1String("irc://")) || link.startsWith(QLatin1String("ircs://")))
-        {
-            Application* konvApp = Application::instance();
-            konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
-        }
-        else
-            Application::openUrl(url.toEncoded());
-    }
+        Application::openUrl(url.toEncoded());
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
     {

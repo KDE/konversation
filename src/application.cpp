@@ -1153,6 +1153,8 @@ void Application::openUrl(const QString& url)
 {
     if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")) || url.startsWith(QLatin1String("amarok:")))
     {
+        if (url.startsWith(QLatin1String("irc://")) || url.startsWith(QLatin1String("ircs://")))
+            Application::instance()->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
         if (url.startsWith(QLatin1String("mailto:")))
             KToolInvocation::invokeMailer(KUrl(url));
         else if (url.startsWith(QLatin1String("amarok:")))
