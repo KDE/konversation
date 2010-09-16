@@ -1297,6 +1297,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case ERR_CHANOPRIVSNEEDED:
+            {
+                if (plHas(2))
+                {
+                    server->appendMessageToFrontmost(i18n("Error"), i18n("You need to be a channel operator in %1 to do that.", parameterList.value(1)));
+                }
+                break;
+            }
             case RPL_YOUREOPER:
             {
                 if (plHas(1))

@@ -251,7 +251,7 @@ Changes since 1.3.1:
   - The code implementing the various actions was in many cases redundantly
     implemented in three different places, for some even in four. This stag-
     gering code duplication has been done away with.
-
+* Added support for the 482 numeric (ERR_CHANOPRIVSNEEDED).
 
 
 Changes from 1.3 to 1.3.1:
