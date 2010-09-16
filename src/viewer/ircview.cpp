@@ -103,6 +103,7 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(fal
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
+    m_server = 0;
 
     setAcceptDrops(false);
 
