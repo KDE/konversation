@@ -29,7 +29,6 @@
 
 #include <QClipboard>
 
-#include <KAction>
 #include <KActionCollection>
 #include <KAuthorized>
 #include <KBookmarkDialog>
