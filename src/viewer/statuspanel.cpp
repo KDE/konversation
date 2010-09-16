@@ -64,7 +64,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
     connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
     connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
-    connect(getTextView(), SIGNAL(popupCommand(int)), this, SLOT(popupCommand(int)));
 
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editedable.  if we design it so it isn't, remove these lines.
@@ -327,7 +326,6 @@ QString StatusPanel::getChannelEncodingDefaultDesc()
 void StatusPanel::serverOnline(bool online)
 {
     //statusInput->setEnabled(online);
-    getTextView()->setNickAndChannelContextMenusEnabled(online);
     nicknameCombobox->setEnabled(online);
 }
 
@@ -335,22 +333,6 @@ void StatusPanel::setServer(Server* server)
 {
     ChatWindow::setServer(server);
     nicknameCombobox->setModel(m_server->nickListModel());
-}
-
-void StatusPanel::popupCommand(int command)
-{
-    switch(command)
-    {
-        case Konversation::Join:
-            m_server->queue("JOIN " + getTextView()->currentChannel());
-            break;
-        case Konversation::Topic:
-            m_server->requestTopic(getTextView()->currentChannel());
-            break;
-        case Konversation::Names:
-            m_server->queue("NAMES " + getTextView()->currentChannel(), Server::LowPriority);
-            break;
-    }
 }
 
 #include "statuspanel.moc"

@@ -27,10 +27,9 @@
 #include "common.h"
 #include "emoticons.h"
 #include "notificationhandler.h"
+#include "irccontextmenus.h"
 
-#include <QStringList>
 #include <QRegExp>
-#include <QClipboard>
 #include <QBrush>
 #include <QEvent>
 #include <QColor>
@@ -43,34 +42,7 @@
 #include <QTextDocumentFragment>
 #include <QTextCodec>
 
-#include <KUrl>
-#include <KBookmarkManager>
-#include <kbookmarkdialog.h>
-#include <KMenu>
-#include <KGlobalSettings>
-#include <KFileDialog>
-#include <KAuthorized>
-#include <KActionCollection>
-#include <KToggleAction>
-#include <KIO/CopyJob>
-
-// For the Web Shortcuts context menu sub-menu.
-#if KDE_IS_VERSION(4,5,0)
-#include <KStringHandler>
-#include <KToolInvocation>
-#include <KUriFilter>
-#endif
-
-class Server;
-class ChatWindow;
-class SearchBar;
-
-class QPixmap;
-class QDropEvent;
-class QDragEnterEvent;
-class QEvent;
-
-class KMenu;
+#include <KStandardShortcut>
 
 using namespace Konversation;
 
@@ -126,15 +98,11 @@ class SelectionPin
 
 IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
-    m_copyUrlMenu = false;
     m_resetScrollbar = true;
-    m_offset = 0;
     m_mousePressed = false;
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
-    m_nickPopup = 0;
-    m_channelPopup = 0;
 
     setAcceptDrops(false);
 
@@ -165,14 +133,14 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(fal
     setTextInteractionFlags(Qt::TextBrowserInteraction);
     viewport()->setMouseTracking(true);
 
-    setupContextMenu();
-
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
 
     //HACK to workaround an issue with the QTextDocument
     //doing a relayout/scrollbar over and over resulting in 100%
     //proc usage. See bug 215256
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    setContextMenuOptions(IrcContextMenus::ShowTitle | IrcContextMenus::ShowFindAction, true);
 }
 
 IRCView::~IRCView()
@@ -185,40 +153,11 @@ void IRCView::setServer(Server* newServer)
         return;
 
     m_server = newServer;
-
-    if (newServer)
-    {
-        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
-
-        QAction* action = actionCollection->action("open_logfile");
-
-        if (action)
-        {
-            m_popup->insertAction(actionCollection->action("channel_settings"), action);
-            QAction* separator = new QAction(m_popup);
-            separator->setSeparator(true);
-            m_popup->insertAction(action, separator);
-        }
-    }
-
 }
 
 void IRCView::setChatWin(ChatWindow* chatWin)
 {
     m_chatWin = chatWin;
-
-    if (m_chatWin->getType()==ChatWindow::Channel)
-    {
-        setupNickPopupMenu(false);
-
-        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
-        QAction* action = actionCollection->action("channel_settings");
-        if (action) m_popup->addAction(action);
-    }
-    else
-        setupNickPopupMenu(true);
-
-    setupChannelPopupMenu();
 }
 
 void IRCView::findText()
@@ -1984,7 +1923,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
     }
     else if (ev->button() == Qt::MidButton)
     {
-        if (m_copyUrlMenu)
+        if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
         {
             openLink(QUrl (m_urlToCopy));
             return;
@@ -2052,20 +1991,6 @@ void IRCView::openLink(const QUrl& url)
     }
 }
 
-void IRCView::saveLinkAs()
-{
-    if(m_urlToCopy.isEmpty())
-        return;
-
-    KUrl srcUrl (m_urlToCopy);
-    KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
-
-    if (saveUrl.isEmpty() || !saveUrl.isValid())
-        return;
-
-    KIO::copy(srcUrl, saveUrl);
-}
-
 void IRCView::highlightedSlot(const QString& /*_link*/)
 {
     QString link = m_urlToCopy;
@@ -2075,9 +2000,6 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())
         return;
-
-    // remember current URL to overcome link clicking problems in KTextBrowser
-    //m_highlightedURL = link;
 
     if (link.isEmpty())
     {
@@ -2102,32 +2024,17 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
             emit setStatusBarTempText(link);
         }
 
-        if (link.isEmpty() && m_copyUrlMenu)
-        {
-            m_copyUrlClipBoard->setVisible(false);
-            m_bookmark->setVisible(false);
-            m_saveUrl->setVisible(false);
-            copyUrlMenuSeparator->setVisible(false);
-            m_copyUrlMenu = false;
-
-        }
-        else if (!link.isEmpty() && !m_copyUrlMenu)
-        {
-           copyUrlMenuSeparator->setVisible(true);
-           m_copyUrlClipBoard->setVisible(true);
-           m_bookmark->setVisible(true);
-           m_saveUrl->setVisible(true);
-           m_copyUrlMenu = true;
-        }
+        if (link.isEmpty() && m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
+            setContextMenuOptions(IrcContextMenus::ShowLinkActions, false);
+        else if (!link.isEmpty() && !m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
+            setContextMenuOptions(IrcContextMenus::ShowLinkActions, true);
     }
     else if (link.startsWith(QLatin1Char('#')) && !link.startsWith(QLatin1String("##")))
     {
         m_currentNick = link.mid(1);
 
-        if (m_nickPopup)
-            m_nickPopup->setTitle(m_currentNick);
-
         m_isOnNick = true;
+
         emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
     }
     else
@@ -2135,382 +2042,65 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
         // link.startsWith("##")
         m_currentChannel = link.mid(1);
 
-        if(m_channelPopup)
-        {
-            QString prettyId = m_currentChannel;
-
-            if (prettyId.length()>15)
-            {
-                prettyId.truncate(15);
-                prettyId.append("...");
-            }
-
-            m_channelPopup->setTitle(prettyId);
-        }
-
         m_isOnChannel = true;
+
         emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
     }
 }
 
-void IRCView::copyUrl()
+void IRCView::setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on)
 {
-        if ( !m_urlToCopy.isEmpty() )
-        {
-                QClipboard *cb = qApp->clipboard();
-                cb->setText(m_urlToCopy,QClipboard::Selection);
-                cb->setText(m_urlToCopy,QClipboard::Clipboard);
-        }
-
-}
-
-void IRCView::slotBookmark()
-{
-    if (m_urlToCopy.isEmpty())
-        return;
-
-    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-    KBookmarkDialog* dialog = new KBookmarkDialog(bm, this);
-    dialog->addBookmark(m_urlToCopy, m_urlToCopy);
-    delete dialog;
-}
-
-// Context Menu
-
-KMenu* IRCView::getPopup() const
-{
-    return m_popup;
-}
-
-void IRCView::setupContextMenu()
-{
-    m_popup = new KMenu(this);
-    m_popup->setObjectName("ircview_context_menu");
-
-    m_popup->addSeparator();
-
-    m_copyUrlClipBoard = new KAction(this);
-    m_copyUrlClipBoard->setIcon(KIcon("edit-copy"));
-    m_copyUrlClipBoard->setText(i18n("Copy Link Address"));
-    connect(m_copyUrlClipBoard, SIGNAL(triggered()), SLOT(copyUrl()));
-    m_popup->addAction(m_copyUrlClipBoard);
-    m_copyUrlClipBoard->setVisible( false );
-
-    // Not using KStandardAction is intentional here since the Ctrl+B
-    // shortcut it would show in the menu is already used by our IRC
-    // wide bookmarking feature.
-    m_bookmark = new KAction(this);
-    m_bookmark->setIcon(KIcon("bookmark-new"));
-    m_bookmark->setText(i18n("Add to Bookmarks"));
-    connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
-    m_popup->addAction(m_bookmark);
-    m_bookmark->setVisible(false);
-
-    m_saveUrl = new KAction(this);
-    m_saveUrl->setIcon(KIcon("document-save"));
-    m_saveUrl->setText(i18n("Save Link As..."));
-    connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
-    m_popup->addAction(m_saveUrl);
-    m_saveUrl->setVisible(false);
-
-    QAction* toggleMenuBarSeparator = m_popup->addSeparator();
-    toggleMenuBarSeparator->setVisible(false);
-    copyUrlMenuSeparator = m_popup->addSeparator();
-    copyUrlMenuSeparator->setVisible(false);
-
-    KAction* copyAct = KStandardAction::copy(this, SLOT(copy()), this);
-    m_popup->addAction(copyAct);
-    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT(setEnabled(bool)));
-    copyAct->setEnabled(false);
-
-    KAction* selectAllAct = KStandardAction::selectAll(this, SLOT(selectAll()), this);
-    m_popup->addAction(selectAllAct);
-
-#if KDE_IS_VERSION(4,5,0)
-    m_webShortcutMenu = new KMenu(this);
-    m_popup->addMenu(m_webShortcutMenu);
-    m_webShortcutMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
-    m_webShortcutMenu->menuAction()->setVisible(false);
-#endif
-
-    KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
-    QAction* findTextAct = actionCollection->action(KStandardAction::name(KStandardAction::Find));
-    m_popup->addAction(findTextAct);
-}
-void IRCView::setupNickPopupMenu(bool isQuery)
-{
-    m_nickPopup = new KMenu(this);
-    m_nickPopup->setObjectName("nicklist_context_menu");
-    m_nickPopup->setTitle(m_currentNick);
-
-    QAction* action = m_nickPopup->addAction(i18n("&Whois"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Whois);
-    action = m_nickPopup->addAction(i18n("&Version"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Version);
-    action = m_nickPopup->addAction(i18n("&Ping"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Ping);
-
-    m_nickPopup->addSeparator();
-
-    if(!isQuery)
-    {
-        QMenu* modes = m_nickPopup->addMenu(i18n("Modes"));
-        action = modes->addAction(i18n("Give Op"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::GiveOp);
-        action->setIcon(KIcon("irc-operator"));
-        action = modes->addAction(i18n("Take Op"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::TakeOp);
-        action->setIcon(KIcon("irc-remove-operator"));
-        action = modes->addAction(i18n("Give Voice"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::GiveVoice);
-        action->setIcon(KIcon("irc-voice"));
-        action = modes->addAction(i18n("Take Voice"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::TakeVoice);
-        action->setIcon(KIcon("irc-unvoice"));
-
-        QMenu* kickban = m_nickPopup->addMenu(i18n("Kick / Ban"));
-        action = kickban->addAction(i18n("Kick"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::Kick);
-        action = kickban->addAction(i18n("Kickban"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBan);
-        action = kickban->addAction(i18n("Ban Nickname"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanNick);
-        kickban->addSeparator();
-        action = kickban->addAction(i18n("Ban *!*@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanHost);
-        action = kickban->addAction(i18n("Ban *!*@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanDomain);
-        action = kickban->addAction(i18n("Ban *!user@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanUserHost);
-        action = kickban->addAction(i18n("Ban *!user@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::BanUserDomain);
-        kickban->addSeparator();
-        action = kickban->addAction(i18n("Kickban *!*@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanHost);
-        action = kickban->addAction(i18n("Kickban *!*@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanDomain);
-        action = kickban->addAction(i18n("Kickban *!user@*.host"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanUserHost);
-        action = kickban->addAction(i18n("Kickban *!user@domain"), this, SLOT(handleContextActions()));
-        action->setData(Konversation::KickBanUserDomain);
-    }
-
-    m_ignoreAction = new KToggleAction(i18n("Ignore"), this);
-    m_ignoreAction->setCheckedState(KGuiItem(i18n("Unignore")));
-    m_ignoreAction->setData(Konversation::IgnoreNick);
-    m_nickPopup->addAction(m_ignoreAction);
-    connect(m_ignoreAction, SIGNAL(triggered()), this, SLOT(handleContextActions()));
-
-    m_nickPopup->addSeparator();
-
-    action = m_nickPopup->addAction(i18n("Open Query"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::OpenQuery);
-
-    KConfigGroup config = KGlobal::config()->group("KDE Action Restrictions");
-
-    if(config.readEntry<bool>("allow_downloading", true))
-    {
-        action = m_nickPopup->addAction(SmallIcon("arrow-right-double"),i18n("Send &File..."), this, SLOT(handleContextActions()));
-        action->setData(Konversation::DccSend);
-    }
-
-    m_nickPopup->addSeparator();
-
-    m_addNotifyAction = m_nickPopup->addAction(i18n("Add to Watched Nicks"), this, SLOT(handleContextActions()));
-    m_addNotifyAction->setData(Konversation::AddNotify);
-}
-
-void IRCView::setNickAndChannelContextMenusEnabled(bool enable)
-{
-    if (m_nickPopup) m_nickPopup->setEnabled(enable);
-    if (m_channelPopup) m_channelPopup->setEnabled(enable);
-}
-
-const QString& IRCView::getContextNick() const
-{
-    return m_currentNick;
-}
-
-void IRCView::clearContextNick()
-{
-    m_currentNick.clear();
-}
-
-void IRCView::updateNickMenuEntries(const QString& nickname)
-{
-    if (Preferences::isIgnored(nickname))
-    {
-        m_ignoreAction->setChecked(true);
-        m_ignoreAction->setData(Konversation::UnignoreNick);
-    }
+    if (on)
+        m_contextMenuOptions |= options;
     else
-    {
-        m_ignoreAction->setChecked(false);
-        m_ignoreAction->setData(Konversation::IgnoreNick);
-    }
-
-    if (!m_server || !m_server->getServerGroup() || !m_server->isConnected() || !Preferences::hasNotifyList(m_server->getServerGroup()->id())
-        || Preferences::isNotify(m_server->getServerGroup()->id(), nickname))
-    {
-        m_addNotifyAction->setEnabled(false);
-    }
-    else
-    {
-        m_addNotifyAction->setEnabled(true);
-    }
-}
-
-void IRCView::setupChannelPopupMenu()
-{
-    m_channelPopup = new KMenu(this);
-    m_channelPopup->setObjectName("channel_context_menu");
-    m_channelPopup->setTitle(m_currentChannel);
-
-    QAction* action = m_channelPopup->addAction(i18n("&Join Channel..."), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Join);
-    action->setIcon(KIcon("irc-join-channel"));
-    action = m_channelPopup->addAction(i18n("Get &user list"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Names);
-    action = m_channelPopup->addAction(i18n("Get &topic"), this, SLOT(handleContextActions()));
-    action->setData(Konversation::Topic);
+        m_contextMenuOptions &= ~options;
 }
 
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 {
-    if (m_nickPopup && m_server && m_isOnNick && m_nickPopup->isEnabled())
+    if (m_isOnChannel && m_server)
     {
-        updateNickMenuEntries(getContextNick());
+        IrcContextMenus::channelMenu(ev->globalPos(), m_server, m_currentChannel);
 
-        if(m_nickPopup->exec(ev->globalPos()) == 0)
-            clearContextNick();
+        m_isOnChannel = false;
+
+        return;
+    }
+
+    if (m_isOnNick && m_server)
+    {
+        IrcContextMenus::nickMenu(ev->globalPos(), m_contextMenuOptions, m_server, QStringList() << m_currentNick,
+            m_contextMenuOptions.testFlag(IrcContextMenus::ShowChannelActions) ? m_chatWin->getName() : QString());
+
+        m_currentNick.clear();
 
         m_isOnNick = false;
-    }
-    else if (m_channelPopup && m_server && m_isOnChannel && m_channelPopup->isEnabled())
-    {
-        m_channelPopup->exec(ev->globalPos());
-        m_isOnChannel = false;
-    }
-    else
-    {
-        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
-        KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
-        QAction* separator = NULL;
 
-        if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
-        {
-            m_popup->insertAction(m_copyUrlClipBoard, toggleMenuBarAction);
-            separator = m_popup->insertSeparator(m_copyUrlClipBoard);
-        }
-
-#if KDE_IS_VERSION(4,5,0)
-        updateWebShortcutMenu();
-#endif
-
-        m_popup->exec(ev->globalPos());
-
-        if(separator)
-        {
-            m_popup->removeAction(toggleMenuBarAction);
-            m_popup->removeAction(separator);
-        }
-    }
-}
-
-void IRCView::handleContextActions()
-{
-    QAction* action = qobject_cast<QAction*>(sender());
-
-    emit popupCommand(action->data().toInt());
-}
-
-void IRCView::updateWebShortcutMenu()
-{
-#if KDE_IS_VERSION(4,5,0)
-    m_webShortcutMenu->menuAction()->setVisible(false);
-    m_webShortcutMenu->clear();
-
-    if (textCursor().selectedText().isEmpty())
         return;
+    }
 
-    QString selectedText = textCursor().selectedText().replace('\n', ' ').replace('\r', ' ').simplified();
+    int contextMenuActionId = IrcContextMenus::textMenu(ev->globalPos(), m_contextMenuOptions, m_server,
+        textCursor().selectedText(), m_urlToCopy,
+        m_contextMenuOptions.testFlag(IrcContextMenus::ShowNickActions) ? m_chatWin->getName() : QString());
 
-    if (selectedText.isEmpty())
-        return;
-
-    KUriFilterData filterData(selectedText);
-
-#if KDE_IS_VERSION(4,5,67)
-    filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
-
-    if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::NormalTextFilter))
-#else
-    // Unfortunately if we don't do this here, then KUriFilterData::preferredSearchProviders()
-    // will later return an empty list when the user has his default search engine set to
-    // "None" in the Web Shortcuts configuration. I consider this nonsensical coupling between
-    // the default search engine setting and the list of enabled web shortcuts a bug in
-    // the kuriikwsfilter plugin, considering we don't actually have any interest in the default
-    // search engine. I picked Google because I expect that web shortcut to be around for some
-    // time to come.
-    filterData.setAlternateDefaultSearchProvider("google");
-
-    if (KUriFilter::self()->filterUri(filterData, QStringList() << "kuriikwsfilter"))
-#endif
+    switch (contextMenuActionId)
     {
-        const QStringList searchProviders = filterData.preferredSearchProviders();
-
-        if (!searchProviders.isEmpty())
-        {
-            m_webShortcutMenu->setTitle(i18n("Search for '%1' with",  KStringHandler::rsqueeze(selectedText, 21)));
-
-            KAction* action = 0;
-
-            foreach(const QString& searchProvider, searchProviders)
+        case -1:
+            break;
+        case IrcContextMenus::TextCopy:
+            copy();
+            break;
+        case IrcContextMenus::TextSelectAll:
+            selectAll();
+            break;
+        default:
+            if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowNickActions))
             {
-                action = new KAction(searchProvider, m_webShortcutMenu);
-                action->setIcon(KIcon(filterData.iconNameForPreferredSearchProvider(searchProvider)));
-                action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
-                connect(action, SIGNAL(triggered()), this, SLOT(handleWebShortcutAction()));
-                m_webShortcutMenu->addAction(action);
+                IrcContextMenus::processNickAction(contextMenuActionId, m_server, QStringList() << m_chatWin->getName(),
+                    m_contextMenuOptions.testFlag(IrcContextMenus::ShowChannelActions) ? m_chatWin->getName() : QString());
             }
-
-            m_webShortcutMenu->addSeparator();
-
-            action = new KAction(i18n("Configure Web Shortcuts..."), m_webShortcutMenu);
-            action->setIcon(KIcon("configure"));
-            connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
-            m_webShortcutMenu->addAction(action);
-
-            m_webShortcutMenu->menuAction()->setVisible(true);
-        }
+            break;
     }
-#endif
-}
-
-void IRCView::handleWebShortcutAction()
-{
-#if KDE_IS_VERSION(4,5,0)
-    KAction* action = qobject_cast<KAction*>(sender());
-
-    if (action)
-    {
-        KUriFilterData filterData(action->data().toString());
-
-#if KDE_IS_VERSION(4,5,67)
-        if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::WebShortcutFilter))
-#else
-        if (KUriFilter::self()->filterUri(filterData, QStringList() << "kurisearchfilter"))
-#endif
-            Application::instance()->openUrl(filterData.uri().url());
-    }
-#endif
-}
-
-void IRCView::configureWebShortcuts()
-{
-#if KDE_IS_VERSION(4,5,0)
-    KToolInvocation::kdeinitExec("kcmshell4", QStringList() << "ebrowsing");
-#endif
 }
 
 // For more information about these RTFM

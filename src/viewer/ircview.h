@@ -15,21 +15,18 @@
 #define IRCVIEW_H
 
 #include "common.h"
+#include "irccontextmenus.h"
 
+#include <QAbstractTextDocumentLayout>
 #include <QFontDatabase>
-#include <QList>
 
 #include <KTextBrowser>
 #include <KUrl>
-#include <kdeversion.h>
+
 
 class Server;
 class ChatWindow;
 
-class KToggleAction;
-class KMenu;
-
-#include <QAbstractTextDocumentLayout>
 
 class IrcViewMarkerLine: public QObject, public QTextObjectInterface
 {
@@ -77,13 +74,6 @@ class IRCView : public KTextBrowser
         //! FIXME assumes the IRCView looks at a chatwin
         void setChatWin(ChatWindow* chatWin);
 
-        // Returns the current nick under context menu.
-        const QString& getContextNick() const;
-
-        //!Obtain the context menu popup in order to add things to it
-        KMenu* getPopup() const;
-
-
         bool search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor);
         bool searchNext(bool reversed = false);
 
@@ -92,19 +82,14 @@ class IRCView : public KTextBrowser
 
         void updateAppearance();
 
-        QString currentChannel() { return m_currentChannel; }
-
-        void setNickAndChannelContextMenusEnabled(bool enable);
-
+        void setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on);
 
     signals:
         void gotFocus(); // So we can set focus to input line
         void textToLog(const QString& text); ///< send the to the log file
         void sendFile(); ///< a command for a target to which we can DCC send
-        void extendedPopup(int id); ///< this is for the query/nickname popup
         void autoText(const QString& text); ///< helper for autotext-on-highlight
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
-        void popupCommand(int); ///< wired to all of the popup menus
         void urlsDropped(const KUrl::List urls);
         void doSearch(); /// Emitted when a search should be started
         void doSearchNext(); /// Emitted when there's a request to go to the next search result.
@@ -209,8 +194,6 @@ class IRCView : public KTextBrowser
     protected:
         void doAppend(const QString& line, bool rtl, bool self=false);
 
-        void updateNickMenuEntries(const QString& nickname);
-
     public slots:
         /// Emits the doSeach signal.
         void findText();
@@ -219,17 +202,10 @@ class IRCView : public KTextBrowser
         /// Emits the doSeachPrevious signal.
         void findPreviousText();
 
-        //! FIXME eh? what is this?
-        void setCurrentChannel(const QString& channel) { m_currentChannel = channel; }
-
         /// Overwritten so the scrollview remains not freaked out
         //virtual void removeSelectedText(int selNum=0);
         //! TODO FIXME meta, derived
         //virtual void scrollToBottom();            // Overwritten for internal reasons
-
-        // Clears context nick
-        //! The name of this method is unclear enough that it needs documentation, but clear enough that the documentation just needs to be a repeat of the name. Thanks for playing, but get some kills next time.
-        void clearContextNick();
 
         // Updates the scrollbar position
         //! Again. Really? Two in a row? Couldn't be more inventive, whoever you are? Come on, show some personality. Let your vocabulary loose! Because right now its looking like you don't know what you're taking about.
@@ -237,13 +213,7 @@ class IRCView : public KTextBrowser
 
     protected slots:
         void highlightedSlot(const QString& link);
-        void saveLinkAs();
         void anchorClicked(const QUrl& url);
-        void copyUrl();
-        void slotBookmark();
-        void handleContextActions();
-        void handleWebShortcutAction();
-        void configureWebShortcuts();
 
     protected:
         void openLink(const QUrl &url);
@@ -316,12 +286,6 @@ class IRCView : public KTextBrowser
         virtual void keyPressEvent(QKeyEvent* ev);
         virtual void contextMenuEvent(QContextMenuEvent* ev);
 
-        bool contextMenu(QContextMenuEvent* ce);
-
-        void setupNickPopupMenu(bool isQuery);
-        void updateNickMenuEntries(KMenu* popup, const QString& nickname);
-        void setupChannelPopupMenu();
-
         QChar::Direction basicDirection(const QString &string);
 
         /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
@@ -340,7 +304,6 @@ class IRCView : public KTextBrowser
         //used in ::filter
         QColor m_highlightColor;
 
-
         QString m_lastStatusText; //last sent status text to the statusbar. Is empty after clearStatusBarTempText()
 
         bool m_resetScrollbar; ///< decide if we should place the scrollbar at the bottom on show()
@@ -351,29 +314,8 @@ class IRCView : public KTextBrowser
         //TODO FIXME light this on fire and send it sailing down an uncharted river riddled with arrows
         Konversation::TabNotifyType m_tabNotification;
 
-
         //QString m_buffer; ///< our text
         Server* m_server; //! FIXME assumes we have a server
-
-        //// Popup menus
-        void setupContextMenu();
-        KMenu* m_popup; ///< text area context menu
-        QAction* copyUrlMenuSeparator;
-        QAction* m_copyUrlClipBoard;
-        QAction* m_bookmark;
-        QAction* m_saveUrl;
-        KToggleAction* m_ignoreAction;
-        QAction* m_addNotifyAction;
-        bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
-        KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
-        KMenu* m_channelPopup; ///<menu to show when context-click on a channel
-
-        void updateWebShortcutMenu();
-#if KDE_IS_VERSION(4,5,0)
-        KMenu* m_webShortcutMenu;
-#endif
-
-        QString m_urlToCopy; ///< the URL we might be about to copy
 
         //// RTL hack
         static QChar LRM;
@@ -384,12 +326,10 @@ class IRCView : public KTextBrowser
         static QChar LRO;
         static QChar PDF;
 
-        //// Nickname colorization
-        uint m_offset;
-        QStringList m_colorList;
-
+        IrcContextMenus::MenuOptions m_contextMenuOptions;
         QString m_currentNick;
         QString m_currentChannel;
+        QString m_urlToCopy; ///< the URL we might be about to copy
         bool m_isOnNick; ///< context menu click hit a nickname
         bool m_isOnChannel; ///< context menu click hit a channel
         bool m_mousePressed; ///< currently processing a mouse press

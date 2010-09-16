@@ -35,6 +35,7 @@
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 #include "ircviewbox.h"
+#include "irccontextmenus.h"
 
 #include <QList>
 #include <QSplitter>
@@ -93,10 +94,23 @@ ViewContainer::ViewContainer(MainWindow* window):
     m_dccPanel->hide();
     m_dccPanelOpen = false;
     connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
+
+    // Pre-construct context menus for better responsiveness when then
+    // user opens them the first time. This is optional; the IrcContext-
+    // Menus API would work fine without doing this here.
+    // IrcContextMenus' setup code calls Application::instance(), and
+    // ViewContainer is constructed in the scope of the Application
+    // constructor, so to avoid a crash we need to queue.
+    QMetaObject::invokeMethod(this, "setupIrcContextMenus", Qt::QueuedConnection);
 }
 
 ViewContainer::~ViewContainer()
 {
+}
+
+void ViewContainer::setupIrcContextMenus()
+{
+    IrcContextMenus::self();
 }
 
 void ViewContainer::showQueueTuner(bool p)

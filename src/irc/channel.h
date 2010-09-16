@@ -238,8 +238,6 @@ class Channel : public ChatWindow
 
         bool autoJoin();
 
-        ChannelNickList getSelectedChannelNicks();
-        ///TODO: this looks like a half-arsed overload.
         QStringList getSelectedNickList();
 
         NickListView* getNickListView() const { return nicknameListView; }
@@ -275,8 +273,6 @@ class Channel : public ChatWindow
         void modeButtonClicked(int id,bool on);
         void channelLimitChanged();
 
-        void popupChannelCommand(int id);         ///< Connected to IRCView::popupCommand()
-        void popupCommand(int id);                ///< Connected to NickListView::popupCommand()
         void doubleClickCommand(QTreeWidgetItem *item,int column);  ///< Connected to NickListView::itemDoubleClicked()
         // Dialogs
         void changeNickname(const QString& newNickname);
@@ -300,8 +296,6 @@ class Channel : public ChatWindow
         void syncSplitters();
         /// Called from ChatWindow adjustFocus
         virtual void childAdjustFocus();
-
-        bool channelCommand;///< True if nick context menu is executed from IRCView
 
         // to take care of redraw problem if hidden
         bool quickButtonsChanged;

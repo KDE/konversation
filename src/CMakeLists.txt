@@ -146,6 +146,7 @@ set(viewer_SRCS
     viewer/images.cpp
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
+    viewer/irccontextmenus.cpp
 )
 
 kde4_add_ui_files(viewer_SRCS

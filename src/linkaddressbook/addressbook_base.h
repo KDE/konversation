@@ -88,7 +88,7 @@ namespace Konversation
              *  email address associated, and gives the user the option to continue
              *  with the contacts that did have email addresses.
              */
-            bool sendEmail(const ChannelNickList &nicklist);
+            bool sendEmail(const NickInfoList& nicks);
             /**
              *  Run kmail (or whatever the users email client is)
              *  to create a single email addressed to the addressee passed in.

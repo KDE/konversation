@@ -45,19 +45,6 @@ namespace Konversation
     {
         class TransferManager;
     }
-
-    // Shared between NickListView and IRCView
-    enum PopupIDs
-    {
-        GiveOp,TakeOp,GiveHalfOp,TakeHalfOp,GiveVoice,TakeVoice,
-        IgnoreNick,UnignoreNick,
-        Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
-        KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
-        Whois,Version,Ping,OpenQuery,DccSend,Join,Names,Topic,
-        CustomID, AddressbookChange, AddressbookNew, AddressbookDelete,
-        AddressbookEdit, SendEmail, StartDccChat, AddNotify, StartDccWhiteboard
-    };
-
 }
 
 namespace KWallet
@@ -188,8 +175,6 @@ class Application : public KUniqueApplication
         bool m_restartScheduled;
 
         Konversation::NotificationHandler* m_notificationHandler;
-
-        QStringList colorList;
 
         KWallet::Wallet* m_wallet;
 };

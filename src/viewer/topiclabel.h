@@ -13,6 +13,8 @@
 #ifndef KONVERSATIONTOPICLABEL_H
 #define KONVERSATIONTOPICLABEL_H
 
+#include "irccontextmenus.h"
+
 #include <QLabel>
 
 
@@ -20,7 +22,6 @@ class Server;
 
 namespace Konversation
 {
-
     class TopicLabel : public QLabel
     {
         Q_OBJECT
@@ -33,6 +34,8 @@ namespace Konversation
             QSize sizeHint() const;
             void setServer(Server* server);
             void setChannelName(const QString& channel);
+
+            void setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on);
 
         public slots:
             virtual void openLink(const QString& link);
@@ -49,18 +52,9 @@ namespace Konversation
             virtual void leaveEvent (QEvent*);
             virtual void contextMenuEvent(QContextMenuEvent* ev);
             void resizeEvent(QResizeEvent*);
-            bool contextMenu(QContextMenuEvent* ce);
 
         protected slots:
             void highlightedSlot(const QString&);
-
-            void joinChannel();
-            void getChannelUserList();
-            void getChannelTopic();
-
-            void copyUrl();
-            void bookmarkUrl();
-            void saveLinkAs();
 
         private:
             inline QString tagUrls(const QString& text, const QString& sender);
@@ -70,11 +64,10 @@ namespace Konversation
 
             QString m_fullText;
             QString m_lastStatusText;
-            QString m_highlightedURL;
+
+            IrcContextMenus::MenuOptions m_contextMenuOptions;
             QString m_currentChannel;
             bool m_isOnChannel;
-            int m_nickPopupId;
-            bool m_copyUrlMenu;
             QString m_urlToCopy;
     };
 

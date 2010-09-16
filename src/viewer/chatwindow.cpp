@@ -280,6 +280,9 @@ void ChatWindow::setLogfileName(const QString& name)
     // Only change name of logfile if the window was new.
     if(firstLog)
     {
+        if (getTextView())
+            getTextView()->setContextMenuOptions(IrcContextMenus::ShowLogAction, true);
+
         // status panels get special treatment here, since they have no server at the beginning
         if (getType() == Status || getType() == DccChat)
         {

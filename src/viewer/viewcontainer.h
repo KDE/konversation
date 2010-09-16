@@ -204,6 +204,7 @@ class ViewContainer : public QObject
         void frontServerChanging(Server*);
 
     private slots:
+        void setupIrcContextMenus();
         void viewSwitched(int newIndex);
 
     private:

@@ -416,18 +416,22 @@ namespace Konversation
         return true;
 
     }
-    bool AddressbookBase::sendEmail(const ChannelNickList &nickList)
+    bool AddressbookBase::sendEmail(const NickInfoList& nicks)
     {
-        if(nickList.isEmpty()) return false;
+        if(nicks.isEmpty())
+            return false;
+
         QString mailto;
 
         QStringList nicksWithoutAddressee;
         QStringList nicksWithoutEmails;
         QStringList nicksWithEmails;
-        for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+
+        foreach(NickInfoPtr nickInfo, nicks)
         {
-            NickInfoPtr nickInfo = (*it)->getNickInfo();
-            Q_ASSERT(nickInfo);  if(!nickInfo) return false;
+            if (nickInfo.isNull())
+                continue;
+
             KABC::Addressee addr = nickInfo->getAddressee();
             if(addr.isEmpty())
             {
@@ -443,7 +447,6 @@ namespace Konversation
                 if(!mailto.isEmpty())
                     mailto += ", ";
                 mailto += addr.fullEmail();
-
             }
         }
         if(!nicksWithoutAddressee.isEmpty() || !nicksWithoutEmails.isEmpty())

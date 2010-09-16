@@ -23,7 +23,6 @@
 #include <QSplitter>
 
 #include <KLocalizedString>
-#include <KMenu>
 #include <KActionCollection>
 #include <KMessageBox>
 #include <KStandardGuiItem>
@@ -87,17 +86,6 @@ namespace Konversation
             connect(getTextView(), SIGNAL(gotFocus()), m_dccChatInput, SLOT(setFocus()));
             connect(getTextView(), SIGNAL(autoText(const QString&)), this, SLOT(textPasted(const QString&)));
 
-            KMenu *popup = textView->getPopup();
-            if (popup)
-            {
-                QAction *action = Application::instance()->getMainWindow()->actionCollection()->action("open_logfile");
-
-                if (action)
-                {
-                    popup->addSeparator();
-                    action->setMenu(popup);
-                }
-            }
             updateAppearance();
         }
 

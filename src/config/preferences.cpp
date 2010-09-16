@@ -325,14 +325,6 @@ bool Preferences::isNotify(int serverGroupId, const QString& pattern)
     return false;
 }
 
-bool Preferences::hasNotifyList(int serverGroupId)
-{
-    if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
-        return true;
-    else
-        return false;
-}
-
 // Default identity functions
 void Preferences::addIdentity(IdentityPtr identity) { self()->mIdentityList.append(identity); }
 void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.removeOne(identity); }
