@@ -1386,6 +1386,9 @@ namespace Konversation
 
                         QString reason = parameterList.join(" ");
 
+                        if (reason.isEmpty())
+                            reason = m_server->getIdentity()->getKickReason();
+
                         result.toServer = "KICK " + channel + ' ' + victim + " :" + reason;
 
                         emit banUsers(QStringList(victim), channel, option);
