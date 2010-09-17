@@ -172,7 +172,7 @@ QColor ViewTreeItem::getColor() const
         if (Preferences::self()->inputFieldsBackgroundColor())
             return Preferences::self()->color(Preferences::ChannelMessage);
         else
-            return Application::instance()->palette().color(QPalette::Active, QPalette::Text); 
+            return Application::instance()->palette().color(QPalette::Active, QPalette::Text);
     }
 }
 
@@ -342,14 +342,14 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     int iconWidth = pixmap(0) ? LED_ICON_SIZE : 0;
     int textWidth = width - MARGIN - iconWidth - MARGIN - MARGIN;
-    
+
     if (!m_isSeparator)
     {
         if (isSelected() || m_isHighlighted)
         {
 
             bool isFirst = listView()->firstChild() == this ? true : false;
-            
+
             painter.setPen(bgColor);
 
             if (!isFirst)
@@ -358,7 +358,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
                 painter.drawPoint(1, 0);
                 painter.drawPoint(0, 1);
             }
-            
+
             painter.drawPoint(0, height() - 1);
             painter.drawPoint(1, height() - 1);
             painter.drawPoint(0, height() - 2);
@@ -370,7 +370,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
                 painter.drawPoint(2, 0);
                 painter.drawPoint(0, 2);
             }
-            
+
             painter.drawPoint(2, height() - 1);
             painter.drawPoint(0, height() - 3);
         }
@@ -456,3 +456,6 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     p->drawPixmap(0, 0, buffer);
 }
+
+// The build with KDE4_ENABLE_FINAL breaks otherwise.
+#undef QT3_SUPPORT //TODO remove when porting away from K3ListView

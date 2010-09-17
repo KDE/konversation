@@ -11,8 +11,6 @@
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
-#define QT3_SUPPORT //TODO remove when porting away from Q3*
-
 #include "channel.h"
 #include "channeloptionsdialog.h"
 #include "application.h"
