@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="53">
+<kpartgui name="konversation" version="54">
 
   <MenuBar>
     <Menu name="file">
@@ -8,7 +8,6 @@
       <Separator />
       <Action name="disconnect_server" />
       <Action name="reconnect_server" />
-      <Separator />
       <Action name="join_channel" />
       <Separator />
       <Action name="toggle_away" />
