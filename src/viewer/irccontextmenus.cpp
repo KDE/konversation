@@ -34,9 +34,7 @@
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
 #include <KFileDialog>
-#include <KGlobal>
 #include <KIO/CopyJob>
-#include <KLocale>
 #include <KMenu>
 #include <KMessageBox>
 #include <KStandardAction>
