@@ -14,17 +14,13 @@
 
 #include "ircinput.h"
 #include "application.h"
-#include "chatwindow.h"
-#include "ircview.h"
 #include "pasteeditor.h"
-#include "viewcontainer.h"
 
 #include <QClipboard>
 #include <QKeyEvent>
 
 #include <KMessageBox>
 #include <KCompletionBox>
-#include <KStandardShortcut>
 #include <KActionCollection>
 
 #define MAXHISTORY 100

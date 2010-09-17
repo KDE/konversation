@@ -34,18 +34,13 @@
 #include "irccolorchooser.h"
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
-#include "ircviewbox.h"
 #include "irccontextmenus.h"
 
-#include <QList>
 #include <QSplitter>
-#include <QToolButton>
 #include <QTabBar>
 
 #include <KInputDialog>
 #include <KMessageBox>
-#include <KGlobalSettings>
-#include <KVBox>
 #include <KRun>
 #include <KUrl>
 #include <KXMLGUIFactory>

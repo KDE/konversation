@@ -16,6 +16,7 @@
 #include "outputfilter.h"
 #include "application.h"
 #include "mainwindow.h"
+#include "channel.h"
 #include "abstractawaymanager.h"
 #include "ignore.h"
 #include "server.h"

@@ -24,16 +24,11 @@
 #include "ircinput.h"
 #include "ircviewbox.h"
 #include "ircview.h"
-#include "common.h"
 #include "topiclabel.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 
-#include <QEvent>
-#include <QSizePolicy>
-#include <QRegExp>
 #include <QSplitter>
-#include <QCheckBox>
 #include <QTimer>
 #include <QToolButton>
 #include <QHeaderView>
@@ -41,7 +36,6 @@
 #include <KLineEdit>
 #include <KInputDialog>
 #include <KPasswordDialog>
-#include <KGlobalSettings>
 #include <KMessageBox>
 #include <KIconLoader>
 #include <KVBox>

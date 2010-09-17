@@ -18,9 +18,9 @@
 
 #include "preferences.h"
 #include "mainwindow.h"
+#include "server.h"
 #include "osd.h"
 #include "identity.h"
-#include "nickinfo.h"
 #include "ircqueue.h"
 
 #include <KUniqueApplication>

@@ -16,10 +16,6 @@
 #include "common.h"
 #include "server.h"
 
-#include <QList>
-#include <QObject>
-#include <QPointer>
-
 #include <KTabWidget>
 
 

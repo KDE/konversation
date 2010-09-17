@@ -30,8 +30,6 @@
 #include "channel.h"
 #include "images.h"
 #include "notificationhandler.h"
-#include "commit.h"
-#include "version.h"
 
 #ifdef HAVE_KIDLETIME
 #include "awaymanagerkidletime.h"

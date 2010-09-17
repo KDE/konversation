@@ -29,7 +29,6 @@
 #include "abstractawaymanager.h"
 #include "transfermanager.h"
 
-
 #include <QSignalMapper>
 #include <QSplitter>
 
@@ -44,7 +43,6 @@
 #include <kdeversion.h>
 #include <KMenu>
 #include <KWindowSystem>
-#include <KGlobal>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>

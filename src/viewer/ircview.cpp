@@ -18,29 +18,15 @@
 #include "channel.h"
 #include "dcc/chatcontainer.h"
 #include "application.h"
-#include "mainwindow.h"
-#include "viewcontainer.h"
-#include "connectionmanager.h"
 #include "highlight.h"
-#include "server.h"
 #include "sound.h"
-#include "common.h"
 #include "emoticons.h"
 #include "notificationhandler.h"
-#include "irccontextmenus.h"
 
-#include <QRegExp>
-#include <QBrush>
-#include <QEvent>
-#include <QColor>
-#include <QMouseEvent>
 #include <QScrollBar>
 #include <QTextBlock>
-#include <QAbstractTextDocumentLayout>
 #include <QPainter>
-#include <QTextObjectInterface>
 #include <QTextDocumentFragment>
-#include <QTextCodec>
 
 #include <KStandardShortcut>
 

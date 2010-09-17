@@ -11,7 +11,6 @@
 */
 
 #include "statuspanel.h"
-#include "channel.h"
 #include "application.h"
 #include "ircinput.h"
 #include "ircview.h"

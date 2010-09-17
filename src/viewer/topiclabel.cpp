@@ -12,10 +12,6 @@
 
 #include "topiclabel.h"
 #include "application.h"
-#include "connectionmanager.h"
-#include "server.h"
-#include "common.h"
-#include "channel.h"
 
 #include <QClipboard>
 #include <QResizeEvent>

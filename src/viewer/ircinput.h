@@ -15,9 +15,7 @@
 #ifndef IRCINPUT_H
 #define IRCINPUT_H
 
-#include <QStringList>
-
-#include <ktextedit.h>
+#include <KTextEdit>
 
 
 class KCompletionBox;

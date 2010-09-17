@@ -16,11 +16,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "channel.h"
+#include "common.h"
 #include "preferences.h"
 #include "ssllabel.h"
-#include "nickinfo.h"
-#include "server.h"
 
 #include <QStringList>
 
@@ -30,6 +28,7 @@
 
 class KToggleAction;
 
+class Server;
 class KonviSettingsDialog;
 class ViewContainer;
 

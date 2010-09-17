@@ -25,28 +25,22 @@
 #include "transfermanager.h"
 #include "transfersend.h"
 #include "transferrecv.h"
-#include <chat.h>
+#include "chat.h"
 #include "recipientdialog.h"
 #include "nick.h"
 #include "irccharsets.h"
 #include "viewcontainer.h"
-#include "statuspanel.h"
 #include "rawlog.h"
 #include "channellistpanel.h"
-#include "servergroupsettings.h"
 #include "addressbook.h"
 #include "scriptlauncher.h"
 #include "serverison.h"
-#include "common.h"
 #include "notificationhandler.h"
 #include "abstractawaymanager.h"
 
-#include <QRegExp>
 #include <QTextCodec>
-#include <QDateTime>
 #include <QStringListModel>
 
-#include <KLocale>
 #include <KFileDialog>
 #include <KInputDialog>
 #include <KWindowSystem>

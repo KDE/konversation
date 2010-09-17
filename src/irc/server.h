@@ -45,7 +45,6 @@ class QAbstractItemModel;
 class QStringListModel;
 class Channel;
 class Query;
-//class StatusPanel;
 class Identity;
 class RawLog;
 class ChannelListPanel;
