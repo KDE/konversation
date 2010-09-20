@@ -501,6 +501,9 @@ bool IRCInput::checkPaste(QString& text)
         QString bytesString = i18np("1 byte", "%1 bytes", text.length());
         QString linesString = i18np("1 line", "%1 lines", lines+1);
 
+        // Work around bug 217592.
+        viewport()->setCursor(Qt::IBeamCursor);
+
         doPaste=KMessageBox::warningYesNoCancel
             (this,
             i18nc(
