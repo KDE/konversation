@@ -362,6 +362,8 @@ void IrcContextMenus::setupNickMenu()
     QAction* defaultAction = createAction(m_nickMenu, OpenQuery, i18n("Open Query"));
     m_nickMenu->setDefaultAction(defaultAction);
 
+    m_nickMenu->addSeparator();
+
     foreach(QAction* action, m_sharedBasicNickActions)
         m_nickMenu->addAction(action);
 
