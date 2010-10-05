@@ -147,7 +147,7 @@ void Warnings_Config::loadSettings()
           "... an open query exists for a nickname that has just been marked as ignored"
         )},
         { "ReconnectWithDifferentServer",                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
-          "... about to switch a connection to a different server in the same network"
+          "... switching a connection to a different server in the same network"
         )},
         { "ReuseExistingConnection",                                                                    I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... creating a new connection to an already connected network"
