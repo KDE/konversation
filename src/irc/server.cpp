@@ -1167,8 +1167,8 @@ void Server::incoming()
         // Decrypt if necessary
 
         //send to raw log before decryption
-        if(m_rawLog)
-            m_rawLog->appendRaw("&gt;&gt; " + first.toPercentEncoding(" :()[]{}<>,.?/\\|`!@#$^&*+-='\"").replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;").replace(' ', "&nbsp;"));
+        if (m_rawLog)
+            m_rawLog->appendRaw(RawLog::Inbound, first);
 
         #ifdef HAVE_QCA2
         QByteArray cKey = getKeyForRecipient(channelKey);
@@ -1370,11 +1370,13 @@ int Server::_send_internal(QString outputLine)
         }
     }
     #endif
+
+    if (m_rawLog)
+        m_rawLog->appendRaw(RawLog::Outbound, encoded);
+
     encoded += '\n';
     qint64 sout = m_socket->write(encoded, encoded.length());
 
-    if (m_rawLog)
-        m_rawLog->appendRaw("&lt;&lt; " + encoded.toPercentEncoding(" :()[]{}<>,.?/\\|`!@#$^&*+-='\"").replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;").replace(' ', "&nbsp;"));
     return sout;
 }
 

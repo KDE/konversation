@@ -22,7 +22,9 @@ class RawLog : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
+        enum MessageDirection { Inbound, Outbound };
+
         explicit RawLog(QWidget* parent);
         ~RawLog();
 
@@ -30,6 +32,8 @@ class RawLog : public ChatWindow
         virtual bool closeYourself();
         virtual bool searchView();
         virtual bool log();
+        using ChatWindow::appendRaw;
+        virtual void appendRaw(MessageDirection dir, const QByteArray& message, bool suppressTimestamps=false);
     public slots:
         void morphNotification();
 
