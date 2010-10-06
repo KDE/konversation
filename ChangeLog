@@ -254,6 +254,15 @@ Changes since 1.3.1:
 * Added support for the 482 numeric (ERR_CHANOPRIVSNEEDED).
 * Fixed a bug causing the '/kickban' command not use the default kick reason
   from the Identity settings if no reason was explicitly specified.
+* Fixed build with KDE4_ENABLE_FINAL.
+* Raw log tabs (/raw) now use percent-recording to depict non-ASCII charac-
+  ters in raw traffic for much improved usefulness and reliability in the
+  multi-encoding world of IRC.
+* The Warning Dialogs system has been overhauled, with improved wording in
+  the listing in the configuration dialog (which now also contains the pre-
+  viously missing warning when minimizing to the system tray) and further
+  improvements to individual warning dialogs, such as the addition of pre-
+  viously missing Cancel buttons.
 
 
 Changes from 1.3 to 1.3.1:
