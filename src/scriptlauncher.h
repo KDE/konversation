@@ -16,7 +16,6 @@
 #define SCRIPTLAUNCHER_H
 
 
-class Server;
 
 class ScriptLauncher : public QObject
 {

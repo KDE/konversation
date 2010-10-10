@@ -16,7 +16,6 @@
 
 class IRCView;
 class SearchBar;
-class Server;
 
 class IRCViewBox : public KVBox
 {
