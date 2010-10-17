@@ -2468,49 +2468,12 @@ ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)
     return channelListPanel;
 }
 
-void ViewContainer::openChannelList(const QString& filter, bool getList)
+void ViewContainer::openChannelList(Server* server, const QString& filter, bool getList)
 {
-    if (m_frontServer)
-    {
-        ChannelListPanel* panel = m_frontServer->getChannelListPanel();
+    if (!server)
+        server = m_frontServer;
 
-        if (panel)
-        {
-            closeView(panel);
-            KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
-            if (action) action->setChecked(false);
-        }
-        else
-        {
-            int ret = KMessageBox::Continue;
-
-            if (filter.isEmpty())
-            {
-                ret = KMessageBox::warningContinueCancel(m_window,i18n("Using this function may result in a lot "
-                      "of network traffic. If your connection is not fast "
-                      "enough, it is possible that your client will be "
-                      "disconnected by the server."),
-                      i18n("Channel List Warning"),
-                      KStandardGuiItem::cont(),
-                      KStandardGuiItem::cancel(),
-                      "ChannelListWarning");
-            }
-
-            if (ret != KMessageBox::Continue)
-            {
-                KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
-                if (action) action->setChecked(false);
-                return;
-            }
-
-            panel = m_frontServer->addChannelListPanel();
-
-            panel->setFilter(filter);
-
-            if(getList) panel->applyFilterClicked();
-        }
-    }
-    else
+    if (!server)
     {
         KMessageBox::information(m_window,
             i18n(
@@ -2521,6 +2484,55 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
             i18n("Channel List"),
             "ChannelListNoServerSelected");
     }
+
+    ChannelListPanel* panel = server->getChannelListPanel();
+
+    if (panel && filter.isEmpty())
+    {
+        closeView(panel);
+
+        if (server == m_frontServer)
+        {
+            KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+            if (action) action->setChecked(false);
+        }
+
+        return;
+    }
+
+    if (!panel)
+    {
+        int ret = KMessageBox::Continue;
+
+        if (filter.isEmpty())
+        {
+            ret = KMessageBox::warningContinueCancel(m_window, i18n("Using this function may result in a lot "
+                    "of network traffic. If your connection is not fast "
+                    "enough, it is possible that your client will be "
+                    "disconnected by the server."),
+                    i18n("Channel List Warning"),
+                    KStandardGuiItem::cont(),
+                    KStandardGuiItem::cancel(),
+                    "ChannelListWarning");
+        }
+
+        if (ret != KMessageBox::Continue)
+        {
+            if (server == m_frontServer)
+            {
+                KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+                if (action) action->setChecked(false);
+            }
+
+            return;
+        }
+
+        panel = server->addChannelListPanel();
+    }
+
+    panel->setFilter(filter);
+
+    if (getList) panel->refreshList();
 }
 
 void ViewContainer::openNicksOnlinePanel()

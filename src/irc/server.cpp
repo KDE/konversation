@@ -322,7 +322,7 @@ void Server::connectSignals()
     connect(this, SIGNAL(resetLag(Server*)), getViewContainer(), SIGNAL(resetStatusBarLagLabel(Server*)));
     connect(getOutputFilter(), SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(getOutputFilter(), SIGNAL(openKonsolePanel()), getViewContainer(), SLOT(addKonsolePanel()));
-    connect(getOutputFilter(), SIGNAL(openChannelList(const QString&, bool)), getViewContainer(), SLOT(openChannelList(const QString&, bool)));
+    connect(getOutputFilter(), SIGNAL(openChannelList(const QString&)), this, SLOT(requestOpenChannelListPanel(const QString&)));
     connect(getOutputFilter(), SIGNAL(closeDccPanel()), getViewContainer(), SLOT(closeDccPanel()));
     connect(getOutputFilter(), SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
 
@@ -3506,6 +3506,11 @@ void Server::addRawLog(bool show)
 void Server::closeRawLog()
 {
     if (m_rawLog) delete m_rawLog;
+}
+
+void Server::requestOpenChannelListPanel(const QString& filter)
+{
+    getViewContainer()->openChannelList(this, filter, true);
 }
 
 ChannelListPanel* Server::addChannelListPanel()

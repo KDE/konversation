@@ -96,6 +96,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void joinChannel(const QString& channelName);
 
     public slots:
+        void refreshList();
         void addToChannelList(const QString& channel,int users,const QString& topic);
         void endOfChannelList();
         void applyFilterClicked();
@@ -104,7 +105,6 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void setFilter(const QString& filter);
 
     protected slots:
-        void refreshList();
         void saveList();
 
         void filterChanged();

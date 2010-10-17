@@ -165,7 +165,7 @@ void Warnings_Config::loadSettings()
           "... closing a DCC Chat tab"
         )},
         { "ChannelListNoServerSelected",                                                                I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
-          "... the channel list cannot be retrieved because the current tab is selected"
+          "... when a source for the channel list cannot be determined from the current tab"
         )},
         { "HideMenuBarWarning",                                                                         I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... you have chosen to hide the menu bar"

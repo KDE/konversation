@@ -1837,7 +1837,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_list(const OutputFilterInput& input)
     {
-        emit openChannelList(input.parameter, true);
+        emit openChannelList(input.parameter);
 
         return OutputFilterResult();
     }

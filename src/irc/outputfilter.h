@@ -106,7 +106,7 @@ namespace Konversation
             void openRawLog(bool show);
             void closeRawLog();
             void openKonsolePanel();
-            void openChannelList(const QString& parameter, bool getList);
+            void openChannelList(const QString& parameter);
             void sendToAllChannels(const QString& text);
             void launchScript(int connectionId, const QString& target, const QString& parameter);
             void banUsers(const QStringList& userList,const QString& channel,const QString& option);

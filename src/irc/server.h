@@ -578,6 +578,8 @@ class Server : public QObject
           */
         void sendChannelNickChangedSignals();
 
+        void requestOpenChannelListPanel(const QString& filter);
+
     private slots:
         void collectStats(int bytes, int encodedBytes);
 

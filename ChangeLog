@@ -263,6 +263,11 @@ Changes since 1.3.1:
   viously missing warning when minimizing to the system tray) and further
   improvements to individual warning dialogs, such as the addition of pre-
   viously missing Cancel buttons.
+* Fixed a bug that could cause the '/list' command to open the Channel List
+  tab for the wrong connection.
+* Fixed a bug causing '/list <search pattern>' to close an existing Channel
+  List tab (the intended behavior for a parameter-less '/list') rather than
+  update the active filter and refresh the list.
 
 
 Changes from 1.3 to 1.3.1:

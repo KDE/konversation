@@ -173,7 +173,7 @@ class ViewContainer : public QObject
         void closeQueries();
 
         ChannelListPanel* addChannelListPanel(Server* server);
-        void openChannelList(const QString& filter = QString(), bool getList = false);
+        void openChannelList(Server* server = 0, const QString& filter = QString(), bool getList = false);
 
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();

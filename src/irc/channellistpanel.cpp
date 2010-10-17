@@ -210,6 +210,9 @@ ChannelListPanel::~ChannelListPanel()
 
 void ChannelListPanel::refreshList()
 {
+    if (!m_refreshList->isEnabled())
+        return;
+
     m_numUsers = 0;
     m_numChannels = 0;
     m_visibleUsers = 0;
@@ -433,12 +436,10 @@ void ChannelListPanel::joinChannelClicked()
 
 void ChannelListPanel::applyFilterClicked()
 {
-    //Don't run if they pressed return when the button was disabled
-    if (!m_refreshList->isEnabled()) return;
-
     if (!m_numChannels)
     {
         refreshList();
+
         return;
     }
 }
