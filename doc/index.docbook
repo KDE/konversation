@@ -3,7 +3,7 @@
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
   <!ENTITY kappname "&konversation;">
-  <!ENTITY package "kdeextragear-2">
+  <!ENTITY package "extragear">
   <!ENTITY irc "<acronym>IRC</acronym>">
   <!ENTITY CTCP "<acronym>CTCP</acronym>">
   <!ENTITY nickname "<acronym>nickname</acronym>">
@@ -80,14 +80,14 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2009-09-13</date>
-<releaseinfo>1.2</releaseinfo>
+<date>2010-10-14</date>
+<releaseinfo>1.3</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
 <abstract>
 <para>
-&konversation; is a user-friendly &irc; client for the K Desktop Environment.
+&konversation; is a user-friendly &irc; client built on the &kde; platform.
 </para>
 </abstract>
 
@@ -97,7 +97,7 @@ Please at least include KDE, the KDE package it is in, the name
 
 <keywordset>
 <keyword>KDE</keyword>
-<keyword>kdeextragear-2</keyword>
+<keyword>extragear</keyword>
 <keyword>Konversation</keyword>
 <keyword>irc</keyword>
 <keyword>internet relay chat</keyword>
@@ -164,7 +164,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para>
-&konversation; is an &irc; client for &kde; 3.2 or later.  It offers the following features:
+&konversation; is an &irc; client built on the &kde; platform.  It offers the following features:
 </para>
 
 <para>
@@ -193,12 +193,11 @@ regular expression pattern.</para></listitem>
 
 <para>The &konversation; website is
 <ulink url="&konviwebsite;">&konviwebsite;</ulink>.
- Questions and answers for &konversation; can be discussed on the
- <ulink url="http://lists.sourceforge.net/mailman/listinfo/konversation-users">&konversation;-Users</ulink> mailing list. Please subscribe to learn about new features, bug reports and the like. To stay informed of new releases, you can join our
- <ulink url="http://lists.sourceforge.net/mailman/listinfo/konversation-announce">&konversation;-Announce</ulink> mailing list. This is a low volume mailing list only used to announce new releases or patches.
+Further information like a FAQ and tips and tricks you find in the 
+<ulink url="http://konversation.kde.org/wiki/Main_Page">&konversation; Wiki</ulink>
 </para>
 
-<para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://irc.kde.org/%23konversation">irc.kde.org channel #konversation</ulink>.
+<para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://chat.freenode.net/konversation">irc.freenode.net channel #konversation</ulink>.
 </para>
 
 </chapter>
@@ -277,7 +276,7 @@ default <guilabel>identity</guilabel> is not set up correctly.</para>
 about the current user from the operating system and fills in defaults
 for the Identity.  If the operating system user information is not
 complete, for example, no Full Name is defined, you may see the message
-above.  To correct this problem, click <guibutton>OK</guibutton> and
+above.  To correct this problem, click <guibutton>Edit Identity...</guibutton> and
 see <link linkend="identity">Setting your identity</link> for more
 information.</para>
 </note>
@@ -344,7 +343,7 @@ the Input Line.  (The <userinput>#</userinput> is required.) You may also type <
 	<guisubmenu>Identities</guisubmenu>
 </menuchoice>
  on the main menu.  <action>The <guilabel>Identities</guilabel> screen will appear.  You can also display the <guilabel>Identities</guilabel> screen by clicking the <guibutton>Edit</guibutton> button on the
- <guilabel>Add Network</guilabel> screen.</action>
+ <guilabel>Edit Network</guilabel> or <guilabel>New Network</guilabel> screen.</action>
 </para>
 
 <para>
@@ -379,7 +378,7 @@ the Input Line.  (The <userinput>#</userinput> is required.) You may also type <
 duplicate, rename, or remove an <guilabel>Identity</guilabel>.</para></callout>
 <callout arearefs="pt-identity-gen-3"><para>Enter your real name here.  &irc; is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake "real name" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous.</para></callout>
 <callout arearefs="pt-identity-gen-4"><para>Use these buttons to
-<guibutton>Add</guibutton>, <guilabel>Edit</guilabel>, or <guilabel>Delete</guilabel> a &nickname;.</para></callout>
+<guibutton>Add</guibutton> or <guilabel>Remove</guilabel> a &nickname;.</para></callout>
 <callout arearefs="pt-identity-gen-5"><para>This is your list of &nickname;s.
 A &nickname; is the name that other users will know you by.
 You may use any name you desire.  The first character must be a letter.  Other characters may be letters, numbers, or the special characters <literal>-[]\`_^{}|</literal>.</para>
@@ -438,7 +437,11 @@ If you don't know what this is, leave these boxes blank.</para></callout>
 		</mediaobjectco>
 	</screenshot>
 </para>
-
+<!-- Automatik Away group missing 
+If you check this box, Konversation will automatically set all connections 
+using this Identity away when the screensaver starts or after a period of 
+user inactivity configured below.
+-->
 <para>
 <calloutlist>
 <callout arearefs="pt-identity-away-1"><para>
@@ -497,7 +500,7 @@ Use this option carefully, with consideration for your fellow &irc; users.
 		</mediaobjectco>
 	</screenshot>
 </para>
-
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
 <para>
 <calloutlist>
 <callout arearefs="pt-identity-adv-1"><para>You can enter a command
@@ -592,8 +595,8 @@ and the <guilabel>Channels</guilabel> automatically joined when connected.
 If you have specified a group for your networks, networks are listed
 indented under the group.  Click on a network to select it.
 </para></callout>
-<callout arearefs="pt-serverlist-2"><para>Use these buttons to
-<guibutton>Add</guibutton> a new network, <guibutton>Edit</guibutton>
+<callout arearefs="pt-serverlist-2"><para>Use these buttons to add a 
+<guibutton>New</guibutton> network, <guibutton>Edit</guibutton>
 a highlighted network, or <guibutton>Delete</guibutton> a highlighted network.
 </para></callout>
 <callout arearefs="pt-serverlist-3"><para>Click this button to connect
@@ -609,12 +612,12 @@ connect to any networks at this time.</para></callout>
 
 <anchor id="serverlist-addnetwork" />
 
-<para>When you click the <guibutton>Add</guibutton> button,
-the <guilabel>Add Network</guilabel> screen appears.</para>
+<para>When you click the <guibutton>New</guibutton> button,
+the <guilabel>New Network</guilabel> screen appears.</para>
 
 <para>
 <screenshot>
-	<screeninfo>Add Network</screeninfo>
+	<screeninfo>New Network</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -626,14 +629,13 @@ the <guilabel>Add Network</guilabel> screen appears.</para>
 				<area id="pt-addnetwork-6" coords="1 1"/>
 				<area id="pt-addnetwork-7" coords="1 1"/>
 				<area id="pt-addnetwork-8" coords="1 1"/>
-				<area id="pt-addnetwork-9" coords="1 1"/>
 			</areaspec>
 			<imageobject>
 				<imagedata fileref="addnetwork_co.png" format="PNG"/>
 			</imageobject>
 		</imageobjectco>
 		<textobject>
-			<phrase>Add Network</phrase>
+			<phrase>New Network</phrase>
 		</textobject>
 	</mediaobjectco>
 </screenshot>
@@ -641,44 +643,44 @@ the <guilabel>Add Network</guilabel> screen appears.</para>
 
 <para>
 <calloutlist>
-<callout arearefs="pt-addnetwork-1"><para>Enter the name of the
-<guilabel>Network</guilabel> here.  You may create as many entries
+<callout arearefs="pt-addnetwork-1"><para>Enter the 
+<guilabel>Network name</guilabel> here.  You may create as many entries
 in the <guilabel>Server List</guilabel> screen with the same
 <guilabel>Network</guilabel> as you like.</para></callout>
-<callout arearefs="pt-addnetwork-2"><para>Optional.  If you enter something
+<!--callout arearefs="pt-addnetwork-2"><para>Optional.  If you enter something
 here, all the <guilabel>Network</guilabel>s with the same
 <guilabel>Group</guilabel> will be listed together in the
-<guilabel>Server List</guilabel> screen.</para></callout>
-<callout arearefs="pt-addnetwork-3"><para>Choose an existing
+<guilabel>Server List</guilabel> screen.</para></callout-->
+<callout arearefs="pt-addnetwork-2"><para>Choose an existing
 <guilabel>Identity</guilabel> or click the <guibutton>Edit</guibutton>
 button to add a new Identity or edit an existing one.  The
 <guilabel>Identity</guilabel> will identify you and determine
 your &nickname; when you connect to the network.</para></callout>
-<callout arearefs="pt-addnetwork-4"><para>Optional.  This command will be sent to the server after connecting.  Example: <userinput>/msg NickServ IDENTIFY
+<callout arearefs="pt-addnetwork-3"><para>Optional.  This command will be sent to the server after connecting.  Example: <userinput>/msg NickServ IDENTIFY
 <replaceable>konvirocks</replaceable></userinput>.  This example is for the freenode network, which requires users to register their &nickname;
 with a password and login when connecting.  <userinput><replaceable>konvirocks</replaceable></userinput>
 is the password for the &nickname; given in <guilabel>Identity</guilabel>.
 You may enter more than one command by separating them with semicolons.</para></callout>
-<callout arearefs="pt-addnetwork-5"><para>Check here if you want
+<callout arearefs="pt-addnetwork-4"><para>Check here if you want
 &konversation; to automatically connect to this network whenever
 you open &konversation;.</para></callout>
-<callout arearefs="pt-addnetwork-6"><para>This is a list of &irc;
+<callout arearefs="pt-addnetwork-5"><para>This is a list of &irc;
 <guilabel>Servers</guilabel> in the network.  When connecting to the network,
 &konversation; will
 attempt to connect to the top server first.  If this fails,
 it will attempt the second server.  If this fails, it will attempt
 the third, and so on.  At least one server must be specified.
 Click a server to highlight it.</para></callout>
-<callout arearefs="pt-addnetwork-7"><para>Use these buttons to
+<callout arearefs="pt-addnetwork-6"><para>Use these buttons to
 <guibutton>Add</guibutton> a server, <guibutton>Edit</guibutton> a
 highlighted server, or <guibutton>Delete</guibutton> a highlighted
 server.  You can also adjust the order of the server list and therefore
 the order of connection attempts.</para></callout>
-<callout arearefs="pt-addnetwork-8"><para>Optional.  This is a list of the
+<callout arearefs="pt-addnetwork-7"><para>Optional.  This is a list of the
 channels that will be automatically joined once &konversation;
 has connected to a server.  You may leave this blank if you
 wish to not automatically join any channels.</para></callout>
-<callout arearefs="pt-addnetwork-9"><para>Use these buttons to
+<callout arearefs="pt-addnetwork-8"><para>Use these buttons to
 <guibutton>Add</guibutton> a channel, <guibutton>Edit</guibutton> a
 highlighted channel, or <guibutton>Delete</guibutton> a highlighted
 channel.  You may also change the order the channels are joined.
@@ -804,7 +806,7 @@ a password in order to join, enter it, otherwise leave blank.
 
 <callout arearefs="pt-channellist-1"><para>Enter a filter string here.</para></callout>
 
-<callout arearefs="pt-channellist-2"><para>You can limit the channel list to those channels with a minimum or maximum number of users here. Choosing 0 disables the respective criteria.</para></callout>
+<callout arearefs="pt-channellist-2"><para>You can limit the channel list to those channels with a minimum or maximum number of users here. Choosing <guilabel>No Limit</guilabel> disables the respective criteria.</para></callout>
 
 <callout arearefs="pt-channellist-3"><para>Click here to retrieve the list of channels from the server and apply the filter.</para></callout>
 
@@ -816,12 +818,12 @@ a password in order to join, enter it, otherwise leave blank.
 
 </calloutlist>
 </para>
-
+<!--
 <para>You should avoid clicking the <guibutton>Refresh List</guibutton> button.  Most servers have thousands
 of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
 depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
 </para>
-
+-->
 <para>Sometimes there are "secret" channels on servers.  Such channels are not listed in the <guilabel>Channel List</guilabel>.
 You can still join these channels if you know their name.  In any <interface>Input Line</interface>, type: <userinput><command>/join</command>
 <replaceable>#channelname</replaceable></userinput>.  (The <userinput>#</userinput> is required.)  A new tab is created for the channel.  If you join a channel and the Nick Panel lists only your &nickname;, it means that the channel did not exist before.  The server created the channel and you are the operator.  In this case, you probably want to close the channel by typing: <userinput><command>/part</command></userinput>.
@@ -884,6 +886,7 @@ To send a message to everyone in the channel, type the message here and press &E
 
  <!-- Uncomment when this is implemented.
  &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
  -->
 
  <para>
@@ -893,8 +896,8 @@ To send a message to everyone in the channel, type the message here and press &E
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
-click on <guilabel>General</guilabel>, and click the
-<guilabel>Completion mode</guilabel> box.
+click on <guilabel>General</guilabel>, and select a 
+<guilabel>Completion mode</guilabel>.
  </para>
 
  <para>
@@ -917,12 +920,15 @@ or use the mouse wheel to cycle through the tabs.
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-</menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
-click on <guilabel>General</guilabel>.
+</menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
+click on <guilabel>Tabs</guilabel> or expand <guilabel>Notifications</guilabel> and 
+click on <guilabel>Tabs</guilabel>.
 </para>
 
 </callout>
-
+<!-- 
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
 <callout arearefs="pt-channeltour-3"><para>These &led;s will blink when there is something you haven't seen in that tab.
 The &led; will blink slower when the only unseen messages are <command>join</command>, <command>part</command>,  <command>quit</command>, or &nickname; changes.  They blink faster if there are unseen regular messages.
   The colors are as follows:
@@ -957,9 +963,8 @@ Channel
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
-click on <guilabel>Chat Window</guilabel>, and uncheck the
-<guilabel>Show box to change own nickname</guilabel> box.
+</menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
+click on <guilabel>Chat Window</guilabel>, and uncheck <guilabel>Show box to change own nickname</guilabel>.
 </para></callout>
 
 <callout arearefs="pt-channeltour-6"><para>The channel topic is displayed here.
@@ -968,7 +973,7 @@ clicking the button to the left of the topic.  To hide channel topics, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
+</menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
 click on <guilabel>Chat Window</guilabel>, and uncheck the
 <guilabel>Show channel topic</guilabel> box.
 </para></callout>
@@ -978,7 +983,7 @@ left of the topic.  To hide channel mode buttons, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
+</menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
 click on <guilabel>Chat Window</guilabel>, and uncheck the
 <guilabel>Show channel mode buttons</guilabel> box.
 </para></callout>
@@ -989,9 +994,8 @@ This is called the <interface>Nick Panel</interface>.  It is displayed whenever 
 about the user.  You may change how the icons are displayed next to each &nickname; by changing
 the &nickname; icon theme.  See <link linkend="nickthemes">Configuring &nickname; themes</link>
  for more information.
-The <guilabel>Big Bullets</guilabel> theme, as shown in the screen above, uses the following icons:
+The <guilabel>Default Theme</guilabel>, as shown in the screen above, uses the following icons:
 <itemizedlist>
-
 <listitem>
 <para><inlinemediaobject><imageobject><imagedata fileref="irc_normal.png" format="PNG"  /></imageobject></inlinemediaobject>
 normal user
@@ -1031,7 +1035,7 @@ channel admin <!-- (see TODO) -->
 </itemizedlist>
 </para>
 
-<para>In addition, if a user is away, a small red cross will be drawn in the corner of the icon.
+<para>In addition, if a user is away, a small clock will be drawn in the corner of the icon.
 <inlinemediaobject><imageobject><imagedata fileref="irc_away.png" format="PNG"  /></imageobject></inlinemediaobject></para>
 
 <para>
@@ -1042,8 +1046,8 @@ This is also the place where you can <link linkend="linkaddressbook">associate a
 
 <para>To hide the <interface>Nick Panel</interface>, choose
 <menuchoice>
-	<guisubmenu>Window</guisubmenu>
-	<guisubmenu>Hide Nicklist</guisubmenu>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Show Nicklist</guisubmenu>
 </menuchoice> from the main menu.
 </para>
 
@@ -1260,8 +1264,6 @@ To configure notifications, choose
  on the main menu.  <action>The <guilabel>Notification Settings</guilabel> screen will appear.</action>
  </para>
 
-<para>Immediately click the <guibutton>More Options</guibutton> button.</para>
-
 <para>
 <screenshot>
 <screeninfo>The Notification Settings screen.</screeninfo>
@@ -1270,7 +1272,6 @@ To configure notifications, choose
 			<areaspec units="calspair">
 				<area id="pt-notification-1" coords="1 1"/>
 				<area id="pt-notification-2" coords="1 1"/>
-				<area id="pt-notification-3" coords="1 1"/>
 			</areaspec>
 			<imageobject>
 				<imagedata fileref="notification_screen_co.png" format="PNG"/>
@@ -1296,11 +1297,11 @@ To configure notifications, choose
 <para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>Apply</guibutton> button.</para>
 
 <para>
-<calloutlist>
-
-<callout arearefs="pt-notification-3"><para>Once you've set up your notifications, you can enable or disable all notification actions here.  For example, you can choose to play a sound whenever your &nickname; is mentioned in a message.  When you are at your workstation, you can disable the sounds, but while you are away from your workstation but nearby, you can enable the sounds in order to get your attention.</para></callout>
-
-</calloutlist>
+Once you've set up your notifications, you can enable or disable all notification using 
+<menuchoice>
+	<guisubmenu>Window</guisubmenu>
+	<guisubmenu>Enable Notifications</guisubmenu>
+</menuchoice> on the main menu.
 </para>
 
 <tip><para>You can also alert yourself when someone mentions your &nickname;
@@ -1383,15 +1384,15 @@ one <userinput><command>WHOIS</command></userinput> command is automatically sen
 to request information for &nickname;s that do not have any information.  This continues until
 all &nickname;s have information.
 </para></callout>
-<callout arearefs="pt-nicksonline-3"><para>Nicknames that are not connected to any
+<!--callout arearefs="pt-nicksonline-3"><para>Nicknames that are not connected to any
 of the &irc; networks you are connected to are listed in the <guilabel>Offline</guilabel>
 part of the listing.
-</para></callout>
-<callout arearefs="pt-nicksonline-4"><para>Nicknames that are associated with
+</para></callout-->
+<!--callout arearefs="pt-nicksonline-4"><para>Nicknames that are associated with
 a contact entry in your address book have this icon
 (<inlinemediaobject><imageobject><imagedata fileref="kaddressbook.png" format="PNG"  /></imageobject></inlinemediaobject>) next to their information.
-</para></callout>
-<callout arearefs="pt-nicksonline-5"><para>Use these buttons to associate a &nickname;
+</para></callout-->
+<callout arearefs="pt-nicksonline-3"><para>Use these buttons to associate a &nickname;
 with a contact in your address book, remove an association, or open the address book
 to edit the contact information.  See the
 <ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
@@ -1401,7 +1402,13 @@ on using the &kde; address book.
 </para>
 
 <para>
-To add additional &nickname;s to watch, click the <guilabel>Edit Watch List</guilabel> button.
+To add additional &nickname;s to watch, open the context menu in the <guilabel>Nick List</guilabel> 
+by clicking with the &RMB; on a &nickname; and select <guilabel>Add to Watched Nicks</guilabel> or choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Notifications</guilabel> and
+click on <guilabel>Watched Nicknames</guilabel>.
 The <guilabel>Watched Nicknames</guilabel> screen appears.
 </para>
 
@@ -1432,7 +1439,7 @@ The <guilabel>Watched Nicknames</guilabel> screen appears.
 <para>
 <calloutlist>
 
-<callout arearefs="pt-notifylist-1"><para>Check this box to activate the <guilabel>nickname watcher</guilabel> feature.</para></callout>
+<callout arearefs="pt-notifylist-1"><para>Check this box to activate the nickname watcher feature.</para></callout>
 
 <callout arearefs="pt-notifylist-2"><para>If you want the
 <guilabel>Watched Nicks Online</guilabel> screen to automatically display when you
@@ -1478,7 +1485,7 @@ your <guilabel>Watched Nicknames</guilabel> list connects or disconnects from th
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure &konversation;</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
  </para>
 
 <para>
@@ -1511,17 +1518,17 @@ your <guilabel>Watched Nicknames</guilabel> list connects or disconnects from th
 <para>
 <calloutlist>
 
-<callout arearefs="pt-highlight-1"><para>Click here to select the <guilabel>Highlighting</guilabel> screen.</para></callout>
+<callout arearefs="pt-highlight-1"><para>Click here to select the <guilabel>Highlight</guilabel> screen.</para></callout>
 <callout arearefs="pt-highlight-2"><para>Click here to add a new item
 to the <guilabel>Highlight list</guilabel>.
 When an item in the list is selected, you may edit it in the panel below.</para></callout>
 <callout arearefs="pt-highlight-3"><para>Enter a string pattern here.
 Any message received that matches this pattern, anywhere in the message, will activate
-the highlighting for the message.  If you have the &kde; Regular Expression Editor
+the highlighting for the message. <!-- If you have the &kde; Regular Expression Editor
 utility installed on your system, the button to the right of the pattern will
 be enabled.  Click to display the editor, which will assist you
 in preparing more complex patterns.  (The &kde; Regular Expression Editor
-is part of the <command>kdeutils</command> package.)
+  is part of the <command>kdeutils</command> package.)-->
 </para></callout>
 <callout arearefs="pt-highlight-4"><para>If the pattern is found
 in a message, the entire message will be displayed
@@ -1578,7 +1585,7 @@ minimized in the system tray.</para>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure &konversation;</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
  </para>
 
 <para>
@@ -1592,6 +1599,7 @@ minimized in the system tray.</para>
 				<area id="pt-osd-3" coords="1 1"/>
 				<area id="pt-osd-4" coords="1 1"/>
 				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
 			</areaspec>
 			<imageobject>
 				<imagedata fileref="osd_screen_co.png" format="PNG"/>
@@ -1615,7 +1623,9 @@ minimized in the system tray.</para>
 
 <callout arearefs="pt-osd-4"><para>Click this button to choose a font for &osd;.  (<emphasis>Note: </emphasis> Not all fonts work.  Luxi Sans 22 and Impact 22 are known to work.)</para></callout>
 
-<callout arearefs="pt-osd-5"><para>Check the boxes here to select the types of messages you'd like to appear on screen, then click the <guibutton>Apply</guibutton> button.</para></callout>
+<callout arearefs="pt-osd-5"><para>Check the boxes here to select the types of messages you'd like to appear on screen.</para></callout>
+
+<callout arearefs="pt-osd-6"><para>Drag the OSD Priview to your desired position, then click the <guibutton>Apply</guibutton> button.</para></callout>
 
 </calloutlist>
 </para>
@@ -1679,9 +1689,9 @@ To change the &nickname; theme, choose
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
- Click <guilabel>Appearance</guilabel> to expand it, then click <guilabel>Themes</guilabel>
- to display the <guilabel>Themes</guilabel> screen.
+ on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
+ Click <guilabel>Interface</guilabel> to expand it, then click <guilabel>Nicklist Themes</guilabel>
+ to display the <guilabel>Nicklist Themes</guilabel> screen.
  </para>
 
 <para>
@@ -1709,7 +1719,7 @@ To change the &nickname; theme, choose
 <para>
 <calloutlist>
 
-<callout arearefs="pt-themes-1"><para>Click to select the nick <guilabel>Themes</guilabel> screen.</para></callout>
+<callout arearefs="pt-themes-1"><para>Click to select the <guilabel>Nicklist Themes</guilabel> screen.</para></callout>
 <callout arearefs="pt-themes-2"><para>Select a theme.</para></callout>
 <callout arearefs="pt-themes-3"><para>Sample icons are displayed here in the chosen theme.</para></callout>
 <callout arearefs="pt-themes-4"><para>If you have downloaded a nick theme
@@ -1730,8 +1740,8 @@ from elsewhere, click to install it.</para></callout>
     <guisubmenu>Settings</guisubmenu>
     <guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice>
-on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
-Click <guilabel>Appearance</guilabel> to expand it, then click <guilabel>Chat Window</guilabel>.
+on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
+Click <guilabel>Interface</guilabel> to expand it, then click <guilabel>Chat Window</guilabel>.
 Check the <guilabel>Show quick buttons</guilabel> box and click <guibutton>OK</guibutton>.
 </para>
 
@@ -1742,7 +1752,7 @@ To customize the <interface>Quick Buttons</interface>, choose
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
  Click <guilabel>Interface</guilabel> to expand it, then click <guilabel>Quick Buttons</guilabel>
  to display the <guilabel>Quick Buttons</guilabel> screen.
  </para>
@@ -1762,8 +1772,9 @@ To customize the <interface>Quick Buttons</interface>, choose
 </para>
 
 <para>
-There are 8 <interface>Quick Button</interface>s.  Click on an entry to change it.
-The <guilabel>Button name</guilabel> column is the name that
+There are 8 default <interface>Quick Button</interface>s.  Click on an entry to change it
+or use the buttons at the right side of the list to add or remove <interface>Quick Button</interface>s.
+The <guilabel>Button Name</guilabel> column is the name that
 will appear on the button in the <link linkend="channel-screen-tour">Main</link> screen.  Keep the names short.
 The <guilabel>Button Action</guilabel> column is the action that will be performed when you click the
 <interface>Quick Button</interface>.  Tips for creating actions are given on the screen.
@@ -1798,10 +1809,6 @@ followed by the chosen &nickname;.  Type a message you want to send to that pers
 &Enter;.  The message will be sent to the user.  Only that user will see the message.
 </para>
 
-<para>
-<emphasis>Note: </emphasis>You cannot add or delete <interface>Quick Buttons</interface>.
-</para>
-
 </sect1>
 
 <!-- =================================================================== -->
@@ -1824,7 +1831,7 @@ Choose
 <menuchoice>
 	<guisubmenu>Send File</guisubmenu>
 </menuchoice>
-<action>A dialog appears for you to choose a file to send.</action>  Next, a new <guilabel>DCC Status</guilabel> tab appears.
+<action>. A dialog appears for you to choose a file to send.</action>  Next, a new <guilabel>DCC Status</guilabel> tab appears.
 </para>
 
 <para>
@@ -1905,10 +1912,10 @@ Choose
 	</varlistentry>
 	<varlistentry>
 		<term>
-			<guilabel>Stalled</guilabel>
+			<guilabel>Pending</guilabel>
 		</term>
 		<listitem>
-			<para>The transfer was started but is not currently progressing.
+			<para>The transfer is waiting for the partner to accept or reject it.
 			</para>
 		</listitem>
 	</varlistentry>
@@ -1968,8 +1975,8 @@ people by choosing
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-	<guisubmenu>DCC Settings</guisubmenu>
-</menuchoice> on the main menu.
+</menuchoice> on the main menu. Click <guilabel>Behaviour</guilabel> to expand it, then click <guilabel>DCC</guilabel>
+ to display the <guilabel>DCC</guilabel> screen.
 </para>
 </callout>
 
@@ -2003,12 +2010,12 @@ click with the &RMB; on the &nickname; of the person in the
 to <action>display information to help you determine the user's real name</action>.
 Next, click with the &RMB; on the &nickname; of the person again and choose
 <menuchoice>
-	<guisubmenu>Addressbook associations</guisubmenu>
+	<guisubmenu>Address Book Associations</guisubmenu>
 </menuchoice>.
   <action>A submenu appears</action>.  If the &nickname; is not already associated with a contact,
 choose
 <menuchoice>
-	<guisubmenu>Create new contact</guisubmenu>
+	<guisubmenu>Create New Contact</guisubmenu>
 </menuchoice>.
   <action>The <guilabel>Edit Contact</guilabel> screen appears</action>.
 </para>
@@ -2046,7 +2053,7 @@ If you know the person's real name, replace the &nickname; with the real name.
 </callout>
 
 <callout arearefs="pt-kimproxy-create-3">
-<para>Click here.  The <guilabel>IM Addresses</guilabel> window appears.</para></callout>
+<para>Click here.  The <guilabel>Edit Instanr Messaging Address</guilabel> window appears.</para></callout>
 
 </calloutlist>
 </para>
@@ -2065,9 +2072,9 @@ If you know the person's real name, replace the &nickname; with the real name.
 </screenshot>
 </para>
 
-<para>Notice that &konversation; fills in the &nickname; for you with protocol
+<!--para>Notice that &konversation; fills in the &nickname; for you with protocol
 <guilabel>IRC</guilabel>.
-</para>
+</para-->
 
 <para>See the
 <ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
@@ -2186,7 +2193,7 @@ use Mozilla instead.
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure &konversation;</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ on the main menu.  <action>The <guilabel>Configure</guilabel> screen will appear.</action>
  </para>
 
  <para>
@@ -2213,7 +2220,7 @@ use Mozilla instead.
 <para>
 <calloutlist>
 
-<callout arearefs="pt-webbrowser-1"><para>Click here to display the <guilabel>Web Browser</guilabel> screen.</para></callout>
+<callout arearefs="pt-webbrowser-1"><para>Click here to display the <guilabel>General</guilabel> screen.</para></callout>
 
 <callout arearefs="pt-webbrowser-2"><para>Click here to specify that you want to use a custom web browser.</para></callout>
 
@@ -2240,7 +2247,7 @@ make it executable (<userinput>chmod a+x moz</userinput>).  Then enter <userinpu
 <replaceable>moz '%u'</replaceable></userinput> for the web browser command in the screen above.
 </para>
 
-<para><emphasis>Note: </emphasis>The <guilabel>Web Browser</guilabel> setting does not apply to
+<para><emphasis>Note: </emphasis>The web browser setting does not apply to
 <interface>mailto:</interface> &URL;s.  <interface>mailto:</interface> &URL;s always launch the default
 &kde; mailer.
 </para>
@@ -2261,25 +2268,25 @@ and <link linkend="query">query</link> screens
 to help you quickly locate information.  To do this, choose
 <menuchoice>
 	<guisubmenu>Insert</guisubmenu>
-	<guisubmenu>Remember Line</guisubmenu>
+	<guisubmenu>Marker Line</guisubmenu>
 </menuchoice>
 on the main menu, or press <keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>.
   <action>A line will appear at the bottom of the text on the screen.
  The line will scroll with the rest of the text in the screen.</action>
 </para>
 
-<para>To make the <interface>Remember Line</interface>
+<para>To make the <interface>Maker Line</interface>
 be inserted in all channels and queries at once, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
 click on <guilabel>Chat Window</guilabel>, and check the
-<guilabel>Show remember line in all channels/queries</guilabel> box.
+<guilabel>Show manually inserted lines in all chat windows</guilabel> box.
 </para>
 
 <para>To make &konversation; automatically insert a
-<interface>Remember Line</interface> whenever you do an
+<interface>Marker Line</interface> whenever you do an
 <userinput><command>/away</command> <replaceable>msg</replaceable></userinput>
 command, see <link linkend="identity-away">Setting your identity</link>.
 </para>
@@ -2997,10 +3004,10 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 			<shortcut>
-				<keycombo action="simul">&Alt; &Ctrl;<keycap>Q</keycap></keycombo>
+				<keycombo action="simul">&Ctrl; &Alt;<keycap>Q</keycap></keycombo>
 			</shortcut>
 			<guimenu>File</guimenu>
-			<guimenuitem>Set Away Globally</guimenuitem>
+			<guimenuitem>Global Away</guimenuitem>
 		</menuchoice></term>
 		<listitem><para><action>Changes your &nickname; status to away in all channels.
 		</action></para></listitem>
@@ -3020,7 +3027,7 @@ or menu bars. -->
 </sect2>
 
 <sect2>
-<title>The <guimenu>Edit</guimenu> Menu</title>
+<title>The Edit Menu</title>
 <para>
 <variablelist>
 	<varlistentry>
@@ -3029,7 +3036,7 @@ or menu bars. -->
 					<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
 				</shortcut>
 				<guimenu>Edit</guimenu>
-				<guimenuitem>Find</guimenuitem>
+				<guimenuitem>Find Text...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
 				<action>Searches for text strings in the current screen.</action>
@@ -3048,6 +3055,10 @@ or menu bars. -->
 				using the previous search string.</action>
 			</para></listitem>
 	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+-->
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
@@ -3077,7 +3088,7 @@ or menu bars. -->
 </sect2>
 
 <sect2>
-<title>The <guimenu>Insert</guimenu> Menu</title>
+<title>The Insert Menu</title>
 <para>
 <variablelist>
 	<varlistentry>
@@ -3086,7 +3097,7 @@ or menu bars. -->
 				<keycombo action="simul">&Ctrl;<keycap>K</keycap></keycombo>
 			</shortcut>
 			<guimenu>Insert</guimenu>
-			<guimenuitem>&irc; Color</guimenuitem>
+			<guimenuitem>&irc; Color...</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
 			<action>See <link linkend="color-msgs">Sending colorful messages</link>.</action>
@@ -3098,7 +3109,7 @@ or menu bars. -->
 					<keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>
 				</shortcut>
 				<guimenu>Insert</guimenu>
-				<guimenuitem>Remember Line</guimenuitem>
+				<guimenuitem>Marker Line</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
 				<action>See <link linkend="rememberlines">Marking Channel and Query Logs</link>.</action>
@@ -3110,7 +3121,7 @@ or menu bars. -->
 					<keycombo action="simul">&Alt; &Shift;<keycap>C</keycap></keycombo>
 				</shortcut>
 			<guimenu>Insert</guimenu>
-			<guimenuitem>Special Character</guimenuitem>
+			<guimenuitem>Special Character...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
 				<action>Used to enter special characters, such as foreign
@@ -3122,7 +3133,7 @@ or menu bars. -->
 </sect2>
 
 <sect2>
-<title>The <guimenu>Bookmarks</guimenu> Menu</title>
+<title>The Bookmarks Menu</title>
 <para>
 <variablelist>
 	<varlistentry>
@@ -3140,19 +3151,28 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 				<guimenu>Bookmarks</guimenu>
-				<guimenuitem>Edit Bookmarks</guimenuitem>
+				<guimenuitem>Bookmark Tabs as Folder...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
-				<action>Opens bookmark editor</action>
+				<action>???</action>
 			</para></listitem>
 	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
 			<guimenu>Bookmarks</guimenu>
-			<guimenuitem>New Bookmark Folder</guimenuitem>
+			<guimenuitem>New Bookmark Folder...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
 				<action>Creates a new bookmark folder</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<guimenu>Bookmarks</guimenu>
+				<guimenuitem>Edit Bookmarks...</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Opens bookmark editor</action>
 			</para></listitem>
 	</varlistentry>
 </variablelist>
@@ -3160,16 +3180,29 @@ or menu bars. -->
 </sect2>
 
 <sect2>
-<title>The <guimenu>Settings</guimenu> Menu</title>
+<title>The Settings Menu</title>
 <para>
 <variablelist>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>H</keycap></keycombo>
+				</shortcut>
+				<guimenu>Settings</guimenu>
+				<guimenuitem>Show Nicklist</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Hides (or displays) the panel of &nickname;s in channel tabs.
+				</action>
+			</para></listitem>
+	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
 			<shortcut>
 				<keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo>
 			</shortcut>
 			<guimenu>Settings</guimenu>
-			<guimenuitem>Hide Menubar</guimenuitem>
+			<guimenuitem>Show Menubar</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
 			<action>Hides the main menu.  Hit
@@ -3180,25 +3213,26 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 			<guimenu>Settings</guimenu>
-			<guimenuitem>Hide Toolbar</guimenuitem>
+			<guimenuitem>Show Toolbar</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>Hides the toolbar.</action>
+			<action>Shows or hides the toolbar.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
 			<guimenu>Settings</guimenu>
-			<guimenuitem>Hide Statusbar</guimenuitem>
+			<guimenuitem>Show Statusbar</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>Hides the status bar at the bottom of the main screen.</action>
+			<action>Shows or hides the status bar at the bottom of the main screen.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
+				<shortcut><keycap>F8</keycap></shortcut>
 				<guimenu>Settings</guimenu>
-				<guimenuitem>Identities</guimenuitem>
+				<guimenuitem>Identities...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para><action>Displays the <link linkend="identity">Identities</link> screen
 		for setting your identification information.
@@ -3237,7 +3271,7 @@ or menu bars. -->
 			<guimenuitem>Configure &konversation;</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>Displays the <guilabel>Edit Preferences</guilabel> screen.</action>
+			<action>Displays the <guilabel>Configure</guilabel> screen.</action>
 		</para></listitem>
 	</varlistentry>
 </variablelist>
@@ -3245,13 +3279,13 @@ or menu bars. -->
 </sect2>
 
 <sect2>
-<title>The <guimenu>Window</guimenu> Menu</title>
+<title>The Window Menu</title>
 <para>
 <variablelist>
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
-					<keycombo action="simul">&Ctrl;<keycap>.</keycap></keycombo>
+					<keycombo action="simul">&Ctrl;<keycap>,</keycap></keycombo>
 				</shortcut>
 				<guimenu>Window</guimenu>
 				<guimenuitem>Previous Tab</guimenuitem>
@@ -3263,7 +3297,7 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
-					<keycombo action="simul">&Ctrl;<keycap>,</keycap></keycombo>
+					<keycombo action="simul">&Ctrl;<keycap>.</keycap></keycombo>
 				</shortcut>
 				<guimenu>Window</guimenu>
 				<guimenuitem>Next Tab</guimenuitem>
@@ -3272,6 +3306,11 @@ or menu bars. -->
 				<action>Displays the screen corresponding to the next tab.</action>
 			</para></listitem>
 	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
@@ -3300,19 +3339,10 @@ or menu bars. -->
 				</action>
 			</para></listitem>
 	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-				<shortcut>
-					<keycombo action="simul">&Ctrl;<keycap>H</keycap></keycombo>
-				</shortcut>
-				<guimenu>Window</guimenu>
-				<guimenuitem>Hide Nicklist</guimenuitem>
-			</menuchoice></term>
-		<listitem><para>
-				<action>Hides (or displays) the panel of &nickname;s in channel tabs.
-				</action>
-			</para></listitem>
-	</varlistentry>
+<!-- 
+Enable Notifications
+Set Encoding
+  -->
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
@@ -3323,18 +3353,6 @@ or menu bars. -->
 		</menuchoice></term>
 		<listitem><para>
 			<action>Displays the <guilabel>Watched Nicks Online</guilabel> screen.   See <link linkend="nicksonline">Monitoring who is online</link>.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-				<shortcut>
-					<keycap>F5</keycap>
-				</shortcut>
-			<guimenu>Window</guimenu>
-			<guimenuitem>Channel List</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Displays a <link linkend="list-channels">list of channels</link> available on the server.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3351,6 +3369,18 @@ or menu bars. -->
 	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
+				<shortcut>
+					<keycap>F9</keycap>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>DCC Status</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>???</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
 			<guimenu>Window</guimenu>
 			<guimenuitem>New Konsole</guimenuitem>
 		</menuchoice></term>
@@ -3361,10 +3391,22 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 				<shortcut>
+					<keycap>F5</keycap>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>Channel List for</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays a <link linkend="list-channels">list of channels</link> available on the server.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
 					<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
 				</shortcut>
 			<guimenu>Window</guimenu>
-			<guimenuitem>Open Logfile</guimenuitem>
+			<guimenuitem>Open Logfile for</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
 			<action>Displays a screen with the log of messages from the current tab.  Only works for
@@ -3379,12 +3421,13 @@ or menu bars. -->
 			</action>
 		</para></listitem>
 	</varlistentry>
+<!-- Channel Settings -->
 </variablelist>
 </para>
 </sect2>
 
 <sect2>
-<title>The <guimenu>Help</guimenu> Menu</title>
+<title>The Help Menu</title>
 
 <!-- Assuming you have a standard help menu (help, what's this, about -->
 <!-- &konversation;, about KDE) then the documentation is already written. -->
@@ -3573,11 +3616,11 @@ Documentation Copyright &copy; 2003-2005 Gary R. Cramblitt <email>garycramblitt@
 part of KDE CVS.  You should remove it if you are releasing your
 application -->
 
-&install.intro.documentation;
+ <!--&install.intro.documentation;-->
 
 <para>
 The latest versions of &konversation;, including source code and build instructions
-can also be obtained from the
+can be obtained from the
 <ulink url="&konviwebsite;">&konviwebsite; website</ulink>.
 </para>
 
@@ -3600,8 +3643,7 @@ information here.
 -->
 
 <para>
-In order to successfully use &konversation;, you need &kde; 3.2 or later and a network connection.
-On earlier &kde; versions some features may be missing.
+In order to successfully use &konversation;, you need &kde; 4 and a network connection.
 If you will be running &konversation; from behind a firewall, see <link linkend="faq">Questions and Answers</link>.  If you wish to use SSL protocol, you may need OpenSSL.
 </para>
 
