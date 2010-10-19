@@ -1192,6 +1192,8 @@ void ViewContainer::toggleAutoJoin()
 
         emit autoJoinToggled(channel->getServer()->getServerGroup());
     }
+
+    m_popupViewIndex = -1;
 }
 
 void ViewContainer::addView(ChatWindow* view, const QString& label, bool weinitiated)
@@ -1471,7 +1473,6 @@ void ViewContainer::goToView(int page)
 
     if (page >= 0)
         m_tabWidget->setCurrentIndex(page);
-
 
     m_popupViewIndex = -1;
 }
