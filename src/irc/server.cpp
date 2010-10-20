@@ -882,6 +882,7 @@ void Server::quitServer(const QString& quitMessage)
     queue(toServer, HighPriority);
 
     flushQueues();
+    m_socket->flush();
 
     // Close the socket to allow a dead connection to be reconnected before the socket timeout.
     m_socket->close();
