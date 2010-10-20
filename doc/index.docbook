@@ -1297,7 +1297,7 @@ To configure notifications, choose
 <para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>Apply</guibutton> button.</para>
 
 <para>
-Once you've set up your notifications, you can enable or disable all notification using 
+Once you've set up your notifications, you can enable or disable all notifications using 
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
 	<guisubmenu>Enable Notifications</guisubmenu>
@@ -1625,7 +1625,7 @@ minimized in the system tray.</para>
 
 <callout arearefs="pt-osd-5"><para>Check the boxes here to select the types of messages you'd like to appear on screen.</para></callout>
 
-<callout arearefs="pt-osd-6"><para>Drag the OSD Priview to your desired position, then click the <guibutton>Apply</guibutton> button.</para></callout>
+<callout arearefs="pt-osd-6"><para>Drag the OSD Preview to your desired position, then click the <guibutton>Apply</guibutton> button.</para></callout>
 
 </calloutlist>
 </para>
@@ -1933,7 +1933,7 @@ Choose
 			<guilabel>Failed</guilabel>
 		</term>
 		<listitem>
-			<para>An error occurred and the transfer was not successful..
+			<para>An error occurred and the transfer was not successful.
 			</para>
 		</listitem>
 	</varlistentry>
@@ -2053,7 +2053,7 @@ If you know the person's real name, replace the &nickname; with the real name.
 </callout>
 
 <callout arearefs="pt-kimproxy-create-3">
-<para>Click here.  The <guilabel>Edit Instanr Messaging Address</guilabel> window appears.</para></callout>
+<para>Click here.  The <guilabel>Edit Instant Messaging Address</guilabel> window appears.</para></callout>
 
 </calloutlist>
 </para>
@@ -2163,7 +2163,7 @@ The application launched depends upon the &MIME; type of the &URL;.  For example
 <interface>http:</interface> will activate your default web browser and display the web page.  For web pages, you can
 also specify the <link linkend="webbrowser">web browser</link> to use.</para></callout>
 
-<callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the &kde; clipboard..</para></callout>
+<callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the &kde; clipboard.</para></callout>
 
 <callout arearefs="pt-urlcatcher-4"><para>Click here to delete the selected  &URL; from the list.</para></callout>
 
