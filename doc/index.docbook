@@ -1087,7 +1087,7 @@ or <userinput>!</userinput>.  The first character of a channel name determines t
    that all the modes are unset, with the exception of the 't' channel flag which is set.
 </para></listitem>
 </itemizedlist>
-Channel names are up to 50 characters long and may contain any characters except for space, comma, and Ctrl-G.
+Channel names are up to 50 characters long and may contain any characters except for space, comma, and Ctrl-G (^G or ASCII 7).
 </para>
 
 </sect1>
@@ -1223,7 +1223,7 @@ click with the &RMB; on the person's &nickname; in the <guilabel>Nick Panel</gui
 <menuchoice>
 	<guisubmenu>Open Query</guisubmenu>
 </menuchoice>
-<action>A new tab will be created</action>.  Announce yourself by sending a message.
+<action>. A new tab will be created</action>.  Announce yourself by sending a message.
 </para>
 
 <para>
@@ -1294,7 +1294,7 @@ To configure notifications, choose
 </calloutlist>
 </para>
 
-<para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>Apply</guibutton> button.</para>
+<para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>OK</guibutton> button.</para>
 
 <para>
 Once you've set up your notifications, you can enable or disable all notifications using 
@@ -1379,7 +1379,7 @@ the icons that appear in the <interface>Nick Panel</interface> in the
 </para></callout>
 <callout arearefs="pt-nicksonline-2"><para>The information known about the &nickname;
 is displayed here.  When the <guilabel>Watched Nicks Online</guilabel> screen is first
-displayed, this information is sparse.  Every 8 seconds,
+displayed, this information is sparse.  Every 20 seconds,
 one <userinput><command>WHOIS</command></userinput> command is automatically sent to the server
 to request information for &nickname;s that do not have any information.  This continues until
 all &nickname;s have information.
@@ -1402,8 +1402,9 @@ on using the &kde; address book.
 </para>
 
 <para>
-To add additional &nickname;s to watch, open the context menu in the <guilabel>Nick List</guilabel> 
-by clicking with the &RMB; on a &nickname; and select <guilabel>Add to Watched Nicks</guilabel> or choose
+To add a single &nickname; to watch, open the context menu in the <guilabel>Nick List</guilabel> 
+by clicking with the &RMB; on a &nickname; and select <guilabel>Add to Watched Nicks</guilabel>.
+If you want to add several &nickname;s choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
@@ -1641,13 +1642,13 @@ minimized in the system tray.</para>
 You can add color to the messages you send in any channel.  In the <interface>Input Line</interface> of any channel, start typing your message.  Click the
 <inlinemediaobject>
 	<imageobject>
-		<imagedata fileref="colorize.png" format="PNG" />
+		<imagedata fileref="format-text-color.png" format="PNG" />
 	</imageobject>
 	<textobject>
 		<phrase>Insert &irc; Color Button</phrase>
 	</textobject>
 </inlinemediaobject>
-Insert &irc; Color button or choose
+<guibutton>&irc; Color</guibutton> button or choose
 <menuchoice>
 	<guisubmenu>Insert</guisubmenu>
 	<guisubmenu>&irc; Color</guisubmenu>
@@ -1671,7 +1672,7 @@ Insert &irc; Color button or choose
 
 <para>
 Choose a color and click <guibutton>OK</guibutton>.  Continue typing your message in the <interface>Input Line</interface>.
-To change the color again, click the <guibutton>Insert &irc; Color</guibutton>  button.  Choose a different color
+To change the color again, click the <guibutton>&irc; Color</guibutton>  button.  Choose a different color
 and click <guibutton>OK</guibutton>.
 </para>
 
@@ -1867,10 +1868,11 @@ Choose
 <variablelist>
 	<varlistentry>
 		<term>
-			<guilabel>Offering</guilabel>
+			<guilabel>Preparing</guilabel>
 		</term>
 		<listitem>
-			<para>You are trying to send a file to the recipient.  &konversation; is waiting for the recipient to accept the file.
+			<para>A receiving transfer is checking for resumable files or a sending 
+			  transfer is acquiring the data to send.
 			</para>
 		</listitem>
 	</varlistentry>
@@ -1942,11 +1944,11 @@ Choose
 			<guilabel>Queued</guilabel>
 		</term>
 		<listitem>
-			<para>The transfer has been accepted and will begin when the software on the receiving end acknowledges.
+			<para>Transfer is waiting for you to accept or reject it.
 			</para>
 		</listitem>
 	</varlistentry>
-	<varlistentry>
+	<!--varlistentry>
 		<term>
 			<guilabel>Lookup</guilabel>
 		</term>
@@ -1954,7 +1956,7 @@ Choose
 			<para>&konversation; is trying to get the IP number of the sender.
 			</para>
 		</listitem>
-	</varlistentry>
+	</varlistentry-->
 	<varlistentry>
 		<term>
 			<guilabel>Resuming</guilabel>
@@ -2155,7 +2157,7 @@ again.  &konversation; can keep a convenient list of all &URL;s for you.  To act
 <para>
 <calloutlist>
 
-<callout arearefs="pt-urlcatcher-1"><para>This is the list of &URL;s seen since you started &konversation;.  The <guilabel>Nick</guilabel> column is the &nickname; of the person who posted the &URL;.  If the &nickname; is blank, the &url; appeared in a <interface>Server Messages</interface> tab.  (&URL;s appearing in join and leave messages
+<callout arearefs="pt-urlcatcher-1"><para>This is the list of &URL;s seen since you started &konversation;.  The <guilabel>From</guilabel> column is the &nickname; of the person who posted the &URL; or the name of the channel or server, where the &URL; was posted. (&URL;s appearing in join and leave messages
 are not listed.)  Click on a &URL; to select it.</para></callout>
 
 <callout arearefs="pt-urlcatcher-2"><para>Click here to activate the application associated with the selected &URL;.
@@ -2933,6 +2935,11 @@ CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), H
 </varlistentry>
 
 </variablelist>
+
+<para>All these scripts have predefind command aliases. In &konversation;'s settings dialog
+select <menuchoice><guimenu>Behaviour</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
+to view, add, remove or edit command aliases.
+</para> 
 </sect1>
 
 </chapter>
@@ -2979,6 +2986,7 @@ or menu bars. -->
 		<listitem><para><action>Displays the <link linkend="quickconnect">Quick Connect</link> screen for connecting to a server.
 		</action></para></listitem>
 	</varlistentry>
+	<!-- Disconnect -->
 	<varlistentry>
 		<term><menuchoice>
 			<guimenu>File</guimenu>
@@ -3004,7 +3012,7 @@ or menu bars. -->
 	<varlistentry>
 		<term><menuchoice>
 			<shortcut>
-				<keycombo action="simul">&Ctrl; &Alt;<keycap>Q</keycap></keycombo>
+				<keycombo action="simul">&Ctrl; &Shift;<keycap>A</keycap></keycombo>
 			</shortcut>
 			<guimenu>File</guimenu>
 			<guimenuitem>Global Away</guimenuitem>
@@ -3154,7 +3162,7 @@ Clear Marker Lines Ctrl Shift R
 				<guimenuitem>Bookmark Tabs as Folder...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
-				<action>???</action>
+			<action>Adds</action> all channels to a new menu item at the end of the bookmarks menu.
 			</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3376,7 +3384,7 @@ Set Encoding
 			<guimenuitem>DCC Status</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>???</action>
+			<action>Displays the <link linkend="dcc">DCC Status</link> tab with information about file transfers.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3529,6 +3537,29 @@ The
 To make it selectable again go back to a channel tab or the server tab.
 </para>
 </answer>
+</qandaentry>
+
+<qandaentry>
+<question><para>
+How do I have &konversation; automatically mark me as away after a period of inactivity?
+</para>
+</question>
+<answer><para>
+Auto-away messages are configured on a per-identity basis. To enable auto-away select <menuchoice><guimenu>Settings</guimenu><guimenuitem>Identities</guimenuitem></menuchoice>.
+Choose the identity for which you want to enable auto-away from the drop
+down list at the top of the dialog an go to the <guilabel>Away</guilabel> tab.
+Check the <guilabel>Automatic Away</guilabel> option. 
+</para></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>How to avoid the <guilabel>Auto Replace</guilabel> feature of the <interface>Input Line</interface>?</para>
+</question>
+<answer><para>Use <keycombo action="simul">&Ctrl;&Enter;</keycombo> instead of just &Enter; to avoid parsing and 
+automatically replacing the text in the <interface>Input Line</interface> according to the options in the settings 
+dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</guimenuitem></menuchoice>.
+</para></answer>
 </qandaentry>
 
 </qandaset>
