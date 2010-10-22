@@ -1908,7 +1908,7 @@ Choose
 			<guilabel>Done</guilabel>
 		</term>
 		<listitem>
-			<para>The file has been successfully transfered.
+			<para>The file has been successfully transferred.
 			</para>
 		</listitem>
 	</varlistentry>
@@ -1977,7 +1977,7 @@ people by choosing
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
-</menuchoice> on the main menu. Click <guilabel>Behaviour</guilabel> to expand it, then click <guilabel>DCC</guilabel>
+</menuchoice> on the main menu. Click <guilabel>Behavior</guilabel> to expand it, then click <guilabel>DCC</guilabel>
  to display the <guilabel>DCC</guilabel> screen.
 </para>
 </callout>
@@ -2830,7 +2830,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <para>This script when run will output a Random Fortune.</para>
 <para>Example: To output a random fortune to your current channel tab.</para>
 <para><userinput><command>/exec </command> <replaceable>fortune</replaceable></userinput></para>
-<para>Sample output: <replaceable>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a
+<para>Sample output: <replaceable>Random Fortune: Never make any mistakes. -- Anonymous, in a mail discussion about to a
 kernel bug report</replaceable></para>
 </listitem>
 </varlistentry>
@@ -2937,7 +2937,7 @@ CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), H
 </variablelist>
 
 <para>All these scripts have predefind command aliases. In &konversation;'s settings dialog
-select <menuchoice><guimenu>Behaviour</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
+select <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
 to view, add, remove or edit command aliases.
 </para> 
 </sect1>
