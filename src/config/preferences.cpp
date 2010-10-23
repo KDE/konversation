@@ -64,7 +64,7 @@ Preferences::Preferences()
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
     server.setHost("chat.freenode.net");
-    server.setPort(8001);
+    server.setPort(6667);
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
