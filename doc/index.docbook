@@ -2830,7 +2830,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <para>This script when run will output a Random Fortune.</para>
 <para>Example: To output a random fortune to your current channel tab.</para>
 <para><userinput><command>/exec </command> <replaceable>fortune</replaceable></userinput></para>
-<para>Sample output: <replaceable>Random Fortune: Never make any mistakes. -- Anonymous, in a mail discussion about to a
+<para>Sample output: <replaceable>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a
 kernel bug report</replaceable></para>
 </listitem>
 </varlistentry>
