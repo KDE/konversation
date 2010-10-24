@@ -2936,7 +2936,7 @@ CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), H
 
 </variablelist>
 
-<para>All these scripts have predefind command aliases. In &konversation;'s settings dialog
+<para>All these scripts have predefined command aliases. In &konversation;'s settings dialog
 select <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
 to view, add, remove or edit command aliases.
 </para> 
@@ -3547,7 +3547,7 @@ How do I have &konversation; automatically mark me as away after a period of ina
 <answer><para>
 Auto-away messages are configured on a per-identity basis. To enable auto-away select <menuchoice><guimenu>Settings</guimenu><guimenuitem>Identities</guimenuitem></menuchoice>.
 Choose the identity for which you want to enable auto-away from the drop
-down list at the top of the dialog an go to the <guilabel>Away</guilabel> tab.
+down list at the top of the dialog and go to the <guilabel>Away</guilabel> tab.
 Check the <guilabel>Automatic Away</guilabel> option. 
 </para></answer>
 </qandaentry>
