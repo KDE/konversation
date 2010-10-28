@@ -102,7 +102,7 @@ void Application::implementRestart()
 {
     QStringList argumentList;
 
-#if KDE_IS_VERSION(4,5,60)
+#if KDE_IS_VERSION(4,5,61)
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
     argumentList = args->allArguments();
