@@ -109,13 +109,30 @@ QString ChatWindow::getURI(bool passNetwork)
     QString server;
     QString channel;
 
+    if (getServer()->getUseSSL())
+        protocol = "ircs://";
+    else
+        protocol = "irc://";
 
     if (getType() == Channel)
-        channel = getName();
+        channel = getName().replace(QRegExp("^#"), QString());
 
     if (passNetwork)
+    {
         server = getServer()->getDisplayName();
-    else
+
+        QUrl test(protocol+server);
+
+        // QUrl (ultimately used by the bookmark system, which is the
+        // primary consumer here) doesn't like spaces in hostnames as
+        // well as other things which are possible in user-chosen net-
+        // work names, so let's fall back to the hostname if we can't
+        // get the network name by it.
+        if (!test.isValid())
+            passNetwork = false;
+    }
+
+    if (!passNetwork)
     {
         server = getServer()->getServerName();
         port = ':'+QString::number(getServer()->getPort());
@@ -123,11 +140,6 @@ QString ChatWindow::getURI(bool passNetwork)
 
     if (server.contains(':')) // IPv6
         server = '['+server+']';
-
-    if (getServer()->getUseSSL())
-        protocol = "ircs://";
-    else
-        protocol = "irc://";
 
     url = protocol+server+port+'/'+channel;
 
