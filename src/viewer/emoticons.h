@@ -34,10 +34,8 @@ namespace Konversation {
         static KEmoticons *self();
 
         static QString parseEmoticons(const QString &text, KEmoticonsTheme::ParseMode mode = KEmoticonsTheme::DefaultParse, const QStringList &exclude = QStringList());
-        static QList<KEmoticonsTheme::Token> tokenize(const QString &message, KEmoticonsTheme::ParseMode mode = KEmoticonsTheme::DefaultParse);
-
     };
 
-} //END namespace Kopete
+} //END namespace Konversation
 
 #endif

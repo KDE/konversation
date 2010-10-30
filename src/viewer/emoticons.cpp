@@ -42,26 +42,4 @@ namespace Konversation
             return text;
         }
     }
-
-    QList<KEmoticonsTheme::Token> Emoticons::tokenize(const QString &message, KEmoticonsTheme::ParseMode mode)
-    {
-        // Disable emoticons support until IRCView supports them
-        if (/*Preferences::enableEmotIcons()*/ false)
-        {
-            QList<KEmoticonsTheme::Token> ret = Konversation::Emoticons::self()->theme().tokenize(message, mode);
-
-            if( !ret.size() )
-            {
-                ret.append( KEmoticonsTheme::Token( KEmoticonsTheme::Text, message ) );
-            }
-
-            return ret;
-        }
-        else
-        {
-            QList<KEmoticonsTheme::Token> result;
-            result.append( KEmoticonsTheme::Token( KEmoticonsTheme::Text, message ) );
-            return result;
-        }
-    }
 }
