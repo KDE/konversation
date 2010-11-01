@@ -107,6 +107,12 @@ class IdentDBus : public QObject
         void setReturnCommand(const QString &identity, const QString& command);
         QString getReturnCommand(const QString &identity);
 
+        void setAwayNickname(const QString& identity, const QString& nickname);
+        QString getAwayNickname(const QString& identity);
+
+        void setAwayMessage(const QString& identity, const QString& message);
+        QString getAwayMessage(const QString& identity);
+
         QStringList listIdentities();
 };
 

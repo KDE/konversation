@@ -371,4 +371,28 @@ QString IdentDBus::getReturnCommand(const QString &identity)
     return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getReturnCommand());
 }
 
+void IdentDBus::setAwayMessage(const QString &identity, const QString& message)
+{
+    const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
+    const_cast<Identity *>(i)->setAwayMessage(sterilizeUnicode(message));
+    static_cast<Application *>(kapp)->saveOptions(true);
+}
+
+QString IdentDBus::getAwayMessage(const QString &identity)
+{
+    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getAwayMessage());
+}
+
+void IdentDBus::setAwayNickname(const QString &identity, const QString& nickname)
+{
+    const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
+    const_cast<Identity *>(i)->setAwayNickname(sterilizeUnicode(nickname));
+    static_cast<Application *>(kapp)->saveOptions(true);
+}
+
+QString IdentDBus::getAwayNickname(const QString &identity)
+{
+    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getAwayNickname());
+}
+
 #include "dbus.moc"

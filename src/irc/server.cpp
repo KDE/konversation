@@ -3709,10 +3709,10 @@ void Server::setAway(bool away)
 
         emit awayState(true);
 
-        if (identity && !identity->getAwayNick().isEmpty() && identity->getAwayNick() != getNickname())
+        if (identity && !identity->getAwayNickname().isEmpty() && identity->getAwayNickname() != getNickname())
         {
             m_nonAwayNick = getNickname();
-            queue("NICK " + getIdentity()->getAwayNick());
+            queue("NICK " + getIdentity()->getAwayNickname());
         }
 
         appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."));
@@ -3732,10 +3732,10 @@ void Server::setAway(bool away)
 
         emit awayState(false);
 
-        if (!identity->getAwayNick().isEmpty() && !m_nonAwayNick.isEmpty())
+        if (!identity->getAwayNickname().isEmpty() && !m_nonAwayNick.isEmpty())
         {
             queue("NICK " + m_nonAwayNick);
-            m_nonAwayNick = "";
+            m_nonAwayNick.clear();
         }
 
         if (m_away)

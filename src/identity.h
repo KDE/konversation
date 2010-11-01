@@ -43,7 +43,7 @@ class Identity : public KShared
         void setIdent(const QString& ident);
         QString getIdent() const;
 
-        void setNickname(uint index,const QString& nick);
+        void setNickname(uint index,const QString& nickname);
         QString getNickname(int index) const;
 
         void setBot(const QString& bot);
@@ -87,8 +87,9 @@ class Identity : public KShared
 
         void setAwayMessage(const QString& message);
         QString getAwayMessage() const;
-        QString getAwayNick() const;
-        void setAwayNick(const QString& nick);
+
+        void setAwayNickname(const QString& nickname);
+        QString getAwayNickname() const;
 
         int id() const { return m_id; }
 
@@ -122,7 +123,7 @@ class Identity : public KShared
         QString m_shellCommand;
 
         QString awayMessage;
-        QString awayNick;
+        QString awayNickname;
 
     private:
         int m_id;

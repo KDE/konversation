@@ -87,7 +87,7 @@ void Identity::copy(const Identity& original)
     setRunAwayCommands(original.getRunAwayCommands());
     setAwayCommand(original.getAwayCommand());
     setAwayMessage(original.getAwayMessage());
-    setAwayNick(original.getAwayNick());
+    setAwayNickname(original.getAwayNickname());
     setReturnCommand(original.getReturnCommand());
     setAutomaticAway(original.getAutomaticAway());
     setAwayInactivity(original.getAwayInactivity());
@@ -170,5 +170,6 @@ void Identity::setCodecName(const QString &newCodecName)
 
 void Identity::setAwayMessage(const QString& message)   { awayMessage = message; }
 QString Identity::getAwayMessage() const                { return awayMessage; }
-void Identity::setAwayNick(const QString& nick)         { awayNick = nick; }
-QString Identity::getAwayNick() const                   { return awayNick; }
+
+void Identity::setAwayNickname(const QString& nickname) { awayNickname = nickname; }
+QString Identity::getAwayNickname() const               { return awayNickname; }
