@@ -668,7 +668,9 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        if (input.destination.isEmpty() || input.parameter.isEmpty())
+        if (input.destination.isEmpty())
+            return error(i18n("%1ME only works from a channel, query or DCC chat tab.", Preferences::self()->commandChar()));
+        else if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1ME text", Preferences::self()->commandChar()));
 
         QString command("PRIVMSGACTION \x01\x01");
@@ -735,18 +737,18 @@ namespace Konversation
         bool recipientIsAChannel = false;
 
         if (recipient.isEmpty())
-            return error(i18n("Error: You need to specify a recipient."));
+            return error(i18n("You need to specify a recipient."));
         else
             recipientIsAChannel = m_server->isAChannel(recipient);
 
         if (commandIsQuery && recipientIsAChannel)
-            return error(i18n("Error: You cannot open queries to channels."));
+            return error(i18n("You cannot open queries to channels."));
 
         if (message.trimmed().isEmpty())
         {
             // Empty result - we don't want to send any message to the server.
             if (!commandIsQuery)
-                return error(i18n("Error: You need to specify a message."));
+                return error(i18n("You need to specify a message."));
         }
         else
         {
