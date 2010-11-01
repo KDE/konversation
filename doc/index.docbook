@@ -2305,8 +2305,6 @@ command, see <link linkend="identity-away">Setting your identity</link>.
 <link linkend="query">Private conversation (query)</link> session.
 Each session is stored in a log file on disk.
 When you open the same session again, &konversation; appends to the log.
-The log grows to a limit you can set (see below).  When the limit is reached, the oldest
-messages are discarded.
 </para>
 
 <para>Whenever you open a session again, approximately the last 1024 characters
@@ -2364,8 +2362,9 @@ display.  Use this button to view the most recent messages.</para></callout>
 <callout arearefs="pt-logviewer-4"><para>Click to erase the log file display
 and the log file on disk.</para></callout>
 <callout arearefs="pt-logviewer-5"><para>Use this box to set the maximum size
-of the log file.  This setting does not take effect until you restart
-&konversation;.  Each log file may have a separate setting.</para></callout>
+of the scroll.  This setting does take effect only for newly opened log tabs.
+The last changed value of the scroll size will be used on &konversation;'s next start.  
+Each log file may have a separate setting.</para></callout>
 </calloutlist>
 </para>
 
@@ -2375,7 +2374,7 @@ of the log file.  This setting does not take effect until you restart
 	<guisubmenu>Configure &konversation;</guisubmenu>
 </menuchoice> on the main menu, then expand <guilabel>Behavior</guilabel> and
 click on <guilabel>Chat Window</guilabel>.  The <guilabel>Scrollback limit</guilabel>
-box appears on this screen.  If you set it to <guilabel>Unlimited</guilabel>,
+box appears on this screen.  If you set it to <guilabel>Unlimited</guilabel> (&ie; zero),
 messages are not discarded from the scroll.
 </para>
 
@@ -2578,31 +2577,6 @@ in the list, it is removed.  If it is not in the list, it is added.  If <userinp
 of watched &nickname;s.</para>
 </listitem>
 </varlistentry>
-
-<varlistentry>
-<term><userinput><command>/prefs </command>[<command>list</command>|<replaceable>group</replaceable>]  [<command>list</command>|<replaceable>option</replaceable>]  [<replaceable>value</replaceable>]</userinput></term>
-<listitem><para>Displays or sets &konversation; settings without using the Settings screen.
-If a parameter contains spaces, surround it with quotes.</para>
-
-<para>Examples:</para>
-
-<para><userinput><replaceable>/prefs list</replaceable></userinput></para>
-
-<para>lists the available option groups.</para>
-
-<para><userinput><replaceable>/prefs "General Options" list</replaceable></userinput></para>
-
-<para>lists the options available in group <userinput><replaceable>General Options</replaceable></userinput> along with their current values</para>
-
-<para><userinput><replaceable>/prefs "General Options" ShowTrayIcon</replaceable></userinput></para>
-
-<para>Displays the current value of the setting for displaying the &konversation; icon in the system tray.</para>
-
-<para><userinput><replaceable>/prefs "General Options" ShowTrayIcon false</replaceable></userinput></para>
-
-<para>Turns off the &konversation; icon in the system tray.</para>
-
-</listitem></varlistentry>
 
 <varlistentry>
 <term><userinput><command>/kick </command><replaceable>nick</replaceable> <replaceable>reason</replaceable></userinput></term>
