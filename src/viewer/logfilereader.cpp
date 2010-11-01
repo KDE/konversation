@@ -62,7 +62,6 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     getTextView()->setWhatsThis(i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
     updateView();
-    resize(Preferences::self()->logfileReaderSize());
     ircBox->ircView()->setFocusPolicy(Qt::StrongFocus);
     setFocusPolicy(Qt::StrongFocus);
     setFocusProxy(ircBox->ircView());
@@ -74,7 +73,6 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
 LogfileReader::~LogfileReader()
 {
-    Preferences::self()->setLogfileReaderSize(size());
     Preferences::self()->setLogfileBufferSize(sizeSpin->value());
 
     delete toolBar;

@@ -280,11 +280,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="LogfileReaderGeometry" type="Size" name="LogfileReaderSize">
-      <default code="true">QSize(400, 200)</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="MultilineEditGeometry" type="Size" name="MultilineEditSize">
       <default></default>
       <label></label>
