@@ -113,8 +113,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;
   w = new QWidget();
   confChatwindowBehaviour.setupUi(w);
-  confChatwindowBehaviour.kcfg_ScrollbackMax->setToolTip(i18np("Maximum scrollback limit: 1 line.",
-      "Maximum scrollback limit: %1 lines.", confChatwindowBehaviour.kcfg_ScrollbackMax->maximum()));
   confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines"));
   confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks"));
   confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds"));
