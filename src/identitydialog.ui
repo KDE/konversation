@@ -285,7 +285,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
        <item row="1" column="1">
         <widget class="QLineEdit" name="m_awayReasonEdit">
          <property name="whatsThis">
-          <string>This away message is used when no away message is entered manually as an argument to /away or /aaway.</string>
+          <string>The text you enter here is used as the away reason when no reason is entered as an argument to the &lt;b&gt;/away&lt;/b&gt; or &lt;b&gt;/aaway&lt;/b&gt; commands, and also when Global Away is toggled from the menu or via the keyboard shortcut.</string>
          </property>
         </widget>
        </item>
