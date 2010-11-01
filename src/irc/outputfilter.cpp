@@ -668,7 +668,9 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        if (input.destination.isEmpty() || input.parameter.isEmpty())
+        if (input.destination.isEmpty())
+            return error(i18n("%1ME only works from a channel, query or DCC chat tab.", Preferences::self()->commandChar()));
+        else if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1ME text", Preferences::self()->commandChar()));
 
         QString command("PRIVMSGACTION \x01\x01");
