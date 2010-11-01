@@ -39,6 +39,8 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     fileName = log;
 
+    setSpacing(0);
+
     toolBar = new KToolBar(this, true, true);
     toolBar->setObjectName("logfile_toolbar");
     toolBar->addAction(KIcon("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
