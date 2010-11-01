@@ -56,6 +56,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
     toolBar->addWidget(sizeSpin);
+    connect(sizeSpin, SIGNAL(valueChanged(int)), this, SLOT(storeBufferSize(int)));
 
     IRCViewBox* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());
@@ -73,8 +74,6 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
 LogfileReader::~LogfileReader()
 {
-    Preferences::self()->setLogfileBufferSize(sizeSpin->value());
-
     delete toolBar;
 }
 
@@ -95,6 +94,11 @@ bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
     }
 
     return false;
+}
+
+void LogfileReader::storeBufferSize(int kb)
+{
+    Preferences::self()->setLogfileBufferSize(kb);
 }
 
 void LogfileReader::updateView()

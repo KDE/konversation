@@ -41,6 +41,7 @@ class LogfileReader : public ChatWindow
 
     protected slots:
         void updateView();
+        void storeBufferSize(int kb);
         void clearLog();
         void saveLog();
         void closeLog();
