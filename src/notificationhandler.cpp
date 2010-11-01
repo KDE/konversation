@@ -254,7 +254,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcc_error"), i18n("An Error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::dccTransferDone(ChatWindow* chatWin, const QString& file)
@@ -346,7 +346,7 @@ namespace Konversation
             return;
 
         KNotification *ev=new KNotification("dccChat", m_mainWindow);
-        ev->setText(i18n("%1 started a dcc chat with you", nick));
+        ev->setText(i18n("%1 started a DCC chat with you", nick));
         ev->sendEvent();
 
     }
