@@ -100,13 +100,12 @@ class IdentDBus : public QObject
         void setKickReason(const QString &identity, const QString& reason);
         QString getKickReason(const QString &identity);
 
-        void setShowAwayMessage(const QString &identity, bool state);
-        bool getShowAwayMessage(const QString &identity);
-
-        void setAwayMessage(const QString &identity, const QString& message);
-        QString getAwayMessage(const QString &identity);
-        void setReturnMessage(const QString &identity, const QString& message);
-        QString getReturnMessage(const QString &identity);
+        void setRunAwayCommands(const QString &identity, bool run);
+        bool getRunAwayCommands(const QString &identity);
+        void setAwayCommand(const QString &identity, const QString& command);
+        QString getAwayCommand(const QString &identity);
+        void setReturnCommand(const QString &identity, const QString& command);
+        QString getReturnCommand(const QString &identity);
 
         QStringList listIdentities();
 };

@@ -410,9 +410,9 @@ void Application::readOptions()
             newIdentity->setPassword(cgIdentity.readEntry("Password"));
 
             newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
-            newIdentity->setShowAwayMessage(cgIdentity.readEntry("ShowAwayMessage", false));
-            newIdentity->setAwayMessage(cgIdentity.readEntry("AwayMessage"));
-            newIdentity->setReturnMessage(cgIdentity.readEntry("ReturnMessage"));
+            newIdentity->setRunAwayCommands(cgIdentity.readEntry("ShowAwayMessage", false));
+            newIdentity->setAwayCommand(cgIdentity.readEntry("AwayMessage"));
+            newIdentity->setReturnCommand(cgIdentity.readEntry("ReturnMessage"));
             newIdentity->setAutomaticAway(cgIdentity.readEntry("AutomaticAway", false));
             newIdentity->setAwayInactivity(cgIdentity.readEntry("AwayInactivity", 10));
             newIdentity->setAutomaticUnaway(cgIdentity.readEntry("AutomaticUnaway", false));
@@ -747,9 +747,9 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("Bot",identity->getBot());
         cgIdentity.writeEntry("Password",identity->getPassword());
         cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
-        cgIdentity.writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
-        cgIdentity.writeEntry("AwayMessage",identity->getAwayMessage());
-        cgIdentity.writeEntry("ReturnMessage",identity->getReturnMessage());
+        cgIdentity.writeEntry("ShowAwayMessage",identity->getRunAwayCommands());
+        cgIdentity.writeEntry("AwayMessage",identity->getAwayCommand());
+        cgIdentity.writeEntry("ReturnMessage",identity->getReturnCommand());
         cgIdentity.writeEntry("AutomaticAway", identity->getAutomaticAway());
         cgIdentity.writeEntry("AwayInactivity", identity->getAwayInactivity());
         cgIdentity.writeEntry("AutomaticUnaway", identity->getAutomaticUnaway());

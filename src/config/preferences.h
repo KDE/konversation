@@ -104,25 +104,7 @@ class Preferences : public PreferencesBase
         static void setIdentityList(const IdentityList& list);
         static const IdentityPtr identityByName(const QString& name);
         static const IdentityPtr identityById(int id);
-        static const QString ident();
-        static void setIdent(const QString &ident);
-        static const QString realName();
-        static void setRealName(const QString &name);
-        static const QString partReason();
-        static void setPartReason(const QString &newReason);
-        static const QString kickReason();
-        static void setKickReason(const QString &newReason);
-        static void setShowAwayMessage(bool state);
-        static /* const */ bool showAwayMessage();
-        static const QString awayMessage();
-        static void setAwayMessage(const QString &newMessage);
-        static const QString unAwayMessage();
-        static void setUnAwayMessage(const QString &newMessage);
         static const QString defaultNicknameSortingOrder();
-        static const QString nickname(int index);
-        static const QStringList nicknameList();
-        static void setNickname(int index,const QString &newName);
-        static void setNicknameList(const QStringList &newList);
 
         static bool dialogFlag(const QString& flagName);
         static void setDialogFlag(const QString& flagName,bool state);

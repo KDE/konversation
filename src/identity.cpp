@@ -65,9 +65,7 @@ void Identity::init()
 
     setAwayReason("Gone away for now");
 
-    setShowAwayMessage(false);
-    setAwayMessage("/me is away: %s");
-    setReturnMessage("/me is back.");
+    setRunAwayCommands(false);
 
     setAutomaticAway(false);
     setAwayInactivity(10);
@@ -87,10 +85,10 @@ void Identity::copy(const Identity& original)
     setKickReason(original.getKickReason());
     setAwayReason(original.getAwayReason());
     setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
-    setShowAwayMessage(original.getShowAwayMessage());
-    setAwayMessage(original.getAwayMessage());
+    setRunAwayCommands(original.getRunAwayCommands());
+    setAwayCommand(original.getAwayCommand());
     setAwayNick(original.getAwayNick());
-    setReturnMessage(original.getReturnMessage());
+    setReturnCommand(original.getReturnCommand());
     setAutomaticAway(original.getAutomaticAway());
     setAwayInactivity(original.getAwayInactivity());
     setAutomaticUnaway(original.getAutomaticUnaway());
@@ -131,13 +129,13 @@ QString Identity::getAwayReason() const                 { return awayReason; }
 
 void Identity::setInsertRememberLineOnAway(bool state) { insertRememberLineOnAway = state; }
 bool Identity::getInsertRememberLineOnAway() const { return insertRememberLineOnAway; }
-void Identity::setShowAwayMessage(bool state)           { showAwayMessages=state; }
-bool Identity::getShowAwayMessage() const               { return showAwayMessages; }
 
-void Identity::setAwayMessage(const QString& message)   { awayMessage=message; }
-QString Identity::getAwayMessage() const                { return awayMessage; }
-void Identity::setReturnMessage(const QString& message) { returnMessage=message; }
-QString Identity::getReturnMessage() const              { return returnMessage; }
+void Identity::setRunAwayCommands(bool run)             { runAwayCommands = run; }
+bool Identity::getRunAwayCommands() const               { return runAwayCommands; }
+void Identity::setAwayCommand(const QString& command)   { awayCommand = command; }
+QString Identity::getAwayCommand() const                { return awayCommand; }
+void Identity::setReturnCommand(const QString& command) { returnCommand = command; }
+QString Identity::getReturnCommand() const              { return returnCommand; }
 
 void Identity::setAutomaticAway(bool automaticAway)     { m_automaticAway = automaticAway; }
 bool Identity::getAutomaticAway() const                 { return m_automaticAway; }

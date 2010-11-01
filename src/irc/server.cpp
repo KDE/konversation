@@ -3717,9 +3717,9 @@ void Server::setAway(bool away)
 
         appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."));
 
-        if (identity && identity->getShowAwayMessage())
+        if (identity && identity->getRunAwayCommands())
         {
-            QString message = identity->getAwayMessage();
+            QString message = identity->getAwayCommand();
             sendToAllChannels(message.replace(QRegExp("%s", Qt::CaseInsensitive), m_awayReason));
         }
 
@@ -3742,9 +3742,9 @@ void Server::setAway(bool away)
         {
             appendMessageToFrontmost(i18n("Away"), i18n("You are no longer marked as being away."));
 
-            if (identity && identity->getShowAwayMessage())
+            if (identity && identity->getRunAwayCommands())
             {
-                QString message = identity->getReturnMessage();
+                QString message = identity->getReturnCommand();
                 sendToAllChannels(message.replace(QRegExp("%t", Qt::CaseInsensitive), awayTime()));
             }
         }

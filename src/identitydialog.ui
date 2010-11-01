@@ -380,7 +380,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
         </widget>
        </item>
        <item row="4" column="0" colspan="2">
-        <widget class="QGroupBox" name="awayMessageGroup">
+        <widget class="QGroupBox" name="awayCommandsGroup">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -388,10 +388,10 @@ Since nicknames must be unique across an entire IRC network, your desired name m
           </sizepolicy>
          </property>
          <property name="whatsThis">
-          <string>If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. &lt;b&gt;%s&lt;/b&gt; is replaced with &lt;b&gt;msg&lt;/b&gt;. Whenever you perform an &lt;b&gt;/away&lt;/b&gt; command, the Return message will be displayed in all channels joined with this Identity.</string>
+          <string>If you check this box, Konversation will automatically run the away command in all channel tabs using this Identity. &lt;b&gt;%s&lt;/b&gt; in the away command is replaced with the away message. When you return, it will run the return command. &lt;b&gt;%t&lt;/b&gt; in the return command is replaced with the length of time you were away.</string>
          </property>
          <property name="title">
-          <string>Away Messages</string>
+          <string>Away Commands</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -403,7 +403,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
           <item row="0" column="0">
            <widget class="QLabel" name="awayLabel">
             <property name="text">
-             <string>Away &amp;message:</string>
+             <string>Away command:</string>
             </property>
             <property name="buddy">
              <cstring>m_awayEdit</cstring>
@@ -416,7 +416,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
           <item row="1" column="0">
            <widget class="QLabel" name="unAwayLabel">
             <property name="text">
-             <string>Re&amp;turn message:</string>
+             <string>Return command:</string>
             </property>
             <property name="buddy">
              <cstring>m_unAwayEdit</cstring>

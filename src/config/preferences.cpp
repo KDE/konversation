@@ -412,34 +412,8 @@ QStringList Preferences::defaultAliasList()
     return aliasList;
 }
 
-
-const QString Preferences::realName() { return self()->mIdentityList[0]->getRealName(); }
-void Preferences::setRealName(const QString &name) { self()->mIdentityList[0]->setRealName(name); }
-
-const QString Preferences::ident() { return self()->mIdentityList[0]->getIdent(); }
-void Preferences::setIdent(const QString &ident) { self()->mIdentityList[0]->setIdent(ident); }
-
-const QString Preferences::partReason() { return self()->mIdentityList[0]->getPartReason(); }
-void Preferences::setPartReason(const QString &newReason) { self()->mIdentityList[0]->setPartReason(newReason); }
-
-const QString Preferences::kickReason() { return self()->mIdentityList[0]->getKickReason(); }
-void Preferences::setKickReason(const QString &newReason) { self()->mIdentityList[0]->setKickReason(newReason); }
-
-bool Preferences::showAwayMessage() { return self()->mIdentityList[0]->getShowAwayMessage(); }
-void Preferences::setShowAwayMessage(bool state) { self()->mIdentityList[0]->setShowAwayMessage(state); }
-
-const QString Preferences::awayMessage() { return self()->mIdentityList[0]->getAwayMessage(); }
-void Preferences::setAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setAwayMessage(newMessage); }
-const QString Preferences::unAwayMessage() { return self()->mIdentityList[0]->getReturnMessage(); }
-void Preferences::setUnAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setReturnMessage(newMessage); }
-
 void Preferences::clearIgnoreList() { qDeleteAll(self()->mIgnoreList); self()->mIgnoreList.clear(); }
 const QList<Ignore*> Preferences::ignoreList() { return self()->mIgnoreList; }
-
-const QString Preferences::nickname(int index) { return self()->mIdentityList[0]->getNickname(index); }
-const QStringList Preferences::nicknameList() { return self()->mIdentityList[0]->getNicknameList(); }
-void Preferences::setNickname(int index,const QString &newName) { self()->mIdentityList[0]->setNickname(index,newName); }
-void Preferences::setNicknameList(const QStringList &newList) { self()->mIdentityList[0]->setNicknameList(newList); }
 
 void Preferences::setShowTrayIcon(bool state)
 {

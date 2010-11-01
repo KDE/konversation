@@ -66,13 +66,13 @@ class Identity : public KShared
 
         void setInsertRememberLineOnAway(bool state);
         bool getInsertRememberLineOnAway() const;
-        void setShowAwayMessage(bool state);
-        bool getShowAwayMessage() const;
 
-        void setAwayMessage(const QString& message);
-        QString getAwayMessage() const;
-        void setReturnMessage(const QString& message);
-        QString getReturnMessage() const;
+        void setRunAwayCommands(bool run);
+        bool getRunAwayCommands() const;
+        void setAwayCommand(const QString& command);
+        QString getAwayCommand() const;
+        void setReturnCommand(const QString& command);
+        QString getReturnCommand() const;
 
         void setAutomaticAway(bool automaticAway);
         bool getAutomaticAway() const;
@@ -110,9 +110,9 @@ class Identity : public KShared
         QString awayReason;
 
         bool insertRememberLineOnAway;
-        bool showAwayMessages;
-        QString awayMessage;
-        QString returnMessage;
+        bool runAwayCommands;
+        QString awayCommand;
+        QString returnCommand;
 
         bool m_automaticAway;
         int m_awayInactivity;

@@ -52,7 +52,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
     nickLabel->setWhatsThis(nickWT);
-    nickInput = new KLineEdit(Preferences::nickname(0), page);
+    nickInput = new KLineEdit(Preferences::identityById(0)->getNickname(0), page);
     nickInput->setWhatsThis(nickWT);
     nickLabel->setBuddy(nickInput);
     nickLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
