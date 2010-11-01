@@ -74,7 +74,6 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
 LogfileReader::~LogfileReader()
 {
-    delete toolBar;
 }
 
 bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
