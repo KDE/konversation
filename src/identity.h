@@ -61,6 +61,9 @@ class Identity : public KShared
         void setKickReason(const QString& reason);
         QString getKickReason() const;
 
+        void setAwayReason(const QString& reason);
+        QString getAwayReason() const;
+
         void setInsertRememberLineOnAway(bool state);
         bool getInsertRememberLineOnAway() const;
         void setShowAwayMessage(bool state);
@@ -104,6 +107,7 @@ class Identity : public KShared
         QString partReason;
         QString quitReason;
         QString kickReason;
+        QString awayReason;
 
         bool insertRememberLineOnAway;
         bool showAwayMessages;
