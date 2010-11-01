@@ -89,7 +89,7 @@ namespace Konversation
         m_passwordEdit->setText(m_currentIdentity->getPassword());
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
-        m_awayReasonEdit->setText(m_currentIdentity->getAwayReason());
+        m_awayMessageEdit->setText(m_currentIdentity->getAwayMessage());
         m_awayNickEdit->setText(m_currentIdentity->getAwayNick());
         awayCommandsGroup->setChecked(m_currentIdentity->getRunAwayCommands());
         m_awayEdit->setText(m_currentIdentity->getAwayCommand());
@@ -137,7 +137,7 @@ namespace Konversation
         m_currentIdentity->setPassword(m_passwordEdit->text());
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
-        m_currentIdentity->setAwayReason(m_awayReasonEdit->text());
+        m_currentIdentity->setAwayMessage(m_awayMessageEdit->text());
         m_currentIdentity->setAwayNick(m_awayNickEdit->text());
         m_currentIdentity->setRunAwayCommands(awayCommandsGroup->isChecked());
         m_currentIdentity->setAwayCommand(m_awayEdit->text());

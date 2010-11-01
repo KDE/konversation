@@ -61,9 +61,6 @@ class Identity : public KShared
         void setKickReason(const QString& reason);
         QString getKickReason() const;
 
-        void setAwayReason(const QString& reason);
-        QString getAwayReason() const;
-
         void setInsertRememberLineOnAway(bool state);
         bool getInsertRememberLineOnAway() const;
 
@@ -88,8 +85,10 @@ class Identity : public KShared
         QString getCodecName() const;
         QTextCodec* getCodec() const;
 
+        void setAwayMessage(const QString& message);
+        QString getAwayMessage() const;
         QString getAwayNick() const;
-        void setAwayNick(const QString& n);
+        void setAwayNick(const QString& nick);
 
         int id() const { return m_id; }
 
@@ -107,7 +106,6 @@ class Identity : public KShared
         QString partReason;
         QString quitReason;
         QString kickReason;
-        QString awayReason;
 
         bool insertRememberLineOnAway;
         bool runAwayCommands;
@@ -123,6 +121,7 @@ class Identity : public KShared
 
         QString m_shellCommand;
 
+        QString awayMessage;
         QString awayNick;
 
     private:

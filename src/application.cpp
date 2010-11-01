@@ -425,7 +425,7 @@ void Application::readOptions()
 
             newIdentity->setCodecName(cgIdentity.readEntry("Codec"));
 
-            newIdentity->setAwayReason(cgIdentity.readEntry("AwaYreason"));
+            newIdentity->setAwayMessage(cgIdentity.readEntry("AwayReason"));
             newIdentity->setAwayNick(cgIdentity.readEntry("AwayNick"));
 
             Preferences::addIdentity(newIdentity);
@@ -758,7 +758,7 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("KickReason",identity->getKickReason());
         cgIdentity.writeEntry("PreShellCommand",identity->getShellCommand());
         cgIdentity.writeEntry("Codec",identity->getCodecName());
-        cgIdentity.writeEntry("AwayReason",identity->getAwayReason());
+        cgIdentity.writeEntry("AwayReason",identity->getAwayMessage());
         cgIdentity.writeEntry("AwayNick", identity->getAwayNick());
         index++;
     } // endfor

@@ -63,7 +63,7 @@ void Identity::init()
     setPartReason("Konversation terminated!");
     setKickReason("User terminated!");
 
-    setAwayReason("Gone away for now");
+    setAwayMessage("Gone away for now");
 
     setRunAwayCommands(false);
 
@@ -83,10 +83,10 @@ void Identity::copy(const Identity& original)
     setQuitReason(original.getQuitReason());
     setPartReason(original.getPartReason());
     setKickReason(original.getKickReason());
-    setAwayReason(original.getAwayReason());
     setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
     setRunAwayCommands(original.getRunAwayCommands());
     setAwayCommand(original.getAwayCommand());
+    setAwayMessage(original.getAwayMessage());
     setAwayNick(original.getAwayNick());
     setReturnCommand(original.getReturnCommand());
     setAutomaticAway(original.getAutomaticAway());
@@ -123,9 +123,6 @@ void Identity::setPartReason(const QString& reason)     { partReason=reason; }
 QString Identity::getPartReason() const                 { return partReason; }
 void Identity::setKickReason(const QString& reason)     { kickReason=reason; }
 QString Identity::getKickReason() const                 { return kickReason; }
-
-void Identity::setAwayReason(const QString& reason)     { awayReason=reason; }
-QString Identity::getAwayReason() const                 { return awayReason; }
 
 void Identity::setInsertRememberLineOnAway(bool state) { insertRememberLineOnAway = state; }
 bool Identity::getInsertRememberLineOnAway() const { return insertRememberLineOnAway; }
@@ -171,5 +168,7 @@ void Identity::setCodecName(const QString &newCodecName)
     m_codec=Konversation::IRCCharsets::self()->codecForName(codecName);
 }
 
-QString Identity::getAwayNick() const { return awayNick; }
-void Identity::setAwayNick(const QString& n) { awayNick = n; }
+void Identity::setAwayMessage(const QString& message)   { awayMessage = message; }
+QString Identity::getAwayMessage() const                { return awayMessage; }
+void Identity::setAwayNick(const QString& nick)         { awayNick = nick; }
+QString Identity::getAwayNick() const                   { return awayNick; }

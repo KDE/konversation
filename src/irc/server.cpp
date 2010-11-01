@@ -3682,7 +3682,7 @@ void Server::requestAway(const QString& reason)
     if (awayReason.isEmpty())
     {
         if (identity)
-            awayReason = identity->getAwayReason();
+            awayReason = identity->getAwayMessage();
         else
             awayReason = i18n("Gone away for now");
     }
