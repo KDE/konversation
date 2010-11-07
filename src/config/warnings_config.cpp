@@ -205,10 +205,11 @@ void Warnings_Config::loadSettings()
     for (int i = 0; i < definitionsCount; ++i)
     {
         const QLatin1String flagName(warningDialogDefinitions[i].flagName);
-        const QLatin1String message(warningDialogDefinitions[i].message);
+        const char * const message(warningDialogDefinitions[i].message);
+        const char * const ctx(warningDialogDefinitions[i].context);
 
         QTreeWidgetItem *item = new QTreeWidgetItem(dialogListView);
-        item->setText(0, message);
+        item->setText(0, i18nc(ctx, message));
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setData(0, WarningNameRole, flagName);
 
