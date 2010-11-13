@@ -502,8 +502,8 @@ void Channel::completeNick()
         pos = oldPos;
     }
 
-    // If the cursor is at beginning of line, insert last completion
-    if(pos == 0 && !channelInput->lastCompletion().isEmpty())
+    // If the cursor is at beginning of line, insert last completion if the nick is still around
+    if(pos == 0 && !channelInput->lastCompletion().isEmpty() && nicknameList.containsNick(channelInput->lastCompletion()))
     {
         QString addStart(Preferences::self()->nickCompleteSuffixStart());
         newLine = channelInput->lastCompletion() + addStart;
