@@ -68,13 +68,29 @@ NickListView::NickListView(QWidget* parent, Channel *chan) : QTreeWidget(parent)
     setRootIsDecorated(false); // single level view
     setColumnCount(2);
 
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setAllColumnsShowFocus(true);
+
     // These two below must be called after setColumnCount().
     header()->setSortIndicator(Nick::NicknameColumn, Qt::AscendingOrder);
     setSortingEnabled(true);
+
+    header()->hide();
+    header()->setStretchLastSection(false);
+
+    connect(selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+        this, SLOT(syncSelectionToCurrent(const QModelIndex&)));
 }
 
 NickListView::~NickListView()
 {
+}
+
+void NickListView::syncSelectionToCurrent(const QModelIndex& index)
+{
+    if (index.isValid())
+        selectionModel()->select(index, QItemSelectionModel::Rows | QItemSelectionModel::ClearAndSelect);
 }
 
 int NickListView::getMinimumRowHeight()

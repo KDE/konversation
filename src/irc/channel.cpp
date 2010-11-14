@@ -204,13 +204,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nickListButtons->setSpacing(spacing());
 
     nicknameListView=new NickListView(nickListButtons, this);
-    nicknameListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    nicknameListView->setAllColumnsShowFocus(true);
-
-    nicknameListView->header()->hide();
-
-    nicknameListView->header()->setStretchLastSection(false);
-
     nicknameListView->installEventFilter(this);
 
     // initialize buttons grid, will be set up in updateQuickButtons
