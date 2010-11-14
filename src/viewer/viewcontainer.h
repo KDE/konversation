@@ -133,6 +133,8 @@ class ViewContainer : public QObject
         void insertChar(const QChar& chr);
         void insertIRCColor();
 
+        void focusInputBox();
+
         void clearViewLines();
         void insertRememberLine();
         void cancelRememberLine();

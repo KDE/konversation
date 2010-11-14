@@ -470,6 +470,13 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("insert_character", action);
 
     action=new KAction(this);
+    action->setText(i18n("Focus Input Box"));
+    action->setShortcut(QKeySequence(Qt::Key_Escape));
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(focusInputBox()));
+    actionCollection()->addAction("focus_input_box", action);
+
+    action=new KAction(this);
     action->setText(i18n("Close &All Open Queries"));
     action->setShortcut(KShortcut("F11"));
     action->setEnabled(false);

@@ -543,6 +543,9 @@ void ViewContainer::updateViewActions(int index)
             action = actionCollection()->action("irc_colors");
             if (action) action->setEnabled(insertSupported);
 
+            action = actionCollection()->action("focus_input_box");
+            if (action) action->setEnabled(insertSupported);
+
             action = actionCollection()->action("clear_lines");
             if (action) action->setEnabled(insertSupported && view->getTextView()->hasLines());
 
@@ -2013,6 +2016,12 @@ void ViewContainer::insertIRCColor()
             m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);
     }
     delete dlg;
+}
+
+void ViewContainer::focusInputBox()
+{
+    if (m_frontView && m_frontView->isInsertSupported())
+        m_frontView->adjustFocus();
 }
 
 void ViewContainer::clearViewLines()
