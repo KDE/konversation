@@ -278,6 +278,9 @@ Changes since 1.3.1:
   so for example when Global Away is enabled using the keyboard shortcut.
 * "Away Messages" on the "Away" tab of the Identities dialog has been re-
   named to "Away Commands".
+* Pressing the Tab key when the cursor is at the start of the input box
+  now checks whether the remembered nickname is currently attending the
+  channel before repeating the last successful completion.
 * Added a "Focus Input Box" action that puts keyboard focus on the input
   box. The default shortcut is the Escape key.
 
