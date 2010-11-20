@@ -22,6 +22,8 @@
      the konvi gods
  */
 
+class QShortcut;
+
 class KMenu;
 class KIcon;
 
@@ -41,6 +43,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         bool caseSensitive() const;
         bool wholeWords() const;
         bool fromCursor() const;
+
+        bool eventFilter(QObject* object, QEvent* e);
 
     protected:
         virtual void showEvent(QShowEvent* e);
@@ -78,6 +82,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         bool m_matchCase;
         bool m_wholeWords;
         bool m_fromCursor;
+
+        QShortcut* m_closeShortcut;
 };
 
 #endif                                            /* SEARCHBAR_H */

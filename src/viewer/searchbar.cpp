@@ -28,6 +28,12 @@ SearchBar::SearchBar(QWidget* parent)
 {
     setupUi(this);
 
+    m_searchEdit->installEventFilter(this);
+    m_closeButton->installEventFilter(this);
+    m_findNextButton->installEventFilter(this);
+    m_findPreviousButton->installEventFilter(this);
+    m_optionsButton->installEventFilter(this);
+
     m_searchFoward = false;
     m_matchCase = false;
     m_wholeWords = false;
@@ -44,7 +50,8 @@ SearchBar::SearchBar(QWidget* parent)
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
 
-    new QShortcut(QKeySequence(Qt::Key_Escape), this, SLOT(hide()));
+    m_closeShortcut = new QShortcut(QKeySequence(Qt::Key_Escape), this, SLOT(hide()));
+    m_closeShortcut->setEnabled(false);
 
     connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
     connect(m_searchEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
@@ -74,6 +81,24 @@ SearchBar::SearchBar(QWidget* parent)
 
 SearchBar::~SearchBar()
 {
+}
+
+bool SearchBar::eventFilter(QObject* object, QEvent* e)
+{
+    Q_UNUSED(object);
+
+    if (e->type() == QEvent::FocusIn)
+    {
+        static_cast<Application*>(kapp)->getMainWindow()->actionCollection()->action("focus_input_box")->setEnabled(false);
+        m_closeShortcut->setEnabled(true);
+    }
+    else if (e->type() == QEvent::FocusOut)
+    {
+        static_cast<Application*>(kapp)->getMainWindow()->actionCollection()->action("focus_input_box")->setEnabled(true);
+        m_closeShortcut->setEnabled(false);
+    }
+
+    return false;
 }
 
 void SearchBar::showEvent(QShowEvent *e)
