@@ -14,6 +14,7 @@
 
 #include "application.h"
 
+#include <QFocusEvent>
 #include <QTimer>
 #include <QShortcut>
 
@@ -28,11 +29,8 @@ SearchBar::SearchBar(QWidget* parent)
 {
     setupUi(this);
 
-    m_searchEdit->installEventFilter(this);
-    m_closeButton->installEventFilter(this);
-    m_findNextButton->installEventFilter(this);
-    m_findPreviousButton->installEventFilter(this);
-    m_optionsButton->installEventFilter(this);
+    foreach(QWidget* widget, findChildren<QWidget*>())
+        widget->installEventFilter(this);
 
     m_searchFoward = false;
     m_matchCase = false;
@@ -87,15 +85,18 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
 {
     Q_UNUSED(object);
 
-    if (e->type() == QEvent::FocusIn)
+    QFocusEvent* focusEvent = dynamic_cast<QFocusEvent*>(e);
+
+    if (focusEvent)
     {
-        static_cast<Application*>(kapp)->getMainWindow()->actionCollection()->action("focus_input_box")->setEnabled(false);
-        m_closeShortcut->setEnabled(true);
-    }
-    else if (e->type() == QEvent::FocusOut)
-    {
-        static_cast<Application*>(kapp)->getMainWindow()->actionCollection()->action("focus_input_box")->setEnabled(true);
-        m_closeShortcut->setEnabled(false);
+        Application* konvApp = static_cast<Application*>(kapp);
+        KAction* action = static_cast<KAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
+
+        if (action->shortcut().contains(QKeySequence(Qt::Key_Escape)))
+        {
+            action->setEnabled(focusEvent->lostFocus());
+            m_closeShortcut->setEnabled(focusEvent->gotFocus());
+        }
     }
 
     return false;
