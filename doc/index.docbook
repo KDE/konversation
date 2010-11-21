@@ -3507,7 +3507,7 @@ The
 <menuchoice>
 <guisubmenu>Window</guisubmenu>
 <guisubmenu>Channel List</guisubmenu>
-</menuchoice>  menu entry will be greyed-out if a non-channel tab, &eg; <guilabel>Watched Nicks Online</guilabel>, is currently being viewed.
+</menuchoice>  menu entry will be grayed-out if a non-channel tab, &eg; <guilabel>Watched Nicks Online</guilabel>, is currently being viewed.
 To make it selectable again go back to a channel tab or the server tab.
 </para>
 </answer>
