@@ -131,7 +131,7 @@ namespace Konversation
         {
             if (j->error())
             {
-                error = i18n("Failed to download %1 : %2",location.prettyUrl(),j->errorString());
+                error = i18n("Failed to download %1: %2",location.prettyUrl(),j->errorString());
                 kDebug() << error << endl;
                 return;
             }
