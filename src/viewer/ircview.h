@@ -218,7 +218,7 @@ class IRCView : public KTextBrowser
     protected:
         void openLink(const QUrl &url);
 
-        QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL, bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = 0);
+        QString filter(const QString& line, const QString& defaultColor, const QString& who=QString(), bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = 0);
 
         void replaceDecoration(QString& line, char decoration, char replacement);
 
