@@ -93,7 +93,7 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
 
     d->manager = new KConfigDialogManager(this, config);
     setupManagerConnections(d->manager);
-
+    setHelp("konversation");
     enableButton(Apply, false);
 }
 
