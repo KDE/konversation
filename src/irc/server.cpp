@@ -3677,15 +3677,15 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
 void Server::requestAway(const QString& reason)
 {
     QString awayReason = reason;
+
     IdentityPtr identity = getIdentity();
 
+    if (awayReason.isEmpty() && identity)
+        awayReason = identity->getAwayMessage();
+
+    // Fallback in case the identity has no away message set.
     if (awayReason.isEmpty())
-    {
-        if (identity)
-            awayReason = identity->getAwayMessage();
-        else
-            awayReason = i18n("Gone away for now");
-    }
+        awayReason = i18n("Gone away for now");
 
     setAwayReason(awayReason);
 
