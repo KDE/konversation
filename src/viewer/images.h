@@ -44,7 +44,7 @@ class Images : public QObject
         Images();
         virtual ~Images();
 
-        QIcon getLed(QColor col,bool state = true);
+        QIcon getLed(const QColor& col, bool state = true);
 
         QIcon getServerLed(bool state);
         QIcon getSystemLed(bool state);

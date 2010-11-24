@@ -130,7 +130,7 @@ void IRCQueue::sent(int, int e, IRCQueue *wq)
     }
 }
 
-void IRCQueue::enqueue(QString line)
+void IRCQueue::enqueue(const QString& line)
 {
     m_pending.append(IRCMessage(line));
     if (!m_timer->isActive())

@@ -35,7 +35,7 @@ class ViewTree : public K3ListView
         void selectFirstView(bool select);
         void addView(const QString& name, ChatWindow* view, const QIcon &iconset, bool select = false, ChatWindow* afterView = 0);
         void setViewName(ChatWindow* view, const QString& name);
-        void setViewColor(ChatWindow* view, QColor color);
+        void setViewColor(ChatWindow* view, const QColor& color);
         void setViewIcon(ChatWindow* view, const QIcon &iconset);
 
         void moveViewUp(ChatWindow* view);
@@ -93,7 +93,7 @@ class ViewTree : public K3ListView
         bool canMoveItemUp(ViewTreeItem* item);
         bool canMoveItemDown(ViewTreeItem* item);
 
-        bool isAboveIcon(QPoint point, ViewTreeItem* item);
+        bool isAboveIcon(const QPoint& point, ViewTreeItem* item);
         void hideCloseButtons(ViewTreeItem* exception = 0);
 
         ViewTreeItem* m_separator;

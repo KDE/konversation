@@ -133,7 +133,7 @@ class Server : public QObject
         int getModesCount();
 
         // extended user modes support
-        void setChanModes(QString);                 //grab modes types from RPL_ISUPPORT CHANMODES
+        void setChanModes(const QString&);                 //grab modes types from RPL_ISUPPORT CHANMODES
         QString banAddressListModes() { return m_banAddressListModes; }     // aka "TYPE A" modes http://tools.ietf.org/html/draft-brocklesby-irc-isupport-03#section-3.3
 
         void setPrefixes(const QString &modes, const QString& prefixes);

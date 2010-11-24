@@ -64,7 +64,7 @@ bool nickLessThan(const Nick* nick1, const Nick* nick2)
 
 using Konversation::ChannelOptionsDialog;
 
-Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
+Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
 {
     // init variables
 

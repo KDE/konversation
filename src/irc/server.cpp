@@ -523,7 +523,7 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
     m_serverNickPrefixes = prefixes;
 }
 
-void Server::setChanModes(QString modes)
+void Server::setChanModes(const QString& modes)
 {
     QStringList abcd = modes.split(',');
     m_banAddressListModes = abcd.value(0);

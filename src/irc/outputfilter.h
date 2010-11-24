@@ -88,7 +88,7 @@ namespace Konversation
             // dcc chat
             OutputFilterResult rejectDccChat(const QString& partnerNick, const QString& extension);
             OutputFilterResult requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort);
-            OutputFilterResult passiveChatRequest(const QString& recipient, const QString extension, const QString& address, const QString& token);
+            OutputFilterResult passiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
             OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
 
             static bool replaceAliases(QString& line);

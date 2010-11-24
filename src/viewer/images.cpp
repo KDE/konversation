@@ -238,7 +238,7 @@ void Images::initializeNickIcons()
     */
 }
 
-QIcon Images::getLed(QColor col,bool state)
+QIcon Images::getLed(const QColor& col,bool state)
 {
     return QIcon(new LedIconEngine(col, state));
 }

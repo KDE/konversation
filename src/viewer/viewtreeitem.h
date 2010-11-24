@@ -47,7 +47,7 @@ class ViewTreeItem : public Q3ListViewItem
         ChatWindow::WindowType getViewType() const;
         void setViewType(ChatWindow::WindowType);
 
-        void setColor(QColor color);
+        void setColor(const QColor& color);
         QColor getColor() const;
 
         void setIcon(const QPixmap& pm);

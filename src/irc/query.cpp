@@ -30,7 +30,7 @@
 
 using namespace Konversation;
 
-Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
+Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
 {
     name=_name; // need the name a little bit earlier for setServer
     // don't setName here! It will break logfiles!

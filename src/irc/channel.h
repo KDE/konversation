@@ -72,7 +72,7 @@ class Channel : public ChatWindow
     friend class Nick;
 
     public:
-        explicit Channel(QWidget* parent, QString name);
+        explicit Channel(QWidget* parent, const QString& name);
         ~Channel();
 //META
         virtual bool canBeFrontView();

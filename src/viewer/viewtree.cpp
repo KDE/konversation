@@ -233,7 +233,7 @@ void ViewTree::setViewName(ChatWindow* view, const QString& name)
 }
 
 
-void ViewTree::setViewColor(ChatWindow* view, QColor color)
+void ViewTree::setViewColor(ChatWindow* view, const QColor& color)
 {
     ViewTreeItem* item = getItemForView(view);
 
@@ -473,7 +473,7 @@ void ViewTree::enableCloseButton()
     if (m_closeButtonItem) m_closeButtonItem->setCloseButtonEnabled();
 }
 
-bool ViewTree::isAboveIcon(QPoint point, ViewTreeItem* item)
+bool ViewTree::isAboveIcon(const QPoint& point, ViewTreeItem* item)
 {
     QPoint inItem = point - itemRect(item).topLeft();
 

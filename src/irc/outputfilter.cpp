@@ -1154,7 +1154,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString extension, const QString& address, const QString& token)
+    OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT " +

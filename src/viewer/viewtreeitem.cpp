@@ -154,7 +154,7 @@ ChatWindow::WindowType ViewTreeItem::getViewType() const
     return m_viewType;
 }
 
-void ViewTreeItem::setColor(QColor color)
+void ViewTreeItem::setColor(const QColor& color)
 {
     if (color != m_color)
     {

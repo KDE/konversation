@@ -40,7 +40,7 @@ class Query : public ChatWindow
     Q_OBJECT
 
     public:
-        explicit Query(QWidget* parent, QString name);
+        explicit Query(QWidget* parent, const QString& _name);
         virtual void setServer(Server* newServer);
 
         ~Query();
