@@ -2200,7 +2200,7 @@ use Mozilla instead.
 
  <para>
 <screenshot>
-<screeninfo>The Web Browser screen</screeninfo>
+<screeninfo>The General screen</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -2213,7 +2213,7 @@ use Mozilla instead.
 			</imageobject>
 		</imageobjectco>
 		<textobject>
-			<phrase>The Web Browser screen</phrase>
+			<phrase>The General screen</phrase>
 		</textobject>
 	</mediaobjectco>
 </screenshot>
@@ -2564,7 +2564,7 @@ scripts.</para>
 
 <para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
 
-<para>Sends your &Linux; version string to the channel.</para>
+<para>Sends your &Linux; version string (the output of <quote>uname -a</quote>) to the channel.</para>
 
 </listitem>
 </varlistentry>
@@ -2664,7 +2664,7 @@ a file.
 
 <varlistentry>
 <term><userinput><command>/dcc </command></userinput></term>
-<listitem><para>Opens a DCC Status tab.
+<listitem><para>Opens the <guilabel>DCC Status</guilabel> tab.
 </para></listitem>
 </varlistentry>
 
@@ -2781,7 +2781,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <para>This script is used to open your browser to search for the given string or bug number on kde's bugzilla.</para>
 <para>Example: To open your browser to search for bug 123456</para>
 <para><userinput><command>/exec </command> <replaceable>bug 123456</replaceable></userinput></para>
-<para>Sample action: <replaceable>The default browser in your KDE System Settings should open to http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
+<para>Sample action: The default browser in your KDE System Settings should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -2852,12 +2852,12 @@ kernel bug report</replaceable></para>
 for only audio players, or only video players via the optional command arguments <replaceable>audio</replaceable>
 and <replaceable>video</replaceable>. Additionally, it's possible to specify the media player you wish to query.</para>
 <para>The following media players are supported: Amarok (audio), JuK (audio), Noatun (audio, video), Kaffeine (video, audio),
-KMPlayer (video audio), KPlayer (video audio), KsCD (audio), kdetv (video), Amarok2 (audio), Yammi (audio), Audacious (audio),
+KMPlayer (video, audio), KPlayer (video, audio), KsCD (audio), kdetv (video), Amarok2 (audio), Yammi (audio), Audacious (audio),
 MPD (audio).</para>
-<para>Example: To output your currently playing song in Amarok2.</para>
-<para><userinput><command>/exec </command> <replaceable>media amarok2</replaceable></userinput></para>
+<para>Example: To output your currently playing song in Amarok.</para>
+<para><userinput><command>/exec </command> <replaceable>media amarok</replaceable></userinput></para>
 <para>Sample output: <replaceable>* user is listening to You Give Love A Bad Name by Bon Jovi
-on Slippery When Wet [Amarok2]</replaceable></para>
+on Slippery When Wet [Amarok]</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -3454,7 +3454,7 @@ application work. -->
 
 <qandaentry>
 <question>
-<para>&konversation; won't connect to any servers.  What is wrong.?</para>
+<para>&konversation; won't connect to any servers.  What is wrong?</para>
 </question>
 <answer>
 <para>There are several things that could be wrong.</para>
@@ -3497,7 +3497,7 @@ If you are behind a firewall, make sure the correct ports are enabled.  &konvers
 <question>
 <para>When I go to
 <menuchoice>
-<guisubmenu>Window</guisubmenu>
+<guimenu>Window</guimenu>
 <guisubmenu>Channel List</guisubmenu>
 </menuchoice>, I cannot select it. Why is that?</para>
 </question>
@@ -3505,7 +3505,7 @@ If you are behind a firewall, make sure the correct ports are enabled.  &konvers
 <para>
 The
 <menuchoice>
-<guisubmenu>Window</guisubmenu>
+<guimenu>Window</guimenu>
 <guisubmenu>Channel List</guisubmenu>
 </menuchoice>  menu entry will be grayed-out if a non-channel tab, &eg; <guilabel>Watched Nicks Online</guilabel>, is currently being viewed.
 To make it selectable again go back to a channel tab or the server tab.
