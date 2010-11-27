@@ -30,7 +30,7 @@ namespace Konversation
         setModal( true );
         m_ui.setupUi(mainWidget());
         m_ui.channelCombo->setFocus();
-  
+
         button(KDialog::Ok)->setEnabled(false);
         connect(m_ui.channelCombo, SIGNAL(editTextChanged(const QString&)),
         	this, SLOT(slotChannelChanged(const QString&)));
@@ -41,7 +41,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+          connect(server, SIGNAL(nicknameChanged(const QString&)), this, SLOT(slotNicknameChanged(const QString&)));
         }
         // Update channel history when selected connection changes
         connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
@@ -101,7 +101,7 @@ namespace Konversation
         accept();
     }
 
-    void JoinChannelDialog::slotNicknameChanged(QString nickname)
+    void JoinChannelDialog::slotNicknameChanged(const QString& nickname)
     {
       Q_UNUSED(nickname);
       // Update all items
@@ -134,7 +134,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+          connect(server, SIGNAL(nicknameChanged(const QString&)), this, SLOT(slotNicknameChanged(const QString&)));
         }
       }
     }

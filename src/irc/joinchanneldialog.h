@@ -36,7 +36,7 @@ namespace Konversation
 
         protected slots:
             virtual void slotOk();
-            void slotNicknameChanged(QString nickname);
+            void slotNicknameChanged(const QString& nickname);
             void slotConnectionListChanged();
             void slotSelectedConnectionChanged(int);
             void slotChannelChanged(const QString& text);

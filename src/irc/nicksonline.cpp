@@ -106,8 +106,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_popupMenu = new KMenu(this);
     m_popupMenu->setObjectName("nicksonline_context_menu");
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
-        this, SLOT(slotCustomContextMenuRequested(QPoint)));
+    connect(m_nickListView, SIGNAL(customContextMenuRequested(const QPoint&)),
+        this, SLOT(slotCustomContextMenuRequested(const QPoint&)));
     connect(m_nickListView, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotNickListView_SelectionChanged()));
 
@@ -706,7 +706,7 @@ void NicksOnline::doCommand(QAction* id)
             }
         }
         EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
-        connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
+        connect(end, SIGNAL(notifyChanged(int, const QString&)), this, SLOT(slotAddNickname(int, const QString&)));
         end->show();
         return;
     }
@@ -973,7 +973,7 @@ void NicksOnline::slotNickListView_SelectionChanged()
 /**
  * Received when right-clicking an item in the NickListView.
  */
-void NicksOnline::slotCustomContextMenuRequested(QPoint point)
+void NicksOnline::slotCustomContextMenuRequested(const QPoint& point)
 {
     QTreeWidgetItem *item = m_nickListView->itemAt(point);
     if (item == 0)
@@ -1012,7 +1012,7 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
 /**
  * Received when user added a new nick to the watched nicks.
  */
-void NicksOnline::slotAddNickname(int serverGroupId, QString nickname)
+void NicksOnline::slotAddNickname(int serverGroupId, const QString& nickname)
 {
     Preferences::addNotify(serverGroupId, nickname);
     static_cast<Application*>(kapp)->saveOptions(true);

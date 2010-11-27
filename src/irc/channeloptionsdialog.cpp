@@ -74,7 +74,7 @@ namespace Konversation
         connect(m_ui.updateBan, SIGNAL(clicked()), this, SLOT(updateBanClicked()));
         connect(m_ui.removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
         connect(m_ui.banList, SIGNAL(itemSelectionChanged()), this, SLOT(banSelectionChanged()));
-        connect(m_ui.hostmask, SIGNAL(textChanged(QString)), this, SLOT(hostmaskChanged(QString)));
+        connect(m_ui.hostmask, SIGNAL(textChanged(const QString&)), this, SLOT(hostmaskChanged(const QString&)));
 
         m_ui.topicModeChBox->setWhatsThis(whatsThisForMode('T'));
         m_ui.messageModeChBox->setWhatsThis(whatsThisForMode('N'));
@@ -520,7 +520,7 @@ namespace Konversation
       }
     }
     /// Enables/disables addBan and updateBan buttons depending on the value of @p text
-    void ChannelOptionsDialog::hostmaskChanged(QString text)
+    void ChannelOptionsDialog::hostmaskChanged(const QString& text)
     {
       if (text.trimmed().length() != 0)
       {

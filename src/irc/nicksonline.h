@@ -95,7 +95,7 @@ class NicksOnline : public ChatWindow
         /**
          * Received when right-clicking an item in the NickListView.
          */
-        void slotCustomContextMenuRequested(QPoint point);
+        void slotCustomContextMenuRequested(const QPoint& point);
         /**
          * Received from server when a NickInfo changes its information.
          */
@@ -107,7 +107,7 @@ class NicksOnline : public ChatWindow
         /**
          * Received when user added a new nick to the watched nicks.
          */
-        void slotAddNickname(int serverGroupId, QString nickname);
+        void slotAddNickname(int serverGroupId, const QString& nickname);
 
     protected:
         /** Called from ChatWindow adjustFocus */

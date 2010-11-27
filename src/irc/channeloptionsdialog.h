@@ -57,7 +57,7 @@ namespace Konversation
             void removeBan(const QString& ban);
             void removeBanClicked();
             void banSelectionChanged();
-            void hostmaskChanged(QString);
+            void hostmaskChanged(const QString&);
 
             void changeOptions();
 
