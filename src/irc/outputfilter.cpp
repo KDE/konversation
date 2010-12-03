@@ -561,8 +561,6 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_back(const OutputFilterInput& input)
     {
         return command_unaway(input);
-
-        return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_aaway(const OutputFilterInput& input)
