@@ -2187,7 +2187,7 @@ also specify the <link linkend="webbrowser">web browser</link> to use.</para></c
 &kde; application associated with the &MIME; type of the &URL;.  For example, when clicking on
 a &URL; beginning with <interface>http</interface>, &konqueror; is launched to display the
 web page.  You can specify an application different from the &kde; default.  For example, you can
-use Mozilla instead.
+use Firefox instead.
 </para>
 
 <para>To choose a different web browser, choose
@@ -2230,23 +2230,6 @@ use Mozilla instead.
 When you click on a &URL; <userinput><replaceable>%u</replaceable></userinput> will be replaced with the &URL;.</para></callout>
 
 </calloutlist>
-</para>
-
-<para><emphasis>Tip: </emphasis>(&UNIX; systems only) The default command is <userinput>mozilla '%u'</userinput>, which will
-start a new instance of Mozilla each time you click on a &URL;.  If you prefer that Mozilla display the web page
-in a new tab of an already-running instance, create a file containing the following:
-</para>
-
-<para>
-<literallayout>
-#!/bin/sh
-mozilla -remote "openURL($@, new-tab)" || exec mozilla "$@";
-</literallayout>
-</para>
-
-<para>Name the file <userinput><replaceable>moz</replaceable></userinput>, place it in the PATH, and
-make it executable (<userinput>chmod a+x moz</userinput>).  Then enter <userinput>
-<replaceable>moz '%u'</replaceable></userinput> for the web browser command in the screen above.
 </para>
 
 <para><emphasis>Note: </emphasis>The web browser setting does not apply to
@@ -2593,7 +2576,7 @@ a channel tab.</para>
 <listitem><para>Attempts to ban the <userinput><replaceable>user</replaceable></userinput> or <userinput><replaceable>mask</replaceable></userinput> from <userinput><replaceable>channel</replaceable></userinput>.  When entered in a channel tab,
 <userinput><replaceable>channel</replaceable></userinput> may be omitted.  For more information
 on hosts, domains, and masks, see the documents at <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.
-Too get the current ban list for a channel, enter
+To get the current ban list for a channel, enter
 <userinput><command>/mode </command><replaceable>channel</replaceable> <command>b</command></userinput>.
 </para></listitem>
 </varlistentry>
@@ -2852,7 +2835,7 @@ kernel bug report</replaceable></para>
 for only audio players, or only video players via the optional command arguments <replaceable>audio</replaceable>
 and <replaceable>video</replaceable>. Additionally, it's possible to specify the media player you wish to query.</para>
 <para>The following media players are supported: Amarok (audio), JuK (audio), Noatun (audio, video), Kaffeine (video, audio),
-KMPlayer (video, audio), KPlayer (video, audio), KsCD (audio), kdetv (video), Amarok2 (audio), Yammi (audio), Audacious (audio),
+KMPlayer (video, audio), KPlayer (video, audio), KsCD (audio), kdetv (video), Yammi (audio), Audacious (audio),
 MPD (audio).</para>
 <para>Example: To output your currently playing song in Amarok.</para>
 <para><userinput><command>/exec </command> <replaceable>media amarok</replaceable></userinput></para>
