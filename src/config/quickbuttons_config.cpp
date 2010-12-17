@@ -197,11 +197,12 @@ void QuickButtons_Config::addEntry()
 {
   // add new item at the bottom of list view
   QTreeWidgetItem* newItem = new QTreeWidgetItem(buttonListView, buttonListView->topLevelItemCount());
-  newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
-  newItem->setText(0, i18n("New"));
-  // if successful ...
-  if(newItem)
+
+  if (newItem)
   {
+    newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+    newItem->setText(0, i18n("New"));
+
     // select new item and make it the current one
     buttonListView->setCurrentItem(newItem);
     // set input focus on item name edit

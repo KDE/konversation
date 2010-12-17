@@ -312,11 +312,12 @@ void Autoreplace_Config::addEntry()
 {
   // add new item at the bottom of list view
   QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
-  newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
-  newItem->setCheckState(0, Qt::Unchecked);
-  // if successful ...
-  if(newItem)
+
+  if (newItem)
   {
+    newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+    newItem->setCheckState(0, Qt::Unchecked);
+  
     // set default direction
     newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     // set default pattern name
