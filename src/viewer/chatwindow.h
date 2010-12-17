@@ -34,7 +34,8 @@ class ChatWindow : public KVBox
 
         enum WindowType
         {
-            Status=0,
+	    None=0,
+            Status,
             Channel,
             Query,
             DccChat,

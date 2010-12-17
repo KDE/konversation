@@ -97,12 +97,18 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, co
 ViewTreeItem::ViewTreeItem(Q3ListView* parent) : Q3ListViewItem(parent)
 {
     setView(0);
+    setViewType(ChatWindow::None);
+    
     setOpen(true);
     setDragEnabled(false);
 
     m_isSeparator = true;
     m_isHighlighted = false;
     m_isTruncated = false;
+
+    images = 0;
+    m_closeButtonShown = false;
+    m_closeButtonEnabled = false; 
 }
 
 ViewTreeItem::~ViewTreeItem()
