@@ -89,11 +89,7 @@ class InputFilter : public QObject
                                                   // automaticRequest[command][channel or nick]=count
         QMap< QString, QMap< QString, int > > automaticRequest;
         QStringList whoRequestList;
-        int lagMeasuring;
-
-        Query* query;
-
-        int m_debugCount;
+        bool lagMeasuring;
 
         /// Used when handling MOTD
         bool m_connecting;

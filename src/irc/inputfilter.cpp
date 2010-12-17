@@ -32,6 +32,8 @@
 
 
 InputFilter::InputFilter()
+    : server(0),
+      lagMeasuring(false)
 {
     m_connecting = false;
 }
@@ -247,7 +249,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     nickinfo->setHostmask(sourceHostmask);
 
                     // create new query (server will check for dupes)
-                    query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
+                    Query* query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
 
                     // send action to query
                     query->appendAction(sourceNick, ctcpArgument);
@@ -2297,7 +2299,7 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
             nickinfo->setHostmask(sourceHostmask);
 
             // Create a new query (server will check for dupes)
-            query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
+            Query* query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
 
             // send action to query
             query->appendQuery(source, message);
