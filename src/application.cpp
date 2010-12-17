@@ -68,8 +68,12 @@ Application::Application()
     osd = 0;
     m_wallet = NULL;
     m_images = 0;
+    m_sound = 0;
     m_dccTransferManager = 0;
     m_notificationHandler = 0;
+    m_urlModel = 0;
+    dbusObject = 0;
+    identDBus = 0;
 }
 
 Application::~Application()
