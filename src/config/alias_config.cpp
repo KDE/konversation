@@ -158,11 +158,12 @@ void Alias_Config::addEntry()
 {
     // add new item at the bottom of list view
     QTreeWidgetItem* newItem = new QTreeWidgetItem(aliasListView, aliasListView->topLevelItemCount());
-    newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
-    newItem->setText(0, i18n("New"));
-    // if successful ...
+
     if (newItem)
     {
+        newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+        newItem->setText(0, i18n("New"));
+
         // select new item and make it the current one
         aliasListView->setCurrentItem(newItem);
         // set input focus on item name edit
