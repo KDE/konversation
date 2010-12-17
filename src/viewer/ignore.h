@@ -36,8 +36,8 @@ class Ignore
 
         void setName(const QString &newName);
         void setFlags(int newFlags);
-        QString getName();
-        int getFlags();
+        QString getName() const;
+        int getFlags() const;
 
     protected:
         QString name;

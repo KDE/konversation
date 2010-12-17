@@ -26,5 +26,5 @@ Ignore::~Ignore()
 
 void Ignore::setName(const QString &newName) { name=newName; }
 void Ignore::setFlags(int newFlags)   { flags=newFlags; }
-QString Ignore::getName()             { return name; }
-int Ignore::getFlags()                { return flags; }
+QString Ignore::getName() const       { return name; }
+int Ignore::getFlags() const          { return flags; }
