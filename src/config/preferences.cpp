@@ -104,7 +104,7 @@ const QStringList Preferences::quickButtonList()
   return self()->mQuickButtonList;
 }
 
-void Preferences::setQuickButtonList(const QStringList newList)
+void Preferences::setQuickButtonList(const QStringList& newList)
 {
   self()->mQuickButtonList=newList;
 }

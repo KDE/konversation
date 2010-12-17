@@ -89,7 +89,7 @@ class Preferences : public PreferencesBase
 
         static const QStringList quickButtonList();
         static const QStringList defaultQuickButtonList();
-        static void setQuickButtonList(const QStringList newList);
+        static void setQuickButtonList(const QStringList& newList);
         static void clearQuickButtonList();
 
         static const QList<QStringList> autoreplaceList();
