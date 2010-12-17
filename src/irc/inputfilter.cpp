@@ -50,12 +50,12 @@ void InputFilter::setServer(Server* newServer)
 /*
 Prefix parsePrefix(QString prefix)
 {
-    //3 possibilities - bare nickname, nickname and a host with optional ident, or a m_server if there is no punct, its a nickname
+    //3 possibilities - bare nickname, nickname and a host with optional ident, or a server if there is no punct, its a nickname
     //there must be at least 1 character before a symbol or its some kind of screwed up nickname
     Prefix pre;
     int id=prefix.indexOf("!");
     int ad=prefix.indexOf("@");
-    if (prefix.indexOf(".") > 0 && id==-1 && ad==-1 ) // it is a m_server
+    if (prefix.indexOf(".") > 0 && id==-1 && ad==-1 ) // it is a server
     {
         pre.isServer=true;
         pre.host=prefix;
@@ -141,7 +141,7 @@ void InputFilter::parseLine(const QString& line)
     if (trailing >= 0 ) //<-- trailing == ":" - per above we need the empty string
         parameterList << line.mid( qMin(trailing+2, line.size()) );
 
-    Q_ASSERT(m_server); //how could we have gotten a line without a m_server?
+    Q_ASSERT(m_server); //how could we have gotten a line without a server?
 
 
     // Server command, if no "!" was found in prefix
@@ -248,7 +248,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     NickInfoPtr nickinfo = m_server->obtainNickInfo(sourceNick);
                     nickinfo->setHostmask(sourceHostmask);
 
-                    // create new query (m_server will check for dupes)
+                    // create new query (server will check for dupes)
                     Query* query = m_server->addQuery(nickinfo, false /* we didn't initiate this*/ );
 
                     // send action to query
@@ -278,7 +278,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                                  QString::fromLatin1("PING"), sourceNick)
                             );
                     }
-                    m_server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
+                    m_server->ctcpReply(sourceNick, QString("PING %1").arg(ctcpArgument));
                 }
             }
 
@@ -448,7 +448,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         i18n("Received CTCP-%1 request from %2, sending answer.",
                             QString::fromLatin1("CLIENTINFO"), sourceNick)
                         );
-                    m_server->ctcpReply(sourceNick,QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
+                    m_server->ctcpReply(sourceNick, QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
                 }
             }
             else if (ctcpCommand=="time" && !isChan)
@@ -459,7 +459,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         i18n("Received CTCP-%1 request from %2, sending answer.",
                             QString::fromLatin1("TIME"), sourceNick)
                         );
-                    m_server->ctcpReply(sourceNick,QString("TIME ")+QDateTime::currentDateTime().toString());
+                    m_server->ctcpReply(sourceNick, QString("TIME ")+QDateTime::currentDateTime().toString());
                 }
             }
 
@@ -625,7 +625,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             // Join the channel
             m_server->joinChannel(channelName, sourceHostmask);
 
-            // Upon JOIN we're going to receive some NAMES input from the m_server which
+            // Upon JOIN we're going to receive some NAMES input from the server which
             // we need to be able to tell apart from manual invocations of /names
             setAutomaticRequest("NAMES",channelName,true);
 
@@ -641,13 +641,13 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         }
         else
         {
-            Channel* channel = m_server->nickJoinsChannel(channelName,sourceNick,sourceHostmask);
+            Channel* channel = m_server->nickJoinsChannel(channelName, sourceNick, sourceHostmask);
             konv_app->notificationHandler()->join(channel, sourceNick);
         }
     }
     else if (command=="kick" && plHas(2))
     {
-        m_server->nickWasKickedFromChannel(parameterList.value(0),parameterList.value(1),sourceNick,trailing);
+        m_server->nickWasKickedFromChannel(parameterList.value(0), parameterList.value(1), sourceNick, trailing);
     }
     else if (command=="part" && plHas(1))
     {
@@ -675,7 +675,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         QString newNick(parameterList.value(0)); // Message may not include ":" in front of the new nickname
 
-        m_server->renameNick(sourceNick,newNick);
+        m_server->renameNick(sourceNick, newNick);
 
         if (sourceNick != m_server->getNickname())
         {
@@ -684,7 +684,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if (command=="topic" && plHas(2))
     {
-        m_server->setChannelTopic(sourceNick,parameterList.value(0),trailing);
+        m_server->setChannelTopic(sourceNick, parameterList.value(0), trailing);
     }
     else if (command=="mode" && plHas(2)) // mode #channel -/+ mmm params
     {
@@ -747,7 +747,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if (command == "pong")
         {
-            // double check if we are in lag measuring mode since some m_servers fail to send
+            // double check if we are in lag measuring mode since some servers fail to send
             // the LAG cookie back in PONG
             if (trailing.startsWith(QLatin1String("LAG")) || getLagMeasuring())
             {
@@ -760,7 +760,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if (command == "notice")
         {
-            m_server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2", prefix, trailing));
+            m_server->appendStatusMessage(i18n("Notice"), i18n("-%1- %2", prefix, trailing));
         }
         else if (command == "kick" && plHas(3))
         {
@@ -773,7 +773,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
-            kDebug() << "unknown m_server command" << command;
+            kDebug() << "unknown server command" << command;
             m_server->appendMessageToFrontmost(command, parameterList.join(" "));
         }
     }
@@ -798,13 +798,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         if (trailing.contains("@"))
                             host = trailing.section('@', 1);
 
-                        // re-set nickname, since the m_server may have truncated it
+                        // re-set nickname, since the server may have truncated it
                         if (m_serverAssignedNick != m_server->getNickname())
                         {
                             m_server->renameNick(m_server->getNickname(), m_serverAssignedNick);
                         }
 
-                        // Send the welcome signal, so the m_server class knows we are connected properly
+                        // Send the welcome signal, so the server class knows we are connected properly
                         emit welcome(host);
                         m_connecting = true;
                     }
@@ -843,10 +843,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(0)) //make the script happy
                 {
-                    m_server->appendStatusMessage(i18n("Support"),parameterList.join(" "));
+                    m_server->appendStatusMessage(i18n("Support"), parameterList.join(" "));
 
                 // The following behaviour is neither documented in RFC 1459 nor in 2810-2813
-                    // Nowadays, most ircds send m_server capabilities out via 005 (BOUNCE).
+                    // Nowadays, most ircds send server capabilities out via 005 (BOUNCE).
                     // refer to http://www.irc.org/tech_docs/005.html for a kind of documentation.
                     // More on http://www.irc.org/tech_docs/draft-brocklesby-irc-isupport-03.txt
 
@@ -872,13 +872,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             if(pos==-1)
                             {
                                 m_server->setPrefixes(QString(), value);
-                                // XXX if ) isn't in the string, NOTHING should be there. anyone got a m_server
+                                // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
                                 if (value.length() || property.length())
-                                    m_server->appendStatusMessage("","XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
+                                    m_server->appendStatusMessage("", "XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
                             }
                             else
                             {
-                                m_server->setPrefixes (value.mid(1, pos-1), value.mid(pos+1));
+                                m_server->setPrefixes(value.mid(1, pos-1), value.mid(pos+1));
                             }
                         }
                         else if (property=="CHANTYPES")
@@ -920,7 +920,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         }
                         else
                         {
-                            //kDebug() << "Ignored m_server-capability: " << property << " with value '" << value << "'";
+                            //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
                         }
                     }                                 // endfor
                 }
@@ -1075,7 +1075,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        m_server->appendMessageToFrontmost(i18n("Names"),i18n("End of NAMES list."));
+                        m_server->appendMessageToFrontmost(i18n("Names"), i18n("End of NAMES list."));
                     }
                 }
                 break;
@@ -1131,7 +1131,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        m_server->appendMessageToFrontmost(i18n("Topic"),i18n("The topic for %1 was set by %2 on %3.",
+                        m_server->appendMessageToFrontmost(i18n("Topic"), i18n("The topic for %1 was set by %2 on %3.",
                             parameterList.value(1),
                             parameterList.value(2),
                             KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
@@ -1149,7 +1149,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Display message only if this was not an automatic request.
                     if (getAutomaticRequest("WHOIS",parameterList.value(1)) == 0)
                     {
-                        m_server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is actually using the host %2.", parameterList.value(1), parameterList.value(2)));
+                        m_server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is actually using the host %2.", parameterList.value(1), parameterList.value(2)));
                     }
                 }
                 break;
@@ -1184,7 +1184,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
-            // Nick already on the m_server, so try another one
+            // Nick already on the server, so try another one
             case ERR_NICKNAMEINUSE:
             {
                 if (plHas(1))
@@ -1211,7 +1211,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             m_server->renameNick(m_server->getNickname(), newNick);
                             // Show message
                             m_server->appendMessageToFrontmost(i18n("Nick"), i18n("Nickname already in use. Trying %1.", newNick));
-                            // Send nickchange request to the m_server
+                            // Send nickchange request to the server
                             m_server->queue("NICK "+newNick);
                         }
                     }
@@ -1311,7 +1311,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(1))
                 {
-                    m_server->appendMessageToFrontmost(i18n("Notice"), i18n("You are now an IRC operator on this m_server."));
+                    m_server->appendMessageToFrontmost(i18n("Notice"), i18n("You are now an IRC operator on this server."));
                 }
                 break;
             }
@@ -1339,7 +1339,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     QString current(trailing.section(' ', 3));
                     //QString max(trailing.section(' ',5,5));
-                    m_server->appendStatusMessage(i18n("Users"),i18n("Current users on %1: %2.", prefix, current));
+                    m_server->appendStatusMessage(i18n("Users"), i18n("Current users on %1: %2.", prefix, current));
                 }
                 break;
             }
@@ -1347,7 +1347,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
-                    // Tell m_server to start the next notify timer round
+                    // Tell server to start the next notify timer round
                     emit notifyResponse(trailing);
                 }
                 break;
@@ -1715,7 +1715,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         if (trailing.toLower().simplified().startsWith(QLatin1String("is an irc operator")))
                             m_server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an IRC Operator.", parameterList.value(1)));
                         else
-                            m_server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList.value(1)).arg(trailing));
+                            m_server->appendMessageToFrontmost(i18n("Whois"), QString("%1 %2").arg(parameterList.value(1)).arg(trailing));
                     }
                 }
                 break;
@@ -1811,7 +1811,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Display message only if this was not an automatic request.
                     if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 0)
                     {
-                        m_server->appendMessageToFrontmost(i18n("Whois"),i18n("End of WHOIS list."));
+                        m_server->appendMessageToFrontmost(i18n("Whois"), i18n("End of WHOIS list."));
                     }
                     // was this an automatic request?
                     if (getAutomaticRequest("WHOIS", parameterList.value(1)) != 0)
@@ -1845,7 +1845,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             nick=nick.left(nick.length()-1);
                         }
 
-                        // inform m_server of this user's data
+                        // inform server of this user's data
                         emit userhost(nick,mask,away,ircOp);
 
                         // display message only if this was no automatic request
@@ -1874,7 +1874,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     if (getAutomaticRequest("LIST",QString())==0)
                     {
-                        m_server->appendMessageToFrontmost(i18n("List"),i18n("List of channels:"));
+                        m_server->appendMessageToFrontmost(i18n("List"), i18n("List of channels:"));
                     }
                 }
                 break;
@@ -1887,7 +1887,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         QString message;
                         message=i18np("%2 (%1 user): %3", "%2 (%1 users): %3", parameterList.value(2).toInt(), parameterList.value(1), trailing);
-                        m_server->appendMessageToFrontmost(i18n("List"),message);
+                        m_server->appendMessageToFrontmost(i18n("List"), message);
                     }
                     else                              // send them to /LIST window
                     {
@@ -1903,7 +1903,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // was this an automatic request?
                     if (getAutomaticRequest("LIST",QString())==0)
                     {
-                        m_server->appendMessageToFrontmost(i18n("List"),i18n("End of channel list."));
+                        m_server->appendMessageToFrontmost(i18n("List"), i18n("End of channel list."));
                     }
                     else
                     {
@@ -1960,7 +1960,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else
                             when = QDateTime::currentDateTime(); //use todays date instead of Jan 1 1970
 
-                        QString setter(parameterList.value(3, i18nc("The m_server didn't respond with the identity of the ban creator, so we say unknown (in brackets to avoid confusion with a real nickname)", "(unknown)")).section('!', 0, 0));
+                        QString setter(parameterList.value(3, i18nc("The server didn't respond with the identity of the ban creator, so we say unknown (in brackets to avoid confusion with a real nickname)", "(unknown)")).section('!', 0, 0));
 
                         m_server->appendMessageToFrontmost(i18n("BanList:%1", parameterList.value(1)),
                                     i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3",
@@ -2005,7 +2005,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
-                    //Some m_servers don't know their name, so they return an error instead of the PING data
+                    //Some servers don't know their name, so they return an error instead of the PING data
                     if (getLagMeasuring() && trailing.startsWith(prefix))
                     {
                         m_server->pongReceived();
@@ -2016,7 +2016,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        m_server->appendMessageToFrontmost(i18n("Error"), i18n("No such m_server: %1.", parameterList.value(1)));
+                        m_server->appendMessageToFrontmost(i18n("Error"), i18n("No such server: %1.", parameterList.value(1)));
                     }
                 }
                 break;
@@ -2054,7 +2054,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(0))
                 {
-                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("Not registered."));
+                    m_server->appendMessageToFrontmost(i18n("Error"), i18n("Not registered."));
                 }
                 break;
             }
@@ -2062,7 +2062,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
-                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("%1: This command requires more parameters.", parameterList.value(1)));
+                    m_server->appendMessageToFrontmost(i18n("Error"), i18n("%1: This command requires more parameters.", parameterList.value(1)));
                 }
                 break;
             }
@@ -2105,7 +2105,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     {
         kDebug() << "unknown message format" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
     }
-} // end of m_server
+} // end of server
 
 void InputFilter::parseModes(const QString &sourceNick, const QStringList &parameterList)
 {
@@ -2174,18 +2174,18 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
                 kDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
                     << parameterList.join(", ") << "'";
             }
-            m_server->updateChannelMode(sourceNick,parameterList.value(0),mode,plus,parameter);
+            m_server->updateChannelMode(sourceNick, parameterList.value(0), mode, plus, parameter);
         }
     } // endfor
 
     if (Preferences::self()->useLiteralModes())
     {
-        m_server->appendCommandMessageToChannel(parameterList.value(0),i18n("Mode"),message);
+        m_server->appendCommandMessageToChannel(parameterList.value(0), i18n("Mode"), message);
     }
 }
 
 // # & + and ! are *often*, but not necessarily, Channel identifiers. + and ! are non-RFC,
-// so if a m_server doesn't offer 005 and supports + and ! channels, I think thats broken behaviour
+// so if a server doesn't offer 005 and supports + and ! channels, I think thats broken behaviour
 // on their part - not ours. --Argonel
 bool InputFilter::isAChannel(const QString &check)
 {
@@ -2298,7 +2298,7 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
             NickInfoPtr nickinfo = m_server->obtainNickInfo(source);
             nickinfo->setHostmask(sourceHostmask);
 
-            // Create a new query (m_server will check for dupes)
+            // Create a new query (server will check for dupes)
             Query* query = m_server->addQuery(nickinfo, false /*we didn't initiate this*/ );
 
             // send action to query
