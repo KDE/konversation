@@ -1583,8 +1583,6 @@ void ViewContainer::closeView(ChatWindow* view)
     {
         ChatWindow::WindowType viewType = view->getType();
 
-        bool closeConfirmed = true;
-
         switch (viewType)
         {
             case ChatWindow::DccTransferPanel:
@@ -1597,7 +1595,7 @@ void ViewContainer::closeView(ChatWindow* view)
                 closeNicksOnlinePanel();
                 break;
             default:
-                closeConfirmed = view->closeYourself();
+                view->closeYourself();
                 break;
         }
     }
