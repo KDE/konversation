@@ -92,7 +92,7 @@ namespace Konversation
         m_serverList = list;
     }
 
-    void ServerGroupSettings::removeServer(const ServerSettings settings)
+    void ServerGroupSettings::removeServer(const ServerSettings& settings)
     {
         m_serverList.removeOne(settings);
     }

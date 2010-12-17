@@ -73,7 +73,7 @@ namespace Konversation
 
             void setServerList(const ServerList& list);
             void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
-            void removeServer(const ServerSettings settings);
+            void removeServer(const ServerSettings& settings);
             ServerList serverList() const { return m_serverList; }
             ServerSettings serverByIndex(int index) const;
 
