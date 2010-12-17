@@ -66,8 +66,6 @@ struct AwayManagerPrivate
 
 AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
 {
-    int dummy = 0;
-
     d = new AwayManagerPrivate;
 
     d->mouseX = d->mouseY = 0;
