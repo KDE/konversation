@@ -82,12 +82,14 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
 #endif
 
 #ifdef HasXidle
+    int dummy = 0;
     d->useXidle = XidleQueryExtension(QX11Info::display(), &dummy, &dummy);
 #endif
 
 #ifdef HasScreenSaver
+    int dummy2 = 0;
     if (!d->useXidle)
-        d->useMit = XScreenSaverQueryExtension(QX11Info::display(), &dummy, &dummy);
+        d->useMit = XScreenSaverQueryExtension(QX11Info::display(), &dummy2, &dummy2);
 #endif
 
     m_activityTimer = new QTimer(this);
