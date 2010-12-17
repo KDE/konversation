@@ -85,11 +85,11 @@ class InputFilter : public QObject
         bool isAChannel(const QString &check);
         bool isIgnore(const QString &pattern, Ignore::Type type);
 
-        Server* server;
+        Server* m_server;
                                                   // automaticRequest[command][channel or nick]=count
-        QMap< QString, QMap< QString, int > > automaticRequest;
-        QStringList whoRequestList;
-        bool lagMeasuring;
+        QMap< QString, QMap< QString, int > > m_automaticRequest;
+        QStringList m_whoRequestList;
+        bool m_lagMeasuring;
 
         /// Used when handling MOTD
         bool m_connecting;
