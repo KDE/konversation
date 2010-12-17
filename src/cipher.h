@@ -31,9 +31,9 @@ namespace Konversation
             QByteArray parseInitKeyX(QByteArray key);
             bool parseFinishKeyX(QByteArray key);
             bool setKey(QByteArray key);
-            QByteArray key() { return m_key; }
+            QByteArray key() const { return m_key; }
             bool setType(const QString &type);
-            QString type() { return m_type; }
+            QString type() const { return m_type; }
 
         private:
             //direction is true for encrypt, false for decrypt
