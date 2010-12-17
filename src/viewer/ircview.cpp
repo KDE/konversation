@@ -1791,7 +1791,7 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
     }
 }
 
-QString IRCView::getColors(const QString text, int start, QString& _fgColor, QString& _bgColor, bool* fgValueOK, bool* bgValueOK)
+QString IRCView::getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* fgValueOK, bool* bgValueOK)
 {
     QRegExp ircColorRegExp("(\003([0-9][0-9]|[0-9]|)(,([0-9][0-9]|[0-9]|)|,|)|\017)");
     if (ircColorRegExp.indexIn(text,start) == -1)

@@ -276,7 +276,7 @@ class IRCView : public KTextBrowser
         /// Parses the colors in <parm>text</parm> starting from <parm>start</parm>
         /// and returns them in the given fg and bg string, as well as information
         /// if the values are valid
-        inline QString getColors(const QString text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
+        inline QString getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
 
     protected:
         virtual void resizeEvent(QResizeEvent *event);
