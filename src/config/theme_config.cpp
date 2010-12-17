@@ -58,17 +58,17 @@ Theme_Config::~Theme_Config()
 
 void Theme_Config::loadSettings()
 {
-    QString themeName, themeComment, themeDir;
-    QString currentTheme = Preferences::self()->iconTheme();
-    int currentThemeIndex = 0;
-
     // get list of theme dirs
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
     // if we have any themes
-    if(m_dirs.count() > 0)
+    if (m_dirs.count() > 0)
     {
         m_dirs.sort();
+
+        QString themeName, themeComment, themeDir;
+        QString currentTheme = Preferences::self()->iconTheme();
+        int currentThemeIndex = 0;
 
         // clear listview
         iconThemeIndex->clear();
