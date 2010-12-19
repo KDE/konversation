@@ -105,7 +105,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     // Actions
     KStandardAction::quit(this,SLOT(quitProgram()),actionCollection());
 
-    hideMenuBarAction = KStandardAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
+    m_showMenuBarAction = KStandardAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
     setStandardToolBarMenuEnabled(true);
     KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
@@ -511,7 +511,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     setAutoSaveSettings();
 
     // Apply menubar show/hide pref
-    hideMenuBarAction->setChecked(Preferences::self()->showMenuBar());
+    m_showMenuBarAction->setChecked(Preferences::self()->showMenuBar());
     toggleMenubar(true);
 
 
@@ -709,14 +709,14 @@ void MainWindow::updateTrayIcon()
 
 void MainWindow::toggleMenubar(bool dontShowWarning)
 {
-    if (hideMenuBarAction->isChecked())
+    if (m_showMenuBarAction->isChecked())
         menuBar()->show();
     else
     {
         bool doit = true;
         if (!dontShowWarning)
         {
-            QString accel = hideMenuBarAction->shortcut().toString();
+            QString accel = m_showMenuBarAction->shortcut().toString();
             doit = KMessageBox::warningContinueCancel(this,
                     i18n("<qt>This will hide the menu bar completely. You can show it again by typing %1.</qt>", accel),
                     i18n("Hide menu bar"),
@@ -727,10 +727,10 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
         if (doit)
             menuBar()->hide();
         else
-            hideMenuBarAction->setChecked (true);
+            m_showMenuBarAction->setChecked (true);
     }
 
-    Preferences::self()->setShowMenuBar(hideMenuBarAction->isChecked());
+    Preferences::self()->setShowMenuBar(m_showMenuBarAction->isChecked());
 }
 
 void MainWindow::focusAndShowErrorMessage(const QString &errorMsg)
