@@ -726,6 +726,8 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
         }
         if (doit)
             menuBar()->hide();
+        else
+            hideMenuBarAction->setChecked (true);
     }
 
     Preferences::self()->setShowMenuBar(hideMenuBarAction->isChecked());
