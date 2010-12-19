@@ -996,7 +996,7 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
         QString highlightColor;
 
         if(Preferences::self()->highlightNick() &&
-            filteredLine.toLower().contains(QRegExp("(^|[^\\d\\w])" +
+            line.toLower().contains(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.toLower()) +
             "([^\\d\\w]|$)")))
         {
@@ -1020,7 +1020,7 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
                     QRegExp needleReg(highlight->getPattern());
                     needleReg.setCaseSensitivity(Qt::CaseInsensitive);
                                                   // highlight regexp in text
-                    patternFound = ((filteredLine.contains(needleReg)) ||
+                    patternFound = ((line.contains(needleReg)) ||
                                                   // highlight regexp in nickname
                         (whoSent.contains(needleReg)));
 
@@ -1032,7 +1032,7 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
                 {
                     QString needle=highlight->getPattern();
                                                   // highlight patterns in text
-                    patternFound = ((filteredLine.contains(needle, Qt::CaseInsensitive)) ||
+                    patternFound = ((line.contains(needle, Qt::CaseInsensitive)) ||
                                                   // highlight patterns in nickname
                         (whoSent.contains(needle, Qt::CaseInsensitive)));
                 }
