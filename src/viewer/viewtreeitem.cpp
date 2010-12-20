@@ -97,7 +97,7 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, co
 ViewTreeItem::ViewTreeItem(Q3ListView* parent) : Q3ListViewItem(parent)
 {
     setView(0);
-    setViewType(ChatWindow::None);
+    setViewType(ChatWindow::Status);
     
     setOpen(true);
     setDragEnabled(false);
