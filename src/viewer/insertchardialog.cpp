@@ -33,7 +33,7 @@ namespace Konversation
 
         m_charTable->setCurrentFont( QFont( font ) );
         setMainWidget(m_charTable);
-        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+        connect(m_charTable, SIGNAL(charSelected(const QChar&)), this, SLOT(charSelected()));
     }
 
     InsertCharDialog::~InsertCharDialog()
@@ -50,9 +50,17 @@ namespace Konversation
         return m_charTable->currentChar();
     }
 
-    void InsertCharDialog::slotOk()
+    void InsertCharDialog::charSelected()
     {
         emit insertChar(m_charTable->currentChar());
+    }
+
+    void InsertCharDialog::slotButtonClicked(int button)
+    {
+        if (button == KDialog::Ok)
+            charSelected();
+        else
+            KDialog::slotButtonClicked(button);
     }
 
 }

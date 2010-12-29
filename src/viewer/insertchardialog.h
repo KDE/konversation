@@ -33,7 +33,8 @@ namespace Konversation
             QChar chr();
 
         protected slots:
-            virtual void slotOk();
+            virtual void slotButtonClicked(int button);
+            void charSelected();
 
             signals:
             void insertChar(const QChar&);
