@@ -28,6 +28,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_expanded = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(int id)
@@ -47,6 +48,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_expanded = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
@@ -65,6 +67,7 @@ namespace Konversation
         setConnectCommands(settings.connectCommands());
         setAutoConnectEnabled(settings.autoConnectEnabled());
         setNotificationsEnabled(settings.enableNotifications());
+        setExpanded(settings.expanded());
         m_id = settings.id();
         m_sortIndex = settings.sortIndex();
         return *this;
@@ -80,6 +83,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_expanded = false;
     }
 
     ServerGroupSettings::~ServerGroupSettings()
