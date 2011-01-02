@@ -1649,10 +1649,11 @@ void ViewContainer::closeViewMiddleClick(QWidget* view)
 void ViewContainer::renameKonsole()
 {
     bool ok = false;
-    int popup = m_popupViewIndex ? m_popupViewIndex : m_tabWidget->currentIndex();
-
+    
     if (!m_tabWidget)
         return;
+
+    int popup = m_popupViewIndex ? m_popupViewIndex : m_tabWidget->currentIndex();
 
     QString label = KInputDialog::getText(i18n("Rename Tab"),
                                           i18n("Enter new tab name:"),
