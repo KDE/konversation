@@ -1651,13 +1651,13 @@ void ViewContainer::renameKonsole()
     bool ok = false;
     int popup = m_popupViewIndex ? m_popupViewIndex : m_tabWidget->currentIndex();
 
+    if (!m_tabWidget)
+        return;
+
     QString label = KInputDialog::getText(i18n("Rename Tab"),
                                           i18n("Enter new tab name:"),
                                           m_tabWidget->tabText(popup),
                                           &ok, m_tabWidget->widget(popup));
-
-    if (!m_tabWidget)
-        return;
 
     if (ok)
     {
@@ -2491,6 +2491,7 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
             ),
             i18n("Channel List"),
             "ChannelListNoServerSelected");
+        return;
     }
 
     ChannelListPanel* panel = server->getChannelListPanel();
