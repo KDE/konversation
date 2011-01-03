@@ -85,7 +85,7 @@ class SelectionPin
 IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_resetScrollbar = true;
-    m_mousePressed = false;
+    m_mousePressedOnUrl = false;
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
@@ -1853,9 +1853,9 @@ void IRCView::resizeEvent(QResizeEvent *event)
 
 void IRCView::mouseMoveEvent(QMouseEvent* ev)
 {
-    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
+    if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
     {
-        m_mousePressed = false;
+        m_mousePressedOnUrl = false;
 
         QTextCursor textCursor = this->textCursor();
         textCursor.clearSelection();
@@ -1865,7 +1865,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         QPointer<QDrag> drag = new QDrag(this);
         QMimeData* mimeData = new QMimeData;
 
-        KUrl url(m_urlToDrag);
+        KUrl url(m_dragUrl);
         url.populateMimeData(mimeData);
 
         drag->setMimeData(mimeData);
@@ -1890,12 +1890,12 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
 {
     if (ev->button() == Qt::LeftButton)
     {
-        m_urlToDrag = anchorAt(ev->pos());
+        m_dragUrl = anchorAt(ev->pos());
 
-        if (!m_urlToDrag.isEmpty() && Konversation::isUrl(m_urlToDrag))
+        if (!m_dragUrl.isEmpty() && Konversation::isUrl(m_dragUrl))
         {
-            m_mousePressed = true;
-            m_pressPosition = ev->pos();
+            m_mousePressedOnUrl = true;
+            m_mousePressPosition = ev->pos();
         }
     }
 
@@ -1906,7 +1906,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
 {
     if (ev->button() == Qt::LeftButton)
     {
-        m_mousePressed = false;
+        m_mousePressedOnUrl = false;
     }
     else if (ev->button() == Qt::MidButton)
     {

@@ -332,9 +332,9 @@ class IRCView : public KTextBrowser
         QString m_urlToCopy; ///< the URL we might be about to copy
         bool m_isOnNick; ///< context menu click hit a nickname
         bool m_isOnChannel; ///< context menu click hit a channel
-        bool m_mousePressed; ///< currently processing a mouse press
-        QString m_urlToDrag; ///< we took a stab at whatever was clicked on, may or may not actually be a URL
-        QPoint m_pressPosition; ///< x,y of the click, relative to the GPS location of tip of Phantom's left ear
+        bool m_mousePressedOnUrl; ///< currently processing a mouse press
+        QPoint m_mousePressPosition; ///< x,y of the click, relative to the GPS location of tip of Phantom's left ear
+        QString m_dragUrl; ///< we took a stab at whatever was clicked on, may or may not actually be a URL
 
         //! TODO FIXME i'll bite. why do we have this in here?
         QFontDatabase m_fontDataBase;
