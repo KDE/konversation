@@ -916,6 +916,9 @@ void IrcContextMenus::setupLinkMenu()
 
 void IrcContextMenus::linkMenu(const QPoint& pos, const QString& link)
 {
+    foreach(QAction* action, self()->m_linkActions)
+        action->setVisible(true);
+
     QAction* action = self()->m_linkMenu->exec(pos);
 
     processLinkAction(extractActionId(action), link);
