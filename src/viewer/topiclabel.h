@@ -57,6 +57,8 @@ namespace Konversation
             void highlightedSlot(const QString&);
 
         private:
+            void resetLinkHighlightState();
+
             inline QString tagUrls(const QString& text, const QString& sender);
 
             Server* m_server;

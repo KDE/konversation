@@ -97,49 +97,47 @@ namespace Konversation
         if (m_isOnChannel && m_server)
         {
             IrcContextMenus::channelMenu(ev->globalPos(), m_server, m_currentChannel);
-
-            m_isOnChannel = false;
-
-            return;
         }
-
+        else
+        {
 #if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-        if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
-        {
-            IrcContextMenus::linkMenu(ev->globalPos(), m_currentUrl);
-
-            return;
-        }
-
-        QLabel::contextMenuEvent(ev);
+            if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
+            {
+                IrcContextMenus::linkMenu(ev->globalPos(), m_currentUrl);
+            }
+            else
+                QLabel::contextMenuEvent(ev);
 #else
-        int contextMenuActionId = IrcContextMenus::textMenu(ev->globalPos(), m_contextMenuOptions,
-            m_server, selectedText(), m_currentUrl);
+            int contextMenuActionId = IrcContextMenus::textMenu(ev->globalPos(), m_contextMenuOptions,
+                m_server, selectedText(), m_currentUrl);
 
-        switch (contextMenuActionId)
-        {
-            case -1:
-                break;
-            case IrcContextMenus::TextCopy:
+            switch (contextMenuActionId)
             {
-                QClipboard* clipboard = qApp->clipboard();
-                clipboard->setText(selectedText(), QClipboard::Clipboard);
+                case -1:
+                    break;
+                case IrcContextMenus::TextCopy:
+                {
+                    QClipboard* clipboard = qApp->clipboard();
+                    clipboard->setText(selectedText(), QClipboard::Clipboard);
 
-                break;
+                    break;
+                }
+                case IrcContextMenus::TextSelectAll:
+                {
+                    QTextDocument doc;
+                    doc.setHtml(text());
+
+                    setSelection(0, doc.toPlainText().length());
+
+                    break;
+                }
+                default:
+                    break;
             }
-            case IrcContextMenus::TextSelectAll:
-            {
-                QTextDocument doc;
-                doc.setHtml(text());
-
-                setSelection(0, doc.toPlainText().length());
-
-                break;
-            }
-            default:
-                break;
-        }
 #endif
+        }
+
+        resetLinkHighlightState();
     }
 
     void TopicLabel::setText(const QString& text)
@@ -225,18 +223,7 @@ namespace Konversation
     void TopicLabel::highlightedSlot(const QString& link)
     {
         if (link.isEmpty())
-        {
-            m_currentUrl.clear();
-            m_isOnChannel = false;
-
-            setContextMenuOptions(IrcContextMenus::ShowLinkActions, false);
-
-            if (!m_lastStatusText.isEmpty())
-            {
-                m_lastStatusText.clear();
-                emit clearStatusBarTempText();
-            }
-        }
+            resetLinkHighlightState();
         else
         {
             // We just saw this link, no need to do the work again.
@@ -260,6 +247,21 @@ namespace Konversation
 
                 setContextMenuOptions(IrcContextMenus::ShowLinkActions, true);
             }
+        }
+    }
+
+    void TopicLabel::resetLinkHighlightState()
+    {
+        m_currentUrl.clear();
+        m_currentChannel.clear();
+        m_isOnChannel = false;
+
+        setContextMenuOptions(IrcContextMenus::ShowLinkActions, false);
+
+        if (!m_lastStatusText.isEmpty())
+        {
+            m_lastStatusText.clear();
+            emit clearStatusBarTempText();
         }
     }
 
