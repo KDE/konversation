@@ -283,6 +283,37 @@ Changes since 1.3.1:
   channel before repeating the last successful completion.
 * Added a "Focus Input Box" action that puts keyboard focus on the input
   box. The default shortcut is the Escape key.
+* Trying to use the '/me' command from a tab that doesn't support it will
+  now cause an appropriate error message to be displayed.
+* Konversation now also registers itself for the irc:// and ircs:// proto-
+  cols using the way preferred by freedesktop.org's shared-mime technology
+  rather than just the KDE-specific way.
+* Fixed a bug causing the bookmark address to be unusable (it would lack
+  the network name) when bookmarking a tab and the name of the associated
+  network contains a space or certain other special characters.
+* Fixed a bug causing a change of the buffer size setting on a log reader
+  tab's toolbar not to immediately apply to new log reader tabs opened
+  thereafter. Instead the buffer size for new tabs would be the size set
+  on the toolbar of the last log reader tab that got closed, making it
+  easy to unintentionally undo a change depending on the order in which
+  log reader tabs were closed.
+* Numerous updates and cleanup in the handbook.
+* Fixed a bug causing the Help button in the Configure Konversation dialog
+  not to open the handbook.
+* Fixed a bug causing the state of the Show/Hide Menubar action not to be
+  updated correctly when hiding the menubar was cancelled from the warning
+  dialog.
+* Fixed bugs in the highlight system caused by it mistakenly operating on
+  the HTML markup used internally by the chat text views rather than the
+  original text.
+* Clicking the Insert button in the "Insert Character" dialog will no
+  longer immediately close the dialog, making it easier to insert multiple
+  characters in quick succession.
+* Double-clicking a character in the "Insert Character" dialog will now
+  insert it into the input line.
+* Various small code cleanups inspired by cppcheck.
+* Added support for dragging web and email address links found in topic
+  areas.
 
 
 Changes from 1.3 to 1.3.1:
