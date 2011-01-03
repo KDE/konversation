@@ -51,7 +51,10 @@ namespace Konversation
             int textWidth(const QString& text);
             virtual void leaveEvent (QEvent*);
             virtual void contextMenuEvent(QContextMenuEvent* ev);
-            void resizeEvent(QResizeEvent*);
+            virtual void resizeEvent(QResizeEvent*);
+            virtual void mouseReleaseEvent(QMouseEvent* ev);
+            virtual void mousePressEvent(QMouseEvent* ev);
+            virtual void mouseMoveEvent(QMouseEvent* ev);
 
         protected slots:
             void highlightedSlot(const QString&);
@@ -71,6 +74,9 @@ namespace Konversation
             QString m_currentChannel;
             bool m_isOnChannel;
             QString m_currentUrl;
+            QString m_dragUrl;
+            bool m_mousePressedOnUrl;
+            QPoint m_mousePressPosition;
     };
 
 }

@@ -30,6 +30,7 @@ namespace Konversation
         setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
         setTextInteractionFlags(Qt::TextBrowserInteraction);
 
+        m_mousePressedOnUrl = false;
         m_isOnChannel = false;
         m_server = NULL;
 
@@ -138,6 +139,66 @@ namespace Konversation
         }
 
         resetLinkHighlightState();
+    }
+
+    void TopicLabel::mousePressEvent(QMouseEvent* ev)
+    {
+        if (ev->button() == Qt::LeftButton)
+        {
+            if (!m_currentUrl.isEmpty())
+            {
+                m_mousePressedOnUrl = true;
+                m_mousePressPosition = ev->pos();
+
+                // We need to keep a copy of the current URL because by the time
+                // the Manhatten length is reached and the drag is initiated the
+                // cursor may have left the link, causing m_currentUrl to be
+                // cleared.
+                m_dragUrl = m_currentUrl;
+            }
+        }
+
+        QLabel::mousePressEvent(ev);
+    }
+
+    void TopicLabel::mouseReleaseEvent(QMouseEvent *ev)
+    {
+        if (ev->button() == Qt::LeftButton)
+        {
+            m_mousePressedOnUrl = false;
+        }
+
+        QLabel::mouseReleaseEvent(ev);
+    }
+
+    void TopicLabel::mouseMoveEvent(QMouseEvent* ev)
+    {
+        if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
+        {
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
+            setSelection(0, 0);
+#endif
+
+            QPointer<QDrag> drag = new QDrag(this);
+            QMimeData* mimeData = new QMimeData;
+
+            KUrl url(m_dragUrl);
+            url.populateMimeData(mimeData);
+
+            drag->setMimeData(mimeData);
+
+            QPixmap pixmap = KIO::pixmapForUrl(url, 0, KIconLoader::Desktop, KIconLoader::SizeMedium);
+            drag->setPixmap(pixmap);
+
+            drag->exec();
+
+            m_mousePressedOnUrl = false;
+            m_dragUrl.clear();
+
+            return;
+        }
+
+        QLabel::mouseMoveEvent(ev);
     }
 
     void TopicLabel::setText(const QString& text)
