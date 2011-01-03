@@ -79,7 +79,6 @@ namespace Konversation
                 channel.replace("##","#");
                 m_server->sendJoinCommand(channel);
             }
-            // Always use KDE default mailer.
             else
                 Application::openUrl(link);
         }
@@ -107,7 +106,7 @@ namespace Konversation
 #if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
         if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
         {
-            IrcContextMenus::linkMenu(ev->globalPos(), m_urlToCopy);
+            IrcContextMenus::linkMenu(ev->globalPos(), m_currentUrl);
 
             return;
         }
@@ -115,7 +114,7 @@ namespace Konversation
         QLabel::contextMenuEvent(ev);
 #else
         int contextMenuActionId = IrcContextMenus::textMenu(ev->globalPos(), m_contextMenuOptions,
-            m_server, selectedText(), m_urlToCopy);
+            m_server, selectedText(), m_currentUrl);
 
         switch (contextMenuActionId)
         {
@@ -225,42 +224,42 @@ namespace Konversation
 
     void TopicLabel::highlightedSlot(const QString& link)
     {
-        //we just saw this a second ago.  no need to reemit.
-        if (link == m_lastStatusText && !link.isEmpty())
-            return;
-
         if (link.isEmpty())
         {
+            m_currentUrl.clear();
+            m_isOnChannel = false;
+
+            setContextMenuOptions(IrcContextMenus::ShowLinkActions, false);
+
             if (!m_lastStatusText.isEmpty())
             {
-                emit clearStatusBarTempText();
                 m_lastStatusText.clear();
+                emit clearStatusBarTempText();
             }
         }
         else
+        {
+            // We just saw this link, no need to do the work again.
+            if (link == m_lastStatusText)
+                return;
+
             m_lastStatusText = link;
 
-        if (!link.startsWith('#'))
-        {
-            m_isOnChannel = false;
-
-            if (!link.isEmpty()) {
-                //link therefore != m_lastStatusText  so emit with this new text
-                emit setStatusBarTempText(link);
-            }
-            if (link.isEmpty() && m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
-                setContextMenuOptions(IrcContextMenus::ShowLinkActions, false);
-            else if (!link.isEmpty() && !m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
+            if (link.startsWith(QLatin1String("##")))
             {
-                m_urlToCopy = link;
+                m_isOnChannel = true;
+                m_currentChannel = link.mid(1);
+
+                emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
+            }
+            else
+            {
+                m_currentUrl = link;
+
+                emit setStatusBarTempText(link);
+
                 setContextMenuOptions(IrcContextMenus::ShowLinkActions, true);
             }
-        }
-        else if (link.startsWith(QLatin1String("##")))
-        {
-            m_currentChannel = link.mid(1);
-            m_isOnChannel = true;
-            emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
         }
     }
 

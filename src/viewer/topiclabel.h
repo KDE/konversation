@@ -68,7 +68,7 @@ namespace Konversation
             IrcContextMenus::MenuOptions m_contextMenuOptions;
             QString m_currentChannel;
             bool m_isOnChannel;
-            QString m_urlToCopy;
+            QString m_currentUrl;
     };
 
 }
