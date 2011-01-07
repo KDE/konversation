@@ -2627,11 +2627,16 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
 {
     ChannelNickPtr channelnick=getChannelNick(nickname);
     //XXX Would be nice to know why it can be null here...
-    if (channelnick) {
+    if (channelnick)
+    {
         channelnick->moreActive();
-        Nick* nick = getNickByName(nickname); // FIXME: begs for map lookup
-        if (nick) {
-            nick->repositionMe();
+        if (Preferences::self()->sortByActivity())
+        {
+            Nick* nick = getNickByName(nickname); // FIXME: begs for map lookup
+            if (nick)
+            {
+                nick->repositionMe();
+            }
         }
     }
 }
