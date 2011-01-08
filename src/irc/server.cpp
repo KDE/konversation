@@ -3220,8 +3220,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
             channel->flushPendingNicks();
 
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
-            // Note that NickPanel has already updated, so pass new nick to getNickByName.
-            if (channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
+            if (channel->getNickByName(nickname)) channel->nickRenamed(nickname, *nickInfo);
         }
 
         //Watched nicknames stuff

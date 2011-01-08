@@ -1016,9 +1016,12 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
         appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick),false);
     }
 
-    Nick *nick = getNickByName(newNick);
+    Nick *nick = getNickByName(oldNick);
     if (nick)
     {
+        m_nicknameNickHash.remove(oldNick.toLower());
+        m_nicknameNickHash.insert(newNick.toLower(), nick);
+
         repositionNick(nick);
     }
 }
