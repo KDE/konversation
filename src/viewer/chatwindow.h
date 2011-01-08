@@ -67,17 +67,17 @@ class ChatWindow : public KVBox
         /** Get the server this is linked to.
          *  @return The server it is associated with, or null if none.
          */
-        Server* getServer();
+        Server* getServer() const;
         void setTextView(IRCView* newView);
         IRCView* getTextView() const;
         virtual bool log();
 
-        QString getName();
-        QString getTitle();
+        QString getName() const;
+        QString getTitle() const;
         QString getURI(bool passNetwork = true);
 
         void setType(WindowType newType);
-        WindowType getType();
+        WindowType getType() const;
 
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendRaw(const QString& message, bool suppressTimestamps=false);

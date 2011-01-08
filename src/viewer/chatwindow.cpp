@@ -79,12 +79,12 @@ void ChatWindow::setName(const QString& newName)
     emit nameChanged(this,newName);
 }
 
-QString ChatWindow::getName()
+QString ChatWindow::getName() const
 {
     return name;
 }
 
-QString ChatWindow::getTitle()
+QString ChatWindow::getTitle() const
 {
     QString title;
     if (getType() == Channel)
@@ -151,7 +151,7 @@ void ChatWindow::setType(WindowType newType)
     type=newType;
 }
 
-ChatWindow::WindowType ChatWindow::getType()
+ChatWindow::WindowType ChatWindow::getType() const
 {
     return type;
 }
@@ -178,7 +178,7 @@ void ChatWindow::setServer(Server* newServer)
     }
 }
 
-Server* ChatWindow::getServer()
+Server* ChatWindow::getServer() const
 {
     return m_server;
 }

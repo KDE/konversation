@@ -406,12 +406,12 @@ void Channel::rejoin()
         m_server->sendJoinCommand(getName(), getPassword());
 }
 
-ChannelNickPtr Channel::getOwnChannelNick()
+ChannelNickPtr Channel::getOwnChannelNick() const
 {
     return m_ownChannelNick;
 }
 
-ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
+ChannelNickPtr Channel::getChannelNick(const QString &ircnick) const
 {
     return m_server->getChannelNick(getName(), ircnick);
 }
@@ -423,6 +423,7 @@ void Channel::purgeNicks()
     // Purge nickname list
     qDeleteAll(nicknameList);
     nicknameList.clear();
+    m_nicknameNickHash.clear();
 
     // Execute this otherwise it may crash trying to access
     // deleted nicks
@@ -995,6 +996,7 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
         nicknameList.insert(it, nick);
     }
 
+    m_nicknameNickHash.insert (channelnick->loweredNickname(), nick);
 }
 
 void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
@@ -1110,11 +1112,12 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
 
         adjustNicks(-1);
-        Nick* nick = getNickByName(channelNick->getNickname());
+        Nick* nick = getNickByName(channelNick->loweredNickname());
 
         if(nick)
         {
             nicknameList.removeOne(nick);
+            m_nicknameNickHash.remove(channelNick->loweredNickname());
             delete nick;
             // Execute this otherwise it may crash trying to access deleted nick
             nicknameListView->executeDelayedItemsLayout();
@@ -1213,7 +1216,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             adjustOps(-1);
 
         adjustNicks(-1);
-        Nick* nick = getNickByName(channelNick->getNickname());
+        Nick* nick = getNickByName(channelNick->loweredNickname());
 
         if(nick == 0)
         {
@@ -1222,22 +1225,17 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         else
         {
             nicknameList.removeOne(nick);
+            m_nicknameNickHash.remove(channelNick->loweredNickname());
             delete nick;
         }
     }
 }
 
-Nick* Channel::getNickByName(const QString &lookname)
+Nick* Channel::getNickByName(const QString &lookname) const
 {
     QString lcLookname(lookname.toLower());
 
-    foreach (Nick* nick, nicknameList)
-    {
-        if(nick->getChannelNick()->loweredNickname() == lcLookname)
-            return nick;
-    }
-
-    return 0;
+    return m_nicknameNickHash.value(lcLookname);
 }
 
 void Channel::adjustNicks(int value)
@@ -2632,7 +2630,7 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
         channelnick->moreActive();
         if (Preferences::self()->sortByActivity())
         {
-            Nick* nick = getNickByName(nickname); // FIXME: begs for map lookup
+            Nick* nick = getNickByName(nickname);
             if (nick)
             {
                 nick->repositionMe();
