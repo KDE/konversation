@@ -46,7 +46,11 @@ namespace Konversation
     {
         if(m_played && ((m_mediaObject->state() != Phonon::PausedState && m_mediaObject->state() != Phonon::StoppedState) || !m_playQueue.isEmpty()))
         {
-            m_playQueue.enqueue(url);
+            if(m_mediaObject->currentSource().url() != url)
+            {
+                m_playQueue.enqueue(url);
+            }
+
             return;
         }
 
