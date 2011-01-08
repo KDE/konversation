@@ -15,7 +15,6 @@
 #include "application.h"
 #include "servergroupdialog.h"
 #include "connectionsettings.h"
-#include "ui_serverlistdialogui.h"
 
 #include <QCheckBox>
 #include <QHeaderView>
@@ -55,19 +54,13 @@ namespace Konversation
     }
 
     ServerListDialog::ServerListDialog(const QString& title, QWidget *parent)
-        : KDialog(parent)
+    : KDialog(parent), Ui::ServerListDialogUI()
     {
         setCaption(title);
         setButtons(Ok|Close);
 
-        m_mainWidget = new Ui::ServerListDialogUI();
-        m_mainWidget->setupUi(mainWidget());
+        setupUi(mainWidget());
         mainWidget()->layout()->setMargin(0);
-        m_serverList = m_mainWidget->m_serverList;
-        m_addButton = m_mainWidget->m_addButton;
-        m_delButton = m_mainWidget->m_delButton;
-        m_editButton = m_mainWidget->m_editButton;
-        m_showAtStartup = m_mainWidget->m_showAtStartup;
 
         setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
@@ -114,7 +107,6 @@ namespace Konversation
         KConfigGroup config(KGlobal::config(), "ServerListDialog");
         config.writeEntry("Size", size());
         config.writeEntry("ServerListHeaderState", m_serverList->header()->saveState());
-        delete m_mainWidget;
     }
 
     void ServerListDialog::slotClose()

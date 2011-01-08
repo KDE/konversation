@@ -16,15 +16,13 @@
 #include "common.h"
 #include "servergroupsettings.h"
 #include "serverlistview.h"
+#include "ui_serverlistdialogui.h"
 #include <kdialog.h>
 
 class ConnectionSettings;
 class QTreeWidgetItem;
 class QCheckBox;
-namespace Ui
-{
-class ServerListDialogUI;
-}
+
 namespace Konversation
 {
     class ServerListItem : public QTreeWidgetItem
@@ -39,7 +37,7 @@ namespace Konversation
             };
     };
 
-    class ServerListDialog : public KDialog
+    class ServerListDialog : public KDialog, private Ui::ServerListDialogUI
     {
         Q_OBJECT
 
@@ -88,12 +86,6 @@ namespace Konversation
 
         private:
             int selectedChildrenCount(QTreeWidgetItem* item);
-            Ui::ServerListDialogUI* m_mainWidget;
-            QPushButton* m_addButton;
-            QPushButton* m_delButton;
-            QPushButton* m_editButton;
-            QCheckBox* m_showAtStartup;
-            ServerListView* m_serverList;
 
             bool m_selectedItem;
             int m_selectedServerGroupId;
