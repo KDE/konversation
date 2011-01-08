@@ -103,6 +103,7 @@ namespace Konversation
         resize(newSize);
         m_serverList->header()->setMovable(false); // don't let the user reorder the header
         m_serverList->sortItems(0, Qt::AscendingOrder);
+        m_serverList->header()->restoreState(config.readEntry<QByteArray>("ServerListHeaderState", QByteArray()));
         //because it sorts the first column in ascending order by default
         //causing problems and such.
         m_serverList->topLevelItem(0)->setSelected(true);
@@ -112,6 +113,7 @@ namespace Konversation
     {
         KConfigGroup config(KGlobal::config(), "ServerListDialog");
         config.writeEntry("Size", size());
+        config.writeEntry("ServerListHeaderState", m_serverList->header()->saveState());
         delete m_mainWidget;
     }
 
