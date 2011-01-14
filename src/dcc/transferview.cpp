@@ -592,7 +592,6 @@ namespace Konversation
                     dataChanged(rowIndex, index(rowIndex.row(), columnCount));
                 }
             }
-            QTreeView::update();
         }
 
         void TransferView::rowsAboutToBeRemovedFromModel(const QModelIndex &/*parent*/,
