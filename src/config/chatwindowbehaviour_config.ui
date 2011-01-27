@@ -158,7 +158,7 @@
            <string>If checked, only events concerning active and watched nicks will be displayed.</string>
           </property>
           <property name="text">
-           <string>Except for watched nicks and nicks active within </string>
+           <string>Except for watched nicks and nicks active within the</string>
           </property>
          </widget>
         </item>
