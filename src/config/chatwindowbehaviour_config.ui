@@ -411,6 +411,22 @@
    <header>knuminput.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_Beep</tabstop>
+  <tabstop>kcfg_HideUnimportantEvents</tabstop>
+  <tabstop>kcfg_HideUnimportantEventsExcludeActive</tabstop>
+  <tabstop>kcfg_HideUnimportantEventsExcludeActiveThreshold</tabstop>
+  <tabstop>kcfg_DisableExpansion</tabstop>
+  <tabstop>kcfg_RedirectServerAndAppMsgToStatusPane</tabstop>
+  <tabstop>kcfg_UseLiteralModes</tabstop>
+  <tabstop>kcfg_ScrollbackMax</tabstop>
+  <tabstop>kcfg_AutomaticRememberLine</tabstop>
+  <tabstop>kcfg_AutomaticRememberLineOnlyOnTextChange</tabstop>
+  <tabstop>kcfg_MarkerLineInAllViews</tabstop>
+  <tabstop>kcfg_AutoWhoContinuousEnabled</tabstop>
+  <tabstop>kcfg_AutoWhoNicksLimit</tabstop>
+  <tabstop>kcfg_AutoWhoContinuousInterval</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
