@@ -245,10 +245,10 @@ void ChatWindow::appendServerMessage(const QString& type,const QString& message,
     textView->appendServerMessage(type,message, parseURL);
 }
 
-void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL, bool self)
+void ChatWindow::appendCommandMessage(const QString& command, const QString& message, bool parseURL, bool self)
 {
     if(!textView) return ;
-    textView->appendCommandMessage(command,message,important, parseURL, self);
+    textView->appendCommandMessage(command,message,parseURL,self);
 }
 
 void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)

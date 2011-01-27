@@ -112,6 +112,7 @@ class Channel : public ChatWindow
         void fastAddNickname(ChannelNickPtr channelnick, Nick *nick=0);
         void setActive(bool active);
         void repositionNick(Nick *nick);
+        bool shouldShowEvent(ChannelNickPtr channelNick);
 
     public slots:
         void setNickname(const QString& newNickname);

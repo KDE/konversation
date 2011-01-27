@@ -714,11 +714,8 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     doAppend(line, rtl);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
+void IRCView::appendCommandMessage(const QString& type,const QString& message, bool parseURL, bool self)
 {
-    if (Preferences::self()->hideUnimportantEvents() && !important)
-        return;
-
     QString commandColor = Preferences::self()->color(Preferences::CommandMessage).name();
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;

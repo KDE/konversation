@@ -188,7 +188,7 @@ class IRCView : public KTextBrowser
         void appendChannelAction(const QString& nick, const QString& message);
 
         void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
-        void appendCommandMessage(const QString& command, const QString& message, bool important, bool parseURL=true, bool self=false);
+        void appendCommandMessage(const QString& command, const QString& message, bool parseURL=true, bool self=false);
         void appendBacklogMessage(const QString& firstColumn, const QString& message);
 
     protected:

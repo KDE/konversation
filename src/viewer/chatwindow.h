@@ -85,7 +85,7 @@ class ChatWindow : public KVBox
         virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);
         virtual void appendAction(const QString& nickname,const QString& message);
         virtual void appendServerMessage(const QString& type,const QString& message, bool parseURL = true);
-        virtual void appendCommandMessage(const QString& command, const QString& message, bool important = true,
+        virtual void appendCommandMessage(const QString& command, const QString& message,
             bool parseURL = true, bool self = false);
         virtual void appendBacklogMessage(const QString& firstColumn,const QString& message);
 

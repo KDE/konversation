@@ -985,8 +985,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Mode"),
-                            i18n("Channel modes: ") + modesAre
-                            );
+                            i18n("Channel modes: ") + modesAre);
                     }
                 }
                 break;

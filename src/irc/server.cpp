@@ -3280,7 +3280,7 @@ void Server::appendCommandMessageToChannel(const QString& channel,const QString&
     Channel* outChannel = getChannelByName(channel);
     if (outChannel)
     {
-        outChannel->appendCommandMessage(command,message,true,parseURL,!highlight);
+        outChannel->appendCommandMessage(command,message,parseURL,!highlight);
     }
     else
     {

@@ -156,7 +156,7 @@ void Query::setName(const QString& newName)
 
     if(ChatWindow::getName() != newName)
     {
-        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", getName(), newName),false);
+        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", getName(), newName));
     }
 
 
@@ -516,14 +516,14 @@ void Query::quitNick(const QString& reason)
 
     if (displayReason.isEmpty())
     {
-        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server.",getName()),false);
+        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server.",getName()));
     }
     else
     {
         if (displayReason.contains(QRegExp("[\\0000-\\0037]")))
             displayReason+="\017";
 
-        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).",getName(),displayReason),false);
+        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).",getName(),displayReason));
     }
 }
 

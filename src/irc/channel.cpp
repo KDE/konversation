@@ -999,24 +999,64 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
     m_nicknameNickHash.insert (channelnick->loweredNickname(), nick);
 }
 
+/* Determines whether Nick/Part/Join event should be shown or skipped based on user settings. */
+bool Channel::shouldShowEvent(ChannelNickPtr channelNick)
+{
+    if (Preferences::self()->hideUnimportantEvents())
+    {
+        if (channelNick && Preferences::self()->hideUnimportantEventsExcludeActive())
+        {
+            uint activityThreshold = 3600;
+
+            if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 0) // last 10 minutes
+                activityThreshold = 600;
+            if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 1) // last hour
+                activityThreshold = 3600;
+            else if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 2) // last day
+                activityThreshold = 86400;
+            else if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 3) // last week
+                activityThreshold = 604800;
+
+            if (m_server->isWatchedNick(channelNick->getNickname()))
+                return true; // nick is on our watched list, so we probably want to see the event
+            else if (channelNick->timeStamp()+activityThreshold > QDateTime::currentDateTime().toTime_t())
+                return true; // the nick has spoken within activity threshold
+            else
+                return false;
+        }
+        else
+            return false; // if hideUnimportantEventsExcludeActive is off, we hide all events
+    }
+    else
+        return true; // if hideUnimportantEvents is off we don't care and just show the event
+}
+
 void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
 {
-
-    /* Did we change our nick name? */
     QString newNick = nickInfo.getNickname();
+    Nick *nick = getNickByName(oldNick);
+    bool displayCommandMessage;
 
+    if (Preferences::self()->hideUnimportantEventsExcludeActive() && m_server->isWatchedNick(oldNick))
+        displayCommandMessage = true; // this is for displaying watched people NICK events both ways (watched->unwatched and unwatched->watched)
+    else if (nick)
+        displayCommandMessage = shouldShowEvent(nick->getChannelNick());
+    else
+        displayCommandMessage = shouldShowEvent(ChannelNickPtr()); // passing null pointer
+    
+    /* Did we change our nick name? */
     if(newNick == m_server->getNickname()) /* Check newNick because  m_server->getNickname() is already updated to new nick */
     {
         setNickname(newNick);
-        appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.", newNick), false, true, true);
+        if (displayCommandMessage)
+            appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.", newNick), true, true);
     }
-    else
+    else if (displayCommandMessage)
     {
         /* No, must've been someone else */
-        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick),false);
+        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick));
     }
 
-    Nick *nick = getNickByName(oldNick);
     if (nick)
     {
         m_nicknameNickHash.remove(oldNick.toLower());
@@ -1028,12 +1068,15 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
 
 void Channel::joinNickname(ChannelNickPtr channelNick)
 {
+    bool displayCommandMessage = shouldShowEvent(channelNick);
+    
     if(channelNick->getNickname() == m_server->getNickname())
     {
         m_joined = true;
         emit joined(this);
-        appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
-                             "You have joined the channel %1 (%2).", getName(), channelNick->getHostmask()),false, false, true);
+        if (displayCommandMessage)
+            appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
+                                 "You have joined the channel %1 (%2).", getName(), channelNick->getHostmask()), false, true);
         m_ownChannelNick = channelNick;
         refreshModeButtons();
         setActive(true);
@@ -1051,14 +1094,17 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     {
         QString nick = channelNick->getNickname();
         QString hostname = channelNick->getHostmask();
-        appendCommandMessage(i18n("Join"), i18nc("%1 is the nick joining and %2 the hostmask of that nick",
-                             "%1 has joined this channel (%2).", nick, hostname),false, false);
+        if (displayCommandMessage)
+            appendCommandMessage(i18n("Join"), i18nc("%1 is the nick joining and %2 the hostmask of that nick",
+                                 "%1 has joined this channel (%2).", nick, hostname), false);
         addNickname(channelNick);
     }
 }
 
 void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit)
 {
+    bool displayCommandMessage = shouldShowEvent(channelNick);
+    
     QString displayReason = reason;
 
     if(!displayReason.isEmpty())
@@ -1070,43 +1116,48 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
 
     if(channelNick->getNickname() == m_server->getNickname())
     {
-        //If in the future we can leave a channel, but not close the window, refreshModeButtons() has to be called.
-        if (quit)
+        if (displayCommandMessage)
         {
-            if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Quit"), i18n("You have left this server."), false);
+            //If in the future we can leave a channel, but not close the window, refreshModeButtons() has to be called.
+            if (quit)
+            {
+                if (displayReason.isEmpty())
+                    appendCommandMessage(i18n("Quit"), i18n("You have left this server."));
+                else
+                    appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).", displayReason));
+            }
             else
-                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).", displayReason), false);
-        }
-        else
-        {
-            if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("You have left channel %1.", getName()), false);
-            else
-                appendCommandMessage(i18n("Part"), i18nc("%1 adds the channel and %2 the reason",
-                                     "You have left channel %1 (%2).", getName(), displayReason), false);
-
+            {
+                if (displayReason.isEmpty())
+                    appendCommandMessage(i18n("Part"), i18n("You have left channel %1.", getName()));
+                else
+                    appendCommandMessage(i18n("Part"), i18nc("%1 adds the channel and %2 the reason",
+                                "You have left channel %1 (%2).", getName(), displayReason));
+            }
         }
 
         delete this;
     }
     else
     {
-        if (quit)
+        if (displayCommandMessage)
         {
-            if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.", channelNick->getNickname()), false);
+            if (quit)
+            {
+                if (displayReason.isEmpty())
+                    appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.", channelNick->getNickname()));
+                else
+                    appendCommandMessage(i18n("Quit"), i18nc("%1 adds the nick and %2 the reason",
+                                         "%1 has left this server (%2).", channelNick->getNickname(), displayReason));
+            }
             else
-                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the nick and %2 the reason",
-                                     "%1 has left this server (%2).", channelNick->getNickname(), displayReason), false);
-        }
-        else
-        {
-            if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.", channelNick->getNickname()), false);
-            else
-                appendCommandMessage(i18n("Part"), i18nc("%1 adds the nick and %2 the reason",
-                                     "%1 has left this channel (%2).", channelNick->getNickname(), displayReason), false);
+            {
+                if (displayReason.isEmpty())
+                    appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.", channelNick->getNickname()));
+                else
+                    appendCommandMessage(i18n("Part"), i18nc("%1 adds the nick and %2 the reason",
+                                         "%1 has left this channel (%2).", channelNick->getNickname(), displayReason));
+            }
         }
 
         if(channelNick->isAnyTypeOfOp())
@@ -1171,12 +1222,12 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             if (displayReason.isEmpty())
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 adds the kicker",
-                                              "You have been kicked from channel %1 by %2.", getName(), kicker), true);
+                                              "You have been kicked from channel %1 by %2.", getName(), kicker));
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 the kicker and %3 the reason",
-                                              "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason), true);
+                                              "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason));
             }
 
             Application::instance()->notificationHandler()->kick(this,getName(), kicker);
@@ -1199,19 +1250,19 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
                 appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.", channelNick->getNickname()));
             else
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick and %2 the reason",
-                                     "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason), true);
+                                     "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason));
         }
         else
         {
             if (displayReason.isEmpty())
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 adds the kicker",
-                                     "%1 has been kicked from the channel by %2.", channelNick->getNickname(), kicker), true);
+                                     "%1 has been kicked from the channel by %2.", channelNick->getNickname(), kicker));
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 the kicker and %3 the reason",
-                                     "%1 has been kicked from the channel by %2 (%3).", channelNick->getNickname(), kicker, displayReason), true);
+                                     "%1 has been kicked from the channel by %2 (%3).", channelNick->getNickname(), kicker, displayReason));
             }
         }
 
