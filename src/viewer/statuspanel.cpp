@@ -15,12 +15,12 @@
 #include "ircinput.h"
 #include "ircview.h"
 #include "ircviewbox.h"
+#include "awaylabel.h"
 #include "server.h"
 
-
-#include <KMessageBox>
 #include <KComboBox>
 #include <KLineEdit>
+#include <KMessageBox>
 
 using namespace Konversation;
 
@@ -48,8 +48,9 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     if (nicknameComboboxLineEdit) nicknameComboboxLineEdit->setClearButtonShown(false);
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can edit the alternative nicknames from the <em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"));
 
-    awayLabel=new QLabel(i18n("(away)"), commandLineBox);
+    awayLabel=new AwayLabel(commandLineBox);
     awayLabel->hide();
+
     statusInput=new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(statusInput);
@@ -65,7 +66,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
 
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
-    Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editedable.  if we design it so it isn't, remove these lines.
+    Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editable.  if we design it so it isn't, remove these lines.
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));
 
@@ -332,6 +333,8 @@ void StatusPanel::setServer(Server* server)
 {
     ChatWindow::setServer(server);
     nicknameCombobox->setModel(m_server->nickListModel());
+    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
+    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
 }
 
 #include "statuspanel.moc"

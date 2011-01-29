@@ -22,6 +22,7 @@
 #include "ircinput.h"
 #include "ircviewbox.h"
 #include "ircview.h"
+#include "awaylabel.h"
 #include "topiclabel.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
@@ -220,7 +221,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     if (nicknameComboboxLineEdit) nicknameComboboxLineEdit->setClearButtonShown(false);
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can edit the alternative nicknames from the <em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"));
 
-    awayLabel = new QLabel(i18n("(away)"), commandLineBox);
+    awayLabel = new AwayLabel(commandLineBox);
     awayLabel->hide();
     cipherLabel = new QLabel(commandLineBox);
     cipherLabel->hide();
@@ -325,6 +326,9 @@ void Channel::setServer(Server* server)
     topicLine->setServer(server);
     refreshModeButtons();
     nicknameCombobox->setModel(m_server->nickListModel());
+    
+    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
+    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
 }
 
 void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)

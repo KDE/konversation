@@ -27,6 +27,7 @@
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */
 
+class AwayLabel;
 class IRCInput;
 
 class QLabel;
@@ -113,8 +114,8 @@ class Query : public ChatWindow
         KSqueezedTextLabel* queryHostmask;
         QLabel* addresseeimage;
         QLabel* addresseelogoimage;
-        QLabel* awayLabel;
         QLabel* blowfishLabel;
+        AwayLabel* awayLabel;
         IRCInput* queryInput;
         NickInfoPtr m_nickInfo;
 

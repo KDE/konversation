@@ -190,9 +190,6 @@ class Server : public QObject
         QString getOwnIpByNetworkInterface();
         QString getOwnIpByServerMessage();
 
-        void requestAway(const QString& reason = "");
-        void requestUnaway();
-
         bool isAway() { return m_away; }
         void setAway(bool away);
         QString awayTime() const;
@@ -470,6 +467,8 @@ class Server : public QObject
         void removeQuery(Query *query);
         void startNotifyTimer(int msec=0);
         void sendJoinCommand(const QString& channelName, const QString& password = QString());
+        void requestAway(const QString& reason = "");
+        void requestUnaway();
         void requestChannelList();
         void requestWhois(const QString& nickname);
         void requestWho(const QString& channel);

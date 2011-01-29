@@ -40,6 +40,7 @@ class KVBox;
 class KHBox;
 class KComboBox;
 
+class AwayLabel;
 class NickListView;
 class Nick;
 class QuickButton;
@@ -336,7 +337,7 @@ class Channel : public ChatWindow
         QWidget* m_buttonsGrid;
         KComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
-        QLabel* awayLabel;
+        AwayLabel* awayLabel;
         QLabel* cipherLabel;
         IRCInput* channelInput;
 

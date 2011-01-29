@@ -141,6 +141,7 @@ set(viewer_SRCS
     viewer/insertchardialog.cpp
     viewer/osd.cpp
     viewer/topiclabel.cpp
+    viewer/awaylabel.cpp
     viewer/editnotifydialog.cpp
     viewer/emoticons.cpp
     viewer/images.cpp

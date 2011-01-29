@@ -15,13 +15,12 @@
 
 #include "chatwindow.h"
 
+class AwayLabel;
 class IRCInput;
 
 class QCheckBox;
-class QLabel;
 
 class KComboBox;
-
 
 class StatusPanel : public ChatWindow
 {
@@ -73,7 +72,6 @@ class StatusPanel : public ChatWindow
         virtual void serverOnline(bool online);
 
     protected:
-
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
@@ -83,7 +81,7 @@ class StatusPanel : public ChatWindow
         void showEvent(QShowEvent* event);
 
         KComboBox* nicknameCombobox;
-        QLabel* awayLabel;
+        AwayLabel* awayLabel;
         IRCInput* statusInput;
         QCheckBox* logCheckBox;
         QString oldNick;

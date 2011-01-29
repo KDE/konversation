@@ -20,6 +20,7 @@
 #include "ircinput.h"
 #include "ircview.h"
 #include "ircviewbox.h"
+#include "awaylabel.h"
 #include "common.h"
 
 #include <QSplitter>
@@ -76,7 +77,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     inputBox->setObjectName("input_log_box");
     inputBox->setSpacing(spacing());
 
-    awayLabel=new QLabel(i18n("(away)"), inputBox);
+    awayLabel=new AwayLabel(inputBox);
     awayLabel->hide();
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();
@@ -128,6 +129,9 @@ void Query::setServer(Server* newServer)
 
     if (!(newServer->getKeyForRecipient(getName()).isEmpty()))
         blowfishLabel->show();
+    
+    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
+    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
 }
 
 void Query::connectionStateChanged(Server* server, Konversation::ConnectionState state)
