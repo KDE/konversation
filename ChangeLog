@@ -318,6 +318,8 @@ Changes since 1.3.1:
   the nickname the message is about has been active in the respective
   channel in the last 10 minutes, last hour, last day or last week. Pre-
   viously it was all or nothing.
+* The '(away)' label shown next to input lines when away now has a context
+  menu with actions to change the away message or return from away state.
 
 
 Changes from 1.3 to 1.3.1:
