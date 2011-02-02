@@ -163,7 +163,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="kcfg_HideUnimportantEventsExcludeActiveThreshold">
+         <widget class="KComboBox" name="kcfg_HideUnimportantEventsExcludeActiveThreshold">
           <property name="enabled">
            <bool>false</bool>
           </property>
