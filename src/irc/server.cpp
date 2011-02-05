@@ -3714,7 +3714,10 @@ void Server::setAway(bool away)
             queue("NICK " + getIdentity()->getAwayNickname());
         }
 
-        appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away (reason: %1).",m_awayReason));
+        if (!m_awayReason.isEmpty())
+            appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away (reason: %1).",m_awayReason));
+        else
+           appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."));
 
         if (identity && identity->getRunAwayCommands())
         {
