@@ -57,7 +57,7 @@ class IrcContextMenusPrivate
         IrcContextMenus instance;
 };
 
-K_GLOBAL_STATIC(IrcContextMenusPrivate, s_ircContextMenusPrivate);
+K_GLOBAL_STATIC(IrcContextMenusPrivate, s_ircContextMenusPrivate)
 
 IrcContextMenusPrivate::IrcContextMenusPrivate()
 {
