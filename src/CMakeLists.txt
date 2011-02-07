@@ -160,6 +160,7 @@ set(dcc_SRCS
     dcc/chat.cpp
     dcc/chatcontainer.cpp
     dcc/dcccommon.cpp
+    dcc/dccfiledialog.cpp
     dcc/recipientdialog.cpp
     dcc/resumedialog.cpp
     dcc/transfer.cpp

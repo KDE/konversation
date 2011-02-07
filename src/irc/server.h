@@ -40,6 +40,7 @@
 #include <ksharedptr.h>
 #include <kprocess.h>
 #include <ktcpsocket.h>
+#include <preferences.h>
 
 class QAbstractItemModel;
 class QStringListModel;
@@ -463,7 +464,7 @@ class Server : public QObject
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName = QString(), quint64 fileSize = 0);
+        void addDccSend(const QString &recipient, KUrl fileURL, bool passive = Preferences::self()->dccPassiveSend(), const QString &altFileName = QString(), quint64 fileSize = 0);
         void removeQuery(Query *query);
         void startNotifyTimer(int msec=0);
         void sendJoinCommand(const QString& channelName, const QString& password = QString());

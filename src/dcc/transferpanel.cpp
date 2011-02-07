@@ -285,6 +285,7 @@ namespace Konversation
                 newTransfer->setPartnerNick(transfer->getPartnerNick());
                 newTransfer->setFileURL(transfer->getFileURL());
                 newTransfer->setFileName(transfer->getFileName());
+                newTransfer->setReverse(transfer->isReverse());
 
                 if (newTransfer->queue())
                 {

@@ -76,7 +76,7 @@ namespace Konversation
             /**
              * Send the file to the contact
              */
-            void sendFile(const QString &uid, const KUrl &sourceURL,
+            void sendFile(const QString &uid, const KUrl &sourceURL, bool passive,
                 const QString &altFileName = QString(), quint64 fileSize = 0);
 
         public:

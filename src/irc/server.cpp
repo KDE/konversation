@@ -22,6 +22,7 @@
 #include "application.h"
 #include "connectionmanager.h"
 #include "dcccommon.h"
+#include "dccfiledialog.h"
 #include "transfermanager.h"
 #include "transfersend.h"
 #include "transferrecv.h"
@@ -41,7 +42,6 @@
 #include <QTextCodec>
 #include <QStringListModel>
 
-#include <KFileDialog>
 #include <KInputDialog>
 #include <KWindowSystem>
 
@@ -1846,18 +1846,20 @@ void Server::requestDccSend(const QString &a_recipient)
 
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
-    {
-        KUrl::List fileURLs=KFileDialog::getOpenUrls(
+    {        
+        QPointer<DccFileDialog> dlg = new DccFileDialog (KUrl(), QString(), getViewContainer()->getWindow());
+        //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
+        KUrl::List fileURLs = dlg->getOpenUrls(
             KUrl(),
             QString(),
-            getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1", recipient)
         );
         KUrl::List::const_iterator it;
         for ( it = fileURLs.constBegin() ; it != fileURLs.constEnd() ; ++it )
         {
-            addDccSend( recipient, *it );
+            addDccSend( recipient, *it, dlg->passiveSend());
         }
+        delete dlg;
     }
 }
 
@@ -1879,7 +1881,7 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
     }
 }
 
-void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName, quint64 fileSize)
+void Server::addDccSend(const QString &recipient, KUrl fileURL, bool passive, const QString &altFileName, quint64 fileSize)
 {
     if (!fileURL.isValid())
     {
@@ -1893,6 +1895,7 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
 
     newDcc->setPartnerNick(recipient);
     newDcc->setFileURL(fileURL);
+    newDcc->setReverse(passive);
     if (!altFileName.isEmpty())
         newDcc->setFileName(altFileName);
     if (fileSize != 0)

@@ -267,7 +267,7 @@ void Addressbook::chatWithContact( const QString &uid )
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
-void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QString &altFileName, quint64 fileSize)
+void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, bool passive, const QString &altFileName, quint64 fileSize)
 {
     if(uid.isEmpty())
     {
@@ -288,7 +288,7 @@ void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QStr
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but the requested user %1 is not currently online.",user));
         return;
     }
-    nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
+    nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, passive, altFileName, fileSize);
     QWidget *widget = nickInfo->getServer()->getViewContainer()->getWindow();
     KWindowSystem::demandAttention(widget->winId());       //If activeWindow request is denied, at least demand attention!
     KWindowSystem::activateWindow(widget->winId());        //May or may not work, depending on focus stealing prevention.
