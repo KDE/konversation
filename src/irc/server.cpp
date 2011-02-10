@@ -169,7 +169,7 @@ Server::~Server()
         m_socket->deleteLater();
     }
 
-    if (m_statusView) delete m_statusView;
+    delete m_statusView;
 
     closeRawLog();
     closeChannelListPanel();
@@ -3507,7 +3507,7 @@ void Server::addRawLog(bool show)
 
 void Server::closeRawLog()
 {
-    if (m_rawLog) delete m_rawLog;
+    delete m_rawLog;
 }
 
 void Server::requestOpenChannelListPanel(const QString& filter)
@@ -3543,7 +3543,7 @@ ChannelListPanel* Server::getChannelListPanel() const
 
 void Server::closeChannelListPanel()
 {
-    if (m_channelListPanel) delete m_channelListPanel;
+    delete m_channelListPanel;
 }
 
 void Server::updateAutoJoin(Konversation::ChannelList channels)

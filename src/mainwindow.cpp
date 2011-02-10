@@ -699,11 +699,8 @@ void MainWindow::updateTrayIcon()
     }
     else
     {
-        if (m_trayIcon)
-        {
-            delete m_trayIcon;
-            m_trayIcon = 0;
-        }
+        delete m_trayIcon;
+        m_trayIcon = 0;
     }
 }
 
