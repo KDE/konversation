@@ -92,7 +92,7 @@ namespace Konversation
         void TransferManager::shutdownUPnP(void)
         {
             // This deletes the router too.
-            if (m_upnpSocket) delete m_upnpSocket;
+            delete m_upnpSocket;
             m_upnpSocket = 0;
             m_upnpRouter = 0;
         }
