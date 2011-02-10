@@ -1959,7 +1959,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     qDeleteAll(buttonList);
     buttonList.clear();
 
-    if(m_buttonsGrid) delete m_buttonsGrid;
+    delete m_buttonsGrid;
 
     // the grid that holds the quick action buttons
     m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);
