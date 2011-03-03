@@ -319,9 +319,7 @@ bool IRCInput::event(QEvent* e)
 
         foreach(QAction* action, Application::instance()->getMainWindow()->actionCollection()->actions())
         {
-            KAction* kAction = qobject_cast<KAction*>(action);
-
-            if(kAction->shortcut().contains(key))
+            if (action->shortcuts().contains(QKeySequence(key)))
             {
                 event->ignore();
                 return false;
