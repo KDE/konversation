@@ -66,8 +66,6 @@ QUOTE_AFTER  = '"'
 
 import os
 import sys
-import re
-import string
 
 try:
     IRC_SERVER = sys.argv[1]
@@ -76,25 +74,14 @@ except IndexError:
     print >>sys.stderr, "This script is intended to be run from within Konversation."
     sys.exit(0)
 
-if (sys.hexversion >> 16) < 0x0204:
-    err="The media script requires Python 2.4."
+if sys.hexversion < 0x02060000:
+    err="The media script requires Python 2.6 or higher."
     os.popen('qdbus org.kde.konversation /irc error "%s"' %(err))
     sys.exit(err)
 
+import re
+import string
 import subprocess
-
-# Python 2.5 has this ...
-try:
-    any(())
-except NameError:
-    def any(data):
-        """Return true of any of the items in the sequence 'data' are true.
-
-        (ie non-zero or not empty)"""
-        try:
-            return reduce(lambda x,y: bool(x) or bool(y), data)
-        except TypeError:
-            return False
 
 def tell(data, feedback='info'):
     """Report back to the user"""
