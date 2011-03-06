@@ -488,7 +488,7 @@ else:
 if __name__=="__main__":
 
     if not TARGET:
-        s="""media v2.0.1 for Konversation 1.0. One media command to rule them all, inspired from Kopete's now listening plugin.
+        s="""media v2.1.0 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.
 Usage:
         "\00312/media\017" - report what the first player found is playing
         "\00312/media\017 [ '\00312audio\017' | '\00312video\017' ]" - report what is playing in a supported audio or video player
