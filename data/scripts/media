@@ -7,14 +7,16 @@
 #(at your option) any later version.
 
 # Copyright 2006 Eli J. MacKenzie
+# Copyright 2011 Eike Hein
 # Inspired by `media` (Copyright 2005 İsmail Dönmez)
+
+from __future__ import print_function
 
 
 # If you wish to customize the formatting strings, do so in this table.
 # Do not change the numbers unless you're changing the logic.
 # Title, artist, and album will be set once the player is queried.
 # See Player.format() for how these are used.
-
 
 #Changing these 3 values will likely cause the script to fail
 Title =4
@@ -71,7 +73,7 @@ try:
     IRC_SERVER = sys.argv[1]
     TARGET = sys.argv[2]
 except IndexError:
-    print >>sys.stderr, "This script is intended to be run from within Konversation."
+    print("This script is intended to be run from within Konversation.", file=sys.stderr)
     sys.exit(0)
 
 if sys.hexversion < 0x02060000:
@@ -256,7 +258,7 @@ class Amarok2Player(Player):
             return ''
 
     def isRunning(self):
-        qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0]
+        qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0].decode()
         running=re.findall(r'^ org.mpris.amarok\r?$', qdbus_items, re.M)
         if type(running) is list:
             try:
@@ -284,7 +286,7 @@ class JukPlayer(Player):
             return ''
 
     def isRunning(self):
-        qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0]
+        qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0].decode()
         running=re.findall(r'^ org.kde.juk\r?$', qdbus_items, re.M)
         if type(running) is list:
             try:
@@ -438,7 +440,7 @@ def run(kind):
                 sys.exit(0)
 
     if not playing(play, kind):
-        print play
+        print(play)
         handleErrors(play, kind)
 
 
@@ -448,7 +450,7 @@ def run(kind):
 #but of course when using shell you don't need to be efficient at all, right?
 
 try:
-    DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
+    DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0].decode()  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
 except OSError:
     DCOP_ITEMS=""
 
