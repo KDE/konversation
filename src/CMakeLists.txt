@@ -22,7 +22,7 @@ set(core_SRCS
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp
-    abstractawaymanager.cpp
+    awaymanager.cpp
     connectionmanager.cpp
     connectionsettings.cpp
     identity.cpp
@@ -209,15 +209,7 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-if (HAVE_KIDLETIME)
-    set(awaymanager_SRCS
-        awaymanagerkidletime.cpp)
-else (HAVE_KIDLETIME)
-    set(awaymanager_SRCS
-        awaymanager.cpp)
-endif (HAVE_KIDLETIME)
-
-set (completed_SRCS ${core_SRCS} ${awaymanager_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS
@@ -235,14 +227,6 @@ kde4_add_executable(konversation ${konversation_SRCS})
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
                             ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
-
-if (X11_FOUND AND X11_Xutil_FOUND)
-    target_link_libraries(konversation ${X11_X11_LIB})
-endif (X11_FOUND AND X11_Xutil_FOUND)
-
-if (X11_Xscreensaver_FOUND)
-    target_link_libraries(konversation ${X11_Xscreensaver_LIB})
-endif (X11_Xscreensaver_FOUND)
 
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})

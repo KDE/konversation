@@ -37,7 +37,7 @@
 #include "scriptlauncher.h"
 #include "serverison.h"
 #include "notificationhandler.h"
-#include "abstractawaymanager.h"
+#include "awaymanager.h"
 
 #include <QTextCodec>
 #include <QStringListModel>
@@ -1846,7 +1846,7 @@ void Server::requestDccSend(const QString &a_recipient)
 
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
-    {        
+    {
         QPointer<DccFileDialog> dlg = new DccFileDialog (KUrl(), QString(), getViewContainer()->getWindow());
         //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
         KUrl::List fileURLs = dlg->getOpenUrls(

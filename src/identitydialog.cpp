@@ -11,7 +11,7 @@
 */
 #include "identitydialog.h"
 #include "application.h"
-#include "abstractawaymanager.h"
+#include "awaymanager.h"
 #include "irccharsets.h"
 
 #include <KDialog>
@@ -66,7 +66,7 @@ namespace Konversation
         setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change identity information")));
         setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
-        AbstractAwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
+        AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
         connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
     }

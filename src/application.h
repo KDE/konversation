@@ -26,7 +26,7 @@
 #include <KUniqueApplication>
 
 class ConnectionManager;
-class AbstractAwayManager;
+class AwayManager;
 class ScriptLauncher;
 class Server;
 class QuickConnectDialog;
@@ -69,7 +69,7 @@ class Application : public KUniqueApplication
         MainWindow* getMainWindow() { return mainWindow; }
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
-        AbstractAwayManager* getAwayManager() { return m_awayManager; }
+        AwayManager* getAwayManager() { return m_awayManager; }
         ScriptLauncher* getScriptLauncher() { return m_scriptLauncher; }
         Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
@@ -162,7 +162,7 @@ class Application : public KUniqueApplication
         void implementRestart();
 
         ConnectionManager* m_connectionManager;
-        AbstractAwayManager* m_awayManager;
+        AwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;
         ScriptLauncher* m_scriptLauncher;
         QStandardItemModel* m_urlModel;

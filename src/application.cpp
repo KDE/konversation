@@ -30,12 +30,7 @@
 #include "channel.h"
 #include "images.h"
 #include "notificationhandler.h"
-
-#ifdef HAVE_KIDLETIME
-#include "awaymanagerkidletime.h"
-#else
 #include "awaymanager.h"
-#endif
 
 #include <QTextCodec>
 #include <QRegExp>

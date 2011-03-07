@@ -15,7 +15,7 @@
 #include "dbus.h"
 #include "application.h"
 #include "connectionmanager.h"
-#include "abstractawaymanager.h"
+#include "awaymanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"

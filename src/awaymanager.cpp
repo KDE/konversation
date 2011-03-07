@@ -13,257 +13,338 @@
 
 #include "awaymanager.h"
 #include "application.h"
-#include "mainwindow.h"
 #include "connectionmanager.h"
 #include "server.h"
 #include "preferences.h"
-#include <config-konversation.h>
-
-#include <QTimer>
-#include <QDBusInterface>
-#include <QDBusReply>
 
 #include <KActionCollection>
+//FIXME: Change to pretty <KIdleTime> include when KDE_IS_VERSION(4, 5, 0)
+#include <kidletime.h>
 #include <KToggleAction>
 
-#ifdef Q_WS_X11
-
-#if defined(HAVE_X11) && defined(HAVE_XUTIL)
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xresource.h>
-#include <X11/Xutil.h>
-#define HasXHeaders
-#endif
-
-#ifdef HAVE_XSCREENSAVER
-#define HasScreenSaver
-#include <X11/extensions/scrnsaver.h>
-#include <QX11Info>
-#endif
-
-// Don't use XIdle for now, it's experimental.
-#undef HAVE_XIDLE
-#undef HasXidle
-
-#include <fixx11h.h>
-#endif
-
-
-struct AwayManagerPrivate
+AwayManager::AwayManager(QObject* parent) : QObject(parent)
 {
-    int mouseX;
-    int mouseY;
-    unsigned int mouseMask;
-#ifdef HasXHeaders
-    Window root;
-    Screen* screen;
-    Time xIdleTime;
-#endif
-    bool useXidle;
-    bool useMit;
-};
+    m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
 
-AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
-{
-    d = new AwayManagerPrivate;
+    connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
+    connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
 
-    d->mouseX = d->mouseY = 0;
-    d->mouseMask = 0;
-    d->useXidle = false;
-    d->useMit = false;
-
-#ifdef HasXHeaders
-    Display* display = QX11Info::display();
-    d->root = DefaultRootWindow(display);
-    d->screen = ScreenOfDisplay(display, DefaultScreen (display));
-
-    d->xIdleTime = 0;
-#endif
-
-#ifdef HasXidle
-    int dummy = 0;
-    d->useXidle = XidleQueryExtension(QX11Info::display(), &dummy, &dummy);
-#endif
-
-#ifdef HasScreenSaver
-    int dummy2 = 0;
-    if (!d->useXidle)
-        d->useMit = XScreenSaverQueryExtension(QX11Info::display(), &dummy2, &dummy2);
-#endif
-
-    m_activityTimer = new QTimer(this);
-    m_activityTimer->setObjectName("AwayTimer");
-    connect(m_activityTimer, SIGNAL(timeout()), this, SLOT(checkActivity()));
-
-    // Initially reset the idle status.
-    resetIdle();
+    // Catch the first "resume event" (= user input) so we correctly catch the first
+    // resume event in case the user is already idle on startup).
+    KIdleTime::instance()->catchNextResumeEvent();
 }
 
 AwayManager::~AwayManager()
 {
-    delete d;
 }
 
-void AwayManager::simulateUserActivity()
+int AwayManager::minutesToMilliseconds(int minutes)
 {
-    resetIdle();
+    return minutes * 60 * 1000;
 }
 
-void AwayManager::resetIdle()
+void AwayManager::identitiesChanged()
 {
-    // Set the time of the idleTimer to the current time.
-    m_idleTime.start();
+    QHash<int, int> newIdentityWithIdleTimeMapping;
+
+    const QList<Server*> serverList = m_connectionManager->getServerList();
+
+    foreach (Server* server, serverList)
+    {
+        IdentityPtr identity = server->getIdentity();
+        int identityId = identity->id();
+
+        // Calculate the auto-away time in milliseconds.
+        int identityIdleTime = minutesToMilliseconds(identity->getAwayInactivity());
+
+        if (identity && identity->getAutomaticAway() && server->isConnected())
+            newIdentityWithIdleTimeMapping[identityId] = identityIdleTime;
+    }
+
+    m_identitiesWithIdleTimesOnAutoAway = newIdentityWithIdleTimeMapping;
+
+    identitiesOnAutoAwayChanged();
 }
 
-int AwayManager::idleTime()
+void AwayManager::identityOnline(int identityId)
 {
-    // Calculate the idle time in milliseconds.
-    return m_idleTime.elapsed();
+    IdentityPtr identity = Preferences::identityById(identityId);
+
+    if (identity && identity->getAutomaticAway() &&
+        !m_identitiesWithIdleTimesOnAutoAway.contains(identityId))
+    {
+        m_identitiesWithIdleTimesOnAutoAway[identityId] = minutesToMilliseconds(identity->getAwayInactivity());
+
+        // Notify the AwayManager implementation that a user which has auto-away enabled is not online.
+        identityOnAutoAwayWentOnline(identityId);
+    }
+}
+
+void AwayManager::identityOffline(int identityId)
+{
+    if (m_identitiesWithIdleTimesOnAutoAway.remove(identityId))
+        // Notify the AwayManager implementation that a user which has auto-away enabled is now offline.
+        identityOnAutoAwayWentOffline(identityId);
+}
+
+void AwayManager::implementManagedAway(int identityId)
+{
+    const QList<Server*> serverList = m_connectionManager->getServerList();
+
+    foreach (Server* server, serverList)
+    {
+        if (server->getIdentity()->id() == identityId && server->isConnected() && !server->isAway())
+            server->requestAway();
+    }
 }
 
 void AwayManager::setManagedIdentitiesAway()
 {
-    // Used to skip X-based activity checking for one round, to avoid jumping
-    // on residual mouse activity after manual screensaver activation.
-    d->mouseX = -1;
-    
-    // Call the base implementation.
-    AbstractAwayManager::setManagedIdentitiesAway();
-}
+    QHash<int, int>::ConstIterator itr = m_identitiesWithIdleTimesOnAutoAway.constBegin();
 
-void AwayManager::identitiesOnAutoAwayChanged()
-{
-    if (m_idetitiesWithIdleTimesOnAutoAway.count() > 0)
-    {
-        if (!m_activityTimer->isActive())
-            m_activityTimer->start(Preferences::self()->autoAwayPollInterval() * 1000);
-    }
-    else if (m_activityTimer->isActive())
-        m_activityTimer->stop();
-}
-
-void AwayManager::identityOnAutoAwayWentOnline(int identityId)
-{
-    Q_UNUSED(identityId);
-
-    identitiesOnAutoAwayChanged();
-}
-
-void AwayManager::identityOnAutoAwayWentOffline(int identityId)
-{
-    Q_UNUSED(identityId);
-
-    identitiesOnAutoAwayChanged();
-}
-
-void AwayManager::checkActivity()
-{
-    // Allow the event loop to be called, to avoid deadlock.
-    static bool rentrencyProtection = false;
-    if (rentrencyProtection) return;
-
-    rentrencyProtection = true;
-    QDBusInterface screenSaver("org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver");
-    QDBusReply<bool> isBlanked = screenSaver.call("GetActive");
-    rentrencyProtection = false;
-
-    if (!isBlanked.isValid() || !isBlanked.value())
-    {
-        // If there was activity we un-away all identities.
-        // Otherwise we set all identities to away (if they
-        // were idle long enough).
-        if (Xactivity())
-            setManagedIdentitiesUnaway();
-        else
-            implementIdleAutoAway();
-    }
-}
-
-bool AwayManager::Xactivity()
-{
-    bool activity = false;
-
-#ifdef HasXHeaders
-    Display* display = QX11Info::display();
-    Window dummyW;
-    int dummyC;
-    unsigned int mask;
-    int rootX;
-    int rootY;
-
-    if (!XQueryPointer (display, d->root, &(d->root), &dummyW, &rootX, &rootY,
-            &dummyC, &dummyC, &mask))
-    {
-        // Figure out which screen the pointer has moved to.
-        for (int i = 0; i < ScreenCount(display); i++)
-        {
-            if (d->root == RootWindow(display, i))
-            {
-                d->screen = ScreenOfDisplay (display, i);
-
-                break;
-            }
-        }
-    }
-
-    Time xIdleTime = 0;
-
-    #ifdef HasXidle
-    if (d->useXidle)
-        XGetIdleTime(display, &xIdleTime);
-    else
-    #endif
-    {
-    #ifdef HasScreenSaver
-        if (d->useMit)
-        {
-            static XScreenSaverInfo* mitInfo = 0;
-            if (!mitInfo) mitInfo = XScreenSaverAllocInfo();
-            XScreenSaverQueryInfo (display, d->root, mitInfo);
-            xIdleTime = mitInfo->idle;
-        }
-    #endif
-    }
-
-    if (rootX != d->mouseX || rootY != d->mouseY || mask != d->mouseMask
-        || ((d->useXidle || d->useMit) && xIdleTime < d->xIdleTime + 2000))
-    {
-        // Set by setManagedIdentitiesAway() to skip X-based activity checking for one
-        // round, to avoid jumping on residual mouse activity after manual screensaver
-        // activation.
-        if (d->mouseX != -1) activity = true;
-
-        d->mouseX = rootX;
-        d->mouseY = rootY;
-        d->mouseMask = mask;
-        d->xIdleTime = xIdleTime;
-    }
-#endif
-
-    return activity;
-}
-
-void AwayManager::implementIdleAutoAway()
-{
-    QHash<int, int>::ConstIterator it;
-
-    for (it = m_idetitiesWithIdleTimesOnAutoAway.constBegin(); it != m_idetitiesWithIdleTimesOnAutoAway.constEnd(); ++it)
-    {
-        // Check if the auto-away timeout (which the user has configured for the given identity)
-        // has already elapsed - if it has we mark the identity as away.
-        if (idleTime() >= it.value())
-            implementManagedAway(it.key());
-    }
+    for (; itr != m_identitiesWithIdleTimesOnAutoAway.constEnd(); ++itr)
+        implementManagedAway(itr.key());
 }
 
 void AwayManager::implementManagedUnaway(const QList<int>& identityList)
 {
-    // Call the base implementation (which does all workflow logic).
-    AbstractAwayManager::implementManagedUnaway(identityList);
+    const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    // Then reset the idle status as the user is not idle anymore.
-    resetIdle();
+    foreach (Server* server, serverList)
+    {
+        IdentityPtr identity = server->getIdentity();
+
+        if (identityList.contains(identity->id()) && identity->getAutomaticUnaway()
+            && server->isConnected() && server->isAway())
+        {
+            server->requestUnaway();
+        }
+    }
+}
+
+void AwayManager::setManagedIdentitiesUnaway()
+{
+    // Set the "not away" status for all identities which have
+    // auto-away enabled.
+    implementManagedUnaway(m_identitiesWithIdleTimesOnAutoAway.keys());
+}
+
+void AwayManager::requestAllAway(const QString& reason)
+{
+    const QList<Server*> serverList = m_connectionManager->getServerList();
+
+    foreach (Server* server, serverList)
+        if (server->isConnected())
+            server->requestAway(reason);
+}
+
+void AwayManager::requestAllUnaway()
+{
+    const QList<Server*> serverList = m_connectionManager->getServerList();
+
+    foreach (Server* server, serverList)
+        if (server->isConnected() && server->isAway())
+            server->requestUnaway();
+}
+
+void AwayManager::setGlobalAway(bool away)
+{
+    if (away)
+        requestAllAway();
+    else
+        requestAllUnaway();
+}
+
+void AwayManager::updateGlobalAwayAction(bool away)
+{
+    // Regardless of any implementation: If the given parameter indicates
+    // that the user is not away we should simulate user activity to
+    // ensure that the away-status of the user is really reset.
+    if (!away)
+        simulateUserActivity();
+
+    Application* konvApp = static_cast<Application*>(kapp);
+    KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
+
+    if (!awayAction)
+        return;
+
+    if (away)
+    {
+        const QList<Server*> serverList = m_connectionManager->getServerList();
+        int awayCount = 0;
+
+        foreach (Server* server, serverList)
+        {
+            if (server->isAway())
+                awayCount++;
+        }
+
+        if (awayCount == serverList.count())
+        {
+            awayAction->setChecked(true);
+            awayAction->setIcon(KIcon("im-user-away"));
+        }
+    }
+    else
+    {
+        awayAction->setChecked(false);
+        awayAction->setIcon(KIcon("im-user"));
+    }
+}
+
+int AwayManager::calculateRemainingTime(int identityId)
+{
+    // Get the idle time for the identity.
+    int identityIdleTimeout = m_identitiesWithIdleTimesOnAutoAway[identityId];
+
+    // The remaining time until the user will be marked as "auto-away".
+    int remainingTime = identityIdleTimeout - KIdleTime::instance()->idleTime();
+
+    return remainingTime;
+}
+
+void AwayManager::implementUpdateIdleTimeout(int identityId)
+{
+    const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
+
+    // calculate the remaining time until the user will be marked as away.
+    int remainingTime = calculateRemainingTime(identityId);
+
+    // Check if the user should be away right now.
+    if (remainingTime <= 0)
+    {
+        implementMarkIdentityAway(identityId);
+
+        // Since the user is away right now the next auto-away should occur
+        // in X minutes (where X is the the timeout which the user has
+        // configured for the identity).
+        remainingTime = m_identitiesWithIdleTimesOnAutoAway[identityId];
+    }
+
+    // Get the timer which is currently active for the identity.
+    int timerId = m_timerForIdentity.key(identityId, -1);
+
+    // Checks if we already have a timer for the given identity.
+    // If we already have a timer we need to make sure that we're always
+    // waiting for the remaining time.
+    if (idleTimeouts[timerId] != remainingTime)
+    {
+        // Remove the idle timeout.
+        implementRemoveIdleTimeout(timerId);
+
+        // Then also reset the timer ID (as the timer does not exist anymore).
+        timerId = -1;
+    }
+
+    // Check if we already have a timer.
+    if (timerId == -1)
+        // If not create a new timer.
+        implementAddIdleTimeout(identityId, remainingTime);
+}
+
+void AwayManager::implementAddIdleTimeout(int identityId, int idleTime)
+{
+    // Create a new timer.
+    int newTimerId = KIdleTime::instance()->addIdleTimeout(idleTime);
+
+    // Make sure we keep track of the identity <-> KIdleTimer mapping.
+    m_timerForIdentity[newTimerId] = identityId;
+}
+
+void AwayManager::implementRemoveIdleTimeout(int timerId)
+{
+    // Make sure we got a valid timer ID.
+    if (timerId != -1)
+    {
+        // Remove the idle timeout.
+        KIdleTime::instance()->removeIdleTimeout(timerId);
+
+        // Also remove the timer/identity mapping from our hashtable.
+        m_timerForIdentity.remove(timerId);
+    }
+}
+
+void AwayManager::implementMarkIdentityAway(int identityId)
+{
+    // Mark the current identity as away.
+    implementManagedAway(identityId);
+
+    // As at least one identity is away we have to catch the next
+    // resume event.
+    KIdleTime::instance()->catchNextResumeEvent();
+}
+
+void AwayManager::simulateUserActivity()
+{
+    // Tell KIdleTime that it should reset the user's idle status.
+    KIdleTime::instance()->simulateUserActivity();
+}
+
+void AwayManager::resumeFromIdle()
+{
+    // We are not idle anymore.
+    setManagedIdentitiesUnaway();
+
+    QHash<int, int>::ConstIterator itr = m_identitiesWithIdleTimesOnAutoAway.constBegin();
+
+    for (; itr != m_identitiesWithIdleTimesOnAutoAway.constEnd(); ++itr)
+        // Update the idle timeout for the identity to the configured timeout.
+        // This is needed in case the timer is not set to fire after the full
+        // away time but a shorter time (for example if the user was away on startup
+        // we want the timer to fire after "configured away-time" minus "time the user
+        // is already idle"). Then the timer's interval is wrong.
+        // Now (if needed) we simply remove the old timer and add a new one with the
+        // correct interval.
+        implementUpdateIdleTimeout(itr.key());
+}
+
+void AwayManager::idleTimeoutReached(int timerId)
+{
+    // Get the identity ID for the given timer ID.
+    int identityId = m_timerForIdentity[timerId];
+
+    // Mark the identity as away.
+    implementMarkIdentityAway(identityId);
+}
+
+void AwayManager::identitiesOnAutoAwayChanged()
+{
+    const QList<Server*> serverList = m_connectionManager->getServerList();
+
+    // Since the list of identities has changed we want to drop all timers.
+    KIdleTime::instance()->removeAllIdleTimeouts();
+
+    // Also clear the list of identity <-> timer mappings.
+    m_timerForIdentity.clear();
+
+    foreach (Server* server, serverList)
+    {
+        IdentityPtr identity = server->getIdentity();
+        int identityId = identity->id();
+
+        // Only add idle timeouts for identities which have auto-away
+        // enabled.
+        if (m_identitiesWithIdleTimesOnAutoAway.contains(identityId))
+            // Update the idle timeout for the current identity.
+            implementUpdateIdleTimeout(identityId);
+    }
+}
+
+void AwayManager::identityOnAutoAwayWentOnline(int identityId)
+{
+    // Simply update the idle timeout for the identity (this will
+    // take care of all necessary calculations).
+    implementUpdateIdleTimeout(identityId);
+}
+
+void AwayManager::identityOnAutoAwayWentOffline(int identityId)
+{
+    // Get the timer for the given identity.
+    int timerId = m_timerForIdentity.key(identityId, -1);
+
+    // Then remove the timer.
+    implementRemoveIdleTimeout(timerId);
 }
 
 #include "awaymanager.moc"

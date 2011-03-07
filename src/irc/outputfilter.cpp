@@ -17,7 +17,7 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "channel.h"
-#include "abstractawaymanager.h"
+#include "awaymanager.h"
 #include "ignore.h"
 #include "server.h"
 #include "scriptlauncher.h"
