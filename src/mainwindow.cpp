@@ -686,9 +686,6 @@ void MainWindow::updateTrayIcon()
             m_trayIcon = new Konversation::TrayIcon(this);
             connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
             connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
-#ifndef HAVE_KSTATUSNOTIFIERITEM
-            connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
-#endif
             KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
             trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Preferences)));
             trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::ConfigureNotifications)));

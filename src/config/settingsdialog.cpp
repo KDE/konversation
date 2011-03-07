@@ -96,11 +96,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::GeneralBehavior_ConfigUI confGeneralBehavior;
   w = new QWidget();
   confGeneralBehavior.setupUi(w);
-  #ifdef HAVE_KSTATUSNOTIFIERITEM
-  confGeneralBehavior.kcfg_TrayNotifyBlink->setVisible(false);
-  confGeneralBehavior.horizontalLayout_2->removeItem(confGeneralBehavior.spacer51_2);
-  confGeneralBehavior.horizontalLayout_2->setEnabled(false);
-  #endif
   addPage( w, behaviorGroup, "configure", i18n("General") );
 
   //Behavior/Connection

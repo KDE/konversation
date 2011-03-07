@@ -15,23 +15,11 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <config-konversation.h>
-
-#ifdef HAVE_KSTATUSNOTIFIERITEM
-#include <kstatusnotifieritem.h>
-#else
-#include <ksystemtrayicon.h>
-
-class QTimer;
-#endif
+#include <KStatusNotifierItem>
 
 namespace Konversation
 {
-#ifdef HAVE_KSTATUSNOTIFIERITEM
     class TrayIcon : public KStatusNotifierItem
-#else
-    class TrayIcon : public KSystemTrayIcon
-#endif
     {
         Q_OBJECT
 
@@ -49,24 +37,11 @@ namespace Konversation
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
             void updateAppearance();
 
-        #ifndef HAVE_KSTATUSNOTIFIERITEM
-        protected slots:
-            void blinkTimeout();
-        #endif
-
         private:
             bool m_notificationEnabled;
 
-        #ifdef HAVE_KSTATUSNOTIFIERITEM
             QString m_nomessagePix;
             QString m_messagePix;
-        #else
-            QTimer* m_blinkTimer;
-            bool m_blinkOn;
-
-            QIcon m_nomessagePix;
-            QIcon m_messagePix;
-        #endif
     };
 }
 

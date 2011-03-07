@@ -148,6 +148,7 @@ set(viewer_SRCS
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
     viewer/irccontextmenus.cpp
+    viewer/trayicon.cpp
 )
 
 kde4_add_ui_files(viewer_SRCS
@@ -208,14 +209,6 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-if (HAVE_KSTATUSNOTIFIERITEM)
-    set(trayicon_SRCS
-        viewer/trayiconkstatusnotifieritem.cpp)
-else (HAVE_KSTATUSNOTIFIERITEM)
-    set(trayicon_SRCS
-        viewer/trayiconksystemtray.cpp)
-endif (HAVE_KSTATUSNOTIFIERITEM)
-
 if (HAVE_KIDLETIME)
     set(awaymanager_SRCS
         awaymanagerkidletime.cpp)
@@ -224,7 +217,7 @@ else (HAVE_KIDLETIME)
         awaymanager.cpp)
 endif (HAVE_KIDLETIME)
 
-set (completed_SRCS ${core_SRCS} ${awaymanager_SRCS} ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+set (completed_SRCS ${core_SRCS} ${awaymanager_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS

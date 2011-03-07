@@ -21,9 +21,6 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
-#check for KDE greater than 4.3.80 (used for KStatusNotifier)
-macro_ensure_version("4.3.80" ${KDE_VERSION} HAVEKDE4_4)
-
 #check for KDE greater than 4.4.3 (usable version of KIdleTime)
 macro_ensure_version("4.4.3" ${KDE_VERSION} HAVEKDE4_4_3)
 
@@ -52,9 +49,6 @@ endif (Q_WS_X11 AND NOT HAVE_KIDLETIME)
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
 macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
-
-#define the value for HAVE_KSTATUSNOTIFIERITEM
-macro_bool_to_01(HAVEKDE4_4 HAVE_KSTATUSNOTIFIERITEM)
 
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
