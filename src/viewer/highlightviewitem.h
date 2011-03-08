@@ -26,29 +26,38 @@ class KUrl;
 class HighlightViewItem : public QTreeWidgetItem
 {
     public:
-        HighlightViewItem(QTreeWidget* parent, Highlight* passed_Highlight);
+        HighlightViewItem(QTreeWidget* parent, Highlight* highlight);
         ~HighlightViewItem();
 
+        void setID(const int itemID);
+        int getID();
+
+        void setPattern(const QString& pattern);
         QString getPattern();
-        QString getAutoText();
-        QColor getColor() { return itemColor; }
-        int getID() { return itemID; }
+
+        void setRegExp(const bool regexp);
         bool getRegExp();
-        KUrl getSoundURL() { return soundURL; }
 
-        void setPattern(const QString& newPattern);
-        void setAutoText(const QString& newAutoText);
-        void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; updateRowColor(); }
-        void setID(int passed_itemID) { itemID = passed_itemID; }
+        void setColor(const QColor color);
+        QColor getColor();
+
         void setSoundURL(const KUrl& url);
+        KUrl getSoundURL();
 
+        void setAutoText(const QString& autoText);
+        QString getAutoText();
+
+        void setChatWindows(const QString& chatWindows);
+        QString getChatWindows();
 
     protected:
-        QColor itemColor;
-        int itemID;
-        KUrl soundURL;
-        QString autoText;
+        int m_itemID;
 
-        void updateRowColor();
+        QString m_pattern;
+        bool m_regexp;
+        QColor m_color;
+        KUrl m_soundURL;
+        QString m_autoText;
+        QString m_chatWindows;
 };
 #endif

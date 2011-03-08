@@ -219,13 +219,11 @@ void Preferences::setHighlightList(QList<Highlight*> newList)
     self()->mHighlightList=newList;
 }
 
-void Preferences::addHighlight(const QString& newHighlight,
-bool regExp,
-const QColor &newColor,
-const QString& sound,
-const QString& autoText)
+void Preferences::addHighlight(const QString& highlight, bool regExp, const QColor& color,
+    const QString& soundURL, const QString& autoText, const QString& chatWindows)
 {
-    self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KUrl(sound),autoText));
+    self()->mHighlightList.append(new Highlight(highlight, regExp, color,
+        KUrl(soundURL), autoText, chatWindows));
 }
 
 void Preferences::setIgnoreList(QList<Ignore*> newList)

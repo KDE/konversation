@@ -18,51 +18,99 @@
 #include <kurl.h>
 
 
-HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* passed_Highlight)
+HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* highlight)
 : QTreeWidgetItem(parent)
 {
-    setCheckState(0, passed_Highlight->getRegExp() ? Qt::Checked : Qt::Unchecked);
-    setText(1,passed_Highlight->getPattern());
-    itemColor = passed_Highlight->getColor();
-    itemID = passed_Highlight->getID();
-    setSoundURL(passed_Highlight->getSoundURL());
-    setAutoText(passed_Highlight->getAutoText());
-    updateRowColor();
+    setID(highlight->getID());
+    setPattern(highlight->getPattern());
+    setRegExp(highlight->getRegExp());
+    setColor(highlight->getColor());
+    setSoundURL(highlight->getSoundURL());
+    setAutoText(highlight->getAutoText());
+    setChatWindows(highlight->getChatWindows());
 }
 
 HighlightViewItem::~HighlightViewItem()
 {
 }
 
-void HighlightViewItem::updateRowColor()
+void HighlightViewItem::setID(const int itemID)
 {
-    const QBrush brush(itemColor);
-    setForeground(1, brush);
-    setForeground(2, brush);
-    setForeground(3, brush);
+    m_itemID = itemID;
 }
 
-void HighlightViewItem::setPattern(const QString& newPattern) { setText(1,newPattern); }
-QString HighlightViewItem::getPattern()                       { return text(1); }
-
-void HighlightViewItem::setSoundURL(const KUrl& url)
+int HighlightViewItem::getID()
 {
-    soundURL = url;
-    setText(2, soundURL.prettyUrl());
+    return m_itemID;
 }
 
-void HighlightViewItem::setAutoText(const QString& newAutoText)
+void HighlightViewItem::setPattern(const QString& pattern)
 {
-    autoText = newAutoText;
-    setText(3,newAutoText);
+    m_pattern = pattern;
+    setText(1, m_pattern);
+}
+
+QString HighlightViewItem::getPattern()
+{
+    return m_pattern;
+}
+
+void HighlightViewItem::setRegExp(const bool regexp)
+{
+    m_regexp = regexp;
+    setCheckState(0, m_regexp ? Qt::Checked : Qt::Unchecked);
 }
 
 bool HighlightViewItem::getRegExp()
 {
-    return checkState(0) == Qt::Checked;
+    return m_regexp;
+}
+
+void HighlightViewItem::setColor(const QColor color)
+{
+    m_color = color;
+
+    const QBrush brush(m_color);
+    setForeground(1, brush);
+    setForeground(2, brush);
+    setForeground(3, brush);
+    setForeground(4, brush);
+}
+
+QColor HighlightViewItem::getColor()
+{
+    return m_color;
+}
+
+void HighlightViewItem::setSoundURL(const KUrl& soundURL)
+{
+    m_soundURL = soundURL;
+    setText(2, m_soundURL.prettyUrl());
+}
+
+KUrl HighlightViewItem::getSoundURL()
+{
+    return m_soundURL;
+}
+
+void HighlightViewItem::setAutoText(const QString& autoText)
+{
+    m_autoText = autoText;
+    setText(3, m_autoText);
 }
 
 QString HighlightViewItem::getAutoText()
 {
-    return autoText;
+    return m_autoText;
+}
+
+void HighlightViewItem::setChatWindows(const QString& chatWindows)
+{
+    m_chatWindows = chatWindows;
+    setText(4, m_chatWindows);
+}
+
+QString HighlightViewItem::getChatWindows()
+{
+    return m_chatWindows;
 }

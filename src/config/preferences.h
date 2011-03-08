@@ -77,7 +77,8 @@ class Preferences : public PreferencesBase
 
         static const QList<Highlight*> highlightList();
         static void setHighlightList(QList<Highlight*> newList);
-        static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
+        static void addHighlight(const QString& highlight, bool regExp, const QColor& color,
+            const QString& soundURL, const QString& autoText,const QString& chatWindows);
 
         /* All of the below work on the first (default) identity in your identity list*/
         static void addIgnore(const QString &newIgnore);

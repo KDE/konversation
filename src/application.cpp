@@ -634,7 +634,7 @@ void Application::readOptions()
 
         for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
         {
-            Preferences::addHighlight(hiList[hiIndex],false,'#'+hiList[hiIndex+1],QString(),QString());
+            Preferences::addHighlight(hiList[hiIndex], false, '#'+hiList[hiIndex+1], QString(), QString(), QString());
         }
 
         cgDefault.deleteEntry("Highlight");
@@ -651,7 +651,8 @@ void Application::readOptions()
                 cgHilight.readEntry("RegExp", false),
                 cgHilight.readEntry("Color", QColor(Qt::black)),
                 cgHilight.readPathEntry("Sound", QString()),
-                cgHilight.readEntry("AutoText")
+                cgHilight.readEntry("AutoText"),
+                cgHilight.readEntry("ChatWindows")
                 );
             i++;
         }

@@ -946,7 +946,7 @@ void IRCView::replaceDecoration(QString& line, char decoration, char replacement
 }
 
 QString IRCView::filter(const QString& line, const QString& defaultColor, const QString& whoSent,
-bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
+    bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
 {
     QString filteredLine(line);
     Application* konvApp = static_cast<Application*>(kapp);
@@ -955,18 +955,20 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
     //  if the line starts with a space turn it into a non-breaking space.
     //    (which magically turns back into a space on copy)
 
-    if (filteredLine[0]==' ')
-        filteredLine[0]='\xA0';
+    if (filteredLine[0] == ' ')
+    {
+        filteredLine[0] = '\xA0';
+    }
 
     // TODO: Use QStyleSheet::escape() here
     // Replace all < with &lt;
-    filteredLine.replace('<',"\x0blt;");
+    filteredLine.replace('<', "\x0blt;");
     // Replace all > with &gt;
     filteredLine.replace('>', "\x0bgt;");
 
-    if(filteredLine.contains('\x07'))
+    if (filteredLine.contains('\x07'))
     {
-        if(Preferences::self()->beep())
+        if (Preferences::self()->beep())
         {
             kapp->beep();
         }
@@ -992,7 +994,7 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
     {
         QString highlightColor;
 
-        if(Preferences::self()->highlightNick() &&
+        if (Preferences::self()->highlightNick() &&
             line.toLower().contains(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.toLower()) +
             "([^\\d\\w]|$)")))
@@ -1006,45 +1008,53 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
             QList<Highlight*> highlightList = Preferences::highlightList();
             QListIterator<Highlight*> it(highlightList);
             Highlight* highlight;
+            QStringList highlightChatWindowList;
             bool patternFound = false;
 
             QStringList captures;
             while (it.hasNext())
             {
                 highlight = it.next();
-                if(highlight->getRegExp())
+                QStringList highlightChatWindowList = highlight->getChatWindowList();
+                if (highlightChatWindowList.isEmpty() ||
+                    highlightChatWindowList.contains(m_chatWin->getName(), Qt::CaseInsensitive))
                 {
-                    QRegExp needleReg(highlight->getPattern());
-                    needleReg.setCaseSensitivity(Qt::CaseInsensitive);
-                                                  // highlight regexp in text
-                    patternFound = ((line.contains(needleReg)) ||
-                                                  // highlight regexp in nickname
-                        (whoSent.contains(needleReg)));
+                    if (highlight->getRegExp())
+                    {
+                        QRegExp needleReg(highlight->getPattern());
+                        needleReg.setCaseSensitivity(Qt::CaseInsensitive);
+                                                      // highlight regexp in text
+                        patternFound = ((line.contains(needleReg)) ||
+                                                      // highlight regexp in nickname
+                            (whoSent.contains(needleReg)));
 
-                    // remember captured patterns for later
-                    captures=needleReg.capturedTexts();
+                        // remember captured patterns for later
+                        captures = needleReg.capturedTexts();
 
+                    }
+                    else
+                    {
+                        QString needle = highlight->getPattern();
+                                                      // highlight patterns in text
+                        patternFound = ((line.contains(needle, Qt::CaseInsensitive)) ||
+                                                      // highlight patterns in nickname
+                            (whoSent.contains(needle, Qt::CaseInsensitive)));
+                    }
+
+                    if (patternFound)
+                    {
+                        break;
+                    }
                 }
-                else
-                {
-                    QString needle=highlight->getPattern();
-                                                  // highlight patterns in text
-                    patternFound = ((line.contains(needle, Qt::CaseInsensitive)) ||
-                                                  // highlight patterns in nickname
-                        (whoSent.contains(needle, Qt::CaseInsensitive)));
-                }
-
-                if (patternFound)
-                    break;
             }
 
-            if(patternFound)
+            if (patternFound)
             {
                 highlightColor = highlight->getColor().name();
                 m_highlightColor = highlightColor;
                 m_tabNotification = Konversation::tnfHighlight;
 
-                if(Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
+                if (Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
                 {
                     konvApp->sound()->play(highlight->getSoundURL());
                 }
@@ -1053,21 +1063,22 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
                 m_autoTextToSend = highlight->getAutoText();
 
                 // replace %0 - %9 in regex groups
-                for(int capture=0;capture<captures.count();capture++)
+                for (int capture = 0; capture < captures.count(); capture++)
                 {
-                  m_autoTextToSend.replace(QString("%%1").arg(capture),captures[capture]);
+                    m_autoTextToSend.replace(QString("%%1").arg(capture), captures[capture]);
                 }
                 m_autoTextToSend.remove(QRegExp("%[0-9]"));
             }
         }
 
         // apply found highlight color to line
-        if(!highlightColor.isEmpty())
+        if (!highlightColor.isEmpty())
         {
-            filteredLine = QLatin1String("<font color=\"") + highlightColor + QLatin1String("\">") + filteredLine + QLatin1String("</font>");
+            filteredLine = QLatin1String("<font color=\"") + highlightColor + QLatin1String("\">") + filteredLine +
+                QLatin1String("</font>");
         }
     }
-    else if(doHighlight && (whoSent == ownNick) && Preferences::self()->highlightOwnLines())
+    else if (doHighlight && (whoSent == ownNick) && Preferences::self()->highlightOwnLines())
     {
         // highlight own lines
         filteredLine = QLatin1String("<font color=\"") + Preferences::self()->highlightOwnLinesColor().name() +
@@ -1077,7 +1088,7 @@ bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
     filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
 
     // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
-    filteredLine.replace("  "," \xA0");
+    filteredLine.replace("  ", " \xA0");
     return filteredLine;
 }
 

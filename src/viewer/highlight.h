@@ -30,34 +30,41 @@
 class Highlight
 {
     public:
-        Highlight(const QString& itemPattern,
-            bool regExp,
-            const QColor& itemColor,
-            const KUrl& soundURL,
-            const QString& autoText);
+        Highlight(const QString& pattern, bool regExp, const QColor& color,
+            const KUrl& soundURL, const QString& autoText, const QString& chatWindows);
 
-        QString getPattern() const ;
-        QString getAutoText() const;
-        QColor getColor() const;
         int getID() const;
+
+        void setPattern(const QString& pattern);
+        QString getPattern() const ;
+
+        void setRegExp(bool state);
         bool getRegExp() const;
+
+        void setColor(const QColor& color);
+        QColor getColor() const;
+
+        void setSoundURL(const KUrl& url);
         KUrl getSoundURL() const;
 
-        void setPattern(const QString& itemPattern);
-        void setColor(const QColor& itemColor);
-        void setSoundURL(const KUrl& url);
         void setAutoText(const QString& autoText);
-        void setRegExp(bool state);
+        QString getAutoText() const;
+
+        void setChatWindows(const QString& chatWindows);
+        QString getChatWindows() const;
+        QStringList getChatWindowList() const;
 
     protected:
         static unsigned int s_id;
 
         int m_itemID;
-        bool m_regExp;
 
         QString m_itemPattern;
-        QString m_autoText;
+        bool m_regExp;
         QColor m_itemColor;
         KUrl m_soundURL;
+        QString m_autoText;
+        QString m_chatWindows;
+        QStringList m_chatWindowList;
 };
 #endif
