@@ -363,7 +363,7 @@
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Chat Windows:</string>
+           <string>Chat windows:</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -387,7 +387,7 @@
              </sizepolicy>
             </property>
             <property name="whatsThis">
-             <string>This highlight will only be searched for in chat windows listed here by name, or in all chat windows if the field is left emtpy. Multiple names have to be separated by commas.</string>
+             <string>This highlight will only be searched for in chat windows listed here by name, or in all chat windows if the field is left empty. Multiple names have to be separated by commas.</string>
             </property>
            </widget>
           </item>
