@@ -323,6 +323,10 @@ Changes since 1.3.1:
 * The 'media' script now requires Python 2.6 or higher and is compatible
   with Python 3.
 * Konversation now depends on KDE Platform 4.4.3 and Qt 4.6.0 or newer.
+* Added a new "Chat Windows" field to the Highlight configuration to
+  optionally restrict the list of chat windows a given highlight event
+  may be triggered in to those named in the field, separated by comma
+  or semicolon.
 
 
 Changes from 1.3 to 1.3.1:
