@@ -1,30 +1,94 @@
-#!/usr/bin/env perl
-# Copyright (C) 2004 by İsmail Dönmez
-# Licensed under GPL v2 or later at your option
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License as
+#  published by the Free Software Foundation; either version 2 of
+#  the License or (at your option) version 3 or any later version
+#  accepted by the membership of KDE e.V. (or its successor appro-
+#  ved by the membership of KDE e.V.), which shall act as a proxy
+#  defined in Section 14 of version 3 of the license.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see http://www.gnu.org/licenses/.
+#
+# Copyright (C) 2011 Eike Hein
 
-$SERVER= shift;
-$TARGET= shift;
 
-my $i;
-my $command;
+"""
+Used to run a shell command from within Konversation and capture the output.
 
-if( $ARGV[0] eq "yes" ){
-    exec 'qdbus', 'org.kde.konversation', '/irc', 'error', 'Requested command is not executed!';
-}
+stdout is sent to the IRC server; stderr is shown only to the user.
 
-foreach $word (@ARGV) {
-    $command = $command." ".$word;
-}
+"""
 
-$ARG_MESSAGE = `exec $command`;
+from __future__ import print_function
 
-foreach $entry (split(/\n/, $ARG_MESSAGE)) {
-    chomp $entry;
-    $i=1;
-    $entry =~ s/^\//\/\//;
-    system 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, $entry;
-}
+import subprocess
+import sys
 
-unless($i) {
-    exec 'qdbus', 'org.kde.konversation', '/irc', 'error', "Command @ARGV doesn't exist";
-}
+
+dbus_command = ('qdbus', 'org.kde.konversation', '/irc')
+
+def dispatch(*args):
+    
+    """Dispatch to Konversation's D-Bus API."""
+    
+    subprocess.Popen(dbus_command + args).communicate()
+
+def info(message):
+    
+    """Show an info message in the active tab in Konversation."""
+    
+    dispatch('info', 'cmd: ' + message)
+
+def error(message):
+    
+    """Show an error message in the active tab in Konversation."""
+    
+    dispatch('error', 'cmd: ' + message)
+
+def say(message):
+    
+    """
+    Instruct Konversation to send a message to the destination (a channel
+    or nickname in a particular connection context) this script was given
+    as arguments.
+
+    """
+
+    dispatch('say', IRC_SERVER, TARGET, message)
+
+if __name__ == '__main__':
+    try:
+        IRC_SERVER = sys.argv[1]
+        TARGET = sys.argv[2]
+    except IndexError:
+        print("This script is intended to be run from within Konversation.", file=sys.stderr)
+        sys.exit(0)
+
+    if len(sys.argv) < 4:
+        error("You need to specify a command argument.")
+
+    command = ' '.join(sys.argv[3:])
+
+    result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()
+
+    stdout = [line.rstrip() for line in result[0].splitlines() if len(line.strip())]
+    stderr = [line.rstrip() for line in result[1].splitlines() if len(line.strip())]
+
+    if not stdout and not stderr:
+        info("The command executed succesfully, but did not return any output or only whitespace.")
+    else:
+        # Send stdout to IRC server.
+        for line in stdout:
+            say(line)
+
+        # Show stderr to user.
+        for line in stderr:
+            error(line)
