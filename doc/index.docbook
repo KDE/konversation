@@ -2711,7 +2711,7 @@ passing it <userinput><replaceable>uname -a</replaceable></userinput>.  This sen
 <para>To get a list of all available scripts, type the following command in a
 &konsole; screen.</para>
 
-<para><userinput><replaceable>ls `kde4-config --prefix`/share/apps/konversation/scripts</replaceable></userinput></para>
+<para><userinput><replaceable>ls `kde4-config --install data`/konversation/scripts</replaceable></userinput></para>
 
 <para>You can write your own scripts.  Scripts are shell scripts and can be written in
 any shell language, such as bash, perl, or python.  When &konversation; runs a script, the
@@ -2747,7 +2747,7 @@ in the tab without sending it to other users, use <computeroutput>info</computer
 instead.  Look at the existing script files for more examples of writing scripts.</para>
 
 <para>To be able to run a script you have written, you must install it by copying
-it to <filename class="directory">`kde4-config --prefix`/share/apps/konversation/scripts</filename> or to <filename class="directory">`kde4-config --localprefix`/share/apps/konversation/scripts</filename>.  You must also give the file execute
+it to <filename class="directory">`kde4-config --install data`/konversation/scripts</filename> or to <filename class="directory">`kde4-config --localprefix`/share/apps/konversation/scripts</filename>.  You must also give the file execute
 privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable></userinput>.</para>
 
 </sect1>
