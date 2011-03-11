@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License as
-#  published by the Free Software Foundation; either version 2 of
-#  the License or (at your option) version 3 or any later version
-#  accepted by the membership of KDE e.V. (or its successor appro-
-#  ved by the membership of KDE e.V.), which shall act as a proxy
-#  defined in Section 14 of version 3 of the license.
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License or (at your option) version 3 or any later version
+# accepted by the membership of KDE e.V. (or its successor appro-
+# ved by the membership of KDE e.V.), which shall act as a proxy
+# defined in Section 14 of version 3 of the license.
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this program. If not, see http://www.gnu.org/licenses/.
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses/.
 #
 # Copyright (C) 2011 Eike Hein
 
@@ -36,25 +36,25 @@ import sys
 dbus_command = ('qdbus', 'org.kde.konversation', '/irc')
 
 def dispatch(*args):
-    
+
     """Dispatch to Konversation's D-Bus API."""
-    
+
     subprocess.Popen(dbus_command + args).communicate()
 
 def info(message):
-    
+
     """Show an info message in the active tab in Konversation."""
-    
+
     dispatch('info', 'cmd: ' + message)
 
 def error(message):
-    
+
     """Show an error message in the active tab in Konversation."""
-    
+
     dispatch('error', 'cmd: ' + message)
 
 def say(message):
-    
+
     """
     Instruct Konversation to send a message to the destination (a channel
     or nickname in a particular connection context) this script was given
@@ -73,7 +73,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     if len(sys.argv) < 4:
-        error("You need to specify a command argument.")
+        error("You need to specify a command.")
 
     command = ' '.join(sys.argv[3:])
 
