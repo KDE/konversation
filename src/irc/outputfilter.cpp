@@ -25,7 +25,10 @@
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
 #include "viewcontainer.h"
-#include <config-konversation.h>
+
+#ifdef HAVE_QCA2
+#include "cipher.h"
+#endif
 
 #include <QStringList>
 #include <QFile>
@@ -33,6 +36,7 @@
 #include <QTextCodec>
 #include <QByteArray>
 #include <QTextStream>
+#include <QtCrypto>
 
 #include <KIO/PasswordDialog>
 #include <KMessageBox>
@@ -1652,11 +1656,9 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_setkey(const OutputFilterInput& input)
     {
-        OutputFilterResult result;
-
+        #ifdef HAVE_QCA2
         QStringList parms = input.parameter.split(' ', QString::SkipEmptyParts);
 
-        #ifdef HAVE_QCA2
         if (parms.count() == 1 && !input.destination.isEmpty())
             parms.prepend(input.destination);
         else if (parms.count() != 2)
@@ -1671,6 +1673,9 @@ namespace Konversation
                               "Electronic Codebook (ECB).",
                               Preferences::self()->commandChar()));
 
+        if (!Cipher::isFeatureAvailable(Cipher::Blowfish))
+            return error(i18n("Unable to set an encryption key for %1.", parms[0]) + ' ' + Cipher::runtimeError());
+
         m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
@@ -1678,41 +1683,37 @@ namespace Konversation
         else if (m_server->getQueryByName(parms[0]))
             m_server->getQueryByName(parms[0])->setEncryptedOutput(true);
 
-        result = info(i18n("The key for %1 has been set.", parms[0]));
+        return info(i18n("The key for %1 has been set.", parms[0]));
         #else
-        result = error(i18n("Setting an encryption key requires Konversation to have been built "
-                            "with support for the Qt Cryptographic Architecture (QCA) library. "
-                            "Contact your distributor about a Konversation package with QCA "
-                            "support, or rebuild Konversation with QCA present."));
+        return error(i18n("Setting an encryption key requires Konversation to have been built "
+                          "with support for the Qt Cryptographic Architecture (QCA) library. "
+                          "Contact your distributor about a Konversation package with QCA "
+                          "support, or rebuild Konversation with QCA present."));
         #endif
-
-        return result;
     }
 
     OutputFilterResult OutputFilter::command_keyx(const OutputFilterInput& input)
     {
-        OutputFilterResult result;
-
+        #ifdef HAVE_QCA2
         QStringList parms = input.parameter.split(' ', QString::SkipEmptyParts);
 
-        #ifdef HAVE_QCA2
         if (parms.count() == 0 && !input.destination.isEmpty())
             parms.prepend(input.destination);
         else if (parms.count() !=1)
             return usage(i18n("Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target.",
                               Preferences::self()->commandChar()));
+        if (!Cipher::isFeatureAvailable(Cipher::DH))
+            return error(i18n("Unable to request a key exchange from %1.", parms[0]) + ' ' + Cipher::runtimeError());
 
         m_server->initKeyExchange(parms[0]);
 
-        result = info(i18n("Beginning DH1080 key exchange with %1.", parms[0]));
+        return info(i18n("Beginning DH1080 key exchange with %1.", parms[0]));
         #else
-        result = error(i18n("Setting an encryption key requires Konversation to have been built "
-                            "with support for the Qt Cryptographic Architecture (QCA) library. "
-                            "Contact your distributor about a Konversation package with QCA "
-                            "support, or rebuild Konversation with QCA present."));
+        return error(i18n("Setting an encryption key requires Konversation to have been built "
+                          "with support for the Qt Cryptographic Architecture (QCA) library. "
+                          "Contact your distributor about a Konversation package with QCA "
+                          "support, or rebuild Konversation with QCA present."));
         #endif
-
-        return result;
     }
 
     OutputFilterResult OutputFilter::command_delkey(const OutputFilterInput& _input)

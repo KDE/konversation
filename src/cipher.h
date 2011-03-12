@@ -24,6 +24,7 @@ namespace Konversation
             Cipher();
             explicit Cipher(QByteArray key, QString cipherType=QString("blowfish"));
             ~Cipher();
+
             QByteArray decrypt(QByteArray cipher);
             QByteArray decryptTopic(QByteArray cipher);
             bool encrypt(QByteArray& cipher);
@@ -34,6 +35,10 @@ namespace Konversation
             QByteArray key() const { return m_key; }
             bool setType(const QString &type);
             QString type() const { return m_type; }
+
+            enum CipherFeature { DH, Blowfish };
+            static bool isFeatureAvailable(CipherFeature feature);
+            static QString runtimeError() { return m_runtimeError; }
 
         private:
             //direction is true for encrypt, false for decrypt
@@ -48,6 +53,8 @@ namespace Konversation
             QCA::BigInteger m_primeNum;
             QString m_type;
             bool m_cbc;
+
+            static QString m_runtimeError;
     };
 }
 #endif

@@ -3915,6 +3915,14 @@ void Server::initKeyExchange(const QString &receiver)
 
 void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
 {
+    if (!Konversation::Cipher::isFeatureAvailable(Konversation::Cipher::DH))
+    {
+        appendMessageToFrontmost(i18n("Error"), i18n("Unable to perform key exchange with %1.", sender)
+            + ' ' + Konversation::Cipher::runtimeError());
+
+        return;
+    }
+
     //TODO ask the user to accept without blocking
     Query* query;
     if (getQueryByName(sender))
@@ -3933,7 +3941,7 @@ void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
 
     if (pubKey.isEmpty())
     {
-        appendMessageToFrontmost(i18n("Error"), i18n("Failed to parse the DH1080_INIT of %1. Key exchange failed.",sender));
+        appendMessageToFrontmost(i18n("Error"), i18n("Failed to parse the DH1080_INIT of %1. Key exchange failed.", sender));
     }
     else
     {
@@ -3953,6 +3961,14 @@ void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
     }
     else
         return;
+
+    if (!Konversation::Cipher::isFeatureAvailable(Konversation::Cipher::DH))
+    {
+        appendMessageToFrontmost(i18n("Error"), i18n("Unable to complete key exchange with %1.", sender)
+            + ' ' + Konversation::Cipher::runtimeError());
+
+        return;
+    }
 
     Konversation::Cipher* cipher = query->getCipher();
 

@@ -15,10 +15,13 @@
 #include "preferences.h"
 
 #include <KDebug>
+#include <KLocale>
 
 
 namespace Konversation
 {
+    QString Cipher::m_runtimeError = QString();
+
     Cipher::Cipher()
     {
         m_primeNum = QCA::BigInteger("12745216229761186769575009943944198619149164746831579719941140425076456621824834322853258804883232842877311723249782818608677050956745409379781245497526069657222703636504651898833151008222772087491045206203033063108075098874712912417029101508315117935752962862335062591404043092163187352352197487303798807791605274487594646923");
@@ -457,5 +460,48 @@ namespace Konversation
             }
         }
         return decoded;
+    }
+
+    bool Cipher::isFeatureAvailable(CipherFeature feature)
+    {
+        QCA::Initializer init;
+
+        if (feature == DH && !QCA::isSupported("dh"))
+        {
+            m_runtimeError = i18n("Diffie-Hellman key exchange is not supported by your installation of the "
+                                  "Qt Cryptographic Architecture (QCA). You likely need to install an additional "
+                                  "provider plugin. Diffie-Hellman key exchange support is usually provided "
+                                  "by the qca-ossl plugin.");
+
+            return false;
+        }
+        else if (feature == Blowfish)
+        {
+            if (Preferences::self()->encryptionType())
+            {
+                if (!QCA::isSupported("blowfish-cbc"))
+                {
+                    m_runtimeError = i18n("Blowfish in cipher-block chaining (CBC) mode is not supported by "
+                                          "your installation of the Qt Cryptographic Architecture (QCA). You "
+                                          "likely need to install an additional provider plugin for QCA. "
+                                          "Blowfish support is usually provided by the qca-ossl plugin.");
+
+                    return false;
+                }
+            }
+            else
+            {
+                if (!QCA::isSupported("blowfish-ecb"))
+                {
+                    m_runtimeError = i18n("Blowfish in electronic codebook (ECB) mode is not supported by "
+                                          "your installation of the Qt Cryptographic Architecture (QCA). You "
+                                          "likely need to install an additional provider plugin for QCA. "
+                                          "Blowfish support is usually provided by the qca-ossl plugin.");
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
