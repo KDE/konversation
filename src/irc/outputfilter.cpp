@@ -36,7 +36,6 @@
 #include <QTextCodec>
 #include <QByteArray>
 #include <QTextStream>
-#include <QtCrypto>
 
 #include <KIO/PasswordDialog>
 #include <KMessageBox>
