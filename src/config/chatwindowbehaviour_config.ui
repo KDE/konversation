@@ -175,22 +175,22 @@
           </property>
           <item>
            <property name="text">
-            <string extracomment="is prefaced with kcfg_HideUnimportantEventsExcludeActive">last 10 min</string>
+            <string comment="Is prefaced with: Except for watched nicks and nicks active within the">last 10 min</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string extracomment="is prefaced with kcfg_HideUnimportantEventsExcludeActive">last hour</string>
+            <string comment="Is prefaced with: Except for watched nicks and nicks active within the">last hour</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string extracomment="is prefaced with kcfg_HideUnimportantEventsExcludeActive">last day</string>
+            <string comment="Is prefaced with: Except for watched nicks and nicks active within the">last day</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string extracomment="is prefaced with kcfg_HideUnimportantEventsExcludeActive">last week</string>
+            <string comment="Is prefaced with: Except for watched nicks and nicks active within the">last week</string>
            </property>
           </item>
          </widget>
@@ -409,6 +409,11 @@
    <class>KIntSpinBox</class>
    <extends>QSpinBox</extends>
    <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
