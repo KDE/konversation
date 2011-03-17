@@ -15,7 +15,7 @@
 
 #include "highlightviewitem.h"
 
-#include <kurl.h>
+#include <KUrl>
 
 
 HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* highlight)
@@ -57,13 +57,12 @@ QString HighlightViewItem::getPattern()
 
 void HighlightViewItem::setRegExp(const bool regexp)
 {
-    m_regexp = regexp;
-    setCheckState(0, m_regexp ? Qt::Checked : Qt::Unchecked);
+    setCheckState(0, regexp ? Qt::Checked : Qt::Unchecked);
 }
 
 bool HighlightViewItem::getRegExp()
 {
-    return m_regexp;
+    return checkState(0) == Qt::Checked;
 }
 
 void HighlightViewItem::setColor(const QColor color)

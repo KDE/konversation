@@ -54,7 +54,6 @@ class HighlightViewItem : public QTreeWidgetItem
         int m_itemID;
 
         QString m_pattern;
-        bool m_regexp;
         QColor m_color;
         KUrl m_soundURL;
         QString m_autoText;
