@@ -92,7 +92,6 @@ void OSDWidget::show() //virtual
 
     const uint M = fontMetrics().width( 'x' );
 
-    const QRect oldGeometry = QRect( pos(), size() );
     const QRect newGeometry = determineMetrics( M );
 
     if( newGeometry.width() > 0 && newGeometry.height() > 0 )

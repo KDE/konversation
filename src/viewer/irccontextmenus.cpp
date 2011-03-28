@@ -276,6 +276,8 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
             m_webShortcutsMenu->menuAction()->setVisible(true);
         }
     }
+#else
+    Q_UNUSED(selectedText);
 #endif
 }
 

@@ -111,9 +111,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // Build some size policies for the widgets
     QSizePolicy hfixed = QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     QSizePolicy hmodest = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-    QSizePolicy vmodest = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QSizePolicy vfixed = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    QSizePolicy modest = QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     QSizePolicy greedy = QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     m_vertSplitter = new QSplitter(Qt::Vertical, this);
@@ -326,7 +324,7 @@ void Channel::setServer(Server* server)
     topicLine->setServer(server);
     refreshModeButtons();
     nicknameCombobox->setModel(m_server->nickListModel());
-    
+
     connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
     connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
 }
@@ -1047,7 +1045,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
         displayCommandMessage = shouldShowEvent(nick->getChannelNick());
     else
         displayCommandMessage = shouldShowEvent(ChannelNickPtr()); // passing null pointer
-    
+
     /* Did we change our nick name? */
     if(newNick == m_server->getNickname()) /* Check newNick because  m_server->getNickname() is already updated to new nick */
     {
@@ -1073,7 +1071,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
 void Channel::joinNickname(ChannelNickPtr channelNick)
 {
     bool displayCommandMessage = shouldShowEvent(channelNick);
-    
+
     if(channelNick->getNickname() == m_server->getNickname())
     {
         m_joined = true;
@@ -1108,7 +1106,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit)
 {
     bool displayCommandMessage = shouldShowEvent(channelNick);
-    
+
     QString displayReason = reason;
 
     if(!displayReason.isEmpty())

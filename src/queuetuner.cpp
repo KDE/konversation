@@ -74,20 +74,13 @@ void QueueTuner::serverDestroyed(QObject* ref)
 
 void QueueTuner::setServer(Server* newServer)
 {
-    const char *w=0;
-    bool toShow=false;
+    bool toShow = false;
+
     if (!m_server && newServer)
-    {
-        toShow=true;
-        w="showing";
-    }
+        toShow = true;
     else if (!newServer && m_server)
-    {
         hide();
-        w="hiding";
-    }
-    else
-        w="unchanged";
+
     // since this is tied to the new signal, we assume we're only getting called with a change
 
     m_server = newServer;
