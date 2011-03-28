@@ -334,6 +334,9 @@ Changes since 1.3.1:
     result in an error claiming the command does not exist. Now an info
     message is shown remarking that the command executed successfully but
     did not return any output or only whitespace.
+  - The script now also works when called from a server status tab - the
+    command output will be shown to the user rather than sent to the
+    server in that case.
   - The command's error output (stderr) used to be ignored; now it is
     shown to the user in the active tab (but not sent to the server).
   - Trailing whitespace is now stripped from command output.

@@ -85,9 +85,15 @@ if __name__ == '__main__':
     if not stdout and not stderr:
         info("The command executed succesfully, but did not return any output or only whitespace.")
     else:
-        # Send stdout to IRC server.
-        for line in stdout:
-            say(line)
+        if len(TARGET):
+            # Send stdout to IRC server.
+            for line in stdout:
+                say(line)
+        else:
+            # Fall back to info if TARGET is zero-length (usually means we
+            # were called from a server tab).
+            for line in stdout:
+                info(line)
 
         # Show stderr to user.
         for line in stderr:
