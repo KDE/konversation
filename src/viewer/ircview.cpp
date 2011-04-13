@@ -1087,8 +1087,6 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
 
     filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
 
-    // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
-    filteredLine.replace("  ", " \xA0");
     return filteredLine;
 }
 
@@ -1172,6 +1170,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         }
     }
 
+    // Remeber last char for pair of spaces situation, see default in switch (htmlText.at(pos)...
+    QChar lastChar;
     int offset;
     for (int pos = 0; pos < htmlText.length(); ++pos)
     {
@@ -1479,6 +1479,28 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
             default:
                 {
                     const QChar& dirChar = htmlText.at(pos);
+
+                    // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
+                    //filteredLine.replace("  ", " \xA0");
+                    // This used to work like above. But just for normal text like "test    test"
+                    // It got replaced as "test \xA0 \xA0test" and QTextEdit showed 4 spaces.
+                    // In case of color/italic/bold codes we don't necessary get a real pair of spaces
+                    // just "test<html> <html> <html> <html> test" and QTextEdit shows it as 1 space.
+                    // Now if we remember the last char, to ignore html tags, and check if current and last ones are spaces
+                    // we replace the current one with \xA0 (a forced space) and get
+                    // "test<html> <html>\xA0<html> <html>\xA0test", which QTextEdit correctly shows as 4 spaces.
+                    //NOTE: replacing all spaces with forced spaces will break text wrapping
+                    if (dirChar == ' ' &&
+                        !lastChar.isNull() && lastChar == ' ')
+                    {
+                        htmlText[pos] = '\xA0';
+                        lastChar = '\xA0';
+                    }
+                    else
+                    {
+                        lastChar = dirChar;
+                    }
+
                     if (!(dirChar.isNumber() || dirChar.isSymbol() ||
                         dirChar.isSpace()  || dirChar.isPunct()  ||
                         dirChar.isMark()))
