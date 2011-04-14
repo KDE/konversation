@@ -25,6 +25,7 @@
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
 #include "viewcontainer.h"
+#include "outputfilterresolvejob.h"
 
 #ifdef HAVE_QCA2
 #include "cipher.h"
@@ -1782,57 +1783,12 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_dns(const OutputFilterInput& input)
     {
-        OutputFilterResult result;
-
         if (input.parameter.isEmpty())
-            result = usage(i18n("Usage: %1DNS <nick>", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1DNS <nick>", Preferences::self()->commandChar()));
         else
-        {
-            QStringList splitString = input.parameter.split(' ');
-            QString target = splitString[0];
+            new OutputFilterResolveJob(input);
 
-            QHostAddress address(target);
-
-            // Parameter is an IP address
-            if (address != QHostAddress::Null)
-            {
-                QHostInfo resolved = QHostInfo::fromName(address.toString());
-
-                if (resolved.error() == QHostInfo::NoError)
-                {
-                    result.typeString = i18n("DNS");
-                    result.output = i18n("Resolved %1 to: %2", target, resolved.hostName());
-                    result.type = Program;
-                }
-                else
-                    result = error(i18n("Unable to resolve %1", target));
-            }
-            // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
-            // FIXME: The reason we detect the host by occurrence of a dot is the large penalty
-            // we would incur by using inputfilter to find out if there's a user==target on the
-            // server - once we have a better API for this, switch to it.
-            else if (target.contains('.'))
-            {
-                QHostInfo resolved = QHostInfo::fromName(target);
-
-                if (resolved.error() == QHostInfo::NoError && !resolved.addresses().isEmpty())
-                {
-                    QString resolvedTarget = resolved.addresses().first().toString();
-
-                    result.typeString = i18n("DNS");
-                    result.output = i18n("Resolved %1 to: %2", target, resolvedTarget);
-                    result.type = Program;
-                }
-                else
-                    result = error(i18n("Unable to resolve %1", target));
-            }
-            // Parameter is either host nor IP, so request a lookup from server, which in
-            // turn lets inputfilter do the job.
-            else
-                m_server->resolveUserhost(target);
-        }
-
-        return result;
+        return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_list(const OutputFilterInput& input)
