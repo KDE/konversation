@@ -31,7 +31,11 @@ OutputFilterResolveJob::OutputFilterResolveJob(const Konversation::OutputFilterI
     m_chatWindow = input.context;
 
     if (!m_chatWindow)
+    {
         deleteLater();
+
+        return;
+    }
 
     QStringList splitString = input.parameter.split(' ');
     m_target = splitString[0];
