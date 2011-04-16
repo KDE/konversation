@@ -1,6 +1,7 @@
 
 add_subdirectory(images)
 add_subdirectory(scripts)
+add_subdirectory(scripting_support)
 
 
 ########### install files ###############
