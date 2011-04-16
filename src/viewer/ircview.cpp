@@ -1170,7 +1170,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         }
     }
 
-    // Remeber last char for pair of spaces situation, see default in switch (htmlText.at(pos)...
+    // Remember last char for pair of spaces situation, see default in switch (htmlText.at(pos)...
     QChar lastChar;
     int offset;
     for (int pos = 0; pos < htmlText.length(); ++pos)
