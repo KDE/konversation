@@ -16,8 +16,8 @@
 #include "server.h"
 
 #include <QFileInfo>
-#include <QProcess>
 
+#include <KProcess>
 #include <KStandardDirs>
 
 
@@ -38,15 +38,22 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
 {
     // send the script all the information it will need
     QStringList parameterList = parameter.split(' ');
+
     // find script path (could be installed for all users in $KDEDIR/share/apps/ or
     // for one user alone in $HOME/.kde/share/apps/
     QString script(parameterList.takeFirst());
     QString path = scriptPath(script);
+
     parameterList.prepend(target);
     parameterList.prepend(QString::number(connectionId));
+
     QFileInfo fileInfo(path);
 
-    if (!QProcess::startDetached(path, parameterList, fileInfo.path()))
+    KProcess proc;
+    proc.setWorkingDirectory(fileInfo.path());
+    proc.setProgram(path, parameterList);
+
+    if (proc.startDetached() == 0)
     {
         if (!fileInfo.exists())
            emit scriptNotFound(script);
