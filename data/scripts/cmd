@@ -42,6 +42,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 4:
         konversation.i18n.init()
         error(_("You need to specify a command."))
+        sys.exit(0)
 
     command = ' '.join(sys.argv[3:])
 
