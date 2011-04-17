@@ -27,13 +27,16 @@ stdout is sent to the IRC server; stderr is shown only to the user.
 
 """
 
+from __future__ import print_function
+
 import subprocess
 import sys
 
-import konversation.dbus
-
-
-konversation.dbus.abort_if_standalone()
+try:
+    import konversation.dbus
+except ImportError:
+    print("This script is intended to be run from within Konversation.", file=sys.stderr)
+    sys.exit(0)
 
 konversation.dbus.prefix = 'cmd: '
 

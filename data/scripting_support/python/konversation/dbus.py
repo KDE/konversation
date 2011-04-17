@@ -25,9 +25,7 @@ This module provides several functions and attributes for use in interacting
 with Konversation's D-Bus API.
 
 The 'connection' and 'target' attributes are fetched from the arguments given
-to your script by Konversation when you import this module. Use the
-abort_if_standalone() function to abort your script with an error message to
-stderr if they are not set.
+to your script by Konversation when you import this module.
 
 Modify the 'prefix' attribute if you want to prefix all messages sent through
 the say/info/error functions with a common string.
@@ -36,9 +34,6 @@ This module is considered EXPERIMENTAL at this time and not part of the public,
 stable scripting inteface.
 
 """
-
-from __future__ import print_function
-
 import subprocess
 import sys
 
@@ -47,11 +42,6 @@ __all__ = ('abort_if_standalone', 'info', 'error', 'say')
 
 
 # Functions
-
-def abort_if_standalone():
-    if not connection or target is None:
-        print("This script is intended to be run from within Konversation.", file=sys.stderr)
-        sys.exit(0)
 
 def info(message):
 
