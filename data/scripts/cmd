@@ -64,7 +64,7 @@ else:
         for line in stdout:
             konversation.dbus.say(line)
     else:
-        # Fall back to info if TARGET is zero-length (usually means we
+        # Fall back to info if target is zero-length (usually means we
         # were called from a server tab).
         for line in stdout:
             konversation.dbus.info(line)
