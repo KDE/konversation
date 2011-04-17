@@ -44,7 +44,7 @@ konversation.dbus.prefix = 'cmd: '
 if len(sys.argv) < 4:
     import konversation.i18n
     konversation.i18n.init()
-    konversation.dbus.error(_("You need to specify a command."))
+    konversation.dbus.error(i18n("You need to specify a command."))
     sys.exit(0)
 
 command = ' '.join(sys.argv[3:])
@@ -57,7 +57,7 @@ stderr = [line.rstrip() for line in result[1].decode().splitlines() if len(line.
 if not stdout and not stderr:
     import konversation.i18n
     konversation.i18n.init()
-    konversation.dbus.info(_("The command executed succesfully, but did not return any output or only whitespace."))
+    konversation.dbus.info(i18n("The command executed succesfully, but did not return any output or only whitespace."))
 else:
     if len(konversation.dbus.target):
         # Send stdout to IRC server.

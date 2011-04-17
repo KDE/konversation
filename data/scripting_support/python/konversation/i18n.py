@@ -21,10 +21,10 @@
 This module provides i18n support for Konversation scripts written in Python,
 via gettext.
 
-Call init() to install the standard _() function in the builtins namespace and
-use it to mark your translatable strings. Optionally provide the 'domain'
-keyword argument to specify a gettext .mo file installed in one of the
-directories KDE considers for this type of resource.
+Call init() to install the i18n() function in the builtins namespace and use it
+to mark your translatable strings. Optionally provide the 'domain' keyword
+argument to specify a gettext .mo file installed in one of the directories KDE
+considers for this type of resource.
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
 stable scripting inteface.
@@ -39,7 +39,8 @@ import subprocess
 def init(domain='konversation'):
 
     """
-    Initializes gettext and installs the _() function in the builtins namespace.
+    Initializes gettext and installs the i18n() function in the builtins
+    namespace.
 
     Third-party scripts may want to provide the 'domain' keyword argument to
     specify the name of their own gettext .mo file, installed in one of the
@@ -66,7 +67,14 @@ def init(domain='konversation'):
         else:
             break
 
-    t.install()
+    try:
+        # Python 2.x.
+        import __builtin__ as namespace
+    except ImportError:
+        # Python 3.x.
+        import builtins as namespace
+
+    namespace.__dict__['i18n'] = t.gettext
 
 def current_language():
 
