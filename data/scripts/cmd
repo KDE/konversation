@@ -30,18 +30,18 @@ stdout is sent to the IRC server; stderr is shown only to the user.
 import subprocess
 import sys
 
-import konversation.i18n
-from konversation.dbus import *
+import konversation.dbus
 
 
 if __name__ == '__main__':
-    abort_if_standalone()
+    konversation.dbus.abort_if_standalone()
 
     konversation.dbus.prefix = 'cmd: '
 
     if len(sys.argv) < 4:
+        import konversation.i18n
         konversation.i18n.init()
-        error(_("You need to specify a command."))
+        konversation.dbus.error(_("You need to specify a command."))
         sys.exit(0)
 
     command = ' '.join(sys.argv[3:])
@@ -52,19 +52,20 @@ if __name__ == '__main__':
     stderr = [line.rstrip() for line in result[1].decode().splitlines() if len(line.strip())]
 
     if not stdout and not stderr:
+        import konversation.i18n
         konversation.i18n.init()
-        info(_("The command executed succesfully, but did not return any output or only whitespace."))
+        konversation.info(_("The command executed succesfully, but did not return any output or only whitespace."))
     else:
         if len(konversation.dbus.target):
             # Send stdout to IRC server.
             for line in stdout:
-                say(line)
+                konversation.dbus.say(line)
         else:
             # Fall back to info if TARGET is zero-length (usually means we
             # were called from a server tab).
             for line in stdout:
-                info(line)
+                konversation.dbus.info(line)
 
         # Show stderr to user.
         for line in stderr:
-            error(line)
+            konversation.dbus.error(line)
