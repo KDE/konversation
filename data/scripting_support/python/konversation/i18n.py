@@ -78,7 +78,6 @@ def current_language():
 
     return os.environ['KONVERSATION_LANG']
 
-
 def locale_directories():
 
     """
