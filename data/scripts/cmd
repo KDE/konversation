@@ -27,65 +27,34 @@ stdout is sent to the IRC server; stderr is shown only to the user.
 
 """
 
-from __future__ import print_function
-
 import subprocess
 import sys
 
+import konversation.i18n
+from konversation.dbus import *
 
-dbus_command = ('qdbus', 'org.kde.konversation', '/irc')
-
-def dispatch(*args):
-
-    """Dispatch to Konversation's D-Bus API."""
-
-    subprocess.Popen(dbus_command + args).communicate()
-
-def info(message):
-
-    """Show an info message in the active tab in Konversation."""
-
-    dispatch('info', 'cmd: ' + message)
-
-def error(message):
-
-    """Show an error message in the active tab in Konversation."""
-
-    dispatch('error', 'cmd: ' + message)
-
-def say(message):
-
-    """
-    Instruct Konversation to send a message to the destination (a channel
-    or nickname in a particular connection context) this script was given
-    as arguments.
-
-    """
-
-    dispatch('say', IRC_SERVER, TARGET, message)
 
 if __name__ == '__main__':
-    try:
-        IRC_SERVER = sys.argv[1]
-        TARGET = sys.argv[2]
-    except IndexError:
-        print("This script is intended to be run from within Konversation.", file=sys.stderr)
-        sys.exit(0)
+    abort_if_standalone()
+
+    konversation.dbus.prefix = 'cmd: '
 
     if len(sys.argv) < 4:
-        error("You need to specify a command.")
+        konversation.i18n.init()
+        error(_("You need to specify a command."))
 
     command = ' '.join(sys.argv[3:])
 
     result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()
 
-    stdout = [line.rstrip() for line in result[0].splitlines() if len(line.strip())]
-    stderr = [line.rstrip() for line in result[1].splitlines() if len(line.strip())]
+    stdout = [line.rstrip() for line in result[0].decode().splitlines() if len(line.strip())]
+    stderr = [line.rstrip() for line in result[1].decode().splitlines() if len(line.strip())]
 
     if not stdout and not stderr:
-        info("The command executed succesfully, but did not return any output or only whitespace.")
+        konversation.i18n.init()
+        info(_("The command executed succesfully, but did not return any output or only whitespace."))
     else:
-        if len(TARGET):
+        if len(konversation.dbus.target):
             # Send stdout to IRC server.
             for line in stdout:
                 say(line)
