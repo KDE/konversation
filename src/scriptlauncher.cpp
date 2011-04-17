@@ -23,6 +23,7 @@
 
 ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
+    qputenv("KONVERSATION_LANG", KGlobal::locale()->language().toAscii());
 }
 
 ScriptLauncher::~ScriptLauncher()
