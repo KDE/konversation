@@ -28,7 +28,8 @@ The 'connection' and 'target' attributes are fetched from the arguments given
 to your script by Konversation when you import this module.
 
 Modify the 'defaultMessagePrefix' attribute if you want to prefix all messages
-sent through the say/info/error functions with a common string.
+sent through the say/info/error functions with a common string rather than pass
+a prefix with each call (but doing so overrides this fallback attribute).
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
 stable scripting inteface.
@@ -44,19 +45,19 @@ __all__ = ('abort_if_standalone', 'info', 'error', 'say')
 
 # Functions
 
-def info(message):
+def info(message, prefix=None):
 
     """Shows an info message in the active tab in Konversation."""
 
-    _dispatch('info', defaultMessagePrefix + message)
+    _dispatch('info', _prefix(message, prefix))
 
-def error(message):
+def error(message, prefix=None):
 
     """Shows an error message in the active tab in Konversation."""
 
-    _dispatch('error', defaultMessagePrefix + message)
+    _dispatch('error', _prefix(message, prefix))
 
-def say(message):
+def say(message, prefix=None):
 
     """
     Instructs Konversation to send a message to the destination (a channel or
@@ -65,7 +66,16 @@ def say(message):
 
     """
 
-    _dispatch('say', connection, target, defaultMessagePrefix + message)
+    _dispatch('say', connection, target, _prefix(message, prefix))
+
+def _prefix(message, prefix):
+
+    """Prefix message, using the argument or falling back to the global."""
+
+    if prefix is None:
+        prefix = defaultMessagePrefix
+
+    return prefix + message
 
 def _dispatch(*args):
 
