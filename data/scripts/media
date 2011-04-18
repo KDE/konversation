@@ -66,33 +66,25 @@ QUOTE_AFTER  = '"'
  ## The Real work is done below
 #############################
 
-import os
 import sys
 
 try:
-    IRC_SERVER = sys.argv[1]
-    TARGET = sys.argv[2]
-except IndexError:
-    print("This script is intended to be run from within Konversation.", file=sys.stderr)
-    sys.exit(0)
+    import konversation.dbus
+except ImportError:
+    sys.exit("This script is intended to be run from within Konversation.")
 
 if sys.hexversion < 0x02060000:
     err="The media script requires Python 2.6 or higher."
-    os.popen('qdbus org.kde.konversation /irc error "%s"' %(err))
+    konversation.dbus.error(err)
     sys.exit(err)
 
+import os
 import re
 import string
 import subprocess
 
-def tell(data, feedback='info'):
-    """Report back to the user"""
-    l=['qdbus', 'org.kde.konversation', '/irc', feedback]
-    if type(data) is type(''):
-        l.append(data)
-    else:
-        l.extend(data)
-    subprocess.Popen(l).communicate()
+
+konversation.dbus.defaultMessagePrefix = 'media: '
 
 class Player(object):
     def __init__(self, display_name, playerType=None):
@@ -403,7 +395,7 @@ def playing(playerList, mode=None):
     for i in playerList:
         s=i.get(mode)
         if s:
-            tell([IRC_SERVER, TARGET, s], 'say' )
+            konversation.dbus.say(s, '')
             return 1
     return 0
 
@@ -419,7 +411,7 @@ def handleErrors(playerList, kind):
         err= "Nothing is playing in %s."%(', '.join(l))
     else:
         err= "No%splayers are running."%(kind,)
-    tell(err,'error')
+    konversation.dbus.error(err)
 
 def run(kind):
     if not kind:
@@ -436,7 +428,7 @@ def run(kind):
             try:
                 kind=play[0].displayName
             except IndexError:
-                tell("%s is not a supported player."%(kind,),'error')
+                konversation.dbus.error("%s is not a supported player."%(kind,))
                 sys.exit(0)
 
     if not playing(play, kind):
@@ -487,8 +479,9 @@ else:
 # It all comes together right here
 if __name__=="__main__":
 
-    if not TARGET:
-        s="""media v2.1.0 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.
+    if not konversation.dbus.target:
+        # No target usually means we were called from a server tab.
+        s="""media v2.1.1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.
 Usage:
         "\00312/media\017" - report what the first player found is playing
         "\00312/media\017 [ '\00312audio\017' | '\00312video\017' ]" - report what is playing in a supported audio or video player
@@ -498,10 +491,7 @@ Usage:
                 """ + ', '.join([("%s (%s)"%(i.displayName,i.type)) for i in PLAYERS])
 
         for i in s.splitlines():
-            tell(i)
-        #tell("%s"%(len(s.splitlines()),))
-        # called from the server tab
-        pass
+            konversation.dbus.info(i)
     else:
         try:
             kind = sys.argv[3].lower()
