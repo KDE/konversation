@@ -27,8 +27,8 @@ with Konversation's D-Bus API.
 The 'connection' and 'target' attributes are fetched from the arguments given
 to your script by Konversation when you import this module.
 
-Modify the 'prefix' attribute if you want to prefix all messages sent through
-the say/info/error functions with a common string.
+Modify the 'defaultMessagePrefix' attribute if you want to prefix all messages
+sent through the say/info/error functions with a common string.
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
 stable scripting inteface.
@@ -48,13 +48,13 @@ def info(message):
 
     """Shows an info message in the active tab in Konversation."""
 
-    _dispatch('info', prefix + message)
+    _dispatch('info', defaultMessagePrefix + message)
 
 def error(message):
 
     """Shows an error message in the active tab in Konversation."""
 
-    _dispatch('error', prefix + message)
+    _dispatch('error', defaultMessagePrefix + message)
 
 def say(message):
 
@@ -65,7 +65,7 @@ def say(message):
 
     """
 
-    _dispatch('say', connection, target, prefix + message)
+    _dispatch('say', connection, target, defaultMessagePrefix + message)
 
 def _dispatch(*args):
 
@@ -83,6 +83,6 @@ except IndexError:
     connection = None
     target = None
 
-prefix = ''
+defaultMessagePrefix = ''
 
 _dbus_command = ('qdbus', 'org.kde.konversation', '/irc')

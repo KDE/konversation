@@ -39,7 +39,7 @@ except ImportError:
     print("This script is intended to be run from within Konversation.", file=sys.stderr)
     sys.exit(0)
 
-konversation.dbus.prefix = 'cmd: '
+konversation.dbus.defaultMessagePrefix = 'cmd: '
 
 if len(sys.argv) < 4:
     import konversation.i18n
