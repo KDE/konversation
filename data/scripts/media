@@ -68,11 +68,13 @@ import sys
 
 try:
     import konversation.dbus
+    import konversation.i18n
+    konversation.i18n.init()
 except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
 if sys.hexversion < 0x02060000:
-    err = "The media script requires Python 2.6 or higher."
+    err = i18n("The media script requires Python 2.6 or higher.")
     konversation.dbus.error(err)
     sys.exit(err)
 
@@ -104,7 +106,7 @@ class Player(object):
             if mode and mode != self.displayName:
                 self._format['intro'] = self._format[mode]
             else:
-                self._format['intro'] = self._format[self.type.replace(',','').split()[0]]
+                self._format['intro'] = self._format[self.type.replace(',', '').split()[0]]
             return string.Template(outputFormat).safe_substitute(self._format)
         return ''
 
@@ -398,17 +400,18 @@ def playing(playerList, mode=None):
     return 0
 
 def handleErrors(playerList, kind):
-    if kind:
-        kind = kind.strip()
-        kind = kind.center(len(kind) + 2)
-    else:
-        kind= ' supported '
-    x = any([i.running for i in playerList])
-    if x:
+    if any([i.running for i in playerList]):
         l = [i.displayName for i in playerList if i.isRunning()]
-        err = "Nothing is playing in %s." % (', '.join(l))
+        err = i18n("Nothing is playing in %1.").replace('%1', ', '.join(l))
     else:
-        err= "No%splayers are running." % (kind,)
+        if not kind:
+            err = i18n("No supported players are running.")
+        elif kind == 'audio':
+            err = i18n("No supported audio players are running.")
+        elif kind == 'video':
+            err = i18n("No supported video players are running.")
+        else:
+            err = i18n("%1 is not running.").replace('%1', kind.strip())
     konversation.dbus.error(err)
 
 def run(kind):
@@ -426,7 +429,7 @@ def run(kind):
             try:
                 kind = play[0].displayName
             except IndexError:
-                konversation.dbus.error("%s is not a supported player." % (kind,))
+                konversation.dbus.error(i18n("%1 is not a supported player.").replace('%1', kind))
                 sys.exit(1)
 
     if not playing(play, kind):
@@ -479,17 +482,18 @@ if __name__ == '__main__':
 
     if not konversation.dbus.target:
         # No target usually means we were called from a server tab.
-        s = """media v2.1.1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.
-Usage:
-        "\00312/media\017" - report what the first player found is playing
-        "\00312/media\017 [ '\00312audio\017' | '\00312video\017' ]" - report what is playing in a supported audio or video player
-        "\00312/media\017 { \00312Player\017 }" - report what is playing in \00312Player\017 if it is supported
-
-        Available players are:
-                """ + ', '.join([("%s (%s)" % (i.displayName, i.type)) for i in PLAYERS])
-
-        for i in s.splitlines():
-            konversation.dbus.info(i)
+        version = '2.1.2'
+        indent = '    '
+        i = konversation.dbus.info
+        i(i18n("media v%1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.").replace('%1', version))
+        i(i18n("Usage:"))
+        i(indent + i18n("\"/media\" - report what the first player found is playing."))
+        i(indent + i18n("\"/media [ 'audio' | 'video' ]\" - report what is playing in a supported audio or video player."))
+        i(indent + i18n("\"/media { Player }\" - report what is playing in the specified player if it is supported."))
+        i(i18n("Supported media players:"))
+        supported = ', '.join(sorted([("%s (%s)" % (p.displayName, p.type)) for p in PLAYERS]))
+        supported = supported.replace('audio', i18n("audio")).replace('video', i18n("video"))
+        i(indent + supported)
     else:
         try:
             kind = sys.argv[3].lower()
