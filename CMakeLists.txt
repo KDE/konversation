@@ -15,8 +15,8 @@ include(CMakeDependentOption)
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_TOLOWER)
-if(CMAKE_BUILD_TYPE_TOLOWER MATCHES debugfull)
-add_definitions (-DQT_STRICT_ITERATORS)
+    if(CMAKE_BUILD_TYPE_TOLOWER MATCHES debugfull)
+    add_definitions (-DQT_STRICT_ITERATORS)
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
@@ -34,5 +34,21 @@ configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ko
 add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)
+
+get_filename_component(_po_path po ABSOLUTE)
+get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
+
+if (EXISTS ${_po_path}/CMakeLists.txt OR EXISTS ${_doc_translations_path}/CMakeLists.txt)
+    find_package(Msgfmt REQUIRED)
+    find_package(Gettext REQUIRED)
+endif()
+
+if (EXISTS ${_po_path}/CMakeLists.txt)
+    add_subdirectory(po)
+endif()
+
+if (EXISTS ${_doc_translations_path}/CMakeLists.txt)
+    add_subdirectory(doc-translations)
+endif()
 
 macro_display_feature_log()
