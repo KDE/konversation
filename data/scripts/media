@@ -407,9 +407,11 @@ def handleErrors(playerList, kind):
         if not kind:
             err = i18n("No supported players are running.")
         elif kind == 'audio':
-            err = i18n("No supported audio players are running.")
+            players = ', '.join(sorted([p.displayName for p in PLAYERS if 'audio' in p.type]))
+            err = i18n("No supported audio players are running. Supported audio players are: %1.").replace('%1', players)
         elif kind == 'video':
-            err = i18n("No supported video players are running.")
+            players = ', '.join(sorted([p.displayName for p in PLAYERS if 'video' in p.type]))
+            err = i18n("No supported video players are running. Supported video players are: %1.").replace('%1', players)
         else:
             err = i18n("%1 is not running.").replace('%1', kind.strip())
     konversation.dbus.error(err)
@@ -482,7 +484,7 @@ if __name__ == '__main__':
 
     if not konversation.dbus.target:
         # No target usually means we were called from a server tab.
-        version = '2.1.2'
+        version = '2.1.3'
         indent = '    '
         i = konversation.dbus.info
         i(i18n("media v%1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.").replace('%1', version))
