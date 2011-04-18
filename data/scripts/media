@@ -267,7 +267,7 @@ class JukPlayer(Player):
         self.isRunning()
 
     def getData(self):
-        playing=os.popen("qdbus org.kde.juk /Player playin").readline().strip() != "false"
+        playing = os.popen("qdbus org.kde.juk /Player playin").readline().strip() != "false"
         if playing and self.isRunning():
             title = os.popen("qdbus org.kde.juk /Player trackProperty Title").readline().strip()
             artist = os.popen("qdbus org.kde.juk /Player trackProperty Artist").readline().strip()
@@ -281,7 +281,7 @@ class JukPlayer(Player):
         running = re.findall(r'^ org.kde.juk\r?$', qdbus_items, re.M)
         if type(running) is list:
             try:
-                running=running[0]
+                running = running[0]
             except IndexError:
                 running = ''
         self.running = bool(running.strip())
