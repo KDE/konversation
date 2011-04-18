@@ -10,8 +10,6 @@
 # Copyright 2011 Eike Hein
 # Inspired by `media` (Copyright 2005 İsmail Dönmez)
 
-from __future__ import print_function
-
 
 # If you wish to customize the formatting strings, do so in this table.
 # Do not change the numbers unless you're changing the logic.
@@ -432,7 +430,6 @@ def run(kind):
                 sys.exit(0)
 
     if not playing(play, kind):
-        print(play)
         handleErrors(play, kind)
 
 
