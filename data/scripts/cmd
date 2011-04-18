@@ -57,7 +57,7 @@ stderr = [line.rstrip() for line in result[1].decode().splitlines() if len(line.
 if not stdout and not stderr:
     import konversation.i18n
     konversation.i18n.init()
-    konversation.dbus.info(i18n("The command executed succesfully, but did not return any output or only whitespace."))
+    konversation.dbus.info(i18n("The command executed successfully, but did not return any output or only whitespace."))
 else:
     if len(konversation.dbus.target):
         # Send stdout to IRC server.
