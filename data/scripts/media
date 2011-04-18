@@ -80,6 +80,7 @@ if sys.hexversion < 0x02060000:
 
 import os
 import re
+import socket
 import string
 import subprocess
 
@@ -260,8 +261,6 @@ class Amarok2Player(Player):
         self.running = bool(running.strip())
         return self.running
 
-import socket
-
 class JukPlayer(Player):
     def __init__(self):
         Player.__init__(self, 'Juk', 'audio')
@@ -287,8 +286,6 @@ class JukPlayer(Player):
                 running = ''
         self.running = bool(running.strip())
         return self.running
-
-import socket
 
 class MPD(Player):
     def __init__(self, display_name):
