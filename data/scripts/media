@@ -427,7 +427,7 @@ def run(kind):
                 kind=play[0].displayName
             except IndexError:
                 konversation.dbus.error("%s is not a supported player."%(kind,))
-                sys.exit(0)
+                sys.exit(1)
 
     if not playing(play, kind):
         handleErrors(play, kind)

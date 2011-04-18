@@ -42,7 +42,7 @@ if len(sys.argv) < 4:
     import konversation.i18n
     konversation.i18n.init()
     konversation.dbus.error(i18n("You need to specify a command."))
-    sys.exit(0)
+    sys.exit(1)
 
 command = ' '.join(sys.argv[3:])
 
