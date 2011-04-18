@@ -74,7 +74,7 @@ except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
 if sys.hexversion < 0x02060000:
-    err = i18n("The media script requires Python 2.6 or higher.")
+    err = i18n("The media script requires Python %1 or higher.").replace('%1', '2.6')
     konversation.dbus.error(err)
     sys.exit(err)
 
