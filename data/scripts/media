@@ -74,7 +74,7 @@ except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
 if sys.hexversion < 0x02060000:
-    err = i18n("The media script requires Python %1 or higher.").replace('%1', '2.6')
+    err = i18n("The media script requires Python %1 or higher.", '2.6')
     konversation.dbus.error(err)
     sys.exit(err)
 
@@ -399,18 +399,18 @@ def playing(playerList, mode=None):
 def handleErrors(playerList, kind):
     if any([i.running for i in playerList]):
         l = [i.displayName for i in playerList if i.isRunning()]
-        err = i18n("Nothing is playing in %1.").replace('%1', ', '.join(l))
+        err = i18n("Nothing is playing in %1.", ', '.join(l))
     else:
         if not kind:
             err = i18n("No supported players are running.")
         elif kind == 'audio':
             players = ', '.join(sorted([p.displayName for p in PLAYERS if 'audio' in p.type]))
-            err = i18n("No supported audio players are running. Supported audio players are: %1.").replace('%1', players)
+            err = i18n("No supported audio players are running. Supported audio players are: %1.", players)
         elif kind == 'video':
             players = ', '.join(sorted([p.displayName for p in PLAYERS if 'video' in p.type]))
-            err = i18n("No supported video players are running. Supported video players are: %1.").replace('%1', players)
+            err = i18n("No supported video players are running. Supported video players are: %1.", players)
         else:
-            err = i18n("%1 is not running.").replace('%1', kind.strip())
+            err = i18n("%1 is not running.", kind.strip())
     konversation.dbus.error(err)
 
 def run(kind):
@@ -428,7 +428,7 @@ def run(kind):
             try:
                 kind = play[0].displayName
             except IndexError:
-                konversation.dbus.error(i18n("%1 is not a supported player.").replace('%1', kind))
+                konversation.dbus.error(i18n("%1 is not a supported player.", kind))
                 sys.exit(1)
 
     if not playing(play, kind):
@@ -484,7 +484,7 @@ if __name__ == '__main__':
         version = '2.1.3'
         indent = '    '
         i = konversation.dbus.info
-        i(i18n("media v%1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.").replace('%1', version))
+        i(i18n("media v%1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.", version))
         i(i18n("Usage:"))
         i(indent + i18n("\"/media\" - report what the first player found is playing."))
         i(indent + i18n("\"/media [ 'audio' | 'video' ]\" - report what is playing in a supported audio or video player."))

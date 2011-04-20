@@ -21,10 +21,10 @@
 This module provides i18n support for Konversation scripts written in Python,
 via gettext.
 
-Call init() to install the i18n() function in the builtins namespace and use it
-to mark your translatable strings. Optionally provide the 'domain' keyword
-argument to specify a gettext .mo file installed in one of the directories KDE
-considers for this type of resource.
+Call the init() function to install the various functions that may be used to
+mark up translatable strings in the builtins namespace, and optionally specify
+a gettext .mo filename to use. See the function's documentation for more
+details.
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
 stable scripting inteface.
@@ -39,12 +39,17 @@ import subprocess
 def init(domain='konversation'):
 
     """
-    Initializes gettext and installs the i18n() function in the builtins
-    namespace.
+    Initializes gettext and installs the following functions in the builtins
+    namespace:
+
+    i18n(message[, arg1, arg1, ...])
+    i18np(singular, plural, num[, arg1, arg1, ...])
+    i18nc(context, message[, arg1, arg1, ...])
+    i18ncp(context, singular, plural, num[, arg1, arg1, ...])
 
     Third-party scripts may want to provide the 'domain' keyword argument to
-    specify the name of their own gettext .mo file, installed in one of the
-    directories that KDE considers for this type of resource.
+    specify the name of their own gettext .mo file, which has to be installed
+    in one of the directories that KDE considers for this type of resource.
 
     Keyword arguments:
     domain -- The gettext domain to use (default 'konversation').
@@ -67,14 +72,51 @@ def init(domain='konversation'):
         else:
             break
 
+    def i18n(msg, *args):
+        return _insert_args(t.gettext(msg), args)
+
+    def i18np(smsg, pmsg, num, *args):
+        return _insert_args(t.ngettext(smsg, pmsg, num), args)
+
+    # Context is part of the gettext msgid. Sadly Python's gettext API currently
+    # doesn't have a convenient way to hand over both context and message, hence
+    # the trick using string formatting here. Python bug 2504 indicates the API
+    # may be extended to support context in Python 3.3.
+    s = '{0}\x04{1}'
+
+    def i18nc(ctxt, msg, *args):
+        translated = t.gettext(s.format(ctxt, msg))
+        translated = msg if '\x04' in translated else translated
+
+        return _insert_args(translated, args)
+
+    def i18ncp(ctxt, smsg, pmsg, num, *args):
+        translated = t.ngettext(s.format(ctxt, smsg), s.format(ctxt, pmsg), num)
+
+        if '\x04' in translated:
+            translated = smsg if num == 1 else pmsg
+
+        return _insert_args(translated, args)
+
     try:
         # Python 2.x.
-        import __builtin__ as namespace
+        import __builtin__
+        d = __builtin__.__dict__
     except ImportError:
         # Python 3.x.
-        import builtins as namespace
+        import builtins
+        d = builtins.__dict__
 
-    namespace.__dict__['i18n'] = t.gettext
+    d['i18n'] = i18n
+    d['i18np'] = i18np
+    d['i18nc'] = i18nc
+    d['i18ncp'] = i18ncp
+
+def _insert_args(msg, args):
+    for i in range(len(args)):
+        msg = msg.replace('%' + str(i + 1), str(args[i]))
+
+    return msg
 
 def current_language():
 
