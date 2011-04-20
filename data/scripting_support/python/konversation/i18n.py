@@ -42,10 +42,10 @@ def init(domain='konversation'):
     Initializes gettext and installs the following functions in the builtins
     namespace:
 
-    i18n(message[, arg1, arg1, ...])
-    i18np(singular, plural, num[, arg1, arg1, ...])
-    i18nc(context, message[, arg1, arg1, ...])
-    i18ncp(context, singular, plural, num[, arg1, arg1, ...])
+    i18n(message[, arg1, arg2, ...])
+    i18np(singular, plural, num[, arg1, arg2, ...])
+    i18nc(context, message[, arg1, arg2, ...])
+    i18ncp(context, singular, plural, num[, arg1, arg2, ...])
 
     Third-party scripts may want to provide the 'domain' keyword argument to
     specify the name of their own gettext .mo file, which has to be installed
@@ -94,6 +94,8 @@ def init(domain='konversation'):
         translated = t.ngettext(s.format(ctxt, smsg), s.format(ctxt, pmsg), num)
 
         if '\x04' in translated:
+            # "If no message catalog is found msgid1 is returned if n == 1, otherwise msgid2."
+            # (Source: GNU gettext v0.18 docs, 11.2.6 Additional functions for plural forms)
             translated = smsg if num == 1 else pmsg
 
         return _insert_args(translated, args)
