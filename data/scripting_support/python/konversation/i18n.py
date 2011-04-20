@@ -35,6 +35,13 @@ import gettext
 import os
 import subprocess
 
+try:
+    # Python 2.x.
+    import __builtin__ as builtins
+except ImportError:
+    # Python 3.x.
+    import builtins
+
 
 def init(domain='konversation'):
 
@@ -100,19 +107,8 @@ def init(domain='konversation'):
 
         return _insert_args(translated, args)
 
-    try:
-        # Python 2.x.
-        import __builtin__
-        d = __builtin__.__dict__
-    except ImportError:
-        # Python 3.x.
-        import builtins
-        d = builtins.__dict__
-
-    d['i18n'] = i18n
-    d['i18np'] = i18np
-    d['i18nc'] = i18nc
-    d['i18ncp'] = i18ncp
+    for func in (i18n, i18np, i18nc, i18ncp):
+        builtins.__dict__[func.__name__] = func
 
 def _insert_args(msg, args):
     for i in range(len(args)):
