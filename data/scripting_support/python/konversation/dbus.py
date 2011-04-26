@@ -32,7 +32,7 @@ sent through the say/info/error functions with a common string rather than pass
 a prefix with each call (but doing so overrides this fallback attribute).
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
-stable scripting inteface.
+stable scripting interface.
 
 """
 

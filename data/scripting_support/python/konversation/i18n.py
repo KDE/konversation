@@ -27,7 +27,7 @@ a gettext .mo filename to use. See the function's documentation for more
 details.
 
 This module is considered EXPERIMENTAL at this time and not part of the public,
-stable scripting inteface.
+stable scripting interface.
 
 """
 
@@ -130,7 +130,7 @@ def locale_directories():
 
     """
     Returns the list of directory paths searched for gettext .mo files, using
-    KDE's normal lookup logic for this type of resource."
+    KDE's normal lookup logic for this type of resource.
 
     """
 
