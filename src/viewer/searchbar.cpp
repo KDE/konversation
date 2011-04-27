@@ -92,13 +92,11 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
         Application* konvApp = static_cast<Application*>(kapp);
         KAction* action = static_cast<KAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
 
-        if (action->isEnabled() && action->shortcut().contains(QKeySequence(Qt::Key_Escape)))
+        if (action->shortcut().contains(QKeySequence(Qt::Key_Escape)))
         {
             action->setEnabled(focusEvent->lostFocus());
             m_closeShortcut->setEnabled(focusEvent->gotFocus());
         }
-        else
-            m_closeShortcut->setEnabled(true);
     }
 
     return false;
