@@ -354,6 +354,20 @@ Changes since 1.3.1:
   meter it was given, potentially causing an extended lock-up of the appli-
   cation when the system has serious DNS trouble. This has been resolved;
   '/dns' is now fully non-blocking.
+* Scripts executed by Konversation can now access Konversation's current UI
+  locale in the KONVERSATION_LANG environment variable.
+* Konversation now installs an experimental Python scripting support package
+  named 'konversation' into a subdirectory of its application data directory
+  and appends all 'konversation/scripting_support/python' directories found
+  in any KDE application data resource directories (i.e. within $KDEHOME,
+  $KDEDIRS, etc.) to the PYTHONPATH environment variable available in the
+  script execution context, thereby allowing Python scripts executed by
+  Konversation to import the package. The package currently sports modules
+  providing APIs for i18n support and D-Bus communication with Konversation.
+* User-facing information and error message strings in the bundled 'cmd' and
+  'media' scripts now finally enjoy translation support, making use of the
+  experimental new Python scripting support package described above.
+
 
 Changes from 1.3 to 1.3.1:
 Konversation 1.3.1 is a maintenance release that improves program behavior
