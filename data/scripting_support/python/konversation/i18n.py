@@ -134,9 +134,8 @@ def locale_directories():
 
     """
 
-    dirs = subprocess.Popen('kde4-config --path locale',
+    dirs = subprocess.Popen(('kde4-config', '--path', 'locale'),
                             stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            shell=True).communicate()
+                            stderr=subprocess.PIPE).communicate()
 
     return dirs[0].rstrip().decode().split(':')
