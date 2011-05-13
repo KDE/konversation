@@ -856,7 +856,7 @@ QStringList Channel::getSelectedNickList()
             selectedNicks << nick->getChannelNick()->getNickname();
     }
 
-    return selectedNicks;;
+    return selectedNicks;
 }
 
 void Channel::channelLimitChanged()
