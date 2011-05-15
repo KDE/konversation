@@ -1967,7 +1967,6 @@ void IRCView::anchorClicked(const QUrl& url)
     openLink(url);
 }
 
-// FIXME do we still care about newtab? looks like konqi has lots of config now..
 void IRCView::openLink(const QUrl& url)
 {
     QString link(url.toString());
