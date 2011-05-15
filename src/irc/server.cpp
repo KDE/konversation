@@ -953,11 +953,13 @@ void Server::startNotifyTimer(int msec)
     // make sure the timer gets started properly in case we have reconnected
     m_notifyTimer.stop();
 
-    if (msec == 0) msec = Preferences::self()->notifyDelay()*1000;
-
-    // start the timer in one shot mode
     if (Preferences::self()->useNotify())
+    {
+        if (msec == 0)
+            msec = Preferences::self()->notifyDelay() * 1000;
+
         m_notifyTimer.start(msec);
+    }
 }
 
 void Server::notifyTimeout()
@@ -968,8 +970,8 @@ void Server::notifyTimeout()
         // But only if there actually are nicks in the notify list
         QString list = getISONListString();
 
-        if (!list.isEmpty()) queue("ISON "+list, LowPriority);
-
+        if (!list.isEmpty())
+            queue("ISON " + list, LowPriority);
     }
 }
 
@@ -2990,10 +2992,13 @@ QString Server::getISONListString() { return getISONList().join(" "); }
  */
 bool Server::isWatchedNick(const QString& nickname)
 {
+    // no nickinfo ISON for the time being
     if (getServerGroup())
         return Preferences::isNotify(getServerGroup()->id(), nickname);
     else
         return false;
+
+    return getWatchList().contains(nickname, Qt::CaseInsensitive);
 }
 
 /**
