@@ -94,7 +94,6 @@ set(config_SRCS
     config/theme_config.cpp
     config/quickbuttons_config.cpp
     config/warnings_config.cpp
-    config/watchednicknames_config.cpp
     config/connectionbehavior_config.cpp
 )
 

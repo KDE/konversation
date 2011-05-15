@@ -31,7 +31,7 @@
 #include "theme_config.h"
 #include "alias_config.h"
 #include "ignore_config.h"
-#include "watchednicknames_config.h"
+#include "ui_watchednicknames_configui.h"
 #include "ui_tabnotifications_config.h"
 
 #include <config-konversation.h>
@@ -160,11 +160,10 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_pages.append(m_confHighlightWdg);
 
   //Notification/Watched Nicknames
-  m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
-  // remember index so we can open this page later from outside
-  m_watchedNicknamesPage = addPage ( m_confWatchedNicknamesWdg, notificationGroup, "edit-find-user", i18n("Watched Nicknames") );
-  connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_pages.append(m_confWatchedNicknamesWdg);
+  Ui::WatchedNicknames_ConfigUI confWatchedNicks;
+  w = new QWidget();
+  confWatchedNicks.setupUi(w);
+  addPage(w, notificationGroup, "edit-find-user", i18n("Watched Nicknames"));
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config( this, "OSD" );
