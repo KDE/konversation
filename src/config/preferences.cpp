@@ -274,10 +274,7 @@ const QMap<int, QStringList> Preferences::notifyList() { return self()->mNotifyL
 
 const QStringList Preferences::notifyListByGroupId(int serverGroupId)
 {
-  if (serverGroupId && self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
-        return self()->mNotifyList.value(serverGroupId);
-  else
-        return QStringList();
+    return self()->mNotifyList.value(serverGroupId);
 }
 
 const QString Preferences::notifyStringByGroupId(int serverGroupId)
@@ -289,37 +286,38 @@ bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
 {
     if (!self()->mNotifyList[serverGroupId].contains(newPattern))
     {
-        QStringList nicknameList = self()->mNotifyList[serverGroupId];
-        nicknameList.append(newPattern);
-        self()->mNotifyList[serverGroupId] = nicknameList;
+        self()->mNotifyList[serverGroupId].append(newPattern);
+
         return true;
     }
+
     return false;
 }
 
 bool Preferences::removeNotify(int serverGroupId, const QString& pattern)
 {
-    if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
+    if (self()->mNotifyList.contains(serverGroupId))
     {
-        QStringList nicknameList = self()->mNotifyList[serverGroupId];
-        nicknameList.removeAll(pattern); //FIXME: what semantics do you really want here?
-        if (nicknameList.isEmpty())
-            self()->mNotifyList.remove(serverGroupId);
-        else
-            self()->mNotifyList[serverGroupId] = nicknameList;
-        return true;
+        QStringList& nicknameList = self()->mNotifyList[serverGroupId];
+
+        if (nicknameList.removeAll(pattern) > 0)
+        {
+            if (nicknameList.isEmpty())
+                self()->mNotifyList.remove(serverGroupId);
+
+            return true;
+        }
     }
+
     return false;
 }
 
 bool Preferences::isNotify(int serverGroupId, const QString& pattern)
 {
-    if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
-    {
-        QStringList nicknameList = self()->mNotifyList[serverGroupId];
+    if (self()->mNotifyList.contains(serverGroupId))
+        if (self()->mNotifyList.value(serverGroupId).contains(pattern))
+            return true;
 
-        if (nicknameList.contains(pattern)) return true;
-    }
     return false;
 }
 

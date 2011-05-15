@@ -1254,38 +1254,61 @@ namespace Konversation
         if (m_server->getServerGroup())
             serverGroupId = m_server->getServerGroup()->id();
 
+        QStringList added;
+        QStringList removed;
+
         if (!input.parameter.isEmpty() && serverGroupId != -1)
         {
-            QStringList list = input.parameter.split(' ');
+            QStringList list = input.parameter.split(' ', QString::SkipEmptyParts);
 
-            for (int index = 0; index < list.count(); index++)
+
+            for (int index = 0; index < list.count(); ++index)
             {
-                // Try to remove current pattern
+                // Try to remove current pattern.
                 if (!Preferences::removeNotify(serverGroupId, list[index]))
                 {
-                    // If remove failed, try to add it instead
-                    if (!Preferences::addNotify(serverGroupId, list[index]))
-                        kDebug() << "Adding failed!";
+                    // If remove failed, try to add it instead.
+                    if (Preferences::addNotify(serverGroupId, list[index]))
+                        added << list[index];
                 }
+                else
+                    removed << list[index];
             }
         }
 
-        // show (new) notify list to user
-        //TODO FIXME uh, wtf? my brain has no room in it for this kind of fucking shit
-
-        QString list = Preferences::notifyStringByGroupId(serverGroupId) + ' ' +
-                       Konversation::Addressbook::self()->
-                           allContactsNicksForServer(m_server->getServerName(),
-                                                     m_server->getDisplayName()).join(" ");
-
-        result.typeString = i18n("Notify");
+        QString list = Preferences::notifyListByGroupId(serverGroupId).join(", ");
 
         if (list.isEmpty())
-            result.output = i18n("Current notify list is empty.");
+        {
+            if (removed.count())
+                result.output = i18nc("%1 = Comma-separated list of nicknames",
+                                      "The notify list has been emptied (removed %1).",
+                                      removed.join(", "));
+            else
+                result.output = i18n("The notify list is currently empty.");
+        }
         else
-            result.output = i18n("Current notify list: %1", list);
+        {
+            if (added.count() && !removed.count())
+                result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
+                                      "Current notify list: %1 (added %2)",
+                                      list, added.join(", "));
+            else if (removed.count() && !added.count())
+                result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
+                                      "Current notify list: %1 (removed %2)",
+                                      list, removed.join(", "));
+            else if (added.count() && removed.count())
+                result.output = i18nc("%1, %2 and %3 = Comma-separated lists of nicknames",
+                                      "Current notify list: %1 (added %2, removed %3)",
+                                      list, added.join(", "), removed.join(", "));
+            else
+                result.output = i18nc("%1 = Comma-separated list of nicknames",
+                                      "Current notify list: %1",
+                                      list);
+        }
 
         result.type = Program;
+        result.typeString = i18n("Notify");
 
         return result;
     }
