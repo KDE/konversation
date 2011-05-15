@@ -284,7 +284,7 @@ const QString Preferences::notifyStringByGroupId(int serverGroupId)
 
 bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
 {
-    if (!self()->mNotifyList[serverGroupId].contains(newPattern))
+    if (!self()->mNotifyList[serverGroupId].contains(newPattern, Qt::CaseInsensitive))
     {
         self()->mNotifyList[serverGroupId].append(newPattern);
 
@@ -298,9 +298,19 @@ bool Preferences::removeNotify(int serverGroupId, const QString& pattern)
 {
     if (self()->mNotifyList.contains(serverGroupId))
     {
+        QString nick = pattern.toLower();
         QStringList& nicknameList = self()->mNotifyList[serverGroupId];
+        int size = nicknameList.size();
 
-        if (nicknameList.removeAll(pattern) > 0)
+        QMutableStringListIterator it(nicknameList);
+
+        while (it.hasNext())
+        {
+            if (it.next().toLower() == nick)
+                it.remove();
+        }
+
+        if (nicknameList.size() < size)
         {
             if (nicknameList.isEmpty())
                 self()->mNotifyList.remove(serverGroupId);
@@ -315,7 +325,7 @@ bool Preferences::removeNotify(int serverGroupId, const QString& pattern)
 bool Preferences::isNotify(int serverGroupId, const QString& pattern)
 {
     if (self()->mNotifyList.contains(serverGroupId))
-        if (self()->mNotifyList.value(serverGroupId).contains(pattern))
+        if (self()->mNotifyList.value(serverGroupId).contains(pattern, Qt::CaseInsensitive))
             return true;
 
     return false;
