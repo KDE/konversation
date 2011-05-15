@@ -2990,10 +2990,10 @@ QString Server::getISONListString() { return getISONList().join(" "); }
  */
 bool Server::isWatchedNick(const QString& nickname)
 {
-    // Get watch list from preferences.
-    QString watchlist= ' ' + getWatchListString() + ' ';
-    // Search case-insensitivly
-    return watchlist.contains(' ' + nickname + ' ', Qt::CaseInsensitive);
+    if (getServerGroup())
+        return Preferences::isNotify(getServerGroup()->id(), nickname);
+    else
+        return false;
 }
 
 /**
