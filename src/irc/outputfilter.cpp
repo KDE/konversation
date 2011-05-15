@@ -1291,19 +1291,19 @@ namespace Konversation
         {
             if (added.count() && !removed.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
-                                      "Current notify list: %1 (added %2)",
+                                      "Current notify list: %1 (added %2).",
                                       list, added.join(", "));
             else if (removed.count() && !added.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
-                                      "Current notify list: %1 (removed %2)",
+                                      "Current notify list: %1 (removed %2).",
                                       list, removed.join(", "));
             else if (added.count() && removed.count())
                 result.output = i18nc("%1, %2 and %3 = Comma-separated lists of nicknames",
-                                      "Current notify list: %1 (added %2, removed %3)",
+                                      "Current notify list: %1 (added %2, removed %3).",
                                       list, added.join(", "), removed.join(", "));
             else
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
-                                      "Current notify list: %1",
+                                      "Current notify list: %1.",
                                       list);
         }
 
