@@ -58,7 +58,6 @@ class MainWindow : public KXmlGuiWindow
         void focusAndShowErrorMessage(const QString &errorMsg);
 
     signals:
-        void startNotifyTimer(int msec);
         void showQuickConnectDialog();
         void nicksNowOnline(Server*);
         void endNotification();

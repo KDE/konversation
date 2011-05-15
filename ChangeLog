@@ -373,6 +373,10 @@ Changes since 1.3.1:
   removing and when summarizing Watched Nicks.
 * Fixed a bug causing the quit message to not always be supplied success-
   fully to the server when disconnecting.
+* Fixed a bug causing the Watched Nicks Online system to fail to start
+  checking nickname online status for a network after adding an initial
+  nick to its Watched Nicks list via the context menu actions or the
+  '/notify' command (it worked fine via the WNO tab, however).
 
 
 Changes from 1.3 to 1.3.1:

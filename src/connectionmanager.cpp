@@ -167,8 +167,6 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
     connect(server, SIGNAL(awayInsertRememberLine(Server*)),
         mainWindow, SIGNAL(triggerRememberLines(Server*)));
 
-    connect(mainWindow, SIGNAL(startNotifyTimer(int)), server, SLOT(startNotifyTimer(int)));
-
     connect(server, SIGNAL(multiServerCommand(const QString&, const QString&)),
         konvApp, SLOT(sendMultiServerCommand(const QString&, const QString&)));
 }

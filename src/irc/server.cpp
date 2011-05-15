@@ -310,8 +310,6 @@ void Server::connectSignals()
     connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
             this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
 
-    connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
-
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
@@ -369,6 +367,9 @@ void Server::connectSignals()
 
     // Stats
     connect(this, SIGNAL(sentStat(int, int)), SLOT(collectStats(int, int)));
+
+    connect(Preferences::self(), SIGNAL(notifyListStarted(int)),
+        this, SLOT(notifyListStarted(int)), Qt::QueuedConnection);
 }
 
 int Server::getPort()
@@ -946,6 +947,13 @@ void Server::notifyResponse(const QString& nicksOnline)
 
     // Next round
     startNotifyTimer();
+}
+
+void Server::notifyListStarted(int serverGroupId)
+{
+    if (getServerGroup())
+        if (getServerGroup()->id() == serverGroupId)
+            startNotifyTimer(1000);
 }
 
 void Server::startNotifyTimer(int msec)

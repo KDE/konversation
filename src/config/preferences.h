@@ -68,9 +68,9 @@ class Preferences : public PreferencesBase
 
         //notifylist is in kconfigxt - FIXME
         static const QMap<int, QStringList> notifyList();
+        static void setNotifyList(const QMap<int, QStringList>& newList);
         static const QStringList notifyListByGroupId(int serverGroupId);
         static const QString notifyStringByGroupId(int serverGroupId);
-        static void setNotifyList(const QMap<int, QStringList>& newList);
         static bool addNotify(int serverGroupId, const QString& newPattern);
         static bool removeNotify(int serverGroupId, const QString& pattern);
         static bool isNotify(int serverGroupId, const QString& pattern);
@@ -128,8 +128,7 @@ class Preferences : public PreferencesBase
                                        Qt::SortOrder defaultSortOrder = Qt::AscendingOrder);
 
     signals:
-        void requestServerConnection(int number);
-        void requestSaveOptions();
+        void notifyListStarted(int serverGroupId);
         void autoContinuousWhoChanged();
         void updateTrayIcon();
 
