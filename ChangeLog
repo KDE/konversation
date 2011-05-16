@@ -367,7 +367,7 @@ Changes since 1.3.1:
 * User-facing information and error message strings in the bundled 'cmd' and
   'media' scripts now finally enjoy translation support, making use of the
   experimental new Python scripting support package described above.
-* Fixed a bug causing adding of nicknames to the Watchd Nicks Online list
+* Fixed a bug causing adding of nicknames to the Watched Nicks Online list
   via the '/notify' command to fail.
 * The '/notify' command now displays more useful output after adding and
   removing and when summarizing Watched Nicks.
