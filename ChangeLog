@@ -105,10 +105,10 @@ Changes since 1.3.1:
     ular these days ("bit.ly/foo" and similar), are now recognized.
   - Arbitrary protocols (e.g. "http://" or "message://") are now recognized;
     previously only a small hand-picked and insufficient set was.
-  - The check that avoids balanced a pair of parenthesis around an URL be-
+  - The check that avoids balanced a pair of parentheses around an URL be-
     coming part of the link now works for more than one level of balanced
-    parenthesis.
-  - Aside from balanced pairs of parenthesis, also square and other forms
+    parentheses.
+  - Aside from balanced pairs of parentheses, also square and other forms
     of brackets are now handled properly.
   - Trailing question marks no longer become part of the link.
   - URLs using uncommon schemas, e.g. Apple message:// URLs or Wolfram
@@ -120,7 +120,7 @@ Changes since 1.3.1:
     menu in Channel List tabs now uses the same infrastructure as link detec-
     tion elsewhere rather than separate code, making it massively better com-
     pared to previous versions.
-  - Average spreed of link detection has improved slightly.
+  - Average speed of link detection has improved slightly.
 * Incoming actions (i.e. "/me") without an argument are now handled properly.
 * Fixed a number of crashes on illegal data from the server.
 * Added a "Show/Hide Konversation" action that can be used to toggle the
@@ -158,7 +158,7 @@ Changes since 1.3.1:
   - Background colors are now supported.
   - The reverse color formatting character is now supported.
   - To emphasize usability, links are now consistently displayed using the
-    link and background colors from the configuration dialog, irregardless
+    link and background colors from the configuration dialog, regardless
     of preceding formatting markup or formatting markup located within the
     link.
   - Formatting markup located within links in incoming messages no longer
@@ -1519,7 +1519,7 @@ Text views
 * Fixed middle-click-to-open-in-new-tab on chat window URLs when Konqueror
   wasn't running.
 * Fixed superfluous closing parenthesis being inserted after links in lines
-  which contain multiple links followed by closing parenthesis.
+  which contain multiple links followed by closing parentheses.
 * Fixed URLs with encoded hash mark %23 being incorrectly passed off to handler.
 * Fixed variable expansion causing certain URLs to be corrupted when pasted.
 * Added a "Save Link As" item to the context menu of links in the chat window.
@@ -2071,7 +2071,7 @@ same
    nickname.
 * The number of backlog lines to show in the chat window is now configurable.
 * The recognition of URLs in the chat window has been improved to cope better
-  with URLs containing or being surrounded by parenthesis and to exclude
+  with URLs containing or being surrounded by parentheses and to exclude
 trailing
   dots and commas.
 * Channel links following mode characters or surrounded by interpunctuation are
