@@ -283,6 +283,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction("next_active_tab", action);
+    action->setGlobalShortcut(KShortcut());
 
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {

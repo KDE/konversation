@@ -378,6 +378,12 @@ Changes since 1.3.1:
   nick to its Watched Nicks list via the context menu actions or the
   '/notify' command (it worked fine via the WNO tab, however).
 * The "Insert Character" dialog now sports a search line.
+* It's now possible to give the "Next Active Tab" shortcut a global key-
+  board shortcut, and when triggered the action will always show, raise and
+  focus the Konversation window (as needed), regardless of whether it will
+  also perform a tab switch. This allows "Next Active Tab" to double as a
+  "get me the Konversation window and the tab that just caused my notifica-
+  tions to go off" global shortcut.
 
 
 Changes from 1.3 to 1.3.1:

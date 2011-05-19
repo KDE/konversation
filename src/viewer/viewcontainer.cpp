@@ -47,6 +47,7 @@
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
+#include <KWindowSystem>
 
 using namespace Konversation;
 
@@ -1492,6 +1493,18 @@ void ViewContainer::showPreviousView()
 
 void ViewContainer::showNextActiveView()
 {
+    if (m_window->isHidden())
+        m_window->show();
+
+    if (m_window->isMinimized())
+        KWindowSystem::unminimizeWindow(m_window->winId());
+
+    if (!m_window->isActiveWindow())
+    {
+        m_window->raise();
+        KWindowSystem::activateWindow(m_window->winId());
+    }
+
     if (!m_activeViewOrderList.isEmpty())
     {
         ChatWindow* prev = m_activeViewOrderList.first();
@@ -1649,7 +1662,7 @@ void ViewContainer::closeViewMiddleClick(QWidget* view)
 void ViewContainer::renameKonsole()
 {
     bool ok = false;
-    
+
     if (!m_tabWidget)
         return;
 
