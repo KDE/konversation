@@ -13,7 +13,8 @@ include(CheckIncludeFile)
 include(CMakeDependentOption)
 
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+#Reenable when it works with kconfig_compiler generated files
+#add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_TOLOWER)
     if(CMAKE_BUILD_TYPE_TOLOWER MATCHES debugfull)
