@@ -634,7 +634,7 @@ void Application::readOptions()
 
         for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
         {
-            Preferences::addHighlight(hiList[hiIndex], false, '#'+hiList[hiIndex+1], QString(), QString(), QString());
+            Preferences::addHighlight(hiList[hiIndex], false, QString('#'+hiList[hiIndex+1]), QString(), QString(), QString());
         }
 
         cgDefault.deleteEntry("Highlight");

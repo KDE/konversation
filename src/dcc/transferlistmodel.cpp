@@ -363,7 +363,7 @@ namespace Konversation
                     }
                     else
                     {
-                        return "<qt>" + tooltip + "</qt>";
+                        return QString(QLatin1String("<qt>") + tooltip + QLatin1String("</qt>"));
                     }
                 }
                 default:

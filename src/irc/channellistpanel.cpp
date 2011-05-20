@@ -71,7 +71,7 @@ QVariant ChannelListModel::data(const QModelIndex& index, int role) const
     }
     else if(role == Qt::ToolTipRole)
     {
-        return "<qt>" + Qt::escape(item.topic) + "</qt>";
+        return QString(QLatin1String("<qt>") + Qt::escape(item.topic) + QLatin1String("</qt>"));
     }
     return QVariant();
 }

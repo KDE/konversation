@@ -102,7 +102,7 @@ QStringList Ignore_Config::currentIgnoreList()
     for (int i = 0; i < root->childCount(); ++i)
     {
         IgnoreListViewItem* item = static_cast<IgnoreListViewItem *>(root->child(i));
-        newList.append(item->text(0)+' '+item->getFlags());
+        newList.append(item->text(0)+QLatin1Char(' ')+QString(item->getFlags()));
     }
 
     return newList;

@@ -114,7 +114,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
                  << (settings.serverGroup()?settings.serverGroup()->name():"");
 
         QString sname = (settings.serverGroup() ? settings.serverGroup()->name()
-            : (settings.server().host() + ':' + settings.server().port()));
+            : (QString(settings.server().host()) + QString(':') + QString(settings.server().port())));
 
         if (!serverChannels.contains(sname))
             serverConnections[sname] = settings;

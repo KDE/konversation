@@ -147,8 +147,8 @@ void Autoreplace_Config::saveSettings()
         QStringList definition = newList[index];
         grp.writeEntry(regexString + indexString,definition.at(0)); //regex status
         grp.writeEntry(directString + indexString,definition.at(1)); //direction
-        grp.writeEntry(patternString + indexString,definition.at(2)+'#'); //pattern
-        grp.writeEntry(replaceString + indexString,definition.at(3)+'#'); //replace
+        grp.writeEntry(patternString + indexString,QString(definition.at(2)+'#')); //pattern
+        grp.writeEntry(replaceString + indexString,QString(definition.at(3)+'#')); //replace
 
     } // for
   }

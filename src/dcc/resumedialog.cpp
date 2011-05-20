@@ -194,7 +194,7 @@ namespace Konversation
             if ( baseURL.isLocalFile() )
                 exists = QFileInfo( baseURL.path(KUrl::AddTrailingSlash) + suggestedName ).exists();
 
-            m_urlreqFileURL->setUrl( baseURL.path(KUrl::AddTrailingSlash) + suggestedName );
+            m_urlreqFileURL->setUrl( QString(baseURL.path(KUrl::AddTrailingSlash) + suggestedName ));
 
             if ( exists ) // already exists -> recurse
                 suggestNewName();

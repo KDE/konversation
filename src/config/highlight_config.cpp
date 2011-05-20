@@ -310,7 +310,7 @@ QStringList Highlight_Config::currentHighlightList()
     HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
-        newList.append(item->getPattern() + item->getRegExp() + item->getColor().name() +
+        newList.append(item->getPattern() + QString(item->getRegExp()) + item->getColor().name() +
             item->getSoundURL().url() + item->getAutoText() + item->getChatWindows());
         item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
