@@ -498,6 +498,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("toggle_mainwindow_visibility", action);
     action->setGlobalShortcut(KShortcut());
 
+    action=new KToggleAction(this);
+    action->setEnabled(true);
+    action->setChecked(Preferences::self()->useOSD());
+    action->setText(i18n("Enable On Screen Display"));
+    action->setIcon(KIcon("video-display"));
+    connect(action, SIGNAL(triggered(bool)), Preferences::self(), SLOT(slotSetUseOSD(bool)));
+    actionCollection()->addAction("toggle_osd", action);
+
     // Bookmarks
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
     new KonviBookmarkHandler(bookmarkMenu->menu(), this);

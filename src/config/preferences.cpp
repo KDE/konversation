@@ -573,4 +573,9 @@ void Preferences::restoreColumnState(QTreeView* treeView, QString name, int defa
         treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", defaultColumn), Qt::AscendingOrder);
 }
 
+void Preferences::slotSetUseOSD(bool use)
+{
+    self()->setUseOSD(use);
+}
+
 #include "preferences.moc"

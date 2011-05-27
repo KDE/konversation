@@ -127,6 +127,9 @@ class Preferences : public PreferencesBase
         static void restoreColumnState(QTreeView *treeView, QString name, int defaultColumn = 0,
                                        Qt::SortOrder defaultSortOrder = Qt::AscendingOrder);
 
+    public slots:
+        static void slotSetUseOSD(bool use);
+
     signals:
         void notifyListStarted(int serverGroupId);
         void autoContinuousWhoChanged();
