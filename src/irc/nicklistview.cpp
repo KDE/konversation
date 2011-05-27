@@ -110,7 +110,7 @@ bool NickListView::event(QEvent *event)
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
 
-        QTreeWidgetItem *item = itemAt( helpEvent->pos() );
+        QTreeWidgetItem *item = itemAt(viewport()->mapFromParent(helpEvent->pos()));
         if( item )
         {
             Nick *nick = dynamic_cast<Nick*>( item );

@@ -498,7 +498,7 @@ bool ViewTree::event(QEvent* e)
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>(e);
 
-        QPoint vp = contentsToViewport(helpEvent->pos());
+        QPoint vp = contentsToViewport(viewport()->mapFromParent(helpEvent->pos()));
         ViewTreeItem* item = static_cast<ViewTreeItem*>(itemAt(vp));
 
         if (item && item->isTruncated())
