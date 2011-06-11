@@ -93,7 +93,9 @@ def init(domain='konversation'):
 
     def i18nc(ctxt, msg, *args):
         translated = t.gettext(s.format(ctxt, msg))
-        translated = msg if '\x04' in translated else translated
+        
+        if '\x04' in translated:
+            translated = msg
 
         return _insert_args(translated, args)
 
