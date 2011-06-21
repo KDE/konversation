@@ -428,7 +428,7 @@ namespace Konversation
                 name += ':' + QString::number((*serverIt).port());
 
             if ((*serverIt).SSLEnabled())
-                name += + " (SSL)";
+                name += " (SSL)";
 
             // Insert the server into the list, as child of the server group list item
             QTreeWidgetItem* serverItem = new ServerListItem(networkItem, QStringList() << name);
