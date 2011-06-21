@@ -389,6 +389,11 @@ Changes since 1.3.1:
   edges of an item in the nickname list or the listview version of the tab
   bar (tooltips are only shown on the latter when the listview is too
   narrow to fit its contents, to provide the unelided tab names).
+* ERR_UNAVAILRESOURCE (numeric 437) is now treated like ERR_NICKNAMEINUSE
+  (numeric 433) during early connection negotiation: The next nickname in
+  the identity's nickname list is tried, or the user asked for a new one
+  if necessary. Previously Konversation would just idle in this situation
+  and allow the connection attempt to time out.
 
 
 Changes from 1.3 to 1.3.1:

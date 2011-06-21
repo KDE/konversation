@@ -463,6 +463,8 @@ void Server::connectToIRCServer()
             connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
             connect(m_socket, SIGNAL(sslErrors(const QList<KSslError>&)), SLOT(sslError(const QList<KSslError>&)));
 
+            m_socket->setAdvertisedSslVersion(KTcpSocket::TlsV1);
+
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
 

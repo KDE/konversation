@@ -2024,7 +2024,24 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
-                    m_server->appendMessageToFrontmost(i18n("Error"), i18n("%1 is currently unavailable.", parameterList.value(1)));
+                    if (m_server->isConnected())
+                        m_server->appendMessageToFrontmost(i18n("Error"), i18n("%1 is currently unavailable.", parameterList.value(1)));
+                    else
+                    {
+                        QString newNick = m_server->getNextNickname();
+
+                        // The user chose to disconnect
+                        if (newNick.isNull())
+                            m_server->disconnectServer();
+                        else
+                        {
+                            m_server->obtainNickInfo(m_server->getNickname()) ;
+                            m_server->renameNick(m_server->getNickname(), newNick);
+                            m_server->appendMessageToFrontmost(i18n("Nick"),
+                                i18n("Nickname %1 is unavailable. Trying %2.", parameterList.value(1), newNick));
+                            m_server->queue("NICK "+newNick);
+                        }
+                    }
                 }
                 break;
             }
