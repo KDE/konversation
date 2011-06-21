@@ -453,11 +453,13 @@ namespace Konversation
 
     int ServerListDialog::selectedChildrenCount(QTreeWidgetItem* item)
     {
-        int count=0;
-        for(int i=0; i< item->childCount(); i++)
+        int count = 0;
+
+        for (int i=0; i< item->childCount(); i++)
         {
-            if(item->child(i)) count++;
+            if (item->child(i)->isSelected()) count++;
         }
+
         return count;
     }
 }

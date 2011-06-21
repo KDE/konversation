@@ -394,6 +394,10 @@ Changes since 1.3.1:
   the identity's nickname list is tried, or the user asked for a new one
   if necessary. Previously Konversation would just idle in this situation
   and allow the connection attempt to time out.
+* Fixed a bug causing the "Delete" button in the "Server List" dialog to
+  incorrectly show a "Network needs to have at least one server." error
+  dialog when trying to delete servers, even when the deletion would in
+  fact leave the network with one or more servers.
 
 
 Changes from 1.3 to 1.3.1:
