@@ -176,8 +176,7 @@ void ViewContainer::setupTabWidget()
     m_queueTuner = new QueueTuner(m_vbox, this);
     m_queueTuner->hide();
 
-    m_tabWidget->setTabReorderingEnabled(true);
-    m_tabWidget->setTabCloseActivatePrevious(true);
+    m_tabWidget->setMovable(true);
     m_tabWidget->tabBar()->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 
     m_vbox->hide();    //m_tabWidget->hide();

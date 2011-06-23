@@ -201,15 +201,24 @@
         </layout>
        </item>
        <item>
-        <widget class="KEditListBox" name="m_nicknameLBox">
-         <property name="whatsThis">
-          <string>This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.
-
-Since nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames.</string>
-         </property>
+        <widget class="QGroupBox" name="groupBox">
          <property name="title">
           <string>Nickname</string>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="KEditListWidget" name="m_nicknameLBox">
+            <property name="whatsThis">
+             <string>This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.
+
+Since nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -604,19 +613,14 @@ Since nicknames must be unique across an entire IRC network, your desired name m
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KEditListBox</class>
-   <extends>QGroupBox</extends>
-   <header>keditlistbox.h</header>
+   <class>KEditListWidget</class>
+   <extends>QWidget</extends>
+   <header>keditlistwidget.h</header>
   </customwidget>
   <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -624,9 +628,14 @@ Since nicknames must be unique across an entire IRC network, your desired name m
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>

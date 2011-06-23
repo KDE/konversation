@@ -84,7 +84,7 @@ namespace Konversation
 
         m_realNameEdit->setText(m_currentIdentity->getRealName());
         m_nicknameLBox->clear();
-        m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList(), 0);//0 is workaround for kdelibs < 4.2.2 bug
+        m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
         m_botEdit->setText(m_currentIdentity->getBot());
         m_passwordEdit->setText(m_currentIdentity->getPassword());
 
@@ -125,13 +125,7 @@ namespace Konversation
         }
 
         m_currentIdentity->setRealName(m_realNameEdit->text());
-        QStringList nicks;
-
-        for(int i = 0; i < m_nicknameLBox->count(); ++i)
-        {
-            nicks.append(m_nicknameLBox->text(i));
-        }
-
+        const QStringList nicks = m_nicknameLBox->items();
         m_currentIdentity->setNicknameList(nicks);
         m_currentIdentity->setBot(m_botEdit->text());
         m_currentIdentity->setPassword(m_passwordEdit->text());

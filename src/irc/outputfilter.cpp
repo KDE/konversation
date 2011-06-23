@@ -38,7 +38,7 @@
 #include <QByteArray>
 #include <QTextStream>
 
-#include <KIO/PasswordDialog>
+#include <KPasswordDialog>
 #include <KMessageBox>
 #include <KAboutData>
 
@@ -1322,21 +1322,14 @@ namespace Konversation
         if (input.parameter.isEmpty() || parameterList.count() == 1)
         {
             QString nick((parameterList.count() == 1) ? parameterList[0] : input.myNick);
-            QString password;
-            bool keep = false;
 
-            int ret = KIO::PasswordDialog::getNameAndPassword
-                (
-                nick,
-                password,
-                &keep,
-                i18n("Enter username and password for IRC operator privileges:"),
-                false,
-                i18n("IRC Operator Password")
-                );
-
-            if (ret == KIO::PasswordDialog::Accepted)
-                result.toServer = "OPER " + nick + ' ' + password;
+            KPasswordDialog dialog(0, KPasswordDialog::ShowUsernameLine);
+            dialog.setPrompt(i18n("Enter username and password for IRC operator privileges:"));
+            dialog.setUsername(nick);
+            dialog.setCaption(i18n("IRC Operator Password"));
+            if (dialog.exec()) {
+                result.toServer = "OPER " + dialog.username() + ' ' + dialog.password();
+            }
         }
         else
             result.toServer = "OPER " + input.parameter;
