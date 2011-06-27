@@ -1323,13 +1323,15 @@ namespace Konversation
         {
             QString nick((parameterList.count() == 1) ? parameterList[0] : input.myNick);
 
-            KPasswordDialog dialog(0, KPasswordDialog::ShowUsernameLine);
-            dialog.setPrompt(i18n("Enter username and password for IRC operator privileges:"));
-            dialog.setUsername(nick);
-            dialog.setCaption(i18n("IRC Operator Password"));
-            if (dialog.exec()) {
-                result.toServer = "OPER " + dialog.username() + ' ' + dialog.password();
+            QPointer<KPasswordDialog> dialog = new KPasswordDialog(0, KPasswordDialog::ShowUsernameLine);
+            dialog->setPrompt(i18n("Enter username and password for IRC operator privileges:"));
+            dialog->setUsername(nick);
+            dialog->setCaption(i18n("IRC Operator Password"));
+            if (dialog->exec()) {
+                result.toServer = "OPER " + dialog->username() + ' ' + dialog->password();
             }
+
+            delete dialog;
         }
         else
             result.toServer = "OPER " + input.parameter;
