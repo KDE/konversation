@@ -509,7 +509,7 @@ void IRCView::updateAppearance()
 
     QPalette p;
     p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
-    setPalette(p);
+    viewport()->setPalette(p);
 }
 
 
