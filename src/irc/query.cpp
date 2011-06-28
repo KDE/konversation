@@ -129,7 +129,7 @@ void Query::setServer(Server* newServer)
 
     if (!(newServer->getKeyForRecipient(getName()).isEmpty()))
         blowfishLabel->show();
-    
+
     connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
     connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
 }
@@ -138,17 +138,27 @@ void Query::connectionStateChanged(Server* server, Konversation::ConnectionState
 {
     if (server == m_server)
     {
+        ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
+
         if (state ==  Konversation::SSConnected)
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
-            if (m_currentTabNotify == Konversation::tnfNone || !Preferences::self()->tabNotificationsEvents())
-                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+            if (viewContainer->getFrontView() == this
+                || m_currentTabNotify == Konversation::tnfNone
+                || !Preferences::self()->tabNotificationsEvents())
+            {
+                viewContainer->unsetViewNotification(this);
+            }
         }
         else
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
-            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+            if (viewContainer->getFrontView() == this
+                || m_currentTabNotify == Konversation::tnfNone
+                || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+            {
+                viewContainer->unsetViewNotification(this);
+            }
         }
     }
 }

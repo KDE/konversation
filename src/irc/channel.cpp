@@ -337,9 +337,15 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
         {
             m_joined = false;
 
+            ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
+
             //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
-            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+            if (viewContainer->getFrontView() == this
+                || m_currentTabNotify == Konversation::tnfNone
+                || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+            {
+               viewContainer->unsetViewNotification(this);
+            }
         }
     }
 }
@@ -1086,9 +1092,15 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         // Prepare for impending NAMES.
         nicknameListView->setUpdatesEnabled(false);
 
+        ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
+
         //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
-        if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+        if (viewContainer->getFrontView() == this
+            || m_currentTabNotify == Konversation::tnfNone
+            || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+        {
             Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+        }
 
         Application::instance()->notificationHandler()->channelJoin(this,getName());
     }
