@@ -1307,6 +1307,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     if (!allowColors)
                     {
                         htmlText.remove(pos, colorMatch.length());
+                        pos -= 1;
+                        linkOffset -= colorMatch.length();
                         break;
                     }
                     QString colorString;
@@ -1424,6 +1426,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     if (!allowColors)
                     {
                         htmlText.remove(pos, 1);
+                        pos -= 1;
+                        linkOffset -= 1;
                         break;
                     }
 
