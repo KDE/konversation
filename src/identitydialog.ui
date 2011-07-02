@@ -201,27 +201,6 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>Nickname</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="margin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="KEditListWidget" name="m_nicknameLBox">
-            <property name="whatsThis">
-             <string>This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.
-
-Since nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames.</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QGroupBox" name="autoIdentifyGroup">
          <property name="title">
           <string>Auto Identify</string>
@@ -612,11 +591,6 @@ Since nicknames must be unique across an entire IRC network, your desired name m
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KEditListWidget</class>
-   <extends>QWidget</extends>
-   <header>keditlistwidget.h</header>
-  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>

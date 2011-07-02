@@ -16,6 +16,13 @@
 #include "ui_identitydialog.h"
 
 #include <KDialog>
+#include <kdeversion.h>
+
+#if KDE_IS_VERSION(4, 6, 0)
+class KEditListWidget;
+#else
+class KEditListBox;
+#endif
 
 namespace Konversation
 {
@@ -29,13 +36,13 @@ namespace Konversation
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
-            
+
         public slots:
             virtual void accept();
 
         signals:
             void identitiesChanged();
-            
+
         protected:
             bool checkCurrentIdentity();
 
@@ -51,6 +58,11 @@ namespace Konversation
         private:
             IdentityList m_identityList;
             IdentityPtr m_currentIdentity;
+#if KDE_IS_VERSION(4, 6, 0)
+            KEditListWidget* m_nicknameLBox;
+#else
+            KEditListBox* m_nicknameLBox;
+#endif
     };
 
 }
