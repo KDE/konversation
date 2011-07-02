@@ -224,10 +224,18 @@ kde4_add_app_icon(konversation_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/
 
 kde4_add_executable(konversation ${konversation_SRCS})
 
-target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KIDLETIME_LIBS}
-                            ${KDE4_KEMOTICONS_LIBS}
-                            ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
-                            ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
+macro_ensure_version("4.5.0" ${KDE_VERSION} HAVEKDE4_5)
+
+if (HAVEKDE4_5)
+    target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KIDLETIME_LIBS}
+                                ${KDE4_KEMOTICONS_LIBS}
+                                ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
+                                ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
+else (HAVEKDE4_5)
+    target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
+                                ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
+                                ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
+endif (HAVEKDE4_5)
 
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
