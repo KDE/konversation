@@ -83,9 +83,6 @@ class NickListView : public QTreeWidget
         Channel *channel;
         QTimer *m_resortTimer;
 
-    private slots:
-        void syncSelectionToCurrent(const QModelIndex& index);
-
     private:
         static int s_minimumRowHeight;
         static void updateMinimumRowHeight();
