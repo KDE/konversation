@@ -20,7 +20,7 @@
 
 namespace Konversation
 {
-    QString Cipher::m_runtimeError = QString();
+    QString Cipher::m_runtimeError;
 
     Cipher::Cipher()
     {
