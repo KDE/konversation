@@ -17,6 +17,7 @@
 #include <KDialog>
 
 class KUrlRequester;
+class QCheckBox;
 
 namespace Konversation
 {
@@ -31,10 +32,11 @@ namespace Konversation
             public:
                 enum ReceiveAction
                 {
-                    RA_Rename    = 0x01,
-                    RA_Overwrite = 0x02,
-                    RA_Resume    = 0x04,
-                    RA_Cancel    = 0x08
+                    RA_Rename    = 1,
+                    RA_Overwrite = 1 << 1,
+                    RA_Resume    = 1 << 2,
+                    RA_Cancel    = 1 << 3,
+                    RA_OverwriteDefaultPath = 1 << 4
                 };
 
                 virtual ~ResumeDialog();
@@ -52,12 +54,12 @@ namespace Konversation
 
                 // UI
                 KUrlRequester* m_urlreqFileURL;
+                QCheckBox* m_overwriteDefaultPathCheckBox;
 
                 // data
                 TransferRecv* m_item;
                 int m_enabledActions;
                 ReceiveAction m_selectedAction;
-
         };
     }
 }

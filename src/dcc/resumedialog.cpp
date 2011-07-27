@@ -14,10 +14,13 @@
 #include "resumedialog.h"
 #include "transferrecv.h"
 
+#include <preferences.h>
+
 #include <QLabel>
 #include <QPointer>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QCheckBox>
 
 #include <KFileDialog>
 #include <KLocale>
@@ -52,8 +55,14 @@ namespace Konversation
 
             ReceiveAction ra = dlg->m_selectedAction;
 
-            if(ra == RA_Rename)
+            if (ra == RA_Rename)
+            {
                 item->setFileURL( dlg->m_urlreqFileURL->url() );
+                if ((enabledActions & RA_OverwriteDefaultPath) && dlg->m_overwriteDefaultPathCheckBox->isChecked())
+                {
+                    Preferences::self()->setDccPath(dlg->m_urlreqFileURL->url().upUrl());
+                }
+            }
 
             delete dlg;
 
@@ -63,6 +72,7 @@ namespace Konversation
         ResumeDialog::ResumeDialog(TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes,
                          KDialog::ButtonCode defaultButtonCode)
         : KDialog(0)
+        , m_overwriteDefaultPathCheckBox(0)
         , m_item(item)
         , m_enabledActions(enabledActions)
         , m_selectedAction(RA_Cancel)
@@ -88,7 +98,7 @@ namespace Konversation
             pageLayout->addWidget(labelMessage);
             pageLayout->addWidget(m_urlreqFileURL);
 
-            if(m_enabledActions & RA_Rename)
+            if (m_enabledActions & RA_Rename)
             {
                 QFrame* filePathToolsFrame = new QFrame(page);
                 QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
@@ -103,12 +113,20 @@ namespace Konversation
                 connect(btnDefaultName, SIGNAL(clicked()), this, SLOT(setDefaultName()));
 
                 pageLayout->addWidget(filePathToolsFrame);
+            }
+            if (m_enabledActions & RA_OverwriteDefaultPath)
+            {
+                QFrame* settingsFrame = new QFrame(page);
+                QVBoxLayout* settingsLayout = new QVBoxLayout(settingsFrame);
 
+                m_overwriteDefaultPathCheckBox = new QCheckBox(i18n("Use as new default download folder"), settingsFrame);
+                settingsLayout->addWidget(m_overwriteDefaultPathCheckBox);
+
+                pageLayout->addWidget(settingsFrame);
             }
 
             updateDialogButtons();
             setInitialSize(QSize(500, sizeHint().height()));
-
         }
 
         ResumeDialog::~ResumeDialog()
@@ -143,12 +161,16 @@ namespace Konversation
                 setButtonText(KDialog::Ok, i18n("&Overwrite"));
                 enableButton(KDialog::Ok, m_enabledActions & RA_Overwrite);
                 enableButton(KDialog::User1, true);
+                if (m_enabledActions & RA_OverwriteDefaultPath)
+                    m_overwriteDefaultPathCheckBox->setEnabled(false);
             }
             else
             {
                 setButtonText(KDialog::Ok, i18n("R&ename"));
                 enableButton(KDialog::Ok, m_enabledActions & RA_Rename);
                 enableButton(KDialog::User1, false);
+                if (m_enabledActions & RA_OverwriteDefaultPath)
+                    m_overwriteDefaultPathCheckBox->setEnabled(true);
             }
         }
 
