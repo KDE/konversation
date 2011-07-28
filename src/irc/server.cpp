@@ -1350,10 +1350,17 @@ int Server::_send_internal(QString outputLine)
             //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
             QByteArray payload = pay.toUtf8();
 
-            if(codec)
+            QByteArray dest;
+            if (codec)
+            {
                 payload=codec->fromUnicode(pay);
-            //apparently channel name isn't a protocol element...
-            QByteArray dest = codec->fromUnicode(outputLineSplit.at(1));
+                //apparently channel name isn't a protocol element...
+                dest = codec->fromUnicode(outputLineSplit.at(1));
+            }
+            else
+            {
+                dest = outputLineSplit.at(1);
+            }
 
             if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
             {
