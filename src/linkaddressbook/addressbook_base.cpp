@@ -214,7 +214,7 @@ namespace Konversation
             }
             else
             {
-                it++;
+                ++it;
             }
         }
         if(!changed)
