@@ -2063,6 +2063,17 @@ void IRCView::setContextMenuOptions(IrcContextMenus::MenuOptions options, bool o
 
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 {
+    // Consider the following scenario: (1) context menu opened, (2) mouse
+    // pointer moved, (3) mouse button clicked to dismiss menu, (4) mouse
+    // button clicked to reopen context menu. In this scenario, if there is
+    // no mouse movement between steps (3) and (4), highlighted() is never
+    // emitted, and the data we use here to display the correct context menu
+    // is outdated. Thus what we're going to do here is post a fake mouse
+    // move event using the context menu event coordinate, forcing an update
+    // just before we display the context menu.
+    QMouseEvent fake(QEvent::MouseMove, ev->pos(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    mouseMoveEvent(&fake);
+
     if (m_isOnChannel && m_server)
     {
         IrcContextMenus::channelMenu(ev->globalPos(), m_server, m_currentChannel);
