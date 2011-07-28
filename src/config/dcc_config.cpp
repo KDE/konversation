@@ -31,6 +31,13 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
+
+#ifdef Q_OS_WIN32
+    //This option does nothing under windows, it just confuses the user
+    //reenable if ipv6FallbackAddress is implemented for windows in dcc/dcccommon.cpp
+    kcfg_DccIPv4Fallback->setEnabled(false);
+    kcfg_DccIPv4FallbackIface->setEnabled(false);
+#endif
 }
 
 void DCC_Config::showEvent(QShowEvent *event)
