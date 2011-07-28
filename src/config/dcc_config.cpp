@@ -15,6 +15,9 @@
 #include "application.h"
 #include "transfermanager.h"
 
+#include <solid/device.h>
+#include <solid/networkinterface.h>
+
 using namespace Konversation;
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
@@ -31,6 +34,16 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
+
+    foreach (Solid::Device device, Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface, QString()))
+    {
+        if  (!device.is<Solid::NetworkInterface>())
+        {
+            return;
+        }
+        Solid::NetworkInterface *network = device.as<Solid::NetworkInterface>();
+        kcfg_DccIPv4FallbackIface->addItem(network->ifaceName());
+    }
 
 #ifdef Q_OS_WIN32
     //This option does nothing under windows, it just confuses the user
@@ -72,7 +85,6 @@ void DCC_Config::languageChange()
     kcfg_DccMethodToGetOwnIp->addItem(i18n("Network Interface"));
     kcfg_DccMethodToGetOwnIp->addItem(i18n("Reply From IRC Server"));
     kcfg_DccMethodToGetOwnIp->addItem(i18n("Specify Manually"));
-
 }
 
 DCC_Config::~DCC_Config()

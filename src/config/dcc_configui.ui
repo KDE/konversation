@@ -109,13 +109,6 @@ the Free Software Foundation; either version 2 of the License, or
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
-    <widget class="KLineEdit" name="kcfg_DccIPv4FallbackIface">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="11" column="0" colspan="2">
     <widget class="QLabel" name="textLabel7">
      <property name="text">
@@ -407,30 +400,21 @@ the Free Software Foundation; either version 2 of the License, or
      </property>
     </widget>
    </item>
-   <item row="10" column="3">
-    <spacer name="spacer5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="10" column="2" colspan="2">
+    <widget class="KComboBox" name="kcfg_DccIPv4FallbackIface">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Maximum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>70</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -438,9 +422,14 @@ the Free Software Foundation; either version 2 of the License, or
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KUrlRequester</class>
+   <extends>QFrame</extends>
+   <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -454,7 +443,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_DccPassiveSend</tabstop>
   <tabstop>kcfg_DccUPnP</tabstop>
   <tabstop>kcfg_DccIPv4Fallback</tabstop>
-  <tabstop>kcfg_DccIPv4FallbackIface</tabstop>
   <tabstop>kcfg_DccSendTimeout</tabstop>
   <tabstop>kcfg_DccBufferSize</tabstop>
   <tabstop>kcfg_DccMethodToGetOwnIp</tabstop>
@@ -472,13 +460,6 @@ the Free Software Foundation; either version 2 of the License, or
   <include location="local">kpushbutton.h</include>
   <include location="local">klineedit.h</include>
  </includes>
- <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -488,12 +469,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>354</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -504,12 +485,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>419</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -520,12 +501,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>445</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>
@@ -536,12 +517,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>354</x>
+     <y>537</y>
     </hint>
    </hints>
   </connection>
@@ -552,12 +533,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>419</x>
+     <y>537</y>
     </hint>
    </hints>
   </connection>
@@ -568,12 +549,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>31</x>
+     <y>537</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>445</x>
+     <y>537</y>
     </hint>
    </hints>
   </connection>
@@ -584,12 +565,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>183</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>308</x>
+     <y>271</y>
     </hint>
    </hints>
   </connection>
