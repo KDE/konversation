@@ -307,7 +307,7 @@ namespace Konversation
 
             if (!createDirs(m_fileURL.upUrl()))
             {
-                askAndPrepareLocalKio(i18n("<b>Cannot create the folder or destination is not writeable.</b><br/>"
+                askAndPrepareLocalKio(i18n("<b>Cannot create the folder or destination is not writable.</b><br/>"
                     "Folder: %1<br/>",
                     m_fileURL.upUrl().prettyUrl()),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel | ResumeDialog::RA_OverwriteDefaultPath,
