@@ -337,9 +337,12 @@ void ViewContainer::removeViewTree()
 
 void ViewContainer::syncTabBarToTree()
 {
+    if (!m_tabWidget)
+        return;
+
     QList<ChatWindow*> viewList = m_viewTree->getSortedViewList();
 
-    if (m_tabWidget && !viewList.isEmpty())
+    if (!viewList.isEmpty())
     {
         QListIterator<ChatWindow*> it(viewList);
         ChatWindow* view;
