@@ -35,13 +35,13 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
 
-    foreach (Solid::Device device, Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface, QString()))
+    foreach (const Solid::Device& device, Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface, QString()))
     {
         if  (!device.is<Solid::NetworkInterface>())
         {
             continue;
         }
-        Solid::NetworkInterface *network = device.as<Solid::NetworkInterface>();
+        const Solid::NetworkInterface *network = device.as<Solid::NetworkInterface>();
         kcfg_DccIPv4FallbackIface->addItem(network->ifaceName());
     }
 
