@@ -123,7 +123,7 @@ namespace Konversation
                 {
                     struct sockaddr_in sock;
                     memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
-                    const QString fallbackIp = inet_ntoa(sock.sin_addr);
+                    fallbackIp = inet_ntoa(sock.sin_addr);
                 }
                 kDebug() << "Falling back to IPv4 address " << fallbackIp;
 #else
