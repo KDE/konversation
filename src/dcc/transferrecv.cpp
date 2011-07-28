@@ -400,7 +400,7 @@ namespace Konversation
                 }
             }
 
-#ifndef Q_OS_WIN32
+#ifndef Q_OS_WIN
             QFileInfo dirInfo(dirURL.pathOrUrl());
             if (!dirInfo.isWritable())
             {

@@ -45,7 +45,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
         kcfg_DccIPv4FallbackIface->addItem(network->ifaceName());
     }
 
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
     //This option does nothing under windows, it just confuses the user
     //reenable if ipv6FallbackAddress is implemented for windows in dcc/dcccommon.cpp
     kcfg_DccIPv4Fallback->setEnabled(false);
