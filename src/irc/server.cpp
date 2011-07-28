@@ -1359,7 +1359,7 @@ int Server::_send_internal(QString outputLine)
             }
             else
             {
-                dest = outputLineSplit.at(1);
+                dest = outputLineSplit.at(1).toAscii();
             }
 
             if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
