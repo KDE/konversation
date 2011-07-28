@@ -39,7 +39,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     {
         if  (!device.is<Solid::NetworkInterface>())
         {
-            return;
+            continue;
         }
         Solid::NetworkInterface *network = device.as<Solid::NetworkInterface>();
         kcfg_DccIPv4FallbackIface->addItem(network->ifaceName());
