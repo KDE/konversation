@@ -59,10 +59,10 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendStatusText(const QString&)) );
+    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendStatusText(QString)) );
 
     connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
-    connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
+    connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
     connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
 
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
@@ -334,7 +334,7 @@ void StatusPanel::setServer(Server* server)
     ChatWindow::setServer(server);
     nicknameCombobox->setModel(m_server->nickListModel());
     connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
+    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
 #include "statuspanel.moc"

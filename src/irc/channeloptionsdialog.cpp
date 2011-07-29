@@ -53,8 +53,8 @@ namespace Konversation
         m_channel = channel;
         m_editingTopic = false;
 
-        connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                this, SLOT(topicHistoryItemClicked(const QItemSelection&)));
+        connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+                this, SLOT(topicHistoryItemClicked(QItemSelection)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_ui.topicEdit, SIGNAL(undoAvailable(bool)), this, SLOT(topicBeingEdited(bool)));
         connect(this, SIGNAL(finished()), m_ui.topicEdit, SLOT(clear()));
@@ -62,19 +62,19 @@ namespace Konversation
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
-        connect(m_channel->getServer(), SIGNAL(channelNickChanged(const QString&)), this, SLOT(refreshEnableModes()));
+        connect(m_channel->getServer(), SIGNAL(channelNickChanged(QString)), this, SLOT(refreshEnableModes()));
 
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
 
-        connect(m_channel, SIGNAL(banAdded(const QString&)), this, SLOT(addBan(const QString&)));
-        connect(m_channel, SIGNAL(banRemoved(const QString&)), this, SLOT(removeBan(const QString&)));
+        connect(m_channel, SIGNAL(banAdded(QString)), this, SLOT(addBan(QString)));
+        connect(m_channel, SIGNAL(banRemoved(QString)), this, SLOT(removeBan(QString)));
         connect(m_channel, SIGNAL(banListCleared()), m_ui.banList, SLOT(clear()));
 
         connect(m_ui.addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
         connect(m_ui.updateBan, SIGNAL(clicked()), this, SLOT(updateBanClicked()));
         connect(m_ui.removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
         connect(m_ui.banList, SIGNAL(itemSelectionChanged()), this, SLOT(banSelectionChanged()));
-        connect(m_ui.hostmask, SIGNAL(textChanged(const QString&)), this, SLOT(hostmaskChanged(const QString&)));
+        connect(m_ui.hostmask, SIGNAL(textChanged(QString)), this, SLOT(hostmaskChanged(QString)));
 
         m_ui.topicModeChBox->setWhatsThis(whatsThisForMode('T'));
         m_ui.messageModeChBox->setWhatsThis(whatsThisForMode('N'));

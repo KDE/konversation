@@ -106,8 +106,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_popupMenu = new KMenu(this);
     m_popupMenu->setObjectName("nicksonline_context_menu");
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_nickListView, SIGNAL(customContextMenuRequested(const QPoint&)),
-        this, SLOT(slotCustomContextMenuRequested(const QPoint&)));
+    connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
+        this, SLOT(slotCustomContextMenuRequested(QPoint)));
     connect(m_nickListView, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotNickListView_SelectionChanged()));
 
@@ -442,8 +442,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     {
         networkRoot->setExpanded(true);
         // Connect server NickInfo updates.
-        connect (servr, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
-            this, SLOT(slotNickInfoChanged(Server*, const NickInfoPtr)));
+        connect (servr, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
+            this, SLOT(slotNickInfoChanged(Server*,NickInfoPtr)));
     }
 }
 
@@ -706,7 +706,7 @@ void NicksOnline::doCommand(QAction* id)
             }
         }
         EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
-        connect(end, SIGNAL(notifyChanged(int, const QString&)), this, SLOT(slotAddNickname(int, const QString&)));
+        connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
         end->show();
         return;
     }

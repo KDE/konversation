@@ -32,8 +32,8 @@ namespace Konversation
         m_ui.channelCombo->setFocus();
 
         button(KDialog::Ok)->setEnabled(false);
-        connect(m_ui.channelCombo, SIGNAL(editTextChanged(const QString&)),
-        	this, SLOT(slotChannelChanged(const QString&)));
+        connect(m_ui.channelCombo, SIGNAL(editTextChanged(QString)),
+        	this, SLOT(slotChannelChanged(QString)));
 
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
@@ -41,7 +41,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(const QString&)), this, SLOT(slotNicknameChanged(const QString&)));
+          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
         // Update channel history when selected connection changes
         connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
@@ -54,7 +54,7 @@ namespace Konversation
         // So channel history combo wont be populated, so force it
         slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
-        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+        connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
         connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
                 this, SLOT(slotConnectionListChanged()));
     }
@@ -134,7 +134,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(const QString&)), this, SLOT(slotNicknameChanged(const QString&)));
+          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
       }
     }

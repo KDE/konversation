@@ -30,8 +30,8 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
 
   connect(buttonListView,SIGNAL (currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT (entrySelected(QTreeWidgetItem*)) );
 
-  connect(nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
-  connect(actionInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
+  connect(nameInput,SIGNAL (textChanged(QString)),this,SLOT (nameChanged(QString)) );
+  connect(actionInput,SIGNAL (textChanged(QString)),this,SLOT (actionChanged(QString)) );
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (addEntry()));
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeEntry()));

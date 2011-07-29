@@ -25,8 +25,8 @@ IRCViewBox::IRCViewBox(QWidget* parent)
     m_searchBar->hide();
     m_matchedOnce = false;
 
-    connect(m_searchBar, SIGNAL(signalSearchChanged(const QString&)),
-        this, SLOT(slotSearchChanged(const QString&)));
+    connect(m_searchBar, SIGNAL(signalSearchChanged(QString)),
+        this, SLOT(slotSearchChanged(QString)));
     connect(m_searchBar, SIGNAL(signalSearchNext()),
         this, SLOT(slotSearchNext()));
     connect(m_searchBar, SIGNAL(signalSearchPrevious()),

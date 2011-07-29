@@ -440,7 +440,7 @@ namespace Konversation
         m_mainWidget->m_serverEdit->setFocus();
 
         connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
-        connect( m_mainWidget->m_serverEdit, SIGNAL(textChanged(const QString &)),this,SLOT( slotServerNameChanged( const QString& ) ) );
+        connect( m_mainWidget->m_serverEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
         slotServerNameChanged( m_mainWidget->m_serverEdit->text() );
     }
 
@@ -495,7 +495,7 @@ namespace Konversation
 
         m_mainWidget->m_channelEdit->setFocus();
         connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
-        connect(m_mainWidget->m_channelEdit, SIGNAL(textChanged(const QString &)),this,SLOT( slotServerNameChanged( const QString& ) ) );
+        connect(m_mainWidget->m_channelEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
         slotServerNameChanged( m_mainWidget->m_channelEdit->text() );
     }
 

@@ -94,7 +94,7 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(fal
     setAcceptDrops(false);
 
     // Marker lines
-    connect(document(), SIGNAL(contentsChange(int, int, int)), SLOT(cullMarkedLine(int, int, int)));
+    connect(document(), SIGNAL(contentsChange(int,int,int)), SLOT(cullMarkedLine(int,int,int)));
 
     //This assert is here because a bad build environment can cause this to fail. There is a note
     // in the Qt source that indicates an error should be output, but there is no such output.
@@ -109,7 +109,7 @@ IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(fal
 
 
     connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
-    connect( this, SIGNAL( highlighted ( const QString &) ), this, SLOT( highlightedSlot( const QString &) ) );
+    connect( this, SIGNAL(highlighted(QString)), this, SLOT(highlightedSlot(QString)) );
     setOpenLinks(false);
     setUndoRedoEnabled(0);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");

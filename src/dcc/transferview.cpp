@@ -62,8 +62,8 @@ namespace Konversation
             setProgressBarDeletegate();
 
             header()->setContextMenuPolicy(Qt::CustomContextMenu);
-            connect(header(), SIGNAL(customContextMenuRequested(const QPoint&)),
-                    this, SLOT(headerCustomContextMenuRequested(const QPoint&)));
+            connect(header(), SIGNAL(customContextMenuRequested(QPoint)),
+                    this, SLOT(headerCustomContextMenuRequested(QPoint)));
 
             m_activeTransfers = 0;
             m_itemCategoryToRemove = 0;
@@ -71,14 +71,14 @@ namespace Konversation
             m_updateTimer->setInterval(500);
             connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(update()));
 
-            connect(model(), SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)),
-                     this, SLOT(rowsAboutToBeRemovedFromModel(const QModelIndex&, int, int)));
+            connect(model(), SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
+                     this, SLOT(rowsAboutToBeRemovedFromModel(QModelIndex,int,int)));
             //we can't use rowsRemoved here, it seems when rowsRemoved is emitted
             //the rows are not permanently removed from model,
             //so if we trigger a new removeRows in our slot,
             //the new remove happens before the old pending
-            connect(m_dccModel, SIGNAL(rowsPermanentlyRemoved(int, int)),
-                    this, SLOT(rowsRemovedFromModel(int, int)));
+            connect(m_dccModel, SIGNAL(rowsPermanentlyRemoved(int,int)),
+                    this, SLOT(rowsRemovedFromModel(int,int)));
         }
 
         TransferView::~TransferView()

@@ -93,7 +93,7 @@ namespace Konversation
             m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().prettyUrl(), page);
             m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
             m_urlreqFileURL->fileDialog()->setKeepLocation(true);
-            connect(m_urlreqFileURL, SIGNAL(textChanged(const QString&)), this, SLOT(updateDialogButtons()));
+            connect(m_urlreqFileURL, SIGNAL(textChanged(QString)), this, SLOT(updateDialogButtons()));
 
             pageLayout->addWidget(labelMessage);
             pageLayout->addWidget(m_urlreqFileURL);

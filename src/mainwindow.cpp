@@ -70,14 +70,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     // Set up view container
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
     connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
-    connect(Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
-            m_viewContainer, SLOT(updateViews(const Konversation::ServerGroupSettingsPtr)));
-    connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettingsPtr)),
-            Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
-    connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
+    connect(Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
+            m_viewContainer, SLOT(updateViews(Konversation::ServerGroupSettingsPtr)));
+    connect(m_viewContainer, SIGNAL(autoJoinToggled(Konversation::ServerGroupSettingsPtr)),
+            Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
+    connect(m_viewContainer, SIGNAL(setWindowCaption(QString)), this, SLOT(setCaption(QString)));
     connect(Application::instance()->getConnectionManager(),
-            SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState)),
-            m_viewContainer, SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+            SIGNAL(connectionChangedState(Server*,Konversation::ConnectionState)),
+            m_viewContainer, SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
     connect(this, SIGNAL(triggerRememberLines(Server*)), m_viewContainer, SLOT(insertRememberLines(Server*)));
     connect(this, SIGNAL(cancelRememberLine()), m_viewContainer, SLOT(cancelRememberLine()));
@@ -90,14 +90,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     createStandardStatusBarAction();
 
     connect(m_viewContainer, SIGNAL(resetStatusBar()), m_statusBar, SLOT(resetStatusBar()));
-    connect(m_viewContainer, SIGNAL(setStatusBarTempText(const QString&)), m_statusBar, SLOT(setMainLabelTempText(const QString&)));
+    connect(m_viewContainer, SIGNAL(setStatusBarTempText(QString)), m_statusBar, SLOT(setMainLabelTempText(QString)));
     connect(m_viewContainer, SIGNAL(clearStatusBarTempText()), m_statusBar, SLOT(clearMainLabelTempText()));
-    connect(m_viewContainer, SIGNAL(setStatusBarInfoLabel(const QString&)), m_statusBar, SLOT(updateInfoLabel(const QString&)));
+    connect(m_viewContainer, SIGNAL(setStatusBarInfoLabel(QString)), m_statusBar, SLOT(updateInfoLabel(QString)));
     connect(m_viewContainer, SIGNAL(clearStatusBarInfoLabel()), m_statusBar, SLOT(clearInfoLabel()));
     connect(m_viewContainer, SIGNAL(setStatusBarLagLabelShown(bool)), m_statusBar, SLOT(setLagLabelShown(bool)));
-    connect(m_viewContainer, SIGNAL(updateStatusBarLagLabel(Server*, int)), m_statusBar, SLOT(updateLagLabel(Server*, int)));
+    connect(m_viewContainer, SIGNAL(updateStatusBarLagLabel(Server*,int)), m_statusBar, SLOT(updateLagLabel(Server*,int)));
     connect(m_viewContainer, SIGNAL(resetStatusBarLagLabel(Server*)), m_statusBar, SLOT(resetLagLabel(Server*)));
-    connect(m_viewContainer, SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)), m_statusBar, SLOT(setTooLongLag(Server*, int)));
+    connect(m_viewContainer, SIGNAL(setStatusBarLagLabelTooLongLag(Server*,int)), m_statusBar, SLOT(setTooLongLag(Server*,int)));
     connect(m_viewContainer, SIGNAL(updateStatusBarSSLLabel(Server*)), m_statusBar, SLOT(updateSSLLabel(Server*)));
     connect(m_viewContainer, SIGNAL(removeStatusBarSSLLabel()), m_statusBar, SLOT(removeSSLLabel()));
 
@@ -792,14 +792,14 @@ void MainWindow::openServerList()
         m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
         Application* konvApp = static_cast<Application*>(kapp);
 
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
-                konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
-        connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
+                konvApp, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
+        connect(konvApp, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
                 m_serverListDialog, SLOT(updateServerList()));
-        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, int)),
-                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, int)));
-        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, ConnectionSettings)),
-                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, ConnectionSettings)));
+        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag,int)),
+                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,int)));
+        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag,ConnectionSettings)),
+                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,ConnectionSettings)));
         connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 

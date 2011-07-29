@@ -200,8 +200,8 @@ void ChatWindow::setTextView(IRCView* newView)
     textView->setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
     textView->setChatWin(this);
-    connect(textView,SIGNAL(textToLog(const QString&)), this,SLOT(logText(const QString&)));
-    connect(textView,SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
+    connect(textView,SIGNAL(textToLog(QString)), this,SLOT(logText(QString)));
+    connect(textView,SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(textView,SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
 }
 

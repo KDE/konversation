@@ -46,7 +46,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     // reset completion mode
     setCompletionMode('\0');
     completionBox = new KCompletionBox(this);
-    connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
+    connect(completionBox, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString)));
 
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));

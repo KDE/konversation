@@ -36,7 +36,7 @@ namespace Konversation
         UPnPMCastSocket::UPnPMCastSocket()
         {
             QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-            QObject::connect(this,SIGNAL(error(QAbstractSocket::SocketError )),this,SLOT(error(QAbstractSocket::SocketError )));
+            QObject::connect(this,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(error(QAbstractSocket::SocketError)));
 
             for (quint32 i = 0;i < 10;i++)
             {
@@ -106,8 +106,8 @@ namespace Konversation
             UPnPRouter* r = parseResponse(data);
             if (r)
             {
-                QObject::connect(r,SIGNAL(xmlFileDownloaded( UPnPRouter*, bool )),
-                        this,SLOT(onXmlFileDownloaded( UPnPRouter*, bool )));
+                QObject::connect(r,SIGNAL(xmlFileDownloaded(UPnPRouter*,bool)),
+                        this,SLOT(onXmlFileDownloaded(UPnPRouter*,bool)));
 
                 // download it's xml file
                 r->downloadXMLFile();

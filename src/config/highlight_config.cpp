@@ -67,13 +67,13 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     // End copy
 
     connect(highlightListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT (highlightSelected(QTreeWidgetItem*)));
-    connect(patternInput, SIGNAL(textChanged(const QString&)), this, SLOT (patternChanged(QString)));
+    connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT (patternChanged(QString)));
     connect(patternButton, SIGNAL(clicked()), this, SLOT(regExpButtonClicked()));
-    connect(patternColor, SIGNAL(changed(const QColor&)), this, SLOT (colorChanged(const QColor&)));
-    connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
+    connect(patternColor, SIGNAL(changed(QColor)), this, SLOT (colorChanged(QColor)));
+    connect(soundURL, SIGNAL(textChanged(QString)), this, SLOT(soundURLChanged(QString)));
     connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
-    connect(autoTextInput, SIGNAL(textChanged(const QString&)), this, SLOT (autoTextChanged(const QString&)));
-    connect(chatWindowsInput, SIGNAL(textChanged(const QString&)), this, SLOT (chatWindowsChanged(QString)));
+    connect(autoTextInput, SIGNAL(textChanged(QString)), this, SLOT (autoTextChanged(QString)));
+    connect(chatWindowsInput, SIGNAL(textChanged(QString)), this, SLOT (chatWindowsChanged(QString)));
     connect(newButton, SIGNAL(clicked()), this, SLOT (addHighlight()));
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeHighlight()));
 

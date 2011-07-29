@@ -78,7 +78,7 @@ namespace Konversation
 
         connect(m_serverList, SIGNAL(aboutToMove()), this, SLOT(slotAboutToMove()));
         connect(m_serverList, SIGNAL(moved()), this, SLOT(slotMoved()));
-        connect(m_serverList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(slotOk()));
+        connect(m_serverList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(slotOk()));
         connect(m_serverList, SIGNAL(itemSelectionChanged()), this, SLOT(updateButtons()));
         connect(m_serverList, SIGNAL(itemExpanded(QTreeWidgetItem*)), this, SLOT(slotSetGroupExpanded(QTreeWidgetItem*)));
         connect(m_serverList, SIGNAL(itemCollapsed(QTreeWidgetItem*)), this, SLOT(slotSetGroupCollapsed(QTreeWidgetItem*)));

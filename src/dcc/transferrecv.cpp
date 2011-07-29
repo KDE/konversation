@@ -346,9 +346,9 @@ namespace Konversation
             }
 
             transferJob->setAutoDelete(true);
-            connect(transferJob, SIGNAL(canResume(KIO::Job*, KIO::filesize_t)), this, SLOT(slotLocalCanResume(KIO::Job*, KIO::filesize_t)));
+            connect(transferJob, SIGNAL(canResume(KIO::Job*,KIO::filesize_t)), this, SLOT(slotLocalCanResume(KIO::Job*,KIO::filesize_t)));
             connect(transferJob, SIGNAL(result(KJob*)), this, SLOT(slotLocalGotResult(KJob*)));
-            connect(transferJob, SIGNAL(dataReq(KIO::Job*, QByteArray&)), this, SLOT(slotLocalReady(KIO::Job*)));
+            connect(transferJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(slotLocalReady(KIO::Job*)));
         }
 
         void TransferRecv::askAndPrepareLocalKio(const QString &message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition)
@@ -506,7 +506,7 @@ namespace Konversation
             m_writeCacheHandler = new TransferRecvWriteCacheHandler(transferJob);
 
             connect(m_writeCacheHandler, SIGNAL(done()), this, SLOT(slotLocalWriteDone()));
-            connect(m_writeCacheHandler, SIGNAL(gotError(const QString&)), this, SLOT(slotLocalGotWriteError(const QString&)));
+            connect(m_writeCacheHandler, SIGNAL(gotError(QString)), this, SLOT(slotLocalGotWriteError(QString)));
 
             if (!m_resumed)
             {
@@ -543,7 +543,7 @@ namespace Konversation
 
                     if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                     {
-                        connect(router, SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendReverseAck(bool, quint16)));
+                        connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
                     }
                     else
                     {
@@ -576,7 +576,7 @@ namespace Konversation
             {
                 if (port != m_ownPort) return; // Somebody elses forward succeeded
 
-                disconnect (this->sender(), SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendRequest(bool, quint16)));
+                disconnect (this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
 
                 if (error)
                 {
@@ -828,7 +828,7 @@ namespace Konversation
             m_writeReady = true;
             m_cacheStream = 0;
 
-            connect(m_transferJob, SIGNAL(dataReq(KIO::Job*, QByteArray&)), this, SLOT(slotKIODataReq(KIO::Job*, QByteArray&)));
+            connect(m_transferJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(slotKIODataReq(KIO::Job*,QByteArray&)));
             connect(m_transferJob, SIGNAL(result(KJob*)), this, SLOT(slotKIOResult(KJob*)));
 
             m_transferJob->setAsyncDataEnabled(m_writeAsyncMode = true);

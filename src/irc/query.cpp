@@ -70,7 +70,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     setTextView(ircViewBox->ircView());               // Server will be set later in setServer();
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowNickActions, true);
     textView->setAcceptDrops(true);
-    connect(textView,SIGNAL(urlsDropped(const KUrl::List)),this,SLOT(urlsDropped(const KUrl::List)));
+    connect(textView,SIGNAL(urlsDropped(KUrl::List)),this,SLOT(urlsDropped(KUrl::List)));
 
     // This box holds the input line
     KHBox* inputBox=new KHBox(this);
@@ -90,12 +90,12 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // connect the signals and slots
     connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
     connect(queryInput,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
-    connect(queryInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
+    connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
     connect(getTextView(), SIGNAL(textPasted(bool)), queryInput, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
     connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );
+    connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendQueryText(QString)) );
 
     updateAppearance();
 
@@ -119,10 +119,10 @@ void Query::setServer(Server* newServer)
 {
     if (m_server != newServer)
     {
-        connect(newServer, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
-        connect(newServer, SIGNAL(nickInfoChanged(Server*, NickInfoPtr)),
-                this, SLOT(updateNickInfo(Server*, NickInfoPtr)));
+        connect(newServer, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
+                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+        connect(newServer, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
+                this, SLOT(updateNickInfo(Server*,NickInfoPtr)));
     }
 
     ChatWindow::setServer(newServer);
@@ -131,7 +131,7 @@ void Query::setServer(Server* newServer)
         blowfishLabel->show();
 
     connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
+    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
 void Query::connectionStateChanged(Server* server, Konversation::ConnectionState state)

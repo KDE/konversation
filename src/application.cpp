@@ -242,7 +242,7 @@ int Application::newInstance()
 
         if (openServerList) mainWindow->openServerList();
 
-        connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
+        connect(this, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
 
         // prepare dcop interface
         dbusObject = new Konversation::DBus(this);
@@ -253,18 +253,18 @@ int Application::newInstance()
 
         if (dbusObject)
         {
-            connect(dbusObject,SIGNAL (dbusMultiServerRaw(const QString&)),
-                this,SLOT (dbusMultiServerRaw(const QString&)) );
-            connect(dbusObject,SIGNAL (dbusRaw(const QString&,const QString&)),
-                this,SLOT (dbusRaw(const QString&,const QString&)) );
-            connect(dbusObject,SIGNAL (dbusSay(const QString&,const QString&,const QString&)),
-                this,SLOT (dbusSay(const QString&,const QString&,const QString&)) );
-            connect(dbusObject,SIGNAL (dbusInfo(const QString&)),
-                this,SLOT (dbusInfo(const QString&)) );
+            connect(dbusObject,SIGNAL (dbusMultiServerRaw(QString)),
+                this,SLOT (dbusMultiServerRaw(QString)) );
+            connect(dbusObject,SIGNAL (dbusRaw(QString,QString)),
+                this,SLOT (dbusRaw(QString,QString)) );
+            connect(dbusObject,SIGNAL (dbusSay(QString,QString,QString)),
+                this,SLOT (dbusSay(QString,QString,QString)) );
+            connect(dbusObject,SIGNAL (dbusInfo(QString)),
+                this,SLOT (dbusInfo(QString)) );
             connect(dbusObject,SIGNAL (dbusInsertMarkerLine()),
                 mainWindow,SIGNAL(insertMarkerLine()));
-            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
-                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
+            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
+                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
         }
 
         m_notificationHandler = new Konversation::NotificationHandler(this);

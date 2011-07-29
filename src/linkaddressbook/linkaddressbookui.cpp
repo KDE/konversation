@@ -42,9 +42,9 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, c
     m_addressBook = Konversation::Addressbook::self()->getAddressBook();
 
     // Addressee validation connections
-    connect( m_ui.addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
-    connect( m_ui.addresseeListView, SIGNAL( itemSelectionChanged() ), SLOT( slotAddresseeSelectionChanged() ) );
-    connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    connect( m_ui.addAddresseeButton, SIGNAL(clicked()), SLOT(slotAddAddresseeClicked()) );
+    connect( m_ui.addresseeListView, SIGNAL(itemSelectionChanged()), SLOT(slotAddresseeSelectionChanged()) );
+    connect( m_addressBook, SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(slotLoadAddressees()) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
     //We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
@@ -65,8 +65,8 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, c
 
                                                   //Photo is 60, and it's nice to have a small gap, imho
     m_ui.addresseeListView->setColumnWidth(0, 63);
-    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
-    connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
+    connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
+    connect( this, SIGNAL(cancelClicked()), this, SLOT(slotCancel()) );
 }
 
 LinkAddressbookUI::~LinkAddressbookUI()
@@ -151,14 +151,14 @@ void LinkAddressbookUI::slotOk()
             return;
         }
     }
-    disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    disconnect( m_addressBook, SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(slotLoadAddressees()) );
     deleteLater();
     accept();
 }
 
 void LinkAddressbookUI::slotCancel()
 {
-    disconnect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    disconnect( m_addressBook, SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(slotLoadAddressees()) );
     deleteLater();
     reject();
 }

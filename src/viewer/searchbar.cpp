@@ -52,7 +52,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_closeShortcut->setEnabled(false);
 
     connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
-    connect(m_searchEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
+    connect(m_searchEdit, SIGNAL(textChanged(QString)), SLOT(slotTextChanged()));
     connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
     connect(m_findNextButton, SIGNAL(clicked()), SLOT(slotFindNext()));
     connect(m_findPreviousButton, SIGNAL(clicked()), SLOT(slotFindPrevious()));

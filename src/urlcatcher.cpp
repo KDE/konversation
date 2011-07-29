@@ -168,8 +168,8 @@ void UrlCatcher::setupUrlTree()
     m_urlTree->setAllColumnsShowFocus(true);
     m_urlTree->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_urlTree->setRootIsDecorated(false);
-    connect(m_urlTree, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(openContextMenu(const QPoint&)));
-    connect(m_urlTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(openUrl(const QModelIndex&)));
+    connect(m_urlTree, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(openContextMenu(QPoint)));
+    connect(m_urlTree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
 
     Application* konvApp = static_cast<Application*>(kapp);
     QStandardItemModel* urlModel = konvApp->getUrlModel();
@@ -179,8 +179,8 @@ void UrlCatcher::setupUrlTree()
     urlModel->setHorizontalHeaderItem(1, item);
     item = new QStandardItem(i18n("Date"));
     urlModel->setHorizontalHeaderItem(2, item);
-    connect(urlModel, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(updateListActionStates()));
-    connect(urlModel, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(updateListActionStates()));
+    connect(urlModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateListActionStates()));
+    connect(urlModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateListActionStates()));
 
     UrlSortFilterProxyModel* proxyModel = new UrlSortFilterProxyModel(this);
     proxyModel->setSourceModel(urlModel);
@@ -189,7 +189,7 @@ void UrlCatcher::setupUrlTree()
     proxyModel->setFilterKeyColumn(-1);
 
     m_urlTree->setModel(proxyModel);
-    connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+    connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(updateItemActionStates()));
 
     searchLine->setProxy(proxyModel);

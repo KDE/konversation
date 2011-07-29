@@ -32,22 +32,22 @@ ServerISON::ServerISON(Server* server) : m_server(server)
     //We need to know when the addressbook changes because if the info for an offline nick changes,
     //we won't get a nickInfoChanged signal.
 
-    connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ),
-        this, SLOT( addressbookChanged() ) );
+    connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL(addressBookChanged(AddressBook*)),
+        this, SLOT(addressbookChanged()) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
         this, SLOT(addressbookChanged()));
 
-    connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
-        this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
+    connect( m_server, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
+        this, SLOT(nickInfoChanged(Server*,NickInfoPtr)));
     connect( m_server,
-        SIGNAL(channelMembersChanged(Server*, const QString&, bool, bool, const QString& )),
+        SIGNAL(channelMembersChanged(Server*,QString,bool,bool,QString)),
         this,
-        SLOT(slotChannelMembersChanged(Server*, const QString&, bool, bool, const QString& )));
+        SLOT(slotChannelMembersChanged(Server*,QString,bool,bool,QString)));
     connect( m_server,
-        SIGNAL(channelJoinedOrUnjoined(Server*, const QString&, bool )),
+        SIGNAL(channelJoinedOrUnjoined(Server*,QString,bool)),
         this,
-        SLOT(slotChannelJoinedOrUnjoined(Server*, const QString&, bool )));
-    connect(Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
+        SLOT(slotChannelJoinedOrUnjoined(Server*,QString,bool)));
+    connect(Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
         this, SLOT(slotServerGroupsChanged()));
 }
 

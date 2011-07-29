@@ -58,9 +58,9 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 
   connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
 
-  connect(patternInput, SIGNAL(textChanged(const QString&)), this, SLOT(patternChanged(const QString&)));
+  connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT(patternChanged(QString)));
   connect(regExpEditorButton, SIGNAL(clicked()), this, SLOT(showRegExpEditor()));
-  connect(replacementInput, SIGNAL(textChanged(const QString&)), this, SLOT(replacementChanged(const QString&)));
+  connect(replacementInput, SIGNAL(textChanged(QString)), this, SLOT(replacementChanged(QString)));
 
   connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
   connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEntry()));

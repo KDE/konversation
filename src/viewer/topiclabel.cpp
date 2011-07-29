@@ -34,8 +34,8 @@ namespace Konversation
         m_isOnChannel = false;
         m_server = NULL;
 
-        connect(this, SIGNAL(linkActivated(const QString&)), this, SLOT(openLink (const QString&)));
-        connect(this, SIGNAL(linkHovered(const QString&)), this, SLOT(highlightedSlot(const QString&)));
+        connect(this, SIGNAL(linkActivated(QString)), this, SLOT(openLink(QString)));
+        connect(this, SIGNAL(linkHovered(QString)), this, SLOT(highlightedSlot(QString)));
     }
 
     TopicLabel::~TopicLabel()

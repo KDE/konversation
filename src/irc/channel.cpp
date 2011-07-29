@@ -136,7 +136,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicLine->setChannelName(getName());
     topicLine->setWordWrap(true);
     topicLine->setWhatsThis(i18n("<qt><p>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.</p><p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</p></qt>"));
-    connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
+    connect(topicLine, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
@@ -263,12 +263,12 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
     connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
     connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
-    connect(channelInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
+    connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
     connect(getTextView(), SIGNAL(textPasted(bool)), channelInput, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
+    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendChannelText(QString)) );
 
     connect(nicknameListView,SIGNAL (itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT (doubleClickCommand(QTreeWidgetItem*,int)) );
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
@@ -296,7 +296,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_cipher = 0;
     #endif
     //FIXME JOHNFLUX
-    // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(slotLoadAddressees()) );
     // connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
     // Setup delayed sort timer
@@ -310,12 +310,12 @@ void Channel::setServer(Server* server)
 {
     if (m_server != server)
     {
-        connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+        connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
+                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
         connect(server, SIGNAL(nickInfoChanged()),
                 this, SLOT(updateNickInfos()));
-        connect(server, SIGNAL(channelNickChanged(const QString&)),
-                this, SLOT(updateChannelNicks(const QString&)));
+        connect(server, SIGNAL(channelNickChanged(QString)),
+                this, SLOT(updateChannelNicks(QString)));
     }
 
     ChatWindow::setServer(server);
@@ -326,7 +326,7 @@ void Channel::setServer(Server* server)
     nicknameCombobox->setModel(m_server->nickListModel());
 
     connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(const QString&)), m_server, SLOT(requestAway(const QString&)));
+    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
 void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
@@ -1989,7 +1989,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
         row += col;
         buttonList.append(quickButton);
 
-        connect(quickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
+        connect(quickButton, SIGNAL(clicked(QString)), this, SLOT(quickButtonClicked(QString)));
 
         // Get the button definition
         QString buttonText=newButtonList[index];

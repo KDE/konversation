@@ -39,7 +39,7 @@ namespace Konversation
             m_transfer = 0;
             m_autoViewUpdateTimer = new QTimer(this);
 
-            connect(m_locationInfo.m_urlreqLocation, SIGNAL(textChanged(const QString&)), this, SLOT(slotLocationChanged(const QString&)));
+            connect(m_locationInfo.m_urlreqLocation, SIGNAL(textChanged(QString)), this, SLOT(slotLocationChanged(QString)));
             connect(Application::instance()->getDccTransferManager(), SIGNAL(fileURLChanged(Konversation::DCC::TransferRecv*)),
                     this, SLOT(updateView()));  // it's a little rough..
 
@@ -71,8 +71,8 @@ namespace Konversation
             if (m_transfer->getStatus() == Transfer::Transferring)
                 m_autoViewUpdateTimer->start(500);
 
-            connect(item, SIGNAL(statusChanged(Konversation::DCC::Transfer*, int, int)),
-                    this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*, int, int)));
+            connect(item, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
+                    this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*,int,int)));
 
             updateView();
         }

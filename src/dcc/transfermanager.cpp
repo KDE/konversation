@@ -35,8 +35,8 @@ namespace Konversation
 
             m_defaultIncomingFolder = Preferences::self()->dccPath();
 
-            connect( Application::instance(), SIGNAL( appearanceChanged() ),
-                     this, SLOT( slotSettingsChanged() ) );
+            connect( Application::instance(), SIGNAL(appearanceChanged()),
+                     this, SLOT(slotSettingsChanged()) );
 
             m_upnpRouter = 0;
             m_upnpSocket = 0;
@@ -83,8 +83,8 @@ namespace Konversation
         {
             m_upnpSocket = new UPnPMCastSocket();
 
-            connect(m_upnpSocket, SIGNAL( discovered(Konversation::UPnP::UPnPRouter *) ),
-                    this, SLOT( upnpRouterDiscovered(Konversation::UPnP::UPnPRouter *) ) );
+            connect(m_upnpSocket, SIGNAL(discovered(Konversation::UPnP::UPnPRouter*)),
+                    this, SLOT(upnpRouterDiscovered(Konversation::UPnP::UPnPRouter*)) );
 
             m_upnpSocket->discover();
         }
@@ -101,7 +101,7 @@ namespace Konversation
         {
             TransferRecv* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
-            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem(Konversation::DCC::Transfer*)));
+            connect( transfer, SIGNAL(removed(Konversation::DCC::Transfer*)), this, SLOT(removeRecvItem(Konversation::DCC::Transfer*)));
             initTransfer( transfer );
             return transfer;
         }
@@ -110,7 +110,7 @@ namespace Konversation
         {
             TransferSend* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
-            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem(Konversation::DCC::Transfer*)));
+            connect( transfer, SIGNAL(removed(Konversation::DCC::Transfer*)), this, SLOT(removeSendItem(Konversation::DCC::Transfer*)));
             initTransfer( transfer );
             return transfer;
         }
@@ -119,7 +119,7 @@ namespace Konversation
         {
             Chat* chat = new Chat(this);
             m_chatItems.append(chat);
-            connect( chat, SIGNAL( removed( Konversation::DCC::Chat* ) ), this, SLOT( removeChatItem(Konversation::DCC::Chat*)));
+            connect( chat, SIGNAL(removed(Konversation::DCC::Chat*)), this, SLOT(removeChatItem(Konversation::DCC::Chat*)));
             return chat;
         }
 
@@ -309,7 +309,7 @@ namespace Konversation
 
         void TransferManager::initTransfer( Transfer* transfer )
         {
-            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
+            connect( transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*,int,int)) );
 
             emit newTransferAdded( transfer );
         }

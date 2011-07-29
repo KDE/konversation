@@ -28,8 +28,8 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
 
   connect(aliasListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(entrySelected(QTreeWidgetItem*)));
 
-  connect(aliasInput, SIGNAL(textChanged(const QString&)), this, SLOT(nameChanged(const QString&)));
-  connect(replacementInput, SIGNAL(textChanged(const QString&)), this, SLOT(actionChanged(const QString&)));
+  connect(aliasInput, SIGNAL(textChanged(QString)), this, SLOT(nameChanged(QString)));
+  connect(replacementInput, SIGNAL(textChanged(QString)), this, SLOT(actionChanged(QString)));
 
   connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
   connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEntry()));

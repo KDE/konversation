@@ -52,8 +52,8 @@ namespace Konversation
                 QSplitter* chatSplitter = new QSplitter(Qt::Vertical);
 
                 m_whiteBoard = new WhiteBoard(chatSplitter);
-                connect(m_whiteBoard, SIGNAL(rawWhiteBoardCommand(const QString&)),
-                        m_chat, SLOT(sendRawLine(const QString&)));
+                connect(m_whiteBoard, SIGNAL(rawWhiteBoardCommand(QString)),
+                        m_chat, SLOT(sendRawLine(QString)));
                 connect(m_chat, SIGNAL(connected()), m_whiteBoard, SLOT(connected()));
                 //chatSplitter->setStretchFactor(chatSplitter->indexOf(paintLabel), 1);
 
@@ -74,17 +74,17 @@ namespace Konversation
             getTextView()->installEventFilter(m_dccChatInput);
             m_dccChatInput->setReadOnly(true);
 
-            connect(m_chat, SIGNAL(receivedRawLine(const QString&)), this, SLOT(receivedLine(const QString&)));
+            connect(m_chat, SIGNAL(receivedRawLine(QString)), this, SLOT(receivedLine(QString)));
             connect(m_chat, SIGNAL(statusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)),
                     this, SLOT(chatStatusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)));
-            connect(m_chat, SIGNAL(upnpError(const QString&)), this, SLOT(upnpError(const QString&)));
+            connect(m_chat, SIGNAL(upnpError(QString)), this, SLOT(upnpError(QString)));
 
             connect(m_dccChatInput, SIGNAL(submit()), this, SLOT(textEntered()));
-            connect(m_dccChatInput, SIGNAL(textPasted(const QString&)), this, SLOT(textPasted(const QString&)));
+            connect(m_dccChatInput, SIGNAL(textPasted(QString)), this, SLOT(textPasted(QString)));
 
             connect(getTextView(), SIGNAL(textPasted(bool)), m_dccChatInput, SLOT(paste(bool)));
             connect(getTextView(), SIGNAL(gotFocus()), m_dccChatInput, SLOT(setFocus()));
-            connect(getTextView(), SIGNAL(autoText(const QString&)), this, SLOT(textPasted(const QString&)));
+            connect(getTextView(), SIGNAL(autoText(QString)), this, SLOT(textPasted(QString)));
 
             updateAppearance();
         }

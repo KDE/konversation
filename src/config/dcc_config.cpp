@@ -30,7 +30,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
 
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
-    connect(kcfg_DccUPnP, SIGNAL(stateChanged( int )), this, SLOT (dccUPnPChanged( int )));
+    connect(kcfg_DccUPnP, SIGNAL(stateChanged(int)), this, SLOT (dccUPnPChanged(int)));
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));

@@ -71,7 +71,7 @@ const QString& nickname):
 
     setButtonGuiItem( KDialog::Ok, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
     setButtonGuiItem( KDialog::Cancel, KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
-    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+    connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
 
     m_nicknameInput->setFocus();
 }

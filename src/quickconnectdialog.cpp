@@ -87,7 +87,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),"network-connect",i18n("Connect to the server")));
 
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
-    connect( hostNameInput, SIGNAL(textChanged(const QString &)),this,SLOT( slotServerNameChanged( const QString& ) ) );
+    connect( hostNameInput, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
     slotServerNameChanged( hostNameInput->text() );
 }
 

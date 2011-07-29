@@ -180,12 +180,12 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     Preferences::restoreColumnState(m_channelListView, "ChannelList ViewSettings");
 
     // double click on channel entry joins the channel
-    connect(m_channelListView, SIGNAL(doubleClicked(const QModelIndex&)),
+    connect(m_channelListView, SIGNAL(doubleClicked(QModelIndex)),
             this, SLOT(joinChannelClicked()) );
     connect(m_channelListView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this, SLOT(currentChanged(QModelIndex,QModelIndex)));
-    connect(m_channelListView, SIGNAL(customContextMenuRequested(const QPoint&)),
-            this, SLOT(contextMenu(const QPoint&)) );
+    connect(m_channelListView, SIGNAL(customContextMenuRequested(QPoint)),
+            this, SLOT(contextMenu(QPoint)) );
 
     connect(m_regexBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
     connect(m_topicBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
@@ -194,7 +194,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_maxUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
 
     connect(m_filterLine, SIGNAL(returnPressed()), this, SLOT(applyFilterClicked()) );
-    connect(m_filterLine, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged()));
+    connect(m_filterLine, SIGNAL(textChanged(QString)), this, SLOT(filterChanged()));
 
     connect(m_filterTimer, SIGNAL(timeout()), this, SLOT(updateFilter()));
     connect(m_progressTimer, SIGNAL(timeout()), this, SLOT(setProgress()));

@@ -64,7 +64,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     connect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
 #if 0
 // TODO find the correct signal
-    connect(k_part, SIGNAL(receivedData(const QString&)), this, SLOT(konsoleChanged(const QString&)));
+    connect(k_part, SIGNAL(receivedData(QString)), this, SLOT(konsoleChanged(QString)));
 #endif
 }
 

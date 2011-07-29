@@ -31,7 +31,7 @@ Warnings_Config::Warnings_Config(QWidget* parent, const char* name, Qt::WFlags f
 
     loadSettings();
 
-    connect(dialogListView, SIGNAL(itemChanged(QTreeWidgetItem *, int)), SIGNAL(modified()));
+    connect(dialogListView, SIGNAL(itemChanged(QTreeWidgetItem*,int)), SIGNAL(modified()));
 }
 
 Warnings_Config::~Warnings_Config()

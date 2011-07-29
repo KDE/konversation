@@ -64,7 +64,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
     if (server)
     {
         connect(server, SIGNAL(serverOnline(bool)), SLOT(serverOnline(bool)));
-        connect(server, SIGNAL(sentStat(int, int, IRCQueue*)), SLOT(sent(int, int, IRCQueue*)));
+        connect(server, SIGNAL(sentStat(int,int,IRCQueue*)), SLOT(sent(int,int,IRCQueue*)));
         m_blocked=!(m_server->isConnected());
     }
 }

@@ -66,8 +66,8 @@ namespace Konversation
 
             restoreDialogSize(KConfigGroup(KGlobal::config(), "DCCRecipientDialog"));
 
-            connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
-            connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
+            connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
+            connect( this, SIGNAL(cancelClicked()), this, SLOT(slotCancel()) );
         }
 
         RecipientDialog::~RecipientDialog()

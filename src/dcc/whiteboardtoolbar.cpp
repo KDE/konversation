@@ -101,12 +101,12 @@ namespace Konversation
             connectToggleButtons();
 
             //foreward colorchooser signals
-            connect(m_colorChooser, SIGNAL(colorsSwapped(const QColor&,const QColor&)),
-                    this, SIGNAL(colorsSwapped(const QColor&,const QColor&)));
-            connect(m_colorChooser, SIGNAL(foregroundColorChanged(const QColor&)),
-                    this, SIGNAL(foregroundColorChanged(const QColor&)));
-            connect(m_colorChooser, SIGNAL(backgroundColorChanged(const QColor&)),
-                    this, SIGNAL(backgroundColorChanged(const QColor&)));
+            connect(m_colorChooser, SIGNAL(colorsSwapped(QColor,QColor)),
+                    this, SIGNAL(colorsSwapped(QColor,QColor)));
+            connect(m_colorChooser, SIGNAL(foregroundColorChanged(QColor)),
+                    this, SIGNAL(foregroundColorChanged(QColor)));
+            connect(m_colorChooser, SIGNAL(backgroundColorChanged(QColor)),
+                    this, SIGNAL(backgroundColorChanged(QColor)));
 
             connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
                     this, SIGNAL(lineWidthChanged(int)));
@@ -182,7 +182,7 @@ namespace Konversation
                     return;
                 }
                 m_fontDialog = new WhiteBoardFontChooser(this);
-                connect(m_fontDialog, SIGNAL(fontChanged(const QFont&)),
+                connect(m_fontDialog, SIGNAL(fontChanged(QFont)),
                         this, SIGNAL(fontChanged(QFont)));
             }
             else

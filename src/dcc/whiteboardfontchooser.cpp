@@ -44,10 +44,10 @@ namespace Konversation
             connect(m_underlinePushButton, SIGNAL(toggled(bool)),
                     this, SLOT(underlineToggled(bool)));
 
-            connect(m_fontComboBox, SIGNAL(currentFontChanged(const QFont&)),
-                    this, SLOT(currentFontChanged(const QFont&)));
-            connect(m_fontPointComboBox, SIGNAL(currentIndexChanged(const QString&)),
-                    this, SLOT(pointSizeChanged(const QString&)));
+            connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)),
+                    this, SLOT(currentFontChanged(QFont)));
+            connect(m_fontPointComboBox, SIGNAL(currentIndexChanged(QString)),
+                    this, SLOT(pointSizeChanged(QString)));
         }
 
         WhiteBoardFontChooser::~WhiteBoardFontChooser()

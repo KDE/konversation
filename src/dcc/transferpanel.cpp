@@ -101,12 +101,12 @@ namespace Konversation
             m_info = m_popup->addAction(KIcon("dialog-information"), i18n("File &Information"), this, SLOT(showFileInfo()));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
-            connect(m_transferView, SIGNAL(customContextMenuRequested (const QPoint&)), this, SLOT(popupRequested (const QPoint&)));
+            connect(m_transferView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(popupRequested(QPoint)));
 
             // misc.
-            connect(m_transferView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(doubleClicked(const QModelIndex&)));
-            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
-                    this, SLOT(setDetailPanelItem (const QItemSelection&, const QItemSelection&)));
+            connect(m_transferView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClicked(QModelIndex)));
+            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+                    this, SLOT(setDetailPanelItem(QItemSelection,QItemSelection)));
 
             m_toolBar->addAction(m_accept);
             m_toolBar->addAction(m_abort);
@@ -129,7 +129,7 @@ namespace Konversation
 
         void TransferPanel::slotNewTransferAdded(Transfer *transfer)
         {
-            connect(transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*, int, int)), this, SLOT(slotTransferStatusChanged()));
+            connect(transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(slotTransferStatusChanged()));
             m_transferView->addTransfer(transfer);
             if (m_transferView->itemCount() == 1)
             {

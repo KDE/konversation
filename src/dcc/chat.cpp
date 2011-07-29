@@ -131,7 +131,7 @@ namespace Konversation
 
                         if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                         {
-                            connect(router, SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendRequest(bool, quint16)));
+                            connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
                         }
                         else
                         {
@@ -175,7 +175,7 @@ namespace Konversation
 
                         if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                         {
-                            connect(router, SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendReverseAck(bool, quint16)));
+                            connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
                         }
                         else
                         {
@@ -297,7 +297,7 @@ namespace Konversation
                     return;
                 }
 
-                disconnect(this->sender(), SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendRequest(bool,quint16)));
+                disconnect(this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
 
                 if (error)
                 {
@@ -328,7 +328,7 @@ namespace Konversation
                     return;
                 }
 
-                disconnect(this->sender(), SIGNAL(forwardComplete(bool, quint16)), this, SLOT(sendRequest(bool,quint16)));
+                disconnect(this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
 
                 if (error)
                 {
