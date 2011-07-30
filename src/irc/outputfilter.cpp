@@ -1867,11 +1867,7 @@ namespace Konversation
             if (input.context)
                 input.context->cycle();
             else
-            {
                 kDebug() << "Parameter-less /cycle without an input context can't work.";
-
-                return OutputFilterResult();
-            }
         }
         else
         {
@@ -1886,11 +1882,7 @@ namespace Konversation
                 if (m_server)
                     m_server->cycle();
                 else
-                {
                     kDebug() << "Told to cycle the server, but current context doesn't have one.";
-
-                    return OutputFilterResult();
-                }
             }
             else if (m_server)
             {
@@ -1912,7 +1904,31 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_clear(const OutputFilterInput& input)
     {
-        if (input.context) input.context->clear();
+        if (input.parameter.isEmpty())
+        {
+            if (input.context)
+                input.context->clear();
+            else
+                kDebug() << "Parameter-less /clear without an input context can't work.";
+        }
+        else if (m_server)
+        {
+            if (isParameter("all", input.parameter))
+                m_server->getViewContainer()->clearAllViews();
+            else
+            {
+                if (isAChannel(input.parameter))
+                {
+                    Channel* channel = m_server->getChannelByName(input.parameter);
+
+                    if (channel) channel->clear();
+                }
+                else if (m_server->getQueryByName(input.parameter))
+                    m_server->getQueryByName(input.parameter)->clear();
+                else
+                    return usage(i18n("%1CLEAR [-ALL] [channel | nickname]", Preferences::self()->commandChar()));
+            }
+        }
 
         return OutputFilterResult();
     }

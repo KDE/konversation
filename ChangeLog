@@ -400,6 +400,8 @@ Changes since 1.3.1:
   fact leave the network with one or more servers.
 * Fixed a bug causing the active tab's text label not to be greyed out when
   its IRC server connection is cut.
+* The '/clear' command now supports a channel or query argument to clear,
+  as well as an an -all parameter to clear all views.
 
 
 Changes from 1.3 to 1.3.1:
