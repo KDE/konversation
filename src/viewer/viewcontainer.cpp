@@ -1911,19 +1911,8 @@ void ViewContainer::clearView()
 
 void ViewContainer::clearAllViews()
 {
-    int total=m_tabWidget->count()-1;
-    ChatWindow* nextPage;
-
-    for(int i=0;i<=total;i++)
-    {
-        nextPage=static_cast<ChatWindow*>(m_tabWidget->widget(i));
-
-        if (nextPage && nextPage->getTextView())
-        {
-            nextPage->getTextView()->clear();
-            unsetViewNotification(nextPage);
-        }
-    }
+    for (int i = 0; i < m_tabWidget->count(); i++)
+        static_cast<ChatWindow*>(m_tabWidget->widget(i))->clear();
 }
 
 void ViewContainer::findText()

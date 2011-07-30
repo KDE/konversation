@@ -17,6 +17,7 @@
 #include "server.h"
 #include "application.h"
 #include "logfilereader.h"
+#include "viewcontainer.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -262,6 +263,11 @@ void ChatWindow::clear()
     if (!textView) return;
 
     textView->clear();
+
+    resetTabNotification();
+
+    if (m_server)
+        m_server->getViewContainer()->unsetViewNotification(this);
 }
 
 void ChatWindow::cdIntoLogPath()
