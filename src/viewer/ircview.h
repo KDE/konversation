@@ -306,8 +306,6 @@ class IRCView : public KTextBrowser
 
         QString m_lastStatusText; //last sent status text to the statusbar. Is empty after clearStatusBarTempText()
 
-        bool m_resetScrollbar; ///< decide if we should place the scrollbar at the bottom on show()
-
         //used in ::filter
         QString m_autoTextToSend;
 

@@ -84,7 +84,6 @@ class SelectionPin
 
 IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
-    m_resetScrollbar = true;
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
     m_isOnChannel = false;
