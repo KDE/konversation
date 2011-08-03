@@ -402,6 +402,9 @@ Changes since 1.3.1:
   its IRC server connection is cut.
 * The '/clear' command now supports a channel or query argument to clear,
   as well as an an -all parameter to clear all views.
+* Fixed the tray icon always being in 'active' mode (and thus conflicting
+  with the Plasma desktop tray's auto-hide behavior) when using the new
+  (and, in this release, only supported) system tray protocol.
 
 
 Changes from 1.3 to 1.3.1:
