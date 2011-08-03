@@ -45,7 +45,7 @@ namespace Konversation
 
     void TrayIcon::endNotification()
     {
-        setStatus(Active);
+        setStatus(Passive);
     }
 
     void TrayIcon::updateAppearance()
