@@ -761,7 +761,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="HideUnimportantEventsExcludeActive" type="Bool">
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
