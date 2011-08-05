@@ -50,7 +50,7 @@ namespace Konversation
 
         if (message.isEmpty())
         {
-            KNotification::event(QString::fromLatin1("message"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("message"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -64,7 +64,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = Qt::escape(cleanedMessage);
 
-            KNotification::event(QString::fromLatin1("message"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("message"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -94,7 +94,7 @@ namespace Konversation
 
         if (message.isEmpty())
         {
-            KNotification::event(QString::fromLatin1("nick"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("nick"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -108,7 +108,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = Qt::escape(cleanedMessage);
 
-            KNotification::event(QString::fromLatin1("nick"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("nick"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -135,7 +135,7 @@ namespace Konversation
 
         if (message.isEmpty())
         {
-            KNotification::event(QString::fromLatin1("queryMessage"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("queryMessage"), QString("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -149,7 +149,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = Qt::escape(cleanedMessage);
 
-            KNotification::event(QString::fromLatin1("queryMessage"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("queryMessage"), QString("&lt;%1&gt; %2").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -183,7 +183,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
@@ -202,7 +202,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
@@ -221,7 +221,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick)
@@ -232,7 +232,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::dccIncoming(ChatWindow* chatWin, const QString& fromNick)
@@ -243,7 +243,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::dccError(ChatWindow* chatWin, const QString& error)
@@ -254,7 +254,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::dccTransferDone(ChatWindow* chatWin, const QString& file)
@@ -265,7 +265,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
@@ -365,9 +365,9 @@ namespace Konversation
         QString forKNotify = Qt::escape(cleanedMessage);
 
         if(fromNick.isEmpty())
-            KNotification::event(QString::fromLatin1("highlight"), QString("(%1) *** %2").arg(chatWin->getName()).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("highlight"), QString("(%1) *** %2").arg(chatWin->getName()).arg(forKNotify), QPixmap(), m_mainWindow);
         else
-            KNotification::event(QString::fromLatin1("highlight"), QString("(%1) &lt;%2&gt; %3").arg(chatWin->getName()).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QLatin1String("highlight"), QString("(%1) &lt;%2&gt; %3").arg(chatWin->getName()).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
         if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
@@ -402,7 +402,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);
+        KNotification::event(QLatin1String("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);
     }
 
 }
