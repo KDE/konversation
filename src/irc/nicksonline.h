@@ -64,7 +64,7 @@ class NicksOnline : public ChatWindow
 
     signals:
         /**
-         * Emitted whenever user double-clicks a nick in the Nicks Online tab.
+         * Emitted whenever user double-clicks a nick in the Watched Nicks tab.
          */
         void doubleClicked(int connectionId,const QString& nick);
 

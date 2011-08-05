@@ -20,7 +20,7 @@
       <string>&lt;qt&gt;
 &lt;p&gt;
 When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
-&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
+&lt;p&gt;You can also open the &lt;b&gt;Watched Nicks&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
 &lt;/qt&gt;</string>
      </property>
      <property name="text">
@@ -34,10 +34,10 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
       <bool>false</bool>
      </property>
      <property name="whatsThis">
-      <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
+      <string>&lt;qt&gt;When checked, the &lt;b&gt;Watched Nicks&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
      </property>
      <property name="text">
-      <string>Show watched nicks online tab on &amp;application startup</string>
+      <string>Show watched Watched Nicks tab on &amp;application startup</string>
      </property>
     </widget>
    </item>
@@ -56,7 +56,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
        </property>
        <property name="whatsThis">
         <string>&lt;qt&gt;
-&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
+&lt;p&gt;When you double click a nickname in the &lt;b&gt;Watched Nicks&lt;/b&gt; window, this
 command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
 &lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
 &lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;
@@ -89,7 +89,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
        </property>
        <property name="whatsThis">
         <string>&lt;qt&gt;
-&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
+&lt;p&gt;When you double click a nickname in the &lt;b&gt;Watched Nicks&lt;/b&gt; window, this
  command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
 &lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
 &lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;

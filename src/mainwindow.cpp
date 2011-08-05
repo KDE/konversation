@@ -166,7 +166,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("identities_dialog", action);
 
     action=new KToggleAction(this);
-    action->setText(i18n("&Watched Nicks Online"));
+    action->setText(i18n("&Watched Nicks"));
     action->setIcon(KIcon("im-user"));
     action->setShortcut(KShortcut("F4"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
