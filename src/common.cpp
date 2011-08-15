@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2006 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #include "common.h"
