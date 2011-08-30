@@ -80,7 +80,7 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
     }
     else
     {
-        QString genericName = QString("SettingsDialog-%1").arg((long)(this));
+        QString genericName = QString("SettingsDialog-%1").arg((quintptr)(this));
         openDialogs.insert(genericName.toLatin1().data(), this);
         setObjectName(genericName);
     }
