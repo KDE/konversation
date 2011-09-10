@@ -428,10 +428,10 @@ namespace Konversation
             switch (extension())
             {
                 case Whiteboard:
-                    return "Whiteboard";
+                    return i18nc("DCC extension", "Whiteboard");
                 case SimpleChat:
                 default:
-                    return "Chat";
+                    return i18nc("DCC extension", "Chat");
             }
         }
 
