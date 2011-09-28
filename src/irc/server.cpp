@@ -2605,6 +2605,9 @@ void Server::removeChannel(Channel* channel)
     }
 
     m_channelList.removeOne(channel);
+
+    if (!isConnected())
+        updateAutoJoin();
 }
 
 void Server::updateChannelMode(const QString &updater, const QString &channelName, char mode, bool plus, const QString &parameter)
