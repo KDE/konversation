@@ -1,3 +1,15 @@
+Changes from 1.3.1 to 1.3.1 #4056.1
+This patch was created as a stop-gap measure to allow
+Konversation 1.3.1 to work with Qt 4.7.4 and newer. Nokia allowed a
+source-incompatible change to fix a bug in QtCreator, which
+causes Konversation to crash when keeping track of the marker and
+remember lines.
+
+As this is not a released version, do not report bugs against it.
+
+For more information about the Qt change, see QTBUG-20916.
+
+
 Changes from 1.3 to 1.3.1:
 Konversation 1.3.1 is a maintenance release that improves program behavior
 and fixes defects, the most serious of which is a regression that unfortu-

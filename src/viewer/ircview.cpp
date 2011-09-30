@@ -11,7 +11,7 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
-  Copyright (C) 2004-2009 Eli Mackenzie <argonel@gmail.com>
+  Copyright (C) 2004-2011 Eli Mackenzie <argonel@gmail.com>
 */
 
 #include "ircview.h"
@@ -111,7 +111,10 @@ class SelectionPin
             if (d->textCursor().hasSelection())
             {
                 int end = d->document()->rootFrame()->lastPosition();
-                QTextBlock b = d->document()->lastBlock();
+
+                //WARNING if selection pins don't work in some build environments, we need to keep the result
+                d->document()->lastBlock();
+
                 pos = d->textCursor().position();
                 anc = d->textCursor().anchor();
                 if (pos != end && anc != end)
@@ -132,7 +135,7 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_rememberLine(0), m_lastMarkerLine(0), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_copyUrlMenu = false;
     m_resetScrollbar = true;
@@ -325,34 +328,6 @@ bool IRCView::searchNext(bool reversed)
     return find(m_pattern, m_searchFlags);
 }
 
-//// Marker lines
-
-#define _S(x) #x << (x)
-void dump_doc(QTextDocument* document)
-{
-    QTextBlock b(document->firstBlock());
-    while (b.isValid())
-    {
-        kDebug()    << _S(b.position())
-                    << _S(b.length())
-                    << _S(b.userState())
-                    ;
-                    b=b.next();
-    };
-}
-
-QDebug operator<<(QDebug dbg, QList<QTextBlock> &l)
-{
-    dbg.space() << _S(l.count()) << endl;
-        for (int i=0; i< l.count(); ++i)
-        {
-            QTextBlock b=l[i];
-            dbg.space() << _S(i) << _S(b.blockNumber()) << _S(b.length()) << _S(b.userState()) << endl;
-        }
-
-    return dbg.space();
-}
-
 class IrcViewMimeData : public QMimeData
 {
 public:
@@ -417,13 +392,52 @@ void IRCView::dropEvent(QDropEvent* e)
         emit urlsDropped(KUrl::List::fromMimeData(e->mimeData(), KUrl::List::PreferLocalUrls));
 }
 
+// Marker lines
+
+// This object gets stuffed into the userData field of a text block.
+// Qt does not give us a way to track blocks, so we have to
+// rely on the destructor of this object to notify us that a
+// block we care about was removed from the document. This does not
+// prevent the first block bug from deleting the wrong block's data,
+// however that should not result in a crash.
+struct Burr: public QTextBlockUserData
+{
+    Burr(IRCView* o, Burr* prev, QTextBlock b, int objFormat)
+        : m_block(b), m_format(objFormat), m_prev(prev), m_next(0),
+        m_owner(o)
+    {
+        if (m_prev)
+            m_prev->m_next = this;
+    }
+
+    ~Burr()
+    {
+        m_owner->blockDeleted(this);
+        unlink();
+    }
+
+    void unlink()
+    {
+        if (m_prev)
+            m_prev->m_next = m_next;
+        if (m_next)
+            m_next->m_prev = m_prev;
+    }
+
+    QTextBlock m_block;
+    int m_format;
+    Burr* m_prev, *m_next;
+    IRCView* m_owner;
+};
+
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(format);
 
     QTextBlock block=doc->findBlock(posInDocument);
     QPen pen;
-    switch (block.userState())
+    Burr* b = dynamic_cast<Burr*>(block.userData());
+    switch (b->m_format)
     {
         case IRCView::BlockIsMarker:
             pen.setColor(Preferences::self()->color(Preferences::ActionMessage));
@@ -456,33 +470,36 @@ QSizeF IrcViewMarkerLine::intrinsicSize(QTextDocument *doc, int posInDocument, c
     return QSizeF(width, 6); // FIXME this is a hardcoded value...
 }
 
+QTextCharFormat IRCView::getFormat(ObjectFormats x)
+{
+    QTextCharFormat f;
+    f.setObjectType(x);
+    return f;
+}
+
+void IRCView::blockDeleted(Burr* b) //slot
+{
+    //tracking only the tail
+    if (b == m_lastMarkerLine)
+        m_lastMarkerLine = b->m_prev;
+
+    if (b == m_rememberLine)
+        m_rememberLine = 0;
+}
+
 void IRCView::cullMarkedLine(int where, int rem, int add) //slot
 {
-    if (where == 0 && add == 0 && rem !=0)
-    {
-        if (document()->blockCount() == 1 && document()->firstBlock().length() == 1)
-        {
+    int blockCount = document()->blockCount();
+    QTextBlock prime = document()->firstBlock();
+
+    if (prime.length() == 1 && document()->blockCount() == 1)
             wipeLineParagraphs();
-        }
-        else
-        {
-            if (m_nextCullIsMarker)
-            {
-                //move the remember line up.. if the cull removed it, this will forget its position
-                if (m_rememberLinePosition >= 0)
-                    --m_rememberLinePosition;
-                m_markers.takeFirst();
-            }
-            int s = document()->firstBlock().userState();
-            m_nextCullIsMarker = (s == BlockIsMarker || s == BlockIsRemember);
-        }
-    }
 }
 
 void IRCView::insertMarkerLine() //slot
 {
     //if the last line is already a marker of any kind, skip out
-    if (lastBlockIsLine())
+    if (lastBlockIsLine(BlockIsMarker))
         return;
 
     //the code used to preserve the dirty bit status, but that was never affected by appendLine...
@@ -505,7 +522,12 @@ void IRCView::cancelRememberLine() //slot
 
 bool IRCView::lastBlockIsLine(int select)
 {
-    int state = document()->lastBlock().userState();
+    Burr *b = dynamic_cast<Burr*>(document()->lastBlock().userData());
+
+    int state = -1;
+
+    if (b)
+        state = b->m_format;
 
     if (select == -1)
         return (state == BlockIsRemember || state == BlockIsMarker);
@@ -522,81 +544,51 @@ void IRCView::appendRememberLine()
     if (lastBlockIsLine(BlockIsRemember))
         return;
 
-    // if we already have a rememberline, remove the previous one
-    if (m_rememberLinePosition > -1)
+    if (m_rememberLine)
     {
-        //get the block that is the remember line
-        QTextBlock rem = m_markers[m_rememberLinePosition];
-        m_markers.removeAt(m_rememberLinePosition); //probably will be in there only once
-        m_rememberLinePosition=-1;
+        QTextBlock rem = m_rememberLine->m_block;
         voidLineBlock(rem);
+        if (m_rememberLine != 0)
+        {
+            kDebug() << "%%%%%%%%%%%%%%%%% m_rememberLine still set!";
+            // this probably means we had a block containing only 0x2029, so Scribe merged the userData/userState into the next
+            m_rememberLine = 0;
+        }
     }
 
-    //tell the control we did stuff
-    //FIXME do we still do something like this?
-    //repaintChanged();
+    m_rememberLine = appendLine(IRCView::RememberLine);
 
-    //actually insert a line
-    appendLine(IRCView::RememberLine);
-
-    //store the index of the remember line
-    m_rememberLinePosition = m_markers.count() - 1;
 }
 
 void IRCView::voidLineBlock(QTextBlock rem)
 {
-    if (rem.blockNumber() == 0)
-    {
-        Q_ASSERT(m_nextCullIsMarker);
-        m_nextCullIsMarker = false;
-    }
     QTextCursor c(rem);
-    //FIXME make sure this doesn't flicker
+
     c.select(QTextCursor::BlockUnderCursor);
     c.removeSelectedText();
 }
 
 void IRCView::clearLines()
 {
-    //if we have a remember line, put it in the list
-        //its already in the list
 
-    kDebug() << _S(m_nextCullIsMarker) << _S(m_rememberLinePosition) << _S(textCursor().position()) << m_markers;
-    dump_doc(document());
-
-    //are there any markers?
-    if (hasLines())
+    while (hasLines())
     {
-        for (int i=0; i < m_markers.count(); ++i)
-            voidLineBlock(m_markers[i]);
-
-        wipeLineParagraphs();
-
-        //FIXME do we have this? //repaintChanged();
-    }
-
+        //IRCView::blockDeleted takes care of the pointers
+        voidLineBlock(m_lastMarkerLine->m_block);
+    };
 }
 
 void IRCView::wipeLineParagraphs()
 {
-    m_nextCullIsMarker = false;
-    m_rememberLinePosition = -1;
-    m_markers.clear();
+    m_rememberLine = m_lastMarkerLine = 0;
 }
 
 bool IRCView::hasLines()
 {
-    return m_markers.count() > 0;
+    return m_lastMarkerLine != 0;
 }
 
-QTextCharFormat IRCView::getFormat(ObjectFormats x)
-{
-    QTextCharFormat f;
-    f.setObjectType(x);
-    return f;
-}
-
-void IRCView::appendLine(IRCView::ObjectFormats type)
+Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 {
     ScrollBarPin barpin(verticalScrollBar());
     SelectionPin selpin(this);
@@ -604,13 +596,21 @@ void IRCView::appendLine(IRCView::ObjectFormats type)
     QTextCursor cursor(document());
     cursor.movePosition(QTextCursor::End);
 
-    cursor.insertBlock();
+    if (cursor.block().length() > 1) // this will be a 0x2029
+        cursor.insertBlock();
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
-    cursor.block().setUserState(type == MarkerLine? BlockIsMarker : BlockIsRemember);
 
-    m_markers.append(cursor.block());
+    QTextBlock block = cursor.block();
+    Burr *b = new Burr(this, m_lastMarkerLine, block, type == MarkerLine? BlockIsMarker : BlockIsRemember);
+    block.setUserData(b);
+
+    m_lastMarkerLine = b;
+
+    //TODO figure out what this is for
+    cursor.setPosition(block.position());
+
+    return b;
 }
-
 
 //// Other stuff
 

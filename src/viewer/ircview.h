@@ -24,7 +24,7 @@
 
 class Server;
 class ChatWindow;
-
+class Burr;
 
 class KToggleAction;
 class KMenu;
@@ -139,9 +139,10 @@ class IRCView : public KTextBrowser
         void appendRememberLine();
 
         /// Create a remember line and insert it.
-        void appendLine(ObjectFormats=MarkerLine);
+        /// @return - Pointer to the Burr that was inserted into the block
+        Burr* appendLine(ObjectFormats=MarkerLine);
 
-        /// Forget the position of the remember line and markers.
+        /// Convenience method - forget the position of the remember line and markers.
         void wipeLineParagraphs();
 
         /// Convenience method - is the last block any sort of line, or a specific line?
@@ -154,16 +155,22 @@ class IRCView : public KTextBrowser
         /// Shortcut to get an object format of the desired type
         QTextCharFormat getFormat(ObjectFormats);
 
+    public slots:
+        // Doesn't have to be a slot, but what the hay.
+        /// Called *only* from ~Burr(), by QTextBlockData::free
+        void blockDeleted(Burr* b);
+
     private slots:
-        /** Called to see if a marker is queued up for deletion. Only triggers if
-            "where" is the beginning and there was nothing added.
-        */
+        /** Called every time a change occurs to the document.
+         *
+         * Used to infer the clearing of the entire document,
+         * because Trolltech removed virtual from the method
+         * that would indicate authoritatively.
+         */
         void cullMarkedLine(int, int, int);
 
     private: //marker/remember line data
-        bool m_nextCullIsMarker; ///< the next time a cull occurs, it'll be a marker
-        QList<QTextBlock> m_markers; ///< what blocks are markers?
-        int m_rememberLinePosition; ///< position of remember line in m_markers
+        Burr *m_rememberLine, *m_lastMarkerLine;
         bool m_rememberLineDirtyBit; ///< the next append needs a remember line
         IrcViewMarkerLine markerFormatObject; ///< a QTextObjectInterface
 
