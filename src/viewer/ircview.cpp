@@ -11,7 +11,7 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006-2010 Eike Hein <hein@kde.org>
-  Copyright (C) 2004-2009 Eli Mackenzie <argonel@gmail.com>
+  Copyright (C) 2004-2011 Eli Mackenzie <argonel@gmail.com>
 */
 
 #include "ircview.h"
@@ -61,7 +61,10 @@ class SelectionPin
             if (d->textCursor().hasSelection())
             {
                 int end = d->document()->rootFrame()->lastPosition();
-                QTextBlock b = d->document()->lastBlock();
+
+                //WARNING if selection pins don't work in some build environments, we need to keep the result
+                d->document()->lastBlock();
+
                 pos = d->textCursor().position();
                 anc = d->textCursor().anchor();
                 if (pos != end && anc != end)
@@ -82,7 +85,7 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_rememberLine(0), m_lastMarkerLine(0), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
@@ -191,34 +194,6 @@ bool IRCView::searchNext(bool reversed)
     return find(m_pattern, m_searchFlags);
 }
 
-// Marker lines
-
-#define _S(x) #x << (x)
-void dump_doc(QTextDocument* document)
-{
-    QTextBlock b(document->firstBlock());
-    while (b.isValid())
-    {
-        kDebug()    << _S(b.position())
-                    << _S(b.length())
-                    << _S(b.userState())
-                    ;
-                    b=b.next();
-    };
-}
-
-QDebug operator<<(QDebug dbg, QList<QTextBlock> &l)
-{
-    dbg.space() << _S(l.count()) << endl;
-        for (int i=0; i< l.count(); ++i)
-        {
-            QTextBlock b=l[i];
-            dbg.space() << _S(i) << _S(b.blockNumber()) << _S(b.length()) << _S(b.userState()) << endl;
-        }
-
-    return dbg.space();
-}
-
 class IrcViewMimeData : public QMimeData
 {
 public:
@@ -283,13 +258,74 @@ void IRCView::dropEvent(QDropEvent* e)
         emit urlsDropped(KUrl::List::fromMimeData(e->mimeData(), KUrl::List::PreferLocalUrls));
 }
 
+// Marker lines
+
+#define _S(x) #x << (x)
+#define DebugBanner KDebug::Block myBlock(qPrintable(QString::number((uint)this, 16)))
+
+QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
+QDebug operator<<(QDebug d, QTextFrame* feed);
+QDebug operator<<(QDebug d, QTextDocument* document);
+QDebug operator<<(QDebug d, QTextBlock b);
+
+// This object gets stuffed into the userData field of a text block.
+// Qt does not give us a way to track blocks, so we have to
+// rely on the destructor of this object to notify us that a
+// block we care about was removed from the document. This does not
+// prevent the first block bug from deleting the wrong block's data,
+// however that should not result in a crash.
+struct Burr: public QTextBlockUserData
+{
+    Burr(IRCView* o, Burr* prev, QTextBlock b, int objFormat)
+        : m_block(b), m_format(objFormat), m_prev(prev), m_next(0),
+        m_owner(o)
+    {
+        if (m_prev)
+            m_prev->m_next = this;
+    }
+
+    ~Burr()
+    {
+        DebugBanner;
+        kDebug() << "~Burr" << (void*)this << _S(m_format) << _S(m_block.blockNumber()) << "deleted";
+        m_owner->blockDeleted(this);
+        unlink();
+    }
+
+    void unlink()
+    {
+        kDebug() << "====" << (void*)this << m_block;
+        if (m_prev)
+        {
+            kDebug() << "prev->next" << (void*)m_next;
+            m_prev->m_next = m_next;
+        }
+        else
+            kDebug() << "prev was null";
+        if (m_next)
+        {
+            kDebug() << "next";
+            m_next->m_prev = m_prev;
+        }
+        else
+            kDebug() << "next was null";
+    }
+
+    QTextBlock m_block;
+    int m_format;
+    Burr* m_prev, *m_next;
+    IRCView* m_owner;
+};
+
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(format);
 
     QTextBlock block=doc->findBlock(posInDocument);
     QPen pen;
-    switch (block.userState())
+    Burr* b = dynamic_cast<Burr*>(block.userData());
+    Q_ASSERT(b); // remember kids, only YOU can makes this document support two user data types
+    switch (b->m_format)
     {
         case IRCView::BlockIsMarker:
             pen.setColor(Preferences::self()->color(Preferences::ActionMessage));
@@ -322,34 +358,87 @@ QSizeF IrcViewMarkerLine::intrinsicSize(QTextDocument *doc, int posInDocument, c
     return QSizeF(width, 6); // FIXME this is a hardcoded value...
 }
 
+QTextCharFormat IRCView::getFormat(ObjectFormats x)
+{
+    QTextCharFormat f;
+    f.setObjectType(x);
+    return f;
+}
+
+void IRCView::blockDeleted(Burr* b) //slot
+{
+    DebugBanner;
+    Q_ASSERT(b); // this method only to be called from a ~Burr();
+    kDebug() << "blockDeleted" << (void*)(b) << b->m_block << _S(m_lastMarkerLine) << _S(m_rememberLine);
+
+    //tracking only the tail
+    if (b == m_lastMarkerLine)
+        m_lastMarkerLine = b->m_prev;
+
+    if (b == m_rememberLine)
+        m_rememberLine = 0;
+}
+
 void IRCView::cullMarkedLine(int where, int rem, int add) //slot
 {
-    if (where == 0 && add == 0 && rem !=0)
+    bool showDebug = false;
+    QString output;
+    QDebug d = QDebug(&output);//KDebug(QtDebugMsg, __FILE__, __LINE__, Q_FUNC_INFO)();
+
+    bool merged = (add!=0 && rem !=0); // i have never seen this happen, adds and removes are always separate
+    int blockCount = document()->blockCount();
+    void *view = this;
+    QTextBlock prime = document()->firstBlock();
+
+    d << "================= cullMarkedLine" << _S(view) << _S(where) << _S(rem) << _S(add) << _S(blockCount) << _S(prime.length()) << _S(merged);
+
+    if (prime.length() == 1)
     {
-        if (document()->blockCount() == 1 && document()->firstBlock().length() == 1)
+        if (document()->blockCount() == 1) //the entire document was wiped. was a signal such a burden? apparently..
         {
+            showDebug = true;
+            d << "- wipeLineParagraphs()" << (void*)m_rememberLine << (void*)m_lastMarkerLine;
             wipeLineParagraphs();
+        }
+        else if (document()->characterAt(0).unicode() == 0x2029)
+        {
+            showDebug = true;
+            d << "- only QChar::ParagraphSeparator";
+            // this should never happen, it should be 0xfffc2029
+            if (dynamic_cast<Burr*>(prime.userData()))
+                d << "Burr!" << prime.userData();
         }
         else
         {
-            if (m_nextCullIsMarker)
-            {
-                //move the remember line up.. if the cull removed it, this will forget its position
-                if (m_rememberLinePosition >= 0)
-                    --m_rememberLinePosition;
-                m_markers.takeFirst();
-            }
-            int s = document()->firstBlock().userState();
-            m_nextCullIsMarker = (s == BlockIsMarker || s == BlockIsRemember);
+            showDebug = true;
+            QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
+            d << "- block of length 1 but not 2029" << qPrintable(fc);
         }
+    }
+    else if (prime.length() == 2)
+    {
+        //probably a Burr going to be culled next..
+        showDebug = true;
+        QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
+        QString sc = "0x" + QString::number(document()->characterAt(1).unicode(), 16).rightJustified(4, '0');
+        d << "- prime(2)" << fc << sc;
+    }
+    if (showDebug)
+    {
+        DebugBanner;
+        kDebug() << output;
     }
 }
 
 void IRCView::insertMarkerLine() //slot
 {
+    DebugBanner;
+
     //if the last line is already a marker of any kind, skip out
-    if (lastBlockIsLine())
+    if (lastBlockIsLine(BlockIsMarker))
         return;
+
+    kDebug() << "ok to insert..";
 
     //the code used to preserve the dirty bit status, but that was never affected by appendLine...
     //maybe i missed something
@@ -358,10 +447,15 @@ void IRCView::insertMarkerLine() //slot
 
 void IRCView::insertRememberLine() //slot
 {
+    DebugBanner;
+
     m_rememberLineDirtyBit = true; // means we're going to append a remember line if some text gets inserted
 
     if (!Preferences::self()->automaticRememberLineOnlyOnTextChange())
+    {
+        kDebug();
         appendRememberLine();
+    }
 }
 
 void IRCView::cancelRememberLine() //slot
@@ -371,7 +465,14 @@ void IRCView::cancelRememberLine() //slot
 
 bool IRCView::lastBlockIsLine(int select)
 {
-    int state = document()->lastBlock().userState();
+    Burr *b = dynamic_cast<Burr*>(document()->lastBlock().userData());
+
+    int state = -1;
+
+    if (b)
+        state = b->m_format;
+
+    kDebug() << _S(state) << _S(select);
 
     if (select == -1)
         return (state == BlockIsRemember || state == BlockIsMarker);
@@ -381,6 +482,8 @@ bool IRCView::lastBlockIsLine(int select)
 
 void IRCView::appendRememberLine()
 {
+    DebugBanner;
+
     //clear this now, so that doAppend doesn't double insert
     m_rememberLineDirtyBit = false;
 
@@ -388,95 +491,77 @@ void IRCView::appendRememberLine()
     if (lastBlockIsLine(BlockIsRemember))
         return;
 
-    // if we already have a rememberline, remove the previous one
-    if (m_rememberLinePosition > -1)
+    if (m_rememberLine)
     {
-        //get the block that is the remember line
-        QTextBlock rem = m_markers[m_rememberLinePosition];
-        m_markers.removeAt(m_rememberLinePosition); //probably will be in there only once
-        m_rememberLinePosition=-1;
+        QTextBlock rem = m_rememberLine->m_block;
         voidLineBlock(rem);
+        Q_ASSERT(m_rememberLine == 0);
     }
 
-    //tell the control we did stuff
-    //FIXME do we still do something like this?
-    //repaintChanged();
+    m_rememberLine = appendLine(IRCView::RememberLine);
 
-    //actually insert a line
-    appendLine(IRCView::RememberLine);
-
-    //store the index of the remember line
-    m_rememberLinePosition = m_markers.count() - 1;
+    kDebug() << (void*)m_rememberLine;
 }
 
 void IRCView::voidLineBlock(QTextBlock rem)
 {
-    if (rem.blockNumber() == 0)
-    {
-        Q_ASSERT(m_nextCullIsMarker);
-        m_nextCullIsMarker = false;
-    }
     QTextCursor c(rem);
-    //FIXME make sure this doesn't flicker
+
     c.select(QTextCursor::BlockUnderCursor);
     c.removeSelectedText();
 }
 
 void IRCView::clearLines()
 {
-    //if we have a remember line, put it in the list
-        //its already in the list
+    DebugBanner;
+    kDebug() << document();
 
-    kDebug() << _S(m_nextCullIsMarker) << _S(m_rememberLinePosition) << _S(textCursor().position()) << m_markers;
-    dump_doc(document());
-
-    //are there any markers?
-    if (hasLines())
+    while (hasLines())
     {
-        for (int i=0; i < m_markers.count(); ++i)
-            voidLineBlock(m_markers[i]);
-
-        wipeLineParagraphs();
-
-        //FIXME do we have this? //repaintChanged();
-    }
-
+        //IRCView::blockDeleted takes care of the pointers
+        voidLineBlock(m_lastMarkerLine->m_block);
+    };
 }
 
 void IRCView::wipeLineParagraphs()
 {
-    m_nextCullIsMarker = false;
-    m_rememberLinePosition = -1;
-    m_markers.clear();
+    m_rememberLine = m_lastMarkerLine = 0;
 }
 
 bool IRCView::hasLines()
 {
-    return m_markers.count() > 0;
+    DebugBanner;
+
+    kDebug() << (void*)m_lastMarkerLine << (void*)m_rememberLine;
+
+    return m_lastMarkerLine != 0;
 }
 
-QTextCharFormat IRCView::getFormat(ObjectFormats x)
+Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 {
-    QTextCharFormat f;
-    f.setObjectType(x);
-    return f;
-}
+    DebugBanner;
 
-void IRCView::appendLine(IRCView::ObjectFormats type)
-{
     ScrollBarPin barpin(verticalScrollBar());
     SelectionPin selpin(this);
 
     QTextCursor cursor(document());
     cursor.movePosition(QTextCursor::End);
-
     cursor.insertBlock();
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
-    cursor.block().setUserState(type == MarkerLine? BlockIsMarker : BlockIsRemember);
 
-    m_markers.append(cursor.block());
+    QTextBlock block = cursor.block();
+    Burr *b = new Burr(this, m_lastMarkerLine, block, type == MarkerLine? BlockIsMarker : BlockIsRemember);
+    block.setUserData(b);
+
+    m_lastMarkerLine = b;
+
+    //TODO figure out what this is for
+    cursor.setPosition(block.position());
+
+    kDebug() << block;
+
+    return b;
 }
-
 
 // Other stuff
 
@@ -2177,4 +2262,102 @@ QChar::Direction IRCView::basicDirection(const QString& string)
         return QChar::DirR;
     else
         return QChar::DirL;
+}
+
+
+#define dS d.space()
+#define dN d.nospace()
+
+QDebug operator<<(QDebug d, QTextBlockUserData *bd)
+{
+    Burr* b = dynamic_cast<Burr*>(bd);
+    if (b)
+    {
+        dN;
+        d   << "(";
+        d   << (void*)(b) << ", format=" << b->m_format << ", blockNumber=" << b->m_block.blockNumber() << " p,n=" << (void*)b->m_prev << ", " << (void*)b->m_next;
+        d   << ")";
+    }
+    else if (bd)
+        dN << "(UNKNOWN! " << (void*)bd << ")";
+    else
+        d << "(none)";
+
+    return d.space();
+}
+
+QDebug operator<<(QDebug d, QTextFrame* feed)
+{
+    if (feed)
+    {
+        d  << "\nDumping frame...";
+        dN << hex << (void*)feed << dec;
+        QTextFrame::iterator it = feed->begin();
+        if (it.currentFrame() == feed)
+            dS << "loop!" << endl;
+        dS << "position" << feed->firstPosition() << feed->lastPosition();
+        dN << "parentFrame=" << (void*)feed->parentFrame();
+        dS;
+        while (!it.atEnd())
+        {
+            //d << "spin";
+            QTextFrame *frame = it.currentFrame();
+            if (!frame) // this is a block
+            {
+                //d<<"dumping blocks:";
+                QTextBlock b = it.currentBlock();
+                //d << "block" << b.position() << b.length();
+                d << endl << b;
+            }
+            else if (frame != feed)
+            {
+                d << frame;
+            }
+            ++it;
+        };
+        d << "\n...done.\n";
+    }
+    else
+        d << "No frame to dump.";
+    return d;
+}
+
+QDebug operator<<(QDebug d, QTextDocument* document)
+{
+    d << "=====================================================================================================================================================================";
+    if (document)
+        d << document->rootFrame();
+    return d;
+}
+
+QDebug operator<<(QDebug d, QTextBlock b)
+{
+    QTextBlock::Iterator it = b.begin();
+
+    int fragCount = 0;
+    d   << "blockNumber"    << b.blockNumber();
+    d   << "position"       << b.position();
+    d   << "length"         << b.length();
+    dN  << "firstChar 0x"   << hex << b.document()->characterAt(b.position()).unicode() << dec;
+    if (b.length() == 2)
+        dN << " second 0x"   << hex << b.document()->characterAt(b.position()+1).unicode() << dec;
+    dS  << "userState"      << b.userState();
+    dN  << "userData "      << (void*)b.userData();
+    //dS  << "text"           << b.text();
+    dS  << endl;
+
+    if (b.userData())
+        d << b.userData();
+
+    for (it = b.begin(); !(it.atEnd()); ++it)
+    {
+        QTextFragment f = it.fragment();
+        if (f.isValid())
+        {
+            fragCount++;
+            //d << "frag" << fragCount << _S(f.position()) << _S(f.length());
+        }
+    }
+    d << _S(fragCount);
+    return d;
 }

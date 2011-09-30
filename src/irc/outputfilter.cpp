@@ -42,6 +42,13 @@
 #include <KMessageBox>
 #include <KAboutData>
 
+#include <QTextDocument>
+#include <QTextBlock>
+#include <kdebug.h>
+#include "ircview.h"
+
+QDebug operator<<(QDebug d, QTextDocument* document);
+
 namespace Konversation
 {
     QSet<QString> OutputFilter::m_commands;
@@ -1930,6 +1937,16 @@ namespace Konversation
             }
         }
 
+        return OutputFilterResult();
+    }
+
+    OutputFilterResult OutputFilter::command_dumpdoc(const OutputFilterInput& input)
+    {
+        if (input.context && input.context->getTextView())
+        {
+            KDebug::Block myBlock(qPrintable(QString::number((uint)(input.context->getTextView()), 16)));
+            kDebug() << input.context->getTextView()->document();
+        }
         return OutputFilterResult();
     }
 
