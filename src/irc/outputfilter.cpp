@@ -1944,7 +1944,7 @@ namespace Konversation
     {
         if (input.context && input.context->getTextView())
         {
-            KDebug::Block myBlock(qPrintable(QString::number((long)(input.context->getTextView()), 16)));
+            KDebug::Block myBlock(qPrintable(QString::number((ulong)(input.context->getTextView()), 16)));
             kDebug() << input.context->getTextView()->document();
         }
         return OutputFilterResult();

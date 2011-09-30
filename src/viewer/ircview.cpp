@@ -261,7 +261,7 @@ void IRCView::dropEvent(QDropEvent* e)
 // Marker lines
 
 #define _S(x) #x << (x)
-#define DebugBanner KDebug::Block myBlock(qPrintable(QString::number((long)this, 16)))
+#define DebugBanner KDebug::Block myBlock(qPrintable(QString::number((ulong)this, 16)))
 
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
 QDebug operator<<(QDebug d, QTextFrame* feed);
