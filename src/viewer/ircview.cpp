@@ -495,7 +495,12 @@ void IRCView::appendRememberLine()
     {
         QTextBlock rem = m_rememberLine->m_block;
         voidLineBlock(rem);
-        Q_ASSERT(m_rememberLine == 0);
+        if (m_rememberLine != 0)
+        {
+            kDebug() << "%%%%%%%%%%%%%%%%% m_rememberLine still set!";
+            // this probably means we had a block containing only 0x2029, so Scribe merged the userData/userState into the next
+            m_rememberLine = 0;
+        }
     }
 
     m_rememberLine = appendLine(IRCView::RememberLine);
