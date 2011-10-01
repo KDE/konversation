@@ -26,7 +26,7 @@
 
 class Server;
 class ChatWindow;
-class Burr;
+struct Burr;
 
 class IrcViewMarkerLine: public QObject, public QTextObjectInterface
 {
