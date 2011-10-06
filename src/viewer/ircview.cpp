@@ -261,7 +261,12 @@ void IRCView::dropEvent(QDropEvent* e)
 // Marker lines
 
 #define _S(x) #x << (x)
-#define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16))))
+
+#if KDE_IS_VERSION(4,6,0)
+#       define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16))))
+#else
+#       define DebugBanner kDebug() << "Entering context:" << qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16)));
+#endif
 
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
 QDebug operator<<(QDebug d, QTextFrame* feed);
@@ -286,7 +291,12 @@ struct Burr: public QTextBlockUserData
 
     ~Burr()
     {
+#if KDE_IS_VERSION(4,6,0)
         KDebug::Block myBlock(qPrintable(QString::number((ulong)(this), 16)));
+#else
+        DebugBanner;
+#endif
+
         kDebug() << "~Burr" << (void*)this << _S(m_format) << _S(m_block.blockNumber()) << "deleted";
         m_owner->blockDeleted(this);
         unlink();

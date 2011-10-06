@@ -1940,11 +1940,16 @@ namespace Konversation
         return OutputFilterResult();
     }
 
+
     OutputFilterResult OutputFilter::command_dumpdoc(const OutputFilterInput& input)
     {
         if (input.context && input.context->getTextView())
         {
+#if KDE_IS_VERSION(4,6,0)
             KDebug::Block myBlock(qPrintable(QString::number((ulong)(input.context->getTextView()), 16)));
+#else
+            kDebug() << "view =" << qPrintable(QString::number((ulong)(input.context->getTextView()), 16));
+#endif
             kDebug() << input.context->getTextView()->document();
         }
         return OutputFilterResult();
