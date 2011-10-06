@@ -261,7 +261,7 @@ void IRCView::dropEvent(QDropEvent* e)
 // Marker lines
 
 #define _S(x) #x << (x)
-#define DebugBanner KDebug::Block myBlock(qPrintable(QString::number((ulong)this, 16)))
+#define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16))))
 
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
 QDebug operator<<(QDebug d, QTextFrame* feed);
@@ -286,7 +286,7 @@ struct Burr: public QTextBlockUserData
 
     ~Burr()
     {
-        DebugBanner;
+        KDebug::Block myBlock(qPrintable(QString::number((ulong)(this), 16)));
         kDebug() << "~Burr" << (void*)this << _S(m_format) << _S(m_block.blockNumber()) << "deleted";
         m_owner->blockDeleted(this);
         unlink();
