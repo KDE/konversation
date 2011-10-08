@@ -244,7 +244,7 @@ int Application::newInstance()
 
         connect(this, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
 
-        // prepare dcop interface
+        // prepare dbus interface
         dbusObject = new Konversation::DBus(this);
         QDBusConnection::sessionBus().registerObject("/irc", dbusObject, QDBusConnection::ExportNonScriptableSlots);
         identDBus = new Konversation::IdentDBus(this);
