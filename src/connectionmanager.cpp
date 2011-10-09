@@ -660,14 +660,6 @@ Server* ConnectionManager::getServerByName(const QString& name)
     return 0;
 }
 
-Server* ConnectionManager::getAnyServer()
-{
-    if ( m_connectionList.count() > 0)
-        return m_connectionList[0];
-
-    return 0;
-}
-
 void ConnectionManager::involuntaryQuitServers()
 {
     m_overrideAutoReconnect = true;

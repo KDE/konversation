@@ -148,17 +148,6 @@ QString DBus::getNickname(const QString& server_Name)
     return server->getNickname();
 }
 
-QString DBus::getAnyNickname()
-{
-    Application* konvApp = static_cast<Application*>(kapp);
-
-    Server* server = konvApp->getConnectionManager()->getAnyServer();
-
-    if (server) return server->getNickname();
-
-    return QString();
-}
-
 QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 {
     return Preferences::channelEncoding(sterilizeUnicode(server), sterilizeUnicode(channel));

@@ -35,7 +35,6 @@ class ConnectionManager : public QObject
 
         Server* getServerByConnectionId(int connectionId);
         Server* getServerByName(const QString& name);
-        Server* getAnyServer();
 
 
     public slots:
