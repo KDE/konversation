@@ -647,8 +647,21 @@ Server* ConnectionManager::getServerByConnectionId(int connectionId)
         return 0;
 }
 
-Server* ConnectionManager::getServerByName(const QString& name)
+Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags flags)
 {
+    if (flags == MatchByIdThenName)
+    {
+        bool conversion = false;
+        const int connectionId = name.toInt(&conversion);
+
+        if (conversion)
+        {
+            Server* const server = this->getServerByConnectionId(connectionId);
+            if (server)
+                return server;
+        }
+    }
+
     QMap<int, Server*>::ConstIterator it;
 
     for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)

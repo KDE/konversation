@@ -33,8 +33,14 @@ class ConnectionManager : public QObject
 
         QList<Server*> getServerList() const;
 
+        enum NameMatchFlags
+        {
+            MatchByName,
+            MatchByIdThenName
+        };
+
         Server* getServerByConnectionId(int connectionId);
-        Server* getServerByName(const QString& name);
+        Server* getServerByName(const QString& name, NameMatchFlags flags = MatchByName);
 
 
     public slots:
