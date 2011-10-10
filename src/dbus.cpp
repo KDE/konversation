@@ -64,6 +64,29 @@ QStringList DBus::listConnectedServers()
     return connectedHosts;
 }
 
+QStringList DBus::listJoinedChannels(const QString& serverName)
+{
+    QStringList joinedChannels;
+
+    ConnectionManager* connectionManager = Application::instance()->getConnectionManager();
+
+    Server* server = connectionManager->getServerByName(serverName, ConnectionManager::MatchByIdThenName);
+
+    if (server)
+    {
+        const QList<Channel*>& channelList = server->getChannelList();
+        joinedChannels.reserve(channelList.size());
+
+        foreach(Channel* channel, channelList)
+        {
+            if (channel->joined())
+                joinedChannels.append(channel->getName());
+        }
+    }
+
+    return joinedChannels;
+}
+
 void DBus::setAway(const QString& awaymessage)
 {
     static_cast<Application*>(kapp)->getAwayManager()->requestAllAway(sterilizeUnicode(awaymessage));

@@ -62,6 +62,7 @@ class DBus : public QObject
         void connectToServer(const QString& address, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();
+        QStringList listJoinedChannels(const QString& server);
 
     private slots:
         void changeAwayStatus(bool away);
