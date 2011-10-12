@@ -561,7 +561,9 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 
     QTextCursor cursor(document());
     cursor.movePosition(QTextCursor::End);
-    cursor.insertBlock();
+
+    if (cursor.block().length() > 1) // this will be a 0x2029
+        cursor.insertBlock();
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
 
     QTextBlock block = cursor.block();
