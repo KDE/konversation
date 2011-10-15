@@ -79,7 +79,7 @@ public:
     };
 
     void setAutoDetectLanguage( AutoDetectLanguage _language ) { m_autoDetectLanguage = _language; }
-    AutoDetectLanguage autoDetectLanguage() { return m_autoDetectLanguage; }
+    AutoDetectLanguage autoDetectLanguage() const { return m_autoDetectLanguage; }
 
 
 
