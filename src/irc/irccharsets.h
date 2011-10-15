@@ -35,14 +35,14 @@ namespace Konversation
              * Encodings which don't work on IRC are excluded. (e.g. utf16)
              * @note It's guaranteed that the order of this list is same with that of @ref availableEncodingDescriptiveNames() .
              */
-            QStringList availableEncodingShortNames();
+            QStringList availableEncodingShortNames() const;
 
             /**
              * Lists all available encoding descriptions.
              * e.g. "Unicode ( utf8 )", "Western European ( iso 8859-1 )"
              * Encodings which don't work on IRC are excluded. (e.g. utf16)
              */
-            QStringList availableEncodingDescriptiveNames();
+            QStringList availableEncodingDescriptiveNames() const;
 
             int availableEncodingsCount();
 

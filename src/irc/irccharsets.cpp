@@ -37,12 +37,12 @@ namespace Konversation
         return &s_charsets->charsets;
     }
 
-    QStringList IRCCharsets::availableEncodingShortNames()
+    QStringList IRCCharsets::availableEncodingShortNames() const
     {
         return m_shortNames;
     }
 
-    QStringList IRCCharsets::availableEncodingDescriptiveNames()
+    QStringList IRCCharsets::availableEncodingDescriptiveNames() const
     {
         return m_descriptiveNames;
     }
