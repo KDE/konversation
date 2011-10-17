@@ -25,7 +25,7 @@ fi
 
 CPU=$(awk -F':' '/model name/{name=$2}
  /cpu MHz/{mhz=int($2)}
- /bogomips/ {bogo=int($2) 
+ /bogomips/ {bogo=int($2)
 }
 END{
  gsub (/ *\(tm\) */, " ", name);
@@ -36,8 +36,8 @@ END{
  printf "CPU: %s at %d MHz (%d bogomips)", name, mhz, bogo;
 }
 ' /proc/cpuinfo )
-  
-HDD=$(df -lP| awk '($1~/\/dev/){
+
+HDD=$(df -lP | sort -u -k1,1 | awk '($1~/\/dev/){
   use+=$3/1024^2;
   tot+=$2/1024^2;
  }
@@ -65,14 +65,14 @@ if (n>60){
   if (n>24){
    n2=n%24;
    n/=24;
-   u="d"; 
+   u="d";
    }
   }
  }
 printf ("%d.%d%s up",n, n2, u);
 }' /proc/uptime )
 
-out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}" 
+out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}"
 
 if [ "x$TARGET" = "x" ] ; then
     qdbus org.kde.konversation /irc error "$out"
