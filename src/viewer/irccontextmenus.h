@@ -45,7 +45,7 @@ class IrcContextMenus : public QObject
         enum ActionId
         {
             TextCopy, TextSelectAll,
-            LinkCopy, LinkBookmark, LinkSaveAs,
+            LinkOpenWith, LinkCopy, LinkBookmark, LinkSaveAs,
             Join, Topic, Names,
             OpenQuery,
             Whois, Version, Ping,

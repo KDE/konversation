@@ -37,6 +37,7 @@
 #include <KIO/CopyJob>
 #include <KMenu>
 #include <KMessageBox>
+#include <KRun>
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
@@ -113,6 +114,7 @@ void IrcContextMenus::setupTextMenu()
     // shortcut it would show in the menu is already used by our IRC-
     // wide bookmarking feature.
     m_linkActions << createAction(m_textMenu, LinkBookmark, KIcon("bookmark-new"), i18n("Add to Bookmarks"));
+    m_linkActions << createAction(m_textMenu, LinkOpenWith, i18n("Open With..."));
     m_linkActions << createAction(m_textMenu, LinkSaveAs, KIcon("document-save"), i18n("Save Link As..."));
 
     m_textMenu->addSeparator();
@@ -944,6 +946,12 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
             dialog->addBookmark(link, link);
 
             delete dialog;
+
+            break;
+        }
+        case LinkOpenWith:
+        {
+            KRun::displayOpenWithDialog(KUrl(link), Application::instance()->getMainWindow());
 
             break;
         }
