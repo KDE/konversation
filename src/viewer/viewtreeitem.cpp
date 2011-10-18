@@ -329,9 +329,8 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     int LED_ICON_SIZE = 14;
     int MARGIN = 2;
 
-    // Bufferize the drawing of items.
-    QPixmap buffer(width, height());
-    QPainter painter(&buffer);
+    QPainter &painter = *p;
+    painter.setClipRect(0, 0, width, height());
 
     QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) : getColor();
     QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) : listView()->palette().color(QPalette::Base);
@@ -457,10 +456,6 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
         painter.setPen(lineColor);
         painter.drawLine(0, 5, width, 5);
     }
-
-    painter.end();
-
-    p->drawPixmap(0, 0, buffer);
 }
 
 // The build with KDE4_ENABLE_FINAL breaks otherwise.
