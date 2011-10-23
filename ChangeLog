@@ -251,6 +251,8 @@ Changes since 1.3.1:
   - The code implementing the various actions was in many cases redundantly
     implemented in three different places, for some even in four. This stag-
     gering code duplication has been done away with.
+  - Links now have an "Open With..." action that opens a dialog allowing to
+    choose in which application to open the link.
 * Added support for the 482 numeric (ERR_CHANOPRIVSNEEDED).
 * Fixed a bug causing the '/kickban' command not use the default kick reason
   from the Identity settings if no reason was explicitly specified.
@@ -412,6 +414,9 @@ Changes since 1.3.1:
   sation against Qt v4.7.4 or newer (see QTBUG-20916 for more).
 * A D-Bus method call to retrieve the list of channels a particular connect-
   ion is currently attending has been added.
+* The bundled 'sysinfo' script now handles the way 'mount' reports bind
+  mounts on certain newer Linux distributions by collapsing the repeated
+  mentions of the same volume before calculating the disk space information.
 * Cancelling the dialog asking how to deal with SSL errors upon connecting
   is now treated as a deliberate disconnect on part of the user, i.e. Kon-
   versation will no longer try to automatically reconnect.
