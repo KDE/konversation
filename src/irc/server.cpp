@@ -447,7 +447,6 @@ void Server::connectToIRCServer()
         resetNickSelection();
 
         m_socket = new KTcpSocket();
-        connect(m_socket, SIGNAL(destroyed()), this, SLOT(foo()));
         m_socket->setObjectName("serverSocket");
 
         connect(m_socket, SIGNAL(error(KTcpSocket::Error)), SLOT(broken(KTcpSocket::Error)) );
