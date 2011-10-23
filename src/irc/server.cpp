@@ -104,7 +104,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_banAddressListModes = 'b'; // {RFC-1459, draft-brocklesby-irc-isupport} -> pick one
     m_channelPrefixes = "#&";
     m_modesCount = 3;
-    m_showSSLConfirmation = true;
 
     setObjectName(QString::fromLatin1("server_") + settings.name());
 
@@ -644,7 +643,7 @@ void Server::ircServerConnectionSuccess()
 void Server::broken(KTcpSocket::Error error)
 {
     Q_UNUSED(error);
-    kDebug() << "Connection broken " << m_socket->errorString() << "!";
+    kDebug() << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
 
     m_socket->blockSignals(true);
 
@@ -699,26 +698,14 @@ void Server::broken(KTcpSocket::Error error)
 
 bool Server::askUserToIgnoreSslErrors()
 {
-    bool retVal = false;
 
-    // We are called by sslError:
-    // sslError is a slot, if it's signal is emitted multiple times
-    // then we only want to show the dialog once.
-    if ( m_showSSLConfirmation )
-    {
-        // We don't want to show any further SSL confirmation dialogs.
-        m_showSSLConfirmation = false;
+    bool ignoreSslErrors = KIO::SslUi::askIgnoreSslErrors( m_socket, KIO::SslUi::RecallAndStoreRules );
 
-        // Ask the user if he wants to ignore SSL errors.
-        // In case the user wants to make the rule he chose (for example: always allow) persistent
-        // this will not show a dialog (but it will return "sslErrorsIgnored = true").
-        retVal = KIO::SslUi::askIgnoreSslErrors( m_socket, KIO::SslUi::RecallAndStoreRules );
+    if (ignoreSslErrors == false)
+        // Don't auto-reconnect if the user chose to ignore the SSL errors.
+        updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 
-        // As we're done now we can show further SSL dialogs.
-        m_showSSLConfirmation = true;
-    }
-
-    return retVal;
+    return ignoreSslErrors;
 }
 
 void Server::sslError( const QList<KSslError>& errors )

@@ -412,6 +412,9 @@ Changes since 1.3.1:
   sation against Qt v4.7.4 or newer (see QTBUG-20916 for more).
 * A D-Bus method call to retrieve the list of channels a particular connect-
   ion is currently attending has been added.
+* Cancelling the dialog asking how to deal with SSL errors upon connecting
+  is now treated as a deliberate disconnect on part of the user, i.e. Kon-
+  versation will no longer try to automatically reconnect.
 
 
 Changes from 1.3 to 1.3.1:

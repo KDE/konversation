@@ -814,8 +814,6 @@ class Server : public QObject
         static int m_availableConnectionId;
         int m_connectionId;
 
-        bool m_showSSLConfirmation;
-
         QPointer<InviteDialog> m_inviteDialog;
 
         QTimer* m_nickInfoChangedTimer;
