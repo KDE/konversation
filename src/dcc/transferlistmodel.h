@@ -80,7 +80,7 @@ namespace Konversation
         };
 
 
-        class TransferSizeDelegate : public QItemDelegate
+        class TransferSizeDelegate : public QStyledItemDelegate
         {
         public:
 #if KDE_IS_VERSION(4, 5, 0)
@@ -90,6 +90,8 @@ namespace Konversation
 #endif
 
             virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+            virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
+                                const QModelIndex &index) const;
         private:
 #if KDE_IS_VERSION(4, 5, 0)
             KCategoryDrawerV3* m_categoryDrawer;
@@ -103,7 +105,7 @@ namespace Konversation
         public:
             TransferProgressBarDelegate(QObject *parent = 0);
 
-            virtual void paint (QPainter *painter, const QStyleOptionViewItem & option,
+            virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const;
         };
 

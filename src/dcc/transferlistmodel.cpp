@@ -60,7 +60,7 @@ namespace Konversation
 #else
         TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject* parent)
 #endif
-            : QItemDelegate(parent)
+            : QStyledItemDelegate(parent)
         {
             m_categoryDrawer = categoryDrawer;
         }
@@ -93,6 +93,21 @@ namespace Konversation
         }
 
 
+        void TransferSizeDelegate::paint(QPainter *painter,
+                                                const QStyleOptionViewItem &option,
+                                                const QModelIndex &index) const
+        {
+            if (index.isValid())
+            {
+                int type = index.data(TransferListModel::TransferDisplayType).toInt();
+
+                if (type == TransferItemData::SpaceRow)
+                    return;
+
+                QStyledItemDelegate::paint(painter, option, index);
+            }
+        }
+
         TransferProgressBarDelegate::TransferProgressBarDelegate(QObject *parent)
             : QStyledItemDelegate(parent)
         {
@@ -112,18 +127,20 @@ namespace Konversation
                     return;
                 }
             }
+            QStyleOptionViewItemV4 _option(option);
+            QStyle* style = _option.widget ? _option.widget->style() : QApplication::style();
+            style->drawPrimitive(QStyle::PE_PanelItemViewItem, &_option, painter, _option.widget);
 
-             QStyleOptionProgressBar progressBarOption;
-             progressBarOption.rect = option.rect;
-             progressBarOption.minimum = 0;
-             progressBarOption.maximum = 100;
-             progressBarOption.progress = index.data().toInt();
-             progressBarOption.text = QString::number(progressBarOption.progress) + '%';
-             progressBarOption.textVisible = true;
-             progressBarOption.state = option.state;
+            QStyleOptionProgressBar progressBarOption;
+            progressBarOption.rect = _option.rect;
+            progressBarOption.minimum = 0;
+            progressBarOption.maximum = 100;
+            progressBarOption.progress = index.data().toInt();
+            progressBarOption.text = QString::number(progressBarOption.progress) + '%';
+            progressBarOption.textVisible = true;
+            progressBarOption.state = _option.state;
 
-             QApplication::style()->drawControl(QStyle::CE_ProgressBar,
-                                                &progressBarOption, painter);
+            style->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
         }
 
 

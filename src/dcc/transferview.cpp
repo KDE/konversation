@@ -107,9 +107,11 @@ namespace Konversation
 
             if (type == TransferItemData::SendCategory || type == TransferItemData::ReceiveCategory)
             {
+                QStyleOptionViewItem _option(option);
+                _option.rect.adjust(1, 1, -1, 0);
                 m_categoryDrawer->drawCategory(index,
                                                0, //ignored anyway
-                                               option,
+                                               _option,
                                                painter);
             }
             else
