@@ -756,14 +756,6 @@ class Server : public QObject
         /// Creates a list of known users and returns the one chosen by the user
         inline QString recipientNick() const;
 
-        /**
-          * shows a dialog to the user where he is asked if he wants to
-          * ignore SSL certificate errors
-          *
-          @ @return true if the user accepted the invalid SSL certificate, otherwise false
-          */
-        bool askUserToIgnoreSslErrors();
-
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
         ServerISON* m_serverISON;
@@ -789,6 +781,8 @@ class Server : public QObject
 
         bool m_identifyMsg;
         bool m_autoIdentifyLock;
+
+        bool m_sslErrorLock;
 
         /// Used to lock incomingTimer while processing message.
         bool m_processingIncoming;
