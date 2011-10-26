@@ -115,6 +115,15 @@ class Server : public QObject
 
         void updateAutoJoin(Konversation::ChannelList channels = Konversation::ChannelList());
 
+        /**
+         * Generates the JOIN commands for the given channel list.
+         * This takes care of splitting too long commands into mutliple ones and
+         * filtering out invalid channels (because they are not prefixed with any of the
+         * CHANTYPES).
+         *
+         * @param tmpList The list of channels for which the JOIN command(s) will be generated.
+         * @return A list of QStrings with the JOIN commands.
+         */
         QStringList generateJoinCommand(const Konversation::ChannelList &tmpList);
 
         QAbstractItemModel* nickListModel() const;

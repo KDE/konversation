@@ -428,6 +428,11 @@ Changes since 1.3.1:
 * Fixed a bug causing a crash when the user chose to accept an invaid cer-
   tificate in the SSL error dialog when the connection had timed out in the
   meantime.
+* The auto-join on connect feature will now skip over any configured
+  channels that are invalid as per the IRC server's CHANTYPES rules when
+  sending the join command(s) to the server, making sure that all valid
+  channels are joined even on servers that stop parsing join commands on
+  the first invalid channel. Previously, all configured channels were sent.
 
 
 Changes from 1.3 to 1.3.1:

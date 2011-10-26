@@ -3623,12 +3623,14 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
 
     if (!tmpList.isEmpty())
     {
-        setAutoJoin(true);
-
         setAutoJoinCommands(generateJoinCommand(tmpList));
+        setAutoJoin(!m_autoJoinCommands.isEmpty());
     }
     else
+    {
+        m_autoJoinCommands.clear();
         setAutoJoin(false);
+    }
 }
 
 
@@ -3644,33 +3646,43 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
     for (it = tmpList.constBegin(); it != tmpList.constEnd(); ++it)
     {
         QString channel = (*it).name();
-        QString password = ((*it).password().isEmpty() ? "." : (*it).password());
 
-        uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
-        currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
-
-        //channels.count() and passwords.count() account for the commas
-        if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
+        // Only add the channel to the JOIN command if it has a valid channel name.
+        if (isAChannel(channel))
         {
-            while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
+            QString password = ((*it).password().isEmpty() ? "." : (*it).password());
 
-            joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+            uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
+            currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
 
-            channels.clear();
-            passwords.clear();
+            //channels.count() and passwords.count() account for the commas
+            if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
+            {
+                while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
 
-            length = 0;
+                joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+
+                channels.clear();
+                passwords.clear();
+
+                length = 0;
+            }
+
+            length += currentLength;
+
+            channels << channel;
+            passwords << password;
         }
-
-        length += currentLength;
-
-        channels << channel;
-        passwords << password;
     }
 
     while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
 
-    joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+    // Even if the given tmpList contained entries they might have been filtered
+    // out by the isAChannel() check.
+    if (!channels.isEmpty())
+    {
+        joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+    }
 
     return joinCommands;
 }
