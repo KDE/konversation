@@ -796,7 +796,7 @@ class Server : public QObject
         /// Used to lock incomingTimer while processing message.
         bool m_processingIncoming;
 
-        /// Meassures the lag between PING and PONG
+        /// Measures the lag between PING and PONG
         QTime m_lagTime;
         /// Updates the gui when the lag gets too high
         QTimer m_pingResponseTimer;
