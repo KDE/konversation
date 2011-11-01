@@ -486,7 +486,7 @@ Build system and dependencies:
   translations is now always present instead of being added manually to the
   tarball at release time, springing into action when the subdirectories
   containing the translation files are added to the source tree from KDE SVN,
-  or remaining otherwise.
+  or remaining dormant otherwise.
 * Konversation could crash during Diffie-Hellman key exchange or Blowfish
   encryption/decryption if the system's installation of the Qt Cryptographic
   Infrastructure (QCA) does not have the required features available (usually
