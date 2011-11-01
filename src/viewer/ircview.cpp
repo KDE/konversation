@@ -2038,7 +2038,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
         {
             // The QUrl magic is what QTextBrowser's anchorClicked() does internally;
             // we copy it here for consistent behavior between left and middle clicks.
-            openLink(QUrl::fromEncoded(m_urlToCopy.toUtf8()));
+            openLink(QUrl::fromEncoded(m_urlToCopy.toUtf8())); // krazy:exclude=qclasses
             return;
         }
         else
