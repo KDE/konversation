@@ -220,8 +220,8 @@ Text views:
     previous versions.
   - Average speed of link detection has improved slightly.
 * Added support for dragging web and email address links found in topic areas.
-* IRC formatting markup (colors, bold, italic, etc.) support in chat text
-  views and the topic editor has been improved significantly:
+* IRC formatting markup (colors, bold, italic, etc.) support in chat text views
+  and the topic editor has been improved significantly:
   - Background colors are now supported.
   - The reverse color formatting character is now supported.
   - To emphasize usability, links are now consistently displayed using the link
