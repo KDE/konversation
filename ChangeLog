@@ -1,78 +1,111 @@
-Changes since 1.3.1:
-* Fixed a bug causing pipe symbols to appear in the date/time stamp and next
-  to the nickname in backlog replay.
-* Added support for UnrealIRCd's 671 numeric.
-* Solid network up/down notifications are now ignored for connections to
-  localhost.
-* Resolved a conflict between the highlight system and the graphical emoticon
-  support that was causing unintended highlights when the filesystem path to
-  an emoticon image file shown in the chat text view matched any of the con-
-  figured highlights.
-* Got rid of some too large margins in the "Edit Network" dialog.
-* The "Rejoin Channel" context menu action, shown when a channel could not
-  be rejoined automatically on reconnect as well as after having been kicked
-  from a channel, will now appear above the "Close Tab" action rather than
-  at the end of the context menu, so "Close Tab" is always the last item.
-* Added a 'Restart' action and a '--restart' command line argument that quit
-  and restart Konversation. Notes: If not already running, the command line
-  argument has no effect; startup will occur normally. Also, the preservation
-  of command line arguments across restarts is only supported on KDE Platform
-  4.6 Alpha 1 and higher, as a required library feature is only available as
-  of that version.
-* Added a '--startupdelay <msec>' command line argument that causes the app
-  to sleep for the specified amount of milliseconds early during the startup
-  process, delaying D-Bus activity and UI creation.
-* Added an optional '-showpath' parameter to the '/exec' command that shows
-  the path at which the given script file was found in the chat text view,
-  i.e. '/exec -showpath media'.
-* Fixed a bug causing a connection failure to reset the lag meter in the
-  status bar to "Unknown" even when the active tab is not related to the
-  connection that failed.
-* Commands that accept parameters in the form "-foo" will now also under-
-  stand "--foo".
-* The syntax for the '/cycle' command is now '/CYCLE [-APP | -SERVER]
-  [channel | nickname]'. Whereas '/cycle' previously only allowed you to
-  cycle a channel from the input line of that same channel, you can now
-  specify the target explicitly. '-app' will restart Konversation (as with
-  the new 'Restart' action mentioned above, preservation of the command line
-  arguments the app was started with requires KDE Platform 4.6 Alpha 1 or
-  higher to work) and '--server' will close all tabs belonging to the current
-  connection and then create a new connection with the same settings as the
-  old one (plus it will attempt to rejoin all previously open channels). Both
-  are new abilities for the command. A '/cycle' without parameters issued in
-  server, channel and query tabs is equivalent to specifying '-server' or the
-  current channel or query, respectively -- the ability to cycle a query is
-  also new.
-* Fixed a bug causing the chat text notification messages originating in
-  the Watched Nicknames Online system to be logged in HTML format (and
-  thus HTML source to be displayed e.g. in backlog replay).
-* Fixed a (harmless) bug causing unnecessary trailing "." placeholder channel
-  key segments to be added to the raw format auto-join command (or to the
-  last of multiple such auto-join commands when the amount of auto-join
-  channels requires multiple commands to be generated).
-* Added support for ircs:// URLs, the 's' standing for 'SSL'. It is supported
-  both for opening and for bookmarking. If an ircs:// URL matches a server
-  configured in the server list or refers to a network name instead of a
-  specific server, the directive from the URL overrides the state of the SSL
-  setting in the configuration.
-* The URL Catcher has been rewritten from scratch, bringing about a number
-  of improvements and bug fixes:
+Changes in 1.4-beta1:
+Konversation v1.4-beta1 is the first pre-release leading up to our next major
+release. A dominant theme in this release cycle have been improvements and
+feature editions to the user interface, particularly to text views, dialogs,
+menus and input line commands. However, as you might expect given the amount of
+time since the last release (sorry about that :-), improvements are to be found
+in nearly all areas of the application, including connection behavior, IRC
+protocol handling, scripting support, and more. Please have a look at the
+changelog for a short summary of the major highlights, as well as the usual
+extensive coverage of the details.
+
+A brief selection of highlights:
+* URL and email detection in text views has been rewritten from scratch, greatly
+  improving the handling of various types of URLs and the contexts they might
+  appear in.
+* Extensive improvements to IRC formatting code handling, including the return
+  of background color support.
+* Extensive, sometimes full rewrites of user interface elements such as nearly
+  all context menus, the URL Catcher and the Warning Dialogs system for a long
+  list of user interface improvements and bug fixes.
+* Improved SSL connection behavior.
+* Translation support and various other improvements in several bundled scripts.
+* Expanded Python scripting support via the introduction of an API support
+  package.
+* Support for more IRC numerics.
+* Various bugfixes to input line command handling and connection behavior.
+
+General User interface (more UI changes in individual sections below):
+* The code handling the context menus of chat text views (including the context
+  menus for nicks and channel links), channel nickname list views and topic
+  areas has been rewritten from scratch, resulting in a long list of bug fixes
+  and consistency and efficiency improvements:
+  - Numerous consistency problems in the area of which actions are available in
+    which context menus have been addressed. For example, the chat text nick
+    context menu used to lack many of the actions available in the nickname list
+    context menu.
+  - Numerous actions that require an established connection (e.g. everything in
+    the "Modes" submenu of nick context menus or the DCC actions) used to not
+    get disabled when loss of connection occured. Others did get disabled, but
+    not consistently in all menus in which they are available. Still others,
+    such as the "Add to Watched Nicks" action, used to get disabled
+    unnecessarily. All of this has been addressed.
+  - Toggle actions used to appear and behave inconsistently: The nickname list
+    context menu showed either "Ignore" or "Unignore" actions as applicable,
+    while the chat text view nick context menu used a checkable item. Meanwhile,
+    the "Add to Watched Nicknames" action had no corresponding action to remove
+    a nick from the Watched Nicks Online list at all. All of this has been
+    fixed, going with the "Ignore"/"Unignore" style of the nickname list context
+    menu (i.e. there's now a "Remove from Watched Nicks").
+  - If built against Qt 4.7, the topic area now uses the same context menus as
+    the chat text view (with the exception of the inappropriate "Find Text.."
+    action in the basic context menu), enabling a lot of functionality missing
+    otherwise.
+  - Some actions used to be shown in menus inappropriately, e.g. the "Channel
+    Settings" action in the chat text view context menu of a connection status
+    tab or the "Open Logfile" action in the same context menu of a raw log tab.
+    This has been addressed.
+  - The behavior of many of the actions is now more consistent with their input
+    line equivalents. For example, clicking "Join Channel" in a link to an
+    already-joined channel will now focus the existing channel tab, the same as
+    the /join command would do. Previously, nothing would happen.
+  - Fixed a bug causing the nick and channel link context menus in the chat text
+    view of a channel tab to get disabled after having been kicked from the
+    channel.
+  - Fixed a bug causing the "Send Email..." action to always be disabled, even
+    when any of the associated address book entries did have an email address on
+    file.
+  - The display of helpful titles repeating the nick/channel at the top of the
+    chat text view nick and channel link context menus has been fixed - it
+    previously got broken in the KDE 4 port.
+  - The nick and channel link context menus now mark the action that occurs when
+    clicking either as the default action of the context menu, improving the
+    appearance with UI styles that visually distinguish the default action.
+  - General improvements to the layout of menus, often with an aim for improved
+    consistency with other KDE applications.
+  - Numerous actions that were missing icons now have them.
+  - The consistency of keyboard accelerators between the various menus has been
+    improved.
+  - Various actions in the nickname list context menu now appropriately use a
+    singular or plural form for their text label depending on the number of
+    selected nicks the menu operates on.
+  - Improved memory efficiency by using single global instances of the various
+    menus, rather than for example having two separate instances of the nick
+    context menu - one for the chat text view, one for the nickname list view -
+    for every channel tab.
+  - The code implementing the various actions was in many cases redundantly
+    implemented in three different places, for some even in four. This
+    staggering code duplication has been done away with.
+  - Links now have an "Open With..." action that opens a dialog allowing to
+    choose in which application to open the link.
+* The URL Catcher has been rewritten from scratch, bringing about a number of
+  improvements and bug fixes:
   - It is now possible to select multiple list entries, and all of the
-    selection-related actions, such as "Open" or "Add Bookmark", can now
-    operate on multiple selected entries ("Add Bookmark" will offer to
-    add all selected entries as a new bookmark folder, for example).
-  - Reasonable default sorting: The list is now sorted by the "Date" column
-    in descending order the first time the URL Catcher is opened, so that
-    the newest URLs are found at the top. Previously, the list was sorted by
-    the "From" column in ascending order by default.
-  - The list data is no longer stored in memory twice while the URL Catcher
-    is open. Data handling is generally more efficient.
+    selection-related actions, such as "Open" or "Add Bookmark", can now operate
+    on multiple selected entries ("Add Bookmark" will offer to add all selected
+    entries as a new bookmark folder, for example).
+  - Reasonable default sorting: The list is now sorted by the "Date" column in
+    descending order the first time the URL Catcher is opened, so that the
+    newest URLs are found at the top. Previously, the list was sorted by the
+    "From" column in ascending order by default.
+  - The list data is no longer stored in memory twice while the URL Catcher is
+    open. Data handling is generally more efficient.
   - The list entry context menu has been cleaned up, now showing only the
     actions applicable to individual entries.
-  - The list now automatically receives keyboard focus when switching to the
-    URL Catcher tab.
-  - When saving the list to disk, the file dialog to pick the destination
-    file will now ask before overwriting an existing file of the same name.
+  - The list now automatically receives keyboard focus when switching to the URL
+    Catcher tab.
+  - When saving the list to disk, the file dialog to pick the destination file
+    will now ask before overwriting an existing file of the same name.
   - The date and time in the header of a saved list file is now formatted
     according to the user's locale settings.
   - Fixed a bug causing the opening of caught irc:// and ircs:// URLs not to
@@ -80,359 +113,380 @@ Changes since 1.3.1:
   - Fixed a bug causing the "Date" column to sort alphabetically rather than
     chronologically.
   - Fixed a bug causing the deletion of list entries not to work.
-  - Fixed a bug causing a 1px remnant of tree branch lines to be visible
-    along the left edge of list entries.
-  - An unnecessary margin around the toolbar and the search line edit has
-    been removed.
-  - Fixed a bug causing the URL Catcher tab to claim to be eligible to re-
-    ceive chat text messages that have the frontmost eligible tab as their
-    recipient despite it not actually possessing the means to display them,
-    resulting in a crash when such a message occurred.
+  - Fixed a bug causing a 1px remnant of tree branch lines to be visible along
+    the left edge of list entries.
+  - An unnecessary margin around the toolbar and the search line edit has been
+    removed.
+  - Fixed a bug causing the URL Catcher tab to claim to be eligible to receive
+    chat text messages that have the frontmost eligible tab as their recipient
+    despite it not actually possessing the means to display them, resulting in a
+    crash when such a message occurred.
+* The Warning Dialogs system has been overhauled, with improved wording in the
+  listing in the configuration dialog (which now also contains the previously
+  missing warning when minimizing to the system tray) and further improvements
+  to individual warning dialogs, such as the addition of previously missing
+  Cancel buttons.
+* Added a "Show/Hide Konversation" action that can be used to toggle the
+  minimized state of the Konversation window or, if the tray icon is enabled,
+  its visibility. Additionally, the window will always be moved to the current
+  virtual desktop if shown using this action (if the window is already shown on
+  another desktop, it will be moved to the current desktop rather than hidden).
+* It's now possible to give the "Next Active Tab" shortcut a global keyboard
+  shortcut, and when triggered the action will always show, raise and focus the
+  Konversation window (as needed), regardless of whether it will also perform a
+  tab switch. This allows "Next Active Tab" to double as a "get me the
+  Konversation window and the tab that just caused my notifications to go off"
+  global shortcut.
+* Clicking the Insert button in the "Insert Character" dialog will no longer
+  immediately close the dialog, making it easier to insert multiple characters
+  in quick succession.
+* Double-clicking a character in the "Insert Character" dialog will now insert
+  it into the input line.
+* The "Insert Character" dialog now sports a search line.
 * The widths of the columns and the sort column and direction in the Channel
   Option dialog's ban list are now remembered across application restarts.
+* The "Rejoin Channel" context menu action, shown when a channel could not be
+  rejoined automatically on reconnect as well as after having been kicked from a
+  channel, will now appear above the "Close Tab" action rather than at the end
+  of the context menu, so "Close Tab" is always the last item.
 * The "Ok" button in the "Edit Multiline Paste" editor has been renamed to
   "Send" to communicate more clearly that clicking it will send the editor
   contents to the server.
-* Fixed a bug causing some user hostmasks in chat text lines about channel
-  topic author information to be treated as email addresses and thus turned
-  into clickable links. They would also pollute the URL Catcher.
+* Formatting control codes (e.g. for colors) in user real names are now filtered
+  out before the names are shown in the nickname list when the "Show real names
+  in nickname list" option is enabled.
+* The layout of user information tooltips (shown e.g. when hovering a nick in
+  the nickname list or the header area of a query tab) has been improved
+  slightly.
+* Fixed bugs causing the tooltip for the adjacent rather than the hovered item
+  to be shown when hovering the mouse pointer near the upper or lower edges of
+  an item in the nickname list or the listview version of the tab bar (tooltips
+  are only shown on the latter when the listview is too narrow to fit its
+  contents, to provide the unelided tab names).
+* Fixed bug causing the IRC Color Chooser dialog to only show 15 colors instead
+  of the available 16.
+* Fixed a bug causing a very wide minimum window width when a query tab with
+  very long user information in the header area was open.
+* Fixed bug causing the opening of URLs via the "Open URL" sub-menu in the list
+  entry context menu in Channel List tabs not to work.
+* Fixed a bug causing actions that are meant to operate on the active tab (e.g.
+  "Close Tab" invoked by the default shortcut Ctrl+W) to operate on a different
+  tab after the "Join on Connect" action in that tab's context menu had been
+  used.
+* Fixed a bug causing the state of the Show/Hide Menubar action not to be
+  updated correctly when hiding the menubar was canceled from the warning
+  dialog.
+* Fixed a bug causing the "Delete" button in the "Server List" dialog to
+  incorrectly show a "Network needs to have at least one server." error dialog
+  when trying to delete servers, even when the deletion would in fact leave the
+  network with one or more servers.
+* Fixed a bug causing the active tab's text label not to be greyed out when its
+  IRC server connection is cut.
+* Got rid of some too large margins in the "Edit Network" dialog.
+
+Text views:
+* Added support for KDE Web Shortcuts when built against KDE Platform 4.5 or
+  higher: The context menu for selected text in a chat text view then offers a
+  submenu by which the selected text can be used in a web search with any of the
+  enabled search providers. The resulting search URL is opened in the system's
+  default wen browser after clicking on the search provider in the submenu.
+* Added support for ircs:// URLs, the 's' standing for 'SSL'. It is supported
+  both for opening and for bookmarking. If an ircs:// URL matches a server
+  configured in the server list or refers to a network name instead of a
+  specific server, the directive from the URL overrides the state of the SSL
+  setting in the configuration.
 * Detection of URLs and email addresses in chat text views to turn them into
   clickable links has been much improved. An incomplete overview of notable
   cases:
-  - Unicode characters in URLs are now handled properly, enabling support
-    for example for international domain names.
-  - Protocol-less links not starting in "www.", such as the short URLs pop-
-    ular these days ("bit.ly/foo" and similar), are now recognized.
+  - Unicode characters in URLs are now handled properly, enabling support for
+    example for international domain names.
+  - Protocol-less links not starting in "www.", such as the short URLs popular
+    these days ("bit.ly/foo" and similar), are now recognized.
   - Arbitrary protocols (e.g. "http://" or "message://") are now recognized;
     previously only a small hand-picked and insufficient set was.
-  - The check that avoids balanced a pair of parentheses around an URL be-
-    coming part of the link now works for more than one level of balanced
-    parentheses.
-  - Aside from balanced pairs of parentheses, also square and other forms
-    of brackets are now handled properly.
+  - The check that avoids balanced a pair of parentheses around an URL becoming
+    part of the link now works for more than one level of balanced parentheses.
+  - Aside from balanced pairs of parentheses, also square and other forms of
+    brackets are now handled properly.
   - Trailing question marks no longer become part of the link.
-  - URLs using uncommon schemas, e.g. Apple message:// URLs or Wolfram
-    Alpha URLs, are now handled properly.
-  - Numerous improvements to email link handling: User names containing the
-    plus sign are now handled correctly, opening email links from the URL
-    Catcher works now and others.
-  - The URL detection for the "Open URL" sub-menu in the list entry context
-    menu in Channel List tabs now uses the same infrastructure as link detec-
-    tion elsewhere rather than separate code, making it massively better com-
-    pared to previous versions.
+  - URLs using uncommon schemas, e.g. Apple message:// URLs or Wolfram Alpha
+    URLs, are now handled properly.
+  - Numerous improvements to email link handling: User names containing the plus
+    sign are now handled correctly, opening email links from the URL Catcher
+    works now and others.
+  - The URL detection for the "Open URL" sub-menu in the list entry context menu
+    in Channel List tabs now uses the same infrastructure as link detection
+    elsewhere rather than separate code, making it massively better compared to
+    previous versions.
   - Average speed of link detection has improved slightly.
-* Incoming actions (i.e. "/me") without an argument are now handled properly.
-* Fixed a number of crashes on illegal data from the server.
-* Added a "Show/Hide Konversation" action that can be used to toggle the
-  minimized state of the Konversation window or, if the tray icon is enabled,
-  its visibility. Additionally, the window will always be moved to the
-  current virtual desktop if shown using this action (if the window is
-  already shown on another desktop, it will be moved to the current desktop
-  rather than hidden).
-* Fixed a bug causing a very wide minimum window width when a query tab with
-  very long user information in the header area was open.
-* Formatting control codes (e.g. for colors) in user real names are now fil-
-  tered out before the names are shown in the nickname list when the "Show
-  real names in nickname list" option is enabled.
-* The layout of user information tooltips (shown e.g. when hovering a nick
-  in the nickname list or the header area of a query tab) has been improved
-  slightly.
-* Fixed bug causing the opening of URLs via the "Open URL" sub-menu in the
-  list entry context menu in Channel List tabs not to work.
-* Added a Color Picker tool to DCC WHITEBOARD, to select a color from the
-  image.
-* Added support for KDE Web Shortcuts when built against KDE Platform 4.5
-  or higher: The context menu for selected text in a chat text view then
-  offers a submenu by which the selected text can be used in a web search
-  with any of the enabled search providers. The resulting search URL is
-  opened in the system's default wen browser after clicking on the search
-  provider in the submenu.
-* A better version of the information dialog for DCC file transfers is
-  shown when Konversation is built against KDE Platform 4.5 or higher.
-* Fixed a bug causing newly-added DCC file transfers to the list in the DCC
-  Status tab not to be sorted when using Qt 4.7.
-* Fixed bug causing the IRC Color Chooser dialog to only show 15 colors in-
-  stead of the available 16.
+* Added support for dragging web and email address links found in topic areas.
 * IRC formatting markup (colors, bold, italic, etc.) support in chat text
   views and the topic editor has been improved significantly:
   - Background colors are now supported.
   - The reverse color formatting character is now supported.
-  - To emphasize usability, links are now consistently displayed using the
-    link and background colors from the configuration dialog, regardless
-    of preceding formatting markup or formatting markup located within the
-    link.
+  - To emphasize usability, links are now consistently displayed using the link
+    and background colors from the configuration dialog, regardless of preceding
+    formatting markup or formatting markup located within the link.
   - Formatting markup located within links in incoming messages no longer
     results in those links being broken.
-  - Fixed bugs resulting in incorrect display of messages containing mul-
-    tiple formatting characters.
+  - Fixed bugs resulting in incorrect display of messages containing multiple
+    formatting characters.
   - Improved robustness in the face of invalid color codes.
-  - Formatting markup in the topic editor's topic history listing is now
-    shown in the human-readable format that is also used for entry, making
-    it much easier to derive a new topic from an old one that contains for-
-    matting markup.
+  - Formatting markup in the topic editor's topic history listing is now shown
+    in the human-readable format that is also used for entry, making it much
+    easier to derive a new topic from an old one that contains formatting
+    markup.
   - Fixed a bug causing '/topic <channel>' to display the topic of <channel>
     with formatting markup stripped.
-* Fixed bugs causing the automatic user information lookup, the periodic
-  WHO-on-self and the periodic PING for a given connection not to be sus-
-  pended properly after a disconnect, causing unnecessary wakeups and the
-  potential for these messages to be sent at inappropriate times in the
-  early phase of a reconnection attempt.
-* Fixed a regression that could cause an endless loop of reconnection
-  attempts when issuing a reconnect order to an established connection
-  and the time needed to establish the new connection was longer than the
-  configured reconnection delay. It would also cause confusing status mes-
-  sages to be shown in the connection status tab.
-* Fixed a bug that could cause the "Server found" message to be shown in
-  the connection status tab before the "Looking for server" message if the
-  DNS response was already cached.
-* Added support for the 475 numeric (ERR_BADCHANNELKEY).
-* Rewrote chat text view wallpaper image support to avoid rendering pro-
-  blems some users were experiencing.
-* The code handling the context menus of chat text views (including the con-
-  text menus for nicks and channel links), channel nickname list views and
-  topic areas has been rewritten from scratch, resulting in a long list of
-  bug fixes and consistency and efficiency improvements:
-  - Numerous consistency problems in the area of which actions are avail-
-    able in which context menus have been addressed. For example, the chat
-    text nick context menu used to lack many of the actions available in
-    the nickname list context menu.
-  - Numerous actions that require an established connection (e.g. everything
-    in the "Modes" submenu of nick context menus or the DCC actions) used to
-    not get disabled when loss of connection occured. Others did get dis-
-    abled, but not consistently in all menus in which they are available.
-    Still others, such as the "Add to Watched Nicks" action, used to get
-    disabled unnecessarily. All of this has been addressed.
-  - Toggle actions used to appear and behave inconsistently: The nickname
-    list context menu showed either "Ignore" or "Unignore" actions as applic-
-    able, while the chat text view nick context menu used a checkable item.
-    Meanwhile, the "Add to Watched Nicknames" action had no corresponding
-    action to remove a nick from the Watched Nicks Online list at all. All
-    of this has been fixed, going with the "Ignore"/"Unignore" style of the
-    nickname list context menu (i.e. there's now a "Remove from Watched
-    Nicks").
-  - If built against Qt 4.7, the topic area now uses the same context menus
-    as the chat text view (with the exception of the inappropriate "Find
-    Text.." action in the basic context menu), enabling a lot of functiona-
-    lity missing otherwise.
-  - Some actions used to be shown in menus inappropriately, e.g. the "Chan-
-    nel Settings" action in the chat text view context menu of a connection
-    status tab or the "Open Logfile" action in the same context menu of a
-    raw log tab. This has been addressed.
-  - The behavior of many of the actions is now more consistent with their
-    input line equivalents. For example, clicking "Join Channel" in a link
-    to an already-joined channel will now focus the existing channel tab,
-    the same as the /join command would do. Previously, nothing would hap-
-    pen.
-  - Fixed a bug causing the nick and channel link context menus in the chat
-    text view of a channel tab to get disabled after having been kicked from
-    the channel.
-  - Fixed a bug causing the "Send Email..." action to always be disabled,
-    even when any of the associated address book entries did have an email
-    address on file.
-  - The display of helpful titles repeating the nick/channel at the top of
-    the chat text view nick and channel link context menus has been fixed -
-    it previously got broken in the KDE 4 port.
-  - The nick and channel link context menus now mark the action that occurs
-    when clicking either as the default action of the context menu, impro-
-    ving the appearance with UI styles that visually distinguish the default
-    action.
-  - General improvements to the layout of menus, often with an aim for
-    improved consistency with other KDE applications.
-  - Numerous actions that were missing icons now have them.
-  - The consistency of keyboard accelerators between the various menus has
-    been improved.
-  - Various actions in the nickname list context menu now appropriately use
-    a singular or plural form for their text label depending on the number
-    of selected nicks the menu operates on.
-  - Improved memory efficiency by using single global instances of the
-    various menus, rather than for example having two separate instances of
-    the nick context menu - one for the chat text view, one for the nickname
-    list view - for every channel tab.
-  - The code implementing the various actions was in many cases redundantly
-    implemented in three different places, for some even in four. This stag-
-    gering code duplication has been done away with.
-  - Links now have an "Open With..." action that opens a dialog allowing to
-    choose in which application to open the link.
-* Added support for the 482 numeric (ERR_CHANOPRIVSNEEDED).
+* Join/Part/Nick messages can now be selectively hidden based on whether the
+  nickname the message is about has been active in the respective channel in the
+  last 10 minutes, last hour, last day or last week. Previously it was all or
+  nothing.
+* Rewrote chat text view wallpaper image support to avoid rendering problems
+  some users were experiencing.
+* Fixed a bug causing some user hostmasks in chat text lines about channel topic
+  author information to be treated as email addresses and thus turned into
+  clickable links. They would also pollute the URL Catcher.
+* The code backing the marker and remember lines has been rewritten to work
+  around bugs in Qt that could cause crashes, especially when running
+  Konversation against Qt v4.7.4 or newer (see QTBUG-20916 for more).
+
+Input lines:
+* Added a "Focus Input Box" action that puts keyboard focus on the input box.
+  The default shortcut is the Escape key.
+* The '(away)' label shown next to input lines when away now has a context menu
+  with actions to change the away message or return from away state.
+* Pressing the Tab key when the cursor is at the start of the input box now
+  checks whether the remembered nickname is currently attending the channel
+  before repeating the last successful completion.
+
+Commands:
+* The syntax for the '/cycle' command is now '/CYCLE [-APP | -SERVER] [channel |
+  nickname]'. Whereas '/cycle' previously only allowed you to cycle a channel
+  from the input line of that same channel, you can now specify the target
+  explicitly. '-app' will restart Konversation (as with the new 'Restart' action
+  mentioned in the "Command line arguments" section, preservation of the command
+  line arguments the app was started with requires KDE Platform 4.6 Alpha 1 or
+  higher to work) and '--server' will close all tabs belonging to the current
+  connection and then create a new connection with the same settings as the old
+  one (plus it will attempt to rejoin all previously open channels). Both are
+  new abilities for the command. A '/cycle' without parameters issued in server,
+  channel and query tabs is equivalent to specifying '-server' or the current
+  channel or query, respectively -- the ability to cycle a query is also new.
+* The '/clear' command now supports a channel or query argument to clear, as
+  well as an an -all parameter to clear all views.
+* The '/notify' command now displays more useful output after adding and
+  removing and when summarizing Watched Nicks.
+* Fixed a bug causing adding of nicknames to the Watched Nicks Online list via
+  the '/notify' command to fail.
+* Added an optional '-showpath' parameter to the '/exec' command that shows the
+  path at which the given script file was found in the chat text view, i.e.
+  '/exec -showpath media'.
+* Commands that accept parameters in the form "-foo" will now also understand "
+  --foo".
+* The '/dns' command used to block the UI while trying to resolve the parameter
+  it was given, potentially causing an extended lock-up of the application when
+  the system has serious DNS trouble. This has been resolved; '/dns' is now
+  fully non-blocking.
+* Trying to use the '/me' command from a tab that doesn't support it will now
+  cause an appropriate error message to be displayed.
 * Fixed a bug causing the '/kickban' command not use the default kick reason
   from the Identity settings if no reason was explicitly specified.
-* Fixed build with KDE4_ENABLE_FINAL.
-* Raw log tabs (/raw) now use percent-recording to depict non-ASCII charac-
-  ters in raw traffic for much improved usefulness and reliability in the
-  multi-encoding world of IRC.
-* The Warning Dialogs system has been overhauled, with improved wording in
-  the listing in the configuration dialog (which now also contains the pre-
-  viously missing warning when minimizing to the system tray) and further
-  improvements to individual warning dialogs, such as the addition of pre-
-  viously missing Cancel buttons.
-* Fixed a bug that could cause the '/list' command to open the Channel List
-  tab for the wrong connection.
-* Fixed a bug causing '/list <search pattern>' to close an existing Channel
-  List tab (the intended behavior for a parameter-less '/list') rather than
-  update the active filter and refresh the list.
-* Fixed a bug causing actions that are meant to operate on the active tab
-  (e.g. "Close Tab" invoked by the default shortcut Ctrl+W) to operate on a
-  different tab after the "Join on Connect" action in that tab's context
-  menu had been used.
+* Fixed a bug that could cause the '/list' command to open the Channel List tab
+  for the wrong connection.
+* Fixed a bug causing '/list <search pattern>' to close an existing Channel List
+  tab (the intended behavior for a parameter-less '/list') rather than update
+  the active filter and refresh the list.
+
+Highlights and notifications:
+* Added a new "Chat Windows" field to the Highlight configuration to optionally
+  restrict the list of chat windows a given highlight event may be triggered in
+  to those named in the field, separated by comma or semicolon.
+* Resolved a conflict between the highlight system and the graphical emoticon
+  support that was causing unintended highlights when the filesystem path to an
+  emoticon image file shown in the chat text view matched any of the configured
+  highlights.
+* Fixed bugs in the highlight system caused by it mistakenly operating on the
+  HTML markup used internally by the chat text views rather than the original
+  text.
+
+Identities:
 * Added a "Default away reason" field to the "Away" tab in the Identities
-  dialog. The away reason entered there will be used when no away message
-  is entered manually as an argument to the '/away' or '/aaway' commands,
-  so for example when Global Away is enabled using the keyboard shortcut.
-* "Away Messages" on the "Away" tab of the Identities dialog has been re-
-  named to "Away Commands".
-* Pressing the Tab key when the cursor is at the start of the input box
-  now checks whether the remembered nickname is currently attending the
-  channel before repeating the last successful completion.
-* Added a "Focus Input Box" action that puts keyboard focus on the input
-  box. The default shortcut is the Escape key.
-* Trying to use the '/me' command from a tab that doesn't support it will
-  now cause an appropriate error message to be displayed.
-* Konversation now also registers itself for the irc:// and ircs:// proto-
-  cols using the way preferred by freedesktop.org's shared-mime technology
-  rather than just the KDE-specific way.
-* Fixed a bug causing the bookmark address to be unusable (it would lack
-  the network name) when bookmarking a tab and the name of the associated
-  network contains a space or certain other special characters.
-* Fixed a bug causing a change of the buffer size setting on a log reader
-  tab's toolbar not to immediately apply to new log reader tabs opened
-  thereafter. Instead the buffer size for new tabs would be the size set
-  on the toolbar of the last log reader tab that got closed, making it
-  easy to unintentionally undo a change depending on the order in which
-  log reader tabs were closed.
-* Numerous updates and cleanup in the handbook.
-* Fixed a bug causing the Help button in the Configure Konversation dialog
-  not to open the handbook.
-* Fixed a bug causing the state of the Show/Hide Menubar action not to be
-  updated correctly when hiding the menubar was cancelled from the warning
-  dialog.
-* Fixed bugs in the highlight system caused by it mistakenly operating on
-  the HTML markup used internally by the chat text views rather than the
-  original text.
-* Clicking the Insert button in the "Insert Character" dialog will no
-  longer immediately close the dialog, making it easier to insert multiple
-  characters in quick succession.
-* Double-clicking a character in the "Insert Character" dialog will now
-  insert it into the input line.
-* Various small code cleanups inspired by cppcheck.
-* Added support for dragging web and email address links found in topic
-  areas.
-* Join/Part/Nick messages can now be selectively hidden based on whether
-  the nickname the message is about has been active in the respective
-  channel in the last 10 minutes, last hour, last day or last week. Pre-
-  viously it was all or nothing.
-* The '(away)' label shown next to input lines when away now has a context
-  menu with actions to change the away message or return from away state.
-* The 'media' script now requires Python 2.6 or higher and is compatible
-  with Python 3.
-* Konversation now depends on KDE Platform 4.4.3 and Qt 4.6.0 or newer.
-* Added a new "Chat Windows" field to the Highlight configuration to
-  optionally restrict the list of chat windows a given highlight event
-  may be triggered in to those named in the field, separated by comma
-  or semicolon.
-* The 'cmd' script, used to run a shell command from within Konversation
-  and send the output to the server, has been rewritten from scratch to
-  provide the following improvements:
-  - Running a command that returns no output or only empty lines used to
-    result in an error claiming the command does not exist. Now an info
-    message is shown remarking that the command executed successfully but
-    did not return any output or only whitespace.
-  - The script now also works when called from a server status tab - the
-    command output will be shown to the user rather than sent to the
-    server in that case.
-  - The command's error output (stderr) used to be ignored; now it is
-    shown to the user in the active tab (but not sent to the server).
+  dialog. The away reason entered there will be used when no away message is
+  entered manually as an argument to the '/away' or '/aaway' commands, so for
+  example when Global Away is enabled using the keyboard shortcut.
+* "Away Messages" on the "Away" tab of the Identities dialog has been renamed to
+  "Away Commands".
+
+Watched Nicknames:
+* Fixed a bug causing the Watched Nicks Online system to fail to start checking
+  nickname online status for a network after adding an initial nick to its
+  Watched Nicks list via the context menu actions or the '/notify' command (it
+  worked fine via the WNO tab, however).
+
+Bookmarking:
+* Fixed a bug causing the bookmark address to be unusable (it would lack the
+  network name) when bookmarking a tab and the name of the associated network
+  contains a space or certain other special characters.
+
+Logging:
+* Fixed a bug causing pipe symbols to appear in the date/time stamp and next to
+  the nickname in backlog replay.
+* Fixed a bug causing the chat text notification messages originating in the
+  Watched Nicknames Online system to be logged in HTML format (and thus HTML
+  source to be displayed e.g. in backlog replay).
+* Fixed a bug causing a change of the buffer size setting on a log reader tab's
+  toolbar not to immediately apply to new log reader tabs opened thereafter.
+  Instead the buffer size for new tabs would be the size set on the toolbar of
+  the last log reader tab that got closed, making it easy to unintentionally
+  undo a change depending on the order in which log reader tabs were closed.
+
+DCC:
+* Added a Color Picker tool to DCC WHITEBOARD, to select a color from the image.
+* A better version of the information dialog for DCC file transfers is shown
+  when Konversation is built against KDE Platform 4.5 or higher.
+* Fixed a bug causing newly-added DCC file transfers to the list in the DCC
+  Status tab not to be sorted when using Qt 4.7.
+
+Connection behavior:
+* The auto-join on connect feature will now skip over any configured channels
+  that are invalid as per the IRC server's CHANTYPES rules when sending the join
+  command(s) to the server, making sure that all valid channels are joined even
+  on servers that stop parsing join commands on the first invalid channel.
+  Previously, all configured channels were sent.
+* Fixed a bug causing a channel the tab of which was closed while a connection
+  was in disconnected mode to be rejoined upon reconnect.
+* Fixed a (harmless) bug causing unnecessary trailing "." placeholder channel
+  key segments to be added to the raw format auto-join command (or to the last
+  of multiple such auto-join commands when the amount of auto-join channels
+  requires multiple commands to be generated).
+* Fixed a regression that could cause an endless loop of reconnection attempts
+  when issuing a reconnect order to an established connection and the time
+  needed to establish the new connection was longer than the configured
+  reconnection delay. It would also cause confusing status messages to be shown
+  in the connection status tab.
+* Cancelling the dialog asking how to deal with SSL errors upon connecting is
+  now treated as a deliberate disconnect on part of the user, i.e. Konversation
+  will no longer try to automatically reconnect.
+* A disconnect while waiting for user response to an SSL error dialog will no
+  longer result in an automatic reconnection attempt. Instead, Konversation will
+  wait for the outcome of the user interaction: If the user decides to ignore
+  the SSL errors that have occurred, a reconnect will be initiated, otherwise
+  the connection will remain disconnected.
+* Fixed a bug causing a crash when the user chose to accept an invalid
+  certificate in the SSL error dialog when the connection had timed out in the
+  meantime.
+* Fixed a bug causing the quit message to not always be supplied successfully to
+  the server when disconnecting.
+* Fixed a bug that could cause the "Server found" message to be shown in the
+  connection status tab before the "Looking for server" message if the DNS
+  response was already cached.
+* Fixed bugs causing the automatic user information lookup, the periodic WHO-on-
+  self and the periodic PING for a given connection not to be suspended properly
+  after a disconnect, causing unnecessary wakeups and the potential for these
+  messages to be sent at inappropriate times in the early phase of a
+  reconnection attempt.
+* Fixed a bug causing a connection failure to reset the lag meter in the status
+  bar to "Unknown" even when the active tab is not related to the connection
+  that failed.
+* Solid network up/down notifications are now ignored for connections to
+  localhost.
+
+Scripting and bundled scripts:
+* The 'cmd' script, used to run a shell command from within Konversation and
+  send the output to the server, has been rewritten from scratch to provide the
+  following improvements:
+  - Running a command that returns no output or only empty lines used to result
+    in an error claiming the command does not exist. Now an info message is
+    shown remarking that the command executed successfully but did not return
+    any output or only whitespace.
+  - The script now also works when called from a server status tab - the command
+    output will be shown to the user rather than sent to the server in that
+    case.
+  - The command's error output (stderr) used to be ignored; now it is shown to
+    the user in the active tab (but not sent to the server).
   - Trailing whitespace is now stripped from command output.
   - Output lines containing only whitespace are no longer forwarded to
-    Konversation. As an aside, this also implicitly fixes a bug the old
-    script used to suffer from that caused it to generate faulty D-Bus
-    calls when trying to forward empty output lines.
-* Konversation could crash during Diffie-Hellman key exchange or Blowfish
-  encryption/decryption if the system's installation of the Qt Crypto-
-  graphic Infrastructure (QCA) does not have the required features avail-
-  able (usually because the qca-ossl provider plugin is not installed). It
-  will now fail gracefully instead and show helpful error messages in the
-  active tab.
-* The '/dns' command used to block the UI while trying to resolve the para-
-  meter it was given, potentially causing an extended lock-up of the appli-
-  cation when the system has serious DNS trouble. This has been resolved;
-  '/dns' is now fully non-blocking.
+    Konversation. As an aside, this also implicitly fixes a bug the old script
+    used to suffer from that caused it to generate faulty D-Bus calls when
+    trying to forward empty output lines.
+* The bundled 'sysinfo' script now handles the way 'mount' reports bind mounts
+  on certain newer Linux distributions by collapsing the repeated mentions of
+  the same volume before calculating the disk space information.
 * Scripts executed by Konversation can now access Konversation's current UI
   locale in the KONVERSATION_LANG environment variable.
 * Konversation now installs an experimental Python scripting support package
-  named 'konversation' into a subdirectory of its application data directory
-  and appends all 'konversation/scripting_support/python' directories found
-  in any KDE application data resource directories (i.e. within $KDEHOME,
-  $KDEDIRS, etc.) to the PYTHONPATH environment variable available in the
-  script execution context, thereby allowing Python scripts executed by
-  Konversation to import the package. The package currently sports modules
-  providing APIs for i18n support and D-Bus communication with Konversation.
+  named 'konversation' into a subdirectory of its application data directory and
+  appends all 'konversation/scripting_support/python' directories found in any
+  KDE application data resource directories (i.e. within $KDEHOME, $KDEDIRS,
+  etc.) to the PYTHONPATH environment variable available in the script execution
+  context, thereby allowing Python scripts executed by Konversation to import
+  the package. The package currently sports modules providing APIs for i18n
+  support and D-Bus communication with Konversation.
 * User-facing information and error message strings in the bundled 'cmd' and
   'media' scripts now finally enjoy translation support, making use of the
   experimental new Python scripting support package described above.
-* Fixed a bug causing adding of nicknames to the Watched Nicks Online list
-  via the '/notify' command to fail.
-* The '/notify' command now displays more useful output after adding and
-  removing and when summarizing Watched Nicks.
-* Fixed a bug causing the quit message to not always be supplied success-
-  fully to the server when disconnecting.
-* Fixed a bug causing the Watched Nicks Online system to fail to start
-  checking nickname online status for a network after adding an initial
-  nick to its Watched Nicks list via the context menu actions or the
-  '/notify' command (it worked fine via the WNO tab, however).
-* The "Insert Character" dialog now sports a search line.
-* It's now possible to give the "Next Active Tab" shortcut a global key-
-  board shortcut, and when triggered the action will always show, raise and
-  focus the Konversation window (as needed), regardless of whether it will
-  also perform a tab switch. This allows "Next Active Tab" to double as a
-  "get me the Konversation window and the tab that just caused my notifica-
-  tions to go off" global shortcut.
-* Fixed bugs causing the tooltip for the adjacent rather than the hovered
-  item to be shown when hovering the mouse pointer near the upper or lower
-  edges of an item in the nickname list or the listview version of the tab
-  bar (tooltips are only shown on the latter when the listview is too
-  narrow to fit its contents, to provide the unelided tab names).
-* ERR_UNAVAILRESOURCE (numeric 437) is now treated like ERR_NICKNAMEINUSE
-  (numeric 433) during early connection negotiation: The next nickname in
-  the identity's nickname list is tried, or the user asked for a new one
-  if necessary. Previously Konversation would just idle in this situation
-  and allow the connection attempt to time out.
-* Fixed a bug causing the "Delete" button in the "Server List" dialog to
-  incorrectly show a "Network needs to have at least one server." error
-  dialog when trying to delete servers, even when the deletion would in
-  fact leave the network with one or more servers.
-* Fixed a bug causing the active tab's text label not to be greyed out when
-  its IRC server connection is cut.
-* The '/clear' command now supports a channel or query argument to clear,
-  as well as an an -all parameter to clear all views.
-* Fixed the tray icon always being in 'active' mode (and thus conflicting
-  with the Plasma desktop tray's auto-hide behavior) when using the new
-  (and, in this release, only supported) system tray protocol.
-* Fixed a bug causing a channel the tab of which was closed while a connec-
-  tion was in disconnected mode to be rejoined upon reconnect.
-* The code backing the marker and remember lines has been rewritten to work
-  around bugs in Qt that could cause crashes, especially when running Konver-
-  sation against Qt v4.7.4 or newer (see QTBUG-20916 for more).
-* A D-Bus method call to retrieve the list of channels a particular connect-
-  ion is currently attending has been added.
-* The bundled 'sysinfo' script now handles the way 'mount' reports bind
-  mounts on certain newer Linux distributions by collapsing the repeated
-  mentions of the same volume before calculating the disk space information.
-* Cancelling the dialog asking how to deal with SSL errors upon connecting
-  is now treated as a deliberate disconnect on part of the user, i.e. Kon-
-  versation will no longer try to automatically reconnect.
-* A disconnect while waiting for user response to an SSL error dialog will
-  no longer result in an automatic reconnection attempt. Instead, Konversa-
-  tion will wait for the outcome of the user interaction: If the user deci-
-  des to ignore the SSL errors that have occurred, a reconnect will be ini-
-  tiated, otherwise the connection will remain disconnected.
-* Fixed a bug causing a crash when the user chose to accept an invaid cer-
-  tificate in the SSL error dialog when the connection had timed out in the
-  meantime.
-* The auto-join on connect feature will now skip over any configured
-  channels that are invalid as per the IRC server's CHANTYPES rules when
-  sending the join command(s) to the server, making sure that all valid
-  channels are joined even on servers that stop parsing join commands on
-  the first invalid channel. Previously, all configured channels were sent.
+* The 'media' script now requires Python 2.6 or higher and is compatible with
+  Python 3.
+
+IRC Protocol:
+* Added support for the 475 numeric (ERR_BADCHANNELKEY).
+* Added support for the 482 numeric (ERR_CHANOPRIVSNEEDED).
+* Added support for UnrealIRCd's 671 numeric.
+* Incoming actions (i.e. "/me") without an argument are now handled properly.
+* Fixed a number of crashes on illegal data from the server.
+* Raw log tabs (/raw) now use percent-recording to depict non-ASCII characters
+  in raw traffic for much improved usefulness and reliability in the multi-
+  encoding world of IRC.
+* Numeric 437 (ERR_UNAVAILRESOURCE) is now treated like numeric 433
+  (ERR_NICKNAMEINUSE) during early connection negotiation: The next nickname in
+  the identity's nickname list is tried, or the user asked for a new one if
+  necessary. Previously Konversation would just idle in this situation and allow
+  the connection attempt to time out.
+
+Command line arguments:
+* Added '--restart' command line argument and a 'Restart' action that quits and
+  restart Konversation. Notes: If not already running, the command line argument
+  has no effect; startup will occur normally. Also, the preservation of command
+  line arguments across restarts is only supported on KDE Platform 4.6 Alpha 1
+  and higher, as a required library feature is only available as of that
+  version.
+* Added a '--startupdelay <msec>' command line argument that causes the app to
+  sleep for the specified amount of milliseconds early during the startup
+  process, delaying D-Bus activity and UI creation.
+
+System integration:
+* Konversation now also registers itself for the irc:// and ircs:// protocols
+  using the way preferred by freedesktop.org's shared-mime technology rather
+  than just the KDE-specific way.
+* Fixed the tray icon always being in 'active' mode (and thus conflicting with
+  the Plasma desktop tray's auto-hide behavior) when using the new (and, in this
+  release, only supported) system tray protocol.
+
+D-Bus interface:
+* A D-Bus method call to retrieve the list of channels a particular connection
+  is currently attending has been added.
+
+Documentation:
+* Numerous updates and cleanup in the handbook.
+* Fixed a bug causing the Help button in the Configure Konversation dialog not
+  to open the handbook.
+
+Misc:
+* Various small code cleanups inspired by cppcheck.
+
+Build system and dependencies:
+* Konversation now depends on KDE Platform v4.4.3 or higher and Qt v4.6.0 or
+  higher.
+* A Python installation is a recommended dependency due to optional but highly
+  popular bundled scripts and an experimental Python scripting support package
+  mentioned above.
+* Fixed build with KDE4_ENABLE_FINAL.
+* Konversation could crash during Diffie-Hellman key exchange or Blowfish
+  encryption/decryption if the system's installation of the Qt Cryptographic
+  Infrastructure (QCA) does not have the required features available (usually
+  because the qca-ossl provider plugin is not installed). It will now fail
+  gracefully instead and show helpful error messages in the active tab.
 
 
 Changes from 1.3 to 1.3.1:
