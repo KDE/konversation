@@ -15,6 +15,7 @@
 #include "server.h"
 #include "replycodes.h"
 #include "application.h"
+#include "commit.h"
 #include "version.h"
 #include "query.h"
 #include "channel.h"
