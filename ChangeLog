@@ -1,7 +1,7 @@
 Changes from 1.3.1 to 1.4-beta1:
 Konversation v1.4-beta1 is the first pre-release leading up to our next major
 release. A dominant theme in this release cycle have been improvements and
-feature editions to the user interface, particularly to text views, dialogs,
+feature additions to the user interface, particularly to text views, dialogs,
 menus and input line commands. However, as you might expect given the amount of
 time since the last release (sorry about that :-), improvements are to be found
 in nearly all areas of the application, including connection behavior, IRC
