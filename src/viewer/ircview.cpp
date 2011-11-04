@@ -291,7 +291,9 @@ struct Burr: public QTextBlockUserData
 
     ~Burr()
     {
+#if KDE_IS_VERSION(4,6,0)
         KDebug::Block myBlock(qPrintable(QString::number((ulong)(this), 16)));
+#endif
 
         kDebug() << "~Burr" << (void*)this << _S(m_format) << _S(m_block.blockNumber()) << "deleted";
         m_owner->blockDeleted(this);
