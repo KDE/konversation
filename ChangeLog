@@ -52,7 +52,7 @@ General User interface (more UI changes in individual sections below):
     context menu.
   - Numerous actions that require an established connection (e.g. everything in
     the "Modes" submenu of nick context menus or the DCC actions) used to not
-    get disabled when loss of connection occured. Others did get disabled, but
+    get disabled when loss of connection occurred. Others did get disabled, but
     not consistently in all menus in which they are available. Still others,
     such as the "Add to Watched Nicks" action, used to get disabled
     unnecessarily. All of this has been addressed.
