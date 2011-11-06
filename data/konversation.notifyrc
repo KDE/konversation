@@ -268,6 +268,7 @@ Name[sv]=Markering orsakad
 Name[tr]=Vurgulama yapıldı
 Name[uk]=Увімкнено підсвічування
 Name[x-test]=xxHighlight triggeredxx
+Name[zh_CN]=触发高亮
 Name[zh_TW]=觸發突顯
 Comment=Someone triggered a highlight
 Comment[ast]=Daquién desencadenó un resaltáu
@@ -305,6 +306,7 @@ Comment[sv]=Någon orsakade en markering
 Comment[tr]=Birisi bir vurgulama yaptı
 Comment[uk]=Хтось увімкнув підсвічування
 Comment[x-test]=xxSomeone triggered a highlightxx
+Comment[zh_CN]=有人触发了高亮
 Comment[zh_TW]=某人觸發了突顯
 Action=None
 
