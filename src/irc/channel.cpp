@@ -1430,15 +1430,9 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
     bool fromMe = false;
     bool toMe = false;
-    bool banTypeThang = m_server->banAddressListModes().contains(QChar(mode));
 
-    // HACK to avoid changing strings for 1.2.2, we pretend any TYPE A mode is a
-    // ban except for e and I, as we have support for those
-    if (banTypeThang)
-    {
-        if (mode != 'b' && mode != 'e' && mode != 'I')
-            mode = 'b';
-    }
+    // HACK right now Server only keeps type A modes
+    bool banTypeThang = m_server->banAddressListModes().contains(QChar(mode));
 
     // remember if this nick had any type of op.
     bool wasAnyOp = false;
@@ -1471,36 +1465,52 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
     switch (mode)
     {
         case 'q':
-            if (plus)
+            if (banTypeThang)
             {
-                if (fromMe)
+                if (plus)
                 {
-                    if (toMe)   message = i18n("You give channel owner privileges to yourself.");
-                    else        message = i18n("You give channel owner privileges to %1.", parameter);
+                    if (fromMe) message = i18n("You set a quiet on %1.", parameter);
+                    else        message = i18n("%1 sets a quiet on %2.", sourceNick, parameter);
                 }
                 else
                 {
-                    if (toMe)   message = i18n("%1 gives channel owner privileges to you.", sourceNick);
-                    else        message = i18n("%1 gives channel owner privileges to %2.", sourceNick, parameter);
+                    if (fromMe) message = i18n("You remove the quiet on %1.", parameter);
+                    else        message = i18n("%1 removes the quiet on %2.", sourceNick, parameter);
                 }
             }
             else
             {
-                if (fromMe)
+                if (plus)
                 {
-                    if (toMe)   message = i18n("You take channel owner privileges from yourself.");
-                    else        message = i18n("You take channel owner privileges from %1.", parameter);
+                    if (fromMe)
+                    {
+                        if (toMe)   message = i18n("You give channel owner privileges to yourself.");
+                        else        message = i18n("You give channel owner privileges to %1.", parameter);
+                    }
+                    else
+                    {
+                        if (toMe)   message = i18n("%1 gives channel owner privileges to you.", sourceNick);
+                        else        message = i18n("%1 gives channel owner privileges to %2.", sourceNick, parameter);
+                    }
                 }
                 else
                 {
-                    if (toMe)   message = i18n("%1 takes channel owner privileges from you.", sourceNick);
-                    else        message = i18n("%1 takes channel owner privileges from %2.", sourceNick, parameter);
+                    if (fromMe)
+                    {
+                        if (toMe)   message = i18n("You take channel owner privileges from yourself.");
+                        else        message = i18n("You take channel owner privileges from %1.", parameter);
+                    }
+                    else
+                    {
+                        if (toMe)   message = i18n("%1 takes channel owner privileges from you.", sourceNick);
+                        else        message = i18n("%1 takes channel owner privileges from %2.", sourceNick, parameter);
+                    }
                 }
-            }
-            if (parameterChannelNick)
-            {
-                parameterChannelNick->setOwner(plus);
-                emitUpdateInfo();
+                if (parameterChannelNick)
+                {
+                    parameterChannelNick->setOwner(plus);
+                    emitUpdateInfo();
+                }
             }
             break;
 
