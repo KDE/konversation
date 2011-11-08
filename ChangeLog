@@ -1,3 +1,10 @@
+Changes since 1.4-beta1:
+* Fixed +q Type A channel modes (Freenode's "quiet bans") being reported as
+  doling out channel owner privileges.
+* Fixed the parameter handling of the example script in the handbook's section
+  on scripting.
+
+
 Changes from 1.3.1 to 1.4-beta1:
 Konversation v1.4-beta1 is the first pre-release leading up to our next major
 release. A dominant theme in this release cycle have been improvements and
