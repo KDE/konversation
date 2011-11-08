@@ -2735,7 +2735,7 @@ first two parameters sent to the script are:</para>
 
 SERVER=$1;
 TARGET=$2;
-shift;shift;shift;
+shift;shift;
 
 $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
 </programlisting>
