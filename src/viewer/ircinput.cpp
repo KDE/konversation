@@ -136,20 +136,6 @@ void IRCInput::setSpellChecking(bool set)
     Preferences::self()->setSpellChecking(set);
 }
 
-void IRCInput::slotSpellCheckDone(const QString& s)
-{
-    // NOTE: kdelibs 3.5's KSpell stupidly adds newlines to its
-    // buffer at some point for god-knows-what-reason, and for-
-    // gets to remove them again before handing the result back.
-    // There's a FIXME to the effect in KSpell::check. This is
-    // a workaround.
-
-    if (s == toPlainText() || s == (toPlainText() + '\n'+'\n'))
-        return;
-
-    setText(s.simplified());
-}
-
 void IRCInput::updateAppearance()
 {
     QPalette palette;
