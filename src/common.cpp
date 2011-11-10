@@ -38,7 +38,6 @@ namespace Konversation
         myHash.insert('m', i18n("moderated"));
         myHash.insert('k', i18n("password protected"));
         myHash.insert('a', i18n("anonymous"));
-        myHash.insert('r', i18n("server reop"));
         myHash.insert('c', i18n("no colors allowed"));
         myHash.insert('l', i18n("user limit"));
 
