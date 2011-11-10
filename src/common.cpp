@@ -40,7 +40,7 @@ namespace Konversation
         myHash.insert('a', i18n("anonymous"));
         myHash.insert('r', i18n("server reop"));
         myHash.insert('c', i18n("no colors allowed"));
-        myHash.insert('l', i18n("user throttling"));
+        myHash.insert('l', i18n("user limit"));
 
         m_modesHash = myHash;
     }
