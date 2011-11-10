@@ -1,6 +1,6 @@
 Changes since 1.4-beta1:
 * Fixed +q Type A channel modes (Freenode's "quiet bans") being reported as
-  awarding out channel owner privileges.
+  awarding channel owner privileges.
 * Fixed a bug causing the +r channel mode to be incorrectly described as
   "server reop" in the user interface.
 * Improved the description string for the +l channel mode.
