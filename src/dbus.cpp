@@ -75,7 +75,9 @@ QStringList DBus::listJoinedChannels(const QString& serverName)
     if (server)
     {
         const QList<Channel*>& channelList = server->getChannelList();
+#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
         joinedChannels.reserve(channelList.size());
+#endif
 
         foreach(Channel* channel, channelList)
         {
