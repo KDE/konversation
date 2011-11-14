@@ -1686,7 +1686,7 @@ namespace Konversation
 
         if (parms.count() == 1 && !input.destination.isEmpty())
             parms.prepend(input.destination);
-        else if (parms.count() != 2)
+        else if (parms.count() < 2)
             return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key "
                               "for nick or channel. %1setkey <key> when in a channel or query "
                               "tab sets the key for it. The key field recognizes \"cbc:\" and "
@@ -1701,7 +1701,7 @@ namespace Konversation
         if (!Cipher::isFeatureAvailable(Cipher::Blowfish))
             return error(i18n("Unable to set an encryption key for %1.", parms[0]) + ' ' + Cipher::runtimeError());
 
-        m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
+        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(" ").toLocal8Bit());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
             m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
