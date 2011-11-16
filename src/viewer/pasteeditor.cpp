@@ -40,6 +40,7 @@ PasteEditor::PasteEditor(QWidget* parent)
     QTextOption options = m_textEditor->document()->defaultTextOption();
     options.setFlags(options.flags() | QTextOption::ShowTabsAndSpaces | QTextOption::ShowLineAndParagraphSeparators);
     m_textEditor->document()->setDefaultTextOption(options);
+    m_textEditor->setFocus();
 
     connect(m_removeNewlinesButton, SIGNAL(clicked()), this, SLOT(removeNewlines()));
     connect(m_addQuotesButton, SIGNAL(clicked()), this, SLOT(addQuotationIndicators()));
