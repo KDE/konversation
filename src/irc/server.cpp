@@ -303,10 +303,8 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(encodingChanged()), this, SLOT(updateEncoding()));
 
     Application* konvApp = static_cast<Application*>(kapp);
-    connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&,
-                const QString&, const QString&, const QString&, const QString&, bool)),
-            konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
-                const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
+    connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag, QString, QString, QString, QString, QString, bool)),
+        konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, QString, QString, QString, QString, QString, bool)));
     connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
             this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
 
