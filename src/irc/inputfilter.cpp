@@ -1047,7 +1047,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
 
                     // send list to channel
-                    m_server->addPendingNickList(parameterList.value(2), nickList); // TEST this was a 2
+                    m_server->queueNicks(parameterList.value(2), nickList); // TEST this was a 2
 
                     // Display message only if this was not an automatic request.
                     if (!getAutomaticRequest("NAMES", parameterList.value(2)) == 1)

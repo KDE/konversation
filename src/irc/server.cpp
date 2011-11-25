@@ -2732,10 +2732,10 @@ Query* Server::getQueryByName(const QString& name)
     return 0;
 }
 
-void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)
+void Server::queueNicks(const QString& channelName, const QStringList& nicknameList)
 {
-    Channel* outChannel=getChannelByName(channelName);
-    if(outChannel) outChannel->addPendingNickList(nickList);
+    Channel* channel = getChannelByName(channelName);
+    if (channel) channel->queueNicks(nicknameList);
 }
 
 // Adds a nickname to the joinedChannels list.
@@ -3183,7 +3183,7 @@ Channel* Server::removeNickFromChannel(const QString &channelName, const QString
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
     {
-        outChannel->flushPendingNicks();
+        outChannel->flushNickQueue();
         ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
         if(channelNick)
         {
@@ -3210,7 +3210,7 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
     {
-        outChannel->flushPendingNicks();
+        outChannel->flushNickQueue();
         ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
 
         if(channelNick)
@@ -3226,7 +3226,7 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 {
     foreach (Channel* channel, m_channelList)
     {
-        channel->flushPendingNicks();
+        channel->flushNickQueue();
         // Check if nick is in this channel or not.
         if(channel->getNickByName(nickname))
             removeNickFromChannel(channel->getName(),nickname,reason,true);
@@ -3272,7 +3272,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
         // Rename the nick in every channel they are in
         foreach (Channel* channel, m_channelList)
         {
-            channel->flushPendingNicks();
+            channel->flushNickQueue();
 
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
             if (channel->getNickByName(nickname)) channel->nickRenamed(nickname, *nickInfo);

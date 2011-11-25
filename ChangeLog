@@ -1,3 +1,7 @@
+Changes not in the 1.4 branch:
+* Performance optimizations and code cleanup for processing NAMES messages
+  from the server.
+
 Changes since 1.4-beta1:
 * Fixed +q Type A channel modes (Freenode's "quiet bans") being reported as
   awarding channel owner privileges.

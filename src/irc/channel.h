@@ -131,7 +131,7 @@ class Channel : public ChatWindow
 
 //Nicklist
     public:
-        void flushPendingNicks();
+        void flushNickQueue();
 
         ChannelNickPtr getOwnChannelNick() const;
         ChannelNickPtr getChannelNick(const QString &ircnick) const;
@@ -141,7 +141,7 @@ class Channel : public ChatWindow
         void kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason);
         void addNickname(ChannelNickPtr channelNick);
         void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
-        void addPendingNickList(const QStringList& pendingChannelNickList);
+        void queueNicks(const QStringList& nicknameList);
         Nick *getNickByName(const QString& lookname) const;
         NickList getNickList() const { return nicknameList; }
 
@@ -153,7 +153,7 @@ class Channel : public ChatWindow
 
     protected slots:
         void purgeNicks();
-        void processPendingNicks();
+        void processQueuedNicks(bool flush = false);
 
         void updateNickInfos();
         void updateChannelNicks(const QString& channel);
@@ -359,11 +359,9 @@ class Channel : public ChatWindow
         QTimer m_whoTimer; ///< For continuous auto /WHO
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
-        QList<QStringList> m_pendingChannelNickLists;
-        int m_opsToAdd;
-        int m_currentIndex;
-
-        QTimer* m_processingTimer;
+        QStringList m_nickQueue;
+        int m_processedNicksCount;
+        int m_processedOpsCount;
 
         QTimer* m_delayedSortTimer;
         int m_delayedSortTrigger;

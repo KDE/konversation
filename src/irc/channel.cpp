@@ -73,13 +73,11 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     //     This effectively assigns the name twice, but none of the other logic has been moved or updated.
     name=_name;
     m_ownChannelNick = 0;
-    m_processingTimer = 0;
     m_optionsDialog = NULL;
     m_delayedSortTimer = 0;
     m_delayedSortTrigger = 0;
-    m_pendingChannelNickLists.clear();
-    m_currentIndex = 0;
-    m_opsToAdd = 0;
+    m_processedNicksCount = 0;
+    m_processedOpsCount = 0;
     nicks = 0;
     ops = 0;
     completionPosition = 0;
@@ -1197,17 +1195,9 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     }
 }
 
-void Channel::flushPendingNicks()
+void Channel::flushNickQueue()
 {
-    if (m_processingTimer)
-    {
-        m_processingTimer->stop();
-    }
-
-    while (!m_pendingChannelNickLists.isEmpty())
-    {
-        processPendingNicks();
-    }
+    processQueuedNicks(true);
 }
 
 void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason)
@@ -1438,21 +1428,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
     bool wasAnyOp = false;
     if (parameterChannelNick)
     {
-        // If NAMES processing is in progress, we likely have received
-        // a NAMES just prior to the MODE that caused this method to
-        // be run. If this nick is not yet in the nicklist (e.g. be-
-        // cause it's just after JOIN and the nicklist is still empty
-        // prior to the initial NAMES processing), the NAMES process-
-        // ing can set the ChannelNick's mode data to outdated infor-
-        // mation. By adding the nickname to the nicklist here if NA-
-        // MES processing is in progress, we prevent this, as the NA-
-        // MES processing code will ignore nicks already in the nick-
-        // list.
-        // We also add the nickname if the timer hasn't been instanci-
-        // ated yet, as this means addPendingNickList() has never run
-        // (yet) and thus NAMES hasn't been processed so far.
-        if (!m_processingTimer || m_processingTimer->isActive())
-            addNickname(parameterChannelNick);
+        addNickname(parameterChannelNick);
 
         wasAnyOp = parameterChannelNick->isAnyTypeOfOp();
     }
@@ -2189,21 +2165,14 @@ void Channel::changeNickname(const QString& newNickname)
         m_server->queue("NICK "+newNickname);
 }
 
-void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
+void Channel::queueNicks(const QStringList& nicknameList)
 {
-    if(pendingChannelNickList.isEmpty())
-      return;
+    if (nicknameList.isEmpty())
+        return;
 
-    if (!m_processingTimer)
-    {
-        m_processingTimer = new QTimer(this);
-        connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
-    }
+    m_nickQueue.append(nicknameList);
 
-    m_pendingChannelNickLists << pendingChannelNickList;
-
-    if (!m_processingTimer->isActive())
-        m_processingTimer->start(0);
+    processQueuedNicks();
 }
 
 void Channel::childAdjustFocus()
@@ -2431,62 +2400,76 @@ void Channel::showTopic(bool show)
     }
 }
 
-void Channel::processPendingNicks()
+void Channel::processQueuedNicks(bool flush)
 {
-    QString nickname = m_pendingChannelNickLists.first()[m_currentIndex];
+// This pops nicks from the front of a queue added to by incoming NAMES
+// messages and adds them to the channel nicklist, calling itself via
+// the event loop until the last invocation finds the queue empty and
+// adjusts the nicks/ops counters and requests a nicklist sort, but only
+// if previous invocations actually processed any nicks. The latter is
+// an optimization for the common case of processing being kicked off by
+// flushNickQueue(), which is done e.g. before a nick rename or part to
+// make sure the channel is up to date and will usually find an empty
+// queue. This is also the use case for the 'flush' parameter, which if
+// true causes the recursion to block in a tight loop instead of queueing
+// via the event loop.
 
-    bool admin = false;
-    bool owner = false;
-    bool op = false;
-    bool halfop = false;
-    bool voice = false;
-
-    // Remove possible mode characters from nickname and store the resulting mode
-    m_server->mangleNicknameWithModes(nickname, admin, owner, op, halfop, voice);
-
-    // TODO: make these an enumeration in KApplication or somewhere, we can use them as well
-    unsigned int mode = (admin  ? 16 : 0) +
-                        (owner  ?  8 : 0) +
-                        (op     ?  4 : 0) +
-                        (halfop ?  2 : 0) +
-                        (voice  ?  1 : 0);
-
-    // Check if nick is already in the nicklist
-    if (nickname.isEmpty() || getNickByName(nickname))
+    if (m_nickQueue.isEmpty())
     {
-        m_pendingChannelNickLists.first().pop_front();
+        if (m_processedNicksCount)
+        {
+            adjustNicks(m_processedNicksCount);
+            adjustOps(m_processedOpsCount);
+            m_processedNicksCount = 0;
+            m_processedOpsCount = 0;
+
+            sortNickList();
+            nicknameListView->setUpdatesEnabled(true);
+
+            if (Preferences::self()->autoUserhost())
+                resizeNicknameListViewColumns();
+        }
     }
     else
     {
-        ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
-        Q_ASSERT(nick);
-        nick->setMode(mode);
+        QString nickname;
 
-        fastAddNickname(nick);
+        while (nickname.isEmpty() && !m_nickQueue.isEmpty())
+            nickname = m_nickQueue.takeFirst();
 
-        if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
-            m_opsToAdd++;
+        bool admin = false;
+        bool owner = false;
+        bool op = false;
+        bool halfop = false;
+        bool voice = false;
 
-        m_currentIndex++;
-    }
+        // Remove possible mode characters from nickname and store the resulting mode.
+        m_server->mangleNicknameWithModes(nickname, admin, owner, op, halfop, voice);
 
-    if (m_pendingChannelNickLists.first().count() <= m_currentIndex)
-    {
-        adjustNicks(m_pendingChannelNickLists.first().count());
-        adjustOps(m_opsToAdd);
-        m_pendingChannelNickLists.pop_front();
-        m_currentIndex = 0;
-        m_opsToAdd = 0;
-    }
+        // TODO: Make these an enumeration in KApplication or somewhere, we can use them as well.
+        unsigned int mode = (admin  ? 16 : 0) +
+                            (owner  ?  8 : 0) +
+                            (op     ?  4 : 0) +
+                            (halfop ?  2 : 0) +
+                            (voice  ?  1 : 0);
 
-    if (m_pendingChannelNickLists.isEmpty())
-    {
-        m_processingTimer->stop();
-        sortNickList();
-        nicknameListView->setUpdatesEnabled(true);
+        // Check if nick is already in the nicklist.
+        if (!nickname.isEmpty() && !getNickByName(nickname))
+        {
+            ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
+            Q_ASSERT(nick);
+            nick->setMode(mode);
 
-        if (Preferences::self()->autoUserhost())
-            resizeNicknameListViewColumns();
+            fastAddNickname(nick);
+
+            ++m_processedNicksCount;
+
+            if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
+                ++m_processedOpsCount;
+        }
+
+        QMetaObject::invokeMethod(this, "processQueuedNicks",
+            flush ? Qt::DirectConnection : Qt::QueuedConnection, Q_ARG(bool, flush));
     }
 }
 
