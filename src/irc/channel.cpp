@@ -2452,7 +2452,11 @@ void Channel::processPendingNicks()
                         (voice  ?  1 : 0);
 
     // Check if nick is already in the nicklist
-    if (!getNickByName(nickname))
+    if (nickname.isEmpty() || getNickByName(nickname))
+    {
+        m_pendingChannelNickLists.first().pop_front();
+    }
+    else
     {
         ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
         Q_ASSERT(nick);
@@ -2464,10 +2468,6 @@ void Channel::processPendingNicks()
             m_opsToAdd++;
 
         m_currentIndex++;
-    }
-    else
-    {
-        m_pendingChannelNickLists.first().pop_front();
     }
 
     if (m_pendingChannelNickLists.first().count() <= m_currentIndex)
