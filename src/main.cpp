@@ -39,9 +39,8 @@ int main(int argc, char* argv[])
         ki18n("A user-friendly IRC client"),
         KAboutData::License_GPL,
         ki18n("(C) 2002-2011 by the Konversation team"),
-        ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
-        "Meet friends on the net, make new acquaintances and lose yourself in\n"
-        "talk about your favorite subject."),
+        ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
+        "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
         "http://konversation.kde.org/");
 
     aboutData.addAuthor(ki18n("Dario Abatianni"),ki18n("Original Author, Project Founder"),"eisfuchs@tigress.com");
