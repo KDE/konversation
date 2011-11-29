@@ -121,7 +121,7 @@ class PlayerList(list):
 def is_specific_player(kind):
     return kind is not None and kind not in ('audio', 'video')
 
-def fetch_attribute(busname, attribute):
+def fetch_property(busname, attribute):
     output = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', attribute))
     return output.decode(errors='replace').strip()
 
@@ -140,8 +140,8 @@ def list_players():
         try:
             busname = line
             name = busname.split('.')[3]
-            identity = fetch_attribute(busname, 'Identity')
-            hastrack = fetch_attribute(busname, 'PlaybackStatus')
+            identity = fetch_property(busname, 'org.mpris.MediaPlayer2.Identity')
+            hastrack = fetch_property(busname, 'org.mpris.MediaPlayer2.Player.PlaybackStatus')
 
             # If this is a player-specific invocation, consider both paused and playing states.
             if is_specific_player(requested):
@@ -218,7 +218,7 @@ def check_playing():
 
 def get_metadata(player):
     try:
-        output = fetch_attribute(player.busname, 'Metadata')
+        output = fetch_property(player.busname, 'org.mpris.MediaPlayer2.Player.Metadata')
     except subprocess.CalledProcessError:
         konversation.dbus.error(i18n("An error occured while trying to retrieve media metadata from %1.", player.identity), exit=True)
 
