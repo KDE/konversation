@@ -89,10 +89,17 @@ QUOTE_AFTER = '"'
 # ===== Do not change anything below this line. =====
 
 import collections
+import os
 import re
 import subprocess
 import string
 import sys
+
+try:
+    from urllib.parse import unquote_plus, urlsplit
+except ImportError:
+    from urllib import unquote_plus
+    from urlparse import urlsplit
 
 try:
     import konversation.dbus
@@ -222,7 +229,7 @@ def get_metadata(player):
     except subprocess.CalledProcessError:
         konversation.dbus.error(i18n("An error occured while trying to retrieve media metadata from %1.", player.identity), exit=True)
 
-    keys = ('xesam:title:', 'xesam:artist:', 'xesam:albumArtist:', 'xesam:album:')
+    keys = ('xesam:title:', 'xesam:artist:', 'xesam:albumArtist:', 'xesam:album:', 'xesam:url:')
     metadata = dict()
 
     for line in output.splitlines():
@@ -231,11 +238,23 @@ def get_metadata(player):
             value = line.split(':', 2)[-1].strip()
             metadata[key] = value
 
+    if not 'title' in metadata and 'url' in metadata:
+        url = urlsplit(metadata['url'])
+
+        if url.scheme == 'file' and url.path:
+            metadata['title'] = os.path.basename(unquote_plus(url.path))
+
+    if 'url' in metadata:
+        del metadata['url']
+
     if not 'artist' in metadata and 'albumArtist' in metadata:
         metadata['artist'] = metadata['albumArtist']
 
     if 'albumArtist' in metadata:
         del metadata['albumArtist']
+
+    if not metadata:
+        konversation.dbus.error(i18n("%1 did not report any metadata for the media it is playing.", player.identity), exit=True)
 
     return metadata
 
