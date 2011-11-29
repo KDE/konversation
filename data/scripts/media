@@ -118,6 +118,13 @@ class PlayerList(list):
         except ValueError:
             list.append(self, player)
 
+def is_specific_player(kind):
+    return kind is not None and kind not in ('audio', 'video')
+
+def fetch_attribute(busname, attribute):
+    output = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', attribute))
+    return output.decode(errors='replace').strip()
+
 def list_players():
     running = PlayerList()
     audio = PlayerList()
@@ -125,19 +132,19 @@ def list_players():
     eligible = PlayerList()
 
     try:
-        output = subprocess.check_output((dbus_command, 'org.mpris.MediaPlayer2.*')).splitlines()
+        output = subprocess.check_output((dbus_command, 'org.mpris.MediaPlayer2.*'))
     except subprocess.CalledProcessError:
         konversation.dbus.error(i18n("An error occured while trying to list the running media players."), exit=True)
 
-    for line in output:
+    for line in output.decode(errors='replace').splitlines():
         try:
             busname = line
             name = busname.split('.')[3]
-            identity = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', 'Identity')).strip()
-            hastrack = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', 'PlaybackStatus')).strip()
+            identity = fetch_attribute(busname, 'Identity')
+            hastrack = fetch_attribute(busname, 'PlaybackStatus')
 
             # If this is a player-specific invocation, consider both paused and playing states.
-            if requested is not None and requested not in ('audio', 'video'):
+            if is_specific_player(requested):
                 hastrack = hastrack in ('Playing', 'Paused')
             else:
                 hastrack = hastrack == 'Playing'
@@ -174,7 +181,7 @@ def check_running():
         konversation.dbus.error(i18n("No running audio players found.", requested), exit=True)
     elif requested == 'video' and not players_video:
         konversation.dbus.error(i18n("No running video players found.", requested), exit=True)
-    elif requested not in ('audio', 'video') and not filter_by_name(players_running, requested):
+    elif is_specific_player(requested) and not filter_by_name(players_running, requested):
         konversation.dbus.error(i18n("\"%1\" is not running.", requested), exit=True)
     elif not players_running:
         konversation.dbus.error(i18n("No running media players found."), exit=True)
@@ -211,14 +218,14 @@ def check_playing():
 
 def get_metadata(player):
     try:
-        output = subprocess.check_output((dbus_command, player.busname, '/org/mpris/MediaPlayer2', 'Metadata')).splitlines()
+        output = fetch_attribute(player.busname, 'Metadata')
     except subprocess.CalledProcessError:
         konversation.dbus.error(i18n("An error occured while trying to retrieve media metadata from %1.", player.identity), exit=True)
 
     keys = ('xesam:title:', 'xesam:artist:', 'xesam:albumArtist:', 'xesam:album:')
     metadata = dict()
 
-    for line in output:
+    for line in output.splitlines():
         if line.startswith(keys):
             key = line.split(':', 2)[1]
             value = line.split(':', 2)[-1].strip()
