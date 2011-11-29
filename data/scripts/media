@@ -85,7 +85,7 @@ import string
 import subprocess
 
 
-konversation.dbus.defaultMessagePrefix = 'media: '
+konversation.dbus.default_message_prefix = 'media: '
 
 class Player(object):
     def __init__(self, display_name, playerType=None):

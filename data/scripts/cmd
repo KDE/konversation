@@ -36,7 +36,7 @@ except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
 
-konversation.dbus.defaultMessagePrefix = 'cmd: '
+konversation.dbus.default_message_prefix = 'cmd: '
 
 if len(sys.argv) < 4:
     import konversation.i18n
