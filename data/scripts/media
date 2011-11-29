@@ -77,9 +77,11 @@ preferred_media = {
 # of 'qdbus'.
 dbus_command = 'qdbus'
 
-# If the title, album or artist metadata fields contain one of the characters
-# listed in FIXUP_CHARS, or if the regular expression given in REGEX_FIXUP
-# matches it, the field's text is surrounded by QUOTE_BEFORE and QUOTE_AFTER.
+
+# If one of the title, album or artist metadata fields contains a character
+# listed in FIXUP_CHARS, or if a string matching the regular expression given
+# in REGEX_FIXUP is found in one of them, the respective field's text is
+# surrounded by QUOTE_BEFORE and QUOTE_AFTER.
 SIMPLE_FIXUP = '' # e.g. ' ' or '-'
 REGEX_FIXUP = ''
 QUOTE_BEFORE = '"'
