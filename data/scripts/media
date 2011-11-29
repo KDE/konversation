@@ -77,11 +77,9 @@ preferred_media = {
 # of 'qdbus'.
 dbus_command = 'qdbus'
 
-
-# If one of the title, album or artist metadata fields contains a character
-# listed in FIXUP_CHARS, or if a string matching the regular expression given
-# in REGEX_FIXUP is found in one of them, the respective field's text is
-# surrounded by QUOTE_BEFORE and QUOTE_AFTER.
+# If the title, album or artist metadata fields contain one of the characters
+# listed in FIXUP_CHARS, or if the regular expression given in REGEX_FIXUP
+# matches it, the field's text is surrounded by QUOTE_BEFORE and QUOTE_AFTER.
 SIMPLE_FIXUP = '' # e.g. ' ' or '-'
 REGEX_FIXUP = ''
 QUOTE_BEFORE = '"'
@@ -238,7 +236,9 @@ def get_metadata(player):
         if line.startswith(keys):
             key = line.split(':', 2)[1]
             value = line.split(':', 2)[-1].strip()
-            metadata[key] = value
+
+            if value:
+                metadata[key] = value
 
     if not 'title' in metadata and 'url' in metadata:
         url = urlsplit(metadata['url'])
