@@ -27,7 +27,7 @@ with Konversation's D-Bus API.
 The 'connection' and 'target' attributes are fetched from the arguments given
 to your script by Konversation when you import this module.
 
-Modify the 'defaultMessagePrefix' attribute if you want to prefix all messages
+Modify the 'default_message_prefix' attribute if you want to prefix all messages
 sent through the say/info/error functions with a common string rather than pass
 a prefix with each call (but doing so overrides this fallback attribute).
 
@@ -73,7 +73,7 @@ def _prefix(message, prefix):
     """Prefix message, using the argument or falling back to the global."""
 
     if prefix is None:
-        prefix = defaultMessagePrefix
+        prefix = default_message_prefix
 
     return prefix + message
 
@@ -93,6 +93,6 @@ except IndexError:
     connection = None
     target = None
 
-defaultMessagePrefix = ''
+default_message_prefix = ''
 
 _dbus_command = ('qdbus', 'org.kde.konversation', '/irc')
