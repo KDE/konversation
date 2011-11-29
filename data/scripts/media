@@ -1,502 +1,310 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#This program is free software; you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation; either version 2 of the License, or
-#(at your option) any later version.
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License or (at your option) version 3 or any later version
+# accepted by the membership of KDE e.V. (or its successor appro-
+# ved by the membership of KDE e.V.), which shall act as a proxy
+# defined in Section 14 of version 3 of the license.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses/.
+#
+# Copyright (C) 2011 Eike Hein
 
-# Copyright 2006 Eli J. MacKenzie
-# Copyright 2011 Eike Hein
-# Inspired by `media` (Copyright 2005 İsmail Dönmez)
 
+# The overall format of this script's output. The format of the individual
+# elements referenced here is specified further below.
+output_format = "/me $intro $info [$player]"
 
-# If you wish to customize the formatting strings, do so in this table.
-# Do not change the numbers unless you're changing the logic.
-# Title, artist, and album will be set once the player is queried.
-# See Player.format() for how these are used.
+# This is the '$intro' element in output_format.
+intro_strings = {'audio' : 'is listening to', 'video' : 'is watching'}
 
-# Changing these 3 values will likely cause the script to fail.
-Title = 4
-Artist = 2
-Album = 1
-
-# To disable self-titled (eponymous) checking, subtract 8.
-SelfTitled = 11
-
-outputFormat = "/me $intro $info [$player]"
-formatStrings = {
-    Title+SelfTitled   : "$title by $artist (eponymous)",
-    SelfTitled         : "${artist}'s self-titled album",
-    Title+Artist+Album : "$title by $artist on $album", # 7, 15
-    Title+Artist       : "$title by $artist", # 6, 14
-    Title+Album        : "$title from $album", # 5, 13
-    Album+Artist       : "$album by $artist", # 3, 11
-    Title              : "$title", # 4, 12
-    Artist             : "$artist", # 2, 10
-    Album              : "$album", # 1, 9
+# This is the '$info' element in output_format. You should not tinker with the
+# case names on the left side of the colons.
+format_strings = {
+    'Title+SelfTitled'   : "$title by $artist (eponymous)",
+    'SelfTitled'         : "${artist}'s self-titled album",
+    'Title+Artist+Album' : "$title by $artist on $album",
+    'Title+Artist'       : "$title by $artist",
+    'Title+Album'        : "$title from $album",
+    'Album+Artist'       : "$album by $artist",
+    'Title'              : "$title",
+    'Artist'             : "$artist",
+    'Album'              : "$album"
 }
 
-# Intro defaults to first type the player supports when a specific type was not demanded.
-formatVariables = {'audio' : 'is listening to', 'video' : 'is watching'}
-
-## Static player ranking list
-# If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
-playerRankings = {
-    'video' : ['kaffeine','kmplayer', 'kplayer', 'noatun', 'kdetv'],
-    'audio' : ['amarok', 'amarok1', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'yammi', 'Audacious', 'xmms', 'MPD']
+# The lists below determine in which order the '/media', '/audio' and '/video'
+# commands will query players if several of them are running. For '/audio'
+# and '/video' they also determine which players are queried at all, however
+# '/media' will query everything implementing the MPRIS2 standard, with un-
+# listed players being queried last in alphabetical order.
+# Entries should be the unique MPRIS2 bus names of players, i.e. the "amarok"
+# part of "org.mpris.MediaPlayer2.amarok".
+player_rankings = {
+    'all'   : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'clementine', 'audacious',
+               'spotify', 'dragon', 'vlc'],
+    'audio' : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'audacious',
+               'clementine', 'spotify', 'pragha', 'gogglesmm', 'qmmp', 'gmusicbrowser',
+               'guayadeque', 'dragon', 'vlc'],
+    'video' : ['dragon', 'kaffeine', 'vlc', 'smplayer', 'totem']
 }
 
-## Title, album and artist fields to be quoted depending on contents
-# List the possible trigger characters here.
-# If you want a '-', it must be first. if you want a '^', it must be last.
-SIMPLE_FIXUP = '' # I use ' '
+# When the generic '/media' command is used rather than '/audio' or '/video',
+# the intro (see intro_strings) will be chosen based on the preferred media
+# type of a player, specified here. If a player is not listed here, the
+# 'audio' intro is used by default.
+# Entries should be the unique MPRIS2 bus names of players, i.e. the "amarok"
+# part of "org.mpris.MediaPlayer2.amarok".
+preferred_media = {
+    'dragon'   : 'video',
+    'kaffeine' : 'video',
+    'smplayer' : 'video',
+    'totem'    : 'video',
+    'vlc'      : 'video'
+}
 
-# If you want to use a regex for the above, specify it here in which case it will be used.
+# To list players and retrieve media metadata his script by default calls the
+# 'qdbus' command installed by Qt. If you need to you can change this here,
+# but beware that the output format of the alternate command has to match that
+# of 'qdbus'.
+dbus_command = 'qdbus'
+
+# If the title, album or artist metadata fields contain one of the characters
+# listed in FIXUP_CHARS, or if the regular expression given in REGEX_FIXUP
+# matches it, the field's text is surrounded by QUOTE_BEFORE and QUOTE_AFTER.
+SIMPLE_FIXUP = '' # e.g. ' ' or '-'
 REGEX_FIXUP = ''
-
-# Quote chars to use:
 QUOTE_BEFORE = '"'
 QUOTE_AFTER = '"'
 
 
-  ################################
- ## The Real work is done below.
-##############################
+# ===== Do not change anything below this line. =====
 
+import collections
+import re
+import subprocess
+import string
 import sys
 
 try:
     import konversation.dbus
+    konversation.dbus.default_message_prefix = 'media: '
+
     import konversation.i18n
     konversation.i18n.init()
 except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
-if sys.hexversion < 0x02060000:
-    err = i18n("The media script requires Python %1 or higher.", '2.6')
+if sys.hexversion < 0x02070000:
+    err = i18n("The media script requires Python %1 or higher.", '2.7')
     konversation.dbus.error(err)
     sys.exit(err)
 
-import os
-import re
-import socket
-import string
-import subprocess
+Player = collections.namedtuple('player', ('busname', 'name', 'identity', 'hastrack'))
 
-
-konversation.dbus.default_message_prefix = 'media: '
-
-class Player(object):
-    def __init__(self, display_name, playerType=None):
-        if playerType is None:
-            self.type = "audio"
-        else:
-            self.type = playerType
-        self.displayName = display_name
-        self.running = False
-        d = {}
-        d.update(formatVariables)
-        d['player'] = self.displayName
-        self._format = d
-
-    def get(self, mode):
-        data = self.getData()
-        if any(data):
-            self._format['info'] = self.format(*data)
-            if mode and mode != self.displayName:
-                self._format['intro'] = self._format[mode]
-            else:
-                self._format['intro'] = self._format[self.type.replace(',', '').split()[0]]
-            return string.Template(outputFormat).safe_substitute(self._format)
-        return ''
-
-    def format(self, title='', artist='', album=''):
-        """Return a 'pretty-printed' info string for the track.
-
-        Uses formatStrings from above."""
-        # Update args last to prevent non-sensical override in formatVariables
-        x = {'title' : title, 'artist' : artist, 'album' : album}
-        if FIXUP:
-            for i, j in x.items():
-                if re.search(FIXUP, j):
-                    x[i] = '%s%s%s' % (QUOTE_BEFORE, j, QUOTE_AFTER)
-        self._format.update(x)
-        n = 0
-        if title:
-            n |= 4 # Still binary to make you read the code ;p
-        if artist:
-            if artist == album:
-                n |= SelfTitled
-            else:
-                n |= 2
-        if album:
-            n |= 1
-        if n:
-            return string.Template(formatStrings[n]).safe_substitute(self._format)
-        return ''
-
-    def getData(self):
-        """Implement this to do the work"""
-        return ''
-
-    def reEncodeString(self, input):
-        if input:
-            try:
-                input = input.decode('utf-8')
-            except UnicodeError:
-                try:
-                    input = input.decode('latin-1')
-                except UnicodeError:
-                    input = input.decode('ascii', 'replace')
-            except NameError:
-                    pass
-        return input.encode('utf-8')
-
-    def test_format(self, title='', artist='', album=''):
-        s = []
-        l = ["to", "by", "on"]
-        if title:
-            s.append(title)
-        else:
-            album, artist = artist, album
-            l.pop()
-        if artist:
-            s.append(artist)
-        else:
-            del l[1]
-        if album:
-            s.append(album)
-        else:
-            l.pop()
-        t = ["is listening"]
-        while l:
-            t.append(l.pop(0))
-            t.append(s.pop(0))
-        return ' '.join(t)
-
-    def isRunning(self):
-        return self.running
-
-class DCOPPlayer(Player):
-    def __init__(self, display_name, service_name, getTitle='', getArtist='', getAlbum='',playerType=None):
-        Player.__init__(self, display_name, playerType)
-        self.serviceName = service_name
-        self._title = getTitle
-        self._artist = getArtist
-        self._album = getAlbum
-        self.DCOP = ""
-
-    def getData(self):
-        self.getService()
-        return (self.grab(self._title), self.grab(self._artist), self.grab(self._album))
-
-    def getService(self):
-        if self.DCOP:
-            return self.DCOP
-        running = re.findall('^' + self.serviceName + "(?:-\\d*)?$", DCOP_ITEMS, re.M)
-        if type(running) is list:
-            try:
-                running = running[0]
-            except IndexError:
-                running = ''
-        self.DCOP = running.strip()
-        self.running = bool(self.DCOP)
-        return self.DCOP
-
-    def grab(self, item):
-        if item and self.isRunning():
-            return self.reEncodeString(os.popen("dcop %s %s" % (self.DCOP, item)).readline().rstrip('\n'))
-        return ''
-
-    def isRunning(self):
-        self.getService()
-        return self.running
-
-class AmarokPlayer(DCOPPlayer):
-    def __init__(self):
-        DCOPPlayer.__init__(self,'Amarok1', 'amarok', 'player title', 'player artist', 'player album')
-
-    def getData(self):
-        data = DCOPPlayer.getData(self)
-        if not any(data):
-            data = (self.grab('player nowPlaying'), '', '')
-            if not data[0]:
-                return ''
-        return data
-
-class Amarok2Player(Player):
-    def __init__(self):
-        Player.__init__(self, 'Amarok', 'audio')
-        self.isRunning()
-
-    def getData(self):
-        playing = os.popen("qdbus org.mpris.amarok /Player PositionGet").readline().strip() != "0"
-        if playing and self.isRunning():
-            title = ''
-            artist = ''
-            album = ''
-            for line in os.popen("qdbus org.mpris.amarok /Player GetMetadata").readlines():
-                m = re.match("^title:\s(.+)", line)
-                if m is not None:
-                    title = m.group(1)
-                m = re.match("^artist:\s(.+)", line)
-                if m is not None:
-                    artist = m.group(1)
-                m = re.match("^album:\s(.+)", line)
-                if m is not None:
-                    album = m.group(1)
-            return (title, artist, album)
-        else:
-            return ''
-
-    def isRunning(self):
-        qdbus_items = subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0].decode()
-        running = re.findall(r'^ org.mpris.amarok\r?$', qdbus_items, re.M)
-        if type(running) is list:
-            try:
-                running = running[0]
-            except IndexError:
-                running = ''
-        self.running = bool(running.strip())
-        return self.running
-
-class JukPlayer(Player):
-    def __init__(self):
-        Player.__init__(self, 'Juk', 'audio')
-        self.isRunning()
-
-    def getData(self):
-        playing = os.popen("qdbus org.kde.juk /Player playin").readline().strip() != "false"
-        if playing and self.isRunning():
-            title = os.popen("qdbus org.kde.juk /Player trackProperty Title").readline().strip()
-            artist = os.popen("qdbus org.kde.juk /Player trackProperty Artist").readline().strip()
-            album = os.popen("qdbus org.kde.juk /Player trackProperty Album").readline().strip()
-            return (title, artist, album)
-        else:
-            return ''
-
-    def isRunning(self):
-        qdbus_items = subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0].decode()
-        running = re.findall(r'^ org.kde.juk\r?$', qdbus_items, re.M)
-        if type(running) is list:
-            try:
-                running = running[0]
-            except IndexError:
-                running = ''
-        self.running = bool(running.strip())
-        return self.running
-
-class MPD(Player):
-    def __init__(self, display_name):
-        Player.__init__(self, display_name)
-
-        self.host = "localhost"
-        self.port = 6600
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.settimeout(0.5)
-
+class PlayerList(list):
+    def insert(self, player, type='all'):
         try:
-            self.sock.connect((self.host, self.port))
-            # Just welcome message, we don't need it.
-            self.sock.recv(1024)
-            self.running = True
-        except socket.error:
-            self.running = False
+            index = player_rankings[type].index(player.name)
+            list.insert(self, index, player)
+        except ValueError:
+            list.append(self, player)
 
-    def getData(self):
-        if not self.running:
-            return ''
+def list_players():
+    running = PlayerList()
+    audio = PlayerList()
+    video = PlayerList()
+    eligible = PlayerList()
+
+    try:
+        output = subprocess.check_output((dbus_command, 'org.mpris.MediaPlayer2.*')).splitlines()
+    except subprocess.CalledProcessError:
+        konversation.dbus.error(i18n("An error occured while trying to list the running media players."), exit=True)
+
+    for line in output:
         try:
-            self.sock.send("currentsong\n")
-            data = self.sock.recv(1024)
-        except socket.error:
-            return ''
+            busname = line
+            name = busname.split('.')[3]
+            identity = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', 'Identity')).strip()
+            hastrack = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', 'PlaybackStatus')).strip()
 
-        # mpd sends OK always, so if nothing to show, we should seek for at least 3 chars.
-        if len(data) < 4:
-            return ''
-        else:
-            # If there is Artist, Title and Album, get it.
-            data = data.splitlines()
-            d = {}
-            for i in data:
-                if ':' not in i:
-                    continue
-                k, v = i.split(':', 1)
-                d[k.lower()] = self.reEncodeString(v.strip())
-            data = (d.get('title', ''), d.get('artist', ''), d.get('album', ''))
-            if not any(data):
-                return d.get('file', '')
-            return data
-
-class StupidPlayer(DCOPPlayer):
-    def getData(self):
-        data = DCOPPlayer.getData(self)[0]
-        if data:
-            if data.startswith('URL'):
-                # KMPlayer window titles in the form of "URL - file:///path/to/<media file> - KMPlayer".
-                data = data.split(None,2)[2].rsplit(None,2)[0].rsplit('/')[-1]
+            # If this is a player-specific invocation, consider both paused and playing states.
+            if requested is not None and requested not in ('audio', 'video'):
+                hastrack = hastrack in ('Playing', 'Paused')
             else:
-                # KPlayer window titles in the form of "<media file> - KPlayer".
-                data = data.rsplit(None,2)[0]
-            return (data,'','')
-        return ''
+                hastrack = hastrack == 'Playing'
 
-try:
-    import xmms.common
-    class XmmsPlayer(Player):
-        def __init__(self, display_name):
-            Player.__init__(self, display_name)
+            player = Player(busname, name, identity, hastrack)
 
-        def isRunning(self):
-            self.running = xmms.control.is_running()
-            return self.running
+            running.insert(player)
 
-        def getData(self):
-            if self.isRunning() and xmms.control.is_playing():
-                # Get the position in the playlist for current playing track.
-                index = xmms.control.get_playlist_pos();
-                # Get the title of the currently playing track.
-                return (self.reEncodeString(xmms.control.get_playlist_title(index)), '', '')
-            return ''
+            if name in player_rankings['audio']:
+                audio.insert(player, 'audio')
+            if name in player_rankings['video']:
+                video.insert(player, 'audio')
+        except (subprocess.CalledProcessError, IndexError):
+            pass
 
-except ImportError:
-    XmmsPlayer = Player
+    if requested == 'audio':
+        eligible = audio
+    elif requested == 'video':
+        eligible = video
+    elif requested is not None:
+        eligible = filter_by_name(running, requested)
+    else:
+        eligible = running
 
-class AudaciousPlayer(Player):
-    def __init__(self, display_name):
-        Player.__init__(self, display_name)
+    eligible = [player for player in eligible if player.hastrack]
 
-    def isRunning(self):
-        self.running = not os.system('audtool current-song')
-        return self.running
+    return running, audio, video, eligible
 
-    def getData(self):
-        if self.isRunning() and not os.system('audtool playback-playing'):
-            # Get the title of the currently playing track.
-            data = os.popen('audtool current-song').read().strip()
-            data_list = data.split(' - ')
-            list_length = len(data_list)
-            if list_length == 1:
-                return (self.reEncodeString(data_list[0]), '', '')
-            elif list_length == 3:
-                return (self.reEncodeString(data_list[-1]), data_list[0], data_list[1])
+def filter_by_name(player_list, name):
+    return [player for player in player_list if player.name.lower() == name or player.identity.lower() == name]
+
+def check_running():
+    if requested == 'audio' and not players_audio:
+        konversation.dbus.error(i18n("No running audio players found.", requested), exit=True)
+    elif requested == 'video' and not players_video:
+        konversation.dbus.error(i18n("No running video players found.", requested), exit=True)
+    elif requested not in ('audio', 'video') and not filter_by_name(players_running, requested):
+        konversation.dbus.error(i18n("\"%1\" is not running.", requested), exit=True)
+    elif not players_running:
+        konversation.dbus.error(i18n("No running media players found."), exit=True)
+
+def check_playing():
+    if not players_eligible:
+        if requested == 'audio':
+            players = players_audio
+        elif requested == 'video':
+            players = players_video
+        elif requested is not None:
+            players = filter_by_name(players_running, requested)
+        else:
+            players = players_running
+
+        if len(players) == 1:
+                konversation.dbus.error(i18n("Nothing is playing in %1.", players[0].identity), exit=True)
+        else:
+            if requested == 'audio':
+                konversation.dbus.error(i18nc("1 = Comma-separated list of audio players.",
+                                              "None of the running audio players (%1) are playing anything.",
+                                              ', '.join(sorted([player.identity for player in players_audio]))),
+                                        exit=True)
+            elif requested == 'video':
+                konversation.dbus.error(i18nc("1 = Comma-separated list of video players.",
+                                              "None of the running video players (%1) are playing anything.",
+                                              ', '.join(sorted([player.identity for player in players_video]))),
+                                        exit=True)
             else:
-                return (self.reEncodeString(data), '', '')
-        else:
-            return ''
+                konversation.dbus.error(i18nc("1 = Comma-separated list of media players.",
+                                              "None of the running media players (%1) are playing anything.",
+                                              ', '.join(sorted([player.identity for player in players_running]))),
+                                        exit=True)
 
+def get_metadata(player):
+    try:
+        output = subprocess.check_output((dbus_command, player.busname, '/org/mpris/MediaPlayer2', 'Metadata')).splitlines()
+    except subprocess.CalledProcessError:
+        konversation.dbus.error(i18n("An error occured while trying to retrieve media metadata from %1.", player.identity), exit=True)
 
-def playing(playerList, mode=None):
-    for i in playerList:
-        s = i.get(mode)
-        if s:
-            konversation.dbus.say(s, '')
-            return 1
-    return 0
+    keys = ('xesam:title:', 'xesam:artist:', 'xesam:albumArtist:', 'xesam:album:')
+    metadata = dict()
 
-def handleErrors(playerList, kind):
-    if any([i.running for i in playerList]):
-        l = [i.displayName for i in playerList if i.isRunning()]
-        err = i18n("Nothing is playing in %1.", ', '.join(l))
+    for line in output:
+        if line.startswith(keys):
+            key = line.split(':', 2)[1]
+            value = line.split(':', 2)[-1].strip()
+            metadata[key] = value
+
+    if not 'artist' in metadata and 'albumArtist' in metadata:
+        metadata['artist'] = metadata['albumArtist']
+
+    if 'albumArtist' in metadata:
+        del metadata['albumArtist']
+
+    return metadata
+
+def fixup(metadata):
+    for key, value in metadata.items():
+        try:
+            quote = False
+
+            if len([c for c in value if c not in SIMPLE_FIXUP]) != len(value):
+                quote = True
+            elif REGEX_FIXUP and re.search(REGEX_FIXUP, value):
+                quote = True
+
+            if quote:
+                metadata[key] = QUOTE_BEFORE + value + QUOTE_AFTER
+        except re.error:
+            konversation.dbus.error(i18nc("REGEX_FIXUP is the name of a config key in a config file.",
+                                          "There is a problem with the regular expression specified in REGEX_FIXUP."),
+                                    exit=True)
+
+def format(player, metadata):
+    fixup(metadata)
+
+    format_key = list(metadata)
+
+    try:
+        if metadata['album'] == metadata['artist']:
+            format_key.remove('album')
+            format_key.remove('artist')
+            format_key.append('selftitled')
+    except KeyError:
+        pass
+
+    format_key = '+'.join(sorted(format_key))
+    format = {'+'.join(sorted(k.lower().split('+'))): v for (k, v) in format_strings.items()}[format_key]
+
+    if format:
+        info = string.Template(format).safe_substitute(metadata)
     else:
-        if not kind:
-            err = i18n("No supported players are running.")
-        elif kind == 'audio':
-            players = ', '.join(sorted([p.displayName for p in PLAYERS if 'audio' in p.type]))
-            err = i18n("No supported audio players are running. Supported audio players are: %1.", players)
-        elif kind == 'video':
-            players = ', '.join(sorted([p.displayName for p in PLAYERS if 'video' in p.type]))
-            err = i18n("No supported video players are running. Supported video players are: %1.", players)
-        else:
-            err = i18n("%1 is not running.", kind.strip())
-    konversation.dbus.error(err)
+        konversation.dbus.error(i18n("There is a problem in the output format configuration."), exit=True)
 
-def run(kind):
-    if not kind:
-        kind = ''
-        play = PLAYERS
+    if requested in ('audio', 'video'):
+        intro = intro_strings[requested]
     else:
-        if kind in ['audio', 'video']:
-            unsorted = dict([(i.displayName.lower(), i) for i in PLAYERS if kind in i.type])
-            play = [unsorted.pop(i.lower(), Player("ImproperlySupported")) for i in playerRankings[kind]]
-            if len(unsorted):
-                play.extend(unsorted.values())
-        else:
-            play = [i for i in PLAYERS if i.displayName.lower() == kind]
-            try:
-                kind = play[0].displayName
-            except IndexError:
-                konversation.dbus.error(i18n("%1 is not a supported player.", kind))
-                sys.exit(1)
+        try:
+            intro = intro_strings[preferred_media[player.name]]
+        except KeyError:
+            intro = intro_strings['audio']
 
-    if not playing(play, kind):
-        handleErrors(play, kind)
+    output = dict(intro=intro, info=info, player=player.identity)
 
+    return string.Template(output_format).safe_substitute(output)
 
-# It would be so nice to just keep this pipe open and use it for all the dcop action,
-# but of course you're supposed to use the big iron (language bindings) instead of
-# the command line tools. One could consider `dcop` the bash dcop language binding,
-# but of course when using shell you don't need to be efficient at all, right?
-
-try:
-    DCOP_ITEMS = subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0].decode()  # re.findall("^amarok(?:-\\d*)?$",l,re.M)
-except OSError:
-    DCOP_ITEMS = ''
-
-# Add your new players here. No more faulty logic due to copy+paste.
-
-PLAYERS = [
-AmarokPlayer(),
-JukPlayer(),
-DCOPPlayer("JuK", "juk", "Player trackProperty Title", "Player trackProperty Artist", "Player trackProperty Album"),
-DCOPPlayer("Noatun", 'noatun', "Noatun title", playerType='audio, video'),
-DCOPPlayer("Kaffeine", "kaffeine", "KaffeineIface title", "KaffeineIface artist", "KaffeineIface album", playerType='video, audio'),
-StupidPlayer("KMPlayer", "kmplayer", "kmplayer-mainwindow#1 caption", playerType='video, audio'),
-StupidPlayer("KPlayer", "kplayer", "kplayer-mainwindow#1 caption", playerType='video, audio'),
-DCOPPlayer("KsCD", "kscd", "CDPlayer currentTrackTitle", "CDPlayer currentArtist", "CDPlayer currentAlbum"),
-DCOPPlayer("kdetv", "kdetv", "KdetvIface channelName", playerType='video'),
-Amarok2Player(),
-DCOPPlayer("Yammi","yammi", "YammiPlayer songTitle", "YammiPlayer songArtist", "YammiPlayer songAlbum"),
-AudaciousPlayer('Audacious'),
-XmmsPlayer('XMMS'),
-MPD('MPD')
-]
-
-# Get rid of players that didn't get subclassed so they don't appear in the available players list.
-for i in PLAYERS[:]:
-    if type(i) is Player:
-        PLAYERS.remove(i)
-
-if REGEX_FIXUP:
-    FIXUP = REGEX_FIXUP
-elif SIMPLE_FIXUP:
-    FIXUP = "[%s]" % (SIMPLE_FIXUP)
-else:
-    FIXUP = ''
-
-# It all comes together right here.
 if __name__ == '__main__':
-
     if not konversation.dbus.target:
         # No target usually means we were called from a server tab.
-        version = '2.1.3'
+        version = '3'
         indent = '    '
         i = konversation.dbus.info
-        i(i18n("media v%1 for Konversation. One media command to rule them all, inspired by Kopete's now listening plugin.", version))
+        i(i18n("media v%1 for Konversation.", version))
         i(i18n("Usage:"))
         i(indent + i18n("\"/media\" - report what the first player found is playing."))
-        i(indent + i18n("\"/media [ 'audio' | 'video' ]\" - report what is playing in a supported audio or video player."))
-        i(indent + i18n("\"/media { Player }\" - report what is playing in the specified player if it is supported."))
-        i(i18n("Supported media players:"))
-        supported = ', '.join(sorted([("%s (%s)" % (p.displayName, p.type)) for p in PLAYERS]))
-        supported = supported.replace('audio', i18n("audio")).replace('video', i18n("video"))
-        i(indent + supported)
+        i(indent + i18n("\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio or video player."))
+        i(indent + i18n("\"/media { Player }\" - report what is playing in the specified player if it is found."))
     else:
         try:
-            kind = sys.argv[3].lower()
+            requested = sys.argv[3].lower().strip()
         except IndexError:
-            kind = None
+            requested = None
 
-        run(kind)
+        players_running, players_audio, players_video, players_eligible = list_players()
+
+        check_running()
+        check_playing()
+
+        player = players_eligible[0]
+        metadata = get_metadata(player)
+
+        konversation.dbus.say(format(player, metadata), '')

@@ -1,6 +1,15 @@
 Changes not in the 1.4 branch:
 * Performance optimizations and code cleanup for processing NAMES messages
   from the server.
+* The bundled 'media' script has been rewritten from scratch to implement the
+  MPRIS2 standard for interfacing with media players - and only the MPRIS2
+  standard. This means losing support for a number of legacy players which do
+  not support MPRIS2, but also gaining support for a number of popular modern
+  players which do (e.g. Tomahawk). Additionally, there are often third-party
+  MPRIS2 bridges or plugins for players which do not support it natively. The
+  script now also features much-improved error handling and reporting in the
+  face of misbehaving players or configuration errors.
+
 
 Changes since 1.4-beta1:
 * Fixed +q Type A channel modes (Freenode's "quiet bans") being reported as
