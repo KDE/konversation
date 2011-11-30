@@ -276,7 +276,7 @@ def format(player, metadata):
 
     if not format_key:
         konversation.dbus.error(i18n("%1 did not report the metadata needed to output a message.", player.identity), exit=True)
-    
+
     try:
         if metadata['album'] == metadata['artist']:
             format_key.remove('album')
