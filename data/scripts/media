@@ -142,7 +142,7 @@ def list_players():
     try:
         output = subprocess.check_output((dbus_command, 'org.mpris.MediaPlayer2.*'))
     except subprocess.CalledProcessError:
-        konversation.dbus.error(i18n("An error occured while trying to list the running media players."), exit=True)
+        konversation.dbus.error(i18n("An error occurred while trying to list the running media players."), exit=True)
 
     for line in output.decode(errors='replace').splitlines():
         try:
@@ -228,7 +228,7 @@ def get_metadata(player):
     try:
         output = fetch_property(player.busname, 'org.mpris.MediaPlayer2.Player.Metadata')
     except subprocess.CalledProcessError:
-        konversation.dbus.error(i18n("An error occured while trying to retrieve media metadata from %1.", player.identity), exit=True)
+        konversation.dbus.error(i18n("An error occurred while trying to retrieve media metadata from %1.", player.identity), exit=True)
 
     keys = ('xesam:title:', 'xesam:artist:', 'xesam:albumArtist:', 'xesam:album:', 'xesam:url:')
     metadata = dict()
