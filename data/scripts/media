@@ -247,17 +247,8 @@ def get_metadata(player):
         if url.scheme == 'file' and url.path:
             metadata['title'] = os.path.basename(unquote_plus(url.path))
 
-    if 'url' in metadata:
-        del metadata['url']
-
     if not 'artist' in metadata and 'albumArtist' in metadata:
         metadata['artist'] = metadata['albumArtist']
-
-    if 'albumArtist' in metadata:
-        del metadata['albumArtist']
-
-    if not metadata:
-        konversation.dbus.error(i18n("%1 did not report any metadata for the media it is playing.", player.identity), exit=True)
 
     return metadata
 
@@ -281,8 +272,11 @@ def fixup(metadata):
 def format(player, metadata):
     fixup(metadata)
 
-    format_key = list(metadata)
+    format_key = [x for x in list(metadata) if x in ('album', 'artist', 'title')]
 
+    if not format_key:
+        konversation.dbus.error(i18n("%1 did not report the metadata needed to output a message.", player.identity), exit=True)
+    
     try:
         if metadata['album'] == metadata['artist']:
             format_key.remove('album')
