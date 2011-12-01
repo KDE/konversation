@@ -40,7 +40,7 @@ import subprocess
 import sys
 
 
-__all__ = ('abort_if_standalone', 'info', 'error', 'say')
+__all__ = ('info', 'error', 'say')
 
 
 # Functions
