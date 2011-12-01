@@ -131,7 +131,7 @@ def is_specific_player(kind):
 
 def fetch_property(busname, attribute):
     output = subprocess.check_output((dbus_command, busname, '/org/mpris/MediaPlayer2', attribute))
-    return output.decode(errors='replace').strip()
+    return output.decode(encoding='utf-8', errors='replace').strip()
 
 def list_players():
     running = PlayerList()
