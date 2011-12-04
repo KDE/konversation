@@ -11,18 +11,50 @@ Changes not in the 1.4 branch:
   face of misbehaving players or configuration errors.
 
 
+Changes from 1.4-beta1 to 1.4:
+The dominant theme in Konversation v1.4 is improvements and feature additions to
+the user interface, particularly to text views, dialogs, (context) menus and
+input line commands. However, nearly all areas of the application have seen some
+amount of improvements in this release, as is to be expected given the
+relatively long relase cycle: Connection behavior, IRC protocol handling,
+scripting support, encryption support, user documentation - new features, polish
+and certainly also bug fixes are to be found in all of them. In summary, we hope
+you will enjoy the best Konversation yet.
+
+The changelog for this release starts with a (very) brief summary of major
+highlights relative to v1.3.1, followed by the short list of changes since
+v1.4-beta1. If you skipped the beta, please do refer to the changelog for
+v1.4-beta1 as well, which is highly detailed and categorized for your reading
+pleasure.
+
+A brief selection of highlights since v1.3.1:
+* URL and email detection in text views has been rewritten from scratch, greatly
+  improving the handling of various types of URLs and the contexts they might
+  appear in.
+* Extensive improvements to IRC formatting code handling, including the return
+  of background color support.
+* Extensive, sometimes full rewrites of user interface elements such as nearly
+  all context menus, the URL Catcher and the Warning Dialogs system for a long
+  list of user interface improvements and bug fixes.
+* Improved SSL connection behavior.
+* Translation support and various other improvements in several bundled scripts.
+* Expanded Python scripting support via the introduction of an API support
+  package.
+* Support for more IRC numerics.
+* Various bugfixes to input line command handling and connection behavior.
+
 Changes since 1.4-beta1:
 * Fixed +q Type A channel modes (Freenode's "quiet bans") being reported as
   awarding channel owner privileges.
-* Fixed a bug causing the +r channel mode to be incorrectly described as
-  "server reop" in the user interface.
+* Fixed a bug causing the +r channel mode to be incorrectly described as "server
+  reop" in the user interface.
 * Improved the description string for the +l channel mode.
 * Fixed the parameter handling of the example script in the handbook's section
   on scripting.
 * Fixed build with KDE Platform versions below 4.6.0. The minimum required
   version is 4.4.3.
-* The '/setkey' command now supports keys that have spaces in them, by
-  treating all parameters after the first as part of the key.
+* The '/setkey' command now supports keys that have spaces in them, by treating
+  all parameters after the first as part of the key.
 * The 'Edit Multiline Paste' editor now puts initial focus on the text field,
   rather than the Send button.
 * Added a sanity check to avoid a crash while processing broken, empty NAMES
@@ -39,22 +71,6 @@ in nearly all areas of the application, including connection behavior, IRC
 protocol handling, scripting support, and more. Please have a look at the
 changelog for a short summary of the major highlights, as well as the usual
 extensive coverage of the details.
-
-A brief selection of highlights:
-* URL and email detection in text views has been rewritten from scratch, greatly
-  improving the handling of various types of URLs and the contexts they might
-  appear in.
-* Extensive improvements to IRC formatting code handling, including the return
-  of background color support.
-* Extensive, sometimes full rewrites of user interface elements such as nearly
-  all context menus, the URL Catcher and the Warning Dialogs system for a long
-  list of user interface improvements and bug fixes.
-* Improved SSL connection behavior.
-* Translation support and various other improvements in several bundled scripts.
-* Expanded Python scripting support via the introduction of an API support
-  package.
-* Support for more IRC numerics.
-* Various bugfixes to input line command handling and connection behavior.
 
 General User interface (more UI changes in individual sections below):
 * The code handling the context menus of chat text views (including the context
