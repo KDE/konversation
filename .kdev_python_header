@@ -1,0 +1,15 @@
+# The lines in this file are silently added to the front of each file
+# processed by kdev-python. See b7b1955f in kdev-python.git.
+
+# Work around 'konversation' being flagged as undefined variable after
+# something like 'import konversation.dbus'. Fix in kdev-python pending.
+import konversation
+
+# konversation.i18n adds the i18n* callables to builtins at runtime,
+# which kdev-python can't economically replicate statically. Help it out
+# here so they're not flagged as undefined variables.
+import konversation.i18n
+i18n = konversation.i18n.i18n
+i18nc = konversation.i18n.i18nc
+i18np = konversation.i18n.i18np
+i18ncp = konversation.i18n.i18ncp
