@@ -5,11 +5,11 @@
 # something like 'import konversation.dbus'. Fix in kdev-python pending.
 import konversation
 
-# konversation.i18n adds the i18n* callables to builtins at runtime,
-# which kdev-python can't economically replicate statically. Help it out
-# here so they're not flagged as undefined variables.
-import konversation.i18n
-i18n = konversation.i18n.i18n
-i18nc = konversation.i18n.i18nc
-i18np = konversation.i18n.i18np
-i18ncp = konversation.i18n.i18ncp
+# konversation.i18n.init() adds the i18n* callables to builtins at
+# runtime (as the original gettext module does with _()), which
+# kdev-python can't economically replicate statically. Help it out here
+# so they're not flagged as undefined variables.
+def i18n(msg, *args): pass
+def i18np(smsg, pmsg, num, *args): pass
+def i18nc(ctxt, msg, *args): pass
+def i18ncp(ctxt, smsg, pmsg, num, *args): pass
