@@ -441,6 +441,7 @@ void ViewContainer::updateViewActions(int index)
         ChatWindow::WindowType viewType = view->getType();
         Server* server = view->getServer();
         bool insertSupported = view->isInsertSupported();
+        IRCView* textView = view->getTextView();
 
         if (m_viewTree)
         {
@@ -538,7 +539,7 @@ void ViewContainer::updateViewActions(int index)
             // to the active tab, e.g. when it was just changed.
 
             action = actionCollection()->action("insert_marker_line");
-            if (action)  action->setEnabled(insertSupported);
+            if (action)  action->setEnabled(textView != 0);
 
             action = actionCollection()->action("insert_character");
             if (action) action->setEnabled(insertSupported);
@@ -547,13 +548,13 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(insertSupported);
 
             action = actionCollection()->action("focus_input_box");
-            if (action) action->setEnabled(insertSupported);
+            if (action) action->setEnabled(view->getInputBar() != 0);
 
             action = actionCollection()->action("clear_lines");
-            if (action) action->setEnabled(insertSupported && view->getTextView()->hasLines());
+            if (action) action->setEnabled(textView != 0 && view->getTextView()->hasLines());
 
             action = actionCollection()->action("clear_window");
-            if (action) action->setEnabled(insertSupported);
+            if (action) action->setEnabled(textView != 0);
 
             action = actionCollection()->action("edit_find");
             if (action)
@@ -1418,7 +1419,7 @@ void ViewContainer::viewSwitched(int newIndex)
 
         disconnect(m_frontView, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
 
-        if (Preferences::self()->automaticRememberLine() && m_frontView->isInsertSupported())
+        if (Preferences::self()->automaticRememberLine() && m_frontView->getTextView() != 0)
             m_frontView->getTextView()->insertRememberLine();
     }
 
@@ -1444,7 +1445,7 @@ void ViewContainer::viewSwitched(int newIndex)
 
     if (!m_viewTree || !m_viewTree->hasFocus()) view->adjustFocus();
 
-    if (view->isInsertSupported()) view->getTextView()->cancelRememberLine();
+    if (view->getTextView() != 0) view->getTextView()->cancelRememberLine();
 
     updateViewEncoding(view);
 
@@ -2029,7 +2030,7 @@ void ViewContainer::focusInputBox()
 
 void ViewContainer::clearViewLines()
 {
-    if (m_frontView && m_frontView->isInsertSupported())
+    if (m_frontView && m_frontView->getTextView() != 0)
     {
         m_frontView->getTextView()->clearLines();
 
@@ -2042,7 +2043,7 @@ void ViewContainer::insertRememberLine()
 {
     if (Preferences::self()->automaticRememberLine())
     {
-        if (m_frontView && m_frontView->isInsertSupported())
+        if (m_frontView && m_frontView->getTextView() != 0)
             m_frontView->getTextView()->insertRememberLine();
     }
 }
@@ -2053,14 +2054,14 @@ void ViewContainer::insertRememberLines(Server* server)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-        if (view->getServer() == server && view->isInsertSupported())
+        if (view->getServer() == server && view->getTextView() != 0)
             view->getTextView()->insertRememberLine();
     }
 }
 
 void ViewContainer::cancelRememberLine()
 {
-    if (m_frontView && m_frontView->isInsertSupported())
+    if (m_frontView && m_frontView->getTextView() != 0)
     {
         m_frontView->getTextView()->cancelRememberLine();
 
@@ -2080,16 +2081,16 @@ void ViewContainer::insertMarkerLine()
         {
             view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-            if (view->isInsertSupported()) view->getTextView()->insertMarkerLine();
+            if (view->getTextView() != 0) view->getTextView()->insertMarkerLine();
         }
     }
     else
     {
-        if (m_frontView && m_frontView->isInsertSupported())
+        if (m_frontView && m_frontView->getTextView() != 0)
             m_frontView->getTextView()->insertMarkerLine();
     }
 
-    if (m_frontView && m_frontView->isInsertSupported())
+    if (m_frontView && m_frontView->getTextView() != 0)
     {
         QAction* action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
