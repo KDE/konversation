@@ -106,7 +106,6 @@ class Channel : public ChatWindow
         virtual void setChannelEncoding(const QString& encoding);
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
-        virtual bool isInsertSupported() { return true; }
 
     protected:
         // use with caution! does not check for duplicates
@@ -233,8 +232,6 @@ class Channel : public ChatWindow
         void updateModeWidgets(char mode, bool plus, const QString &parameter);
         void updateQuickButtons(const QStringList &newButtonList);
 
-        /// Get the contents of the input line.
-        virtual QString getTextInLine();
         /// Sounds suspiciously like a destructor..
         virtual bool closeYourself(bool askForConfirmation=true);
 
@@ -258,7 +255,6 @@ class Channel : public ChatWindow
         void showQuickButtons(bool show);
         void showModeButtons(bool show);
 
-        void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
         void showTopic(bool show);
         void showNicknameBox(bool show);
@@ -339,7 +335,6 @@ class Channel : public ChatWindow
         QString oldNick; ///< GUI
         AwayLabel* awayLabel;
         QLabel* cipherLabel;
-        IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;
         QList<QuickButton*> buttonList;

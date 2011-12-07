@@ -51,19 +51,19 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     awayLabel=new AwayLabel(commandLineBox);
     awayLabel->hide();
 
-    statusInput=new IRCInput(commandLineBox);
+    m_inputBar=new IRCInput(commandLineBox);
 
-    getTextView()->installEventFilter(statusInput);
-    statusInput->installEventFilter(this);
+    getTextView()->installEventFilter(m_inputBar);
+    m_inputBar->installEventFilter(this);
 
-    connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
+    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendStatusText(QString)) );
 
-    connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
-    connect(statusInput,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
-    connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
+    connect(m_inputBar,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
+    connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
+    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
 
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editable.  if we design it so it isn't, remove these lines.
@@ -89,7 +89,7 @@ void StatusPanel::setNickname(const QString& newNickname)
 
 void StatusPanel::childAdjustFocus()
 {
-    statusInput->setFocus();
+    m_inputBar->setFocus();
 }
 
 void StatusPanel::sendStatusText(const QString& sendLine)
@@ -122,9 +122,9 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
 void StatusPanel::statusTextEntered()
 {
-    QString line = sterilizeUnicode(statusInput->toPlainText());
+    QString line = sterilizeUnicode(m_inputBar->toPlainText());
 
-    statusInput->clear();
+    m_inputBar->clear();
 
     if (!line.isEmpty()) sendStatusText(line);
 }
@@ -208,8 +208,6 @@ void StatusPanel::showEvent(QShowEvent*)
     }
 }
 
-QString StatusPanel::getTextInLine() { return statusInput->toPlainText(); }
-
 bool StatusPanel::canBeFrontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
 
@@ -274,7 +272,7 @@ void StatusPanel::nicknameComboboxChanged()
         m_server->queue("NICK "+newNick);
     }
     // return focus to input line
-    statusInput->setFocus();
+    m_inputBar->setFocus();
 }
 
 void StatusPanel::changeNickname(const QString& newNickname)
@@ -285,20 +283,6 @@ void StatusPanel::changeNickname(const QString& newNickname)
 void StatusPanel::emitUpdateInfo()
 {
     emit updateInfo(getServer()->getDisplayName());
-}
-
-void StatusPanel::appendInputText(const QString& text, bool fromCursor)
-{
-    if (!fromCursor)
-    {
-        QTextCursor c(statusInput->textCursor());
-        c.movePosition(QTextCursor::End);
-        c.insertText(text);
-    }
-    else
-    {
-        statusInput->textCursor().insertText(text);
-    }
 }
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)
@@ -325,7 +309,7 @@ QString StatusPanel::getChannelEncodingDefaultDesc()
 //Used to disable functions when not connected
 void StatusPanel::serverOnline(bool online)
 {
-    //statusInput->setEnabled(online);
+    //m_inputBar->setEnabled(online);
     nicknameCombobox->setEnabled(online);
 }
 

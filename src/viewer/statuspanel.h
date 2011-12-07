@@ -34,7 +34,6 @@ class StatusPanel : public ChatWindow
 
         virtual void setName(const QString& newName);
 
-        virtual QString getTextInLine();
         virtual bool closeYourself(bool askForConfirmation=true);
         virtual bool canBeFrontView();
         virtual bool searchView();
@@ -46,8 +45,6 @@ class StatusPanel : public ChatWindow
 
         virtual void setServer(Server* newServer);
 
-        virtual bool isInsertSupported() { return true; }
-
         virtual void setNotificationsEnabled(bool enable);
 
     signals:
@@ -57,7 +54,6 @@ class StatusPanel : public ChatWindow
         void setNickname(const QString& newNickname);
         virtual void indicateAway(bool show);
         void updateAppearance();
-        virtual void appendInputText(const QString&, bool fromCursor);
         void updateName();
 
     protected slots:
@@ -82,7 +78,6 @@ class StatusPanel : public ChatWindow
 
         KComboBox* nicknameCombobox;
         AwayLabel* awayLabel;
-        IRCInput* statusInput;
         QCheckBox* logCheckBox;
         QString oldNick;
 };

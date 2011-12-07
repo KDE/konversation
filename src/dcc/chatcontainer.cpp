@@ -70,20 +70,20 @@ namespace Konversation
                 setTextView(ircViewBox->ircView());
             }
 
-            m_dccChatInput = new IRCInput(this);
-            getTextView()->installEventFilter(m_dccChatInput);
-            m_dccChatInput->setReadOnly(true);
+            m_inputBar = new IRCInput(this);
+            getTextView()->installEventFilter(m_inputBar);
+            m_inputBar->setReadOnly(true);
 
             connect(m_chat, SIGNAL(receivedRawLine(QString)), this, SLOT(receivedLine(QString)));
             connect(m_chat, SIGNAL(statusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)),
                     this, SLOT(chatStatusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)));
             connect(m_chat, SIGNAL(upnpError(QString)), this, SLOT(upnpError(QString)));
 
-            connect(m_dccChatInput, SIGNAL(submit()), this, SLOT(textEntered()));
-            connect(m_dccChatInput, SIGNAL(textPasted(QString)), this, SLOT(textPasted(QString)));
+            connect(m_inputBar, SIGNAL(submit()), this, SLOT(textEntered()));
+            connect(m_inputBar, SIGNAL(textPasted(QString)), this, SLOT(textPasted(QString)));
 
-            connect(getTextView(), SIGNAL(textPasted(bool)), m_dccChatInput, SLOT(paste(bool)));
-            connect(getTextView(), SIGNAL(gotFocus()), m_dccChatInput, SLOT(setFocus()));
+            connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
+            connect(getTextView(), SIGNAL(gotFocus()), m_inputBar, SLOT(setFocus()));
             connect(getTextView(), SIGNAL(autoText(QString)), this, SLOT(textPasted(QString)));
 
             updateAppearance();
@@ -127,14 +127,14 @@ namespace Konversation
 
                 case Chat::Chatting:
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
-                    m_dccChatInput->setReadOnly(false);
+                    m_inputBar->setReadOnly(false);
                     // KTextEdit::setReadOnly(true) from the ChatContainer constructor fucked up the palette.
-                    m_dccChatInput->updateAppearance();
+                    m_inputBar->updateAppearance();
                     break;
                 case Chat::Failed:
                 default:
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
-                    m_dccChatInput->setReadOnly(true);
+                    m_inputBar->setReadOnly(true);
                     break;
             }
 
@@ -157,11 +157,6 @@ namespace Konversation
             return m_chat->ownNick();
         }
 
-        bool ChatContainer::isInsertSupported()
-        {
-            return true;
-        }
-
         bool ChatContainer::canBeFrontView()
         {
             return true;
@@ -169,7 +164,7 @@ namespace Konversation
 
         void ChatContainer::childAdjustFocus()
         {
-            m_dccChatInput->setFocus();
+            m_inputBar->setFocus();
         }
 
         bool ChatContainer::closeYourself(bool askForConfirmation)
@@ -227,11 +222,6 @@ namespace Konversation
             return i18nc("%1=Encoding","Default ( %1 )", Konversation::IRCCharsets::self()->encodingForLocale());
         }
 
-        QString ChatContainer::getTextInLine()
-        {
-            return m_dccChatInput->toPlainText();
-        }
-
         bool ChatContainer::searchView()
         {
             return true;
@@ -244,7 +234,7 @@ namespace Konversation
 
         void ChatContainer::textEntered()
         {
-            const QString &line = sterilizeUnicode(m_dccChatInput->toPlainText());
+            const QString &line = sterilizeUnicode(m_inputBar->toPlainText());
 
             if (line.isEmpty())
             {
@@ -287,7 +277,7 @@ namespace Konversation
             {
                 textPasted(line);
             }
-            m_dccChatInput->clear();
+            m_inputBar->clear();
         }
 
         void ChatContainer::textPasted(const QString &text)
@@ -336,22 +326,5 @@ namespace Konversation
                 getTextView()->append(m_chat->partnerNick(), line);
             }
         }
-
-        void ChatContainer::appendInputText(const QString &text, bool fromCursor)
-        {
-            if (!fromCursor)
-            {
-                m_dccChatInput->append(text);
-            }
-            else
-            {
-                const int position = m_dccChatInput->textCursor().position();
-                m_dccChatInput->textCursor().insertText(text);
-                QTextCursor cursor = m_dccChatInput->textCursor();
-                cursor.setPosition(position + text.length());
-                m_dccChatInput->setTextCursor(cursor);
-            }
-        }
-
     }
 }

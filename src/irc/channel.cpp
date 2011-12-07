@@ -222,11 +222,11 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     cipherLabel = new QLabel(commandLineBox);
     cipherLabel->hide();
     cipherLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
-    channelInput = new IRCInput(commandLineBox);
+    m_inputBar = new IRCInput(commandLineBox);
 
-    getTextView()->installEventFilter(channelInput);
-    topicLine->installEventFilter(channelInput);
-    channelInput->installEventFilter(this);
+    getTextView()->installEventFilter(m_inputBar);
+    topicLine->installEventFilter(m_inputBar);
+    m_inputBar->installEventFilter(this);
 
     // Set the widgets size policies
     m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -257,14 +257,14 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     getTextView()->setSizePolicy(greedy);
     nicknameListView->setSizePolicy(hmodest);
 
-    connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
-    connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
-    connect(channelInput,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
-    connect(channelInput,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
-    connect(channelInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+    connect(m_inputBar,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
+    connect(m_inputBar,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
+    connect(m_inputBar,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
+    connect(m_inputBar,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
+    connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
 
-    connect(getTextView(), SIGNAL(textPasted(bool)), channelInput, SLOT(paste(bool)));
-    connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
+    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
+    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendChannelText(QString)) );
 
@@ -483,18 +483,18 @@ void Channel::doubleClickCommand(QTreeWidgetItem *item, int column)
 void Channel::completeNick()
 {
     int pos, oldPos;
-    QTextCursor cursor = channelInput->textCursor();
+    QTextCursor cursor = m_inputBar->textCursor();
 
     pos = cursor.position();
-    oldPos = channelInput->getOldCursorPosition();
+    oldPos = m_inputBar->getOldCursorPosition();
 
-    QString line=channelInput->toPlainText();
+    QString line=m_inputBar->toPlainText();
     QString newLine;
     // Check if completion position is out of range
     if(completionPosition >= nicknameList.count()) completionPosition = 0;
 
     // Check, which completion mode is active
-    char mode = channelInput->getCompletionMode();
+    char mode = m_inputBar->getCompletionMode();
 
     if(mode == 'c')
     {
@@ -503,10 +503,10 @@ void Channel::completeNick()
     }
 
     // If the cursor is at beginning of line, insert last completion if the nick is still around
-    if(pos == 0 && !channelInput->lastCompletion().isEmpty() && nicknameList.containsNick(channelInput->lastCompletion()))
+    if(pos == 0 && !m_inputBar->lastCompletion().isEmpty() && nicknameList.containsNick(m_inputBar->lastCompletion()))
     {
         QString addStart(Preferences::self()->nickCompleteSuffixStart());
-        newLine = channelInput->lastCompletion() + addStart;
+        newLine = m_inputBar->lastCompletion() + addStart;
         // New cursor position is behind nickname
         pos = newLine.length();
         // Add rest of the line
@@ -515,7 +515,7 @@ void Channel::completeNick()
     else
     {
         // remember old cursor position in input field
-        channelInput->setOldCursorPosition(pos);
+        m_inputBar->setOldCursorPosition(pos);
         // remember old cursor position locally
         oldPos = pos;
         // step back to last space or start of line
@@ -549,7 +549,7 @@ void Channel::completeNick()
                     }
                     else
                     {
-                        channelInput->showCompletionList(found);
+                        m_inputBar->showCompletionList(found);
                     }
                 }
             } // Cycle completion
@@ -608,7 +608,7 @@ void Channel::completeNick()
             if(!foundNick.isEmpty())
             {
                 // set channel nicks completion mode
-                channelInput->setCompletionMode('c');
+                m_inputBar->setCompletionMode('c');
 
                 // remove pattern from line
                 newLine.remove(pos, pattern.length());
@@ -616,7 +616,7 @@ void Channel::completeNick()
                 // did we find the nick in the middle of the line?
                 if(pos && complete)
                 {
-                    channelInput->setLastCompletion(foundNick);
+                    m_inputBar->setLastCompletion(foundNick);
                     QString addMiddle = Preferences::self()->nickCompleteSuffixMiddle();
                     newLine.insert(pos, foundNick + addMiddle);
                     pos = pos + foundNick.length() + addMiddle.length();
@@ -624,7 +624,7 @@ void Channel::completeNick()
                 // no, it was at the beginning
                 else if(complete)
                 {
-                    channelInput->setLastCompletion(foundNick);
+                    m_inputBar->setLastCompletion(foundNick);
                     QString addStart = Preferences::self()->nickCompleteSuffixStart();
                     newLine.insert(pos, foundNick + addStart);
                     pos = pos + foundNick.length() + addStart.length();
@@ -642,9 +642,9 @@ void Channel::completeNick()
     }
 
     // Set new text and cursor position
-    channelInput->setText(newLine);
+    m_inputBar->setText(newLine);
     cursor.setPosition(pos);
-    channelInput->setTextCursor(cursor);
+    m_inputBar->setTextCursor(cursor);
 }
 
 // make sure to step back one position when completion ends so the user starts
@@ -762,9 +762,9 @@ void Channel::sendFileMenu()
 
 void Channel::channelTextEntered()
 {
-    QString line = channelInput->toPlainText();
+    QString line = m_inputBar->toPlainText();
 
-    channelInput->clear();
+    m_inputBar->clear();
 
     if (!line.isEmpty()) sendChannelText(sterilizeUnicode(line));
 }
@@ -772,9 +772,9 @@ void Channel::channelTextEntered()
 void Channel::channelPassthroughCommand()
 {
     QString commandChar = Preferences::self()->commandChar();
-    QString line = channelInput->toPlainText();
+    QString line = m_inputBar->toPlainText();
 
-    channelInput->clear();
+    m_inputBar->clear();
 
     if(!line.isEmpty())
     {
@@ -921,7 +921,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
         sendChannelText(out);
     // single line without newline needs to be copied into input line
     else
-        channelInput->setText(out);
+        m_inputBar->setText(out);
 }
 
 void Channel::addNickname(ChannelNickPtr channelnick)
@@ -2105,14 +2105,14 @@ void Channel::updateAppearance()
     if (Preferences::self()->customTextFont())
     {
         topicLine->setFont(Preferences::self()->textFont());
-        channelInput->setFont(Preferences::self()->textFont());
+        m_inputBar->setFont(Preferences::self()->textFont());
         nicknameCombobox->setFont(Preferences::self()->textFont());
         limit->setFont(Preferences::self()->textFont());
     }
     else
     {
         topicLine->setFont(KGlobalSettings::generalFont());
-        channelInput->setFont(KGlobalSettings::generalFont());
+        m_inputBar->setFont(KGlobalSettings::generalFont());
         nicknameCombobox->setFont(KGlobalSettings::generalFont());
         limit->setFont(KGlobalSettings::generalFont());
     }
@@ -2155,7 +2155,7 @@ void Channel::nicknameComboboxChanged()
         nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(oldNick));
         changeNickname(newNick);
         // return focus to input line
-        channelInput->setFocus();
+        m_inputBar->setFocus();
     }
 }
 
@@ -2177,7 +2177,7 @@ void Channel::queueNicks(const QStringList& nicknameList)
 
 void Channel::childAdjustFocus()
 {
-    channelInput->setFocus();
+    m_inputBar->setFocus();
     refreshModeButtons();
 }
 
@@ -2299,35 +2299,14 @@ void Channel::fadeActivity()
     }
 }
 
-QString Channel::getTextInLine()
-{
-  return channelInput->toPlainText();
-}
-
 bool Channel::canBeFrontView()
 {
-  return true;
+    return true;
 }
 
 bool Channel::searchView()
 {
-  return true;
-}
-
-void Channel::appendInputText(const QString& s, bool fromCursor)
-{
-    if(!fromCursor)
-    {
-        channelInput->append(s);
-    }
-    else
-    {
-        const int position = channelInput->textCursor().position();
-        channelInput->textCursor().insertText(s);
-        QTextCursor cursor = channelInput->textCursor();
-        cursor.setPosition(position + s.length());
-        channelInput->setTextCursor(cursor);
-    }
+    return true;
 }
 
 bool Channel::closeYourself(bool confirm)

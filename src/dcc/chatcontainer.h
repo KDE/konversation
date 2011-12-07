@@ -35,7 +35,6 @@ namespace Konversation
                 ~ChatContainer();
 
             // ChatWindow
-                virtual QString getTextInLine();
                 virtual bool closeYourself(bool askForConfirmation=true);
                 virtual bool canBeFrontView();
                 virtual bool searchView();
@@ -45,16 +44,11 @@ namespace Konversation
                 virtual QString getChannelEncodingDefaultDesc();
                 virtual void emitUpdateInfo();
 
-                virtual bool isInsertSupported();
                 QString ownNick() const;
 
             protected:
                 /** Called from ChatWindow adjustFocus */
                 virtual void childAdjustFocus();
-
-            public slots:
-                void appendInputText(const QString &text, bool fromCursor);
-            // ChatWindow end
 
             public slots:
                 void setPartnerNick(const QString &nick);
@@ -74,7 +68,6 @@ namespace Konversation
                 QSplitter *m_headerSplitter;
 
                 Konversation::TopicLabel *m_topicLabel;
-                IRCInput *m_dccChatInput;
 
                 Chat *m_chat;
                 WhiteBoard *m_whiteBoard;

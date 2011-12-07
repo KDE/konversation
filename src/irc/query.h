@@ -55,7 +55,6 @@ class Query : public ChatWindow
          *  This should be fixed maybe?  I don't know.
          */
         NickInfoPtr getNickInfo();
-        virtual QString getTextInLine();
         virtual bool closeYourself(bool askForConfirmation=true);
         virtual bool canBeFrontView();
         virtual bool searchView();
@@ -64,8 +63,6 @@ class Query : public ChatWindow
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
         virtual void emitUpdateInfo();
-
-        virtual bool isInsertSupported() { return true; }
 
         /** call this when you see a nick quit from the server.
          *  @param reason The quit reason given by that user.
@@ -82,7 +79,6 @@ class Query : public ChatWindow
 
     public slots:
         void sendQueryText(const QString& text);
-        void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
@@ -116,7 +112,6 @@ class Query : public ChatWindow
         QLabel* addresseelogoimage;
         QLabel* blowfishLabel;
         AwayLabel* awayLabel;
-        IRCInput* queryInput;
         NickInfoPtr m_nickInfo;
 
         bool m_initialShow;

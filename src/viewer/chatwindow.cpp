@@ -14,6 +14,7 @@
 #include "channel.h"
 #include "query.h"
 #include "ircview.h"
+#include "ircinput.h"
 #include "server.h"
 #include "application.h"
 #include "logfilereader.h"
@@ -33,6 +34,7 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 {
     setName("ChatWindowObject");
     setTextView(0);
+    setInputBar(0);
     firstLog = true;
     m_server = 0;
     m_recreationScheduled = false;
@@ -502,7 +504,10 @@ bool ChatWindow::log()
 // reimplement this in all panels that have user input
 QString ChatWindow::getTextInLine()
 {
-  return QString();
+    if (m_inputBar)
+        return m_inputBar->toPlainText();
+    else
+        return QString();
 }
 
 bool ChatWindow::canBeFrontView()
@@ -521,8 +526,18 @@ void ChatWindow::indicateAway(bool)
 }
 
 // reimplement this in all panels that have user input
-void ChatWindow::appendInputText(const QString&, bool)
+void ChatWindow::appendInputText(const QString& text, bool fromCursor)
 {
+    if (!fromCursor)
+        m_inputBar->append(text);
+    else
+    {
+        const int position = m_inputBar->textCursor().position();
+        m_inputBar->textCursor().insertText(text);
+        QTextCursor cursor = m_inputBar->textCursor();
+        cursor.setPosition(position + text.length());
+        m_inputBar->setTextCursor(cursor);
+    }
 }
 
 bool ChatWindow::eventFilter(QObject* watched, QEvent* e)

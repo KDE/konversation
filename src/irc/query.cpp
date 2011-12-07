@@ -82,17 +82,17 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();
     blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
-    queryInput=new IRCInput(inputBox);
+    m_inputBar=new IRCInput(inputBox);
 
-    getTextView()->installEventFilter(queryInput);
-    queryInput->installEventFilter(this);
+    getTextView()->installEventFilter(m_inputBar);
+    m_inputBar->installEventFilter(this);
 
     // connect the signals and slots
-    connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
-    connect(queryInput,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
-    connect(queryInput,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
-    connect(getTextView(), SIGNAL(textPasted(bool)), queryInput, SLOT(paste(bool)));
-    connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
+    connect(m_inputBar,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
+    connect(m_inputBar,SIGNAL (envelopeCommand()),this,SLOT (queryPassthroughCommand()) );
+    connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
+    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
     connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendQueryText(QString)) );
@@ -202,9 +202,9 @@ void Query::setEncryptedOutput(bool e)
 
 void Query::queryTextEntered()
 {
-    QString line=queryInput->toPlainText();
+    QString line=m_inputBar->toPlainText();
 
-    queryInput->clear();
+    m_inputBar->clear();
 
     if (!line.isEmpty()) sendQueryText(sterilizeUnicode(line));
 }
@@ -212,9 +212,9 @@ void Query::queryTextEntered()
 void Query::queryPassthroughCommand()
 {
     QString commandChar = Preferences::self()->commandChar();
-    QString line = queryInput->toPlainText();
+    QString line = m_inputBar->toPlainText();
 
-    queryInput->clear();
+    m_inputBar->clear();
 
     if(!line.isEmpty())
     {
@@ -342,7 +342,7 @@ void Query::sendFileMenu()
 
 void Query::childAdjustFocus()
 {
-    queryInput->setFocus();
+    m_inputBar->setFocus();
 }
 
 void Query::setNickInfo(const NickInfoPtr & nickInfo)
@@ -440,25 +440,8 @@ NickInfoPtr Query::getNickInfo()
     return m_nickInfo;
 }
 
-QString Query::getTextInLine() { return queryInput->toPlainText(); }
-
 bool Query::canBeFrontView()        { return true; }
 bool Query::searchView()       { return true; }
-
-void Query::appendInputText(const QString& s, bool fromCursor)
-{
-    if(!fromCursor)
-    {
-        queryInput->append(s);
-    }
-    else
-    {
-        const int position = queryInput->textCursor().position();
-        queryInput->textCursor().insertText(s);
-        queryInput->textCursor().setPosition(position + s.length());
-    }
-}
-
                                                   // virtual
 void Query::setChannelEncoding(const QString& encoding)
 {
