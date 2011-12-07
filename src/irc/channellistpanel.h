@@ -91,6 +91,9 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         virtual bool closeYourself();
         virtual void emitUpdateInfo();
 
+        bool isInsertSupported() { return true; }
+        QString getTextInLine() { return m_filterLine->text(); }
+
     signals:
         void refreshChannelList();
         void joinChannel(const QString& channelName);
