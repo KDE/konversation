@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# Prints the KDE version.
-
-SERVER=$1;
-TARGET=$2;
-
-kde4-config --version | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$line"; done
