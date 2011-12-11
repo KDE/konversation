@@ -34,6 +34,7 @@ stable scripting interface.
 import gettext
 import os
 import subprocess
+from . import dbus
 
 try:
     # Python 2.x.
@@ -136,8 +137,12 @@ def locale_directories():
 
     """
 
-    dirs = subprocess.Popen(('kde4-config', '--path', 'locale'),
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE).communicate()
+    dirs = ''
+    
+    try:
+        dirs = subprocess.check_output(('kde4-config', '--path', 'locale'))
+    except (OSError, subprocess.CalledProcessError):
+        dbus.error("A problem occured while looking for directories containing translation files. "
+                   "The output of this script will not be translated.")
 
-    return dirs[0].rstrip().decode().split(':')
+    return dirs.rstrip().decode().split(':')

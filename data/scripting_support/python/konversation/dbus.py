@@ -84,7 +84,7 @@ def _dispatch(*args):
 
     """Dispatch to Konversation's D-Bus API."""
 
-    subprocess.Popen(_dbus_command + args).communicate()
+    subprocess.call(_dbus_command + args)
 
 
 # Attributes
