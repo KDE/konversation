@@ -9,6 +9,10 @@ Changes not in the 1.4 branch:
   MPRIS2 bridges or plugins for players which do not support it natively. The
   script now also features much-improved error handling and reporting in the
   face of misbehaving players or configuration errors.
+* The bundled 'sayclip' script has been rewritten from scratch, removing the
+  now-redundant flood handling found in the old version (Konversation takes
+  care of this implicitly today) and improving the error handling in case
+  Klipper cannot be contacted.
 
 
 Changes from 1.4-beta1 to 1.4:

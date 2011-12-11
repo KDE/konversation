@@ -1,18 +1,46 @@
-#!/bin/sh
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License or (at your option) version 3 or any later version
+# accepted by the membership of KDE e.V. (or its successor appro-
+# ved by the membership of KDE e.V.), which shall act as a proxy
+# defined in Section 14 of version 3 of the license.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses/.
+#
+# Copyright (C) 2011 Eike Hein
 
-# Prints the contents of the clipbaord into Konversation with flood protection.
-# Klipper must be running.
-# Usage: /exec sayclip [pause-time]
-# Pause time defaults to 1 second.
-# By Gary Cramblitt (garycramblitt@comcast.net)
-# Use however you wish.
 
-SERVER=$1;
-TARGET=$2;
-PAUSETIME="1s";
-if [ -n "$3" ]
-then
-  PAUSETIME="$3"
-fi
+"""
+Used to post the clipboard contents to the current tab in Konversation.
 
-qdbus org.kde.klipper /klipper getClipboardContents | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" " $line"; sleep $PAUSETIME; done
+"""
+
+import subprocess
+
+try:
+    import konversation.dbus
+    import konversation.i18n
+    konversation.i18n.init()
+except ImportError:
+    sys.exit("This script is intended to be run from within Konversation.")
+
+try:
+    clipboard = subprocess.check_output(('qdbus', 'org.kde.klipper', '/klipper', 'getClipboardContents'))
+except subprocess.CalledProcessError:
+    konversation.dbus.error(i18n("Unable to retrieve clipboard contents from Klipper."), exit=True)
+
+# Fall back to info if there is no target (usually means we were called from a server tab).
+dispatch = konversation.dbus.say if konversation.dbus.target else konversation.dbus.info
+    
+for line in clipboard.decode(encoding='utf-8', errors='replace').splitlines():
+    dispatch(line)
