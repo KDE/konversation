@@ -32,11 +32,9 @@ import sys
 
 try:
     import konversation.dbus
+    konversation.dbus.default_message_prefix = 'cmd: '
 except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
-
-
-konversation.dbus.default_message_prefix = 'cmd: '
 
 if len(sys.argv) < 4:
     import konversation.i18n
@@ -56,15 +54,12 @@ if not stdout and not stderr:
     konversation.i18n.init()
     konversation.dbus.info(i18n("The command executed successfully, but did not return any output or only whitespace."))
 else:
-    if len(konversation.dbus.target):
-        # Send stdout to IRC server.
-        for line in stdout:
-            konversation.dbus.say(line)
-    else:
-        # Fall back to info if target is zero-length (usually means we
-        # were called from a server tab).
-        for line in stdout:
-            konversation.dbus.info(line)
+    # Fall back to info if there is no target (usually means we were called from a server tab).
+    dispatch = konversation.dbus.say if koversation.dbus.target else konversation.dbus.info
+
+    # Send stdout to IRC server.
+    for line in stdout:
+        dispatch(line)
 
     # Show stderr to user.
     for line in stderr:
