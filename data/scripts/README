@@ -21,9 +21,6 @@ uptime          Displays the system uptime on the current channel.
 fortune         Displays a random fortune cookie
 		usage: /fortune
 
-kdeversion	Displays the Qt/KDE version.
-		usage: /kdeversion
-
 cmd		Prints the output of a given command.
 		usage: /cmd command
 
