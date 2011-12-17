@@ -990,8 +990,8 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 void Application::openQuickConnectDialog()
 {
     quickConnectDialog = new QuickConnectDialog(mainWindow);
-    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, QString, QString, QString, QString, QString, bool)),
-        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, QString, QString, QString, QString, QString, bool)));
+    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
+        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
     quickConnectDialog->show();
 }
 
