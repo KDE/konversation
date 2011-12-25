@@ -1267,8 +1267,6 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
     int offset;
     for (int pos = 0; pos < htmlText.length(); ++pos)
     {
-        offset = 0;
-
         //check for next relevant url or channel link to insert
         if (parseURL && pos == linkPos+linkOffset)
         {

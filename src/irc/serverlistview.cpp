@@ -61,7 +61,7 @@ bool ServerListView::badDropSelection()
 {
     QList<QTreeWidgetItem*> items = selectedItems();
     QList<QTreeWidgetItem*> children;
-    QTreeWidgetItem* parent = new QTreeWidgetItem();;
+    QTreeWidgetItem* parent;
     int t=0; //top item count
     foreach (QTreeWidgetItem* item, items)
     {
