@@ -191,6 +191,7 @@ void ServerISON::recalculateAddressees()
             }
         }
     }
+    else
     {
         m_addresseesISON.clear();
         m_ISONList.clear();
