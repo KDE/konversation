@@ -291,32 +291,16 @@ struct Burr: public QTextBlockUserData
 
     ~Burr()
     {
-#if KDE_IS_VERSION(4,6,0)
-        KDebug::Block myBlock(qPrintable(QString::number((ulong)(this), 16)));
-#endif
-
-        kDebug() << "~Burr" << (void*)this << _S(m_format) << _S(m_block.blockNumber()) << "deleted";
         m_owner->blockDeleted(this);
         unlink();
     }
 
     void unlink()
     {
-        kDebug() << "====" << (void*)this << m_block;
         if (m_prev)
-        {
-            kDebug() << "prev->next" << (void*)m_next;
             m_prev->m_next = m_next;
-        }
-        else
-            kDebug() << "prev was null";
         if (m_next)
-        {
-            kDebug() << "next";
             m_next->m_prev = m_prev;
-        }
-        else
-            kDebug() << "next was null";
     }
 
     QTextBlock m_block;
@@ -375,9 +359,7 @@ QTextCharFormat IRCView::getFormat(ObjectFormats x)
 
 void IRCView::blockDeleted(Burr* b) //slot
 {
-    DebugBanner;
     Q_ASSERT(b); // this method only to be called from a ~Burr();
-    kDebug() << "blockDeleted" << (void*)(b) << b->m_block << _S(m_lastMarkerLine) << _S(m_rememberLine);
 
     //tracking only the tail
     if (b == m_lastMarkerLine)
@@ -404,13 +386,13 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
     {
         if (document()->blockCount() == 1) //the entire document was wiped. was a signal such a burden? apparently..
         {
-            showDebug = true;
+            //showDebug = true;
             d << "- wipeLineParagraphs()" << (void*)m_rememberLine << (void*)m_lastMarkerLine;
             wipeLineParagraphs();
         }
         else if (document()->characterAt(0).unicode() == 0x2029)
         {
-            showDebug = true;
+            //showDebug = true;
             d << "- only QChar::ParagraphSeparator";
             // this should never happen, it should be 0xfffc2029
             if (dynamic_cast<Burr*>(prime.userData()))
@@ -418,7 +400,7 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
         }
         else
         {
-            showDebug = true;
+            //showDebug = true;
             QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
             d << "- block of length 1 but not 2029" << qPrintable(fc);
         }
@@ -426,7 +408,7 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
     else if (prime.length() == 2)
     {
         //probably a Burr going to be culled next..
-        showDebug = true;
+        //showDebug = true;
         QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
         QString sc = "0x" + QString::number(document()->characterAt(1).unicode(), 16).rightJustified(4, '0');
         d << "- prime(2)" << fc << sc;
@@ -440,13 +422,9 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
 
 void IRCView::insertMarkerLine() //slot
 {
-    DebugBanner;
-
     //if the last line is already a marker of any kind, skip out
     if (lastBlockIsLine(BlockIsMarker))
         return;
-
-    kDebug() << "ok to insert..";
 
     //the code used to preserve the dirty bit status, but that was never affected by appendLine...
     //maybe i missed something
@@ -455,13 +433,10 @@ void IRCView::insertMarkerLine() //slot
 
 void IRCView::insertRememberLine() //slot
 {
-    DebugBanner;
-
     m_rememberLineDirtyBit = true; // means we're going to append a remember line if some text gets inserted
 
     if (!Preferences::self()->automaticRememberLineOnlyOnTextChange())
     {
-        kDebug();
         appendRememberLine();
     }
 }
@@ -480,8 +455,6 @@ bool IRCView::lastBlockIsLine(int select)
     if (b)
         state = b->m_format;
 
-    kDebug() << _S(state) << _S(select);
-
     if (select == -1)
         return (state == BlockIsRemember || state == BlockIsMarker);
 
@@ -490,8 +463,6 @@ bool IRCView::lastBlockIsLine(int select)
 
 void IRCView::appendRememberLine()
 {
-    DebugBanner;
-
     //clear this now, so that doAppend doesn't double insert
     m_rememberLineDirtyBit = false;
 
@@ -505,15 +476,12 @@ void IRCView::appendRememberLine()
         voidLineBlock(rem);
         if (m_rememberLine != 0)
         {
-            kDebug() << "%%%%%%%%%%%%%%%%% m_rememberLine still set!";
             // this probably means we had a block containing only 0x2029, so Scribe merged the userData/userState into the next
             m_rememberLine = 0;
         }
     }
 
     m_rememberLine = appendLine(IRCView::RememberLine);
-
-    kDebug() << (void*)m_rememberLine;
 }
 
 void IRCView::voidLineBlock(QTextBlock rem)
@@ -526,9 +494,6 @@ void IRCView::voidLineBlock(QTextBlock rem)
 
 void IRCView::clearLines()
 {
-    DebugBanner;
-    kDebug() << document();
-
     while (hasLines())
     {
         //IRCView::blockDeleted takes care of the pointers
@@ -543,17 +508,11 @@ void IRCView::wipeLineParagraphs()
 
 bool IRCView::hasLines()
 {
-    DebugBanner;
-
-    kDebug() << (void*)m_lastMarkerLine << (void*)m_rememberLine;
-
     return m_lastMarkerLine != 0;
 }
 
 Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 {
-    DebugBanner;
-
     ScrollBarPin barpin(verticalScrollBar());
     SelectionPin selpin(this);
 
@@ -572,8 +531,6 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 
     //TODO figure out what this is for
     cursor.setPosition(block.position());
-
-    kDebug() << block;
 
     return b;
 }
