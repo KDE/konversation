@@ -55,7 +55,7 @@ if not stdout and not stderr:
     konversation.dbus.info(i18n("The command executed successfully, but did not return any output or only whitespace."))
 else:
     # Fall back to info if there is no target (usually means we were called from a server tab).
-    dispatch = konversation.dbus.say if koversation.dbus.target else konversation.dbus.info
+    dispatch = konversation.dbus.say if konversation.dbus.target else konversation.dbus.info
 
     # Send stdout to IRC server.
     for line in stdout:
