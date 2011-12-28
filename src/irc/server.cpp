@@ -106,9 +106,9 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_modesCount = 3;
     m_sslErrorLock = false;
 
-    setObjectName(QString::fromLatin1("server_") + settings.name());
+    setObjectName(QString::fromLatin1("server_") + m_connectionSettings.name());
 
-    setNickname(settings.initialNick());
+    setNickname(m_connectionSettings.initialNick());
     obtainNickInfo(getNickname());
 
     m_statusView = getViewContainer()->addStatusView(this);
@@ -122,7 +122,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     // For /msg query completion
     m_completeQueryPosition = 0;
 
-    updateAutoJoin(settings.oneShotChannelList());
+    updateAutoJoin(m_connectionSettings.oneShotChannelList());
 
     if (!getIdentity()->getShellCommand().isEmpty())
         QTimer::singleShot(0, this, SLOT(doPreShellCommand()));
