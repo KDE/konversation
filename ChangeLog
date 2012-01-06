@@ -308,7 +308,7 @@ Commands:
   channel and query tabs is equivalent to specifying '-server' or the current
   channel or query, respectively -- the ability to cycle a query is also new.
 * The '/clear' command now supports a channel or query argument to clear, as
-  well as an an -all parameter to clear all views.
+  well as an -all parameter to clear all views.
 * The '/notify' command now displays more useful output after adding and
   removing and when summarizing Watched Nicks.
 * Fixed a bug causing adding of nicknames to the Watched Nicks Online list via
