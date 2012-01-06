@@ -20,7 +20,7 @@ The dominant theme in Konversation v1.4 is improvements and feature additions to
 the user interface, particularly to text views, dialogs, (context) menus and
 input line commands. However, nearly all areas of the application have seen some
 amount of improvements in this release, as is to be expected given the
-relatively long relase cycle: Connection behavior, IRC protocol handling,
+relatively long release cycle: Connection behavior, IRC protocol handling,
 scripting support, encryption support, user documentation - new features, polish
 and certainly also bug fixes are to be found in all of them. In summary, we hope
 you will enjoy the best Konversation yet.
