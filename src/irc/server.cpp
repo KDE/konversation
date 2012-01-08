@@ -347,6 +347,8 @@ void Server::connectSignals()
         this, SLOT(setTopicAuthor(QString,QString,QDateTime)) );
     connect(&m_inputFilter, SIGNAL(endOfWho(QString)),
         this, SLOT(endOfWho(QString)) );
+    connect(&m_inputFilter, SIGNAL(endOfNames(QString)),
+        this, SLOT(endOfNames(QString)) );
     connect(&m_inputFilter, SIGNAL(invitation(QString,QString)),
         this,SLOT(invitation(QString,QString)) );
     connect(&m_inputFilter, SIGNAL(addToChannelList(QString,int,QString)),
@@ -3397,6 +3399,13 @@ void Server::endOfWho(const QString& target)
     Channel* channel = getChannelByName(target);
     if(channel)
         channel->scheduleAutoWho();
+}
+
+void Server::endOfNames(const QString& target)
+{
+    Channel* channel = getChannelByName(target);
+    if(channel)
+        channel->endOfNames();
 }
 
 bool Server::isNickname(const QString &compare) const

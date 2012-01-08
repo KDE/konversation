@@ -78,6 +78,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_delayedSortTimer = 0;
     m_delayedSortTrigger = 0;
     m_pendingChannelNickLists.clear();
+    m_initialNamesReceived = false;
     m_currentIndex = 0;
     m_opsToAdd = 0;
     nicks = 0;
@@ -2202,6 +2203,16 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 
     if (!m_processingTimer->isActive())
         m_processingTimer->start(0);
+}
+
+void Channel::endOfNames()
+{
+    if (!m_initialNamesReceived)
+    {
+        m_initialNamesReceived = true;
+
+        scheduleAutoWho();
+    }
 }
 
 void Channel::childAdjustFocus()

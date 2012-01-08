@@ -143,6 +143,7 @@ class Channel : public ChatWindow
         void addNickname(ChannelNickPtr channelNick);
         void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
         void addPendingNickList(const QStringList& pendingChannelNickList);
+        void endOfNames();
         Nick *getNickByName(const QString& lookname) const;
         NickList getNickList() const { return nicknameList; }
 
@@ -356,14 +357,13 @@ class Channel : public ChatWindow
         QStringList m_BanList;
         bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
 
-        bool m_firstAutoWhoDone;
         QTimer m_whoTimer; ///< For continuous auto /WHO
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
         QList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
         int m_currentIndex;
-
+        bool m_initialNamesReceived;
         QTimer* m_processingTimer;
 
         QTimer* m_delayedSortTimer;
