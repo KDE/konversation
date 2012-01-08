@@ -124,6 +124,7 @@ class Channel : public ChatWindow
     protected slots:
         void autoUserhost();
         void autoWho();
+        void updateAutoWho();
         void fadeActivity();
         virtual void serverOnline(bool online);
         void delayedSortNickList();

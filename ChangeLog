@@ -1,3 +1,11 @@
+Changes since 1.4:
+* Fixed bugs causing currently joined channels not to react correctly to changes
+  in the enabled state of the Automatic User Information Lookup setting.
+  Previously, enabling the lookup would not actually start it, and disabling it
+  would only take effect after one last lookup was performed. Both now take
+  effect immediately.
+
+
 Changes from 1.4-beta1 to 1.4:
 The dominant theme in Konversation v1.4 is improvements and feature additions to
 the user interface, particularly to text views, dialogs, (context) menus and

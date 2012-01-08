@@ -280,15 +280,13 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
 
     m_whoTimer.setSingleShot(true);
-    connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
+    connect(&m_whoTimer, SIGNAL(timeout()), this, SLOT(autoWho()));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateAutoWho()));
 
     // every 5 minutes decrease everyone's activity by 1 unit
     m_fadeActivityTimer.start(5*60*1000);
 
     connect(&m_fadeActivityTimer, SIGNAL(timeout()), this, SLOT(fadeActivity()));
-
-    // re-schedule when the settings were changed
-    connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
     updateAppearance();
 
@@ -2302,25 +2300,49 @@ void Channel::setAutoUserhost(bool state)
     }
 }
 
-void Channel::scheduleAutoWho() // slot
+void Channel::scheduleAutoWho()
 {
-    if(m_whoTimer.isActive())
+    // The first auto-who is scheduled by ENDOFNAMES in InputFilter, which means
+    // the first auto-who occurs one interval after it. This has two desirable
+    // consequences specifically related to the startup phase: auto-who dispatch
+    // doesn't occur at the same time for all channels that are auto-joined, and
+    // it gives some breathing room to process the NAMES replies for all channels
+    // first before getting started on WHO.
+    // Subsequent auto-whos are scheduled by ENDOFWHO in InputFilter. However,
+    // autoWho() might refuse to actually do the request if the number of nicks
+    // in the channel exceeds the threshold, and will instead schedule another
+    // attempt later. Thus scheduling an auto-who does not guarantee it will be
+    // performed.
+    // If this is called mid-interval (e.g. due to the ENDOFWHO from a manual WHO)
+    // it will reset the interval to avoid cutting it short.
+    
+    if (m_whoTimer.isActive())
         m_whoTimer.stop();
-    if(Preferences::self()->autoWhoContinuousEnabled())
+
+    if (Preferences::self()->autoWhoContinuousEnabled())
         m_whoTimer.start(Preferences::self()->autoWhoContinuousInterval() * 1000);
 }
 
 void Channel::autoWho()
 {
-    // don't use auto /WHO when the number of nicks is too large, or get banned.
-    if((nicks > Preferences::self()->autoWhoNicksLimit()) ||
+    // Try again later if there are too many nicks or we're already processing a WHO request.
+    if ((nicks > Preferences::self()->autoWhoNicksLimit()) ||
        m_server->getInputFilter()->isWhoRequestUnderProcess(getName()))
     {
         scheduleAutoWho();
+        
         return;
     }
 
     m_server->requestWho(getName());
+}
+
+void Channel::updateAutoWho()
+{   
+    if (!Preferences::self()->autoWhoContinuousEnabled())
+        m_whoTimer.stop();
+    else if (Preferences::self()->autoWhoContinuousEnabled() && !m_whoTimer.isActive())
+        autoWho();
 }
 
 void Channel::fadeActivity()
