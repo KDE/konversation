@@ -2592,7 +2592,7 @@ void Server::sendJoinCommand(const QString& name, const QString& password)
     queue(result.toServer);
 }
 
-void Server::joinChannel(const QString& name, const QString& hostmask)
+Channel* Server::joinChannel(const QString& name, const QString& hostmask)
 {
     // (re-)join channel, open a new panel if needed
     Channel* channel = getChannelByName(name);
@@ -2628,6 +2628,8 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
     }
 
     channel->joinNickname(channelNick);
+
+    return channel;
 }
 
 void Server::removeChannel(Channel* channel)

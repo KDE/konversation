@@ -161,7 +161,7 @@ class Server : public QObject
         InputFilter* getInputFilter() { return &m_inputFilter; }
         Konversation::OutputFilter* getOutputFilter() { return m_outputFilter; };
 
-        void joinChannel(const QString& name, const QString& hostmask);
+        Channel* joinChannel(const QString& name, const QString& hostmask);
         void removeChannel(Channel* channel);
         void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
         void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message,
