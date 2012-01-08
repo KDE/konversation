@@ -4,6 +4,13 @@ Changes since 1.4:
   Previously, enabling the lookup would not actually start it, and disabling it
   would only take effect after one last lookup was performed. Both now take
   effect immediately.
+* The reaction to a change of the Automatic User Information Lookup interval
+  setting has been improved considerably: Whereas previously Konversation would
+  simply wait out the current interval scheduled using the old setting value and
+  only then schedule the next lookup using the new value, it now reschedules the
+  next lookup to occur as if the new value had been set all along, or, if the
+  time elapsed since the last lookup was performed already exceeds the new value,
+  comes as close as possible by performing a lookup immediately.
 
 
 Changes from 1.4-beta1 to 1.4:

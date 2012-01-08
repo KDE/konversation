@@ -117,7 +117,7 @@ class Channel : public ChatWindow
 
     public slots:
         void setNickname(const QString& newNickname);
-        void scheduleAutoWho();
+        void scheduleAutoWho(int msec = -1);
         void setAutoUserhost(bool state);
         void rejoin();
 
@@ -358,6 +358,8 @@ class Channel : public ChatWindow
         bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
 
         QTimer m_whoTimer; ///< For continuous auto /WHO
+        QTime  m_whoTimerStarted;
+
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
         QList<QStringList> m_pendingChannelNickLists;

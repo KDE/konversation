@@ -2311,7 +2311,7 @@ void Channel::setAutoUserhost(bool state)
     }
 }
 
-void Channel::scheduleAutoWho()
+void Channel::scheduleAutoWho(int msec)
 {
     // The first auto-who is scheduled by ENDOFNAMES in InputFilter, which means
     // the first auto-who occurs one interval after it. This has two desirable
@@ -2331,7 +2331,12 @@ void Channel::scheduleAutoWho()
         m_whoTimer.stop();
 
     if (Preferences::self()->autoWhoContinuousEnabled())
-        m_whoTimer.start(Preferences::self()->autoWhoContinuousInterval() * 1000);
+    {
+        if (msec > 0)
+            m_whoTimer.start(msec);
+        else
+            m_whoTimer.start(Preferences::self()->autoWhoContinuousInterval() * 1000);
+    }
 }
 
 void Channel::autoWho()
@@ -2354,6 +2359,49 @@ void Channel::updateAutoWho()
         m_whoTimer.stop();
     else if (Preferences::self()->autoWhoContinuousEnabled() && !m_whoTimer.isActive())
         autoWho();
+    else if (m_whoTimer.isActive())
+    {   
+        // The below tries to meet user expectations on an interval settings change,
+        // making two assumptions:
+        // - If the new interval is lower than the old one, the user may be impatient
+        //   and desires an information update.
+        // - If the new interval is longer than the old one, the user may be trying to
+        //   avoid Konversation producing too much traffic in a given timeframe, and
+        //   wants it to stop doing so sooner rather than later.
+        // Both require rescheduling the next auto-who request.
+
+        int interval = Preferences::self()->autoWhoContinuousInterval() * 1000;
+
+        if (interval != m_whoTimer.interval())
+        {
+            if (m_whoTimerStarted.elapsed() >= interval)
+            {
+                // If the time since the last auto-who request is longer than (or
+                // equal to) the new interval setting, it follows that the new
+                // setting is lower than the old setting. In this case issue a new
+                // request immediately, which is the closest we can come to acting
+                // as if the new setting had been active all along, short of tra-
+                // velling back in time to change history. This handles the impa-
+                // tient user.
+                // FIXME: Adjust algorithm when time machine becomes available.
+
+                m_whoTimer.stop();
+                autoWho();
+            }
+            else
+            {
+                // If on the other hand the elapsed time is shorter than the new
+                // interval setting, the new setting could be either shorter or
+                // _longer_ than the old setting. Happily, this time we can actually
+                // behave as if the new setting had been active all along, by sched-
+                // uling the next request to happen in the new interval time minus
+                // the already elapsed time, meeting user expecations for both cases
+                // originally laid out.
+                
+                scheduleAutoWho(interval - m_whoTimerStarted.elapsed());
+            }
+        }
+    }
 }
 
 void Channel::fadeActivity()
