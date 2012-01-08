@@ -132,7 +132,6 @@ class Preferences : public PreferencesBase
 
     signals:
         void notifyListStarted(int serverGroupId);
-        void autoContinuousWhoChanged();
         void updateTrayIcon();
 
     protected:

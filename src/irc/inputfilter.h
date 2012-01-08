@@ -67,7 +67,8 @@ class InputFilter : public QObject
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
                                                   // will be connected to Server::setTopicAuthor()
         void topicAuthor(const QString& channel, const QString& author, QDateTime t);
-        void endOfWho(const QString& target);     // for scheduling auto /WHO
+        void endOfWho(const QString& target);
+        void endOfNames(const QString& target);
         void addChannelListPanel();
         void addToChannelList(const QString& channel,int users,const QString& topic);
         void endOfChannelList();

@@ -116,13 +116,14 @@ class Channel : public ChatWindow
 
     public slots:
         void setNickname(const QString& newNickname);
-        void scheduleAutoWho();
+        void scheduleAutoWho(int msec = -1);
         void setAutoUserhost(bool state);
         void rejoin();
 
     protected slots:
         void autoUserhost();
         void autoWho();
+        void updateAutoWho();
         void fadeActivity();
         virtual void serverOnline(bool online);
         void delayedSortNickList();
@@ -141,6 +142,7 @@ class Channel : public ChatWindow
         void addNickname(ChannelNickPtr channelNick);
         void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
         void queueNicks(const QStringList& nicknameList);
+        void endOfNames();
         Nick *getNickByName(const QString& lookname) const;
         NickList getNickList() const { return nicknameList; }
 
@@ -350,13 +352,15 @@ class Channel : public ChatWindow
         QStringList m_BanList;
         bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
 
-        bool m_firstAutoWhoDone;
         QTimer m_whoTimer; ///< For continuous auto /WHO
+        QTime  m_whoTimerStarted;
+
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
         QStringList m_nickQueue;
         int m_processedNicksCount;
         int m_processedOpsCount;
+        bool m_initialNamesReceived;
 
         QTimer* m_delayedSortTimer;
         int m_delayedSortTrigger;

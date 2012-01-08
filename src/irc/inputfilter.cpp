@@ -1066,16 +1066,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         // This code path was taken for the automatic NAMES input on JOIN, upcoming
                         // NAMES input for this channel will be manual invocations of /names
                         setAutomaticRequest("NAMES", parameterList.value(1), false);
-
-                        if (Preferences::self()->autoWhoContinuousEnabled())
-                        {
-                            emit endOfWho(parameterList.value(1));
-                        }
                     }
                     else
                     {
                         m_server->appendMessageToFrontmost(i18n("Names"), i18n("End of NAMES list."));
                     }
+
+                    emit endOfNames(parameterList.value(1));
                 }
                 break;
             }
