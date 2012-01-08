@@ -188,6 +188,7 @@ Server::~Server()
 
     qDeleteAll(m_channelList);
     m_channelList.clear();
+    m_loweredChannelNameHash.clear();
 
     qDeleteAll(m_queryList);
     m_queryList.clear();
@@ -2611,6 +2612,7 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
         }
 
         m_channelList.append(channel);
+        m_loweredChannelNameHash.insert(channel->getName().toLower(), channel);
 
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
         connect(this, SIGNAL(nicknameChanged(QString)), channel, SLOT(setNickname(QString)));
@@ -2641,6 +2643,7 @@ void Server::removeChannel(Channel* channel)
     }
 
     m_channelList.removeOne(channel);
+    m_loweredChannelNameHash.remove(channel->getName().toLower());
 
     if (!isConnected())
         updateAutoJoin();
@@ -2711,12 +2714,9 @@ Channel* Server::getChannelByName(const QString& name)
     // Convert wanted channel name to lowercase
     QString wanted = name.toLower();
 
-    // Traverse through list to find the channel named "name"
-    foreach (Channel* lookChannel, m_channelList)
-    {
-        if (lookChannel->getName().toLower()==wanted) return lookChannel;
-    }
-    // No channel by that name found? Return 0. Happens on first channel join
+    if (m_loweredChannelNameHash.contains(wanted))
+        return m_loweredChannelNameHash.value(wanted);
+    
     return 0;
 }
 

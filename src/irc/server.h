@@ -721,8 +721,10 @@ class Server : public QObject
         QString m_ownIpByUserhost;                  // RPL_USERHOST
         QString m_ownIpByWelcome;                   // RPL_WELCOME
 
-        QList<Channel *> m_channelList;
-        QList<Query *> m_queryList;
+        QList<Channel*> m_channelList;
+        QHash<QString, Channel*> m_loweredChannelNameHash;
+        
+        QList<Query*> m_queryList;
 
         InputFilter m_inputFilter;
         Konversation::OutputFilter* m_outputFilter;
