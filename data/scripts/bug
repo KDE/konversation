@@ -1,17 +1,54 @@
-#!/bin/sh
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License or (at your option) version 3 or any later version
+# accepted by the membership of KDE e.V. (or its successor appro-
+# ved by the membership of KDE e.V.), which shall act as a proxy
+# defined in Section 14 of version 3 of the license.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses/.
+#
+# Copyright (C) 2012 Kristopher Kerwin
+# Copyright (C) 2012 Eike Hein <hein@kde.org>
 
-SERVER=$1
-TARGET=$2
-BUG=$3
+"""
+Used to search for a bug at bugs.kde.org.
 
-if [ ! $TARGET ]
-then
-  qdbus org.kde.konversation /irc error "Can't write into status view."
-else
-  if [ -z $BUG ]
-  then
-    qdbus org.kde.konversation /irc error "You forgot the bug number!"
-  else
-    kfmclient openURL https://bugs.kde.org/buglist.cgi?quicksearch=$3
-  fi
-fi
+"""
+
+import subprocess
+import sys
+
+try:
+    import konversation.dbus
+    konversation.dbus.default_message_prefix = 'bug: '
+
+    import konversation.i18n
+    konversation.i18n.init()
+except ImportError:
+    sys.exit("This script is intended to be run from within Konversation.")
+
+try:
+    bug = int(sys.argv[3].strip())
+except IndexError:
+    konversation.dbus.error(i18n("You forgot the bug number."), exit=True)
+except ValueError:
+    konversation.dbus.error(i18n("Please search by bug number."), exit=True)
+        
+try:
+    url = 'https://bugs.kde.org/buglist.cgi?quicksearch={0}'.format(bug)
+    subprocess.call('xdg-open', url)
+except OSError:
+    konversation.dbus.error(i18n("xdg-open not found."), exit=True)
+except subprocess.CalledProcessError:
+    konversation.dbus.error(i18n("xdg-open failed."), exit=True)
+
