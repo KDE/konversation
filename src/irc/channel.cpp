@@ -1350,7 +1350,15 @@ void Channel::emitUpdateInfo()
 
 void Channel::setTopic(const QString &newTopic)
 {
-    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", newTopic));
+    QString cleanTopic = newTopic;
+    if(!cleanTopic.isEmpty())
+    {
+        // if the reason contains text markup characters, play it safe and reset all
+        if(cleanTopic.contains(QRegExp("[\\0000-\\0037]")))
+            cleanTopic += "\017";
+    }
+
+    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
     topicAuthorUnknown=true; // if we only get called with a topic, it was a 332, which usually has a 333 next
@@ -1367,13 +1375,21 @@ void Channel::setTopic(const QString &newTopic)
 
 void Channel::setTopic(const QString &nickname, const QString &newTopic) // Overloaded
 {
+    QString cleanTopic = newTopic;
+    if(!cleanTopic.isEmpty())
+    {
+        // if the reason contains text markup characters, play it safe and reset all
+        if(cleanTopic.contains(QRegExp("[\\0000-\\0037]")))
+            cleanTopic += "\017";
+    }
+
     if(nickname == m_server->getNickname())
     {
-        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", newTopic));
+        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic));
     }
     else
     {
-        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, newTopic));
+        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, cleanTopic));
     }
 
     prependTopicHistory(newTopic, nickname);
