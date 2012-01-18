@@ -517,7 +517,7 @@ void Query::quitNick(const QString& reason)
     }
     else
     {
-        if (displayReason.contains(QRegExp("[\\0000-\\0037]")))
+        if (hasIRCMarkups(displayReason))
             displayReason+="\017";
 
         appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).",getName(),displayReason));
