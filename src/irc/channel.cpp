@@ -1123,7 +1123,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.contains(QRegExp("[\\0000-\\0037]")))
+        if (hasIRCMarkups(displayReason))
             displayReason += "\017";
     }
 
@@ -1216,7 +1216,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.contains(QRegExp("[\\0000-\\0037]")))
+        if (hasIRCMarkups(displayReason))
             displayReason += "\017";
     }
 
@@ -1354,7 +1354,7 @@ void Channel::setTopic(const QString &newTopic)
     if(!cleanTopic.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(cleanTopic.contains(QRegExp("[\\0000-\\0037]")))
+        if (hasIRCMarkups(cleanTopic))
             cleanTopic += "\017";
     }
 
@@ -1379,7 +1379,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
     if(!cleanTopic.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(cleanTopic.contains(QRegExp("[\\0000-\\0037]")))
+        if (hasIRCMarkups(cleanTopic))
             cleanTopic += "\017";
     }
 
