@@ -2311,7 +2311,7 @@ void Channel::scheduleAutoWho(int msec)
     // performed.
     // If this is called mid-interval (e.g. due to the ENDOFWHO from a manual WHO)
     // it will reset the interval to avoid cutting it short.
-    
+
     if (m_whoTimer.isActive())
         m_whoTimer.stop();
 
@@ -2331,7 +2331,7 @@ void Channel::autoWho()
        m_server->getInputFilter()->isWhoRequestUnderProcess(getName()))
     {
         scheduleAutoWho();
-        
+
         return;
     }
 
@@ -2339,13 +2339,13 @@ void Channel::autoWho()
 }
 
 void Channel::updateAutoWho()
-{   
+{
     if (!Preferences::self()->autoWhoContinuousEnabled())
         m_whoTimer.stop();
     else if (Preferences::self()->autoWhoContinuousEnabled() && !m_whoTimer.isActive())
         autoWho();
     else if (m_whoTimer.isActive())
-    {   
+    {
         // The below tries to meet user expectations on an interval settings change,
         // making two assumptions:
         // - If the new interval is lower than the old one, the user may be impatient
@@ -2382,7 +2382,7 @@ void Channel::updateAutoWho()
                 // uling the next request to happen in the new interval time minus
                 // the already elapsed time, meeting user expecations for both cases
                 // originally laid out.
-                
+
                 scheduleAutoWho(interval - m_whoTimerStarted.elapsed());
             }
         }
@@ -2445,6 +2445,7 @@ void Channel::setActive(bool active)
         nicknameCombobox->setEnabled(true);
     else
     {
+        m_initialNamesReceived = false;
         purgeNicks();
         nicknameCombobox->setEnabled(false);
         topicLine->clear();
