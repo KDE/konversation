@@ -77,7 +77,7 @@ class MetaSensor(abc.ABCMeta):
 
 # This is for papering over the syntax differences for specifying a
 # metaclass in Python 2 and 3.
-Shunt = MetaSensor('Shunt', (object, ), {})
+Shunt = MetaSensor('Shunt', (object,), {})
 
 class Sensor(Shunt):
     __metaclass__ = MetaSensor
@@ -185,7 +185,7 @@ class storage(Sensor):
         volumes = {line.split()[0] : line.split()[1:4] for line in df.splitlines() if line.startswith('/dev')}
 
         for (key, index) in zip(['total', 'used', 'free'], range(2)):
-            self.data[key] = int(sum(int(volume[index]) for volume in volumes.values()) /  1048576)
+            self.data[key] = int(sum(int(volume[index]) for volume in volumes.values()) / 1048576)
 
 class procs(Sensor):
     def gather(self):
