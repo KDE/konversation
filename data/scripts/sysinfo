@@ -194,7 +194,7 @@ class procs(Sensor):
 class uptime(Sensor):
     def gather(self):
         with open('/proc/uptime', 'r') as uptimef:
-            self.data['hours'] = round(float(uptimef.read().split()[0]) / (3600), 2)
+            self.data['hours'] = round(float(uptimef.read().split()[0]) / 3600, 2)
 
 if __name__ == '__main__':
     sensors = {cls.__name__ : cls().format() for cls in sensors}
