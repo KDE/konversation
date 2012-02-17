@@ -56,7 +56,7 @@ except ImportError:
 if sys.hexversion < 0x02070000:
     import konversation.i18n
     konversation.i18n.init()
-    err = i18n("The media script requires Python %1 or higher.", '2.7')
+    err = i18n("The sysinfo script requires Python %1 or higher.", '2.7')
     konversation.dbus.error(err)
     sys.exit(err)
 
