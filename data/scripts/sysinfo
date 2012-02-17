@@ -120,27 +120,26 @@ class distro(Sensor):
         if os.path.exists('/etc/os-release'):
             with open('/etc/os-release', 'r') as osrelease:
                 for line in osrelease:
-                    if line.startswith('NAME='):
-                        self.data['name'] = line.split('=')[1].strip(string.whitespace + '"')
-                    elif line.startswith('VERSION='):
-                        self.data['version'] = line.split('=')[1].strip(string.whitespace + '"')
+                    key, value = line.split('=', 1)
+                    if key == 'NAME':
+                        self.data['name'] = value.strip(string.whitespace + '"')
+                    elif key == 'VERSION':
+                        self.data['version'] = value.strip(string.whitespace + '"')
         else:
             try:
                 lsbrelease = subprocess.check_output(['lsb_release', '-i', '-r'], stderr=subprocess.STDOUT)
 
                 for line in lsbrelease.decode().splitlines():
-                    if line.startswith('Distributor ID:'):
-                        self.data['name'] = line.split(':')[1].strip()
-                    elif line.startswith('Release:'):
-                        self.data['version'] = line.split(':')[1].strip()
+                    key, value = line.split(':', 1)
+                    if key == 'Distributor ID':
+                        self.data['name'] = value.strip()
+                    elif key == 'Release':
+                        self.data['version'] = value.strip()
             except subprocess.CalledProcessError:
                 pass
 
     def format(self):
-        if not 'name' in self.data:
-            return ''
-        else:
-            return Sensor.format(self)
+        return Sensor.format(self) if 'name' in self.data else ''
 
 class kernel(Sensor):
     def gather(self):
@@ -152,26 +151,29 @@ class cpu(Sensor):
     def gather(self):
         with open('/proc/cpuinfo', 'r') as cpuinfo:
             for line in cpuinfo:
-                if line.startswith('model name'):
-                    self.data['model'] = line.split(':')[1].strip()
-                elif line.startswith('cpu MHz'):
-                    self.data['mhz'] = int(float(line.split(':')[1].strip()))
-                elif line.startswith('bogomips'):
-                    self.data['bogomips'] = line.split(':')[1].strip()
+                key, value = line.split(':', 1)
+                if key.strip() == 'model name':
+                    self.data['model'] = value.strip()
+                elif key.strip() == 'cpu MHz':
+                    self.data['mhz'] = int(float(value.strip()))
+                elif key.strip() == 'bogomips':
+                    self.data['bogomips'] = value.strip()
+                    break
 
 class ram(Sensor):
     def gather(self):
         with open('/proc/meminfo', 'r') as meminfo:
             for line in meminfo:
-                if line.startswith('MemTotal:'):
-                    self.data['total'] = int(line.split()[1])
-                elif line.startswith('MemFree:'):
-                    self.data['free'] = int(line.split()[1])
+                key, value = line.split(':', 1)
+                if key == 'MemTotal':
+                    self.data['total'] = int(value.split()[0])
+                elif key == 'MemFree':
+                    self.data['free'] = int(value.split()[0])
 
-                    self.data['used'] = self.data['total'] - self.data['free']
+            self.data['used'] = self.data['total'] - self.data['free']
 
-                    for (key, value) in self.data.items():
-                        self.data[key] = int(value / 1024)
+            for (key, value) in self.data.items():
+                self.data[key] = int(value / 1024)
 
 class storage(Sensor):
     def gather(self):
