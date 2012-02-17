@@ -1,81 +1,201 @@
-#!/bin/sh
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
-# Licensed under GPL v2 or later at your option
-# Copyright 2004 by Michiel de Boer <infobash@rebelhomicide.demon.nl>
-# Copyright 2006 by Emil Obermayr <nobs@tigress.com>
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of
+# the License or (at your option) version 3 or any later version
+# accepted by the membership of KDE e.V. (or its successor appro-
+# ved by the membership of KDE e.V.), which shall act as a proxy
+# defined in Section 14 of version 3 of the license.
 #
-# this version is stripped down to no-color
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
 #
-# get full original version at http://rebelhomicide.demon.nl/scripts/
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see http://www.gnu.org/licenses/.
+#
+# Copyright (C) 2012 Eike Hein
 
-SERVER=$1;
-TARGET=$2;
 
-export LC_ALL="C"
+# The overall format of this script's output. The format of the individual
+# elements referenced here is specified further below.
+output_format = "Sysinfo for '$host': Running $kde $distro $kernel, $cpu, $ram, $storage, $procs, $uptime"
 
-HN="$(hostname)"
-OSKERN="$(uname -s) $(uname -r)"
-if [ "$KDE_FULL_SESSION" = "true" ]; then
-	if [ "$KDE_SESSION_VERSION" = 4 ];  then
-		KDE="$(kde4-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
-	else
-		KDE="$(kde-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
-	fi
-fi
-
-CPU=$(awk -F':' '/model name/{name=$2}
- /cpu MHz/{mhz=int($2)}
- /bogomips/ {bogo=int($2)
+# The formats for the individual elements referenced in output_format.
+format_strings = {
+    'host'    : '$hostname',
+    'distro'  : 'on $name $version',
+    'kernel'  : 'powered by $name $version',
+    'kde'     : '$mode KDE $version', # $mode is 'inside' or 'against'.
+    'cpu'     : 'CPU: $model at $mhz Mhz ($bogomips bogomips)',
+    'ram'     : 'RAM: $used/$total MB', # Also available: $free.
+    'storage' : 'Storage: $used/$total GB', # Also available: $free.
+    'procs'   : '$count procs',
+    'uptime'  : '${hours}h up'
 }
-END{
- gsub (/ *\(tm\) */, " ", name);
- gsub (/ *\(TM\) */, " ", name);
- gsub (/ *Processor */, " ", name);
- gsub (/ *$/, "", name);
- gsub (/^ */, "", name);
- printf "CPU: %s at %d MHz (%d bogomips)", name, mhz, bogo;
-}
-' /proc/cpuinfo )
 
-HDD=$(df -lP | sort -u -k1,1 | awk '($1~/\/dev/){
-  use+=$3/1024^2;
-  tot+=$2/1024^2;
- }
- END{print "HD: " int(use) "/" int(tot) "GB"}')
 
-MEM=$(awk '($1=="MemTotal:"){tot=int($2/1024)}
- ($1=="MemFree:"){free=int($2/1024)}
- END{
-use=tot-free
-print "RAM: " use "/" tot "MB"}
-' /proc/meminfo)
+# ===== Do not change anything below this line. =====
 
-PROC="$(($(ps aux | wc -l)-1))"
+import abc
+import os
+import socket
+import string
+import subprocess
+import sys
 
-UPT=$(awk '{u="s";
-n=$1;
-if (n>60){
- n2=n%60;
- n/=60;
- u="min";
- if (n>60){
-  n2=n%60;
-  n/=60;
-  u="h";
-  if (n>24){
-   n2=n%24;
-   n/=24;
-   u="d";
-   }
-  }
- }
-printf ("%d.%d%s up",n, n2, u);
-}' /proc/uptime )
+try:
+    import konversation.dbus
+except ImportError:
+    sys.exit("This script is intended to be run from within Konversation.")
 
-out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}"
+if sys.hexversion < 0x02070000:
+    import konversation.i18n
+    konversation.i18n.init()
+    err = i18n("The media script requires Python %1 or higher.", '2.7')
+    konversation.dbus.error(err)
+    sys.exit(err)
 
-if [ "x$TARGET" = "x" ] ; then
-    qdbus org.kde.konversation /irc error "$out"
-else
-    qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$out"
-fi
+
+sensors = list()
+
+class MetaSensor(abc.ABCMeta):
+    def __init__(cls, name, *rest):
+        global sensors
+
+        try:
+            if cls.__base__ == Sensor:
+                sensors.append(cls)
+                cls.template = string.Template(format_strings[name])
+        except NameError:
+            pass
+
+        return abc.ABCMeta.__init__(cls, name, *rest)
+
+# This is for papering over the syntax differences for specifying a
+# metaclass in Python 2 and 3.
+Shunt = MetaSensor('Shunt', (object, ), {})
+
+class Sensor(Shunt):
+    __metaclass__ = MetaSensor
+
+    def __init__(self):
+        self.data = dict()
+        self.gather()
+
+    @abc.abstractmethod
+    def gather(self):
+        pass
+
+    def format(self):
+        return self.template.safe_substitute(self.data)
+
+class host(Sensor):
+    def gather(self):
+        self.data['hostname'] = socket.gethostname()
+
+class kde(Sensor):
+    def gather(self):
+        kde = 'KDE_FULL_SESSION' in os.environ
+        self.data['mode'] = ('against', 'inside')[kde]
+
+        if kde and os.environ['KDE_SESSION_VERSION'] == '3':
+            cmd = ['kde-config']
+        else:
+            cmd = ['kde4-config']
+
+        cmd.append('--version')
+        version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+
+        for line in version.splitlines():
+            if line.startswith('KDE'):
+                self.data['version'] = line.split(':')[1].split()[0]
+                break
+
+class distro(Sensor):
+    def gather(self):
+        if os.path.exists('/etc/os-release'):
+            with open('/etc/os-release', 'r') as osrelease:
+                for line in osrelease:
+                    if line.startswith('NAME='):
+                        self.data['name'] = line.split('=')[1].strip(string.whitespace + '"')
+                    elif line.startswith('VERSION='):
+                        self.data['version'] = line.split('=')[1].strip(string.whitespace + '"')
+        else:
+            try:
+                lsbrelease = subprocess.check_output(['lsb_release', '-i', '-r'], stderr=subprocess.STDOUT)
+
+                for line in lsbrelease.decode().splitlines():
+                    if line.startswith('Distributor ID:'):
+                        self.data['name'] = line.split(':')[1].strip()
+                    elif line.startswith('Release:'):
+                        self.data['version'] = line.split(':')[1].strip()
+            except subprocess.CalledProcessError:
+                pass
+
+    def format(self):
+        if not 'name' in self.data:
+            return ''
+        else:
+            return Sensor.format(self)
+
+class kernel(Sensor):
+    def gather(self):
+        uname = os.uname()
+        self.data['name'] = uname[0]
+        self.data['version'] = uname[2]
+
+class cpu(Sensor):
+    def gather(self):
+        with open('/proc/cpuinfo', 'r') as cpuinfo:
+            for line in cpuinfo:
+                if line.startswith('model name'):
+                    self.data['model'] = line.split(':')[1].strip()
+                elif line.startswith('cpu MHz'):
+                    self.data['mhz'] = int(float(line.split(':')[1].strip()))
+                elif line.startswith('bogomips'):
+                    self.data['bogomips'] = line.split(':')[1].strip()
+
+class ram(Sensor):
+    def gather(self):
+        with open('/proc/meminfo', 'r') as meminfo:
+            for line in meminfo:
+                if line.startswith('MemTotal:'):
+                    self.data['total'] = int(line.split()[1])
+                elif line.startswith('MemFree:'):
+                    self.data['free'] = int(line.split()[1])
+
+                    self.data['used'] = self.data['total'] - self.data['free']
+
+                    for (key, value) in self.data.items():
+                        self.data[key] = int(value / 1024)
+
+class storage(Sensor):
+    def gather(self):
+        try:
+            df = subprocess.check_output(['df', '-lP'], stderr=subprocess.STDOUT).decode()
+        except subprocess.CalledProcessError as e:
+            df = e.output.decode()
+
+        volumes = {line.split()[0] : line.split()[1:4] for line in df.splitlines() if line.startswith('/dev')}
+
+        for (key, index) in zip(['total', 'used', 'free'], range(2)):
+            self.data[key] = int(sum(int(volume[index]) for volume in volumes.values()) /  1048576)
+
+class procs(Sensor):
+    def gather(self):
+        self.data['count'] = len([pid for pid in os.listdir('/proc') if pid.isdigit()])
+
+class uptime(Sensor):
+    def gather(self):
+        with open('/proc/uptime', 'r') as uptimef:
+            self.data['hours'] = round(float(uptimef.read().split()[0]) / (3600), 2)
+
+if __name__ == '__main__':
+    sensors = {cls.__name__ : cls().format() for cls in sensors}
+    output = string.Template(output_format).safe_substitute(sensors)
+    output = ' '.join(output.split()) # Simplify whitespace.
+    konversation.dbus.say(output)
