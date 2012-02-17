@@ -49,6 +49,7 @@ import sys
 
 try:
     import konversation.dbus
+    konversation.dbus.default_message_prefix = 'sysinfo: '
 except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
@@ -198,6 +199,9 @@ class uptime(Sensor):
 
 if __name__ == '__main__':
     sensors = {cls.__name__ : cls().format() for cls in sensors}
+
     output = string.Template(output_format).safe_substitute(sensors)
     output = ' '.join(output.split()) # Simplify whitespace.
-    konversation.dbus.say(output)
+
+    report = konversation.dbus.say if konversation.dbus.target else konversation.dbus.info
+    report(output)
