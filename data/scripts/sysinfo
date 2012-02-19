@@ -30,7 +30,7 @@ format_strings = {
     'distro'  : 'on $name $version',
     'kernel'  : 'powered by $name $version',
     'kde'     : '$mode KDE $version', # $mode is 'inside' or 'against'.
-    'cpu'     : 'CPU: $model at $mhz Mhz ($bogomips bogomips)',
+    'cpu'     : 'CPU: $model at $mhz MHz ($bogomips bogomips)',
     'ram'     : 'RAM: $used/$total MB', # Also available: $free.
     'storage' : 'Storage: $used/$total GB', # Also available: $free.
     'procs'   : '$count procs',
