@@ -50,7 +50,6 @@ import sys
 
 try:
     import konversation.dbus
-    konversation.dbus.default_message_prefix = 'sysinfo: '
 except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
