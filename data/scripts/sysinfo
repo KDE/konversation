@@ -173,14 +173,18 @@ class cpu(Sensor):
             curfreq = curfreqs[0]
 
         maxfreq = 0
-        dir = '/sys/devices/system/cpu/'
 
-        for cpu in (cpu for cpu in os.listdir(dir) if re.match('cpu[0-9]+', cpu)):
-            with open(os.path.join(dir, cpu, 'cpufreq/cpuinfo_max_freq'), 'r') as maxfreqf:
-                new = int(maxfreqf.read())
-                maxfreq = new if new > maxfreq else maxfreq
+        try:
+            dir = '/sys/devices/system/cpu/'
 
-        maxfreq = int(maxfreq / 1000)
+            for cpu in (cpu for cpu in os.listdir(dir) if re.match('cpu[0-9]+', cpu)):
+                with open(os.path.join(dir, cpu, 'cpufreq/cpuinfo_max_freq'), 'r') as maxfreqf:
+                    new = int(maxfreqf.read())
+                    maxfreq = new if new > maxfreq else maxfreq
+
+            maxfreq = int(maxfreq / 1000)
+        except IOError:
+            pass
 
         if curfreqs[0] < maxfreq:
             self.data['mhz'] = '{0}/{1}'.format(curfreq, maxfreq)
