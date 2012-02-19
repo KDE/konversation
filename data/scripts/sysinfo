@@ -92,7 +92,12 @@ class Sensor(Shunt):
         pass
 
     def format(self):
-        return self.template.safe_substitute(self.data)
+        substituted = self.template.safe_substitute(self.data)
+
+        for match in self.template.pattern.findall(substituted):
+            substituted = substituted.replace('${' + match[2] + '}', '').replace('$' + match[1], '')
+
+        return substituted
 
 class host(Sensor):
     def gather(self):
