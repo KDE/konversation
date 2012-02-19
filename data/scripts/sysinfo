@@ -30,7 +30,7 @@ format_strings = {
     'distro'  : 'on $name $version',
     'kernel'  : 'powered by $name $version',
     'kde'     : '$mode KDE $version', # $mode is 'inside' or 'against'.
-    'cpu'     : 'CPU: $model at $mhz MHz ($bogomips bogomips)',
+    'cpu'     : 'CPU: $model at $mhz MHz',
     'ram'     : 'RAM: $used/$total MB', # Also available: $free.
     'storage' : 'Storage: $used/$total GB', # Also available: $free.
     'procs'   : '$count procs',
@@ -42,6 +42,7 @@ format_strings = {
 
 import abc
 import os
+import re
 import socket
 import string
 import subprocess
@@ -155,16 +156,37 @@ class kernel(Sensor):
 
 class cpu(Sensor):
     def gather(self):
+        curfreqs = set()
+
         with open('/proc/cpuinfo', 'r') as cpuinfo:
-            for line in cpuinfo:
+            for line in (line for line in cpuinfo if len(line) > 1):
                 key, value = line.split(':', 1)
                 if key.strip() == 'model name':
                     self.data['model'] = value.strip()
                 elif key.strip() == 'cpu MHz':
-                    self.data['mhz'] = int(float(value.strip()))
-                elif key.strip() == 'bogomips':
-                    self.data['bogomips'] = value.strip()
-                    break
+                    curfreqs.add(int(float(value.strip())))
+
+        curfreqs = sorted(curfreqs)
+
+        if len(curfreqs) > 1:
+            curfreq = '{0}-{1}'.format(curfreqs[0], curfreqs[-1])
+        else:
+            curfreq = curfreqs[0]
+
+        maxfreq = 0
+        dir = '/sys/devices/system/cpu/'
+
+        for cpu in (cpu for cpu in os.listdir(dir) if re.match('cpu[0-9]+', cpu)):
+            with open(os.path.join(dir, cpu, 'cpufreq/cpuinfo_max_freq'), 'r') as maxfreqf:
+                new = int(maxfreqf.read())
+                maxfreq = new if new > maxfreq else maxfreq
+
+        maxfreq = int(maxfreq / 1000)
+
+        if curfreqs[0] < maxfreq:
+            self.data['mhz'] = '{0}/{1}'.format(curfreq, maxfreq)
+        else:
+            self.data['mhz'] = curfreq
 
 class ram(Sensor):
     def gather(self):
