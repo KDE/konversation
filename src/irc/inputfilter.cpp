@@ -690,10 +690,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         parseModes(sourceNick, parameterList);
         Channel* channel = m_server->getChannelByName(parameterList.value(0));
-        if (sourceNick != m_server->getNickname())
-        {
-            konv_app->notificationHandler()->mode(channel, sourceNick);
-        }
+        konv_app->notificationHandler()->mode(channel, sourceNick, parameterList.value(0),
+            QStringList(parameterList.mid(1)).join (" "));
     }
     else if (command=="invite" && plHas(2)) //:ejm!i=beezle@bas5-oshawa95-1176455927.dsl.bell.ca INVITE argnl :#sug4
     {

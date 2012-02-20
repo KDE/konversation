@@ -40,7 +40,7 @@ namespace Konversation
             void dccIncoming(ChatWindow* chatWin, const QString& fromNick);
             void dccError(ChatWindow* chatWin, const QString& error);
             void dccTransferDone(ChatWindow* chatWin, const QString& file);
-            void mode(ChatWindow* chatWin, const QString& nick);
+            void mode(ChatWindow* chatWin, const QString& nick, const QString& subject, const QString& change);
             void query(ChatWindow* chatWin, const QString& fromNick);
             void queryMessage(ChatWindow* chatWin, const QString& fromNick, const QString& message);
             void nickOnline(ChatWindow* chatWin, const QString& nick);

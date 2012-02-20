@@ -268,7 +268,7 @@ namespace Konversation
         KNotification::event(QLatin1String("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file), QPixmap(), m_mainWindow);
     }
 
-    void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
+    void NotificationHandler::mode(ChatWindow* chatWin, const QString& nick, const QString& subject, const QString& change)
     {
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
@@ -277,6 +277,7 @@ namespace Konversation
             return;
 
         KNotification *ev=new KNotification("mode", m_mainWindow);
+        ev->setText(i18n("%1 changed modes in %2: %3", nick, subject, change));
         ev->sendEvent();
     }
 
