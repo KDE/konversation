@@ -1940,6 +1940,14 @@ namespace Konversation
         return OutputFilterResult();
     }
 
+    OutputFilterResult OutputFilter::command_umode(const OutputFilterInput& input)
+    {
+        OutputFilterResult result;
+
+        result.toServer = "MODE " + input.myNick + ' ' + input.parameter;
+
+        return result;
+    }
 
     OutputFilterResult OutputFilter::command_dumpdoc(const OutputFilterInput& input)
     {
