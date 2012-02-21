@@ -141,7 +141,7 @@ class distro(Sensor):
                         self.data['name'] = value.strip()
                     elif key == 'Release':
                         self.data['version'] = value.strip()
-            except subprocess.CalledProcessError:
+            except (OSError, subprocess.CalledProcessError):
                 pass
 
     def format(self):
