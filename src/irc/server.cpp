@@ -1758,6 +1758,10 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
         if (!weinitiated)
             static_cast<Application*>(kapp)->notificationHandler()->query(query, nickname);
     }
+    else
+    {
+        emit showView(query);
+    }
 
     // try to get hostmask if there's none yet
     if (query->getNickInfo()->getHostmask().isEmpty()) requestUserhost(nickname);
