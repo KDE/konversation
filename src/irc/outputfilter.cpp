@@ -781,7 +781,7 @@ namespace Konversation
             ::Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
 
             // Force focus if the user did not specify any message.
-            if (output.isEmpty()) emit showView(query);
+            if (output.isEmpty() && Preferences::self()->focusNewQueries()) emit showView(query);
         }
 
         // Result should be completely empty;
