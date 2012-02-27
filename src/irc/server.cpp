@@ -1758,7 +1758,7 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
         if (!weinitiated)
             static_cast<Application*>(kapp)->notificationHandler()->query(query, nickname);
     }
-    else
+    else if (weinitiated)
     {
         emit showView(query);
     }
