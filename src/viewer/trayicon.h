@@ -35,13 +35,12 @@ namespace Konversation
             void startNotification();
             void endNotification();
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
+            void setAway(bool away);
             void updateAppearance();
 
         private:
             bool m_notificationEnabled;
-
-            QString m_nomessagePix;
-            QString m_messagePix;
+            bool m_away;
     };
 }
 

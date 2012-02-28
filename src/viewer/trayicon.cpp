@@ -17,6 +17,7 @@ namespace Konversation
         setCategory(Communications);
 
         m_notificationEnabled = false;
+        m_away = false;
 
         updateAppearance();
 
@@ -47,13 +48,18 @@ namespace Konversation
         setStatus(Passive);
     }
 
+    void TrayIcon::setAway(bool away)
+    {
+        m_away = away;
+
+        updateAppearance();
+    }
+
     void TrayIcon::updateAppearance()
     {
-        m_nomessagePix = "konversation";
-        m_messagePix = "konv_message";
-
-        setIconByName(m_nomessagePix);
-        setAttentionIconByName(m_messagePix);
+        setIconByName("konversation");
+        setAttentionIconByName("konv_message");
+        setOverlayIconByName(m_away ? "user-away" : QString());
     }
 }
 
