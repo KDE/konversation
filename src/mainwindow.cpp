@@ -871,33 +871,22 @@ void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/,
 
 void MainWindow::toggleVisibility()
 {
-    if (isMinimized())
+    if (isActiveWindow())
     {
-        KWindowSystem::unminimizeWindow(winId());
+        if (Preferences::self()->showTrayIcon())
+            hide();
+        else
+            KWindowSystem::minimizeWindow(winId());
+    }
+    else
+    {
+        if (isMinimized())
+            KWindowSystem::unminimizeWindow(winId());
+        else if (Preferences::self()->showTrayIcon() && !isVisible())
+            m_trayIcon->restore();
+
         KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
         KWindowSystem::activateWindow(winId());
-    }
-    else if (isVisible())
-    {
-        bool onCurrentDesktop = KWindowSystem::windowInfo(winId(), NET::WMDesktop).isOnCurrentDesktop();
-
-        if (onCurrentDesktop)
-        {
-            if (Preferences::self()->showTrayIcon())
-                hide();
-            else
-                KWindowSystem::minimizeWindow(winId());
-        }
-        else
-        {
-            KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
-            KWindowSystem::activateWindow(winId());
-        }
-    }
-    else if (Preferences::self()->showTrayIcon())
-    {
-        KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
-        m_trayIcon->restore();
     }
 }
 
