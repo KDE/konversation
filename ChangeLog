@@ -27,6 +27,17 @@ Changes since 1.4:
   next lookup to occur as if the new value had been set all along, or, if the
   time elapsed since the last lookup was performed already exceeds the new value,
   comes as close as possible by performing a lookup immediately.
+* All forms of opening a query (the '/query' command, clicking a nickname in the
+  chat text display, double-clicking in the nickname list or the nickname list
+  context menu action) now consistently move focus to an existing matching query
+  tab, matching the behavior of various forms of joining an already-joined channel.
+  Previously this was only true for the '/query' command.
+* Minor visual (the selection decoration for server items now spans the whole row)
+  and behavioral (when collapsing a network while one of its a server is selected,
+  the selection is now moved to the network item instead of becoming invisible)
+  improvements in the Server List dialog.
+* Fixed a bug causing the option to automatically focus new query tabs not to work
+  correctly.
 
 
 Changes from 1.4-beta1 to 1.4:
