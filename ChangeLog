@@ -13,6 +13,35 @@ Changes not in the 1.4 branch:
   now-redundant flood handling found in the old version (Konversation takes
   care of this implicitly today) and improving the error handling in case
   Klipper cannot be contacted.
+* The bundled 'bug' script has been rewritten from scratch, featuring improved
+  error handling and adding internationalization support.
+* The bundled 'sysinfo' script has been rewritten from scratch. The new version
+  offers more accurate CPU and KDE version information (accounting for multiple
+  cores and frequency scaling for the former, and making the difference between
+  running inside KDE or just using the KDE Platform for the latter), as well as
+  the addition of distro name and release information and generally improved
+  robustness in data acquisition. Finally, the output format is now easier to
+  configure, adopting an approach similar to the one used in the 'media' script.
+* All types of tabs which sport a prominent input widget will now see focus
+  moved to that widget and the first keypress redirected when focus is on the
+  treelist version of the tab bar while starting to type. In previous releases
+  this already worked for chat tabs with their usual input bars, now it also
+  works for e.g. Channel List tabs and Konsole tabs.
+* Performance improvements have been applied to hotpaths in the protocol
+  implementation.
+* A '/umode' convenience command to set modes on self has been added.
+* The 'Mode change' notification event now sports a proper text payload
+  describing what has happened.
+* The system tray icon now shows an overlay icon when global away is enabled.
+* The behavior of the 'Show/Hide Konversation' action has been simplified and
+  tuned to do the correct thing in more scenarios. Previously, invoking the
+  action would hide the window even if it was not actually visible due to
+  being covered by other windows, because merely not being hidden, not being
+  minimized and being on the current desktop was already considered being
+  shown. A much simpler approach of always showing the window if it is not the
+  currently active window (and, as before, moving it to the current desktop as
+  needed) and hiding it when it is has been adopted now instead.
+
 
 Changes since 1.4:
 * Fixed bugs causing currently joined channels not to react correctly to changes
