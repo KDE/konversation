@@ -85,6 +85,14 @@ class Server : public QObject
             RegularPriority=StandardPriority
         };
 
+        enum CapModifier {
+            NoModifiers = 0x0,
+            DisMod = 0x1,
+            StickyMod = 0x2,
+            AckMod = 0x4
+        };
+        Q_DECLARE_FLAGS(CapModifiers, CapModifier)
+
         Server(QObject* parent, ConnectionSettings& settings);
         ~Server();
 
@@ -356,6 +364,7 @@ class Server : public QObject
         void setKeyForRecipient(const QString& recipient, const QByteArray& key);
 
         bool identifyMsg() const { return m_identifyMsg; }
+        QString getLastAuthenticateCommand() const { return m_lastAuthenticateCommand; }
 
         ChannelListPanel* addChannelListPanel();
 
@@ -521,11 +530,19 @@ class Server : public QObject
         /// Will only reconnect if the connection state is involuntary disconnected.
         void reconnectInvoluntary();
 
+        void capInitiateNegotiation();
+        void capReply();
+        void capEndNegotiation();
+        void capCheckIgnored();
+        void capAcknowledged(const QString& name, CapModifiers modifiers);
+        void capDenied(const QString& name);
+        void sendAuthenticate(const QString& message);
+
     protected slots:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
         void preShellCommandError(QProcess::ProcessError eror);
-        void ircServerConnectionSuccess();
+        void socketConnected();
         void startAwayTimer();
         void incoming();
         void processIncomingData();
@@ -723,7 +740,7 @@ class Server : public QObject
 
         QList<Channel*> m_channelList;
         QHash<QString, Channel*> m_loweredChannelNameHash;
-        
+
         QList<Query*> m_queryList;
 
         InputFilter m_inputFilter;
@@ -809,6 +826,9 @@ class Server : public QObject
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
 
+        bool m_capAnswered;
+        QString m_lastAuthenticateCommand;
+
         ConnectionSettings m_connectionSettings;
 
         /// Used by ConnectionManager to schedule a reconnect; stopped by /disconnect
@@ -828,5 +848,7 @@ class Server : public QObject
 
         bool m_recreationScheduled;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
 
 #endif

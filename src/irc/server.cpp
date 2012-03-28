@@ -79,6 +79,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_processingIncoming = false;
     m_identifyMsg = false;
+    m_capAnswered = false;
     m_autoIdentifyLock = false;
     m_autoJoin = false;
 
@@ -463,7 +464,7 @@ void Server::connectToIRCServer()
         // connect() will do a async lookup too
         if(!getConnectionSettings().server().SSLEnabled())
         {
-            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(connected()), SLOT (socketConnected()));
             m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
         else
@@ -623,30 +624,90 @@ void Server::hostFound()
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
 }
 
-void Server::ircServerConnectionSuccess()
+void Server::socketConnected()
 {
     emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
-    Konversation::ServerSettings serverSettings = getConnectionSettings().server();
-
-    connect(this, SIGNAL(nicknameChanged(QString)), getStatusView(), SLOT(setNickname(QString)));
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
 
-    QString connectString = "USER " +
-        getIdentity()->getIdent() +
-        " 8 * :" +                                // 8 = +i; 4 = +w
-        getIdentity()->getRealName();
+    // capInitiateNegotiation();
 
     QStringList ql;
-    if (!serverSettings.password().isEmpty())
-        ql << "PASS " + serverSettings.password();
 
-    ql << "NICK "+getNickname();
-    ql << connectString;
+    if (!getConnectionSettings().server().password().isEmpty())
+        ql << "PASS " + getConnectionSettings().server().password();
+
+    ql << "NICK " + getNickname();
+    ql << "USER " + getIdentity()->getIdent() + " 8 * :" /* 8 = +i; 4 = +w */ +  getIdentity()->getRealName();
+
     queueList(ql, HighPriority);
 
+    connect(this, SIGNAL(nicknameChanged(QString)), getStatusView(), SLOT(setNickname(QString)));
     setNickname(getNickname());
+}
+
+void Server::capInitiateNegotiation()
+{
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiation capabilities with server..."));
+
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
+    queue("CAP REQ :sasl", HighPriority);
+}
+
+void Server::capReply()
+{
+    m_capAnswered = true;
+}
+
+void Server::capEndNegotiation()
+{
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Closing capabilities negotiation."));
+
+    queue("CAP END", HighPriority);
+}
+
+void Server::capCheckIgnored()
+{
+    if (!m_capAnswered)
+        getStatusView()->appendServerMessage(i18n("Error"), i18n("Capabilities negotiation failed: Appears not supported by server."));
+}
+
+void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers)
+{
+    m_capAnswered = true;
+
+    if (name == "sasl" && modifiers == Server::NoModifiers)
+    {
+        getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL PLAIN authentication..."));
+        sendAuthenticate("PLAIN");
+    }
+}
+
+void Server::capDenied(const QString& name)
+{
+    if (name == "sasl")
+        getStatusView()->appendServerMessage(i18n("Error"), i18n("SASL capability denied or not supported by server."));
+
+    capEndNegotiation();
+}
+
+void Server::registerWithServices()
+{
+    if (getIdentity() && !getIdentity()->getBot().isEmpty()
+        && !getIdentity()->getPassword().isEmpty()
+        && !m_autoIdentifyLock)
+    {
+        queue("PRIVMSG "+getIdentity()->getBot()+" :identify "+getIdentity()->getPassword(), HighPriority);
+
+        m_autoIdentifyLock = true;
+    }
+}
+
+void Server::sendAuthenticate(const QString& message)
+{
+    m_lastAuthenticateCommand = message;
+    queue("AUTHENTICATE " + message, HighPriority);
 }
 
 void Server::broken(KTcpSocket::Error error)
@@ -822,18 +883,6 @@ void Server::connectionEstablished(const QString& ownHost)
         // Correct server's beliefs about its away state.
         m_away = false;
         requestAway(m_awayReason);
-    }
-}
-
-void Server::registerWithServices()
-{
-    if (getIdentity() && !getIdentity()->getBot().isEmpty()
-        && !getIdentity()->getPassword().isEmpty()
-        && !m_autoIdentifyLock)
-    {
-        queue("PRIVMSG "+getIdentity()->getBot()+" :identify "+getIdentity()->getPassword(), HighPriority);
-
-        m_autoIdentifyLock = true;
     }
 }
 
@@ -2722,7 +2771,7 @@ Channel* Server::getChannelByName(const QString& name)
 
     if (m_loweredChannelNameHash.contains(wanted))
         return m_loweredChannelNameHash.value(wanted);
-    
+
     return 0;
 }
 

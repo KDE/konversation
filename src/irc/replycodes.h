@@ -159,5 +159,15 @@
 
 #define RPL_WHOISSECURE        671 // used by UnrealIRCd to denote SSL in WHOIS response
 
+#define RPL_LOGGEDIN           900
+#define RPL_LOGGEDOUT          901
+#define ERR_NICKLOCKED         902
+#define RPL_SASLSUCCESS        903
+#define ERR_SASLFAIL           904
+#define ERR_SASLTOOLONG        905
+#define ERR_SASLABORTED        906
+#define ERR_SASLALREADY        907
+#define RPL_SASLMECHS          908
+
 #endif // REPLYCODES_H
 

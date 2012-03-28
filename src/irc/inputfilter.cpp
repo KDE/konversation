@@ -768,6 +768,54 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
             parsePrivMsg(prefix, parameterList);
         }
+        else if (command=="cap" && plHas(3))
+        {
+            QString command = parameterList.value(1).toLower();
+
+            if (command == "ack" || command == "nak")
+            {
+                m_server->capReply();
+
+                QStringList capabilities = parameterList.value(2).split(' ', QString::SkipEmptyParts);
+
+                foreach(const QString& capability, capabilities)
+                {
+                    int nameStart = capability.indexOf(QRegExp("[a-z0-9", Qt::CaseInsensitive));
+                    QString modifierString = capability.left(nameStart);
+                    QString name = capability.mid(nameStart);
+
+                    Server::CapModifiers modifiers = Server::NoModifiers;
+
+                    if (modifierString.contains('-'))
+                    {
+                        modifiers = modifiers | Server::DisMod;
+                        modifiers = modifiers ^ Server::NoModifiers;
+                    }
+
+                    if (modifierString.contains('='))
+                    {
+                        modifiers = modifiers | Server::StickyMod;
+                        modifiers = modifiers ^ Server::NoModifiers;
+                    }
+
+                    if (modifierString.contains('~'))
+                    {
+                        modifiers = modifiers | Server::AckMod;
+                        modifiers = modifiers ^ Server::NoModifiers;
+                    }
+
+                    if (command == "ack")
+                        m_server->capAcknowledged(name, modifiers);
+                    else
+                        m_server->capDenied(name);
+                }
+            }
+        }
+        else if ("authenticate" && plHas(1))
+        {
+            if (m_server->getLastAuthenticateCommand() == "PLAIN" && parameterList.value(0) == "+")
+                m_server->registerWithServices();
+        }
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
@@ -791,6 +839,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     if (numeric == RPL_WELCOME)
                     {
+                        m_server->capCheckIgnored();
+
                         QString host;
 
                         if (trailing.contains("@"))
@@ -2099,6 +2149,40 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     m_server->appendMessageToFrontmost(i18n("Error"), i18n("Cannot join %1: The channel is password-protected and either a wrong or no password was given.", parameterList.value(1)));
                 }
+                break;
+            }
+            case RPL_LOGGEDIN:
+            {
+                if (plHas(3))
+                    m_server->appendStatusMessage(i18n("Info"), i18n("You are now logged in as %1.", parameterList.value(2)));
+
+                break;
+            }
+            case RPL_SASLSUCCESS:
+            {
+                if (plHas(2))
+                {
+                    m_server->appendStatusMessage(i18n("Info"), i18n("SASL authentication successful."));
+                    m_server->capEndNegotiation();
+                }
+
+                break;
+            }
+            case ERR_SASLFAIL:
+            {
+                if (plHas(2))
+                {
+                    m_server->appendStatusMessage(i18n("Error"), i18n("SASL authentication attempt failed."));
+                    m_server->capEndNegotiation();
+                }
+
+                break;
+            }
+            case ERR_SASLABORTED:
+            {
+                if (plHas(2))
+                    m_server->appendStatusMessage(i18n("Info"), i18n("SASL authentication aborted."));
+
                 break;
             }
             default:
