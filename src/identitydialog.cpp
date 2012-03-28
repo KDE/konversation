@@ -79,6 +79,7 @@ namespace Konversation
         connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
         m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
         m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
+        m_authTypeCombo->addItem(i18n("Server Password"), "serverpw");
 
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
@@ -353,18 +354,19 @@ namespace Konversation
 
         bool isNickServ = (authType == "nickserv");
         bool isSaslPlain = (authType == "saslplain");
+        bool isServerPw = (authType == "serverpw");
 
         if (isNickServ)
         {
             if (autoIdentifyLayout->indexOf(m_nickservNicknameEdit) == -1)
-                autoIdentifyLayout->insertRow(3, nickservNicknameLabel, m_nickservNicknameEdit);
+                autoIdentifyLayout->insertRow(1, nickservNicknameLabel, m_nickservNicknameEdit);
 
             if (autoIdentifyLayout->indexOf(m_nickservCommandEdit) == -1)
-                autoIdentifyLayout->insertRow(3, nickservCommandLabel, m_nickservCommandEdit);
+                autoIdentifyLayout->insertRow(2, nickservCommandLabel, m_nickservCommandEdit);
 
             autoIdentifyLayout->removeWidget(saslAccountLabel);
             autoIdentifyLayout->removeWidget(m_saslAccountEdit);
-
+            autoIdentifyLayout->removeWidget(serverPasswordAuthInfoLabel);
         }
         else if (isSaslPlain)
         {
@@ -375,6 +377,19 @@ namespace Konversation
             autoIdentifyLayout->removeWidget(m_nickservNicknameEdit);
             autoIdentifyLayout->removeWidget(nickservCommandLabel);
             autoIdentifyLayout->removeWidget(m_nickservCommandEdit);
+            autoIdentifyLayout->removeWidget(serverPasswordAuthInfoLabel);
+        }
+        else if (isServerPw)
+        {
+            if (autoIdentifyLayout->indexOf(serverPasswordAuthInfoLabel) == -1)
+                autoIdentifyLayout->addRow(0, serverPasswordAuthInfoLabel);
+
+            autoIdentifyLayout->removeWidget(nickservNicknameLabel);
+            autoIdentifyLayout->removeWidget(m_nickservNicknameEdit);
+            autoIdentifyLayout->removeWidget(nickservCommandLabel);
+            autoIdentifyLayout->removeWidget(m_nickservCommandEdit);
+            autoIdentifyLayout->removeWidget(saslAccountLabel);
+            autoIdentifyLayout->removeWidget(m_saslAccountEdit);
         }
 
         nickservNicknameLabel->setVisible(isNickServ);
@@ -383,5 +398,6 @@ namespace Konversation
         m_nickservCommandEdit->setVisible(isNickServ);
         saslAccountLabel->setVisible(isSaslPlain);
         m_saslAccountEdit->setVisible(isSaslPlain);
+        serverPasswordAuthInfoLabel->setVisible(isServerPw);
     }
 }

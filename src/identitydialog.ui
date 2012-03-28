@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>428</width>
-    <height>344</height>
+    <width>331</width>
+    <height>366</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -252,6 +252,19 @@
           <item row="3" column="1">
            <widget class="KLineEdit" name="m_nickservCommandEdit"/>
           </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="saslAccountLabel">
+            <property name="text">
+             <string>Account:</string>
+            </property>
+            <property name="buddy">
+             <cstring>m_saslAccountEdit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="KLineEdit" name="m_saslAccountEdit"/>
+          </item>
           <item row="5" column="0">
            <widget class="QLabel" name="authPasswordLabel">
             <property name="text">
@@ -269,16 +282,22 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="KLineEdit" name="m_saslAccountEdit"/>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="saslAccountLabel">
-            <property name="text">
-             <string>Account:</string>
+          <item row="6" column="1">
+           <widget class="QLabel" name="serverPasswordAuthInfoLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="buddy">
-             <cstring>m_saslAccountEdit</cstring>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; The password entered here will override the one set in the server settings, if any.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

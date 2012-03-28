@@ -636,7 +636,12 @@ void Server::socketConnected()
 
     QStringList ql;
 
-    if (!getConnectionSettings().server().password().isEmpty())
+    if (getIdentity() && getIdentity()->getAuthType() == "serverpw"
+        && !getIdentity()->getAuthPassword().isEmpty())
+    {
+        ql << "PASS " + getIdentity()->getAuthPassword();
+    }
+    else if (!getConnectionSettings().server().password().isEmpty())
         ql << "PASS " + getConnectionSettings().server().password();
 
     ql << "NICK " + getNickname();
