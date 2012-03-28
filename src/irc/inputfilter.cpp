@@ -2164,6 +2164,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     m_server->appendStatusMessage(i18n("Info"), i18n("SASL authentication successful."));
                     m_server->capEndNegotiation();
+
+                    NickInfoPtr nickInfo = m_server->getNickInfo(m_server->getNickname());
+                    if (nickInfo) nickInfo->setIdentified(true);
                 }
 
                 break;
