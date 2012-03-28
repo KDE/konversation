@@ -81,7 +81,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_identifyMsg = false;
     m_capRequested = false;
     m_capAnswered = false;
-    m_autoIdentifyLock = false;
     m_autoJoin = false;
 
     m_nickIndices.clear();
@@ -437,7 +436,6 @@ void Server::connectToIRCServer()
 
         updateConnectionState(Konversation::SSConnecting);
 
-        m_autoIdentifyLock = false;
         m_ownIpByUserhost.clear();
 
         resetQueues();
@@ -710,12 +708,9 @@ void Server::registerWithServices()
     {
         if (!getIdentity()->getNickservNickname().isEmpty()
             && !getIdentity()->getNickservCommand().isEmpty()
-            && !getIdentity()->getAuthPassword().isEmpty()
-            && !m_autoIdentifyLock)
+            && !getIdentity()->getAuthPassword().isEmpty())
         {
             queue("PRIVMSG "+getIdentity()->getNickservNickname()+" :"+getIdentity()->getNickservCommand()+" "+getIdentity()->getAuthPassword(), HighPriority);
-
-            m_autoIdentifyLock = true;
         }
     }
     else if (getIdentity()->getAuthType() == "saslplain")
@@ -3336,12 +3331,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 
     // If this was our own nickchange, tell our server object about it
     if (nickname == getNickname())
-    {
         setNickname(newNick);
-
-        // We may get a request from nickserv, so remove the auto-identify lock.
-        m_autoIdentifyLock = false;
-    }
 
     //Actually do the rename.
     NickInfoPtr nickInfo = getNickInfo(nickname);

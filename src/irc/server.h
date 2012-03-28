@@ -809,7 +809,6 @@ class Server : public QObject
         QHash<QString, QByteArray> m_keyHash;
 
         bool m_identifyMsg;
-        bool m_autoIdentifyLock;
 
         bool m_sslErrorLock;
 

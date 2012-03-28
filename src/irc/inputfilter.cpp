@@ -574,29 +574,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         m_server->appendMessageToFrontmost(i18n("Notice"), i18n("Received DH1080_FINISH from %1", sourceNick));
                         m_server->parseFinishKeyX(sourceNick, trailing.mid(14));
                     }
-
-                    else
-                    {
-                    #endif
-                        // Nickserv
-                        if (trailing.startsWith(QLatin1String("If this is your nick")))
-                        {
-                            // Identify command if specified
-                            m_server->registerWithServices();
-                        }
-                        else if (m_server->identifyMsg())
-                            trailing = trailing.mid(1);
-
-                        if (trailing.toLower() == "password accepted - you are now recognized"
-                            || trailing.toLower() == "you have already identified")
-                        {
-                            NickInfoPtr nickInfo = m_server->getNickInfo(m_server->getNickname());
-                            if(nickInfo)
-                                nickInfo->setIdentified(true);
-                        }
-                        m_server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick, trailing));
-                    #ifdef HAVE_QCA2
-                    }
                     #endif
                 }
             }
