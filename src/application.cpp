@@ -391,7 +391,7 @@ void Application::readOptions()
 
             newIdentity->setNicknameList(cgIdentity.readEntry<QStringList>("Nicknames",QStringList()));
 
-            newIdentity->setAuthType(cgIdentity.readEntry("AuthType"));
+            newIdentity->setAuthType(cgIdentity.readEntry("AuthType"), "nickserv");
             newIdentity->setAuthPassword(cgIdentity.readEntry("Password"));
             newIdentity->setNickservNickname(cgIdentity.readEntry("Bot"));
             newIdentity->setNickservCommand(cgIdentity.readEntry("NickservCommand", "identify"));
