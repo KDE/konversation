@@ -3196,7 +3196,6 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
         // Get existing lowercase nickname and rename nickname in the NickInfo object.
         QString lcNickname(nickInfo->loweredNickname());
         nickInfo->setNickname(newname);
-        nickInfo->setIdentified(false);
         QString lcNewname(newname.toLower());
         // Rename the key in m_allNicks list.
         m_allNicks.remove(lcNickname);
