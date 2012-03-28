@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>428</width>
-    <height>408</height>
+    <height>344</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -205,36 +205,65 @@
          <property name="title">
           <string>Auto Identify</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
+         <layout class="QFormLayout" name="formLayout_4">
+          <property name="fieldGrowthPolicy">
+           <enum>QFormLayout::ExpandingFieldsGrow</enum>
+          </property>
           <item row="0" column="0">
-           <widget class="QLabel" name="botLabel">
+           <widget class="QLabel" name="authTypeLabel">
             <property name="text">
-             <string>Ser&amp;vice:</string>
+             <string>Type:</string>
             </property>
             <property name="buddy">
-             <cstring>m_botEdit</cstring>
+             <cstring>m_authTypeCombo</cstring>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="KLineEdit" name="m_botEdit">
+           <widget class="KComboBox" name="m_authTypeCombo"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="nickservNicknameLabel">
+            <property name="text">
+             <string>Ser&amp;vice:</string>
+            </property>
+            <property name="buddy">
+             <cstring>m_nickservNicknameEdit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="KLineEdit" name="m_nickservNicknameEdit">
             <property name="whatsThis">
              <string>Service name can be &lt;b&gt;&lt;i&gt;nickserv&lt;/i&gt;&lt;/b&gt; or a network-dependent name such as &lt;b&gt;&lt;i&gt;nickserv@services.dal.net&lt;/i&gt;&lt;/b&gt;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="passwordLabel">
+          <item row="3" column="0">
+           <widget class="QLabel" name="nickservCommandLabel">
+            <property name="text">
+             <string>Command:</string>
+            </property>
+            <property name="buddy">
+             <cstring>m_nickservCommandEdit</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="KLineEdit" name="m_nickservCommandEdit"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="authPasswordLabel">
             <property name="text">
              <string>Pa&amp;ssword:</string>
             </property>
             <property name="buddy">
-             <cstring>m_passwordEdit</cstring>
+             <cstring>m_authPasswordEdit</cstring>
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
-           <widget class="KLineEdit" name="m_passwordEdit">
+          <item row="4" column="1">
+           <widget class="KLineEdit" name="m_authPasswordEdit">
             <property name="passwordMode">
              <bool>true</bool>
             </property>
@@ -618,6 +647,34 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>m_identityCBox</tabstop>
+  <tabstop>newBtn</tabstop>
+  <tabstop>copyBtn</tabstop>
+  <tabstop>m_editBtn</tabstop>
+  <tabstop>m_delBtn</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>m_realNameEdit</tabstop>
+  <tabstop>m_authTypeCombo</tabstop>
+  <tabstop>m_nickservNicknameEdit</tabstop>
+  <tabstop>m_nickservCommandEdit</tabstop>
+  <tabstop>m_authPasswordEdit</tabstop>
+  <tabstop>m_insertRememberLineOnAwayChBox</tabstop>
+  <tabstop>m_awayMessageEdit</tabstop>
+  <tabstop>m_awayNickEdit</tabstop>
+  <tabstop>automaticAwayGroup</tabstop>
+  <tabstop>m_awayInactivitySpin</tabstop>
+  <tabstop>m_automaticUnawayChBox</tabstop>
+  <tabstop>awayCommandsGroup</tabstop>
+  <tabstop>m_awayEdit</tabstop>
+  <tabstop>m_unAwayEdit</tabstop>
+  <tabstop>m_sCommandEdit</tabstop>
+  <tabstop>m_codecCBox</tabstop>
+  <tabstop>m_loginEdit</tabstop>
+  <tabstop>m_quitEdit</tabstop>
+  <tabstop>m_partEdit</tabstop>
+  <tabstop>m_kickEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

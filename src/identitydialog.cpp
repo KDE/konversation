@@ -8,6 +8,7 @@
 /*
   copyright: (C) 2004, 2009 by Peter Simonsson
   email:     peter.simonsson@gmail.com
+  Copyright (C) 2012 Eike Hein <hein@kde.org>
 */
 #include "identitydialog.h"
 #include "application.h"
@@ -75,6 +76,8 @@ namespace Konversation
             m_identityList.append( IdentityPtr( id ) );
         }
 
+        m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
+
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
@@ -109,8 +112,9 @@ namespace Konversation
         m_realNameEdit->setText(m_currentIdentity->getRealName());
         m_nicknameLBox->clear();
         m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
-        m_botEdit->setText(m_currentIdentity->getNickservNickname());
-        m_passwordEdit->setText(m_currentIdentity->getAuthPassword());
+        m_nickservNicknameEdit->setText(m_currentIdentity->getNickservNickname());
+        m_nickservCommandEdit->setText(m_currentIdentity->getNickservCommand());
+        m_authPasswordEdit->setText(m_currentIdentity->getAuthPassword());
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
         m_awayMessageEdit->setText(m_currentIdentity->getAwayMessage());
@@ -151,8 +155,9 @@ namespace Konversation
         m_currentIdentity->setRealName(m_realNameEdit->text());
         const QStringList nicks = m_nicknameLBox->items();
         m_currentIdentity->setNicknameList(nicks);
-        m_currentIdentity->setNickservNickname(m_botEdit->text());
-        m_currentIdentity->setAuthPassword(m_passwordEdit->text());
+        m_currentIdentity->setNickservNickname(m_nickservNicknameEdit->text());
+        m_currentIdentity->setNickservCommand(m_nickservCommandEdit->text());
+        m_currentIdentity->setAuthPassword(m_authPasswordEdit->text());
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
         m_currentIdentity->setAwayMessage(m_awayMessageEdit->text());
