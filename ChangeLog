@@ -41,6 +41,23 @@ Changes not in the 1.4 branch:
   shown. A much simpler approach of always showing the window if it is not the
   currently active window (and, as before, moving it to the current desktop as
   needed) and hiding it when it is has been adopted now instead.
+* A basic framework to support the IRC Client Capabilities Extension ("CAP") has
+  been added.
+* The user interface for the Auto Identify settings in the Identities dialog has
+  been extended by a combo box that allows choosing the type of authentification
+  to be performed. Depending on the chosen type, different input fields are shown
+  below the combo box.
+* SASL PLAIN authentification is now supported. To use, pick SASL as the Auto
+  Identify type in the Identities dialog and fill in your account name and
+  password.
+* Standard NickServ authentification has been further improved. The command sent
+  to to the service, previously hard-coded to "identify", is now configurable,
+  and the name of the service now defaults to "nickserv" in new identities
+  (the previous default was an empty field).
+* The server password-based authentification supported by some networks is now
+  configurable in the Identities dialog as well, making it more discoverable and
+  allowing to keep Auto Identify settings generally with the Identity rather than
+  requiring going through the Edit Server dialog.
 
 
 Changes since 1.4:
