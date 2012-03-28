@@ -331,6 +331,7 @@ void Server::connectSignals()
             this, SLOT(rejectDccChat(QString)));
     connect(&m_inputFilter, SIGNAL(startReverseDccChat(QString,QStringList)),
             this, SLOT(startReverseDccChat(QString,QStringList)));
+    connect(&m_inputFilter, SIGNAL(welcome(QString)), this, SLOT(capCheckIgnored()));
     connect(&m_inputFilter, SIGNAL(welcome(QString)), this, SLOT(connectionEstablished(QString)));
     connect(&m_inputFilter, SIGNAL(notifyResponse(QString)), this, SLOT(notifyResponse(QString)));
     connect(&m_inputFilter, SIGNAL(startReverseDccSendTransfer(QString,QStringList)),

@@ -816,8 +816,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     if (numeric == RPL_WELCOME)
                     {
-                        m_server->capCheckIgnored();
-
                         QString host;
 
                         if (trailing.contains("@"))
