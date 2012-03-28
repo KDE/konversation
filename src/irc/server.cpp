@@ -631,7 +631,8 @@ void Server::socketConnected()
 
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
 
-    // capInitiateNegotiation();
+    if (getIdentity() && getIdentity()->getAuthType() == "saslplain")
+        capInitiateNegotiation();
 
     QStringList ql;
 
@@ -694,14 +695,30 @@ void Server::capDenied(const QString& name)
 
 void Server::registerWithServices()
 {
-    if (getIdentity() && !getIdentity()->getNickservNickname().isEmpty()
-        && !getIdentity()->getNickservCommand().isEmpty()
-        && !getIdentity()->getAuthPassword().isEmpty()
-        && !m_autoIdentifyLock)
-    {
-        queue("PRIVMSG "+getIdentity()->getNickservNickname()+" :"+getIdentity()->getNickservCommand()+" "+getIdentity()->getAuthPassword(), HighPriority);
+    if (!getIdentity())
+        return;
 
-        m_autoIdentifyLock = true;
+    if (getIdentity()->getAuthType() == "nickserv")
+    {
+        if (!getIdentity()->getNickservNickname().isEmpty()
+            && !getIdentity()->getNickservCommand().isEmpty()
+            && !getIdentity()->getAuthPassword().isEmpty()
+            && !m_autoIdentifyLock)
+        {
+            queue("PRIVMSG "+getIdentity()->getNickservNickname()+" :"+getIdentity()->getNickservCommand()+" "+getIdentity()->getAuthPassword(), HighPriority);
+
+            m_autoIdentifyLock = true;
+        }
+    }
+    else if (getIdentity()->getAuthType() == "saslplain")
+    {
+        QString authString = getIdentity()->getSaslAccount();
+        authString.append(QChar(QChar::Null));
+        authString.append(getIdentity()->getSaslAccount());
+        authString.append(QChar(QChar::Null));
+        authString.append(getIdentity()->getAuthPassword());
+
+        sendAuthenticate(authString.toAscii().toBase64());
     }
 }
 
@@ -870,8 +887,11 @@ void Server::connectionEstablished(const QString& ownHost)
     m_serverISON = new ServerISON(this);
     // get first notify very early
     startNotifyTimer(1000);
+
     // Register with services
-    registerWithServices();
+    if (getIdentity() && getIdentity()->getAuthType() == "nickserv")
+        registerWithServices();
+
     // get own ip by userhost
     requestUserhost(getNickname());
 

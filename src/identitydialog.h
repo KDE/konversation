@@ -8,6 +8,7 @@
 /*
   copyright: (C) 2004, 2009 by Peter Simonsson
   email:     peter.simonsson@gmail.com
+  Copyright (C) 2012 Eike Hein <hein@kde.org>
 */
 #ifndef KONVERSATIONIDENTITYDIALOG_H
 #define KONVERSATIONIDENTITYDIALOG_H
@@ -48,13 +49,15 @@ namespace Konversation
 
         protected slots:
             void updateIdentity(int index);
-
             void refreshCurrentIdentity();
 
             void newIdentity();
             void renameIdentity();
             void deleteIdentity();
             void copyIdentity();
+
+            void authTypeChanged(int index);
+
         private:
             IdentityList m_identityList;
             IdentityPtr m_currentIdentity;

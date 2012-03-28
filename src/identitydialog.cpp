@@ -76,7 +76,9 @@ namespace Konversation
             m_identityList.append( IdentityPtr( id ) );
         }
 
+        connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
         m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
+        m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
 
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
@@ -112,9 +114,12 @@ namespace Konversation
         m_realNameEdit->setText(m_currentIdentity->getRealName());
         m_nicknameLBox->clear();
         m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
+
+        m_authTypeCombo->setCurrentIndex(m_authTypeCombo->findData(m_currentIdentity->getAuthType()));
+        m_authPasswordEdit->setText(m_currentIdentity->getAuthPassword());
         m_nickservNicknameEdit->setText(m_currentIdentity->getNickservNickname());
         m_nickservCommandEdit->setText(m_currentIdentity->getNickservCommand());
-        m_authPasswordEdit->setText(m_currentIdentity->getAuthPassword());
+        m_saslAccountEdit->setText(m_currentIdentity->getSaslAccount());
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
         m_awayMessageEdit->setText(m_currentIdentity->getAwayMessage());
@@ -155,9 +160,12 @@ namespace Konversation
         m_currentIdentity->setRealName(m_realNameEdit->text());
         const QStringList nicks = m_nicknameLBox->items();
         m_currentIdentity->setNicknameList(nicks);
+
+        m_currentIdentity->setAuthType(m_authTypeCombo->itemData(m_authTypeCombo->currentIndex()).toString());
+        m_currentIdentity->setAuthPassword(m_authPasswordEdit->text());
         m_currentIdentity->setNickservNickname(m_nickservNicknameEdit->text());
         m_currentIdentity->setNickservCommand(m_nickservCommandEdit->text());
-        m_currentIdentity->setAuthPassword(m_authPasswordEdit->text());
+        m_currentIdentity->setSaslAccount(m_saslAccountEdit->text());
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
         m_currentIdentity->setAwayMessage(m_awayMessageEdit->text());
@@ -337,5 +345,43 @@ namespace Konversation
         }
 
         return true;
+    }
+
+    void IdentityDialog::authTypeChanged(int index)
+    {
+        QString authType = m_authTypeCombo->itemData(index).toString();
+
+        bool isNickServ = (authType == "nickserv");
+        bool isSaslPlain = (authType == "saslplain");
+
+        if (isNickServ)
+        {
+            if (autoIdentifyLayout->indexOf(m_nickservNicknameEdit) == -1)
+                autoIdentifyLayout->insertRow(3, nickservNicknameLabel, m_nickservNicknameEdit);
+
+            if (autoIdentifyLayout->indexOf(m_nickservCommandEdit) == -1)
+                autoIdentifyLayout->insertRow(3, nickservCommandLabel, m_nickservCommandEdit);
+
+            autoIdentifyLayout->removeWidget(saslAccountLabel);
+            autoIdentifyLayout->removeWidget(m_saslAccountEdit);
+
+        }
+        else if (isSaslPlain)
+        {
+            if (autoIdentifyLayout->indexOf(m_saslAccountEdit) == -1)
+                autoIdentifyLayout->insertRow(3, saslAccountLabel, m_saslAccountEdit);
+
+            autoIdentifyLayout->removeWidget(nickservNicknameLabel);
+            autoIdentifyLayout->removeWidget(m_nickservNicknameEdit);
+            autoIdentifyLayout->removeWidget(nickservCommandLabel);
+            autoIdentifyLayout->removeWidget(m_nickservCommandEdit);
+        }
+
+        nickservNicknameLabel->setVisible(isNickServ);
+        m_nickservNicknameEdit->setVisible(isNickServ);
+        nickservCommandLabel->setVisible(isNickServ);
+        m_nickservCommandEdit->setVisible(isNickServ);
+        saslAccountLabel->setVisible(isSaslPlain);
+        m_saslAccountEdit->setVisible(isSaslPlain);
     }
 }
