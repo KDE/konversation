@@ -79,6 +79,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_processingIncoming = false;
     m_identifyMsg = false;
+    m_capRequested = false;
     m_capAnswered = false;
     m_autoIdentifyLock = false;
     m_autoJoin = false;
@@ -659,6 +660,8 @@ void Server::capInitiateNegotiation()
 
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
     queue("CAP REQ :sasl", HighPriority);
+
+    m_capRequested = true;
 }
 
 void Server::capReply()
@@ -675,7 +678,7 @@ void Server::capEndNegotiation()
 
 void Server::capCheckIgnored()
 {
-    if (!m_capAnswered)
+    if (m_capRequested && !m_capAnswered)
         getStatusView()->appendServerMessage(i18n("Error"), i18n("Capabilities negotiation failed: Appears not supported by server."));
 }
 
