@@ -704,6 +704,10 @@ void Server::registerWithServices()
     if (!getIdentity())
         return;
 
+    NickInfoPtr nickInfo = getNickInfo(getNickname());
+    if (!nickInfo || nickInfo->isIdentified())
+        return;
+
     if (getIdentity()->getAuthType() == "nickserv")
     {
         if (!getIdentity()->getNickservNickname().isEmpty()
