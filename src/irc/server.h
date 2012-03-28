@@ -826,7 +826,7 @@ class Server : public QObject
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
 
-        bool m_capRequested:
+        bool m_capRequested;
         bool m_capAnswered;
         QString m_lastAuthenticateCommand;
 
