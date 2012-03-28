@@ -46,13 +46,19 @@ class Identity : public KShared
         void setNickname(uint index,const QString& nickname);
         QString getNickname(int index) const;
 
-        void setBot(const QString& bot);
-        QString getBot() const;
-        void setPassword(const QString& password);
-        QString getPassword() const;
-
         void setNicknameList(const QStringList& newList);
         QStringList getNicknameList() const;
+
+        void setAuthType(const QString& authType);
+        QString getAuthType() const;
+        void setAuthPassword(const QString& authPassword);
+        QString getAuthPassword() const;
+        void setNickservNickname(const QString& nickservNickname);
+        QString getNickservNickname() const;
+        void setNickservCommand(const QString& nickservCommand);
+        QString getNickservCommand() const;
+        void setSaslAccount(const QString& saslAccount);
+        QString getSaslAccount() const;
 
         void setQuitReason(const QString& reason);
         QString getQuitReason() const;
@@ -96,9 +102,6 @@ class Identity : public KShared
     protected:
         QString name;
 
-        QString bot;
-        QString password;
-
         QString realName;
         QString ident;
 
@@ -107,6 +110,12 @@ class Identity : public KShared
         QString partReason;
         QString quitReason;
         QString kickReason;
+
+        QString m_authType;
+        QString m_authPassword;
+        QString m_nickservNickname;
+        QString m_nickservCommand;
+        QString m_saslAccount;
 
         bool insertRememberLineOnAway;
         bool runAwayCommands;

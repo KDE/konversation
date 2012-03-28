@@ -55,6 +55,10 @@ Identity::~Identity()
 
 void Identity::init()
 {
+    setAuthType("nickserv");
+    setNickservNickname("nickserv");
+    setNickservCommand("identify");
+
     setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
 
     setInsertRememberLineOnAway(false);
@@ -78,8 +82,11 @@ void Identity::copy(const Identity& original)
     setRealName(original.getRealName());
     setIdent(original.getIdent());
     setNicknameList(original.getNicknameList());
-    setBot(original.getBot());
-    setPassword(original.getPassword());
+    setAuthType(original.getAuthType());
+    setAuthPassword(original.getAuthPassword());
+    setNickservNickname(original.getNickservNickname());
+    setNickservCommand(original.getNickservCommand());
+    setSaslAccount(original.getSaslAccount());
     setQuitReason(original.getQuitReason());
     setPartReason(original.getPartReason());
     setKickReason(original.getKickReason());
@@ -111,11 +118,16 @@ QString Identity::getNickname(int index) const
   return nicknameList.value(index);
 }
 
-void Identity::setBot(const QString& newBot)            { bot=newBot; }
-QString Identity::getBot() const                        { return bot; }
-
-void Identity::setPassword(const QString& newPassword)  { password=newPassword; }
-QString Identity::getPassword() const                   { return password; }
+void Identity::setAuthType(const QString& authType)     { m_authType = authType; }
+QString Identity::getAuthType() const                   { return m_authType; }
+void Identity::setAuthPassword(const QString& authPassword) { m_authPassword = authPassword; }
+QString Identity::getAuthPassword() const                   { return m_authPassword; }
+void Identity::setNickservNickname(const QString& nickservNickname) { m_nickservNickname = nickservNickname; }
+QString Identity::getNickservNickname() const                       { return m_nickservNickname; }
+void Identity::setNickservCommand(const QString& nickservCommand) { m_nickservCommand = nickservCommand; }
+QString Identity::getNickservCommand() const                      { return m_nickservCommand; }
+void Identity::setSaslAccount(const QString& saslAccount) { m_saslAccount = saslAccount; }
+QString Identity::getSaslAccount() const                  { return m_saslAccount; }
 
 void Identity::setQuitReason(const QString& reason)     { quitReason=reason; }
 QString Identity::getQuitReason() const                 { return quitReason; }
@@ -136,8 +148,8 @@ QString Identity::getReturnCommand() const              { return returnCommand; 
 
 void Identity::setAutomaticAway(bool automaticAway)     { m_automaticAway = automaticAway; }
 bool Identity::getAutomaticAway() const                 { return m_automaticAway; }
-void Identity::setAwayInactivity(int awayInactivity)   { m_awayInactivity = awayInactivity; }
-int Identity::getAwayInactivity() const                { return m_awayInactivity; }
+void Identity::setAwayInactivity(int awayInactivity)    { m_awayInactivity = awayInactivity; }
+int Identity::getAwayInactivity() const                 { return m_awayInactivity; }
 void Identity::setAutomaticUnaway(bool automaticUnaway) { m_automaticUnaway = automaticUnaway; }
 bool Identity::getAutomaticUnaway() const               { return m_automaticUnaway; }
 

@@ -694,11 +694,12 @@ void Server::capDenied(const QString& name)
 
 void Server::registerWithServices()
 {
-    if (getIdentity() && !getIdentity()->getBot().isEmpty()
-        && !getIdentity()->getPassword().isEmpty()
+    if (getIdentity() && !getIdentity()->getNickservNickname().isEmpty()
+        && !getIdentity()->getNickservCommand().isEmpty()
+        && !getIdentity()->getAuthPassword().isEmpty()
         && !m_autoIdentifyLock)
     {
-        queue("PRIVMSG "+getIdentity()->getBot()+" :identify "+getIdentity()->getPassword(), HighPriority);
+        queue("PRIVMSG "+getIdentity()->getNickservNickname()+" :"+getIdentity()->getNickservCommand()+" "+getIdentity()->getAuthPassword(), HighPriority);
 
         m_autoIdentifyLock = true;
     }

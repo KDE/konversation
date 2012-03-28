@@ -391,8 +391,11 @@ void Application::readOptions()
 
             newIdentity->setNicknameList(cgIdentity.readEntry<QStringList>("Nicknames",QStringList()));
 
-            newIdentity->setBot(cgIdentity.readEntry("Bot"));
-            newIdentity->setPassword(cgIdentity.readEntry("Password"));
+            newIdentity->setAuthType(cgIdentity.readEntry("AuthType"));
+            newIdentity->setAuthPassword(cgIdentity.readEntry("Password"));
+            newIdentity->setNickservNickname(cgIdentity.readEntry("Bot"));
+            newIdentity->setNickservCommand(cgIdentity.readEntry("NickservCommand", "identify"));
+            newIdentity->setSaslAccount(cgIdentity.readEntry("SaslAccount"));
 
             newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
             newIdentity->setRunAwayCommands(cgIdentity.readEntry("ShowAwayMessage", false));
@@ -730,8 +733,11 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("Ident",identity->getIdent());
         cgIdentity.writeEntry("Realname",identity->getRealName());
         cgIdentity.writeEntry("Nicknames",identity->getNicknameList());
-        cgIdentity.writeEntry("Bot",identity->getBot());
-        cgIdentity.writeEntry("Password",identity->getPassword());
+        cgIdentity.writeEntry("AuthType",identity->getAuthType());
+        cgIdentity.writeEntry("Password",identity->getAuthPassword());
+        cgIdentity.writeEntry("Bot",identity->getNickservNickname());
+        cgIdentity.writeEntry("NickservCommand",identity->getNickservCommand());
+        cgIdentity.writeEntry("SaslAccount",identity->getSaslAccount());
         cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
         cgIdentity.writeEntry("ShowAwayMessage",identity->getRunAwayCommands());
         cgIdentity.writeEntry("AwayMessage",identity->getAwayCommand());

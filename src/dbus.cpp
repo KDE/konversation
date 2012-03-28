@@ -279,25 +279,25 @@ QString IdentDBus::getNickname(const QString &identity, int index)
 void IdentDBus::setBot(const QString &identity, const QString& bot)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
-    const_cast<Identity *>(i)->setBot(sterilizeUnicode(bot));
+    const_cast<Identity *>(i)->setNickservNickname(sterilizeUnicode(bot));
     static_cast<Application *>(kapp)->saveOptions(true);
 }
 
 QString IdentDBus::getBot(const QString &identity)
 {
-    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getBot());
+    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getNickservNickname());
 }
 
 void IdentDBus::setPassword(const QString &identity, const QString& password)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
-    const_cast<Identity *>(i)->setPassword(sterilizeUnicode(password));
+    const_cast<Identity *>(i)->setAuthPassword(sterilizeUnicode(password));
     static_cast<Application *>(kapp)->saveOptions(true);
 }
 
 QString IdentDBus::getPassword(const QString &identity)
 {
-    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getPassword());
+    return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getAuthPassword());
 }
 
 void IdentDBus::setNicknameList(const QString &identity, const QStringList& newList)

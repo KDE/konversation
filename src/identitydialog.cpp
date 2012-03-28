@@ -109,8 +109,8 @@ namespace Konversation
         m_realNameEdit->setText(m_currentIdentity->getRealName());
         m_nicknameLBox->clear();
         m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
-        m_botEdit->setText(m_currentIdentity->getBot());
-        m_passwordEdit->setText(m_currentIdentity->getPassword());
+        m_botEdit->setText(m_currentIdentity->getNickservNickname());
+        m_passwordEdit->setText(m_currentIdentity->getAuthPassword());
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
         m_awayMessageEdit->setText(m_currentIdentity->getAwayMessage());
@@ -151,8 +151,8 @@ namespace Konversation
         m_currentIdentity->setRealName(m_realNameEdit->text());
         const QStringList nicks = m_nicknameLBox->items();
         m_currentIdentity->setNicknameList(nicks);
-        m_currentIdentity->setBot(m_botEdit->text());
-        m_currentIdentity->setPassword(m_passwordEdit->text());
+        m_currentIdentity->setNickservNickname(m_botEdit->text());
+        m_currentIdentity->setAuthPassword(m_passwordEdit->text());
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
         m_currentIdentity->setAwayMessage(m_awayMessageEdit->text());
