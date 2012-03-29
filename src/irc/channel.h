@@ -107,6 +107,8 @@ class Channel : public ChatWindow
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
 
+        virtual bool log();
+
     protected:
         // use with caution! does not check for duplicates
         void fastAddNickname(ChannelNickPtr channelnick, Nick *nick=0);

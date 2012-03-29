@@ -411,6 +411,11 @@ void Channel::rejoin()
         m_server->sendJoinCommand(getName(), getPassword());
 }
 
+bool Channel::log()
+{
+    return ChatWindow::log() && !Preferences::self()->privateOnly();
+}
+
 ChannelNickPtr Channel::getOwnChannelNick() const
 {
     return m_ownChannelNick;
