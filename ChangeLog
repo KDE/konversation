@@ -58,6 +58,8 @@ Changes not in the 1.4 branch:
   configurable in the Identities dialog as well, making it more discoverable and
   allowing to keep Auto Identify settings generally with the Identity rather than
   requiring going through the Edit Server dialog.
+* Added an option to restrict logging to private conversations (queries, DCC
+  chats).
 
 
 Changes since 1.4:
