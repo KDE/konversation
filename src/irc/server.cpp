@@ -469,7 +469,7 @@ void Server::connectToIRCServer()
         }
         else
         {
-            connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(encrypted()), SLOT (socketConnected()));
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
 
             m_socket->setAdvertisedSslVersion(KTcpSocket::TlsV1);
