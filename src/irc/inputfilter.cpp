@@ -574,6 +574,13 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         m_server->appendMessageToFrontmost(i18n("Notice"), i18n("Received DH1080_FINISH from %1", sourceNick));
                         m_server->parseFinishKeyX(sourceNick, trailing.mid(14));
                     }
+                    else
+                    {
+                    #endif
+                        m_server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick,
+                            m_server->identifyMsg() ? trailing.mid(1) : trailing));
+                    #ifdef HAVE_QCA2
+                    }
                     #endif
                 }
             }
