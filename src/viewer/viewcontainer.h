@@ -33,6 +33,7 @@ class Images;
 class UrlCatcher;
 class NicksOnline;
 class QueueTuner;
+class ViewSpringLoader;
 
 namespace Konversation
 {
@@ -84,6 +85,7 @@ class ViewContainer : public QObject
         void showQueueTuner(bool);
 
         int getViewIndex(QWidget* widget);
+        ChatWindow* getViewAt(int index);
 
         QList<QPair<QString,QString> > getChannelsURI();
 
@@ -251,6 +253,8 @@ class ViewContainer : public QObject
         int m_queryViewCount;
 
         QList<ChatWindow*> m_activeViewOrderList;
+
+        ViewSpringLoader* m_viewSpringLoader;
 };
 
 #endif

@@ -35,6 +35,7 @@
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 #include "irccontextmenus.h"
+#include "viewspringloader.h"
 
 #include <QSplitter>
 #include <QTabBar>
@@ -70,6 +71,7 @@ ViewContainer::ViewContainer(MainWindow* window):
         , m_insertCharDialog(0)
         , m_queryViewCount(0)
 {
+    m_viewSpringLoader = new ViewSpringLoader(this);
 
     images = Application::instance()->images();
 
@@ -173,6 +175,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->setObjectName("main_window_right_side");
     m_tabWidget = new TabWidget(m_vbox);
     m_tabWidget->setObjectName("main_window_tab_widget");
+    m_viewSpringLoader->addWidget(m_tabWidget->tabBar());
     m_queueTuner = new QueueTuner(m_vbox, this);
     m_queueTuner->hide();
 
@@ -200,6 +203,7 @@ void ViewContainer::setupViewTree()
     m_viewTree = new ViewTree(m_viewTreeSplitter);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewTree->hide();
+    m_viewSpringLoader->addWidget(m_viewTree->viewport());
 
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
     connect(this, SIGNAL(viewChanged(ChatWindow*)), m_viewTree, SLOT(selectView(ChatWindow*)));
@@ -1879,6 +1883,11 @@ QString ViewContainer::currentViewURL(bool passNetwork)
 int ViewContainer::getViewIndex(QWidget* widget)
 {
     return m_tabWidget->indexOf(widget);
+}
+
+ChatWindow* ViewContainer::getViewAt(int index)
+{
+    return static_cast<ChatWindow*>(m_tabWidget->widget(index));
 }
 
 QList<QPair<QString,QString> > ViewContainer::getChannelsURI()

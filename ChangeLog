@@ -60,6 +60,11 @@ Changes not in the 1.4 branch:
   requiring going through the Edit Server dialog.
 * Added an option to restrict logging to private conversations (queries, DCC
   chats).
+* Both the regular tab bar and its listview version now implement "spring-
+  loading". That is, when dragging something onto a tab and holding it there,
+  the hovered tab will now be switched to after a brief delay. This allows
+  switching to the intended tab as part of dragging text or a file to its
+  destination, e.g. the tab's input bar or nicklist.
 
 
 Changes since 1.4:

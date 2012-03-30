@@ -149,6 +149,7 @@ set(viewer_SRCS
     viewer/searchbar.cpp
     viewer/irccontextmenus.cpp
     viewer/trayicon.cpp
+    viewer/viewspringloader.cpp
 )
 
 kde4_add_ui_files(viewer_SRCS
