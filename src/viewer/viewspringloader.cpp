@@ -46,33 +46,41 @@ bool ViewSpringLoader::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::DragEnter)
     {
-         m_hoveredWidget = static_cast<QWidget*>(watched);
+        if (!static_cast<QDragEnterEvent*>(event)->mimeData()->hasFormat("application/x-qlistviewitem"))
+        {
+            m_hoveredWidget = static_cast<QWidget*>(watched);
 
-         event->accept();
+            event->accept();
 
-         return true;
+            return true;
+        }
     }
     else if (event->type() == QEvent::DragMove)
     {
-        ChatWindow* hoveredView = viewForPos(watched, static_cast<QDragMoveEvent*>(event)->pos());
+        QDragMoveEvent* dragMoveEvent = static_cast<QDragMoveEvent*>(event);
 
-        if (hoveredView != m_hoveredView)
+        if (!dragMoveEvent->mimeData()->hasFormat("application/x-qlistviewitem"))
         {
-            m_hoveredView = hoveredView;
+            ChatWindow* hoveredView = viewForPos(watched, dragMoveEvent->pos());
 
-            if (m_hoveredView)
-                m_hoverTimer.start(400);
+            if (hoveredView != m_hoveredView)
+            {
+                m_hoveredView = hoveredView;
+
+                if (m_hoveredView)
+                    m_hoverTimer.start(400);
+            }
+
+            event->ignore();
+
+            return true;
         }
-
-        event->ignore();
-
-        return true;
     }
     else if (event->type() == QEvent::Drop || event->type() == QEvent::DragLeave)
     {
+        m_hoverTimer.stop();
         m_hoveredWidget = 0;
         m_hoveredView = 0;
-        m_hoverTimer.stop();
     }
 
     return QObject::eventFilter(watched, event);
