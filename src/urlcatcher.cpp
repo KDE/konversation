@@ -191,6 +191,7 @@ void UrlCatcher::setupUrlTree()
     m_urlTree->setModel(proxyModel);
     connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(updateItemActionStates()));
+    connect(KGlobalSettings::self(), SIGNAL(settingsChanged(int)), this, SLOT(checkLocaleChanged(int)));
 
     searchLine->setProxy(proxyModel);
 
@@ -383,6 +384,19 @@ void UrlCatcher::clearUrlModel()
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     urlModel->removeRows(0, urlModel->rowCount());
+}
+
+void UrlCatcher::checkLocaleChanged(int category)
+{
+#if KDE_IS_VERSION(4,8,1)
+    if (category != KGlobalSettings::SETTINGS_LOCALE)
+        return;
+
+    Application* konvApp = static_cast<Application*>(kapp);
+    QStandardItemModel* urlModel = konvApp->getUrlModel();
+
+    m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));
+#endif
 }
 
 void UrlCatcher::childAdjustFocus()

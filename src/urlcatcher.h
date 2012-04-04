@@ -86,6 +86,7 @@ class UrlCatcher : public ChatWindow
         void deleteSelectedUrls();
         void saveUrlModel();
         void clearUrlModel();
+        void checkLocaleChanged(int category);
 
 
     private:
