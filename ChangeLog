@@ -26,6 +26,9 @@ Changes since 1.4:
   when showing it in a channel's chat text display, potentially causing the rest
   of the line to be malformatted.
 * Fixed a compilation problem on 64bit Windows.
+* If built against KDE Platform v4.8.3 or higher, the date column in the Url
+  Catcher will now immediately reflect changes to the date format made in KDE's
+  System Settings application.
 
 
 Changes from 1.4-beta1 to 1.4:
