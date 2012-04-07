@@ -15,12 +15,7 @@
 #include "awaymanager.h"
 #include "irccharsets.h"
 
-#if KDE_IS_VERSION(4, 6, 0)
 #include <KEditListWidget>
-#else
-#include <KEditListBox>
-#endif
-
 #include <KDialog>
 #include <KMessageBox>
 #if KDE_IS_VERSION(4, 7, 0)
@@ -44,17 +39,13 @@ namespace Konversation
         setupUi(w);
         setMainWidget(w);
 
-#if KDE_IS_VERSION(4, 6, 0)
         QGroupBox* nickGroupBox = new QGroupBox(i18n("Nickname"));
         verticalLayout->insertWidget(1, nickGroupBox);
         QVBoxLayout* nickGroupBoxLayout = new QVBoxLayout(nickGroupBox);
         nickGroupBoxLayout->setContentsMargins(0, 0, 0, 0);
         m_nicknameLBox = new KEditListWidget(nickGroupBox);
         nickGroupBoxLayout->addWidget(m_nicknameLBox);
-#else
-        m_nicknameLBox = new KEditListBox(i18n("Nickname"), generalWidget);
-        verticalLayout->insertWidget(1, m_nicknameLBox);
-#endif
+
         m_nicknameLBox->setWhatsThis(i18n("This is your list of nicknames. A nickname is the name that other users will "
                                           "know you by. You may use any name you desire. The first character must be a letter.\n\n"
                                           "Since nicknames must be unique across an entire IRC network, your desired name may be "

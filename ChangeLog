@@ -69,6 +69,8 @@ Changes not in the 1.4 branch:
   a PEM file if Konversation is built against KDE Platform v4.8.3 or higher.
   Choosing this type of authentication in the Identities dialog forces SSL to be
   enabled for a connection, overriding any server settings.
+* Konversation now depends on KDE Platform v4.6.0 or higher and Qt v4.7.0 or
+  higher.
 
 
 Changes since 1.4:

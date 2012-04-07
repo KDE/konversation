@@ -19,8 +19,7 @@
 #include "trayicon.h"
 
 #include <KActionCollection>
-//FIXME: Change to pretty <KIdleTime> include when KDE_IS_VERSION(4, 5, 0)
-#include <kidletime.h>
+#include <KIdleTime>
 #include <KToggleAction>
 
 AwayManager::AwayManager(QObject* parent) : QObject(parent)

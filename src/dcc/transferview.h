@@ -23,11 +23,8 @@
 #include "transferlistmodel.h"
 
 class QKeyEvent;
-#if KDE_IS_VERSION(4, 5, 0)
+
 class KCategoryDrawerV3;
-#else
-class KCategoryDrawer;
-#endif
 
 namespace Konversation
 {
@@ -115,11 +112,8 @@ namespace Konversation
 
             inline void addItem(Transfer *transfer, TransferItemData::ItemDisplayType type);
 
-#if KDE_IS_VERSION(4, 5, 0)
             KCategoryDrawerV3 *m_categoryDrawer;
-#else
-            KCategoryDrawer *m_categoryDrawer;
-#endif
+
             TransferListModel *m_dccModel;
             TransferListProxyModel *m_proxyModel;
 

@@ -101,7 +101,6 @@ void Application::implementRestart()
 {
     QStringList argumentList;
 
-#if KDE_IS_VERSION(4,5,61)
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
     argumentList = args->allArguments();
@@ -134,7 +133,6 @@ void Application::implementRestart()
         }
     }
     else
-#endif
         argumentList << "--startupdelay" << "2000";
 
     KProcess::startDetached(QCoreApplication::applicationFilePath(), argumentList);

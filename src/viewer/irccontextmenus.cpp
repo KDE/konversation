@@ -43,10 +43,8 @@
 #include <KToggleAction>
 
 // For the Web Shortcuts context menu sub-menu.
-#if KDE_IS_VERSION(4, 5, 0)
 #include <KToolInvocation>
 #include <KUriFilter>
-#endif
 
 
 class IrcContextMenusPrivate
@@ -80,10 +78,6 @@ IrcContextMenus::IrcContextMenus()
     setupTextMenu();
     setupChannelMenu();
     setupNickMenu();
-
-#if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-    setupLinkMenu();
-#endif
 }
 
 IrcContextMenus::~IrcContextMenus()
@@ -92,10 +86,6 @@ IrcContextMenus::~IrcContextMenus()
     delete m_channelMenu;
     delete m_nickMenu;
     delete m_addressBookMenu;
-
-#if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-    delete m_linkMenu;
-#endif
 }
 
 IrcContextMenus* IrcContextMenus::self()
@@ -128,12 +118,10 @@ void IrcContextMenus::setupTextMenu()
     action->setData(TextSelectAll);
     m_textMenu->addAction(action);
 
-#if KDE_IS_VERSION(4, 5, 0)
     m_webShortcutsMenu = new KMenu(m_textMenu);
     m_webShortcutsMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
-#endif
 
     m_textActionsSeparator = m_textMenu->addSeparator();
 
@@ -226,7 +214,6 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
 void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 {
-#if KDE_IS_VERSION(4, 5, 0)
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_webShortcutsMenu->clear();
 
@@ -241,15 +228,9 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
     KUriFilterData filterData(searchText);
 
-#if KDE_IS_VERSION(4, 5, 67)
     filterData.setSearchFilteringOptions(KUriFilterData::RetrievePreferredSearchProvidersOnly);
 
     if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::NormalTextFilter))
-#else
-    filterData.setAlternateDefaultSearchProvider("google");
-
-    if (KUriFilter::self()->filterUri(filterData, QStringList() << "kuriikwsfilter"))
-#endif
     {
         const QStringList searchProviders = filterData.preferredSearchProviders();
 
@@ -278,35 +259,24 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
             m_webShortcutsMenu->menuAction()->setVisible(true);
         }
     }
-#else
-    Q_UNUSED(selectedText);
-#endif
 }
 
 void IrcContextMenus::handleWebShortcutAction()
 {
-#if KDE_IS_VERSION(4, 5, 0)
     KAction* action = qobject_cast<KAction*>(sender());
 
     if (action)
     {
         KUriFilterData filterData(action->data().toString());
 
-#if KDE_IS_VERSION(4, 5, 67)
         if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::WebShortcutFilter))
-#else
-        if (KUriFilter::self()->filterUri(filterData, QStringList() << "kurisearchfilter"))
-#endif
             Application::instance()->openUrl(filterData.uri().url());
     }
-#endif
 }
 
 void IrcContextMenus::configureWebShortcuts()
 {
-#if KDE_IS_VERSION(4, 5, 0)
     KToolInvocation::kdeinitExec("kcmshell4", QStringList() << "ebrowsing");
-#endif
 }
 
 void IrcContextMenus::setupChannelMenu()
@@ -902,26 +872,6 @@ void IrcContextMenus::updateAddressBookActions(Server* server, const QStringList
 
     addressBookMenu->menuAction()->setVisible(true);
 }
-
-#if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-void IrcContextMenus::setupLinkMenu()
-{
-    m_linkMenu = new KMenu();
-
-    foreach(QAction* action, m_linkActions)
-        m_linkMenu->addAction(action);
-}
-
-void IrcContextMenus::linkMenu(const QPoint& pos, const QString& link)
-{
-    foreach(QAction* action, self()->m_linkActions)
-        action->setVisible(true);
-
-    QAction* action = self()->m_linkMenu->exec(pos);
-
-    processLinkAction(extractActionId(action), link);
-}
-#endif
 
 void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 {

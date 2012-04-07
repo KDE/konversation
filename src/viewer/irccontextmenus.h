@@ -85,9 +85,6 @@ class IrcContextMenus : public QObject
         static void processNickAction(int actionId, Server* server, const QStringList& nicks,
             const QString& channel);
 
-#if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-        static void linkMenu(const QPoint& pos, const QString& link);
-#endif
         static void processLinkAction(int actionId, const QString& link);
 
 
@@ -106,9 +103,7 @@ class IrcContextMenus : public QObject
         QAction* m_textActionsSeparator;
         QList<QAction*> m_linkActions;
         void updateWebShortcutsMenu(const QString& selectedText);
-#if KDE_IS_VERSION(4, 5, 0)
         KMenu* m_webShortcutsMenu;
-#endif
 
         void setupChannelMenu();
         KMenu* m_channelMenu;
@@ -135,11 +130,6 @@ class IrcContextMenus : public QObject
         QAction* m_sendMailAction;
         void createSharedDccActions();
         QList<QAction*> m_sharedDccActions;
-
-#if !(QT_VERSION >= QT_VERSION_CHECK(4, 7, 0))
-        void setupLinkMenu();
-        KMenu* m_linkMenu;
-#endif
 
         inline QAction* createAction(ActionId id, const QString& text);
         inline QAction* createAction(ActionId id, const QIcon& icon);

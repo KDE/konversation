@@ -1953,11 +1953,7 @@ namespace Konversation
     {
         if (input.context && input.context->getTextView())
         {
-#if KDE_IS_VERSION(4,6,0)
             KDebug::Block myBlock(qPrintable(QString::number((quintptr)(input.context->getTextView()), 16)));
-#else
-            kDebug() << "view =" << qPrintable(QString::number((quintptr)(input.context->getTextView()), 16));
-#endif
             kDebug() << input.context->getTextView()->document();
         }
         return OutputFilterResult();

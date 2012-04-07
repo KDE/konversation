@@ -19,12 +19,7 @@
 #include <KDialog>
 #include <kdeversion.h>
 
-#if KDE_IS_VERSION(4, 6, 0)
 class KEditListWidget;
-#else
-class KEditListBox;
-#endif
-
 #if KDE_IS_VERSION(4, 7, 0)
 class KMessageWidget;
 #endif
@@ -65,11 +60,9 @@ namespace Konversation
         private:
             IdentityList m_identityList;
             IdentityPtr m_currentIdentity;
-#if KDE_IS_VERSION(4, 6, 0)
+
             KEditListWidget* m_nicknameLBox;
-#else
-            KEditListBox* m_nicknameLBox;
-#endif
+
             KMessageWidget* m_additionalAuthInfo;
     };
 

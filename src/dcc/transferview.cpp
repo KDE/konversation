@@ -47,11 +47,7 @@ namespace Konversation
             setRootIsDecorated(false); //not implemented for special items
             setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-#if KDE_IS_VERSION(4, 5, 0)
             m_categoryDrawer = new KCategoryDrawerV3(0);
-#else
-            m_categoryDrawer = new KCategoryDrawer();
-#endif
 
             setItemDelegate(new TransferSizeDelegate(m_categoryDrawer, this));
 
