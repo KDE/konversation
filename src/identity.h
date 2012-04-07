@@ -15,7 +15,9 @@
 #ifndef IDENTITY_H
 #define IDENTITY_H
 
-#include <ksharedptr.h>
+#include <KSharedPtr>
+#include <KUrl>
+
 #include <QStringList>
 
 
@@ -59,6 +61,8 @@ class Identity : public KShared
         QString getNickservCommand() const;
         void setSaslAccount(const QString& saslAccount);
         QString getSaslAccount() const;
+        void setPemClientCertFile(const KUrl& url);
+        KUrl getPemClientCertFile() const;
 
         void setQuitReason(const QString& reason);
         QString getQuitReason() const;
@@ -116,6 +120,7 @@ class Identity : public KShared
         QString m_nickservNickname;
         QString m_nickservCommand;
         QString m_saslAccount;
+        KUrl m_pemClientCertFile;
 
         bool insertRememberLineOnAway;
         bool runAwayCommands;

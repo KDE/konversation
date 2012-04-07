@@ -65,6 +65,10 @@ Changes not in the 1.4 branch:
   the hovered tab will now be switched to after a brief delay. This allows
   switching to the intended tab as part of dragging text or a file to its
   destination, e.g. the tab's input bar or nicklist.
+* Added support for authenticating via a SSL Client Certificate in the form of
+  a PEM file, as supported by Freenode and OFTC, among others. Choosing this
+  type of authentication in the Identities dialog forces SSL to be enabled for
+  a connection, overriding any server settings.
 
 
 Changes since 1.4:

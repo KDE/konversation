@@ -78,9 +78,11 @@ namespace Konversation
 
         connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
         m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
-        m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
         m_authTypeCombo->addItem(i18n("Server Password"), "serverpw");
-
+        m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
+#if KDE_IS_VERSION(4, 8, 2)
+m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
+#endif
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
@@ -121,6 +123,7 @@ namespace Konversation
         m_nickservNicknameEdit->setText(m_currentIdentity->getNickservNickname());
         m_nickservCommandEdit->setText(m_currentIdentity->getNickservCommand());
         m_saslAccountEdit->setText(m_currentIdentity->getSaslAccount());
+        m_pemClientCertFile->setUrl(m_currentIdentity->getPemClientCertFile());
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
         m_awayMessageEdit->setText(m_currentIdentity->getAwayMessage());
@@ -167,6 +170,7 @@ namespace Konversation
         m_currentIdentity->setNickservNickname(m_nickservNicknameEdit->text());
         m_currentIdentity->setNickservCommand(m_nickservCommandEdit->text());
         m_currentIdentity->setSaslAccount(m_saslAccountEdit->text());
+        m_currentIdentity->setPemClientCertFile(m_pemClientCertFile->url());
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
         m_currentIdentity->setAwayMessage(m_awayMessageEdit->text());
@@ -355,42 +359,7 @@ namespace Konversation
         bool isNickServ = (authType == "nickserv");
         bool isSaslPlain = (authType == "saslplain");
         bool isServerPw = (authType == "serverpw");
-
-        if (isNickServ)
-        {
-            if (autoIdentifyLayout->indexOf(m_nickservNicknameEdit) == -1)
-                autoIdentifyLayout->insertRow(1, nickservNicknameLabel, m_nickservNicknameEdit);
-
-            if (autoIdentifyLayout->indexOf(m_nickservCommandEdit) == -1)
-                autoIdentifyLayout->insertRow(2, nickservCommandLabel, m_nickservCommandEdit);
-
-            autoIdentifyLayout->removeWidget(saslAccountLabel);
-            autoIdentifyLayout->removeWidget(m_saslAccountEdit);
-            autoIdentifyLayout->removeWidget(serverPasswordAuthInfoLabel);
-        }
-        else if (isSaslPlain)
-        {
-            if (autoIdentifyLayout->indexOf(m_saslAccountEdit) == -1)
-                autoIdentifyLayout->insertRow(3, saslAccountLabel, m_saslAccountEdit);
-
-            autoIdentifyLayout->removeWidget(nickservNicknameLabel);
-            autoIdentifyLayout->removeWidget(m_nickservNicknameEdit);
-            autoIdentifyLayout->removeWidget(nickservCommandLabel);
-            autoIdentifyLayout->removeWidget(m_nickservCommandEdit);
-            autoIdentifyLayout->removeWidget(serverPasswordAuthInfoLabel);
-        }
-        else if (isServerPw)
-        {
-            if (autoIdentifyLayout->indexOf(serverPasswordAuthInfoLabel) == -1)
-                autoIdentifyLayout->addRow(0, serverPasswordAuthInfoLabel);
-
-            autoIdentifyLayout->removeWidget(nickservNicknameLabel);
-            autoIdentifyLayout->removeWidget(m_nickservNicknameEdit);
-            autoIdentifyLayout->removeWidget(nickservCommandLabel);
-            autoIdentifyLayout->removeWidget(m_nickservCommandEdit);
-            autoIdentifyLayout->removeWidget(saslAccountLabel);
-            autoIdentifyLayout->removeWidget(m_saslAccountEdit);
-        }
+        bool isPemClientCert = (authType == "pemclientcert");
 
         nickservNicknameLabel->setVisible(isNickServ);
         m_nickservNicknameEdit->setVisible(isNickServ);
@@ -398,6 +367,38 @@ namespace Konversation
         m_nickservCommandEdit->setVisible(isNickServ);
         saslAccountLabel->setVisible(isSaslPlain);
         m_saslAccountEdit->setVisible(isSaslPlain);
+        authPasswordLabel->setVisible(!isPemClientCert);
+        m_authPasswordEdit->setVisible(!isPemClientCert);
+        pemClientCertFileLabel->setVisible(isPemClientCert);
+        m_pemClientCertFile->setVisible(isPemClientCert);
         serverPasswordAuthInfoLabel->setVisible(isServerPw);
+        pemClientCertAuthInfoLabel->setVisible(isPemClientCert);
+
+        for (int i = 0; i < autoIdentifyLayout->count(); ++i)
+            autoIdentifyLayout->removeItem(autoIdentifyLayout->itemAt(0));
+
+        autoIdentifyLayout->addRow(authTypeLabel, m_authTypeCombo);
+
+        if (isNickServ)
+        {
+            autoIdentifyLayout->addRow(nickservNicknameLabel, m_nickservNicknameEdit);
+            autoIdentifyLayout->addRow(nickservCommandLabel, m_nickservCommandEdit);
+            autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
+        }
+        else if (isServerPw)
+        {
+            autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
+            autoIdentifyLayout->addRow(0, serverPasswordAuthInfoLabel);
+        }
+        else if (isSaslPlain)
+        {
+            autoIdentifyLayout->addRow(saslAccountLabel, m_saslAccountEdit);
+            autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
+        }
+        else if (isPemClientCert)
+        {
+            autoIdentifyLayout->addRow(pemClientCertFileLabel, m_pemClientCertFile);
+            autoIdentifyLayout->addRow(0, pemClientCertAuthInfoLabel);
+        }
     }
 }

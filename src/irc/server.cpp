@@ -462,19 +462,25 @@ void Server::connectToIRCServer()
             QString::number(getConnectionSettings().server().port())));
 
         // connect() will do a async lookup too
-        if(!getConnectionSettings().server().SSLEnabled())
-        {
-            connect(m_socket, SIGNAL(connected()), SLOT (socketConnected()));
-            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
-        }
-        else
+        if(!getConnectionSettings().server().SSLEnabled() || getIdentity()->getAuthType() == "pemclientcert")
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (socketConnected()));
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
 
+            if (getIdentity()->getAuthType() == "pemclientcert")
+            {
+                m_socket->setLocalCertificate(getIdentity()->getPemClientCertFile().toLocalFile());
+                m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
+            }
+
             m_socket->setAdvertisedSslVersion(KTcpSocket::TlsV1);
 
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+        }
+        else
+        {
+            connect(m_socket, SIGNAL(connected()), SLOT (socketConnected()));
+            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
 
         // set up the connection details
