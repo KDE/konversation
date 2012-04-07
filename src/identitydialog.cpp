@@ -80,7 +80,7 @@ namespace Konversation
         m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
         m_authTypeCombo->addItem(i18n("Server Password"), "serverpw");
         m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
-#if KDE_IS_VERSION(4, 8, 2)
+#if KDE_IS_VERSION(4, 8, 3)
 m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
 #endif
         // add encodings to combo box
