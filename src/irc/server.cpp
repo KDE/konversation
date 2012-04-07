@@ -462,7 +462,7 @@ void Server::connectToIRCServer()
             QString::number(getConnectionSettings().server().port())));
 
         // connect() will do a async lookup too
-        if(!getConnectionSettings().server().SSLEnabled() || getIdentity()->getAuthType() == "pemclientcert")
+        if(getConnectionSettings().server().SSLEnabled() || getIdentity()->getAuthType() == "pemclientcert")
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (socketConnected()));
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
