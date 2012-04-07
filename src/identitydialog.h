@@ -25,6 +25,10 @@ class KEditListWidget;
 class KEditListBox;
 #endif
 
+#if KDE_IS_VERSION(4, 7, 0)
+class KMessageWidget;
+#endif
+
 namespace Konversation
 {
 
@@ -66,6 +70,7 @@ namespace Konversation
 #else
             KEditListBox* m_nicknameLBox;
 #endif
+            KMessageWidget* m_additionalAuthInfo;
     };
 
 }

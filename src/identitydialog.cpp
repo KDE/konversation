@@ -23,6 +23,9 @@
 
 #include <KDialog>
 #include <KMessageBox>
+#if KDE_IS_VERSION(4, 7, 0)
+#include <KMessageWidget>
+#endif
 #include <KInputDialog>
 #include <KUser>
 
@@ -76,6 +79,13 @@ namespace Konversation
             m_identityList.append( IdentityPtr( id ) );
         }
 
+#if KDE_IS_VERSION(4, 7, 0)
+        m_additionalAuthInfo = new KMessageWidget(generalWidget);
+        m_additionalAuthInfo->setWordWrap(true);
+        m_additionalAuthInfo->setCloseButtonVisible(false);
+        m_additionalAuthInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+#endif
+
         connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
         m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
         m_authTypeCombo->addItem(i18n("Server Password"), "serverpw");
@@ -83,6 +93,7 @@ namespace Konversation
 #if KDE_IS_VERSION(4, 8, 3)
 m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
 #endif
+
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
@@ -371,8 +382,9 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         m_authPasswordEdit->setVisible(!isPemClientCert);
         pemClientCertFileLabel->setVisible(isPemClientCert);
         m_pemClientCertFile->setVisible(isPemClientCert);
-        serverPasswordAuthInfoLabel->setVisible(isServerPw);
-        pemClientCertAuthInfoLabel->setVisible(isPemClientCert);
+#if KDE_IS_VERSION(4, 7, 0)
+        m_additionalAuthInfo->setVisible(isServerPw || isPemClientCert);
+#endif
 
         for (int i = 0; i < autoIdentifyLayout->count(); ++i)
             autoIdentifyLayout->removeItem(autoIdentifyLayout->itemAt(0));
@@ -388,7 +400,11 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         else if (isServerPw)
         {
             autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
-            autoIdentifyLayout->addRow(0, serverPasswordAuthInfoLabel);
+
+#if KDE_IS_VERSION(4, 7, 0)
+        m_additionalAuthInfo->setText(i18n("The password entered here will override the one set in the server settings, if any."));
+        autoIdentifyLayout->addRow(0, m_additionalAuthInfo);
+#endif
         }
         else if (isSaslPlain)
         {
@@ -398,7 +414,11 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         else if (isPemClientCert)
         {
             autoIdentifyLayout->addRow(pemClientCertFileLabel, m_pemClientCertFile);
-            autoIdentifyLayout->addRow(0, pemClientCertAuthInfoLabel);
+
+#if KDE_IS_VERSION(4, 7, 0)
+        m_additionalAuthInfo->setText(i18n("SSL Client Certificate authentication forces SSL to be enabled for a connection, overriding any server settings."));
+        autoIdentifyLayout->addRow(0, m_additionalAuthInfo);
+#endif
         }
     }
 }
