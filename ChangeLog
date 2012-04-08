@@ -71,6 +71,9 @@ Changes not in the 1.4 branch:
   enabled for a connection, overriding any server settings.
 * Konversation now depends on KDE Platform v4.6.0 or higher and Qt v4.7.0 or
   higher.
+* Raw log tabs now use color coding to visually differenciate inbound and
+  outbound messages, using the server message and channel message colors from
+  the color settings respectively.
 
 
 Changes since 1.4:

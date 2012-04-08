@@ -108,20 +108,20 @@ static QString toPercentEncoding(const QByteArray& input, QString output=QString
     return output;
 }
 
-void RawLog::appendRaw(RawLog::MessageDirection dir, const QByteArray& message, bool suppressTimestamps)
+void RawLog::appendRaw(RawLog::MessageDirection dir, const QByteArray& message)
 {
     if (!getTextView() || message.isEmpty())
         return;
 
     static const QLatin1String in("&gt;&gt; ");
     static const QLatin1String out("&lt;&lt; ");
-    QString output = toPercentEncoding(message, (dir == RawLog::Inbound? in : out));
+    QString output = toPercentEncoding(message, (dir == RawLog::Inbound ? in : out));
 
     // Whatever the original line inbound ending was is too much effort to conserve, but its nice
     // to see the actual line endings, so we'll fake it here
     output.append(QLatin1String("%0A"));
 
-    appendRaw(output, suppressTimestamps);
+    appendRaw(output, dir == RawLog::Outbound);
 }
 
 #include "rawlog.moc"

@@ -43,7 +43,7 @@ except IndexError:
     konversation.dbus.error(i18n("You forgot the bug number."), exit=True)
 except ValueError:
     konversation.dbus.error(i18n("Please search by bug number."), exit=True)
-        
+
 try:
     url = 'https://bugs.kde.org/buglist.cgi?quicksearch={0}'.format(bug)
     subprocess.call('xdg-open', url)

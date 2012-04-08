@@ -208,10 +208,10 @@ void ChatWindow::setTextView(IRCView* newView)
     connect(textView,SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
 }
 
-void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
+void ChatWindow::appendRaw(const QString& message, bool self)
 {
     if(!textView) return;
-    textView->appendRaw(message, suppressTimestamps);
+    textView->appendRaw(message, self);
 }
 
 void ChatWindow::appendLog(const QString& message)

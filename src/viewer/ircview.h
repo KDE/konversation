@@ -179,7 +179,7 @@ class IRCView : public KTextBrowser
     public slots:
         //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
         void append(const QString& nick, const QString& message);
-        void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
+        void appendRaw(const QString& message, bool self = false);
         void appendLog(const QString& message);
 
         void appendQuery(const QString& nick, const QString& message, bool inChannel = false);

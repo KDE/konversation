@@ -601,16 +601,13 @@ void IRCView::append(const QString& nick, const QString& message)
     doAppend(line, rtl);
 }
 
-void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
+void IRCView::appendRaw(const QString& message, bool self)
 {
-    QColor channelColor=Preferences::self()->color(Preferences::ChannelMessage);
+    QColor color = self ? Preferences::self()->color(Preferences::ChannelMessage)
+        : Preferences::self()->color(Preferences::ServerMessage);
     m_tabNotification = Konversation::tnfNone;
 
-    QString line;
-    if (suppressTimestamps)
-        line = QString("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
-    else
-        line = QString(timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font>");
+    QString line = QString(timeStamp() + " <font color=\"" + color.name() + "\">" + message + "</font>");
 
     doAppend(line, false, self);
 }

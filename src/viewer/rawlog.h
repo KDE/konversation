@@ -33,7 +33,7 @@ class RawLog : public ChatWindow
         virtual bool searchView();
         virtual bool log();
         using ChatWindow::appendRaw;
-        virtual void appendRaw(MessageDirection dir, const QByteArray& message, bool suppressTimestamps=false);
+        virtual void appendRaw(MessageDirection dir, const QByteArray& message);
     public slots:
         void morphNotification();
 
