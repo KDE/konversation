@@ -651,7 +651,11 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
 
     line = line.arg(timeStamp(), nick, text);
 
-    emit textToLog(QString("<%1>\t%2").arg(nick, message));
+    if (inChannel) {
+        emit textToLog(QString("<-> %1>\t%2").arg(nick, message));
+    } else {
+        emit textToLog(QString("<%1>\t%2").arg(nick, message));
+    }
 
     doAppend(line, rtl);
 }
