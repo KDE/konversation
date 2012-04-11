@@ -353,8 +353,11 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo)
 
     if (m_server->getNickname() != getName())
     {
+        QStringList sharedChannels =  m_server->getSharedChannels(getName());
+        sharedChannels.sort();
+
         appendCommandMessage(i18n("Nick"), i18nc("%1 = nickname, %2 = comma-separated list of channels",
-            "Channels you have in common with %1: %2", getName(), m_server->getSharedChannels(getName()).join(", ")));
+            "Channels you have in common with %1: %2", getName(), sharedChannels.join(", ")));
     }
 }
 
