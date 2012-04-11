@@ -293,6 +293,11 @@ class Server : public QObject
          *  has been performed on it.
          */
         QStringList getNickChannels(const QString& nickname);
+        /** Returns a list of all the channels we're in that nickname is also in.
+         *  @param nickname    The desired nickname.  Case insensitive.
+         *  @return            A list of channels the nick is in that we're also in.  Empty if none.
+         */
+        QStringList getSharedChannels(const QString& nickname);
         /** Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a
          *  given channel and nickname.
          *  @param channelName The desired channel name.  Case insensitive.

@@ -1797,6 +1797,18 @@ QStringList Server::getNickChannels(const QString& nickname)
     return channellist;
 }
 
+QStringList Server::getSharedChannels(const QString& nickname)
+{
+    QString lcNickname = nickname.toLower();
+    QStringList channellist;
+    ChannelMembershipMap::ConstIterator channel;
+    for( channel = m_joinedChannels.constBegin(); channel != m_joinedChannels.constEnd(); ++channel )
+    {
+        if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
+    }
+    return channellist;
+}
+
 bool Server::isNickOnline(const QString &nickname)
 {
     NickInfoPtr nickInfo = getNickInfo(nickname);
