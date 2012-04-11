@@ -25,7 +25,7 @@
 #include "mainwindow.h"
 #include "server.h"
 
-#include <QResource>
+#include <Q3MimeSourceFactory>
 
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
@@ -287,7 +287,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     bool isimage=false;
     if(photo.isIntern())
     {
-        QResource::registerResource(photo.data().bits(), "photo");
+        Q3MimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
         tooltip << "<img src=\"photo\">";
         isimage=true;
     }
@@ -301,7 +301,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     }
     if(logo.isIntern())
     {
-        QResource::registerResource(logo.data().bits(), "logo");
+        Q3MimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
         tooltip << "<img src=\"logo\">";
         isimage=true;
     }
