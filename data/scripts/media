@@ -50,11 +50,11 @@ format_strings = {
 # part of "org.mpris.MediaPlayer2.amarok".
 player_rankings = {
     'all'   : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'clementine', 'audacious',
-               'spotify', 'dragon', 'bangarang', 'vlc'],
+               'spotify', 'dragonplayer', 'bangarang', 'vlc'],
     'audio' : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'audacious',
                'clementine', 'spotify', 'pragha', 'gogglesmm', 'qmmp', 'gmusicbrowser',
-               'guayadeque', 'bangarang', 'dragon', 'vlc'],
-    'video' : ['dragon', 'kaffeine', 'bangarang', 'vlc', 'smplayer', 'totem']
+               'guayadeque', 'bangarang', 'dragonplayer', 'vlc'],
+    'video' : ['dragonplayer', 'kaffeine', 'bangarang', 'vlc', 'smplayer', 'totem']
 }
 
 # When the generic '/media' command is used rather than '/audio' or '/video',
@@ -64,11 +64,11 @@ player_rankings = {
 # Entries should be the unique MPRIS2 bus names of players, i.e. the "amarok"
 # part of "org.mpris.MediaPlayer2.amarok".
 preferred_media = {
-    'dragon'   : 'video',
-    'kaffeine' : 'video',
-    'smplayer' : 'video',
-    'totem'    : 'video',
-    'vlc'      : 'video'
+    'dragonplayer' : 'video',
+    'kaffeine'     : 'video',
+    'smplayer'     : 'video',
+    'totem'        : 'video',
+    'vlc'          : 'video'
 }
 
 # To list players and retrieve media metadata his script by default calls the
