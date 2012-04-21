@@ -24,6 +24,8 @@
 #include "viewtree.h"
 #include "viewtreeitem.h"
 
+#include <KTabBar>
+
 
 ViewSpringLoader::ViewSpringLoader(ViewContainer* viewContainer) : QObject(viewContainer)
 {
@@ -98,7 +100,7 @@ void ViewSpringLoader::springLoad()
 
 ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
 {
-    QTabBar* tabBar = qobject_cast<QTabBar*>(widget);
+    KTabBar* tabBar = qobject_cast<KTabBar*>(widget);
 
     if (tabBar)
        return m_viewContainer->getViewAt(tabBar->tabAt(pos));
