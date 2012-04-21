@@ -19,6 +19,7 @@
 #include <KMenu>
 #include <KCategoryDrawer>
 #include <KLocalizedString>
+#include <KGlobalSettings>
 
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -64,8 +65,12 @@ namespace Konversation
             m_activeTransfers = 0;
             m_itemCategoryToRemove = 0;
             m_updateTimer = new QTimer(this);
-            m_updateTimer->setInterval(500);
+            m_updateTimer->setInterval(graphicEffectLevelToInterval(
+                                           KGlobalSettings::graphicEffectsLevel()));
+
             connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(update()));
+
+            connect(KGlobalSettings::self(), SIGNAL(settingsChanged(int)), this, SLOT(globalSettingsChanged(int)));
 
             connect(model(), SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
                      this, SLOT(rowsAboutToBeRemovedFromModel(QModelIndex,int,int)));
@@ -195,6 +200,21 @@ namespace Konversation
             tD.displayType = type;
             tD.transfer = transfer;
             m_dccModel->append(tD);
+        }
+
+        int TransferView::graphicEffectLevelToInterval(int value)
+        {
+            switch (value)
+            {
+                case KGlobalSettings::NoEffects:
+                case KGlobalSettings::GradientEffects:
+                    return 2000;
+                case KGlobalSettings::SimpleAnimationEffects:
+                    return 1000;
+                case KGlobalSettings::ComplexAnimationEffects:
+                default:
+                    return 500;
+            }
         }
 
         void TransferView::transferStatusChanged(Transfer *transfer,
@@ -634,6 +654,13 @@ namespace Konversation
                     }
                 }
             }
+        }
+
+        void TransferView::globalSettingsChanged(int category)
+        {
+            if (category == KGlobalSettings::SETTINGS_STYLE)
+                m_updateTimer->setInterval(graphicEffectLevelToInterval(
+                                               KGlobalSettings::graphicEffectsLevel()));
         }
 
         int TransferView::removeItems(TransferItemData::ItemDisplayType displaytype)

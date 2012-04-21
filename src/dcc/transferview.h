@@ -91,6 +91,7 @@ namespace Konversation
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,
                                                int start, int end);
             void rowsRemovedFromModel(int start, int end);
+            void globalSettingsChanged(int category);
 
         private:
             //extra enum needed because ItemDisplayType are not or-able
@@ -111,6 +112,8 @@ namespace Konversation
             inline void restoreColumns();
 
             inline void addItem(Transfer *transfer, TransferItemData::ItemDisplayType type);
+
+            inline int graphicEffectLevelToInterval(int value);
 
             KCategoryDrawerV3 *m_categoryDrawer;
 
