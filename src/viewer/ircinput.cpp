@@ -126,6 +126,12 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     m_disableSpellCheckTimer->start(5000);
 }
 
+void IRCInput::resizeEvent(QResizeEvent* e)
+{
+    maybeResize();
+    QTextEdit::resizeEvent(e);
+}
+
 void IRCInput::disableSpellChecking()
 {
     setCheckSpellingEnabled(false);

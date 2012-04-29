@@ -74,6 +74,7 @@ class IRCInput : public KTextEdit
         //virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
         virtual void showEvent(QShowEvent* e);
         virtual void hideEvent(QHideEvent* e);
+        virtual void resizeEvent(QResizeEvent* e);
 
         QStringList historyList;
         int lineNum;
