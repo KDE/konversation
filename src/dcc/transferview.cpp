@@ -658,7 +658,11 @@ namespace Konversation
 
         void TransferView::globalSettingsChanged(int category)
         {
+#if KDE_IS_VERSION(4,8,1)
             if (category == KGlobalSettings::SETTINGS_STYLE)
+#else
+            Q_UNUSED(category);
+#endif
                 m_updateTimer->setInterval(graphicEffectLevelToInterval(
                                                KGlobalSettings::graphicEffectsLevel()));
         }
