@@ -511,7 +511,7 @@ namespace Konversation
         void TransferPanel::popupRequested(const QPoint &pos)
         {
             updateButton();
-            m_popup->popup(QWidget::mapToGlobal(pos));
+            m_popup->popup(QWidget::mapToGlobal(m_transferView->viewport()->mapTo(this, pos)));
         }
 
         void TransferPanel::doubleClicked(const QModelIndex &index)
