@@ -129,7 +129,7 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
 void IRCInput::resizeEvent(QResizeEvent* e)
 {
     maybeResize();
-    QTextEdit::resizeEvent(e);
+    KTextEdit::resizeEvent(e);
 }
 
 void IRCInput::disableSpellChecking()
