@@ -661,7 +661,7 @@ void Server::socketConnected()
 
 void Server::capInitiateNegotiation()
 {
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiation capabilities with server..."));
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiating capabilities with server..."));
 
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
     queue("CAP REQ :sasl", HighPriority);
