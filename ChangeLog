@@ -79,11 +79,11 @@ Changes not in the 1.4 branch:
 * The list of placeholders available in Quick Button patterns now mention the
   previously undocumented "%k" placeholder for the current channel's key and is
   sorted alphabetically.
-* When a Quick Button pattern replaces the current input line contents (due to
+* When a Quick Button pattern replaces the current input box contents (due to
   the presence of the "%n" expando in the pattern) they are now added to the
-  input line history first.
+  input box history first.
 * Quick Button patterns now support a new "%i" placeholder that is replaced with
-  the current contents of the input line.
+  the current contents of the input box.
 
 
 Changes since 1.4:
