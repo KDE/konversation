@@ -76,6 +76,14 @@ Changes not in the 1.4 branch:
   the color settings respectively.
 * Queries now start with an info message listing the channels you and the other
   side have in common, i.e. that both of you are presently in.
+* The DCC Status transfer list update interval now depends on the graphics effects
+  level setting in KDE System Settings, changing between 500, 1000 and 2000 ms
+  depending on the level set.
+* Fixed a bug causing the input box height not to be adjusted appropriately to
+  fit the contents when the "Input box expands with text" option is enabled and
+  the window is resized horizontally, causing the text to rewrap.
+* Fixed a bug causing the context menu for an item in the DCC Status transfer
+  list to appear in the wrong position.
 * The list of placeholders available in Quick Button patterns now mention the
   previously undocumented "%k" placeholder for the current channel's key and is
   sorted alphabetically.
