@@ -1023,7 +1023,8 @@ void Server::notifyAction(const QString& nick)
         getNickname(),
         QString(),
         QString(),
-        nick);
+        nick,
+        QString());
 
     // Send all strings, one after another
     QStringList outList = out.split('\n', QString::SkipEmptyParts);
@@ -3522,16 +3523,19 @@ QString Server::parseWildcards(const QString& toParse,
 const QString& sender,
 const QString& channelName,
 const QString& channelKey,
-const QString& nick)
+const QString& nick,
+const QString& inputLineText)
 {
-    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(' ', QString::SkipEmptyParts));
+    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(' ', QString::SkipEmptyParts), inputLineText);
 }
 
 QString Server::parseWildcards(const QString& toParse,
 const QString& sender,
 const QString& channelName,
 const QString& channelKey,
-const QStringList& nickList)
+const QStringList& nickList,
+const QString& inputLineText
+)
 {
     // store the parsed version
     QString out;
@@ -3588,6 +3592,10 @@ const QStringList& nickList)
         else if (toExpand == 'p')
         {
             out.append("%");
+        }
+        else if (toExpand == 'i')
+        {
+            out.append(inputLineText);
         }
     }
 

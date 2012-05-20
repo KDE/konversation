@@ -76,9 +76,11 @@ Changes not in the 1.4 branch:
   the color settings respectively.
 * Queries now start with an info message listing the channels you and the other
   side have in common, i.e. that both of you are presently in.
-* When a quick button pattern replaces the current input line contents (due to
+* When a Quick Button pattern replaces the current input line contents (due to
   the presence of the "%n" expando in the pattern) they are now added to the
   input line history first.
+* Quick Button patterns now support a new "%i" placeholder that is replaced with
+  the current contents of the input line.
 
 
 Changes since 1.4:
