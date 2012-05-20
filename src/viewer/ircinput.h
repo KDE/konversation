@@ -49,7 +49,7 @@ class IRCInput : public KTextEdit
     public slots:
         void paste(bool useSelection);
         void showCompletionList(const QStringList& nicks);
-        void setText(const QString& text);
+        void setText(const QString& text, bool preserveContents = false);
         void setLastCompletion(const QString& completion);
         virtual void setOverwriteMode(bool) { }
         virtual void updateAppearance();

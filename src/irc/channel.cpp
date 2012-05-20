@@ -925,7 +925,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
         sendChannelText(out);
     // single line without newline needs to be copied into input line
     else
-        m_inputBar->setText(out);
+        m_inputBar->setText(out, true);
 }
 
 void Channel::addNickname(ChannelNickPtr channelnick)

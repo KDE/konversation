@@ -186,8 +186,11 @@ QString IRCInput::text() const
     return KTextEdit::text();
 }
 */
-void IRCInput::setText(const QString& text)
+void IRCInput::setText(const QString& text, bool preserveContents)
 {
+    if (!text.isEmpty() && preserveContents)
+        getHistory(false);
+
     // reimplemented to  set cursor at the end of the new text
     KTextEdit::setPlainText(text);
     moveCursor(QTextCursor::End);
