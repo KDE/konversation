@@ -192,7 +192,8 @@ class Server : public QObject
 
         Channel* getChannelByName(const QString& name);
         Query* getQueryByName(const QString& name);
-        QString parseWildcards(const QString& toParse, ChatWindow* context = 0);
+        ChatWindow* getChannelOrQueryByName(const QString& name);
+        QString parseWildcards(const QString& toParse, ChatWindow* context = 0, const QStringList nicks = QStringList());
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& inputLineText);
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& inputLineText);
 

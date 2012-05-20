@@ -82,6 +82,8 @@ class ChatWindow : public KVBox
         void setType(WindowType newType);
         WindowType getType() const;
 
+        virtual void sendText(const QString& text) {}
+
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendRaw(const QString& message, bool self = false);
         virtual void appendLog(const QString& message);

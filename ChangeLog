@@ -97,6 +97,10 @@ Changes not in the 1.4 branch:
 * Fixed a bug causing wildcard expansion to be performed on the input box
   contents when they start with a Command Alias (rather than just expanding
   wildcards in the Alias replacement pattern).
+* The Quick Buttons options now feature a new checkbox that toggles whether Quick
+  Buttons that operate on nicknames will be shown alongside other nickname-
+  related actions in context menus throughout Konversation. Essentially, this
+  allows for placing custom actions in nickname context menus.
 
 
 Changes since 1.4:

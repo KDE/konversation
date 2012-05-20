@@ -78,7 +78,7 @@ class Query : public ChatWindow
         void updateQueryChrome(ChatWindow*, const QString&);
 
     public slots:
-        void sendQueryText(const QString& text);
+        void sendText(const QString& text);
         virtual void indicateAway(bool show);
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);

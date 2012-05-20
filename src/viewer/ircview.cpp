@@ -2137,8 +2137,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 
     if (m_isOnNick && m_server)
     {
-        IrcContextMenus::nickMenu(ev->globalPos(), m_contextMenuOptions, m_server, QStringList() << m_currentNick,
-            m_contextMenuOptions.testFlag(IrcContextMenus::ShowChannelActions) ? m_chatWin->getName() : QString());
+        IrcContextMenus::nickMenu(ev->globalPos(), m_contextMenuOptions, m_server, QStringList() << m_currentNick, m_chatWin->getName());
 
         m_currentNick.clear();
 

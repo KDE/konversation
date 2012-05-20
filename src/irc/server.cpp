@@ -1620,7 +1620,7 @@ void Server::dbusSay(const QString& target,const QString& command)
     if(isAChannel(target))
     {
         Channel* channel=getChannelByName(target);
-        if(channel) channel->sendChannelText(command);
+        if(channel) channel->sendText(command);
     }
     else
     {
@@ -1633,7 +1633,7 @@ void Server::dbusSay(const QString& target,const QString& command)
         if(query)
         {
             if(!command.isEmpty())
-                query->sendQueryText(command);
+                query->sendText(command);
             else
             {
                 query->adjustFocus();
@@ -2836,6 +2836,16 @@ Query* Server::getQueryByName(const QString& name)
     return 0;
 }
 
+ChatWindow* Server::getChannelOrQueryByName(const QString& name)
+{
+    ChatWindow* window = getChannelByName(name);
+
+    if (!window)
+        window = getQueryByName(name);
+
+    return window;
+}
+
 void Server::queueNicks(const QString& channelName, const QStringList& nicknameList)
 {
     Channel* channel = getChannelByName(channelName);
@@ -3519,7 +3529,7 @@ QString Server::loweredNickname() const
     return m_loweredNickname;
 }
 
-QString Server::parseWildcards(const QString& toParse, ChatWindow* context)
+QString Server::parseWildcards(const QString& toParse, ChatWindow* context, QStringList nicks)
 {
     QString inputLineText;
 
@@ -3531,7 +3541,9 @@ QString Server::parseWildcards(const QString& toParse, ChatWindow* context)
     else if (context->getType() == ChatWindow::Channel)
     {
         Channel* channel = static_cast<Channel*>(context);
-        parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(), channel->getSelectedNickList(), inputLineText);
+
+        return parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(),
+            nicks.count() ? nicks : channel->getSelectedNickList(), inputLineText);
     }
     else if (context->getType() == ChatWindow::Query)
         return parseWildcards(toParse, getNickname(), context->getName(), QString(), context->getName(), inputLineText);
@@ -3629,7 +3641,7 @@ void Server::sendToAllChannels(const QString &text)
     // Send a message to all channels we are in
     foreach (Channel* channel, m_channelList)
     {
-        channel->sendChannelText(text);
+        channel->sendText(text);
     }
 }
 
@@ -3858,13 +3870,13 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
     // Send a message to all channels we are in
     foreach (Channel* channel, m_channelList)
     {
-        channel->sendChannelText(text);
+        channel->sendText(text);
     }
 
     // Send a message to all queries we are in
     foreach (Query* query, m_queryList)
     {
-        query->sendQueryText(text);
+        query->sendText(text);
     }
 }
 

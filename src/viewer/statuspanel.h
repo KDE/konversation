@@ -59,7 +59,7 @@ class StatusPanel : public ChatWindow
     protected slots:
         void sendFileMenu();
         void statusTextEntered();
-        void sendStatusText(const QString& line);
+        void sendText(const QString& line);
         // connected to IRCInput::textPasted() - used for large/multiline pastes
         void textPasted(const QString& text);
         void changeNickname(const QString& newNickname);

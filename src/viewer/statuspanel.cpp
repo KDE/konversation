@@ -59,7 +59,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendStatusText(QString)) );
+    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     connect(m_inputBar,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
     connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
@@ -92,7 +92,7 @@ void StatusPanel::childAdjustFocus()
     m_inputBar->setFocus();
 }
 
-void StatusPanel::sendStatusText(const QString& sendLine)
+void StatusPanel::sendText(const QString& sendLine)
 {
     // create a work copy
     QString outputAll(sendLine);
@@ -124,7 +124,7 @@ void StatusPanel::statusTextEntered()
 
     m_inputBar->clear();
 
-    if (!line.isEmpty()) sendStatusText(line);
+    if (!line.isEmpty()) sendText(line);
 }
 
 void StatusPanel::textPasted(const QString& text)
@@ -138,7 +138,7 @@ void StatusPanel::textPasted(const QString& text)
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
-            sendStatusText(line);
+            sendText(line);
         }
     }
 }

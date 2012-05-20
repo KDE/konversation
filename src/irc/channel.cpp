@@ -267,7 +267,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendChannelText(QString)) );
+    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     connect(nicknameListView,SIGNAL (itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT (doubleClickCommand(QTreeWidgetItem*,int)) );
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
@@ -466,7 +466,7 @@ void Channel::textPasted(const QString& text)
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
-            sendChannelText(line);
+            sendText(line);
         }
     }
 }
@@ -770,7 +770,7 @@ void Channel::channelTextEntered()
 
     m_inputBar->clear();
 
-    if (!line.isEmpty()) sendChannelText(sterilizeUnicode(line));
+    if (!line.isEmpty()) sendText(sterilizeUnicode(line));
 }
 
 void Channel::channelPassthroughCommand()
@@ -787,11 +787,11 @@ void Channel::channelPassthroughCommand()
         {
             line = commandChar + line;
         }
-        sendChannelText(sterilizeUnicode(line));
+        sendText(sterilizeUnicode(line));
     }
 }
 
-void Channel::sendChannelText(const QString& sendLine)
+void Channel::sendText(const QString& sendLine)
 {
     // create a work copy
     QString outputAll(sendLine);
@@ -919,7 +919,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
 
     // are there any newlines in the definition?
     if (out.contains('\n'))
-        sendChannelText(out);
+        sendText(out);
     // single line without newline needs to be copied into input line
     else
         m_inputBar->setText(out, true);

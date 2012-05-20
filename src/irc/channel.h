@@ -254,7 +254,7 @@ class Channel : public ChatWindow
         void updateAppearance();
         void channelTextEntered();
         void channelPassthroughCommand();
-        void sendChannelText(const QString& line);
+        void sendText(const QString& line);
         void showOptionsDialog();
         void showQuickButtons(bool show);
         void showModeButtons(bool show);

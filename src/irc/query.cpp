@@ -95,7 +95,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
     connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
-    connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendQueryText(QString)) );
+    connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     updateAppearance();
 
@@ -206,7 +206,7 @@ void Query::queryTextEntered()
 
     m_inputBar->clear();
 
-    if (!line.isEmpty()) sendQueryText(sterilizeUnicode(line));
+    if (!line.isEmpty()) sendText(sterilizeUnicode(line));
 }
 
 void Query::queryPassthroughCommand()
@@ -223,11 +223,11 @@ void Query::queryPassthroughCommand()
         {
             line = commandChar + line;
         }
-        sendQueryText(sterilizeUnicode(line));
+        sendText(sterilizeUnicode(line));
     }
 }
 
-void Query::sendQueryText(const QString& sendLine)
+void Query::sendText(const QString& sendLine)
 {
     // create a work copy
     QString outputAll(sendLine);
@@ -293,7 +293,7 @@ void Query::textPasted(const QString& text)
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
-            sendQueryText(line);
+            sendText(line);
         }
     }
 }
