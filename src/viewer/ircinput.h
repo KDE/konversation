@@ -42,7 +42,6 @@ class IRCInput : public KTextEdit
     signals:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over
-        void history(bool up);
         void textPasted(const QString& text);
         void submit();
         void envelopeCommand();

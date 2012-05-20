@@ -37,8 +37,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
     m_multiRow = Preferences::self()->useMultiRowInputBox();
 
-    // connect history signal
-    connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
     // add one empty line to the history (will be overwritten with newest entry)
     historyList.prepend(QString());
     // reset history line counter
@@ -236,14 +234,14 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
         case Qt::Key_Up:
             if (m_multiRow && textCursor().movePosition(QTextCursor::Up))
                 break;
-            emit history(true);
+            getHistory(true);
             return;
             break;
 
         case Qt::Key_Down:
             if (m_multiRow && textCursor().movePosition(QTextCursor::Down))
                 break;
-            emit history(false);
+            getHistory(false);
             return;
             break;
 
@@ -326,13 +324,9 @@ bool IRCInput::event(QEvent* e)
 void IRCInput::wheelEvent(QWheelEvent* e)
 {
     if (e->delta() > 0)
-    {
-        emit history(true);
-    }
+        getHistory(true);
     else if (e->delta() < 0)
-    {
-        emit history(false);
-    }
+        getHistory(false);
 
     KTextEdit::wheelEvent(e);
 }
