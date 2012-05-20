@@ -83,35 +83,34 @@ namespace Konversation
     }
 
     // replace all aliases in the string and return true if anything got replaced at all
-    bool OutputFilter::replaceAliases(QString& line)
+    bool OutputFilter::replaceAliases(QString& line, ChatWindow* context)
     {
-        QStringList aliasList=Preferences::self()->aliasList();
-        QString cc(Preferences::self()->commandChar());
-        // check if the line starts with a defined alias
-        for(int index=0;index<aliasList.count();index++)
+        QStringList aliasList = Preferences::self()->aliasList();
+
+        for(int index = 0; index<aliasList.count(); index++)
         {
             // cut alias pattern from definition
-            QString aliasPattern(aliasList[index].section(' ',0,0));
+            QString aliasPattern(aliasList[index].section(' ', 0, 0));
+
             // cut first word from command line, so we do not wrongly find an alias
             // that starts with the same letters, like /m would override /me
-            QString lineStart=line.section(' ',0,0);
+            QString lineStart = line.section(' ', 0, 0);
 
             // pattern found?
-            // TODO: cc may be a regexp character here ... we should escape it then
-            if (lineStart==cc+aliasPattern)
+            if (lineStart == Preferences::self()->commandChar() + aliasPattern)
             {
-                QString aliasReplace;
+                QString aliasReplace = aliasList[index].section(' ',1);
 
-                // cut alias replacement from definition
-                if ( aliasList[index].contains("%p") )
-                    aliasReplace = aliasList[index].section(' ',1);
-                else
-                    aliasReplace = aliasList[index].section(' ',1 )+' '+line.section(' ',1 );
+                if (context)
+                    aliasReplace = context->getServer()->parseWildcards(aliasReplace, context);
+
+                if (!aliasList[index].contains("%p"))
+                    aliasReplace.append(' ' + line.section(' ', 1));
 
                 // protect "%%"
                 aliasReplace.replace("%%","%\x01");
                 // replace %p placeholder with rest of line
-                aliasReplace.replace("%p",line.section(' ',1));
+                aliasReplace.replace("%p", line.section(' ', 1));
                 // restore "%<1>" as "%%"
                 aliasReplace.replace("%\x01","%%");
                 // modify line
@@ -119,7 +118,7 @@ namespace Konversation
                 // return "replaced"
                 return true;
             }
-        }                                         // for
+        }
 
         return false;
     }

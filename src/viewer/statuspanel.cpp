@@ -96,11 +96,9 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 {
     // create a work copy
     QString outputAll(sendLine);
+
     // replace aliases and wildcards
-    if(m_server->getOutputFilter()->replaceAliases(outputAll))
-    {
-        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), QString(), QString(), QString(), m_inputBar->toPlainText());
-    }
+    m_server->getOutputFilter()->replaceAliases(outputAll);
 
     // Send all strings, one after another
     QStringList outList=outputAll.split('\n');

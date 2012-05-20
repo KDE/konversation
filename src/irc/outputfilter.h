@@ -91,7 +91,7 @@ namespace Konversation
             OutputFilterResult passiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
             OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
 
-            static bool replaceAliases(QString& line);
+            static bool replaceAliases(QString& line, ChatWindow* context = 0);
 
         signals:
             void openDccSend(const QString &recipient, KUrl kurl);

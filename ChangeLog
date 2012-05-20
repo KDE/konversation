@@ -84,6 +84,11 @@ Changes not in the 1.4 branch:
   input box history first.
 * Quick Button patterns now support a new "%i" placeholder that is replaced with
   the current contents of the input box.
+* The double-click action command for Watched Nicks list entries now supports
+  command aliases.
+* Fixed a bug causing wildcard expansion to be performed on the input box
+  contents when they start with a Command Alias (rather than just expanding
+  wildcards in the Alias replacement pattern).
 
 
 Changes since 1.4:

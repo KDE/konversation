@@ -38,6 +38,7 @@
 #include "serverison.h"
 #include "notificationhandler.h"
 #include "awaymanager.h"
+#include "ircinput.h"
 
 #include <QTextCodec>
 #include <QStringListModel>
@@ -1018,13 +1019,12 @@ void Server::quitServer(const QString& quitMessage)
 
 void Server::notifyAction(const QString& nick)
 {
+    QString out(Preferences::self()->notifyDoubleClickAction());
+
+    getOutputFilter()->replaceAliases(out);
+
     // parse wildcards (toParse,nickname,channelName,nickList,parameter)
-    QString out = parseWildcards(Preferences::self()->notifyDoubleClickAction(),
-        getNickname(),
-        QString(),
-        QString(),
-        nick,
-        QString());
+    out = parseWildcards(out, getNickname(), QString(), QString(), nick, QString());
 
     // Send all strings, one after another
     QStringList outList = out.split('\n', QString::SkipEmptyParts);
@@ -3517,6 +3517,26 @@ QString Server::getNickname() const
 QString Server::loweredNickname() const
 {
     return m_loweredNickname;
+}
+
+QString Server::parseWildcards(const QString& toParse, ChatWindow* context)
+{
+    QString inputLineText;
+
+    if (context && context->getInputBar())
+        inputLineText = context->getInputBar()->toPlainText();
+
+    if (!context)
+        return parseWildcards(toParse, getNickname(), QString(), QString(), QString(), QString());
+    else if (context->getType() == ChatWindow::Channel)
+    {
+        Channel* channel = static_cast<Channel*>(context);
+        parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(), channel->getSelectedNickList(), inputLineText);
+    }
+    else if (context->getType() == ChatWindow::Query)
+        return parseWildcards(toParse, getNickname(), context->getName(), QString(), context->getName(), inputLineText);
+
+    return parseWildcards(toParse, getNickname(), context->getName(), QString(), QString(), inputLineText);
 }
 
 QString Server::parseWildcards(const QString& toParse,
