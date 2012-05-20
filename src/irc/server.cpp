@@ -1023,8 +1023,7 @@ void Server::notifyAction(const QString& nick)
         getNickname(),
         QString(),
         QString(),
-        nick,
-        QString());
+        nick);
 
     // Send all strings, one after another
     QStringList outList = out.split('\n', QString::SkipEmptyParts);
@@ -3523,21 +3522,17 @@ QString Server::parseWildcards(const QString& toParse,
 const QString& sender,
 const QString& channelName,
 const QString& channelKey,
-const QString& nick,
-const QString& parameter)
+const QString& nick)
 {
-    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(' ', QString::SkipEmptyParts), parameter);
+    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(' ', QString::SkipEmptyParts));
 }
 
 QString Server::parseWildcards(const QString& toParse,
 const QString& sender,
 const QString& channelName,
 const QString& channelKey,
-const QStringList& nickList,
-const QString& /*parameter*/)
+const QStringList& nickList)
 {
-    // TODO: parameter handling, since parameters are not functional yet
-
     // store the parsed version
     QString out;
 

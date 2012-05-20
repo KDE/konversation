@@ -796,10 +796,10 @@ void Channel::sendChannelText(const QString& sendLine)
     // create a work copy
     QString outputAll(sendLine);
     // replace aliases and wildcards
-    if(m_server->getOutputFilter()->replaceAliases(outputAll))
+    if (m_server->getOutputFilter()->replaceAliases(outputAll))
     {
         outputAll = m_server->parseWildcards(outputAll,m_server->getNickname(),getName(),getPassword(),
-            getSelectedNickList(),QString());
+            getSelectedNickList());
     }
 
     // Send all strings, one after another
@@ -918,7 +918,7 @@ void Channel::modeButtonClicked(int id, bool on)
 void Channel::quickButtonClicked(const QString &buttonText)
 {
     // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList(),QString());
+    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList());
 
     // are there any newlines in the definition?
     if (out.contains('\n'))
