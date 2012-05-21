@@ -76,10 +76,11 @@ IrcContextMenus::IrcContextMenus()
     createSharedNickSettingsActions();
     createSharedDccActions();
 
-    setupQuickButtonMenu();
-    setupTextMenu();
     setupChannelMenu();
+    setupQuickButtonMenu();
+    // setupNickMenu and setupTextMenu need initialised m_quickButtonMenu
     setupNickMenu();
+    setupTextMenu();
 
     updateQuickButtonMenu();
 }
@@ -90,6 +91,7 @@ IrcContextMenus::~IrcContextMenus()
     delete m_channelMenu;
     delete m_nickMenu;
     delete m_addressBookMenu;
+    delete m_quickButtonMenu;
 }
 
 IrcContextMenus* IrcContextMenus::self()
@@ -99,7 +101,8 @@ IrcContextMenus* IrcContextMenus::self()
 
 void IrcContextMenus::setupQuickButtonMenu()
 {
-    m_quickButtonMenu = new KMenu(m_nickMenu);
+    //NOTE: if we depend on m_nickMenu we get an we an cyclic initialising
+    m_quickButtonMenu = new KMenu();
     m_quickButtonMenu->setTitle(i18n("Quick Buttons"));
     connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateQuickButtonMenu()));
 }
