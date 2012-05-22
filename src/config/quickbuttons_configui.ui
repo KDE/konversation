@@ -39,7 +39,7 @@
 %i: Input box contents
 %k: Channel key
 %K: Server password
-%n: Send command directly to the server instead of your input linex
+%n: Send command directly to the server instead of your input line
 %o: Current nickname
 %s&lt;term&gt;%: term used to separate nicknames in %u
 %u: List of selected nicknames</string>
