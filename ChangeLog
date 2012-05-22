@@ -101,6 +101,9 @@ Changes not in the 1.4 branch:
   Buttons that operate on nicknames will be shown alongside other nickname-
   related actions in context menus throughout Konversation. Essentially, this
   allows for placing custom actions in nickname context menus.
+* When editing the topic in the Channel Options dialog, any text entered past the
+  server's maximum allowed topic length will now be drawn in the color scheme's
+  negative text color (i.e. usually red).
 
 
 Changes since 1.4:

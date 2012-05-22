@@ -64,9 +64,11 @@ namespace Konversation
         protected slots:
             void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited(bool edited);
+            void topicEditContentsChange(int position, int charsRemoved, int charsAdded);
 
         protected:
             bool m_editingTopic;
+            bool m_previousEditPastTopicLength;
             bool m_isAnyTypeOfOp;
 
         private:

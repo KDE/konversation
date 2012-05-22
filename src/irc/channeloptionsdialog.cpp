@@ -15,6 +15,8 @@
 #include "application.h"
 #include "channel.h"
 
+#include <KColorScheme>
+
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QPushButton>
@@ -52,11 +54,13 @@ namespace Konversation
 
         m_channel = channel;
         m_editingTopic = false;
+        m_previousEditPastTopicLength = false;
 
         connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
                 this, SLOT(topicHistoryItemClicked(QItemSelection)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_ui.topicEdit, SIGNAL(undoAvailable(bool)), this, SLOT(topicBeingEdited(bool)));
+        connect(m_ui.topicEdit->document(), SIGNAL(contentsChange(int,int,int)), this, SLOT(topicEditContentsChange(int,int,int)));
         connect(this, SIGNAL(finished()), m_ui.topicEdit, SLOT(clear()));
 
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
@@ -167,6 +171,52 @@ namespace Konversation
     void ChannelOptionsDialog::topicBeingEdited(bool edited)
     {
         m_editingTopic = edited;
+    }
+
+    void ChannelOptionsDialog::topicEditContentsChange(int position, int charsRemoved, int charsAdded)
+    {
+        if (!m_editingTopic) return;
+        if (charsRemoved == 0 && charsAdded == 0) return;
+
+        int topicLength = m_channel->getServer()->topicLength();
+
+        if (topicLength == -1) return;
+
+        if (m_ui.topicEdit->document()->characterCount() > topicLength)
+        {
+            m_previousEditPastTopicLength = true;
+
+            QTextCursor cursor(m_ui.topicEdit->document());
+            QTextCharFormat format = cursor.charFormat();
+
+            cursor.joinPreviousEditBlock();
+
+            cursor.setPosition(topicLength, QTextCursor::KeepAnchor);
+            cursor.setCharFormat(format);
+
+            cursor.setPosition(topicLength, QTextCursor::MoveAnchor);
+            cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+
+            KColorScheme colors(QPalette::Active);
+            format.setForeground(colors.foreground(KColorScheme::NegativeText));
+            cursor.setCharFormat(format);
+
+            cursor.endEditBlock();
+        }
+        else if (m_previousEditPastTopicLength)
+        {
+            m_previousEditPastTopicLength = false;
+
+            QTextCursor cursor(m_ui.topicEdit->document());
+            QTextCharFormat format = cursor.charFormat();
+
+            cursor.joinPreviousEditBlock();
+
+            cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+            cursor.setCharFormat(format);
+
+            cursor.endEditBlock();
+        }
     }
 
     QString ChannelOptionsDialog::topic()
