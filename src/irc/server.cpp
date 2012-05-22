@@ -107,6 +107,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_channelPrefixes = "#&";
     m_modesCount = 3;
     m_sslErrorLock = false;
+    m_topicLength = -1;
 
     setObjectName(QString::fromLatin1("server_") + m_connectionSettings.name());
 

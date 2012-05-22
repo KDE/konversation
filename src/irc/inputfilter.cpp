@@ -948,6 +948,17 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                 m_server->setAllowedChannelModes(newModes);
                             }
                         }
+                        else if (property == "TOPICLEN")
+                        {
+                            if (!value.isEmpty())
+                            {
+                                bool ok =  false;
+                                int topicLength = value.toInt(&ok);
+
+                                if (ok)
+                                    m_server->setTopicLength(topicLength);
+                            }
+                        }
                         else
                         {
                             //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";

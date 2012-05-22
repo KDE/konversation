@@ -364,6 +364,9 @@ class Server : public QObject
         void setAllowedChannelModes(const QString& modes) { m_allowedChannelModes = modes; }
         QString allowedChannelModes() const { return m_allowedChannelModes; }
 
+        void setTopicLength(int topicLength) { m_topicLength = topicLength; }
+        int topicLength() const { return m_topicLength; }
+
         void registerWithServices();
 
         // Blowfish stuff
@@ -811,6 +814,8 @@ class Server : public QObject
         NickInfoMap m_queryNicks;
 
         QString m_allowedChannelModes;
+
+        int m_topicLength;
 
         // Blowfish key map
         QHash<QString, QByteArray> m_keyHash;
