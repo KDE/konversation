@@ -175,6 +175,8 @@ namespace Konversation
 
     void ChannelOptionsDialog::topicEditContentsChange(int position, int charsRemoved, int charsAdded)
     {
+        Q_UNUSED(position);
+
         if (!m_editingTopic) return;
         if (charsRemoved == 0 && charsAdded == 0) return;
 
@@ -187,7 +189,11 @@ namespace Konversation
             m_previousEditPastTopicLength = true;
 
             QTextCursor cursor(m_ui.topicEdit->document());
+
+            KColorScheme colors(QPalette::Active);
+
             QTextCharFormat format = cursor.charFormat();
+            format.setForeground(colors.foreground(KColorScheme::NormalText));
 
             cursor.joinPreviousEditBlock();
 
@@ -197,7 +203,6 @@ namespace Konversation
             cursor.setPosition(topicLength, QTextCursor::MoveAnchor);
             cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 
-            KColorScheme colors(QPalette::Active);
             format.setForeground(colors.foreground(KColorScheme::NegativeText));
             cursor.setCharFormat(format);
 
@@ -208,7 +213,11 @@ namespace Konversation
             m_previousEditPastTopicLength = false;
 
             QTextCursor cursor(m_ui.topicEdit->document());
+
+            KColorScheme colors(QPalette::Active);
+
             QTextCharFormat format = cursor.charFormat();
+            format.setForeground(colors.foreground(KColorScheme::NormalText));
 
             cursor.joinPreviousEditBlock();
 
