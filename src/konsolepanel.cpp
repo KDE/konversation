@@ -18,6 +18,7 @@
 #include <QLabel>
 
 #include <KApplication>
+#include <KService>
 #include <KHBox>
 #include <kde_terminal_interface.h>
 
@@ -44,7 +45,13 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     m_konsoleLabel = new QLabel(headerWidget);
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
-    KPluginFactory* fact = KPluginLoader("libkonsolepart").factory();
+    KPluginFactory* fact = 0;
+    KService::Ptr service = KService::serviceByDesktopName("konsolepart");
+    if( service )
+    {
+        fact = KPluginLoader(service->library()).factory();
+    }
+
     if (!fact) return;
 
     k_part = fact->create<KParts::ReadOnlyPart>(m_headerSplitter);
