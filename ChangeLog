@@ -103,7 +103,10 @@ Changes not in the 1.4 branch:
   allows for placing custom actions in nickname context menus.
 * When editing the topic in the Channel Options dialog, any text entered past the
   server's maximum allowed topic length will now be drawn in the color scheme's
-  negative text color (i.e. usually red).
+  negative text color (i.e. usually red). Further, if Konversation has been built
+  against KDE Platform v4.7.0 or higher, a warning is shown at the bottom of the
+  text field explaining the limit and offering the option - via a button - to
+  delete the excess text.
 
 
 Changes since 1.4:

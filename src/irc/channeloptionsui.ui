@@ -57,7 +57,7 @@ the Free Software Foundation; either version 2 of the License, or
            <bool>true</bool>
           </property>
          </widget>
-         <widget class="KTextEdit" name="topicEdit">
+         <widget class="TopicEdit" name="topicEdit">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -365,6 +365,7 @@ the Free Software Foundation; either version 2 of the License, or
   <include location="local">ktextedit.h</include>
   <include location="local">knuminput.h</include>
   <include location="local">klineedit.h</include>
+  <include location="local">topicedit.h</include>
  </includes>
  <resources/>
  <connections>

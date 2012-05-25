@@ -150,6 +150,7 @@ set(viewer_SRCS
     viewer/irccontextmenus.cpp
     viewer/trayicon.cpp
     viewer/viewspringloader.cpp
+    viewer/topicedit.cpp
 )
 
 kde4_add_ui_files(viewer_SRCS
