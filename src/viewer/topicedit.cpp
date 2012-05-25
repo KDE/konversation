@@ -121,10 +121,10 @@ void TopicEdit::colorizeExcessText()
 
     cursor.joinPreviousEditBlock();
 
-    cursor.setPosition(m_maximumLength, QTextCursor::KeepAnchor);
+    cursor.setPosition(m_maximumLength - 1, QTextCursor::KeepAnchor);
     cursor.setCharFormat(format);
 
-    cursor.setPosition(m_maximumLength, QTextCursor::MoveAnchor);
+    cursor.setPosition(m_maximumLength - 1, QTextCursor::MoveAnchor);
     cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 
     format.setForeground(colors.foreground(KColorScheme::NegativeText));
