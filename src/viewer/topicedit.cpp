@@ -76,6 +76,8 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
     // than user interaction.
     if (!document()->availableUndoSteps())
     {
+        resetTextColorization();
+
 #if KDE_IS_VERSION(4, 7, 0)
         if (m_warning && m_warning->isVisible())
             hideWarning();
