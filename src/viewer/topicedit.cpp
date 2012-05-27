@@ -159,7 +159,9 @@ void TopicEdit::showWarning()
         m_warning = new KMessageWidget(this);
         m_warning->setMessageType(KMessageWidget::Warning);
         m_warning->setCloseButtonVisible(false);
+#if KDE_IS_VERSION(4, 8, 4)
         m_warning->setWordWrap(true);
+#endif
 
         QAction* trimExcessAction = new QAction(i18n("Delete excess text"), m_warning);
         connect(trimExcessAction, SIGNAL(triggered(bool)), this, SLOT(trimExcessText()));
@@ -193,7 +195,11 @@ void TopicEdit::hideWarning()
 void TopicEdit::updateWarningGeometry()
 {
     int width = viewport()->width() - (2 * MARGIN);
+#if KDE_IS_VERSION(4, 8, 4)
     int heightForWidth = m_warning->heightForWidth(width);
+#else
+    int heightForWidth = m_warning->minimumSizeHint().height();
+#endif
     int viewportMargin = heightForWidth + MARGIN + 1;
 
     setViewportMargins(0, 0, 0, viewportMargin);
