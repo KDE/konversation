@@ -194,6 +194,8 @@ void TopicEdit::hideWarning()
 
 void TopicEdit::updateWarningGeometry()
 {
+    QRect rect = viewport()->geometry();
+
     int width = viewport()->width() - (2 * MARGIN);
 #if KDE_IS_VERSION(4, 8, 4)
     int heightForWidth = m_warning->heightForWidth(width);
@@ -204,7 +206,12 @@ void TopicEdit::updateWarningGeometry()
 
     setViewportMargins(0, 0, 0, viewportMargin);
 
-    QRect rect;
+    if (viewport()->geometry() != rect)
+    {
+        updateWarningGeometry();
+
+        return;
+    }
 
     rect.setLeft(frameWidth() + MARGIN);
     rect.setTop(height() - (heightForWidth + frameWidth() + MARGIN));
