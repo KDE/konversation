@@ -714,7 +714,7 @@ void Server::registerWithServices()
         return;
 
     NickInfoPtr nickInfo = getNickInfo(getNickname());
-    if (!nickInfo || nickInfo->isIdentified())
+    if (nickInfo && nickInfo->isIdentified())
         return;
 
     if (getIdentity()->getAuthType() == "nickserv")
