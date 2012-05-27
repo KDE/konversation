@@ -24,7 +24,6 @@
 
 #if KDE_IS_VERSION(4, 7, 0)
 #include <KColorScheme>
-#include <KDebug>
 #include <KLocale>
 #include <KMessageWidget>
 
@@ -160,9 +159,7 @@ void TopicEdit::showWarning()
         m_warning = new KMessageWidget(this);
         m_warning->setMessageType(KMessageWidget::Warning);
         m_warning->setCloseButtonVisible(false);
-#if KDE_IS_VERSION(4, 8, 4)
         m_warning->setWordWrap(true);
-#endif
 
         QAction* trimExcessAction = new QAction(i18n("Delete excess text"), m_warning);
         connect(trimExcessAction, SIGNAL(triggered(bool)), this, SLOT(trimExcessText()));
@@ -180,8 +177,7 @@ void TopicEdit::showWarning()
 
     updateWarningGeometry();
 
-    m_warningUndercarriage->show();
-    m_warning->animatedShow();
+    m_warning->show();
 
     // Our minimum size hint may have changed.
     updateGeometry();
@@ -196,28 +192,38 @@ void TopicEdit::hideWarning()
 
 void TopicEdit::updateWarningGeometry()
 {
-    int viewportMargin = m_warning->minimumSizeHint().height() + MARGIN + 1;
+    int width = viewport()->width() - (2 * MARGIN);
+    int heightForWidth = m_warning->heightForWidth(width);
+    int viewportMargin = heightForWidth + MARGIN + 1;
 
     setViewportMargins(0, 0, 0, viewportMargin);
 
     QRect rect;
 
     rect.setLeft(frameWidth() + MARGIN);
-    rect.setTop(height() - (m_warning->minimumSizeHint().height() + frameWidth() + MARGIN));
-    rect.setWidth(viewport()->width() - (2 * MARGIN));
-    rect.setHeight(m_warning->minimumSizeHint().height());
+    rect.setTop(height() - (heightForWidth + frameWidth() + MARGIN));
+    rect.setWidth(width);
+    rect.setHeight(heightForWidth);
 
     m_warning->setGeometry(rect);
 
-    QPoint topLeft = parentWidget()->mapTo(window(), geometry().bottomLeft());
-    topLeft.setX(topLeft.x() + frameWidth());
-    topLeft.setY(topLeft.y() - frameWidth() - viewportMargin);
+    if (viewport()->geometry().height() == 0)
+        m_warningUndercarriage->hide();
+    else
+    {
+        if (m_warningUndercarriage->isHidden())
+            m_warningUndercarriage->show();
 
-    rect.setTopLeft(topLeft);
-    rect.setWidth(viewport()->width());
-    rect.setHeight(viewportMargin);
+        QPoint topLeft = parentWidget()->mapTo(window(), geometry().bottomLeft());
+        topLeft.setX(topLeft.x() + frameWidth());
+        topLeft.setY(topLeft.y() - frameWidth() - viewportMargin);
 
-    m_warningUndercarriage->setGeometry(rect);
+        rect.setTopLeft(topLeft);
+        rect.setWidth(viewport()->width());
+        rect.setHeight(viewportMargin);
+
+        m_warningUndercarriage->setGeometry(rect);
+    }
 }
 
 QSize TopicEdit::minimumSizeHint() const
