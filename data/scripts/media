@@ -68,7 +68,8 @@ preferred_media = {
     'kaffeine'     : 'video',
     'smplayer'     : 'video',
     'totem'        : 'video',
-    'vlc'          : 'video'
+    'vlc'          : 'video',
+    'SMPlayer2'    : 'video'
 }
 
 # To list players and retrieve media metadata his script by default calls the
