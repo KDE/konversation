@@ -171,5 +171,19 @@ namespace Konversation
             return socket;
         }
 
+        int DccCommon::graphicEffectLevelToUpdateInterval(int value)
+        {
+            switch (value)
+            {
+                case KGlobalSettings::NoEffects:
+                case KGlobalSettings::GradientEffects:
+                    return 2000;
+                case KGlobalSettings::SimpleAnimationEffects:
+                    return 1000;
+                case KGlobalSettings::ComplexAnimationEffects:
+                default:
+                    return 500;
+            }
+        }
     }
 }

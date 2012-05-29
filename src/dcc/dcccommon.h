@@ -41,6 +41,9 @@ namespace Konversation
                 // creates an instance of QTcpServer following the DCC settings
                 static QTcpServer* createServerSocketAndListen( QObject* parent = 0, QString* failedReason = 0, int minPort = 0, int maxPort = 0 );
 
+                // returns a updateinterval according to KGlobalSettings::graphicEffectsLevel()
+                static int graphicEffectLevelToUpdateInterval(int value);
+
             private:
                 DccCommon();
         };

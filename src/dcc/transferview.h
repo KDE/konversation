@@ -113,8 +113,6 @@ namespace Konversation
 
             inline void addItem(Transfer *transfer, TransferItemData::ItemDisplayType type);
 
-            inline int graphicEffectLevelToInterval(int value);
-
             KCategoryDrawerV3 *m_categoryDrawer;
 
             TransferListModel *m_dccModel;

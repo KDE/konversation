@@ -45,6 +45,8 @@ namespace Konversation
                 void slotTransferStatusChanged(Konversation::DCC::Transfer *transfer, int newStatus, int oldStatus);
                 void slotLocationChanged(const QString& url);
 
+                void globalSettingsChanged(int category);
+
             private:
                 Ui::DccTransferDetailedInfoPanelUI m_locationInfo;
                 Ui::DccTransferDetailedTimeInfoPanelUI m_timeInfo;

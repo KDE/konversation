@@ -25,6 +25,7 @@
 #include <QKeyEvent>
 
 #include <preferences.h>
+#include "dcccommon.h"
 
 namespace Konversation
 {
@@ -65,7 +66,7 @@ namespace Konversation
             m_activeTransfers = 0;
             m_itemCategoryToRemove = 0;
             m_updateTimer = new QTimer(this);
-            m_updateTimer->setInterval(graphicEffectLevelToInterval(
+            m_updateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
                                            KGlobalSettings::graphicEffectsLevel()));
 
             connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(update()));
@@ -200,21 +201,6 @@ namespace Konversation
             tD.displayType = type;
             tD.transfer = transfer;
             m_dccModel->append(tD);
-        }
-
-        int TransferView::graphicEffectLevelToInterval(int value)
-        {
-            switch (value)
-            {
-                case KGlobalSettings::NoEffects:
-                case KGlobalSettings::GradientEffects:
-                    return 2000;
-                case KGlobalSettings::SimpleAnimationEffects:
-                    return 1000;
-                case KGlobalSettings::ComplexAnimationEffects:
-                default:
-                    return 500;
-            }
         }
 
         void TransferView::transferStatusChanged(Transfer *transfer,
@@ -663,7 +649,7 @@ namespace Konversation
 #else
             Q_UNUSED(category);
 #endif
-                m_updateTimer->setInterval(graphicEffectLevelToInterval(
+                m_updateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
                                                KGlobalSettings::graphicEffectsLevel()));
         }
 

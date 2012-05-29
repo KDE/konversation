@@ -18,6 +18,7 @@
 #include "connectionmanager.h"
 #include "server.h"
 #include "transferlistmodel.h"
+#include "dcccommon.h"
 
 #include <QTimer>
 
@@ -38,6 +39,10 @@ namespace Konversation
 
             m_transfer = 0;
             m_autoViewUpdateTimer = new QTimer(this);
+            m_autoViewUpdateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
+                                                 KGlobalSettings::graphicEffectsLevel()));
+
+            connect(KGlobalSettings::self(), SIGNAL(settingsChanged(int)), this, SLOT(globalSettingsChanged(int)));
 
             connect(m_locationInfo.m_urlreqLocation, SIGNAL(textChanged(QString)), this, SLOT(slotLocationChanged(QString)));
             connect(Application::instance()->getDccTransferManager(), SIGNAL(fileURLChanged(Konversation::DCC::TransferRecv*)),
@@ -258,7 +263,7 @@ namespace Konversation
             if (newStatus == Transfer::Transferring)
             {
                 // start auto view-update timer
-                m_autoViewUpdateTimer->start(500);
+                m_autoViewUpdateTimer->start();
             }
             else if (oldStatus == Transfer::Transferring)
             {
@@ -275,6 +280,17 @@ namespace Konversation
                 transfer->setFileURL(KUrl(url));
                 updateView();
             }
+        }
+
+        void TransferDetailedInfoPanel::globalSettingsChanged(int category)
+        {
+#if KDE_IS_VERSION(4,8,1)
+            if (category == KGlobalSettings::SETTINGS_STYLE)
+#else
+            Q_UNUSED(category);
+#endif
+                m_autoViewUpdateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
+                                                    KGlobalSettings::graphicEffectsLevel()));
         }
 
     }
