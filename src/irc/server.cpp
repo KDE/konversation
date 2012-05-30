@@ -637,10 +637,11 @@ void Server::socketConnected()
     emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Connected; logging in..."));
-
-    if (getIdentity() && getIdentity()->getAuthType() == "saslplain")
+    if (getIdentity() && getIdentity()->getAuthType() == "saslplain"
+        && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty())
+    {
         capInitiateNegotiation();
+    }
 
     QStringList ql;
 
@@ -728,16 +729,13 @@ void Server::registerWithServices()
     }
     else if (getIdentity()->getAuthType() == "saslplain")
     {
-        if (!getIdentity()->getNickservCommand().isEmpty() && !getIdentity()->getAuthPassword().isEmpty())
-        {
-            QString authString = getIdentity()->getSaslAccount();
-            authString.append(QChar(QChar::Null));
-            authString.append(getIdentity()->getSaslAccount());
-            authString.append(QChar(QChar::Null));
-            authString.append(getIdentity()->getAuthPassword());
+        QString authString = getIdentity()->getSaslAccount();
+        authString.append(QChar(QChar::Null));
+        authString.append(getIdentity()->getSaslAccount());
+        authString.append(QChar(QChar::Null));
+        authString.append(getIdentity()->getAuthPassword());
 
-            sendAuthenticate(authString.toAscii().toBase64());
-        }
+        sendAuthenticate(authString.toAscii().toBase64());
     }
 }
 
