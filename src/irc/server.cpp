@@ -728,13 +728,16 @@ void Server::registerWithServices()
     }
     else if (getIdentity()->getAuthType() == "saslplain")
     {
-        QString authString = getIdentity()->getSaslAccount();
-        authString.append(QChar(QChar::Null));
-        authString.append(getIdentity()->getSaslAccount());
-        authString.append(QChar(QChar::Null));
-        authString.append(getIdentity()->getAuthPassword());
+        if (!getIdentity()->getNickservCommand().isEmpty() && !getIdentity()->getAuthPassword().isEmpty())
+        {
+            QString authString = getIdentity()->getSaslAccount();
+            authString.append(QChar(QChar::Null));
+            authString.append(getIdentity()->getSaslAccount());
+            authString.append(QChar(QChar::Null));
+            authString.append(getIdentity()->getAuthPassword());
 
-        sendAuthenticate(authString.toAscii().toBase64());
+            sendAuthenticate(authString.toAscii().toBase64());
+        }
     }
 }
 
