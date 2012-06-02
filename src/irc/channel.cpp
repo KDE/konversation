@@ -369,6 +369,8 @@ void Channel::setEncryptedOutput(bool e)
         topicLine->setText(m_topicHistory->currentTopic());
 
     }
+#else
+    Q_UNUSED(e)
 #endif
 }
 
