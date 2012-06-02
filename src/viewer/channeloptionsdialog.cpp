@@ -217,7 +217,7 @@ namespace Konversation
         if (!m_editingTopic)
         {
             if (!selection.isEmpty())
-                m_ui.topicEdit->setText(m_ui.topicHistoryView->model()->data(selection.indexes().first()).toString());
+                m_ui.topicEdit->setPlainText(m_ui.topicHistoryView->model()->data(selection.indexes().first()).toString());
             else
                 m_ui.topicEdit->clear();
         }

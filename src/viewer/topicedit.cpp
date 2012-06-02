@@ -46,6 +46,8 @@ TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
 
     viewport()->installEventFilter(this);
 #endif
+
+    setAcceptRichText(false);
 }
 
 TopicEdit::~TopicEdit()

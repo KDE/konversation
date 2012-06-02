@@ -161,7 +161,7 @@ void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, 
     const QColor& color = historyView->palette().color(colorGroup, colorRole);
     label->setTextColor(color);
 
-    label->setText(index.model()->data(index).toString());
+    label->setPlainText(index.model()->data(index).toString());
 
     label->setGeometry(QRect(0, 0, option.rect.width(), option.rect.height() - (2 * MARGIN)));
 }
@@ -184,7 +184,7 @@ QSize TopicHistoryItemDelegate::sizeHint(const QStyleOptionViewItem& option, con
 {
     Q_UNUSED(option);
 
-    m_hiddenLabel->setText(index.model()->data(index).toString());
+    m_hiddenLabel->setPlainText(index.model()->data(index).toString());
     m_hiddenLabel->setFixedWidth(itemView()->viewport()->width()
         - (2 * static_cast<TopicHistoryView*>(itemView())->categorySpacing())
         - (2 * MARGIN));
