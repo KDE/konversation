@@ -350,9 +350,9 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
+#ifdef HAVE_QCA2
     if (e)
     {
-#ifdef HAVE_QCA2
         cipherLabel->show();
 
         if  (!getCipher()->setKey(m_server->getKeyForRecipient(getName())))
@@ -361,16 +361,15 @@ void Channel::setEncryptedOutput(bool e)
         m_topicHistory->setCipher(getCipher());
 
         topicLine->setText(m_topicHistory->currentTopic());
-#endif
     }
     else
     {
         cipherLabel->hide();
-#ifdef HAVE_QCA2
         m_topicHistory->clearCipher();
         topicLine->setText(m_topicHistory->currentTopic());
-#endif
+
     }
+#endif
 }
 
 Channel::~Channel()
