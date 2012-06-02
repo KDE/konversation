@@ -149,6 +149,13 @@ Changes not in the 1.4 branch:
   is now synchronized across all Channel Options dialogs.
 * Fixed a bug causing the topic at the top of channel tabs not to return to its
   encrypted form after the decryption key for a channel has been deleted.
+* Debug builds of Konversation now understand a "--nui" command line argument to
+  disable the check for whether Konversation is already running, thus allowing
+  multiple instances of Konversation to be started. This is known to cause bugs
+  (e.g. for anything started by Konversation that relies on the D-Bus service
+  name of the running instance being org.kde.konversation: this means all
+  bundled scripts) and can wreak havoc with the config file - it's meant only
+  for use by developers / for debugging purposes.
 
 
 Changes since 1.4:

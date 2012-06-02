@@ -95,6 +95,9 @@ int main(int argc, char* argv[])
     options.add( "noautoconnect", ki18n("Disable auto-connecting to any IRC networks"));
     options.add( "startupdelay <msec>", ki18n("Delay D-Bus activity and UI creation by the specified amount of miliseconds"), "2000");
     options.add( "restart", ki18n("Quits and restarts Konversation (if running, otherwise has no effect)"));
+#ifndef QT_NO_DEBUG
+    options.add( "nui", ki18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"));
+#endif
 
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs::addStdCmdLineOptions();
@@ -116,7 +119,14 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (!KUniqueApplication::start()) return 0;
+#ifndef QT_NO_DEBUG
+    KUniqueApplication::StartFlags startFlags;
+
+    if (args->isSet("nui"))
+        startFlags = KUniqueApplication::NonUniqueInstance;
+#endif
+
+    if (!KUniqueApplication::start(startFlags)) return 0;
 
     Application app;
 
