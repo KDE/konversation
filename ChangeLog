@@ -131,6 +131,8 @@ Changes not in the 1.4 branch:
   - Fixed a bug causing redundant entries to accumulate in the topic history
     across reconnects when the last entry in the history corresponds to the
     topic given by the server at rejoin.
+  - Fixed a bug causing HTML tags (e.g. <title>) in topics to be invisible in
+    the edit field.
   - Fixed a bug causing the "Undo" action in the edit field to occassionally
     stop working, making it impossible to return the field to the unmodified
     state in which its contents sync to the selected history list entry.
