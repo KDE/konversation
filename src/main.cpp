@@ -119,9 +119,9 @@ int main(int argc, char* argv[])
         }
     }
 
-#ifndef QT_NO_DEBUG
     KUniqueApplication::StartFlags startFlags;
 
+#ifndef QT_NO_DEBUG
     if (args->isSet("nui"))
         startFlags = KUniqueApplication::NonUniqueInstance;
 #endif
