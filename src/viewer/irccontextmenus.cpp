@@ -78,9 +78,9 @@ IrcContextMenus::IrcContextMenus()
 
     setupChannelMenu();
     setupQuickButtonMenu();
-    // setupNickMenu and setupTextMenu need initialised m_quickButtonMenu
     setupNickMenu();
     setupTextMenu();
+    setupTopicHistoryMenu();
 
     updateQuickButtonMenu();
 }
@@ -92,6 +92,7 @@ IrcContextMenus::~IrcContextMenus()
     delete m_nickMenu;
     delete m_addressBookMenu;
     delete m_quickButtonMenu;
+    delete m_topicHistoryMenu;
 }
 
 IrcContextMenus* IrcContextMenus::self()
@@ -992,6 +993,37 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 
             break;
         }
+        default:
+            break;
+    }
+}
+
+void IrcContextMenus::setupTopicHistoryMenu()
+{
+    m_topicHistoryMenu = new KMenu();
+
+    m_topicHistoryMenu->addAction(m_textCopyAction);
+
+    m_queryTopicAuthorAction = createAction(m_topicHistoryMenu, OpenQuery, i18n("Query author"));
+}
+
+void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const QString& text, const QString& author)
+{
+    KMenu* topicHistoryMenu = self()->m_topicHistoryMenu;
+
+    self()->m_textCopyAction->setEnabled(true);
+    self()->m_queryTopicAuthorAction->setEnabled(!author.isEmpty());
+
+    QAction* action = topicHistoryMenu->exec(pos);
+
+    switch (extractActionId(action))
+    {
+        case TextCopy:
+            qApp->clipboard()->setText(text, QClipboard::Clipboard);
+            break;
+        case OpenQuery:
+            commandToServer(server, QString("query %1").arg(author));
+            break;
         default:
             break;
     }

@@ -445,7 +445,7 @@ namespace Konversation
             serverItem->setData(0,SortIndex,i);
             serverItem->setData(0,IsServer,true);
             serverItem->setData(0,ServerId,i);
-            serverItem->setFirstColumnSpanned(true); 
+            serverItem->setFirstColumnSpanned(true);
             // Initialize a pointer to the new location of the last edited server
             if (m_selectedItem && m_selectedServer==(*serverIt))
                 m_selectedItemPtr = serverItem;

@@ -101,12 +101,52 @@ Changes not in the 1.4 branch:
   Buttons that operate on nicknames will be shown alongside other nickname-
   related actions in context menus throughout Konversation. Essentially, this
   allows for placing custom actions in nickname context menus.
-* When editing the topic in the Channel Options dialog, any text entered past the
-  server's maximum allowed topic length will now be drawn in the color scheme's
-  negative text color (i.e. usually red). Further, if Konversation has been built
-  against KDE Platform v4.7.0 or higher, a warning is shown at the bottom of the
-  text field explaining the limit and offering the option - via a button - to
-  delete the excess text.
+* The Topic tab in the Channel Options dialog has been redesigned and
+  rewritten from scratch, featuring a much improved UI and many bug fixes:
+  - In place of the previous UI with a multi-column topic history list and two
+    distinct text fields for browsing and editing there is now only the list
+    and an edit field. The list has been redesigned to show all of the data for
+    a topic, with visually distinct headers serving to delineate individual
+    entries and showing the author and timestamp, above the full text for each
+    topic.
+  - Entries in the history list now sport a context menu allowing to copy the
+    topic text and querying the topic author.
+  - A new search field above the history list allows filtering it by looking
+    for the search string in the text, author name and timestamp of all topics.
+  - When an encryption key is set for a channel an attempt is now made to
+    decrypt all of the topics in the history, not just the current topic.
+  - When editing the topic any text entered past the server's maximum
+    allowed topic length will now be drawn in the color scheme's negative
+    text color (i.e. usually red). Further, if Konversation has been built
+    against KDE Platform v4.7.0 or higher, a warning is shown at the bottom
+    of the text field explaining the limit and offering the option - via a
+    button - to delete the excess text.
+  - The text cursor is now automatically placed at the end of the edit field,
+    making the common use case of adding to the topic more convenient.
+  - The location of the splitter handle inbetween the history list and the edit
+    is now remembered across all Channel Options dialogs and application
+    restarts.
+  - Storing the topic history for each channel now takes up less memory, and
+    general efficiency in handling with topic data has been improved greatly.
+  - Fixed a bug causing redundant entries to accumulate in the topic history
+    across reconnects when the last entry in the history corresponds to the
+    topic given by the server at rejoin.
+  - Fixed a bug causing the "Undo" action in the edit field to occassionally
+    stop working, making it impossible to return the field to the unmodified
+    state in which its contents sync to the selected history list entry.
+  - Fixed a bug causing the topic not to return to its encrypted form when the
+    decryption key for a channel has been deleted.
+  - Fixed a bug causing the author of a topic to sometimes be shown as the full
+    user mask instead of consistenty showing only the nickname.
+  - Fixed a bug causing the "Unknown" placeholder that is used when the author
+    of a topic is unknown not to be translated.
+  - Fixed the incorrect tab key order in the Topic tab.
+* The size of the Channel Options dialog is now synchronized between the dialogs
+  for different channels and remembered across application restarts.
+* The widths of the columns in the Ban List tab in the Channel Options dialog
+  is now synchronized across all Channel Options dialogs.
+* Fixed a bug causing the topic at the top of channel tabs not to return to its
+  encrypted form after the decryption key for a channel has been deleted.
 
 
 Changes since 1.4:

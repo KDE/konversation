@@ -47,6 +47,7 @@ class QuickButton;
 class ModeButton;
 class IRCInput;
 class NickChangeDialog;
+class TopicHistoryModel;
 
 namespace Konversation
 {
@@ -162,33 +163,14 @@ class Channel : public ChatWindow
         void updateChannelNicks(const QString& channel);
 //Topic
     public:
-        /** Get the current channel topic.
-         *
-         * The topic may or may not have the author that set it at the start of the string,
-         * like:  "<author> topic"
-         *
-         * The internal variable topicAuthorUnknown stores whether the "<author>" bit is there or not.
-         *
-         * */
         QString getTopic();
-        /** Get the channel topic history sorted in reverse chronological order.
-         *
-         * Each topic may or may not have the author that set it at the start of the string,
-         * like:  "<author> topic"
-         *
-         * @return a list of topics this channel used to have, current at the top.
-         */
-        QStringList getTopicHistory();
+        TopicHistoryModel* getTopicHistory() { return m_topicHistory; };
 
-        void setTopic(const QString& topic);
-        void setTopic(const QString& nickname, const QString& topic);
-        void setTopicAuthor(const QString& author, QDateTime t);
-
-    private:
-        inline void prependTopicHistory(const QString& topic, const QString& nickname = "unknown", uint time = QDateTime::currentDateTime().toTime_t());
+        void setTopic(const QString& text);
+        void setTopic(const QString& nickname, const QString& text);
+        void setTopicAuthor(const QString& author, QDateTime timestamp);
 
     signals:
-        void topicHistoryChanged();
         void joined(Channel* channel);
 
 
@@ -350,9 +332,8 @@ class Channel : public ChatWindow
         int m_nicknameListViewTextChanged;
         QHash<QString, Nick*> m_nicknameNickHash;
 
-        QStringList m_topicHistory;
+        TopicHistoryModel* m_topicHistory;
         QStringList m_BanList;
-        bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
 
         QTimer m_whoTimer; ///< For continuous auto /WHO
         QTime  m_whoTimerStarted;

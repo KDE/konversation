@@ -44,7 +44,6 @@ namespace Konversation
             static QString whatsThisForMode(char mode);
 
         public slots:
-            void refreshTopicHistory();
             void refreshAllowedChannelModes();
             void refreshModes();
             void refreshEnableModes(bool forceUpdate = false);
@@ -66,14 +65,15 @@ namespace Konversation
             void topicBeingEdited(bool edited);
 
         protected:
+            void showEvent(QShowEvent* event);
+            void hideEvent(QHideEvent* event);
+
             bool m_editingTopic;
             bool m_isAnyTypeOfOp;
 
         private:
             Ui::ChannelOptionsUI m_ui;
             Channel *m_channel;
-
-            TopicListModel* m_topicModel;
     };
 
     class BanListViewItem : public QTreeWidgetItem
@@ -86,34 +86,6 @@ namespace Konversation
 
         protected:
             QDateTime m_timestamp;
-    };
-
-    struct TopicItem
-    {
-        QString author;
-        QString topic;
-        QDateTime timestamp;
-    };
-
-    class TopicListModel : public QAbstractListModel
-    {
-        Q_OBJECT
-        public:
-            TopicListModel(QObject* parent);
-
-            QList<TopicItem> topicList() const;
-            void setTopicList(const QList<TopicItem>& list);
-
-            int columnCount(const QModelIndex& parent = QModelIndex()) const;
-            int rowCount(const QModelIndex& parent = QModelIndex()) const;
-
-            QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-            QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-
-            void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
-
-        private:
-            QList<TopicItem> m_topicList;
     };
 }
 #endif

@@ -14,6 +14,7 @@
 #include "channeloptionsdialog.h"
 #include "application.h"
 #include "channel.h"
+#include "topichistorymodel.h"
 
 #include <KColorScheme>
 
@@ -36,6 +37,8 @@ namespace Konversation
         setDefaultButton( KDialog::Ok );
 
         Q_ASSERT(channel);
+        m_channel = channel;
+
         m_ui.setupUi(mainWidget());
 
         m_ui.addBan->setIcon(KIcon("list-add"));
@@ -48,11 +51,12 @@ namespace Konversation
 
         m_ui.banListSearchLine->setTreeWidget(m_ui.banList);
 
-        m_topicModel = new TopicListModel(m_ui.topicHistoryView);
-        m_ui.topicHistoryView->setModel(m_topicModel);
-        m_ui.topicHistoryView->sortByColumn(0, Qt::DescendingOrder);
+        installEventFilter(m_ui.topicHistoryView);
+        m_ui.topicHistoryView->setServer(m_channel->getServer());
+        m_ui.topicHistoryView->setModel(m_channel->getTopicHistory());
+        m_ui.topicHistorySearchLine->setProxy(static_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
+        m_ui.topicHistorySearchLine->lineEdit()->setClickMessage("");
 
-        m_channel = channel;
         m_editingTopic = false;
 
         m_ui.topicEdit->setMaximumLength(m_channel->getServer()->topicLength());
@@ -62,8 +66,6 @@ namespace Konversation
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_ui.topicEdit, SIGNAL(undoAvailable(bool)), this, SLOT(topicBeingEdited(bool)));
         connect(this, SIGNAL(finished()), m_ui.topicEdit, SLOT(clear()));
-
-        connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
         connect(m_channel->getServer(), SIGNAL(channelNickChanged(QString)), this, SLOT(refreshEnableModes()));
@@ -90,27 +92,58 @@ namespace Konversation
         m_ui.userLimitEdit->setWhatsThis(whatsThisForMode('L'));
         m_ui.userLimitChBox->setWhatsThis(whatsThisForMode('L'));
 
-        refreshTopicHistory();
         refreshBanList();
-        refreshAllowedChannelModes();
-        refreshModes();
 
-        setInitialSize(QSize(450, 380));
-
-        Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
+        setInitialSize(QSize(450, 420));
     }
 
     ChannelOptionsDialog::~ChannelOptionsDialog()
     {
+    }
+
+    void ChannelOptionsDialog::showEvent(QShowEvent* event)
+    {
+        if (!event->spontaneous())
+        {
+            refreshAllowedChannelModes();
+            refreshModes();
+
+            if (!m_ui.topicEdit->isReadOnly())
+                m_ui.topicEdit->setFocus();
+
+            KConfigGroup config(KGlobal::config(), "ChannelOptionsDialog");
+
+            resize(config.readEntry("Size", sizeHint()));
+
+            const QList<int>& sizes = config.readEntry("SplitterSizes", QList<int>());
+
+            if (!sizes.isEmpty())
+                m_ui.splitter->setSizes(sizes);
+
+            Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
+        }
+
+        QDialog::showEvent(event);
+    }
+
+    void ChannelOptionsDialog::hideEvent(QHideEvent* event)
+    {
+        KConfigGroup config(KGlobal::config(), "ChannelOptionsDialog");
+
+        config.writeEntry("Size", size());
+        config.writeEntry("SplitterSizes", m_ui.splitter->sizes());
+
         Preferences::saveColumnState(m_ui.banList, "BanList ViewSettings");
+
+        KDialog::hideEvent(event);
     }
 
     void ChannelOptionsDialog::changeOptions()
     {
-        QString newTopic = topic();
-        QString oldTopic = m_channel->getTopicHistory().isEmpty() ? 0 : m_channel->getTopicHistory().first().section(' ', 2);
+        const QString& newTopic = topic();
+        const QString& oldTopic = m_channel->getTopic();
 
-        if(newTopic != oldTopic)
+        if (newTopic != oldTopic)
         {
             // Pass a ^A so we can determine if we want to clear the channel topic.
             if (newTopic.isEmpty())
@@ -171,70 +204,21 @@ namespace Konversation
     void ChannelOptionsDialog::topicBeingEdited(bool edited)
     {
         m_editingTopic = edited;
+        m_ui.topicHistoryView->setTextSelectable(edited);
     }
 
     QString ChannelOptionsDialog::topic()
     {
-        return m_ui.topicEdit->toPlainText().replace('\n',' ');
-    }
-
-    void ChannelOptionsDialog::refreshTopicHistory()
-    {
-        QStringList history = m_channel->getTopicHistory();
-        QList<TopicItem> topicList;
-
-        for(QStringList::ConstIterator it = --history.constEnd(); it != --history.constBegin(); --it)
-        {
-            TopicItem item;
-            item.author = (*it).section(' ', 1, 1);
-            item.timestamp.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            item.topic = (*it).section(' ', 2);
-            topicList.append(item);
-        }
-        m_topicModel->setTopicList(topicList);
-        m_topicModel->sort(m_ui.topicHistoryView->header()->sortIndicatorSection(),
-                           m_ui.topicHistoryView->header()->sortIndicatorOrder());
-        if (topicList.count() > 0)
-        {
-            // Save current topic
-            TopicItem topic = topicList.last();
-            // Find current topic's row index
-            int row = 0;
-            QList<TopicItem> sortedList = m_topicModel->topicList();
-            for (int i = 0; i < sortedList.count(); ++i)
-            {
-                if (sortedList.at(i).author == topic.author &&
-                    sortedList.at(i).timestamp == topic.timestamp &&
-                    sortedList.at(i).topic == topic.topic)
-                {
-                    row = i;
-                    break;
-                }
-            }
-            // Select current topic and update topic preview
-            QItemSelection selection(m_topicModel->index(row, 0, QModelIndex()), m_topicModel->index(row, 1, QModelIndex()));
-            m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
-            // Make sure that the item is visible
-            m_ui.topicHistoryView->scrollTo(m_topicModel->index(row, 0, QModelIndex()));
-        }
+        return m_ui.topicEdit->toPlainText().replace('\n', ' ');
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(const QItemSelection& selection)
     {
-        if (!selection.isEmpty())
+        if (!m_editingTopic)
         {
-            // update topic preview
-            m_ui.topicPreview->setText(m_topicModel->data(selection.indexes().first(), Qt::UserRole).toString());
-
-            if (!m_editingTopic)
-                m_ui.topicEdit->setText(m_topicModel->data(selection.indexes().first(), Qt::UserRole).toString());
-        }
-        else
-        {
-            // clear topic preview
-            m_ui.topicPreview->clear();
-
-            if (!m_editingTopic)
+            if (!selection.isEmpty())
+                m_ui.topicEdit->setText(m_ui.topicHistoryView->model()->data(selection.indexes().first()).toString());
+            else
                 m_ui.topicEdit->clear();
         }
     }
@@ -572,125 +556,6 @@ namespace Konversation
         }
 
         return text(treeWidget()->sortColumn()) < item.text(treeWidget()->sortColumn());
-    }
-
-    TopicListModel::TopicListModel(QObject* parent)
-        : QAbstractListModel(parent)
-    {
-    }
-
-    QList<TopicItem> TopicListModel::topicList() const
-    {
-        return m_topicList;
-    }
-
-    void TopicListModel::setTopicList(const QList<TopicItem>& list)
-    {
-        m_topicList = list;
-        reset();
-    }
-
-    int TopicListModel::columnCount(const QModelIndex& /*parent*/) const
-    {
-        return 2;
-    }
-
-    int TopicListModel::rowCount(const QModelIndex& /*parent*/) const
-    {
-        return m_topicList.count();
-    }
-
-    QVariant TopicListModel::data(const QModelIndex& index, int role) const
-    {
-        if(!index.isValid() || index.row() >= m_topicList.count ())
-            return QVariant();
-
-        const TopicItem& item = m_topicList[index.row()];
-
-        if(role == Qt::DisplayRole)
-        {
-            switch(index.column())
-            {
-                case 0:
-                    return KGlobal::locale()->formatDateTime(item.timestamp, KLocale::ShortDate, true);
-                case 1:
-                    return item.author;
-                default:
-                    return QVariant();
-            }
-        }
-        else if(role == Qt::UserRole)
-        {
-            return item.topic;
-        }
-
-        return QVariant();
-    }
-
-    QVariant TopicListModel::headerData (int section, Qt::Orientation orientation, int role) const
-    {
-        if(orientation == Qt::Vertical || role != Qt::DisplayRole)
-            return QVariant();
-
-        switch(section)
-        {
-            case 0:
-                return i18n("Timestamp");
-            case 1:
-                return i18n("Author");
-            default:
-                return QVariant();
-        }
-    }
-
-    bool lessThanTimestamp(const TopicItem& item1, const TopicItem& item2)
-    {
-        return item1.timestamp < item2.timestamp;
-    }
-
-    bool moreThanTimestamp(const TopicItem& item1, const TopicItem& item2)
-    {
-        return item1.timestamp > item2.timestamp;
-    }
-
-    bool lessThanAuthor(const TopicItem& item1, const TopicItem& item2)
-    {
-        return item1.author.toLower() < item2.author.toLower();
-    }
-
-    bool moreThanAuthor(const TopicItem& item1, const TopicItem& item2)
-    {
-        return item1.author.toLower() > item2.author.toLower();
-    }
-
-    void TopicListModel::sort(int column, Qt::SortOrder order)
-    {
-        if(order == Qt::AscendingOrder)
-        {
-            switch(column)
-            {
-                case 0:
-                    qStableSort(m_topicList.begin(), m_topicList.end(), lessThanTimestamp);
-                    break;
-                case 1:
-                    qStableSort(m_topicList.begin(), m_topicList.end(), lessThanAuthor);
-                    break;
-            }
-        }
-        else
-        {
-            switch(column)
-            {
-                case 0:
-                    qStableSort(m_topicList.begin(), m_topicList.end(), moreThanTimestamp);
-                    break;
-                case 1:
-                    qStableSort(m_topicList.begin(), m_topicList.end(), moreThanAuthor);
-                    break;
-            }
-        }
-
-        reset();
     }
 }
 

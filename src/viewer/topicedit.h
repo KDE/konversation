@@ -42,8 +42,8 @@ class TopicEdit : public KTextEdit
         explicit TopicEdit(QWidget* parent = 0);
         ~TopicEdit();
 
-        void setMaximumLength(int length);
         int maximumLength() const;
+        void setMaximumLength(int length);
 
 #if KDE_IS_VERSION(4, 7, 0)
         QSize minimumSizeHint() const;
@@ -59,7 +59,7 @@ class TopicEdit : public KTextEdit
     private slots:
         void contentsChanged(int position, int charsRemoved, int charsAdded);
         void trimExcessText();
-
+        void moveCursorToEnd();
 
     private:
         void colorizeExcessText();
@@ -73,6 +73,7 @@ class TopicEdit : public KTextEdit
 
         int m_maximumLength;
         bool m_lastEditPastMaximumLength;
+
 
 #if KDE_IS_VERSION(4, 7, 0)
         KMessageWidget* m_warning;

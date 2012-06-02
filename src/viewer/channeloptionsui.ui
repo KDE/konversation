@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>390</height>
+    <width>388</width>
+    <height>336</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -26,36 +26,51 @@ the Free Software Foundation; either version 2 of the License, or
       <attribute name="title">
        <string>Topi&amp;c</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QSplitter" name="splitter">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QTreeView" name="topicHistoryView">
-          <property name="rootIsDecorated">
-           <bool>false</bool>
-          </property>
-          <property name="uniformRowHeights">
-           <bool>true</bool>
-          </property>
-          <property name="sortingEnabled">
-           <bool>true</bool>
-          </property>
-          <property name="allColumnsShowFocus">
-           <bool>true</bool>
-          </property>
-          <attribute name="headerDefaultSectionSize">
-           <number>150</number>
-          </attribute>
-         </widget>
-         <widget class="KTextEdit" name="topicPreview">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="margin">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="textLabel2_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Search:</string>
+               </property>
+               <property name="wordWrap">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="KFilterProxySearchLine" name="topicHistorySearchLine"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="TopicHistoryView" name="topicHistoryView">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
          <widget class="TopicEdit" name="topicEdit">
           <property name="sizePolicy">
@@ -335,14 +350,24 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
-   <class>KTreeWidgetSearchLine</class>
-   <extends>KLineEdit</extends>
-   <header>ktreewidgetsearchline.h</header>
+   <class>KFilterProxySearchLine</class>
+   <extends>QWidget</extends>
+   <header>kfilterproxysearchline.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTreeWidgetSearchLine</class>
+   <extends>KLineEdit</extends>
+   <header>ktreewidgetsearchline.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>
@@ -351,14 +376,14 @@ the Free Software Foundation; either version 2 of the License, or
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>KIntNumInput</class>
-   <extends>QWidget</extends>
-   <header>knuminput.h</header>
+   <class>TopicView</class>
+   <extends>QListView</extends>
+   <header>topichistoryview.h</header>
   </customwidget>
   <customwidget>
-   <class>KTextEdit</class>
+   <class>TopicEdit</class>
    <extends>QTextEdit</extends>
-   <header>ktextedit.h</header>
+   <header>topicedit.h</header>
   </customwidget>
  </customwidgets>
  <includes>
@@ -366,7 +391,8 @@ the Free Software Foundation; either version 2 of the License, or
   <include location="local">knuminput.h</include>
   <include location="local">klineedit.h</include>
   <include location="local">topicedit.h</include>
- </includes>
+  <include location="local">topichistoryview.h</include>
+  </includes>
  <resources/>
  <connections>
   <connection>

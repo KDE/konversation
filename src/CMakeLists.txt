@@ -41,11 +41,11 @@ set (irc_SRCS
     irc/query.cpp
     irc/channel.cpp
     irc/channellistpanel.cpp
-    irc/channeloptionsdialog.cpp
     irc/channelnick.cpp
     irc/modebutton.cpp
     irc/joinchanneldialog.cpp
     irc/invitedialog.cpp
+    irc/topichistorymodel.cpp
 
     irc/irccharsets.cpp
 
@@ -71,7 +71,6 @@ set (irc_SRCS
 kde4_add_ui_files(irc_SRCS
     irc/channellistpanelui.ui
     irc/channeldialogui.ui
-    irc/channeloptionsui.ui
     irc/joinchannelui.ui
     irc/serverdialogui.ui
     irc/servergroupdialogui.ui
@@ -150,10 +149,13 @@ set(viewer_SRCS
     viewer/irccontextmenus.cpp
     viewer/trayicon.cpp
     viewer/viewspringloader.cpp
+    viewer/channeloptionsdialog.cpp
     viewer/topicedit.cpp
+    viewer/topichistoryview.cpp
 )
 
 kde4_add_ui_files(viewer_SRCS
+    viewer/channeloptionsui.ui
     viewer/irccolorchooserui.ui
     viewer/pasteeditor.ui
 )

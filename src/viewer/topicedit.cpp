@@ -35,7 +35,7 @@
 #endif
 
 
-TopicEdit::TopicEdit(QWidget* parent): KTextEdit(parent)
+TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
 {
     m_maximumLength = -1;
     m_lastEditPastMaximumLength = false;
@@ -52,6 +52,11 @@ TopicEdit::~TopicEdit()
 {
 }
 
+int TopicEdit::maximumLength() const
+{
+    return m_maximumLength;
+}
+
 void TopicEdit::setMaximumLength(int length)
 {
     m_maximumLength = length;
@@ -60,11 +65,6 @@ void TopicEdit::setMaximumLength(int length)
         connect(document(), SIGNAL(contentsChange(int,int,int)), this, SLOT(contentsChanged(int,int,int)));
     else
         disconnect(document(), SIGNAL(contentsChange(int,int,int)), this, SLOT(contentsChanged(int,int,int)));
-}
-
-int TopicEdit::maximumLength() const
-{
-    return m_maximumLength;
 }
 
 void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
@@ -81,6 +81,10 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
         if (m_warning && m_warning->isVisible())
             hideWarning();
 #endif
+
+        document()->clearUndoRedoStacks();
+
+        QMetaObject::invokeMethod(this, "moveCursorToEnd", Qt::QueuedConnection);
 
         return;
     }
@@ -168,7 +172,9 @@ void TopicEdit::showWarning()
 
         m_warning->addAction(trimExcessAction);
 
-        m_warningUndercarriage = new QWidget(window());
+        // NOTE: This makes certain assumptions about the widget hierarchy the
+        // edit is placed in. Try window() if you need to be more generic.
+        m_warningUndercarriage = new QWidget(parentWidget()->parentWidget());
         m_warningUndercarriage->lower();
         m_warningUndercarriage->setBackgroundRole(QPalette::Base);
         m_warningUndercarriage->setPalette(viewport()->palette());
@@ -227,7 +233,8 @@ void TopicEdit::updateWarningGeometry()
         if (m_warningUndercarriage->isHidden())
             m_warningUndercarriage->show();
 
-        QPoint topLeft = parentWidget()->mapTo(window(), geometry().bottomLeft());
+        QPoint topLeft = parentWidget()->mapTo(m_warningUndercarriage->parentWidget(),
+            geometry().bottomLeft());
         topLeft.setX(topLeft.x() + frameWidth());
         topLeft.setY(topLeft.y() - frameWidth() - viewportMargin);
 
@@ -282,4 +289,9 @@ void TopicEdit::trimExcessText()
     cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 
     cursor.removeSelectedText();
+}
+
+void TopicEdit::moveCursorToEnd()
+{
+    moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 }

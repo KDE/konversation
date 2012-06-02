@@ -87,6 +87,9 @@ class IrcContextMenus : public QObject
 
         static void processLinkAction(int actionId, const QString& link);
 
+        static void topicHistoryMenu(const QPoint& pos, Server* server, const QString& text,
+            const QString& author);
+
 
     protected slots:
         void processWebShortcutAction();
@@ -137,6 +140,10 @@ class IrcContextMenus : public QObject
         QAction* m_sendMailAction;
         void createSharedDccActions();
         QList<QAction*> m_sharedDccActions;
+
+        void setupTopicHistoryMenu();
+        KMenu* m_topicHistoryMenu;
+        QAction* m_queryTopicAuthorAction;
 
         inline QAction* createAction(ActionId id, const QString& text);
         inline QAction* createAction(ActionId id, const QIcon& icon);

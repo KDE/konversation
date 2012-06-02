@@ -24,6 +24,7 @@
 #include "ircview.h"
 #include "awaylabel.h"
 #include "topiclabel.h"
+#include "topichistorymodel.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 
@@ -100,9 +101,6 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicSplitterHidden = false;
     channelSplitterHidden = false;
 
-    // flag for first seen topic
-    topicAuthorUnknown = true;
-
     setType(ChatWindow::Channel);
 
     setChannelEncodingSupported(true);
@@ -137,6 +135,9 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicLine->setWhatsThis(i18n("<qt><p>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.</p><p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</p></qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
+
+    m_topicHistory = new TopicHistoryModel(this);
+    connect(m_topicHistory, SIGNAL(currentTopicChanged(QString)), topicLine, SLOT(setText(QString)));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
     topicLayout->addWidget(topicLine, 0, 1, -1, 1);
@@ -349,33 +350,24 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
-
     if (e) {
     #ifdef HAVE_QCA2
         cipherLabel->show();
-        //scan the channel topic and decrypt it if necessary
-        if (m_topicHistory.isEmpty())
+
+        if  (!getCipher()->setKey(m_server->getKeyForRecipient(getName())))
             return;
-        QString topic(m_topicHistory.at(0).section(' ',2));
 
-        //prepend two colons to make it appear to be an irc message for decryption,
-        // \r because it won't decrypt without it, even though the message did not have a \r
-        // when encrypted. Bring on the QCA!
-        //QByteArray cipher = "::" + topic.toUtf8() + '\x0d';
-        QByteArray cipherText = topic.toUtf8();
-        QByteArray key = m_server->getKeyForRecipient(getName());
+        m_topicHistory->setCipher(getCipher());
 
-        if(getCipher()->setKey(key))
-            cipherText = getCipher()->decryptTopic(cipherText);
-
-        topic=QString::fromUtf8(cipherText.data()+2, cipherText.length()-2);
-        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
-        topicLine->setText(topic);
-        emit topicHistoryChanged();
+        topicLine->setText(m_topicHistory->currentTopic());
     #endif
     }
     else
+    {
         cipherLabel->hide();
+        m_topicHistory->clearCipher();
+        topicLine->setText(m_topicHistory->currentTopic());
+    }
 }
 
 Channel::~Channel()
@@ -446,12 +438,9 @@ void Channel::purgeNicks()
 
 void Channel::showOptionsDialog()
 {
-    if(!m_optionsDialog)
+    if (!m_optionsDialog)
         m_optionsDialog = new Konversation::ChannelOptionsDialog(this);
 
-    m_optionsDialog->refreshAllowedChannelModes();
-    m_optionsDialog->refreshModes();
-    m_optionsDialog->refreshTopicHistory();
     m_optionsDialog->show();
 }
 
@@ -1340,85 +1329,46 @@ void Channel::emitUpdateInfo()
     emit updateInfo(info);
 }
 
-void Channel::setTopic(const QString &newTopic)
-{
-    QString cleanTopic = newTopic;
-    if(!cleanTopic.isEmpty())
-    {
-        // if the reason contains text markup characters, play it safe and reset all
-        if (hasIRCMarkups(cleanTopic))
-            cleanTopic += "\017";
-    }
-
-    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic));
-    QString topic = Konversation::removeIrcMarkup(newTopic);
-    topicLine->setText(topic);
-    topicAuthorUnknown=true; // if we only get called with a topic, it was a 332, which usually has a 333 next
-    topic = replaceIRCMarkups(newTopic);
-    // cut off "nickname" and "time_t" portion of the topic before comparing, otherwise the history
-    // list will fill up with the same entries while the user only requests the topic to be seen.
-
-    if(m_topicHistory.isEmpty() || (m_topicHistory.first().section(' ', 2) != topic))
-    {
-        prependTopicHistory(topic);
-        emit topicHistoryChanged();
-    }
-}
-
-void Channel::setTopic(const QString &nickname, const QString &newTopic) // Overloaded
-{
-    QString cleanTopic = newTopic;
-    if(!cleanTopic.isEmpty())
-    {
-        // if the reason contains text markup characters, play it safe and reset all
-        if (hasIRCMarkups(cleanTopic))
-            cleanTopic += "\017";
-    }
-
-    if(nickname == m_server->getNickname())
-    {
-        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic));
-    }
-    else
-    {
-        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, cleanTopic));
-    }
-
-    prependTopicHistory(newTopic, nickname);
-    QString topic = Konversation::removeIrcMarkup(newTopic);
-    topicLine->setText(topic);
-
-    emit topicHistoryChanged();
-}
-
-void Channel::prependTopicHistory(const QString& topic, const QString& nickname, uint time)
-{
-    QString newTopic(replaceIRCMarkups(topic));
-    m_topicHistory.prepend(QString("%1 %2 %3").arg(time).arg(nickname).arg(newTopic));
-}
-
-QStringList Channel::getTopicHistory()
-{
-    return m_topicHistory;
-}
-
 QString Channel::getTopic()
 {
-    return m_topicHistory[0];
+    return m_topicHistory->currentTopic();
 }
 
-void Channel::setTopicAuthor(const QString& newAuthor, QDateTime time)
+void Channel::setTopic(const QString& text)
+{
+    QString cleanTopic = text;
+
+    // If the reason contains text markup characters, play it safe and reset all.
+    if (!cleanTopic.isEmpty() && hasIRCMarkups(cleanTopic))
+        cleanTopic += "\017";
+
+    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic));
+
+    m_topicHistory->appendTopic(replaceIRCMarkups(Konversation::removeIrcMarkup(text)));
+}
+
+void Channel::setTopic(const QString& nickname, const QString& text)
+{
+    QString cleanTopic = text;
+
+    // If the reason contains text markup characters, play it safe and reset all.
+    if (!cleanTopic.isEmpty() && hasIRCMarkups(cleanTopic))
+        cleanTopic += "\017";
+
+    if (nickname == m_server->getNickname())
+        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic));
+    else
+        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, cleanTopic));
+
+    m_topicHistory->appendTopic(replaceIRCMarkups(Konversation::removeIrcMarkup(text)), nickname);
+}
+
+void Channel::setTopicAuthor(const QString& author, QDateTime time)
 {
     if (time.isNull() || !time.isValid())
-        time=QDateTime::currentDateTime();
+        time = QDateTime::currentDateTime();
 
-    if(topicAuthorUnknown && !m_topicHistory.isEmpty())
-    {
-        m_topicHistory[0] =  QString("%1").arg(time.toTime_t()) + ' ' + newAuthor + ' ' + m_topicHistory[0].section(' ', 2);
-        topicAuthorUnknown = false;
-
-        emit topicHistoryChanged();
-    }
+    m_topicHistory->setCurrentTopicMetadata(author, time);
 }
 
 void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter)
