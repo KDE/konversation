@@ -200,6 +200,8 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
 {
     m_proxyModel = new TopicHistorySortfilterProxyModel(this);
 
+    m_textSelectable = false;
+
     setCategoryDrawer(new KCategoryDrawerV3(this));
 
     setModelColumn(0);
