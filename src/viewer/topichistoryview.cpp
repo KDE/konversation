@@ -54,7 +54,7 @@ QVariant TopicHistorySortfilterProxyModel::data(const QModelIndex& index, int ro
         const QString& author = sourceModel()->data(sourceIndex.sibling(sourceIndex.row(), 1)).toString();
         const QString& timestamp = sourceModel()->data(sourceIndex.sibling(sourceIndex.row(), 2)).toString();
 
-        return i18n("On %1 by %2", timestamp, author);
+        return i18nc("%1 is a timestamp, %2 is the author's name", "On %1 by %2", timestamp, author);
     }
     else if (role == KCategorizedSortFilterProxyModel::CategorySortRole)
     {
