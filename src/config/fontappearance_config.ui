@@ -19,6 +19,57 @@ the Free Software Foundation; either version 2 of the License, or
    <property name="margin" >
     <number>0</number>
    </property>
+   <item row="0" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomTextFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Chat text:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KFontRequester" name="kcfg_TextFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomListFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Nickname list:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="KFontRequester" name="kcfg_ListFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomTabFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Tab bar:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="KFontRequester" name="kcfg_TabFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="0" colspan="2" >
     <widget class="QCheckBox" name="kcfg_FixedMOTD" >
      <property name="whatsThis" >
@@ -44,64 +95,7 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="sizeType" >
       <enum>QSizePolicy::Expanding</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>20</width>
-       <height>161</height>
-      </size>
-     </property>
     </spacer>
-   </item>
-   <item row="0" column="0" >
-    <widget class="QCheckBox" name="kcfg_CustomTextFont" >
-     <property name="enabled" >
-      <bool>true</bool>
-     </property>
-     <property name="text" >
-      <string>Chat text:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" >
-    <widget class="KFontRequester" name="kcfg_TextFont" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" >
-    <widget class="KFontRequester" name="kcfg_ListFont" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" >
-    <widget class="KFontRequester" name="kcfg_TabFont" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" >
-    <widget class="QCheckBox" name="kcfg_CustomListFont" >
-     <property name="enabled" >
-      <bool>true</bool>
-     </property>
-     <property name="text" >
-      <string>Nickname list:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" >
-    <widget class="QCheckBox" name="kcfg_CustomTabFont" >
-     <property name="enabled" >
-      <bool>true</bool>
-     </property>
-     <property name="text" >
-      <string>Tab bar:</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
