@@ -155,7 +155,7 @@ void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, 
 
     QPalette::ColorRole colorRole = !historyView->textSelectable() &&
         historyView->selectionModel()->isRowSelected(index.row(), index.parent())
-        && itemView()->hasFocus() ? QPalette::HighlightedText : QPalette::Text;
+            ? QPalette::HighlightedText : QPalette::Text;
     QPalette::ColorGroup colorGroup = historyView->hasFocus() ? QPalette::Active
         : QPalette::Inactive;
     const QColor& color = historyView->palette().color(colorGroup, colorRole);
