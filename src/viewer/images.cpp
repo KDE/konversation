@@ -144,6 +144,11 @@ QString Images::getNickIconPath(NickPrivilege privilege) const
     return nickIconPaths[privilege];
 }
 
+QString Images::getNickIconAwayPath() const
+{
+    return nickIconAwayPath;
+}
+
 void Images::initializeLeds()
 {
     m_serverColor = "steelblue";
@@ -195,6 +200,7 @@ void Images::initializeNickIcons()
     nickIconPaths[Admin] = *it;
     ++it;
     QPixmap elementAway(*it);
+    nickIconAwayPath = *it;
     ++it;
     QPixmap elementHalfOp(*it);
     nickIconPaths[HalfOp] = *it;

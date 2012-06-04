@@ -137,31 +137,26 @@ void NickListView::setWhatsThis()
     }
     else
     {
-        QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
+        QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<br /></p>"
             "<table>"
-
-            "<tr><th><img src=\"admin\"/></th><td>This person has administrator privileges.</td></tr>"
-            "<tr><th><img src=\"owner\"/></th><td>This person is a channel owner.</td></tr>"
-            "<tr><th><img src=\"op\"/></th><td>This person is a channel operator.</td></tr>"
-            "<tr><th><img src=\"halfop\"/></th><td>This person is a channel half-operator.</td></tr>"
-            "<tr><th><img src=\"voice\"/></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
-            "<tr><th><img src=\"normal\"/></th><td>This person does not have any special privileges.</td></tr>"
-            "<tr><th><img src=\"normalaway\"/></th><td>This indicates that this person is currently away.</td></tr>"
+            "<tr><th><img src=\"%1\"/></th><td>This person has administrator privileges.</td></tr>"
+            "<tr><th><img src=\"%2\"/></th><td>This person is a channel owner.</td></tr>"
+            "<tr><th><img src=\"%3\"/></th><td>This person is a channel operator.</td></tr>"
+            "<tr><th><img src=\"%4\"/></th><td>This person is a channel half-operator.</td></tr>"
+            "<tr><th><img src=\"%5\"/></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
+            "<tr><th><img src=\"%6\"/></th><td>This person does not have any special privileges.</td></tr>"
+            "<tr><th><img src=\"%7\"/ style=\"background-image:url(%8)\"></th><td>This, overlaid on any of the above, indicates that this person is currently away.</td></tr>"
             "</table><p>"
             "The meaning of admin, owner and halfop varies between different IRC servers.</p><p>"
-            "Hovering over any nick shows their current status"
-                    //", as well as any information in the addressbook for this person"
-                    ". See the Konversation Handbook for more information."
-            "</p></qt>"
-            )
-            .replace("'admin'", images->getNickIconPath(Images::Admin))
-            .replace("'owner'", images->getNickIconPath(Images::Owner))
-            .replace("'op'", images->getNickIconPath(Images::Op))
-            .replace("'halfop'", images->getNickIconPath(Images::HalfOp))
-            .replace("'voice'", images->getNickIconPath(Images::Voice))
-            .replace("'normal'", images->getNickIconPath(Images::Normal))
-            .replace("'normalaway'", images->getNickIconPath(Images::Normal))
-            );
+            "Hovering over any nick shows their current status. See the Konversation Handbook for more information."
+            "</p></qt>",
+            images->getNickIconPath(Images::Admin),
+            images->getNickIconPath(Images::Owner),
+            images->getNickIconPath(Images::Op),
+            images->getNickIconPath(Images::HalfOp),
+            images->getNickIconPath(Images::Voice),
+            images->getNickIconPath(Images::Normal),
+            images->getNickIconAwayPath()));
     }
 
 }

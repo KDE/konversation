@@ -60,6 +60,7 @@ class Images : public QObject
 
         QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
         QString getNickIconPath(NickPrivilege privilege) const;
+        QString getNickIconAwayPath() const;
         void initializeNickIcons();
 
     protected:
@@ -93,5 +94,6 @@ class Images : public QObject
                                                   // [privilege][away]
         QPixmap nickIcons[_NickPrivilege_COUNT][2];
         QString nickIconPaths[_NickPrivilege_COUNT];
+        QString nickIconAwayPath;
 };
 #endif
