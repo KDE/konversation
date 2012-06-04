@@ -189,6 +189,30 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
       <bool>true</bool>
      </property>
      <layout class="QFormLayout" name="proxyLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="typeLabel">
+        <property name="text">
+         <string>Type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="KComboBox" name="kcfg_ProxyType">
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Socks v5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>HTTP</string>
+         </property>
+        </item>
+       </widget>
+      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="addressLabel">
         <property name="text">
@@ -249,30 +273,6 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
         <property name="urlDropsEnabled">
          <bool>false</bool>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="typeLabel">
-        <property name="text">
-         <string>Type:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="KComboBox" name="kcfg_ProxyType">
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-        <item>
-         <property name="text">
-          <string>Socks v5</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>HTTP</string>
-         </property>
-        </item>
        </widget>
       </item>
      </layout>
