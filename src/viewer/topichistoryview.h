@@ -39,6 +39,8 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
 {
     Q_OBJECT
 
+    friend class TopicHistoryView;
+
     public:
         explicit TopicHistorySortfilterProxyModel(QObject* parent = 0);
         ~TopicHistorySortfilterProxyModel();
@@ -122,6 +124,10 @@ class TopicHistoryView : public KCategorizedView
 #if !KDE_IS_VERSION(4, 8, 0)
         void updateGeometries();
 #endif
+
+
+    private slots:
+        void updateSelectedItemWidgets();
 
 
     private:

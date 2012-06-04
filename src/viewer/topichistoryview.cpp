@@ -25,10 +25,7 @@
 #include "topichistorymodel.h"
 
 #include <KCategoryDrawer>
-#include <KLocale>
 
-#include <QLabel>
-#include <QDateTime>
 #if !KDE_IS_VERSION(4, 8, 0)
 #include <QScrollBar>
 #endif
@@ -222,6 +219,8 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
                       "wish to incorporate some of their text into the new topic. To return to "
                       "entry selection mode and a synchronized edit field, undo back to the "
                       "original text or close and reopen the dialog."));
+
+    connect(KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(updateSelectedItemWidgets()));
 }
 
 TopicHistoryView::~TopicHistoryView()
@@ -238,11 +237,6 @@ void TopicHistoryView::setTextSelectable(bool selectable)
     if (selectable != m_textSelectable)
     {
         m_textSelectable = selectable;
-
-        const QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
-
-        if (!selectedIndexes.isEmpty())
-            dataChanged(selectedIndexes.first(), selectedIndexes.first());
 
         emit textSelectableChanged(selectable);
     }
@@ -293,6 +287,18 @@ void TopicHistoryView::contextMenuEvent(QContextMenuEvent* event)
         author.clear();
 
     IrcContextMenus::topicHistoryMenu(event->globalPos(), m_server, text, author);
+}
+
+void TopicHistoryView::updateSelectedItemWidgets()
+{
+    // KWidgetItemDelegate::updateItemWidgets() is documented to run in response to
+    // data changes, so in order to update our widgets outside of data changes we
+    // fake a data change.
+
+    const QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
+
+    if (!selectedIndexes.isEmpty())
+        m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
 }
 
 #if !KDE_IS_VERSION(4, 8, 0)
