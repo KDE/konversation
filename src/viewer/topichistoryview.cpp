@@ -122,12 +122,33 @@ void TopicHistoryLabel::setTextSelectable(bool selectable)
 TopicHistoryItemDelegate::TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent) : KWidgetItemDelegate(itemView, parent)
 {
     m_hiddenLabel = new TopicHistoryLabel(itemView);
+    m_hiddenLabel->setFixedHeight(0);
     m_hiddenLabel->lower();
-    m_hiddenLabel->hide();
+
+    m_shownBefore = false;
+
+    itemView->installEventFilter(this);
 }
 
 TopicHistoryItemDelegate::~TopicHistoryItemDelegate()
 {
+}
+
+bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
+{
+    Q_UNUSED(watched);
+
+    // NOTE: QTextEdit needs to have been shown at least once (and while its
+    // parents are shown, too) before it starts to calculate the document sizes
+    // we need in sizeHint().
+
+    if (!m_shownBefore && event->type() == QEvent::Show && !event->spontaneous())
+    {
+        m_hiddenLabel->show();
+        m_hiddenLabel->hide();
+    }
+
+    return false;
 }
 
 QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets() const
@@ -185,9 +206,6 @@ QSize TopicHistoryItemDelegate::sizeHint(const QStyleOptionViewItem& option, con
     m_hiddenLabel->setFixedWidth(itemView()->viewport()->width()
         - (2 * static_cast<TopicHistoryView*>(itemView())->categorySpacing())
         - (2 * MARGIN));
-    m_hiddenLabel->setFixedHeight(0);
-    m_hiddenLabel->show();
-    m_hiddenLabel->hide();
     int documentHeight = m_hiddenLabel->document()->size().toSize().height();
 
     return QSize(itemView()->viewport()->width(), documentHeight + (2 * MARGIN));

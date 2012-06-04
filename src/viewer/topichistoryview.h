@@ -84,6 +84,8 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
+        bool eventFilter(QObject* watched, QEvent* event);
+
 
     protected:
         QList<QWidget*> createItemWidgets () const;
@@ -93,6 +95,7 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
 
     private:
         TopicHistoryLabel* m_hiddenLabel;
+        bool m_shownBefore;
 };
 
 
