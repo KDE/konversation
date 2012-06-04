@@ -441,8 +441,10 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_DccAutoResume</tabstop>
   <tabstop>kcfg_DccFastSend</tabstop>
   <tabstop>kcfg_DccPassiveSend</tabstop>
+  <tabstop>kcfg_DccChatAutoAccept</tabstop>
   <tabstop>kcfg_DccUPnP</tabstop>
   <tabstop>kcfg_DccIPv4Fallback</tabstop>
+  <tabstop>kcfg_DccIPv4FallbackIface</tabstop>
   <tabstop>kcfg_DccSendTimeout</tabstop>
   <tabstop>kcfg_DccBufferSize</tabstop>
   <tabstop>kcfg_DccMethodToGetOwnIp</tabstop>
