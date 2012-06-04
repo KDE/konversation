@@ -238,6 +238,8 @@ void TopicHistoryView::setTextSelectable(bool selectable)
     {
         m_textSelectable = selectable;
 
+        updateSelectedItemWidgets();
+
         emit textSelectableChanged(selectable);
     }
 }
