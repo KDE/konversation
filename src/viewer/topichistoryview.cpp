@@ -321,9 +321,9 @@ void TopicHistoryView::updateSelectedItemWidgets()
         m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
 }
 
-#if !KDE_IS_VERSION(4, 8, 0)
 void TopicHistoryView::updateGeometries()
 {
+#if !KDE_IS_VERSION(4, 8, 0)
      const Qt::ScrollBarPolicy verticalP = verticalScrollBarPolicy(), horizontalP = horizontalScrollBarPolicy();
 
     if (m_proxyModel->isCategorizedModel())
@@ -333,9 +333,9 @@ void TopicHistoryView::updateGeometries()
         setHorizontalScrollBarPolicy((horizontalP == Qt::ScrollBarAlwaysOn || horizontalScrollBar()->isVisibleTo(this)) ?
             Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
     }
-
+#endif
     KCategorizedView::updateGeometries();
-
+#if !KDE_IS_VERSION(4, 8, 0)
     if (!m_proxyModel->isCategorizedModel())
         return;
 
@@ -349,6 +349,7 @@ void TopicHistoryView::updateGeometries()
     validRange = horizontalScrollBar()->maximum() > horizontalScrollBar()->minimum();
     if (horizontalP == Qt::ScrollBarAsNeeded && (horizontalScrollBar()->isVisibleTo(this) != validRange))
         horizontalScrollBar()->setVisible(validRange);
-}
-
 #endif
+
+    setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+}

@@ -124,9 +124,7 @@ class TopicHistoryView : public KCategorizedView
     protected:
         void resizeEvent(QResizeEvent* event);
         void contextMenuEvent (QContextMenuEvent* event);
-#if !KDE_IS_VERSION(4, 8, 0)
         void updateGeometries();
-#endif
 
 
     private slots:
