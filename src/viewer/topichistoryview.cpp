@@ -227,9 +227,8 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
 
     setWhatsThis(i18n("This is a list of all topics that have been set for this channel "
                       "while its tab was open.\n\n"
-                      "Duplicates, that is consecutively set topics with identical text "
-                      "and the same author, have been merged into a single list entry. "
-                      "The date and time shown is that of the last time the topic was set.\n\n"
+                      "If the same topic is set multiple times consecutively by someone, "
+                      "only the final occurrence is shown.\n\n"
                       "When you select a topic in the list, the edit field below it will "
                       "receive its text. Once you start modifying the contents of the field, "
                       "however, the list will switch from the regular entry selection mode to "
