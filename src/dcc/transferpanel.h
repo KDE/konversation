@@ -82,7 +82,6 @@ namespace Konversation
 
                 TransferView *getTransferView();
 
-                void runFile(Transfer *transfer);
                 void openLocation(Transfer *transfer);
                 void openFileInfoDialog(Transfer *transfer);
 

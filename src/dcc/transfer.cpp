@@ -13,10 +13,13 @@
 */
 
 #include "transfer.h"
+
 #include "application.h"
 #include "connectionmanager.h"
 #include "notificationhandler.h"
 #include "preferences.h"
+
+#include <KRun>
 
 #include <config-konversation.h>
 
@@ -111,6 +114,14 @@ namespace Konversation
             return true;
         }
 
+        void Transfer::runFile()
+        {
+            if (getType() == Transfer::Send || getStatus() == Transfer::Done)
+            {
+                new KRun(getFileURL(), 0);
+            }
+        }
+
         void Transfer::startTransferLogger()
         {
             m_timeTransferStarted = QDateTime::currentDateTime();
@@ -182,7 +193,7 @@ namespace Konversation
                 if (server)
                 {
                     kDebug() << "notification:" << m_fileName;
-                    konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName);
+                    konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName, this);
                 }
             }
         }

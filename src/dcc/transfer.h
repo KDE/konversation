@@ -112,6 +112,7 @@ namespace Konversation
                 virtual bool queue();
                 virtual void start() {}
                 virtual void abort() {}
+                void runFile();
 
             protected:
                 virtual void cleanUp();

@@ -466,7 +466,7 @@ namespace Konversation
                     Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
                     if (transfer)
                     {
-                        runFile(transfer);
+                        transfer->runFile();
                     }
                 }
             }
@@ -519,7 +519,7 @@ namespace Konversation
             Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
             if (transfer)
             {
-                runFile(transfer);
+                transfer->runFile();
             }
         }
 
@@ -531,14 +531,6 @@ namespace Konversation
         TransferView *TransferPanel::getTransferView()
         {
             return m_transferView;
-        }
-
-        void TransferPanel::runFile(Transfer *transfer)
-        {
-            if (transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done)
-            {
-                new KRun(transfer->getFileURL(), getTransferView());
-            }
         }
 
         void TransferPanel::openLocation(Transfer *transfer)
