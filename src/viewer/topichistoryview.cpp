@@ -89,7 +89,7 @@ void TopicHistorySortfilterProxyModel::sourceDataChanged(const QModelIndex& topL
     emit layoutChanged();
 }
 
-TopicHistoryLabel::TopicHistoryLabel(QWidget* parent) : QTextEdit(parent)
+TopicHistoryLabel::TopicHistoryLabel(QWidget* parent) : KTextEdit(parent)
 {
     viewport()->setAutoFillBackground(false);
 

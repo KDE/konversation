@@ -145,7 +145,7 @@ void NickListView::setWhatsThis()
             "<tr><th><img src=\"%4\"/></th><td>This person is a channel half-operator.</td></tr>"
             "<tr><th><img src=\"%5\"/></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
             "<tr><th><img src=\"%6\"/></th><td>This person does not have any special privileges.</td></tr>"
-            "<tr><th><img src=\"%7\"/ style=\"background-image:url(%8)\"></th><td>This, overlaid on any of the above, indicates that this person is currently away.</td></tr>"
+            "<tr><th><img src=\"%7\"/></th><td>This, overlaid on any of the above, indicates that this person is currently away.</td></tr>"
             "</table><p>"
             "The meaning of admin, owner and halfop varies between different IRC servers.</p><p>"
             "Hovering over any nick shows their current status. See the Konversation Handbook for more information."

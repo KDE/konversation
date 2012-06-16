@@ -123,7 +123,7 @@ namespace Konversation
             Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
         }
 
-        QDialog::showEvent(event);
+        KDialog::showEvent(event);
     }
 
     void ChannelOptionsDialog::hideEvent(QHideEvent* event)

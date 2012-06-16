@@ -73,7 +73,7 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
 {
     Q_UNUSED(position);
 
-    // If there are no undo steps, the change probably occured via setText() rather
+    // If there are no undo steps, the change probably occurred via setText() rather
     // than user interaction.
     if (!document()->availableUndoSteps())
     {
@@ -91,7 +91,7 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
         return;
     }
 
-    // Nothing we care about occured.
+    // Nothing we care about occurred.
     if (charsRemoved == 0 && charsAdded == 0) return;
 
     if (document()->characterCount() > m_maximumLength)

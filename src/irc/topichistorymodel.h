@@ -20,8 +20,8 @@
   Copyright (C) 2012 Eike Hein <hein@kde.org>
 */
 
-#ifndef TOPICMODEL_H
-#define TOPICMODEL_H
+#ifndef TOPICHISTORYMODEL_H
+#define TOPICHISTORYMODEL_H
 
 #include <QAbstractListModel>
 #include <QDateTime>

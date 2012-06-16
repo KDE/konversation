@@ -21,15 +21,15 @@
   Copyright (C) 2012 Eike Hein <hein@kde.org>
 */
 
-#ifndef TOPICVIEW_H
-#define TOPICVIEW_H
+#ifndef TOPICHISTORYVIEW_H
+#define TOPICHISTORYVIEW_H
 
 #include <KCategorizedSortFilterProxyModel>
 #include <KCategorizedView>
 #include <KWidgetItemDelegate>
 #include <kdeversion.h>
 
-#include <QTextEdit>
+#include <KTextEdit>
 
 
 class Server;
@@ -59,7 +59,7 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
 };
 
 
-class TopicHistoryLabel : public QTextEdit
+class TopicHistoryLabel : public KTextEdit
 {
     Q_OBJECT
 

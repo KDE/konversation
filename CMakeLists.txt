@@ -34,7 +34,7 @@ configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ko
 
 add_subdirectory(src)
 add_subdirectory(data)
-add_subdirectory(doc)
+#add_subdirectory(doc)
 
 get_filename_component(_po_path po ABSOLUTE)
 get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
