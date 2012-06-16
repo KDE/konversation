@@ -348,15 +348,6 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo)
     m_nickInfo = nickInfo;
     Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
     nickInfoChanged();
-
-    if (m_server->getNickname() != getName())
-    {
-        QStringList sharedChannels =  m_server->getSharedChannels(getName());
-        sharedChannels.sort();
-
-        appendCommandMessage(i18n("Nick"), i18nc("%1 = nickname, %2 = comma-separated list of channels",
-            "Channels you have in common with %1: %2", getName(), sharedChannels.join(", ")));
-    }
 }
 
 void Query::updateNickInfo(Server* server, NickInfoPtr nickInfo)
