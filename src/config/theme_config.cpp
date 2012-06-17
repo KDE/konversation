@@ -42,11 +42,6 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
 
     m_defaultThemeIndex = -1;
 
-    QPalette p = framePreview->palette();
-    p.setColor(QPalette::Background,p.color(QPalette::Base));
-    framePreview->setPalette(p);
-    framePreview->setAutoFillBackground(true);
-
     // load the current settings
     loadSettings();
 
