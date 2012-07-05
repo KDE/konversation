@@ -276,7 +276,7 @@ namespace Konversation
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
             //notification->setPixmap( QPixmap() );
             notification->setActions(QStringList(i18nc("Opens the file from the finished dcc transfer", "Open")));
-            connect(notification, SIGNAL(activated(unsigned int)), transfer, SLOT(runFile()));
+            connect(notification, SIGNAL(activated(unsigned)), transfer, SLOT(runFile()));
             notification->sendEvent();
         }
     }
