@@ -1161,7 +1161,8 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             else
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18n("Part"), i18n("%1 (%2) has left this channel.", channelNick->getNickname()));
+                    appendCommandMessage(i18n("Part"), i18n("%1 (%2) has left this channel.", channelNick->getNickname(),
+                        channelNick->getHostmask()));
                 else
                     appendCommandMessage(i18n("Part"), i18nc("%1 = nick, %2 = hostmask, %3 = reason",
                         "%1 (%2) has left this channel (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason));

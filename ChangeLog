@@ -158,6 +158,7 @@ Changes not in the 1.4 branch:
   for use by developers / for debugging purposes.
 * Part and Quit messages now show the hostmask of the subject, consistent with
   Join messages.
+UFINISHED
 
 
 Changes since 1.4:
