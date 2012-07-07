@@ -1076,7 +1076,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         emit joined(this);
         if (displayCommandMessage)
             appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
-                                 "You have joined the channel %1 (%2).", getName(), channelNick->getHostmask()), false, true);
+                                 "You (%2) have joined the channel %1.", getName(), channelNick->getHostmask()), false, true);
         m_ownChannelNick = channelNick;
         refreshModeButtons();
         setActive(true);
@@ -1102,7 +1102,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         QString hostname = channelNick->getHostmask();
         if (displayCommandMessage)
             appendCommandMessage(i18n("Join"), i18nc("%1 is the nick joining and %2 the hostmask of that nick",
-                                 "%1 has joined this channel (%2).", nick, hostname), false);
+                                 "%1 (%2) has joined this channel.", nick, hostname), false);
         addNickname(channelNick);
     }
 }
