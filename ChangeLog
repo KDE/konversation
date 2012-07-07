@@ -156,6 +156,8 @@ Changes not in the 1.4 branch:
   name of the running instance being org.kde.konversation: this means all
   bundled scripts) and can wreak havoc with the config file - it's meant only
   for use by developers / for debugging purposes.
+* Part and Quit messages now show the hostmask of the subject, consistent with
+  Join messages.
 
 
 Changes since 1.4:

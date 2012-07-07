@@ -1075,8 +1075,8 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         m_joined = true;
         emit joined(this);
         if (displayCommandMessage)
-            appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
-                                 "You (%2) have joined the channel %1.", getName(), channelNick->getHostmask()), false, true);
+            appendCommandMessage(i18n("Join"), i18nc("%1 = channel, %2 = our hostmask",
+                                 "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), false, true);
         m_ownChannelNick = channelNick;
         refreshModeButtons();
         setActive(true);
@@ -1128,17 +1128,18 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (quit)
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18n("Quit"), i18n("You have left this server."));
+                    appendCommandMessage(i18n("Quit"), i18n("You (%1) have left this server.", channelNick->getHostmask()));
                 else
-                    appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).", displayReason));
+                    appendCommandMessage(i18n("Quit"), i18nc("%1 = our hostmask, %2 = reason", "You (%1) have left this server (%2).",
+                        channelNick->getHostmask(), displayReason));
             }
             else
             {
                 if (displayReason.isEmpty())
                     appendCommandMessage(i18n("Part"), i18n("You have left channel %1.", getName()));
                 else
-                    appendCommandMessage(i18n("Part"), i18nc("%1 adds the channel and %2 the reason",
-                                "You have left channel %1 (%2).", getName(), displayReason));
+                    appendCommandMessage(i18n("Part"), i18nc("%1 = our hostmask, %2 = channel, %3 = reason",
+                        "You (%1) have left channel %2 (%3).", getName(), channelNick->getHostmask(), displayReason));
             }
         }
 
@@ -1151,18 +1152,19 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (quit)
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.", channelNick->getNickname()));
+                    appendCommandMessage(i18n("Quit"), i18n("%1 (%2) has left this server.", channelNick->getNickname(),
+                        channelNick->getHostmask()));
                 else
-                    appendCommandMessage(i18n("Quit"), i18nc("%1 adds the nick and %2 the reason",
-                                         "%1 has left this server (%2).", channelNick->getNickname(), displayReason));
+                    appendCommandMessage(i18n("Quit"), i18nc("%1 = nick, %2 = hostname, %3 = reason",
+                        "%1 (%2) has left this server (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason));
             }
             else
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.", channelNick->getNickname()));
+                    appendCommandMessage(i18n("Part"), i18n("%1 (%2) has left this channel.", channelNick->getNickname()));
                 else
-                    appendCommandMessage(i18n("Part"), i18nc("%1 adds the nick and %2 the reason",
-                                         "%1 has left this channel (%2).", channelNick->getNickname(), displayReason));
+                    appendCommandMessage(i18n("Part"), i18nc("%1 = nick, %2 = hostmask, %3 = reason",
+                        "%1 (%2) has left this channel (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason));
             }
         }
 
