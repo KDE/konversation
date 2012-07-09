@@ -511,16 +511,16 @@ void Query::quitNick(const QString& reason)
 
     if (displayReason.isEmpty())
     {
-        appendCommandMessage(i18n("Quit"),i18nc("%1 = nick, %2 = hostmask", "%1 (%2) has left this server.",
-            getName(), getNickInfo()->getHostmask()));
+        appendCommandMessage(i18n("Quit"), i18nc("%1 = nick, %2 = hostmask", "%1 (%2) has left this server.",
+            getName(), getNickInfo()->getHostmask()), false);
     }
     else
     {
         if (hasIRCMarkups(displayReason))
             displayReason+="\017";
 
-        appendCommandMessage(i18n("Quit"),i18nc("%1 = nick, %2 = hostmask, %3 = reason", "%1 (%2) has left this server (%3).",
-            getName(), getNickInfo()->getHostmask(), displayReason));
+        appendCommandMessage(i18n("Quit"), i18nc("%1 = nick, %2 = hostmask, %3 = reason", "%1 (%2) has left this server (%3).",
+            getName(), getNickInfo()->getHostmask(), displayReason), false);
     }
 }
 
