@@ -95,6 +95,12 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="sizeType" >
       <enum>QSizePolicy::Expanding</enum>
      </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>161</height>
+      </size>
+     </property>
     </spacer>
    </item>
   </layout>
