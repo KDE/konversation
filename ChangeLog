@@ -1584,7 +1584,7 @@ A QCA2-enabled build will have it; a build not using QCA2 will not.
 * Fixed a bug causing the automatic away system to set the user away again
   on the next periodic activity check when no further mouse/keyboard acti-
   vity occurs after unlocking the screen/ending the screensaver.
-* Implemented splitting up of overly long actions (i.e. usage of the the
+* Implemented splitting up of overly long actions (i.e. usage of the
   '/me' command) into multiple messages to stay under the 512 byte message
   length limit (in raw format) imposed by the IRC protocol. As with the
   normal message splitting, this is aware of how multi-byte/variable-width
@@ -2492,7 +2492,7 @@ application
 * Several errors in the chat window status messages produced by the Watched
 Nicks
   Online system have been corrected.
-* A bug that could lead the the columns in the "Watched Nicks Online" list
+* A bug that could lead to the columns in the "Watched Nicks Online" list
 resizing
   erratically has been fixed.
 * A bug that could lead to the status bar not being cleared properly when the

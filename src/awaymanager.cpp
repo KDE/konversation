@@ -220,7 +220,7 @@ void AwayManager::implementUpdateIdleTimeout(int identityId)
         implementMarkIdentityAway(identityId);
 
         // Since the user is away right now the next auto-away should occur
-        // in X minutes (where X is the the timeout which the user has
+        // in X minutes (where X is the timeout which the user has
         // configured for the identity).
         remainingTime = m_identitiesWithIdleTimesOnAutoAway[identityId];
     }
