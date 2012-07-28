@@ -45,7 +45,7 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
     QStringList parameterList = parameter.split(' ');
 
     // find script path (could be installed for all users in $KDEDIR/share/apps/ or
-    // for one user alone in $HOME/.kde/share/apps/
+    // for one user alone in $HOME/.kde/share/apps/)
     QString script(parameterList.takeFirst());
     QString path = scriptPath(script);
 
