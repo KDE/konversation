@@ -237,8 +237,12 @@ void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
     {
 
         QString question(i18n("This cannot be undone, are you sure you wish to reset to default values?"));
-        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), KGuiItem(), QString(), KMessageBox::Dangerous);
-        if ( x == KMessageBox::Continue)
+        int x = KMessageBox::warningContinueCancel(
+                this, question, i18n("Reset Values"),
+                KStandardGuiItem::reset(), KStandardGuiItem::cancel(),
+                QString(), KMessageBox::Dangerous
+        );
+        if (x == KMessageBox::Continue)
         {
             Application::instance()->resetQueueRates();
             getRates();
