@@ -38,7 +38,7 @@ PasteEditor::PasteEditor(QWidget* parent)
     m_textEditor->enableFindReplace(true);
 
     QTextOption options = m_textEditor->document()->defaultTextOption();
-    options.setFlags(options.flags() | QTextOption::ShowTabsAndSpaces | QTextOption::ShowLineAndParagraphSeparators);
+    options.setFlags(options.flags() | QTextOption::ShowTabsAndSpaces);
     m_textEditor->document()->setDefaultTextOption(options);
     m_textEditor->setFocus();
 
