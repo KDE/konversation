@@ -69,31 +69,31 @@ void PasteEditor::addQuotationIndicators()
 
 void PasteEditor::removeNewlines()
 {
-    QTextCursor cursor(m_textEditor->document());
-    cursor.beginEditBlock();
+    QString text(m_textEditor->toPlainText());
+    text.remove('\r');
+    text.remove(QRegExp("^\n+|\n+$"));
 
-    while(cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor))
+    int i = 0;
+
+    while (i < text.length())
     {
-        cursor.deletePreviousChar();
-
-        if (!cursor.atBlockEnd())
+        if (text[i] == '\n')
         {
-            bool moved = cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor);
-
-            if (moved)
+            if (text[i - 1].category() == QChar::Separator_Space)
             {
-                cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, 2);
-
-                if (!cursor.selectedText().contains(' '))
-                {
-                    cursor.movePosition(QTextCursor::Left, QTextCursor::MoveAnchor);
-                    cursor.insertText(" ");
-                }
+                text.remove(i, 1);
+                continue;
             }
+            else
+                text[i] = ' ';
         }
+
+        ++i;
     }
 
-    cursor.endEditBlock();
+    QTextCursor cursor(m_textEditor->document());
+    cursor.select(QTextCursor::Document);
+    cursor.insertText(text);
 }
 
 void PasteEditor::setText(const QString& text)
