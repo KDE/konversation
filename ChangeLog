@@ -192,6 +192,9 @@ Changes since 1.4:
 * If built against KDE Platform v4.8.3 or higher, the date column in the Url
   Catcher will now immediately reflect changes to the date format made in KDE's
   System Settings application.
+* Improvements and fixes in the Paste Editor. Use QString methods instead of
+  QTextCursor to remove newlines. Disable showing line and paragraph
+  indicators because of QTBUG:24531.
 
 
 Changes from 1.4-beta1 to 1.4:
