@@ -315,7 +315,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             .arg(QString::number(COMMIT));
 
                     }
-                    m_server->ctcpReply(sourceNick,"VERSION "+reply);
+
+                    if (!reply.isEmpty())
+                        m_server->ctcpReply(sourceNick,"VERSION "+reply);
                 }
             }
             // DCC request?
