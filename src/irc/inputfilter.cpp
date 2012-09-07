@@ -797,7 +797,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
             }
         }
-        else if ("authenticate" && plHas(1))
+        else if (command == "authenticate" && plHas(1))
         {
             if (m_server->getLastAuthenticateCommand() == "PLAIN" && parameterList.value(0) == "+")
                 m_server->registerWithServices();
