@@ -224,7 +224,7 @@ bool StatusPanel::closeYourself(bool confirm)
     {
         result = KMessageBox::warningContinueCancel(
                 this,
-                i18n("Do you really want to close '%1'?\n\n All associated tabs will be closed as well.",getName()),
+                i18n("Do you really want to close '%1'?\n\nAll associated tabs will be closed as well.",getName()),
                 i18n("Close Tab"),
                 KStandardGuiItem::close(),
                 KStandardGuiItem::cancel(),
@@ -234,7 +234,7 @@ bool StatusPanel::closeYourself(bool confirm)
     {
         result = KMessageBox::warningContinueCancel(
             this,
-            i18n("Do you want to disconnect from '%1'?\n\n All associated tabs will be closed as well.",m_server->getServerName()),
+            i18n("Do you want to disconnect from '%1'?\n\nAll associated tabs will be closed as well.",m_server->getServerName()),
             i18n("Disconnect From Server"),
             KGuiItem(i18n("Disconnect")),
             KStandardGuiItem::cancel(),
