@@ -1487,7 +1487,7 @@ namespace Konversation
                 showUsage = false;
             }
             // if all went good, signal server to unban this mask
-            if (!channel.isEmpty())
+            if (!channel.isEmpty() && parameterList.count())
             {
                 emit unbanUsers(parameterList[0], channel);
                 // syntax was correct, so reset flag
