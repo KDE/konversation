@@ -34,7 +34,7 @@
 <!-- This header contains all of the meta-information for the document such
 as Authors, publish date, the abstract, and Keywords -->
 
-<book id="konversation"info>
+<bookinfo>
 <title>The &konversation; Handbook</title>
 
 <authorgroup>
