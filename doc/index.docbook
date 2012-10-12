@@ -29,12 +29,12 @@
 <!-- The language must NOT be changed here. -->
 <!-- If you are writing original documentation in a language other -->
 <!-- than English, change the language above ONLY, not here -->
-<book lang="&language;">
+<book id="konversation" lang="&language;">
 
 <!-- This header contains all of the meta-information for the document such
 as Authors, publish date, the abstract, and Keywords -->
 
-<bookinfo>
+<book id="konversation"info>
 <title>The &konversation; Handbook</title>
 
 <authorgroup>
