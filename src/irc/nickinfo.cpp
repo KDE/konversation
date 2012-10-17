@@ -36,7 +36,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     m_owningServer = server;
     m_away = false;
     m_identified = false;
-    m_printedOnline = true;
+    m_printedOnline = false;
     m_changed = false;
 
     if(!m_addressee.isEmpty())
