@@ -134,6 +134,7 @@ class ViewContainer : public QObject
         void insertCharacter();
         void insertChar(const QChar& chr);
         void insertIRCColor();
+        void doAutoReplace();
 
         void focusInputBox();
 

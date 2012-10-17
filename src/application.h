@@ -115,7 +115,7 @@ class Application : public KUniqueApplication
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
         // auto replacement for input or output lines
-        QString doAutoreplace(const QString& text,bool output);
+        QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1);
 
         int newInstance();
 

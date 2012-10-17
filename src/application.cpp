@@ -1036,7 +1036,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
 }
 
 // auto replace on input/output
-QString Application::doAutoreplace(const QString& text,bool output)
+QPair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos)
 {
     // get autoreplace list
     QList<QStringList> autoreplaceList=Preferences::autoreplaceList();
@@ -1067,6 +1067,7 @@ QString Application::doAutoreplace(const QString& text,bool output)
                 // set pattern case insensitive
                 needleReg.setCaseSensitivity(Qt::CaseSensitive);
                 int index = 0;
+                int newIndex = index;
 
                 do {
                     // find matches
@@ -1096,9 +1097,25 @@ QString Application::doAutoreplace(const QString& text,bool output)
                         replaceWith = Konversation::doVarExpansion(replaceWith);
                         // replace input with replacement
                         line.replace(index, captures[0].length(), replaceWith);
-                        index += replaceWith.length();
+
+                        newIndex = index + replaceWith.length();
+
+                        if (cursorPos > -1 && cursorPos >= index)
+                        {
+                            if (cursorPos < index + captures[0].length())
+                                cursorPos = newIndex;
+                            else
+                            {
+                                if (captures[0].length() > replaceWith.length())
+                                    cursorPos -= captures[0].length() - replaceWith.length();
+                                else
+                                    cursorPos += replaceWith.length() - captures[0].length();
+                            }
+                        }
+
+                        index = newIndex;
                     }
-                } while (index >= 0 && index < (int)line.length());
+                } while (index >= 0 && index < line.length());
             }
             else
             {
@@ -1109,6 +1126,7 @@ QString Application::doAutoreplace(const QString& text,bool output)
                 {
                     int length,nextLength,patLen,repLen;
                     patLen=pattern.length();
+
                     repLen=replacement.length();
                     length=index;
                     length+=patLen;
@@ -1128,13 +1146,27 @@ QString Application::doAutoreplace(const QString& text,bool output)
                             nextLength = index+repLen;
                         }
                     }
+
+                    if (cursorPos > -1 && cursorPos >= index)
+                    {
+                        if (cursorPos < length)
+                            cursorPos = nextLength;
+                        else
+                        {
+                            if (patLen > repLen)
+                                cursorPos -= patLen - repLen;
+                            else
+                                cursorPos += repLen - patLen;
+                        }
+                    }
+
                     index=line.indexOf(needleReg,nextLength);
                 }
             }
         }
     }
 
-  return line;
+    return QPair<QString, int>(line, cursorPos);
 }
 
 void Application::openUrl(const QString& url)

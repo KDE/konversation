@@ -18,6 +18,7 @@
 #include "images.h"
 #include "irccharsets.h"
 #include "ircview.h"
+#include "ircinput.h"
 #include "logfilereader.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
@@ -550,6 +551,9 @@ void ViewContainer::updateViewActions(int index)
 
             action = actionCollection()->action("irc_colors");
             if (action) action->setEnabled(insertSupported);
+
+            action = actionCollection()->action("auto_replace");
+            if (action) action->setEnabled(view->getInputBar() != 0);
 
             action = actionCollection()->action("focus_input_box");
             if (action) action->setEnabled(view->getInputBar() != 0);
@@ -2029,6 +2033,15 @@ void ViewContainer::insertIRCColor()
             m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);
     }
     delete dlg;
+}
+
+void ViewContainer::doAutoReplace()
+{
+    if (!m_frontView)
+        return;
+
+    if (m_frontView->getInputBar())
+        m_frontView->getInputBar()->doInlineAutoreplace();
 }
 
 void ViewContainer::focusInputBox()

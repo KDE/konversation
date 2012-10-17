@@ -33,6 +33,7 @@ class IRCInput : public KTextEdit
         void setOldCursorPosition(int pos);
         int getOldCursorPosition();
         QString lastCompletion() const { return m_lastCompletion; }
+        void doInlineAutoreplace();
 
         virtual QSize sizeHint() const;
         virtual QSize minimumSizeHint() const;

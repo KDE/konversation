@@ -264,7 +264,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(static_cast<Application*>(kapp)->doAutoreplace(toPlainText(),true));
+                    setText(static_cast<Application*>(kapp)->doAutoreplace(toPlainText(), true).first);
                     emit submit();
                 }
             }
@@ -558,6 +558,22 @@ void IRCInput::insertCompletion(const QString& nick)
 void IRCInput::setLastCompletion(const QString& completion)
 {
     m_lastCompletion = completion;
+}
+
+void IRCInput::doInlineAutoreplace()
+{
+    QTextCursor cursor(document());
+
+    cursor.beginEditBlock();
+
+    const QPair<QString, int>& rep = Application::instance()->doAutoreplace(toPlainText(), true, textCursor().position());
+    cursor.select(QTextCursor::Document);
+    cursor.insertText(rep.first);
+    cursor.setPosition(rep.second);
+
+    cursor.endEditBlock();
+
+    setTextCursor(cursor);
 }
 
 // Accessor methods

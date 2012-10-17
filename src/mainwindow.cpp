@@ -471,6 +471,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("insert_character", action);
 
     action=new KAction(this);
+    action->setText(i18n("Auto Replace"));
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(doAutoReplace()));
+    actionCollection()->addAction("auto_replace", action);
+
+    action=new KAction(this);
     action->setText(i18n("Focus Input Box"));
     action->setShortcut(QKeySequence(Qt::Key_Escape));
     action->setEnabled(false);
