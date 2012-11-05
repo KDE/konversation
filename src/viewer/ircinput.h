@@ -95,6 +95,6 @@ class IRCInput : public KTextEdit
 
         QTimer* m_disableSpellCheckTimer;
 
-        Sonnet::Speller* m_speller;
+        static Sonnet::Speller* m_speller;
 };
 #endif

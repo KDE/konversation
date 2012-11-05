@@ -28,6 +28,7 @@
 
 #define MAXHISTORY 100
 
+Sonnet::Speller* IRCInput::m_speller = 0;
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
@@ -62,7 +63,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
 
-    m_speller = 0;
     connect(this, SIGNAL(aboutToShowContextMenu(QMenu*)), this, SLOT(insertLanguageMenu(QMenu*)));
 
     document()->adjustSize();
