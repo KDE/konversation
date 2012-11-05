@@ -44,6 +44,8 @@ class IRCInput : public KTextEdit
 
         virtual bool event(QEvent* e);
 
+        virtual void createHighlighter();
+
     signals:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over

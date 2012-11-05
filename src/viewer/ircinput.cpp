@@ -127,6 +127,13 @@ void IRCInput::languageSelected()
     setSpellCheckingLanguage(languageAction->data().toString());
 }
 
+void IRCInput::createHighlighter()
+{
+    KTextEdit::createHighlighter();
+    setSpellCheckingLanguage(spellCheckingLanguage());
+}
+
+
 QSize IRCInput::sizeHint() const
 {
     QFontMetrics fm(font());
@@ -159,6 +166,7 @@ void IRCInput::showEvent(QShowEvent* /* e */)
 {
     m_disableSpellCheckTimer->stop();
     setCheckSpellingEnabled(Preferences::self()->spellChecking());
+    setSpellCheckingLanguage(spellCheckingLanguage());
     connect(this, SIGNAL(checkSpellingChanged(bool)), this, SLOT(setSpellChecking(bool)));
 }
 
