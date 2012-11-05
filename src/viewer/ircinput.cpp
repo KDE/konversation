@@ -159,7 +159,6 @@ void IRCInput::showEvent(QShowEvent* /* e */)
 {
     m_disableSpellCheckTimer->stop();
     setCheckSpellingEnabled(Preferences::self()->spellChecking());
-    setSpellCheckingLanguage(spellCheckingLanguage());
     connect(this, SIGNAL(checkSpellingChanged(bool)), this, SLOT(setSpellChecking(bool)));
 }
 
