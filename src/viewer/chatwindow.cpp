@@ -48,6 +48,7 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 
 ChatWindow::~ChatWindow()
 {
+    return;
     if (getInputBar() && getServer())
     {
         const QString& language = getInputBar()->spellCheckingLanguage();
@@ -62,6 +63,9 @@ ChatWindow::~ChatWindow()
                 Preferences::setSpellCheckingLanguage(getServer()->getDisplayName(), getName(), language);
         }
     }
+
+    emit closing(this);
+    m_server=0;
 }
 
 // reimplement this if your window needs special close treatment
