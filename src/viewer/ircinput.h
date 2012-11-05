@@ -17,6 +17,10 @@
 
 #include <KTextEdit>
 
+namespace Sonnet
+{
+    class Speller;
+}
 
 class KCompletionBox;
 
@@ -60,6 +64,8 @@ class IRCInput : public KTextEdit
         void insertCompletion(const QString& nick);
         void disableSpellChecking();
         void setSpellChecking(bool set);
+        void insertLanguageMenu(QMenu* contextMenu);
+        void languageSelected();
 
         void maybeResize();
 
@@ -86,5 +92,7 @@ class IRCInput : public KTextEdit
         int m_qtBoxPadding; //see comment in constructor
 
         QTimer* m_disableSpellCheckTimer;
+
+        Sonnet::Speller* m_speller;
 };
 #endif

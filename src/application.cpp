@@ -684,15 +684,32 @@ void Application::readOptions()
     QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
     QList<QString> encodingEntryKeys=encodingEntries.keys();
 
-    QRegExp reg("^(.+) ([^\\s]+) ([^\\s]+)$");
+    QRegExp reg("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$");
     for(QList<QString>::const_iterator itStr=encodingEntryKeys.constBegin(); itStr != encodingEntryKeys.constEnd(); ++itStr)
     {
         if(reg.indexIn(*itStr) > -1)
         {
-            if(reg.cap(1) == "ServerGroup" && reg.numCaptures() == 3)
+            if(reg.cap(1) == "ServerGroup" && !reg.cap(3).isEmpty())
                 Preferences::setChannelEncoding(sgKeys.at(reg.cap(2).toInt()), reg.cap(3), encodingEntries[*itStr]);
             else
                 Preferences::setChannelEncoding(reg.cap(1), reg.cap(2), encodingEntries[*itStr]);
+        }
+    }
+
+    // Spell Checking Languages
+    KConfigGroup cgSpellCheckingLanguages(KGlobal::config()->group("Spell Checking Languages"));
+    QMap<QString, QString> spellCheckingLanguageEntries=cgSpellCheckingLanguages.entryMap();
+    QList<QString> spellCheckingLanguageEntryKeys=spellCheckingLanguageEntries.keys();
+
+    for (QList<QString>::const_iterator itStr=spellCheckingLanguageEntryKeys.constBegin(); itStr != spellCheckingLanguageEntryKeys.constEnd(); ++itStr)
+    {
+        if (reg.indexIn(*itStr) > -1)
+        {
+            if (reg.cap(1) == "ServerGroup" && !reg.cap(3).isEmpty())
+                Preferences::setSpellCheckingLanguage(Preferences::serverGroupById(sgKeys.at(reg.cap(2).toInt())),
+                    reg.cap(3), spellCheckingLanguageEntries[*itStr]);
+            else
+                Preferences::setSpellCheckingLanguage(reg.cap(1), reg.cap(2), spellCheckingLanguageEntries[*itStr]);
         }
     }
 
@@ -826,7 +843,7 @@ void Application::saveOptions(bool updateGUI)
         serverlist = (it.value())->serverList();
         servers.clear();
 
-        sgKeys.append(it.key());
+        sgKeys.append(it.value()->id());
 
         for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
         {
@@ -919,6 +936,42 @@ void Application::saveOptions(bool updateGUI)
                     key.prepend(sgsp->name());
                 cgEncoding.writeEntry(key, enc);
             }
+        }
+    }
+
+    // Spell Checking Languages
+    KGlobal::config()->deleteGroup("Spell Checking Languages");
+    KConfigGroup cgSpellCheckingLanguages(KGlobal::config()->group("Spell Checking Languages"));
+
+    QHashIterator<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > i(Preferences::serverGroupSpellCheckingLanguages());
+
+    while (i.hasNext())
+    {
+        i.next();
+
+        QHashIterator<QString, QString> i2(i.value());
+
+        while (i2.hasNext())
+        {
+            i2.next();
+
+            cgSpellCheckingLanguages.writeEntry("ServerGroup " + QString::number(sgKeys.indexOf(i.key()->id())) + ' ' + i2.key(), i2.value());
+        }
+    }
+
+    QHashIterator<QString, QHash<QString, QString> > i3(Preferences::serverSpellCheckingLanguages());
+
+    while (i3.hasNext())
+    {
+        i3.next();
+
+        QHashIterator<QString, QString> i4(i3.value());
+
+        while (i4.hasNext())
+        {
+            i4.next();
+
+            cgSpellCheckingLanguages.writeEntry(i3.key() + ' ' + i4.key(), i4.value());
         }
     }
 

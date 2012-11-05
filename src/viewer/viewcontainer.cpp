@@ -2245,13 +2245,13 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
 {
     StatusPanel* statusView = new StatusPanel(m_tabWidget);
 
-    statusView->setServer(server);
-
-    if (server->getServerGroup()) statusView->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
-
     // Get group name for tab if available
     QString label = server->getDisplayName();
     statusView->setName(label);
+
+    statusView->setServer(server);
+
+    if (server->getServerGroup()) statusView->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
 
     QObject::connect(server, SIGNAL(sslInitFailure()), this, SIGNAL(removeStatusBarSSLLabel()));
     QObject::connect(server, SIGNAL(sslConnected(Server*)), this, SIGNAL(updateStatusBarSSLLabel(Server*)));

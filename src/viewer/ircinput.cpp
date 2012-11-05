@@ -18,10 +18,13 @@
 
 #include <QClipboard>
 #include <QKeyEvent>
+#include <QMenu>
 
 #include <KMessageBox>
 #include <KCompletionBox>
 #include <KActionCollection>
+
+#include <sonnet/speller.h>
 
 #define MAXHISTORY 100
 
@@ -59,6 +62,9 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
 
+    m_speller = 0;
+    connect(this, SIGNAL(aboutToShowContextMenu(QMenu*)), this, SLOT(insertLanguageMenu(QMenu*)));
+
     document()->adjustSize();
 
     document()->setDocumentMargin(2);
@@ -66,6 +72,59 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
 IRCInput::~IRCInput()
 {
+    if (m_speller)
+        delete m_speller;
+}
+
+static inline QString i18n_kdelibs4(const char *str) { return ki18n(str).toString("kdelibs4"); }
+
+void IRCInput::insertLanguageMenu(QMenu* contextMenu)
+{
+    QAction* spellCheckAction = 0;
+
+    foreach(QAction* action, contextMenu->actions())
+    {
+        if (action->text() == i18n_kdelibs4("Auto Spell Check"))
+        {
+            spellCheckAction = action;
+
+            break;
+        }
+    }
+
+    if (spellCheckAction)
+    {
+        QMenu* languagesMenu = new QMenu(i18n("Spell Checking Language"), this);
+        QActionGroup* languagesGroup = new QActionGroup(languagesMenu);
+        languagesGroup->setExclusive(true);
+
+        if (!m_speller)
+            m_speller = new Sonnet::Speller();
+
+        QMapIterator<QString, QString> i(m_speller->availableDictionaries());
+        QAction* languageAction = 0;
+
+        while (i.hasNext())
+        {
+            i.next();
+
+            languageAction = languagesMenu->addAction(i.key());
+            languageAction->setCheckable(true);
+            languageAction->setChecked(spellCheckingLanguage() == i.value());
+            languageAction->setData(i.value());
+            languageAction->setActionGroup(languagesGroup);
+            connect(languageAction, SIGNAL(triggered(bool)), this, SLOT(languageSelected()));
+        }
+
+        contextMenu->insertMenu(spellCheckAction, languagesMenu);
+    }
+}
+
+void IRCInput::languageSelected()
+{
+    QAction* languageAction = static_cast<QAction*>(QObject::sender());
+
+    setSpellCheckingLanguage(languageAction->data().toString());
 }
 
 QSize IRCInput::sizeHint() const

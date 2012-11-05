@@ -48,8 +48,20 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 
 ChatWindow::~ChatWindow()
 {
-    emit closing(this);
-    m_server=0;
+    if (getInputBar() && getServer())
+    {
+        const QString& language = getInputBar()->spellCheckingLanguage();
+
+        if (!language.isEmpty())
+        {
+            Konversation::ServerGroupSettingsPtr serverGroup = getServer()->getConnectionSettings().serverGroup();
+
+            if (serverGroup)
+                Preferences::setSpellCheckingLanguage(serverGroup, getName(), language);
+            else
+                Preferences::setSpellCheckingLanguage(getServer()->getDisplayName(), getName(), language);
+        }
+    }
 }
 
 // reimplement this if your window needs special close treatment
@@ -178,6 +190,21 @@ void ChatWindow::setServer(Server* newServer)
         }
 
         serverOnline(m_server->isConnected());
+    }
+
+    if (getInputBar())
+    {
+        QString language;
+
+        Konversation::ServerGroupSettingsPtr serverGroup = newServer->getConnectionSettings().serverGroup();
+
+        if (serverGroup)
+            language = Preferences::spellCheckingLanguage(serverGroup, getName());
+        else
+            language = Preferences::spellCheckingLanguage(newServer->getDisplayName(), getName());
+
+        if (!language.isEmpty())
+            getInputBar()->setSpellCheckingLanguage(language);
     }
 }
 

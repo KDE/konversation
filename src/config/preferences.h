@@ -117,6 +117,13 @@ class Preferences : public PreferencesBase
         static const QList<int> channelEncodingsServerGroupIdList();
         static const QStringList channelEncodingsChannelList(int serverGroupId);
 
+        static const QString spellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key);
+        static const QString spellCheckingLanguage(const QString& server, const QString& key);
+        static void setSpellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key, const QString& language);
+        static void setSpellCheckingLanguage(const QString& server, const QString& key, const QString& language);
+        static const QHash<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > serverGroupSpellCheckingLanguages();
+        static const QHash<QString, QHash<QString, QString> > serverSpellCheckingLanguages();
+
         static void setShowTrayIcon(bool state);
         static void setTrayNotify(bool state);
         static void setAutoUserhost(bool state);
@@ -142,6 +149,8 @@ class Preferences : public PreferencesBase
         QList<Highlight*> mHighlightList;
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]
+        QHash<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > mServerGroupSpellCheckingLanguages;
+        QHash<QString, QHash<QString, QString> > mServerSpellCheckingLanguages;
         QStringList mQuickButtonList;
         QList<QStringList> mAutoreplaceList;
         QString mSortingOrder;

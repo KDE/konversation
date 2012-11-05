@@ -530,6 +530,56 @@ const QStringList Preferences::channelEncodingsChannelList(int serverGroupId)
     return self()->mChannelEncodingsMap[serverGroupId].keys();
 }
 
+const QString Preferences::spellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key)
+{
+    if (self()->mServerGroupSpellCheckingLanguages.contains(serverGroup))
+        return self()->mServerGroupSpellCheckingLanguages.value(serverGroup).value(key);
+
+    return QString();
+}
+
+const QString Preferences::spellCheckingLanguage(const QString& server, const QString& key)
+{
+    if (self()->mServerSpellCheckingLanguages.contains(server))
+        return self()->mServerSpellCheckingLanguages.value(server).value(key);
+
+    return QString();
+}
+
+void Preferences::setSpellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key, const QString& language)
+{
+    QHash<QString, QString> languageHash;
+
+    if (self()->mServerGroupSpellCheckingLanguages.contains(serverGroup))
+        languageHash = self()->mServerGroupSpellCheckingLanguages.value(serverGroup);
+
+    languageHash.insert(key, language);
+
+    self()->mServerGroupSpellCheckingLanguages.insert(serverGroup, languageHash);
+}
+
+void Preferences::setSpellCheckingLanguage(const QString& server, const QString& key, const QString& language)
+{
+    QHash<QString, QString> languageHash;
+
+    if (self()->mServerSpellCheckingLanguages.contains(server))
+        languageHash = self()->mServerSpellCheckingLanguages.value(server);
+
+    languageHash.insert(key, language);
+
+    self()->mServerSpellCheckingLanguages.insert(server, languageHash);
+}
+
+const QHash< Konversation::ServerGroupSettingsPtr, QHash< QString, QString > > Preferences::serverGroupSpellCheckingLanguages()
+{
+    return self()->mServerGroupSpellCheckingLanguages;
+}
+
+const QHash< QString, QHash< QString, QString > > Preferences::serverSpellCheckingLanguages()
+{
+    return self()->mServerSpellCheckingLanguages;
+}
+
 const QString Preferences::defaultNicknameSortingOrder()
 {
   return "qpohv-";
