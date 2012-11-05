@@ -72,8 +72,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
 IRCInput::~IRCInput()
 {
-    if (m_speller)
-        delete m_speller;
 }
 
 static inline QString i18n_kdelibs4(const char *str) { return ki18n(str).toString("kdelibs4"); }
@@ -110,7 +108,8 @@ void IRCInput::insertLanguageMenu(QMenu* contextMenu)
 
             languageAction = languagesMenu->addAction(i.key());
             languageAction->setCheckable(true);
-            languageAction->setChecked(spellCheckingLanguage() == i.value() || m_speller->defaultLanguage() == i.value());
+            languageAction->setChecked(spellCheckingLanguage() == i.value() || (spellCheckingLanguage().isEmpty()
+                && m_speller->defaultLanguage() == i.value()));
             languageAction->setData(i.value());
             languageAction->setActionGroup(languagesGroup);
             connect(languageAction, SIGNAL(triggered(bool)), this, SLOT(languageSelected()));
