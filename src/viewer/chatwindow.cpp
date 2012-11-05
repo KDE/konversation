@@ -48,7 +48,6 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 
 ChatWindow::~ChatWindow()
 {
-    return;
     if (getInputBar() && getServer())
     {
         const QString& language = getInputBar()->spellCheckingLanguage();
