@@ -110,7 +110,7 @@ void IRCInput::insertLanguageMenu(QMenu* contextMenu)
 
             languageAction = languagesMenu->addAction(i.key());
             languageAction->setCheckable(true);
-            languageAction->setChecked(spellCheckingLanguage() == i.value());
+            languageAction->setChecked(spellCheckingLanguage() == i.value() || m_speller->defaultLanguage() == i.value());
             languageAction->setData(i.value());
             languageAction->setActionGroup(languagesGroup);
             connect(languageAction, SIGNAL(triggered(bool)), this, SLOT(languageSelected()));
