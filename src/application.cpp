@@ -1230,10 +1230,8 @@ void Application::openUrl(const QString& url)
             Application::instance()->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
         else if (url.startsWith(QLatin1String("mailto:")))
             KToolInvocation::invokeMailer(KUrl(url));
-        else if (url.startsWith(QLatin1String("amarok:")))
-            new KRun(KUrl(url), Application::instance()->getMainWindow());
         else
-            KToolInvocation::invokeBrowser(url);
+            new KRun(KUrl(url), Application::instance()->getMainWindow());
     }
     else
     {
