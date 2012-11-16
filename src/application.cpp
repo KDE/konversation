@@ -38,6 +38,7 @@
 #include <QNetworkProxy>
 #include <QWaitCondition>
 #include <QStandardItemModel>
+#include <QFileInfo>
 
 #include <KRun>
 #include <KCmdLineArgs>
@@ -108,7 +109,7 @@ void Application::implementRestart()
 
     // Pop off the executable name. May not be the first argument in argv
     // everywhere, so verify first.
-    if (QCoreApplication::applicationFilePath().endsWith(argumentList.first()))
+    if (QFileInfo(argumentList.first()) == QFileInfo(QCoreApplication::applicationFilePath()))
         argumentList.removeFirst();
 
     // Don't round-trip --restart.
