@@ -392,12 +392,10 @@ bool IRCInput::event(QEvent* e)
 
 void IRCInput::wheelEvent(QWheelEvent* e)
 {
-/*
     if (e->delta() > 0)
         getHistory(true);
     else if (e->delta() < 0)
         getHistory(false);
-*/
 
     KTextEdit::wheelEvent(e);
 }
