@@ -91,7 +91,7 @@ namespace Konversation
         class TransferProgressBarDelegate : public QStyledItemDelegate
         {
         public:
-            TransferProgressBarDelegate(QObject *parent = 0);
+            explicit TransferProgressBarDelegate(QObject *parent = 0);
 
             virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const;
@@ -101,7 +101,7 @@ namespace Konversation
         class TransferListProxyModel : public QSortFilterProxyModel
         {
         public:
-            TransferListProxyModel(QObject *parent = 0);
+            explicit TransferListProxyModel(QObject *parent = 0);
 
             bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
         };
@@ -122,7 +122,7 @@ namespace Konversation
                 TransferOfferDate //to get the QDateTime, not just a time string
             };
 
-            TransferListModel(QObject *parent);
+            explicit TransferListModel(QObject *parent);
 
             void append(const TransferItemData &item);
 

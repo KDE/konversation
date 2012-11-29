@@ -23,7 +23,7 @@ class AwayManager : public QObject
     Q_OBJECT
 
     public:
-        AwayManager(QObject* parent = 0);
+        explicit AwayManager(QObject* parent = 0);
         ~AwayManager();
 
 

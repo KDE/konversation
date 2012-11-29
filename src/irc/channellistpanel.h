@@ -35,7 +35,7 @@ class ChannelListProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
     public:
-        ChannelListProxyModel(QObject *parent = 0);
+        explicit ChannelListProxyModel(QObject *parent = 0);
 
         int filterMinimumUsers() { return m_minUsers; }
         int filterMaximumUsers() { return m_maxUsers; }

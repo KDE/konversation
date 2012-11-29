@@ -37,7 +37,7 @@ class InviteChannelListModel : public QAbstractListModel
             Qt::CheckState checkState;
         };
 
-        InviteChannelListModel(QObject* parent);
+        explicit InviteChannelListModel(QObject* parent);
 
         void addInvite(const QString& nickname, const QString& channel);
         QString selectedChannels() const;

@@ -62,7 +62,7 @@ class IRCView : public KTextBrowser
     Q_OBJECT
 
     public:
-        IRCView(QWidget* parent);
+        explicit IRCView(QWidget* parent);
         ~IRCView();
 
         //void clear();

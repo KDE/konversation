@@ -50,7 +50,7 @@ namespace Konversation
                     Whiteboard
                 };
 
-                Chat(QObject *parent);
+                explicit Chat(QObject *parent);
                 ~Chat();
 
                 quint16 ownPort() const;

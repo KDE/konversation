@@ -36,7 +36,7 @@ namespace Konversation
                 BackgroundColor
             };
 
-            WhiteBoardColorChooser(QWidget* parent = 0);
+            explicit WhiteBoardColorChooser(QWidget* parent = 0);
             ~WhiteBoardColorChooser();
 
             QColor color(const ColorLayer& layer) const;

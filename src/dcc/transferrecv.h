@@ -47,7 +47,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                TransferRecv(QObject *parent);
+                explicit TransferRecv(QObject *parent);
                 virtual ~TransferRecv();
 
                 // REQUIRED

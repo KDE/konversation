@@ -34,7 +34,7 @@ class OutputFilterResolveJob : public QObject
     Q_OBJECT
 
     public:
-        OutputFilterResolveJob(const Konversation::OutputFilterInput& input);
+        explicit OutputFilterResolveJob(const Konversation::OutputFilterInput& input);
         ~OutputFilterResolveJob();
 
 

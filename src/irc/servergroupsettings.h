@@ -60,10 +60,10 @@ namespace Konversation
     class ServerGroupSettings : public KShared
     {
         public:
-            ServerGroupSettings();
-            ServerGroupSettings(int id);
-            ServerGroupSettings(const ServerGroupSettings& settings);
-            ServerGroupSettings(const QString& name);
+            explicit ServerGroupSettings();
+            explicit ServerGroupSettings(int id);
+            explicit ServerGroupSettings(const ServerGroupSettings& settings);
+            explicit ServerGroupSettings(const QString& name);
             ~ServerGroupSettings();
 
             ServerGroupSettings& operator=(const ServerGroupSettings& settings);

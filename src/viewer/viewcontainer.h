@@ -52,7 +52,7 @@ class TabWidget : public KTabWidget
     Q_OBJECT
 
     public:
-        TabWidget(QWidget* parent = 0);
+        explicit TabWidget(QWidget* parent = 0);
         ~TabWidget();
 
     // Suppress krazy2 false positive (cf. kdelibs bug #207747).

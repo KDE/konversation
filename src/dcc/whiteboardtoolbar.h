@@ -40,7 +40,7 @@ namespace Konversation
                     ExtentedText
                 };
 
-                WhiteBoardToolBar(QWidget* parent);
+                explicit WhiteBoardToolBar(QWidget* parent);
                 ~WhiteBoardToolBar();
 
                 QColor foregroundColor() const;

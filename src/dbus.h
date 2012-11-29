@@ -28,7 +28,7 @@ class DBus : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
     public:
-        DBus(QObject *parent = 0);
+        explicit DBus(QObject *parent = 0);
 
         QString getNickname (const QString &server);
         QString getChannelEncoding(const QString& server, const QString& channel);

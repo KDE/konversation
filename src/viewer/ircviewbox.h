@@ -23,7 +23,7 @@ class IRCViewBox : public KVBox
 
         public:
 
-        IRCViewBox(QWidget* parent);
+        explicit IRCViewBox(QWidget* parent);
         ~IRCViewBox();
 
         IRCView*   ircView() const;

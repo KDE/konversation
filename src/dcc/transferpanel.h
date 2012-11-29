@@ -77,7 +77,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                TransferPanel(QWidget *parent);
+                explicit TransferPanel(QWidget *parent);
                 ~TransferPanel();
 
                 TransferView *getTransferView();

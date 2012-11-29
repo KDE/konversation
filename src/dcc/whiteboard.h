@@ -28,7 +28,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                WhiteBoard(QWidget* parent);
+                explicit WhiteBoard(QWidget* parent);
                 ~WhiteBoard();
 
                 static QStringList whiteboardCommands();
@@ -65,7 +65,7 @@ namespace Konversation
             private:
                 inline QColor parseColor(const QString& colorString, bool* ok = 0);
                 inline QString colorToString(const QColor& color);
-                inline int fontToStyle(const QFont& font); 
+                inline int fontToStyle(const QFont& font);
 
                 inline void emitDRCommand(WhiteBoardGlobals::WhiteBoardTool tool, int lineWidth,
                                          const QColor& penColor, const QColor& brushColor,

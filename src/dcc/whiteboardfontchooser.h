@@ -29,7 +29,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                WhiteBoardFontChooser(QWidget* parent);
+                explicit WhiteBoardFontChooser(QWidget* parent);
                 ~WhiteBoardFontChooser();
 
                 QFont font() const;
