@@ -1314,7 +1314,7 @@ namespace Konversation
         }
 
         result.type = Program;
-        result.typeString = i18n("Notify");
+        result.typeString = i18nc("Message type", "Notify");
 
         return result;
     }

@@ -766,12 +766,12 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
 
-    if(type == i18n("Join"))
+    if(type == i18nc("Message type", "Join"))
     {
         prefix="-->";
         parseURL=false;
     }
-    else if(type == i18n("Part") || type == i18n("Quit"))
+    else if(type == i18nc("Message type", "Part") || type == i18nc("Message type", "Quit"))
     {
         prefix="<--";
     }
