@@ -466,7 +466,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     menu->addSeparator();
 
     // open URL submenu
-    KMenu* showURLmenu = new KMenu("Open URL", menu);
+    KMenu* showURLmenu = new KMenu(i18n("Open URL"), menu);
 
     QList<QPair<int, int> > urlRanges = Konversation::getUrlRanges(filteredLine);
     QPair<int, int> urlRange;
