@@ -92,17 +92,22 @@ void Warnings_Config::saveSettings()
         }
         else if (warningName == QLatin1String("Invitation"))
         {
+            // 0 == always ask
+            // 1 == always join
+            // 2 == always ignore
+
             if (checked)
             {
                 grp.writeEntry(warningName, "0");
             }
             else
             {
-                // Let's keep the old state if we got one, or join if
-                // there isn't an old state.
+                // We have two cases here, new unchecked and old already unchecked
+                // If we already ignore the joining, keep it "2"
+                // else newly unchecked, always join "1"
                 QString state = grp.readEntry(warningName, QString());
 
-                if (!state.isEmpty())
+                if (state == "2")
                     grp.writeEntry(warningName, state);
                 else
                     grp.writeEntry(warningName, "1");
@@ -219,7 +224,7 @@ void Warnings_Config::loadSettings()
         }
         else if (flagName == QLatin1String("Invitation"))
         {
-            item->setCheckState(0, grp.readEntry(flagName, QString()) == "0" ? Qt::Checked : Qt::Unchecked);
+            item->setCheckState(0, grp.readEntry(flagName, QString("0")) == "0" ? Qt::Checked : Qt::Unchecked);
         }
         else
         {
