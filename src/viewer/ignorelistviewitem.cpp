@@ -44,6 +44,7 @@ void IgnoreListViewItem::setFlags(int newFlags)
     if(m_flags & Ignore::Notice) flagsStr += i18n("Notice") + ' ';
     if(m_flags & Ignore::CTCP) flagsStr += i18n("CTCP") + ' ';
     if(m_flags & Ignore::DCC) flagsStr += i18n("DCC") + ' ';
+    if(m_flags & Ignore::Invite) flagsStr += i18n("Invite") + ' ';
     if(m_flags & Ignore::Exception) flagsStr += i18n("Exception") + ' ';
     setText(1,flagsStr);
 }

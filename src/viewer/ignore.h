@@ -22,13 +22,15 @@ class Ignore
     public:
         enum Type
         {
-            Channel=1,
-            Query=2,
-            Notice=4,
-            CTCP=8,
-            DCC=16,
-            Exception=32,
-            All=31
+            Channel = 1 << 0,
+            Query   = 1 << 1,
+            Notice  = 1 << 2,
+            CTCP    = 1 << 3,
+            DCC     = 1 << 4,
+            Invite  = 1 << 5,
+            All     = Channel|Query|Notice|CTCP|DCC|Invite,
+
+            Exception = 1 << 31
         };
 
         Ignore(const QString &name,int flags);

@@ -112,6 +112,13 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="chkInvite">
+        <property name="text">
+         <string>Invite</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -180,6 +187,7 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>chkNotice</tabstop>
   <tabstop>chkCTCP</tabstop>
   <tabstop>chkDCC</tabstop>
+  <tabstop>chkInvite</tabstop>
   <tabstop>newButton</tabstop>
   <tabstop>removeButton</tabstop>
   <tabstop>removeAllButton</tabstop>

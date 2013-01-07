@@ -37,6 +37,7 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     connect(chkNotice, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkCTCP, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkDCC, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
+    connect(chkInvite, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(txtPattern, SIGNAL(textChanged(QString)), this, SLOT(flagCheckboxChanged()));
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     loadSettings();
@@ -57,7 +58,8 @@ void Ignore_Config::newIgnore()
         Ignore::Query |
         Ignore::Notice |
         Ignore::CTCP |
-        Ignore::DCC);
+        Ignore::DCC |
+        Ignore::Invite);
     ignoreListView->setCurrentItem(item);
     txtPattern->setFocus();
     txtPattern->selectAll();
@@ -151,6 +153,7 @@ void Ignore_Config::updateEnabledness()
     chkNotice->setEnabled(selectedItem != NULL);
     chkCTCP->setEnabled(selectedItem != NULL);
     chkDCC->setEnabled(selectedItem != NULL);
+    chkInvite->setEnabled(selectedItem != NULL);
 //	chkExceptions->setEnabled(selectedItem != NULL);
     txtPattern->setEnabled(selectedItem != NULL);
     removeButton->setEnabled(selectedItem != NULL);
@@ -171,6 +174,7 @@ void Ignore_Config::select(QTreeWidgetItem* item)
         chkNotice->setChecked(flags & Ignore::Notice);
         chkCTCP->setChecked(flags & Ignore::CTCP);
         chkDCC->setChecked(flags & Ignore::DCC);
+        chkInvite->setChecked(flags & Ignore::Invite);
 	txtPattern->blockSignals(true);
 	txtPattern->setText(selectedItem->getName());
 	txtPattern->blockSignals(false);
@@ -187,6 +191,7 @@ void Ignore_Config::flagCheckboxChanged()
     if(chkNotice->isChecked()) flags |= Ignore::Notice;
     if(chkCTCP->isChecked()) flags |= Ignore::CTCP;
     if(chkDCC->isChecked()) flags |= Ignore::DCC;
+    if(chkInvite->isChecked()) flags |= Ignore::Invite;
 
 //    if(chkExceptions->isChecked()) flags |= Ignore::Exceptions;
     IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());

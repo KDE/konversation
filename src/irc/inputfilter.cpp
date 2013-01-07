@@ -681,12 +681,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if (command=="invite" && plHas(2)) //:ejm!i=beezle@bas5-oshawa95-1176455927.dsl.bell.ca INVITE argnl :#sug4
     {
-        QString channel(trailing);
+        if (!isIgnore(prefix, Ignore::Invite))
+        {
+            QString channel(trailing);
 
-        m_server->appendMessageToFrontmost(i18n("Invite"),
-            i18n("%1 invited you to channel %2.", sourceNick, channel)
-            );
-        emit invitation(sourceNick,channel);
+            m_server->appendMessageToFrontmost(i18n("Invite"),
+                i18n("%1 invited you to channel %2.", sourceNick, channel)
+                );
+            emit invitation(sourceNick, channel);
+        }
     }
     else
     {
