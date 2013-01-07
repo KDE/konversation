@@ -61,7 +61,7 @@ Preferences::Preferences()
     mIdentity->setNicknameList(nickList);
 
     Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
-    serverGroup->setName("Freenode");
+    serverGroup->setName("freenode");
     Konversation::ServerSettings server;
     server.setHost("chat.freenode.net");
     server.setPort(8001);
