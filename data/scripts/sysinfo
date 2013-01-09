@@ -157,7 +157,7 @@ class cpu(Sensor):
     def gather(self):
         curfreqs = set()
 
-        with open('/home/sho/pastedata', 'r') as cpuinfo:
+        with open('/proc/cpuinfo', 'r') as cpuinfo:
             for line in (line for line in cpuinfo if len(line.strip()) > 1):
                 key, value = line.split(':', 1)
                 if key.strip() == 'model name':
