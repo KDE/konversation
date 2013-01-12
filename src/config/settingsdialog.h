@@ -60,7 +60,6 @@ class KonviSettingsDialog : public KonviConfigDialog
         QuickButtons_Config* m_confQuickButtonsWdg;
         Autoreplace_Config* m_confAutoreplaceWdg;
         DCC_Config* m_confDCCWdg;
-        WatchedNicknames_Config* m_confWatchedNicknamesWdg;
         Highlight_Config* m_confHighlightWdg;
         OSD_Config* m_confOSDWdg;
         Ignore_Config* m_confIgnoreWdg;
@@ -68,7 +67,6 @@ class KonviSettingsDialog : public KonviConfigDialog
         bool m_modified;
 
         // remember page index
-        KPageWidgetItem *m_watchedNicknamesPage;
         QList<KonviSettingsPage*> m_pages;
 };
 

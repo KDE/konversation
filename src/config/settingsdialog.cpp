@@ -229,12 +229,6 @@ void KonviSettingsDialog::updateWidgetsDefault()
   m_modified = true;
 }
 
-void KonviSettingsDialog::openWatchedNicknamesPage()
-{
-  // page index has been calculated in the constructor
-  setCurrentPage(m_watchedNicknamesPage);
-}
-
 // accessor method - will be used by KonviConfigDialog::updateButtons()
 bool KonviSettingsDialog::hasChanged()
 {

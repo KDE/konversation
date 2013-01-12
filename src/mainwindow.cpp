@@ -824,12 +824,6 @@ void MainWindow::openQuickConnectDialog()
     emit showQuickConnectDialog();
 }
 
-// open the preferences dialog and show the watched nicknames page
-void MainWindow::openNotify()
-{
-    openPrefsDialog();
-    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
-}
 
 void MainWindow::openIdentitiesDialog()
 {

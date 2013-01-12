@@ -101,7 +101,6 @@ class MainWindow : public KXmlGuiWindow
         void openKeyBindings();
         void openQuickConnectDialog();
 
-        void openNotify();
         // it seems that moc does not honor #ifs in compile so we create an
         // empty slot in our .cpp file rather than #if this slot out
         void openNotifications();
