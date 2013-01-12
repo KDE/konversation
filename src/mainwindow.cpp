@@ -74,6 +74,8 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             m_viewContainer, SLOT(updateViews(Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(autoJoinToggled(Konversation::ServerGroupSettingsPtr)),
             Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
+    connect(m_viewContainer, SIGNAL(autoConnectOnStartupToggled(Konversation::ServerGroupSettingsPtr)),
+            Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(QString)), this, SLOT(setCaption(QString)));
     connect(Application::instance()->getConnectionManager(),
             SIGNAL(connectionChangedState(Server*,Konversation::ConnectionState)),
@@ -369,6 +371,11 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("Join on Connect"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleAutoJoin()));
     actionCollection()->addAction("tab_autojoin", action);
+
+    action=new KToggleAction(this);
+    action->setText(i18n("Connect on application start up"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleConnectOnStartup()));
+    actionCollection()->addAction("tab_autoconnect", action);
 
     QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     encodingDescs.prepend(i18n("Default"));

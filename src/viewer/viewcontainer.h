@@ -101,6 +101,7 @@ class ViewContainer : public QObject
         void unsetViewNotification(ChatWindow* view);
         void toggleViewNotifications();
         void toggleAutoJoin();
+        void toggleConnectOnStartup();
 
         void showView(ChatWindow* view);
         void goToView(int page);
@@ -201,6 +202,7 @@ class ViewContainer : public QObject
         void updateStatusBarSSLLabel(Server* server);
         void removeStatusBarSSLLabel();
         void autoJoinToggled(const Konversation::ServerGroupSettingsPtr);
+        void autoConnectOnStartupToggled(const Konversation::ServerGroupSettingsPtr);
 
         void frontServerChanging(Server*);
 

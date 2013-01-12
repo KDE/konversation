@@ -514,6 +514,18 @@ void ViewContainer::updateViewActions(int index)
             autoJoinAction->setChecked(false);
         }
 
+        KToggleAction* autoConnectAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
+        if (autoConnectAction && viewType == ChatWindow::Status && server->getServerGroup())
+        {
+            autoConnectAction->setEnabled(true);
+            autoConnectAction->setChecked(server->getServerGroup()->autoConnectEnabled());
+        }
+        else if (!(viewType != ChatWindow::Status && index != m_tabWidget->currentIndex()))
+        {
+            autoConnectAction->setEnabled(false);
+            autoConnectAction->setChecked(false);
+        }
+
         action = actionCollection()->action("rejoin_channel");
         if (action) action->setEnabled(viewType == ChatWindow::Channel && channel->rejoinable());
 
@@ -651,6 +663,9 @@ void ViewContainer::updateViewActions(int index)
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("tab_autojoin");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("tab_autoconnect");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("rejoin_channel");
@@ -1206,6 +1221,32 @@ void ViewContainer::toggleAutoJoin()
         channel->setAutoJoin(!autoJoin);
 
         emit autoJoinToggled(channel->getServer()->getServerGroup());
+    }
+
+    m_popupViewIndex = -1;
+}
+
+void ViewContainer::toggleConnectOnStartup()
+{
+    ChatWindow* view = 0;
+
+    if (m_popupViewIndex == -1)
+        view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
+    else
+        view = static_cast<ChatWindow*>(m_tabWidget->widget(m_popupViewIndex));
+
+    if (view && view->getType() == ChatWindow::Status)
+    {
+        Server* server = view->getServer();
+
+        if (server)
+        {
+            Konversation::ServerGroupSettingsPtr settings = server->getConnectionSettings().serverGroup();
+            bool autoConnect = settings->autoConnectEnabled();
+            settings->setAutoConnectEnabled(!autoConnect);
+
+            emit autoConnectOnStartupToggled(settings);
+        }
     }
 
     m_popupViewIndex = -1;
@@ -1780,6 +1821,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
     KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+    KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
     QAction* rejoinAction = actionCollection()->action("rejoin_channel");
     QAction* closeAction = actionCollection()->action("close_tab");
 
@@ -1815,9 +1857,12 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         if (viewType == ChatWindow::Status)
         {
+            QAction* action = actionCollection()->action("tab_encoding");
+            menu->insertAction(action, autoConnectAction);
+
             QList<QAction *> serverActions;
 
-            QAction* action = actionCollection()->action("disconnect_server");
+            action = actionCollection()->action("disconnect_server");
             if (action) serverActions.append(action);
             action = actionCollection()->action("reconnect_server");
             if (action) serverActions.append(action);
@@ -1843,6 +1888,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     }
 
     menu->removeAction(autoJoinAction);
+    menu->removeAction(autoConnectAction);
     menu->removeAction(rejoinAction);
     menu->removeAction(renameAct);
     m_window->unplugActionList("server_actions");
