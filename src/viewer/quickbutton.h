@@ -35,8 +35,6 @@ class QuickButton : public QPushButton
         void wasClicked();
 
     protected:
-        int id;
-
         QString definition;
 };
 #endif
