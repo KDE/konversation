@@ -373,7 +373,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("tab_autojoin", action);
 
     action=new KToggleAction(this);
-    action->setText(i18n("Connect on application start up"));
+    action->setText(i18n("Connect at startup"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleConnectOnStartup()));
     actionCollection()->addAction("tab_autoconnect", action);
 
