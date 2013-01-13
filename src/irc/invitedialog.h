@@ -59,7 +59,7 @@ class InviteDialog : public KDialog, protected Ui::InviteDialog
 {
     Q_OBJECT
     public:
-        InviteDialog(QWidget* parent);
+        explicit InviteDialog(QWidget* parent);
 
         void addInvite(const QString& nickname, const QString& channel);
 

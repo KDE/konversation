@@ -65,7 +65,7 @@ class ChannelListModel : public QAbstractListModel
     Q_OBJECT
 
     public:
-        ChannelListModel(QObject* parent);
+        explicit ChannelListModel(QObject* parent);
 
         void append(const ChannelItem& item);
 

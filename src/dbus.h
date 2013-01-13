@@ -74,7 +74,7 @@ class IdentDBus : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
         public:
-        IdentDBus(QObject *parent = 0);
+        explicit IdentDBus(QObject *parent = 0);
 
     public slots:
         void setrealName(const QString &identity, const QString& name);
