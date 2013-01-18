@@ -248,7 +248,7 @@ Comment[sv]=Någon skrev ett meddelande till ditt smeknamn
 Comment[tr]=Birisi iletisinde sizin takma adınızı yazdı
 Comment[uk]=Хтось написав ваш псевдонім у повідомленні
 Comment[x-test]=xxSomeone wrote your nick in a messagexx
-Comment[zh_CN]=有人在消息里用了您的昵称
+Comment[zh_CN]=有人在消息里提到了您的昵称
 Comment[zh_TW]=有人在訊息中提到您的暱稱
 Action=None
 
@@ -292,7 +292,7 @@ Name[sv]=Markering orsakad
 Name[tr]=Vurgulama yapıldı
 Name[uk]=Увімкнено підсвічування
 Name[x-test]=xxHighlight triggeredxx
-Name[zh_CN]=触发高亮
+Name[zh_CN]=高亮被触发
 Name[zh_TW]=觸發突顯
 Comment=Someone triggered a highlight
 Comment[ast]=Daquién desencadenó un resaltáu
@@ -630,7 +630,7 @@ Comment[sv]=Någon vill skicka en fil till dig via direktkommunikation
 Comment[tr]=Birisi size DCC üzerinden dosya göndermek istiyor
 Comment[uk]=Хтось бажає передати вам файл за допомогою DCC
 Comment[x-test]=xxSomeone wants to transmit a file to you over DCCxx
-Comment[zh_CN]=有些人想要通过 DCC 向您传送文件
+Comment[zh_CN]=有人想通过 DCC 向您传送文件
 Comment[zh_TW]=有人要透過 DCC 傳送檔案給您
 Action=None
 
@@ -1101,7 +1101,7 @@ Comment[sv]=Tillståndet för en användare eller kanal ändrades
 Comment[tr]=Bir kullanıcı veya oda kipi değiştirildi
 Comment[uk]=Було змінено режим користувача або каналу
 Comment[x-test]=xxA user or channel mode was changedxx
-Comment[zh_CN]=一个用户或频道模式已改变
+Comment[zh_CN]=一个用户或频道的模式已改变
 Comment[zh_TW]=某個使用者或頻道的模式被變更了
 Action=None
 
@@ -1302,7 +1302,7 @@ Comment[sv]=Någon startade en konversation med dig (ställde en fråga till dig
 Comment[tr]=Birisi sizinle sohbet başlattı
 Comment[uk]=Хтось почав розмову (діалог) з вами
 Comment[x-test]=xxSomeone started a conversation (query) with youxx
-Comment[zh_CN]=有人您发起了会话(请求)
+Comment[zh_CN]=有人向您发起了会话(请求)
 Comment[zh_TW]=有人啟動了一個與您的通話階段
 Action=None
 
@@ -1402,7 +1402,7 @@ Comment[sv]=Någon sparkade ut dig från en kanal
 Comment[tr]=Birisi sizi odadan tekmeledi
 Comment[uk]=Хтось виштурхав вас з каналу
 Comment[x-test]=xxSomeone kicked you out of a channelxx
-Comment[zh_CN]=有人将您驱逐出一个频道
+Comment[zh_CN]=有人将您驱逐出了一个频道
 Comment[zh_TW]=有人把您踢出了頻道
 Action=None
 
