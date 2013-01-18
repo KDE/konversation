@@ -515,7 +515,7 @@ void ViewContainer::updateViewActions(int index)
         }
 
         KToggleAction* autoConnectAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
-        if (autoConnectAction && viewType == ChatWindow::Status && server->getServerGroup())
+        if (autoConnectAction && server && (viewType == ChatWindow::Status || server == m_frontServer) && server->getServerGroup())
         {
             autoConnectAction->setEnabled(true);
             autoConnectAction->setChecked(server->getServerGroup()->autoConnectEnabled());
