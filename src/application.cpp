@@ -87,6 +87,7 @@ Application::~Application()
     delete m_dccTransferManager;
 
     delete m_images;
+    delete m_sound;
     //delete dbusObject;
     //delete prefsDCOP;
     //delete identDBus;
@@ -1251,7 +1252,7 @@ void Application::openUrl(const QString& url)
 Konversation::Sound* Application::sound()
 {
     if (!m_sound)
-        m_sound = new Konversation::Sound(this);
+        m_sound = new Konversation::Sound;
 
     return m_sound;
 }
