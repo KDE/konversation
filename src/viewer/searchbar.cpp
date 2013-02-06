@@ -32,6 +32,8 @@ SearchBar::SearchBar(QWidget* parent)
     foreach(QWidget* widget, findChildren<QWidget*>())
         widget->installEventFilter(this);
 
+    parent->installEventFilter(this); // HACK See notes in SearchBar::eventFilter
+
     m_searchFoward = false;
     m_matchCase = false;
     m_wholeWords = false;
@@ -83,9 +85,21 @@ SearchBar::~SearchBar()
 
 bool SearchBar::eventFilter(QObject* object, QEvent* e)
 {
-    Q_UNUSED(object);
+    QFocusEvent* focusEvent = 0;
 
-    QFocusEvent* focusEvent = dynamic_cast<QFocusEvent*>(e);
+    // HACK This event comes from the ViewContainer when
+    // updateViewActions is called. ViewContainer can't
+    // check the status of the search box, and so tramples
+    // on the KAction we're managing - that is until the
+    // ambiguous shortcut dialog box pops up, at which point
+    // a focus event is sent to the searchbar and the other
+    // stanza in this method is triggered.
+    // 414 was the time of day when I named the event.
+    bool hack = (object == parent() && e->type() == QEvent::User+414);
+    if (hack && hasFocus())
+        focusEvent = new QFocusEvent(QEvent::FocusIn);
+    else
+        focusEvent = dynamic_cast<QFocusEvent*>(e);
 
     if (focusEvent)
     {
@@ -99,7 +113,10 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
         }
     }
 
-    return false;
+    if (hack)
+        delete focusEvent;
+
+    return hack;
 }
 
 void SearchBar::showEvent(QShowEvent *e)

@@ -568,7 +568,14 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(view->getInputBar() != 0);
 
             action = actionCollection()->action("focus_input_box");
-            if (action) action->setEnabled(view->getInputBar() != 0);
+            if (action)
+            {
+                action->setEnabled(view->getInputBar() != 0);
+
+                //HACK See notes in SearchBar::eventFilter
+                QEvent e(static_cast<QEvent::Type>(QEvent::User+414)); // Magic number to avoid QEvent::registerEventType
+                Application::instance()->sendEvent(view->getTextView()->parent(), &e);
+            }
 
             action = actionCollection()->action("clear_lines");
             if (action) action->setEnabled(textView != 0 && view->getTextView()->hasLines());
