@@ -568,7 +568,7 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(view->getInputBar() != 0);
 
             action = actionCollection()->action("focus_input_box");
-            if (action)
+            if (action && view->getTextView() && view->getTextView()->parent())
             {
                 action->setEnabled(view->getInputBar() != 0);
 
