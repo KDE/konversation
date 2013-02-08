@@ -1075,7 +1075,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         m_joined = true;
         emit joined(this);
         if (displayCommandMessage)
-            appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 = channel, %2 = our hostmask",
+            appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 = our hostmask, %2 = channel",
                                  "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), false, true);
         m_ownChannelNick = channelNick;
         refreshModeButtons();
@@ -1139,7 +1139,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
                     appendCommandMessage(i18nc("Message type", "Part"), i18n("You have left channel %1.", getName()));
                 else
                     appendCommandMessage(i18nc("Message type", "Part"), i18nc("%1 = our hostmask, %2 = channel, %3 = reason",
-                        "You (%1) have left channel %2 (%3).", getName(), channelNick->getHostmask(), displayReason), false);
+                        "You (%1) have left channel %2 (%3).", channelNick->getHostmask(), getName(), displayReason), false);
             }
         }
 
