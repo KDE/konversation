@@ -1495,7 +1495,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             }
             if (parameterChannelNick)
             {
-                parameterChannelNick->setOwner(plus);
+                parameterChannelNick->setAdmin(plus);
                 emitUpdateInfo();
             }
             break;
