@@ -708,8 +708,12 @@ void Application::readOptions()
         if (reg.indexIn(*itStr) > -1)
         {
             if (reg.cap(1) == "ServerGroup" && !reg.cap(3).isEmpty())
-                Preferences::setSpellCheckingLanguage(Preferences::serverGroupById(sgKeys.at(reg.cap(2).toInt())),
-                    reg.cap(3), spellCheckingLanguageEntries[*itStr]);
+            {
+                ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(reg.cap(2).toInt()));
+
+                if (serverGroup)
+                    Preferences::setSpellCheckingLanguage(serverGroup, reg.cap(3), spellCheckingLanguageEntries[*itStr]);
+            }
             else
                 Preferences::setSpellCheckingLanguage(reg.cap(1), reg.cap(2), spellCheckingLanguageEntries[*itStr]);
         }
