@@ -1538,6 +1538,7 @@ namespace Konversation
                     if (!parameterList[index].contains('!'))
                         parameterList[index] += "!*";
 
+                    Preferences::removeIgnore(parameterList[index]);
                     Preferences::addIgnore(parameterList[index] + ',' + QString::number(value));
                 }
 

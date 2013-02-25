@@ -235,7 +235,6 @@ void Preferences::setIgnoreList(QList<Ignore*> newList)
 void Preferences::addIgnore(const QString &newIgnore)
 {
     QStringList ignore = newIgnore.split(',');
-    removeIgnore(ignore[0]);
     self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 
