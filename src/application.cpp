@@ -957,7 +957,10 @@ void Application::saveOptions(bool updateGUI)
         {
             i2.next();
 
-            cgSpellCheckingLanguages.writeEntry("ServerGroup " + QString::number(sgKeys.indexOf(i.key()->id())) + ' ' + i2.key(), i2.value());
+            int serverGroupIndex = sgKeys.indexOf(i.key()->id());
+
+            if (serverGroupIndex != -1)
+                cgSpellCheckingLanguages.writeEntry("ServerGroup " + QString::number(serverGroupIndex) + ' ' + i2.key(), i2.value());
         }
     }
 
