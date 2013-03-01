@@ -2193,8 +2193,9 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
         }
         else
         {
-            LogfileReader* logReader = new LogfileReader(m_tabWidget, file);
-            addView(logReader, i18n("Logfile of %1",caption));
+            LogfileReader* logReader = new LogfileReader(m_tabWidget, file, caption);
+            addView(logReader, logReader->getName());
+
             logReader->setServer(0);
         }
     }

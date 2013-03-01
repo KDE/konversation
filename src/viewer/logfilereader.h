@@ -29,7 +29,7 @@ class LogfileReader : public ChatWindow
     Q_OBJECT
 
         public:
-        LogfileReader(QWidget* parent, const QString& log);
+        LogfileReader(QWidget* parent, const QString& log, const QString& caption);
         ~LogfileReader();
 
         using ChatWindow::closeYourself;

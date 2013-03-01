@@ -33,9 +33,10 @@
 #include <KJobUiDelegate>
 
 
-LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)
+LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString& caption) : ChatWindow(parent)
 {
     setType(ChatWindow::LogFileReader);
+    setName(i18n("Logfile of %1", caption));
 
     fileName = log;
 
