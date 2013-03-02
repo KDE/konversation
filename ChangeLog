@@ -183,12 +183,14 @@ Changes not in the 1.4 branch:
   restarts.
 * Link opening now properly respects KDE's file type associating settings instead
   of always opening a web browser.
+* Fix Konversation not saving the unchecked "... a channel invitation is received"
+  warning dialog option in the Warning Dialogs list in the configuration dialog
 * Unchecking the "... a channel invitation is received" warning dialog option
   in the Warning Dialogs list in the configuration dialog now sets the behavior
-  for future channel join invitations to always ignoring them. The actual dialog
+  for future channel join invitations to always joining them. The actual dialog
   allows chosing between always accepting and always ignoring, but until this
-  can be exposed in the configuration dialog, ignoring seems to be the preferred
-  default behavior.
+  can be exposed in the configuration dialog, always joining them makes this
+  option consistent to all other warning dialog options.
 * The default behavior upon receiving a channel join invitation is now to ask
   the user, instead of silently accepting the invitation. The latter behavior
   accidentally snuck into 1.4 and is considered a bug.
