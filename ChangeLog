@@ -158,7 +158,61 @@ Changes not in the 1.4 branch:
   for use by developers / for debugging purposes.
 * Part and Quit messages now show the hostmask of the subject, consistent with
   Join messages.
-UFINISHED
+* Fixed a bug causing the What's This help tooltip for nickname lists to show
+  the regular user icon instead of the away icon as the away icon example.
+* The desktop notification for a completed incoming DCC file transfer now offers
+  an action to open/run the received file.
+* The nickname list theme preview in the configuration dialog now uses the same
+  background color as the actual nickname lists.
+* Various fixed to tab stops and margins in the configuration dialog pages.
+* Minor UI fixes for the Queue Tuner (opened by /queuetuner), correcting icon
+  use and button labels.
+* Removed excess white space from several warning dialog messages.
+* Fixed a bug causing the Watched Nicks to spam the active tab with repeated
+  WHOIS requests for someone on the Watched Nicks List after opening a query
+  tab to them while they were offline.
+* Added an action to manually apply the user-configured auto-replace rules to
+  the input box contents without sending the message, enabling user review
+  before doing so. The relative cursor position is preserved or the cursor is
+  moved to the end of an intersecting replacement insertion when auto-replace
+  is applied.
+* Added the ability to set a different spell-checking language for every tab,
+  from the context menu of the input box. The chosen language setting is pre-
+  served across application restarts.
+* Fixed several bugs in preserving per-tab encoding settings across application
+  restarts.
+* Link opening now properly respects KDE's file type associating settings instead
+  of always opening a web browser.
+* Unchecking the "... a channel invitation is received" warning dialog option
+  in the Warning Dialogs list in the configuration dialog now sets the behavior
+  for future channel join invitations to always ignoring them. The actual dialog
+  allows chosing between always accepting and always ignoring, but until this
+  can be exposed in the configuration dialog, ignoring seems to be the preferred
+  default behavior.
+* The default behavior upon receiving a channel join invitation is now to ask
+  the user, instead of silently accepting the invitation. The latter behavior
+  accidentally snuck into 1.4 and is considered a bug.
+* Server status tabs for networks listed in the Server List dialog now have a
+  "Connect at Startup" checkbox in their context menu, similar to the "Join on
+  Connect" checkbox in the context menu of channel tabs. Both set options also
+  available from the Server List.
+* Added a workaround for behavior in the Phonon multimedia library that could
+  lead to crashes on application quit when using custom highlight notification
+  sounds.
+* Fixed a bug causing an ambiguous shortcut warning dialog when using the
+  default ESC keyboard shortcut to invoke the Focus Input Box action after the
+  search has been opened and the Focus New Tabs option was disabled while a new
+  tab was opened.
+* Fixed a bug causing multiple ignore list entries with the same pattern not to
+  be preserved across application restarts. Instead only the latest entry with
+  the pattern would.
+* Fixed a bug causing the tab label for open log viewer tabs to be set to
+  "ChatWindowObject" when switching the tab bar position between top or bottom
+  and left.
+* Markup cleanups in the handbook and visual improvements to handbook icons in
+  the PDF export on http://doc.kde.org.
+* Code cleanups for warnings issued by clang.
+* Build system improvements for kdepimlibs includes handling.
 
 
 Changes since 1.4:
