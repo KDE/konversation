@@ -154,10 +154,9 @@ bool IRCQueue::doSend()
     bool p=!m_pending.isEmpty();
     if (p)
     {
-        // int plw = m_lastWait;
         QString s=pop();
-        //if (m_myIndex == 0)
-        //    KX << _S(plw) << _S(m_lastWait) << endl;
+        if (s.isEmpty())
+            return doSend(); //can't send empty strings, but no point in losing the timeslot
         m_server->toServer(s, this);
         m_startedAt.start();
     }
