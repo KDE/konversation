@@ -29,9 +29,15 @@ Changes since 1.4:
 * If built against KDE Platform v4.8.3 or higher, the date column in the Url
   Catcher will now immediately reflect changes to the date format made in KDE's
   System Settings application.
-* Improvements and fixes in the Paste Editor. Use QString methods instead of
-  QTextCursor to remove newlines. Disable showing line and paragraph
-  indicators because of QTBUG:24531.
+* Fixed a bug causing an application crash in response to an (illegal) '/unban
+  <#channel>' command.
+* Removing newlines in the Edit Paste dialog can now handle Windows-style
+  carriage return line breaks and whitespace characters other than ASCII 0x20.
+* Showing line and paragraph indicators in the Edit Paste dialog's text entry
+  field unfortunately had to be disabled for the time being due to a bug in
+  the underlying Qt code.
+* Leaving the "Use custom version reply" option's text field empty now disables
+  responding to CTCP VERSION requests entirely instead of sending empty responses.
 
 
 Changes from 1.4-beta1 to 1.4:
