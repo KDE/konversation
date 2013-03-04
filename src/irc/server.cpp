@@ -1575,6 +1575,8 @@ bool Server::queueList(const QStringList& buffer, QueuePriority priority)
 
 void Server::resetQueues()
 {
+    m_incomingTimer.stop();
+    m_inputBuffer.clear();
     for (int i=0; i <= Application::instance()->countOfQueues(); i++)
         m_queues[i]->reset();
 }
