@@ -1,4 +1,4 @@
-Changes not in the 1.4 branch:
+Changes since 1.4:
 * Performance optimizations and code cleanup for processing NAMES messages
   from the server.
 * The bundled 'media' script has been rewritten from scratch to implement the
@@ -217,9 +217,6 @@ Changes not in the 1.4 branch:
 * Build system improvements for kdepimlibs includes handling.
 * Made the code turning channel names into clickable links more strict about what
   types of trailing punctuation it incorporates into the link.
-
-
-Changes since 1.4:
 * Fixed bugs causing currently joined channels not to react correctly to changes
   in the enabled state of the Automatic User Information Lookup setting.
   Previously, enabling the lookup would not actually start it, and disabling it
