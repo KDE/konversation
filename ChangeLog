@@ -215,6 +215,8 @@ Changes not in the 1.4 branch:
   the PDF export on http://doc.kde.org.
 * Code cleanups for warnings issued by clang.
 * Build system improvements for kdepimlibs includes handling.
+* Made the code turning channel names into clickable links more strict about what
+  types of trailing punctuation it incorporates into the link.
 
 
 Changes since 1.4:
