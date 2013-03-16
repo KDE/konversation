@@ -256,6 +256,8 @@ Changes since 1.4:
   the underlying Qt code.
 * Leaving the "Use custom version reply" option's text field empty now disables
   responding to CTCP VERSION requests entirely instead of sending empty responses.
+* Fixed the vertical height of rows in the Channel Invites dialog possibly cutting
+  off the checkboxes depending on the checkbox and font sizes in play.
 
 
 Changes from 1.4-beta1 to 1.4:
