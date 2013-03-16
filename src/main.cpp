@@ -15,7 +15,6 @@
 
 #include "application.h"
 #include "version.h"
-#include "commit.h"
 
 #include <QWaitCondition>
 
@@ -35,10 +34,10 @@ int main(int argc, char* argv[])
     KAboutData aboutData("konversation",
         "",
         ki18n("Konversation"),
-        KONVI_VERSION " #" STRHACK(COMMIT),
+        KONVI_VERSION,
         ki18n("A user-friendly IRC client"),
         KAboutData::License_GPL,
-        ki18n("(C) 2002-2012 by the Konversation team"),
+        ki18n("(C) 2002-2013 by the Konversation team"),
         ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
         "http://konversation.kde.org/");
