@@ -1,52 +1,23 @@
-Changes since 1.4:
-* Performance optimizations and code cleanup for processing NAMES messages
-  from the server.
-* The bundled 'media' script has been rewritten from scratch to implement the
-  MPRIS2 standard for interfacing with media players - and only the MPRIS2
-  standard. This means losing support for a number of legacy players which do
-  not support MPRIS2, but also gaining support for a number of popular modern
-  players which do (e.g. Tomahawk). Additionally, there are often third-party
-  MPRIS2 bridges or plugins for players which do not support it natively. The
-  script now also features much-improved error handling and reporting in the
-  face of misbehaving players or configuration errors.
-* The bundled 'sayclip' script has been rewritten from scratch, removing the
-  now-redundant flood handling found in the old version (Konversation takes
-  care of this implicitly today) and improving the error handling in case
-  Klipper cannot be contacted.
-* The bundled 'bug' script has been rewritten from scratch, featuring improved
-  error handling and adding internationalization support.
-* The bundled 'sysinfo' script has been rewritten from scratch. The new version
-  offers more accurate CPU and KDE version information (accounting for multiple
-  cores and frequency scaling for the former, and making the difference between
-  running inside KDE or just using the KDE Platform for the latter), as well as
-  the addition of distro name and release information and generally improved
-  robustness in data acquisition. Finally, the output format is now easier to
-  configure, adopting an approach similar to the one used in the 'media' script.
-* All types of tabs which sport a prominent input widget will now see focus
-  moved to that widget and the first keypress redirected when focus is on the
-  treelist version of the tab bar while starting to type. In previous releases
-  this already worked for chat tabs with their usual input bars, now it also
-  works for e.g. Channel List tabs and Konsole tabs.
-* Performance improvements have been applied to hotpaths in the protocol
-  implementation.
-* A '/umode' convenience command to set modes on self has been added.
-* The 'Mode change' notification event now sports a proper text payload
-  describing what has happened.
-* The system tray icon now shows an overlay icon when global away is enabled.
-* The behavior of the 'Show/Hide Konversation' action has been simplified and
-  tuned to do the correct thing in more scenarios. Previously, invoking the
-  action would hide the window even if it was not actually visible due to
-  being covered by other windows, because merely not being hidden, not being
-  minimized and being on the current desktop was already considered being
-  shown. A much simpler approach of always showing the window if it is not the
-  currently active window (and, as before, moving it to the current desktop as
-  needed) and hiding it when it is has been adopted now instead.
-* A basic framework to support the IRC Client Capabilities Extension ("CAP") has
-  been added.
+Changes from 1.4 to 1.5-rc1:
+Konversation 1.5-rc1 is the first test release for our next major release. The
+1.5 development cycle has lead to significant new features in many areas of the
+application, from support for SASL and client certificate authentication on
+the protocol side, to all-new topic management UI, overhauled authentication
+UI, per-tab spell-checking language settings, user-configurable nick context
+menu entries and mouse spring-loading in the frontend and all-new versions of
+major bundled scripts. Improved Ignore, Watched Nicknames and Edit Paste
+functionality and behavior, performance improvements in some critical codepaths
+and many other bug fixes and minor UI touch-ups round things out.
+
+
 * The user interface for the Auto Identify settings in the Identities dialog has
   been extended by a combo box that allows choosing the type of authentification
   to be performed. Depending on the chosen type, different input fields are shown
   below the combo box.
+* The server password-based authentification supported by some networks is now
+  configurable in the Identities dialog as well, making it more discoverable and
+  allowing to keep Auto Identify settings generally with the Identity rather than
+  requiring going through the Edit Server dialog.
 * SASL PLAIN authentification is now supported. To use, pick SASL as the Auto
   Identify type in the Identities dialog and fill in your account name and
   password.
@@ -54,53 +25,13 @@ Changes since 1.4:
   to to the service, previously hard-coded to "identify", is now configurable,
   and the name of the service now defaults to "nickserv" in new identities
   (the previous default was an empty field).
-* The server password-based authentification supported by some networks is now
-  configurable in the Identities dialog as well, making it more discoverable and
-  allowing to keep Auto Identify settings generally with the Identity rather than
-  requiring going through the Edit Server dialog.
-* Added an option to restrict logging to private conversations (queries, DCC
-  chats).
-* Both the regular tab bar and its listview version now implement "spring-
-  loading". That is, when dragging something onto a tab and holding it there,
-  the hovered tab will now be switched to after a brief delay. This allows
-  switching to the intended tab as part of dragging text or a file to its
-  destination, e.g. the tab's input bar or nicklist.
 * Added support for authenticating via a SSL Client Certificate in the form of
   a PEM file if Konversation is built against KDE Platform v4.8.3 or higher.
   Choosing this type of authentication in the Identities dialog forces SSL to be
   enabled for a connection, overriding any server settings.
-* Konversation now depends on KDE Platform v4.6.0 or higher and Qt v4.7.0 or
-  higher.
-* Raw log tabs now use color coding to visually differenciate inbound and
-  outbound messages, using the server message and channel message colors from
-  the color settings respectively.
-* Queries now start with an info message listing the channels you and the other
-  side have in common, i.e. that both of you are presently in.
-* The DCC Status transfer list update interval now depends on the graphics effects
-  level setting in KDE System Settings, changing between 500, 1000 and 2000 ms
-  depending on the level set.
-* Fixed a bug causing the input box height not to be adjusted appropriately to
-  fit the contents when the "Input box expands with text" option is enabled and
-  the window is resized horizontally, causing the text to rewrap.
-* Fixed a bug causing the context menu for an item in the DCC Status transfer
-  list to appear in the wrong position.
-* The list of placeholders available in Quick Button patterns now mention the
-  previously undocumented "%k" placeholder for the current channel's key and is
-  sorted alphabetically.
-* When a Quick Button pattern replaces the current input box contents (due to
-  the presence of the "%n" expando in the pattern) they are now added to the
-  input box history first.
-* Quick Button patterns now support a new "%i" placeholder that is replaced with
-  the current contents of the input box.
-* The double-click action command for Watched Nicks list entries now supports
-  command aliases.
-* Fixed a bug causing wildcard expansion to be performed on the input box
-  contents when they start with a Command Alias (rather than just expanding
-  wildcards in the Alias replacement pattern).
-* The Quick Buttons options now feature a new checkbox that toggles whether Quick
-  Buttons that operate on nicknames will be shown alongside other nickname-
-  related actions in context menus throughout Konversation. Essentially, this
-  allows for placing custom actions in nickname context menus.
+* Added the ability to set a different spell-checking language for every tab,
+  from the context menu of the input box. The chosen language setting is pre-
+  served across application restarts.
 * The Topic tab in the Channel Options dialog has been redesigned and
   rewritten from scratch, featuring a much improved UI and many bug fixes:
   - In place of the previous UI with a multi-column topic history list and two
@@ -143,27 +74,104 @@ Changes since 1.4:
   - Fixed a bug causing the "Unknown" placeholder that is used when the author
     of a topic is unknown not to be translated.
   - Fixed the incorrect tab key order in the Topic tab.
+* Fixed a bug causing the topic at the top of channel tabs not to return to its
+  encrypted form after the decryption key for a channel has been deleted.
 * The size of the Channel Options dialog is now synchronized between the dialogs
   for different channels and remembered across application restarts.
 * The widths of the columns in the Ban List tab in the Channel Options dialog
   is now synchronized across all Channel Options dialogs.
-* Fixed a bug causing the topic at the top of channel tabs not to return to its
-  encrypted form after the decryption key for a channel has been deleted.
-* Debug builds of Konversation now understand a "--nui" command line argument to
-  disable the check for whether Konversation is already running, thus allowing
-  multiple instances of Konversation to be started. This is known to cause bugs
-  (e.g. for anything started by Konversation that relies on the D-Bus service
-  name of the running instance being org.kde.konversation: this means all
-  bundled scripts) and can wreak havoc with the config file - it's meant only
-  for use by developers / for debugging purposes.
+* The Quick Buttons options now feature a new checkbox that toggles whether Quick
+  Buttons that operate on nicknames will be shown alongside other nickname-
+  related actions in context menus throughout Konversation. Essentially, this
+  allows for placing custom actions in nickname context menus.
+* The list of placeholders available in Quick Button patterns now mention the
+  previously undocumented "%k" placeholder for the current channel's key and is
+  sorted alphabetically.
+* When a Quick Button pattern replaces the current input box contents (due to
+  the presence of the "%n" expando in the pattern) they are now added to the
+  input box history first.
+* Quick Button patterns now support a new "%i" placeholder that is replaced with
+  the current contents of the input box.
+* Both the regular tab bar and its listview version now implement "spring-
+  loading". That is, when dragging something onto a tab and holding it there,
+  the hovered tab will now be switched to after a brief delay. This allows
+  switching to the intended tab as part of dragging text or a file to its
+  destination, e.g. the tab's input bar or nicklist.
+* All types of tabs which sport a prominent input widget will now see focus
+  moved to that widget and the first keypress redirected when focus is on the
+  treelist version of the tab bar while starting to type. In previous releases
+  this already worked for chat tabs with their usual input bars, now it also
+  works for e.g. Channel List tabs and Konsole tabs.
+* A '/umode' convenience command to set modes on self has been added.
+* The 'Mode change' notification event now sports a proper text payload
+  describing what has happened.
+* The system tray icon now shows an overlay icon when global away is enabled.
+* The behavior of the 'Show/Hide Konversation' action has been simplified and
+  tuned to do the correct thing in more scenarios. Previously, invoking the
+  action would hide the window even if it was not actually visible due to
+  being covered by other windows, because merely not being hidden, not being
+  minimized and being on the current desktop was already considered being
+  shown. A much simpler approach of always showing the window if it is not the
+  currently active window (and, as before, moving it to the current desktop as
+  needed) and hiding it when it is has been adopted now instead.
+* Added an option to restrict logging to private conversations (queries, DCC
+  chats).
+* Added an action to manually apply the user-configured auto-replace rules to
+  the input box contents without sending the message, enabling user review
+  before doing so. The relative cursor position is preserved or the cursor is
+  moved to the end of an intersecting replacement insertion when auto-replace
+  is applied.
+* Server status tabs for networks listed in the Server List dialog now have a
+  "Connect at Startup" checkbox in their context menu, similar to the "Join on
+  Connect" checkbox in the context menu of channel tabs. Both set options also
+  available from the Server List.
+* Removing newlines in the Edit Paste dialog can now handle Windows-style
+  carriage return line breaks and whitespace characters other than ASCII 0x20.
 * Part and Quit messages now show the hostmask of the subject, consistent with
   Join messages.
+* The nickname list theme preview in the configuration dialog now uses the same
+  background color as the actual nickname lists.
+* Raw log tabs now use color coding to visually differenciate inbound and
+  outbound messages, using the server message and channel message colors from
+  the color settings respectively.
+* The DCC Status transfer list update interval now depends on the graphics effects
+  level setting in KDE System Settings, changing between 500, 1000 and 2000 ms
+  depending on the level set.
+* Fixed a bug causing the input box height not to be adjusted appropriately to
+  fit the contents when the "Input box expands with text" option is enabled and
+  the window is resized horizontally, causing the text to rewrap.
+* Fixed a bug causing the context menu for an item in the DCC Status transfer
+  list to appear in the wrong position.
+* The double-click action command for Watched Nicks list entries now supports
+  command aliases.
+* Fixed a bug causing wildcard expansion to be performed on the input box
+  contents when they start with a Command Alias (rather than just expanding
+  wildcards in the Alias replacement pattern).
+* The bundled 'media' script has been rewritten from scratch to implement the
+  MPRIS2 standard for interfacing with media players - and only the MPRIS2
+  standard. This means losing support for a number of legacy players which do
+  not support MPRIS2, but also gaining support for a number of popular modern
+  players which do (e.g. Tomahawk). Additionally, there are often third-party
+  MPRIS2 bridges or plugins for players which do not support it natively. The
+  script now also features much-improved error handling and reporting in the
+  face of misbehaving players or configuration errors.
+* The bundled 'sysinfo' script has been rewritten from scratch. The new version
+  offers more accurate CPU and KDE version information (accounting for multiple
+  cores and frequency scaling for the former, and making the difference between
+  running inside KDE or just using the KDE Platform for the latter), as well as
+  the addition of distro name and release information and generally improved
+  robustness in data acquisition. Finally, the output format is now easier to
+  configure, adopting an approach similar to the one used in the 'media' script.
+* The bundled 'sayclip' script has been rewritten from scratch, removing the
+  now-redundant flood handling found in the old version (Konversation takes
+  care of this implicitly today) and improving the error handling in case
+  Klipper cannot be contacted.
+* The bundled 'bug' script has been rewritten from scratch, featuring improved
+  error handling and adding internationalization support.
 * Fixed a bug causing the What's This help tooltip for nickname lists to show
   the regular user icon instead of the away icon as the away icon example.
 * The desktop notification for a completed incoming DCC file transfer now offers
   an action to open/run the received file.
-* The nickname list theme preview in the configuration dialog now uses the same
-  background color as the actual nickname lists.
 * Various fixed to tab stops and margins in the configuration dialog pages.
 * Minor UI fixes for the Queue Tuner (opened by /queuetuner), correcting icon
   use and button labels.
@@ -171,14 +179,6 @@ Changes since 1.4:
 * Fixed a bug causing the Watched Nicks to spam the active tab with repeated
   WHOIS requests for someone on the Watched Nicks List after opening a query
   tab to them while they were offline.
-* Added an action to manually apply the user-configured auto-replace rules to
-  the input box contents without sending the message, enabling user review
-  before doing so. The relative cursor position is preserved or the cursor is
-  moved to the end of an intersecting replacement insertion when auto-replace
-  is applied.
-* Added the ability to set a different spell-checking language for every tab,
-  from the context menu of the input box. The chosen language setting is pre-
-  served across application restarts.
 * Fixed several bugs in preserving per-tab encoding settings across application
   restarts.
 * Link opening now properly respects KDE's file type associating settings instead
@@ -194,10 +194,6 @@ Changes since 1.4:
 * The default behavior upon receiving a channel join invitation is now to ask
   the user, instead of silently accepting the invitation. The latter behavior
   accidentally snuck into 1.4 and is considered a bug.
-* Server status tabs for networks listed in the Server List dialog now have a
-  "Connect at Startup" checkbox in their context menu, similar to the "Join on
-  Connect" checkbox in the context menu of channel tabs. Both set options also
-  available from the Server List.
 * Added a workaround for behavior in the Phonon multimedia library that could
   lead to crashes on application quit when using custom highlight notification
   sounds.
@@ -211,10 +207,6 @@ Changes since 1.4:
 * Fixed a bug causing the tab label for open log viewer tabs to be set to
   "ChatWindowObject" when switching the tab bar position between top or bottom
   and left.
-* Markup cleanups in the handbook and visual improvements to handbook icons in
-  the PDF export on http://doc.kde.org.
-* Code cleanups for warnings issued by clang.
-* Build system improvements for kdepimlibs includes handling.
 * Made the code turning channel names into clickable links more strict about what
   types of trailing punctuation it incorporates into the link.
 * Fixed bugs causing currently joined channels not to react correctly to changes
@@ -243,14 +235,11 @@ Changes since 1.4:
 * Fixed a bug causing IRC formatting state not to be reset at the end of a topic
   when showing it in a channel's chat text display, potentially causing the rest
   of the line to be malformatted.
-* Fixed a compilation problem on 64bit Windows.
 * If built against KDE Platform v4.8.3 or higher, the date column in the Url
   Catcher will now immediately reflect changes to the date format made in KDE's
   System Settings application.
 * Fixed a bug causing an application crash in response to an (illegal) '/unban
   <#channel>' command.
-* Removing newlines in the Edit Paste dialog can now handle Windows-style
-  carriage return line breaks and whitespace characters other than ASCII 0x20.
 * Showing line and paragraph indicators in the Edit Paste dialog's text entry
   field unfortunately had to be disabled for the time being due to a bug in
   the underlying Qt code.
@@ -258,6 +247,26 @@ Changes since 1.4:
   responding to CTCP VERSION requests entirely instead of sending empty responses.
 * Fixed the vertical height of rows in the Channel Invites dialog possibly cutting
   off the checkboxes depending on the checkbox and font sizes in play.
+* A basic framework to support the IRC Client Capabilities Extension ("CAP") has
+  been added.
+* Performance optimizations and code cleanup for processing NAMES messages
+  from the server.
+* Performance improvements have been applied to hotpaths in the protocol
+  implementation.
+* Debug builds of Konversation now understand a "--nui" command line argument to
+  disable the check for whether Konversation is already running, thus allowing
+  multiple instances of Konversation to be started. This is known to cause bugs
+  (e.g. for anything started by Konversation that relies on the D-Bus service
+  name of the running instance being org.kde.konversation: this means all
+  bundled scripts) and can wreak havoc with the config file - it's meant only
+  for use by developers / for debugging purposes.
+* Markup cleanups in the handbook and visual improvements to handbook icons in
+  the PDF export on http://doc.kde.org.
+* Fixed a compilation problem on 64bit Windows.
+* Code cleanups for warnings issued by clang.
+* Build system improvements for kdepimlibs includes handling.
+* Konversation now depends on KDE Platform v4.6.0 or higher and Qt v4.7.0 or
+  higher.
 
 
 Changes from 1.4-beta1 to 1.4:
