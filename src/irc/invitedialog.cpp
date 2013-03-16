@@ -18,6 +18,7 @@
 
 #include "invitedialog.h"
 
+#include <KApplication>
 #include <KLocale>
 #include <KIcon>
 #include <KConfigGroup>
@@ -40,6 +41,7 @@ InviteDialog::InviteDialog(QWidget* parent)
     m_channelModel = new InviteChannelListModel(m_channelView);
     m_channelView->setModel(m_channelModel);
     m_channelView->setRootIsDecorated(false);
+    m_channelView->setUniformRowHeights(true);
 
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
@@ -49,6 +51,7 @@ InviteDialog::InviteDialog(QWidget* parent)
 void InviteDialog::addInvite(const QString& nickname, const QString& channel)
 {
     m_channelModel->addInvite(nickname, channel);
+    m_channelView->resizeColumnToContents(0);
 }
 
 void InviteDialog::slotOk()
@@ -146,6 +149,11 @@ QVariant InviteChannelListModel::data(const QModelIndex& index, int role) const
             default:
                 return QVariant();
         }
+    }
+    if(role == Qt::SizeHintRole)
+    {
+        return QSize(0, qMax(kapp->style()->sizeFromContents(QStyle::CT_CheckBox, 0, QSize(0, 0), 0).height(),
+                             kapp->fontMetrics().height()));
     }
     else if(Qt::CheckStateRole && index.column() == 0)
     {
