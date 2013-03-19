@@ -1,3 +1,9 @@
+Changes since 1.5-rc1:
+* Fixed a bug that could cause the Watched Nicks system to report all nicknames
+  as offline if the Watched Nicks tab had been opened prior to a reconnect, even
+  if that was not the case.
+
+
 Changes from 1.4 to 1.5-rc1:
 Konversation 1.5-rc1 is the first test release for our next major release. The
 1.5 development cycle has lead to significant new features in many areas of the
