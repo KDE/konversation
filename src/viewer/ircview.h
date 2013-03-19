@@ -266,7 +266,7 @@ class IRCView : public KTextBrowser
         /// This way we avoid pointless empty tags after the url like "<b></b>"
         /// The returned string consists of all codes that this function could not deal with,
         /// which is the best case empty.
-        QString removeDuplicateCodes(const QString& codes, TextHtmlData* data);
+        QString removeDuplicateCodes(const QString& codes, TextHtmlData* data, bool allowColors);
 
         /// Helperfunction for removeDuplicateCodes, for dealing with simple irc richtext
         /// chars as bold, italic, underline and strikethrou.
