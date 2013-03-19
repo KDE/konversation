@@ -321,7 +321,6 @@ class Server : public QObject
          * Returns a lower case list of all the nicks on the user watch list plus nicks in the addressbook.
          */
         QStringList getWatchList();
-        QString getWatchListString();
         /**
          * Return true if the given nickname is on the watch list.
          */

@@ -3026,8 +3026,6 @@ QStringList Server::getWatchList()
         return QStringList();
 }
 
-QString Server::getWatchListString() { return getWatchList().join(" "); }
-
 QStringList Server::getISONList()
 {
     // no nickinfo ISON for the time being
