@@ -1209,7 +1209,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
 
                 QString closeTagsString(closeTags(&data));
                 QString colorCodes = extractColorCodes(oldUrl);
-                colorCodes = removeDuplicateCodes(colorCodes, &data);
+                colorCodes = removeDuplicateCodes(colorCodes, &data, allowColors);
 
                 QString link("%1<a href=\"%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
 
@@ -1656,7 +1656,7 @@ QString IRCView::spanColorOpenTag(const QString& bgColor)
     return QLatin1String("<span style=\"background-color:") + bgColor + QLatin1String("\">");
 }
 
-QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
+QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, bool allowColors)
 {
     int pos = 0;
     QString ret;
@@ -1690,6 +1690,12 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
                 break;
 
             case '\x16': //reverse
+                if (!allowColors)
+                {
+                    pos += 1;
+                    continue;
+                }
+
                 if (data->reverse)
                 {
                     data->openHtmlTags.removeOne(QLatin1String("span"));
@@ -1719,6 +1725,12 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data)
                     QString fgColor, bgColor;
                     bool fgOK = true, bgOK = true;
                     QString colorMatch(getColors(codes, pos, fgColor, bgColor, &fgOK, &bgOK));
+
+                    if (!allowColors)
+                    {
+                        pos += colorMatch.length();
+                        continue;
+                    }
 
                     // check for color reset conditions
                     //TODO check if \x11 \017 is really valid here
