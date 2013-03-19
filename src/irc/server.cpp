@@ -677,6 +677,7 @@ void Server::broken(KTcpSocket::Error error)
 
     emit resetLag(this);
     emit nicksNowOnline(this, QStringList(), true);
+    m_prevISONList.clear();
 
     updateAutoJoin();
 

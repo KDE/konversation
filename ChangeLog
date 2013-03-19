@@ -40,6 +40,9 @@ Changes since 1.4:
   responding to CTCP VERSION requests entirely instead of sending empty responses.
 * Fixed the vertical height of rows in the Channel Invites dialog possibly cutting
   off the checkboxes depending on the checkbox and font sizes in play.
+* Fixed a bug that could cause the Watched Nicks system to report all nicknames
+  as offline if the Watched Nicks tab had been opened prior to a reconnect, even
+  if that was not the case.
 
 
 Changes from 1.4-beta1 to 1.4:
