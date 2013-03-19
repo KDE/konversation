@@ -318,7 +318,7 @@ class Server : public QObject
         const QList<Channel *>& getChannelList() const { return m_channelList; }
 
         /**
-         * Returns a list of all the nicks on the user watch list plus nicks in the addressbook.
+         * Returns a lower case list of all the nicks on the user watch list plus nicks in the addressbook.
          */
         QStringList getWatchList();
         QString getWatchListString();
