@@ -1666,12 +1666,8 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
     ChannelNickPtr channelNick = getChannelNick(channelName, lcNickname);
     if (!channelNick)
     {
-        // Get watch list from preferences.
-        QString watchlist=getWatchListString();
-        // Create a lower case nick list from the watch list.
-        QStringList watchLowerList = watchlist.toLower().split(' ', QString::SkipEmptyParts);
-        // If on the watch list, add channel and nick to unjoinedChannels list.
-        if (watchLowerList.contains(lcNickname))
+        // If the nick is on the watch list, add channel and nick to unjoinedChannels list.
+        if (getWatchList().contains(lcNickname, Qt::CaseInsensitive))
         {
             channelNick = addNickToUnjoinedChannelsList(channelName, nickname);
             channelNick->setMode(mode);
