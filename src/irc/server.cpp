@@ -230,6 +230,9 @@ void Server::purgeData()
     m_unjoinedChannels.clear();
 
     m_queryNicks.clear();
+    delete m_serverISON;
+    m_serverISON = 0;
+
 }
 
 //... so called to match the ChatWindow derivatives.
@@ -805,6 +808,7 @@ void Server::connectionEstablished(const QString& ownHost)
 
     // Make a helper object to build ISON (notify) list and map offline nicks to addressbook.
     // TODO: Give the object a kick to get it started?
+    Q_ASSERT(m_serverISON == 0);
     m_serverISON = new ServerISON(this);
     // get first notify very early
     startNotifyTimer(1000);
