@@ -269,7 +269,7 @@ void Server::doPreShellCommand()
     else
     {
         // FIXME add i18n, and in preShellCommandExited and preShellCommandError
-        getStatusView()->appendServerMessage(i18n("Info"), "Running pre-connect shell command...");
+        getStatusView()->appendServerMessage(i18n("Info"), i18nc("The command mentioned is executed in a shell prior to connecting.", "Running pre-connect shell command..."));
 
         connect(&m_preShellCommand, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(preShellCommandExited(int,QProcess::ExitStatus)));
         connect(&m_preShellCommand, SIGNAL(error(QProcess::ProcessError)), SLOT(preShellCommandError(QProcess::ProcessError)));
@@ -415,10 +415,10 @@ void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus
 {
     Q_UNUSED(exitCode);
     if (exitStatus == QProcess::NormalExit)
-        getStatusView()->appendServerMessage(i18n("Info"),"Process executed successfully!");
+        getStatusView()->appendServerMessage(i18n("Info"), i18n("Pre-shell command executed successfully!"));
     else
     {
-        QString errorText = QLatin1String("There was a problem while executing the command: ") % m_preShellCommand.errorString();
+        QString errorText = i18nc("An error message from KDE or Qt is appended.", "There was a problem while executing the command: ") % m_preShellCommand.errorString();
         getStatusView()->appendServerMessage(i18n("Warning"), errorText);
     }
 
@@ -430,7 +430,7 @@ void Server::preShellCommandError(QProcess::ProcessError error)
 {
     Q_UNUSED(error);
 
-    QString errorText = QLatin1String("There was a problem while executing the command: ") % m_preShellCommand.errorString();
+    QString errorText = i18nc("An error message from KDE or Qt is appended.", "There was a problem while executing the command: ") % m_preShellCommand.errorString();
     getStatusView()->appendServerMessage(i18n("Warning"), errorText);
 
     connectToIRCServer();
