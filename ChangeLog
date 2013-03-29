@@ -45,6 +45,8 @@ Changes since 1.4:
   if that was not the case.
 * Fixed a bug where a URL with IRC Color markups caused to show colors, even if
   'Allow Colored Text in IRC Messages' was disabled.
+* Fixed a bug where spaces in the path to the pre-connect shell command were
+  handled incorrectly. Tilde expansion now occurs as well.
 
 
 Changes from 1.4-beta1 to 1.4:

@@ -41,9 +41,11 @@
 
 #include <QTextCodec>
 #include <QStringListModel>
+#include <QStringBuilder>
 
 #include <KInputDialog>
 #include <KWindowSystem>
+#include <KShell>
 
 #include <solid/networking.h>
 
@@ -252,19 +254,28 @@ void Server::cycle()
 
 void Server::doPreShellCommand()
 {
-    QString command = getIdentity()->getShellCommand();
-    getStatusView()->appendServerMessage(i18n("Info"),"Running preconfigured command...");
+    KShell::Errors e;
+    QStringList command = KShell::splitArgs(getIdentity()->getShellCommand(), KShell::TildeExpand, &e);
+    if (e != KShell::NoError)
+    {
+        //FIXME The flow needs to be refactored, add a finally-like method that does the ready-to-connect stuff
+        // "The pre-connect shell command could not be understood!");
+        preShellCommandExited(m_preShellCommand.exitCode(), m_preShellCommand.exitStatus());
+    }
+    else
+    {
+        // FIXME add i18n, and in preShellCommandExited and preShellCommandError
+        getStatusView()->appendServerMessage(i18n("Info"), "Running pre-connect shell command...");
 
-    connect(&m_preShellCommand,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(preShellCommandExited(int,QProcess::ExitStatus)));
-    connect(&m_preShellCommand,SIGNAL(error(QProcess::ProcessError)), this, SLOT(preShellCommandError(QProcess::ProcessError)));
+        connect(&m_preShellCommand, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(preShellCommandExited(int,QProcess::ExitStatus)));
+        connect(&m_preShellCommand, SIGNAL(error(QProcess::ProcessError)), SLOT(preShellCommandError(QProcess::ProcessError)));
 
-    const QStringList commandList = command.split(' ');
-
-    for (QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it)
-        m_preShellCommand << *it;
-
-    m_preShellCommand.start();
-    if (m_preShellCommand.state() == QProcess::NotRunning) preShellCommandExited(m_preShellCommand.exitCode(), m_preShellCommand.exitStatus());
+        m_preShellCommand.setProgram(command);
+        m_preShellCommand.start();
+        // NOTE: isConnecting is tested in connectToIRCServer so there's no guard here
+        if (m_preShellCommand.state() == QProcess::NotRunning)
+            preShellCommandExited(m_preShellCommand.exitCode(), m_preShellCommand.exitStatus());
+    }
 }
 
 void Server::initTimers()
@@ -401,7 +412,10 @@ void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus
     if (exitStatus == QProcess::NormalExit)
         getStatusView()->appendServerMessage(i18n("Info"),"Process executed successfully!");
     else
-        getStatusView()->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");
+    {
+        QString errorText = QLatin1String("There was a problem while executing the command: ") % m_preShellCommand.errorString();
+        getStatusView()->appendServerMessage(i18n("Warning"), errorText);
+    }
 
     connectToIRCServer();
     connectSignals();
@@ -411,7 +425,8 @@ void Server::preShellCommandError(QProcess::ProcessError error)
 {
     Q_UNUSED(error);
 
-    getStatusView()->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");
+    QString errorText = QLatin1String("There was a problem while executing the command: ") % m_preShellCommand.errorString();
+    getStatusView()->appendServerMessage(i18n("Warning"), errorText);
 
     connectToIRCServer();
     connectSignals();
@@ -419,7 +434,7 @@ void Server::preShellCommandError(QProcess::ProcessError error)
 
 void Server::connectToIRCServer()
 {
-    if (!isConnected())
+    if (!isConnected() && !isConnecting())
     {
         if (m_sslErrorLock)
         {
@@ -484,7 +499,7 @@ void Server::connectToIRCServer()
         m_inputFilter.reset();
     }
     else
-        kDebug() << "connectToIRCServer() called while already connected: This should never happen.";
+        kDebug() << "connectToIRCServer() called while already connected: This should never happen. (" << (isConnecting() << 1) + isConnected() << ')';
 }
 
 void Server::connectToIRCServerIn(uint delay)
