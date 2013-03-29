@@ -37,13 +37,12 @@ class ServerISON : public QObject
     public:
         explicit ServerISON(Server* server);
         /**
-         * Returns a list of nicks that we want to know whether they are online
-         * of offline.
+         * Returns a lower case list of nicks whose online status is being tracked
          *
          * Calls getAddressees() and merges with the Watch List from preferences.
          * The resulting nicks don't have the servername/servergroup attached.
          *
-         * @returns              A list of nicks that we want to know if they are on or not.
+         * @returns              a lower case list of nicks whose online status is being tracked
          *
          * @see getAddressees()
          */
