@@ -2046,9 +2046,7 @@ void IRCView::openLink(const QUrl& url)
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
     {
-        QString channel(link);
-        channel.replace("##", "#");
-        m_server->sendJoinCommand(channel);
+        m_server->sendJoinCommand(link.mid(1));
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith('#') && m_server && m_server->isConnected())
