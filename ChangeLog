@@ -6,6 +6,9 @@ Changes since 1.5-rc1:
   'Allow Colored Text in IRC Messages' was disabled.
 * Fixed a bug where spaces in the path to the pre-connect shell command were
   handled incorrectly. Tilde expansion now occurs as well.
+* Clicking a channel link starting with more than one # character would join a
+  channel starting with one # too few; this has been fixed.
+
 
 Changes from 1.4 to 1.5-rc1:
 Konversation 1.5-rc1 is the first test release for our next major release. The
