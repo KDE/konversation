@@ -1082,6 +1082,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         setActive(true);
 
         // Prepare for impending NAMES.
+        purgeNicks();
         nicknameListView->setUpdatesEnabled(false);
 
         ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
