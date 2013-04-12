@@ -920,8 +920,9 @@ void Server::connectionEstablished(const QString& ownHost)
 
     // Make a helper object to build ISON (notify) list and map offline nicks to addressbook.
     // TODO: Give the object a kick to get it started?
-    Q_ASSERT(m_serverISON == 0);
+    delete m_serverISON;
     m_serverISON = new ServerISON(this);
+
     // get first notify very early
     startNotifyTimer(1000);
 
