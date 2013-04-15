@@ -2093,6 +2093,10 @@ void ViewContainer::doAutoReplace()
     if (!m_frontView)
         return;
 
+    // Check for active window in case action was triggered from a modal dialog, like the Paste Editor
+    if (!m_window->isActiveWindow())
+        return;
+
     if (m_frontView->getInputBar())
         m_frontView->getInputBar()->doInlineAutoreplace();
 }

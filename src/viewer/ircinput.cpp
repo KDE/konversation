@@ -630,18 +630,7 @@ void IRCInput::setLastCompletion(const QString& completion)
 
 void IRCInput::doInlineAutoreplace()
 {
-    QTextCursor cursor(document());
-
-    cursor.beginEditBlock();
-
-    const QPair<QString, int>& rep = Application::instance()->doAutoreplace(toPlainText(), true, textCursor().position());
-    cursor.select(QTextCursor::Document);
-    cursor.insertText(rep.first);
-    cursor.setPosition(rep.second);
-
-    cursor.endEditBlock();
-
-    setTextCursor(cursor);
+    Application::instance()->doInlineAutoreplace(this);
 }
 
 // Accessor methods

@@ -39,6 +39,7 @@
 #include <QWaitCondition>
 #include <QStandardItemModel>
 #include <QFileInfo>
+#include <QTextCursor>
 
 #include <KRun>
 #include <KCmdLineArgs>
@@ -48,6 +49,7 @@
 #include <KCharMacroExpander>
 #include <kwallet.h>
 #include <solid/networking.h>
+#include <KTextEdit>
 
 
 using namespace Konversation;
@@ -1230,6 +1232,21 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
 
     return QPair<QString, int>(line, cursorPos);
 }
+
+void Application::doInlineAutoreplace(KTextEdit* textEdit)
+{
+    QTextCursor cursor(textEdit->document());
+
+    cursor.beginEditBlock();
+    const QPair<QString, int>& replace = Application::instance()->doAutoreplace(textEdit->toPlainText(), true, textEdit->textCursor().position());
+    cursor.select(QTextCursor::Document);
+    cursor.insertText(replace.first);
+    cursor.setPosition(replace.second);
+    cursor.endEditBlock();
+
+    textEdit->setTextCursor(cursor);
+}
+
 
 void Application::openUrl(const QString& url)
 {
