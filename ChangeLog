@@ -49,6 +49,8 @@ Changes since 1.4:
   handled incorrectly. Tilde expansion now occurs as well.
 * Clicking a channel link starting with more than one # character would join a
   channel starting with one # too few; this has been fixed.
+* Fixed auto-replace not being applied to messages that are sent from the
+  Large Paste Warning dialog.
 
 
 Changes from 1.4-beta1 to 1.4:

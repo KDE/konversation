@@ -459,6 +459,8 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
             // ask the user on long pastes
             if(checkPaste(pasteText))
             {
+              pasteText = Application::instance()->doAutoreplace(pasteText, true);
+
               Konversation::sterilizeUnicode(pasteText);
               // signal pasted text
               emit textPasted(pasteText);
