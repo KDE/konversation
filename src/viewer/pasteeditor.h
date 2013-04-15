@@ -20,6 +20,8 @@
 
 #include <KDialog>
 
+class QAction;
+
 class PasteEditor : public KDialog, private Ui::PasteEditor
 {
     Q_OBJECT
@@ -35,6 +37,13 @@ class PasteEditor : public KDialog, private Ui::PasteEditor
     protected slots:
         void addQuotationIndicators();
         void removeNewlines();
+
+    private slots:
+        void doInlineAutoreplace();
+
+    private:
+        bool m_autoReplaceActionWasEnabled;
+        QAction* m_autoReplaceAction;
 };
 
 #endif //KONVERSATION_PASTEEDITOR_H

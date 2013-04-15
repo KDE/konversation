@@ -15,16 +15,19 @@
 
 #include "pasteeditor.h"
 #include "preferences.h"
+#include "application.h"
 
 #include <KPushButton>
 #include <KLocale>
+#include <KActionCollection>
 
 #include <QTextCursor>
 #include <QTextOption>
 #include <QPointer>
+#include <QAction>
 
 PasteEditor::PasteEditor(QWidget* parent)
-    : KDialog(parent), Ui::PasteEditor()
+    : KDialog(parent), Ui::PasteEditor(), m_autoReplaceActionWasEnabled(true), m_autoReplaceAction(0)
 {
     setCaption(i18n("Edit Multiline Paste"));
     setModal(true);
@@ -42,6 +45,17 @@ PasteEditor::PasteEditor(QWidget* parent)
     m_textEditor->document()->setDefaultTextOption(options);
     m_textEditor->setFocus();
 
+    // Get auto_replace action, check enabled state and make the connection
+    m_autoReplaceAction = Application::instance()->getMainWindow()->actionCollection()->action("auto_replace");
+    if (m_autoReplaceAction)
+    {
+        // Store action's original enabled state in ViewContainer
+        m_autoReplaceActionWasEnabled = m_autoReplaceAction->isEnabled();
+        m_autoReplaceAction->setEnabled(true);
+        addAction(m_autoReplaceAction);
+        connect(m_autoReplaceAction, SIGNAL(triggered(bool)), this, SLOT(doInlineAutoreplace()));
+    }
+
     connect(m_removeNewlinesButton, SIGNAL(clicked()), this, SLOT(removeNewlines()));
     connect(m_addQuotesButton, SIGNAL(clicked()), this, SLOT(addQuotationIndicators()));
 
@@ -51,6 +65,9 @@ PasteEditor::PasteEditor(QWidget* parent)
 PasteEditor::~PasteEditor()
 {
     Preferences::self()->setMultilineEditSize(size());
+    // Restore action's original state in ViewContainer
+    if (m_autoReplaceAction)
+        m_autoReplaceAction->setEnabled(m_autoReplaceActionWasEnabled);
 }
 
 void PasteEditor::addQuotationIndicators()
@@ -119,6 +136,11 @@ QString PasteEditor::edit(QWidget* parent, const QString& text)
     }
     delete dialog;
     return QString();
+}
+
+void PasteEditor::doInlineAutoreplace()
+{
+    Application::instance()->doInlineAutoreplace(m_textEditor);
 }
 
 #include "pasteeditor.moc"

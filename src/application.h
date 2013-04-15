@@ -34,6 +34,8 @@ class Images;
 class ServerGroupSettings;
 class QStandardItemModel;
 
+class KTextEdit;
+
 namespace Konversation
 {
     class DBus;
@@ -116,6 +118,9 @@ class Application : public KUniqueApplication
 
         // auto replacement for input or output lines
         QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1);
+
+        // inline auto replacement for input lines
+        void doInlineAutoreplace(KTextEdit* textEdit);
 
         int newInstance();
 
