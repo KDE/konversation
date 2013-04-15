@@ -1077,13 +1077,14 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         if (displayCommandMessage)
             appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 = our hostmask, %2 = channel",
                                  "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), false, true);
-        m_ownChannelNick = channelNick;
-        refreshModeButtons();
-        setActive(true);
 
         // Prepare for impending NAMES.
         purgeNicks();
         nicknameListView->setUpdatesEnabled(false);
+
+        m_ownChannelNick = channelNick;
+        refreshModeButtons();
+        setActive(true);
 
         ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
 
