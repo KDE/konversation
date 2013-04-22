@@ -263,9 +263,9 @@ void IRCView::dropEvent(QDropEvent* e)
 #define _S(x) #x << (x)
 
 #if KDE_IS_VERSION(4,6,0)
-#       define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16))))
+#       define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((quintptr)this, 16))))
 #else
-#       define DebugBanner kDebug() << "Entering context:" << qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((ulong)this, 16)));
+#       define DebugBanner kDebug() << "Entering context:" << qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((quintptr)this, 16)));
 #endif
 
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
