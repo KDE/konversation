@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=konversation -caption "%c" %u
+Exec=konversation -caption %c %u
 Icon=konversation
 X-DocPath=konversation/index.html
 MimeType=x-scheme-handler/irc;x-scheme-handler/ircs;
