@@ -245,6 +245,13 @@ namespace Konversation
             maxPixels -= fontMetrics().width("...");
             int len, delta;
 
+            // On some MacOS system, maxWidth may return 0
+            if (em == 0) {
+                foreach (const QChar &c, text) {
+                    em = qMax(em, fontMetrics().width(c));
+                }
+            }
+
             while((tw > maxPixels) && !tmp.isEmpty())
             {
                 len = tmp.length();
