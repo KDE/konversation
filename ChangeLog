@@ -12,6 +12,15 @@ Changes since 1.5-rc1:
   Large Paste Warning dialog.
 * Made the action to manually apply Auto Replace work in the Paste Editor
   as well.
+* Fixed irc(s):// URL support registration in KDE 4.9.3+ (kdelibs versions 4.9.3
+  and higher give precedence to .desktop file x-scheme-handler MIME type regis-
+  tration over .protocol files installed by an app, but Konversation did not
+  announce URL support via an %u expando in the Exec key).
+* Build fix for win32.
+* Added a workaround for a rare crash on Mac OS X due to bugs in the implementa-
+  tion of Qt's font metrics calculation on that platform.
+* Fixed a bug causing changes of the 'a' user mode to set/remove Owner status on
+  nickname list entries.
 
 
 Changes from 1.4 to 1.5-rc1:
