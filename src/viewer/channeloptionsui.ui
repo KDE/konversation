@@ -12,11 +12,20 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
-    <height>336</height>
+    <width>437</width>
+    <height>342</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="KTabWidget" name="channelTabWidget">
      <property name="currentIndex">
@@ -61,7 +70,7 @@ the Free Software Foundation; either version 2 of the License, or
             </layout>
            </item>
            <item>
-            <widget class="TopicHistoryView" name="topicHistoryView">
+            <widget class="TopicHistoryView" name="topicHistoryView" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -376,14 +385,14 @@ the Free Software Foundation; either version 2 of the License, or
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>TopicView</class>
-   <extends>QListView</extends>
-   <header>topichistoryview.h</header>
-  </customwidget>
-  <customwidget>
    <class>TopicEdit</class>
    <extends>QTextEdit</extends>
    <header>topicedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TopicHistoryView</class>
+   <extends>QWidget</extends>
+   <header>topichistoryview.h</header>
   </customwidget>
  </customwidgets>
  <includes>
@@ -392,7 +401,7 @@ the Free Software Foundation; either version 2 of the License, or
   <include location="local">klineedit.h</include>
   <include location="local">topicedit.h</include>
   <include location="local">topichistoryview.h</include>
-  </includes>
+ </includes>
  <resources/>
  <connections>
   <connection>
