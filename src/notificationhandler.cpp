@@ -311,7 +311,7 @@ namespace Konversation
 
     void NotificationHandler::nickOnline(ChatWindow* chatWin, const QString& nick)
     {
-        if (!chatWin || !chatWin->notificationsEnabled())
+        if (!chatWin)
             return;
 
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
@@ -325,7 +325,7 @@ namespace Konversation
 
     void NotificationHandler::nickOffline(ChatWindow* chatWin, const QString& nick)
     {
-        if (!chatWin || !chatWin->notificationsEnabled())
+        if (!chatWin)
             return;
 
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())

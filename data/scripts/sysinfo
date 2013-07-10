@@ -124,9 +124,9 @@ class kde(Sensor):
 class distro(Sensor):
     def gather(self):
         if os.path.exists('/etc/os-release'):
-            with open('/etc/os-release', 'r') as osrelease:
+            with open('/etc/os-release', 'rb') as osrelease:
                 for line in osrelease:
-                    key, value = line.split('=', 1)
+                    key, value = line.decode('utf-8', 'replace').split('=', 1)
                     if key == 'NAME':
                         self.data['name'] = value.strip(string.whitespace + '"')
                     elif key == 'VERSION':
