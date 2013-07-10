@@ -21,6 +21,18 @@ Changes since 1.5-rc1:
   tion of Qt's font metrics calculation on that platform.
 * Fixed a bug causing changes of the 'a' user mode to set/remove Owner status on
   nickname list entries.
+* Minor UI cleanup in the Channel Settings dialog.
+* Enabled freedesktop.org Startup Notification support.
+* Recent releases of Konversation filtered all Unicode characters outside the
+  Basic Multilingual Plane due to a confluence of grave bugs in the Utf-8
+  support in Qt. As fixed versions of Qt have now circulated for some time and
+  are required to build Konversation, this restriction on Unicode support has
+  now been lifted.
+* Fixed a bug that caused the desktop notification (KNotify) event for nicks
+  on the Watched Nicknames list coming online or dropping offline not to fire
+  when notifications for the associated connection's status tab were disabled.
+* Fixed the bundled 'sysinfo' script crashing on non-ascii characters in
+  /etc/os-release when run on Python 2.
 
 
 Changes from 1.4 to 1.5-rc1:
