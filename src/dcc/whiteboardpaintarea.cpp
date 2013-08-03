@@ -547,7 +547,9 @@ namespace Konversation
                 case WhiteBoardGlobals::ColorPicker:
                     {
                         QImage image = m_imagePixmap->toImage();
-                        emit colorPicked(QColor(image.pixel(event->pos().x(), event->pos().y())));
+                        QColor fgColor(image.pixel(event->pos().x(), event->pos().y()));
+                        m_foregroundColor = fgColor;
+                        emit colorPicked(fgColor);
                     }
                     break;
                 case WhiteBoardGlobals::Stamp:
