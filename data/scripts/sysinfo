@@ -157,6 +157,8 @@ class cpu(Sensor):
     def gather(self):
         curfreqs = set()
 
+        self.data['model'] = 'Unknown model'
+
         with open('/proc/cpuinfo', 'r') as cpuinfo:
             for line in (line for line in cpuinfo if len(line.strip()) > 1):
                 key, value = line.split(':', 1)
@@ -166,9 +168,15 @@ class cpu(Sensor):
                     curfreqs.add(int(float(value.strip())))
 
         if not curfreqs:
-            self.data['model'] = 'Unknown model'
-            self.data['mhz'] = 'unknown'
-            return
+            try:
+                dir = '/sys/devices/system/cpu/'
+
+                for cpu in (cpu for cpu in os.listdir(dir) if re.match('cpu[0-9]+', cpu)):
+                    with open(os.path.join(dir, cpu, 'cpufreq/scaling_cur_freq'), 'r') as curfreqf:
+                        curfreqs.add(int(curfreqf.read())/1000)
+            except IOError:
+                self.data['mhz'] = 'unknown'
+                return
 
         curfreqs = sorted(curfreqs)
 
