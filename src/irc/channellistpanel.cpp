@@ -282,9 +282,9 @@ void ChannelListPanel::updateFilter()
 
     bool change = false;
 
-    //this invalidates the filter on it's own so no need to set change=true;
     if (m_proxyModel->filterRegExp().pattern() != text || regexChanged)
     {
+        change = true;
         if(m_regexState)
             m_proxyModel->setFilterRegExp(text);
         else
