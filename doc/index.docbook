@@ -171,7 +171,7 @@ revision history. (see installation appendix comment) -->
 <itemizedlist>
 <listitem><para>SSL support.</para></listitem>
 <listitem><para>User-friendly tabbed interface.</para></listitem>
-<listitem><para>Customizable Quick Buttons for often-used commands</para></listitem>
+<listitem><para>Customizable Quick Buttons for often-used commands.</para></listitem>
 <listitem><para>Automatic reconnect and rejoin.</para></listitem>
 <listitem><para>DCC send and receive.</para></listitem>
 <listitem><para>&Nickname; watch list.</para></listitem>
@@ -194,7 +194,7 @@ regular expression pattern.</para></listitem>
 <para>The &konversation; website is
 <ulink url="&konviwebsite;">&konviwebsite;</ulink>.
 Further information like a FAQ and tips and tricks you find in the 
-<ulink url="http://konversation.kde.org/wiki/Main_Page">&konversation; Wiki</ulink>
+<ulink url="http://konversation.kde.org/wiki/Main_Page">&konversation; Wiki</ulink>.
 </para>
 
 <para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://chat.freenode.net/konversation">irc.freenode.net channel #konversation</ulink>.
@@ -374,11 +374,11 @@ the Input Line.  (The <userinput>#</userinput> is required.) You may also type <
 <para>
 <calloutlist>
 <callout arearefs="pt-identity-gen-1"><para>Click here to select an <guilabel>Identity</guilabel> to edit.</para></callout>
-<callout arearefs="pt-identity-gen-2"><para>Use these buttons to add,
-duplicate, rename, or remove an <guilabel>Identity</guilabel>.</para></callout>
+<callout arearefs="pt-identity-gen-2"><para>Use these buttons to <guibutton>Add</guibutton>,
+<guibutton>Duplicate</guibutton>, <guibutton>Rename</guibutton>, or <guibutton>Remove</guibutton> an <guilabel>Identity</guilabel>.</para></callout>
 <callout arearefs="pt-identity-gen-3"><para>Enter your real name here.  &irc; is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake "real name" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous.</para></callout>
 <callout arearefs="pt-identity-gen-4"><para>Use these buttons to
-<guibutton>Add</guibutton> or <guilabel>Remove</guilabel> a &nickname;.</para></callout>
+<guibutton>Add</guibutton> or <guibutton>Remove</guibutton> a &nickname;.</para></callout>
 <callout arearefs="pt-identity-gen-5"><para>This is your list of &nickname;s.
 A &nickname; is the name that other users will know you by.
 You may use any name you desire.  The first character must be a letter.  Other characters may be letters, numbers, or the special characters <literal>-[]\`_^{}|</literal>.</para>
@@ -390,7 +390,7 @@ You may use any name you desire.  The first character must be a letter.  Other c
 According to RFC 2812, the maximum &nickname; length is 9, but
 this is actually determined by the server.  To determine the maximum for a server, connect to the server.  In the
 <interface>Server Messages</interface> tab, look for a <computeroutput>[Support]</computeroutput> message.
-For example</para>
+For example:</para>
 
 <para>
 <computeroutput>
@@ -595,8 +595,8 @@ and the <guilabel>Channels</guilabel> automatically joined when connected.
 If you have specified a group for your networks, networks are listed
 indented under the group.  Click on a network to select it.
 </para></callout>
-<callout arearefs="pt-serverlist-2"><para>Use these buttons to add a 
-<guibutton>New</guibutton> network, <guibutton>Edit</guibutton>
+<callout arearefs="pt-serverlist-2"><para>Use these buttons to <guibutton>Add</guibutton> a
+new network, <guibutton>Edit</guibutton>
 a highlighted network, or <guibutton>Delete</guibutton> a highlighted network.
 </para></callout>
 <callout arearefs="pt-serverlist-3"><para>Click this button to connect
@@ -698,7 +698,7 @@ correctly.</para>
 
 <anchor id="serverlist-addserver" />
 
-<para>When you click the <guibutton>Add</guibutton> button in the <guilabel>Servers</guilabel> frame, the Add Server screen appears.</para>
+<para>When you click the <guibutton>Add</guibutton> button in the <guilabel>Servers</guilabel> frame, the <guilabel>Add Server</guilabel> screen appears.</para>
 
 <para>
 <screenshot>
@@ -941,7 +941,7 @@ Channel
 <listitem>
 <para><inlinemediaobject><imageobject><imagedata fileref="led_blue_on.png" format="PNG"  /></imageobject></inlinemediaobject>
 <interface>Server Messages</interface>, <link linkend="list-channels">Channel List</link>, or
-<link linkend="urlcatcher">&URL; catcher</link>
+<link linkend="urlcatcher">&URL; catcher</link>.
 </para>
 </listitem>
 <listitem>
@@ -964,7 +964,7 @@ Channel
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
-click on <guilabel>Chat Window</guilabel>, and uncheck <guilabel>Show box to change own nickname</guilabel>.
+click on <guilabel>Chat Window</guilabel>, and uncheck <guilabel>Show box to change own nickname</guilabel> box.
 </para></callout>
 
 <callout arearefs="pt-channeltour-6"><para>The channel topic is displayed here.
@@ -1061,15 +1061,20 @@ You can customize their definitions to whatever commands you wish.</para></callo
 </calloutlist>
 </para>
 
-<para><emphasis>Note </emphasis>You can control how messages are displayed in the
+<note>
+<para>
+You can control how messages are displayed in the
 message scroll of channel and query tabs.  For example, you can change the color
 of messages, play a sound when a message containing a string
 is received, or automatically reply to messages.
 See <link linkend="highlighting">
 Message highlighting</link> for more information.
 </para>
+</note>
 
-<para><emphasis>Note: </emphasis>Channel names sometimes begin with <userinput>&amp;</userinput>, <userinput>&plus;</userinput>,
+<note>
+<para>
+Channel names sometimes begin with <userinput>&amp;</userinput>, <userinput>&plus;</userinput>,
 or <userinput>!</userinput>.  The first character of a channel name determines the type of channel (RFC 2811) as follows:
 <itemizedlist>
 <listitem><para>
@@ -1089,6 +1094,7 @@ or <userinput>!</userinput>.  The first character of a channel name determines t
 </itemizedlist>
 Channel names are up to 50 characters long and may contain any characters except for space, comma, and Ctrl-G (^G or ASCII 7).
 </para>
+</note>
 
 </sect1>
 
@@ -1139,7 +1145,7 @@ join a channel.
 
 <para>The following is a short list of frequently-used &irc; commands.  See <ulink url="http://www.faqs.org/rfcs/rfc2812.html">RFC 2812</ulink> for a complete list of all commands, or
 visit <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.  For a list of commands
-treated specially by &konversation;, see <link linkend="konvi-cmds">&konversation; commands</link>
+treated specially by &konversation;, see <link linkend="konvi-cmds">&konversation; commands</link>.
 </para>
 
 <para>
@@ -1174,7 +1180,7 @@ Synonym for <userinput><command>/leave</command></userinput></para></listitem>
 <varlistentry>
 <term><userinput><command>/me </command><replaceable>msg</replaceable></userinput></term>
 <listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
-your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the /away command instead.</para></listitem>
+your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -1219,11 +1225,11 @@ Use <userinput><command>/query</command></userinput> for longer conversations.</
 A private conversation is one that only you and one other person can see.  Private conversations are called "queries" in &konversation;.  To initiate a private conversation,
 type <userinput><command>/query </command><replaceable>nick</replaceable></userinput> in any input line,
 where <replaceable>nick</replaceable> is the &nickname; of the person you want to talk with.  You can also
-click with the &RMB; on the person's &nickname; in the <guilabel>Nick Panel</guilabel> and choose
+click with the &RMB; on the person's &nickname; in the <interface>Nick Panel</interface> and choose
 <menuchoice>
 	<guisubmenu>Open Query</guisubmenu>
-</menuchoice>
-<action>. A new tab will be created</action>.  Announce yourself by sending a message.
+</menuchoice>.
+<action>A new tab will be created.</action>  Announce yourself by sending a message.
 </para>
 
 <para>
@@ -1236,7 +1242,7 @@ To leave the query, just close the tab.  Note however, that if the other person 
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
 	<guisubmenu>Close All Open Queries</guisubmenu>
-</menuchoice> on the main menu, or 
+</menuchoice> on the main menu, or press
 press <keycap>F11</keycap>.</para>
 
 <para>
@@ -1440,7 +1446,7 @@ The <guilabel>Watched Nicknames</guilabel> screen appears.
 <para>
 <calloutlist>
 
-<callout arearefs="pt-notifylist-1"><para>Check this box to activate the nickname watcher feature.</para></callout>
+<callout arearefs="pt-notifylist-1"><para>Check this box to activate the &nickname; watcher feature.</para></callout>
 
 <callout arearefs="pt-notifylist-2"><para>If you want the
 <guilabel>Watched Nicks Online</guilabel> screen to automatically display when you
@@ -1448,7 +1454,7 @@ open &konversation;, check this box.</para></callout>
 
 <callout arearefs="pt-notifylist-3"><para>The &nickname;s of the users you want to monitor are listed here.  Each &nickname; has an associated &irc; network.</para></callout>
 
-<callout arearefs="pt-notifylist-4"><para>Click these buttons to add or remove &nickname;s from the list.</para></callout>
+<callout arearefs="pt-notifylist-4"><para>Click these buttons to <guibutton>Add</guibutton> or <guibutton>Remove</guibutton> &nickname;s from the list.</para></callout>
 
 <callout arearefs="pt-notifylist-5"><para>The <guilabel>Watched Nicks Online</guilabel> feature works by periodically polling the server.  This box sets how often that occurs.  Avoid numbers less than 20 seconds because it places excessive load on the server.</para></callout>
 
@@ -1626,7 +1632,7 @@ minimized in the system tray.</para>
 
 <callout arearefs="pt-osd-5"><para>Check the boxes here to select the types of messages you'd like to appear on screen.</para></callout>
 
-<callout arearefs="pt-osd-6"><para>Drag the OSD Preview to your desired position, then click the <guibutton>Apply</guibutton> button.</para></callout>
+<callout arearefs="pt-osd-6"><para>Drag the <interface>&osd; Preview</interface> to your desired position, then click the <guibutton>Apply</guibutton> button.</para></callout>
 
 </calloutlist>
 </para>
@@ -1720,7 +1726,7 @@ To change the &nickname; theme, choose
 <para>
 <calloutlist>
 
-<callout arearefs="pt-themes-1"><para>Click to select the <guilabel>Nicklist Themes</guilabel> screen.</para></callout>
+<callout arearefs="pt-themes-1"><para>Click here to select the <guilabel>Nicklist Themes</guilabel> screen.</para></callout>
 <callout arearefs="pt-themes-2"><para>Select a theme.</para></callout>
 <callout arearefs="pt-themes-3"><para>Sample icons are displayed here in the chosen theme.</para></callout>
 <callout arearefs="pt-themes-4"><para>If you have downloaded a nick theme
@@ -2014,12 +2020,12 @@ Next, click with the &RMB; on the &nickname; of the person again and choose
 <menuchoice>
 	<guisubmenu>Address Book Associations</guisubmenu>
 </menuchoice>.
-  <action>A submenu appears</action>.  If the &nickname; is not already associated with a contact,
+  <action>A submenu appears.</action>  If the &nickname; is not already associated with a contact,
 choose
 <menuchoice>
 	<guisubmenu>Create New Contact</guisubmenu>
 </menuchoice>.
-  <action>The <guilabel>Edit Contact</guilabel> screen appears</action>.
+  <action>The <guilabel>Edit Contact</guilabel> screen appears.</action>
 </para>
 
 <para>
@@ -2055,7 +2061,7 @@ If you know the person's real name, replace the &nickname; with the real name.
 </callout>
 
 <callout arearefs="pt-kimproxy-create-3">
-<para>Click here.  The <guilabel>Edit Instant Messaging Address</guilabel> window appears.</para></callout>
+<para>Click here.  The <guilabel>Edit Instant Messaging Addresses</guilabel> window appears.</para></callout>
 
 </calloutlist>
 </para>
@@ -2186,11 +2192,11 @@ also specify the <link linkend="webbrowser">web browser</link> to use.</para></c
 <para>When you click on a highlighted &URL; anywhere in &konversation;, it will launch the default
 &kde; application associated with the &MIME; type of the &URL;.  For example, when clicking on
 a &URL; beginning with <interface>http</interface>, &konqueror; is launched to display the
-web page.  You can specify an application different from the &kde; default.  For example, you can
-use Firefox instead.
+web page.  You can specify an application different from the <guilabel>Default Applications</guilabel>
+module of the &kde; &systemsettings;.  For example, you can use <application>Firefox</application> instead.
 </para>
 
-<para>To choose a different web browser, choose
+<para>To choose a different web browser from &konversation; app, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure &konversation;</guisubmenu>
@@ -2387,7 +2393,7 @@ alternate forms of the command.  Commands not listed here are sent to the server
 <varlistentry>
 <term><userinput><command>/me</command> <replaceable>msg</replaceable></userinput></term>
 <listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
-your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the /away command instead.</para></listitem>
+your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2399,7 +2405,7 @@ the message is sent to all the channels and queries you have open on all the ser
 <varlistentry>
 <term><userinput><command>/join</command> <replaceable>channel</replaceable> <replaceable>[pwd]</replaceable></userinput></term>
 <listitem><para>Joins <userinput><replaceable>channel</replaceable></userinput>.  If the server permits it,
-and if the channel does not already exist, it is created and you are the channel operator.  If the channel requires a password in order to join, specify as <userinput><replaceable>pwd</replaceable></userinput>.  Most channel names begin with <userinput><replaceable>#</replaceable></userinput></para></listitem>
+and if the channel does not already exist, it is created and you are the channel operator.  If the channel requires a password in order to join, specify as <userinput><replaceable>pwd</replaceable></userinput>.  Most channel names begin with <userinput><replaceable>#</replaceable></userinput>.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2518,11 +2524,11 @@ topic of the channel.  Changing a channel topic may fail if you lack sufficient 
 <varlistentry>
 <term><userinput><command>/away </command> <replaceable>reason</replaceable></userinput></term>
 <listitem><para>If anyone tries to send you a private message or invite you to a channel, they will be told that you are
-away from your workstation for <userinput><replaceable>reason</replaceable></userinput>.  To change your state back to normal, enter <userinput><command>/away</command></userinput> without a reason.</para></listitem>
+away from your workstation for <userinput><replaceable>reason</replaceable></userinput>.  To change your state back to normal, enter <userinput><command>/away</command></userinput> without a <userinput><replaceable>reason</replaceable></userinput>.</para></listitem>
 </varlistentry>
 
 <varlistentry>
-<term><userinput><command>/aaway </command> <replaceable>reason</replaceable></userinput></term>
+<term><userinput><command>/aaway </command><replaceable>reason</replaceable></userinput></term>
 <listitem><para>Like the <userinput><command>/away</command></userinput> command above except that
 the command is sent to all the servers you have connected in &konversation;.</para></listitem>
 </varlistentry>
@@ -2711,7 +2717,7 @@ passing it <userinput><replaceable>uname -a</replaceable></userinput>.  This sen
 <para>To get a list of all available scripts, type the following command in a
 &konsole; screen.</para>
 
-<para><userinput><replaceable>ls `kde4-config --install data`/konversation/scripts</replaceable></userinput></para>
+<para><userinput>ls `kde4-config --install data`konversation/scripts</userinput></para>
 
 <para>You can write your own scripts.  Scripts are shell scripts and can be written in
 any shell language, such as bash, perl, or python.  When &konversation; runs a script, the
@@ -2747,7 +2753,7 @@ in the tab without sending it to other users, use <computeroutput>info</computer
 instead.  Look at the existing script files for more examples of writing scripts.</para>
 
 <para>To be able to run a script you have written, you must install it by copying
-it to <filename class="directory">`kde4-config --install data`/konversation/scripts</filename> or to <filename class="directory">`kde4-config --localprefix`/share/apps/konversation/scripts</filename>.  You must also give the file execute
+it to <filename class="directory">`kde4-config --install data`konversation/scripts</filename> or to <filename class="directory">`kde4-config --localprefix`share/apps/konversation/scripts</filename>.  You must also give the file execute
 privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable></userinput>.</para>
 
 </sect1>
@@ -2761,10 +2767,10 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>bug</replaceable> [<replaceable>Bug Number|Search String</replaceable>]</userinput></term>
 <listitem>
-<para>This script is used to open your browser to search for the given string or bug number on kde's bugzilla.</para>
+  <para>This script is used to open your browser to search for the given string or bug number on <ulink url="https://bugs.kde.org/">&kde;'s Bugzilla</ulink>.</para>
 <para>Example: To open your browser to search for bug 123456</para>
 <para><userinput><command>/exec </command> <replaceable>bug 123456</replaceable></userinput></para>
-<para>Sample action: The default browser in your KDE System Settings should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
+<para>Sample action: The default browser in your &kde; &systemsettings; should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -2985,7 +2991,7 @@ or menu bars. -->
 			<guimenu>File</guimenu>
 			<guimenuitem>Quit</guimenuitem>
 		</menuchoice></term>
-		<listitem><para><action>Quits</action> &konversation;</para></listitem>
+		<listitem><para><action>Quits</action> &konversation;.</para></listitem>
 	</varlistentry>
 </variablelist>
 </para>
@@ -3110,7 +3116,7 @@ Clear Marker Lines Ctrl Shift R
 			<guimenuitem>Add Bookmark</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-		    <action>Bookmarks current network &amp; channel</action>
+		    <action>Bookmarks current network &amp; channel.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3128,7 +3134,7 @@ Clear Marker Lines Ctrl Shift R
 			<guimenuitem>New Bookmark Folder...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
-				<action>Creates a new bookmark folder</action>
+				<action>Creates a new bookmark folder.</action>
 			</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3137,7 +3143,7 @@ Clear Marker Lines Ctrl Shift R
 				<guimenuitem>Edit Bookmarks...</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
-				<action>Opens bookmark editor</action>
+				<action>Opens bookmark editor.</action>
 			</para></listitem>
 	</varlistentry>
 </variablelist>
