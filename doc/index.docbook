@@ -6,8 +6,8 @@
   <!ENTITY package "extragear">
   <!ENTITY irc "<acronym>IRC</acronym>">
   <!ENTITY CTCP "<acronym>CTCP</acronym>">
-  <!ENTITY nickname "<acronym>nickname</acronym>">
-  <!ENTITY Nickname "<acronym>Nickname</acronym>">
+  <!ENTITY i18n-nickname "<acronym>nickname</acronym>">
+  <!ENTITY i18n-Nickname "<acronym>Nickname</acronym>">
   <!ENTITY led "<acronym>LED</acronym>">
   <!ENTITY osd "<acronym>OSD</acronym>">
   <!ENTITY url "<acronym>URL</acronym>">
@@ -139,7 +139,7 @@ See <link linkend="nicksonline">Monitoring who is online</link> for more informa
 See <link linkend="highlighting">Message highlighting</link> for more information
 See <link linkend="cfg-osd">Configuring On Screen Display (&osd;)</link> for more information
 See <link linkend="color-msgs">Sending colorful messages</link> for more information
-See <link linkend="nickthemes">Configuring &nickname; themes</link> for more information.
+See <link linkend="nickthemes">Configuring &i18n-nickname; themes</link> for more information.
 See <link linkend="quick-buttons">Configuring Quick Buttons</link> for more information
 See <link linkend="dcc">Sending and receiving files</link> for more information
 See <link linkend="linkaddressbook">Integrating with &kaddressbook;</link> for more information
@@ -174,16 +174,16 @@ revision history. (see installation appendix comment) -->
 <listitem><para>Customizable Quick Buttons for often-used commands.</para></listitem>
 <listitem><para>Automatic reconnect and rejoin.</para></listitem>
 <listitem><para>DCC send and receive.</para></listitem>
-<listitem><para>&Nickname; watch list.</para></listitem>
+<listitem><para>&i18n-Nickname; watch list.</para></listitem>
 <listitem><para>Visual and auditory notifications for a wide variety of events, such as messages containing
- your &nickname;, or &nickname;s on your watch list going online or offline.
+ your &i18n-nickname;, or &i18n-nickname;s on your watch list going online or offline.
 </para></listitem>
-<listitem><para>Customizable highlighting of messages by &nickname; or
+<listitem><para>Customizable highlighting of messages by &i18n-nickname; or
 regular expression pattern.</para></listitem>
-<listitem><para>&Nickname; completion.</para></listitem>
+<listitem><para>&i18n-Nickname; completion.</para></listitem>
 <listitem><para>Capture and save all &URL;s appearing in messages.</para></listitem>
 <listitem><para>On-screen display of messages, even when minimized.</para></listitem>
-<listitem><para>&Nickname; ignore list.</para></listitem>
+<listitem><para>&i18n-Nickname; ignore list.</para></listitem>
 <listitem><para>Automatic logging and log management.</para></listitem>
 <listitem><para>Marking of lines in logs.</para></listitem>
 <listitem><para>Scripting.</para></listitem>
@@ -312,7 +312,7 @@ The <interface>Main</interface> screen will be displayed showing the messages se
 
 <callout arearefs="pt-first-channel-1"><para>This is called the <interface>Input Line</interface>.  To send a message to everyone in the channel, type the message here and press &Enter;.
  Your message, as well as everyone else's messages appear in the channel scroll above.
- Each message is preceded by the time and user's &nickname;.</para></callout>
+ Each message is preceded by the time and user's &i18n-nickname;.</para></callout>
 
 <callout arearefs="pt-first-channel-2"><para>You may join additional servers and channels.  Each server, channel, channel list, and other screen gets a separate tab here.
 To display a list of available channels, see <link linkend="list-channels">Listing available channels</link>.
@@ -321,7 +321,7 @@ type: <userinput><command>/join</command> <replaceable>#channelname</replaceable
 the Input Line.  (The <userinput>#</userinput> is required.) You may also type <userinput><command>/j</command></userinput> as a shorthand to <userinput><command>/join</command></userinput>. To leave a channel, just type <userinput><command>/part</command></userinput>.  To switch the display to a different server or channel, click the corresponding tab.
 </para></callout>
 
-<callout arearefs="pt-first-channel-3"><para>This is called the <interface>Nick Panel</interface>.  It lists the &nickname;s of all the users who have joined the channel, including yourself.</para></callout>
+<callout arearefs="pt-first-channel-3"><para>This is called the <interface>Nick Panel</interface>.  It lists the &i18n-nickname;s of all the users who have joined the channel, including yourself.</para></callout>
 
 </calloutlist>
 </para>
@@ -378,16 +378,16 @@ the Input Line.  (The <userinput>#</userinput> is required.) You may also type <
 <guibutton>Duplicate</guibutton>, <guibutton>Rename</guibutton>, or <guibutton>Remove</guibutton> an <guilabel>Identity</guilabel>.</para></callout>
 <callout arearefs="pt-identity-gen-3"><para>Enter your real name here.  &irc; is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake "real name" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous.</para></callout>
 <callout arearefs="pt-identity-gen-4"><para>Use these buttons to
-<guibutton>Add</guibutton> or <guibutton>Remove</guibutton> a &nickname;.</para></callout>
-<callout arearefs="pt-identity-gen-5"><para>This is your list of &nickname;s.
-A &nickname; is the name that other users will know you by.
+<guibutton>Add</guibutton> or <guibutton>Remove</guibutton> a &i18n-nickname;.</para></callout>
+<callout arearefs="pt-identity-gen-5"><para>This is your list of &i18n-nickname;s.
+A &i18n-nickname; is the name that other users will know you by.
 You may use any name you desire.  The first character must be a letter.  Other characters may be letters, numbers, or the special characters <literal>-[]\`_^{}|</literal>.</para>
 
-<para>Since &nickname;s must be unique across an entire &irc; network, your desired name may be rejected by the server because someone else is already using that &nickname;.  Enter alternate &nickname;s for yourself.  If your first choice is rejected by the server, &konversation; will try the alternate &nickname;s.
+<para>Since &i18n-nickname;s must be unique across an entire &irc; network, your desired name may be rejected by the server because someone else is already using that &i18n-nickname;.  Enter alternate &i18n-nickname;s for yourself.  If your first choice is rejected by the server, &konversation; will try the alternate &i18n-nickname;s.
 </para>
 
 <para>
-According to RFC 2812, the maximum &nickname; length is 9, but
+According to RFC 2812, the maximum &i18n-nickname; length is 9, but
 this is actually determined by the server.  To determine the maximum for a server, connect to the server.  In the
 <interface>Server Messages</interface> tab, look for a <computeroutput>[Support]</computeroutput> message.
 For example:</para>
@@ -399,14 +399,14 @@ For example:</para>
 </para>
 
 <para>
-The <computeroutput>NICKLEN</computeroutput> parameter specifies the maximum &nickname; length.
+The <computeroutput>NICKLEN</computeroutput> parameter specifies the maximum &i18n-nickname; length.
 </para>
 </callout>
 
 <callout arearefs="pt-identity-gen-6"><para>Use these buttons to change the
-order of the &nickname;s.  The top &nickname; is tried first, then the next
-&nickname;, and so on.</para></callout>
-<callout arearefs="pt-identity-gen-7"><para>If you have registered your &nickname; with the &irc; network, enter the service and password to authenticate your &nickname;.
+order of the &i18n-nickname;s.  The top &i18n-nickname; is tried first, then the next
+&i18n-nickname;, and so on.</para></callout>
+<callout arearefs="pt-identity-gen-7"><para>If you have registered your &i18n-nickname; with the &irc; network, enter the service and password to authenticate your &i18n-nickname;.
 When &konversation; connects, it will automatically send
 <userinput><command>/msg</command> <replaceable>service</replaceable> <command>IDENTIFY</command> <replaceable>password</replaceable></userinput> to the server.
 If you don't know what this is, leave these boxes blank.</para></callout>
@@ -445,16 +445,16 @@ user inactivity configured below.
 <para>
 <calloutlist>
 <callout arearefs="pt-identity-away-1"><para>
-Enter a &nickname; that indicates you are away.  Whenever you perform an
+Enter a &i18n-nickname; that indicates you are away.  Whenever you perform an
 <userinput><command>/away </command><replaceable>msg</replaceable></userinput> command in
 any channel joined with this <guilabel>Identity</guilabel>,
-&konversation; will automatically change your &nickname; to the <guilabel>Away nickname</guilabel>.  Other users will be able to tell you are away
+&konversation; will automatically change your &i18n-nickname; to the <guilabel>Away nickname</guilabel>.  Other users will be able to tell you are away
 from your computer.
 Whenever you perform an <userinput><command>/away</command></userinput> command
 in any channel in which
-you are away, &konversation; will automatically change your &nickname; back
+you are away, &konversation; will automatically change your &i18n-nickname; back
 to the original.  If you do not wish to automatically change your
-&nickname; when going away, leave blank.</para></callout>
+&i18n-nickname; when going away, leave blank.</para></callout>
 <callout arearefs="pt-identity-away-2"><para>If you check this box,
 whenever you perform an <userinput><command>/away</command></userinput> command, a horizontal line will appear in the channel, marking the point where you
 went away.  Other &irc; users do not see this horizontal line.
@@ -655,11 +655,11 @@ here, all the <guilabel>Network</guilabel>s with the same
 <guilabel>Identity</guilabel> or click the <guibutton>Edit</guibutton>
 button to add a new Identity or edit an existing one.  The
 <guilabel>Identity</guilabel> will identify you and determine
-your &nickname; when you connect to the network.</para></callout>
+your &i18n-nickname; when you connect to the network.</para></callout>
 <callout arearefs="pt-addnetwork-3"><para>Optional.  This command will be sent to the server after connecting.  Example: <userinput>/msg NickServ IDENTIFY
-<replaceable>konvirocks</replaceable></userinput>.  This example is for the freenode network, which requires users to register their &nickname;
+<replaceable>konvirocks</replaceable></userinput>.  This example is for the freenode network, which requires users to register their &i18n-nickname;
 with a password and login when connecting.  <userinput><replaceable>konvirocks</replaceable></userinput>
-is the password for the &nickname; given in <guilabel>Identity</guilabel>.
+is the password for the &i18n-nickname; given in <guilabel>Identity</guilabel>.
 You may enter more than one command by separating them with semicolons.</para></callout>
 <callout arearefs="pt-addnetwork-4"><para>Check here if you want
 &konversation; to automatically connect to this network whenever
@@ -692,7 +692,7 @@ channel.  You may also change the order the channels are joined.
 <guilabel>Network</guilabel>.  Avoid entering the same server under
 two different <guilabel>Network</guilabel>s.  Otherwise, &konversation;
 <link linkend="linkaddressbook">integration with your address book</link> and
-<link linkend="nicksonline">monitoring of online &nickname;s</link> will not function
+<link linkend="nicksonline">monitoring of online &i18n-nickname;s</link> will not function
 correctly.</para>
 </note>
 
@@ -826,7 +826,7 @@ depending upon your network bandwidth.  If your client is too slow, the server m
 -->
 <para>Sometimes there are "secret" channels on servers.  Such channels are not listed in the <guilabel>Channel List</guilabel>.
 You can still join these channels if you know their name.  In any <interface>Input Line</interface>, type: <userinput><command>/join</command>
-<replaceable>#channelname</replaceable></userinput>.  (The <userinput>#</userinput> is required.)  A new tab is created for the channel.  If you join a channel and the Nick Panel lists only your &nickname;, it means that the channel did not exist before.  The server created the channel and you are the operator.  In this case, you probably want to close the channel by typing: <userinput><command>/part</command></userinput>.
+<replaceable>#channelname</replaceable></userinput>.  (The <userinput>#</userinput> is required.)  A new tab is created for the channel.  If you join a channel and the Nick Panel lists only your &i18n-nickname;, it means that the channel did not exist before.  The server created the channel and you are the operator.  In this case, you probably want to close the channel by typing: <userinput><command>/part</command></userinput>.
 </para>
 
 </sect1>
@@ -873,7 +873,7 @@ The screen is shown below with a channel tab selected.</para>
 It appears only when the current tab is a channel.
 To send a message to everyone in the channel, type the message here and press &Enter;.
  Your message, as well as everyone else's messages appear in the channel scroll above.
- Each message is preceded by the time and user's &nickname;.</para>
+ Each message is preceded by the time and user's &i18n-nickname;.</para>
 
  <para>You can also paste text from the clipboard.  If the pasted text has more than one line (newlines),
  a dialog box appears.  Edit the text as desired and click <guibutton>OK</guibutton>.
@@ -890,8 +890,8 @@ To send a message to everyone in the channel, type the message here and press &E
  -->
 
  <para>
- A convention used in many channels is to precede messages directed at one user with their &nickname;.  &konversation;
- provides a convenient &nickname; completion feature.  Start typing the user's &nickname;, then press &Tab;.  &konversation; will complete the rest of the user's &nickname; followed by a colon.  To customize the completion feature, choose
+ A convention used in many channels is to precede messages directed at one user with their &i18n-nickname;.  &konversation;
+ provides a convenient &i18n-nickname; completion feature.  Start typing the user's &i18n-nickname;, then press &Tab;.  &konversation; will complete the rest of the user's &i18n-nickname; followed by a colon.  To customize the completion feature, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
@@ -930,7 +930,7 @@ click on <guilabel>Tabs</guilabel>.
 Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
 -->
 <callout arearefs="pt-channeltour-3"><para>These &led;s will blink when there is something you haven't seen in that tab.
-The &led; will blink slower when the only unseen messages are <command>join</command>, <command>part</command>,  <command>quit</command>, or &nickname; changes.  They blink faster if there are unseen regular messages.
+The &led; will blink slower when the only unseen messages are <command>join</command>, <command>part</command>,  <command>quit</command>, or &i18n-nickname; changes.  They blink faster if there are unseen regular messages.
   The colors are as follows:
 <itemizedlist>
 <listitem>
@@ -959,7 +959,7 @@ Channel
 
 <callout arearefs="pt-channeltour-4"><para>Click here to close the current tab.  Closing a <interface>Channel</interface> tab will leave the channel.  Closing a <interface>Server Messages</interface> tab will leave all channels you've joined, close all open queries at that server and disconnect from the server.</para></callout>
 
-<callout arearefs="pt-channeltour-5"><para>Click this button to change your own &nickname;. It appears only when the current tab is a channel.  To hide this button, choose
+<callout arearefs="pt-channeltour-5"><para>Click this button to change your own &i18n-nickname;. It appears only when the current tab is a channel.  To hide this button, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
@@ -990,9 +990,9 @@ click on <guilabel>Chat Window</guilabel>, and uncheck the
 
 <callout arearefs="pt-channeltour-8">
 <para>
-This is called the <interface>Nick Panel</interface>.  It is displayed whenever the current tab is a channel.  It lists the &nickname;s of all the users who have joined the channel, including yourself.  Hover the mouse pointer over a &nickname; to display additional information
-about the user.  You may change how the icons are displayed next to each &nickname; by changing
-the &nickname; icon theme.  See <link linkend="nickthemes">Configuring &nickname; themes</link>
+This is called the <interface>Nick Panel</interface>.  It is displayed whenever the current tab is a channel.  It lists the &i18n-nickname;s of all the users who have joined the channel, including yourself.  Hover the mouse pointer over a &i18n-nickname; to display additional information
+about the user.  You may change how the icons are displayed next to each &i18n-nickname; by changing
+the &i18n-nickname; icon theme.  See <link linkend="nickthemes">Configuring &i18n-nickname; themes</link>
  for more information.
 The <guilabel>Default Theme</guilabel>, as shown in the screen above, uses the following icons:
 <itemizedlist>
@@ -1039,9 +1039,9 @@ channel admin <!-- (see TODO) -->
 <inlinemediaobject><imageobject><imagedata fileref="irc_away.png" format="PNG"  /></imageobject></inlinemediaobject></para>
 
 <para>
-Click with the &RMB; on any &nickname; to display a context menu of operations you can perform with that &nickname;.
-For example, you can <link linkend="dcc">send a file</link> to the &nickname;.
-This is also the place where you can <link linkend="linkaddressbook">associate a &nickname; to a contact in your address book.</link>
+Click with the &RMB; on any &i18n-nickname; to display a context menu of operations you can perform with that &i18n-nickname;.
+For example, you can <link linkend="dcc">send a file</link> to the &i18n-nickname;.
+This is also the place where you can <link linkend="linkaddressbook">associate a &i18n-nickname; to a contact in your address book.</link>
 </para>
 
 <para>To hide the <interface>Nick Panel</interface>, choose
@@ -1130,7 +1130,7 @@ of creating a new server in the <link linkend="serverlist">Server List</link>.
 </para>
 
 <para>Enter the server address in the <guilabel>Server host</guilabel> box, your desired
-&nickname; in the <guilabel>Nick</guilabel> box, and click the <guibutton>Connect</guibutton> button.
+&i18n-nickname; in the <guilabel>Nick</guilabel> box, and click the <guibutton>Connect</guibutton> button.
 When &konversation; has connected to the server, enter command
 <userinput><command>/join</command> <replaceable>#channelname</replaceable></userinput> to
 join a channel.
@@ -1179,8 +1179,8 @@ Synonym for <userinput><command>/leave</command></userinput></para></listitem>
 
 <varlistentry>
 <term><userinput><command>/me </command><replaceable>msg</replaceable></userinput></term>
-<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
-your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &i18n-nickname;.  For example, if
+your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -1201,14 +1201,14 @@ away from your workstation with <userinput><replaceable>msg</replaceable></useri
 
 <varlistentry>
 <term><userinput><command>/msg </command><replaceable>nick</replaceable>  <replaceable>msg</replaceable></userinput></term>
-<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &nickname;  <userinput><replaceable>nick</replaceable></userinput>.
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &i18n-nickname;  <userinput><replaceable>nick</replaceable></userinput>.
 Only <userinput><replaceable>nick</replaceable></userinput> sees the message.
 Use <userinput><command>/query</command></userinput> for longer conversations.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><userinput><command>/invite </command><replaceable>nick</replaceable></userinput></term>
-<listitem><para>Invites the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> to join a channel.  This command is especially useful if the channel is invite-only.</para></listitem>
+<listitem><para>Invites the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> to join a channel.  This command is especially useful if the channel is invite-only.</para></listitem>
 </varlistentry>
 
 </variablelist>
@@ -1224,8 +1224,8 @@ Use <userinput><command>/query</command></userinput> for longer conversations.</
 <para>
 A private conversation is one that only you and one other person can see.  Private conversations are called "queries" in &konversation;.  To initiate a private conversation,
 type <userinput><command>/query </command><replaceable>nick</replaceable></userinput> in any input line,
-where <replaceable>nick</replaceable> is the &nickname; of the person you want to talk with.  You can also
-click with the &RMB; on the person's &nickname; in the <interface>Nick Panel</interface> and choose
+where <replaceable>nick</replaceable> is the &i18n-nickname; of the person you want to talk with.  You can also
+click with the &RMB; on the person's &i18n-nickname; in the <interface>Nick Panel</interface> and choose
 <menuchoice>
 	<guisubmenu>Open Query</guisubmenu>
 </menuchoice>.
@@ -1243,11 +1243,11 @@ To leave the query, just close the tab.  Note however, that if the other person 
 	<guisubmenu>Window</guisubmenu>
 	<guisubmenu>Close All Open Queries</guisubmenu>
 </menuchoice> on the main menu, or press
-press <keycap>F11</keycap>.</para>
+<keycap>F11</keycap> key.</para>
 
 <para>
 When someone else initiates a query with you, &konversation; creates a new tab with their
-&nickname;.  If you don't wish to talk with the person, close the tab.
+&i18n-nickname;.  If you don't wish to talk with the person, close the tab.
 </para>
 
 </sect1>
@@ -1310,7 +1310,7 @@ Once you've set up your notifications, you can enable or disable all notificatio
 </menuchoice> on the main menu.
 </para>
 
-<tip><para>You can also alert yourself when someone mentions your &nickname;
+<tip><para>You can also alert yourself when someone mentions your &i18n-nickname;
 in a message using &konversation;'s
 <link linkend="highlighting">highlighting feature</link>.</para></tip>
 
@@ -1326,21 +1326,21 @@ in a message using &konversation;'s
 or not.
 </para>
 
-<para>You can associate online &nickname;s with contact entries in your address book.
-When you do this, the &nickname; and &irc; network where the &nickname; is online are
-entered into the contact in the address book.  The &irc; network is recorded because &nickname;s
-are unique across a single &irc; network.  The &nickname; in two different &irc; networks
-is not necessarily the same person, but the same &nickname; on two different servers
+<para>You can associate online &i18n-nickname;s with contact entries in your address book.
+When you do this, the &i18n-nickname; and &irc; network where the &i18n-nickname; is online are
+entered into the contact in the address book.  The &irc; network is recorded because &i18n-nickname;s
+are unique across a single &irc; network.  The &i18n-nickname; in two different &irc; networks
+is not necessarily the same person, but the same &i18n-nickname; on two different servers
 within the same &irc; network generally is the same person.</para>
 
 <note><para>This is why it is important to use the same <guilabel>Network</guilabel>
 for all servers in the same &irc; network, when <link linkend="serverlist">
 defining networks, servers, and auto join channels</link>.</para></note>
 
-<para>You can also define &nickname;s you want watched that are not in your address book.
-In this case also, each &nickname; has an associated &irc; network.  See below.</para>
+<para>You can also define &i18n-nickname;s you want watched that are not in your address book.
+In this case also, each &i18n-nickname; has an associated &irc; network.  See below.</para>
 
-<para>To activate the &nickname; watching feature, choose
+<para>To activate the &i18n-nickname; watching feature, choose
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
 	<guisubmenu>Watched Nicks Online</guisubmenu>
@@ -1374,21 +1374,21 @@ In this case also, each &nickname; has an associated &irc; network.  See below.<
 
 <para>
 <calloutlist>
-<callout arearefs="pt-nicksonline-1"><para>The &nickname;s in your watch list and
-also the &nickname;s associated with entries in your address book are listed here.
-They are listed under their associated &irc; network.  If no &nickname;s are listed,
-either you haven't specified any &nickname;s to watch, or you need to activate
-the &nickname; watching feature (see below).  Expand each online &nickname; to see a list
-of channels the &nickname; has joined.  The icons next to each channel are the same as
+<callout arearefs="pt-nicksonline-1"><para>The &i18n-nickname;s in your watch list and
+also the &i18n-nickname;s associated with entries in your address book are listed here.
+They are listed under their associated &irc; network.  If no &i18n-nickname;s are listed,
+either you haven't specified any &i18n-nickname;s to watch, or you need to activate
+the &i18n-nickname; watching feature (see below).  Expand each online &i18n-nickname; to see a list
+of channels the &i18n-nickname; has joined.  The icons next to each channel are the same as
 the icons that appear in the <interface>Nick Panel</interface> in the
 <link linkend="channel-screen-tour">channel</link> screens.
 </para></callout>
-<callout arearefs="pt-nicksonline-2"><para>The information known about the &nickname;
+<callout arearefs="pt-nicksonline-2"><para>The information known about the &i18n-nickname;
 is displayed here.  When the <guilabel>Watched Nicks Online</guilabel> screen is first
 displayed, this information is sparse.  Every 20 seconds,
 one <userinput><command>WHOIS</command></userinput> command is automatically sent to the server
-to request information for &nickname;s that do not have any information.  This continues until
-all &nickname;s have information.
+to request information for &i18n-nickname;s that do not have any information.  This continues until
+all &i18n-nickname;s have information.
 </para></callout>
 <!--callout arearefs="pt-nicksonline-3"><para>Nicknames that are not connected to any
 of the &irc; networks you are connected to are listed in the <guilabel>Offline</guilabel>
@@ -1398,7 +1398,7 @@ part of the listing.
 a contact entry in your address book have this icon
 (<inlinemediaobject><imageobject><imagedata fileref="kaddressbook.png" format="PNG"  /></imageobject></inlinemediaobject>) next to their information.
 </para></callout-->
-<callout arearefs="pt-nicksonline-3"><para>Use these buttons to associate a &nickname;
+<callout arearefs="pt-nicksonline-3"><para>Use these buttons to associate a &i18n-nickname;
 with a contact in your address book, remove an association, or open the address book
 to edit the contact information.  See the
 <ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
@@ -1408,9 +1408,9 @@ on using the &kde; address book.
 </para>
 
 <para>
-To add a single &nickname; to watch, open the context menu in the <guilabel>Nick List</guilabel> 
-by clicking with the &RMB; on a &nickname; and select <guilabel>Add to Watched Nicks</guilabel>.
-If you want to add several &nickname;s choose
+To add a single &i18n-nickname; to watch, open the context menu in the <guilabel>Nick List</guilabel> 
+by clicking with the &RMB; on a &i18n-nickname; and select <guilabel>Add to Watched Nicks</guilabel>.
+If you want to add several &i18n-nickname;s choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
@@ -1446,30 +1446,30 @@ The <guilabel>Watched Nicknames</guilabel> screen appears.
 <para>
 <calloutlist>
 
-<callout arearefs="pt-notifylist-1"><para>Check this box to activate the &nickname; watcher feature.</para></callout>
+<callout arearefs="pt-notifylist-1"><para>Check this box to activate the &i18n-nickname; watcher feature.</para></callout>
 
 <callout arearefs="pt-notifylist-2"><para>If you want the
 <guilabel>Watched Nicks Online</guilabel> screen to automatically display when you
 open &konversation;, check this box.</para></callout>
 
-<callout arearefs="pt-notifylist-3"><para>The &nickname;s of the users you want to monitor are listed here.  Each &nickname; has an associated &irc; network.</para></callout>
+<callout arearefs="pt-notifylist-3"><para>The &i18n-nickname;s of the users you want to monitor are listed here.  Each &i18n-nickname; has an associated &irc; network.</para></callout>
 
-<callout arearefs="pt-notifylist-4"><para>Click these buttons to <guibutton>Add</guibutton> or <guibutton>Remove</guibutton> &nickname;s from the list.</para></callout>
+<callout arearefs="pt-notifylist-4"><para>Click these buttons to <guibutton>Add</guibutton> or <guibutton>Remove</guibutton> &i18n-nickname;s from the list.</para></callout>
 
 <callout arearefs="pt-notifylist-5"><para>The <guilabel>Watched Nicks Online</guilabel> feature works by periodically polling the server.  This box sets how often that occurs.  Avoid numbers less than 20 seconds because it places excessive load on the server.</para></callout>
 
 <callout arearefs="pt-notifylist-6"><para>In the <guilabel>Watched Nicks Online</guilabel>
-screen above, you may double click on any &nickname; and this command will be sent to the
+screen above, you may double click on any &i18n-nickname; and this command will be sent to the
 server.  <userinput><command>%u</command></userinput> will be replaced with the
-&nickname;.  The <userinput><command>%n</command></userinput> is required at the
+&i18n-nickname;.  The <userinput><command>%n</command></userinput> is required at the
 end of the command.</para></callout>
 
 </calloutlist>
 </para>
 
-<para>Click the <guibutton>OK</guibutton> button when you have finished adding or removing &nickname;s.</para>
+<para>Click the <guibutton>OK</guibutton> button when you have finished adding or removing &i18n-nickname;s.</para>
 
-<para><emphasis>Note: </emphasis>Whenever you display the <guilabel>Watched Nicks Online</guilabel> screen, it may take a while before any &nickname;s are displayed until &konversation; has polled the server.  Normally, you leave the <guilabel>Watched Nicks Online</guilabel> screen running.
+<para><emphasis>Note: </emphasis>Whenever you display the <guilabel>Watched Nicks Online</guilabel> screen, it may take a while before any &i18n-nickname;s are displayed until &konversation; has polled the server.  Normally, you leave the <guilabel>Watched Nicks Online</guilabel> screen running.
 </para>
 
 <para>&konversation; also displays a message in all the <link linkend="channel-screen-tour">channels</link> whenever a user in
@@ -1552,7 +1552,7 @@ with too much chatter if not careful.  You can also enter
 for any of your highlights, you can disable all of them by unchecking
 this box.</para></callout>
 <callout arearefs="pt-highlight-8"><para>If you check this box,
-whenever someone mentions your &nickname; in a message, the message
+whenever someone mentions your &i18n-nickname; in a message, the message
 will be displayed in the color you choose at the right.</para></callout>
 <callout arearefs="pt-highlight-9"><para>Normally, highlighting
 does not apply to messages you type.  If you wish to highlight the
@@ -1687,11 +1687,11 @@ and click <guibutton>OK</guibutton>.
 <!-- =================================================================== -->
 
 <sect1 id="nickthemes">
-<title>Configuring &nickname; themes</title>
+<title>Configuring &i18n-nickname; themes</title>
 
-<para>You can change the icons displayed next to &nickname;s in the
+<para>You can change the icons displayed next to &i18n-nickname;s in the
 <interface>Nick Panel</interface> of channel tabs.
-To change the &nickname; theme, choose
+To change the &i18n-nickname; theme, choose
 <menuchoice>
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
@@ -1810,9 +1810,9 @@ Click <guibutton>OK</guibutton> to complete the changes.
 
 <para>
 To use this button in the <link linkend="channel-screen-tour">Main</link> screen,
-click on a &nickname; in the <interface>Nick Panel</interface>, then click the button.
+click on a &i18n-nickname; in the <interface>Nick Panel</interface>, then click the button.
 <computeroutput>/MSG </computeroutput> will appear in the <interface>Input Line</interface>
-followed by the chosen &nickname;.  Type a message you want to send to that person and press
+followed by the chosen &i18n-nickname;.  Type a message you want to send to that person and press
 &Enter;.  The message will be sent to the user.  Only that user will see the message.
 </para>
 
@@ -1832,7 +1832,7 @@ You may send files via &irc; to other users online, or they may send you files.
 </para>
 
 <para>
-To send a file to someone in a channel, click with the &RMB; on the &nickname; of the person in the
+To send a file to someone in a channel, click with the &RMB; on the &i18n-nickname; of the person in the
 <interface>Nick Panel</interface> of the <link linkend="channel-screen-tour">Main</link> screen.
 Choose
 <menuchoice>
@@ -1865,7 +1865,7 @@ Choose
 <para>
 <calloutlist>
 
-<callout arearefs="pt-dccstatus-1"><para>The &nickname; of the recipient and file name appear here.</para></callout>
+<callout arearefs="pt-dccstatus-1"><para>The &i18n-nickname; of the recipient and file name appear here.</para></callout>
 
 <callout arearefs="pt-dccstatus-2">
 <para>The <guilabel>Status</guilabel> column indicates the status of the file send or receive as follows:</para>
@@ -2003,24 +2003,24 @@ See <link linkend="faq">Questions and Answers</link>.
 <sect1 id="linkaddressbook">
 <title>Integrating with &kaddressbook;</title>
 
-<para>You can associate any &nickname; with a contact in &kaddressbook;.
+<para>You can associate any &i18n-nickname; with a contact in &kaddressbook;.
 Once you've done this, &konversation; will display the contact real name
-in parenthesis after the &nickname; in the <interface>Nick Panel</interface>.
+in parenthesis after the &i18n-nickname; in the <interface>Nick Panel</interface>.
 </para>
 
 <para>
-To associate a &nickname; with a contact in &kaddressbook;,
-click with the &RMB; on the &nickname; of the person in the
+To associate a &i18n-nickname; with a contact in &kaddressbook;,
+click with the &RMB; on the &i18n-nickname; of the person in the
 <interface>Nick Panel</interface> of the <link linkend="channel-screen-tour">Main</link> screen.  Choose
 <menuchoice>
 	<guisubmenu>Whois</guisubmenu>
 </menuchoice>
 to <action>display information to help you determine the user's real name</action>.
-Next, click with the &RMB; on the &nickname; of the person again and choose
+Next, click with the &RMB; on the &i18n-nickname; of the person again and choose
 <menuchoice>
 	<guisubmenu>Address Book Associations</guisubmenu>
 </menuchoice>.
-  <action>A submenu appears.</action>  If the &nickname; is not already associated with a contact,
+  <action>A submenu appears.</action>  If the &i18n-nickname; is not already associated with a contact,
 choose
 <menuchoice>
 	<guisubmenu>Create New Contact</guisubmenu>
@@ -2052,12 +2052,12 @@ choose
 <para>
 <calloutlist>
 
-<callout arearefs="pt-kimproxy-create-1"><para>The &nickname; is automatically filled in here.
-If you know the person's real name, replace the &nickname; with the real name.
+<callout arearefs="pt-kimproxy-create-1"><para>The &i18n-nickname; is automatically filled in here.
+If you know the person's real name, replace the &i18n-nickname; with the real name.
 </para></callout>
 
 <callout arearefs="pt-kimproxy-create-2">
-<para>Notice that the &nickname; does <emphasis>not</emphasis> appear here.  Instead, ..</para>
+<para>Notice that the &i18n-nickname; does <emphasis>not</emphasis> appear here.  Instead, ..</para>
 </callout>
 
 <callout arearefs="pt-kimproxy-create-3">
@@ -2080,7 +2080,7 @@ If you know the person's real name, replace the &nickname; with the real name.
 </screenshot>
 </para>
 
-<!--para>Notice that &konversation; fills in the &nickname; for you with protocol
+<!--para>Notice that &konversation; fills in the &i18n-nickname; for you with protocol
 <guilabel>IRC</guilabel>.
 </para-->
 
@@ -2088,27 +2088,27 @@ If you know the person's real name, replace the &nickname; with the real name.
 <ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
 on using the &kde; address book.</para>
 
-<para>Fill in any additional information about the &nickname; you know and click
+<para>Fill in any additional information about the &i18n-nickname; you know and click
 <guilabel>OK</guilabel>.  The real name of the person will appear inside
-parenthesis next to the &nickname; in the <guilabel>Nick Panel</guilabel>
+parenthesis next to the &i18n-nickname; in the <guilabel>Nick Panel</guilabel>
 of &konversation;.  The real name also appears when the mouse hovers over
-the &nickname;.</para>
+the &i18n-nickname;.</para>
 
-<para>Once a &nickname; has been associated with a contact in &kaddressbook;,
-you can click with the &RMB; on the &nickname; of the person in the
+<para>Once a &i18n-nickname; has been associated with a contact in &kaddressbook;,
+you can click with the &RMB; on the &i18n-nickname; of the person in the
 <interface>Nick Panel</interface> and edit the associated contact, associate
-the &nickname; with a different contact, or delete the association.
+the &i18n-nickname; with a different contact, or delete the association.
 </para>
 
-<para>If you have associated a &nickname; with a contact, and the user changes their &nickname; while you are running &konversation;,
-it will automatically associate the new &nickname; with the contact, keeping the
+<para>If you have associated a &i18n-nickname; with a contact, and the user changes their &i18n-nickname; while you are running &konversation;,
+it will automatically associate the new &i18n-nickname; with the contact, keeping the
 original association as well.</para>
 
-<para>If you associate an &irc; &nickname; with a contact in
+<para>If you associate an &irc; &i18n-nickname; with a contact in
 <ulink url="help:kopete">&kopete;</ulink>,
 the association will also appear in &konversation;, and vice versa.</para>
 
-<para>Note: It is possible to highlight more than one &nickname; in the
+<para>Note: It is possible to highlight more than one &i18n-nickname; in the
 <interface>Nick Panel</interface>, click with the mouse &RMB;, and perform
 multiple associations.
 </para>
@@ -2163,7 +2163,7 @@ again.  &konversation; can keep a convenient list of all &URL;s for you.  To act
 <para>
 <calloutlist>
 
-<callout arearefs="pt-urlcatcher-1"><para>This is the list of &URL;s seen since you started &konversation;.  The <guilabel>From</guilabel> column is the &nickname; of the person who posted the &URL; or the name of the channel or server, where the &URL; was posted. (&URL;s appearing in join and leave messages
+<callout arearefs="pt-urlcatcher-1"><para>This is the list of &URL;s seen since you started &konversation;.  The <guilabel>From</guilabel> column is the &i18n-nickname; of the person who posted the &URL; or the name of the channel or server, where the &URL; was posted. (&URL;s appearing in join and leave messages
 are not listed.)  Click on a &URL; to select it.</para></callout>
 
 <callout arearefs="pt-urlcatcher-2"><para>Click here to activate the application associated with the selected &URL;.
@@ -2392,8 +2392,8 @@ alternate forms of the command.  Commands not listed here are sent to the server
 
 <varlistentry>
 <term><userinput><command>/me</command> <replaceable>msg</replaceable></userinput></term>
-<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
-your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &i18n-nickname;.  For example, if
+your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2430,7 +2430,7 @@ and closes all channel, query, or DCC tabs open on that server.</para></listitem
 </varlistentry>
 
 <varlistentry><term><userinput><command>/notice</command> <replaceable>nick|channel</replaceable> <replaceable>msg</replaceable></userinput></term>
-<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> or to everyone in <userinput><replaceable>channel</replaceable></userinput>.  The following is an example
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> or to everyone in <userinput><replaceable>channel</replaceable></userinput>.  The following is an example
 of what appears to you in the channel tab</para>
 
 <para><computeroutput>[17:14] [Notice] Sending notice "I think I understand" to #konversation</computeroutput></para>
@@ -2443,13 +2443,13 @@ of what appears to you in the channel tab</para>
 
 <varlistentry>
 <term><userinput><command>/query </command><replaceable>nick</replaceable></userinput></term>
-<listitem><para>Creates a new tab with the user's <userinput><replaceable>nick</replaceable></userinput> for private conversation, commonly known on &irc; as a <link linkend="query">Query</link>. Everything written here is only visible to you and your query partner.  You may enter more than one &nickname; separated by spaces and a query tab will be opened for each &nickname;.  Each such query tab will be private between you and the query partner.</para></listitem>
+<listitem><para>Creates a new tab with the user's <userinput><replaceable>nick</replaceable></userinput> for private conversation, commonly known on &irc; as a <link linkend="query">Query</link>. Everything written here is only visible to you and your query partner.  You may enter more than one &i18n-nickname; separated by spaces and a query tab will be opened for each &i18n-nickname;.  Each such query tab will be private between you and the query partner.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term><userinput><command>/msg </command><replaceable>nick|channel</replaceable></userinput>
  <userinput><replaceable>message</replaceable></userinput></term>
-<listitem><para>Sends a private message to the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> or to all users in <userinput><replaceable>channel</replaceable></userinput>.  Unlike <userinput><command>/query</command></userinput>,
+<listitem><para>Sends a private message to the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> or to all users in <userinput><replaceable>channel</replaceable></userinput>.  Unlike <userinput><command>/query</command></userinput>,
 does not open a new tab.  If <userinput><replaceable>message</replaceable></userinput> begins with <userinput><command>/me </command></userinput>, the message is formatted in the same manner as a
 <userinput><command>/me</command></userinput> command.</para>
 
@@ -2483,19 +2483,19 @@ the message is sent to all the channels and queries you have open on all the ser
 <listitem><para>When entered into a channel tab, attempts to give
  <userinput><replaceable>nick</replaceable></userinput> operator privilege for the
 channel.  May not work if you lack sufficient privilege in the channel (you must be a
-channel operator yourself).  You may enter more than one &nickname; separated by spaces.</para>
+channel operator yourself).  You may enter more than one &i18n-nickname; separated by spaces.</para>
 </listitem></varlistentry>
 
 <varlistentry>
 <term><userinput><command>/deop </command><replaceable>nick</replaceable></userinput></term>
 <listitem><para>When entered into a channel tab, takes away channel operator privilege from
-<userinput><replaceable>nick</replaceable></userinput>.  You may enter more than one &nickname; separated by spaces.</para>
+<userinput><replaceable>nick</replaceable></userinput>.  You may enter more than one &i18n-nickname; separated by spaces.</para>
 </listitem></varlistentry>
 
 <varlistentry>
 <term><userinput><command>/oper </command><replaceable>[nick]</replaceable></userinput></term>
-<listitem><para>Grants the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> &irc;-Op (Administrator) privilege.  This only works if the &nickname; is listed in the server's O: line.  &irc;-Ops
-have the privilege to <userinput><command>/kill</command></userinput> &nickname;s,
+<listitem><para>Grants the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> &irc;-Op (Administrator) privilege.  This only works if the &i18n-nickname; is listed in the server's O: line.  &irc;-Ops
+have the privilege to <userinput><command>/kill</command></userinput> &i18n-nickname;s,
 <userinput><command>/connect</command></userinput> servers to the &irc; network, and more.
 If <userinput><replaceable>nick</replaceable></userinput> is not entered,
 attempts to grant yourself &irc;-Op privilege.  You will be prompted for your &irc;-Op user name and password in either case.</para>
@@ -2535,7 +2535,7 @@ the command is sent to all the servers you have connected in &konversation;.</pa
 
 <varlistentry>
 <term><userinput><command>/invite </command><replaceable>nick</replaceable> <replaceable>[channel]</replaceable></userinput></term>
-<listitem><para>Invites the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> to join <userinput><replaceable>channel</replaceable></userinput>.  This command is especially useful if the channel is invite-only.  When entered in a channel tab, <userinput><replaceable>channel</replaceable></userinput> may be omitted.</para></listitem>
+<listitem><para>Invites the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> to join <userinput><replaceable>channel</replaceable></userinput>.  This command is especially useful if the channel is invite-only.  When entered in a channel tab, <userinput><replaceable>channel</replaceable></userinput> may be omitted.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2561,15 +2561,15 @@ scripts.</para>
 <varlistentry>
 <term><userinput><command>/notify </command><replaceable>[nick]</replaceable></userinput></term>
 <listitem><para>Adds or removes <userinput><replaceable>nick</replaceable></userinput> from
-your <link linkend="nicksonline">Watched Nicks Online</link> list.  If the &nickname; is already
+your <link linkend="nicksonline">Watched Nicks Online</link> list.  If the &i18n-nickname; is already
 in the list, it is removed.  If it is not in the list, it is added.  If <userinput><replaceable>nick</replaceable></userinput> is omitted, displays the current list
-of watched &nickname;s.</para>
+of watched &i18n-nickname;s.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term><userinput><command>/kick </command><replaceable>nick</replaceable> <replaceable>reason</replaceable></userinput></term>
-<listitem><para>When entered in a channel tab, attempts to kick the user with &nickname;
+<listitem><para>When entered in a channel tab, attempts to kick the user with &i18n-nickname;
 <userinput><replaceable>nick</replaceable></userinput> from the channel with
 <userinput><replaceable>reason</replaceable></userinput>.  If <userinput><replaceable>reason</replaceable></userinput> is not entered, defaults to the
 reason in the <link linkend="identity">Settings</link>.  This command may only be used in
@@ -2597,7 +2597,7 @@ To get the current ban list for a channel, enter
 <varlistentry>
 <term><userinput><command>/ignore </command> [<command>-all</command>] <replaceable>nick</replaceable> </userinput></term>
 <listitem><para>Adds <userinput><replaceable>nick</replaceable></userinput> to your Ignore list.
-You may specify more than one &nickname; separated by spaces.  Channel messages from users on your Ignore
+You may specify more than one &i18n-nickname; separated by spaces.  Channel messages from users on your Ignore
 list are not displayed.  In addition, if you enter <userinput><command>-all</command></userinput>, all message types
 (queries, notices, &CTCP;, DCC, and Exceptions) from the user are ignored as well as channel messages.
 </para></listitem>
@@ -2645,7 +2645,7 @@ the server requires a port number other than the default (6667), enter the <user
 <term><userinput><command>/dcc </command> <command>SEND </command><replaceable>nick</replaceable>
 <replaceable>[filename]</replaceable></userinput></term>
 <listitem><para>Sends <userinput><replaceable>filename</replaceable></userinput> to the user with
-&nickname; <userinput><replaceable>nick</replaceable></userinput>.
+&i18n-nickname; <userinput><replaceable>nick</replaceable></userinput>.
 If <userinput><replaceable>filename</replaceable></userinput> is omitted, a dialog appears for you to select
 a file.
 </para></listitem>
@@ -2980,7 +2980,7 @@ or menu bars. -->
 			<guimenu>File</guimenu>
 			<guimenuitem>Global Away</guimenuitem>
 		</menuchoice></term>
-		<listitem><para><action>Changes your &nickname; status to away in all channels.
+		<listitem><para><action>Changes your &i18n-nickname; status to away in all channels.
 		</action></para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3163,7 +3163,7 @@ Clear Marker Lines Ctrl Shift R
 				<guimenuitem>Show Nicklist</guimenuitem>
 			</menuchoice></term>
 		<listitem><para>
-				<action>Hides (or displays) the panel of &nickname;s in channel tabs.
+				<action>Hides (or displays) the panel of &i18n-nickname;s in channel tabs.
 				</action>
 			</para></listitem>
 	</varlistentry>
