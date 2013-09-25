@@ -246,7 +246,7 @@ bool& needWhois)
         {
             niInfo += i18n("Away");
             if (!nickInfo->getAwayMessage().isEmpty())
-                niInfo += '(' + nickInfo->getAwayMessage() + ')';
+                niInfo += " (" + nickInfo->getAwayMessage() + ')';
         }
         if (!nickInfo->getHostmask().isEmpty())
             niInfo += ' ' + nickInfo->getHostmask();
