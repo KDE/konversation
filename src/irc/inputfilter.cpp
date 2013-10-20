@@ -1062,6 +1062,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
+                    NickInfoPtr nickInfo = m_server->getNickInfo(parameterList.value(1));
+                    if (nickInfo)
+                    {
+                        nickInfo->setIdentified(true);
+                    }
                     // Display message only if this was not an automatic request.
                     if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 0)
                     {
