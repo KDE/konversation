@@ -220,10 +220,10 @@ void Preferences::setHighlightList(QList<Highlight*> newList)
 }
 
 void Preferences::addHighlight(const QString& highlight, bool regExp, const QColor& color,
-    const QString& soundURL, const QString& autoText, const QString& chatWindows)
+    const QString& soundURL, const QString& autoText, const QString& chatWindows, bool notify)
 {
     self()->mHighlightList.append(new Highlight(highlight, regExp, color,
-        KUrl(soundURL), autoText, chatWindows));
+        KUrl(soundURL), autoText, chatWindows, notify));
 }
 
 void Preferences::setIgnoreList(QList<Ignore*> newList)

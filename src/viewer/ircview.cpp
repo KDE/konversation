@@ -1097,14 +1097,18 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             {
                 highlightColor = highlight->getColor().name();
                 m_highlightColor = highlightColor;
-                m_tabNotification = Konversation::tnfHighlight;
 
-                if (Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
+                if (highlight->getNotify())
                 {
-                    konvApp->sound()->play(highlight->getSoundURL());
-                }
+                    m_tabNotification = Konversation::tnfHighlight;
 
-                konvApp->notificationHandler()->highlight(m_chatWin, whoSent, line);
+                    if (Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
+                    {
+                        konvApp->sound()->play(highlight->getSoundURL());
+                    }
+
+                    konvApp->notificationHandler()->highlight(m_chatWin, whoSent, line);
+                }
                 m_autoTextToSend = highlight->getAutoText();
 
                 // replace %0 - %9 in regex groups

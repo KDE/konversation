@@ -31,7 +31,7 @@ class Highlight
 {
     public:
         Highlight(const QString& pattern, bool regExp, const QColor& color,
-            const KUrl& soundURL, const QString& autoText, const QString& chatWindows);
+            const KUrl& soundURL, const QString& autoText, const QString& chatWindows, bool notify);
 
         int getID() const;
 
@@ -54,6 +54,9 @@ class Highlight
         QString getChatWindows() const;
         QStringList getChatWindowList() const;
 
+        void setNotify(bool notify);
+        bool getNotify() const;
+
     protected:
         static unsigned int s_id;
 
@@ -66,5 +69,6 @@ class Highlight
         QString m_autoText;
         QString m_chatWindows;
         QStringList m_chatWindowList;
+        bool m_notify;
 };
 #endif

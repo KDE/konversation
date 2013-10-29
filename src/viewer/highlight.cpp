@@ -19,7 +19,7 @@
 unsigned int Highlight::s_id = 0;                 // static
 
 Highlight::Highlight(const QString& pattern, bool regExp, const QColor& color,
-    const KUrl& soundURL, const QString& autoText, const QString& chatWindows)
+    const KUrl& soundURL, const QString& autoText, const QString& chatWindows, bool notify)
 {
     setPattern(pattern);
     setRegExp(regExp);
@@ -27,6 +27,7 @@ Highlight::Highlight(const QString& pattern, bool regExp, const QColor& color,
     setSoundURL(soundURL);
     setAutoText(autoText);
     setChatWindows(chatWindows);
+    setNotify(notify);
 
     // unique ID for every Highlight
     m_itemID = s_id++;
@@ -110,3 +111,14 @@ QStringList Highlight::getChatWindowList() const
 {
     return m_chatWindowList;
 }
+
+bool Highlight::getNotify() const
+{
+    return m_notify;
+}
+
+void Highlight::setNotify(bool notify)
+{
+    m_notify = notify;
+}
+

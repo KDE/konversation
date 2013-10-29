@@ -68,6 +68,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
     connect(highlightListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT (highlightSelected(QTreeWidgetItem*)));
     connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT (patternChanged(QString)));
+    connect(enableNotificationsCheckbox, SIGNAL(toggled(bool)), this, SLOT(notifyModeChanged(bool)));
     connect(patternButton, SIGNAL(clicked()), this, SLOT(regExpButtonClicked()));
     connect(patternColor, SIGNAL(changed(QColor)), this, SLOT (colorChanged(QColor)));
     connect(soundURL, SIGNAL(textChanged(QString)), this, SLOT(soundURLChanged(QString)));
@@ -128,6 +129,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
         newItemSelected = true;
         patternColor->setColor(highlightItem->getColor());
         patternInput->setText(highlightItem->getPattern());
+        enableNotificationsCheckbox->setChecked(highlightItem->getNotify());
         soundURL->setUrl(highlightItem->getSoundURL().prettyUrl());
         autoTextInput->setText(highlightItem->getAutoText());
         chatWindowsInput->setText(highlightItem->getChatWindows());
@@ -155,6 +157,8 @@ void Highlight_Config::updateButtons()
     patternButton->setEnabled(enabled && installed);
     colorLabel->setEnabled(enabled);
     patternColor->setEnabled(enabled);
+    enableNotificationsLabel->setEnabled(enabled);
+    enableNotificationsCheckbox->setEnabled(enabled);
     soundURL->setEnabled(enabled);
     soundLabel->setEnabled(enabled);
     soundPlayBtn->setEnabled(enabled);
@@ -181,6 +185,17 @@ void Highlight_Config::patternChanged(const QString& newPattern)
     if (!newItemSelected && item)
     {
         item->setPattern(newPattern);
+        emit modified();
+    }
+}
+
+void Highlight_Config::notifyModeChanged(bool enabled)
+{
+    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+
+    if (!newItemSelected && item)
+    {
+        item->setNotify(enabled);
         emit modified();
     }
 }
@@ -258,7 +273,7 @@ void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
 
 void Highlight_Config::addHighlight()
 {
-    Highlight* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), KUrl(), QString(), QString());
+    Highlight* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), KUrl(), QString(), QString(), true);
 
     HighlightViewItem* item = new HighlightViewItem(highlightListView, newHighlight);
     item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
@@ -296,7 +311,7 @@ QList<Highlight*> Highlight_Config::getHighlightList()
     while (item)
     {
         newList.append(new Highlight(item->getPattern(), item->getRegExp(), item->getColor(),
-            item->getSoundURL(), item->getAutoText(), item->getChatWindows()));
+            item->getSoundURL(), item->getAutoText(), item->getChatWindows(), item->getNotify()));
         item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
 
@@ -311,7 +326,7 @@ QStringList Highlight_Config::currentHighlightList()
     while (item)
     {
         newList.append(item->getPattern() + QString(item->getRegExp()) + item->getColor().name() +
-            item->getSoundURL().url() + item->getAutoText() + item->getChatWindows());
+            item->getSoundURL().url() + item->getAutoText() + item->getChatWindows() + QString::number(item->getNotify()));
         item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
 
@@ -340,6 +355,7 @@ void Highlight_Config::saveSettings()
         grp.writePathEntry("Sound", hl->getSoundURL().prettyUrl());
         grp.writeEntry("AutoText", hl->getAutoText());
         grp.writeEntry("ChatWindows", hl->getChatWindows());
+        grp.writeEntry("Notify", hl->getNotify());
         i++;
     }
 

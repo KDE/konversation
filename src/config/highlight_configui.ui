@@ -357,6 +357,32 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="enableNotificationsLabel">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Enable &amp;notifications:</string>
+          </property>
+          <property name="buddy">
+           <cstring>enableNotificationsCheckbox</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QCheckBox" name="enableNotificationsCheckbox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <layout class="QHBoxLayout" name="chatWindowsLayout"/>
+        </item>
         <item row="4" column="0">
          <widget class="QLabel" name="chatWindowsLabel">
           <property name="enabled">
@@ -374,24 +400,20 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <layout class="QHBoxLayout" name="chatWindowsLayout">
-          <item>
-           <widget class="KLineEdit" name="chatWindowsInput">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="whatsThis">
-             <string>This highlight will only be searched for in chat windows listed here by name, or in all chat windows if the field is left empty. Multiple names have to be separated by commas.</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="KLineEdit" name="chatWindowsInput">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="whatsThis">
+           <string>This highlight will only be searched for in chat windows listed here by name, or in all chat windows if the field is left empty. Multiple names have to be separated by commas.</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

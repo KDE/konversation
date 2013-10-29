@@ -28,6 +28,7 @@ HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* highlight)
     setSoundURL(highlight->getSoundURL());
     setAutoText(highlight->getAutoText());
     setChatWindows(highlight->getChatWindows());
+    setNotify(highlight->getNotify());
 }
 
 HighlightViewItem::~HighlightViewItem()
@@ -39,7 +40,7 @@ void HighlightViewItem::setID(const int itemID)
     m_itemID = itemID;
 }
 
-int HighlightViewItem::getID()
+int HighlightViewItem::getID() const
 {
     return m_itemID;
 }
@@ -50,7 +51,7 @@ void HighlightViewItem::setPattern(const QString& pattern)
     setText(1, m_pattern);
 }
 
-QString HighlightViewItem::getPattern()
+QString HighlightViewItem::getPattern() const
 {
     return m_pattern;
 }
@@ -60,7 +61,7 @@ void HighlightViewItem::setRegExp(const bool regexp)
     setCheckState(0, regexp ? Qt::Checked : Qt::Unchecked);
 }
 
-bool HighlightViewItem::getRegExp()
+bool HighlightViewItem::getRegExp() const
 {
     return checkState(0) == Qt::Checked;
 }
@@ -76,7 +77,7 @@ void HighlightViewItem::setColor(const QColor color)
     setForeground(4, brush);
 }
 
-QColor HighlightViewItem::getColor()
+QColor HighlightViewItem::getColor() const
 {
     return m_color;
 }
@@ -87,7 +88,7 @@ void HighlightViewItem::setSoundURL(const KUrl& soundURL)
     setText(2, m_soundURL.prettyUrl());
 }
 
-KUrl HighlightViewItem::getSoundURL()
+KUrl HighlightViewItem::getSoundURL() const
 {
     return m_soundURL;
 }
@@ -98,7 +99,7 @@ void HighlightViewItem::setAutoText(const QString& autoText)
     setText(3, m_autoText);
 }
 
-QString HighlightViewItem::getAutoText()
+QString HighlightViewItem::getAutoText() const
 {
     return m_autoText;
 }
@@ -109,7 +110,17 @@ void HighlightViewItem::setChatWindows(const QString& chatWindows)
     setText(4, m_chatWindows);
 }
 
-QString HighlightViewItem::getChatWindows()
+QString HighlightViewItem::getChatWindows() const
 {
     return m_chatWindows;
+}
+
+void HighlightViewItem::setNotify(bool doNotify)
+{
+    m_notify = doNotify;
+}
+
+bool HighlightViewItem::getNotify() const
+{
+    return m_notify;
 }

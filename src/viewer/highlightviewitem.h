@@ -30,25 +30,28 @@ class HighlightViewItem : public QTreeWidgetItem
         ~HighlightViewItem();
 
         void setID(const int itemID);
-        int getID();
+        int getID() const;
 
         void setPattern(const QString& pattern);
-        QString getPattern();
+        QString getPattern() const;
 
         void setRegExp(const bool regexp);
-        bool getRegExp();
+        bool getRegExp() const;
 
         void setColor(const QColor color);
-        QColor getColor();
+        QColor getColor() const;
 
         void setSoundURL(const KUrl& url);
-        KUrl getSoundURL();
+        KUrl getSoundURL() const;
 
         void setAutoText(const QString& autoText);
-        QString getAutoText();
+        QString getAutoText() const;
 
         void setChatWindows(const QString& chatWindows);
-        QString getChatWindows();
+        QString getChatWindows() const;
+
+        void setNotify(bool doNotify);
+        bool getNotify() const;
 
     protected:
         int m_itemID;
@@ -58,5 +61,6 @@ class HighlightViewItem : public QTreeWidgetItem
         KUrl m_soundURL;
         QString m_autoText;
         QString m_chatWindows;
+        bool m_notify;
 };
 #endif
