@@ -223,16 +223,13 @@ void OSDWidget::paintEvent( QPaintEvent *e )
     p.setRenderHints( QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing );
     p.setClipRect( e->rect() );
 
-    const qreal xround = 20.0;
-    const qreal yround = 20.0;
-
     // Masking for transparency
     mask.fill( Qt::color0 );
     maskPainter.setBrush( Qt::color1 );
-    maskPainter.drawRoundedRect( e->rect(), xround, yround );
+    maskPainter.drawRect( e->rect() );
     setMask( mask );
 
-    p.drawRoundedRect( e->rect(), xround, yround );
+    p.drawRect( e->rect() );
 
     p.setPen( Qt::white ); // Revert this when the background can be colorized again.
     rect.adjust( M, M, -M, -M );
