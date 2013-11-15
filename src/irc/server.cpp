@@ -39,6 +39,7 @@
 #include "notificationhandler.h"
 #include "awaymanager.h"
 #include "ircinput.h"
+#include "guess_ja.cpp"
 
 #include <QTextCodec>
 #include <QStringListModel>
@@ -55,6 +56,7 @@
 using namespace Konversation;
 
 int Server::m_availableConnectionId = 0;
+JapaneseCode Server::m_jc = JapaneseCode();
 
 Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 {
@@ -1361,35 +1363,43 @@ void Server::incoming()
             }
         }
         #endif
-        bool isUtf8 = Konversation::isUtf8(first);
 
-        QString encoded;
+        QString channelEncoding;
 
-        if (isUtf8)
-            encoded = QString::fromUtf8(first);
-        else
+        // Retrieve user codec preference for this chat window.
+        if (!channelKey.isEmpty())
         {
-            // check setting
-            QString channelEncoding;
-            if( !channelKey.isEmpty() )
-            {
-                if(getServerGroup())
-                    channelEncoding = Preferences::channelEncoding(getServerGroup()->id(), channelKey);
-                else
-                    channelEncoding = Preferences::channelEncoding(getDisplayName(), channelKey);
-            }
-            // END set channel encoding if specified
-
-            if( !channelEncoding.isEmpty() )
-                codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
-
-            // if channel encoding is utf-8 and the string is definitely not utf-8
-            // then try latin-1
-            if (codec->mibEnum() == 106)
-                codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
-
-            encoded = codec->toUnicode(first);
+            if (getServerGroup())
+                channelEncoding = Preferences::channelEncoding(getServerGroup()->id(), channelKey);
+            else
+                channelEncoding = Preferences::channelEncoding(getDisplayName(), channelKey);
         }
+
+        // Get a QTextCodec if preference was set.
+        if (!channelEncoding.isEmpty())
+            codec = Konversation::IRCCharsets::self()->codecForName(channelEncoding);
+
+        // We're trying Utf-8, but the sanity checker says it can't be Utf-8.
+        if (codec->mibEnum() == 106 && !Konversation::isUtf8(first))
+        {
+            // Attempt to guess K_SJIS and K_JIS.
+            JapaneseCode::Type result = m_jc.guess_jp(first, first.length());
+
+            switch(result)
+            {
+                case JapaneseCode::K_SJIS:
+                case JapaneseCode::K_JIS:
+                    codec = QTextCodec::codecForMib( 17 /* Shift_JIS */ );
+                    break;
+                default:
+                    // Fall back to latin-1.
+                    codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
+                    break;
+            }
+        }
+
+        // Decode and encode to Unicode.
+        QString encoded = codec->toUnicode(first);
 
         // Qt uses 0xFDD0 and 0xFDD1 to mark the beginning and end of text frames. Remove
         // these here to avoid fatal errors encountered in QText* and the event loop pro-
