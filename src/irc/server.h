@@ -26,6 +26,7 @@
 #include "connectionsettings.h"
 #include "statuspanel.h"
 #include "invitedialog.h"
+#include "guess_ja.h"
 #include <config-konversation.h>
 
 #ifdef HAVE_QCA2
@@ -40,6 +41,7 @@
 #include <ksharedptr.h>
 #include <kprocess.h>
 #include <ktcpsocket.h>
+#include <guess_ja.h>
 #include <preferences.h>
 
 class QAbstractItemModel;
@@ -858,6 +860,8 @@ class Server : public QObject
         QStringList m_changedChannels;
 
         bool m_recreationScheduled;
+
+        static JapaneseCode m_jc;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
