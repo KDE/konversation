@@ -1116,7 +1116,7 @@ Comment[zh_TW]=某個使用者或頻道的模式被變更了
 Action=None
 
 [Event/notify]
-Name=Notify
+Name=Nick online
 Name[ast]=Notificar
 Name[bg]=Известяване
 Name[bs]=Obavještenje
