@@ -1117,6 +1117,17 @@ Action=None
 
 [Event/notify]
 Name=Nick online
+Name[ca]=Sobrenom en línia
+Name[da]=Nick kommet online
+Name[de]=Spitzname ist online
+Name[gl]=Alcume conectado
+Name[nl]=Schermnaam online
+Name[pt]=Alcunha ligada
+Name[pt_BR]=Apelido conectado
+Name[sl]=Vzdevek povezan
+Name[sv]=Smeknamn uppkopplat
+Name[uk]=Псевдонім у мережі
+Name[x-test]=xxNick onlinexx
 Comment=A user on your watched nicks list has come online
 Comment[ast]=Un usuariu de la to llista d'alcuños observaos coneutóse
 Comment[bg]=Потребител от списъка ви с наблюдавани псевдоними влезе в канала
