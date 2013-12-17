@@ -398,6 +398,7 @@ void Application::readOptions()
             newIdentity->setNickservNickname(cgIdentity.readEntry("Bot"));
             newIdentity->setNickservCommand(cgIdentity.readEntry("NickservCommand", "identify"));
             newIdentity->setSaslAccount(cgIdentity.readEntry("SaslAccount"));
+            newIdentity->setPemClientCertFile(cgIdentity.readEntry<KUrl>("PemClientCertFile", KUrl()));
 
             newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
             newIdentity->setRunAwayCommands(cgIdentity.readEntry("ShowAwayMessage", false));
@@ -762,6 +763,7 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("Bot",identity->getNickservNickname());
         cgIdentity.writeEntry("NickservCommand",identity->getNickservCommand());
         cgIdentity.writeEntry("SaslAccount",identity->getSaslAccount());
+        cgIdentity.writeEntry("PemClientCertFile", identity->getPemClientCertFile());
         cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
         cgIdentity.writeEntry("ShowAwayMessage",identity->getRunAwayCommands());
         cgIdentity.writeEntry("AwayMessage",identity->getAwayCommand());

@@ -1916,7 +1916,7 @@ void Server::closeChannel(const QString& name)
     kDebug() << "Server::closeChannel(" << name << ")";
     Channel* channelToClose = getChannelByName(name);
 
-    if(channelToClose)
+    if (channelToClose && channelToClose->joined())
     {
         Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),
             Preferences::self()->commandChar() + "PART", name);
