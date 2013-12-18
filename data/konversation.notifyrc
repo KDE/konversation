@@ -1117,16 +1117,15 @@ Action=None
 
 [Event/notify]
 Name=Nick online
-Name[bs]=Nadimak na mreži
 Name[ca]=Sobrenom en línia
 Name[da]=Nick kommet online
 Name[de]=Spitzname ist online
 Name[es]=Apodo en conexión
 Name[fi]=Nimimerkki paikalla
 Name[fr]=Pseudo en Ligne
+Name[gl]=Alcume conectado
 Name[it]=Nick collegato
 Name[nl]=Schermnaam online
-Name[pa]=ਨਾਂ ਆਨਲਾਈਨ
 Name[pt]=Alcunha ligada
 Name[pt_BR]=Apelido conectado
 Name[sk]=Prezývka online
@@ -1138,7 +1137,6 @@ Name[sr@latin]=Nadimak na vezi
 Name[sv]=Smeknamn uppkopplat
 Name[uk]=Псевдонім у мережі
 Name[x-test]=xxNick onlinexx
-Name[zh_TW]=線上暱稱
 Comment=A user on your watched nicks list has come online
 Comment[ast]=Un usuariu de la to llista d'alcuños observaos coneutóse
 Comment[bg]=Потребител от списъка ви с наблюдавани псевдоними влезе в канала
