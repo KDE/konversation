@@ -40,7 +40,7 @@ namespace Konversation
             m_clearPushButton->setIcon(KIcon("document-edit"));
             m_clearPushButton->setToolTip(i18n("Clear Image"));
             m_savePushButton->setIcon(KIcon("document-save"));
-            m_savePushButton->setToolTip(i18n("Save As.."));
+            m_savePushButton->setToolTip(i18n("Save As..."));
 
             m_pencilPushButton->setIcon(KIcon("draw-freehand"));
             m_pencilPushButton->setToolTip(i18n("Freehand Drawing"));
