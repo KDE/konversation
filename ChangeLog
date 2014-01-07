@@ -33,6 +33,30 @@ Changes since 1.5-rc1:
   when notifications for the associated connection's status tab were disabled.
 * Fixed the bundled 'sysinfo' script crashing on non-ascii characters in
   /etc/os-release when run on Python 2.
+* The bundled 'sysinfo' script now tries harder to determine the current CPU
+  clock frequencies (it now looks at sys/.../cpufreq/scaling_cur_freq in addi-
+  tion to /proc/cpuinfo).
+* Fixed a bug causing the flood fill tool in DCC Whiteboard tabs not to use
+  the correct color after using the color picker tool to set it.
+* Launching the default browser when clicking on links now works properly
+  again on Windows.
+* Fixed a bug causing certain combinations of sorting and filtering in Channel
+  List tabs not to work correctly, leading to partially unsorted list entries.
+* Minor rewordings and cleanups in UI text and the handbook for clarity and
+  correctness, e.g. the "Notify" notification event is now known as "Nick on-
+  line".
+* More information sources are now taken into account to update Konversation's
+  idea of whether a particular nick is identified with services or not (infor-
+  mation from IRC numeric 330 was previously discarded).
+* Fixed a bug causing Konversation to attempt to PART a channel that's no
+  longer actually joined when closing a channel tab after having been kicked
+  from the channel.
+* Some included PNG image files were badly encoded, this has been addressed.
+* Fixed a bug causing the file URL for an authentication certificate in the
+  Identities dialog to be forgotten across application restarts.
+* The warning about text in the topic editor exceeding the server-allowed
+  limit now calculates the threshold more correctly, taking encoding and IRC
+  formatting expandos into account.
 * Konversation now depends on KDE Platform v4.7.0 or higher and Qt v4.7.0 or
   higher.
 
