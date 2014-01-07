@@ -143,7 +143,7 @@ bool TopicEdit::colorizeExcessText()
 
         int length = codec->fromUnicode(Konversation::doVarExpansion(cursor.selectedText())).length();
 
-        if (length < m_maximumLength)
+        if (length <= m_maximumLength)
         {
             m_maxCursorPos = i;
         }
@@ -218,7 +218,8 @@ void TopicEdit::showWarning()
         m_warningUndercarriage->setAutoFillBackground(true);
     }
 
-    m_warning->setText(i18n("Text past the server limit of %1 bytes is shown in color.", m_maximumLength));
+    // FIXME: This should read bytes instead of characters, but we're in string freeze.
+    m_warning->setText(i18n("Text past the server limit of %1 characters is shown in color.", m_maximumLength));
 
     updateWarningGeometry();
 
