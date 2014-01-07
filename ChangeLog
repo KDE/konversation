@@ -1,4 +1,13 @@
-Changes since 1.5-rc1:
+Changes from 1.5-rc1 to 1.5-rc2:
+After a (too) long wait, Konversation 1.5-rc2 is hopefully our final bid for
+your aid in assuring the quality of a now-impending final release. Quite a few
+gnarly bugs have fallen since rc1; some of them long-standing, others were
+introduced along with the features that made their debut in the preceding test
+release. Of particular interest to many users will be robustness improvements
+in the Watched Nicks system and the lifting of certain restrictions on Unicode
+support that had been in place as a by-product of supporting older, defective
+Qt versions. See the changelog for more details!
+
 * Fixed a bug that could cause the Watched Nicks system to report all nicknames
   as offline if the Watched Nicks tab had been opened prior to a reconnect, even
   if that was not the case.
