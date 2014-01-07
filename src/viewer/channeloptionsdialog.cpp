@@ -59,6 +59,7 @@ namespace Konversation
 
         m_editingTopic = false;
 
+        m_ui.topicEdit->setChannel(channel);
         m_ui.topicEdit->setMaximumLength(m_channel->getServer()->topicLength());
 
         connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),

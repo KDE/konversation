@@ -26,10 +26,11 @@
 #include <kdeversion.h>
 #include <KTextEdit>
 
-
-class KMessageWidget;
+class Channel;
 
 class QEvent;
+
+class KMessageWidget;
 
 
 class TopicEdit : public KTextEdit
@@ -39,6 +40,9 @@ class TopicEdit : public KTextEdit
     public:
         explicit TopicEdit(QWidget* parent = 0);
         ~TopicEdit();
+
+        Channel* channel() const;
+        void setChannel(Channel* channel);
 
         int maximumLength() const;
         void setMaximumLength(int length);
@@ -58,7 +62,7 @@ class TopicEdit : public KTextEdit
         void moveCursorToEnd();
 
     private:
-        void colorizeExcessText();
+        bool colorizeExcessText();
         void resetTextColorization();
 
         void showWarning();
@@ -66,10 +70,12 @@ class TopicEdit : public KTextEdit
         void updateWarningGeometry();
 
         int m_maximumLength;
-        bool m_lastEditPastMaximumLength;
+        int m_maxCursorPos;
 
         KMessageWidget* m_warning;
         QWidget* m_warningUndercarriage;
+
+        Channel* m_channel;
 };
 
 #endif
