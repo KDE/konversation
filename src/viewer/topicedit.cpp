@@ -143,7 +143,7 @@ bool TopicEdit::colorizeExcessText()
 
         int length = codec->fromUnicode(Konversation::doVarExpansion(cursor.selectedText())).length();
 
-        if (length < m_maximumLength)
+        if (length <= m_maximumLength)
         {
             m_maxCursorPos = i;
         }
