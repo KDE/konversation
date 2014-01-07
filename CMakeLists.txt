@@ -3,7 +3,7 @@ project(konversation)
 #paranoid?
 cmake_minimum_required(VERSION 2.6.2)
 
-set(KDE_MIN_VERSION "4.6.0")
+set(KDE_MIN_VERSION "4.7.0")
 #atm this gets us FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
 find_package(KDE4 ${KDE_MIN_VERSION} REQUIRED)
 find_package(KdepimLibs REQUIRED)

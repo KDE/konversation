@@ -22,7 +22,6 @@
 
 #include "topicedit.h"
 
-#if KDE_IS_VERSION(4, 7, 0)
 #include <KColorScheme>
 #include <KLocale>
 #include <KMessageWidget>
@@ -32,7 +31,6 @@
 
 
 #define MARGIN 4
-#endif
 
 
 TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
@@ -40,12 +38,10 @@ TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
     m_maximumLength = -1;
     m_lastEditPastMaximumLength = false;
 
-#if KDE_IS_VERSION(4, 7, 0)
     m_warning = 0;
     m_warningUndercarriage = 0;
 
     viewport()->installEventFilter(this);
-#endif
 
     setAcceptRichText(false);
 }
@@ -79,10 +75,8 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
     {
         resetTextColorization();
 
-#if KDE_IS_VERSION(4, 7, 0)
         if (m_warning && m_warning->isVisible())
             hideWarning();
-#endif
 
         document()->clearUndoRedoStacks();
 
@@ -98,9 +92,7 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
     {
         m_lastEditPastMaximumLength = true;
         colorizeExcessText();
-#if KDE_IS_VERSION(4, 7, 0)
         showWarning();
-#endif
     }
     else if (document()->characterCount() <= m_maximumLength)
     {
@@ -110,10 +102,8 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
             m_lastEditPastMaximumLength = false;
         }
 
-#if KDE_IS_VERSION(4, 7, 0)
         if (m_warning && m_warning->isVisible())
             hideWarning();
-#endif
     }
 }
 
@@ -157,7 +147,6 @@ void TopicEdit::resetTextColorization()
     cursor.endEditBlock();
 }
 
-#if KDE_IS_VERSION(4, 7, 0)
 void TopicEdit::showWarning()
 {
     if (!m_warning)
@@ -281,7 +270,6 @@ void TopicEdit::moveEvent(QMoveEvent* event)
 
     QWidget::moveEvent(event);
 }
-#endif
 
 void TopicEdit::trimExcessText()
 {

@@ -27,9 +27,7 @@
 #include <KTextEdit>
 
 
-#if KDE_IS_VERSION(4, 7, 0)
 class KMessageWidget;
-#endif
 
 class QEvent;
 
@@ -45,7 +43,6 @@ class TopicEdit : public KTextEdit
         int maximumLength() const;
         void setMaximumLength(int length);
 
-#if KDE_IS_VERSION(4, 7, 0)
         QSize minimumSizeHint() const;
 
         bool eventFilter(QObject* watched, QEvent* event);
@@ -53,7 +50,6 @@ class TopicEdit : public KTextEdit
 
     protected:
         void moveEvent(QMoveEvent* event);
-#endif
 
 
     private slots:
@@ -65,20 +61,15 @@ class TopicEdit : public KTextEdit
         void colorizeExcessText();
         void resetTextColorization();
 
-#if KDE_IS_VERSION(4, 7, 0)
         void showWarning();
         void hideWarning();
         void updateWarningGeometry();
-#endif
 
         int m_maximumLength;
         bool m_lastEditPastMaximumLength;
 
-
-#if KDE_IS_VERSION(4, 7, 0)
         KMessageWidget* m_warning;
         QWidget* m_warningUndercarriage;
-#endif
 };
 
 #endif
