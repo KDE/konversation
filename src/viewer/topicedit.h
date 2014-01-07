@@ -26,12 +26,11 @@
 #include <kdeversion.h>
 #include <KTextEdit>
 
-
-#if KDE_IS_VERSION(4, 7, 0)
-class KMessageWidget;
-#endif
+class Channel;
 
 class QEvent;
+
+class KMessageWidget;
 
 
 class TopicEdit : public KTextEdit
@@ -42,10 +41,12 @@ class TopicEdit : public KTextEdit
         explicit TopicEdit(QWidget* parent = 0);
         ~TopicEdit();
 
+        Channel* channel() const;
+        void setChannel(Channel* channel);
+
         int maximumLength() const;
         void setMaximumLength(int length);
 
-#if KDE_IS_VERSION(4, 7, 0)
         QSize minimumSizeHint() const;
 
         bool eventFilter(QObject* watched, QEvent* event);
@@ -53,7 +54,6 @@ class TopicEdit : public KTextEdit
 
     protected:
         void moveEvent(QMoveEvent* event);
-#endif
 
 
     private slots:
@@ -62,23 +62,20 @@ class TopicEdit : public KTextEdit
         void moveCursorToEnd();
 
     private:
-        void colorizeExcessText();
+        bool colorizeExcessText();
         void resetTextColorization();
 
-#if KDE_IS_VERSION(4, 7, 0)
         void showWarning();
         void hideWarning();
         void updateWarningGeometry();
-#endif
 
         int m_maximumLength;
-        bool m_lastEditPastMaximumLength;
+        int m_maxCursorPos;
 
-
-#if KDE_IS_VERSION(4, 7, 0)
         KMessageWidget* m_warning;
         QWidget* m_warningUndercarriage;
-#endif
+
+        Channel* m_channel;
 };
 
 #endif

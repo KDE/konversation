@@ -20,9 +20,7 @@
 #include <kdeversion.h>
 
 class KEditListWidget;
-#if KDE_IS_VERSION(4, 7, 0)
 class KMessageWidget;
-#endif
 
 namespace Konversation
 {

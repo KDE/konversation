@@ -21,37 +21,48 @@
 */
 
 #include "topicedit.h"
+#include "channel.h"
+#include "irccharsets.h"
 
-#if KDE_IS_VERSION(4, 7, 0)
 #include <KColorScheme>
 #include <KLocale>
 #include <KMessageWidget>
 
 #include <QAction>
 #include <QEvent>
+#include <QTextCodec>
 
 
 #define MARGIN 4
-#endif
 
 
 TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
 {
-    m_maximumLength = -1;
-    m_lastEditPastMaximumLength = false;
+    m_channel = 0;
 
-#if KDE_IS_VERSION(4, 7, 0)
+    m_maximumLength = -1;
+    m_maxCursorPos = -1;
+
     m_warning = 0;
     m_warningUndercarriage = 0;
 
     viewport()->installEventFilter(this);
-#endif
 
     setAcceptRichText(false);
 }
 
 TopicEdit::~TopicEdit()
 {
+}
+
+Channel* TopicEdit::channel() const
+{
+    return m_channel;
+}
+
+void TopicEdit::setChannel(Channel* channel)
+{
+    m_channel = channel;
 }
 
 int TopicEdit::maximumLength() const
@@ -79,10 +90,8 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
     {
         resetTextColorization();
 
-#if KDE_IS_VERSION(4, 7, 0)
         if (m_warning && m_warning->isVisible())
             hideWarning();
-#endif
 
         document()->clearUndoRedoStacks();
 
@@ -94,32 +103,57 @@ void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
     // Nothing we care about occurred.
     if (charsRemoved == 0 && charsAdded == 0) return;
 
-    if (document()->characterCount() > m_maximumLength)
+    if (colorizeExcessText())
     {
-        m_lastEditPastMaximumLength = true;
-        colorizeExcessText();
-#if KDE_IS_VERSION(4, 7, 0)
         showWarning();
-#endif
     }
-    else if (document()->characterCount() <= m_maximumLength)
+    else if (m_warning && m_warning->isVisible())
     {
-        if (m_lastEditPastMaximumLength)
-        {
-            resetTextColorization();
-            m_lastEditPastMaximumLength = false;
-        }
-
-#if KDE_IS_VERSION(4, 7, 0)
-        if (m_warning && m_warning->isVisible())
-            hideWarning();
-#endif
+        resetTextColorization();
+        hideWarning();
     }
 }
 
-void TopicEdit::colorizeExcessText()
+bool TopicEdit::colorizeExcessText()
 {
+    if (!m_channel) {
+        return false;
+    }
+
+    QString channelCodecName = m_channel->getChannelEncoding();
+    QTextCodec* codec = channelCodecName.isEmpty() ? m_channel->getServer()->getIdentity()->getCodec()
+        : Konversation::IRCCharsets::self()->codecForName(channelCodecName);
+
     QTextCursor cursor(document());
+
+    cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
+
+    if (codec->fromUnicode(Konversation::doVarExpansion(cursor.selectedText())).length() <= m_maximumLength)
+    {
+        m_maxCursorPos = -1;
+        return false;
+    }
+
+    int end = cursor.position();
+    cursor.setPosition(0);
+
+    for (int i = 1; i <= end; ++i)
+    {
+        cursor.setPosition(i, QTextCursor::KeepAnchor);
+
+        int length = codec->fromUnicode(Konversation::doVarExpansion(cursor.selectedText())).length();
+
+        if (length < m_maximumLength)
+        {
+            m_maxCursorPos = i;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    cursor.setPosition(0);
 
     KColorScheme colors(QPalette::Active);
 
@@ -128,16 +162,18 @@ void TopicEdit::colorizeExcessText()
 
     cursor.joinPreviousEditBlock();
 
-    cursor.setPosition(m_maximumLength - 1, QTextCursor::KeepAnchor);
+    cursor.setPosition(m_maxCursorPos, QTextCursor::KeepAnchor);
     cursor.setCharFormat(format);
 
-    cursor.setPosition(m_maximumLength - 1, QTextCursor::MoveAnchor);
+    cursor.setPosition(m_maxCursorPos, QTextCursor::MoveAnchor);
     cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 
     format.setForeground(colors.foreground(KColorScheme::NegativeText));
     cursor.setCharFormat(format);
 
     cursor.endEditBlock();
+
+    return true;
 }
 
 void TopicEdit::resetTextColorization()
@@ -157,7 +193,6 @@ void TopicEdit::resetTextColorization()
     cursor.endEditBlock();
 }
 
-#if KDE_IS_VERSION(4, 7, 0)
 void TopicEdit::showWarning()
 {
     if (!m_warning)
@@ -183,7 +218,7 @@ void TopicEdit::showWarning()
         m_warningUndercarriage->setAutoFillBackground(true);
     }
 
-    m_warning->setText(i18n("Text past the server limit of %1 characters is shown in color.", m_maximumLength));
+    m_warning->setText(i18n("Text past the server limit of %1 bytes is shown in color.", m_maximumLength));
 
     updateWarningGeometry();
 
@@ -281,13 +316,17 @@ void TopicEdit::moveEvent(QMoveEvent* event)
 
     QWidget::moveEvent(event);
 }
-#endif
 
 void TopicEdit::trimExcessText()
 {
+    if (m_maxCursorPos == -1)
+    {
+        return;
+    }
+
     QTextCursor cursor(document());
 
-    cursor.setPosition(m_maximumLength - 1, QTextCursor::MoveAnchor);
+    cursor.setPosition(m_maxCursorPos, QTextCursor::MoveAnchor);
     cursor.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
 
     cursor.removeSelectedText();
