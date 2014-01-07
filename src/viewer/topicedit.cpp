@@ -183,7 +183,7 @@ void TopicEdit::showWarning()
         m_warningUndercarriage->setAutoFillBackground(true);
     }
 
-    m_warning->setText(i18n("Text past the server limit of %1 characters is shown in color.", m_maximumLength));
+    m_warning->setText(i18n("Text past the server limit of %1 bytes is shown in color.", m_maximumLength));
 
     updateWarningGeometry();
 
