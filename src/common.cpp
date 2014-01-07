@@ -21,6 +21,7 @@
 #include <QBitmap>
 #include <QPainter>
 
+#include "guess_ja.cpp"
 #include "unicode.cpp"
 
 namespace Konversation
