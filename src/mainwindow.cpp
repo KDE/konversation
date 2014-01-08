@@ -294,7 +294,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action->setIcon(KIcon("arrow-up"));
         action->setShortcut(KShortcut("Alt+Shift+Left"));
         action->setEnabled(false);
-        action->setHelpText("Move this tab");
+        action->setHelpText(i18n("Move this tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
         actionCollection()->addAction("move_tab_left", action);
 
@@ -440,7 +440,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setIcon(KIcon("irc-join-channel"));
     action->setShortcut(KShortcut("Ctrl+J"));
     action->setEnabled(false);
-    action->setHelpText("Join a new channel on this server");
+    action->setHelpText(i18n("Join a new channel on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showJoinChannelDialog()));
     actionCollection()->addAction("join_channel", action);
 
