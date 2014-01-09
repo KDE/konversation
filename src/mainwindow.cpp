@@ -299,7 +299,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         actionCollection()->addAction("move_tab_left", action);
 
         action->setEnabled(false);
-        action->setHelpText("Move this tab");
+        action->setHelpText(i18n("Move this tab"));
         action=new KAction(this);
         action->setText(i18n("Move Tab Down"));
         action->setIcon(KIcon("arrow-down"));
@@ -316,7 +316,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
-            action->setHelpText("Move this tab");
+            action->setHelpText(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
@@ -325,7 +325,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
-            action->setHelpText("Move this tab");
+            action->setHelpText(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
             actionCollection()->addAction("move_tab_right", action);
 
@@ -337,7 +337,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
-            action->setHelpText("Move this tab");
+            action->setHelpText(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
@@ -346,7 +346,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
-            action->setHelpText("Move this tab");
+            action->setHelpText(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
             actionCollection()->addAction("move_tab_right", action);
 
