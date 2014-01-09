@@ -131,11 +131,7 @@ void NickListView::setWhatsThis()
 {
     Images* images = Application::instance()->images();
 
-    if(images->getNickIcon( Images::Normal, false).isNull())
-    {
-        QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearance</i>.</p></qt>"));
-    }
-    else
+    if(!images->getNickIcon( Images::Normal, false).isNull())
     {
         QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<br /></p>"
             "<table>"
