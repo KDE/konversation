@@ -1,3 +1,18 @@
+Changes from 1.5-rc2 to 1.5-rc1:
+Konversation 1.5 adds numerous major features over the previous stable release.
+Of particular note are support for SASL and client certificate authentication,
+all-new topic management UI, overhauled authentication UI in the Identities
+dialog, per-tab spell-checking language settings, user-configurable nick context
+menu entries, mouse spring-loading on tabs, all-new versions of major bundled
+scripts and improved Ignore and Watched Nicknames systems. Many under-the-hood
+changes to improve codec support and general performance, along with the usual
+slew of bug fixes all over, further sweeten the deal. Don't miss out on reading
+about various other new features and more fixes in the full changelogs since
+version 1.4, too!
+
+* Expanded interface translations.
+
+
 Changes from 1.5-rc1 to 1.5-rc2:
 After a (too) long wait, Konversation 1.5-rc2 is hopefully our final bid for
 your aid in assuring the quality of a now-impending final release. Quite a few
