@@ -224,7 +224,8 @@ class ram(Sensor):
 class storage(Sensor):
     def gather(self):
         try:
-            df = subprocess.check_output(['df', '-lP'], stderr=subprocess.STDOUT).decode()
+            env = dict(LC_ALL='C')
+            df = subprocess.check_output(['df', '-lP'], stderr=subprocess.STDOUT, env=env).decode()
         except subprocess.CalledProcessError as e:
             df = e.output.decode()
 
