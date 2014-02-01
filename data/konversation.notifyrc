@@ -1117,6 +1117,7 @@ Action=None
 
 [Event/notify]
 Name=Nick online
+Name[bs]=Nadimak na mreži
 Name[ca]=Sobrenom en línia
 Name[da]=Nick kommet online
 Name[de]=Spitzname ist online
