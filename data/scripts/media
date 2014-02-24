@@ -49,9 +49,9 @@ format_strings = {
 # Entries should be the unique MPRIS2 bus names of players, i.e. the "amarok"
 # part of "org.mpris.MediaPlayer2.amarok".
 player_rankings = {
-    'all'   : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'clementine', 'audacious',
-               'spotify', 'dragonplayer', 'bangarang', 'vlc'],
-    'audio' : ['amarok', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'audacious',
+    'all'   : ['amarok', 'cantata', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'clementine',
+               'audacious', 'spotify', 'dragonplayer', 'bangarang', 'vlc'],
+    'audio' : ['amarok', 'cantata', 'juk', 'tomahawk', 'rhythmbox', 'banshee', 'audacious',
                'clementine', 'spotify', 'pragha', 'gogglesmm', 'qmmp', 'gmusicbrowser',
                'guayadeque', 'bangarang', 'dragonplayer', 'vlc'],
     'video' : ['dragonplayer', 'kaffeine', 'bangarang', 'vlc', 'smplayer', 'totem']
