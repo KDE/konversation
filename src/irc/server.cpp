@@ -43,6 +43,7 @@
 #include <QStringListModel>
 #include <QStringBuilder>
 #include <QInputDialog>
+#include <QNetworkProxy>
 
 #include <QDebug>
 #include <KLocalizedString>
@@ -477,6 +478,12 @@ void Server::connectToIRCServer()
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port())));
 
+        KTcpSocket::ProxyPolicy proxyPolicy = KTcpSocket::AutoProxy;
+        if(getConnectionSettings().server().bypassProxy()) {
+            proxyPolicy = KTcpSocket::ManualProxy;
+            m_socket->setProxy(QNetworkProxy::NoProxy);
+        }
+
         // connect() will do a async lookup too
         if(getConnectionSettings().server().SSLEnabled() || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
         {
@@ -496,7 +503,7 @@ void Server::connectToIRCServer()
         else
         {
             connect(m_socket, SIGNAL(connected()), SLOT (socketConnected()));
-            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port(), proxyPolicy);
         }
 
         // set up the connection details

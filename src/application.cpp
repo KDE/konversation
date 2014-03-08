@@ -504,6 +504,7 @@ void Application::readOptions()
                 server.setPort(cgServer.readEntry<int>("Port", 0));
                 server.setPassword(cgServer.readEntry("Password"));
                 server.setSSLEnabled(cgServer.readEntry("SSLEnabled", false));
+                server.setBypassProxy(cgServer.readEntry("BypassProxy", false));
                 serverGroup->addServer(server);
             }
 
@@ -883,6 +884,7 @@ void Application::saveOptions(bool updateGUI)
             cgServer.writeEntry("Port", (*it2).port());
             cgServer.writeEntry("Password", (*it2).password());
             cgServer.writeEntry("SSLEnabled", (*it2).SSLEnabled());
+            cgServer.writeEntry("BypassProxy", (*it2).bypassProxy());
             index2++;
         }
 

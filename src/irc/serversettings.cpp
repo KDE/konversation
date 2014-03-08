@@ -20,6 +20,7 @@ namespace Konversation
     {
         setPort(6667);
         setSSLEnabled(false);
+        setBypassProxy(false);
     }
 
     ServerSettings::ServerSettings(const ServerSettings& settings)
@@ -35,6 +36,7 @@ namespace Konversation
         setHost(host);
         setPort(6667);
         setSSLEnabled(false);
+        setBypassProxy(false);
     }
 
     ServerSettings::~ServerSettings()
@@ -46,7 +48,8 @@ namespace Konversation
         if (m_host.toLower() == settings.host().toLower()
             && m_port == settings.port()
             && m_password == settings.password()
-            && m_SSLEnabled == settings.SSLEnabled())
+            && m_SSLEnabled == settings.SSLEnabled()
+            && m_bypassProxy == settings.bypassProxy())
         {
             return true;
         }
