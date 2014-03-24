@@ -1142,6 +1142,7 @@ Action=None
 Name=Nick online
 Name[bs]=Nadimak na mreži
 Name[ca]=Sobrenom en línia
+Name[ca@valencia]=Sobrenom en línia
 Name[da]=Nick kommet online
 Name[de]=Spitzname ist online
 Name[es]=Apodo en conexión
