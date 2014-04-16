@@ -1,4 +1,8 @@
-Changes from 1.5-rc2 to 1.5-rc1:
+Changes since 1.5:
+* Fixed a bug causing wildcards in command alias replacement patterns not to
+  be expanded.
+
+Changes from 1.5-rc2 to 1.5:
 Konversation 1.5 adds numerous major features over the previous stable release.
 Of particular note are support for SASL and client certificate authentication,
 all-new topic management UI, overhauled authentication UI in the Identities
