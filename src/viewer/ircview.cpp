@@ -899,9 +899,6 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
 
-    if (!QApplication::isLeftToRight())
-        rtl = !rtl;
-
     format.setAlignment(rtl ? Qt::AlignRight : Qt::AlignLeft);
     formatCursor.setBlockFormat(format);
 }
