@@ -18,7 +18,7 @@
 
 #include "sound.h"
 
-#include <KUrl>
+#include <QUrl>
 
 #include <Phonon/AudioOutput>
 
@@ -42,7 +42,7 @@ namespace Konversation
     Sound::~Sound()
     {}
 
-    void Sound::play(const KUrl& url)
+    void Sound::play(const QUrl &url)
     {
         if(m_played && ((m_mediaObject->state() != Phonon::PausedState && m_mediaObject->state() != Phonon::StoppedState) || !m_playQueue.isEmpty()))
         {
@@ -68,7 +68,7 @@ namespace Konversation
         }
     }
 
-    void Sound::playSound(const KUrl& url)
+    void Sound::playSound(const QUrl &url)
     {
         m_mediaObject->setCurrentSource(Phonon::MediaSource(url));
         m_mediaObject->play();

@@ -18,7 +18,7 @@
 #include <QPainter>
 
 #include <KPushButton>
-#include <KUrl>
+#include <QUrl>
 #include <KFileDialog>
 #include <KIcon>
 #include <KDebug>

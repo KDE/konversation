@@ -16,7 +16,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <KUrl>
+#include <QUrl>
 
 #include "preferences.h"
 #include "mainwindow.h"

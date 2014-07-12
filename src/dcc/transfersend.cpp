@@ -101,7 +101,7 @@ namespace Konversation
             Transfer::cleanUp();
         }
 
-        void TransferSend::setFileURL(const KUrl &url)
+        void TransferSend::setFileURL(const QUrl &url)
         {
             if (getStatus() == Configuring)
             {

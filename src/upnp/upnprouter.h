@@ -15,7 +15,7 @@
 
 #include <QHostAddress>
 
-#include <kurl.h>
+#include <QUrl>
 #include <kjob.h>
 #include <kio/jobclasses.h>
 
@@ -100,7 +100,7 @@ namespace Konversation
             };
 
             QString server;
-            KUrl location;
+            QUrl location;
             QString uuid;
             UPnPDeviceDescription desc;
 
@@ -123,7 +123,7 @@ namespace Konversation
             * @param location The location of it's xml description file
             * @param verbose Print lots of debug info
             */
-            UPnPRouter(const QString & server,const KUrl & location,const QString & uuid);
+            UPnPRouter(const QString & server,const QUrl &location,const QString & uuid);
             virtual ~UPnPRouter();
 
             /// Get the name  of the server

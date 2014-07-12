@@ -147,7 +147,7 @@ namespace Konversation
             }
         }
 
-        void TransferRecv::setFileURL(const KUrl &url)
+        void TransferRecv::setFileURL(const QUrl &url)
         {
             if (getStatus() == Preparing || getStatus() == Configuring || getStatus() == Queued)
             {
@@ -249,7 +249,8 @@ namespace Konversation
                 }
                 else
                 {
-                    m_fileURL.addPath(fileNameSanitized);
+                    m_fileURL = m_fileURL.adjusted(QUrl::StripTrailingSlash);
+                    m_fileURL.setPath(m_fileURL.path() + '/' + fileNameSanitized);
                 }
             }
 
@@ -370,9 +371,9 @@ namespace Konversation
             }
         }
 
-        bool TransferRecv::createDirs(const KUrl &dirURL) const
+        bool TransferRecv::createDirs(const QUrl &dirURL) const
         {
-            KUrl kurl(dirURL);
+            QUrl kurl(dirURL);
             QString surl = kurl.url();
 
             //First we split directories until we reach to the top,

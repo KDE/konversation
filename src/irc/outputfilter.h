@@ -24,7 +24,7 @@
 #include <QSet>
 #include <QPointer>
 
-#include <KUrl>
+#include <QUrl>
 #include <kio/global.h>
 
 class Server;

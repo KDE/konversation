@@ -314,7 +314,7 @@ namespace Konversation
             emit newTransferAdded( transfer );
         }
 
-        bool TransferManager::isLocalFileInWritingProcess( const KUrl& url ) const
+        bool TransferManager::isLocalFileInWritingProcess( const QUrl &url ) const
         {
             foreach ( TransferRecv* it, m_recvItems )
             {
@@ -378,7 +378,7 @@ namespace Konversation
                     if ( it->getStatus() == Transfer::Queued &&
                          it->getFileURL().directory() == m_defaultIncomingFolder.pathOrUrl() )
                     {
-                        KUrl url;
+                        QUrl url;
                         url.setDirectory( Preferences::self()->dccPath().url(QUrl::PrettyDecoded | QUrl::PreferLocalFile) );
                         url.setFileName( it->getFileURL().fileName() );
                         it->setFileURL( url );

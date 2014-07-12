@@ -24,7 +24,7 @@
 
 #include <Phonon/MediaObject>
 
-class KUrl;
+class QUrl;
 
 namespace Phonon
 {
@@ -46,13 +46,13 @@ namespace Konversation
             ~Sound();
 
         public slots:
-            void play(const KUrl& url);
+            void play(const QUrl &url);
 
         protected slots:
             void tryPlayNext(Phonon::State newState, Phonon::State oldState);
 
         protected:
-            void playSound(const KUrl& url);
+            void playSound(const QUrl &url);
 
         private:
             Phonon::MediaObject* m_mediaObject;

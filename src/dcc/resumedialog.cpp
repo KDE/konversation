@@ -24,7 +24,7 @@
 
 #include <KFileDialog>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 #include <KUrlRequester>
 
 namespace Konversation

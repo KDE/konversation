@@ -788,7 +788,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         {
             KUrl srcUrl(link);
 
-            KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(),
+            QUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(),
                 Application::instance()->getMainWindow(), i18n("Save link as"));
 
             if (saveUrl.isEmpty() || !saveUrl.isValid())

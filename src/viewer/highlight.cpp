@@ -19,7 +19,7 @@
 unsigned int Highlight::s_id = 0;                 // static
 
 Highlight::Highlight(const QString& pattern, bool regExp, const QColor& color,
-    const KUrl& soundURL, const QString& autoText, const QString& chatWindows, bool notify)
+    const QUrl &soundURL, const QString& autoText, const QString& chatWindows, bool notify)
 {
     setPattern(pattern);
     setRegExp(regExp);
@@ -78,7 +78,7 @@ QString Highlight::getAutoText() const
     return m_autoText;
 }
 
-void Highlight::setSoundURL(const KUrl& url)
+void Highlight::setSoundURL(const QUrl &url)
 {
     m_soundURL = url;
 }

@@ -21,7 +21,7 @@
 #include <QTreeWidget>
 
 
-class KUrl;
+class QUrl;
 
 class HighlightViewItem : public QTreeWidgetItem
 {
@@ -41,7 +41,7 @@ class HighlightViewItem : public QTreeWidgetItem
         void setColor(const QColor color);
         QColor getColor() const;
 
-        void setSoundURL(const KUrl& url);
+        void setSoundURL(const QUrl &url);
         KUrl getSoundURL() const;
 
         void setAutoText(const QString& autoText);
@@ -58,7 +58,7 @@ class HighlightViewItem : public QTreeWidgetItem
 
         QString m_pattern;
         QColor m_color;
-        KUrl m_soundURL;
+        QUrl m_soundURL;
         QString m_autoText;
         QString m_chatWindows;
         bool m_notify;

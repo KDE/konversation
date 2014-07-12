@@ -15,7 +15,7 @@
 
 #include "highlightviewitem.h"
 
-#include <KUrl>
+#include <QUrl>
 
 
 HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* highlight)
@@ -82,7 +82,7 @@ QColor HighlightViewItem::getColor() const
     return m_color;
 }
 
-void HighlightViewItem::setSoundURL(const KUrl& soundURL)
+void HighlightViewItem::setSoundURL(const QUrl &soundURL)
 {
     m_soundURL = soundURL;
     setText(2, m_soundURL.prettyUrl());

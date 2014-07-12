@@ -21,7 +21,7 @@
 #include <QFontDatabase>
 
 #include <KTextBrowser>
-#include <KUrl>
+#include <QUrl>
 
 
 class Server;

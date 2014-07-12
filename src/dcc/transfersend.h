@@ -42,7 +42,7 @@ namespace Konversation
                 virtual ~TransferSend();
 
                 // REQUIRED
-                void setFileURL(const KUrl &url);
+                void setFileURL(const QUrl &url);
                 // OPTIONAL
                 void setFileName(const QString &fileName);
                 // OPTIONAL

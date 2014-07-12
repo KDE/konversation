@@ -277,7 +277,7 @@ void UrlCatcher::saveSelectedUrls()
         if (index.isValid())
         {
             KUrl url(index.data().toString());
-            KUrl targetUrl = KFileDialog::getSaveUrl(url.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
+            QUrl targetUrl = KFileDialog::getSaveUrl(url.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
 
             if (targetUrl.isEmpty() || !targetUrl.isValid())
                 continue;

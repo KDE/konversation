@@ -22,7 +22,7 @@
 
 #include <QObject>
 
-#include <KUrl>
+#include <QUrl>
 
 namespace Konversation
 {
@@ -83,7 +83,7 @@ namespace Konversation
 
                 void acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName);
 
-                bool isLocalFileInWritingProcess(const KUrl& localUrl) const;
+                bool isLocalFileInWritingProcess(const QUrl &localUrl) const;
 
                 int generateReverseTokenNumber();
 
@@ -119,7 +119,7 @@ namespace Konversation
                 UPnP::UPnPRouter *m_upnpRouter;
 
                 int m_nextReverseTokenNumber;
-                KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
+                QUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
         };
     }
 }

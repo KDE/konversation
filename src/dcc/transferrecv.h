@@ -59,7 +59,7 @@ namespace Konversation
                 // OPTIONAL, if not specified, "unnamed_file"
                 void setFileName(const QString &fileName);
                 // OPTIONAL, if not specified, default folder + the file name
-                void setFileURL(const KUrl &url);
+                void setFileURL(const QUrl &url);
                 // OPTIONAL
                 void setReverse(bool reverse, const QString &reverseToken);
 
@@ -117,7 +117,7 @@ namespace Konversation
                  * @param dirURL A url for the directory to create.
                  * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
                  */
-                bool createDirs(const KUrl &dirURL) const;
+                bool createDirs(const QUrl &dirURL) const;
 
                 void requestResume();
                 // for non-reverse DCC
@@ -129,7 +129,7 @@ namespace Konversation
                 void stopConnectionTimer();
 
             protected:
-                KUrl m_saveToTmpFileURL;
+                QUrl m_saveToTmpFileURL;
                 ///Current filesize of the file saved on the disk.
                 KIO::filesize_t m_saveToFileSize;
                 ///Current filesize of the file+".part" saved on the disk.

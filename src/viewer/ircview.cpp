@@ -549,7 +549,7 @@ void IRCView::updateAppearance()
 
     if (Preferences::self()->showBackgroundImage())
     {
-        KUrl url = Preferences::self()->backgroundImage();
+        QUrl url = Preferences::self()->backgroundImage();
 
         if (url.hasPath())
         {

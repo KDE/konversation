@@ -14,7 +14,7 @@
 
 #include <QStringList>
 
-#include <KUrl>
+#include <QUrl>
 #include <KDebug>
 
 #include <unistd.h>
@@ -119,7 +119,7 @@ namespace Konversation
         {
             QStringList lines = QString::fromAscii(arr).split("\r\n");
             QString server;
-            KUrl location;
+            QUrl location;
             QString uuid;
 
             // first read first line and see if contains a HTTP 200 OK message

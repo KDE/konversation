@@ -93,7 +93,7 @@ namespace Konversation
 
         ///////////////////////////////////////
 
-        UPnPRouter::UPnPRouter(const QString & server,const KUrl & location,const QString & uuid) : server(server),location(location),uuid(uuid)
+        UPnPRouter::UPnPRouter(const QString & server,const QUrl &location,const QString & uuid) : server(server),location(location),uuid(uuid)
         {
         }
 
@@ -311,9 +311,9 @@ namespace Konversation
             if (location.port()<=0)
                 location.setPort(80);
 
-            KUrl address;
+            QUrl address;
 
-            address.setProtocol(QString("http"));
+            address.setScheme(QString("http"));
             address.setHost(location.host());
             address.setPort(location.port());
             address.setPath(controlurl);

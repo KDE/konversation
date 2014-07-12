@@ -20,9 +20,9 @@ class DccFileDialog : public KFileDialog
 {
 
 public:
-    DccFileDialog(const KUrl& startDir, const QString& filter, QWidget* parent, QWidget* widget = 0);
+    DccFileDialog(const QUrl &startDir, const QString& filter, QWidget* parent, QWidget* widget = 0);
     
-    KUrl::List getOpenUrls(const KUrl& startDir = KUrl(), const QString& filter = QString(), const QString& caption = QString());
+    KUrl::List getOpenUrls(const QUrl &startDir = KUrl(), const QString& filter = QString(), const QString& caption = QString());
 
     bool passiveSend();
 private:

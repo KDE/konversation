@@ -43,7 +43,7 @@
 #include <KInputDialog>
 #include <KMessageBox>
 #include <KRun>
-#include <KUrl>
+#include <QUrl>
 #include <KXMLGUIFactory>
 #include <KActionCollection>
 #include <KToggleAction>

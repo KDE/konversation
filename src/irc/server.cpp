@@ -2010,7 +2010,7 @@ void Server::requestDccSend()
 void Server::sendURIs(const KUrl::List& uris, const QString& nick)
 {
     /* FIXME KF5 port
-    foreach(const KUrl& uri, uris)
+    foreach(const QUrl &uri, uris)
          addDccSend(nick, uri);
     */
 }

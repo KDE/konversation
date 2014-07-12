@@ -21,7 +21,7 @@
 #include <QString>
 #include <QColor>
 
-#include <kurl.h>
+#include <QUrl>
 
 /**
  *@author Matthias Gierlings
@@ -31,7 +31,7 @@ class Highlight
 {
     public:
         Highlight(const QString& pattern, bool regExp, const QColor& color,
-            const KUrl& soundURL, const QString& autoText, const QString& chatWindows, bool notify);
+            const QUrl &soundURL, const QString& autoText, const QString& chatWindows, bool notify);
 
         int getID() const;
 
@@ -44,7 +44,7 @@ class Highlight
         void setColor(const QColor& color);
         QColor getColor() const;
 
-        void setSoundURL(const KUrl& url);
+        void setSoundURL(const QUrl &url);
         KUrl getSoundURL() const;
 
         void setAutoText(const QString& autoText);
@@ -65,7 +65,7 @@ class Highlight
         QString m_itemPattern;
         bool m_regExp;
         QColor m_itemColor;
-        KUrl m_soundURL;
+        QUrl m_soundURL;
         QString m_autoText;
         QString m_chatWindows;
         QStringList m_chatWindowList;

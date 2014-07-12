@@ -19,7 +19,7 @@
 
 #include <preferences.h>
 
-DccFileDialog::DccFileDialog(const KUrl& startDir, const QString& filter, QWidget* parent, QWidget* widget)
+DccFileDialog::DccFileDialog(const QUrl &startDir, const QString& filter, QWidget* parent, QWidget* widget)
     : KFileDialog(startDir, filter, parent, widget)
 {
     m_checkBox = new QCheckBox(i18nc("passive dcc send", "Passive Send"));
@@ -28,7 +28,7 @@ DccFileDialog::DccFileDialog(const KUrl& startDir, const QString& filter, QWidge
     m_checkBox->setCheckState(Preferences::self()->dccPassiveSend() ? Qt::Checked : Qt::Unchecked);
 }
 
-KUrl::List DccFileDialog::getOpenUrls(const KUrl& startDir, const QString& filter, const QString& caption)
+KUrl::List DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
 {
     setStartDir(startDir);
     setFilter(filter);

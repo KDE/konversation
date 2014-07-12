@@ -20,7 +20,7 @@
 
 #include <QStringList>
 
-#include <KUrl>
+#include <QUrl>
 #include <KMessageBox>
 #include <KStandardDirs>
 #include <KFileDialog>
@@ -156,7 +156,7 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    KUrl themeURL = KFileDialog::getOpenUrl(QString(),
+    QUrl themeURL = KFileDialog::getOpenUrl(QString(),
         i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
         NULL,
         i18n("Select Theme Package")

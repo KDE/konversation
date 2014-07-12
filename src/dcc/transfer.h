@@ -23,7 +23,7 @@
 #include <QObject>
 #include <QTimer>
 
-#include <KUrl>
+#include <QUrl>
 #include <kio/global.h>
 
 namespace Konversation
@@ -177,7 +177,7 @@ namespace Konversation
                  * If we are recieving a file, this is the url of the file we are saving
                  * to in the end (Temporararily it will be filename+".part" ).
                  */
-                KUrl m_fileURL;
+                QUrl m_fileURL;
 
             private:
                 void updateTransferMeters();

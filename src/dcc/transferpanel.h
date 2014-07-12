@@ -45,7 +45,7 @@ namespace Konversation
         class FileMetaDataDialog : public KDialog
         {
             public:
-                explicit FileMetaDataDialog(const KUrl& file, QWidget *parent = 0)
+                explicit FileMetaDataDialog(const QUrl &file, QWidget *parent = 0)
                     : KDialog(parent)
                 {
                     setCaption( i18nc("%1=filename", "File Information for %1",  file.fileName() ) );
