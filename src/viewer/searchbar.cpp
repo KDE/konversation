@@ -23,7 +23,7 @@
 #include <KDialog>
 #include <KShortcut>
 #include <KStandardAction>
-#include <KMenu>
+#include <QMenu>
 
 
 SearchBar::SearchBar(QWidget* parent)
@@ -64,7 +64,7 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
 
     QAction *action = 0;
-    m_optionsMenu = new KMenu(m_optionsButton);
+    m_optionsMenu = new QMenu(m_optionsButton);
     action = m_optionsMenu->addAction(i18n("Find Forward"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleSearchFoward(bool)));

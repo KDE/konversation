@@ -31,7 +31,7 @@
 
 class QTreeView;
 
-class KMenu;
+class QMenu;
 class KToolBar;
 
 
@@ -94,7 +94,7 @@ class UrlCatcher : public ChatWindow
         void setupUrlTree();
 
         KToolBar* m_toolBar;
-        KMenu* m_contextMenu;
+        QMenu* m_contextMenu;
 
         QList<QAction*> m_itemActions;
         QList<QAction*> m_listActions;

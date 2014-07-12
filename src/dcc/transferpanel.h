@@ -31,7 +31,7 @@
 #include <KDebug>
 
 class QSplitter;
-class KMenu;
+class QMenu;
 class KToolBar;
 
 namespace Konversation
@@ -118,7 +118,7 @@ namespace Konversation
                 inline void initGUI();
 
                 TransferView *m_transferView;
-                KMenu *m_popup;
+                QMenu *m_popup;
                 KToolBar *m_toolBar;
 
                 TransferDetailedInfoPanel *m_detailPanel;

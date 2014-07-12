@@ -22,17 +22,17 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 
 class QString;
-class KMenu;
+class QMenu;
 class MainWindow;
 class KBookmarkMenu;
-class KMenu;
+class QMenu;
 
 class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
 
         public:
-        explicit KonviBookmarkHandler(KMenu *menu, MainWindow* mainWindow);
+        explicit KonviBookmarkHandler(QMenu *menu, MainWindow* mainWindow);
         ~KonviBookmarkHandler();
 
         // KBookmarkOwner interface:

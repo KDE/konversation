@@ -24,7 +24,7 @@
 
 #include <QContextMenuEvent>
 
-#include <KMenu>
+#include <QMenu>
 #include <KMessageBox>
 
 
@@ -230,7 +230,7 @@ void QueueTuner::fastIntervalChanged(int v)
 
 void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
 {
-    KMenu p(this);
+    QMenu p(this);
     p.addAction(i18n("Reset..."));
     QAction *action = p.exec(e->globalPos());
     if (action)

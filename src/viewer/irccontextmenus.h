@@ -34,7 +34,7 @@ class Server;
 
 class QAction;
 
-class KMenu;
+class QMenu;
 
 
 class IrcContextMenus : public QObject
@@ -101,28 +101,28 @@ class IrcContextMenus : public QObject
         friend class IrcContextMenusPrivate;
 
         void setupQuickButtonMenu();
-        KMenu* m_quickButtonMenu;
+        QMenu* m_quickButtonMenu;
         bool shouldShowQuickButtonMenu();
         static void processQuickButtonAction(QAction* action, Server* server, const QString& context,
             const QStringList nicks = QStringList());
 
         void setupTextMenu();
-        KMenu* m_textMenu;
+        QMenu* m_textMenu;
         QAction* m_textCopyAction;
         QAction* m_textActionsSeparator;
         QList<QAction*> m_linkActions;
         void updateWebShortcutsMenu(const QString& selectedText);
-        KMenu* m_webShortcutsMenu;
+        QMenu* m_webShortcutsMenu;
 
         void setupChannelMenu();
-        KMenu* m_channelMenu;
+        QMenu* m_channelMenu;
 
         void setupNickMenu();
-        KMenu* m_nickMenu;
+        QMenu* m_nickMenu;
         void createSharedBasicNickActions();
         QList<QAction*> m_sharedBasicNickActions;
-        KMenu* m_modesMenu;
-        KMenu* m_kickBanMenu;
+        QMenu* m_modesMenu;
+        QMenu* m_kickBanMenu;
         void createSharedNickSettingsActions();
         static void updateSharedNickSettingsActions(Server* server, const QStringList& nicks);
         QList<QAction*> m_sharedNickSettingsActions;
@@ -134,14 +134,14 @@ class IrcContextMenus : public QObject
         QList<QAction*> m_sharedDccActions;
 
         void setupTopicHistoryMenu();
-        KMenu* m_topicHistoryMenu;
+        QMenu* m_topicHistoryMenu;
         QAction* m_queryTopicAuthorAction;
 
         inline QAction* createAction(ActionId id, const QString& text);
         inline QAction* createAction(ActionId id, const QIcon& icon);
         inline QAction* createAction(ActionId id, const QIcon& icon, const QString& text);
-        inline QAction* createAction(KMenu* menu, ActionId id, const QString& text);
-        inline QAction* createAction(KMenu* menu, ActionId id, const QIcon& icon,
+        inline QAction* createAction(QMenu* menu, ActionId id, const QString& text);
+        inline QAction* createAction(QMenu* menu, ActionId id, const QIcon& icon,
             const QString& text);
 
         static int extractActionId(QAction* action);

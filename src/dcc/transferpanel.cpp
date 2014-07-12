@@ -28,7 +28,7 @@
 
 #include <KGlobal>
 #include <KMessageBox>
-#include <KMenu>
+#include <QMenu>
 #include <KRun>
 #include <KAuthorized>
 #include <KFileMetaInfo>
@@ -79,7 +79,7 @@ namespace Konversation
             m_splitter->setStretchFactor(0, QSizePolicy::Expanding);
 
             // popup menu
-            m_popup = new KMenu(this);
+            m_popup = new QMenu(this);
             m_selectAll =  m_popup->addAction(i18n("&Select All Items"), this, SLOT(selectAll()));
             m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"), this, SLOT(selectAllCompleted()));
             m_popup->addSeparator();                           // -----

@@ -21,7 +21,7 @@
 
 #include <QIcon>
 
-#include <KMenu>
+#include <QMenu>
 
 class ChatWindow;
 
@@ -208,7 +208,7 @@ class NicksOnline : public ChatWindow
         // The main display of networks, nicks, and channels.
         QTreeWidget* m_nickListView;
         // Context menu when right-clicking a nick.
-        KMenu* m_popupMenu;
+        QMenu* m_popupMenu;
         KToolBar *m_toolBar;
         // A string containing the identifier for the "Offline" listview item
         QString c_offline;

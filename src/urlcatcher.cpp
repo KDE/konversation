@@ -37,7 +37,7 @@
 #include <KIcon>
 #include <KLocale>
 #include <KLocalizedString>
-#include <KMenu>
+#include <QMenu>
 #include <KMessageBox>
 #include <KToolBar>
 
@@ -103,7 +103,7 @@ UrlCatcher::~UrlCatcher()
 void UrlCatcher::setupActions()
 {
     m_toolBar = new KToolBar(this, true, true);
-    m_contextMenu = new KMenu(this);
+    m_contextMenu = new QMenu(this);
 
     QAction* action;
 

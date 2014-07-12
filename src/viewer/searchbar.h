@@ -26,7 +26,7 @@
 
 class QShortcut;
 
-class KMenu;
+class QMenu;
 class KIcon;
 
 class SearchBar : public QWidget, private Ui::SearchBarBase
@@ -76,7 +76,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
     private:
         QTimer* m_timer;
 
-        KMenu* m_optionsMenu;
+        QMenu* m_optionsMenu;
         KIcon m_goUpSearch;
         KIcon m_goDownSearch;
 

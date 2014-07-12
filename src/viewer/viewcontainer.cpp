@@ -1847,7 +1847,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    KMenu* menu = static_cast<KMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
+    QMenu* menu = static_cast<QMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
 
     if (!menu) return;
 

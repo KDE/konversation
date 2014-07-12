@@ -16,7 +16,7 @@
 #include "transferview.h"
 
 #include <KDebug>
-#include <KMenu>
+#include <QMenu>
 #include <KCategoryDrawer>
 #include <KLocalizedString>
 #include <KGlobalSettings>
@@ -311,7 +311,7 @@ namespace Konversation
 
         void TransferView::headerCustomContextMenuRequested(const QPoint &pos)
         {
-            KMenu menu(this);
+            QMenu menu(this);
             menu.addTitle(i18n("Columns"));
 
             for (int i = 0; i < m_dccModel->columnCount(); ++i)

@@ -87,7 +87,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setupToolbarActions(0);
 
     // Create context menu.
-    m_popupMenu = new KMenu(this);
+    m_popupMenu = new QMenu(this);
     m_popupMenu->setObjectName("nicksonline_context_menu");
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),

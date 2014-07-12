@@ -24,7 +24,7 @@
 
 #include <KRun>
 #include <KFileDialog>
-#include <KMenu>
+#include <QMenu>
 #include <KToolBar>
 
 
@@ -453,7 +453,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
         item = item.sibling(item.row(),2);
 
     QString filteredLine = item.data().toString();
-    KMenu* menu = new KMenu(this);
+    QMenu* menu = new QMenu(this);
 
     // Join Channel Action
     QAction *joinAction = new QAction(menu);
@@ -466,7 +466,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     menu->addSeparator();
 
     // open URL submenu
-    KMenu* showURLmenu = new KMenu(i18n("Open URL"), menu);
+    QMenu* showURLmenu = new QMenu(i18n("Open URL"), menu);
 
     QList<QPair<int, int> > urlRanges = Konversation::getUrlRanges(filteredLine);
     QPair<int, int> urlRange;

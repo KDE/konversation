@@ -36,7 +36,7 @@
 */
 #include <KFileDialog>
 #include <KIO/CopyJob>
-#include <KMenu>
+#include <QMenu>
 #include <KMessageBox>
 #include <KRun>
 #include <KStandardAction>
@@ -102,7 +102,7 @@ IrcContextMenus* IrcContextMenus::self()
 void IrcContextMenus::setupQuickButtonMenu()
 {
     //NOTE: if we depend on m_nickMenu we get an we an cyclic initialising
-    m_quickButtonMenu = new KMenu();
+    m_quickButtonMenu = new QMenu();
     m_quickButtonMenu->setTitle(i18n("Quick Buttons"));
     connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateQuickButtonMenu()));
 }
@@ -148,7 +148,7 @@ void IrcContextMenus::processQuickButtonAction(QAction* action, Server* server, 
 
 void IrcContextMenus::setupTextMenu()
 {
-    m_textMenu = new KMenu();
+    m_textMenu = new QMenu();
 
     m_textMenu->addSeparator();
 
@@ -171,7 +171,7 @@ void IrcContextMenus::setupTextMenu()
     action->setData(TextSelectAll);
     m_textMenu->addAction(action);
 
-    m_webShortcutsMenu = new KMenu(m_textMenu);
+    m_webShortcutsMenu = new QMenu(m_textMenu);
     m_webShortcutsMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
@@ -201,7 +201,7 @@ void IrcContextMenus::setupTextMenu()
 int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* server,
     const QString& selectedText, const QString& link, const QString& nick)
 {
-    KMenu* textMenu = self()->m_textMenu;
+    QMenu* textMenu = self()->m_textMenu;
 
     KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
 
@@ -343,7 +343,7 @@ void IrcContextMenus::configureWebShortcuts()
 
 void IrcContextMenus::setupChannelMenu()
 {
-    m_channelMenu = new KMenu();
+    m_channelMenu = new QMenu();
 
     QAction* defaultAction = createAction(m_channelMenu, Join, KIcon("irc-join-channel"), i18n("&Join Channel..."));
     m_channelMenu->setDefaultAction(defaultAction);
@@ -354,12 +354,14 @@ void IrcContextMenus::setupChannelMenu()
 
 void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QString& channel)
 {
-    KMenu* channelMenu = self()->m_channelMenu;
+    QMenu* channelMenu = self()->m_channelMenu;
 
     QAction* title = 0;
 
+    /* FIXME KF5 prot
     if (!channel.isEmpty())
         title = channelMenu->addTitle(KStringHandler::rsqueeze(channel, 15), channelMenu->actions().first());
+    */
 
     bool connected = server->isConnected();
 
@@ -393,7 +395,7 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
 void IrcContextMenus::setupNickMenu()
 {
-    m_nickMenu = new KMenu();
+    m_nickMenu = new QMenu();
 
     QAction* defaultAction = createAction(m_nickMenu, OpenQuery, i18n("Open Query"));
     m_nickMenu->setDefaultAction(defaultAction);
@@ -405,7 +407,7 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    m_modesMenu = new KMenu(m_nickMenu);
+    m_modesMenu = new QMenu(m_nickMenu);
     m_nickMenu->addMenu(m_modesMenu);
     m_modesMenu->setTitle(i18n("Modes"));
     createAction(m_modesMenu, GiveOp, KIcon("irc-operator"), i18n("Give Op"));
@@ -415,7 +417,7 @@ void IrcContextMenus::setupNickMenu()
     createAction(m_modesMenu, GiveVoice, KIcon("irc-voice"), i18n("Give Voice"));
     createAction(m_modesMenu, TakeVoice, KIcon("irc-unvoice"), i18n("Take Voice"));
 
-    m_kickBanMenu = new KMenu(m_nickMenu);
+    m_kickBanMenu = new QMenu(m_nickMenu);
     m_nickMenu->addMenu(m_kickBanMenu);
     m_kickBanMenu->setTitle(i18n("Kick / Ban"));
     createAction(m_kickBanMenu, Kick, i18n("Kick"));
@@ -477,12 +479,14 @@ void IrcContextMenus::createSharedDccActions()
 void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* server,
     const QStringList& nicks, const QString& context)
 {
-    KMenu* nickMenu = self()->m_nickMenu;
+    QMenu* nickMenu = self()->m_nickMenu;
 
     QAction* title = 0;
 
+    /* FIXME KF5 port
     if (options.testFlag(ShowTitle) && nicks.count() == 1)
         title = nickMenu->addTitle(KStringHandler::rsqueeze(nicks.first(), 15), nickMenu->actions().first());
+    */
 
     foreach(QAction* action, nickMenu->actions())
         action->setVisible(true);
@@ -806,7 +810,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 
 void IrcContextMenus::setupTopicHistoryMenu()
 {
-    m_topicHistoryMenu = new KMenu();
+    m_topicHistoryMenu = new QMenu();
 
     m_topicHistoryMenu->addAction(m_textCopyAction);
 
@@ -815,7 +819,7 @@ void IrcContextMenus::setupTopicHistoryMenu()
 
 void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const QString& text, const QString& author)
 {
-    KMenu* topicHistoryMenu = self()->m_topicHistoryMenu;
+    QMenu* topicHistoryMenu = self()->m_topicHistoryMenu;
 
     self()->m_textCopyAction->setEnabled(true);
     self()->m_queryTopicAuthorAction->setEnabled(!author.isEmpty());
@@ -863,7 +867,7 @@ QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon, const QSt
     return action;
 }
 
-QAction* IrcContextMenus::createAction(KMenu* menu, ActionId id, const QString& text)
+QAction* IrcContextMenus::createAction(QMenu* menu, ActionId id, const QString& text)
 {
     QAction* action = createAction(id, text);
 
@@ -872,7 +876,7 @@ QAction* IrcContextMenus::createAction(KMenu* menu, ActionId id, const QString& 
     return action;
 }
 
-QAction* IrcContextMenus::createAction(KMenu* menu, ActionId id, const QIcon& icon, const QString& text)
+QAction* IrcContextMenus::createAction(QMenu* menu, ActionId id, const QIcon& icon, const QString& text)
 {
     QAction* action = createAction(id, text);
 
