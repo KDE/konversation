@@ -42,15 +42,15 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
-    m_addNickname = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Nickname..."));
+    m_addNickname = m_toolBar->addAction(QIcon::fromTheme("list-add-user"), i18n("&Add Nickname..."));
     m_addNickname->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
-    m_removeNickname = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Nickname"));
+    m_removeNickname = m_toolBar->addAction(QIcon::fromTheme("list-remove-user"), i18n("&Remove Nickname"));
     m_removeNickname->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
     m_toolBar->addSeparator();
-    m_whois = m_toolBar->addAction(KIcon("office-address-book"), i18n("&Whois"));
-    m_openQuery = m_toolBar->addAction(KIcon("office-address-book"), i18n("Open &Query"));
+    m_whois = m_toolBar->addAction(QIcon::fromTheme("office-address-book"), i18n("&Whois"));
+    m_openQuery = m_toolBar->addAction(QIcon::fromTheme("office-address-book"), i18n("Open &Query"));
     m_toolBar->addSeparator();
-    m_joinChannel = m_toolBar->addAction(KIcon("irc-join-channel"), i18n("&Join Channel"));
+    m_joinChannel = m_toolBar->addAction(QIcon::fromTheme("irc-join-channel"), i18n("&Join Channel"));
     connect(m_toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotPopupMenu_Activated(QAction*)));
 
     m_nickListView=new QTreeWidget(this);
@@ -59,8 +59,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     // Remove when server does this automatically.
     m_whoisRequested = true;
 
-    m_onlineIcon = KIcon("im-user");
-    m_offlineIcon = KIcon("im-user-offline");
+    m_onlineIcon = QIcon::fromTheme("im-user");
+    m_offlineIcon = QIcon::fromTheme("im-user-offline");
     m_nickListView->setColumnCount(2);
     m_nickListView->headerItem()->setText(0, i18n("Network/Nickname/Channel"));
     m_nickListView->headerItem()->setText(1, i18n("Additional Information"));

@@ -19,7 +19,7 @@
 #include "trayicon.h"
 
 #include <KActionCollection>
-#include <KIcon>
+#include <QIcon>
 #include <KIdleTime>
 #include <KToggleAction>
 
@@ -185,14 +185,14 @@ void AwayManager::updateGlobalAwayAction(bool away)
         if (awayCount == serverList.count())
         {
             awayAction->setChecked(true);
-            awayAction->setIcon(KIcon("im-user-away"));
+            awayAction->setIcon(QIcon::fromTheme("im-user-away"));
             if (trayIcon) trayIcon->setAway(true);
         }
     }
     else
     {
         awayAction->setChecked(false);
-        awayAction->setIcon(KIcon("im-user"));
+        awayAction->setIcon(QIcon::fromTheme("im-user"));
         if (trayIcon) trayIcon->setAway(false);
     }
 }

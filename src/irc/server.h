@@ -30,7 +30,7 @@
 
 // FIXME KF5 port: This block is there so I don't need to add stuff all over the place.
 #include <KDebug>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <KGlobal>
 #include <KLocalizedString>

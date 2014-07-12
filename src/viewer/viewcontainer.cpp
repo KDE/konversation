@@ -225,7 +225,7 @@ void ViewContainer::setupViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(KIcon("arrow-up"));
+        action->setIcon(QIcon::fromTheme("arrow-up"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -233,7 +233,7 @@ void ViewContainer::setupViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(KIcon("arrow-down"));
+        action->setIcon(QIcon::fromTheme("arrow-down"));
     }
 
     // If the tab widget already exists we may need to sync the ViewTree
@@ -330,7 +330,7 @@ void ViewContainer::removeViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Left"));
-        action->setIcon(KIcon("arrow-left"));
+        action->setIcon(QIcon::fromTheme("arrow-left"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -338,7 +338,7 @@ void ViewContainer::removeViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Right"));
-        action->setIcon(KIcon("arrow-right"));
+        action->setIcon(QIcon::fromTheme("arrow-right"));
     }
 
     delete m_viewTree;
@@ -842,7 +842,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
                 m_viewTree->setViewIcon(view, QIcon());
 
             if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
-                 m_viewTree->setViewIcon(view, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
+                 m_viewTree->setViewIcon(view, QIcon::fromTheme("dialog-close").pixmap(KIconLoader::SizeSmall));
 
 
             if (!Preferences::self()->tabNotificationsText())
@@ -896,7 +896,7 @@ void ViewContainer::updateViewIcons()
         {
 
             if (m_viewTree)
-                m_viewTree->setViewIcon(view, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
+                m_viewTree->setViewIcon(view, QIcon::fromTheme("dialog-close").pixmap(KIconLoader::SizeSmall));
         }
     }
 
@@ -1288,7 +1288,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     QIcon iconSet;
 
     if (Preferences::self()->closeButtons() && m_viewTree)
-        iconSet = KIcon("dialog-close");
+        iconSet = QIcon::fromTheme("dialog-close");
 
     connect(Application::instance(), SIGNAL(appearanceChanged()), view, SLOT(updateAppearance()));
     connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));

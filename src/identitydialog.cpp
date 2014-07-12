@@ -51,16 +51,16 @@ namespace Konversation
                                           "alternate nicknames for yourself. If your first choice is rejected by the server, "
                                           "Konversation will try the alternate nicknames."));
 
-        newBtn->setIcon(KIcon("list-add"));
+        newBtn->setIcon(QIcon::fromTheme("list-add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
-        copyBtn->setIcon(KIcon("edit-copy"));
+        copyBtn->setIcon(QIcon::fromTheme("edit-copy"));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
-        m_editBtn->setIcon(KIcon("edit-rename"));
+        m_editBtn->setIcon(QIcon::fromTheme("edit-rename"));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
-        m_delBtn->setIcon(KIcon("edit-delete"));
+        m_delBtn->setIcon(QIcon::fromTheme("edit-delete"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
         foreach(const IdentityPtr &id, Preferences::identityList()) {

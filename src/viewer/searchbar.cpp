@@ -42,7 +42,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
-    m_closeButton->setIcon(KIcon("dialog-close"));
+    m_closeButton->setIcon(QIcon::fromTheme("dialog-close"));
     m_findNextButton->setIcon(m_goUpSearch);
     m_findPreviousButton->setIcon(m_goDownSearch);
     Application* konvApp = static_cast<Application*>(kapp);

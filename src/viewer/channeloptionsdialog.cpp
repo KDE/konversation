@@ -41,9 +41,9 @@ namespace Konversation
 
         m_ui.setupUi(mainWidget());
 
-        m_ui.addBan->setIcon(KIcon("list-add"));
-        m_ui.updateBan->setIcon(KIcon("edit-rename"));
-        m_ui.removeBan->setIcon(KIcon("list-remove"));
+        m_ui.addBan->setIcon(QIcon::fromTheme("list-add"));
+        m_ui.updateBan->setIcon(QIcon::fromTheme("edit-rename"));
+        m_ui.removeBan->setIcon(QIcon::fromTheme("list-remove"));
 
         QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
         m_ui.otherModesList->setModel(modesModel);

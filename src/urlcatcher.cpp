@@ -34,7 +34,7 @@
 #include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
 #include <KGlobal>
-#include <KIcon>
+#include <QIcon>
 #include <KLocale>
 #include <KLocalizedString>
 #include <QMenu>
@@ -107,21 +107,21 @@ void UrlCatcher::setupActions()
 
     QAction* action;
 
-    action = m_toolBar->addAction(KIcon("window-new"), i18nc("open url", "&Open"), this, SLOT(openSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme("window-new"), i18nc("open url", "&Open"), this, SLOT(openSelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Open URLs in external browser."));
     action->setWhatsThis(i18n("<p>Select one or several <b>URLs</b> below, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>"));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme("document-save"), i18n("&Save..."), this, SLOT(saveSelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Save selected URLs to the disk."));
     action->setEnabled(false);
 
     /* FIXME KF5 port
-    action = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkSelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setEnabled(false);
@@ -130,14 +130,14 @@ void UrlCatcher::setupActions()
     m_toolBar->addSeparator();
     m_contextMenu->addSeparator();
 
-    action = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copySelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copySelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Copy URLs to the clipboard."));
     action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to copy them to the clipboard."));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(KIcon("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteSelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to delete them from the list."));
@@ -147,13 +147,13 @@ void UrlCatcher::setupActions()
     m_toolBar->addSeparator();
     m_contextMenu->addSeparator();
 
-    action = m_toolBar->addAction(KIcon("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveUrlModel()));
+    action = m_toolBar->addAction(QIcon::fromTheme("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveUrlModel()));
     m_listActions.append(action);
     action->setStatusTip(i18n("Save list."));
     action->setWhatsThis(i18n("Click to save the entire list to a file."));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear List"), this, SLOT(clearUrlModel()));
+    action = m_toolBar->addAction(QIcon::fromTheme("edit-clear-list"), i18nc("clear url list","&Clear List"), this, SLOT(clearUrlModel()));
     m_listActions.append(action);
     action->setStatusTip(i18n("Clear list."));
     action->setWhatsThis(i18n("Click to erase the entire list."));

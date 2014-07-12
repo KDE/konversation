@@ -38,7 +38,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
     loadSettings();
 
-    soundPlayBtn->setIcon(KIcon("media-playback-start"));
+    soundPlayBtn->setIcon(QIcon::fromTheme("media-playback-start"));
     soundURL->setWhatsThis(i18n("Select Sound File"));
 
     // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]

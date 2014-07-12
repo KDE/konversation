@@ -152,13 +152,13 @@ void IrcContextMenus::setupTextMenu()
 
     m_textMenu->addSeparator();
 
-    m_linkActions << createAction(m_textMenu, LinkCopy, KIcon("edit-copy"), i18n("Copy Link Address"));
+    m_linkActions << createAction(m_textMenu, LinkCopy, QIcon::fromTheme("edit-copy"), i18n("Copy Link Address"));
     // Not using KStandardAction is intentional here since the Ctrl+B
     // shortcut it would show in the menu is already used by our IRC-
     // wide bookmarking feature.
-    // m_linkActions << createAction(m_textMenu, LinkBookmark, KIcon("bookmark-new"), i18n("Add to Bookmarks")); FIXME KF5 port
+    // m_linkActions << createAction(m_textMenu, LinkBookmark, QIcon::fromTheme("bookmark-new"), i18n("Add to Bookmarks")); FIXME KF5 port
     m_linkActions << createAction(m_textMenu, LinkOpenWith, i18n("Open With..."));
-    m_linkActions << createAction(m_textMenu, LinkSaveAs, KIcon("document-save"), i18n("Save Link As..."));
+    m_linkActions << createAction(m_textMenu, LinkSaveAs, QIcon::fromTheme("document-save"), i18n("Save Link As..."));
 
     m_textMenu->addSeparator();
 
@@ -172,7 +172,7 @@ void IrcContextMenus::setupTextMenu()
     m_textMenu->addAction(action);
 
     m_webShortcutsMenu = new QMenu(m_textMenu);
-    m_webShortcutsMenu->menuAction()->setIcon(KIcon("preferences-web-browser-shortcuts"));
+    m_webShortcutsMenu->menuAction()->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
 
@@ -305,7 +305,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
             foreach(const QString& searchProvider, searchProviders)
             {
                 action = new QAction(searchProvider, m_webShortcutsMenu);
-                action->setIcon(KIcon(filterData.iconNameForPreferredSearchProvider(searchProvider)));
+                action->setIcon(QIcon::fromTheme(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
                 connect(action, SIGNAL(triggered()), this, SLOT(processWebShortcutAction()));
                 m_webShortcutsMenu->addAction(action);
@@ -314,7 +314,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
             m_webShortcutsMenu->addSeparator();
 
             action = new QAction(i18n("Configure Web Shortcuts..."), m_webShortcutsMenu);
-            action->setIcon(KIcon("configure"));
+            action->setIcon(QIcon::fromTheme("configure"));
             connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
             m_webShortcutsMenu->addAction(action);
 
@@ -345,7 +345,7 @@ void IrcContextMenus::setupChannelMenu()
 {
     m_channelMenu = new QMenu();
 
-    QAction* defaultAction = createAction(m_channelMenu, Join, KIcon("irc-join-channel"), i18n("&Join Channel..."));
+    QAction* defaultAction = createAction(m_channelMenu, Join, QIcon::fromTheme("irc-join-channel"), i18n("&Join Channel..."));
     m_channelMenu->setDefaultAction(defaultAction);
 
     createAction(m_channelMenu, Topic, i18n("Get &topic"));
@@ -410,12 +410,12 @@ void IrcContextMenus::setupNickMenu()
     m_modesMenu = new QMenu(m_nickMenu);
     m_nickMenu->addMenu(m_modesMenu);
     m_modesMenu->setTitle(i18n("Modes"));
-    createAction(m_modesMenu, GiveOp, KIcon("irc-operator"), i18n("Give Op"));
-    createAction(m_modesMenu, TakeOp, KIcon("irc-remove-operator"), i18n("Take Op"));
+    createAction(m_modesMenu, GiveOp, QIcon::fromTheme("irc-operator"), i18n("Give Op"));
+    createAction(m_modesMenu, TakeOp, QIcon::fromTheme("irc-remove-operator"), i18n("Take Op"));
     createAction(m_modesMenu, GiveHalfOp, i18n("Give HalfOp"));
     createAction(m_modesMenu, TakeHalfOp, i18n("Take HalfOp"));
-    createAction(m_modesMenu, GiveVoice, KIcon("irc-voice"), i18n("Give Voice"));
-    createAction(m_modesMenu, TakeVoice, KIcon("irc-unvoice"), i18n("Take Voice"));
+    createAction(m_modesMenu, GiveVoice, QIcon::fromTheme("irc-voice"), i18n("Give Voice"));
+    createAction(m_modesMenu, TakeVoice, QIcon::fromTheme("irc-unvoice"), i18n("Take Voice"));
 
     m_kickBanMenu = new QMenu(m_nickMenu);
     m_nickMenu->addMenu(m_kickBanMenu);
@@ -461,16 +461,16 @@ void IrcContextMenus::createSharedNickSettingsActions()
     m_unignoreAction = createAction(UnignoreNick, i18n("Unignore"));
     m_sharedNickSettingsActions << m_unignoreAction;
 
-    m_addNotifyAction = createAction(AddNotify, KIcon("list-add-user"), i18n("Add to Watched Nicks"));
+    m_addNotifyAction = createAction(AddNotify, QIcon::fromTheme("list-add-user"), i18n("Add to Watched Nicks"));
     m_sharedNickSettingsActions << m_addNotifyAction;
-    m_removeNotifyAction = createAction(RemoveNotify, KIcon("list-remove-user"), i18n("Remove From Watched Nicks"));
+    m_removeNotifyAction = createAction(RemoveNotify, QIcon::fromTheme("list-remove-user"), i18n("Remove From Watched Nicks"));
     m_sharedNickSettingsActions << m_removeNotifyAction;
 }
 
 void IrcContextMenus::createSharedDccActions()
 {
     if (KAuthorized::authorizeKAction("allow_downloading"))
-        m_sharedDccActions << createAction(DccSend, KIcon("arrow-right-double"), i18n("Send &File..."));
+        m_sharedDccActions << createAction(DccSend, QIcon::fromTheme("arrow-right-double"), i18n("Send &File..."));
 
     m_sharedDccActions << createAction(StartDccChat, i18n("Open DCC Chat"));
     m_sharedDccActions << createAction(StartDccWhiteboard, i18n("Open DCC Whiteboard"));

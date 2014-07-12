@@ -54,9 +54,9 @@ namespace Konversation
         for (IdentityList::ConstIterator it = identities.constBegin(); it != identities.constEnd(); ++it)
             m_mainWidget->m_identityCBox->addItem((*it)->getName());
 
-        m_mainWidget->m_removeServerButton->setIcon(KIcon("list-remove"));
-        m_mainWidget->m_upServerBtn->setIcon(KIcon("arrow-up"));
-        m_mainWidget->m_downServerBtn->setIcon(KIcon("arrow-down"));
+        m_mainWidget->m_removeServerButton->setIcon(QIcon::fromTheme("list-remove"));
+        m_mainWidget->m_upServerBtn->setIcon(QIcon::fromTheme("arrow-up"));
+        m_mainWidget->m_downServerBtn->setIcon(QIcon::fromTheme("arrow-down"));
 
         connect(m_mainWidget->m_addServerButton, SIGNAL(clicked()), this, SLOT(addServer()));
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
@@ -65,9 +65,9 @@ namespace Konversation
         connect(m_mainWidget->m_upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
         connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
-        m_mainWidget->m_removeChannelButton->setIcon(KIcon("list-remove"));
-        m_mainWidget->m_upChannelBtn->setIcon(KIcon("arrow-up"));
-        m_mainWidget->m_downChannelBtn->setIcon(KIcon("arrow-down"));
+        m_mainWidget->m_removeChannelButton->setIcon(QIcon::fromTheme("list-remove"));
+        m_mainWidget->m_upChannelBtn->setIcon(QIcon::fromTheme("arrow-up"));
+        m_mainWidget->m_downChannelBtn->setIcon(QIcon::fromTheme("arrow-down"));
 
         connect(m_mainWidget->m_addChannelButton, SIGNAL(clicked()), this, SLOT(addChannel()));
         connect(m_mainWidget->m_changeChannelButton, SIGNAL(clicked()), this, SLOT(editChannel()));

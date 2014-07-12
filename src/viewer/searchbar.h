@@ -15,7 +15,7 @@
 
 #include "ui_searchbarbase.h"
 
-#include <KIcon>
+#include <QIcon>
 
 /* TODO:
    - Changing case-sensitivity and search-forward restarts search from beginning.
@@ -27,7 +27,6 @@
 class QShortcut;
 
 class QMenu;
-class KIcon;
 
 class SearchBar : public QWidget, private Ui::SearchBarBase
 {
@@ -77,8 +76,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         QTimer* m_timer;
 
         QMenu* m_optionsMenu;
-        KIcon m_goUpSearch;
-        KIcon m_goDownSearch;
+        QIcon m_goUpSearch;
+        QIcon m_goDownSearch;
 
         bool m_searchFoward;
         bool m_matchCase;

@@ -21,7 +21,7 @@
 #include <KApplication>
 #include <KGlobal>
 #include <KLocale>
-#include <KIcon>
+#include <QIcon>
 #include <KConfigGroup>
 
 #include <QStringList>
@@ -37,7 +37,7 @@ InviteDialog::InviteDialog(QWidget* parent)
     setMainWidget(mainWidget);
     setupUi(mainWidget);
 
-    m_iconLabel->setPixmap(KIcon("irc-join-channel").pixmap(48));
+    m_iconLabel->setPixmap(QIcon::fromTheme("irc-join-channel").pixmap(48));
 
     m_channelModel = new InviteChannelListModel(m_channelView);
     m_channelView->setModel(m_channelModel);

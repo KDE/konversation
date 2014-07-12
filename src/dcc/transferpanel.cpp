@@ -83,22 +83,22 @@ namespace Konversation
             m_selectAll =  m_popup->addAction(i18n("&Select All Items"), this, SLOT(selectAll()));
             m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"), this, SLOT(selectAllCompleted()));
             m_popup->addSeparator();                           // -----
-            m_accept =  m_popup->addAction(KIcon("media-playback-start"), i18n("&Accept"), this, SLOT(acceptDcc()));
+            m_accept =  m_popup->addAction(QIcon::fromTheme("media-playback-start"), i18n("&Accept"), this, SLOT(acceptDcc()));
             m_accept->setStatusTip(i18n("Start receiving"));
-            m_abort = m_popup->addAction(KIcon("process-stop"),i18n("A&bort"), this, SLOT(abortDcc()));
+            m_abort = m_popup->addAction(QIcon::fromTheme("process-stop"),i18n("A&bort"), this, SLOT(abortDcc()));
             m_abort->setStatusTip(i18n("Abort the transfer(s)"));
             m_popup->addSeparator();                           // -----
-            m_resend = m_popup->addAction(KIcon("edit-redo"),i18n("Resend"), this, SLOT(resendFile()));
-            m_clear = m_popup->addAction(KIcon("edit-delete"),i18nc("clear selected dcctransfer","&Clear"), this, SLOT(clearDcc()));
+            m_resend = m_popup->addAction(QIcon::fromTheme("edit-redo"),i18n("Resend"), this, SLOT(resendFile()));
+            m_clear = m_popup->addAction(QIcon::fromTheme("edit-delete"),i18nc("clear selected dcctransfer","&Clear"), this, SLOT(clearDcc()));
             m_clear->setStatusTip(i18n("Clear all selected Items"));
-            m_clearCompleted = m_popup->addAction(KIcon("edit-clear-list"),i18n("Clear Completed"), this, SLOT(clearCompletedDcc()));
+            m_clearCompleted = m_popup->addAction(QIcon::fromTheme("edit-clear-list"),i18n("Clear Completed"), this, SLOT(clearCompletedDcc()));
             m_clearCompleted->setStatusTip(i18n("Clear Completed Items"));
             m_popup->addSeparator();                           // -----
-            m_open = m_popup->addAction(KIcon("system-run"), i18n("&Open File"), this, SLOT(runDcc()));
+            m_open = m_popup->addAction(QIcon::fromTheme("system-run"), i18n("&Open File"), this, SLOT(runDcc()));
             m_open->setStatusTip(i18n("Run the file"));
-            m_openLocation = m_popup->addAction(KIcon("document-open-folder"), i18n("Open Location"), this, SLOT(openLocation()));
+            m_openLocation = m_popup->addAction(QIcon::fromTheme("document-open-folder"), i18n("Open Location"), this, SLOT(openLocation()));
             m_openLocation->setStatusTip(i18n("Open the file location"));
-            m_info = m_popup->addAction(KIcon("dialog-information"), i18n("File &Information"), this, SLOT(showFileInfo()));
+            m_info = m_popup->addAction(QIcon::fromTheme("dialog-information"), i18n("File &Information"), this, SLOT(showFileInfo()));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(m_transferView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(popupRequested(QPoint)));

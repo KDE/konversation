@@ -34,7 +34,7 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
 {
     setupUi(this);
 
-    m_closeButton->setIcon(KIcon("dialog-close"));
+    m_closeButton->setIcon(QIcon::fromTheme("dialog-close"));
     connect(m_closeButton, SIGNAL(clicked()), SLOT(close()));
     connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
     connect(&m_timer, SIGNAL(timeout()), SLOT(timerFired()));

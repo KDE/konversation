@@ -41,7 +41,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <kdeversion.h>
-#include <KIcon>
+#include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
 #include <KShortcut>
@@ -121,14 +121,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Restart"));
-    action->setIcon(KIcon("system-reboot"));
+    action->setIcon(QIcon::fromTheme("system-reboot"));
     action->setStatusTip(i18n("Quit and restart the application"));
     connect(action, SIGNAL(triggered()), Application::instance(), SLOT(restart()));
     actionCollection()->addAction("restart", action);
 
     action=new QAction(this);
     action->setText(i18n("&Server List..."));
-    action->setIcon(KIcon("network-server"));
+    action->setIcon(QIcon::fromTheme("network-server"));
     action->setShortcut(QKeySequence("F2"));
     action->setStatusTip(i18n("Manage networks and servers"));
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
@@ -136,7 +136,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Quick &Connect..."));
-    action->setIcon(KIcon("network-connect"));
+    action->setIcon(QIcon::fromTheme("network-connect"));
     action->setShortcut(QKeySequence("F7"));
     action->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
@@ -144,7 +144,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Reconnect"));
-    action->setIcon(KIcon("view-refresh"));
+    action->setIcon(QIcon::fromTheme("view-refresh"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Reconnect to the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(reconnectFrontServer()));
@@ -153,7 +153,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Disconnect"));
-    action->setIcon(KIcon("network-disconnect"));
+    action->setIcon(QIcon::fromTheme("network-disconnect"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Disconnect from the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
@@ -161,7 +161,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Identities..."));
-    action->setIcon(KIcon("user-identity"));
+    action->setIcon(QIcon::fromTheme("user-identity"));
     action->setShortcut(QKeySequence("F8"));
     action->setStatusTip(i18n("Manage your nick, away and other identity settings"));
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
@@ -169,7 +169,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new KToggleAction(this);
     action->setText(i18n("&Watched Nicks"));
-    action->setIcon(KIcon("im-user"));
+    action->setIcon(QIcon::fromTheme("im-user"));
     action->setShortcut(QKeySequence("F4"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
     actionCollection()->addAction("open_nicksonline_window", action);
@@ -177,7 +177,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new KToggleAction(this);
     action->setText(i18n("&DCC Status"));
-    action->setIcon(KIcon("arrow-right-double"));
+    action->setIcon(QIcon::fromTheme("arrow-right-double"));
     action->setShortcut(QKeySequence("F9"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleDccPanel()));
     actionCollection()->addAction("open_dccstatus_window", action);
@@ -186,7 +186,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Open Logfile"));
-    action->setIcon(KIcon("view-history"));
+    action->setIcon(QIcon::fromTheme("view-history"));
     action->setShortcut(QKeySequence("Ctrl+O"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the known history for this channel in a new tab"));
@@ -195,7 +195,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Channel Settings..."));
-    action->setIcon(KIcon("configure"));
+    action->setIcon(QIcon::fromTheme("configure"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the channel settings dialog for this tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
@@ -203,7 +203,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new KToggleAction(this);
     action->setText(i18n("Channel &List"));
-    action->setIcon(KIcon("view-list-text"));
+    action->setIcon(QIcon::fromTheme("view-list-text"));
     action->setShortcut(QKeySequence("F5"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Show a list of all the known channels on this server"));
@@ -212,7 +212,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new KToggleAction(this);
     action->setText(i18n("&URL Catcher"));
-    action->setIcon(KIcon("text-html"));
+    action->setIcon(QIcon::fromTheme("text-html"));
     action->setShortcut(QKeySequence("F6"));
     action->setStatusTip(i18n("List all URLs that have been mentioned recently in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
@@ -222,7 +222,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     {
         action=new QAction(this);
         action->setText(i18n("New &Konsole"));
-        action->setIcon(KIcon("utilities-terminal"));
+        action->setIcon(QIcon::fromTheme("utilities-terminal"));
         action->setStatusTip(i18n("Open a terminal in a new tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addKonsolePanel()));
         actionCollection()->addAction("open_konsole", action);
@@ -254,7 +254,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Next Tab"));
-    action->setIcon(KIcon(nextIcon));
+    action->setIcon(QIcon::fromTheme(nextIcon));
     action->setShortcut(nextShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
@@ -262,7 +262,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Previous Tab"));
-    action->setIcon(KIcon(prevIcon));
+    action->setIcon(QIcon::fromTheme(prevIcon));
     action->setShortcut(prevShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
@@ -270,7 +270,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Close &Tab"));
-    action->setIcon(KIcon("tab-close-other"));
+    action->setIcon(QIcon::fromTheme("tab-close-other"));
     action->setShortcut(QKeySequence("Ctrl+w"));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
@@ -295,7 +295,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     {
         action=new QAction(this);
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(KIcon("arrow-up"));
+        action->setIcon(QIcon::fromTheme("arrow-up"));
         action->setShortcut(QKeySequence("Alt+Shift+Left"));
         action->setEnabled(false);
         action->setStatusTip(i18n("Move this tab"));
@@ -306,7 +306,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action->setStatusTip(i18n("Move this tab"));
         action=new QAction(this);
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(KIcon("arrow-down"));
+        action->setIcon(QIcon::fromTheme("arrow-down"));
         action->setShortcut(QKeySequence("Alt+Shift+Right"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
         actionCollection()->addAction("move_tab_right", action);
@@ -317,7 +317,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         {
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(KIcon("arrow-right"));
+            action->setIcon(QIcon::fromTheme("arrow-right"));
             action->setShortcut(QKeySequence("Alt+Shift+Right"));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
@@ -326,7 +326,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(KIcon("arrow-left"));
+            action->setIcon(QIcon::fromTheme("arrow-left"));
             action->setShortcut(QKeySequence("Alt+Shift+Left"));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
@@ -338,7 +338,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         {
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(KIcon("arrow-left"));
+            action->setIcon(QIcon::fromTheme("arrow-left"));
             action->setShortcut(QKeySequence("Alt+Shift+Left"));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
@@ -347,7 +347,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(KIcon("arrow-right"));
+            action->setIcon(QIcon::fromTheme("arrow-right"));
             action->setShortcut(QKeySequence("Alt+Shift+Right"));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
@@ -388,7 +388,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     selectAction->setItems(encodingDescs);
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
-    selectAction->setIcon(KIcon("character-set"));
+    selectAction->setIcon(QIcon::fromTheme("character-set"));
     connect(selectAction, SIGNAL(triggered(int)), m_viewContainer, SLOT(changeViewCharset(int)));
     actionCollection()->addAction("tab_encoding", selectAction);
 
@@ -435,13 +435,13 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     awayAction->setText(i18n("Global Away"));
     awayAction->setShortcut(QKeySequence("Ctrl+Shift+A"));
     awayAction->setEnabled(false);
-    awayAction->setIcon(KIcon("im-user-away"));
+    awayAction->setIcon(QIcon::fromTheme("im-user-away"));
     connect(awayAction, SIGNAL(triggered(bool)), Application::instance()->getAwayManager(), SLOT(setGlobalAway(bool)));
     actionCollection()->addAction("toggle_away", awayAction);
 
     action=new QAction(this);
     action->setText(i18n("&Join Channel..."));
-    action->setIcon(KIcon("irc-join-channel"));
+    action->setIcon(QIcon::fromTheme("irc-join-channel"));
     action->setShortcut(QKeySequence("Ctrl+J"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Join a new channel on this server"));
@@ -457,7 +457,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&IRC Color..."));
-    action->setIcon(KIcon("format-text-color"));
+    action->setIcon(QIcon::fromTheme("format-text-color"));
     action->setShortcut(QKeySequence("Ctrl+K"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Set the color of your current IRC message"));
@@ -474,7 +474,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Special &Character..."));
-    action->setIcon(KIcon("character-set"));
+    action->setIcon(QIcon::fromTheme("character-set"));
     action->setShortcut(QKeySequence("Alt+Shift+C"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Insert any character into your current IRC message"));
@@ -519,7 +519,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setEnabled(true);
     action->setChecked(Preferences::self()->useOSD());
     action->setText(i18n("Enable On Screen Display"));
-    action->setIcon(KIcon("video-display"));
+    action->setIcon(QIcon::fromTheme("video-display"));
     connect(action, SIGNAL(triggered(bool)), Preferences::self(), SLOT(slotSetUseOSD(bool)));
     actionCollection()->addAction("toggle_osd", action);
 

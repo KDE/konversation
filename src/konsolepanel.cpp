@@ -19,7 +19,7 @@
 
 #include <KApplication>
 #include <KDebug>
-#include <KIcon>
+#include <QIcon>
 #include <KLocalizedString>
 #include <KService>
 #include <KHBox>
@@ -39,7 +39,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(headerWidget), 0);
 
     m_profileButton = new QToolButton(headerWidget);
-    m_profileButton->setIcon(KIcon("configure"));
+    m_profileButton->setIcon(QIcon::fromTheme("configure"));
     m_profileButton->setToolTip(i18n("Manage Konsole Profiles"));
     m_profileButton->setAutoRaise(true);
     m_profileButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));

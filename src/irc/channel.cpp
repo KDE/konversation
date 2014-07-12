@@ -123,7 +123,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicLayout->setSpacing(0);
 
     m_topicButton = new QToolButton(topicWidget);
-    m_topicButton->setIcon(KIcon("document-edit"));
+    m_topicButton->setIcon(QIcon::fromTheme("document-edit"));
     m_topicButton->setToolTip(i18n("Edit Channel Settings"));
     m_topicButton->setAutoRaise(true);
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));

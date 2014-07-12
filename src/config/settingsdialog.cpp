@@ -36,7 +36,7 @@
 #include <config-konversation.h>
 
 #include <KConfigDialog>
-#include <KIcon>
+#include <QIcon>
 #include <KLocalizedString>
 
 
@@ -48,15 +48,15 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   /* FIXME KF5 port
   KPageWidgetItem *interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
-  interfaceGroup->setIcon(KIcon("preferences-desktop-theme"));
+  interfaceGroup->setIcon(QIcon::fromTheme("preferences-desktop-theme"));
   KPageDialog::addPage(interfaceGroup);
 
   KPageWidgetItem *behaviorGroup = new KPageWidgetItem(new QWidget(this), i18n("Behavior"));
-  behaviorGroup->setIcon(KIcon("configure"));
+  behaviorGroup->setIcon(QIcon::fromTheme("configure"));
   KPageDialog::addPage(behaviorGroup);
 
   KPageWidgetItem *notificationGroup = new KPageWidgetItem(new QWidget(this), i18n("Notifications"));
-  notificationGroup->setIcon(KIcon("preferences-desktop-notification"));
+  notificationGroup->setIcon(QIcon::fromTheme("preferences-desktop-notification"));
   KPageDialog::addPage(notificationGroup);
   */
 
