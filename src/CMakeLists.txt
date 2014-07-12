@@ -18,7 +18,6 @@ set(core_SRCS
     sound.cpp
     ssllabel.cpp
     statusbar.cpp
-    bookmarkhandler.cpp
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp

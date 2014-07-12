@@ -18,7 +18,7 @@
 #include "settingsdialog.h"
 #include "viewcontainer.h"
 #include "statusbar.h"
-#include "bookmarkhandler.h"
+// #include "bookmarkhandler.h" FIXME KF5 port
 #include "trayicon.h"
 #include "serverlistdialog.h"
 #include "identitydialog.h"
@@ -516,11 +516,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered(bool)), Preferences::self(), SLOT(slotSetUseOSD(bool)));
     actionCollection()->addAction("toggle_osd", action);
 
+    /* FIXME KF5 port
     // Bookmarks
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
     new KonviBookmarkHandler(bookmarkMenu->menu(), this);
     actionCollection()->addAction("bookmarks" , bookmarkMenu);
-
+    */
 
     // decide whether to show the tray icon or not
     updateTrayIcon();

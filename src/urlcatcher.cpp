@@ -26,8 +26,10 @@
 #include <QClipboard>
 #include <QTreeView>
 
+/* FIXME KF5 port
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
+*/
 #include <KFileDialog>
 #include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
@@ -115,10 +117,12 @@ void UrlCatcher::setupActions()
     action->setStatusTip(i18n("Save selected URLs to the disk."));
     action->setEnabled(false);
 
+    /* FIXME KF5 port
     action = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkSelectedUrls()));
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setEnabled(false);
+    */
 
     m_toolBar->addSeparator();
     m_contextMenu->addSeparator();
@@ -282,6 +286,7 @@ void UrlCatcher::saveSelectedUrls()
 
 void UrlCatcher::bookmarkSelectedUrls()
 {
+    /* FIXME KF5 port
     QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
@@ -304,6 +309,7 @@ void UrlCatcher::bookmarkSelectedUrls()
     }
 
     delete dialog;
+    */
 }
 
 void UrlCatcher::copySelectedUrls()
