@@ -235,23 +235,6 @@ void IRCInput::updateAppearance()
     ensureCursorVisible(); //appears to trigger updateGeometry
 }
 
-// TODO FIXME - ok, wtf are we removing here? this is exactly the kind of shit i don't want to see any more
-/*
-Q3PopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
-{
-    Q3PopupMenu *menu=KTextEdit::createPopupMenu(pos);
-    menu->removeItemAt(menu->count()-1);
-    menu->removeItemAt(menu->count()-1);
-    return menu;
-}
-*/
-
-/*
-QString IRCInput::text() const
-{
-    return KTextEdit::text();
-}
-*/
 void IRCInput::setText(const QString& text, bool preserveContents)
 {
     if (!text.isEmpty() && preserveContents)
