@@ -121,6 +121,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
   </customwidget>
  </customwidgets>
  <includes>
+  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
   <include location="local">klineedit.h</include>
   <include location="local">kpushbutton.h</include>
   <include location="local">kpushbutton.h</include>

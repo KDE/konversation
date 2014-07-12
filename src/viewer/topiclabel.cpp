@@ -14,9 +14,13 @@
 #include "application.h"
 
 #include <QClipboard>
+#include <QDrag>
 #include <QResizeEvent>
 #include <QTextCursor>
 #include <QTextDocument>
+
+#include <KIconLoader>
+#include <kio/pixmaploader.h> // FIXME KF5 port
 
 
 namespace Konversation

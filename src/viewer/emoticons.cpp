@@ -23,7 +23,7 @@
 namespace Konversation
 {
 
-    K_GLOBAL_STATIC(KEmoticons, s_self)
+    Q_GLOBAL_STATIC(KEmoticons, s_self)
 
     KEmoticons *Emoticons::self()
     {
@@ -37,7 +37,7 @@ namespace Konversation
         {
             return Konversation::Emoticons::self()->theme().parseEmoticons(text, mode, exclude);
         }
-        else 
+        else
         {
             return text;
         }

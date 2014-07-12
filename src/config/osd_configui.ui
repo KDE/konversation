@@ -357,6 +357,7 @@
   <include location="local" >kcolorbutton.h</include>
   <include location="local" >kcolorbutton.h</include>
   <include location="local" >kfontrequester.h</include>
+  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
  </includes>
  <resources/>
  <connections>

@@ -21,7 +21,7 @@
 #include <QWaitCondition>
 
 #include <KCmdLineArgs>
-#include <KAboutData>
+#include <K4AboutData>
 
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)
@@ -33,12 +33,13 @@
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData("konversation",
+    // FIXME KF5 port: Use KAboutData.
+    K4AboutData aboutData("konversation",
         "",
         ki18n("Konversation"),
         KONVI_VERSION " #" STRHACK(COMMIT),
         ki18n("A user-friendly IRC client"),
-        KAboutData::License_GPL,
+        K4AboutData::License_GPL,
         ki18n("(C) 2002-2014 by the Konversation team"),
         ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
@@ -84,6 +85,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit(ki18n("Abdurrahman AVCI"),ki18n("Various bug fixes and enhancements."),"abdurrahmanavci@gmail.com");
     aboutData.addCredit(ki18n("Martin Blumenstingl"),ki18n("KStatusNotifierItem support, KIdleTime support, other enhancements"),"darklight.xdarklight@googlemail.com");
 
+    // FIXME KF5 port: Switch to QCommandLineFoo.
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineOptions options;
     options.add( "+[url]", ki18n("irc:// URL or server hostname"), 0);

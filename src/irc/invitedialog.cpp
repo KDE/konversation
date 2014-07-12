@@ -19,6 +19,7 @@
 #include "invitedialog.h"
 
 #include <KApplication>
+#include <KGlobal>
 #include <KLocale>
 #include <KIcon>
 #include <KConfigGroup>
@@ -88,7 +89,7 @@ bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
 	buttonCode = KDialog::Cancel;
 	return false;
     }
-    
+
     return true;
 }
 

@@ -151,8 +151,10 @@ bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
     return false;
 }
 
-QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets() const
+QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& index) const
 {
+    Q_UNUSED(index)
+
     QList<QWidget*> widgets;
 
     TopicHistoryLabel* label = new TopicHistoryLabel();

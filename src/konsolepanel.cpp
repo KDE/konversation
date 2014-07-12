@@ -18,6 +18,9 @@
 #include <QLabel>
 
 #include <KApplication>
+#include <KDebug>
+#include <KIcon>
+#include <KLocalizedString>
 #include <KService>
 #include <KHBox>
 #include <kde_terminal_interface.h>

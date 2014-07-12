@@ -68,6 +68,7 @@ ViewContainer::ViewContainer(MainWindow* window):
         , m_queueTuner(0)
         , m_urlCatcherPanel(0)
         , m_nicksOnlinePanel(0)
+        , m_dccPanel(0)
         , m_insertCharDialog(0)
         , m_queryViewCount(0)
 {
@@ -88,10 +89,10 @@ ViewContainer::ViewContainer(MainWindow* window):
 
     initializeSplitterSizes();
 
-    m_dccPanel = new DCC::TransferPanel(m_tabWidget);
-    m_dccPanel->hide();
+    // m_dccPanel = new DCC::TransferPanel(m_tabWidget); FIXME KF5 port
+    //m_dccPanel->hide(); FIXME KF5 port
     m_dccPanelOpen = false;
-    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
+    // connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType))); FIXME KF5 port
 
     // Pre-construct context menus for better responsiveness when then
     // user opens them the first time. This is optional; the IrcContext-
@@ -185,7 +186,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     QToolButton* closeBtn = new QToolButton(m_tabWidget);
-    closeBtn->setIcon(SmallIcon("tab-close"));
+    // closeBtn->setIcon(SmallIcon("tab-close")); FIXME KF5 port
     closeBtn->adjustSize();
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
@@ -290,6 +291,8 @@ void ViewContainer::setupViewTree()
 
 void ViewContainer::setViewTreeShown(bool show)
 {
+    return; // FIXME KF5 port
+
     if (m_viewTree)
     {
         if (!show)
@@ -415,7 +418,8 @@ void ViewContainer::updateTabWidgetAppearance()
 {
     if (!m_tabWidget) return;
 
-    bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
+    // bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left); FIXME ViewTree port
+    bool noTabBar = false; // FIXME ViewTree port
     m_tabWidget->setTabBarHidden(noTabBar);
 
     m_tabWidget->setDocumentMode(true);
@@ -428,7 +432,7 @@ void ViewContainer::updateTabWidgetAppearance()
     m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
         QTabWidget::North : QTabWidget::South);
 
-    if (Preferences::self()->showTabBarCloseButton() && !(Preferences::self()->tabPlacement()==Preferences::Left))
+    if (Preferences::self()->showTabBarCloseButton() && !noTabBar)
         m_tabWidget->cornerWidget()->show();
     else
         m_tabWidget->cornerWidget()->hide();
@@ -2214,7 +2218,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
     {
         if(Preferences::self()->useExternalLogViewer())
         {
-            new KRun(KUrl(file), m_window, 0, false, false, "");
+            // new KRun(KUrl(file), m_window, 0, false, false, ""); FIXME KF5 port
         }
         else
         {
@@ -2269,6 +2273,8 @@ void ViewContainer::toggleDccPanel()
 
 void ViewContainer::addDccPanel()
 {
+    return; // FIXME KF5 port
+
     if (!m_dccPanelOpen)
     {
         addView(m_dccPanel, i18n("DCC Status"));
@@ -2300,11 +2306,12 @@ void ViewContainer::deleteDccPanel()
     }
 }
 
-DCC::TransferPanel* ViewContainer::getDccPanel()
+ChatWindow* ViewContainer::getDccPanel() // FIXME KF5 port
 {
     return m_dccPanel;
 }
 
+/* FIXME KF5 port
 void ViewContainer::addDccChat(DCC::Chat* chat)
 {
     if (!chat->selfOpened()) // Someone else initiated dcc chat
@@ -2319,6 +2326,7 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
 
     addView(chatcontainer, chatcontainer->getName());
 }
+*/
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
 {

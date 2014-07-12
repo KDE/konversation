@@ -780,7 +780,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         */
         case LinkOpenWith:
         {
-            KRun::displayOpenWithDialog(KUrl(link), Application::instance()->getMainWindow());
+            // KRun::displayOpenWithDialog(KUrl(link), Application::instance()->getMainWindow()); FIXME KF5 port
 
             break;
         }

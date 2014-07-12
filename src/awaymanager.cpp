@@ -19,6 +19,7 @@
 #include "trayicon.h"
 
 #include <KActionCollection>
+#include <KIcon>
 #include <KIdleTime>
 #include <KToggleAction>
 

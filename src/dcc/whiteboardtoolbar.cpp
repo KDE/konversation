@@ -22,6 +22,7 @@
 #include <KFileDialog>
 #include <KIcon>
 #include <KDebug>
+#include <KLocalizedString>
 
 #include "whiteboardfontchooser.h"
 

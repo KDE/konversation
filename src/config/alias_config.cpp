@@ -13,7 +13,6 @@
 #include "alias_config.h"
 #include "preferences.h"
 
-
 Alias_Config::Alias_Config(QWidget* parent, const char* name)
  : QWidget(parent)
 {

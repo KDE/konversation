@@ -33,10 +33,13 @@
 #include <KFileDialog>
 #include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
+#include <KGlobal>
+#include <KIcon>
+#include <KLocale>
+#include <KLocalizedString>
 #include <KMenu>
 #include <KMessageBox>
 #include <KToolBar>
-
 
 UrlDateItem::UrlDateItem(const QDateTime& dateTime)
 {
@@ -394,7 +397,6 @@ void UrlCatcher::clearUrlModel()
 
 void UrlCatcher::checkLocaleChanged(int category)
 {
-#if KDE_IS_VERSION(4,8,1)
     if (category != KGlobalSettings::SETTINGS_LOCALE)
         return;
 
@@ -402,7 +404,6 @@ void UrlCatcher::checkLocaleChanged(int category)
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));
-#endif
 }
 
 void UrlCatcher::childAdjustFocus()

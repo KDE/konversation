@@ -14,7 +14,7 @@
 
 #include "chatwindow.h"
 
-#include <kparts/part.h>
+#include <KParts/Part>
 
 class QSplitter;
 class QToolButton;

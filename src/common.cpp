@@ -21,6 +21,8 @@
 #include <QBitmap>
 #include <QPainter>
 
+#include <KLocalizedString>
+
 #include "guess_ja.cpp"
 #include "unicode.cpp"
 

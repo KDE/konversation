@@ -43,6 +43,7 @@
 #include <KRun>
 #include <KCmdLineArgs>
 #include <KConfig>
+#include <KGlobal>
 #include <KShell>
 #include <KToolInvocation>
 #include <KCharMacroExpander>
@@ -166,7 +167,7 @@ int Application::newInstance()
         m_scriptLauncher = new ScriptLauncher(this);
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        m_dccTransferManager = new DCC::TransferManager(this);
+        // m_dccTransferManager = new DCC::TransferManager(this); FIXME KF5 port
 
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
@@ -396,7 +397,7 @@ void Application::readOptions()
             newIdentity->setNickservNickname(cgIdentity.readEntry("Bot"));
             newIdentity->setNickservCommand(cgIdentity.readEntry("NickservCommand", "identify"));
             newIdentity->setSaslAccount(cgIdentity.readEntry("SaslAccount"));
-            newIdentity->setPemClientCertFile(cgIdentity.readEntry<KUrl>("PemClientCertFile", KUrl()));
+            newIdentity->setPemClientCertFile(cgIdentity.readEntry<QUrl>("PemClientCertFile", QUrl())); // FIXME KF5 port: QUrl hack
 
             newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
             newIdentity->setRunAwayCommands(cgIdentity.readEntry("ShowAwayMessage", false));
@@ -761,7 +762,7 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("Bot",identity->getNickservNickname());
         cgIdentity.writeEntry("NickservCommand",identity->getNickservCommand());
         cgIdentity.writeEntry("SaslAccount",identity->getSaslAccount());
-        cgIdentity.writeEntry("PemClientCertFile", identity->getPemClientCertFile());
+        cgIdentity.writeEntry("PemClientCertFile", QUrl(identity->getPemClientCertFile().toString())); // FIXME KF5 port: KUrl hack
         cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
         cgIdentity.writeEntry("ShowAwayMessage",identity->getRunAwayCommands());
         cgIdentity.writeEntry("AwayMessage",identity->getAwayCommand());

@@ -17,6 +17,8 @@
 
 #include <QHeaderView>
 
+#include <KGlobal>
+#include <KSharedConfig>
 
 static const int WarningNameRole = Qt::UserRole + 100;
 

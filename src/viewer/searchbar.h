@@ -15,6 +15,8 @@
 
 #include "ui_searchbarbase.h"
 
+#include <KIcon>
+
 /* TODO:
    - Changing case-sensitivity and search-forward restarts search from beginning.
      fix to continue search from current position

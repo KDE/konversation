@@ -14,9 +14,10 @@
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
-#include <KStatusBar>
 #include <QLabel>
 
+#include <KLocalizedString>
+#include <KStatusBar>
 #include <KSqueezedTextLabel>
 
 
@@ -51,7 +52,7 @@ namespace Konversation
 
         m_sslLabel = new SSLLabel(m_window->statusBar());
         m_sslLabel->setObjectName("sslLabel");
-        m_sslLabel->setPixmap(SmallIcon("security-high"));
+        // m_sslLabel->setPixmap(SmallIcon("security-high")); FIXME KF5 port
         m_sslLabel->hide();
         m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 

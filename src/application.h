@@ -16,6 +16,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <KUrl>
+
 #include "preferences.h"
 #include "mainwindow.h"
 #include "server.h"
@@ -55,6 +57,7 @@ namespace KWallet
 }
 
 
+// FIXME KF5 port: Switch to QApplication + KDBusService.
 class Application : public KUniqueApplication
 {
     Q_OBJECT

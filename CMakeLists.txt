@@ -1,27 +1,46 @@
 project(konversation)
 
-#paranoid?
-cmake_minimum_required(VERSION 2.6.2)
+cmake_minimum_required (VERSION 2.8.12 FATAL_ERROR)
+set (QT_MIN_VERSION "5.3.0")
 
-set(KDE_MIN_VERSION "4.7.0")
-#atm this gets us FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
-find_package(KDE4 ${KDE_MIN_VERSION} REQUIRED)
-include(KDE4Defaults)
-include(MacroLibrary)
+find_package(ECM 1.0.0 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+
 include(CheckIncludeFile)
-include(CMakeDependentOption)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings)
+include(ECMInstallIcons)
+include(FeatureSummary)
 
-add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS -DQT_STRICT_ITERATORS)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets)
 
-find_package(BalooWidgets REQUIRED)
-set_package_properties(BalooWidgets PROPERTIES DESCRIPTION "Baloos Widgets"
-                       URL "http://www.kde.org"
-                       TYPE REQUIRED
-                       )
+find_package(KF5 REQUIRED
+    Archive
+    Config
+    ConfigWidgets
+    Emoticons
+    I18n
+    IdleTime
+    NotifyConfig
+    KDELibs4Support
+    KIO
+    Parts
+    Solid
+    Sonnet
+    Wallet
+    WidgetsAddons
+)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${BALOO_INCLUDE_DIR} ${BALOO_WIDGETS_INCLUDE_DIR})
+find_package(Phonon4Qt5 4.6.60 REQUIRED)
+include_directories(${PHONON_INCLUDES})
 
+#FIXME KF5 port Reenable when TransferPanel uses it again.
+#find_package(BalooWidgets REQUIRED)
+#set_package_properties(BalooWidgets PROPERTIES DESCRIPTION "Baloos Widgets"
+#                       URL "http://www.kde.org"
+#                       TYPE REQUIRED
+#                       )
 
 #FIXME Reenable when on QCA-for-Qt5.
 set(HAVE_QCA2 FALSE)
@@ -34,6 +53,18 @@ check_include_file("byteswap.h" HAVE_BYTESWAP_H)
 check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+add_definitions(
+  -DQT_USE_QSTRINGBUILDER
+  -DQT_NO_CAST_TO_ASCII
+# -DQT_NO_CAST_FROM_ASCII FIXME KF5 port
+  -DQT_STRICT_ITERATORS
+# -DQT_NO_URL_CAST_FROM_STRING FIXME KF5 port
+# -DQT_NO_CAST_FROM_BYTEARRAY FIXME KF5 port
+# -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 port
+  -DQT_USE_FAST_OPERATOR_PLUS
+)
 
 add_subdirectory(src)
 add_subdirectory(data)
@@ -55,4 +86,4 @@ if (EXISTS ${_doc_translations_path}/CMakeLists.txt)
     add_subdirectory(doc-translations)
 endif()
 
-macro_display_feature_log()
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -23,8 +23,8 @@
 
 
 #include <KGlobal>
-#include <kparts/componentfactory.h>
-#include <kregexpeditorinterface.h>
+// #include <kparts/componentfactory.h> FIXME KF5 port
+// #include <kregexpeditorinterface.h> FIXME KF5 port
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
@@ -48,7 +48,6 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
     if (!soundDirs.isEmpty())
     {
-        KUrl url;
         QDir dir;
         dir.setFilter( QDir::Files | QDir::Readable );
         QStringList::ConstIterator it = soundDirs.constBegin();
@@ -57,8 +56,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 )
             {
-                url.setPath( *it );
-                soundURL->fileDialog()->setUrl( url );
+                soundURL->fileDialog()->setDirectory( *it );
                 break;
             }
             ++it;

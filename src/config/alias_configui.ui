@@ -140,6 +140,7 @@
   <tabstop>removeButton</tabstop>
  </tabstops>
  <includes>
+  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
   <include location="local">klineedit.h</include>
  </includes>
  <resources/>

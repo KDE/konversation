@@ -234,7 +234,11 @@ void Images::initializeNickIcons()
 
 QIcon Images::getLed(const QColor& col,bool state)
 {
-    return QIcon(new LedIconEngine(col, state));
+    Q_UNUSED(col)
+    Q_UNUSED(state)
+
+    // return QIcon(new LedIconEngine(col, state)); FIXME KF5 port
+    return QIcon(); // FIXME KF5 port
 }
 
 QIcon Images::getServerLed(bool state)

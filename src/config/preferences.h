@@ -20,6 +20,9 @@
 #include "identity.h"
 #include "preferences_base.h"
 
+// FIXME KF5 port: Hack to avoid having to add this everywhere, clean up later.
+#include <KLocalizedString>
+#include <KGlobal>
 
 /*
 Options still to be GUIfied:
@@ -155,4 +158,5 @@ class Preferences : public PreferencesBase
         QList<QStringList> mAutoreplaceList;
         QString mSortingOrder;
 };
+
 #endif

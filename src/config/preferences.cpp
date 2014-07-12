@@ -22,6 +22,7 @@
 #include <QHeaderView>
 #include <QTreeView>
 
+#include <KGlobal>
 #include <KLocale>
 #include <KUser>
 #include <KStandardDirs>
@@ -31,7 +32,7 @@ struct PreferencesSingleton
     Preferences prefs;
 };
 
-K_GLOBAL_STATIC(PreferencesSingleton, s_prefs)
+Q_GLOBAL_STATIC(PreferencesSingleton, s_prefs)
 
 Preferences *Preferences::self()
 {

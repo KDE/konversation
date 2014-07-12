@@ -27,7 +27,7 @@
 
 #include <KDialog>
 #include <KLocalizedString>
-#include <baloo/filemetadatawidget.h>
+// #include <baloo/filemetadatawidget.h> FIXME KF5 port
 #include <KDebug>
 
 class QSplitter;
@@ -51,6 +51,7 @@ namespace Konversation
                     setCaption( i18nc("%1=filename", "File Information for %1",  file.fileName() ) );
                     setButtons( KDialog::Ok );
 
+                    /* FIXME KF5 port
                     m_fileMetaDataWidget = new Baloo::FileMetaDataWidget(this);
 
                     KFileItemList fileList;
@@ -58,6 +59,7 @@ namespace Konversation
                     m_fileMetaDataWidget->setItems(fileList);
 
                     setMainWidget(m_fileMetaDataWidget);
+                    */
 
                     //known Qt problem, minimum size is not set, limitation of X11 window manager
                     setMinimumSize(QSize(sizeHint().height()*2, sizeHint().width()));
@@ -65,11 +67,11 @@ namespace Konversation
 
                 ~FileMetaDataDialog()
                 {
-                    delete m_fileMetaDataWidget;
+                    //delete m_fileMetaDataWidget; FIXME KF5 port
                 }
 
             private:
-                Baloo::FileMetaDataWidget* m_fileMetaDataWidget;
+                // Baloo::FileMetaDataWidget* m_fileMetaDataWidget; FIXME KF5 port
         };
 
         class TransferPanel : public ChatWindow

@@ -18,7 +18,7 @@
 #include <QPixmap>
 
 #include <KComboBox>
-
+#include <KLocalizedString>
 
 IRCColorChooser::IRCColorChooser(QWidget* parent)
 : KDialog(parent)

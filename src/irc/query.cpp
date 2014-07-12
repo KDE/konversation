@@ -25,6 +25,7 @@
 
 #include <QSplitter>
 
+#include <KIconLoader>
 #include <KHBox>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>

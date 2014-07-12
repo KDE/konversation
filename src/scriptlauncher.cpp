@@ -17,6 +17,7 @@
 
 #include <QFileInfo>
 
+#include <KGlobal>
 #include <KProcess>
 #include <KStandardDirs>
 

@@ -379,7 +379,7 @@ namespace Konversation
                          it->getFileURL().directory() == m_defaultIncomingFolder.pathOrUrl() )
                     {
                         KUrl url;
-                        url.setDirectory( Preferences::self()->dccPath().pathOrUrl() );
+                        url.setDirectory( Preferences::self()->dccPath().url(QUrl::PrettyDecoded | QUrl::PreferLocalFile) );
                         url.setFileName( it->getFileURL().fileName() );
                         it->setFileURL( url );
 

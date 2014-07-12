@@ -21,6 +21,7 @@
 #include <KLocalizedString>
 #include <KDebug>
 #include <KCategoryDrawer>
+#include <KIconLoader>
 
 namespace Konversation
 {

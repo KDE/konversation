@@ -540,7 +540,7 @@ namespace Konversation
             {
                 KUrl url(urlString);
                 url.setFileName(QString());
-                new KRun(url, 0, 0, true, true);
+                // new KRun(url, 0, 0, true, true); FIXME KF5 port
             }
         }
 

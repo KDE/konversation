@@ -15,7 +15,7 @@
 
 #include <KLocalizedString>
 #include <KDebug>
-#include <kabstractfilewidget.h>
+#include <KFileWidget>
 
 #include <preferences.h>
 
@@ -24,7 +24,7 @@ DccFileDialog::DccFileDialog(const KUrl& startDir, const QString& filter, QWidge
 {
     m_checkBox = new QCheckBox(i18nc("passive dcc send", "Passive Send"));
     fileWidget()->setCustomWidget(m_checkBox);
-    
+
     m_checkBox->setCheckState(Preferences::self()->dccPassiveSend() ? Qt::Checked : Qt::Unchecked);
 }
 

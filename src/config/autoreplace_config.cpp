@@ -13,8 +13,8 @@
 #include "autoreplace_config.h"
 #include "preferences.h"
 
-#include <kparts/componentfactory.h>
-#include <kregexpeditorinterface.h>
+// #include <kparts/componentfactory.h> FIXME KF5 port
+// #include <kregexpeditorinterface.h> FIXME KF5 port
 
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
@@ -317,7 +317,7 @@ void Autoreplace_Config::addEntry()
   {
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
     newItem->setCheckState(0, Qt::Unchecked);
-  
+
     // set default direction
     newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     // set default pattern name
@@ -370,12 +370,14 @@ void Autoreplace_Config::removeEntry()
 
 void Autoreplace_Config::showRegExpEditor()
 {
+    /* FIXME KF5 port
+
     QDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     if(editorDialog)
     {
         // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
-         KRegExpEditorInterface *iface = qobject_cast<KRegExpEditorInterface*>( editorDialog );
+        KRegExpEditorInterface *iface = qobject_cast<KRegExpEditorInterface*>( editorDialog );
         Q_ASSERT(iface); // This should not fail!
         iface->setRegExp(patternInput->text());
         int dlgResult = editorDialog->exec();
@@ -388,6 +390,7 @@ void Autoreplace_Config::showRegExpEditor()
 
         delete editorDialog;
     }
+    */
 }
 
 #include "autoreplace_config.moc"

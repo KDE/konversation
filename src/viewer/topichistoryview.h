@@ -88,7 +88,7 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
 
 
     protected:
-        QList<QWidget*> createItemWidgets () const;
+        QList<QWidget*> createItemWidgets (const QModelIndex& index) const;
         void updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option,
             const QPersistentModelIndex& index) const;
 

@@ -28,6 +28,13 @@
 #include "invitedialog.h"
 #include <config-konversation.h>
 
+// FIXME KF5 port: This block is there so I don't need to add stuff all over the place.
+#include <KDebug>
+#include <KIcon>
+#include <KLocale>
+#include <KGlobal>
+#include <KLocalizedString>
+
 #ifdef HAVE_QCA2
 #include "cipher.h"
 #endif

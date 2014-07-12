@@ -39,7 +39,7 @@
 
 #include <KPasswordDialog>
 #include <KMessageBox>
-#include <KAboutData>
+#include <K4AboutData>
 
 #include <QTextDocument>
 #include <QTextBlock>
@@ -62,7 +62,7 @@ namespace Konversation
         for (int i = OutputFilter::staticMetaObject.methodOffset();
             i < OutputFilter::staticMetaObject.methodCount(); ++i)
         {
-            methodSignature = QString::fromLatin1(OutputFilter::staticMetaObject.method(i).signature());
+            methodSignature = QString::fromLatin1(OutputFilter::staticMetaObject.method(i).methodSignature());
 
             if (methodSignature.startsWith(QLatin1String("command_")))
                 m_commands << methodSignature.mid(8).section('(', 0, 0).toLower();
@@ -1331,7 +1331,7 @@ namespace Konversation
             QPointer<KPasswordDialog> dialog = new KPasswordDialog(0, KPasswordDialog::ShowUsernameLine);
             dialog->setPrompt(i18n("Enter username and password for IRC operator privileges:"));
             dialog->setUsername(nick);
-            dialog->setCaption(i18n("IRC Operator Password"));
+            dialog->setWindowTitle(i18n("IRC Operator Password"));
             if (dialog->exec()) {
                 result.toServer = "OPER " + dialog->username() + ' ' + dialog->password();
             }

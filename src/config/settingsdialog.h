@@ -13,10 +13,11 @@
 #ifndef KONVISETTINGSDIALOG_H
 #define KONVISETTINGSDIALOG_H
 
-#include "configdialog.h"
 #include "settingspage.h"
 
 #include <QList>
+
+#include <KConfigDialog>
 
 class Warnings_Config;
 class Theme_Config;
@@ -32,7 +33,7 @@ class OSD_Config;
 class Ignore_Config;
 
 
-class KonviSettingsDialog : public KonviConfigDialog
+class KonviSettingsDialog : public KConfigDialog
 {
     Q_OBJECT
 

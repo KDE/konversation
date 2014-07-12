@@ -305,7 +305,7 @@ void ChatWindow::clear()
 void ChatWindow::cdIntoLogPath()
 {
     QString home = KUser(KUser::UseRealUserID).homeDir();
-    QString logPath = Preferences::self()->logfilePath().pathOrUrl().replace("$HOME", home);
+    QString logPath = KUrl(Preferences::self()->logfilePath()).pathOrUrl().replace("$HOME", home);
 
     QDir logDir(home);
 

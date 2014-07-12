@@ -157,9 +157,9 @@ class ViewContainer : public QObject
         void addDccPanel();
         void closeDccPanel();
         void deleteDccPanel();
-        Konversation::DCC::TransferPanel* getDccPanel();
+        ChatWindow* getDccPanel(); // FIXME KF5 port
 
-        void addDccChat(Konversation::DCC::Chat* myNick);
+        // void addDccChat(Konversation::DCC::Chat* myNick); FIXME KF5 port
 
         StatusPanel* addStatusView(Server* server);
         RawLog* addRawLog(Server* server);
@@ -247,7 +247,7 @@ class ViewContainer : public QObject
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
 
-        Konversation::DCC::TransferPanel* m_dccPanel;
+        ChatWindow* m_dccPanel; // FIXME KF5 port
         bool m_dccPanelOpen;
 
         Konversation::InsertCharDialog* m_insertCharDialog;

@@ -11,7 +11,6 @@
 */
 
 #include "settingsdialog.h"
-#include "configdialog.h"
 #include "preferences.h"
 #include "ui_chatwindowappearance_config.h"
 #include "connectionbehavior_config.h"
@@ -26,7 +25,7 @@
 #include "tabs_config.h"
 #include "ui_colorsappearance_config.h"
 #include "ui_generalbehavior_configui.h"
-#include "dcc_config.h"
+// #include "dcc_config.h" FIXME KF5 port
 #include "osd_config.h"
 #include "theme_config.h"
 #include "alias_config.h"
@@ -36,13 +35,18 @@
 
 #include <config-konversation.h>
 
+#include <KConfigDialog>
+#include <KIcon>
+#include <KLocalizedString>
+
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
-    KonviConfigDialog( parent, "settings", Preferences::self(), KPageDialog::Tree)
+    KConfigDialog( parent, QLatin1String("settings"), Preferences::self())
 {
   m_modified = false;
   QWidget *w = 0;
 
+  /* FIXME KF5 port
   KPageWidgetItem *interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
   interfaceGroup->setIcon(KIcon("preferences-desktop-theme"));
   KPageDialog::addPage(interfaceGroup);
@@ -54,6 +58,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   KPageWidgetItem *notificationGroup = new KPageWidgetItem(new QWidget(this), i18n("Notifications"));
   notificationGroup->setIcon(KIcon("preferences-desktop-notification"));
   KPageDialog::addPage(notificationGroup);
+  */
 
   //Interface/Chat Window
   Ui::ChatWindowAppearance_Config confChatWindowAppearance;
@@ -62,11 +67,11 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   confChatWindowAppearance.kcfg_TimestampFormat->addItem("hh:mm");
   confChatWindowAppearance.kcfg_TimestampFormat->addItem("hh:mm:ss");
   confChatWindowAppearance.kcfg_TimestampFormat->addItem("h:m ap");
-  addPage(w, interfaceGroup, "view-list-text", i18n("Chat Window"));
+  addPage(w, i18n("Chat Window (Interface)"), QLatin1String("view-list-text"));
 
   //Interface/Themes
   m_confThemeWdg = new Theme_Config( this, "Theme" );
-  addPage ( m_confThemeWdg, interfaceGroup, "preferences-desktop-icons", i18n("Nicklist Themes") );
+  addPage(m_confThemeWdg, i18n("Nicklist Themes"), QLatin1String("preferences-desktop-icons"));
   m_pages.append(m_confThemeWdg);
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
@@ -74,34 +79,34 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ColorsAppearance_Config confColorsAppearance;
   w = new QWidget();
   confColorsAppearance.setupUi(w);
-  addPage(w, interfaceGroup, "preferences-desktop-color", i18n("Colors"));
+  addPage(w, i18n("Colors"), QLatin1String("preferences-desktop-color"));
 
   //Interface/Fonts
   Ui::FontAppearance_Config confFontAppearance;
   w = new QWidget();
   confFontAppearance.setupUi(w);
-  addPage(w, interfaceGroup, "preferences-desktop-font", i18n("Fonts"));
+  addPage(w, i18n("Fonts"), QLatin1String("preferences-desktop-font"));
 
   //Interface/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
-  addPage ( m_confQuickButtonsWdg, interfaceGroup, "preferences-desktop-keyboard", i18n("Quick Buttons") );
+  addPage(m_confQuickButtonsWdg, i18n("Quick Buttons"), QLatin1String("preferences-desktop-keyboard"));
   m_pages.append(m_confQuickButtonsWdg);
   connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Tabs
   m_confTabBarWdg = new Tabs_Config( this, "TabBar" );
-  addPage ( m_confTabBarWdg, interfaceGroup, "tab-new", i18n("Tabs") );
+  addPage ( m_confTabBarWdg, i18n("Tabs (Interface)"), QLatin1String("tab-new"));
 
   //Behavior/General
   Ui::GeneralBehavior_ConfigUI confGeneralBehavior;
   w = new QWidget();
   confGeneralBehavior.setupUi(w);
-  addPage( w, behaviorGroup, "configure", i18n("General") );
+  addPage(w, i18n("General Behavior"), QLatin1String("configure"));
 
   //Behavior/Connection
   ConnectionBehavior_Config* confConnectionBehavior = new ConnectionBehavior_Config(this);
   confConnectionBehavior->setObjectName("ConnectionBehavior");
-  addPage(confConnectionBehavior, behaviorGroup, "network-connect", i18n("Connection"));
+  addPage(confConnectionBehavior, i18n("Connection"), QLatin1String("network-connect"));
   m_pages.append(confConnectionBehavior);
 
   //Behaviour/Chat Window
@@ -111,29 +116,29 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines"));
   confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks"));
   confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds"));
-  addPage(w, behaviorGroup, "view-list-text", i18n("Chat Window"));
+  addPage(w, i18n("Chat Window (Behavior)"), QLatin1String("view-list-text"));
 
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
-  addPage ( m_confNicklistBehaviorWdg, behaviorGroup, "preferences-contact-list", i18n("Nickname List") );
+  addPage ( m_confNicklistBehaviorWdg, i18n("Nickname List"), QLatin1String("preferences-contact-list"));
   connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_pages.append(m_confNicklistBehaviorWdg);
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config( this, "Alias" );
-  addPage ( m_confAliasWdg, behaviorGroup, "edit-rename", i18n("Command Aliases") );
+  addPage(m_confAliasWdg, i18n("Command Aliases"), QLatin1String("edit-rename"));
   m_pages.append(m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Auto Replace
   m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
-  addPage ( m_confAutoreplaceWdg, behaviorGroup, "edit-rename", i18n("Auto Replace") );
+  addPage (m_confAutoreplaceWdg, i18n("Auto Replace"), QLatin1String("edit-rename"));
   m_pages.append(m_confAutoreplaceWdg);
   connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
-  addPage ( m_confIgnoreWdg, behaviorGroup, "process-stop", i18nc("@title:tab", "Ignore") );
+  addPage ( m_confIgnoreWdg, i18nc("@title:tab", "Ignore"), QLatin1String("process-stop"));
   connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_pages.append(m_confIgnoreWdg);
 
@@ -142,20 +147,22 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   w = new QWidget();
   confLog.setupUi(w);
   confLog.kcfg_LogfilePath->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
-  addPage(w, behaviorGroup, "text-plain", i18n("Logging"));
+  addPage(w, i18n("Logging"), QLatin1String("text-plain"));
 
+  /* FIXME KF5 port
   m_confDCCWdg = new DCC_Config( this, "DCC" );
-  addPage ( m_confDCCWdg, behaviorGroup, "arrow-right-double", i18n("DCC") );
+  addPage ( m_confDCCWdg, behaviorGroup, QLatin1String("arrow-right-double"), i18n("DCC") );
+  */
 
   //Notifications/Tab Bar
   Ui::TabNotifications_Config confTabNotifications;
   w = new QWidget();
   confTabNotifications.setupUi(w);
-  addPage(w, notificationGroup, "tab-new", i18n("Tabs"));
+  addPage(w, i18n("Tabs (Notifications)"), QLatin1String("tab-new"));
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
-  addPage ( m_confHighlightWdg, notificationGroup, "flag-red", i18n("Highlight") );
+  addPage ( m_confHighlightWdg, i18n("Highlight"), QLatin1String("flag-red"));
   connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_pages.append(m_confHighlightWdg);
 
@@ -163,17 +170,17 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::WatchedNicknames_ConfigUI confWatchedNicks;
   w = new QWidget();
   confWatchedNicks.setupUi(w);
-  addPage(w, notificationGroup, "edit-find-user", i18n("Watched Nicknames"));
+  addPage(w, i18n("Watched Nicknames"), QLatin1String("edit-find-user"));
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config( this, "OSD" );
-  addPage ( m_confOSDWdg, notificationGroup, "video-display", i18n("On Screen Display") );
+  addPage(m_confOSDWdg, i18n("On Screen Display"), QLatin1String("video-display"));
   //no modified connection needed - it's all kcfg widgets
   m_pages.append(m_confOSDWdg);
 
   //Notification/Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
-  addPage ( m_confWarningsWdg, notificationGroup, "dialog-warning", i18n("Warning Dialogs") );
+  addPage(m_confWarningsWdg, i18n("Warning Dialogs"), QLatin1String("dialog-warning"));
   m_pages.append(m_confWarningsWdg);
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 }
@@ -208,7 +215,7 @@ void KonviSettingsDialog::updateSettings()
     page->saveSettings();
   }
   m_modified = false;
-  emit settingsChanged();
+  emit settingsChanged(QLatin1String("settings"));
 }
 
 void KonviSettingsDialog::updateWidgets()

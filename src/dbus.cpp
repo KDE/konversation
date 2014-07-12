@@ -20,6 +20,9 @@
 #include "identity.h"
 #include "server.h"
 
+#include <KDebug>
+#include <KLocalizedString>
+
 #include <QDBusConnection>
 
 using namespace Konversation;
