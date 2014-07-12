@@ -397,7 +397,7 @@ void Application::readOptions()
             newIdentity->setNickservNickname(cgIdentity.readEntry("Bot"));
             newIdentity->setNickservCommand(cgIdentity.readEntry("NickservCommand", "identify"));
             newIdentity->setSaslAccount(cgIdentity.readEntry("SaslAccount"));
-            newIdentity->setPemClientCertFile(cgIdentity.readEntry<QUrl>("PemClientCertFile", QUrl())); // FIXME KF5 port: QUrl hack
+            newIdentity->setPemClientCertFile(cgIdentity.readEntry<QUrl>("PemClientCertFile", QUrl()));
 
             newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
             newIdentity->setRunAwayCommands(cgIdentity.readEntry("ShowAwayMessage", false));
@@ -762,7 +762,7 @@ void Application::saveOptions(bool updateGUI)
         cgIdentity.writeEntry("Bot",identity->getNickservNickname());
         cgIdentity.writeEntry("NickservCommand",identity->getNickservCommand());
         cgIdentity.writeEntry("SaslAccount",identity->getSaslAccount());
-        cgIdentity.writeEntry("PemClientCertFile", QUrl(identity->getPemClientCertFile().toString())); // FIXME KF5 port: KUrl hack
+        cgIdentity.writeEntry("PemClientCertFile", identity->getPemClientCertFile().toString());
         cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
         cgIdentity.writeEntry("ShowAwayMessage",identity->getRunAwayCommands());
         cgIdentity.writeEntry("AwayMessage",identity->getAwayCommand());
@@ -1257,10 +1257,10 @@ void Application::openUrl(const QString& url)
         if (url.startsWith(QLatin1String("irc://")) || url.startsWith(QLatin1String("ircs://")))
             Application::instance()->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
         else if (url.startsWith(QLatin1String("mailto:")))
-            KToolInvocation::invokeMailer(KUrl(url));
+            KToolInvocation::invokeMailer(QUrl(url));
         else
 #ifndef Q_WS_WIN
-            new KRun(KUrl(url), Application::instance()->getMainWindow());
+            new KRun(QUrl(url), Application::instance()->getMainWindow());
 #else
             KToolInvocation::invokeBrowser(url);
 #endif

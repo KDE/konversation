@@ -31,7 +31,7 @@
 
 #include <KIconLoader>
 #include <KStandardShortcut>
-#include <kio/pixmaploader.h> // FIXME KF5 port
+#include <kio/pixmaploader.h>
 
 using namespace Konversation;
 
@@ -257,8 +257,10 @@ void IRCView::dragMoveEvent(QDragMoveEvent* e)
 
 void IRCView::dropEvent(QDropEvent* e)
 {
+    /* FIXME KF5 port
     if (e->mimeData() && e->mimeData()->hasUrls())
         emit urlsDropped(KUrl::List::fromMimeData(e->mimeData(), KUrl::List::PreferLocalUrls));
+    */
 }
 
 // Marker lines
@@ -551,12 +553,14 @@ void IRCView::updateAppearance()
     {
         QUrl url = Preferences::self()->backgroundImage();
 
+        /* FIXME KF5 port
         if (url.hasPath())
         {
             viewport()->setStyleSheet("QWidget { background-image: url("+url.path()+"); background-attachment:fixed; }");
 
             return;
         }
+        */
     }
 
     if (!viewport()->styleSheet().isEmpty())
@@ -1958,8 +1962,9 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         QPointer<QDrag> drag = new QDrag(this);
         QMimeData* mimeData = new QMimeData;
 
-        KUrl url(m_dragUrl);
-        url.populateMimeData(mimeData);
+        QUrl url(m_dragUrl);
+
+        mimeData->setUrls(QList<QUrl>() << url);
 
         drag->setMimeData(mimeData);
 

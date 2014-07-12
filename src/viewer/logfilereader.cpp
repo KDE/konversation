@@ -166,8 +166,9 @@ void LogfileReader::saveLog()
         i18n("Choose Destination Folder"));
     if(!destination.isEmpty())
     {
-        KIO::Job* job=KIO::copy(KUrl(fileName),
-            KUrl(destination));
+        // FIXME KF5 port: Test that QUrl conversion works.
+        KIO::Job* job=KIO::copy(QUrl(fileName),
+            QUrl(destination));
 
         connect(job,SIGNAL(result(KJob*)),this,SLOT(copyResult(KJob*)));
     }

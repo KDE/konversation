@@ -276,8 +276,8 @@ void UrlCatcher::saveSelectedUrls()
     {
         if (index.isValid())
         {
-            KUrl url(index.data().toString());
-            QUrl targetUrl = KFileDialog::getSaveUrl(url.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
+            QUrl url(index.data().toString());
+            QUrl targetUrl = KFileDialog::getSaveUrl(url.toLocalFile(), QString(), this, i18n("Save link as")); // FIXME KF5 port: Test this QUrl conversion works.
 
             if (targetUrl.isEmpty() || !targetUrl.isValid())
                 continue;

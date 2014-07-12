@@ -253,10 +253,12 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ev)
 
 QStringList NickListView::mimeTypes () const
 {
-    return KUrl::List::mimeDataTypes();
+    // return KUrl::List::mimeDataTypes(); FIXME KF5 port
+    return QStringList(); // FIXME KF5 port
 }
 
 bool NickListView::canDecodeMime(QDropEvent const *event) const {
+    /* FIXME KF5 port
     // Verify if the URL is not irc://
     if (KUrl::List::canDecode(event->mimeData()))
     {
@@ -274,6 +276,7 @@ bool NickListView::canDecodeMime(QDropEvent const *event) const {
         }
         return true;
     }
+    */
     return false;
 }
 
@@ -302,6 +305,7 @@ void NickListView::dragMoveEvent(QDragMoveEvent *event)
 
 bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action)
 {
+    /* FIXME KF5 port
     Q_UNUSED(index);
     Q_UNUSED(action);
     Nick* nick = dynamic_cast<Nick*>(parent);
@@ -310,6 +314,7 @@ bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeD
         channel->getServer()->sendURIs(uris, nick->getChannelNick()->getNickname());
         return true;
     }
+    */
     return false;
 }
 

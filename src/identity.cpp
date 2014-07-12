@@ -130,7 +130,7 @@ QString Identity::getNickservCommand() const                      { return m_nic
 void Identity::setSaslAccount(const QString& saslAccount) { m_saslAccount = saslAccount; }
 QString Identity::getSaslAccount() const                  { return m_saslAccount; }
 void Identity::setPemClientCertFile(const QUrl &url)      { m_pemClientCertFile = url; }
-KUrl Identity::getPemClientCertFile() const               { return m_pemClientCertFile; }
+QUrl Identity::getPemClientCertFile() const               { return m_pemClientCertFile; }
 
 void Identity::setQuitReason(const QString& reason)     { quitReason=reason; }
 QString Identity::getQuitReason() const                 { return quitReason; }

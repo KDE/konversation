@@ -83,7 +83,7 @@ void Highlight::setSoundURL(const QUrl &url)
     m_soundURL = url;
 }
 
-KUrl Highlight::getSoundURL() const
+QUrl Highlight::getSoundURL() const
 {
     return m_soundURL;
 }

@@ -183,7 +183,7 @@ void Theme_Config::installTheme()
     if(themeInstallDir.exists()) // We got a directory not a file
     {
         if(themeInstallDir.exists("index.desktop"))
-            KIO::NetAccess::dircopy(KUrl(tmpThemeFile),KUrl(themesDir),0L);
+            KIO::NetAccess::dircopy(QUrl(tmpThemeFile), QUrl(themesDir), 0L);
         else
         {
             KMessageBox::error(0L,
@@ -244,7 +244,7 @@ void Theme_Config::removeTheme()
     {
 
         unlink(QFile::encodeName(dir));
-        KIO::DeleteJob* job = KIO::del(KUrl(dir.remove("index.desktop")));
+        KIO::DeleteJob* job = KIO::del(QUrl(dir.remove("index.desktop")));
         connect(job, SIGNAL(result(KJob*)), this, SLOT(postRemoveTheme(KJob*)));
     }
 }

@@ -62,7 +62,7 @@ class Identity : public KShared
         void setSaslAccount(const QString& saslAccount);
         QString getSaslAccount() const;
         void setPemClientCertFile(const QUrl &url);
-        KUrl getPemClientCertFile() const;
+        QUrl getPemClientCertFile() const;
 
         void setQuitReason(const QString& reason);
         QString getQuitReason() const;

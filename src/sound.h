@@ -58,7 +58,7 @@ namespace Konversation
             Phonon::MediaObject* m_mediaObject;
             Phonon::AudioOutput* m_audioOutput;
 
-            QQueue<KUrl> m_playQueue;
+            QQueue<QUrl> m_playQueue;
             bool m_played;
     };
 }

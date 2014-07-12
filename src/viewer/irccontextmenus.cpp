@@ -786,7 +786,8 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         }
         case LinkSaveAs:
         {
-            KUrl srcUrl(link);
+            /* FIXME KF5 port
+            QUrl srcUrl(link);
 
             QUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(),
                 Application::instance()->getMainWindow(), i18n("Save link as"));
@@ -795,7 +796,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
                 break;
 
             KIO::copy(srcUrl, saveUrl);
-
+            */
             break;
         }
         default:

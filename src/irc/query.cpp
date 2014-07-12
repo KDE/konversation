@@ -61,7 +61,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     setTextView(ircViewBox->ircView());               // Server will be set later in setServer();
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowNickActions, true);
     textView->setAcceptDrops(true);
-    connect(textView,SIGNAL(urlsDropped(KUrl::List)),this,SLOT(urlsDropped(KUrl::List)));
+    connect(textView,SIGNAL(urlsDropped(QList<QUrl>)),this,SLOT(urlsDropped(QList<QUrl>))); // FIXME KF5: Test QUrl conversion.
 
     // This box holds the input line
     KHBox* inputBox=new KHBox(this);
@@ -432,7 +432,7 @@ bool Query::closeYourself(bool confirm)
     return false;
 }
 
-void Query::urlsDropped(const KUrl::List urls)
+void Query::urlsDropped(const QList<QUrl>& urls)
 {
     m_server->sendURIs(urls, getName());
 }

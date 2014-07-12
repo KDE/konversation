@@ -305,7 +305,7 @@ void ChatWindow::clear()
 void ChatWindow::cdIntoLogPath()
 {
     QString home = KUser(KUser::UseRealUserID).homeDir();
-    QString logPath = KUrl(Preferences::self()->logfilePath()).pathOrUrl().replace("$HOME", home);
+    QString logPath = Preferences::self()->logfilePath().toLocalFile(); // FIXME KF5 port: Probably brittle QUrl conversion, need not be local?
 
     QDir logDir(home);
 

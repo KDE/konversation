@@ -970,7 +970,7 @@ namespace Konversation
                 {
                     // TODO: make sure this will work:
                     //output=i18n("Usage: %1DCC SEND nickname [filename] [filename] ...").arg(commandChar);
-                    KUrl fileURL(parameterList[2]);
+                    QUrl fileURL(parameterList[2]);
 
                     //We could easily check if the remote file exists, but then we might
                     //end up asking for creditionals twice, so settle for only checking locally

@@ -128,7 +128,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
         patternColor->setColor(highlightItem->getColor());
         patternInput->setText(highlightItem->getPattern());
         enableNotificationsCheckbox->setChecked(highlightItem->getNotify());
-        soundURL->setUrl(highlightItem->getSoundURL().prettyUrl());
+        soundURL->setUrl(highlightItem->getSoundURL().url());
         autoTextInput->setText(highlightItem->getAutoText());
         chatWindowsInput->setText(highlightItem->getChatWindows());
         // all signals will now emit the modified() signal again
@@ -242,7 +242,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
 
     if (!newItemSelected && item)
     {
-        item->setSoundURL(KUrl(newURL));
+        item->setSoundURL(QUrl(newURL));
         emit modified();
     }
 }
@@ -271,7 +271,7 @@ void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
 
 void Highlight_Config::addHighlight()
 {
-    Highlight* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), KUrl(), QString(), QString(), true);
+    Highlight* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), QUrl(), QString(), QString(), true);
 
     HighlightViewItem* item = new HighlightViewItem(highlightListView, newHighlight);
     item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
@@ -334,7 +334,7 @@ QStringList Highlight_Config::currentHighlightList()
 void Highlight_Config::playSound()
 {
     Application *konvApp = static_cast<Application *>(KApplication::kApplication());
-    konvApp->sound()->play(KUrl(soundURL->url()));
+    konvApp->sound()->play(soundURL->url());
 }
 
 void Highlight_Config::saveSettings()
@@ -350,7 +350,7 @@ void Highlight_Config::saveSettings()
         grp.writeEntry("Pattern", hl->getPattern());
         grp.writeEntry("RegExp", hl->getRegExp());
         grp.writeEntry("Color", hl->getColor());
-        grp.writePathEntry("Sound", hl->getSoundURL().prettyUrl());
+        grp.writePathEntry("Sound", hl->getSoundURL().url());
         grp.writeEntry("AutoText", hl->getAutoText());
         grp.writeEntry("ChatWindows", hl->getChatWindows());
         grp.writeEntry("Notify", hl->getNotify());

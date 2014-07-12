@@ -206,7 +206,7 @@ class Server : public QObject
 
         void autoCommandsAndChannels();
 
-        void sendURIs(const KUrl::List& uris, const QString& nick);
+        void sendURIs(const QList<QUrl>& uris, const QString& nick);
 
         void notifyAction(const QString& nick);
         ChannelListPanel* getChannelListPanel() const;
@@ -491,7 +491,7 @@ class Server : public QObject
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient, KUrl fileURL, bool passive = Preferences::self()->dccPassiveSend(), const QString &altFileName = QString(), quint64 fileSize = 0);
+        void addDccSend(const QString &recipient, QUrl fileURL, bool passive = Preferences::self()->dccPassiveSend(), const QString &altFileName = QString(), quint64 fileSize = 0);
         void removeQuery(Query *query);
         void notifyListStarted(int serverGroupId);
         void startNotifyTimer(int msec=0);

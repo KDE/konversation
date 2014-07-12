@@ -2007,7 +2007,7 @@ void Server::requestDccSend()
     */
 }
 
-void Server::sendURIs(const KUrl::List& uris, const QString& nick)
+void Server::sendURIs(const QList<QUrl>& uris, const QString& nick)
 {
     /* FIXME KF5 port
     foreach(const QUrl &uri, uris)
@@ -2065,7 +2065,7 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
     */
 }
 
-void Server::addDccSend(const QString &recipient, KUrl fileURL, bool passive, const QString &altFileName, quint64 fileSize)
+void Server::addDccSend(const QString &recipient, QUrl fileURL, bool passive, const QString &altFileName, quint64 fileSize)
 {
     /* FIXME KF5 port
     if (!fileURL.isValid())

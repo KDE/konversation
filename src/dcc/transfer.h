@@ -80,7 +80,7 @@ namespace Konversation
                 KIO::filesize_t    getFileSize()              const;
                 KIO::fileoffset_t  getTransferringPosition()  const;
                 KIO::fileoffset_t  getTransferStartPosition() const;
-                KUrl               getFileURL()               const;
+                QUrl               getFileURL()               const;
                 bool               isResumed()                const;
                 bool               isReverse()                const;
                 QString            getReverseToken()          const;

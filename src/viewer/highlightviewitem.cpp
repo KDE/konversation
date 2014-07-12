@@ -85,10 +85,10 @@ QColor HighlightViewItem::getColor() const
 void HighlightViewItem::setSoundURL(const QUrl &soundURL)
 {
     m_soundURL = soundURL;
-    setText(2, m_soundURL.prettyUrl());
+    setText(2, m_soundURL.url());
 }
 
-KUrl HighlightViewItem::getSoundURL() const
+QUrl HighlightViewItem::getSoundURL() const
 {
     return m_soundURL;
 }

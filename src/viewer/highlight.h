@@ -45,7 +45,7 @@ class Highlight
         QColor getColor() const;
 
         void setSoundURL(const QUrl &url);
-        KUrl getSoundURL() const;
+        QUrl getSoundURL() const;
 
         void setAutoText(const QString& autoText);
         QString getAutoText() const;

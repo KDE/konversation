@@ -131,7 +131,7 @@ namespace Konversation
         {
             if (j->error())
             {
-                error = i18n("Failed to download %1: %2",location.prettyUrl(),j->errorString());
+                error = i18n("Failed to download %1: %2",location.url(),j->errorString());
                 kDebug() << error << endl;
                 return;
             }
@@ -296,7 +296,7 @@ namespace Konversation
 
                     return true;
                 }
-                
+
                 kDebug() << "Undo forwarding Failed: Failed to send SOAP query.";
             }
 
@@ -319,19 +319,19 @@ namespace Konversation
             address.setPath(controlurl);
 
             KIO::TransferJob *req = KIO::http_post( address, query.toAscii(), KIO::HideProgressInfo );
-            
+
             req->addMetaData("content-type", QString("text/xml"));
             req->addMetaData("UserAgent", QString("Konversation UPnP"));
             req->addMetaData("customHTTPHeader", QString("SOAPAction: ") + soapact);
 
             soap_data_out[req] = QByteArray();
             soap_data_in[req]  = QByteArray();
-            
+
             connect( req, SIGNAL(data(KIO::Job*,QByteArray)), this, SLOT(recvSoapData(KIO::Job*,QByteArray)) );
             connect( req, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(sendSoapData(KIO::Job*,QByteArray&)) );
-            
+
             connect( req, SIGNAL(result(KJob*)), this, SLOT(onRequestFinished(KJob*)) );
-            
+
             return req;
         }
 
@@ -351,7 +351,7 @@ namespace Konversation
             if (r->error())
             {
                 kDebug() << "UPnPRouter : Error: " << r->errorString() << endl;
-                
+
                 if (pending_services.contains(r))
                 {
                     pending_services.remove(r);
@@ -359,14 +359,14 @@ namespace Konversation
                 else if (pending_forwards.contains(r))
                 {
                     emit forwardComplete(true, pending_forwards[r]->port);
-                    
+
                     forwards.removeAll(pending_forwards[r]);
                     pending_forwards.remove(r);
                 }
                 else if (pending_unforwards.contains(r))
                 {
                     emit unforwardComplete(true, pending_unforwards[r]->port);
-                    
+
                     forwards.removeAll(pending_unforwards[r]);
                     pending_unforwards.remove(r);
                 }
@@ -377,7 +377,7 @@ namespace Konversation
                 soap_data_in[r].clear();
 
                 kDebug() << "UPnPRouter : OK:" << endl;
-                
+
                 if (pending_services.contains(r))
                 {
                     if (reply.contains("Connected"))
@@ -385,27 +385,27 @@ namespace Konversation
                         // Lets just deal with one connected service for now. Last one wins.
                         service = pending_services[r];
                         service.ready = true;
-                        
+
                         kDebug() << "Found connected service: " << service.servicetype << endl;
                     }
-                    
+
                     pending_services.remove(r);
                 }
                 else if (pending_forwards.contains(r))
                 {
                     emit forwardComplete(false, pending_forwards[r]->port);
-                    
+
                     pending_forwards.remove(r);
                 }
                 else if (pending_unforwards.contains(r))
                 {
                     emit unforwardComplete(false, pending_unforwards[r]->port);
-                    
+
                     forwards.removeAll(pending_unforwards[r]);
                     pending_unforwards.remove(r);
                 }
             }
-            
+
             soap_data_in.remove(r);
             soap_data_out.remove(r);
         }

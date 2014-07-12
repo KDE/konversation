@@ -87,7 +87,7 @@ class Query : public ChatWindow
         void queryTextEntered();
         void queryPassthroughCommand();
         void sendFileMenu();
-        void urlsDropped(const KUrl::List urls);
+        void urlsDropped(const QList<QUrl>& urls);
         // connected to IRCInput::textPasted() - used to handle large/multiline pastes
         void textPasted(const QString& text);
         void nickInfoChanged();

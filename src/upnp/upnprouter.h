@@ -115,7 +115,7 @@ namespace Konversation
             QHash<KJob*, QByteArray>  soap_data_out;
 
             QString error;
-            
+
         public:
             /**
             * Construct a router.
@@ -133,7 +133,7 @@ namespace Konversation
             QString getUUID() const {return uuid;}
 
             /// Get the location of it's xml description
-            KUrl getLocation() const {return location;}
+            QUrl getLocation() const {return location;}
 
             /// Get the device description
             UPnPDeviceDescription & getDescription() {return desc;}
@@ -174,10 +174,10 @@ namespace Konversation
         private slots:
             void onRequestFinished(KJob *reply);
             void downloadFinished(KJob* j);
-            
+
             void sendSoapData(KIO::Job *job, QByteArray &data);
             void recvSoapData(KIO::Job *job, const QByteArray &data);
-            
+
         signals:
             /**
             * Signal which indicates that the XML was downloaded successfully or not.

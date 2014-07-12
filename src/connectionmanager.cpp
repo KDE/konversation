@@ -96,13 +96,13 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, int serverG
     connectTo(flag, settings);
 }
 
-void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList<KUrl>& list)
+void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList<QUrl>& list)
 {
     QMap<QString,Konversation::ChannelList> serverChannels;
     QMap<QString,ConnectionSettings> serverConnections;
 
-    QList<KUrl>::ConstIterator it = list.constBegin();
-    QList<KUrl>::ConstIterator end = list.constEnd();
+    QList<QUrl>::ConstIterator it = list.constBegin();
+    QList<QUrl>::ConstIterator end = list.constEnd();
 
     for (; it != end; ++it)
     {

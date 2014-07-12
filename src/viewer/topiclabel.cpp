@@ -20,8 +20,7 @@
 #include <QTextDocument>
 
 #include <KIconLoader>
-#include <kio/pixmaploader.h> // FIXME KF5 port
-
+#include <kio/pixmaploader.h>
 
 namespace Konversation
 {
@@ -175,8 +174,9 @@ namespace Konversation
             QPointer<QDrag> drag = new QDrag(this);
             QMimeData* mimeData = new QMimeData;
 
-            KUrl url(m_dragUrl);
-            url.populateMimeData(mimeData);
+            QUrl url(m_dragUrl);
+
+            mimeData->setUrls(QList<QUrl>() << url);
 
             drag->setMimeData(mimeData);
 

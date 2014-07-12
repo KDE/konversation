@@ -224,7 +224,7 @@ void Preferences::addHighlight(const QString& highlight, bool regExp, const QCol
     const QString& soundURL, const QString& autoText, const QString& chatWindows, bool notify)
 {
     self()->mHighlightList.append(new Highlight(highlight, regExp, color,
-        KUrl(soundURL), autoText, chatWindows, notify));
+        QUrl(soundURL), autoText, chatWindows, notify));
 }
 
 void Preferences::setIgnoreList(QList<Ignore*> newList)
