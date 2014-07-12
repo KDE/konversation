@@ -230,7 +230,7 @@ class ViewContainer : public QObject
 
         QSplitter* m_viewTreeSplitter;
         TabWidget* m_tabWidget;
-        ViewTree* m_viewTree;
+        QWidget* m_viewTree;
         KVBox* m_vbox;
         QueueTuner* m_queueTuner;
 

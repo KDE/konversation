@@ -12,7 +12,6 @@
 #include "viewcontainer.h"
 #include "connectionmanager.h"
 #include "queuetuner.h"
-#include "viewtree.h"
 #include "application.h"
 #include "notificationhandler.h"
 #include "images.h"
@@ -201,6 +200,7 @@ void ViewContainer::setupTabWidget()
 
 void ViewContainer::setupViewTree()
 {
+    /* FIXME ViewTree port
     m_viewTree = new ViewTree(m_viewTreeSplitter);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewTree->hide();
@@ -285,6 +285,7 @@ void ViewContainer::setupViewTree()
         // properly selected list item in the tree on app startup.
         m_viewTree->selectFirstView(true);
     }
+    */
 }
 
 void ViewContainer::setViewTreeShown(bool show)
@@ -307,6 +308,7 @@ void ViewContainer::setViewTreeShown(bool show)
 
 void ViewContainer::removeViewTree()
 {
+    /* FIXME ViewTree port
     disconnect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
     disconnect(this, SIGNAL(viewChanged(ChatWindow*)), m_viewTree, SLOT(selectView(ChatWindow*)));
     disconnect(this, SIGNAL(removeView(ChatWindow*)), m_viewTree, SLOT(removeView(ChatWindow*)));
@@ -338,10 +340,12 @@ void ViewContainer::removeViewTree()
 
     delete m_viewTree;
     m_viewTree = 0;
+    */
 }
 
 void ViewContainer::syncTabBarToTree()
 {
+    /* FIXME ViewTree port
     if (!m_tabWidget)
         return;
 
@@ -368,10 +372,12 @@ void ViewContainer::syncTabBarToTree()
     }
 
     updateViewActions(m_tabWidget->currentIndex());
+    */
 }
 
 void ViewContainer::updateAppearance()
 {
+    /* FIXME ViewTree port
     if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
     {
         m_saveSplitterSizesLock = true;
@@ -383,6 +389,7 @@ void ViewContainer::updateAppearance()
         m_saveSplitterSizesLock = true;
         removeViewTree();
     }
+    */
 
     updateViews();
     updateTabWidgetAppearance();
@@ -448,6 +455,7 @@ void ViewContainer::updateViewActions(int index)
         bool insertSupported = view->isInsertSupported();
         IRCView* textView = view->getTextView();
 
+        /* FIXME ViewTree port
         if (m_viewTree)
         {
             action = actionCollection()->action("move_tab_left");
@@ -479,6 +487,7 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(server->isConnected());
         }
         else
+        */
         {
             action = actionCollection()->action("reconnect_server");
             if (action) action->setEnabled(false);
@@ -806,7 +815,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
                 if (!label.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != label)
                 {
                     if (m_tabWidget) m_tabWidget->setTabText(m_tabWidget->indexOf(view), label);
-                    if (m_viewTree) m_viewTree->setViewName(view, label);
+                    // if (m_viewTree) m_viewTree->setViewName(view, label); FIXME ViewTree port
 
                     if (view == m_frontView)
                     {
@@ -822,6 +831,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
                 updateViewActions(m_tabWidget->currentIndex());
         }
 
+        /* FIXME ViewTree port
         if (m_viewTree)
         {
             if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->closeButtons())
@@ -834,7 +844,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
             if (!Preferences::self()->tabNotificationsText())
                 m_viewTree->setViewColor(view, m_window->palette().windowText().color());
         }
-        else if (m_tabWidget)
+        else */ if (m_tabWidget)
         {
             const int idx = m_tabWidget->indexOf(view);
             if (!Preferences::self()->tabNotificationsLeds())
@@ -870,6 +880,8 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
 
 void ViewContainer::updateViewIcons()
 {
+/* FIXME ViewTree port
+
     if (!m_tabWidget) return;
 
     for (int i = 0; i < m_tabWidget->count(); ++i)
@@ -878,10 +890,13 @@ void ViewContainer::updateViewIcons()
 
         if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
         {
+
             if (m_viewTree)
                 m_viewTree->setViewIcon(view, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
         }
     }
+
+    */
 }
 
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
@@ -895,6 +910,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->self()->tabNotificationsText())
         return;
 
+    /* FIXME ViewTree port
     if (m_viewTree)
     {
         switch (type)
@@ -991,7 +1007,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
         }
     }
-    else if (m_tabWidget)
+    else */ if (m_tabWidget)
     {
         const int idx = m_tabWidget->indexOf(view);
         switch (type)
@@ -1092,6 +1108,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
 {
+    /* FIXME ViewTree port
     if (m_viewTree)
     {
         if (Preferences::self()->tabNotificationsLeds())
@@ -1135,7 +1152,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
         m_viewTree->setViewColor(view, textColor);
     }
-    else if (m_tabWidget)
+    else */ if (m_tabWidget)
     {
         const int idx = m_tabWidget->indexOf(view);
         if (Preferences::self()->tabNotificationsLeds())
@@ -1427,6 +1444,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     }
     m_vbox->show();//m_tabWidget->show();
 
+    /* FIXME ViewTree port
     if (m_viewTree)
     {
         if (placement != -1 && m_tabWidget->widget(placement-1))
@@ -1437,6 +1455,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         else
             m_viewTree->addView(label, view, iconSet);
     }
+    */
 
     // Check, if user was typing in old input line
     bool doBringToFront=false;
@@ -1599,13 +1618,14 @@ void ViewContainer::moveViewLeft()
 
     if (index)
     {
+        /* FIXME ViewTree port
         if (m_viewTree)
         {
             ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
             m_viewTree->moveViewUp(view);
             syncTabBarToTree();
         }
-        else if (m_tabWidget)
+        else */ if (m_tabWidget)
         {
             m_tabWidget->moveTab(index, index - 1);
             updateViewActions(index - 1);
@@ -1626,13 +1646,14 @@ void ViewContainer::moveViewRight()
 
     if (index < (m_tabWidget->count() - 1))
     {
+        /* FIXME ViewTree port
         if (m_viewTree)
         {
             ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
             m_viewTree->moveViewDown(view);
             syncTabBarToTree();
         }
-        else if (m_tabWidget)
+        else */ if (m_tabWidget)
         {
             m_tabWidget->moveTab(index, index + 1);
             updateViewActions(index + 1);
@@ -1741,7 +1762,7 @@ void ViewContainer::renameKonsole()
         view->setName(label);
 
         m_tabWidget->setTabText(popup, label);
-        if (m_viewTree) m_viewTree->setViewName(view, label);
+        // if (m_viewTree) m_viewTree->setViewName(view, label); FIXME ViewTree port
 
         if (popup == m_tabWidget->currentIndex())
         {
@@ -2516,7 +2537,7 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
 
     if (!newName.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != newName)
     {
-        if (m_viewTree) m_viewTree->setViewName(view, newName);
+        // if (m_viewTree) m_viewTree->setViewName(view, newName); FIXME ViewTree port
         if (m_tabWidget) m_tabWidget->setTabText(m_tabWidget->indexOf(view), newName);
     }
 

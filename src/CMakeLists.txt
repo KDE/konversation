@@ -128,8 +128,6 @@ set(viewer_SRCS
     viewer/statuspanel.cpp
     viewer/ircviewbox.cpp
     viewer/viewcontainer.cpp
-    viewer/viewtree.cpp
-    viewer/viewtreeitem.cpp
     viewer/pasteeditor.cpp
     viewer/highlight.cpp
     viewer/highlightviewitem.cpp

@@ -21,8 +21,8 @@
 */
 
 #include "viewspringloader.h"
-#include "viewtree.h"
-#include "viewtreeitem.h"
+
+#include <QDragMoveEvent>
 
 #include <KTabBar>
 
@@ -104,6 +104,7 @@ ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
 
     if (tabBar)
        return m_viewContainer->getViewAt(tabBar->tabAt(pos));
+    /* FIXME ViewTree port
     else
     {
         ViewTree* viewTree = qobject_cast<ViewTree*>(widget->parent());
@@ -116,6 +117,7 @@ ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
                 return item->getView();
         }
     }
+    */
 
     return 0;
 }
