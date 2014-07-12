@@ -22,9 +22,12 @@ set_package_properties(BalooWidgets PROPERTIES DESCRIPTION "Baloos Widgets"
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${BALOO_INCLUDE_DIR} ${BALOO_WIDGETS_INCLUDE_DIR})
 
-macro_optional_find_package(QCA2)
-macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
-macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
+
+#FIXME Reenable when on QCA-for-Qt5.
+set(HAVE_QCA2 FALSE)
+#macro_optional_find_package(QCA2)
+#macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
+#macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
 
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
