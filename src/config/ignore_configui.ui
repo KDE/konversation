@@ -125,21 +125,21 @@ the Free Software Foundation; either version 2 of the License, or
    <item row="0" column="2" rowspan="3">
     <layout class="QVBoxLayout">
      <item>
-      <widget class="KPushButton" name="newButton">
+      <widget class="QPushButton" name="newButton">
        <property name="text">
         <string>&amp;New</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="removeButton">
+      <widget class="QPushButton" name="removeButton">
        <property name="text">
         <string>&amp;Remove</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="removeAllButton">
+      <widget class="QPushButton" name="removeAllButton">
        <property name="text">
         <string>Remove &amp;All</string>
        </property>
@@ -173,11 +173,6 @@ the Free Software Foundation; either version 2 of the License, or
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
   </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>ignoreListView</tabstop>
@@ -193,10 +188,7 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>removeAllButton</tabstop>
  </tabstops>
  <includes>
-     <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
-  <include location="local">kpushbutton.h</include>
-  <include location="local">kpushbutton.h</include>
-  <include location="local">kpushbutton.h</include>
+  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
  </includes>
  <resources/>
  <connections/>

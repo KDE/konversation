@@ -17,7 +17,7 @@
 #include <QImageWriter>
 #include <QPainter>
 
-#include <KPushButton>
+#include <QPushButton>
 #include <QUrl>
 #include <KFileDialog>
 #include <KIcon>
@@ -149,7 +149,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::disableTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            KPushButton* button = m_toggleButtonHash.value(tool);
+            QPushButton* button = m_toggleButtonHash.value(tool);
             if (button)
             {
                 button->setEnabled(false);
@@ -162,7 +162,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::enableTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            KPushButton* button = m_toggleButtonHash.value(tool);
+            QPushButton* button = m_toggleButtonHash.value(tool);
             if (button)
             {
                 button->setEnabled(true);
@@ -343,7 +343,7 @@ namespace Konversation
             setFontDialogVisible(true);
         }
 
-        void WhiteBoardToolBar::handleToggleButton(KPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
+        void WhiteBoardToolBar::handleToggleButton(QPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
         {
             disconnectToggleButtons();
             kDebug() << "tool:" << tool << "checked:" << checked;
@@ -360,9 +360,9 @@ namespace Konversation
             connectToggleButtons();
         }
 
-        void WhiteBoardToolBar::unCheckOtherButtons(KPushButton* button)
+        void WhiteBoardToolBar::unCheckOtherButtons(QPushButton* button)
         {
-            foreach(KPushButton* pushButton, m_toggleButtonHash)
+            foreach(QPushButton* pushButton, m_toggleButtonHash)
             {
                 if (pushButton != button && pushButton->isChecked())
                 {

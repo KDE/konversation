@@ -16,7 +16,7 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-#include <KPushButton>
+#include <QPushButton>
 
 namespace Konversation
 {

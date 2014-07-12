@@ -60,7 +60,7 @@
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="KPushButton" name="m_editIdentityButton">
+    <widget class="QPushButton" name="m_editIdentityButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
        <horstretch>0</horstretch>
@@ -143,14 +143,14 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="KPushButton" name="m_addServerButton">
+       <widget class="QPushButton" name="m_addServerButton">
         <property name="text">
          <string>&amp;Add...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="KPushButton" name="m_changeServerButton">
+       <widget class="QPushButton" name="m_changeServerButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -228,14 +228,14 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="KPushButton" name="m_addChannelButton">
+       <widget class="QPushButton" name="m_addChannelButton">
         <property name="text">
          <string>Add...</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="KPushButton" name="m_changeChannelButton">
+       <widget class="QPushButton" name="m_changeChannelButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -342,11 +342,6 @@
    <class>KListWidget</class>
    <extends>QListWidget</extends>
    <header>klistwidget.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>

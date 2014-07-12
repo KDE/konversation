@@ -19,7 +19,7 @@
 
 #include "whiteboardglobals.h"
 
-class KPushButton;
+class QPushButton;
 
 namespace Konversation
 {
@@ -104,8 +104,8 @@ namespace Konversation
                 inline void connectToggleButtons();
                 inline void disconnectToggleButtons();
 
-                inline void handleToggleButton(KPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
-                inline void unCheckOtherButtons(KPushButton* button);
+                inline void handleToggleButton(QPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
+                inline void unCheckOtherButtons(QPushButton* button);
 
                 inline void setLineWidthVisible(bool visible);
                 inline void setFormOptionVisible(bool visible);
@@ -113,7 +113,7 @@ namespace Konversation
 
                 inline void fillFormOptionList(FormOption form);
 
-                QHash<Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool, KPushButton*> m_toggleButtonHash;
+                QHash<Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool, QPushButton*> m_toggleButtonHash;
                 QPixmap m_lineWidthPixmap;
 
                 QPixmap m_rectanglePixmap;

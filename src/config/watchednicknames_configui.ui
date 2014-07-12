@@ -167,7 +167,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
  </tabstops>
  <includes>
   <include location="local">klineedit.h</include>
-  <include location="local">kpushbutton.h</include>
  </includes>
  <resources/>
  <connections>

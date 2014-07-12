@@ -50,10 +50,10 @@
       <number>3</number>
      </property>
      <item row="0" column="0">
-      <widget class="KPushButton" name="m_clearPushButton"/>
+      <widget class="QPushButton" name="m_clearPushButton"/>
      </item>
      <item row="0" column="1">
-      <widget class="KPushButton" name="m_savePushButton"/>
+      <widget class="QPushButton" name="m_savePushButton"/>
      </item>
     </layout>
    </item>
@@ -76,7 +76,7 @@
       <number>3</number>
      </property>
      <item row="0" column="0">
-      <widget class="KPushButton" name="m_pencilPushButton">
+      <widget class="QPushButton" name="m_pencilPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -86,7 +86,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="KPushButton" name="m_linePushButton">
+      <widget class="QPushButton" name="m_linePushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -96,7 +96,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="KPushButton" name="m_rectanglePushButton">
+      <widget class="QPushButton" name="m_rectanglePushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -106,7 +106,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="KPushButton" name="m_ellipsePushButton">
+      <widget class="QPushButton" name="m_ellipsePushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -116,7 +116,7 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="KPushButton" name="m_textPushButton">
+      <widget class="QPushButton" name="m_textPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -126,7 +126,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="KPushButton" name="m_selectionPushButton">
+      <widget class="QPushButton" name="m_selectionPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -136,7 +136,7 @@
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="KPushButton" name="m_eraserPushButton">
+      <widget class="QPushButton" name="m_eraserPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -146,7 +146,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="KPushButton" name="m_fillPushButton">
+      <widget class="QPushButton" name="m_fillPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -156,7 +156,7 @@
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="KPushButton" name="m_arrowPushButton">
+      <widget class="QPushButton" name="m_arrowPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -166,7 +166,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="KPushButton" name="m_colorPickerPushButton">
+      <widget class="QPushButton" name="m_colorPickerPushButton">
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -314,11 +314,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
   <customwidget>
    <class>Konversation::DCC::WhiteBoardColorChooser</class>
    <extends>QFrame</extends>

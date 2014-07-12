@@ -54,7 +54,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
       <widget class="KLineEdit" name="m_searchEdit"/>
      </item>
      <item>
-      <widget class="KPushButton" name="m_findNextButton">
+      <widget class="QPushButton" name="m_findNextButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -64,7 +64,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
       </widget>
      </item>
      <item>
-      <widget class="KPushButton" name="m_findPreviousButton">
+      <widget class="QPushButton" name="m_findPreviousButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -110,11 +110,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
  <layoutfunction spacing="KDialog::spacingHint"/>
  <customwidgets>
   <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
@@ -123,8 +118,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
  <includes>
   <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
   <include location="local">klineedit.h</include>
-  <include location="local">kpushbutton.h</include>
-  <include location="local">kpushbutton.h</include>
  </includes>
  <resources/>
  <connections/>

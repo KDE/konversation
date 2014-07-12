@@ -25,7 +25,7 @@
 #include <QCheckBox>
 
 #include <KMessageBox>
-#include <KPushButton>
+#include <QPushButton>
 
 
 namespace Konversation

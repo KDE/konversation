@@ -42,7 +42,7 @@
      <item>
       <layout class="QHBoxLayout" name="identityButtonsHLayout">
        <item>
-        <widget class="KPushButton" name="newBtn">
+        <widget class="QPushButton" name="newBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -73,7 +73,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="copyBtn">
+        <widget class="QPushButton" name="copyBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_editBtn">
+        <widget class="QPushButton" name="m_editBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -135,7 +135,7 @@
         </widget>
        </item>
        <item>
-        <widget class="KPushButton" name="m_delBtn">
+        <widget class="QPushButton" name="m_delBtn">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -656,11 +656,6 @@
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KIntSpinBox</class>

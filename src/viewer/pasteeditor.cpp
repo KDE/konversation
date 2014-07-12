@@ -17,7 +17,7 @@
 #include "preferences.h"
 #include "application.h"
 
-#include <KPushButton>
+#include <QPushButton>
 #include <KLocale>
 #include <KActionCollection>
 
