@@ -33,7 +33,7 @@
 
 #include <KMenuBar>
 #include <KActionCollection>
-#include <KAction>
+#include <QAction>
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KAuthorized>

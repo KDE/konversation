@@ -92,7 +92,7 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
     // HACK This event comes from the ViewContainer when
     // updateViewActions is called. ViewContainer can't
     // check the status of the search box, and so tramples
-    // on the KAction we're managing - that is until the
+    // on the QAction we're managing - that is until the
     // ambiguous shortcut dialog box pops up, at which point
     // a focus event is sent to the searchbar and the other
     // stanza in this method is triggered.
@@ -106,7 +106,7 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
     if (focusEvent)
     {
         Application* konvApp = static_cast<Application*>(kapp);
-        KAction* action = static_cast<KAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
+        QAction * action = static_cast<QAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
 
         if (action->shortcut().contains(QKeySequence(Qt::Key_Escape)))
         {

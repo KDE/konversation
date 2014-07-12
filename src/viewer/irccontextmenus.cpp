@@ -116,7 +116,7 @@ void IrcContextMenus::updateQuickButtonMenu()
 {
     m_quickButtonMenu->clear();
 
-    KAction* action;
+    QAction * action;
     QString pattern;
 
     foreach(const QString& button, Preferences::quickButtonList())
@@ -125,7 +125,7 @@ void IrcContextMenus::updateQuickButtonMenu()
 
         if (pattern.contains("%u"))
         {
-            action = new KAction(button.section(',', 0, 0), m_quickButtonMenu);
+            action = new QAction(button.section(',', 0, 0), m_quickButtonMenu);
             action->setData(pattern);
             m_quickButtonMenu->addAction(action);
         }
@@ -300,11 +300,11 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
         {
             m_webShortcutsMenu->setTitle(i18n("Search for '%1' with",  KStringHandler::rsqueeze(searchText, 21)));
 
-            KAction* action = 0;
+            QAction * action = 0;
 
             foreach(const QString& searchProvider, searchProviders)
             {
-                action = new KAction(searchProvider, m_webShortcutsMenu);
+                action = new QAction(searchProvider, m_webShortcutsMenu);
                 action->setIcon(KIcon(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
                 connect(action, SIGNAL(triggered()), this, SLOT(processWebShortcutAction()));
@@ -313,7 +313,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
             m_webShortcutsMenu->addSeparator();
 
-            action = new KAction(i18n("Configure Web Shortcuts..."), m_webShortcutsMenu);
+            action = new QAction(i18n("Configure Web Shortcuts..."), m_webShortcutsMenu);
             action->setIcon(KIcon("configure"));
             connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
             m_webShortcutsMenu->addAction(action);
@@ -325,7 +325,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
 void IrcContextMenus::processWebShortcutAction()
 {
-    KAction* action = qobject_cast<KAction*>(sender());
+    QAction * action = qobject_cast<QAction*>(sender());
 
     if (action)
     {
