@@ -15,7 +15,6 @@
 
 #include "mainwindow.h"
 #include "application.h"
-#include "linkaddressbook/addressbook.h"
 #include "settingsdialog.h"
 #include "viewcontainer.h"
 #include "statusbar.h"
@@ -43,8 +42,6 @@
 #include <kdeversion.h>
 #include <KMenu>
 #include <KWindowSystem>
-#include <kabc/addressbook.h>
-#include <kabc/errorhandler.h>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KActionMenu>
@@ -535,13 +532,6 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     // Apply menubar show/hide pref
     m_showMenuBarAction->setChecked(Preferences::self()->showMenuBar());
     toggleMenubar(true);
-
-
-    // set up KABC with a nice gui error dialog
-    KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
-    //kapp->dcopClient()->setAcceptCalls( false );
-    Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
-    //kapp->dcopClient()->setAcceptCalls( true );
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();

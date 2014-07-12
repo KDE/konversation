@@ -123,16 +123,11 @@ Images::Images()
 {
     initializeLeds();
     initializeNickIcons();
-    initializeKimifaceIcons();
 }
 
 Images::~Images()
 {
 }
-
-QIcon Images::getKimproxyAway() const { return kimproxyAway; }
-QIcon Images::getKimproxyOnline() const { return kimproxyOnline; }
-QIcon Images::getKimproxyOffline() const { return kimproxyOffline; }
 
 QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {
@@ -170,13 +165,6 @@ void Images::initializeLeds()
     m_eventsLedOn = getLed(m_eventsColor,true);
     m_nickLedOn = getLed(m_nickColor,true);
     m_highlightsLedOn = getLed(m_highlightsColor,true);
-}
-
-void Images::initializeKimifaceIcons()
-{
-    kimproxyAway = KIcon("kimproxyaway");
-    kimproxyOnline = KIcon("kimproxyonline");
-    kimproxyOffline = KIcon("kimproxyoffline");
 }
 
 // NickIcons

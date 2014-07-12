@@ -1,6 +1,6 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
-include_directories(config dcc irc viewer linkaddressbook upnp)
+include_directories(config dcc irc viewer upnp)
 
 if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
@@ -191,16 +191,6 @@ kde4_add_ui_files(dcc_SRCS
     dcc/whiteboardfontchooserui.ui
 )
 
-set(linkaddressbook_SRCS
-    linkaddressbook/linkaddressbookui.cpp
-    linkaddressbook/addressbook_base.cpp
-    linkaddressbook/addressbook.cpp
-    linkaddressbook/addresseeitem.cpp
-)
-
-kde4_add_ui_files(linkaddressbook_SRCS
-    linkaddressbook/linkaddressbookui_base.ui
-)
 if (QCA2_FOUND)
     set(cipher_SRCS
         cipher.cpp)
@@ -213,7 +203,7 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS
@@ -229,7 +219,7 @@ kde4_add_app_icon(konversation_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/
 kde4_add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KPARTS_LIBS}
-                                   ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
+                                   ${KDE4_KDE3SUPPORT_LIBS}
                                    ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS}
                                    ${KDE4_KIDLETIME_LIBS} ${KDE4_KEMOTICONS_LIBS})
 

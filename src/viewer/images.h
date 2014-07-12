@@ -54,10 +54,6 @@ class Images : public QObject
         QIcon getNickLed();
         QIcon getHighlightsLed();
 
-        QIcon getKimproxyAway() const;
-        QIcon getKimproxyOnline() const;
-        QIcon getKimproxyOffline() const;
-
         QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
         QString getNickIconPath(NickPrivilege privilege) const;
         QString getNickIconAwayPath() const;
@@ -65,7 +61,6 @@ class Images : public QObject
 
     protected:
         void initializeLeds();
-        void initializeKimifaceIcons();
 
         QIcon m_serverLedOn;
         QIcon m_serverLedOff;
@@ -86,11 +81,6 @@ class Images : public QObject
         QColor m_eventsColor;
         QColor m_nickColor;
         QColor m_highlightsColor;
-
-        QIcon kimproxyAway;
-        QIcon kimproxyOnline;
-        QIcon kimproxyOffline;
-
                                                   // [privilege][away]
         QPixmap nickIcons[_NickPrivilege_COUNT][2];
         QString nickIconPaths[_NickPrivilege_COUNT];

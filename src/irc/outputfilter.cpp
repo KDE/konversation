@@ -22,7 +22,6 @@
 #include "server.h"
 #include "scriptlauncher.h"
 #include "irccharsets.h"
-#include "linkaddressbook/addressbook.h"
 #include "query.h"
 #include "viewcontainer.h"
 #include "outputfilterresolvejob.h"

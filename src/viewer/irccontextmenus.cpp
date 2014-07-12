@@ -25,8 +25,6 @@
 #include "nick.h"
 #include "server.h"
 #include "ircinput.h"
-#include "linkaddressbook/addressbook.h"
-#include "linkaddressbook/linkaddressbookui.h"
 
 #include <QClipboard>
 
@@ -90,7 +88,6 @@ IrcContextMenus::~IrcContextMenus()
     delete m_textMenu;
     delete m_channelMenu;
     delete m_nickMenu;
-    delete m_addressBookMenu;
     delete m_quickButtonMenu;
     delete m_topicHistoryMenu;
 }
@@ -464,17 +461,6 @@ void IrcContextMenus::createSharedNickSettingsActions()
     m_sharedNickSettingsActions << m_addNotifyAction;
     m_removeNotifyAction = createAction(RemoveNotify, KIcon("list-remove-user"), i18n("Remove From Watched Nicks"));
     m_sharedNickSettingsActions << m_removeNotifyAction;
-
-    m_addressBookMenu = new KMenu();
-    m_addressBookMenu->setIcon(KIcon("office-address-book"));
-    m_sharedNickSettingsActions << m_addressBookMenu->menuAction();
-    m_addressBookNewAction = createAction(AddressbookNew, KIcon("contact-new"));
-    m_addressBookChangeAction = createAction(AddressbookChange, KIcon("office-address-book"));
-    m_addressBookEditAction = createAction(AddressbookEdit, KIcon("document-edit"));
-    m_addressBookDeleteAction = createAction(AddressbookDelete, KIcon("edit-delete"));
-
-    m_sendMailAction = createAction(SendEmail, KIcon("mail-send"), ("&Send Email..."));
-    m_sharedNickSettingsActions << m_sendMailAction;
 }
 
 void IrcContextMenus::createSharedDccActions()
@@ -700,104 +686,6 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         case StartDccWhiteboard:
             commandToServer(server, "dcc whiteboard %1", nicks);
             break;
-        case AddressbookEdit:
-        {
-            foreach(const QString& nick, nicks)
-            {
-                NickInfoPtr nickInfo = server->getNickInfo(nick);
-
-                if (nickInfo.isNull())
-                    continue;
-
-                KABC::Addressee addressee = nickInfo->getAddressee();
-
-                if(addressee.isEmpty())
-                    break;
-
-                Konversation::Addressbook::self()->editAddressee(addressee.uid());
-            }
-
-            break;
-        }
-        case AddressbookNew:
-        case AddressbookDelete:
-        {
-            Konversation::Addressbook* addressbook = Konversation::Addressbook::self();
-
-            // Handle all the selected nicks in one go. Either they all save, or none do.
-            if (addressbook->getAndCheckTicket())
-            {
-                foreach(const QString& nick, nicks)
-                {
-                    NickInfoPtr nickInfo = server->getNickInfo(nick);
-
-                    if (nickInfo.isNull())
-                        continue;
-
-                    if (actionId == AddressbookDelete)
-                    {
-                        KABC::Addressee addr = nickInfo->getAddressee();
-
-                        addressbook->unassociateNick(addr, nick, server->getServerName(), server->getDisplayName());
-                    }
-                    else
-                    {
-                        // Make new addressbook contact.
-                        KABC::Addressee addr;
-
-                        if (nickInfo->getRealName().isEmpty())
-                            addr.setGivenName(nickInfo->getNickname());
-                        else
-                            addr.setGivenName(nickInfo->getRealName());
-
-                        addr.setNickName(nick);
-
-                        addressbook->associateNickAndUnassociateFromEveryoneElse(addr, nick, server->getServerName(),
-                            server->getDisplayName());
-                    }
-                }
-
-                // This will refresh the nicks automatically for us. At least, if it doesn't, it's a bug :)
-                addressbook->saveTicket();
-            }
-
-            break;
-        }
-        case AddressbookChange:
-        {
-            foreach(const QString& nick, nicks)
-            {
-                NickInfoPtr nickInfo = server->getNickInfo(nick);
-
-                if (nickInfo.isNull())
-                    continue;
-
-                LinkAddressbookUI* linkaddressbookui = new LinkAddressbookUI(Application::instance()->getMainWindow(),
-                    nick, server->getServerName(), server->getDisplayName(), nickInfo->getRealName());
-
-                linkaddressbookui->show();
-            }
-            break;
-        }
-        case SendEmail:
-        {
-            NickInfoList nickInfos;
-
-            foreach(const QString& nick, nicks)
-            {
-                NickInfoPtr nickInfo = server->getNickInfo(nick);
-
-                if (nickInfo.isNull())
-                    continue;
-
-                nickInfos.append(nickInfo);
-            }
-
-            if (!nickInfos.isEmpty())
-                Konversation::Addressbook::self()->sendEmail(nickInfos);
-
-            break;
-        }
         default:
             break;
     }
@@ -858,93 +746,6 @@ void IrcContextMenus::updateSharedNickSettingsActions(Server* server, const QStr
     self()->m_addNotifyAction->setVisible(serverGroupId == -1 || addNotifyCounter);
     self()->m_addNotifyAction->setEnabled(serverGroupId != -1);
     self()->m_removeNotifyAction->setVisible(removeNotifyCounter);
-
-    updateAddressBookActions(server, nicks);
-}
-
-void IrcContextMenus::updateAddressBookActions(Server* server, const QStringList& nicks)
-{
-    KMenu* addressBookMenu = self()->m_addressBookMenu;
-
-    addressBookMenu->setTitle(i18np("Address Book Association", "Address Book Associations", nicks.count()));
-
-    addressBookMenu->clear();
-
-    bool existingAssociation = false;
-    bool noAssociation = false;
-    bool emailAddress = false;
-
-    foreach(const QString& nick, nicks)
-    {
-        NickInfoPtr nickInfo =  server->getNickInfo(nick);
-
-        if (nickInfo.isNull())
-            continue;
-
-        KABC::Addressee addr = nickInfo->getAddressee();
-
-        if (addr.isEmpty())
-        {
-            noAssociation = true;
-
-            if (existingAssociation && emailAddress)
-                break;
-        }
-        else
-        {
-            if (!emailAddress && !addr.preferredEmail().isEmpty())
-                emailAddress = true;
-
-            existingAssociation = true;
-
-            if (noAssociation && emailAddress)
-                break;
-        }
-    }
-    if (!noAssociation && existingAssociation)
-    {
-       self()->m_addressBookEditAction->setText(i18np("Edit Contact...",
-            "Edit Contacts...", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookEditAction);
-        addressBookMenu->addSeparator();
-    }
-
-    if (noAssociation && existingAssociation)
-    {
-        self()->m_addressBookChangeAction->setText(i18np("Choose/Change Association...",
-            "Choose/Change Associations...", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookChangeAction);
-    }
-    else if (noAssociation)
-    {
-        self()->m_addressBookChangeAction->setText(i18np("Choose Contact...",
-            "Choose Contacts...", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookChangeAction);
-    }
-    else
-    {
-        self()->m_addressBookChangeAction->setText(i18np("Change Association...",
-            "Change Associations...", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookChangeAction);
-    }
-
-    if (noAssociation && !existingAssociation)
-    {
-        self()->m_addressBookNewAction->setText(i18np("Create New Contact...",
-            "Create New Contacts...", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookNewAction);
-    }
-
-    if (existingAssociation)
-    {
-        self()->m_addressBookDeleteAction->setText(i18np("Delete Association",
-            "Delete Associations", nicks.count()));
-        addressBookMenu->addAction(self()->m_addressBookDeleteAction);
-    }
-
-    self()->m_sendMailAction->setEnabled(emailAddress);
-
-    addressBookMenu->menuAction()->setVisible(true);
 }
 
 void IrcContextMenus::processLinkAction(int  actionId, const QString& link)

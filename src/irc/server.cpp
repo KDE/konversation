@@ -33,7 +33,6 @@
 #include "viewcontainer.h"
 #include "rawlog.h"
 #include "channellistpanel.h"
-#include "addressbook.h"
 #include "scriptlauncher.h"
 #include "serverison.h"
 #include "notificationhandler.h"
@@ -140,9 +139,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
         connectSignals();
     // TODO FIXME this disappeared in a merge, ensure it should have
     updateConnectionState(Konversation::SSNeverConnected);
-
-    connect(Konversation::Addressbook::self()->getAddressBook(), SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(updateNickInfoAddressees()));
-    connect(Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(updateNickInfoAddressees()));
 
     m_nickInfoChangedTimer = new QTimer(this);
     m_nickInfoChangedTimer->setSingleShot(true);
@@ -918,7 +914,7 @@ void Server::connectionEstablished(const QString& ownHost)
 
     updateConnectionState(Konversation::SSConnected);
 
-    // Make a helper object to build ISON (notify) list and map offline nicks to addressbook.
+    // Make a helper object to build ISON (notify) list.
     // TODO: Give the object a kick to get it started?
     delete m_serverISON;
     m_serverISON = new ServerISON(this);
@@ -3010,8 +3006,6 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     }
 
     emit watchedNickChanged(this, nickname, true);
-    KABC::Addressee addressee = nickInfo->getAddressee();
-    if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 is online (%2).", nickname, getServerName()), getStatusView());
 
@@ -3023,10 +3017,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
 void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
 {
-   if (nickInfo) {
-        KABC::Addressee addressee = nickInfo->getAddressee();
-        if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
-    }
+    Q_UNUSED(nickInfo)
 
     emit watchedNickChanged(this, nickname, false);
 
@@ -4020,14 +4011,6 @@ void Server::startAwayTimer()
     m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
 
-KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
-{
-    if (m_serverISON)
-        return m_serverISON->getOfflineNickAddressee(nickname);
-    else
-        return KABC::Addressee();
-}
-
 void Server::enableIdentifyMsg(bool enabled)
 {
     m_identifyMsg = enabled;
@@ -4211,14 +4194,6 @@ void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
 QAbstractItemModel* Server::nickListModel() const
 {
     return m_nickListModel;
-}
-
-void Server::updateNickInfoAddressees()
-{
-    foreach(NickInfoPtr nickInfo, m_allNicks)
-    {
-        nickInfo->refreshAddressee();
-    }
 }
 
 void Server::startNickInfoChangedTimer()

@@ -108,8 +108,6 @@ class Query : public ChatWindow
 
         QSplitter* m_headerSplitter;
         KSqueezedTextLabel* queryHostmask;
-        QLabel* addresseeimage;
-        QLabel* addresseelogoimage;
         QLabel* blowfishLabel;
         AwayLabel* awayLabel;
         NickInfoPtr m_nickInfo;

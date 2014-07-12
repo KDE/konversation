@@ -293,9 +293,6 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     #ifdef HAVE_QCA2
     m_cipher = 0;
     #endif
-    //FIXME JOHNFLUX
-    // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL(addressBookChanged(AddressBook*)), this, SLOT(slotLoadAddressees()) );
-    // connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
     // Setup delayed sort timer
     m_delayedSortTimer = new QTimer(this);

@@ -184,8 +184,6 @@ QString ChannelNick::getHostmask() const
 
 QString ChannelNick::tooltip() const
 {
-    //  if(addressee.isEmpty()) return QString();
-    //KABC::Addressee addressee = nickInfo->getAddressee();
     QString strTooltip;
     QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 

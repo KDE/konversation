@@ -24,7 +24,6 @@
 #include "sound.h"
 #include "quickconnectdialog.h"
 #include "dbus.h"
-#include "linkaddressbook/addressbook.h"
 #include "servergroupsettings.h"
 #include "serversettings.h"
 #include "channel.h"
@@ -251,7 +250,6 @@ int Application::newInstance()
         QDBusConnection::sessionBus().registerObject("/irc", dbusObject, QDBusConnection::ExportNonScriptableSlots);
         identDBus = new Konversation::IdentDBus(this);
         QDBusConnection::sessionBus().registerObject("/identity", identDBus, QDBusConnection::ExportNonScriptableSlots);
-        QDBusConnection::sessionBus().registerObject("/KIMIface", Konversation::Addressbook::self(), QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
 
         if (dbusObject)
         {

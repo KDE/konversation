@@ -17,6 +17,7 @@
 #include "version.h"
 #include "commit.h"
 
+#include <QMutex>
 #include <QWaitCondition>
 
 #include <KCmdLineArgs>

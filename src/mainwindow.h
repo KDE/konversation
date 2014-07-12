@@ -51,9 +51,6 @@ class MainWindow : public KXmlGuiWindow
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
 
         /** Some errors need to be shown, even when konversation is minimized.
-         *  For example, when a kimiface call is received to query a person,
-         *  (e.g. the user choses "Chat with X" in kmail) but that person isn't
-         *  recognised, we need to give immediate feedback to the user.
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
 

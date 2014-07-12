@@ -142,7 +142,6 @@ See <link linkend="color-msgs">Sending colorful messages</link> for more informa
 See <link linkend="nickthemes">Configuring &i18n-nickname; themes</link> for more information.
 See <link linkend="quick-buttons">Configuring Quick Buttons</link> for more information
 See <link linkend="dcc">Sending and receiving files</link> for more information
-See <link linkend="linkaddressbook">Integrating with &kaddressbook;</link> for more information
 See <link linkend="urlcatcher">Capturing &URL;s from messages.</link> for more information
 See <link linkend="webbrowser">Setting your preferred web browser.</link> for more information
 See <link linkend="rememberlines">Marking Channel and Query Logs</link> for more information
@@ -187,13 +186,12 @@ regular expression pattern.</para></listitem>
 <listitem><para>Automatic logging and log management.</para></listitem>
 <listitem><para>Marking of lines in logs.</para></listitem>
 <listitem><para>Scripting.</para></listitem>
-<listitem><para>Integration with &kaddressbook;.</para></listitem>
 </itemizedlist>
 </para>
 
 <para>The &konversation; website is
 <ulink url="&konviwebsite;">&konviwebsite;</ulink>.
-Further information like a FAQ and tips and tricks you find in the 
+Further information like a FAQ and tips and tricks you find in the
 <ulink url="http://konversation.kde.org/wiki/Main_Page">&konversation; Wiki</ulink>.
 </para>
 
@@ -437,9 +435,9 @@ If you don't know what this is, leave these boxes blank.</para></callout>
 		</mediaobjectco>
 	</screenshot>
 </para>
-<!-- Automatik Away group missing 
-If you check this box, Konversation will automatically set all connections 
-using this Identity away when the screensaver starts or after a period of 
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
 user inactivity configured below.
 -->
 <para>
@@ -643,7 +641,7 @@ the <guilabel>New Network</guilabel> screen appears.</para>
 
 <para>
 <calloutlist>
-<callout arearefs="pt-addnetwork-1"><para>Enter the 
+<callout arearefs="pt-addnetwork-1"><para>Enter the
 <guilabel>Network name</guilabel> here.  You may create as many entries
 in the <guilabel>Server List</guilabel> screen with the same
 <guilabel>Network</guilabel> as you like.</para></callout>
@@ -690,9 +688,7 @@ channel.  You may also change the order the channels are joined.
 
 <note><para>Avoid mixing servers on different &irc; networks under the same
 <guilabel>Network</guilabel>.  Avoid entering the same server under
-two different <guilabel>Network</guilabel>s.  Otherwise, &konversation;
-<link linkend="linkaddressbook">integration with your address book</link> and
-<link linkend="nicksonline">monitoring of online &i18n-nickname;s</link> will not function
+two different <guilabel>Network</guilabel>s. Otherwise, <link linkend="nicksonline">monitoring of online &i18n-nickname;s</link> will not function
 correctly.</para>
 </note>
 
@@ -896,7 +892,7 @@ To send a message to everyone in the channel, type the message here and press &E
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
-click on <guilabel>General</guilabel>, and select a 
+click on <guilabel>General</guilabel>, and select a
 <guilabel>Completion mode</guilabel>.
  </para>
 
@@ -921,12 +917,12 @@ or use the mouse wheel to cycle through the tabs.
 	<guisubmenu>Settings</guisubmenu>
 	<guisubmenu>Configure Konversation</guisubmenu>
 </menuchoice> from the main menu, expand <guilabel>Interface</guilabel>,
-click on <guilabel>Tabs</guilabel> or expand <guilabel>Notifications</guilabel> and 
+click on <guilabel>Tabs</guilabel> or expand <guilabel>Notifications</guilabel> and
 click on <guilabel>Tabs</guilabel>.
 </para>
 
 </callout>
-<!-- 
+<!--
 Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
 -->
 <callout arearefs="pt-channeltour-3"><para>These &led;s will blink when there is something you haven't seen in that tab.
@@ -1041,7 +1037,6 @@ channel admin <!-- (see TODO) -->
 <para>
 Click with the &RMB; on any &i18n-nickname; to display a context menu of operations you can perform with that &i18n-nickname;.
 For example, you can <link linkend="dcc">send a file</link> to the &i18n-nickname;.
-This is also the place where you can <link linkend="linkaddressbook">associate a &i18n-nickname; to a contact in your address book.</link>
 </para>
 
 <para>To hide the <interface>Nick Panel</interface>, choose
@@ -1303,7 +1298,7 @@ To configure notifications, choose
 <para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>OK</guibutton> button.</para>
 
 <para>
-Once you've set up your notifications, you can enable or disable all notifications using 
+Once you've set up your notifications, you can enable or disable all notifications using
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
 	<guisubmenu>Enable Notifications</guisubmenu>
@@ -1326,9 +1321,7 @@ in a message using &konversation;'s
 or not.
 </para>
 
-<para>You can associate online &i18n-nickname;s with contact entries in your address book.
-When you do this, the &i18n-nickname; and &irc; network where the &i18n-nickname; is online are
-entered into the contact in the address book.  The &irc; network is recorded because &i18n-nickname;s
+<para>The &irc; network is recorded because &i18n-nickname;s
 are unique across a single &irc; network.  The &i18n-nickname; in two different &irc; networks
 is not necessarily the same person, but the same &i18n-nickname; on two different servers
 within the same &irc; network generally is the same person.</para>
@@ -1336,9 +1329,6 @@ within the same &irc; network generally is the same person.</para>
 <note><para>This is why it is important to use the same <guilabel>Network</guilabel>
 for all servers in the same &irc; network, when <link linkend="serverlist">
 defining networks, servers, and auto join channels</link>.</para></note>
-
-<para>You can also define &i18n-nickname;s you want watched that are not in your address book.
-In this case also, each &i18n-nickname; has an associated &irc; network.  See below.</para>
 
 <para>To activate the &i18n-nickname; watching feature, choose
 <menuchoice>
@@ -1374,8 +1364,7 @@ In this case also, each &i18n-nickname; has an associated &irc; network.  See be
 
 <para>
 <calloutlist>
-<callout arearefs="pt-nicksonline-1"><para>The &i18n-nickname;s in your watch list and
-also the &i18n-nickname;s associated with entries in your address book are listed here.
+<callout arearefs="pt-nicksonline-1"><para>The &i18n-nickname;s in your watch list are listed here.
 They are listed under their associated &irc; network.  If no &i18n-nickname;s are listed,
 either you haven't specified any &i18n-nickname;s to watch, or you need to activate
 the &i18n-nickname; watching feature (see below).  Expand each online &i18n-nickname; to see a list
@@ -1394,21 +1383,11 @@ all &i18n-nickname;s have information.
 of the &irc; networks you are connected to are listed in the <guilabel>Offline</guilabel>
 part of the listing.
 </para></callout-->
-<!--callout arearefs="pt-nicksonline-4"><para>Nicknames that are associated with
-a contact entry in your address book have this icon
-(<inlinemediaobject><imageobject><imagedata fileref="kaddressbook.png" format="PNG"  /></imageobject></inlinemediaobject>) next to their information.
-</para></callout-->
-<callout arearefs="pt-nicksonline-3"><para>Use these buttons to associate a &i18n-nickname;
-with a contact in your address book, remove an association, or open the address book
-to edit the contact information.  See the
-<ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
-on using the &kde; address book.
-</para></callout>
 </calloutlist>
 </para>
 
 <para>
-To add a single &i18n-nickname; to watch, open the context menu in the <guilabel>Nick List</guilabel> 
+To add a single &i18n-nickname; to watch, open the context menu in the <guilabel>Nick List</guilabel>
 by clicking with the &RMB; on a &i18n-nickname; and select <guilabel>Add to Watched Nicks</guilabel>.
 If you want to add several &i18n-nickname;s choose
 <menuchoice>
@@ -1877,7 +1856,7 @@ Choose
 			<guilabel>Preparing</guilabel>
 		</term>
 		<listitem>
-			<para>A receiving transfer is checking for resumable files or a sending 
+			<para>A receiving transfer is checking for resumable files or a sending
 			  transfer is acquiring the data to send.
 			</para>
 		</listitem>
@@ -1994,123 +1973,6 @@ people by choosing
 <para>
 If you have trouble sending or receiving files, your firewall or router may be blocking DCC ports.
 See <link linkend="faq">Questions and Answers</link>.
-</para>
-
-</sect1>
-
-<!-- =================================================================== -->
-
-<sect1 id="linkaddressbook">
-<title>Integrating with &kaddressbook;</title>
-
-<para>You can associate any &i18n-nickname; with a contact in &kaddressbook;.
-Once you've done this, &konversation; will display the contact real name
-in parenthesis after the &i18n-nickname; in the <interface>Nick Panel</interface>.
-</para>
-
-<para>
-To associate a &i18n-nickname; with a contact in &kaddressbook;,
-click with the &RMB; on the &i18n-nickname; of the person in the
-<interface>Nick Panel</interface> of the <link linkend="channel-screen-tour">Main</link> screen.  Choose
-<menuchoice>
-	<guisubmenu>Whois</guisubmenu>
-</menuchoice>
-to <action>display information to help you determine the user's real name</action>.
-Next, click with the &RMB; on the &i18n-nickname; of the person again and choose
-<menuchoice>
-	<guisubmenu>Address Book Associations</guisubmenu>
-</menuchoice>.
-  <action>A submenu appears.</action>  If the &i18n-nickname; is not already associated with a contact,
-choose
-<menuchoice>
-	<guisubmenu>Create New Contact</guisubmenu>
-</menuchoice>.
-  <action>The <guilabel>Edit Contact</guilabel> screen appears.</action>
-</para>
-
-<para>
-<screenshot>
-<screeninfo>The Edit Contact screen.</screeninfo>
-	<mediaobjectco>
-		<imageobjectco>
-			<areaspec units="calspair">
-				<area id="pt-kimproxy-create-1" coords="1 1"/>
-				<area id="pt-kimproxy-create-2" coords="1 1"/>
-				<area id="pt-kimproxy-create-3" coords="1 1"/>
-			</areaspec>
-			<imageobject>
-				<imagedata fileref="kimproxy_create_screen_co.png" format="PNG"/>
-			</imageobject>
-		</imageobjectco>
-		<textobject>
-			<phrase>The Edit Contact screen.</phrase>
-		</textobject>
-	</mediaobjectco>
-</screenshot>
-</para>
-
-<para>
-<calloutlist>
-
-<callout arearefs="pt-kimproxy-create-1"><para>The &i18n-nickname; is automatically filled in here.
-If you know the person's real name, replace the &i18n-nickname; with the real name.
-</para></callout>
-
-<callout arearefs="pt-kimproxy-create-2">
-<para>Notice that the &i18n-nickname; does <emphasis>not</emphasis> appear here.  Instead, ..</para>
-</callout>
-
-<callout arearefs="pt-kimproxy-create-3">
-<para>Click here.  The <guilabel>Edit Instant Messaging Addresses</guilabel> window appears.</para></callout>
-
-</calloutlist>
-</para>
-
-<para>
-<screenshot>
-	<screeninfo>The IM Addresses Window.</screeninfo>
-	<mediaobject>
-		<imageobject>
-			<imagedata fileref="kimproxy_create_screen2.png" format="PNG"/>
-		</imageobject>
-		<textobject>
-			<phrase>The IM Addresses Window.</phrase>
-		</textobject>
-	</mediaobject>
-</screenshot>
-</para>
-
-<!--para>Notice that &konversation; fills in the &i18n-nickname; for you with protocol
-<guilabel>IRC</guilabel>.
-</para-->
-
-<para>See the
-<ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
-on using the &kde; address book.</para>
-
-<para>Fill in any additional information about the &i18n-nickname; you know and click
-<guilabel>OK</guilabel>.  The real name of the person will appear inside
-parenthesis next to the &i18n-nickname; in the <guilabel>Nick Panel</guilabel>
-of &konversation;.  The real name also appears when the mouse hovers over
-the &i18n-nickname;.</para>
-
-<para>Once a &i18n-nickname; has been associated with a contact in &kaddressbook;,
-you can click with the &RMB; on the &i18n-nickname; of the person in the
-<interface>Nick Panel</interface> and edit the associated contact, associate
-the &i18n-nickname; with a different contact, or delete the association.
-</para>
-
-<para>If you have associated a &i18n-nickname; with a contact, and the user changes their &i18n-nickname; while you are running &konversation;,
-it will automatically associate the new &i18n-nickname; with the contact, keeping the
-original association as well.</para>
-
-<para>If you associate an &irc; &i18n-nickname; with a contact in
-<ulink url="help:kopete">&kopete;</ulink>,
-the association will also appear in &konversation;, and vice versa.</para>
-
-<para>Note: It is possible to highlight more than one &i18n-nickname; in the
-<interface>Nick Panel</interface>, click with the mouse &RMB;, and perform
-multiple associations.
 </para>
 
 </sect1>
@@ -2352,7 +2214,7 @@ display.  Use this button to view the most recent messages.</para></callout>
 and the log file on disk.</para></callout>
 <callout arearefs="pt-logviewer-5"><para>Use this box to set the maximum size
 of the scroll.  This setting does take effect only for newly opened log tabs.
-The last changed value of the scroll size will be used on &konversation;'s next start.  
+The last changed value of the scroll size will be used on &konversation;'s next start.
 Each log file may have a separate setting.</para></callout>
 </calloutlist>
 </para>
@@ -2902,7 +2764,7 @@ CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), H
 <para>All these scripts have predefined command aliases. In &konversation;'s settings dialog
 select <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
 to view, add, remove or edit command aliases.
-</para> 
+</para>
 </sect1>
 
 </chapter>
@@ -3310,7 +3172,7 @@ Move Tab Right Alt Shift Right
 				</action>
 			</para></listitem>
 	</varlistentry>
-<!-- 
+<!--
 Enable Notifications
 Set Encoding
   -->
@@ -3511,7 +3373,7 @@ How do I have &konversation; automatically mark me as away after a period of ina
 Auto-away messages are configured on a per-identity basis. To enable auto-away select <menuchoice><guimenu>Settings</guimenu><guimenuitem>Identities</guimenuitem></menuchoice>.
 Choose the identity for which you want to enable auto-away from the drop
 down list at the top of the dialog and go to the <guilabel>Away</guilabel> tab.
-Check the <guilabel>Automatic Away</guilabel> option. 
+Check the <guilabel>Automatic Away</guilabel> option.
 </para></answer>
 </qandaentry>
 
@@ -3519,8 +3381,8 @@ Check the <guilabel>Automatic Away</guilabel> option.
 <question>
 <para>How to avoid the <guilabel>Auto Replace</guilabel> feature of the <interface>Input Line</interface>?</para>
 </question>
-<answer><para>Use <keycombo action="simul">&Ctrl;&Enter;</keycombo> instead of just &Enter; to avoid parsing and 
-automatically replacing the text in the <interface>Input Line</interface> according to the options in the settings 
+<answer><para>Use <keycombo action="simul">&Ctrl;&Enter;</keycombo> instead of just &Enter; to avoid parsing and
+automatically replacing the text in the <interface>Input Line</interface> according to the options in the settings
 dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</guimenuitem></menuchoice>.
 </para></answer>
 </qandaentry>

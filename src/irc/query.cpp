@@ -47,22 +47,12 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     awayState=false;
     KHBox* box = new KHBox(m_headerSplitter);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(box), 0);
-    addresseeimage = new QLabel(box);
-    addresseeimage->setObjectName("query_image");
-    addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    addresseeimage->hide();
-    addresseelogoimage = new QLabel(box);
-    addresseelogoimage->setObjectName("query_logo_image");
-    addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    addresseelogoimage->hide();
 
     queryHostmask=new KSqueezedTextLabel(box);
     queryHostmask->setTextElideMode(Qt::ElideRight);
     queryHostmask->setObjectName("query_hostmask");
 
-    QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Address Book.</p><p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the address book, and for an explanation of what the hostmask is.</p></qt>");
-    addresseeimage->setWhatsThis(whatsthis);
-    addresseelogoimage->setWhatsThis(whatsthis);
+    QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar. The full name and hostmask is shown.</p><p>See the <i>Konversation Handbook</i> for an explanation of what the hostmask is.</p></qt>");
     queryHostmask->setWhatsThis(whatsthis);
 
     IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter);
@@ -371,43 +361,6 @@ void Query::nickInfoChanged()
             text += " (" + m_nickInfo->getAwayMessage() + ") ";
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
-        KABC::Picture pic = m_nickInfo->getAddressee().photo();
-        if(pic.isIntern())
-        {
-            QPixmap qpixmap = QPixmap::fromImage(pic.data().scaledToHeight(queryHostmask->height(), Qt::SmoothTransformation));
-            if(!qpixmap.isNull())
-            {
-                addresseeimage->setPixmap(qpixmap);
-                addresseeimage->show();
-            }
-            else
-            {
-                addresseeimage->hide();
-            }
-        }
-        else
-        {
-            addresseeimage->hide();
-        }
-        KABC::Picture logo = m_nickInfo->getAddressee().logo();
-        if(logo.isIntern())
-        {
-            QPixmap qpixmap = QPixmap::fromImage(logo.data().scaledToHeight(queryHostmask->height(), Qt::SmoothTransformation));
-            if(!qpixmap.isNull())
-            {
-                addresseelogoimage->setPixmap(qpixmap);
-                addresseelogoimage->show();
-            }
-            else
-            {
-                addresseelogoimage->hide();
-            }
-        }
-        else
-        {
-            addresseelogoimage->hide();
-        }
-
         QString strTooltip;
         QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 
@@ -419,14 +372,6 @@ void Query::nickInfoChanged()
 
         tooltip << "</table></qt>";
         queryHostmask->setToolTip(strTooltip);
-        addresseeimage->setToolTip(strTooltip);
-        addresseelogoimage->setToolTip(strTooltip);
-
-    }
-    else
-    {
-        addresseeimage->hide();
-        addresseelogoimage->hide();
     }
 
     emit updateQueryChrome(this,getName());

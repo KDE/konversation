@@ -12,15 +12,12 @@
 */
 
 #include "nick.h"
-#include "addressbook.h"
 #include "application.h"
 #include "images.h"
 #include "preferences.h"
 #include "nicklistview.h"
 
 #include <QHeaderView>
-
-#include <kabc/phonenumber.h>
 
 Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& channelnick)
     : QTreeWidgetItem (listView)
@@ -148,15 +145,10 @@ void Nick::repositionMe()
 QString Nick::calculateLabel1() const
 {
     NickInfoPtr nickinfo = getChannelNick()->getNickInfo();
-    KABC::Addressee addressee = nickinfo->getAddressee();
 
     QString retString = nickinfo->getNickname();
 
-    if(!addressee.realName().isEmpty())           //if no addressee, realName will be empty
-    {
-        retString += " (" + Konversation::removeIrcMarkup(addressee.realName()) + ')';
-    }
-    else if(Preferences::self()->showRealNames() && !nickinfo->getRealName().isEmpty())
+    if(Preferences::self()->showRealNames() && !nickinfo->getRealName().isEmpty())
     {
         retString += " (" + Konversation::removeIrcMarkup(nickinfo->getRealName()) + ')';
     }
