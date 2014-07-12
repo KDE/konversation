@@ -16,7 +16,7 @@
 
 #include <QScrollArea>
 
-#include "kdebug.h"
+#include "qdebug.h"
 
 namespace Konversation
 {
@@ -92,7 +92,7 @@ namespace Konversation
 
         void WhiteBoard::receivedWhiteBoardLine(const QString& line)
         {
-            // kDebug() << line;
+            // qDebug() << line;
             if (line.isEmpty() || !line.contains(' '))
                 return;
 
@@ -105,8 +105,8 @@ namespace Konversation
                 return;
 
             const QString ctcpCommand(firstSplit.at(0));
-            // kDebug() << "ctcpCommand" << ctcpCommand;
-            // kDebug() << "firstSize" << firstSplit.size();
+            // qDebug() << "ctcpCommand" << ctcpCommand;
+            // qDebug() << "firstSize" << firstSplit.size();
 
             if (ctcpCommand == "DR" && firstSplit.size() == 2)
             {
@@ -114,7 +114,7 @@ namespace Konversation
                 const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
                 if (drArgsList.size() != 8)
                 {
-                    kDebug() << "wrong size:" << drArgsList.size();
+                    qDebug() << "wrong size:" << drArgsList.size();
                     return;
                 }
 
@@ -123,7 +123,7 @@ namespace Konversation
                 int toolType = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse tooltype:" << tmp;
+                    qDebug() << "unabled to parse tooltype:" << tmp;
                     return;
                 }
 
@@ -131,21 +131,21 @@ namespace Konversation
                 int lineWidth = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse linewidth:" << tmp;
+                    qDebug() << "unabled to parse linewidth:" << tmp;
                     return;
                 }
 
                 QColor penColor = parseColor(drArgsList.at(2), &ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse pencolor:" << drArgsList.at(2);
+                    qDebug() << "unabled to parse pencolor:" << drArgsList.at(2);
                     return;
                 }
 
                 QColor brushColor = parseColor(drArgsList.at(3), &ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse brush:" << drArgsList.at(3);
+                    qDebug() << "unabled to parse brush:" << drArgsList.at(3);
                     return;
                 }
 
@@ -153,7 +153,7 @@ namespace Konversation
                 int xFrom = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse xFrom:" << tmp;
+                    qDebug() << "unabled to parse xFrom:" << tmp;
                     return;
                 }
 
@@ -161,7 +161,7 @@ namespace Konversation
                 int yFrom = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse yFrom:" << tmp;
+                    qDebug() << "unabled to parse yFrom:" << tmp;
                     return;
                 }
 
@@ -169,7 +169,7 @@ namespace Konversation
                 int xTo = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse xTo:" << tmp;
+                    qDebug() << "unabled to parse xTo:" << tmp;
                     return;
                 }
 
@@ -177,7 +177,7 @@ namespace Konversation
                 int yTo = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse yTo:" << tmp;
+                    qDebug() << "unabled to parse yTo:" << tmp;
                     return;
                 }
 
@@ -191,35 +191,35 @@ namespace Konversation
                 {
                 case WhiteBoardGlobals::Line:
                 case WhiteBoardGlobals::Pencil:
-                    // kDebug() << "drawing a line" << lineWidth << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a line" << lineWidth << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawLine(lineWidth, penColor, brushColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::Rectangle:
-                    // kDebug() << "drawing a rectangle" << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a rectangle" << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawRectangle(lineWidth, penColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::FilledRectangle:
-                    // kDebug() << "drawing a filledrectangle" << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a filledrectangle" << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawFilledRectangle(lineWidth, penColor, brushColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::Ellipse:
-                    // kDebug() << "drawing a rectangle" << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a rectangle" << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawEllipse(lineWidth, penColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::FilledEllipse:
-                    // kDebug() << "drawing a filledrectangle" << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a filledrectangle" << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawFilledEllipse(lineWidth, penColor, brushColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::Eraser:
-                    // kDebug() << "drawing a Eraser" << xFrom << yFrom << xTo << yTo;
+                    // qDebug() << "drawing a Eraser" << xFrom << yFrom << xTo << yTo;
                     m_paintArea->useEraser(lineWidth, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::FloodFill:
-                    // kDebug() << "drawing a FloodFill" << xFrom << yFrom;
+                    // qDebug() << "drawing a FloodFill" << xFrom << yFrom;
                     m_paintArea->useFloodFill(xFrom, yFrom, penColor);
                     break;
                 case WhiteBoardGlobals::Arrow:
-                    // kDebug() << "drawing an Arrow" << xFrom << yFrom;
+                    // qDebug() << "drawing an Arrow" << xFrom << yFrom;
                     m_paintArea->drawArrow(lineWidth, penColor, xFrom, yFrom, xTo, yTo);
                     break;
                 }
@@ -229,7 +229,7 @@ namespace Konversation
                 QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
                 if (txtArgsList.size() < 3)
                 {
-                    kDebug() << "txt wrong size:" << txtArgsList.size();
+                    qDebug() << "txt wrong size:" << txtArgsList.size();
                     return;
                 }
 
@@ -238,7 +238,7 @@ namespace Konversation
                 int x1 = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txt unabled to parse x1:" << tmp;
+                    qDebug() << "txt unabled to parse x1:" << tmp;
                     return;
                 }
 
@@ -246,7 +246,7 @@ namespace Konversation
                 int y1 = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txt unabled to parse y1:" << tmp;
+                    qDebug() << "txt unabled to parse y1:" << tmp;
                     return;
                 }
 
@@ -261,7 +261,7 @@ namespace Konversation
                 QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
                 if (txtArgsList.size() < 8)
                 {
-                    kDebug() << "txtex wrong size:" << txtArgsList.size();
+                    qDebug() << "txtex wrong size:" << txtArgsList.size();
                     return;
                 }
 
@@ -270,7 +270,7 @@ namespace Konversation
                 int x1 = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse x1:" << tmp;
+                    qDebug() << "txtex unabled to parse x1:" << tmp;
                     return;
                 }
 
@@ -278,7 +278,7 @@ namespace Konversation
                 int y1 = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse y1:" << tmp;
+                    qDebug() << "txtex unabled to parse y1:" << tmp;
                     return;
                 }
 
@@ -288,7 +288,7 @@ namespace Konversation
                 int fontSize = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse fontsize:" << tmp;
+                    qDebug() << "txtex unabled to parse fontsize:" << tmp;
                     return;
                 }
 
@@ -296,21 +296,21 @@ namespace Konversation
                 int fontStyle = tmp.toInt(&ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse fontstyle:" << tmp;
+                    qDebug() << "txtex unabled to parse fontstyle:" << tmp;
                     return;
                 }
 
                 QColor penColor = parseColor(txtArgsList.at(5), &ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse pencolor:" << txtArgsList.at(5);
+                    qDebug() << "txtex unabled to parse pencolor:" << txtArgsList.at(5);
                     return;
                 }
 
                 QColor brushColor = parseColor(txtArgsList.at(6), &ok);
                 if (!ok)
                 {
-                    kDebug() << "txtex unabled to parse brush:" << txtArgsList.at(6);
+                    qDebug() << "txtex unabled to parse brush:" << txtArgsList.at(6);
                     return;
                 }
 
@@ -335,7 +335,7 @@ namespace Konversation
                 txtArgsList.removeFirst(); // textcolor
                 txtArgsList.removeFirst(); // bgcolor
                 QString text(txtArgsList.join(","));
-                // kDebug() << "TXTEX" << text << fontSize << fontName;
+                // qDebug() << "TXTEX" << text << fontSize << fontName;
                 m_paintArea->useTextExtended(x1,y1,tFont,penColor,brushColor,text);
             }
             else if (ctcpCommand == "CLS" && firstSplit.size() == 1)
@@ -359,7 +359,7 @@ namespace Konversation
                     m_toolbar->setSupportedTextType(WhiteBoardToolBar::ExtentedText);
                     return;
                 }
-                kDebug() << "unhandled CAN" << firstSplit.at(1);
+                qDebug() << "unhandled CAN" << firstSplit.at(1);
             }
             else if (ctcpCommand == "CANT" && firstSplit.size() == 2)
             {
@@ -370,7 +370,7 @@ namespace Konversation
                     m_toolbar->setSupportedTextType(WhiteBoardToolBar::SimpleText);
                     return;
                 }
-                kDebug() << "unhandled CANT" << firstSplit.at(1);
+                qDebug() << "unhandled CANT" << firstSplit.at(1);
             }
             else if (ctcpCommand == "DO" && firstSplit.size() == 2)
             {
@@ -388,7 +388,7 @@ namespace Konversation
                 const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
                 if (drArgsList.size() != 6)
                 {
-                    kDebug() << "blt wrong size:" << drArgsList.size();
+                    qDebug() << "blt wrong size:" << drArgsList.size();
                     return;
                 }
 
@@ -409,13 +409,13 @@ namespace Konversation
 
                 if (!finalOk)
                 {
-                    kDebug() << "blt unabled to parse coords:" << firstSplit.at(1);
+                    qDebug() << "blt unabled to parse coords:" << firstSplit.at(1);
                     return;
                 }
 
                 if (x2src <= x1src || y2src <= y1src)
                 {
-                    kDebug() << "blt coords invalid:" << firstSplit.at(1);
+                    qDebug() << "blt coords invalid:" << firstSplit.at(1);
                     return;
                 }
                 m_paintArea->useBlt(x1src, y1src, x2src, y2src, xdest, ydest);
@@ -424,7 +424,7 @@ namespace Konversation
 
         void WhiteBoard::clear()
         {
-            kDebug();
+            qDebug();
             m_paintArea->clear();
             static const QString cls = QString("\x01""CLS\x01");
             emit rawWhiteBoardCommand(cls);
@@ -567,7 +567,7 @@ namespace Konversation
             drLineCommand = drLineCommand.arg(tool).arg(
                                           lineWidth).arg(colorToString(penColor)).arg(colorToString(brushColor)).arg(
                                           xFrom).arg(yFrom).arg(xTo).arg(yTo);
-            // kDebug() << drLineCommand;
+            // qDebug() << drLineCommand;
             emit rawWhiteBoardCommand(drLineCommand);
         }
 

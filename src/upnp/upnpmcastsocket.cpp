@@ -41,7 +41,7 @@ namespace Konversation
             for (quint32 i = 0;i < 10;i++)
             {
                 if (!bind(1900 + i,QUdpSocket::ShareAddress))
-                    kDebug() << "Cannot bind to UDP port 1900 : " << errorString() << endl;
+                    qDebug() << "Cannot bind to UDP port 1900 : " << errorString() << endl;
                 else
                     break;
             }
@@ -59,7 +59,7 @@ namespace Konversation
 
         void UPnPMCastSocket::discover()
         {
-            kDebug() << "Trying to find UPnP devices on the local network" << endl;
+            qDebug() << "Trying to find UPnP devices on the local network" << endl;
 
             // send a HTTP M-SEARCH message to 239.255.255.250:1900
             const char* data = "M-SEARCH * HTTP/1.1\r\n"
@@ -145,7 +145,7 @@ namespace Konversation
             }
             if (!validDevice)
             {
-            //	kDebug() << "Not a valid Internet Gateway Device" << endl;
+            //	qDebug() << "Not a valid Internet Gateway Device" << endl;
                 return 0;
             }
 
@@ -181,7 +181,7 @@ namespace Konversation
             }
             else
             {
-                kDebug() << "Detected IGD " << server << "UUID" << uuid << endl;
+                qDebug() << "Detected IGD " << server << "UUID" << uuid << endl;
                 // everything OK, make a new UPnPRouter
                 return new UPnPRouter(server,location,uuid);
             }
@@ -189,7 +189,7 @@ namespace Konversation
 
         void UPnPMCastSocket::error(QAbstractSocket::SocketError )
         {
-            kDebug() << "UPnPMCastSocket Error : " << errorString() << endl;
+            qDebug() << "UPnPMCastSocket Error : " << errorString() << endl;
         }
 
         void UPnPMCastSocket::joinUPnPMCastGroup()
@@ -208,7 +208,7 @@ namespace Konversation
             if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
     #endif
             {
-                kDebug() << "Failed to join multicast group 239.255.255.250" << endl;
+                qDebug() << "Failed to join multicast group 239.255.255.250" << endl;
             }
         }
 
@@ -228,7 +228,7 @@ namespace Konversation
             if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
     #endif
             {
-                kDebug() << "Failed to leave multicast group 239.255.255.250" << endl;
+                qDebug() << "Failed to leave multicast group 239.255.255.250" << endl;
             }
         }
     }

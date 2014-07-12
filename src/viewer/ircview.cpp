@@ -417,7 +417,7 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
     if (showDebug)
     {
         DebugBanner;
-        kDebug() << output;
+        qDebug() << output;
     }
 }
 
@@ -1824,7 +1824,7 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
                 }
                 break;
             default:
-//                 kDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toAscii(), 16);
+//                 qDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toAscii(), 16);
                 ret += codes.at(pos);
                 ++pos;
         }

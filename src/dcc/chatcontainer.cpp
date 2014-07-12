@@ -200,7 +200,7 @@ namespace Konversation
 
         void ChatContainer::emitUpdateInfo()
         {
-            //kDebug();
+            //qDebug();
             QString info;
             if (m_chat && m_chat->partnerNick() == m_chat->ownNick())
                 info = i18n("Talking to yourself");
@@ -245,7 +245,7 @@ namespace Konversation
             if (line.startsWith(cc))
             {
                 QString cmd = line.section(' ', 0, 0).toLower();
-                kDebug() << "cmd" << cmd;
+                qDebug() << "cmd" << cmd;
                 if (cmd == cc + "clear")
                 {
                     textView->clear();
@@ -253,7 +253,7 @@ namespace Konversation
                 else if (cmd == cc + "me")
                 {
                     QString toSend = line.section(' ', 1);
-                    //kDebug() << "toSend" << toSend;
+                    //qDebug() << "toSend" << toSend;
                     if (toSend.isEmpty())
                     {
                         getTextView()->appendServerMessage(i18n("Usage"), i18n("Usage: %1ME text", Preferences::self()->commandChar()));

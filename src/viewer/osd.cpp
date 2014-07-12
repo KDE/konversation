@@ -108,7 +108,7 @@ void OSDWidget::show() //virtual
         }
     }
     else
-        kWarning() << "Attempted to make an invalid sized OSD";
+        qWarning() << "Attempted to make an invalid sized OSD";
 
     update();
 }

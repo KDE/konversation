@@ -156,7 +156,7 @@ namespace Konversation
             }
             else
             {
-                kDebug() << "unhandled tool:" << tool;
+                qDebug() << "unhandled tool:" << tool;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Konversation
             }
             else
             {
-                kDebug() << "unhandled tool:" << tool;
+                qDebug() << "unhandled tool:" << tool;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::connectToggleButtons()
         {
-            kDebug();
+            qDebug();
             connect(m_pencilPushButton, SIGNAL(toggled(bool)), this, SLOT(pencilToggled(bool)));
             connect(m_linePushButton, SIGNAL(toggled(bool)), this, SLOT(lineToggled(bool)));
             connect(m_rectanglePushButton, SIGNAL(toggled(bool)), this, SLOT(rectangleToggled(bool)));
@@ -219,7 +219,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::disconnectToggleButtons()
         {
-            kDebug();
+            qDebug();
             disconnect(m_pencilPushButton, 0, 0, 0);
             disconnect(m_linePushButton, 0, 0, 0);
             disconnect(m_rectanglePushButton, 0, 0, 0);
@@ -248,7 +248,7 @@ namespace Konversation
 
             if (ret == KDialog::Accepted && fileDialog)
             {
-                kDebug() << fileDialog->selectedFile();
+                qDebug() << fileDialog->selectedFile();
                 emit save(fileDialog->selectedFile());
             }
             delete fileDialog;
@@ -346,7 +346,7 @@ namespace Konversation
         void WhiteBoardToolBar::handleToggleButton(QPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
         {
             disconnectToggleButtons();
-            kDebug() << "tool:" << tool << "checked:" << checked;
+            qDebug() << "tool:" << tool << "checked:" << checked;
             if (checked)
             {
                 unCheckOtherButtons(button);
@@ -391,19 +391,19 @@ namespace Konversation
 
         void WhiteBoardToolBar::formSelectionChanged()
         {
-            // kDebug();
+            // qDebug();
             QList<QListWidgetItem *> selectList = m_formOptionListWidget->selectedItems();
             const int selectedRow = m_formOptionListWidget->row(selectList.first());
             if (selectedRow == 0)
             {
                 if (m_rectanglePushButton->isChecked())
                 {
-                    kDebug() << "emit rectangle";
+                    qDebug() << "emit rectangle";
                     emit toolChanged(WhiteBoardGlobals::Rectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
-                    kDebug() << "emit ellipse";
+                    qDebug() << "emit ellipse";
                     emit toolChanged(WhiteBoardGlobals::Ellipse);
                 }
             }
@@ -411,12 +411,12 @@ namespace Konversation
             {
                 if (m_rectanglePushButton->isChecked())
                 {
-                    kDebug() << "emit filledrectangle";
+                    qDebug() << "emit filledrectangle";
                     emit toolChanged(WhiteBoardGlobals::FilledRectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
-                    kDebug() << "emit filledellipse";
+                    qDebug() << "emit filledellipse";
                     emit toolChanged(WhiteBoardGlobals::FilledEllipse);
                 }
             }
@@ -451,8 +451,8 @@ namespace Konversation
             const int drawHeight = 20 - 2;
             const int widthLayoutOffset = 2;
             const QSize sizeHint(width, 20);
-            // kDebug() << "wanted width" << width;
-            // kDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
+            // qDebug() << "wanted width" << width;
+            // qDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
             switch (form)
             {
                 case Rectangle:

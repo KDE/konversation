@@ -76,7 +76,7 @@ Application::Application()
 
 Application::~Application()
 {
-    kDebug();
+    qDebug();
 
     if (!m_images)
         return; // Nothing to do, newInstance() has never been called.
@@ -1314,7 +1314,7 @@ void Application::updateProxySettings()
 
             if(ret != 0)
             {
-                kError() << "Failed to read the proxy password from the wallet, error code:" << ret;
+                qCritical() << "Failed to read the proxy password from the wallet, error code:" << ret;
             }
         }
 
@@ -1347,7 +1347,7 @@ KWallet::Wallet* Application::wallet()
         {
             if(!m_wallet->createFolder("Konversation"))
             {
-                kError() << "Failed to create folder Konversation in the network wallet.";
+                qCritical() << "Failed to create folder Konversation in the network wallet.";
                 closeWallet();
                 return NULL;
             }
@@ -1355,7 +1355,7 @@ KWallet::Wallet* Application::wallet()
 
         if(!m_wallet->setFolder("Konversation"))
         {
-            kError() << "Failed to set active folder to Konversation in the network wallet.";
+            qCritical() << "Failed to set active folder to Konversation in the network wallet.";
             closeWallet();
             return NULL;
         }

@@ -60,7 +60,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::setTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            //kDebug() << "newtool" << tool;
+            //qDebug() << "newtool" << tool;
             if (tool != m_tool && (m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended))
             {
                 finishText();
@@ -255,7 +255,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::paintEvent(QPaintEvent *event)
         {
-            //kDebug();
+            //qDebug();
             QPainter tPaint;
             tPaint.begin(this);
 
@@ -296,8 +296,8 @@ namespace Konversation
         void WhiteBoardPaintArea::resizeEvent(QResizeEvent *event)
         {
             Q_UNUSED(event);
-            // kDebug() << "newsize:" << event->size();
-            // kDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
+            // qDebug() << "newsize:" << event->size();
+            // qDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
             resizeImage(contentsRect().width(), contentsRect().height());
         }
 
@@ -397,7 +397,7 @@ namespace Konversation
                     return;
 
                 case WhiteBoardGlobals::Selection:
-                    kDebug() << "TODO implement whiteboard Selection";
+                    qDebug() << "TODO implement whiteboard Selection";
                     return;
                 }
 
@@ -513,7 +513,7 @@ namespace Konversation
                         }
                         else
                         {
-                            kDebug() << "draw eraser point";
+                            qDebug() << "draw eraser point";
                             tPainter.drawPoint(event->pos());
                             emit usedEraser(m_penWidth, event->pos().x(), event->pos().y(), event->pos().x(), event->pos().y());
                         }
@@ -554,7 +554,7 @@ namespace Konversation
                     break;
                 case WhiteBoardGlobals::Stamp:
                 case WhiteBoardGlobals::Selection:
-                    kDebug() << "TODO implement whiteboard Selection/Stamp";
+                    qDebug() << "TODO implement whiteboard Selection/Stamp";
                     break;
                 }
                 tPainter.end();
@@ -565,7 +565,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::keyPressEvent(QKeyEvent* event)
         {
-            // kDebug() << event->text() << event->text().length() << int(event->text()[0].toAscii());
+            // qDebug() << event->text() << event->text().length() << int(event->text()[0].toAscii());
 
             if ((m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended) && isLastPosValid())
             {
@@ -614,7 +614,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::checkImageSize(int x1, int y1, int x2, int y2, int penWidth)
         {
-            // kDebug() << x1 << y1 << x2 << y2;
+            // qDebug() << x1 << y1 << x2 << y2;
             if (width() == WhiteBoardGlobals::MaxImageSize && height() == WhiteBoardGlobals::MaxImageSize)
             {
                 return;

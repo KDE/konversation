@@ -166,7 +166,7 @@ bool _plHas(int count, int x)
     _plHad=(count >= x);
     _plWanted = x;
     if (!_plHad)
-        kDebug() << "plhad" << count << "wanted" << x;
+        qDebug() << "plhad" << count << "wanted" << x;
     return _plHad;
 }
 
@@ -218,7 +218,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = m_server->getChannelByName( parameterList.value(0) );
 
                     if (!channel) {
-                        kError() << "Didn't find the channel " << parameterList.value(0) << endl;
+                        qCritical() << "Didn't find the channel " << parameterList.value(0) << endl;
                         return;
                     }
 
@@ -533,7 +533,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     }
                     else if (replyReason.toLower() == "dcc")
                     {
-                        kDebug() << reply;
+                        qDebug() << reply;
                         QStringList dccList = reply.split(' ');
 
                         //all dcc notices we receive are rejects
@@ -693,7 +693,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else
     {
-        kDebug() << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
+        qDebug() << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
         m_server->appendMessageToFrontmost(command, parameterList.join(" "));
     }
 }
@@ -730,7 +730,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if (command == "error :closing link:")
         {
-            kDebug() << "link closed";
+            qDebug() << "link closed";
         }
         else if (command == "pong")
         {
@@ -808,7 +808,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
-            kDebug() << "unknown server command" << command;
+            qDebug() << "unknown server command" << command;
             m_server->appendMessageToFrontmost(command, parameterList.join(" "));
         }
     }
@@ -966,7 +966,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         }
                         else
                         {
-                            //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
+                            //qDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
                         }
                     }                                 // endfor
                 }
@@ -1094,7 +1094,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        kDebug() << "Hmm seems something is broken... can't get to the names!";
+                        qDebug() << "Hmm seems something is broken... can't get to the names!";
                     }
 
                     // send list to channel
@@ -1595,14 +1595,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else
                         {
                             // whoRequestList seems to be broken.
-                            kDebug() << "RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
+                            qDebug() << "RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
                                 << parameterList.value(1) << " expected: " << m_whoRequestList.front();
                             m_whoRequestList.clear();
                         }
                     }
                     else
                     {
-                        kDebug() << "RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
+                        qDebug() << "RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
                             << parameterList.value(1);
                     }
 
@@ -2195,16 +2195,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 // All yet unknown messages go into the frontmost window without the
                 // preceding nickname
-                kDebug() << "unknown numeric" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
+                qDebug() << "unknown numeric" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
                 m_server->appendMessageToFrontmost(command, parameterList.join(" "));
             }
         } // end of numeric switch
         if (!_plHad)
-            kDebug() << "numeric format error" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
+            qDebug() << "numeric format error" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
     } // end of numeric elseif
     else
     {
-        kDebug() << "unknown message format" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
+        qDebug() << "unknown message format" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
     }
 } // end of server
 
@@ -2272,7 +2272,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
             // Let the channel update its modes
             if (parameter.isEmpty())               // XXX Check this to ensure the braces are in the correct place
             {
-                kDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
+                qDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
                     << parameterList.join(", ") << "'";
             }
             m_server->updateChannelMode(sourceNick, parameterList.value(0), mode, plus, parameter);
@@ -2324,7 +2324,7 @@ void InputFilter::setAutomaticRequest(const QString& command, const QString& nam
     m_automaticRequest[command][name.toLower()] += (yes) ? 1 : -1;
     if(m_automaticRequest[command][name.toLower()]<0)
     {
-        kDebug()   << "( " << command << ", " << name
+        qDebug()   << "( " << command << ", " << name
             << " ) was negative! Resetting!";
         m_automaticRequest[command][name.toLower()]=0;
     }

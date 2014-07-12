@@ -46,7 +46,7 @@ namespace Konversation
         Transfer::Transfer(Type dccType, QObject *parent)
             : QObject(parent)
         {
-            kDebug();
+            qDebug();
 
             m_type = dccType;
 
@@ -73,7 +73,7 @@ namespace Konversation
 
         Transfer::~Transfer()
         {
-            kDebug();
+            qDebug();
         }
 
         void Transfer::setConnectionId(int id)
@@ -94,7 +94,7 @@ namespace Konversation
 
         bool Transfer::queue()
         {
-            kDebug();
+            qDebug();
             if (getStatus() != Configuring)
             {
                 return false;
@@ -149,7 +149,7 @@ namespace Konversation
 
         void Transfer::cleanUp()
         {
-            kDebug();
+            qDebug();
             delete[] m_buffer;
             m_buffer = 0;
             m_loggerTimer.stop();
@@ -168,7 +168,7 @@ namespace Konversation
             Server *server = konv_app->getConnectionManager()->getServerByConnectionId(m_connectionId);
             if (server)
             {
-                kDebug() << "notification:" << errorMessage;
+                qDebug() << "notification:" << errorMessage;
                 konv_app->notificationHandler()->dccError(server->getStatusView(), errorMessage);
             }
             setStatus(Failed, errorMessage);
@@ -192,7 +192,7 @@ namespace Konversation
                 Server *server = konv_app->getConnectionManager()->getServerByConnectionId(m_connectionId);
                 if (server)
                 {
-                    kDebug() << "notification:" << m_fileName;
+                    qDebug() << "notification:" << m_fileName;
                     konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName, this);
                 }
             }

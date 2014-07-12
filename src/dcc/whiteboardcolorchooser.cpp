@@ -93,26 +93,26 @@ namespace Konversation
 
         void WhiteBoardColorChooser::mouseReleaseEvent(QMouseEvent *e)
         {
-            // kDebug() << "epos:"<< e->pos();
-            // kDebug() << "foregroundrect" << foregroundRect();
-            // kDebug() << "backgroundrect" << backgroundRect();
-            // kDebug() << "swap" << swapPixmapRect();
+            // qDebug() << "epos:"<< e->pos();
+            // qDebug() << "foregroundrect" << foregroundRect();
+            // qDebug() << "backgroundrect" << backgroundRect();
+            // qDebug() << "swap" << swapPixmapRect();
 
             ColorLayer whichColor = None;
 
             if (foregroundRect().contains(e->pos()))
             {
                 whichColor = ForegroundColor;
-                kDebug() << "> in foreground";
+                qDebug() << "> in foreground";
             }
             else if (backgroundRect().contains(e->pos()))
             {
                 whichColor = BackgroundColor;
-                kDebug() << "> in background";
+                qDebug() << "> in background";
             }
             else if (swapPixmapRect().contains(e->pos()))
             {
-                kDebug() << "> in swap";
+                qDebug() << "> in swap";
                 QColor oldFore = m_foregroundColor;
                 m_foregroundColor = m_backgroundColor;
                 m_backgroundColor = oldFore;

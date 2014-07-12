@@ -168,7 +168,7 @@ namespace Konversation
                 if (m_activeTransfers > 0 && !m_updateTimer->isActive())
                 {
                     m_updateTimer->start();
-                    kDebug() << "timer start";
+                    qDebug() << "timer start";
                 }
             }
 
@@ -428,7 +428,7 @@ namespace Konversation
                     return i;
                 }
             }
-            kDebug() << "unknown headerType: " << headerType;
+            qDebug() << "unknown headerType: " << headerType;
             return -1;
         }
 
@@ -507,7 +507,7 @@ namespace Konversation
             }
             else
             {
-                kDebug() << "transferview fallback, did we crash last time?\n"
+                qDebug() << "transferview fallback, did we crash last time?\n"
                          << " columnOrder.count():"<< columnOrder.count()
                          << " columnWidths.count():"<< columnWidths.count()
                          << " columnVisible.count():"<< columnVisible.count()
@@ -617,7 +617,7 @@ namespace Konversation
                     m_itemCategoryToRemove &= ~Transfer::Send;
                     m_categorieFlags &= ~TransferView::SendCategory;
                     int removed = removeItems(TransferItemData::SendCategory);
-                    //kDebug() << "Sendremoved:" << removed;
+                    //qDebug() << "Sendremoved:" << removed;
                     if (removed > 0 && (m_categorieFlags & SpacerRow))
                     {
                         removeItems(TransferItemData::SpaceRow);
@@ -632,7 +632,7 @@ namespace Konversation
                     m_itemCategoryToRemove &= ~Transfer::Receive;
                     m_categorieFlags &= ~TransferView::ReceiveCategory;
                     int removed = removeItems(TransferItemData::ReceiveCategory);
-                    //kDebug() << "Receiveremoved:" << removed;
+                    //qDebug() << "Receiveremoved:" << removed;
                     if (removed > 0 && (m_categorieFlags & SpacerRow))
                     {
                         removeItems(TransferItemData::SpaceRow);

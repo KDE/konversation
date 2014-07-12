@@ -56,7 +56,7 @@ void ConnectionBehavior_Config::saveSettings()
 
             if(ret != 0)
             {
-                kError() << "Failed to write the proxy password to the wallet, error code:" << ret;
+                qCritical() << "Failed to write the proxy password to the wallet, error code:" << ret;
             }
         }
     }
@@ -76,7 +76,7 @@ void ConnectionBehavior_Config::loadSettings()
 
             if(ret != 0)
             {
-                kError() << "Failed to read the proxy password from the wallet, error code:" << ret;
+                qCritical() << "Failed to read the proxy password from the wallet, error code:" << ret;
             }
         }
     }

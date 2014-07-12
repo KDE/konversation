@@ -110,7 +110,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
 
         decodeIrcUrl(it->url(), settings);
 
-        kDebug() << settings.name() << " - "
+        qDebug() << settings.name() << " - "
                  << settings.server().host() << settings.server().port()
                  << settings.server().password() << " - "
                  << (settings.serverGroup()?settings.serverGroup()->name():"");

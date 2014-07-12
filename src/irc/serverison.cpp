@@ -91,7 +91,7 @@ void ServerISON::recalculateAddressees()
 // When user changes preferences and has nick watching turned on, rebuild notify list.
 void ServerISON::slotServerGroupsChanged()
 {
-    kDebug();
+    qDebug();
     m_ISONList_invalid = true;
 }
 

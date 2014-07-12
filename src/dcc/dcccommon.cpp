@@ -51,7 +51,7 @@ namespace Konversation
                 return ip.toString();
 
             default:
-                kDebug() << "unspported protocol: " << ipString;
+                qDebug() << "unspported protocol: " << ipString;
                 return "";
             }
         }
@@ -100,7 +100,7 @@ namespace Konversation
                 ownIp = server->getOwnIpByNetworkInterface();
             }
 
-            kDebug() << ownIp;
+            qDebug() << ownIp;
             return ownIp;
         }
 
@@ -125,9 +125,9 @@ namespace Konversation
                     memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
                     fallbackIp = inet_ntoa(sock.sin_addr);
                 }
-                kDebug() << "Falling back to IPv4 address " << fallbackIp;
+                qDebug() << "Falling back to IPv4 address " << fallbackIp;
 #else
-                kDebug() << "TODO: implement ipv6 fallback";
+                qDebug() << "TODO: implement ipv6 fallback";
 #endif
             }
             return fallbackIp;

@@ -127,7 +127,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                kDebug() << "Decryption from CBC Failed";
+                qDebug() << "Decryption from CBC Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -139,7 +139,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                kDebug() << "Decryption from ECB Failed";
+                qDebug() << "Decryption from ECB Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -282,7 +282,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    kDebug() << "CBC Encoding Failed";
+                    qDebug() << "CBC Encoding Failed";
                     return false;
                 }
 
@@ -294,7 +294,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    kDebug() << "ECB Encoding Failed";
+                    qDebug() << "ECB Encoding Failed";
                     return false;
                 }
 

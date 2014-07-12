@@ -373,15 +373,15 @@ void Channel::setEncryptedOutput(bool e)
 
 Channel::~Channel()
 {
-    kDebug() << "(" << getName() << ")";
+    qDebug() << "(" << getName() << ")";
 
     // Purge nickname list
     purgeNicks();
-    kDebug() << "Nicks purged.";
+    qDebug() << "Nicks purged.";
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
-    kDebug() << "Channel removed.";
+    qDebug() << "Channel removed.";
 
     if (m_recreationScheduled)
     {
@@ -943,7 +943,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
         requestNickListSort();
     }
     else
-        kWarning() << "Nickname " << channelnick->getNickname() << " has not been added as it is already in the nickname list."<< endl;
+        qWarning() << "Nickname " << channelnick->getNickname() << " has not been added as it is already in the nickname list."<< endl;
 }
 
 // Use with caution! Does not check for duplicates or may not
@@ -1186,7 +1186,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            kWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            qWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
     }
 }
@@ -1274,7 +1274,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         if(nick == 0)
         {
-            kWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            qWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
         else
         {
@@ -2594,7 +2594,7 @@ void Channel::repositionNick(Nick *nick)
         nicknameList.removeAt(index);
         fastAddNickname(nick->getChannelNick(), nick);
     } else {
-        kWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!"<< endl;
+        qWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!"<< endl;
     }
 }
 

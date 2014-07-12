@@ -580,7 +580,7 @@ QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
     case 'L':
         return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</p></qt>");
     default:
-        kWarning() << "called for unknown mode" << mode;
+        qWarning() << "called for unknown mode" << mode;
         return QString();
     }
 }

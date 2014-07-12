@@ -43,7 +43,7 @@
 
 #include <QTextDocument>
 #include <QTextBlock>
-#include <kdebug.h>
+#include <qdebug.h>
 #include "ircview.h"
 
 QDebug operator<<(QDebug d, QTextDocument* document);
@@ -939,7 +939,7 @@ namespace Konversation
         OutputFilterInput input(_input);
         OutputFilterResult result;
 
-        kDebug() << input.parameter;
+        qDebug() << input.parameter;
         // No parameter, just open DCC panel
         if (input.parameter.isEmpty())
         {
@@ -1873,7 +1873,7 @@ namespace Konversation
             if (input.context)
                 input.context->cycle();
             else
-                kDebug() << "Parameter-less /cycle without an input context can't work.";
+                qDebug() << "Parameter-less /cycle without an input context can't work.";
         }
         else
         {
@@ -1888,7 +1888,7 @@ namespace Konversation
                 if (m_server)
                     m_server->cycle();
                 else
-                    kDebug() << "Told to cycle the server, but current context doesn't have one.";
+                    qDebug() << "Told to cycle the server, but current context doesn't have one.";
             }
             else if (m_server)
             {
@@ -1915,7 +1915,7 @@ namespace Konversation
             if (input.context)
                 input.context->clear();
             else
-                kDebug() << "Parameter-less /clear without an input context can't work.";
+                qDebug() << "Parameter-less /clear without an input context can't work.";
         }
         else if (m_server)
         {
@@ -1953,7 +1953,7 @@ namespace Konversation
         if (input.context && input.context->getTextView())
         {
             KDebug::Block myBlock(qPrintable(QString::number((quintptr)(input.context->getTextView()), 16)));
-            kDebug() << input.context->getTextView()->document();
+            qDebug() << input.context->getTextView()->document();
         }
         return OutputFilterResult();
     }

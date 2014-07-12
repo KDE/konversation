@@ -59,7 +59,7 @@ namespace Konversation
         TransferRecv::TransferRecv(QObject *parent)
             : Transfer(Transfer::Receive, parent)
         {
-            kDebug();
+            qDebug();
 
             m_serverSocket = 0;
             m_recvSocket = 0;
@@ -73,13 +73,13 @@ namespace Konversation
 
         TransferRecv::~TransferRecv()
         {
-            kDebug();
+            qDebug();
             cleanUp();
         }
 
         void TransferRecv::cleanUp()
         {
-            kDebug();
+            qDebug();
 
             stopConnectionTimer();
             disconnect(m_connectionTimer, 0, 0, 0);
@@ -171,7 +171,7 @@ namespace Konversation
 
         bool TransferRecv::queue()
         {
-            kDebug();
+            qDebug();
 
             if (getStatus() != Configuring)
             {
@@ -259,7 +259,7 @@ namespace Konversation
 
         void TransferRecv::abort()                     // public slot
         {
-            kDebug();
+            qDebug();
 
             if (getStatus() == Transfer::Queued)
             {
@@ -282,7 +282,7 @@ namespace Konversation
 
         void TransferRecv::start()                     // public slot
         {
-            kDebug() << "[BEGIN]";
+            qDebug() << "[BEGIN]";
 
             if (getStatus() != Queued)
             {
@@ -293,12 +293,12 @@ namespace Konversation
 
             prepareLocalKio(false, false);
 
-            kDebug() << "[END]";
+            qDebug() << "[END]";
         }
 
         void TransferRecv::prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition)
         {
-            kDebug()
+            qDebug()
                 << "URL: " << m_fileURL << endl
                 << "Overwrite: " << overwrite << endl
                 << "Resume: " << resume << " (Position: " << startPosition << ")";
@@ -341,7 +341,7 @@ namespace Konversation
 
             if (!transferJob)
             {
-                kDebug() << "KIO::put() returned NULL. what happened?";
+                qDebug() << "KIO::put() returned NULL. what happened?";
                 failed(i18n("Could not create a KIO instance"));
                 return;
             }
@@ -422,13 +422,13 @@ namespace Konversation
 
         void TransferRecv::slotLocalCanResume(KIO::Job *job, KIO::filesize_t size)
         {
-            kDebug() << "[BEGIN]" << endl
+            qDebug() << "[BEGIN]" << endl
                 << "size: " << size;
 
             KIO::TransferJob* transferJob = dynamic_cast<KIO::TransferJob*>(job);
             if (!transferJob)
             {
-                kDebug() << "not a TransferJob? returning";
+                qDebug() << "not a TransferJob? returning";
                 return;
             }
 
@@ -457,12 +457,12 @@ namespace Konversation
                 transferJob->putOnHold();
             }
 
-            kDebug() << "[END]";
+            qDebug() << "[END]";
         }
 
         void TransferRecv::slotLocalGotResult(KJob *job)
         {
-            kDebug() << "[BEGIN]";
+            qDebug() << "[BEGIN]";
 
             KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
             disconnect(transferJob, 0, 0, 0);
@@ -470,7 +470,7 @@ namespace Konversation
             switch (transferJob->error())
             {
                 case 0:                                   // no error
-                    kDebug() << "job->error() returned 0." << endl
+                    qDebug() << "job->error() returned 0." << endl
                         << "Why was I called in spite of no error?";
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:
@@ -493,12 +493,12 @@ namespace Konversation
                         ResumeDialog::RA_Rename);
             }
 
-            kDebug() << "[END]";
+            qDebug() << "[END]";
         }
 
         void TransferRecv::slotLocalReady(KIO::Job *job)
         {
-            kDebug();
+            qDebug();
 
             KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
 
@@ -571,7 +571,7 @@ namespace Konversation
                 return;
             }
 
-            kDebug();
+            qDebug();
 
             if (Preferences::self()->dccUPnP() && this->sender())
             {
@@ -592,18 +592,18 @@ namespace Konversation
 
         void TransferRecv::requestResume()
         {
-            kDebug();
+            qDebug();
 
             setStatus(WaitingRemote, i18n("Waiting for remote host's acceptance"));
 
             startConnectionTimer(30);
 
-            kDebug() << "Requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort;
+            qDebug() << "Requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort;
 
             Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(m_connectionId);
             if (!server)
             {
-                kDebug() << "Could not retrieve the instance of Server. Connection id: " << m_connectionId;
+                qDebug() << "Could not retrieve the instance of Server. Connection id: " << m_connectionId;
                 failed(i18n("Could not send DCC RECV resume request to the partner via the IRC server."));
                 return;
             }
@@ -621,13 +621,13 @@ namespace Konversation
                                                           // public slot
         void TransferRecv::startResume(quint64 position)
         {
-            kDebug() << "Position:" << position;
+            qDebug() << "Position:" << position;
 
             stopConnectionTimer();
 
             if ((quint64)m_transferringPosition != position)
             {
-                kDebug() << "remote responsed an unexpected position"<< endl
+                qDebug() << "remote responsed an unexpected position"<< endl
                     << "expected: " << m_transferringPosition << endl
                     << "remote response: " << position;
                 failed(i18n("Unexpected response from remote host"));
@@ -639,7 +639,7 @@ namespace Konversation
 
         void TransferRecv::connectToSendServer()
         {
-            kDebug();
+            qDebug();
 
             // connect to sender
 
@@ -652,7 +652,7 @@ namespace Konversation
             connect(m_recvSocket, SIGNAL(connected()), this, SLOT(startReceiving()));
             connect(m_recvSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(connectionFailed(QAbstractSocket::SocketError)));
 
-            kDebug() << "Attempting to connect to " << m_partnerIp << ":" << m_partnerPort;
+            qDebug() << "Attempting to connect to " << m_partnerIp << ":" << m_partnerPort;
 
             m_recvSocket->connectToHost(m_partnerIp, m_partnerPort);
         }
@@ -714,7 +714,7 @@ namespace Konversation
 
         void TransferRecv::startReceiving()
         {
-            kDebug();
+            qDebug();
             stopConnectionTimer();
 
             connect(m_recvSocket, SIGNAL(readyRead()), this, SLOT(readData()));
@@ -734,13 +734,13 @@ namespace Konversation
                                                           // slot
         void TransferRecv::connectionFailed(QAbstractSocket::SocketError errorCode)
         {
-            kDebug() << "Code = " << errorCode << ", string = " << m_recvSocket->errorString();
+            qDebug() << "Code = " << errorCode << ", string = " << m_recvSocket->errorString();
             failed(m_recvSocket->errorString());
         }
 
         void TransferRecv::readData()                  // slot
         {
-            //kDebug();
+            //qDebug();
             qint64 actual = m_recvSocket->read(m_buffer, m_bufferSize);
             if (actual > 0)
             {
@@ -762,7 +762,7 @@ namespace Konversation
 
         void TransferRecv::sendAck()                   // slot
         {
-            //kDebug() << m_transferringPosition << "/" << (KIO::fileoffset_t)m_fileSize;
+            //qDebug() << m_transferringPosition << "/" << (KIO::fileoffset_t)m_fileSize;
 
             //It is bound to be 32bit according to dcc specs, -> 4GB limit.
             //But luckily no client ever reads this value,
@@ -774,20 +774,20 @@ namespace Konversation
             m_recvSocket->write((char*)&pos, 4);
             if (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
             {
-                kDebug() << "Sent final ACK.";
+                qDebug() << "Sent final ACK.";
                 disconnect(m_recvSocket, 0, 0, 0);
                 m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
             }
             else if (m_transferringPosition > (KIO::fileoffset_t)m_fileSize)
             {
-                kDebug() << "The remote host sent larger data than expected: " << m_transferringPosition;
+                qDebug() << "The remote host sent larger data than expected: " << m_transferringPosition;
                 failed(i18n("Transfer error"));
             }
         }
 
         void TransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
         {
-            kDebug();
+            qDebug();
             cleanUp();
             setStatus(Done);
             emit done(this);
@@ -796,13 +796,13 @@ namespace Konversation
                                                           // <- WriteCacheHandler::gotError()
         void TransferRecv::slotLocalGotWriteError(const QString &errorString)
         {
-            kDebug();
+            qDebug();
             failed(i18n("KIO error: %1", errorString));
         }
 
         void TransferRecv::startConnectionTimer(int secs)
         {
-            kDebug();
+            qDebug();
             m_connectionTimer->start(secs * 1000);
         }
 
@@ -811,13 +811,13 @@ namespace Konversation
             if (m_connectionTimer->isActive())
             {
                 m_connectionTimer->stop();
-                kDebug();
+                qDebug();
             }
         }
 
         void TransferRecv::connectionTimeout()         // slot
         {
-            kDebug();
+            qDebug();
             failed(i18n("Timed out"));
         }
 
@@ -876,7 +876,7 @@ namespace Konversation
             m_writeReady = false;
 
             m_transferJob->sendAsyncData(m_cacheList.front());
-            //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
+            //qDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
             m_cacheList.pop_front();
 
             return true;
@@ -884,11 +884,11 @@ namespace Konversation
 
         void TransferRecvWriteCacheHandler::close()    // public
         {
-            kDebug();
+            qDebug();
             write(true);                                // write once if kio is ready to write
             m_transferJob->setAsyncDataEnabled(m_writeAsyncMode = false);
-            kDebug() << "switched to synchronized mode.";
-            kDebug() << "flushing... (remaining caches: " << m_cacheList.count() << ")";
+            qDebug() << "switched to synchronized mode.";
+            qDebug() << "flushing... (remaining caches: " << m_cacheList.count() << ")";
         }
 
         void TransferRecvWriteCacheHandler::closeNow() // public
@@ -921,13 +921,13 @@ namespace Konversation
                     // once we write everything in cache, the file is complete.
                     // This function will be called once more after this last data is written.
                     data = m_cacheList.front();
-                    kDebug() << "will write " << m_cacheList.front().size() << " bytes.";
+                    qDebug() << "will write " << m_cacheList.front().size() << " bytes.";
                     m_cacheList.pop_front();
                 }
                 else
                 {
                     // finally, no data left to write or read.
-                    kDebug() << "flushing done.";
+                    qDebug() << "flushing done.";
                     m_transferJob = 0;
                     emit done();                          // -> TransferRecv::slotLocalWriteDone()
                 }

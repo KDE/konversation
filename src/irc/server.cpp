@@ -156,7 +156,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 Server::~Server()
 {
     //send queued messages
-    kDebug() << "Server::~Server(" << getServerName() << ")";
+    qDebug() << "Server::~Server(" << getServerName() << ")";
 
     // Delete helper object.
     delete m_serverISON;
@@ -215,7 +215,7 @@ Server::~Server()
             Q_ARG(ConnectionSettings, m_connectionSettings));
     }
 
-    kDebug() << "~Server done";
+    qDebug() << "~Server done";
 }
 
 void Server::purgeData()
@@ -441,7 +441,7 @@ void Server::connectToIRCServer()
     {
         if (m_sslErrorLock)
         {
-            kDebug() << "Refusing to connect while SSL lock from previous connection attempt is being held.";
+            qDebug() << "Refusing to connect while SSL lock from previous connection attempt is being held.";
 
             return;
         }
@@ -507,7 +507,7 @@ void Server::connectToIRCServer()
         m_inputFilter.reset();
     }
     else
-        kDebug() << "connectToIRCServer() called while already connected: This should never happen. (" << (isConnecting() << 1) + isConnected() << ')';
+        qDebug() << "connectToIRCServer() called while already connected: This should never happen. (" << (isConnecting() << 1) + isConnected() << ')';
 }
 
 void Server::connectToIRCServerIn(uint delay)
@@ -764,7 +764,7 @@ void Server::sendAuthenticate(const QString& message)
 void Server::broken(KTcpSocket::Error error)
 {
     Q_UNUSED(error);
-    kDebug() << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
+    qDebug() << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
 
     m_socket->blockSignals(true);
 
@@ -852,7 +852,7 @@ void Server::sslError( const QList<KSslError>& errors )
     // If it was destroyed, let's not do anything and bail out.
     if (!socket)
     {
-        kDebug() << "Socket was destroyed while waiting for user interaction.";
+        qDebug() << "Socket was destroyed while waiting for user interaction.";
 
         return;
     }
@@ -959,7 +959,7 @@ void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
     if (res.error() == QHostInfo::NoError && !res.addresses().isEmpty())
         m_ownIpByWelcome = res.addresses().first().toString();
     else
-        kDebug() << "Got error: " << res.errorString();
+        qDebug() << "Got error: " << res.errorString();
 }
 
 bool Server::isSocketConnected() const
@@ -1441,7 +1441,7 @@ int Server::_send_internal(QString outputLine)
 
     if (outputLine.at(outputLine.length()-1) == '\n')
     {
-        kDebug() << "found \\n on " << outboundCommand;
+        qDebug() << "found \\n on " << outboundCommand;
         outputLine.resize(outputLine.length()-1);
     }
 
@@ -1524,7 +1524,7 @@ int Server::_send_internal(QString outputLine)
                         getQueryByName(target)->getCipher()->encrypt(payload);
 
                     encoded = outputLineSplit.at(0).toAscii();
-                    kDebug() << payload << "\n" << payload.data();
+                    qDebug() << payload << "\n" << payload.data();
                     //two lines because the compiler insists on using the wrong operator+
                     encoded += ' ' + dest + " :" + payload;
                 }
@@ -1901,7 +1901,7 @@ void Server::closeQuery(const QString &name)
 
 void Server::closeChannel(const QString& name)
 {
-    kDebug() << "Server::closeChannel(" << name << ")";
+    qDebug() << "Server::closeChannel(" << name << ")";
     Channel* channelToClose = getChannelByName(name);
 
     if (channelToClose && channelToClose->joined())
@@ -2050,7 +2050,7 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
     /* FIXME KF5 port
     if (transfer->getConnectionId() == connectionId() )
     {
-        kDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
+        qDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
         if ( transfer->getType() == DCC::Transfer::Receive )
         {
             connect( transfer, SIGNAL(done(Konversation::DCC::Transfer*)), this, SLOT(dccGetDone(Konversation::DCC::Transfer*)) );
@@ -2101,7 +2101,7 @@ QString Server::recoverDccFileName(const QStringList & dccArguments, int offset)
     QString fileName;
     if(dccArguments.count() > offset + 1)
     {
-        kDebug() << "recover filename";
+        qDebug() << "recover filename";
         const int argumentOffsetSize = dccArguments.size() - offset;
         for (int i = 0; i < argumentOffsetSize; ++i)
         {
@@ -2249,11 +2249,11 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         newDcc->setReverse(true, token);
     }
 
-    kDebug() << "ip: " << ip;
-    kDebug() << "port: " << port;
-    kDebug() << "filename: " << fileName;
-    kDebug() << "filesize: " << fileSize;
-    kDebug() << "token: " << token;
+    qDebug() << "ip: " << ip;
+    qDebug() << "port: " << port;
+    qDebug() << "filename: " << fileName;
+    qDebug() << "filesize: " << fileSize;
+    qDebug() << "token: " << token;
 
     //emit after data was set
     emit addDccPanel();
@@ -2316,10 +2316,10 @@ void Server::addDccChat(const QString& sourceNick, const QStringList& dccArgumen
     newChat->setPartnerNick(sourceNick);
     newChat->setOwnNick(getNickname());
 
-    kDebug() << "ip: " << ip;
-    kDebug() << "port: " << port;
-    kDebug() << "token: " << token;
-    kDebug() << "extension: " << extension;
+    qDebug() << "ip: " << ip;
+    qDebug() << "port: " << port;
+    qDebug() << "token: " << token;
+    qDebug() << "extension: " << extension;
 
     newChat->setPartnerIp(ip);
     newChat->setPartnerPort(port);
@@ -2335,7 +2335,7 @@ void Server::addDccChat(const QString& sourceNick, const QStringList& dccArgumen
 void Server::openDccChat(const QString& nickname)
 {
     /* FIXME KF5 port
-    kDebug();
+    qDebug();
     QString recipient(nickname);
     // if we don't have a recipient yet, let the user select one
     if (recipient.isEmpty())
@@ -2360,7 +2360,7 @@ void Server::openDccChat(const QString& nickname)
 void Server::openDccWBoard(const QString& nickname)
 {
     /* FIXME KF5 port
-    kDebug();
+    qDebug();
     QString recipient(nickname);
     // if we don't have a recipient yet, let the user select one
     if (recipient.isEmpty())
@@ -2489,7 +2489,7 @@ void Server::dccRejectChat(const QString& partnerNick, const QString& extension)
 void Server::startReverseDccChat(const QString &sourceNick, const QStringList &dccArguments)
 {
     /* FIXME KF5 port
-    kDebug();
+    qDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     bool ok = true;
@@ -2497,9 +2497,9 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
     quint16 port = stringToPort(dccArguments.at(2), &ok);
     QString token = dccArguments.at(3);
 
-    kDebug() << "ip: " << partnerIP;
-    kDebug() << "port: " << port;
-    kDebug() << "token: " << token;
+    qDebug() << "ip: " << partnerIP;
+    qDebug() << "port: " << port;
+    qDebug() << "token: " << token;
 
     if (!ok || dtm->startReverseChat(connectionId(), sourceNick,
                                     partnerIP, port, token) == 0)
@@ -2516,7 +2516,7 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
     /* FIXME KF5 port
-    kDebug();
+    qDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     bool ok = true;
@@ -2527,11 +2527,11 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     quint64 fileSize = dccArguments.at(argumentSize - 2).toULongLong();
     QString fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
 
-    kDebug() << "ip: " << partnerIP;
-    kDebug() << "port: " << port;
-    kDebug() << "filename: " << fileName;
-    kDebug() << "filesize: " << fileSize;
-    kDebug() << "token: " << token;
+    qDebug() << "ip: " << partnerIP;
+    qDebug() << "port: " << port;
+    qDebug() << "filename: " << fileName;
+    qDebug() << "filesize: " << fileSize;
+    qDebug() << "token: " << token;
 
     if (!ok ||
         dtm->startReverseSending(connectionId(), sourceNick,
@@ -2869,14 +2869,14 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 /*
             if(parameter.isEmpty())
             {
-                kDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing.";
+                qDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing.";
                                                   //this will get their attention.
-                kDebug() << kBacktrace();
+                qDebug() << kBacktrace();
             }
             else
             {
-                kDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName;
-                kDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error.";
+                qDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName;
+                qDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error.";
             }
 */
             //TODO Do we need to add this nick?
@@ -3189,7 +3189,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
         }
         else
         {
-            kDebug() << "Error: Tried to remove nickname=" << nickname << " from joined channel=" << channelName;
+            qDebug() << "Error: Tried to remove nickname=" << nickname << " from joined channel=" << channelName;
         }
     }
     else
@@ -3208,7 +3208,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
             }
             else
             {
-                kDebug() << "Error: Tried to remove nickname=" << nickname << " from unjoined channel=" << channelName;
+                qDebug() << "Error: Tried to remove nickname=" << nickname << " from unjoined channel=" << channelName;
             }
         }
     }
@@ -3346,7 +3346,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
     else
     {
-        kDebug() << "was called for newname='" << newname << "' but nickInfo is null";
+        qDebug() << "was called for newname='" << newname << "' but nickInfo is null";
     }
 }
 
@@ -3447,7 +3447,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 {
     if(nickname.isEmpty() || newNick.isEmpty())
     {
-        kDebug() << "called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'";
+        qDebug() << "called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'";
         return;
     }
 
@@ -3460,7 +3460,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 
     if(!nickInfo)
     {
-        kDebug() << "called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results.";
+        qDebug() << "called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results.";
     }
     else
     {
@@ -3519,7 +3519,7 @@ void Server::gotOwnResolvedHostByUserhost(const QHostInfo& res)
     if ( res.error() == QHostInfo::NoError && !res.addresses().isEmpty() )
         m_ownIpByUserhost = res.addresses().first().toString();
     else
-        kDebug() << "Got error: " << res.errorString();
+        qDebug() << "Got error: " << res.errorString();
 }
 
 void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
@@ -4159,7 +4159,7 @@ void Server::updateLongPongLag()
     {
         m_currentLag = m_lagTime.elapsed();
         emit tooLongLag(this, m_currentLag);
-        // kDebug() << "Current lag: " << currentLag;
+        // qDebug() << "Current lag: " << currentLag;
 
         if (m_currentLag > (Preferences::self()->maximumLagTime() * 1000))
             m_socket->close();

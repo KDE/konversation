@@ -178,7 +178,7 @@ void ChatWindow::setServer(Server* newServer)
 {
     if (!newServer)
     {
-        kDebug() << "ChatWindow::setServer(0)!";
+        qDebug() << "ChatWindow::setServer(0)!";
     }
     else
     {
@@ -189,7 +189,7 @@ void ChatWindow::setServer(Server* newServer)
         if(getType() != ChannelList)
         {
             if(textView) textView->setServer(newServer);
-            else kDebug() << "textView==0!";
+            else qDebug() << "textView==0!";
         }
 
         serverOnline(m_server->isConnected());
@@ -490,7 +490,7 @@ void ChatWindow::logText(const QString& text)
             // close file
             logfile.close();
         }
-        else kWarning() << "open(QIODevice::Append) for " << logfile.fileName() << " failed!";
+        else qWarning() << "open(QIODevice::Append) for " << logfile.fileName() << " failed!";
     }
 }
 

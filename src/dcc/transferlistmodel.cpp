@@ -290,7 +290,7 @@ namespace Konversation
                             return getTimeLeftPrettyText(transfer->getTimeLeft());
 
                         default:
-                            kDebug() << "unknown columntype: " << type;
+                            qDebug() << "unknown columntype: " << type;
                         case TransferHeaderData::TypeIcon:
                             return QVariant();
                     };
@@ -367,7 +367,7 @@ namespace Konversation
                             tooltip = displayTypeToString(m_transferList[index.row()].displayType);
                             break;
                         default:
-                            kDebug() << "unknown columntype: " << type;
+                            qDebug() << "unknown columntype: " << type;
                             break;
                     };
 
@@ -508,7 +508,7 @@ namespace Konversation
                         case Transfer::Send:
                             return i18n("Sending");
                         default:
-                            kDebug() << "unknown type: " << type;
+                            qDebug() << "unknown type: " << type;
                             return QString();
                     }
                 case Transfer::Done:
@@ -518,7 +518,7 @@ namespace Konversation
                 case Transfer::Aborted:
                     return i18n("Aborted");
                 default:
-                    kDebug() << "unknown status: " << status;
+                    qDebug() << "unknown status: " << status;
                     return QString();
             }
         }
@@ -537,7 +537,7 @@ namespace Konversation
                         case Transfer::Send:
                             return i18n("Preparing - Transfer is acquiring the data to send");
                         default:
-                            kDebug() << "unknown type: " << type;
+                            qDebug() << "unknown type: " << type;
                             return QString();
                     }
                 case Transfer::WaitingRemote:
@@ -552,7 +552,7 @@ namespace Konversation
                         case Transfer::Send:
                             return i18n("Sending - Transfer is sending data to partner");
                         default:
-                            kDebug() << "unknown type: " << type;
+                            qDebug() << "unknown type: " << type;
                             return QString();
                     }
                 case Transfer::Done:
@@ -569,7 +569,7 @@ namespace Konversation
                 case Transfer::Aborted:
                     return i18n("Aborted - Transfer was aborted by the User");
                 default:
-                    kDebug() << "unknown status: " << status;
+                    qDebug() << "unknown status: " << status;
                     return QString();
             }
         }
