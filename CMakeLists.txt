@@ -19,7 +19,13 @@ string(TOLOWER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_TOLOWER)
     add_definitions (-DQT_STRICT_ITERATORS)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
+find_package(BalooWidgets REQUIRED)
+set_package_properties(BalooWidgets PROPERTIES DESCRIPTION "Baloos Widgets"
+                       URL "http://www.kde.org"
+                       TYPE REQUIRED
+                       )
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${BALOO_INCLUDE_DIR} ${BALOO_WIDGETS_INCLUDE_DIR})
 
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)

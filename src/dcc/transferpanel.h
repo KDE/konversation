@@ -27,7 +27,7 @@
 
 #include <KDialog>
 #include <KLocalizedString>
-#include <kfilemetadatawidget.h>
+#include <baloo/filemetadatawidget.h>
 #include <KDebug>
 
 class QSplitter;
@@ -51,7 +51,7 @@ namespace Konversation
                     setCaption( i18nc("%1=filename", "File Information for %1",  file.fileName() ) );
                     setButtons( KDialog::Ok );
 
-                    m_fileMetaDataWidget = new KFileMetaDataWidget(this);
+                    m_fileMetaDataWidget = new Baloo::FileMetaDataWidget(this);
 
                     KFileItemList fileList;
                     fileList.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, file));
@@ -69,7 +69,7 @@ namespace Konversation
                 }
 
             private:
-                KFileMetaDataWidget* m_fileMetaDataWidget;
+                Baloo::FileMetaDataWidget* m_fileMetaDataWidget;
         };
 
         class TransferPanel : public ChatWindow
