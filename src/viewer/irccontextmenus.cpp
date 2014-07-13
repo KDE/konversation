@@ -30,10 +30,8 @@
 
 #include <KActionCollection>
 #include <KAuthorized>
-/* FIXME KF5 port
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
-*/
 #include <KFileDialog>
 #include <KIO/CopyJob>
 #include <QMenu>
@@ -156,7 +154,7 @@ void IrcContextMenus::setupTextMenu()
     // Not using KStandardAction is intentional here since the Ctrl+B
     // shortcut it would show in the menu is already used by our IRC-
     // wide bookmarking feature.
-    // m_linkActions << createAction(m_textMenu, LinkBookmark, QIcon::fromTheme("bookmark-new"), i18n("Add to Bookmarks")); FIXME KF5 port
+    m_linkActions << createAction(m_textMenu, LinkBookmark, QIcon::fromTheme("bookmark-new"), i18n("Add to Bookmarks"));
     m_linkActions << createAction(m_textMenu, LinkOpenWith, i18n("Open With..."));
     m_linkActions << createAction(m_textMenu, LinkSaveAs, QIcon::fromTheme("document-save"), i18n("Save Link As..."));
 
@@ -358,7 +356,7 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
     QAction* title = 0;
 
-    /* FIXME KF5 prot
+    /* FIXME KF5 port
     if (!channel.isEmpty())
         title = channelMenu->addTitle(KStringHandler::rsqueeze(channel, 15), channelMenu->actions().first());
     */
@@ -769,19 +767,17 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 
             break;
         }
-        /* FIXME KF5 port
         case LinkBookmark:
         {
             KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
             KBookmarkDialog* dialog = new KBookmarkDialog(manager, Application::instance()->getMainWindow());
 
-            dialog->addBookmark(link, link);
+            dialog->addBookmark(link, link, QString());
 
             delete dialog;
 
             break;
         }
-        */
         case LinkOpenWith:
         {
             // KRun::displayOpenWithDialog(KUrl(link), Application::instance()->getMainWindow()); FIXME KF5 port

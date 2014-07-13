@@ -19,6 +19,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 */
 
 #include <kbookmarkmanager.h>
+#include <kbookmarkowner.h>
 
 
 class QString;
@@ -37,11 +38,11 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 
         // KBookmarkOwner interface:
         virtual void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km);
-        virtual QString currentUrl() const;
+        virtual QUrl currentUrl() const;
         virtual QString currentTitle() const;
         virtual bool enableOption(BookmarkOption option) const;
         virtual bool supportsTabs() const;
-        virtual QList<QPair<QString,QString> > currentBookmarkList() const;
+        virtual QList<KBookmarkOwner::FutureBookmark> currentBookmarkList() const;
         virtual void openFolderinTabs(const KBookmarkGroup &group);
 
     private:

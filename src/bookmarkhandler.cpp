@@ -57,9 +57,9 @@ void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, bm.url().url());
 }
 
-QString KonviBookmarkHandler::currentUrl() const
+QUrl KonviBookmarkHandler::currentUrl() const
 {
-    return m_mainWindow->getViewContainer()->currentViewURL(true);
+    return QUrl(m_mainWindow->getViewContainer()->currentViewURL(true));
 }
 
 QString KonviBookmarkHandler::currentTitle() const
@@ -83,14 +83,21 @@ bool KonviBookmarkHandler::supportsTabs() const
     return true;
 }
 
-QList<QPair<QString,QString> > KonviBookmarkHandler::currentBookmarkList() const
+QList<KBookmarkOwner::FutureBookmark> KonviBookmarkHandler::currentBookmarkList() const
 {
-    return m_mainWindow->getViewContainer()->getChannelsURI();
+    QList<KBookmarkOwner::FutureBookmark> list;
+    QPair<QString, QString> uri;
+
+    foreach (uri, m_mainWindow->getViewContainer()->getChannelsURI()) {
+        list << KBookmarkOwner::FutureBookmark(uri.first, uri.second, QString());
+    }
+
+    return list;
 }
 
 void KonviBookmarkHandler::openFolderinTabs(const KBookmarkGroup &group)
 {
-    const QList<KUrl> list = group.groupUrlList();
+    const QList<QUrl> list = group.groupUrlList();
 
     Application* konvApp = static_cast<Application*>(kapp);
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, list);

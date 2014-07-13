@@ -17,6 +17,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets)
 
 find_package(KF5 REQUIRED
     Archive
+    Bookmarks
     Config
     ConfigWidgets
     Emoticons
