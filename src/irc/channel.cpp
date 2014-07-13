@@ -209,8 +209,11 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_buttonsGrid = 0;
 
     // The box holding the Nickname button and Channel input
-    commandLineBox = new KHBox(this);
-    commandLineBox->setSpacing(spacing());
+    commandLineBox = new QFrame(this);
+    QHBoxLayout* commandLineLayout = new QHBoxLayout(commandLineBox);
+    commandLineBox->setLayout(commandLineLayout);
+    commandLineLayout->setMargin(0);
+    commandLineLayout->setSpacing(spacing());
 
     nicknameCombobox = new KComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
@@ -225,6 +228,11 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     cipherLabel->hide();
     cipherLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
     m_inputBar = new IRCInput(commandLineBox);
+
+    commandLineLayout->addWidget(nicknameCombobox);
+    commandLineLayout->addWidget(awayLabel);
+    commandLineLayout->addWidget(cipherLabel);
+    commandLineLayout->addWidget(m_inputBar);
 
     getTextView()->installEventFilter(m_inputBar);
     topicLine->installEventFilter(m_inputBar);

@@ -314,7 +314,7 @@ class Channel : public ChatWindow
         KLineEdit* limit; //TODO: this GUI element is the only storage for the mode
 
         NickListView* nicknameListView;
-        KHBox* commandLineBox;
+        QFrame* commandLineBox;
         KVBox* nickListButtons;
         QWidget* m_buttonsGrid;
         KComboBox* nicknameCombobox;
