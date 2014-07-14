@@ -769,7 +769,7 @@ void MainWindow::openPrefsDialog()
         m_settingsDialog = new KonviSettingsDialog(this);
         //User edited the configuration - update your local copies of the
         //configuration data
-        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(settingsChangedSlot()));
+        connect(m_settingsDialog, SIGNAL(settingsChanged(QString)), this, SLOT(settingsChangedSlot()));
     }
     m_settingsDialog->show();
 }
