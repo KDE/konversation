@@ -336,7 +336,7 @@ void IrcContextMenus::processWebShortcutAction()
 
 void IrcContextMenus::configureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec("kcmshell5", QStringList() << "ebrowsing");
+    KToolInvocation::kdeinitExec("kcmshell5", QStringList() << "webshortcuts");
 }
 
 void IrcContextMenus::setupChannelMenu()
