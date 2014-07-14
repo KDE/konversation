@@ -17,7 +17,7 @@
 
 #include <QList>
 
-#include <KConfigDialog>
+#include <configdialog.h>
 
 class Warnings_Config;
 class Theme_Config;
@@ -33,15 +33,13 @@ class OSD_Config;
 class Ignore_Config;
 
 
-class KonviSettingsDialog : public KConfigDialog
+class KonviSettingsDialog : public ConfigDialog
 {
     Q_OBJECT
 
     public:
         explicit KonviSettingsDialog(QWidget *parent);
         ~KonviSettingsDialog();
-
-        void openWatchedNicknamesPage();
 
     protected slots:
         virtual void updateSettings();
