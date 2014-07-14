@@ -22,7 +22,7 @@
 
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const QString& channel)
-: KShared()
+: QSharedData()
 {
     m_nickInfo = nickInfo;
     m_isop = false;

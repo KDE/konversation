@@ -17,7 +17,7 @@
 #include "identity.h"
 
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 
 
 namespace Konversation
@@ -52,12 +52,12 @@ namespace Konversation
     };
 
     class ServerGroupSettings;
-    typedef KSharedPtr<ServerGroupSettings> ServerGroupSettingsPtr;
+    typedef QExplicitlySharedDataPointer<ServerGroupSettings> ServerGroupSettingsPtr;
     typedef QHash<int,ServerGroupSettingsPtr> ServerGroupHash;
     typedef QList<ServerSettings> ServerList;
     typedef QList<ChannelSettings> ChannelList;
 
-    class ServerGroupSettings : public KShared
+    class ServerGroupSettings : public QSharedData
     {
         public:
             explicit ServerGroupSettings();

@@ -20,7 +20,7 @@ namespace Konversation
     int ServerGroupSettings::s_availableId = 0;
 
     ServerGroupSettings::ServerGroupSettings()
-        : KShared()
+        : QSharedData()
     {
         m_id = s_availableId;
         s_availableId++;
@@ -32,7 +32,7 @@ namespace Konversation
     }
 
     ServerGroupSettings::ServerGroupSettings(int id)
-        : KShared()
+        : QSharedData()
     {
         if(id < 0)
         {
@@ -52,7 +52,7 @@ namespace Konversation
     }
 
     ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
-        : KShared()
+        : QSharedData()
     {
         (*this) = settings;
     }
@@ -74,7 +74,7 @@ namespace Konversation
     }
 
     ServerGroupSettings::ServerGroupSettings(const QString& name)
-        : KShared()
+        : QSharedData()
     {
         setName(name);
         m_id = s_availableId;

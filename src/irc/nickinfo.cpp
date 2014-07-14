@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 #include "server.h"
 
-NickInfo::NickInfo(const QString& nick, Server* server): KShared()
+NickInfo::NickInfo(const QString& nick, Server* server): QSharedData()
 {
     m_nickname = nick;
     m_loweredNickname = nick.toLower();

@@ -44,7 +44,7 @@
 
 #include <QHostInfo>
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 #include <kprocess.h>
 #include <ktcpsocket.h>
 #include <preferences.h>
@@ -258,7 +258,7 @@ class Server : public QObject
          *  - It is on the notify list and is known to be online.
          *  - The nick initiated a query with the user.
          *
-         * @return A QMap of KSharedPtrs to NickInfos indexed by lowercase nickname.
+         * @return A QMap of NickInfoPtrs indexed by lowercase nickname.
          */
         const NickInfoMap* getAllNicks();
         /** Returns the list of members for a channel in the joinedChannels list.

@@ -1831,7 +1831,7 @@ QStringList Server::getSharedChannels(const QString& nickname)
 bool Server::isNickOnline(const QString &nickname)
 {
     NickInfoPtr nickInfo = getNickInfo(nickname);
-    return (!nickInfo.isNull());
+    return (nickInfo != nullptr);
 }
 
 QString Server::getOwnIpByNetworkInterface()
@@ -3136,7 +3136,7 @@ bool Server::setNickOffline(const QString& nickname)
         nickInfo->setPrintedOnline(false);
     }
 
-    return (!nickInfo.isNull());
+    return (nickInfo != nullptr);
 }
 
 /**

@@ -20,7 +20,7 @@
 
 int Identity::s_availableId = 0;
 
-Identity::Identity() : KShared()
+Identity::Identity() : QSharedData()
 {
     m_id = s_availableId;
     s_availableId++;
@@ -28,7 +28,7 @@ Identity::Identity() : KShared()
     init();
 }
 
-Identity::Identity(int id) : KShared()
+Identity::Identity(int id) : QSharedData()
 {
     if (id < 0)
     {
@@ -43,7 +43,7 @@ Identity::Identity(int id) : KShared()
     init();
 }
 
-Identity::Identity(const Identity& original) : KShared()
+Identity::Identity(const Identity& original) : QSharedData()
 {
     copy(original);
     m_id = original.id();

@@ -15,7 +15,7 @@
 #ifndef IDENTITY_H
 #define IDENTITY_H
 
-#include <KSharedPtr>
+#include <QExplicitlySharedDataPointer>
 #include <QUrl>
 
 #include <QStringList>
@@ -23,7 +23,7 @@
 
 class QTextCodec;
 
-class Identity : public KShared
+class Identity : public QSharedData
 {
     public:
         /// Create an Identity with a new id.
@@ -145,7 +145,7 @@ class Identity : public KShared
         void init();
 };
 
-typedef KSharedPtr<Identity> IdentityPtr;
+typedef QExplicitlySharedDataPointer<Identity> IdentityPtr;
 typedef QList<IdentityPtr> IdentityList;
 
 #endif

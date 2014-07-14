@@ -19,7 +19,7 @@
 #include <QTextStream>
 #include <QList>
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 
 class Server;
 
@@ -31,7 +31,7 @@ class Server;
   Offline (but watched) nicks are stored in the Server object.
 
 */
-class NickInfo : public KShared
+class NickInfo : public QSharedData
 {
     public:
         NickInfo(const QString& nick, Server* server);
@@ -138,10 +138,10 @@ class NickInfo : public KShared
         bool m_changed;
 };
 
-/** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a KSharedPtr, the NickInfo
+/** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a QExplicitlySharedDataPointer, the NickInfo
  * object is automatically destroyed when all references are destroyed.
  */
-typedef KSharedPtr<NickInfo> NickInfoPtr;
+typedef QExplicitlySharedDataPointer<NickInfo> NickInfoPtr;
 /** A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
  */
 typedef QMap<QString,NickInfoPtr> NickInfoMap;

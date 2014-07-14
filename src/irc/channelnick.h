@@ -17,10 +17,10 @@
 
 #include "nickinfo.h"
 
-#include <ksharedptr.h>
+#include <QExplicitlySharedDataPointer>
 
 
-class ChannelNick : public KShared
+class ChannelNick : public QSharedData
 {
     public:
         ChannelNick(const NickInfoPtr& nickInfo, const QString& channel);
@@ -81,10 +81,10 @@ class ChannelNick : public KShared
         void channelNickChanged();
 };
 
-/** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
+/** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a QExplicitlySharedDataPointer,
  *  the ChannelNick object is automatically destroyed when all references are destroyed.
  */
-typedef KSharedPtr<ChannelNick> ChannelNickPtr;
+typedef QExplicitlySharedDataPointer<ChannelNick> ChannelNickPtr;
 
 /** A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by
  *  lowercase nickname.
