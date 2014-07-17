@@ -12,16 +12,16 @@
 #ifndef IRCVIEWBOX_H
 #define IRCVIEWBOX_H
 
-#include <kvbox.h>
+#include <QWidget>
 
 class IRCView;
 class SearchBar;
 
-class IRCViewBox : public KVBox
+class IRCViewBox : public QWidget
 {
     Q_OBJECT
 
-        public:
+    public:
 
         explicit IRCViewBox(QWidget* parent);
         ~IRCViewBox();

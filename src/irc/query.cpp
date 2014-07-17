@@ -26,7 +26,6 @@
 #include <QSplitter>
 
 #include <KIconLoader>
-#include <KHBox>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
 
@@ -46,10 +45,9 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_initialShow = true;
     awayChanged=false;
     awayState=false;
-    KHBox* box = new KHBox(m_headerSplitter);
-    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(box), 0);
 
-    queryHostmask=new KSqueezedTextLabel(box);
+    queryHostmask=new KSqueezedTextLabel(m_headerSplitter);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(queryHostmask), 0);
     queryHostmask->setTextElideMode(Qt::ElideRight);
     queryHostmask->setObjectName("query_hostmask");
 
@@ -64,16 +62,21 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(textView,SIGNAL(urlsDropped(QList<QUrl>)),this,SLOT(urlsDropped(QList<QUrl>))); // FIXME KF5: Test QUrl conversion.
 
     // This box holds the input line
-    KHBox* inputBox=new KHBox(this);
+    QWidget* inputBox=new QWidget(this);
+    QHBoxLayout* inputBoxLayout = new QHBoxLayout(inputBox);
     inputBox->setObjectName("input_log_box");
-    inputBox->setSpacing(spacing());
+    inputBoxLayout->setSpacing(spacing());
+    inputBoxLayout->setMargin(0);
 
     awayLabel=new AwayLabel(inputBox);
+    inputBoxLayout->addWidget(awayLabel);
     awayLabel->hide();
     blowfishLabel = new QLabel(inputBox);
+    inputBoxLayout->addWidget(blowfishLabel);
     blowfishLabel->hide();
     blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
     m_inputBar=new IRCInput(inputBox);
+    inputBoxLayout->addWidget(m_inputBar);
 
     getTextView()->installEventFilter(m_inputBar);
     m_inputBar->installEventFilter(this);

@@ -182,6 +182,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
     limit=new KLineEdit(modeBox);
+    modeBoxLayout->addWidget(limit);
     limit->setToolTip(i18n("Maximum users allowed in channel"));
     limit->setWhatsThis(i18n("<qt><p>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</p></qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );

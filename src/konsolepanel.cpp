@@ -16,13 +16,13 @@
 #include <QSplitter>
 #include <QToolButton>
 #include <QLabel>
+#include <QHBoxLayout>
 
 #include <KApplication>
 #include <KDebug>
 #include <QIcon>
 #include <KLocalizedString>
 #include <KService>
-#include <KHBox>
 #include <kde_terminal_interface.h>
 
 
@@ -35,10 +35,13 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
-    KHBox* headerWidget = new KHBox(m_headerSplitter);
+    QWidget* headerWidget = new QWidget(m_headerSplitter);
+    QHBoxLayout* headerWidgetLayout = new QHBoxLayout(headerWidget);
+    headerWidgetLayout->setMargin(0);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(headerWidget), 0);
 
     m_profileButton = new QToolButton(headerWidget);
+    headerWidgetLayout->addWidget(m_profileButton);
     m_profileButton->setIcon(QIcon::fromTheme("configure"));
     m_profileButton->setToolTip(i18n("Manage Konsole Profiles"));
     m_profileButton->setAutoRaise(true);
@@ -46,6 +49,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     connect(m_profileButton, SIGNAL(clicked()), this, SLOT(manageKonsoleProfiles()));
 
     m_konsoleLabel = new QLabel(headerWidget);
+    headerWidgetLayout->addWidget(m_konsoleLabel);
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
     KPluginFactory* fact = 0;

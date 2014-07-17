@@ -22,6 +22,8 @@
 #include <KLineEdit>
 #include <KMessageBox>
 
+#include <QHBoxLayout>
+
 using namespace Konversation;
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
@@ -37,11 +39,13 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     IRCViewBox* ircBox = new IRCViewBox(this); // Server will be set later in setServer()
     setTextView(ircBox->ircView());
 
-    KHBox* commandLineBox=new KHBox(this);
-    commandLineBox->setSpacing(spacing());
-    commandLineBox->setMargin(0);
+    QWidget* commandLineBox=new QWidget(this);
+    QHBoxLayout* commandLineBoxLayout = new QHBoxLayout(commandLineBox);
+    commandLineBoxLayout->setSpacing(spacing());
+    commandLineBoxLayout->setMargin(0);
 
     nicknameCombobox = new KComboBox(commandLineBox);
+    commandLineBoxLayout->addWidget(nicknameCombobox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->setSizeAdjustPolicy(KComboBox::AdjustToContents);
     KLineEdit* nicknameComboboxLineEdit = qobject_cast<KLineEdit*>(nicknameCombobox->lineEdit());
@@ -49,9 +53,11 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can edit the alternative nicknames from the <em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"));
 
     awayLabel=new AwayLabel(commandLineBox);
+    commandLineBoxLayout->addWidget(awayLabel);
     awayLabel->hide();
 
     m_inputBar=new IRCInput(commandLineBox);
+    commandLineBoxLayout->addWidget(m_inputBar);
 
     getTextView()->installEventFilter(m_inputBar);
     m_inputBar->installEventFilter(this);

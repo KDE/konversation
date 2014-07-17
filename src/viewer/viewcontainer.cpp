@@ -171,13 +171,17 @@ void ViewContainer::setupTabWidget()
 {
     m_popupViewIndex = -1;
 
-    m_vbox = new KVBox(m_viewTreeSplitter);
+    m_vbox = new QWidget(m_viewTreeSplitter);
+    QVBoxLayout* vboxLayout = new QVBoxLayout(m_vbox);
+    vboxLayout->setMargin(0);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
     m_vbox->setObjectName("main_window_right_side");
     m_tabWidget = new TabWidget(m_vbox);
+    vboxLayout->addWidget(m_tabWidget);
     m_tabWidget->setObjectName("main_window_tab_widget");
     m_viewSpringLoader->addWidget(m_tabWidget->tabBar());
     m_queueTuner = new QueueTuner(m_vbox, this);
+    vboxLayout->addWidget(m_queueTuner);
     m_queueTuner->hide();
 
     m_tabWidget->setMovable(true);

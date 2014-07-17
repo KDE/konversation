@@ -15,13 +15,17 @@
 
 #include <KIconLoader>
 #include <QPixmap>
-#include <KVBox>
+#include <QVBoxLayout>
 
 IRCViewBox::IRCViewBox(QWidget* parent)
-: KVBox(parent)
+: QWidget(parent)
 {
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->setMargin(0);
     m_ircView = new IRCView(this);
+    mainLayout->addWidget(m_ircView);
     m_searchBar = new SearchBar(this);
+    mainLayout->addWidget(m_searchBar);
     m_searchBar->hide();
     m_matchedOnce = false;
 

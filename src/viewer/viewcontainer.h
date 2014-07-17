@@ -23,7 +23,6 @@ class QSplitter;
 class QTabBar;
 
 class KActionCollection;
-class KVBox;
 
 class MainWindow;
 class ViewTree;
@@ -231,7 +230,7 @@ class ViewContainer : public QObject
         QSplitter* m_viewTreeSplitter;
         TabWidget* m_tabWidget;
         QWidget* m_viewTree;
-        KVBox* m_vbox;
+        QWidget* m_vbox;
         QueueTuner* m_queueTuner;
 
         Images* images;
