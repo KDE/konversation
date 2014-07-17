@@ -69,7 +69,6 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     // Set up view container
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
-    connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
     connect(Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
             m_viewContainer, SLOT(updateViews(Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(autoJoinToggled(Konversation::ServerGroupSettingsPtr)),

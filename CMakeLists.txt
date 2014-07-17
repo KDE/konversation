@@ -67,6 +67,8 @@ add_definitions(
   -DQT_USE_FAST_OPERATOR_PLUS
 )
 
+add_definitions(-Wno-deprecated)
+
 add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)

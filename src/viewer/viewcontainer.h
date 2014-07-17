@@ -92,10 +92,8 @@ class ViewContainer : public QObject
         void updateAppearance();
         void saveSplitterSizes();
         void setViewTreeShown(bool show);
-        void syncTabBarToTree();
 
         void updateViews(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
-        void updateViewIcons();
         void setViewNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
         void unsetViewNotification(ChatWindow* view);
         void toggleViewNotifications();
