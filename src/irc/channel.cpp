@@ -38,8 +38,6 @@
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <KIconLoader>
-#include <KVBox>
-#include <KHBox>
 #include <KComboBox>
 
 
@@ -143,17 +141,27 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicLayout->addWidget(topicLine, 0, 1, -1, 1);
 
     // The box holding the channel modes
-    modeBox = new KHBox(topicWidget);
+    modeBox = new QFrame(topicWidget);
+    QHBoxLayout* modeBoxLayout = new QHBoxLayout(modeBox);
+    modeBoxLayout->setMargin(0);
     modeBox->hide();
     modeBox->setSizePolicy(hfixed);
     modeT = new ModeButton("T",modeBox,0);
+    modeBoxLayout->addWidget(modeT);
     modeN = new ModeButton("N",modeBox,1);
+    modeBoxLayout->addWidget(modeN);
     modeS = new ModeButton("S",modeBox,2);
+    modeBoxLayout->addWidget(modeS);
     modeI = new ModeButton("I",modeBox,3);
+    modeBoxLayout->addWidget(modeI);
     modeP = new ModeButton("P",modeBox,4);
+    modeBoxLayout->addWidget(modeP);
     modeM = new ModeButton("M",modeBox,5);
+    modeBoxLayout->addWidget(modeM);
     modeK = new ModeButton("K",modeBox,6);
+    modeBoxLayout->addWidget(modeK);
     modeL = new ModeButton("L",modeBox,7);
+    modeBoxLayout->addWidget(modeL);
 
     modeT->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('T'));
     modeN->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('N'));
@@ -198,11 +206,14 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowChannelActions, true);
 
     // The box that holds the Nick List and the quick action buttons
-    nickListButtons = new KVBox(m_horizSplitter);
+    nickListButtons = new QFrame(m_horizSplitter);
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(nickListButtons), 0);
-    nickListButtons->setSpacing(spacing());
+    QVBoxLayout* nickListButtonsLayout = new QVBoxLayout(nickListButtons);
+    nickListButtonsLayout->setSpacing(spacing());
+    nickListButtonsLayout->setMargin(0);
 
     nicknameListView=new NickListView(nickListButtons, this);
+    nickListButtons->layout()->addWidget(nicknameListView);
     nicknameListView->installEventFilter(this);
 
     // initialize buttons grid, will be set up in updateQuickButtons
@@ -1911,6 +1922,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
 
     // the grid that holds the quick action buttons
     m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);
+    nickListButtons->layout()->addWidget(m_buttonsGrid);
     m_buttonsGrid->hide();
     QGridLayout* layout = new QGridLayout (m_buttonsGrid);
     layout->setMargin(0);

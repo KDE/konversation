@@ -36,8 +36,6 @@ class QSplitter;
 class QToolButton;
 
 class KLineEdit;
-class KVBox;
-class KHBox;
 class KComboBox;
 
 class AwayLabel;
@@ -301,7 +299,7 @@ class Channel : public ChatWindow
         Konversation::TopicLabel* topicLine;
 
         //TODO: abstract these
-        KHBox* modeBox;
+        QFrame* modeBox;
         ModeButton* modeT;
         ModeButton* modeN;
         ModeButton* modeS;
@@ -315,7 +313,7 @@ class Channel : public ChatWindow
 
         NickListView* nicknameListView;
         QFrame* commandLineBox;
-        KVBox* nickListButtons;
+        QFrame* nickListButtons;
         QWidget* m_buttonsGrid;
         KComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
