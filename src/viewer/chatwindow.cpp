@@ -30,8 +30,12 @@
 #include <KUser>
 
 
-ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
+ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
 {
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->setMargin(margin());
+    mainLayout->setSpacing(spacing());
+
     setName("ChatWindowObject");
     setTextView(0);
     setInputBar(0);
@@ -41,9 +45,6 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
-
-    setMargin(margin());
-    setSpacing(spacing());
 }
 
 ChatWindow::~ChatWindow()
@@ -65,6 +66,24 @@ ChatWindow::~ChatWindow()
 
     emit closing(this);
     m_server=0;
+}
+
+void ChatWindow::childEvent(QChildEvent* event)
+{
+    if(event->type() == QChildEvent::ChildAdded)
+    {
+        if(event->child()->isWidgetType())
+        {
+            layout()->addWidget(qobject_cast< QWidget* >(event->child()));
+        }
+    }
+    else if(event->type() == QChildEvent::ChildRemoved)
+    {
+        if(event->child()->isWidgetType())
+        {
+            layout()->removeWidget(qobject_cast<QWidget*>(event->child()));
+        }
+    }
 }
 
 // reimplement this if your window needs special close treatment
@@ -621,7 +640,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
     }
 
-    return KVBox::eventFilter(watched, e);
+    return QWidget::eventFilter(watched, e);
 }
 
 void ChatWindow::adjustFocus()

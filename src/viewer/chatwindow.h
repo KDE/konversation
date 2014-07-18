@@ -16,16 +16,16 @@
 #include "identity.h"
 #include "common.h"
 
-#include <kvbox.h>
-
 #include <QFile>
+#include <QWidget>
+#include <QVBoxLayout>
 
 
 class IRCView;
 class IRCInput;
 class Server;
 
-class ChatWindow : public KVBox
+class ChatWindow : public QWidget
 {
     Q_OBJECT
 
@@ -136,6 +136,9 @@ class ChatWindow : public KVBox
 
         void msgHelper(const QString& recipient, const QString& message);
 
+        void setMargin(int margin) { layout()->setMargin(margin); }
+        void setSpacing(int spacing) { layout()->setSpacing(spacing); }
+
     signals:
         void nameChanged(ChatWindow* view, const QString& newName);
         //void online(ChatWindow* myself, bool state);
@@ -176,6 +179,7 @@ class ChatWindow : public KVBox
         virtual void serverOnline(bool online);
 
     protected:
+	virtual void childEvent(QChildEvent* event);
 
         /** Some children may handle the name themselves, and not want this public.
          *  Increase the visibility in the subclass if you want outsiders to call this.
