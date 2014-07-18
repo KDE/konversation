@@ -21,11 +21,10 @@
 */
 
 #include "viewspringloader.h"
+#include "viewtree.h"
 
 #include <QDragMoveEvent>
-
-#include <KTabBar>
-
+#include <QTabBar>
 
 ViewSpringLoader::ViewSpringLoader(ViewContainer* viewContainer) : QObject(viewContainer)
 {
@@ -100,24 +99,25 @@ void ViewSpringLoader::springLoad()
 
 ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
 {
-    KTabBar* tabBar = qobject_cast<KTabBar*>(widget);
+    QTabBar* tabBar = qobject_cast<QTabBar*>(widget);
 
     if (tabBar)
        return m_viewContainer->getViewAt(tabBar->tabAt(pos));
-    /* FIXME ViewTree port
     else
     {
         ViewTree* viewTree = qobject_cast<ViewTree*>(widget->parent());
 
         if (viewTree)
         {
-            ViewTreeItem* item = static_cast<ViewTreeItem*>(viewTree->itemAt(QPoint(0, pos.y())));
+            const QModelIndex& idx = viewTree->indexAt(QPoint(0, pos.y()));
 
-            if (item)
-                return item->getView();
+            if (idx.isValid()) {
+                ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());
+
+                return view;
+            }
         }
     }
-    */
 
     return 0;
 }

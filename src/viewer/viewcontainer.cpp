@@ -35,6 +35,7 @@
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 #include "irccontextmenus.h"
+#include "viewtree.h"
 #include "viewspringloader.h"
 
 #include <QModelIndex>
@@ -215,22 +216,18 @@ void ViewContainer::setupTabWidget()
 
 void ViewContainer::setupViewTree()
 {
-    /* FIXME ViewTree port
     m_viewTree = new ViewTree(m_viewTreeSplitter);
+    m_viewTree->setModel(this);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewTree->hide();
     m_viewSpringLoader->addWidget(m_viewTree->viewport());
 
-    connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
-    connect(this, SIGNAL(viewChanged(ChatWindow*)), m_viewTree, SLOT(selectView(ChatWindow*)));
-    connect(this, SIGNAL(removeView(ChatWindow*)), m_viewTree, SLOT(removeView(ChatWindow*)));
-    connect(this, SIGNAL(contextMenuClosed()), m_viewTree, SLOT(unHighlight()));
-    connect(m_viewTree, SIGNAL(setViewTreeShown(bool)), this, SLOT(setViewTreeShown(bool)));
+    //connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
-    connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
-    connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
-    connect(m_viewTree, SIGNAL(syncTabBarToTree()), this, SLOT(syncTabBarToTree()));
+    connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(setViewTreeShown(bool)));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
+    connect(this, SIGNAL(viewChanged(QModelIndex)), m_viewTree, SLOT(selectView(QModelIndex)));
 
     QAction* action;
 
@@ -249,58 +246,6 @@ void ViewContainer::setupViewTree()
         action->setText(i18n("Move Tab Down"));
         action->setIcon(QIcon::fromTheme("arrow-down"));
     }
-
-    // If the tab widget already exists we may need to sync the ViewTree
-    // with an already-populated tab bar.
-    if (m_tabWidget)
-    {
-        // Explicitly move to the left since we've been added after the
-        // tab widget.
-        m_viewTreeSplitter->insertWidget(0, m_viewTree);
-
-        if (m_tabWidget->count() > 0)
-        {
-            // Add StatusPanels first, or curious tab bar sortings may break
-            // the tree hierarchy.
-            for (int i = 0; i < m_tabWidget->count(); ++i)
-            {
-                ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
-
-                if (view->getType() == ChatWindow::Status)
-                {
-                    if (view == m_frontView)
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)), true);
-                    else
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)));
-                }
-            }
-
-            for (int i = 0; i < m_tabWidget->count(); ++i)
-            {
-                ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
-
-                if (!view->getType() == ChatWindow::Status)
-                {
-                    if (view == m_frontView)
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)), true);
-                    else
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)));
-                }
-            }
-
-            syncTabBarToTree();
-        }
-    }
-    else
-    {
-        // Since the ViewTree was created before the tab widget, it
-        // is free to select the first view added to the tree. Other-
-        // wise the currently focused view would have been selected
-        // by the tabbar/viewtree sync loop above. This ensures a
-        // properly selected list item in the tree on app startup.
-        m_viewTree->selectFirstView(true);
-    }
-    */
 }
 
 void ViewContainer::setViewTreeShown(bool show)
@@ -323,18 +268,6 @@ void ViewContainer::setViewTreeShown(bool show)
 
 void ViewContainer::removeViewTree()
 {
-    /* FIXME ViewTree port
-    disconnect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
-    disconnect(this, SIGNAL(viewChanged(ChatWindow*)), m_viewTree, SLOT(selectView(ChatWindow*)));
-    disconnect(this, SIGNAL(removeView(ChatWindow*)), m_viewTree, SLOT(removeView(ChatWindow*)));
-    disconnect(this, SIGNAL(contextMenuClosed()), m_viewTree, SLOT(unHighlight()));
-    disconnect(m_viewTree, SIGNAL(setViewTreeShown(bool)), this, SLOT(setViewTreeShown(bool)));
-    disconnect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
-    disconnect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-    disconnect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
-    disconnect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
-    disconnect(m_viewTree, SIGNAL(syncTabBarToTree()), this, SLOT(syncTabBarToTree()));
-
     QAction* action;
 
     action = actionCollection()->action("move_tab_left");
@@ -355,7 +288,6 @@ void ViewContainer::removeViewTree()
 
     delete m_viewTree;
     m_viewTree = 0;
-    */
 }
 
 int ViewContainer::rowCount(const QModelIndex& parent) const
@@ -380,7 +312,7 @@ QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent)
 {
     Q_UNUSED(parent)
 
-    return createIndex(row, column);
+    return createIndex(row, column, m_tabWidget ? m_tabWidget->widget(row) : 0);
 }
 
 QModelIndex ViewContainer::parent(const QModelIndex& index) const
@@ -407,7 +339,18 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     } else if (role == Qt::DecorationRole) {
         return m_tabWidget->tabIcon(row);
     } else if (role == ColorRole) {
-        return m_tabWidget->tabBar()->tabTextColor(row);
+        const QColor& color = m_tabWidget->tabBar()->tabTextColor(row);
+
+        // FIXME HACK ViewTree port: Fix-up base text color.
+        if (color == m_window->palette().foreground().color()) {
+            if (Preferences::self()->inputFieldsBackgroundColor()) {
+                return Preferences::self()->color(Preferences::ChannelMessage);
+            } else {
+                m_window->palette().color(QPalette::Text);
+            }
+        } else {
+            return color;
+        }
     }
 
     return QVariant();
@@ -415,6 +358,10 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
 
 void ViewContainer::removedTab(int index)
 {
+    if (!m_tabWidget->count() && m_viewTree) {
+        setViewTreeShown(false);
+    }
+
     beginRemoveRows(QModelIndex(), index, index);
     endRemoveRows();
 }
@@ -427,7 +374,6 @@ void ViewContainer::movedTab(int from, int to)
 
 void ViewContainer::updateAppearance()
 {
-    /* FIXME ViewTree port
     if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
     {
         m_saveSplitterSizesLock = true;
@@ -439,7 +385,6 @@ void ViewContainer::updateAppearance()
         m_saveSplitterSizesLock = true;
         removeViewTree();
     }
-    */
 
     updateViews();
     updateTabWidgetAppearance();
@@ -463,10 +408,7 @@ void ViewContainer::updateAppearance()
 
 void ViewContainer::updateTabWidgetAppearance()
 {
-    if (!m_tabWidget) return;
-
-    // bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left); FIXME ViewTree port
-    bool noTabBar = false; // FIXME ViewTree port
+    bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
     m_tabWidget->tabBar()->setHidden(noTabBar);
 
     m_tabWidget->setDocumentMode(true);
@@ -504,23 +446,12 @@ void ViewContainer::updateViewActions(int index)
         bool insertSupported = view->isInsertSupported();
         IRCView* textView = view->getTextView();
 
-        /* FIXME ViewTree port
-        if (m_viewTree)
-        {
-            action = actionCollection()->action("move_tab_left");
-            if (action) action->setEnabled(m_viewTree->canMoveViewUp(view));
+        // FIXME ViewTree port: Take hierarchy into account.
+        action = actionCollection()->action("move_tab_left");
+        if (action) action->setEnabled(index > 0);
 
-            action = actionCollection()->action("move_tab_right");
-            if (action) action->setEnabled(m_viewTree->canMoveViewDown(view));
-        }
-        else if (m_tabWidget)
-        {
-            action = actionCollection()->action("move_tab_left");
-            if (action) action->setEnabled(index > 0);
-
-            action = actionCollection()->action("move_tab_right");
-            if (action) action->setEnabled(index < (m_tabWidget->count() - 1));
-        }
+        action = actionCollection()->action("move_tab_right");
+        if (action) action->setEnabled(index < (m_tabWidget->count() - 1));
 
         if (server && (viewType == ChatWindow::Status || server == m_frontServer))
         {
@@ -536,7 +467,6 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(server->isConnected());
         }
         else
-        */
         {
             action = actionCollection()->action("reconnect_server");
             if (action) action->setEnabled(false);
@@ -1032,6 +962,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
 {
+    if (!m_tabWidget) return;
+
     const int tabIndex = m_tabWidget->indexOf(view);
     if (Preferences::self()->tabNotificationsLeds())
     {
@@ -1159,7 +1091,7 @@ void ViewContainer::toggleConnectOnStartup()
 void ViewContainer::addView(ChatWindow* view, const QString& label, bool weinitiated)
 {
     ChatWindow *tmp_ChatWindow;
-    int placement = -1;
+    int placement = m_tabWidget->count();
     ChatWindow::WindowType wtype;
     QIcon iconSet;
 
@@ -1341,6 +1273,10 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     if (doBringToFront) showView(view);
 
     updateViewActions(m_tabWidget->currentIndex());
+
+    if (m_viewTree && m_tabWidget->count() == 1) {
+        setViewTreeShown(true);
+    }
 }
 
 void ViewContainer::viewSwitched(int newIndex)
@@ -1351,7 +1287,8 @@ void ViewContainer::viewSwitched(int newIndex)
     m_lastFocusedView = m_currentView;
     m_currentView = view;
 
-    emit viewChanged(view);
+    const QModelIndex &idx = index(newIndex, 0);
+    emit viewChanged(idx);
 
     if (m_frontView)
     {
@@ -1401,8 +1338,9 @@ void ViewContainer::showView(ChatWindow* view)
 {
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
-    if (m_tabWidget->isVisible())
+    if (m_tabWidget->isVisible()) {
         m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(view));
+    }
 }
 
 void ViewContainer::goToView(int page)

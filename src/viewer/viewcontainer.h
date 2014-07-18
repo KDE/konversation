@@ -110,7 +110,7 @@ class ViewContainer : public QAbstractItemModel
     public slots:
         void updateAppearance();
         void saveSplitterSizes();
-        void setViewTreeShown(bool show);
+        void setViewTreeShown(bool show = false);
 
         void updateViews(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
         void setViewNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
@@ -201,7 +201,7 @@ class ViewContainer : public QAbstractItemModel
         void closeNicksOnlinePanel();
 
     signals:
-        void viewChanged(ChatWindow* view);
+        void viewChanged(const QModelIndex& idx);
         void removeView(ChatWindow* view);
         void setWindowCaption(const QString& caption);
         void updateChannelAppearance();
@@ -248,7 +248,7 @@ class ViewContainer : public QAbstractItemModel
 
         QSplitter* m_viewTreeSplitter;
         TabWidget* m_tabWidget;
-        QWidget* m_viewTree;
+        ViewTree* m_viewTree;
         QWidget* m_vbox;
         QueueTuner* m_queueTuner;
 

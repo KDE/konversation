@@ -149,6 +149,7 @@ set(viewer_SRCS
     viewer/channeloptionsdialog.cpp
     viewer/topicedit.cpp
     viewer/topichistoryview.cpp
+    viewer/viewtree.cpp
 )
 
 qt5_wrap_ui(viewer_SRCS
