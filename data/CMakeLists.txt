@@ -7,8 +7,7 @@ add_subdirectory(scripting_support)
 ########### install files ###############
 
 install(PROGRAMS   konversation.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES   konversationui.rc konversation.notifyrc DESTINATION
-	${DATA_INSTALL_DIR}/konversation)
+install(FILES   konversationui.rc konversation.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
 install(FILES   updaters/konversation.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
 install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.19-sortorder.pl
