@@ -222,7 +222,7 @@ void ViewContainer::setupViewTree()
     m_viewTree->hide();
     m_viewSpringLoader->addWidget(m_viewTree->viewport());
 
-    //connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
+    connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(setViewTreeShown(bool)));

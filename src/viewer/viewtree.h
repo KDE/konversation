@@ -53,10 +53,12 @@ class ViewTree : public QListView
         void selectView(const QModelIndex &index);
 
     Q_SIGNALS:
-        void showView(ChatWindow* view);
-        void showViewContextMenu(QWidget* widget, const QPoint& point);
+        void sizeChanged() const;
+        void showView(ChatWindow* view) const;
+        void showViewContextMenu(QWidget* widget, const QPoint& point) const;
 
     protected:
+        void resizeEvent(QResizeEvent* event);
         void contextMenuEvent(QContextMenuEvent* event);
         void wheelEvent(QWheelEvent* event);
         void keyPressEvent(QKeyEvent* event);

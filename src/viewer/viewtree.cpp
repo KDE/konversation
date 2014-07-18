@@ -86,6 +86,13 @@ void ViewTree::updateAppearance()
     setPalette(palette);
 }
 
+void ViewTree::resizeEvent(QResizeEvent* event)
+{
+    QListView::resizeEvent(event);
+
+    emit sizeChanged();
+}
+
 void ViewTree::contextMenuEvent(QContextMenuEvent* event)
 {
     const QModelIndex& idx = indexAt(event->pos());
