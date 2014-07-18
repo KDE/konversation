@@ -19,9 +19,15 @@
 #include <QContextMenuEvent>
 #include <QCoreApplication>
 #include <QFontDatabase>
+#include <QPainter>
+
+// FIXME KF5 port, ViewTree port: Not DPI-aware.
+#define LED_ICON_SIZE 14
+#define MARGIN 2
 
 ViewTreeDelegate::ViewTreeDelegate(QObject* parent) : QStyledItemDelegate(parent)
 {
+    m_view = qobject_cast<ViewTree*>(parent);
 }
 
 ViewTreeDelegate::~ViewTreeDelegate()
@@ -32,20 +38,116 @@ QSize ViewTreeDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
 {
     QSize size = QStyledItemDelegate::sizeHint(option, index);
 
-    size.setHeight(size.height() * 1.3);
+    const QRect& textRect = m_view->fontMetrics().boundingRect(index.data(Qt::DisplayRole).toString());
+
+    size.setHeight(MARGIN + qMax(LED_ICON_SIZE, textRect.height()) + MARGIN);
 
     return size;
 }
 
 void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QStyleOptionViewItem _option = option;
+    painter->save();
 
+    bool selected = (option.state & QStyle::State_Selected);
+
+    const QColor& bgColor  = m_view->palette().color(m_view->backgroundRole());
+    const QColor& selColor = m_view->palette().color(QPalette::Highlight);
+    const QColor& midColor = mixColor(bgColor, selColor);
+    const QColor& background = selected ? selColor : m_view->palette().color(QPalette::Base);
+
+    int y = option.rect.y();
+    int height = option.rect.y() + option.rect.height();
+    int width = option.rect.width();
+
+    painter->fillRect(option.rect, background);
+
+    if (selected)
+    {
+        bool isFirst = (index.row() == 0);
+
+        painter->setPen(bgColor);
+
+        if (!isFirst)
+        {
+            painter->drawPoint(0, y);
+            painter->drawPoint(1, y);
+            painter->drawPoint(0, y + 1);
+        }
+
+        painter->drawPoint(0, height - 1);
+        painter->drawPoint(1, height - 1);
+        painter->drawPoint(0, height - 2);
+
+        painter->setPen(midColor);
+
+        if (!isFirst)
+        {
+            painter->drawPoint(2, y);
+            painter->drawPoint(0, y + 2);
+        }
+
+        painter->drawPoint(2, height - 1);
+        painter->drawPoint(0, height - 3);
+    }
+
+    const QAbstractItemModel* model = index.model();
+
+    if (model) {
+        const QModelIndex idxBefore = model->index(index.row() - 1, 0);
+
+        if (idxBefore.isValid() && m_view->selectionModel()->isSelected(idxBefore)) {
+            painter->setPen(selColor);
+            painter->drawPoint(width - 1, y);
+            painter->drawPoint(width - 2, y);
+            painter->drawPoint(width - 1, y + 1);
+            painter->setPen(midColor);
+            painter->drawPoint(width - 3, y);
+            painter->drawPoint(width - 1, y + 2);
+        }
+
+        const QModelIndex idxAfter = model->index(index.row() + 1, 0);
+
+        if (idxAfter.isValid() && m_view->selectionModel()->isSelected(idxAfter)) {
+            painter->setPen(selColor);
+            painter->drawPoint(width - 1, height - 1);
+            painter->drawPoint(width - 2, height - 1);
+            painter->drawPoint(width - 1, height - 2);
+            painter->setPen(midColor);
+            painter->drawPoint(width - 3, height - 1);
+            painter->drawPoint(width - 1, height - 3);
+        }
+
+        bool isLast = (index.row() == model->rowCount() - 1);
+
+        if (isLast && selected) {
+            painter->setPen(selColor);
+            painter->drawPoint(width - 1, height);
+            painter->drawPoint(width - 2, height);
+            painter->drawPoint(width - 1, height + 1);
+            painter->setPen(midColor);
+            painter->drawPoint(width - 3, height);
+            painter->drawPoint(width - 1, height + 2);
+        }
+    }
+
+    painter->restore();
+
+    QStyleOptionViewItem _option = option;
+    _option.state = QStyle::State_None;
     _option.palette.setColor(QPalette::Text, index.data(ViewContainer::ColorRole).value<QColor>());
 
     QStyledItemDelegate::paint(painter, _option, index);
 }
 
+QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2) const
+{
+    QColor mixedColor;
+    mixedColor.setRgb( (color1.red()   + color2.red())   / 2,
+                       (color1.green() + color2.green()) / 2,
+                       (color1.blue()  + color2.blue())  / 2 );
+    return mixedColor;
+}
 
 ViewTree::ViewTree(QWidget* parent) : QListView(parent)
 {
@@ -65,6 +167,8 @@ ViewTree::ViewTree(QWidget* parent) : QListView(parent)
 
     setDragEnabled(false);
     setDropIndicatorShown(false);
+
+    setBackgroundRole(QPalette::Base);
 
     setItemDelegate(new ViewTreeDelegate(this));
 
@@ -89,6 +193,9 @@ void ViewTree::updateAppearance()
 
     if (Preferences::self()->inputFieldsBackgroundColor())
     {
+        // Only override the active color to keep around the disabled text color
+        // for the disconnect label greyout.
+        palette.setColor(QPalette::Active, QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
         palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
     }
 

@@ -28,6 +28,7 @@ Currently missing:
 #include <QListView>
 
 class ChatWindow;
+class ViewTree;
 
 class ViewTreeDelegate : public QStyledItemDelegate
 {
@@ -37,9 +38,14 @@ class ViewTreeDelegate : public QStyledItemDelegate
         explicit ViewTreeDelegate(QObject *parent = 0);
         ~ViewTreeDelegate();
 
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
-    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
+    private:
+        QColor mixColor(const QColor& color1, const QColor& color2) const;
+
+        ViewTree* m_view;
 };
 
 class ViewTree : public QListView
