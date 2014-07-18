@@ -57,7 +57,7 @@ namespace KWallet
 }
 
 
-// FIXME KF5 port: Switch to QApplication + KDBusService.
+// FIXME KF5 port: See frameworks-qapp branch for start of port to QApplication and QCommandLineParser.
 class Application : public KUniqueApplication
 {
     Q_OBJECT
