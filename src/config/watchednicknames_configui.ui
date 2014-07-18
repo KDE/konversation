@@ -120,7 +120,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="KIntSpinBox" name="kcfg_NotifyDelay">
+      <widget class="QSpinBox" name="kcfg_NotifyDelay">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -148,11 +148,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
  <layoutdefault spacing="6" margin="11"/>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

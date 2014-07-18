@@ -385,7 +385,7 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="KIntSpinBox" name="m_awayInactivitySpin">
+           <widget class="QSpinBox" name="m_awayInactivitySpin">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -656,11 +656,6 @@
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KUrlRequester</class>

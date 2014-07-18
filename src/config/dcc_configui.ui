@@ -123,7 +123,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item row="11" column="2">
-    <widget class="KIntSpinBox" name="kcfg_DccSendTimeout">
+    <widget class="QSpinBox" name="kcfg_DccSendTimeout">
      <property name="minimum">
       <number>1</number>
      </property>
@@ -162,7 +162,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item row="12" column="2">
-    <widget class="KIntSpinBox" name="kcfg_DccBufferSize">
+    <widget class="QSpinBox" name="kcfg_DccBufferSize">
      <property name="minimum">
       <number>1024</number>
      </property>
@@ -420,11 +420,6 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KUrlRequester</class>

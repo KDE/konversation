@@ -96,7 +96,7 @@ the Free Software Foundation; either version 2 of the License, or
        </widget>
       </item>
       <item>
-       <widget class="KIntSpinBox" name="kcfg_BacklogLines">
+       <widget class="QSpinBox" name="kcfg_BacklogLines">
         <property name="value">
          <number>10</number>
         </property>
@@ -309,11 +309,6 @@ the Free Software Foundation; either version 2 of the License, or
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
   <customwidget>
    <class>KUrlRequester</class>
    <extends>QFrame</extends>

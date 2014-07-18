@@ -85,7 +85,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
         // set the suffix for the inactivity time spinbox
-        m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes"));
+        m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes").toString());
 
         // set values for the widgets
         updateIdentity(0);

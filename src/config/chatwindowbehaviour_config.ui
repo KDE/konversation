@@ -97,7 +97,7 @@
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="KIntSpinBox" name="kcfg_ScrollbackMax">
+       <widget class="QSpinBox" name="kcfg_ScrollbackMax">
         <property name="minimumSize">
          <size>
           <width>120</width>
@@ -330,7 +330,7 @@
        </widget>
       </item>
       <item row="0" column="1" rowspan="2">
-       <widget class="KIntSpinBox" name="kcfg_AutoWhoNicksLimit">
+       <widget class="QSpinBox" name="kcfg_AutoWhoNicksLimit">
         <property name="minimumSize">
          <size>
           <width>140</width>
@@ -349,7 +349,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="KIntSpinBox" name="kcfg_AutoWhoContinuousInterval">
+       <widget class="QSpinBox" name="kcfg_AutoWhoContinuousInterval">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -405,11 +405,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KIntSpinBox</class>
-   <extends>QSpinBox</extends>
-   <header>knuminput.h</header>
-  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>

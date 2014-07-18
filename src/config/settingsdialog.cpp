@@ -60,7 +60,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   KPageDialog::addPage(notificationGroup);
 
   QWidget *w = 0;
-  KPageWidgetItem *i = 0;
 
   //Interface/Chat Window
   Ui::ChatWindowAppearance_Config confChatWindowAppearance;
@@ -115,9 +114,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;
   w = new QWidget();
   confChatwindowBehaviour.setupUi(w);
-  confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines"));
-  confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks"));
-  confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds"));
+  confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines").toString());
+  confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks").toString());
+  confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds").toString());
   konviAddSubPage(behaviorGroup, w, i18n("Chat Window"), QLatin1String("view-list-text"));
 
   //Behaviour/Nickname List
