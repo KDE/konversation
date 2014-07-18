@@ -37,6 +37,8 @@ class ViewTreeDelegate : public QStyledItemDelegate
         explicit ViewTreeDelegate(QObject *parent = 0);
         ~ViewTreeDelegate();
 
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
 

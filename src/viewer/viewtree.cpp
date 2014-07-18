@@ -28,6 +28,15 @@ ViewTreeDelegate::~ViewTreeDelegate()
 {
 }
 
+QSize ViewTreeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    QSize size = QStyledItemDelegate::sizeHint(option, index);
+
+    size.setHeight(size.height() * 1.3);
+
+    return size;
+}
+
 void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     QStyleOptionViewItem _option = option;
