@@ -70,9 +70,6 @@ the Free Software Foundation; either version 2 of the License, or
       </item>
       <item row="0" column="1">
        <widget class="QSpinBox" name="kcfg_ReconnectDelay">
-        <property name="label">
-         <string/>
-        </property>
         <property name="value">
          <number>120</number>
         </property>
