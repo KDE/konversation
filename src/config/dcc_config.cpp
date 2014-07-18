@@ -32,8 +32,8 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
     connect(kcfg_DccUPnP, SIGNAL(stateChanged(int)), this, SLOT (dccUPnPChanged(int)));
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
-    kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
-    kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
+    kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
+    kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
 
     /* FIXME KF5 port
     foreach (const Solid::Device& device, Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface, QString()))

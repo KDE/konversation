@@ -114,9 +114,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;
   w = new QWidget();
   confChatwindowBehaviour.setupUi(w);
-  confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
-  confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
-  confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
+  confChatwindowBehaviour.kcfg_ScrollbackMax->setSuffix(ki18np(" line", " lines"));
+  confChatwindowBehaviour.kcfg_AutoWhoNicksLimit->setSuffix(ki18np(" nick", " nicks"));
+  confChatwindowBehaviour.kcfg_AutoWhoContinuousInterval->setSuffix(ki18np(" second", " seconds"));
   konviAddSubPage(behaviorGroup, w, i18n("Chat Window"), QLatin1String("view-list-text"));
 
   //Behaviour/Nickname List

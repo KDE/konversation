@@ -37,7 +37,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
     kcfg_EncryptionType->setDisabled(true);
 #endif
 
-    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
+    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
 
     connect(m_ProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(setPasswordChanged()));
 }
