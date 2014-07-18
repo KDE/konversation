@@ -338,10 +338,12 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     } else if (role == Qt::DecorationRole) {
         return m_tabWidget->tabIcon(row);
     } else if (role == ColorRole) {
+        const ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(row));
         const QColor& color = m_tabWidget->tabBar()->tabTextColor(row);
 
-        // FIXME HACK ViewTree port: Fix-up base text color.
-        if (color == m_window->palette().foreground().color()) {
+        // FIXME HACK ViewTree port: Do the colow window-vs-view color swap locally in the tree.
+        if (view->currentTabNotification() == Konversation::tnfNone
+            || color == m_window->palette().foreground().color()) {
             if (Preferences::self()->inputFieldsBackgroundColor()) {
                 return Preferences::self()->color(Preferences::ChannelMessage);
             } else {

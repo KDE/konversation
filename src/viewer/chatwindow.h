@@ -131,7 +131,7 @@ class ChatWindow : public KVBox
          */
         virtual bool areIRCColorsSupported() {return false; }
 
-        Konversation::TabNotifyType currentTabNotification() { return m_currentTabNotify; }
+        Konversation::TabNotifyType currentTabNotification() const { return m_currentTabNotify; }
         QColor highlightColor();
 
         void msgHelper(const QString& recipient, const QString& message);
