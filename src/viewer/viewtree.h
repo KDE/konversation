@@ -19,6 +19,7 @@ Currently missing:
 - DND
 - Middle click close
 - Seperator painting
+- Tooltips for elided items
 */
 
 #ifndef VIEWTREE_H
