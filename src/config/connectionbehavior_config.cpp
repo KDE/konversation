@@ -36,7 +36,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
     kcfg_EncryptionType->setDisabled(true);
 #endif
 
-    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
+    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds").toString());
 
     connect(m_ProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(setPasswordChanged()));
 }

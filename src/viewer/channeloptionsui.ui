@@ -141,7 +141,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
        </item>
        <item row="5" column="1" colspan="2">
-        <widget class="KIntNumInput" name="userLimitEdit">
+        <widget class="QSpinBox" name="userLimitEdit">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -372,11 +372,6 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KTreeWidgetSearchLine</class>
    <extends>KLineEdit</extends>
    <header>ktreewidgetsearchline.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntNumInput</class>
-   <extends>QWidget</extends>
-   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KTabWidget</class>
