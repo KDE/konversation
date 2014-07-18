@@ -14,7 +14,7 @@
 #ifndef CIPHER_H
 #define CIPHER_H
 
-#include <QtCrypto>
+#include <QtCrypto/QtCrypto>
 
 namespace Konversation
 {

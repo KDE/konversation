@@ -43,11 +43,10 @@ include_directories(${PHONON_INCLUDES})
 #                       TYPE REQUIRED
 #                       )
 
-#FIXME Reenable when on QCA-for-Qt5.
-set(HAVE_QCA2 FALSE)
-#macro_optional_find_package(QCA2)
-#macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
-#macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
+find_package(QCA2 2.1.0)
+set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for encryption"
+                       URL "http://delta.affinix.com/qca"
+                       TYPE OPTIONAL)
 
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
@@ -66,8 +65,6 @@ add_definitions(
 # -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 port
   -DQT_USE_FAST_OPERATOR_PLUS
 )
-
-add_definitions(-Wno-deprecated)
 
 add_subdirectory(src)
 add_subdirectory(data)

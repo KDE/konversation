@@ -237,7 +237,7 @@ target_link_libraries(konversation
     Phonon::phonon4qt5)
 
 if (QCA2_FOUND)
-    target_link_libraries(konversation ${QCA2_LIBRARIES})
+    target_link_libraries(konversation QCA::QCA)
 endif (QCA2_FOUND)
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
