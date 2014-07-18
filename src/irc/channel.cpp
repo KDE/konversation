@@ -110,7 +110,6 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     QSizePolicy greedy = QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     m_vertSplitter = new QSplitter(Qt::Vertical, this);
-    m_vertSplitter->setOpaqueResize(KGlobalSettings::opaqueResize());
 
 
     QWidget* topicWidget = new QWidget(m_vertSplitter);

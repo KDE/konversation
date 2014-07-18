@@ -87,7 +87,6 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 
     m_viewTreeSplitter = new QSplitter(m_window);
     m_viewTreeSplitter->setObjectName("view_tree_splitter");
-    m_viewTreeSplitter->setOpaqueResize(KGlobalSettings::opaqueResize());
     m_saveSplitterSizesLock = true;
 
     // The tree needs to be initialized before the tab widget so that it
