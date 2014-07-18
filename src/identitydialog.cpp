@@ -85,7 +85,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
         // set the suffix for the inactivity time spinbox
-        m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes").toString());
+        m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
 
         // set values for the widgets
         updateIdentity(0);

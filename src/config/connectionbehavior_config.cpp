@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <KLineEdit>
 #include <kwallet.h>
+#include <KLocalizedString>
 
 #include <config-konversation.h>
 
@@ -36,7 +37,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
     kcfg_EncryptionType->setDisabled(true);
 #endif
 
-    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds").toString());
+    kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds").toString()); //FIXME KF5 port QSpinBox does not have support for KLocalizedString
 
     connect(m_ProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(setPasswordChanged()));
 }
