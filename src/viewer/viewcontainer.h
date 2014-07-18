@@ -55,9 +55,6 @@ class TabWidget : public QTabWidget
         explicit TabWidget(QWidget* parent = 0);
         ~TabWidget();
 
-    // Suppress krazy2 false positive (cf. kdelibs bug #207747).
-    QTabBar* tabBar() { return QTabWidget::tabBar(); } // krazy:exclude=qclasses
-
     Q_SIGNALS:
         void removedTab(int index) const;
 
