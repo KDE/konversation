@@ -16,8 +16,9 @@
 #include "common.h"
 #include "server.h"
 
-#include <KTabWidget>
+#include <QAbstractItemModel>
 
+#include <QTabWidget>
 
 class QSplitter;
 class QTabBar;
@@ -46,7 +47,7 @@ namespace Konversation
     }
 }
 
-class TabWidget : public KTabWidget
+class TabWidget : public QTabWidget
 {
     Q_OBJECT
 
@@ -55,14 +56,24 @@ class TabWidget : public KTabWidget
         ~TabWidget();
 
     // Suppress krazy2 false positive (cf. kdelibs bug #207747).
-    QTabBar* tabBar() { return KTabWidget::tabBar(); } // krazy:exclude=qclasses
+    QTabBar* tabBar() { return QTabWidget::tabBar(); } // krazy:exclude=qclasses
+
+    Q_SIGNALS:
+        void removedTab(int index) const;
+
+    protected:
+        void tabRemoved(int index);
 };
 
-class ViewContainer : public QObject
+class ViewContainer : public QAbstractItemModel
 {
     Q_OBJECT
 
     public:
+        enum DataRoles {
+            ColorRole = Qt::UserRole + 1
+        };
+
         explicit ViewContainer(MainWindow* window);
         ~ViewContainer();
 
@@ -74,6 +85,14 @@ class ViewContainer : public QObject
         Server* getFrontServer() { return m_frontServer; }
 
         void prepareShutdown();
+
+        int rowCount(const QModelIndex & parent = QModelIndex()) const;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const;
+
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        QModelIndex parent(const QModelIndex& index) const;
+
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork = true);
@@ -206,6 +225,8 @@ class ViewContainer : public QObject
     private slots:
         void setupIrcContextMenus();
         void viewSwitched(int newIndex);
+        void removedTab(int index);
+        void movedTab(int from, int to);
 
     private:
         void setupTabWidget();

@@ -17,10 +17,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="UseMaxSizedTabs" type="Bool">
-    <default>true</default>
-    <label>Limit the size of the tab labels to fit them all on screen</label>
-    </entry>
     <entry key="TreeSplitterSizes" type="IntList">
       <default></default>
       <label></label>

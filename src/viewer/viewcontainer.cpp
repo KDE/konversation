@@ -37,6 +37,7 @@
 #include "irccontextmenus.h"
 #include "viewspringloader.h"
 
+#include <QModelIndex>
 #include <QSplitter>
 #include <QTabBar>
 
@@ -52,7 +53,7 @@
 
 using namespace Konversation;
 
-TabWidget::TabWidget(QWidget* parent) : KTabWidget(parent)
+TabWidget::TabWidget(QWidget* parent) : QTabWidget(parent)
 {
 }
 
@@ -60,17 +61,24 @@ TabWidget::~TabWidget()
 {
 }
 
-ViewContainer::ViewContainer(MainWindow* window):
-        m_window(window)
-        , m_tabWidget(0)
-        , m_viewTree(0)
-        , m_vbox(0)
-        , m_queueTuner(0)
-        , m_urlCatcherPanel(0)
-        , m_nicksOnlinePanel(0)
-        , m_dccPanel(0)
-        , m_insertCharDialog(0)
-        , m_queryViewCount(0)
+void TabWidget::tabRemoved(int index)
+{
+    QTabWidget::tabRemoved(index);
+
+    emit removedTab(index);
+}
+
+ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
+, m_window(window)
+, m_tabWidget(0)
+, m_viewTree(0)
+, m_vbox(0)
+, m_queueTuner(0)
+, m_urlCatcherPanel(0)
+, m_nicksOnlinePanel(0)
+, m_dccPanel(0)
+, m_insertCharDialog(0)
+, m_queryViewCount(0)
 {
     m_viewSpringLoader = new ViewSpringLoader(this);
 
@@ -199,6 +207,8 @@ void ViewContainer::setupTabWidget()
     connect(m_tabWidget, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_tabWidget, SIGNAL(mouseMiddleClick(QWidget*)), this, SLOT(closeViewMiddleClick(QWidget*)));
+    connect(m_tabWidget, SIGNAL(removedTab(int)), this, SLOT(removedTab(int)));
+    connect(m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), this, SLOT(movedTab(int,int)));
 
     updateTabWidgetAppearance();
 }
@@ -348,6 +358,73 @@ void ViewContainer::removeViewTree()
     */
 }
 
+int ViewContainer::rowCount(const QModelIndex& parent) const
+{
+    Q_UNUSED(parent)
+
+    if (m_tabWidget) {
+        return m_tabWidget->count();
+    }
+
+    return 0;
+}
+
+int ViewContainer::columnCount(const QModelIndex& parent) const
+{
+    Q_UNUSED(parent)
+
+    return 1;
+}
+
+QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent) const
+{
+    Q_UNUSED(parent)
+
+    return createIndex(row, column);
+}
+
+QModelIndex ViewContainer::parent(const QModelIndex& index) const
+{
+    Q_UNUSED(index)
+
+    return QModelIndex();
+}
+
+QVariant ViewContainer::data(const QModelIndex& index, int role) const
+{
+    if (!index.isValid() || !m_tabWidget) {
+        return QVariant();
+    }
+
+    int row = index.row();
+
+    if (row >= m_tabWidget->count()) {
+        return QVariant();
+    }
+
+    if (role == Qt::DisplayRole) {
+        return m_tabWidget->tabText(row);
+    } else if (role == Qt::DecorationRole) {
+        return m_tabWidget->tabIcon(row);
+    } else if (role == ColorRole) {
+        return m_tabWidget->tabBar()->tabTextColor(row);
+    }
+
+    return QVariant();
+}
+
+void ViewContainer::removedTab(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    endRemoveRows();
+}
+
+void ViewContainer::movedTab(int from, int to)
+{
+    beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);
+    endMoveRows();
+}
+
 void ViewContainer::updateAppearance()
 {
     /* FIXME ViewTree port
@@ -390,7 +467,7 @@ void ViewContainer::updateTabWidgetAppearance()
 
     // bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left); FIXME ViewTree port
     bool noTabBar = false; // FIXME ViewTree port
-    m_tabWidget->setTabBarHidden(noTabBar);
+    m_tabWidget->tabBar()->setHidden(noTabBar);
 
     m_tabWidget->setDocumentMode(true);
 
@@ -408,8 +485,6 @@ void ViewContainer::updateTabWidgetAppearance()
         m_tabWidget->cornerWidget()->hide();
 
     m_tabWidget->tabBar()->setTabsClosable(Preferences::self()->closeButtons());
-
-    m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
 }
 
 void ViewContainer::updateViewActions(int index)
@@ -777,6 +852,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+        bool announce = false;
 
         if (serverGroup)
         {
@@ -784,9 +860,11 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
             {
                 QString label = view->getServer()->getDisplayName();
 
-                if (!label.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != label)
+                if (!label.isEmpty() && m_tabWidget->tabText(i) != label)
                 {
-                    m_tabWidget->setTabText(m_tabWidget->indexOf(view), label);
+                    m_tabWidget->setTabText(i, label);
+
+                    announce = true;
 
                     if (view == m_frontView)
                     {
@@ -799,15 +877,18 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
             }
 
             if (i == m_tabWidget->currentIndex())
-                updateViewActions(m_tabWidget->currentIndex());
+                updateViewActions(i);
         }
 
-        const int idx = m_tabWidget->indexOf(view);
-        if (!Preferences::self()->tabNotificationsLeds())
-            m_tabWidget->setTabIcon(idx, QIcon());
+        if (!Preferences::self()->tabNotificationsLeds()) {
+            m_tabWidget->setTabIcon(i, QIcon());
+            announce = true;
+        }
 
-        if (!Preferences::self()->tabNotificationsText())
-            m_tabWidget->setTabTextColor(idx, m_window->palette().foreground().color());
+        if (!Preferences::self()->tabNotificationsText()) {
+            m_tabWidget->tabBar()->setTabTextColor(i, m_window->palette().foreground().color());
+            announce = true;
+        }
 
         if (Preferences::self()->tabNotificationsLeds() || Preferences::self()->tabNotificationsText())
         {
@@ -830,6 +911,11 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
             else
                 setViewNotification(view, view->currentTabNotification());
         }
+
+        if (announce) {
+            const QModelIndex& idx = index(i, 0);
+            emit dataChanged(idx, idx);
+        }
     }
 }
 
@@ -844,7 +930,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->self()->tabNotificationsText())
         return;
 
-    const int idx = m_tabWidget->indexOf(view);
+    const int tabIndex = m_tabWidget->indexOf(view);
 
     switch (type)
     {
@@ -852,9 +938,9 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             if (Preferences::self()->tabNotificationsMsgs())
             {
                 if (Preferences::self()->tabNotificationsLeds())
-                    m_tabWidget->setTabIcon(idx, images->getMsgsLed(true));
+                    m_tabWidget->setTabIcon(tabIndex, images->getMsgsLed(true));
                 if (Preferences::self()->tabNotificationsText())
-                    m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsMsgsColor());
+                    m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsMsgsColor());
             }
             break;
 
@@ -862,9 +948,9 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             if (Preferences::self()->tabNotificationsPrivate())
             {
                 if (Preferences::self()->tabNotificationsLeds())
-                    m_tabWidget->setTabIcon(idx, images->getPrivateLed(true));
+                    m_tabWidget->setTabIcon(tabIndex, images->getPrivateLed(true));
                 if (Preferences::self()->tabNotificationsText())
-                    m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsPrivateColor());
+                    m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsPrivateColor());
             }
             break;
 
@@ -872,9 +958,9 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             if (Preferences::self()->tabNotificationsSystem())
             {
                 if (Preferences::self()->tabNotificationsLeds())
-                    m_tabWidget->setTabIcon(idx, images->getSystemLed(true));
+                    m_tabWidget->setTabIcon(tabIndex, images->getSystemLed(true));
                 if (Preferences::self()->tabNotificationsText())
-                    m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsSystemColor());
+                    m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsSystemColor());
             }
             break;
 
@@ -882,9 +968,9 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             if (Preferences::self()->tabNotificationsEvents())
             {
                 if (Preferences::self()->tabNotificationsLeds())
-                    m_tabWidget->setTabIcon(idx, images->getEventsLed());
+                    m_tabWidget->setTabIcon(tabIndex, images->getEventsLed());
                 if (Preferences::self()->tabNotificationsText())
-                    m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsEventsColor());
+                    m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsEventsColor());
             }
             break;
 
@@ -894,16 +980,16 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsOverride() && Preferences::self()->highlightNick())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIcon(idx, images->getLed(Preferences::self()->highlightNickColor(),true));
+                        m_tabWidget->setTabIcon(tabIndex, images->getLed(Preferences::self()->highlightNickColor(),true));
                     if (Preferences::self()->tabNotificationsText())
-                        m_tabWidget->setTabTextColor(idx, Preferences::self()->highlightNickColor());
+                        m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->highlightNickColor());
                 }
                 else
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIcon(idx, images->getNickLed());
+                        m_tabWidget->setTabIcon(tabIndex, images->getNickLed());
                     if (Preferences::self()->tabNotificationsText())
-                        m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsNickColor());
+                        m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsNickColor());
                 }
             }
             else
@@ -918,16 +1004,16 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsOverride() && view->highlightColor().isValid())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIcon(idx, images->getLed(view->highlightColor(),true));
+                        m_tabWidget->setTabIcon(tabIndex, images->getLed(view->highlightColor(),true));
                     if (Preferences::self()->tabNotificationsText())
-                        m_tabWidget->setTabTextColor(idx, view->highlightColor());
+                        m_tabWidget->tabBar()->setTabTextColor(tabIndex, view->highlightColor());
                 }
                 else
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIcon(idx, images->getHighlightsLed());
+                        m_tabWidget->setTabIcon(tabIndex, images->getHighlightsLed());
                     if (Preferences::self()->tabNotificationsText())
-                        m_tabWidget->setTabTextColor(idx, Preferences::self()->tabNotificationsHighlightsColor());
+                        m_tabWidget->tabBar()->setTabTextColor(tabIndex, Preferences::self()->tabNotificationsHighlightsColor());
                 }
             }
             else
@@ -939,30 +1025,33 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
         default:
             break;
     }
+
+    const QModelIndex& idx = index(tabIndex, 0);
+    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
 }
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
 {
-    const int idx = m_tabWidget->indexOf(view);
+    const int tabIndex = m_tabWidget->indexOf(view);
     if (Preferences::self()->tabNotificationsLeds())
     {
         switch (view->getType())
         {
             case ChatWindow::Channel:
             case ChatWindow::DccChat:
-                m_tabWidget->setTabIcon(idx, images->getMsgsLed(false));
+                m_tabWidget->setTabIcon(tabIndex, images->getMsgsLed(false));
                 break;
 
             case ChatWindow::Query:
-                m_tabWidget->setTabIcon(idx, images->getPrivateLed(false));
+                m_tabWidget->setTabIcon(tabIndex, images->getPrivateLed(false));
                 break;
 
             case ChatWindow::Status:
-                m_tabWidget->setTabIcon(idx, images->getServerLed(false));
+                m_tabWidget->setTabIcon(tabIndex, images->getServerLed(false));
                 break;
 
             default:
-                m_tabWidget->setTabIcon(idx, images->getSystemLed(false));
+                m_tabWidget->setTabIcon(tabIndex, images->getSystemLed(false));
                 break;
         }
     }
@@ -982,7 +1071,10 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             textColor = m_tabWidget->palette().color(QPalette::Disabled, QPalette::Text);
     }
 
-    m_tabWidget->setTabTextColor(idx, textColor);
+    m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
+
+    const QModelIndex& idx = index(tabIndex, 0);
+    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
 
     m_activeViewOrderList.removeAll(view);
 }
@@ -1222,15 +1314,11 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
     }
 
+    beginInsertRows(QModelIndex(), placement, placement);
+
     m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', "&&"));
 
-    // HACK Seems like automatic resize isn't all that automatic currently.
-    // Work around it by unsetting it and setting it again.
-    if (Preferences::self()->useMaxSizedTabs())
-    {
-        m_tabWidget->setAutomaticResizeTabs(false);
-        m_tabWidget->setAutomaticResizeTabs(true);
-    }
+    endInsertRows();
 
     m_vbox->show();
 
@@ -1395,7 +1483,7 @@ void ViewContainer::moveViewLeft()
 
     if (index)
     {
-        m_tabWidget->moveTab(index, index - 1);
+        m_tabWidget->tabBar()->moveTab(index, index - 1);
         updateViewActions(index - 1);
     }
 
@@ -1413,7 +1501,7 @@ void ViewContainer::moveViewRight()
 
     if (index < (m_tabWidget->count() - 1))
     {
-        m_tabWidget->moveTab(index, index + 1);
+        m_tabWidget->tabBar()->moveTab(index, index + 1);
         updateViewActions(index + 1);
     }
 
@@ -1519,6 +1607,9 @@ void ViewContainer::renameKonsole()
         view->setName(label);
 
         m_tabWidget->setTabText(popup, label);
+
+        const QModelIndex& idx = index(popup, 0);
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
 
         if (popup == m_tabWidget->currentIndex())
         {
@@ -2293,8 +2384,12 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
 
     if (!newName.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != newName)
     {
-        // if (m_viewTree) m_viewTree->setViewName(view, newName); FIXME ViewTree port
-        if (m_tabWidget) m_tabWidget->setTabText(m_tabWidget->indexOf(view), newName);
+        int tabIndex = m_tabWidget->indexOf(view);
+
+        m_tabWidget->setTabText(tabIndex, newName);
+
+        const QModelIndex& idx = index(tabIndex, 0);
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
     }
 
     if (!newName.isEmpty() && view==m_frontView)
