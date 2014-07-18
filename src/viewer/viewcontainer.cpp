@@ -368,7 +368,7 @@ void ViewContainer::removedTab(int index)
 
 void ViewContainer::movedTab(int from, int to)
 {
-    beginMoveRows(QModelIndex(), from, from, QModelIndex(), to);
+    beginMoveRows(QModelIndex(), from, from, QModelIndex(), (to > from) ? to + 1 : to);
     endMoveRows();
 }
 
