@@ -47,6 +47,7 @@ find_package(QCA2 2.1.0)
 set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "http://delta.affinix.com/qca"
                        TYPE OPTIONAL)
+set(HAVE_QCA2 ${QCA2_FOUND})
 
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
