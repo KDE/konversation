@@ -20,11 +20,12 @@
 #include <KGlobal>
 #include <KProcess>
 #include <KStandardDirs>
+#include <KLocale>
 
 
 ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
-    qputenv("KONVERSATION_LANG", KGlobal::locale()->language().toAscii());
+    qputenv("KONVERSATION_LANG", KLocale::global()->language().toAscii());
 
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value("PYTHONPATH").split(':', QString::SkipEmptyParts));
     pythonPath << KGlobal::dirs()->findDirs("data", "konversation/scripting_support/python");

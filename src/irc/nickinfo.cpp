@@ -103,7 +103,7 @@ bool NickInfo::isIdentified() const
 
 QString NickInfo::getPrettyOnlineSince() const
 {
-    return KGlobal::locale()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
+    return KLocale::global()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
 }
 
 // Return the Server object that owns this NickInfo object.

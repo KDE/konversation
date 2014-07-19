@@ -28,6 +28,7 @@
 
 #include <KDialog>
 #include <KUser>
+#include <KLocale>
 
 
 ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
@@ -498,8 +499,8 @@ void ChatWindow::logText(const QString& text)
             }
 
             QDateTime dateTime = QDateTime::currentDateTime();
-            QString logLine(QString("[%1] [%2] %3\n").arg(KGlobal::locale()->formatDate(dateTime.date(), KLocale::LongDate)).
-                arg(KGlobal::locale()->formatTime(dateTime.time(), true)).arg(text));
+            QString logLine(QString("[%1] [%2] %3\n").arg(KLocale::global()->formatDate(dateTime.date(), KLocale::LongDate)).
+                arg(KLocale::global()->formatTime(dateTime.time(), true)).arg(text));
 
             logStream << logLine;
 

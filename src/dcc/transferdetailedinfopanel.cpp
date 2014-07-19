@@ -21,6 +21,7 @@
 #include "dcccommon.h"
 
 #include <QTimer>
+#include <KLocale>
 
 
 namespace Konversation
@@ -176,7 +177,7 @@ namespace Konversation
                                                           m_transfer->getOwnIp(), m_transfer->getOwnPort()));
 
             // File Size:
-            m_timeInfo.m_labelFileSize->setText(KGlobal::locale()->formatNumber(m_transfer->getFileSize(), 0));
+            m_timeInfo.m_labelFileSize->setText(KLocale::global()->formatNumber(m_transfer->getFileSize(), 0));
 
             // Resumed:
             if (m_transfer->isResumed())
@@ -225,7 +226,7 @@ namespace Konversation
             m_locationInfo.m_progress->setValue(m_transfer->getProgress());
 
             // Current Position:
-            m_timeInfo.m_labelCurrentPosition->setText(KGlobal::locale()->formatNumber(m_transfer->getTransferringPosition(), 0));
+            m_timeInfo.m_labelCurrentPosition->setText(KLocale::global()->formatNumber(m_transfer->getTransferringPosition(), 0));
 
             // Current Speed:
             m_timeInfo.m_labelCurrentSpeed->setText(TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()));

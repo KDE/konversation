@@ -27,6 +27,7 @@
 #include <QItemSelectionModel>
 #include <QTreeWidget>
 #include <KSharedConfig>
+#include <KLocale>
 
 namespace Konversation
 {
@@ -541,7 +542,7 @@ namespace Konversation
         setText(0, label1);
         setText(1, label2);
         m_timestamp.setTime_t(timestamp);
-        setText(2, KGlobal::locale()->formatDateTime(m_timestamp, KLocale::ShortDate, true));
+        setText(2, KLocale::global()->formatDateTime(m_timestamp, KLocale::ShortDate, true));
         setData(2, Qt::UserRole, m_timestamp);
         parent->addTopLevelItem(this);
     }

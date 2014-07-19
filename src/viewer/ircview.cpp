@@ -32,6 +32,7 @@
 #include <KIconLoader>
 #include <KStandardShortcut>
 #include <kio/pixmaploader.h>
+#include <KLocale>
 
 using namespace Konversation;
 
@@ -928,7 +929,7 @@ QString IRCView::timeStamp()
             QDate date = QDate::currentDate();
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1 %2]</font> ")
-                    .arg(KGlobal::locale()->formatDate(date, KLocale::ShortDate),
+                    .arg(KLocale::global()->formatDate(date, KLocale::ShortDate),
                          time.toString(timeFormat));
         }
 

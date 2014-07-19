@@ -1053,7 +1053,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     when.setTime_t(parameterList.value(2).toUInt());
                     m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Created"),
                         i18n("This channel was created on %1.",
-                            KGlobal::locale()->formatDateTime(when, KLocale::ShortDate))
+                            KLocale::global()->formatDateTime(when, KLocale::ShortDate))
                         );
                 }
                 break;
@@ -1172,7 +1172,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Topic"),
                             i18n("The topic was set by %1 on %2.",
-                            parameterList.value(2), KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
+                            parameterList.value(2), KLocale::global()->formatDateTime(when, KLocale::ShortDate)),
                             false,
                             false);
                     }
@@ -1181,7 +1181,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         m_server->appendMessageToFrontmost(i18n("Topic"), i18n("The topic for %1 was set by %2 on %3.",
                             parameterList.value(1),
                             parameterList.value(2),
-                            KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
+                            KLocale::global()->formatDateTime(when, KLocale::ShortDate)),
                             false);
                         setAutomaticRequest("TOPIC",parameterList.value(1), false);
                     }
@@ -1842,7 +1842,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             m_server->appendMessageToFrontmost(i18n("Whois"),
                                 i18n("%1 has been online since %2.",
-                                parameterList.value(1), KGlobal::locale()->formatDateTime(signonTime, KLocale::ShortDate, true)));
+                                parameterList.value(1), KLocale::global()->formatDateTime(signonTime, KLocale::ShortDate, true)));
                         }
                     }
                 }
@@ -2011,7 +2011,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                         m_server->appendMessageToFrontmost(i18n("BanList:%1", parameterList.value(1)),
                                     i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3",
-                                        parameterList.value(2), setter, KGlobal::locale()->formatDateTime(when, KLocale::ShortDate))
+                                        parameterList.value(2), setter, KLocale::global()->formatDateTime(when, KLocale::ShortDate))
                                     );
                     }
                 }

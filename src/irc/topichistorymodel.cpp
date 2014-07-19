@@ -166,7 +166,7 @@ QVariant TopicHistoryModel::data(const QModelIndex& index, int role) const
 
                 break;
             case 2:
-                return KGlobal::locale()->formatDateTime(topic.timestamp, KLocale::ShortDate, true);
+                return KLocale::global()->formatDateTime(topic.timestamp, KLocale::ShortDate, true);
                 break;
         }
     }

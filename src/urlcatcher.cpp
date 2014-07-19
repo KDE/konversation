@@ -51,7 +51,7 @@ UrlDateItem::~UrlDateItem()
 QVariant UrlDateItem::data(int role) const
 {
     if (role == Qt::DisplayRole)
-        return KGlobal::locale()->formatDateTime(QStandardItem::data().toDateTime(), KLocale::ShortDate, true);
+        return KLocale::global()->formatDateTime(QStandardItem::data().toDateTime(), KLocale::ShortDate, true);
 
     return QStandardItem::data(role);
 }
@@ -366,7 +366,7 @@ void UrlCatcher::saveUrlModel()
         QTextStream stream(&file);
 
         stream << i18n("Konversation URL List: %1\n\n",
-            KGlobal::locale()->formatDateTime(QDateTime::currentDateTime(), KLocale::LongDate, true));
+            KLocale::global()->formatDateTime(QDateTime::currentDateTime(), KLocale::LongDate, true));
 
         for (int r = 0; r < rows; r++)
         {
