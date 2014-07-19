@@ -2288,7 +2288,7 @@ void ViewContainer::toggleChannelNicklists()
     if (action)
     {
         Preferences::self()->setShowNickList(action->isChecked());
-        Preferences::self()->writeConfig();
+        Preferences::self()->save();
 
         emit updateChannelAppearance();
     }
