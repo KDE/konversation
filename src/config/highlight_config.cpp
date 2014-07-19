@@ -58,7 +58,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 )
             {
-                soundURL->fileDialog()->setDirectory( *it );
+                soundURL->setStartDir( *it );
                 break;
             }
             ++it;
