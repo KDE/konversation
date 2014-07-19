@@ -219,7 +219,7 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
 
     m_textSelectable = false;
 
-    setCategoryDrawer(new KCategoryDrawerV3(this));
+    setCategoryDrawer(new KCategoryDrawer(this));
 
     setModelColumn(0);
 
