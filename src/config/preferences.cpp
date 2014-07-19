@@ -38,7 +38,7 @@ Q_GLOBAL_STATIC(PreferencesSingleton, s_prefs)
 Preferences *Preferences::self()
 {
   if ( !s_prefs.exists() ) {
-    s_prefs->prefs.readConfig();
+    s_prefs->prefs.load();
   }
 
   return &s_prefs->prefs;
