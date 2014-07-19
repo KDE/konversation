@@ -14,6 +14,7 @@
 #include "preferences.h"
 
 #include <QPushButton>
+#include <KSharedConfig>
 
 
 QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
@@ -72,7 +73,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 void QuickButtons_Config::saveSettings()
 {
   // get configuration object
-  KSharedConfigPtr config=KGlobal::config();
+  KSharedConfigPtr config=KSharedConfig::openConfig();
 
   // delete all buttons
   config->deleteGroup("Button List");

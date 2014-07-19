@@ -26,6 +26,7 @@
 #include <KLocale>
 #include <KUser>
 #include <KStandardDirs>
+#include <KSharedConfig>
 
 struct PreferencesSingleton
 {
@@ -448,7 +449,7 @@ void Preferences::setAutoUserhost(bool state)
 
 bool Preferences::dialogFlag(const QString& flagName)
 {
-    KConfigGroup config(KGlobal::config()->group("Notification self()->Messages"));
+    KConfigGroup config(KSharedConfig::openConfig()->group("Notification self()->Messages"));
 
     if (!config.readEntry(flagName).isEmpty())
         return false;
@@ -458,7 +459,7 @@ bool Preferences::dialogFlag(const QString& flagName)
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
 {
-    KConfigGroup config(KGlobal::config()->group("Notification self()->Messages"));
+    KConfigGroup config(KSharedConfig::openConfig()->group("Notification self()->Messages"));
 
     if (state)
         config.deleteEntry(flagName);
@@ -597,7 +598,7 @@ QString Preferences::webBrowserCmd()
 
 void Preferences::saveColumnState(QTreeView *treeView, QString name)
 {
-    KConfigGroup group(KGlobal::config(), name);
+    KConfigGroup group(KSharedConfig::openConfig(), name);
 
     QList<int> columnWidths;
     for (int i = 0; i < treeView->header()->count(); ++i)
@@ -610,7 +611,7 @@ void Preferences::saveColumnState(QTreeView *treeView, QString name)
 
 void Preferences::restoreColumnState(QTreeView* treeView, QString name, int defaultColumn , Qt::SortOrder defaultSortOrder)
 {
-    KConfigGroup group(KGlobal::config(), name);
+    KConfigGroup group(KSharedConfig::openConfig(), name);
 
     QList<int> columnWidths = group.readEntry("ColumnWidths", QList<int>());
     for (int i = 0; i < columnWidths.count(); ++i)

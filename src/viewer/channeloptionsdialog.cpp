@@ -26,6 +26,7 @@
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 #include <QTreeWidget>
+#include <KSharedConfig>
 
 namespace Konversation
 {
@@ -112,7 +113,7 @@ namespace Konversation
             if (!m_ui.topicEdit->isReadOnly())
                 m_ui.topicEdit->setFocus();
 
-            KConfigGroup config(KGlobal::config(), "ChannelOptionsDialog");
+            KConfigGroup config(KSharedConfig::openConfig(), "ChannelOptionsDialog");
 
             resize(config.readEntry("Size", sizeHint()));
 
@@ -129,7 +130,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::hideEvent(QHideEvent* event)
     {
-        KConfigGroup config(KGlobal::config(), "ChannelOptionsDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), "ChannelOptionsDialog");
 
         config.writeEntry("Size", size());
         config.writeEntry("SplitterSizes", m_ui.splitter->sizes());

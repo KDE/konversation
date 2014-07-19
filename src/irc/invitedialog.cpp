@@ -25,6 +25,7 @@
 #include <KConfigGroup>
 
 #include <QStringList>
+#include <KSharedConfig>
 
 InviteDialog::InviteDialog(QWidget* parent)
     : KDialog(parent), Ui::InviteDialog()
@@ -68,14 +69,14 @@ void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
     if (buttonCode == KDialog::Ok)
     {
 	KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
-	KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+	KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
 	cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
 	cg.sync();
     }
 }
 bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
 {
-    KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+    KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 

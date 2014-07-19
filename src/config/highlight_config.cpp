@@ -25,6 +25,7 @@
 #include <KGlobal>
 // #include <kparts/componentfactory.h> FIXME KF5 port
 // #include <kregexpeditorinterface.h> FIXME KF5 port
+#include <KSharedConfig>
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
@@ -339,7 +340,7 @@ void Highlight_Config::playSound()
 
 void Highlight_Config::saveSettings()
 {
-    KSharedConfigPtr config = KGlobal::config();
+    KSharedConfigPtr config = KSharedConfig::openConfig();
 
     // Write all highlight entries
     QList<Highlight*> hiList = getHighlightList();

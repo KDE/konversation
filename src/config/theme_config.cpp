@@ -30,6 +30,7 @@
 #include <KIO/NetAccess>
 
 #include <unistd.h> // unlink()
+#include <KSharedConfig>
 
 
 using namespace Konversation;
@@ -134,7 +135,7 @@ void Theme_Config::saveSettings()
         if(hasChanged())
         {
             // save icon theme name
-            KSharedConfigPtr config = KGlobal::config();
+            KSharedConfigPtr config = KSharedConfig::openConfig();
             KConfigGroup grp = config->group("Themes");
             grp.writeEntry("IconTheme",m_currentTheme);
             // set in-memory theme to the saved theme

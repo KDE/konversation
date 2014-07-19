@@ -24,6 +24,7 @@
 
 #include <KLocale>
 #include <KLineEdit>
+#include <KSharedConfig>
 
 namespace Konversation
 {
@@ -64,7 +65,7 @@ namespace Konversation
             setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Select nickname and close the window")));
             setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Close the window without changes")));
 
-            restoreDialogSize(KConfigGroup(KGlobal::config(), "DCCRecipientDialog"));
+            restoreDialogSize(KConfigGroup(KSharedConfig::openConfig(), "DCCRecipientDialog"));
 
             connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
             connect( this, SIGNAL(cancelClicked()), this, SLOT(slotCancel()) );
@@ -72,7 +73,7 @@ namespace Konversation
 
         RecipientDialog::~RecipientDialog()
         {
-            KConfigGroup config(KGlobal::config(), "DCCRecipientDialog");
+            KConfigGroup config(KSharedConfig::openConfig(), "DCCRecipientDialog");
             saveDialogSize(config);
         }
 

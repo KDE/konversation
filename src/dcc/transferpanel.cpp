@@ -33,6 +33,7 @@
 #include <KAuthorized>
 #include <KFileMetaInfo>
 #include <KToolBar>
+#include <KSharedConfig>
 
 namespace Konversation
 {
@@ -52,7 +53,7 @@ namespace Konversation
 
         TransferPanel::~TransferPanel()
         {
-            KConfigGroup config(KGlobal::config(), "DCC Settings");
+            KConfigGroup config(KSharedConfig::openConfig(), "DCC Settings");
             const QByteArray state = m_splitter->saveState();
             config.writeEntry(QString("PanelSplitter"), state.toBase64());
         }
@@ -115,7 +116,7 @@ namespace Konversation
             m_toolBar->addAction(m_open);
             m_toolBar->addAction(m_openLocation);
 
-            KConfigGroup config(KGlobal::config(), "DCC Settings");
+            KConfigGroup config(KSharedConfig::openConfig(), "DCC Settings");
             QByteArray state;
             if (config.hasKey("PanelSplitter"))
             {

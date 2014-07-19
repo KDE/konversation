@@ -60,7 +60,7 @@ void Warnings_Config::restorePageToDefaults()
 
 void Warnings_Config::saveSettings()
 {
-    KSharedConfigPtr config = KGlobal::config();
+    KSharedConfigPtr config = KSharedConfig::openConfig();
     KConfigGroup grp = config->group("Notification Messages");
 
     // prepare list
@@ -206,7 +206,7 @@ void Warnings_Config::loadSettings()
 
     dialogListView->clear();
 
-    KSharedConfigPtr config = KGlobal::config();
+    KSharedConfigPtr config = KSharedConfig::openConfig();
     KConfigGroup grp =  config->group("Notification Messages");
 
     for (int i = 0; i < definitionsCount; ++i)

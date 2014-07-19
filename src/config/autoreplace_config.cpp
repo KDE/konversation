@@ -15,6 +15,7 @@
 
 // #include <kparts/componentfactory.h> FIXME KF5 port
 // #include <kregexpeditorinterface.h> FIXME KF5 port
+#include <KSharedConfig>
 
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
@@ -121,7 +122,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
 void Autoreplace_Config::saveSettings()
 {
   // get configuration object
-  KSharedConfigPtr config=KGlobal::config();
+  KSharedConfigPtr config=KSharedConfig::openConfig();
 
   // delete all patterns
   config->deleteGroup("Autoreplace List");

@@ -50,6 +50,7 @@
 #include <kwallet.h>
 #include <solid/networking.h>
 #include <KTextEdit>
+#include <KSharedConfig>
 
 
 using namespace Konversation;
@@ -363,7 +364,7 @@ void Application::readOptions()
     // get standard config file
 
     // read nickname sorting order for channel nick lists
-    KConfigGroup cgSortNicknames(KGlobal::config()->group("Sort Nicknames"));
+    KConfigGroup cgSortNicknames(KSharedConfig::openConfig()->group("Sort Nicknames"));
 
     QString sortOrder=cgSortNicknames.readEntry("SortOrder");
     QStringList sortOrderList=sortOrder.split("");
@@ -375,7 +376,7 @@ void Application::readOptions()
     }
 
     // Identity list
-    QStringList identityList=KGlobal::config()->groupList().filter(QRegExp("Identity [0-9]+"));
+    QStringList identityList=KSharedConfig::openConfig()->groupList().filter(QRegExp("Identity [0-9]+"));
     if (!identityList.isEmpty())
     {
         Preferences::clearIdentityList();
@@ -383,7 +384,7 @@ void Application::readOptions()
         for(int index=0;index<identityList.count();index++)
         {
             IdentityPtr newIdentity(new Identity());
-            KConfigGroup cgIdentity(KGlobal::config()->group(identityList[index]));
+            KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(identityList[index]));
 
             newIdentity->setName(cgIdentity.readEntry("Name"));
 
@@ -445,10 +446,10 @@ void Application::readOptions()
     }
 
     // Check if there is old server list config //TODO FIXME why are we doing this here?
-    KConfigGroup cgServerList(KGlobal::config()->group("Server List"));
+    KConfigGroup cgServerList(KSharedConfig::openConfig()->group("Server List"));
 
     // Read the new server settings
-    QStringList groups = KGlobal::config()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
+    QStringList groups = KSharedConfig::openConfig()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
     QMap<int,QStringList> notifyList;
     QList<int> sgKeys;
 
@@ -465,7 +466,7 @@ void Application::readOptions()
 
         for (it = groups.begin(); it != groups.end(); ++it)
         {
-            KConfigGroup cgServerGroup(KGlobal::config()->group(*it));
+            KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(*it));
             Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
             serverGroup->setName(cgServerGroup.readEntry("Name"));
             serverGroup->setSortIndex(index);
@@ -480,7 +481,7 @@ void Application::readOptions()
             tmp1 = cgServerGroup.readEntry("ServerList", QStringList());
             for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                KConfigGroup cgServer(KGlobal::config()->group(*it2));
+                KConfigGroup cgServer(KSharedConfig::openConfig()->group(*it2));
                 server.setHost(cgServer.readEntry("Server"));
                 server.setPort(cgServer.readEntry<int>("Port", 0));
                 server.setPassword(cgServer.readEntry("Password"));
@@ -493,7 +494,7 @@ void Application::readOptions()
 
             for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                KConfigGroup cgJoin(KGlobal::config()->group(*it2));
+                KConfigGroup cgJoin(KSharedConfig::openConfig()->group(*it2));
 
                 if (!cgJoin.readEntry("Name").isEmpty())
                 {
@@ -509,7 +510,7 @@ void Application::readOptions()
 
             for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                KConfigGroup cgChanHistory(KGlobal::config()->group(*it2));
+                KConfigGroup cgChanHistory(KSharedConfig::openConfig()->group(*it2));
 
                 if (!cgChanHistory.readEntry("Name").isEmpty())
                 {
@@ -539,10 +540,10 @@ void Application::readOptions()
     // Quick Buttons List
 
     // if there are button definitions in the config file, remove default buttons
-    if (KGlobal::config()->hasGroup("Button List"))
+    if (KSharedConfig::openConfig()->hasGroup("Button List"))
         Preferences::clearQuickButtonList();
 
-    KConfigGroup cgQuickButtons(KGlobal::config()->group("Button List"));
+    KConfigGroup cgQuickButtons(KSharedConfig::openConfig()->group("Button List"));
     // Read all default buttons
     QStringList buttonList(Preferences::quickButtonList());
     // Read all quick buttons
@@ -557,10 +558,10 @@ void Application::readOptions()
     // Autoreplace List
 
     // if there are autoreplace definitions in the config file, remove default entries
-    if (KGlobal::config()->hasGroup("Autoreplace List"))
+    if (KSharedConfig::openConfig()->hasGroup("Autoreplace List"))
         Preferences::clearAutoreplaceList();
 
-    KConfigGroup cgAutoreplace(KGlobal::config()->group("Autoreplace List"));
+    KConfigGroup cgAutoreplace(KSharedConfig::openConfig()->group("Autoreplace List"));
     // Read all default entries
     QList<QStringList> autoreplaceList(Preferences::autoreplaceList());
     // Read all entries
@@ -617,7 +618,7 @@ void Application::readOptions()
 
     //TODO FIXME I assume this is in the <default> group, but I have a hunch we just don't care about <1.0.1
     // Highlight List
-    KConfigGroup cgDefault(KGlobal::config()->group("<default>"));
+    KConfigGroup cgDefault(KSharedConfig::openConfig()->group("<default>"));
     if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
     {
         QString highlight=cgDefault.readEntry("Highlight");
@@ -634,9 +635,9 @@ void Application::readOptions()
     {
         int i = 0;
 
-        while (KGlobal::config()->hasGroup(QString("Highlight%1").arg(i)))
+        while (KSharedConfig::openConfig()->hasGroup(QString("Highlight%1").arg(i)))
         {
-            KConfigGroup cgHilight(KGlobal::config()->group(QString("Highlight%1").arg(i)));
+            KConfigGroup cgHilight(KSharedConfig::openConfig()->group(QString("Highlight%1").arg(i)));
             Preferences::addHighlight(
                 cgHilight.readEntry("Pattern"),
                 cgHilight.readEntry("RegExp", false),
@@ -651,7 +652,7 @@ void Application::readOptions()
     }
 
     // Ignore List
-    KConfigGroup cgIgnoreList(KGlobal::config()->group("Ignore List"));
+    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group("Ignore List"));
     // Remove all default entries if there is at least one Ignore in the Preferences::file
     if (cgIgnoreList.hasKey("Ignore0"))
         Preferences::clearIgnoreList();
@@ -663,7 +664,7 @@ void Application::readOptions()
     }
 
     // Aliases
-    KConfigGroup cgAliases(KGlobal::config()->group("Aliases"));
+    KConfigGroup cgAliases(KSharedConfig::openConfig()->group("Aliases"));
     QStringList newList=cgAliases.readEntry("AliasList", QStringList());
     if (!newList.isEmpty())
         Preferences::self()->setAliasList(newList);
@@ -671,7 +672,7 @@ void Application::readOptions()
     // Channel Encodings
 
     //Legacy channel encodings read in Jun. 29, 2009
-    KConfigGroup cgChannelEncodings(KGlobal::config()->group("Channel Encodings"));
+    KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group("Channel Encodings"));
     QMap<QString,QString> channelEncodingEntries=cgChannelEncodings.entryMap();
     QRegExp re("^(.+) ([^\\s]+)$");
     QList<QString> channelEncodingEntryKeys=channelEncodingEntries.keys();
@@ -685,7 +686,7 @@ void Application::readOptions()
     }
     //End legacy channel encodings read in Jun 29, 2009
 
-    KConfigGroup cgEncodings(KGlobal::config()->group("Encodings"));
+    KConfigGroup cgEncodings(KSharedConfig::openConfig()->group("Encodings"));
     QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
     QList<QString> encodingEntryKeys=encodingEntries.keys();
 
@@ -702,7 +703,7 @@ void Application::readOptions()
     }
 
     // Spell Checking Languages
-    KConfigGroup cgSpellCheckingLanguages(KGlobal::config()->group("Spell Checking Languages"));
+    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group("Spell Checking Languages"));
     QMap<QString, QString> spellCheckingLanguageEntries=cgSpellCheckingLanguages.entryMap();
     QList<QString> spellCheckingLanguageEntryKeys=spellCheckingLanguageEntries.keys();
 
@@ -729,20 +730,20 @@ void Application::readOptions()
 
 void Application::saveOptions(bool updateGUI)
 {
-    // template:    KConfigGroup  (KGlobal::config()->group( ));
+    // template:    KConfigGroup  (KSharedConfig::openConfig()->group( ));
 
-    //KConfig* config=KGlobal::config();
+    //KConfig* config=KSharedConfig::openConfig();
 
 //    Should be handled in NicklistBehaviorConfigController now
 //    config->setGroup("Sort Nicknames");
 
     // Clean up identity list
-    QStringList identities=KGlobal::config()->groupList().filter(QRegExp("Identity [0-9]+"));
+    QStringList identities=KSharedConfig::openConfig()->groupList().filter(QRegExp("Identity [0-9]+"));
     if (identities.count())
     {
         // remove old identity list from Preferences::file to keep numbering under control
         for (int index=0; index < identities.count(); index++)
-            KGlobal::config()->deleteGroup(identities[index]);
+            KSharedConfig::openConfig()->deleteGroup(identities[index]);
     }
 
     IdentityList identityList = Preferences::identityList();
@@ -751,7 +752,7 @@ void Application::saveOptions(bool updateGUI)
     for (IdentityList::ConstIterator it = identityList.constBegin(); it != identityList.constEnd(); ++it)
     {
         IdentityPtr identity = (*it);
-        KConfigGroup cgIdentity(KGlobal::config()->group(QString("Identity %1").arg(index)));
+        KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(QString("Identity %1").arg(index)));
 
         cgIdentity.writeEntry("Name",identity->getName());
         cgIdentity.writeEntry("Ident",identity->getIdent());
@@ -781,35 +782,35 @@ void Application::saveOptions(bool updateGUI)
     } // endfor
 
     // Remove the old servergroups from the config
-    QStringList groups = KGlobal::config()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
+    QStringList groups = KSharedConfig::openConfig()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            KGlobal::config()->deleteGroup((*it));
+            KSharedConfig::openConfig()->deleteGroup((*it));
         }
     }
 
     // Remove the old servers from the config
-    groups = KGlobal::config()->groupList().filter(QRegExp("Server [0-9]+"));
+    groups = KSharedConfig::openConfig()->groupList().filter(QRegExp("Server [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            KGlobal::config()->deleteGroup((*it));
+            KSharedConfig::openConfig()->deleteGroup((*it));
         }
     }
 
     // Remove the old channels from the config
-    groups = KGlobal::config()->groupList().filter(QRegExp("Channel [0-9]+"));
+    groups = KSharedConfig::openConfig()->groupList().filter(QRegExp("Channel [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            KGlobal::config()->deleteGroup((*it));
+            KSharedConfig::openConfig()->deleteGroup((*it));
         }
     }
 
@@ -859,7 +860,7 @@ void Application::saveOptions(bool updateGUI)
         {
             groupName = QString("Server %1").arg(index2);
             servers.append(groupName);
-            KConfigGroup cgServer(KGlobal::config()->group(groupName));
+            KConfigGroup cgServer(KSharedConfig::openConfig()->group(groupName));
             cgServer.writeEntry("Server", (*it2).host());
             cgServer.writeEntry("Port", (*it2).port());
             cgServer.writeEntry("Password", (*it2).password());
@@ -874,7 +875,7 @@ void Application::saveOptions(bool updateGUI)
         {
             groupName = QString("Channel %1").arg(index3);
             channels.append(groupName);
-            KConfigGroup cgChannel(KGlobal::config()->group(groupName));
+            KConfigGroup cgChannel(KSharedConfig::openConfig()->group(groupName));
             cgChannel.writeEntry("Name", (*it3).name());
             cgChannel.writeEntry("Password", (*it3).password());
             index3++;
@@ -887,7 +888,7 @@ void Application::saveOptions(bool updateGUI)
         {   // TODO FIXME: is it just me or is this broken?
             groupName = QString("Channel %1").arg(index3);
             channelHistory.append(groupName);
-            KConfigGroup cgChannelHistory(KGlobal::config()->group(groupName));
+            KConfigGroup cgChannelHistory(KSharedConfig::openConfig()->group(groupName));
             cgChannelHistory.writeEntry("Name", (*it3).name());
             cgChannelHistory.writeEntry("Password", (*it3).password());
             cgChannelHistory.writeEntry("EnableNotifications", (*it3).enableNotifications());
@@ -895,7 +896,7 @@ void Application::saveOptions(bool updateGUI)
         }
 
         QString sgn = QString("ServerGroup %1").arg(QString::number(index).rightJustified(width,'0'));
-        KConfigGroup cgServerGroup(KGlobal::config()->group(sgn));
+        KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(sgn));
         cgServerGroup.writeEntry("Name", it.value()->name());
         cgServerGroup.writeEntry("Identity", it.value()->identity()->getName());
         cgServerGroup.writeEntry("ServerList", servers);
@@ -909,11 +910,11 @@ void Application::saveOptions(bool updateGUI)
         index++;
     }
 
-    KGlobal::config()->deleteGroup("Server List");
+    KSharedConfig::openConfig()->deleteGroup("Server List");
 
     // Ignore List
-    KGlobal::config()->deleteGroup("Ignore List");
-    KConfigGroup cgIgnoreList(KGlobal::config()->group("Ignore List"));
+    KSharedConfig::openConfig()->deleteGroup("Ignore List");
+    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group("Ignore List"));
     QList<Ignore*> ignoreList=Preferences::ignoreList();
     for (int i = 0; i < ignoreList.size(); ++i) {
         cgIgnoreList.writeEntry(QString("Ignore%1").arg(i),QString("%1,%2").arg(ignoreList.at(i)->getName()).arg(ignoreList.at(i)->getFlags()));
@@ -921,9 +922,9 @@ void Application::saveOptions(bool updateGUI)
 
     // Channel Encodings
     // remove all entries once
-    KGlobal::config()->deleteGroup("Channel Encodings"); // legacy Jun 29, 2009
-    KGlobal::config()->deleteGroup("Encodings");
-    KConfigGroup cgEncoding(KGlobal::config()->group("Encodings"));
+    KSharedConfig::openConfig()->deleteGroup("Channel Encodings"); // legacy Jun 29, 2009
+    KSharedConfig::openConfig()->deleteGroup("Encodings");
+    KConfigGroup cgEncoding(KSharedConfig::openConfig()->group("Encodings"));
     QList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
     QList<int>::iterator encServer;
@@ -950,8 +951,8 @@ void Application::saveOptions(bool updateGUI)
     }
 
     // Spell Checking Languages
-    KGlobal::config()->deleteGroup("Spell Checking Languages");
-    KConfigGroup cgSpellCheckingLanguages(KGlobal::config()->group("Spell Checking Languages"));
+    KSharedConfig::openConfig()->deleteGroup("Spell Checking Languages");
+    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group("Spell Checking Languages"));
 
     QHashIterator<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > i(Preferences::serverGroupSpellCheckingLanguages());
 
@@ -988,7 +989,7 @@ void Application::saveOptions(bool updateGUI)
         }
     }
 
-    KGlobal::config()->sync();
+    KSharedConfig::openConfig()->sync();
 
     if(updateGUI)
         emit appearanceChanged();

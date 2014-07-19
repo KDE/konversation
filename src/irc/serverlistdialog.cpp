@@ -21,6 +21,7 @@
 
 #include <KGuiItem>
 #include <KMessageBox>
+#include <KSharedConfig>
 
 
 namespace Konversation
@@ -90,7 +91,7 @@ namespace Konversation
 
         updateButtons();
 
-        KConfigGroup config(KGlobal::config(), "ServerListDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), "ServerListDialog");
         QSize newSize = size();
         newSize = config.readEntry("Size", newSize);
         resize(newSize);
@@ -104,7 +105,7 @@ namespace Konversation
 
     ServerListDialog::~ServerListDialog()
     {
-        KConfigGroup config(KGlobal::config(), "ServerListDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), "ServerListDialog");
         config.writeEntry("Size", size());
         config.writeEntry("ServerListHeaderState", m_serverList->header()->saveState());
     }
