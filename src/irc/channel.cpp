@@ -81,7 +81,6 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     nicks = 0;
     ops = 0;
     completionPosition = 0;
-    nickChangeDialog = 0;
     m_nicknameListViewTextChanged = 0;
 
     m_joined = false;

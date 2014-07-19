@@ -44,7 +44,6 @@ class Nick;
 class QuickButton;
 class ModeButton;
 class IRCInput;
-class NickChangeDialog;
 class TopicHistoryModel;
 
 namespace Konversation
@@ -320,7 +319,6 @@ class Channel : public ChatWindow
         AwayLabel* awayLabel;
         QLabel* cipherLabel;
 
-        NickChangeDialog* nickChangeDialog;
         QList<QuickButton*> buttonList;
 
 //Members from here to end are not GUI
