@@ -156,7 +156,7 @@ void StatusPanel::updateAppearance()
         if (Preferences::self()->customTextFont())
             nicknameCombobox->setFont(Preferences::self()->textFont());
         else
-            nicknameCombobox->setFont(KGlobalSettings::generalFont());
+            nicknameCombobox->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
         nicknameCombobox->show();
     }

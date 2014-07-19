@@ -546,7 +546,7 @@ void IRCView::updateAppearance()
     if (Preferences::self()->customTextFont())
         setFont(Preferences::self()->textFont());
     else
-        setFont(KGlobalSettings::generalFont());
+        setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
     setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
@@ -739,7 +739,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     if(Preferences::self()->fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
     {
         if(type == i18n("MOTD"))
-            fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
+            fixed=" face=\"" + QFontDatabase::systemFont(QFontDatabase::FixedFont).family() + "\"";
     }
 
     QString line;

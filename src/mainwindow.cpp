@@ -49,7 +49,7 @@
 #include <KStandardShortcut>
 #include <KActionMenu>
 #include <KNotifyConfigWidget>
-
+#include <KGlobalSettings>
 
 MainWindow::MainWindow() : KXmlGuiWindow(0)
 {

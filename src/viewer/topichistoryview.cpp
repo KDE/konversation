@@ -25,6 +25,7 @@
 #include "topichistorymodel.h"
 
 #include <KCategoryDrawer>
+#include <KGlobalSettings>
 
 #if !KDE_IS_VERSION(4, 8, 0)
 #include <QScrollBar>

@@ -7,9 +7,9 @@
   <include>qsize.h</include>
   <include>kdialog.h</include>
   <include>QDir</include>
-  <include>kglobalsettings.h</include>
   <include>kuser.h</include>
   <include>QStandardPaths</include>
+  <include>QFontDatabase</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -29,17 +29,17 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="TextFont" type="Font">
-      <default code="true">KGlobalSettings::generalFont()</default>
+      <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
     <entry key="ListFont" type="Font">
-      <default code="true">KGlobalSettings::generalFont()</default>
+      <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
     <entry key="TabFont" type="Font">
-      <default code="true">KGlobalSettings::generalFont()</default>
+      <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -460,7 +460,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="OSDFont" type="Font">
-      <default code="true">KGlobalSettings::generalFont()</default>
+      <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

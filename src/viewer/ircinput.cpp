@@ -221,7 +221,7 @@ void IRCInput::updateAppearance()
     if (Preferences::self()->customTextFont())
         setFont(Preferences::self()->textFont());
     else
-        setFont(KGlobalSettings::generalFont());
+        setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
     m_multiRow = Preferences::self()->useMultiRowInputBox();
     setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);

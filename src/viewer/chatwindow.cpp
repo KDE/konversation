@@ -108,7 +108,7 @@ void ChatWindow::updateAppearance()
 
     // The font size of the KTabWidget container may be inappropriately
     // small due to the "Tab bar" font size setting.
-    setFont(KGlobalSettings::generalFont());
+    setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 }
 
 void ChatWindow::setName(const QString& newName)

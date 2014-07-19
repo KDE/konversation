@@ -401,7 +401,7 @@ void ViewContainer::updateAppearance()
         if (Preferences::self()->customTextFont())
             font = Preferences::self()->textFont();
         else
-            font = KGlobalSettings::generalFont();
+            font = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
 
         m_insertCharDialog->setFont(font);
     }
@@ -417,7 +417,7 @@ void ViewContainer::updateTabWidgetAppearance()
     if (Preferences::self()->customTabFont())
         m_tabWidget->setFont(Preferences::self()->tabFont());
     else
-        m_tabWidget->setFont(KGlobalSettings::generalFont());
+        m_tabWidget->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
     m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
         QTabWidget::North : QTabWidget::South);
@@ -1860,7 +1860,7 @@ void ViewContainer::insertCharacter()
     if (Preferences::self()->customTextFont())
         font = Preferences::self()->textFont();
     else
-        font = KGlobalSettings::generalFont();
+        font = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
 
 
     if (!m_insertCharDialog)

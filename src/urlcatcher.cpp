@@ -38,6 +38,7 @@
 #include <QMenu>
 #include <KMessageBox>
 #include <KToolBar>
+#include <KGlobalSettings>
 
 UrlDateItem::UrlDateItem(const QDateTime& dateTime)
 {

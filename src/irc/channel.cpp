@@ -39,7 +39,7 @@
 #include <KMessageBox>
 #include <KIconLoader>
 #include <KComboBox>
-
+#include <KGlobalSettings>
 
 #define DELAYED_SORT_TRIGGER    10
 
@@ -2103,10 +2103,10 @@ void Channel::updateAppearance()
     }
     else
     {
-        topicLine->setFont(KGlobalSettings::generalFont());
-        m_inputBar->setFont(KGlobalSettings::generalFont());
-        nicknameCombobox->setFont(KGlobalSettings::generalFont());
-        limit->setFont(KGlobalSettings::generalFont());
+        topicLine->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+        m_inputBar->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+        nicknameCombobox->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+        limit->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
     }
 
     nicknameListView->resort();
@@ -2116,7 +2116,7 @@ void Channel::updateAppearance()
     if (Preferences::self()->customListFont())
         nicknameListView->setFont(Preferences::self()->listFont());
     else
-        nicknameListView->setFont(KGlobalSettings::generalFont());
+        nicknameListView->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
     nicknameListView->refresh();
 

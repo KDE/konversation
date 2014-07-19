@@ -51,6 +51,7 @@
 #include <solid/networking.h>
 #include <KTextEdit>
 #include <KSharedConfig>
+#include <KGlobalSettings>
 
 
 using namespace Konversation;
