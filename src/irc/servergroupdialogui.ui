@@ -136,7 +136,7 @@
     <widget class="QWidget" name="serverWidget" native="true">
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" colspan="6">
-       <widget class="KListWidget" name="m_serverLBox">
+       <widget class="QListWidget" name="m_serverLBox">
         <property name="whatsThis">
          <string>This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it.</string>
         </property>
@@ -221,7 +221,7 @@
     <widget class="QWidget" name="channelWidget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0" colspan="6">
-       <widget class="KListWidget" name="m_channelLBox">
+       <widget class="QListWidget" name="m_channelLBox">
         <property name="whatsThis">
          <string>Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels.</string>
         </property>
@@ -338,11 +338,6 @@
  </widget>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
-  <customwidget>
-   <class>KListWidget</class>
-   <extends>QListWidget</extends>
-   <header>klistwidget.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
