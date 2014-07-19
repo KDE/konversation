@@ -270,9 +270,6 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
         </property>
-        <property name="urlDropsEnabled">
-         <bool>false</bool>
-        </property>
        </widget>
       </item>
      </layout>
