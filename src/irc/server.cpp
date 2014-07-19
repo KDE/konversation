@@ -779,11 +779,11 @@ void Server::broken(KTcpSocket::Error error)
     purgeData();
 
     // HACK Only show one nick change dialog at connection time.
-    // This hack is a bit nasty as it assumes that the only KDialog
+    // This hack is a bit nasty as it assumes that the only QInputDialog
     // child of the statusview will be the nick change dialog.
     if (getStatusView())
     {
-        KDialog* nickChangeDialog = getStatusView()->findChild<KDialog*>();
+        QInputDialog* nickChangeDialog = getStatusView()->findChild<QInputDialog*>();
 
         if (nickChangeDialog) nickChangeDialog->reject();
     }
