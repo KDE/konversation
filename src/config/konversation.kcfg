@@ -9,6 +9,7 @@
   <include>QDir</include>
   <include>kglobalsettings.h</include>
   <include>kuser.h</include>
+  <include>QStandardPaths</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -716,7 +717,7 @@
       <default code="true">QString(KUser(KUser::UseRealUserID).homeDir()+"/logs")</default>
     </entry>
     <entry key="DccPath" type="Url">
-      <default code="true">KGlobalSettings::downloadPath()</default>
+      <default code="true">QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
