@@ -59,7 +59,7 @@ namespace Konversation
 
     QString descriptiveNameToShortName( const QString& descriptiveName )
     {
-        return KGlobal::charsets()->encodingForName( descriptiveName );
+        return KCharsets::charsets()->encodingForName( descriptiveName );
     }
 
     QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
@@ -127,11 +127,11 @@ namespace Konversation
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
         QRegExp reSimplify( "[^a-zA-Z0-9]" );
-        m_descriptiveNames = KGlobal::charsets()->descriptiveEncodingNames();
+        m_descriptiveNames = KCharsets::charsets()->descriptiveEncodingNames();
         QStringList::Iterator it = m_descriptiveNames.begin();
         while ( it != m_descriptiveNames.end() )
         {
-            QString encodingName = KGlobal::charsets()->encodingForName( *it );
+            QString encodingName = KCharsets::charsets()->encodingForName( *it );
             // exclude encodings which are not supported on IRC
             // 10646-UCS-2 & ucs2 are both UTF-16
             if ( encodingName == "ISO 10646-UCS-2" ||
