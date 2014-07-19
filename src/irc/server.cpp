@@ -42,9 +42,9 @@
 #include <QTextCodec>
 #include <QStringListModel>
 #include <QStringBuilder>
+#include <QInputDialog>
 
 #include <KDebug>
-#include <KInputDialog>
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KShell>
@@ -1205,8 +1205,7 @@ QString Server::getNextNickname()
     else
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:", getIdentity()->getName(), getDisplayName());
-        newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
-                                        QString(), 0, getStatusView());
+        newNick = QInputDialog::getText(getStatusView(), i18n("Nickname error"), inputText);
     }
     return newNick;
 }

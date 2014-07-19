@@ -14,7 +14,7 @@
 
 #include <QAction>
 
-#include <KInputDialog>
+#include <QInputDialog>
 #include <KLocale>
 #include <KMessageBox>
 
@@ -36,7 +36,7 @@ AwayLabel::~AwayLabel()
 
 void AwayLabel::changeAwayMessage()
 {
-    QString awayMessage = KInputDialog::getText(i18n("Change away message"),i18n("Enter new away message:"));
+    QString awayMessage = QInputDialog::getText(this, i18n("Change away message"),i18n("Enter new away message:"));
     if (!awayMessage.isEmpty())
         emit awayMessageChanged(awayMessage);
 }

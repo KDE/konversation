@@ -15,11 +15,12 @@
 #include "awaymanager.h"
 #include "irccharsets.h"
 
+#include <QInputDialog>
+
 #include <KEditListWidget>
 #include <KDialog>
 #include <KMessageBox>
 #include <KMessageWidget>
-#include <KInputDialog>
 #include <KUser>
 
 namespace Konversation
@@ -206,7 +207,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
     void IdentityDialog::newIdentity()
     {
         bool ok = false;
-        QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity name:"), QString(), &ok, this);
+        QString txt = QInputDialog::getText(this, i18n("Add Identity"), i18n("Identity name:"), QLineEdit::Normal, QString(), &ok);
 
         if(ok && !txt.isEmpty())
         {
@@ -229,7 +230,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
     {
         bool ok = false;
         QString currentTxt = m_identityCBox->currentText();
-        QString txt = KInputDialog::getText(i18n("Rename Identity"), i18n("Identity name:"), currentTxt, &ok, this);
+        QString txt = QInputDialog::getText(this, i18n("Rename Identity"), i18n("Identity name:"), QLineEdit::Normal, currentTxt, &ok);
 
         if(ok && !txt.isEmpty())
         {
@@ -284,7 +285,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
     {
         bool ok = false;
         QString currentTxt = m_identityCBox->currentText();
-        QString txt = KInputDialog::getText(i18n("Duplicate Identity"), i18n("Identity name:"), currentTxt, &ok, this);
+        QString txt = QInputDialog::getText(this, i18n("Duplicate Identity"), i18n("Identity name:"), QLineEdit::Normal, currentTxt, &ok);
 
         if(ok && !txt.isEmpty())
         {

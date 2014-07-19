@@ -32,9 +32,9 @@
 #include <QTimer>
 #include <QToolButton>
 #include <QHeaderView>
+#include <QInputDialog>
 
 #include <KLineEdit>
-#include <KInputDialog>
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <KIconLoader>
@@ -906,11 +906,11 @@ void Channel::modeButtonClicked(int id, bool on)
         {
             bool ok=false;
             // ask user how many nicks should be the limit
-            args=KInputDialog::getText(i18n("Channel User Limit"),
+            args=QInputDialog::getText(this, i18n("Channel User Limit"),
                 i18n("Enter the new user limit for the channel:"),
+                QLineEdit::Normal,
                 limit->text(),                    // will be always "" but what the hell ;)
-                &ok,
-                this);
+                &ok);
             // leave this function if user cancels
             if(!ok) return;
         }
@@ -2785,7 +2785,7 @@ NickList::NickList() : QList<Nick*>()
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-			       bool skipNonAlfaNum, bool caseSensitive)
+                   bool skipNonAlfaNum, bool caseSensitive)
 {
     found.clear();
     QString prefix('^');

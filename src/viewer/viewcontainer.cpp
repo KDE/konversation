@@ -42,7 +42,7 @@
 #include <QSplitter>
 #include <QTabBar>
 
-#include <KInputDialog>
+#include <QInputDialog>
 #include <KMessageBox>
 #include <KRun>
 #include <QUrl>
@@ -1532,10 +1532,12 @@ void ViewContainer::renameKonsole()
 
     int popup = m_popupViewIndex ? m_popupViewIndex : m_tabWidget->currentIndex();
 
-    QString label = KInputDialog::getText(i18n("Rename Tab"),
+    QString label = QInputDialog::getText(m_tabWidget->widget(popup),
+                                          i18n("Rename Tab"),
                                           i18n("Enter new tab name:"),
+                                          QLineEdit::Normal,
                                           m_tabWidget->tabText(popup),
-                                          &ok, m_tabWidget->widget(popup));
+                                          &ok);
 
     if (ok)
     {
