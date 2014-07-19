@@ -22,7 +22,6 @@
 
 #include <QUrl>
 #include <KMessageBox>
-#include <KStandardDirs>
 #include <KFileDialog>
 #include <KTar>
 #include <KDesktopFile>
@@ -31,6 +30,7 @@
 
 #include <unistd.h> // unlink()
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 
 using namespace Konversation;
@@ -60,7 +60,7 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     // get list of theme dirs
-    m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
+    m_dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/*/index.desktop");
 
     // if we have any themes
     if (m_dirs.count() > 0)
@@ -166,7 +166,7 @@ void Theme_Config::installTheme()
     if(themeURL.isEmpty())
         return;
 
-    QString themesDir(KStandardDirs::locateLocal("data", "konversation/themes/"));
+    QString themesDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "konversation/themes/");
     QString tmpThemeFile;
 
     if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))

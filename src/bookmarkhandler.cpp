@@ -21,8 +21,8 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "connectionmanager.h"
 #include "viewer/viewcontainer.h"
 
-#include <KStandardDirs>
 #include <KBookmarkMenu>
+#include <QStandardPaths>
 
 
 KonviBookmarkHandler::KonviBookmarkHandler(QMenu *menu, MainWindow* mainWindow)
@@ -32,10 +32,10 @@ m_mainWindow(mainWindow)
 {
     setObjectName("KonviBookmarkHandler");
 
-    m_file = KStandardDirs::locate( "data", "konversation/bookmarks.xml" );
+    m_file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "konversation/bookmarks.xml" );
 
     if ( m_file.isEmpty() )
-        m_file = KStandardDirs::locateLocal( "data", "konversation/bookmarks.xml" );
+        m_file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "konversation/bookmarks.xml" ;
 
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
     manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);

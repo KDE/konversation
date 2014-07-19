@@ -25,8 +25,8 @@
 #include <KGlobal>
 #include <KLocale>
 #include <KUser>
-#include <KStandardDirs>
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 struct PreferencesSingleton
 {
@@ -392,7 +392,7 @@ const IdentityPtr Preferences::identityById(int id)
 QStringList Preferences::defaultAliasList()
 {
     // Auto-alias scripts
-    const QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+    const QStringList scripts = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripts/*");
     QFileInfo* fileInfo = new QFileInfo();
     QStringList aliasList;
     QString newAlias;

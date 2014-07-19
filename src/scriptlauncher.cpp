@@ -19,8 +19,8 @@
 
 #include <KGlobal>
 #include <KProcess>
-#include <KStandardDirs>
 #include <KLocale>
+#include <QStandardPaths>
 
 
 ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
@@ -28,7 +28,7 @@ ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
     qputenv("KONVERSATION_LANG", KLocale::global()->language().toAscii());
 
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value("PYTHONPATH").split(':', QString::SkipEmptyParts));
-    pythonPath << KGlobal::dirs()->findDirs("data", "konversation/scripting_support/python");
+    pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripting_support/python");
     qputenv("PYTHONPATH", pythonPath.join(":").toLocal8Bit());
 }
 
@@ -38,7 +38,7 @@ ScriptLauncher::~ScriptLauncher()
 
 QString ScriptLauncher::scriptPath(const QString& script)
 {
-    return KStandardDirs::locate("data", "konversation/scripts/" + script);
+    return QStandardPaths::locate(QStandardPaths::GenericDataLocation, "konversation/scripts/" + script);
 }
 
 void ScriptLauncher::launchScript(int connectionId, const QString& target, const QString &parameter)
@@ -61,7 +61,7 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
     proc.setProgram(path, parameterList);
 
     QStringList pythonPath = QProcessEnvironment::systemEnvironment().value("PYTHONPATH").split(':', QString::SkipEmptyParts);
-    pythonPath << KGlobal::dirs()->findDirs("data", "konversation/scripting_support/python");
+    pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripting_support/python");
     proc.setEnv("PYTHONPATH", pythonPath.join(":"));
 
     if (proc.startDetached() == 0)

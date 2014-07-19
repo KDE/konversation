@@ -17,7 +17,7 @@
 #include <QIconEngine>
 #include <QPainter>
 
-#include <KStandardDirs>
+#include <QStandardPaths>
 
 
 using namespace Konversation;
@@ -173,10 +173,10 @@ void Images::initializeNickIcons()
 {
 
     QString iconTheme = Preferences::self()->iconTheme();
-    QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
+    QStringList icons = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/"+iconTheme+"/*.png");
 
     if( icons.count() < 7 ) // Sanity
-        icons = KGlobal::dirs()->findAllResources("data","konversation/themes/default/*.png");
+        icons = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default/*.png");
     if ( icons.count() < 7 ) // Sanity
         return;
     icons.sort();

@@ -26,6 +26,7 @@
 // #include <kparts/componentfactory.h> FIXME KF5 port
 // #include <kregexpeditorinterface.h> FIXME KF5 port
 #include <KSharedConfig>
+#include <QStandardPaths>
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
@@ -44,7 +45,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
     // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
     // find the first "sound"-resource that contains files
-    QStringList soundDirs = KGlobal::dirs()->findDirs("data", "konversation/sounds");
+    QStringList soundDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/sounds");
     soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
 
     if (!soundDirs.isEmpty())
