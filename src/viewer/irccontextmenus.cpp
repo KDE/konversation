@@ -354,12 +354,8 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 {
     QMenu* channelMenu = self()->m_channelMenu;
 
-    QAction* title = 0;
-
-    /* FIXME KF5 port
     if (!channel.isEmpty())
-        title = channelMenu->addTitle(KStringHandler::rsqueeze(channel, 15), channelMenu->actions().first());
-    */
+        channelMenu->setTitle(KStringHandler::rsqueeze(channel, 15));
 
     bool connected = server->isConnected();
 
@@ -367,13 +363,6 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
         action->setEnabled(connected);
 
     QAction* action = channelMenu->exec(pos);
-
-    if (title)
-    {
-        channelMenu->removeAction(title);
-
-        delete title;
-    }
 
     switch (extractActionId(action))
     {
@@ -479,12 +468,8 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
 {
     QMenu* nickMenu = self()->m_nickMenu;
 
-    QAction* title = 0;
-
-    /* FIXME KF5 port
     if (options.testFlag(ShowTitle) && nicks.count() == 1)
-        title = nickMenu->addTitle(KStringHandler::rsqueeze(nicks.first(), 15), nickMenu->actions().first());
-    */
+        nickMenu->setTitle(KStringHandler::rsqueeze(nicks.first(), 15));
 
     foreach(QAction* action, nickMenu->actions())
         action->setVisible(true);
@@ -507,13 +492,6 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
     updateSharedNickSettingsActions(server, nicks);
 
     QAction* action = nickMenu->exec(pos);
-
-    if (title)
-    {
-        nickMenu->removeAction(title);
-
-        delete title;
-    }
 
     if (self()->m_quickButtonMenu->actions().contains(action))
         processQuickButtonAction(action, server, context, nicks);
