@@ -707,12 +707,10 @@ void MainWindow::updateTrayIcon()
             m_trayIcon = new Konversation::TrayIcon(this);
             connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
             connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
-            /* FIXME KF5 port
             QMenu *trayMenu = qobject_cast<QMenu*>(m_trayIcon->contextMenu());
             trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Preferences)));
             trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::ConfigureNotifications)));
             trayMenu->addAction(actionCollection()->action("toggle_away"));
-            */
         }
 
         m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());
