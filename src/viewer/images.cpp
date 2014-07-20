@@ -34,6 +34,7 @@ class LedIconEngine : public QIconEngine
         // QIconEngine
         virtual void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state);
         virtual QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
+        virtual QIconEngine* clone() const;
 
     private:
         const QColor m_color;
@@ -116,6 +117,13 @@ QPixmap LedIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State 
         paint(&p, QRect(QPoint(0, 0), size), mode, state);
     }
     return pix;
+}
+
+QIconEngine* LedIconEngine::clone() const
+{
+    LedIconEngine* newEngine = new LedIconEngine(m_color, m_state);
+
+    return newEngine;
 }
 
 
@@ -237,8 +245,7 @@ QIcon Images::getLed(const QColor& col,bool state)
     Q_UNUSED(col)
     Q_UNUSED(state)
 
-    // return QIcon(new LedIconEngine(col, state)); FIXME KF5 port
-    return QIcon(); // FIXME KF5 port
+    return QIcon(new LedIconEngine(col, state));
 }
 
 QIcon Images::getServerLed(bool state)
