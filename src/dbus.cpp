@@ -38,6 +38,19 @@ void DBus::raw(const QString& server,const QString& command)
     emit dbusRaw(sterilizeUnicode(server), sterilizeUnicode(command));
 }
 
+QStringList DBus::listConnections()
+{
+    Application* konvApp = static_cast<Application*>(kapp);
+
+    QStringList connections;
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
+
+    foreach (Server* server, serverList)
+        connections << QString::number(server->connectionId());
+
+    return connections;
+}
+
 QStringList DBus::listServers()
 {
     Application* konvApp = static_cast<Application*>(kapp);
