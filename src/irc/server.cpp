@@ -532,6 +532,12 @@ void Server::showSSLDialog()
 void Server::setChannelTypes(const QString &pre)
 {
     m_channelPrefixes = pre;
+
+    if (getConnectionSettings().reconnectCount() == 0) {
+        updateAutoJoin(m_connectionSettings.oneShotChannelList());
+    } else {
+        updateAutoJoin();
+    }
 }
 
 QString Server::getChannelTypes() const
