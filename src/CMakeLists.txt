@@ -67,7 +67,7 @@ set (irc_SRCS
     irc/serversettings.cpp
 )
 
-qt5_wrap_ui(irc_SRCS
+ki18n_wrap_ui(irc_SRCS
     irc/channellistpanelui.ui
     irc/channeldialogui.ui
     irc/joinchannelui.ui
@@ -95,7 +95,7 @@ set(config_SRCS
     config/connectionbehavior_config.cpp
 )
 
-qt5_wrap_ui(config_SRCS
+ki18n_wrap_ui(config_SRCS
     config/alias_configui.ui
     config/autoreplace_configui.ui
     config/chatwindowappearance_config.ui
@@ -152,7 +152,7 @@ set(viewer_SRCS
     viewer/viewtree.cpp
 )
 
-qt5_wrap_ui(viewer_SRCS
+ki18n_wrap_ui(viewer_SRCS
     viewer/channeloptionsui.ui
     viewer/irccolorchooserui.ui
     viewer/pasteeditor.ui
@@ -183,7 +183,7 @@ qt5_wrap_ui(viewer_SRCS
 #     dcc/whiteboardtoolbar.cpp
 # )
 #
-# qt5_wrap_ui(dcc_SRCS
+# ki18n_wrap_ui(dcc_SRCS
 #     dcc/transferdetailedinfopanelui.ui
 #     dcc/transferdetailedtimeinfopanelui.ui
 #     dcc/whiteboardtoolbarui.ui
@@ -205,7 +205,7 @@ set(upnp_SRCS
 set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
-qt5_wrap_ui(konversation_SRCS
+ki18n_wrap_ui(konversation_SRCS
     identitydialog.ui
     queuetunerbase.ui
     viewer/searchbarbase.ui
