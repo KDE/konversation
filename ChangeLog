@@ -4,6 +4,10 @@ Changes since 1.5:
 * Fixed a bug causing auto-joining of channels not starting in # or & to some-
   times fail because the auto-join command was generated before we got the
   CHANTYPES pronouncement by the server.
+* Fixed the bundled 'sysinfo' script not coping with empty lines in
+  /etc/os-release.
+* Made disk space info in the bundled 'sysinfo' script more robust by forcing
+  the C locale for 'df'.
 
 Changes from 1.5-rc2 to 1.5:
 Konversation 1.5 adds numerous major features over the previous stable release.
