@@ -2007,22 +2007,17 @@ void Server::requestUnban(const QString& mask,const QString& channel)
 
 void Server::requestDccSend()
 {
-    /* FIXME KF5 port
     requestDccSend(QString());
-    */
 }
 
 void Server::sendURIs(const QList<QUrl>& uris, const QString& nick)
 {
-    /* FIXME KF5 port
     foreach(const QUrl &uri, uris)
          addDccSend(nick, uri);
-    */
 }
 
 void Server::requestDccSend(const QString &a_recipient)
 {
-    /* FIXME KF5 port
     QString recipient(a_recipient);
     // if we don't have a recipient yet, let the user select one
     if (recipient.isEmpty())
@@ -2033,26 +2028,24 @@ void Server::requestDccSend(const QString &a_recipient)
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
-        QPointer<DccFileDialog> dlg = new DccFileDialog (KUrl(), QString(), getViewContainer()->getWindow());
+        QPointer<DccFileDialog> dlg = new DccFileDialog (QUrl(), QString(), getViewContainer()->getWindow());
         //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
-        KUrl::List fileURLs = dlg->getOpenUrls(
-            KUrl(),
+        QList<QUrl> fileURLs = dlg->getOpenUrls(
+            QUrl(),
             QString(),
             i18n("Select File(s) to Send to %1", recipient)
         );
-        KUrl::List::const_iterator it;
+        QList<QUrl>::const_iterator it;
         for ( it = fileURLs.constBegin() ; it != fileURLs.constEnd() ; ++it )
         {
             addDccSend( recipient, *it, dlg->passiveSend());
         }
         delete dlg;
     }
-    */
 }
 
 void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
 {
-    /* FIXME KF5 port
     if (transfer->getConnectionId() == connectionId() )
     {
         qDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
@@ -2067,12 +2060,10 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
             connect( transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(dccStatusChanged(Konversation::DCC::Transfer*,int,int)) );
         }
     }
-    */
 }
 
 void Server::addDccSend(const QString &recipient, QUrl fileURL, bool passive, const QString &altFileName, quint64 fileSize)
 {
-    /* FIXME KF5 port
     if (!fileURL.isValid())
     {
         return;
@@ -2095,14 +2086,10 @@ void Server::addDccSend(const QString &recipient, QUrl fileURL, bool passive, co
 
     if (newDcc->queue())
         newDcc->start();
-    */
 }
 
 QString Server::recoverDccFileName(const QStringList & dccArguments, int offset) const
 {
-    Q_UNUSED(dccArguments)
-
-    /* FIXME KF5 port
     QString fileName;
     if(dccArguments.count() > offset + 1)
     {
@@ -2124,14 +2111,10 @@ QString Server::recoverDccFileName(const QStringList & dccArguments, int offset)
     }
 
     return cleanDccFileName(fileName);
-    */
-
-    return QString(); // FIXME KF5 port
 }
 
 QString Server::cleanDccFileName(const QString& filename) const
 {
-    /* FIXME KF5 port
     QString cleanFileName = filename;
 
     //we want a clean filename to get rid of the mass """filename"""
@@ -2143,9 +2126,6 @@ QString Server::cleanDccFileName(const QString& filename) const
     }
 
     return cleanFileName;
-    */
-
-    return QString(); // FIXME KF5 port
 }
 
 quint16 Server::stringToPort(const QString &port, bool *ok)
@@ -2172,7 +2152,6 @@ quint16 Server::stringToPort(const QString &port, bool *ok)
 
 QString Server::recipientNick() const
 {
-    /* FIXME KF5 port
     QStringList nickList;
 
     // fill nickList with all nicks we know about
@@ -2193,17 +2172,10 @@ QString Server::recipientNick() const
     QStringListModel model;
     model.setStringList(nickList);
     return DCC::RecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
-    */
-
-    return QString(); // FIXME KF5 port
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-    Q_UNUSED(dccArguments)
-    Q_UNUSED(sourceNick)
-
-    /* FIXME KF5 port
     //filename ip port filesize [token]
     QString ip;
     quint16 port;
@@ -2274,15 +2246,10 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         if (Preferences::self()->dccAutoGet())
             newDcc->start();
     }
-    */
 }
 
 void Server::addDccChat(const QString& sourceNick, const QStringList& dccArguments)
 {
-    Q_UNUSED(dccArguments)
-    Q_UNUSED(sourceNick)
-
-    /* FIXME KF5 port
     //chat ip port [token]
     QString ip;
     quint16 port = 0;
@@ -2334,12 +2301,10 @@ void Server::addDccChat(const QString& sourceNick, const QStringList& dccArgumen
 
     emit addDccChat(newChat);
     newChat->start();
-    */
 }
 
 void Server::openDccChat(const QString& nickname)
 {
-    /* FIXME KF5 port
     qDebug();
     QString recipient(nickname);
     // if we don't have a recipient yet, let the user select one
@@ -2359,12 +2324,10 @@ void Server::openDccChat(const QString& nickname)
         emit addDccChat(newChat);
         newChat->start();
     }
-    */
 }
 
 void Server::openDccWBoard(const QString& nickname)
 {
-    /* FIXME KF5 port
     qDebug();
     QString recipient(nickname);
     // if we don't have a recipient yet, let the user select one
@@ -2386,27 +2349,21 @@ void Server::openDccWBoard(const QString& nickname)
         emit addDccChat(newChat);
         newChat->start();
     }
-    */
 }
 
 void Server::requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->requestDccChat(partnerNick, extension, numericalOwnIp,ownPort);
     queue(result.toServer);
-    */
 }
 
 void Server::acceptDccGet(const QString& nick, const QString& file)
 {
-    /* FIXME KF5 port
     Application::instance()->getDccTransferManager()->acceptDccGet(m_connectionId, nick, file);
-    */
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, quint16 port, quint64 size)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
 
@@ -2415,12 +2372,10 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
                                     partner,
                                     cleanDccFileName(fileName),
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
-    */
 }
 
 void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,quint64 size,const QString& token)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->passiveSendRequest(recipient,fileName,address,size,token);
     queue(result.toServer);
 
@@ -2429,71 +2384,55 @@ void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileN
                                     recipient,
                                     cleanDccFileName(fileName),
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
-    */
 }
 
 void Server::dccPassiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->passiveChatRequest(recipient, extension, address, token);
     queue(result.toServer);
 
     appendMessageToFrontmost(i18n("DCC"),
                              i18nc("%1=name, %2=dcc extension, chat or wboard for example","Asking %1 to accept %2...", recipient, extension));
-    */
 }
 
 void Server::dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,quint16 port,KIO::filesize_t startAt,const QString &token)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->resumePassiveRequest(sender,fileName,port,startAt,token);;
     queue(result.toServer);
-    */
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, quint16 port, KIO::filesize_t startAt)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);;
     queue(result.toServer);
-    */
 }
 
 void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,quint16 ownPort,quint64 size,const QString& reverseToken)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveSendRequest(partnerNick,fileName,ownAddress,ownPort,size,reverseToken);
     queue(result.toServer);
-    */
 }
 
 void Server::dccReverseChatAck(const QString& partnerNick, const QString& extension, const QString& ownAddress, quint16 ownPort, const QString& reverseToken)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveChatRequest(partnerNick, extension, ownAddress, ownPort, reverseToken);
     queue(result.toServer);
-    */
 }
 
 void Server::dccRejectSend(const QString& partnerNick, const QString& fileName)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->rejectDccSend(partnerNick,fileName);
     queue(result.toServer);
-    */
 }
 
 void Server::dccRejectChat(const QString& partnerNick, const QString& extension)
 {
-    /* FIXME KF5 port
     Konversation::OutputFilterResult result = getOutputFilter()->rejectDccChat(partnerNick, extension);
     queue(result.toServer);
-    */
 }
 
 void Server::startReverseDccChat(const QString &sourceNick, const QStringList &dccArguments)
 {
-    /* FIXME KF5 port
     qDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
@@ -2515,12 +2454,10 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
                                        "Received invalid passive DCC chat acceptance message from %1.",
                                        sourceNick));
     }
-    */
 }
 
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
-    /* FIXME KF5 port
     qDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
@@ -2554,12 +2491,10 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
                                        fileName,
                                        sourceNick));
     }
-    */
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    /* FIXME KF5 port
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename port position [token]
@@ -2607,12 +2542,10 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
                                        fileName,
                                        sourceNick));
     }
-    */
 }
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    /* FIXME KF5 port
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     bool passiv = false;
@@ -2677,12 +2610,10 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
                                        fileName,
                                        sourceNick));
     }
-    */
 }
 
 void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    /* FIXME KF5 port
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename
@@ -2698,12 +2629,10 @@ void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList 
                                        fileName,
                                        sourceNick));
     }
-    */
 }
 
 void Server::rejectDccChat(const QString& sourceNick)
 {
-    /* FIXME KF5 port
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     DCC::Chat* dccChat = dtm->rejectChat(connectionId(), sourceNick);
@@ -2715,12 +2644,10 @@ void Server::rejectDccChat(const QString& sourceNick)
                                        "Received invalid reject request from %1.",
                                        sourceNick));
     }
-    */
 }
 
 void Server::dccGetDone(DCC::Transfer* item)
 {
-    /* FIXME KF5 port
     if (!item)
         return;
 
@@ -2735,12 +2662,10 @@ void Server::dccGetDone(DCC::Transfer* item)
             "Download of \"%1\" from %2 failed. Reason: %3.", item->getFileName(),
             item->getPartnerNick(), item->getStatusDetail()));
     }
-    */
 }
 
 void Server::dccSendDone(DCC::Transfer* item)
 {
-    /* FIXME KF5 port
     if (!item)
         return;
 
@@ -2751,12 +2676,10 @@ void Server::dccSendDone(DCC::Transfer* item)
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 failed. Reason: %3.", item->getFileName(), item->getPartnerNick(),
             item->getStatusDetail()));
-    */
 }
 
 void Server::dccStatusChanged(DCC::Transfer *item, int newStatus, int oldStatus)
 {
-    /* FIXME KF5 port
     if(!item)
         return;
 
@@ -2778,7 +2701,6 @@ void Server::dccStatusChanged(DCC::Transfer *item, int newStatus, int oldStatus)
                                             item->getPartnerNick() ) );
         }
     }
-    */
 }
 
 void Server::removeQuery(Query* query)
