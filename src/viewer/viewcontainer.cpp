@@ -97,10 +97,10 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 
     initializeSplitterSizes();
 
-    // m_dccPanel = new DCC::TransferPanel(m_tabWidget); FIXME KF5 port
-    //m_dccPanel->hide(); FIXME KF5 port
+    m_dccPanel = new DCC::TransferPanel(m_tabWidget);
+    m_dccPanel->hide();
     m_dccPanelOpen = false;
-    // connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType))); FIXME KF5 port
+    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
 
     // Pre-construct context menus for better responsiveness when then
     // user opens them the first time. This is optional; the IrcContext-
@@ -2053,8 +2053,7 @@ void ViewContainer::toggleDccPanel()
 
 void ViewContainer::addDccPanel()
 {
-    return; // FIXME KF5 port
-
+    qDebug();
     if (!m_dccPanelOpen)
     {
         addView(m_dccPanel, i18n("DCC Status"));

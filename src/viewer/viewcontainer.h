@@ -262,7 +262,7 @@ class ViewContainer : public QAbstractItemModel
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
 
-        ChatWindow* m_dccPanel; // FIXME KF5 port
+        ChatWindow* m_dccPanel;
         bool m_dccPanelOpen;
 
         Konversation::InsertCharDialog* m_insertCharDialog;
