@@ -170,9 +170,9 @@ class ViewContainer : public QAbstractItemModel
         void addDccPanel();
         void closeDccPanel();
         void deleteDccPanel();
-        ChatWindow* getDccPanel(); // FIXME KF5 port
+        ChatWindow* getDccPanel();
 
-        // void addDccChat(Konversation::DCC::Chat* myNick); FIXME KF5 port
+        void addDccChat(Konversation::DCC::Chat* myNick);
 
         StatusPanel* addStatusView(Server* server);
         RawLog* addRawLog(Server* server);

@@ -169,7 +169,7 @@ int Application::newInstance()
         m_scriptLauncher = new ScriptLauncher(this);
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        // m_dccTransferManager = new DCC::TransferManager(this); FIXME KF5 port
+        m_dccTransferManager = new DCC::TransferManager(this);
 
         // make sure all vars are initialized properly
         quickConnectDialog = 0;

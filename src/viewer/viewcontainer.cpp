@@ -2086,12 +2086,11 @@ void ViewContainer::deleteDccPanel()
     }
 }
 
-ChatWindow* ViewContainer::getDccPanel() // FIXME KF5 port
+ChatWindow* ViewContainer::getDccPanel()
 {
     return m_dccPanel;
 }
 
-/* FIXME KF5 port
 void ViewContainer::addDccChat(DCC::Chat* chat)
 {
     if (!chat->selfOpened()) // Someone else initiated dcc chat
@@ -2106,7 +2105,6 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
 
     addView(chatcontainer, chatcontainer->getName());
 }
-*/
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
 {

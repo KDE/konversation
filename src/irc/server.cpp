@@ -304,7 +304,7 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(reconnectServer(QString)), this, SLOT(reconnectServer(QString)));
     connect(getOutputFilter(), SIGNAL(disconnectServer(QString)), this, SLOT(disconnectServer(QString)));
     connect(getOutputFilter(), SIGNAL(quitServer(QString)), this, SLOT(quitServer(QString)));
-    connect(getOutputFilter(), SIGNAL(openDccSend(QString,KUrl)), this, SLOT(addDccSend(QString,KUrl)), Qt::QueuedConnection);
+    connect(getOutputFilter(), SIGNAL(openDccSend(QString,QUrl)), this, SLOT(addDccSend(QString,QUrl)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccChat(QString)), this, SLOT(openDccChat(QString)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccWBoard(QString)), this, SLOT(openDccWBoard(QString)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(acceptDccGet(QString,QString)),
