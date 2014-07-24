@@ -22,6 +22,7 @@
 
 #include <QTimer>
 #include <KLocale>
+#include <kglobalsettings.h>
 
 
 namespace Konversation
@@ -142,7 +143,7 @@ namespace Konversation
             m_locationInfo.m_labelFilename->setText(m_transfer->getFileName());
 
             // Location:
-            m_locationInfo.m_urlreqLocation->setUrl(m_transfer->getFileURL().prettyUrl());
+            m_locationInfo.m_urlreqLocation->setUrl(m_transfer->getFileURL().toString());
             //m_urlreqLocation->lineEdit()->setFocusPolicy( m_item->getStatus() == Transfer::Queued ? Qt::StrongFocus : ClickFocus );
             m_locationInfo.m_urlreqLocation->lineEdit()->setReadOnly(m_transfer->getStatus() != Transfer::Queued);
             m_locationInfo.m_urlreqLocation->lineEdit()->setFrame(m_transfer->getStatus() == Transfer::Queued);
@@ -278,7 +279,7 @@ namespace Konversation
             if (m_transfer &&  m_transfer->getType() == Transfer::Receive)
             {
                 TransferRecv *transfer = static_cast<TransferRecv*>(m_transfer);
-                transfer->setFileURL(KUrl(url));
+                transfer->setFileURL(QUrl::fromLocalFile(url));
                 updateView();
             }
         }

@@ -179,7 +179,7 @@ namespace Konversation
             //Check the file exists
             if (!KIO::NetAccess::exists(m_fileURL, KIO::NetAccess::SourceSide, NULL))
             {
-                failed(i18n("The url \"%1\" does not exist", m_fileURL.prettyUrl()));
+                failed(i18n("The url \"%1\" does not exist", m_fileURL.toString()));
                 return false;
             }
 
@@ -187,7 +187,7 @@ namespace Konversation
             //Download the file.  Does nothing if it's local (file:/)
             if (!KIO::NetAccess::download(m_fileURL, m_tmpFile, NULL))
             {
-                failed(i18n("Could not retrieve \"%1\"", m_fileURL.prettyUrl()));
+                failed(i18n("Could not retrieve \"%1\"", m_fileURL.toString()));
                 qDebug() << "KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString();
                 return false;
             }

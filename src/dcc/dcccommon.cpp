@@ -32,6 +32,8 @@
 #include <QHostAddress>
 #include <QTcpServer>
 
+#include <kglobalsettings.h>
+
 namespace Konversation
 {
     namespace DCC

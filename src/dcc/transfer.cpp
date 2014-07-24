@@ -369,7 +369,7 @@ namespace Konversation
             return m_transferStartPosition;
         }
 
-        KUrl Transfer::getFileURL() const
+        QUrl Transfer::getFileURL() const
         {
             return m_fileURL;
         }

@@ -11,6 +11,8 @@
   Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
+#include <QDir>
+
 #include "transfermanager.h"
 #include "transferrecv.h"
 #include "transfersend.h"
@@ -376,12 +378,10 @@ namespace Konversation
                 foreach ( TransferRecv* it, m_recvItems )
                 {
                     if ( it->getStatus() == Transfer::Queued &&
-                         it->getFileURL().directory() == m_defaultIncomingFolder.pathOrUrl() )
+                         it->getFileURL().adjusted(QUrl::RemoveFilename) == m_defaultIncomingFolder.adjusted(QUrl::RemoveFilename))
                     {
-                        QUrl url;
-                        url.setDirectory( Preferences::self()->dccPath().url(QUrl::PrettyDecoded | QUrl::PreferLocalFile) );
-                        url.setFileName( it->getFileURL().fileName() );
-                        it->setFileURL( url );
+                        QUrl url = QUrl::fromLocalFile(Preferences::self()->dccPath().adjusted(QUrl::StripTrailingSlash).toString() + QDir::separator() + it->getFileURL().fileName());
+                        it->setFileURL(url);
 
                         emit fileURLChanged( it );
                     }

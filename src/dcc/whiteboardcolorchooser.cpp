@@ -14,6 +14,7 @@
 #include <QPaintEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <qdrawutil.h>
 
 #include <KColorDialog>
 #include <KDebug>

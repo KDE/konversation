@@ -259,7 +259,6 @@ namespace Konversation
         KNotification::event(QLatin1String("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
     }
 
-    /* KF5 port
     void NotificationHandler::dccTransferDone(ChatWindow* chatWin, const QString& file, DCC::Transfer* transfer)
     {
         if (!chatWin || !chatWin->notificationsEnabled())
@@ -282,7 +281,6 @@ namespace Konversation
             notification->sendEvent();
         }
     }
-    */
 
     void NotificationHandler::mode(ChatWindow* chatWin, const QString& nick, const QString& subject, const QString& change)
     {

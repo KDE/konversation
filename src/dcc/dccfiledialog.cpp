@@ -28,13 +28,20 @@ DccFileDialog::DccFileDialog(const QUrl &startDir, const QString& filter, QWidge
     m_checkBox->setCheckState(Preferences::self()->dccPassiveSend() ? Qt::Checked : Qt::Unchecked);
 }
 
-KUrl::List DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
+QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
 {
+    //setDirectory(startDir);
     setStartDir(startDir);
+    
     setFilter(filter);
+
+    //setAcceptMode(QFileDialog::AcceptOpen);
     setOperationMode( KFileDialog::Opening );
+
+    //setFileMode(QFileDialog::ExistingFile);
     setMode( KFile::Files | KFile::ExistingOnly );
-    setCaption(caption.isEmpty() ? i18n("Open") : caption);
+    
+    //setCaption(caption.isEmpty() ? i18n("Open") : caption);
 
     exec();
     return selectedUrls();

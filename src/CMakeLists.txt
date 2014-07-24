@@ -160,35 +160,35 @@ ki18n_wrap_ui(viewer_SRCS
 
 # FIXME KF5 port
 #     #=== DCC
-# set(dcc_SRCS
-#     dcc/chat.cpp
-#     dcc/chatcontainer.cpp
-#     dcc/dcccommon.cpp
-#     dcc/dccfiledialog.cpp
-#     dcc/recipientdialog.cpp
-#     dcc/resumedialog.cpp
-#     dcc/transfer.cpp
-#     dcc/transferdetailedinfopanel.cpp
-#     dcc/transfermanager.cpp
-#     dcc/transferpanel.cpp
-#     dcc/transferrecv.cpp
-#     dcc/transfersend.cpp
-#     dcc/transferlistmodel.cpp
-#     dcc/transferview.cpp
-#     dcc/whiteboard.cpp
-#     dcc/whiteboardcolorchooser.cpp
-#     dcc/whiteboardfontchooser.cpp
-#     dcc/whiteboardglobals.cpp
-#     dcc/whiteboardpaintarea.cpp
-#     dcc/whiteboardtoolbar.cpp
-# )
+set(dcc_SRCS
+     dcc/chat.cpp
+     dcc/chatcontainer.cpp
+     dcc/dcccommon.cpp
+     dcc/dccfiledialog.cpp
+     dcc/recipientdialog.cpp
+     dcc/resumedialog.cpp
+     dcc/transfer.cpp
+     dcc/transferdetailedinfopanel.cpp
+     dcc/transfermanager.cpp
+     dcc/transferpanel.cpp
+     dcc/transferrecv.cpp
+     dcc/transfersend.cpp
+     dcc/transferlistmodel.cpp
+     dcc/transferview.cpp
+     dcc/whiteboard.cpp
+     dcc/whiteboardcolorchooser.cpp
+     dcc/whiteboardfontchooser.cpp
+     dcc/whiteboardglobals.cpp
+     dcc/whiteboardpaintarea.cpp
+     dcc/whiteboardtoolbar.cpp
+)
 #
-# ki18n_wrap_ui(dcc_SRCS
-#     dcc/transferdetailedinfopanelui.ui
-#     dcc/transferdetailedtimeinfopanelui.ui
-#     dcc/whiteboardtoolbarui.ui
-#     dcc/whiteboardfontchooserui.ui
-# )
+ki18n_wrap_ui(dcc_SRCS
+     dcc/transferdetailedinfopanelui.ui
+     dcc/transferdetailedtimeinfopanelui.ui
+     dcc/whiteboardtoolbarui.ui
+     dcc/whiteboardfontchooserui.ui
+)
 
 if (QCA2_FOUND)
     set(cipher_SRCS
@@ -202,7 +202,7 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${cipher_SRCS} ${upnp_SRCS} ${dcc_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 ki18n_wrap_ui(konversation_SRCS

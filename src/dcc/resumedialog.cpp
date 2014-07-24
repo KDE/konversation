@@ -60,7 +60,7 @@ namespace Konversation
                 item->setFileURL( dlg->m_urlreqFileURL->url() );
                 if ((enabledActions & RA_OverwriteDefaultPath) && dlg->m_overwriteDefaultPathCheckBox->isChecked())
                 {
-                    Preferences::self()->setDccPath(dlg->m_urlreqFileURL->url().upUrl());
+                    Preferences::self()->setDccPath(KIO::upUrl(dlg->m_urlreqFileURL->url()));
                 }
             }
 
@@ -90,9 +90,9 @@ namespace Konversation
             QLabel* labelMessage = new QLabel(page);
             labelMessage->setText(message);
 
-            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().prettyUrl(), page);
+            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().toString(), page);
             m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
-            m_urlreqFileURL->fileDialog()->setKeepLocation(true);
+            //m_urlreqFileURL->fileDialog()->setKeepLocation(true);
             connect(m_urlreqFileURL, SIGNAL(textChanged(QString)), this, SLOT(updateDialogButtons()));
 
             pageLayout->addWidget(labelMessage);
@@ -180,7 +180,7 @@ namespace Konversation
         {
             QString dotSuffix, suggestedName;
             QString basename = m_urlreqFileURL->url().url().section('/', -1);
-            KUrl baseURL(m_urlreqFileURL->url().url().section('/', 0, -2));
+            QUrl baseURL(m_urlreqFileURL->url().url().section('/', 0, -2));
 
             int index = basename.indexOf( '.' );
             if ( index != -1 )
@@ -214,9 +214,9 @@ namespace Konversation
             // TODO: network transparency. However, using NetAccess from a modal dialog
             // could be a problem, no? (given that it uses a modal widget itself....)
             if ( baseURL.isLocalFile() )
-                exists = QFileInfo( baseURL.path(KUrl::AddTrailingSlash) + suggestedName ).exists();
+                exists = QFileInfo(baseURL.adjusted(QUrl::StripTrailingSlash).toLocalFile() + QDir::separator() + suggestedName).exists();
 
-            m_urlreqFileURL->setUrl( QString(baseURL.path(KUrl::AddTrailingSlash) + suggestedName ));
+            m_urlreqFileURL->setUrl(QUrl::fromLocalFile(baseURL.adjusted(QUrl::StripTrailingSlash).toLocalFile() + QDir::separator() + suggestedName));
 
             if ( exists ) // already exists -> recurse
                 suggestNewName();
@@ -224,7 +224,7 @@ namespace Konversation
 
         void ResumeDialog::setDefaultName() // slot
         {
-            m_urlreqFileURL->setUrl(m_item->getFileURL().prettyUrl());
+            m_urlreqFileURL->setUrl(m_item->getFileURL().toString());
         }
     }
 }

@@ -223,20 +223,22 @@ namespace Konversation
                 // set default folder
                 if (!Preferences::self()->dccPath().isEmpty())
                 {
-                    m_fileURL = KUrl(Preferences::self()->dccPath());
+                    m_fileURL = Preferences::self()->dccPath();
                 }
                 else
                 {
                     m_fileURL.setPath(KUser(KUser::UseRealUserID).homeDir());  // default folder is *not* specified
                 }
 
+                //buschinski TODO CHECK ME
                 // add a slash if there is none
-                m_fileURL.adjustPath(KUrl::AddTrailingSlash);
+                //m_fileURL.adjustPath(KUrl::AddTrailingSlash);
 
                 // Append folder with partner's name if wanted
                 if (Preferences::self()->dccCreateFolder())
                 {
-                    m_fileURL.addPath(m_partnerNick + '/');
+                    m_fileURL = m_fileURL.adjusted(QUrl::StripTrailingSlash);
+                    m_fileURL.setPath(m_fileURL.path() + QDir::separator() + m_partnerNick);
                 }
 
                 // Just incase anyone tries to do anything nasty
@@ -245,12 +247,13 @@ namespace Konversation
                 // Append partner's name to file name if wanted
                 if (Preferences::self()->dccAddPartner())
                 {
-                    m_fileURL.addPath(m_partnerNick + '.' + fileNameSanitized);
+                    m_fileURL = m_fileURL.adjusted(QUrl::StripTrailingSlash);
+                    m_fileURL.setPath(m_fileURL.path() + QDir::separator() + m_partnerNick + '.' + fileNameSanitized);
                 }
                 else
                 {
                     m_fileURL = m_fileURL.adjusted(QUrl::StripTrailingSlash);
-                    m_fileURL.setPath(m_fileURL.path() + '/' + fileNameSanitized);
+                    m_fileURL.setPath(m_fileURL.path() + QDir::separator() + fileNameSanitized);
                 }
             }
 
@@ -306,11 +309,11 @@ namespace Konversation
             m_resumed = resume;
             m_transferringPosition = startPosition;
 
-            if (!createDirs(m_fileURL.upUrl()))
+            if (!createDirs(KIO::upUrl(m_fileURL)))
             {
                 askAndPrepareLocalKio(i18n("<b>Cannot create the folder or destination is not writable.</b><br/>"
                     "Folder: %1<br/>",
-                    m_fileURL.upUrl().prettyUrl()),
+                    KIO::upUrl(m_fileURL).toString()),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel | ResumeDialog::RA_OverwriteDefaultPath,
                     ResumeDialog::RA_Rename);
                 return;
@@ -320,7 +323,7 @@ namespace Konversation
             {
                 askAndPrepareLocalKio(i18n("<b>The file is used by another transfer.</b><br/>"
                     "%1<br/>",
-                    m_fileURL.prettyUrl()),
+                    m_fileURL.toString()),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                     ResumeDialog::RA_Rename);
                 return;
@@ -380,10 +383,10 @@ namespace Konversation
             //since we need to create directories one by one
 
             QStringList dirList;
-            while (surl != kurl.upUrl().url())
+            while (surl != KIO::upUrl(kurl).url())
             {
                 dirList.prepend(surl);
-                kurl = kurl.upUrl();
+                kurl = KIO::upUrl(kurl);
                 surl = kurl.url();
             }
 
@@ -402,7 +405,7 @@ namespace Konversation
             }
 
 #ifndef Q_OS_WIN
-            QFileInfo dirInfo(dirURL.pathOrUrl());
+            QFileInfo dirInfo(dirURL.toLocalFile());
             if (!dirInfo.isWritable())
             {
                 return false;
@@ -449,7 +452,7 @@ namespace Konversation
                         "%2<br/>"
                         "Size of the partial file: %1 bytes.<br/>",
                         size,
-                        m_fileURL.prettyUrl()),
+                        m_fileURL.toString()),
                         ResumeDialog::RA_Resume | ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                         ResumeDialog::RA_Resume,
                         size);
@@ -478,7 +481,7 @@ namespace Konversation
                                                 "<b>The file already exists.</b><br/>"
                                                 "%1 (%2)<br/>"
                                                 "Sender reports file size of %3<br/>",
-                                                m_fileURL.prettyUrl(), KIO::convertSize(QFileInfo(m_fileURL.path()).size()),
+                                                m_fileURL.toString(), KIO::convertSize(QFileInfo(m_fileURL.path()).size()),
                                                 KIO::convertSize(m_fileSize)),
                                           ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                                           ResumeDialog::RA_Overwrite);
@@ -488,7 +491,7 @@ namespace Konversation
                         "Error: %1</b><br/>"
                         "%2<br/>",
                         transferJob->error(),
-                        m_fileURL.prettyUrl()),
+                        m_fileURL.toString()),
                         ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                         ResumeDialog::RA_Rename);
             }
