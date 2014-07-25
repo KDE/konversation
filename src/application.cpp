@@ -1261,7 +1261,7 @@ void Application::openUrl(const QString& url)
         else if (url.startsWith(QLatin1String("mailto:")))
             KToolInvocation::invokeMailer(QUrl(url));
         else
-#ifndef Q_WS_WIN
+#ifndef Q_OS_WIN
             new KRun(QUrl(url), Application::instance()->getMainWindow());
 #else
             KToolInvocation::invokeBrowser(url);
