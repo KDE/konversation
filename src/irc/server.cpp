@@ -757,7 +757,7 @@ void Server::registerWithServices()
         authString.append(QChar(QChar::Null));
         authString.append(getIdentity()->getAuthPassword());
 
-        sendAuthenticate(authString.toAscii().toBase64());
+        sendAuthenticate(authString.toLatin1().toBase64());
     }
 }
 
@@ -1506,7 +1506,7 @@ int Server::_send_internal(QString outputLine)
             }
             else
             {
-                dest = outputLineSplit.at(1).toAscii();
+                dest = outputLineSplit.at(1).toLatin1();
             }
 
             if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
@@ -1528,7 +1528,7 @@ int Server::_send_internal(QString outputLine)
                     else if(getQueryByName(target) && getQueryByName(target)->getCipher()->setKey(cipherKey.toLocal8Bit()))
                         getQueryByName(target)->getCipher()->encrypt(payload);
 
-                    encoded = outputLineSplit.at(0).toAscii();
+                    encoded = outputLineSplit.at(0).toLatin1();
                     qDebug() << payload << "\n" << payload.data();
                     //two lines because the compiler insists on using the wrong operator+
                     encoded += ' ' + dest + " :" + payload;

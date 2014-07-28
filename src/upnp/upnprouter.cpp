@@ -318,7 +318,7 @@ namespace Konversation
             address.setPort(location.port());
             address.setPath(controlurl);
 
-            KIO::TransferJob *req = KIO::http_post( address, query.toAscii(), KIO::HideProgressInfo );
+            KIO::TransferJob *req = KIO::http_post( address, query.toLatin1(), KIO::HideProgressInfo );
 
             req->addMetaData("content-type", QString("text/xml"));
             req->addMetaData("UserAgent", QString("Konversation UPnP"));

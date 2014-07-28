@@ -995,7 +995,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     for (int index=0;index<modeString.length();index++)
                     {
                         QString parameter;
-                        char mode(modeString[index].toAscii());
+                        char mode(modeString[index].toLatin1());
                         if(mode!='+')
                         {
                             if(!modesAre.isEmpty())
@@ -2246,7 +2246,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
 
     for (int index=0;index<modestring.length();index++)
     {
-        unsigned char mode(modestring[index].toAscii());
+        unsigned char mode(modestring[index].toLatin1());
         QString parameter;
 
         // Check if this is a mode or a +/- qualifier

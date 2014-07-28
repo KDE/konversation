@@ -1334,7 +1334,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
         }
 
 
-        switch (htmlText.at(pos).toAscii())
+        switch (htmlText.at(pos).toLatin1())
         {
             case '\x02': //bold
                 offset = defaultHtmlReplace(htmlText, &data, pos, QLatin1String("b"));
@@ -1712,7 +1712,7 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
     QString ret;
     while (pos < codes.length())
     {
-        switch (codes.at(pos).toAscii())
+        switch (codes.at(pos).toLatin1())
         {
             case '\x02': //bold
                 defaultRemoveDuplicateHandling(data, QLatin1String("b"));
@@ -1825,7 +1825,7 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
                 }
                 break;
             default:
-//                 qDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toAscii(), 16);
+//                 qDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toLatin1(), 16);
                 ret += codes.at(pos);
                 ++pos;
         }
