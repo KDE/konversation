@@ -29,11 +29,11 @@
 #include <QTimer>
 #include <QTcpSocket>
 #include <QTcpServer>
+#include <QInputDialog>
 
 #include <KIO/NetAccess>
 
 // TODO: remove the dependence
-#include <KInputDialog>
 #include <KAuthorized>
 
 using namespace Konversation::UPnP;
@@ -196,7 +196,10 @@ namespace Konversation
             if (m_fileName.isEmpty())
             {
                 bool pressedOk;
-                m_fileName = KInputDialog::getText(i18n("Enter Filename"), i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick()), "unknown", &pressedOk, NULL);
+                m_fileName = QInputDialog::getText(0, i18n("Enter Filename"),
+                                                   i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick()),
+                                                   QLineEdit::EchoMode::Normal, i18n("unknown"),
+                                                   &pressedOk);
 
                 if (!pressedOk)
                 {
