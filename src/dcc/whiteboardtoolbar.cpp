@@ -240,7 +240,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::saveClicked()
         {
-            QPointer<QFileDialog> fileDialog = new QFileDialog(this, i18n("Save Image"), QDir::homePath(), "Images (*.png *.xpm *.jpg)");
+            QPointer<QFileDialog> fileDialog = new QFileDialog(this, i18n("Save Image"), QDir::homePath(), i18n("Images (*.png *.xpm *.jpg)"));
             fileDialog->setAcceptMode(QFileDialog::AcceptSave);
             fileDialog->setFileMode(QFileDialog::AnyFile);
 
