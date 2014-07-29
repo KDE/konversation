@@ -46,7 +46,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
     // find the first "sound"-resource that contains files
     QStringList soundDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/sounds");
-    soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
+    soundDirs += QStandardPaths::locate(QStandardPaths::GenericDataLocation, "sounds", QStandardPaths::LocateDirectory);
 
     if (!soundDirs.isEmpty())
     {
