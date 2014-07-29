@@ -15,9 +15,8 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QDebug>
+#include <QColorDialog>
 #include <qdrawutil.h>
-
-#include <KColorDialog>
 
 namespace Konversation
 {
@@ -125,7 +124,7 @@ namespace Konversation
             if (whichColor == ForegroundColor || whichColor == BackgroundColor)
             {
                 QColor col = color(whichColor);
-                if (KColorDialog::getColor(col, this) == KColorDialog::Accepted)
+                if (QColorDialog::getColor(col, this) == QColorDialog::Accepted)
                 {
                     setColor(whichColor, col);
                     update();
