@@ -28,7 +28,6 @@
 #include <KDialog>
 #include <KLocalizedString>
 // #include <baloo/filemetadatawidget.h> FIXME KF5 port
-#include <KDebug>
 
 class QSplitter;
 class QMenu;

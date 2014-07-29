@@ -23,8 +23,7 @@
 #include <QResizeEvent>
 #include <QPen>
 #include <QStack>
-
-#include <KDebug>
+#include <QDebug>
 
 namespace Konversation
 {

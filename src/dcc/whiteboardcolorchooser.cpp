@@ -14,10 +14,10 @@
 #include <QPaintEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QDebug>
 #include <qdrawutil.h>
 
 #include <KColorDialog>
-#include <KDebug>
 
 namespace Konversation
 {

@@ -16,12 +16,12 @@
 #include <QDir>
 #include <QImageWriter>
 #include <QPainter>
-
 #include <QPushButton>
 #include <QUrl>
-#include <KFileDialog>
 #include <QIcon>
-#include <KDebug>
+#include <QDebug>
+
+#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "whiteboardfontchooser.h"

@@ -15,7 +15,6 @@
 
 #include "transferview.h"
 
-#include <KDebug>
 #include <QMenu>
 #include <KCategoryDrawer>
 #include <KLocalizedString>

@@ -14,7 +14,6 @@
 #include <QCheckBox>
 
 #include <KLocalizedString>
-#include <KDebug>
 #include <KFileWidget>
 
 #include <preferences.h>

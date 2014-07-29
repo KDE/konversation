@@ -16,10 +16,10 @@
 #include "transferlistmodel.h"
 
 #include <QApplication>
+#include <QDebug>
 
 #include <KCategorizedSortFilterProxyModel>
 #include <KLocalizedString>
-#include <KDebug>
 #include <KCategoryDrawer>
 #include <KIconLoader>
 
