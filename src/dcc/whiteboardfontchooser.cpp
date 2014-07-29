@@ -14,7 +14,6 @@
 #include <QCloseEvent>
 
 #include <KComboBox>
-#include <KFontComboBox>
 
 namespace Konversation
 {

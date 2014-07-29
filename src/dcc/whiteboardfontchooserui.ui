@@ -34,7 +34,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="KFontComboBox" name="m_fontComboBox"/>
+        <widget class="QFontComboBox" name="m_fontComboBox"/>
        </item>
        <item>
         <widget class="KComboBox" name="m_fontPointComboBox">
@@ -203,11 +203,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KFontComboBox</class>
-   <extends>KComboBox</extends>
-   <header>kfontcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
