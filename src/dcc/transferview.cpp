@@ -48,7 +48,7 @@ namespace Konversation
             setRootIsDecorated(false); //not implemented for special items
             setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-            m_categoryDrawer = new KCategoryDrawerV3(0);
+            m_categoryDrawer = new KCategoryDrawer(0);
 
             setItemDelegate(new TransferSizeDelegate(m_categoryDrawer, this));
 

@@ -24,7 +24,7 @@
 
 class QKeyEvent;
 
-class KCategoryDrawerV3;
+class KCategoryDrawer;
 
 namespace Konversation
 {
@@ -113,7 +113,7 @@ namespace Konversation
 
             inline void addItem(Transfer *transfer, TransferItemData::ItemDisplayType type);
 
-            KCategoryDrawerV3 *m_categoryDrawer;
+            KCategoryDrawer *m_categoryDrawer;
 
             TransferListModel *m_dccModel;
             TransferListProxyModel *m_proxyModel;

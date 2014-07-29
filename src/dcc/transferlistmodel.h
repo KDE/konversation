@@ -27,7 +27,7 @@
 
 #include "transfer.h"
 
-class KCategoryDrawerV3;
+class KCategoryDrawer;
 
 namespace Konversation
 {
@@ -79,13 +79,13 @@ namespace Konversation
         class TransferSizeDelegate : public QStyledItemDelegate
         {
         public:
-            explicit TransferSizeDelegate(KCategoryDrawerV3* categoryDrawer, QObject *parent = 0);
+            explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
 
             virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
             virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const;
         private:
-            KCategoryDrawerV3* m_categoryDrawer;
+            KCategoryDrawer* m_categoryDrawer;
         };
 
         class TransferProgressBarDelegate : public QStyledItemDelegate

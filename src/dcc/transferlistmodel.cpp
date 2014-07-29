@@ -56,7 +56,7 @@ namespace Konversation
             };
         }
 
-        TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawerV3* categoryDrawer, QObject* parent)
+        TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject* parent)
             : QStyledItemDelegate(parent)
         {
             m_categoryDrawer = categoryDrawer;
