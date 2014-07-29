@@ -20,8 +20,8 @@
 #include <QUrl>
 #include <QIcon>
 #include <QDebug>
+#include <QFileDialog>
 
-#include <KFileDialog>
 #include <KLocalizedString>
 
 #include "whiteboardfontchooser.h"
@@ -240,16 +240,18 @@ namespace Konversation
 
         void WhiteBoardToolBar::saveClicked()
         {
-            QPointer<KFileDialog> fileDialog = new KFileDialog(QUrl(QDir::homePath()), "*.png\n*.jpg", this);
-            //fileDialog->setCaption(i18n("Save Image"));
-            fileDialog->setOperationMode(KFileDialog::Saving);
-            fileDialog->setMode(KFile::File);
+            QPointer<QFileDialog> fileDialog = new QFileDialog(this, i18n("Save Image"), QDir::homePath(), "Images (*.png *.xpm *.jpg)");
+            fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+            fileDialog->setFileMode(QFileDialog::AnyFile);
+
             int ret = fileDialog->exec();
 
             if (ret == QDialog::Accepted && fileDialog)
             {
-                qDebug() << fileDialog->selectedFile();
-                emit save(fileDialog->selectedFile());
+                QStringList saveList = fileDialog->selectedFiles();
+                qDebug() << saveList;
+                if (saveList.count() > 0)
+                emit save(saveList.at(0));
             }
             delete fileDialog;
         }
