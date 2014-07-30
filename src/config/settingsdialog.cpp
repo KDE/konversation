@@ -25,7 +25,7 @@
 #include "tabs_config.h"
 #include "ui_colorsappearance_config.h"
 #include "ui_generalbehavior_configui.h"
-// #include "dcc_config.h" FIXME KF5 port
+#include "dcc_config.h"
 #include "osd_config.h"
 #include "theme_config.h"
 #include "alias_config.h"
@@ -150,10 +150,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   confLog.kcfg_LogfilePath->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
   konviAddSubPage(behaviorGroup, w, i18n("Logging"), QLatin1String("text-plain"));
 
-  /* FIXME KF5 port
-  m_confDCCWdg = new DCC_Config( this, "DCC" );
-  addPage ( m_confDCCWdg, behaviorGroup, QLatin1String("arrow-right-double"), i18n("DCC") );
-  */
+  //DCC
+  m_confDCCWdg = new DCC_Config(this, "DCC");
+  konviAddSubPage(behaviorGroup, m_confDCCWdg, i18nc("@title:tab", "DCC"), QLatin1String("arrow-right-double"));
 
   //Notifications/Tab Bar
   Ui::TabNotifications_Config confTabNotifications;

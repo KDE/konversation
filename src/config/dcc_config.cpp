@@ -15,8 +15,8 @@
 #include "application.h"
 #include "transfermanager.h"
 
-// #include <solid/device.h> FIXME KF5 port
-// #include <Solid/NetworkInterface> FIXME KF5 port
+#include <QNetworkConfiguration>
+#include <QNetworkConfigurationManager>
 
 using namespace Konversation;
 
@@ -35,17 +35,11 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
 
-    /* FIXME KF5 port
-    foreach (const Solid::Device& device, Solid::Device::listFromType(Solid::DeviceInterface::NetworkInterface, QString()))
+    QNetworkConfigurationManager manager;
+    foreach (const QNetworkConfiguration& conf, manager.allConfigurations())
     {
-        if  (!device.is<Solid::NetworkInterface>())
-        {
-            continue;
-        }
-        const Solid::NetworkInterface *network = device.as<Solid::NetworkInterface>();
-        kcfg_DccIPv4FallbackIface->addItem(network->ifaceName());
+        kcfg_DccIPv4FallbackIface->addItem(conf.name());
     }
-    */
 
 #ifdef Q_OS_WIN
     //This option does nothing under windows, it just confuses the user

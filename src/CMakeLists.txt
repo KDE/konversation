@@ -83,7 +83,7 @@ set(config_SRCS
     config/settingsdialog.cpp
     config/alias_config.cpp
     config/autoreplace_config.cpp
-#   config/dcc_config.cpp FIXME KF5 port
+    config/dcc_config.cpp
     config/highlight_config.cpp
     config/ignore_config.cpp
     config/nicklistbehavior_config.cpp
@@ -158,8 +158,7 @@ ki18n_wrap_ui(viewer_SRCS
     viewer/pasteeditor.ui
 )
 
-# FIXME KF5 port
-#     #=== DCC
+     #=== DCC
 set(dcc_SRCS
      dcc/chat.cpp
      dcc/chatcontainer.cpp
@@ -182,7 +181,7 @@ set(dcc_SRCS
      dcc/whiteboardpaintarea.cpp
      dcc/whiteboardtoolbar.cpp
 )
-#
+
 ki18n_wrap_ui(dcc_SRCS
      dcc/transferdetailedinfopanelui.ui
      dcc/transferdetailedtimeinfopanelui.ui
