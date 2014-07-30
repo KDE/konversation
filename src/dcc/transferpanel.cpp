@@ -31,7 +31,6 @@
 #include <QMenu>
 #include <KRun>
 #include <KAuthorized>
-#include <KFileMetaInfo>
 #include <KToolBar>
 #include <KSharedConfig>
 
