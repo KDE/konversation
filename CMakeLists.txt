@@ -20,6 +20,7 @@ find_package(KF5 REQUIRED
     Bookmarks
     Config
     ConfigWidgets
+    DocTools
     Emoticons
     I18n
     IdleTime
