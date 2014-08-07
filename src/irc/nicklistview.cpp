@@ -23,6 +23,7 @@
 #include <QToolTip>
 #include <QStyledItemDelegate>
 
+#include <KUrlMimeData>
 
 class NickItemDelegate : public QStyledItemDelegate
 {
@@ -253,8 +254,7 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ev)
 
 QStringList NickListView::mimeTypes () const
 {
-    // return KUrl::List::mimeDataTypes(); FIXME KF5 port
-    return QStringList(); // FIXME KF5 port
+    return  KUrlMimeData::mimeDataTypes();
 }
 
 bool NickListView::canDecodeMime(QDropEvent const *event) const {
