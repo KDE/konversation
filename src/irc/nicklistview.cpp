@@ -20,6 +20,7 @@
 
 #include <QHeaderView>
 #include <QDropEvent>
+#include <QMimeData>
 #include <QToolTip>
 #include <QStyledItemDelegate>
 
@@ -258,17 +259,18 @@ QStringList NickListView::mimeTypes () const
 }
 
 bool NickListView::canDecodeMime(QDropEvent const *event) const {
-    /* FIXME KF5 port
+
     // Verify if the URL is not irc://
-    if (KUrl::List::canDecode(event->mimeData()))
+    if (event->mimeData()->hasUrls())
     {
-        const KUrl::List uris = KUrl::List::fromMimeData(event->mimeData());
+        const QList<QUrl> uris = KUrlMimeData::urlsFromMimeData(event->mimeData());
+
         if (!uris.isEmpty())
         {
-            const KUrl first = uris.first();
+            const QUrl first = uris.first();
 
-            if (first.protocol() == QLatin1String("irc") ||
-                first.protocol() == QLatin1String("ircs") ||
+            if (first.scheme() == QLatin1String("irc") ||
+                first.scheme() == QLatin1String("ircs") ||
                 channel->getNickList().containsNick(first.url()))
                 {
                     return false;
@@ -276,7 +278,7 @@ bool NickListView::canDecodeMime(QDropEvent const *event) const {
         }
         return true;
     }
-    */
+
     return false;
 }
 
