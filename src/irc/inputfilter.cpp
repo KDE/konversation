@@ -1101,7 +1101,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     m_server->queueNicks(parameterList.value(2), nickList); // TEST this was a 2
 
                     // Display message only if this was not an automatic request.
-                    if (!getAutomaticRequest("NAMES", parameterList.value(2)) == 1)
+                    if (getAutomaticRequest("NAMES", parameterList.value(2)) == 0)
                     {
                         m_server->appendMessageToFrontmost(i18n("Names"), trailing);
                     }
@@ -1112,7 +1112,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if (plHas(2))
                 {
-                    if (getAutomaticRequest("NAMES",parameterList.value(1)) == 1)
+                    if (getAutomaticRequest("NAMES",parameterList.value(1)) != 0)
                     {
                         // This code path was taken for the automatic NAMES input on JOIN, upcoming
                         // NAMES input for this channel will be manual invocations of /names
@@ -1469,7 +1469,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // This WHOIS was requested by Server for DNS resolve purposes; try to resolve the host
-                        if (getAutomaticRequest("DNS", parameterList.value(1)) == 1)
+                        if (getAutomaticRequest("DNS", parameterList.value(1)) != 0)
                         {
                             QHostInfo resolved = QHostInfo::fromName(parameterList.value(3));
                             if (resolved.error() == QHostInfo::NoError && !resolved.addresses().isEmpty())
@@ -2057,7 +2057,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         m_server->pongReceived();
                     }
-                    else if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 1) //Inhibit message if this was an automatic request
+                    else if (getAutomaticRequest("WHOIS", parameterList.value(1)) != 0) //Inhibit message if this was an automatic request
                     {
                         setAutomaticRequest("WHOIS", parameterList.value(1), false);
                     }
