@@ -264,7 +264,7 @@ void ViewContainer::setupViewTree()
             {
                 ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-                if (!view->getType() == ChatWindow::Status)
+                if (view->getType() != ChatWindow::Status)
                 {
                     if (view == m_frontView)
                         m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)), true);
