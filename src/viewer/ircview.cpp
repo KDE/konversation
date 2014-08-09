@@ -33,6 +33,7 @@
 #include <KStandardShortcut>
 #include <kio/pixmaploader.h>
 #include <KLocale>
+#include <KUrlMimeData>
 
 using namespace Konversation;
 
@@ -258,10 +259,8 @@ void IRCView::dragMoveEvent(QDragMoveEvent* e)
 
 void IRCView::dropEvent(QDropEvent* e)
 {
-    /* FIXME KF5 port
     if (e->mimeData() && e->mimeData()->hasUrls())
-        emit urlsDropped(KUrl::List::fromMimeData(e->mimeData(), KUrl::List::PreferLocalUrls));
-    */
+        emit urlsDropped(KUrlMimeData::urlsFromMimeData(e->mimeData(), KUrlMimeData::PreferLocalUrls));
 }
 
 // Marker lines
