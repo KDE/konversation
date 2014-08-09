@@ -90,7 +90,7 @@ class IRCView : public KTextBrowser
         void sendFile(); ///< a command for a target to which we can DCC send
         void autoText(const QString& text); ///< helper for autotext-on-highlight
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
-        void urlsDropped(const QList<QUrl>& urls); // FIXME KF5 port: Test this QUrl conversion works.
+        void urlsDropped(const QList<QUrl>& urls);
         void doSearch(); /// Emitted when a search should be started
         void doSearchNext(); /// Emitted when there's a request to go to the next search result.
         void doSearchPrevious(); /// Emitted when there's a request to go to the previous search result.

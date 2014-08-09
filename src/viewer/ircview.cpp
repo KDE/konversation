@@ -951,7 +951,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
                 nickColor = Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
             else
                 nickColor =  Preferences::self()->nickColor(8).name();
-        } /* FIXME KF5 port
+        }
         else if (m_chatWin->getType() == ChatWindow::DccChat)
         {
             QString ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
@@ -960,7 +960,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
                 nickColor = Preferences::self()->nickColor(Konversation::colorForNick(ownNick)).name();
             else
                 nickColor = Preferences::self()->nickColor(8).name();
-        } */
+        }
     }
     else
         nickColor = defaultColor;
@@ -1033,11 +1033,11 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     if (m_server)
     {
         ownNick = m_server->getNickname();
-    } /* FIXME KF5 port
+    }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
         ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
-    } */
+    }
 
     if(doHighlight && (whoSent != ownNick) && !self)
     {
