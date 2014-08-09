@@ -18,6 +18,7 @@
 #include <QPainter>
 
 #include <QStandardPaths>
+#include <QDebug>
 
 
 using namespace Konversation;
@@ -181,10 +182,33 @@ void Images::initializeNickIcons()
 {
 
     QString iconTheme = Preferences::self()->iconTheme();
-    QStringList icons = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/"+iconTheme+"/*.png");
+    QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/"+iconTheme, QStandardPaths::LocateDirectory);
+    QStringList icons;
+
+    foreach(const QString& dir, dirs)
+    {
+        QDir themedir(dir);
+
+        foreach(const QString& file, themedir.entryList(QStringList() << "*.png", QDir::Files))
+        {
+            icons.append(dir + QLatin1Char('/') + file);
+        }
+    }
 
     if( icons.count() < 7 ) // Sanity
-        icons = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default/*.png");
+    {
+        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default/*.png");
+
+        foreach(const QString& dir, dirs)
+        {
+            QDir themedir(dir);
+
+            foreach(const QString& file, themedir.entryList(QStringList() << "*.png", QDir::Files))
+            {
+                icons.append(dir + QLatin1Char('/') + file);
+            }
+        }
+    }
     if ( icons.count() < 7 ) // Sanity
         return;
     icons.sort();
