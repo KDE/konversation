@@ -307,16 +307,14 @@ void NickListView::dragMoveEvent(QDragMoveEvent *event)
 
 bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action)
 {
-    /* FIXME KF5 port
     Q_UNUSED(index);
     Q_UNUSED(action);
     Nick* nick = dynamic_cast<Nick*>(parent);
     if (nick) {
-        const KUrl::List uris = KUrl::List::fromMimeData(data);
+        const QList<QUrl> uris = KUrlMimeData::urlsFromMimeData(data);
         channel->getServer()->sendURIs(uris, nick->getChannelNick()->getNickname());
         return true;
     }
-    */
     return false;
 }
 
