@@ -31,6 +31,7 @@
 #include <unistd.h> // unlink()
 #include <KSharedConfig>
 #include <QStandardPaths>
+#include <QDebug>
 
 
 using namespace Konversation;
@@ -60,7 +61,23 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     // get list of theme dirs
-    m_dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/*/index.desktop");
+    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/", QStandardPaths::LocateDirectory);
+    m_dirs.clear();
+
+    foreach(const QString& path, paths)
+    {
+        QDir dir(path);
+
+        foreach(const QString& themedir, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot))
+        {
+            QFileInfo file(path + themedir + "/index.desktop");
+
+            if(file.exists())
+            {
+                m_dirs.append(file.absoluteFilePath());
+            }
+        }
+    }
 
     // if we have any themes
     if (m_dirs.count() > 0)
