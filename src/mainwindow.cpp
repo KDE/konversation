@@ -228,8 +228,8 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     }
 
     // Actions to navigate through the different pages
-    QList<QKeySequence> nextShortcut = KStandardShortcut::tabNext(); // FIXME KF5 port: Guard against empty list.
-    QList<QKeySequence> prevShortcut = KStandardShortcut::tabPrev(); // FIXME KF5 port: Guard against empty list.
+    QList<QKeySequence> nextShortcut = KStandardShortcut::tabNext();
+    QList<QKeySequence> prevShortcut = KStandardShortcut::tabPrev();
 
     const char *nextIcon, *prevIcon;
     if (QApplication::isRightToLeft())
