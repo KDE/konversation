@@ -228,25 +228,21 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     }
 
     // Actions to navigate through the different pages
-    QKeySequence nextShortcut = KStandardShortcut::tabNext().at(0); // FIXME KF5 port: Guard against empty list.
-    QKeySequence prevShortcut = KStandardShortcut::tabPrev().at(0); // FIXME KF5 port: Guard against empty list.
+    QList<QKeySequence> nextShortcut = KStandardShortcut::tabNext(); // FIXME KF5 port: Guard against empty list.
+    QList<QKeySequence> prevShortcut = KStandardShortcut::tabPrev(); // FIXME KF5 port: Guard against empty list.
 
     const char *nextIcon, *prevIcon;
     if (QApplication::isRightToLeft())
     {
-        /* FIXME KF5 port
-        prevShortcut.setAlternate(QKeySequence("Alt+Right"));
-        nextShortcut.setAlternate(QKeySequence("Alt+Left"));
-        */
+        prevShortcut.append(QKeySequence("Alt+Right"));
+        nextShortcut.append(QKeySequence("Alt+Left"));
         nextIcon="go-previous-view";
         prevIcon="go-next-view";
     }
     else
     {
-        /* FIXME KF5 port
-        nextShortcut.setAlternate(QKeySequence("Alt+Right"));
-        prevShortcut.setAlternate(QKeySequence("Alt+Left"));
-        */
+        nextShortcut.append(QKeySequence("Alt+Right"));
+        prevShortcut.append(QKeySequence("Alt+Left"));
         nextIcon="go-next-view";
         prevIcon="go-previous-view";
     }
@@ -254,7 +250,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Next Tab"));
     action->setIcon(QIcon::fromTheme(nextIcon));
-    action->setShortcut(nextShortcut);
+    action->setShortcuts(nextShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
     actionCollection()->addAction("next_tab", action);
@@ -262,7 +258,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Previous Tab"));
     action->setIcon(QIcon::fromTheme(prevIcon));
-    action->setShortcut(prevShortcut);
+    action->setShortcuts(prevShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
     actionCollection()->addAction("previous_tab", action);
