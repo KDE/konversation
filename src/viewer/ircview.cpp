@@ -553,14 +553,12 @@ void IRCView::updateAppearance()
     {
         QUrl url = Preferences::self()->backgroundImage();
 
-        /* FIXME KF5 port
-        if (url.hasPath())
+        if (url.isValid())
         {
             viewport()->setStyleSheet("QWidget { background-image: url("+url.path()+"); background-attachment:fixed; }");
 
             return;
         }
-        */
     }
 
     if (!viewport()->styleSheet().isEmpty())
