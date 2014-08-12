@@ -475,7 +475,7 @@ void Server::connectToIRCServer()
 
         connect(m_socket, SIGNAL(hostFound()), SLOT (hostFound()));
 
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port <numid>%2</numid>)...",
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port %2)...",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port())));
 
@@ -810,7 +810,7 @@ void Server::broken(KTcpSocket::Error error)
         // reaffirm this.
 
         getStatusView()->appendServerMessage(i18n("SSL Connection Error"),
-            i18n("Connection to server %1 (port <numid>%2</numid>) lost while waiting for user response to an SSL error. "
+            i18n("Connection to server %1 (port %2) lost while waiting for user response to an SSL error. "
                  "Will automatically reconnect if error is ignored.",
                  getConnectionSettings().server().host(),
                  QString::number(getConnectionSettings().server().port())));
@@ -830,7 +830,7 @@ void Server::broken(KTcpSocket::Error error)
     {
         static_cast<Application*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
-        QString error = i18n("Connection to server %1 (port <numid>%2</numid>) lost: %3.",
+        QString error = i18n("Connection to server %1 (port %2) lost: %3.",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port()),
             m_socket->errorString());
@@ -867,7 +867,7 @@ void Server::sslError( const QList<KSslError>& errors )
     if (ignoreSslErrors)
     {
         // Show a warning in the chat window that the SSL certificate failed the authenticity check.
-        QString error = i18n("The SSL certificate for the server %1 (port <numid>%2</numid>) failed the authenticity check.",
+        QString error = i18n("The SSL certificate for the server %1 (port %2) failed the authenticity check.",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port()));
 
@@ -901,7 +901,7 @@ void Server::sslError( const QList<KSslError>& errors )
             errorReason += errors.at(i).errorString() + ' ';
         }
 
-        QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Either the server does not support SSL (did you use the correct port?) or you rejected the certificate. %3",
+        QString error = i18n("Could not connect to %1 (port %2) using SSL encryption. Either the server does not support SSL (did you use the correct port?) or you rejected the certificate. %3",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port()),
             errorReason);
@@ -1039,7 +1039,7 @@ void Server::quitServer(const QString& quitMessage)
     // Close the socket to allow a dead connection to be reconnected before the socket timeout.
     m_socket->close();
 
-    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1 (port <numid>%2</numid>).",
+    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1 (port %2).",
         getConnectionSettings().server().host(),
         QString::number(getConnectionSettings().server().port())));
 }

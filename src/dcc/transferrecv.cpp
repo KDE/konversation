@@ -584,7 +584,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort), false);
+                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)), false);
                 }
             }
 

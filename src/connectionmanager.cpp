@@ -258,8 +258,8 @@ void ConnectionManager::handleReconnect(Server* server)
 
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18np(
-                 "Trying to connect to %2 (port <numid>%3</numid>) in 1 second.",
-                 "Trying to connect to %2 (port <numid>%3</numid>) in %1 seconds.",
+                 "Trying to connect to %2 (port %3) in 1 second.",
+                 "Trying to connect to %2 (port %3) in %1 seconds.",
                  Preferences::self()->reconnectDelay(),
                  settings.server().host(),
                  QString::number(settings.server().port())));
@@ -268,8 +268,8 @@ void ConnectionManager::handleReconnect(Server* server)
         {
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18np(
-                 "Trying to reconnect to %2 (port <numid>%3</numid>) in 1 second.",
-                 "Trying to reconnect to %2 (port <numid>%3</numid>) in %1 seconds.",
+                 "Trying to reconnect to %2 (port %3) in 1 second.",
+                 "Trying to reconnect to %2 (port %3) in %1 seconds.",
                  Preferences::self()->reconnectDelay(),
                  settings.server().host(),
                  QString::number(settings.server().port())));
@@ -537,12 +537,12 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
         {
             int result = KMessageBox::warningContinueCancel(
                 mainWindow,
-                i18n("You are presently connected to %1 via '%2' (port <numid>%3</numid>). Do you want to switch to '%4' (port <numid>%5</numid>) instead?",
+                i18n("You are presently connected to %1 via '%2' (port %3). Do you want to switch to '%4' (port %5) instead?",
                     dupe->getDisplayName(),
                     dupe->getServerName(),
-                    dupe->getPort(),
+                    QString::number(dupe->getPort()),
                     settings.server().host(),
-                    settings.server().port()),
+                    QString::number(settings.server().port())),
                 i18n("Already connected to %1", dupe->getDisplayName()),
                 KGuiItem(i18n("Switch Server")),
                 KStandardGuiItem::cancel(),

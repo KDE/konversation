@@ -161,9 +161,9 @@ namespace Konversation
             if (!m_transfer->getPartnerIp().isEmpty())
             {
                 m_locationInfo.m_labelPartner->setText(i18nc("%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort",
-                                                             "%1 on %2, %3 (port <numid>%4</numid>)",
+                                                             "%1 on %2, %3 (port %4)",
                                                              m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
-                                                             partnerInfoServerName, m_transfer->getPartnerIp(), m_transfer->getPartnerPort()));
+                                                             partnerInfoServerName, m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort())));
             }
             else
             {
@@ -174,8 +174,8 @@ namespace Konversation
 
             // Self:
             if (!m_transfer->getOwnIp().isEmpty())
-                m_locationInfo.m_labelSelf->setText(i18nc("%1=ownIP, %2=ownPort", "%1 (port <numid>%2</numid>)",
-                                                          m_transfer->getOwnIp(), m_transfer->getOwnPort()));
+                m_locationInfo.m_labelSelf->setText(i18nc("%1=ownIP, %2=ownPort", "%1 (port %2)",
+                                                          m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
 
             // File Size:
             m_timeInfo.m_labelFileSize->setText(KLocale::global()->formatNumber(m_transfer->getFileSize(), 0));

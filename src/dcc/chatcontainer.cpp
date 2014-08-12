@@ -113,15 +113,15 @@ namespace Konversation
             {
                 case Chat::WaitingRemote:
                     m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port",
-                                                "DCC %1 with %2 on port <numid>%3</numid>.",
-                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), m_chat->ownPort()));
+                                                "DCC %1 with %2 on port %3.",
+                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), QString::number(m_chat->ownPort())));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
                 case Chat::Connecting:
                     m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port",
-                                                "DCC %1 with %2 on %3:<numid>%4</numid>.",
-                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), m_chat->partnerIp(), m_chat->partnerPort()));
+                                                "DCC %1 with %2 on %3:%4.",
+                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), m_chat->partnerIp(), QString::number(m_chat->partnerPort())));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 

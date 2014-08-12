@@ -301,7 +301,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    failedUPnP(i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort));
+                    failedUPnP(i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)));
                 }
             }
 
@@ -332,7 +332,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    failedUPnP(i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort));
+                    failedUPnP(i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)));
                 }
             }
 
@@ -367,8 +367,8 @@ namespace Konversation
             qDebug() << "using port: " << m_ownPort ;
 
             setStatus(Chat::WaitingRemote, i18nc("%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port",
-                                                 "Offering DCC %1 connection to %2 on port <numid>%3</numid>...",
-                                                 localizedExtensionString(), m_partnerNick, m_ownPort));
+                                                 "Offering DCC %1 connection to %2 on port %3...",
+                                                 localizedExtensionString(), m_partnerNick, QString::number(m_ownPort)));
 
             qDebug() << "[END]";
         }
@@ -462,8 +462,8 @@ namespace Konversation
             qDebug() << "partnerIP: " << m_partnerIp << " partnerport: " << m_partnerPort  << " nick: " << m_partnerNick;
 
             setStatus(Chat::Connecting, i18nc("%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port",
-                                              "Establishing DCC %1 connection to %2 (%3:<numid>%4</numid>)...", localizedExtensionString(),
-                                              m_partnerNick, m_partnerIp, m_partnerPort));
+                                              "Establishing DCC %1 connection to %2 (%3:%4)...", localizedExtensionString(),
+                                              m_partnerNick, m_partnerIp, QString::number(m_partnerPort)));
 
             m_dccSocket = new QTcpSocket(this);
 
