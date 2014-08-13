@@ -1999,7 +1999,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
     {
         if(Preferences::self()->useExternalLogViewer())
         {
-            // new KRun(KUrl(file), m_window, 0, false, false, ""); FIXME KF5 port
+            new KRun(QUrl::fromLocalFile(file), m_window, false);
         }
         else
         {
