@@ -560,7 +560,6 @@ int MainWindow::confirmQuit()
 
     int result = KMessageBox::Cancel;
 
-    /* FIXME KF5 port
     if (!KMessageBox::shouldBeShownContinue("systemtrayquitKonversation")
          && konvApp->getDccTransferManager()->hasActiveTransfers())
     {
@@ -572,7 +571,7 @@ int MainWindow::confirmQuit()
             KStandardGuiItem::cancel(),
             "QuitWithActiveDccTransfers");
     }
-    else */
+    else
     {
         result = KMessageBox::warningContinueCancel(
             this,
