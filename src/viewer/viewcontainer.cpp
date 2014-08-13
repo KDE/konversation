@@ -51,6 +51,7 @@
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KWindowSystem>
+#include <KIconLoader>
 
 using namespace Konversation;
 
@@ -198,7 +199,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     QToolButton* closeBtn = new QToolButton(m_tabWidget);
-    // closeBtn->setIcon(SmallIcon("tab-close")); FIXME KF5 port
+    closeBtn->setIcon(SmallIcon("tab-close"));
     closeBtn->adjustSize();
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
