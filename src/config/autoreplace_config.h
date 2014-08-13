@@ -41,7 +41,6 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
     void replacementChanged(const QString& newReplacement);
     void addEntry();
     void removeEntry();
-    void showRegExpEditor();
 
   protected:
     void setAutoreplaceListView(const QList<QStringList> &autoreplaceList);

@@ -41,7 +41,6 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void highlightSelected(QTreeWidgetItem* item);
         void patternChanged(const QString& newPattern);
         void notifyModeChanged(bool);
-        void regExpButtonClicked();
         void colorChanged(const QColor& newColor);
         void soundURLChanged(const QString& newURL);
         void autoTextChanged(const QString& newText);

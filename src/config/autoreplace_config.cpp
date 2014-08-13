@@ -13,8 +13,6 @@
 #include "autoreplace_config.h"
 #include "preferences.h"
 
-// #include <kparts/componentfactory.h> FIXME KF5 port
-// #include <kregexpeditorinterface.h> FIXME KF5 port
 #include <KSharedConfig>
 
 #define DIRECTION_OUTPUT 0
@@ -30,23 +28,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
-  //Check if the regexp editor is installed
-// it does not make sense to port / enable this since KRegExpEditor is in a very bad shape. just keep this
-// code here because it will probably help at a later point to port it when KRegExpEditor is again usable.
-// 2009-02-06, uwolfer
-  bool installed = false;//( KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this )!= 0 );
-  regExpEditorButton->setVisible(false);
 
-  if(installed)
-  {
-      regExpEditorButton->setEnabled(true);
-      regExpEditorButton->setStatusTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
-  }
-  else
-  {
-      regExpEditorButton->setEnabled(false);
-      regExpEditorButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
-  }
   // populate combobox
   directionCombo->insertItem(DIRECTION_OUTPUT, i18n("Outgoing"));
   directionCombo->insertItem(DIRECTION_INPUT, i18n("Incoming"));
@@ -60,7 +42,6 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
 
   connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT(patternChanged(QString)));
-  connect(regExpEditorButton, SIGNAL(clicked()), this, SLOT(showRegExpEditor()));
   connect(replacementInput, SIGNAL(textChanged(QString)), this, SLOT(replacementChanged(QString)));
 
   connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
@@ -235,13 +216,6 @@ void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
 
-// see note above about KRegExpEditor
-#if 0
-  if(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty())
-  {
-    regExpEditorButton->setEnabled(enabled);
-  }
-#endif
   // make checkboxes work
   emit modified();
 }
@@ -367,31 +341,6 @@ void Autoreplace_Config::removeEntry()
     // tell the config system that somethig has changed
     emit modified();
   }
-}
-
-void Autoreplace_Config::showRegExpEditor()
-{
-    /* FIXME KF5 port
-
-    QDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
-
-    if(editorDialog)
-    {
-        // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
-        KRegExpEditorInterface *iface = qobject_cast<KRegExpEditorInterface*>( editorDialog );
-        Q_ASSERT(iface); // This should not fail!
-        iface->setRegExp(patternInput->text());
-        int dlgResult = editorDialog->exec();
-
-        if(dlgResult == QDialog::Accepted)
-        {
-            QString re = iface->regExp();
-            patternInput->setText(re);
-        }
-
-        delete editorDialog;
-    }
-    */
 }
 
 #include "autoreplace_config.moc"

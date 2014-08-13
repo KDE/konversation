@@ -11,7 +11,16 @@
    </rect>
   </property>
   <layout class="QGridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item row="1" column="0">
@@ -201,6 +210,9 @@
       </item>
       <item row="1" column="0">
        <layout class="QFormLayout" name="formLayout">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="patternLabel">
           <property name="enabled">
@@ -218,43 +230,17 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="KLineEdit" name="patternInput">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>1</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="patternButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string>Click to run Regular Expression Editor (KRegExpEditor)</string>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-            <property name="shortcut">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="KLineEdit" name="patternInput">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="colorLabel">
@@ -340,7 +326,7 @@
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>&amp;Auto text:</string>
+           <string>A&amp;uto text:</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
@@ -356,32 +342,6 @@
            <bool>false</bool>
           </property>
          </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="enableNotificationsLabel">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Enable &amp;notifications:</string>
-          </property>
-          <property name="buddy">
-           <cstring>enableNotificationsCheckbox</cstring>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QCheckBox" name="enableNotificationsCheckbox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <layout class="QHBoxLayout" name="chatWindowsLayout"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="chatWindowsLabel">
@@ -415,6 +375,29 @@
           </property>
          </widget>
         </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="enableNotificationsLabel">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Enable &amp;notifications:</string>
+          </property>
+          <property name="buddy">
+           <cstring>enableNotificationsCheckbox</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QCheckBox" name="enableNotificationsCheckbox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -425,9 +408,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -435,27 +418,27 @@
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>KColorButton</class>
-   <extends>QPushButton</extends>
-   <header>kcolorbutton.h</header>
+   <class>KUrlRequester</class>
+   <extends>QWidget</extends>
+   <header>kurlrequester.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>highlightListView</tabstop>
+  <tabstop>newButton</tabstop>
+  <tabstop>removeButton</tabstop>
   <tabstop>patternInput</tabstop>
-  <tabstop>patternButton</tabstop>
   <tabstop>patternColor</tabstop>
   <tabstop>soundURL</tabstop>
   <tabstop>soundPlayBtn</tabstop>
   <tabstop>autoTextInput</tabstop>
   <tabstop>chatWindowsInput</tabstop>
+  <tabstop>enableNotificationsCheckbox</tabstop>
   <tabstop>kcfg_HighlightSoundsEnabled</tabstop>
   <tabstop>kcfg_HighlightNick</tabstop>
   <tabstop>kcfg_HighlightNickColor</tabstop>
   <tabstop>kcfg_HighlightOwnLines</tabstop>
   <tabstop>kcfg_HighlightOwnLinesColor</tabstop>
-  <tabstop>newButton</tabstop>
-  <tabstop>removeButton</tabstop>
  </tabstops>
  <includes>
   <include location="local">klineedit.h</include>

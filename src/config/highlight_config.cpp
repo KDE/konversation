@@ -23,8 +23,6 @@
 
 
 #include <KGlobal>
-// #include <kparts/componentfactory.h> FIXME KF5 port
-// #include <kregexpeditorinterface.h> FIXME KF5 port
 #include <KSharedConfig>
 #include <QStandardPaths>
 
@@ -69,7 +67,6 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     connect(highlightListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT (highlightSelected(QTreeWidgetItem*)));
     connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT (patternChanged(QString)));
     connect(enableNotificationsCheckbox, SIGNAL(toggled(bool)), this, SLOT(notifyModeChanged(bool)));
-    connect(patternButton, SIGNAL(clicked()), this, SLOT(regExpButtonClicked()));
     connect(patternColor, SIGNAL(changed(QColor)), this, SLOT (colorChanged(QColor)));
     connect(soundURL, SIGNAL(textChanged(QString)), this, SLOT(soundURLChanged(QString)));
     connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
@@ -143,18 +140,9 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
 void Highlight_Config::updateButtons()
 {
     bool enabled = highlightListView->currentItem() != NULL;
-    // is the kregexpeditor installed?
-    bool installed = false;
-    // it does not make sense to port / enable this since KRegExpEditor is in a very bad shape. just keep this
-    // code here because it will probably help at a later point to port it when KRegExpEditor is again usable.
-    // 2009-02-06, uwolfer
-#if 0
-    !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
-#endif
     // enable or disable edit widgets
     patternLabel->setEnabled(enabled);
     patternInput->setEnabled(enabled);
-    patternButton->setEnabled(enabled && installed);
     colorLabel->setEnabled(enabled);
     patternColor->setEnabled(enabled);
     enableNotificationsLabel->setEnabled(enabled);
@@ -166,16 +154,6 @@ void Highlight_Config::updateButtons()
     autoTextInput->setEnabled(enabled);
     chatWindowsLabel->setEnabled(enabled);
     chatWindowsInput->setEnabled(enabled);
-
-    if (installed)
-    {
-        patternButton->setStatusTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
-    }
-    else
-    {
-        patternButton->setVisible(false);
-        patternButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
-    }
 }
 
 void Highlight_Config::patternChanged(const QString& newPattern)
@@ -198,33 +176,6 @@ void Highlight_Config::notifyModeChanged(bool enabled)
         item->setNotify(enabled);
         emit modified();
     }
-}
-
-void Highlight_Config::regExpButtonClicked()
-{
-    // see note above about KRegExpEditor
-#if 0
-    QDialog *editorDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>("KRegExpEditor/KRegExpEditor");
-    if (editorDialog)
-    {
-        // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
-        KRegExpEditorInterface *reEditor = static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast("KRegExpEditorInterface"));
-        Q_ASSERT(reEditor); // This should not fail!// now use the editor.
-        reEditor->setRegExp(patternInput->text());
-        int dlgResult = editorDialog->exec();
-        if (dlgResult == QDialog::Accepted)
-        {
-            QString re = reEditor->regExp();
-            patternInput->setText(re);
-            HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
-            if (item)
-            {
-                item->setPattern(re);
-            }
-        }
-        delete editorDialog;
-    }
-#endif
 }
 
 void Highlight_Config::colorChanged(const QColor& newColor)
