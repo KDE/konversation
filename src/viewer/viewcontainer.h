@@ -57,9 +57,12 @@ class TabWidget : public QTabWidget
 
     Q_SIGNALS:
         void removedTab(int index) const;
+        void contextMenu(QWidget* widget, const QPoint& pos);
 
     protected:
         void tabRemoved(int index);
+
+        virtual void contextMenuEvent(QContextMenuEvent* event);
 };
 
 class ViewContainer : public QAbstractItemModel

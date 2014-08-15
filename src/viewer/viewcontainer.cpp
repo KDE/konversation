@@ -70,6 +70,19 @@ void TabWidget::tabRemoved(int index)
     emit removedTab(index);
 }
 
+void TabWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+    event->accept();
+    QPoint pos = event->globalPos();
+    int tabIndex = tabBar()->tabAt(tabBar()->mapFromGlobal(pos));
+
+    if (tabIndex != -1)
+    {
+        emit contextMenu(widget(tabIndex), pos);
+    }
+}
+
+
 ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_window(window)
 , m_tabWidget(0)
