@@ -28,7 +28,7 @@
 
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
 #include <KGlobal>
@@ -274,7 +274,7 @@ void UrlCatcher::saveSelectedUrls()
         if (index.isValid())
         {
             QUrl url(index.data().toString());
-            QUrl targetUrl = KFileDialog::getSaveUrl(url.toLocalFile(), QString(), this, i18n("Save link as")); // FIXME KF5 port: Test this QUrl conversion works.
+            QUrl targetUrl = QFileDialog::getSaveFileUrl(this, i18n("Save link as"), QUrl::fromLocalFile(url.fileName()));
 
             if (targetUrl.isEmpty() || !targetUrl.isValid())
                 continue;
@@ -338,8 +338,8 @@ void UrlCatcher::deleteSelectedUrls()
 
 void UrlCatcher::saveUrlModel()
 {
-    QString target = KFileDialog::getSaveFileName(QString(), QString(), this,
-        i18n("Save URL List"), KFileDialog::ConfirmOverwrite);
+    QString target = QFileDialog::getSaveFileName(this,
+        i18n("Save URL List"));
 
     if (!target.isEmpty())
     {

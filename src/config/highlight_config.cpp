@@ -18,10 +18,6 @@
 
 #include <QDir>
 #include <KStandardDirs>
-#include <KFileDialog>
-
-
-
 #include <KGlobal>
 #include <KSharedConfig>
 #include <QStandardPaths>

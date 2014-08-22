@@ -22,7 +22,6 @@
 #include <QHBoxLayout>
 #include <QCheckBox>
 
-#include <KFileDialog>
 #include <KLocale>
 #include <QUrl>
 #include <KUrlRequester>

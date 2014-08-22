@@ -32,7 +32,7 @@
 #include <KAuthorized>
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KIO/CopyJob>
 #include <QMenu>
 #include <KMessageBox>
@@ -766,8 +766,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         {
             QUrl srcUrl(link);
 
-            QUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(), QString(),
-                Application::instance()->getMainWindow(), i18n("Save link as"));
+            QUrl saveUrl = QFileDialog::getSaveFileUrl(Application::instance()->getMainWindow(), i18n("Save link as"), QUrl::fromLocalFile(srcUrl.fileName()));
 
             if (saveUrl.isEmpty() || !saveUrl.isValid())
                 break;

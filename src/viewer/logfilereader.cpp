@@ -27,7 +27,7 @@
 #include <KDialog>
 #include <KToolBar>
 #include <KMessageBox>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KLocale>
 #include <KIO/CopyJob>
 #include <KJobUiDelegate>
@@ -160,15 +160,11 @@ void LogfileReader::saveLog()
         i18n("Save Logfile"),
         "SaveLogfileNote");
 
-    QString destination=KFileDialog::getSaveFileName(fileName,
-        QString(),
-        this,
-        i18n("Choose Destination Folder"));
+    QUrl logUrl = QUrl::fromLocalFile(fileName);
+    QUrl destination = QFileDialog::getSaveFileUrl(this, i18n("Choose Destination Folder"), logUrl);
     if(!destination.isEmpty())
     {
-        // FIXME KF5 port: Test that QUrl conversion works.
-        KIO::Job* job=KIO::copy(QUrl(fileName),
-            QUrl(destination));
+        KIO::Job* job = KIO::copy(logUrl, destination);
 
         connect(job,SIGNAL(result(KJob*)),this,SLOT(copyResult(KJob*)));
     }

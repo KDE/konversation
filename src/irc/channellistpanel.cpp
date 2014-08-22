@@ -23,7 +23,7 @@
 #include <QTextDocument>
 
 #include <KRun>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <QMenu>
 #include <KToolBar>
 
@@ -357,9 +357,7 @@ void ChannelListPanel::updateUsersChannels()
 void ChannelListPanel::saveList()
 {
     // Ask user for file name
-    QString fileName=KFileDialog::getSaveFileName(
-        QString(),
-        QString(),
+    QString fileName = QFileDialog::getSaveFileName(
         this,
         i18n("Save Channel List"));
 

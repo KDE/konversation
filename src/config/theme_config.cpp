@@ -22,7 +22,7 @@
 
 #include <QUrl>
 #include <KMessageBox>
-#include <KFileDialog>
+#include <QFileDialog>
 #include <KTar>
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
@@ -174,10 +174,9 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    QUrl themeURL = KFileDialog::getOpenUrl(QString(),
-        i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
-        NULL,
-        i18n("Select Theme Package")
+    QUrl themeURL = QFileDialog::getOpenFileUrl(this,
+        i18n("Select Theme Package"), QUrl (),
+        i18n("Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)")
         );
 
     if(themeURL.isEmpty())
