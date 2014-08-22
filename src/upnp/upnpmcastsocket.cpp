@@ -155,7 +155,7 @@ namespace Konversation
                 line = lines[i];
                 if (line.startsWith(QLatin1String("Location"), Qt::CaseInsensitive))
                 {
-                    location = line.mid(line.indexOf(':') + 1).trimmed();
+                    location = QUrl(line.mid(line.indexOf(':') + 1).trimmed());
                     if (!location.isValid())
                         return 0;
                 }

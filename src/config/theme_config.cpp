@@ -259,8 +259,8 @@ void Theme_Config::removeTheme()
 
     if(remove == KMessageBox::Continue)
     {
-
-        unlink(QFile::encodeName(dir));
+        QByteArray encoded = QFile::encodeName(dir);
+        unlink(encoded.data());
         KIO::DeleteJob* job = KIO::del(QUrl(dir.remove("index.desktop")));
         connect(job, SIGNAL(result(KJob*)), this, SLOT(postRemoveTheme(KJob*)));
     }

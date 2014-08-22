@@ -296,7 +296,7 @@ void UrlCatcher::bookmarkSelectedUrls()
         QList<KBookmarkOwner::FutureBookmark> bookmarks;
 
         foreach(const QModelIndex& index, selectedIndexes)
-            bookmarks << KBookmarkOwner::FutureBookmark(index.data().toString(), index.data().toString(), QString());
+            bookmarks << KBookmarkOwner::FutureBookmark(index.data().toString(), QUrl(index.data().toString()), QString());
 
         dialog->addBookmarks(bookmarks, i18n("New"));
     }
@@ -304,7 +304,7 @@ void UrlCatcher::bookmarkSelectedUrls()
     {
         QString url = selectedIndexes.first().data().toString();
 
-        dialog->addBookmark(url, url, QString());
+        dialog->addBookmark(url, QUrl(url), QString());
     }
 
     delete dialog;

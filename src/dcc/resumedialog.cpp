@@ -89,7 +89,7 @@ namespace Konversation
             QLabel* labelMessage = new QLabel(page);
             labelMessage->setText(message);
 
-            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().toString(), page);
+            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL(), page);
             m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
             //m_urlreqFileURL->fileDialog()->setKeepLocation(true);
             connect(m_urlreqFileURL, SIGNAL(textChanged(QString)), this, SLOT(updateDialogButtons()));
@@ -223,7 +223,7 @@ namespace Konversation
 
         void ResumeDialog::setDefaultName() // slot
         {
-            m_urlreqFileURL->setUrl(m_item->getFileURL().toString());
+            m_urlreqFileURL->setUrl(m_item->getFileURL());
         }
     }
 }

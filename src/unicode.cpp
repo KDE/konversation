@@ -47,7 +47,7 @@ bool isUtf8(const QByteArray& text)
 
     JapaneseCode* jc = new JapaneseCode();
 
-    JapaneseCode::Type result = jc->guess_jp(text, len);
+    JapaneseCode::Type result = jc->guess_jp(text.data(), len);
 
     switch(result)
     {

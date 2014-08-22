@@ -89,7 +89,7 @@ QList<KBookmarkOwner::FutureBookmark> KonviBookmarkHandler::currentBookmarkList(
     QPair<QString, QString> uri;
 
     foreach (uri, m_mainWindow->getViewContainer()->getChannelsURI()) {
-        list << KBookmarkOwner::FutureBookmark(uri.first, uri.second, QString());
+        list << KBookmarkOwner::FutureBookmark(uri.first, QUrl(uri.second), QString());
     }
 
     return list;

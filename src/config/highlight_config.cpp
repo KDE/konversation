@@ -52,7 +52,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
             dir = *it;
             if ( dir.isReadable() && dir.count() > 2 )
             {
-                soundURL->setStartDir( *it );
+                soundURL->setStartDir(QUrl(*it));
                 break;
             }
             ++it;
@@ -123,7 +123,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
         patternColor->setColor(highlightItem->getColor());
         patternInput->setText(highlightItem->getPattern());
         enableNotificationsCheckbox->setChecked(highlightItem->getNotify());
-        soundURL->setUrl(highlightItem->getSoundURL().url());
+        soundURL->setUrl(highlightItem->getSoundURL());
         autoTextInput->setText(highlightItem->getAutoText());
         chatWindowsInput->setText(highlightItem->getChatWindows());
         // all signals will now emit the modified() signal again

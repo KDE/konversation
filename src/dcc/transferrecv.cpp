@@ -395,9 +395,9 @@ namespace Konversation
             QStringList::ConstIterator it;
             for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
             {
-                if (!KIO::NetAccess::exists(*it, KIO::NetAccess::SourceSide, NULL))
+                if (!KIO::NetAccess::exists(QUrl(*it), KIO::NetAccess::SourceSide, NULL))
                 {
-                    if (!KIO::NetAccess::mkdir(*it, NULL, -1))
+                    if (!KIO::NetAccess::mkdir(QUrl(*it), NULL, -1))
                     {
                         return false;
                     }

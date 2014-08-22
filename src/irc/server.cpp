@@ -1542,7 +1542,7 @@ int Server::_send_internal(QString outputLine)
         m_rawLog->appendRaw(RawLog::Outbound, encoded);
 
     encoded += '\n';
-    qint64 sout = m_socket->write(encoded, encoded.length());
+    qint64 sout = m_socket->write(encoded);
 
     return sout;
 }

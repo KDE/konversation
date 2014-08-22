@@ -750,7 +750,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
             KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
             KBookmarkDialog* dialog = new KBookmarkDialog(manager, Application::instance()->getMainWindow());
 
-            dialog->addBookmark(link, link, QString());
+            dialog->addBookmark(link, QUrl(link), QString());
 
             delete dialog;
 

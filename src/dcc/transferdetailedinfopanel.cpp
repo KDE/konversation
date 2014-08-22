@@ -143,7 +143,7 @@ namespace Konversation
             m_locationInfo.m_labelFilename->setText(m_transfer->getFileName());
 
             // Location:
-            m_locationInfo.m_urlreqLocation->setUrl(m_transfer->getFileURL().toString());
+            m_locationInfo.m_urlreqLocation->setUrl(m_transfer->getFileURL());
             //m_urlreqLocation->lineEdit()->setFocusPolicy( m_item->getStatus() == Transfer::Queued ? Qt::StrongFocus : ClickFocus );
             m_locationInfo.m_urlreqLocation->lineEdit()->setReadOnly(m_transfer->getStatus() != Transfer::Queued);
             m_locationInfo.m_urlreqLocation->lineEdit()->setFrame(m_transfer->getStatus() == Transfer::Queued);
