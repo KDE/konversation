@@ -10,6 +10,7 @@
   <include>kuser.h</include>
   <include>QStandardPaths</include>
   <include>QFontDatabase</include>
+  <include>QUrl</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -714,10 +715,10 @@
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Url">
-      <default code="true">QString(KUser(KUser::UseRealUserID).homeDir()+"/logs")</default>
+      <default code="true">QUrl::fromLocalFile((KUser(KUser::UseRealUserID).homeDir()+"/logs"))</default>
     </entry>
     <entry key="DccPath" type="Url">
-      <default code="true">QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)</default>
+      <default code="true">QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
