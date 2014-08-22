@@ -28,7 +28,8 @@ ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
     qputenv("KONVERSATION_LANG", KLocale::global()->language().toLatin1());
 
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value("PYTHONPATH").split(':', QString::SkipEmptyParts));
-    pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripting_support/python");
+    pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripting_support/python",
+        QStandardPaths::LocateDirectory);
     qputenv("PYTHONPATH", pythonPath.join(":").toLocal8Bit());
 }
 
@@ -59,10 +60,6 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
     KProcess proc;
     proc.setWorkingDirectory(fileInfo.path());
     proc.setProgram(path, parameterList);
-
-    QStringList pythonPath = QProcessEnvironment::systemEnvironment().value("PYTHONPATH").split(':', QString::SkipEmptyParts);
-    pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripting_support/python");
-    proc.setEnv("PYTHONPATH", pythonPath.join(":"));
 
     if (proc.startDetached() == 0)
     {
