@@ -27,6 +27,7 @@
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
 #include <KIO/NetAccess>
+#include <KIO/CopyJob>
 
 #include <unistd.h> // unlink()
 #include <KSharedConfig>
@@ -200,7 +201,10 @@ void Theme_Config::installTheme()
     if(themeInstallDir.exists()) // We got a directory not a file
     {
         if(themeInstallDir.exists("index.desktop"))
-            KIO::NetAccess::dircopy(QUrl(tmpThemeFile), QUrl(themesDir), 0L);
+        {
+            KIO::CopyJob* job = KIO::copy(QUrl(tmpThemeFile), QUrl(themesDir));
+            job->exec();
+        }
         else
         {
             KMessageBox::error(0L,
