@@ -32,16 +32,16 @@ namespace Konversation
     {
         QHash<QChar,QString> myHash;
 
-        myHash.insert('t', i18n("topic protection"));
-        myHash.insert('n', i18n("no messages from outside"));
-        myHash.insert('s', i18n("secret"));
-        myHash.insert('i', i18n("invite only"));
-        myHash.insert('p', i18n("private"));
-        myHash.insert('m', i18n("moderated"));
-        myHash.insert('k', i18n("password protected"));
-        myHash.insert('a', i18n("anonymous"));
-        myHash.insert('c', i18n("no colors allowed"));
-        myHash.insert('l', i18n("user limit"));
+        myHash.insert(QLatin1Char('t'), i18n("topic protection"));
+        myHash.insert(QLatin1Char('n'), i18n("no messages from outside"));
+        myHash.insert(QLatin1Char('s'), i18n("secret"));
+        myHash.insert(QLatin1Char('i'), i18n("invite only"));
+        myHash.insert(QLatin1Char('p'), i18n("private"));
+        myHash.insert(QLatin1Char('m'), i18n("moderated"));
+        myHash.insert(QLatin1Char('k'), i18n("password protected"));
+        myHash.insert(QLatin1Char('a'), i18n("anonymous"));
+        myHash.insert(QLatin1Char('c'), i18n("no colors allowed"));
+        myHash.insert(QLatin1Char('l'), i18n("user limit"));
 
         m_modesHash = myHash;
     }
@@ -109,17 +109,17 @@ namespace Konversation
         QString line = text;
 
         // Replace placeholders.
-        line.replace("%%","%\x01");      // make sure to protect double %%
-        line.replace("%B","\x02");       // replace %B with bold char
-        line.replace("%C","\x03");       // replace %C with color char
-        line.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
-        line.replace("%I","\x1d");       // replace %I with italics char
-        line.replace("%O","\x0f");       // replace %O with reset to default char
-        line.replace("%S","\x13");       // replace %S with strikethru char
+        line.replace(QStringLiteral("%%"),QStringLiteral("%\x01"));      // make sure to protect double %%
+        line.replace(QStringLiteral("%B"),QStringLiteral("\x02"));       // replace %B with bold char
+        line.replace(QStringLiteral("%C"),QStringLiteral("\x03"));       // replace %C with color char
+        line.replace(QStringLiteral("%G"),QStringLiteral("\x07"));       // replace %G with ASCII BEL 0x07
+        line.replace(QStringLiteral("%I"),QStringLiteral("\x1d"));       // replace %I with italics char
+        line.replace(QStringLiteral("%O"),QStringLiteral("\x0f"));       // replace %O with reset to default char
+        line.replace(QStringLiteral("%S"),QStringLiteral("\x13"));       // replace %S with strikethru char
         // line.replace(QRegExp("%?"),"\x15");
-        line.replace("%R","\x16");       // replace %R with reverse char
-        line.replace("%U","\x1f");       // replace %U with underline char
-        line.replace("%\x01","%");       // restore double %% as single %
+        line.replace(QStringLiteral("%R"),QStringLiteral("\x16"));       // replace %R with reverse char
+        line.replace(QStringLiteral("%U"),QStringLiteral("\x1f"));       // replace %U with underline char
+        line.replace(QStringLiteral("%\x01"),QStringLiteral("%"));       // restore double %% as single %
 
         return line;
     }
@@ -128,17 +128,17 @@ namespace Konversation
     {
         QString line(text);
 
-        line.replace('\x02', "%B");      // replace bold char with %B
-        line.replace('\x03', "%C");       // replace color char with %C
-        line.replace('\x07', "%G");       // replace ASCII BEL 0x07 with %G
-        line.replace('\x1d', "%I");       // replace italics char with %I
-        line.replace('\x0f', "%O");       // replace reset to default char with %O
-        line.replace('\x13', "%S");       // replace strikethru char with %S
-        line.replace('\x16', "%R");       // replace reverse char with %R
+        line.replace(QLatin1Char('\x02'), QStringLiteral("%B"));      // replace bold char with %B
+        line.replace(QLatin1Char('\x03'), QStringLiteral("%C"));       // replace color char with %C
+        line.replace(QLatin1Char('\x07'), QStringLiteral("%G"));       // replace ASCII BEL 0x07 with %G
+        line.replace(QLatin1Char('\x1d'), QStringLiteral("%I"));       // replace italics char with %I
+        line.replace(QLatin1Char('\x0f'), QStringLiteral("%O"));       // replace reset to default char with %O
+        line.replace(QLatin1Char('\x13'), QStringLiteral("%S"));       // replace strikethru char with %S
+        line.replace(QLatin1Char('\x16'), QStringLiteral("%R"));       // replace reverse char with %R
         // underline char send by kvirc
-        line.replace('\x1f', "%U");       // replace underline char with %U
+        line.replace(QLatin1Char('\x1f'), QStringLiteral("%U"));       // replace underline char with %U
         // underline char send by mirc
-        line.replace('\x15', "%U");       // replace underline char with %U
+        line.replace(QLatin1Char('\x15'), QStringLiteral("%U"));       // replace underline char with %U
 
         return line;
     }
@@ -183,12 +183,12 @@ namespace Konversation
                 if (urlPattern.cap(2).isEmpty())
                 {
                     QString urlPatternCap1(urlPattern.cap(1));
-                    if (urlPatternCap1.contains('@'))
-                        protocol = "mailto:";
+                    if (urlPatternCap1.contains(QLatin1Char('@')))
+                        protocol = QStringLiteral("mailto:");
                     else if (urlPatternCap1.startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
-                        protocol = "ftp://";
+                        protocol = QStringLiteral("ftp://");
                     else
-                        protocol = "http://";
+                        protocol = QStringLiteral("http://");
                 }
 
                 href = protocol + removeIrcMarkup(href);

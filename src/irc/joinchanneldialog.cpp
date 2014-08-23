@@ -78,7 +78,7 @@ namespace Konversation
             Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
 
             if (server && !server->isAChannel(channel))
-                channel = '#' + channel;
+                channel = QLatin1Char('#') + channel;
         }
 
         return channel;

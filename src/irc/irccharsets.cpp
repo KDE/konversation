@@ -66,7 +66,7 @@ namespace Konversation
     {
         // simplify ambiguousName
         QString simplifiedAmbiguousName( ambiguousName.toLower() );
-        simplifiedAmbiguousName.remove( QRegExp( "[^a-z0-9]" ));
+        simplifiedAmbiguousName.remove( QRegExp( QStringLiteral("[^a-z0-9]") ));
 
         // search m_simplifiedShortNames
         if(m_simplifiedShortNames.contains(simplifiedAmbiguousName))
@@ -99,20 +99,20 @@ namespace Konversation
 
         // Special cases
         // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
-        if ( locale == "ja_JP" )
-            return "jis7";
+        if ( locale == QStringLiteral("ja_JP") )
+            return QStringLiteral("jis7");
 
         // it's a little hacky..
         for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
             if ( QTextCodec::codecForName( (*it).toLatin1() ) == QTextCodec::codecForLocale() )
                 return *it;
 
-        return "UTF-8";
+        return QStringLiteral("UTF-8");
     }
 
     QTextCodec* IRCCharsets::codecForName( const QString& shortName )
     {
-        if(shortName == "ISO 2022-JP")
+        if(shortName == QStringLiteral("ISO 2022-JP"))
             return QTextCodec::codecForName( "jis7" );
         else
             return QTextCodec::codecForName( shortName.toLatin1() );
@@ -122,11 +122,11 @@ namespace Konversation
     {
         // Add some aliases
         // use only [a-z0-9] for keys!
-        m_simplifiedShortNames["unicode"] = "UTF-8";
-        m_simplifiedShortNames["latin1"] = "ISO 8859-1";
+        m_simplifiedShortNames[QStringLiteral("unicode")] = QStringLiteral("UTF-8");
+        m_simplifiedShortNames[QStringLiteral("latin1")] = QStringLiteral("ISO 8859-1");
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
-        QRegExp reSimplify( "[^a-zA-Z0-9]" );
+        QRegExp reSimplify( QStringLiteral("[^a-zA-Z0-9]") );
         m_descriptiveNames = KCharsets::charsets()->descriptiveEncodingNames();
         QStringList::Iterator it = m_descriptiveNames.begin();
         while ( it != m_descriptiveNames.end() )
@@ -134,10 +134,10 @@ namespace Konversation
             QString encodingName = KCharsets::charsets()->encodingForName( *it );
             // exclude encodings which are not supported on IRC
             // 10646-UCS-2 & ucs2 are both UTF-16
-            if ( encodingName == "ISO 10646-UCS-2" ||
-                 encodingName == "ucs2" ||
-                 encodingName == "UTF-16" ||
-                 encodingName == "utf7" )
+            if ( encodingName == QStringLiteral("ISO 10646-UCS-2") ||
+                 encodingName == QStringLiteral("ucs2") ||
+                 encodingName == QStringLiteral("UTF-16") ||
+                 encodingName == QStringLiteral("utf7") )
             {
                 it = m_descriptiveNames.erase( it );
             }
@@ -146,11 +146,11 @@ namespace Konversation
                 m_shortNames.append( encodingName );
                 m_simplifiedShortNames.insert( encodingName.remove( reSimplify ).toLower(), m_shortNames.last() );
 
-                if(encodingName == "jis7")        // Add iso-2022-jp which is same as jis7 but not in Qt
+                if(encodingName == QStringLiteral("jis7"))        // Add iso-2022-jp which is same as jis7 but not in Qt
                 {
-                    it = m_descriptiveNames.insert(it, "Japanese ( ISO 2022-JP )");
-                    m_shortNames.append( "ISO 2022-JP" );
-                    m_simplifiedShortNames.insert( "iso2022jp", "ISO 2022-JP" );
+                    it = m_descriptiveNames.insert(it, QStringLiteral("Japanese ( ISO 2022-JP )"));
+                    m_shortNames.append( QStringLiteral("ISO 2022-JP") );
+                    m_simplifiedShortNames.insert( QStringLiteral("iso2022jp"), QStringLiteral("ISO 2022-JP") );
                     ++it;
                 }
                 ++it;

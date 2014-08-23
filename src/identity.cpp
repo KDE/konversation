@@ -55,19 +55,19 @@ Identity::~Identity()
 
 void Identity::init()
 {
-    setAuthType("nickserv");
-    setNickservNickname("nickserv");
-    setNickservCommand("identify");
+    setAuthType(QStringLiteral("nickserv"));
+    setNickservNickname(QStringLiteral("nickserv"));
+    setNickservCommand(QStringLiteral("identify"));
 
     setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
 
     setInsertRememberLineOnAway(false);
 
-    setQuitReason("Konversation terminated!");
-    setPartReason("Konversation terminated!");
-    setKickReason("User terminated!");
+    setQuitReason(QStringLiteral("Konversation terminated!"));
+    setPartReason(QStringLiteral("Konversation terminated!"));
+    setKickReason(QStringLiteral("User terminated!"));
 
-    setAwayMessage("Gone away for now");
+    setAwayMessage(QStringLiteral("Gone away for now"));
 
     setRunAwayCommands(false);
 

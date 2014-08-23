@@ -42,15 +42,15 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
-    m_addNickname = m_toolBar->addAction(QIcon::fromTheme("list-add-user"), i18n("&Add Nickname..."));
+    m_addNickname = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("list-add-user")), i18n("&Add Nickname..."));
     m_addNickname->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
-    m_removeNickname = m_toolBar->addAction(QIcon::fromTheme("list-remove-user"), i18n("&Remove Nickname"));
+    m_removeNickname = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("list-remove-user")), i18n("&Remove Nickname"));
     m_removeNickname->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
     m_toolBar->addSeparator();
-    m_whois = m_toolBar->addAction(QIcon::fromTheme("office-address-book"), i18n("&Whois"));
-    m_openQuery = m_toolBar->addAction(QIcon::fromTheme("office-address-book"), i18n("Open &Query"));
+    m_whois = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("office-address-book")), i18n("&Whois"));
+    m_openQuery = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("office-address-book")), i18n("Open &Query"));
     m_toolBar->addSeparator();
-    m_joinChannel = m_toolBar->addAction(QIcon::fromTheme("irc-join-channel"), i18n("&Join Channel"));
+    m_joinChannel = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18n("&Join Channel"));
     connect(m_toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotPopupMenu_Activated(QAction*)));
 
     m_nickListView=new QTreeWidget(this);
@@ -59,15 +59,15 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     // Remove when server does this automatically.
     m_whoisRequested = true;
 
-    m_onlineIcon = QIcon::fromTheme("im-user");
-    m_offlineIcon = QIcon::fromTheme("im-user-offline");
+    m_onlineIcon = QIcon::fromTheme(QStringLiteral("im-user"));
+    m_offlineIcon = QIcon::fromTheme(QStringLiteral("im-user-offline"));
     m_nickListView->setColumnCount(2);
     m_nickListView->headerItem()->setText(0, i18n("Network/Nickname/Channel"));
     m_nickListView->headerItem()->setText(1, i18n("Additional Information"));
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setSortingEnabled(true);
 
-    Preferences::restoreColumnState(m_nickListView, "NicksOnline ViewSettings");
+    Preferences::restoreColumnState(m_nickListView, QStringLiteral("NicksOnline ViewSettings"));
 
     QString nickListViewWT = i18n(
         "<p>These are all the nicknames on your Nickname Watch list, listed under the "
@@ -88,7 +88,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     // Create context menu.
     m_popupMenu = new QMenu(this);
-    m_popupMenu->setObjectName("nicksonline_context_menu");
+    m_popupMenu->setObjectName(QStringLiteral("nicksonline_context_menu"));
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
         this, SLOT(slotCustomContextMenuRequested(QPoint)));
@@ -100,7 +100,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     // Connect and start refresh timer.
     m_timer = new QTimer(this);
-    m_timer->setObjectName("nicksOnlineTimer");
+    m_timer->setObjectName(QStringLiteral("nicksOnlineTimer"));
     connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
     // TODO: User preference for refresh interval.
     m_timer->start(8000);
@@ -108,7 +108,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
 NicksOnline::~NicksOnline()
 {
-    Preferences::saveColumnState(m_nickListView, "NicksOnline ViewSettings");
+    Preferences::saveColumnState(m_nickListView, QStringLiteral("NicksOnline ViewSettings"));
 
     m_timer->stop();
     delete m_timer;
@@ -135,7 +135,7 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
                        QToolTip::hideText();
             }
             else
-	        QToolTip::hideText();
+            QToolTip::hideText();
         }
         else
                 QToolTip::hideText();
@@ -222,17 +222,17 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois
         {
             niInfo += i18n("Away");
             if (!nickInfo->getAwayMessage().isEmpty())
-                niInfo += " (" + nickInfo->getAwayMessage() + ')';
+                niInfo += QStringLiteral(" (") + nickInfo->getAwayMessage() + QLatin1Char(')');
         }
         if (!nickInfo->getHostmask().isEmpty())
-            niInfo += ' ' + nickInfo->getHostmask();
+            niInfo += QLatin1Char(' ') + nickInfo->getHostmask();
         if (!nickInfo->getRealName().isEmpty())
-            niInfo += " (" + nickInfo->getRealName() + ')';
+            niInfo += QStringLiteral(" (") + nickInfo->getRealName() + QLatin1Char(')');
         if (!nickInfo->getNetServer().isEmpty())
         {
             niInfo += i18n( " online via %1", nickInfo->getNetServer() );
             if (!nickInfo->getNetServerInfo().isEmpty())
-                niInfo += " (" + nickInfo->getNetServerInfo() + ')';
+                niInfo += QStringLiteral(" (") + nickInfo->getNetServerInfo() + QLatin1Char(')');
         }
         if (!nickInfo->getOnlineSince().isNull())
             niInfo += i18n( " since %1", nickInfo->getPrettyOnlineSince() );
@@ -269,9 +269,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // watch list.
     networkRoot->setText(nlvcServerName, serverName);
     // Update list of servers in the network that are connected.
-    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(',', QString::SkipEmptyParts);
+    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(QLatin1Char(','), QString::SkipEmptyParts);
     if (!serverList.contains(serverName)) serverList.append(serverName);
-    networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
+    networkRoot->setText(nlvcAdditionalInfo, serverList.join(QStringLiteral(",")));
     // Get watch list.
     QStringList watchList = servr->getWatchList();
     QStringList::iterator itEnd = watchList.end();
@@ -486,7 +486,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     {
         QTreeWidgetItem *child = m_nickListView->invisibleRootItem()->child(i);
         QString networkName = child->text(nlvcNetwork);
-        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(',', QString::SkipEmptyParts);
+        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(QLatin1Char(','), QString::SkipEmptyParts);
         QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
         while (it != itEnd)
@@ -512,7 +512,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             i--;
         }
         else
-            child->setText(nlvcAdditionalInfo, serverNameList.join(","));
+            child->setText(nlvcAdditionalInfo, serverNameList.join(QStringLiteral(",")));
     }
     // Display info for all currently-connected servers.
     foreach (Server* server, serverList)
@@ -557,7 +557,7 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
       else
       {
         // Get the server object corresponding to the connection id.
-        server->queue( "JOIN "+ nickitem->text(nlvcChannel) );
+        server->queue( QStringLiteral("JOIN ")+ nickitem->text(nlvcChannel) );
       }
     }
 }
@@ -697,13 +697,13 @@ void NicksOnline::doCommand(QAction* id)
             if (static_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0))->type() == NicksOnlineItem::ChannelItem)
             {
                 QString contactChannel = m_nickListView->selectedItems().at(0)->text(nlvcChannel);
-                server->queue( "JOIN "+contactChannel );
+                server->queue( QStringLiteral("JOIN ")+contactChannel );
             }
         }
     }
     else if ( id == m_whois )
     {
-            server->queue("WHOIS "+nickname);
+            server->queue(QStringLiteral("WHOIS ")+nickname);
     }
     else if ( id == m_openQuery )
     {

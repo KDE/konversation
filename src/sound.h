@@ -42,7 +42,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit Sound(QObject *parent = 0, const char *name = 0);
+            explicit Sound(QObject *parent = 0, const QString &name = QString());
             ~Sound();
 
         public slots:

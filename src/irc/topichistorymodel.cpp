@@ -74,7 +74,7 @@ void TopicHistoryModel::appendTopic(const QString& text, const QString& author, 
 
     Topic topic;
     topic.text = text;
-    topic.author = author.section('!', 0, 0);
+    topic.author = author.section(QLatin1Char('!'), 0, 0);
     topic.timestamp = timestamp;
 
     m_topicList.append(topic);
@@ -92,7 +92,7 @@ void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, QDateTime
     Topic currentTopic = m_topicList.last();
     int row = m_topicList.count() - 1;
 
-    currentTopic.author = author.section('!', 0, 0);
+    currentTopic.author = author.section(QLatin1Char('!'), 0, 0);
     currentTopic.timestamp = timestamp;
 
     if (m_topicList.count() >= 2 && m_topicList.at(row - 1) == currentTopic)

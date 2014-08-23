@@ -121,131 +121,131 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Restart"));
-    action->setIcon(QIcon::fromTheme("system-reboot"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("system-reboot")));
     action->setStatusTip(i18n("Quit and restart the application"));
     connect(action, SIGNAL(triggered()), Application::instance(), SLOT(restart()));
-    actionCollection()->addAction("restart", action);
+    actionCollection()->addAction(QStringLiteral("restart"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Server List..."));
-    action->setIcon(QIcon::fromTheme("network-server"));
-    action->setShortcut(QKeySequence("F2"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("network-server")));
+    action->setShortcut(QKeySequence(QStringLiteral("F2")));
     action->setStatusTip(i18n("Manage networks and servers"));
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
-    actionCollection()->addAction("open_server_list", action);
+    actionCollection()->addAction(QStringLiteral("open_server_list"), action);
 
     action=new QAction(this);
     action->setText(i18n("Quick &Connect..."));
-    action->setIcon(QIcon::fromTheme("network-connect"));
-    action->setShortcut(QKeySequence("F7"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("network-connect")));
+    action->setShortcut(QKeySequence(QStringLiteral("F7")));
     action->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
-    actionCollection()->addAction("quick_connect_dialog", action);
+    actionCollection()->addAction(QStringLiteral("quick_connect_dialog"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Reconnect"));
-    action->setIcon(QIcon::fromTheme("view-refresh"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Reconnect to the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(reconnectFrontServer()));
-    actionCollection()->addAction("reconnect_server", action);
+    actionCollection()->addAction(QStringLiteral("reconnect_server"), action);
 
 
     action=new QAction(this);
     action->setText(i18n("&Disconnect"));
-    action->setIcon(QIcon::fromTheme("network-disconnect"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("network-disconnect")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Disconnect from the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
-    actionCollection()->addAction("disconnect_server", action);
+    actionCollection()->addAction(QStringLiteral("disconnect_server"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Identities..."));
-    action->setIcon(QIcon::fromTheme("user-identity"));
-    action->setShortcut(QKeySequence("F8"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("user-identity")));
+    action->setShortcut(QKeySequence(QStringLiteral("F8")));
     action->setStatusTip(i18n("Manage your nick, away and other identity settings"));
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
-    actionCollection()->addAction("identities_dialog", action);
+    actionCollection()->addAction(QStringLiteral("identities_dialog"), action);
 
     action=new KToggleAction(this);
     action->setText(i18n("&Watched Nicks"));
-    action->setIcon(QIcon::fromTheme("im-user"));
-    action->setShortcut(QKeySequence("F4"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("im-user")));
+    action->setShortcut(QKeySequence(QStringLiteral("F4")));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
-    actionCollection()->addAction("open_nicksonline_window", action);
+    actionCollection()->addAction(QStringLiteral("open_nicksonline_window"), action);
 
 
     action=new KToggleAction(this);
     action->setText(i18n("&DCC Status"));
-    action->setIcon(QIcon::fromTheme("arrow-right-double"));
-    action->setShortcut(QKeySequence("F9"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right-double")));
+    action->setShortcut(QKeySequence(QStringLiteral("F9")));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleDccPanel()));
-    actionCollection()->addAction("open_dccstatus_window", action);
+    actionCollection()->addAction(QStringLiteral("open_dccstatus_window"), action);
 
 
 
     action=new QAction(this);
     action->setText(i18n("&Open Logfile"));
-    action->setIcon(QIcon::fromTheme("view-history"));
-    action->setShortcut(QKeySequence("Ctrl+O"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+O")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the known history for this channel in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
-    actionCollection()->addAction("open_logfile", action);
+    actionCollection()->addAction(QStringLiteral("open_logfile"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Channel Settings..."));
-    action->setIcon(QIcon::fromTheme("configure"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the channel settings dialog for this tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
-    actionCollection()->addAction("channel_settings", action);
+    actionCollection()->addAction(QStringLiteral("channel_settings"), action);
 
     action=new KToggleAction(this);
     action->setText(i18n("Channel &List"));
-    action->setIcon(QIcon::fromTheme("view-list-text"));
-    action->setShortcut(QKeySequence("F5"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("view-list-text")));
+    action->setShortcut(QKeySequence(QStringLiteral("F5")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Show a list of all the known channels on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
-    actionCollection()->addAction("open_channel_list", action);
+    actionCollection()->addAction(QStringLiteral("open_channel_list"), action);
 
     action=new KToggleAction(this);
     action->setText(i18n("&URL Catcher"));
-    action->setIcon(QIcon::fromTheme("text-html"));
-    action->setShortcut(QKeySequence("F6"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("text-html")));
+    action->setShortcut(QKeySequence(QStringLiteral("F6")));
     action->setStatusTip(i18n("List all URLs that have been mentioned recently in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
-    actionCollection()->addAction("open_url_catcher", action);
+    actionCollection()->addAction(QStringLiteral("open_url_catcher"), action);
 
-    if (KAuthorized::authorizeKAction("shell_access"))
+    if (KAuthorized::authorizeKAction(QStringLiteral("shell_access")))
     {
         action=new QAction(this);
         action->setText(i18n("New &Konsole"));
-        action->setIcon(QIcon::fromTheme("utilities-terminal"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("utilities-terminal")));
         action->setStatusTip(i18n("Open a terminal in a new tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addKonsolePanel()));
-        actionCollection()->addAction("open_konsole", action);
+        actionCollection()->addAction(QStringLiteral("open_konsole"), action);
     }
 
     // Actions to navigate through the different pages
     QList<QKeySequence> nextShortcut = KStandardShortcut::tabNext();
     QList<QKeySequence> prevShortcut = KStandardShortcut::tabPrev();
 
-    const char *nextIcon, *prevIcon;
+    QString nextIcon, prevIcon;
     if (QApplication::isRightToLeft())
     {
-        prevShortcut.append(QKeySequence("Alt+Right"));
-        nextShortcut.append(QKeySequence("Alt+Left"));
-        nextIcon="go-previous-view";
-        prevIcon="go-next-view";
+        prevShortcut.append(QKeySequence(QStringLiteral("Alt+Right")));
+        nextShortcut.append(QKeySequence(QStringLiteral("Alt+Left")));
+        nextIcon=QStringLiteral("go-previous-view");
+        prevIcon=QStringLiteral("go-next-view");
     }
     else
     {
-        nextShortcut.append(QKeySequence("Alt+Right"));
-        prevShortcut.append(QKeySequence("Alt+Left"));
-        nextIcon="go-next-view";
-        prevIcon="go-previous-view";
+        nextShortcut.append(QKeySequence(QStringLiteral("Alt+Right")));
+        prevShortcut.append(QKeySequence(QStringLiteral("Alt+Left")));
+        nextIcon=QStringLiteral("go-next-view");
+        prevIcon=QStringLiteral("go-previous-view");
     }
 
     action=new QAction(this);
@@ -254,7 +254,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setShortcuts(nextShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
-    actionCollection()->addAction("next_tab", action);
+    actionCollection()->addAction(QStringLiteral("next_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Previous Tab"));
@@ -262,50 +262,50 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setShortcuts(prevShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
-    actionCollection()->addAction("previous_tab", action);
+    actionCollection()->addAction(QStringLiteral("previous_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("Close &Tab"));
-    action->setIcon(QIcon::fromTheme("tab-close-other"));
-    action->setShortcut(QKeySequence("Ctrl+w"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("tab-close-other")));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+w")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
-    actionCollection()->addAction("close_tab", action);
+    actionCollection()->addAction(QStringLiteral("close_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("Last Focused Tab"));
-    action->setShortcut(QKeySequence("Alt+Space"));
+    action->setShortcut(QKeySequence(QStringLiteral("Alt+Space")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showLastFocusedView()));
-    actionCollection()->addAction("last_focused_tab", action);
+    actionCollection()->addAction(QStringLiteral("last_focused_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("Next Active Tab"));
-    action->setShortcut(QKeySequence("Ctrl+Alt+Space"));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Alt+Space")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
-    actionCollection()->addAction("next_active_tab", action);
+    actionCollection()->addAction(QStringLiteral("next_active_tab"), action);
     KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
 
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
         action=new QAction(this);
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(QIcon::fromTheme("arrow-up"));
-        action->setShortcut(QKeySequence("Alt+Shift+Left"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
+        action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
         action->setEnabled(false);
         action->setStatusTip(i18n("Move this tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
-        actionCollection()->addAction("move_tab_left", action);
+        actionCollection()->addAction(QStringLiteral("move_tab_left"), action);
 
         action->setEnabled(false);
         action->setStatusTip(i18n("Move this tab"));
         action=new QAction(this);
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(QIcon::fromTheme("arrow-down"));
-        action->setShortcut(QKeySequence("Alt+Shift+Right"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
+        action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
-        actionCollection()->addAction("move_tab_right", action);
+        actionCollection()->addAction(QStringLiteral("move_tab_right"), action);
     }
     else
     {
@@ -313,42 +313,42 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         {
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(QIcon::fromTheme("arrow-right"));
-            action->setShortcut(QKeySequence("Alt+Shift+Right"));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right")));
+            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
-            actionCollection()->addAction("move_tab_left", action);
+            actionCollection()->addAction(QStringLiteral("move_tab_left"), action);
 
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(QIcon::fromTheme("arrow-left"));
-            action->setShortcut(QKeySequence("Alt+Shift+Left"));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-left")));
+            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
-            actionCollection()->addAction("move_tab_right", action);
+            actionCollection()->addAction(QStringLiteral("move_tab_right"), action);
 
         }
         else
         {
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(QIcon::fromTheme("arrow-left"));
-            action->setShortcut(QKeySequence("Alt+Shift+Left"));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-left")));
+            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
-            actionCollection()->addAction("move_tab_left", action);
+            actionCollection()->addAction(QStringLiteral("move_tab_left"), action);
 
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(QIcon::fromTheme("arrow-right"));
-            action->setShortcut(QKeySequence("Alt+Shift+Right"));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right")));
+            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
-            actionCollection()->addAction("move_tab_right", action);
+            actionCollection()->addAction(QStringLiteral("move_tab_right"), action);
 
         }
 
@@ -358,24 +358,24 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("Rejoin Channel"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(rejoinChannel()));
-    actionCollection()->addAction("rejoin_channel", action);
+    actionCollection()->addAction(QStringLiteral("rejoin_channel"), action);
 
     action->setEnabled(false);
     action=new KToggleAction(this);
     action->setText(i18n("Enable Notifications"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleViewNotifications()));
-    actionCollection()->addAction("tab_notifications", action);
+    actionCollection()->addAction(QStringLiteral("tab_notifications"), action);
 
     action->setEnabled(false);
     action=new KToggleAction(this);
     action->setText(i18n("Join on Connect"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleAutoJoin()));
-    actionCollection()->addAction("tab_autojoin", action);
+    actionCollection()->addAction(QStringLiteral("tab_autojoin"), action);
 
     action=new KToggleAction(this);
     action->setText(i18n("Connect at Startup"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleConnectOnStartup()));
-    actionCollection()->addAction("tab_autoconnect", action);
+    actionCollection()->addAction(QStringLiteral("tab_autoconnect"), action);
 
     QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     encodingDescs.prepend(i18n("Default"));
@@ -384,9 +384,9 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     selectAction->setItems(encodingDescs);
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
-    selectAction->setIcon(QIcon::fromTheme("character-set"));
+    selectAction->setIcon(QIcon::fromTheme(QStringLiteral("character-set")));
     connect(selectAction, SIGNAL(triggered(int)), m_viewContainer, SLOT(changeViewCharset(int)));
-    actionCollection()->addAction("tab_encoding", selectAction);
+    actionCollection()->addAction(QStringLiteral("tab_encoding"), selectAction);
 
     QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
     connect(tabSelectionMapper, SIGNAL(mapped(int)), m_viewContainer, SLOT(goToView(int)));
@@ -396,53 +396,53 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
         action=new QAction(this);
         action->setText(i18n("Go to Tab %1",i));
-        action->setShortcut(QKeySequence(QString("Alt+%1").arg(i%10)));
+        action->setShortcut(QKeySequence(QString(QStringLiteral("Alt+%1")).arg(i%10)));
         connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
-        actionCollection()->addAction(QString("go_to_tab_%1").arg(i).toLocal8Bit(), action);
+        actionCollection()->addAction(QString(QStringLiteral("go_to_tab_%1")).arg(i), action);
 
         tabSelectionMapper->setMapping(action, i-1);
     }
 
     action=new QAction(this);
     action->setText(i18n("Clear &Marker Lines"));
-    action->setShortcut(QKeySequence("Ctrl+Shift+R"));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+R")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear marker lines in the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
-    actionCollection()->addAction("clear_lines", action);
+    actionCollection()->addAction(QStringLiteral("clear_lines"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Clear Window"));
-    action->setShortcut(QKeySequence("Ctrl+L"));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+L")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear the contents of the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearView()));
-    actionCollection()->addAction("clear_window", action);
+    actionCollection()->addAction(QStringLiteral("clear_window"), action);
 
     action=new QAction(this);
     action->setText(i18n("Clear &All Windows"));
-    action->setShortcut(QKeySequence("Ctrl+Shift+L"));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+L")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear the contents of all open tabs"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearAllViews()));
-    actionCollection()->addAction("clear_tabs", action);
+    actionCollection()->addAction(QStringLiteral("clear_tabs"), action);
 
     KToggleAction* awayAction = new KToggleAction(this);
     awayAction->setText(i18n("Global Away"));
-    awayAction->setShortcut(QKeySequence("Ctrl+Shift+A"));
+    awayAction->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+A")));
     awayAction->setEnabled(false);
-    awayAction->setIcon(QIcon::fromTheme("im-user-away"));
+    awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
     connect(awayAction, SIGNAL(triggered(bool)), Application::instance()->getAwayManager(), SLOT(setGlobalAway(bool)));
-    actionCollection()->addAction("toggle_away", awayAction);
+    actionCollection()->addAction(QStringLiteral("toggle_away"), awayAction);
 
     action=new QAction(this);
     action->setText(i18n("&Join Channel..."));
-    action->setIcon(QIcon::fromTheme("irc-join-channel"));
-    action->setShortcut(QKeySequence("Ctrl+J"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("irc-join-channel")));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+J")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Join a new channel on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showJoinChannelDialog()));
-    actionCollection()->addAction("join_channel", action);
+    actionCollection()->addAction(QStringLiteral("join_channel"), action);
 
     action = KStandardAction::find(m_viewContainer, SLOT(findText()), actionCollection());
     action->setEnabled(false);
@@ -453,71 +453,71 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&IRC Color..."));
-    action->setIcon(QIcon::fromTheme("format-text-color"));
-    action->setShortcut(QKeySequence("Ctrl+K"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("format-text-color")));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+K")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Set the color of your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertIRCColor()));
-    actionCollection()->addAction("irc_colors", action);
+    actionCollection()->addAction(QStringLiteral("irc_colors"), action);
 
     action=new QAction(this);
     action->setText(i18n("&Marker Line"));
-    action->setShortcut(QKeySequence("Ctrl+R"));
+    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+R")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Insert a horizontal line into the current tab that only you can see"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertMarkerLine()));
-    actionCollection()->addAction("insert_marker_line", action);
+    actionCollection()->addAction(QStringLiteral("insert_marker_line"), action);
 
     action=new QAction(this);
     action->setText(i18n("Special &Character..."));
-    action->setIcon(QIcon::fromTheme("character-set"));
-    action->setShortcut(QKeySequence("Alt+Shift+C"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("character-set")));
+    action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+C")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Insert any character into your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertCharacter()));
-    actionCollection()->addAction("insert_character", action);
+    actionCollection()->addAction(QStringLiteral("insert_character"), action);
 
     action=new QAction(this);
     action->setText(i18n("Auto Replace"));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(doAutoReplace()));
-    actionCollection()->addAction("auto_replace", action);
+    actionCollection()->addAction(QStringLiteral("auto_replace"), action);
 
     action=new QAction(this);
     action->setText(i18n("Focus Input Box"));
     action->setShortcut(QKeySequence(Qt::Key_Escape));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(focusInputBox()));
-    actionCollection()->addAction("focus_input_box", action);
+    actionCollection()->addAction(QStringLiteral("focus_input_box"), action);
 
     action=new QAction(this);
     action->setText(i18n("Close &All Open Queries"));
-    action->setShortcut(QKeySequence("F11"));
+    action->setShortcut(QKeySequence(QStringLiteral("F11")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeQueries()));
-    actionCollection()->addAction("close_queries", action);
+    actionCollection()->addAction(QStringLiteral("close_queries"), action);
 
     KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
     if (Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
     toggleChannelNickListsAction->setText(i18n("Show Nicklist"));
-    toggleChannelNickListsAction->setShortcut(QKeySequence("Ctrl+H"));
+    toggleChannelNickListsAction->setShortcut(QKeySequence(QStringLiteral("Ctrl+H")));
     connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
-    actionCollection()->addAction("hide_nicknamelist", toggleChannelNickListsAction);
+    actionCollection()->addAction(QStringLiteral("hide_nicknamelist"), toggleChannelNickListsAction);
 
     action=new QAction(this);
     action->setText(i18n("Show/Hide Konversation"));
     connect(action, SIGNAL(triggered()), this, SLOT(toggleVisibility()));
-    actionCollection()->addAction("toggle_mainwindow_visibility", action);
+    actionCollection()->addAction(QStringLiteral("toggle_mainwindow_visibility"), action);
     KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
 
     action=new KToggleAction(this);
     action->setEnabled(true);
     action->setChecked(Preferences::self()->useOSD());
     action->setText(i18n("Enable On Screen Display"));
-    action->setIcon(QIcon::fromTheme("video-display"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("video-display")));
     connect(action, SIGNAL(triggered(bool)), Preferences::self(), SLOT(slotSetUseOSD(bool)));
-    actionCollection()->addAction("toggle_osd", action);
+    actionCollection()->addAction(QStringLiteral("toggle_osd"), action);
 
     // Bookmarks
     action=new QAction(this);
@@ -525,7 +525,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     QMenu *menu = new QMenu(this);
     action->setMenu(menu);
     new KonviBookmarkHandler(menu, this);
-    actionCollection()->addAction("bookmarks" , action);
+    actionCollection()->addAction(QStringLiteral("bookmarks") , action);
 
     // decide whether to show the tray icon or not
     updateTrayIcon();
@@ -561,7 +561,7 @@ int MainWindow::confirmQuit()
 
     int result = KMessageBox::Cancel;
 
-    if (!KMessageBox::shouldBeShownContinue("systemtrayquitKonversation")
+    if (!KMessageBox::shouldBeShownContinue(QStringLiteral("systemtrayquitKonversation"))
          && konvApp->getDccTransferManager()->hasActiveTransfers())
     {
         result = KMessageBox::warningContinueCancel(
@@ -570,7 +570,7 @@ int MainWindow::confirmQuit()
             i18n("Confirm Quit"),
             KStandardGuiItem::quit(),
             KStandardGuiItem::cancel(),
-            "QuitWithActiveDccTransfers");
+            QStringLiteral("QuitWithActiveDccTransfers"));
     }
     else
     {
@@ -580,7 +580,7 @@ int MainWindow::confirmQuit()
             i18n("Confirm Quit"),
             KStandardGuiItem::quit(),
             KStandardGuiItem::cancel(),
-            "systemtrayquitKonversation");
+            QStringLiteral("systemtrayquitKonversation"));
     }
 
     if (result != KMessageBox::Continue)
@@ -704,9 +704,9 @@ void MainWindow::updateTrayIcon()
             connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
             connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
             QMenu *trayMenu = qobject_cast<QMenu*>(m_trayIcon->contextMenu());
-            trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Preferences)));
-            trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::ConfigureNotifications)));
-            trayMenu->addAction(actionCollection()->action("toggle_away"));
+            trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Preferences))));
+            trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::ConfigureNotifications))));
+            trayMenu->addAction(actionCollection()->action(QStringLiteral("toggle_away")));
         }
 
         m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());
@@ -770,27 +770,27 @@ void MainWindow::openPrefsDialog()
 void MainWindow::openKeyBindings()
 {
     // Change a number of action names to make them friendlier for the shortcut list.
-    actionCollection()->action("tab_notifications")->setText(i18n("Toggle Notifications"));
-    actionCollection()->action("toggle_away")->setText(i18n("Toggle Away Globally"));
-    actionCollection()->action("irc_colors")->setText(i18n("Insert &IRC Color..."));
-    actionCollection()->action("insert_character")->setText(i18n("Insert Special &Character..."));
-    actionCollection()->action("insert_marker_line")->setText(i18n("Insert &Marker Line"));
-    QString openChannelListString = actionCollection()->action("open_channel_list")->text();
-    actionCollection()->action("open_channel_list")->setText(i18n("&Channel List"));
-    QString openLogFileString = actionCollection()->action("open_logfile")->text();
-    actionCollection()->action("open_logfile")->setText(i18n("&Open Logfile"));
+    actionCollection()->action(QStringLiteral("tab_notifications"))->setText(i18n("Toggle Notifications"));
+    actionCollection()->action(QStringLiteral("toggle_away"))->setText(i18n("Toggle Away Globally"));
+    actionCollection()->action(QStringLiteral("irc_colors"))->setText(i18n("Insert &IRC Color..."));
+    actionCollection()->action(QStringLiteral("insert_character"))->setText(i18n("Insert Special &Character..."));
+    actionCollection()->action(QStringLiteral("insert_marker_line"))->setText(i18n("Insert &Marker Line"));
+    QString openChannelListString = actionCollection()->action(QStringLiteral("open_channel_list"))->text();
+    actionCollection()->action(QStringLiteral("open_channel_list"))->setText(i18n("&Channel List"));
+    QString openLogFileString = actionCollection()->action(QStringLiteral("open_logfile"))->text();
+    actionCollection()->action(QStringLiteral("open_logfile"))->setText(i18n("&Open Logfile"));
 
     // Open shortcut configuration dialog.
     KShortcutsDialog::configure(actionCollection());
 
     // Reset action names.
-    actionCollection()->action("tab_notifications")->setText(i18n("Enable Notifications"));
-    actionCollection()->action("toggle_away")->setText(i18n("Set &Away Globally"));
-    actionCollection()->action("irc_colors")->setText(i18n("&IRC Color..."));
-    actionCollection()->action("insert_character")->setText(i18n("Special &Character..."));
-    actionCollection()->action("insert_marker_line")->setText(i18n("&Marker Line"));
-    actionCollection()->action("open_channel_list")->setText(openChannelListString);
-    actionCollection()->action("open_logfile")->setText(openLogFileString);
+    actionCollection()->action(QStringLiteral("tab_notifications"))->setText(i18n("Enable Notifications"));
+    actionCollection()->action(QStringLiteral("toggle_away"))->setText(i18n("Set &Away Globally"));
+    actionCollection()->action(QStringLiteral("irc_colors"))->setText(i18n("&IRC Color..."));
+    actionCollection()->action(QStringLiteral("insert_character"))->setText(i18n("Special &Character..."));
+    actionCollection()->action(QStringLiteral("insert_marker_line"))->setText(i18n("&Marker Line"));
+    actionCollection()->action(QStringLiteral("open_channel_list"))->setText(openChannelListString);
+    actionCollection()->action(QStringLiteral("open_logfile"))->setText(openLogFileString);
 }
 
 void MainWindow::openServerList()

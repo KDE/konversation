@@ -67,7 +67,7 @@ namespace Konversation
             methodSignature = QString::fromLatin1(OutputFilter::staticMetaObject.method(i).methodSignature());
 
             if (methodSignature.startsWith(QLatin1String("command_")))
-                m_commands << methodSignature.mid(8).section('(', 0, 0).toLower();
+                m_commands << methodSignature.mid(8).section(QLatin1Char('('), 0, 0).toLower();
         }
     }
 
@@ -91,29 +91,29 @@ namespace Konversation
         for(int index = 0; index<aliasList.count(); index++)
         {
             // cut alias pattern from definition
-            QString aliasPattern(aliasList[index].section(' ', 0, 0));
+            QString aliasPattern(aliasList[index].section(QLatin1Char(' '), 0, 0));
 
             // cut first word from command line, so we do not wrongly find an alias
             // that starts with the same letters, like /m would override /me
-            QString lineStart = line.section(' ', 0, 0);
+            QString lineStart = line.section(QLatin1Char(' '), 0, 0);
 
             // pattern found?
             if (lineStart == Preferences::self()->commandChar() + aliasPattern)
             {
-                QString aliasReplace = aliasList[index].section(' ',1);
+                QString aliasReplace = aliasList[index].section(QLatin1Char(' '),1);
 
                 if (context)
                     aliasReplace = context->getServer()->parseWildcards(aliasReplace, context);
 
-                if (!aliasList[index].contains("%p"))
-                    aliasReplace.append(' ' + line.section(' ', 1));
+                if (!aliasList[index].contains(QStringLiteral("%p")))
+                    aliasReplace.append(QLatin1Char(' ') + line.section(QLatin1Char(' '), 1));
 
                 // protect "%%"
-                aliasReplace.replace("%%","%\x01");
+                aliasReplace.replace(QStringLiteral("%%"),QStringLiteral("%\x01"));
                 // replace %p placeholder with rest of line
-                aliasReplace.replace("%p", line.section(' ', 1));
+                aliasReplace.replace(QStringLiteral("%p"), line.section(QLatin1Char(' '), 1));
                 // restore "%<1>" as "%%"
-                aliasReplace.replace("%\x01","%%");
+                aliasReplace.replace(QStringLiteral("%\x01"),QStringLiteral("%%"));
                 // modify line
                 line=aliasReplace;
                 // return "replaced"

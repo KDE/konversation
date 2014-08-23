@@ -119,7 +119,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     topicLayout->setSpacing(0);
 
     m_topicButton = new QToolButton(topicWidget);
-    m_topicButton->setIcon(QIcon::fromTheme("document-edit"));
+    m_topicButton->setIcon(QIcon::fromTheme(QStringLiteral("document-edit")));
     m_topicButton->setToolTip(i18n("Edit Channel Settings"));
     m_topicButton->setAutoRaise(true);
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
@@ -144,21 +144,21 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     modeBoxLayout->setMargin(0);
     modeBox->hide();
     modeBox->setSizePolicy(hfixed);
-    modeT = new ModeButton("T",modeBox,0);
+    modeT = new ModeButton(QStringLiteral("T"),modeBox,0);
     modeBoxLayout->addWidget(modeT);
-    modeN = new ModeButton("N",modeBox,1);
+    modeN = new ModeButton(QStringLiteral("N"),modeBox,1);
     modeBoxLayout->addWidget(modeN);
-    modeS = new ModeButton("S",modeBox,2);
+    modeS = new ModeButton(QStringLiteral("S"),modeBox,2);
     modeBoxLayout->addWidget(modeS);
-    modeI = new ModeButton("I",modeBox,3);
+    modeI = new ModeButton(QStringLiteral("I"),modeBox,3);
     modeBoxLayout->addWidget(modeI);
-    modeP = new ModeButton("P",modeBox,4);
+    modeP = new ModeButton(QStringLiteral("P"),modeBox,4);
     modeBoxLayout->addWidget(modeP);
-    modeM = new ModeButton("M",modeBox,5);
+    modeM = new ModeButton(QStringLiteral("M"),modeBox,5);
     modeBoxLayout->addWidget(modeM);
-    modeK = new ModeButton("K",modeBox,6);
+    modeK = new ModeButton(QStringLiteral("K"),modeBox,6);
     modeBoxLayout->addWidget(modeK);
-    modeL = new ModeButton("L",modeBox,7);
+    modeL = new ModeButton(QStringLiteral("L"),modeBox,7);
     modeBoxLayout->addWidget(modeL);
 
     modeT->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('T'));
@@ -236,7 +236,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     awayLabel->hide();
     cipherLabel = new QLabel(commandLineBox);
     cipherLabel->hide();
-    cipherLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
+    cipherLabel->setPixmap(KIconLoader::global()->loadIcon(QStringLiteral("document-encrypt"), KIconLoader::Toolbar));
     m_inputBar = new IRCInput(commandLineBox);
 
     commandLineLayout->addWidget(nicknameCombobox);
@@ -467,7 +467,7 @@ void Channel::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline = text.split('\n', QString::SkipEmptyParts);
+        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
         for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
@@ -531,7 +531,7 @@ void Channel::completeNick()
         // remember old cursor position locally
         oldPos = pos;
         // step back to last space or start of line
-        while(pos && line[pos-1] != ' ') pos--;
+        while(pos && line[pos-1] != QLatin1Char(' ')) pos--;
         // copy search pattern (lowercase)
         QString pattern = line.mid(pos, oldPos - pos);
         // copy line to newLine-buffer
@@ -556,7 +556,7 @@ void Channel::completeNick()
                 {
                     if(Preferences::self()->nickCompletionMode() == 1)
                     {
-                        QString nicksFound = found.join(" ");
+                        QString nicksFound = found.join(QStringLiteral(" "));
                         appendServerMessage(i18n("Completion"), i18n("Possible completions: %1.", nicksFound));
                     }
                     else
@@ -741,7 +741,7 @@ QString Channel::getPassword()
 
     for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
     {
-        if ((*it)[0] == 'k') password = (*it).mid(1);
+        if ((*it)[0] == QLatin1Char('k')) password = (*it).mid(1);
     }
 
     if (password.isEmpty() && m_server->getServerGroup())
@@ -808,7 +808,7 @@ void Channel::sendText(const QString& sendLine)
     m_server->getOutputFilter()->replaceAliases(outputAll, this);
 
     // Send all strings, one after another
-    QStringList outList = outputAll.split(QRegExp("[\r\n]+"), QString::SkipEmptyParts);
+    QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
     for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
@@ -882,7 +882,7 @@ void Channel::channelLimitChanged()
 void Channel::modeButtonClicked(int id, bool on)
 {
     char mode[]={'t','n','s','i','p','m','k','l'};
-    QString command("MODE %1 %2%3 %4");
+    QString command(QStringLiteral("MODE %1 %2%3 %4"));
     QString args = getPassword();
 
     if (mode[id] == 'k')
@@ -917,7 +917,7 @@ void Channel::modeButtonClicked(int id, bool on)
             args=limit->text();
     }
     // put together the mode command and send it to the server queue
-    m_server->queue(command.arg(getName()).arg((on) ? "+" : "-").arg(mode[id]).arg(args));
+    m_server->queue(command.arg(getName()).arg((on) ? QStringLiteral("+") : QStringLiteral("-")).arg(mode[id]).arg(args));
 }
 
 void Channel::quickButtonClicked(const QString &buttonText)
@@ -926,7 +926,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
     QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList(), m_inputBar->toPlainText());
 
     // are there any newlines in the definition?
-    if (out.contains('\n'))
+    if (out.contains(QLatin1Char('\n')))
         sendText(out);
     // single line without newline needs to be copied into input line
     else
@@ -1134,7 +1134,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     {
         // if the reason contains text markup characters, play it safe and reset all
         if (hasIRCMarkups(displayReason))
-            displayReason += "\017";
+            displayReason += QStringLiteral("\017");
     }
 
     if(channelNick->getNickname() == m_server->getNickname())
@@ -1222,7 +1222,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
     {
         // if the reason contains text markup characters, play it safe and reset all
         if (hasIRCMarkups(displayReason))
-            displayReason += "\017";
+            displayReason += QStringLiteral("\017");
     }
 
     if(channelNick->getNickname() == m_server->getNickname())
@@ -1346,7 +1346,7 @@ void Channel::adjustOps(int value)
 
 void Channel::emitUpdateInfo()
 {
-    QString info = getName() + " - ";
+    QString info = getName() + QStringLiteral(" - ");
     info += i18np("%1 nick", "%1 nicks", numberOfNicks());
     info += i18np(" (%1 op)", " (%1 ops)", numberOfOps());
 
@@ -1364,7 +1364,7 @@ void Channel::setTopic(const QString& text)
 
     // If the reason contains text markup characters, play it safe and reset all.
     if (!cleanTopic.isEmpty() && hasIRCMarkups(cleanTopic))
-        cleanTopic += "\017";
+        cleanTopic += QStringLiteral("\017");
 
     appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic));
 
@@ -1377,7 +1377,7 @@ void Channel::setTopic(const QString& nickname, const QString& text)
 
     // If the reason contains text markup characters, play it safe and reset all.
     if (!cleanTopic.isEmpty() && hasIRCMarkups(cleanTopic))
-        cleanTopic += "\017";
+        cleanTopic += QStringLiteral("\017");
 
     if (nickname == m_server->getNickname())
         appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic));
@@ -1413,7 +1413,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
     bool toMe = false;
 
     // HACK right now Server only keeps type A modes
-    bool banTypeThang = m_server->banAddressListModes().contains(QChar(mode));
+    bool banTypeThang = m_server->banAddressListModes().contains(QLatin1Char(mode));
 
     // remember if this nick had any type of op.
     bool wasAnyOp = false;
@@ -1790,28 +1790,28 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         default:
         if (plus)
         {
-            if (Konversation::getChannelModesHash().contains(mode))
+            if (Konversation::getChannelModesHash().contains(QLatin1Char(mode)))
             {
-                if (fromMe) message = i18n("You set the channel mode '%1'.", Konversation::getChannelModesHash().value(mode));
-                else        message= i18n("%1 sets the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(mode));
+                if (fromMe) message = i18n("You set the channel mode '%1'.", Konversation::getChannelModesHash().value(QLatin1Char(mode)));
+                else        message= i18n("%1 sets the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(QLatin1Char(mode)));
             }
             else
             {
-                if (fromMe) message = i18n("You set channel mode +%1", QString(mode));
-                else        message = i18n("%1 sets channel mode +%2", sourceNick, QString(mode));
+                if (fromMe) message = i18n("You set channel mode +%1", QLatin1Char(mode));
+                else        message = i18n("%1 sets channel mode +%2", sourceNick, QLatin1Char(mode));
             }
         }
         else
         {
-            if (Konversation::getChannelModesHash().contains(mode))
+            if (Konversation::getChannelModesHash().contains(QLatin1Char(mode)))
             {
-                if (fromMe) message = i18n("You remove the channel mode '%1'.", Konversation::getChannelModesHash().value(mode));
-                else        message= i18n("%1 removes the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(mode));
+                if (fromMe) message = i18n("You remove the channel mode '%1'.", Konversation::getChannelModesHash().value(QLatin1Char(mode)));
+                else        message= i18n("%1 removes the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(QLatin1Char(mode)));
             }
             else
             {
-                if (fromMe) message = i18n("You set channel mode -%1", QString(mode));
-                else        message = i18n("%1 sets channel mode -%2", sourceNick, QString(mode));
+                if (fromMe) message = i18n("You set channel mode -%1", QLatin1Char(mode));
+                else        message = i18n("%1 sets channel mode -%2", sourceNick, QLatin1Char(mode));
             }
         }
     }
@@ -1840,7 +1840,7 @@ void Channel::clearModeList()
     // Keep channel password in the backing store, for rejoins.
     for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
     {
-        if ((*it)[0] == 'k') k = (*it);
+        if ((*it)[0] == QLatin1Char('k')) k = (*it);
     }
 
     m_modeList.clear();
@@ -1898,11 +1898,11 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 
     if(plus)
     {
-        m_modeList.append(QString(mode + parameter));
+        m_modeList.append(QString(QLatin1Char(mode) + parameter));
     }
     else
     {
-        QStringList removable = m_modeList.filter(QRegExp(QString("^%1.*").arg(mode)));
+        QStringList removable = m_modeList.filter(QRegExp(QString(QStringLiteral("^%1.*")).arg(mode)));
         foreach(const QString &mode, removable)
         {
             m_modeList.removeOne(mode);
@@ -1943,17 +1943,17 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
         // Get the button definition
         QString buttonText=newButtonList[index];
         // Extract button label
-        QString buttonLabel=buttonText.section(',',0,0);
+        QString buttonLabel=buttonText.section(QLatin1Char(','),0,0);
         // Extract button definition
-        buttonText=buttonText.section(',',1);
+        buttonText=buttonText.section(QLatin1Char(','),1);
 
         quickButton->setText(buttonLabel);
         quickButton->setDefinition(buttonText);
 
         // Add tool tips
-        QString toolTip=buttonText.replace('&',"&amp;").
-            replace('<',"&lt;").
-            replace('>',"&gt;");
+        QString toolTip=buttonText.replace(QLatin1Char('&'),QStringLiteral("&amp;")).
+            replace(QLatin1Char('<'),QStringLiteral("&lt;")).
+            replace(QLatin1Char('>'),QStringLiteral("&gt;"));
 
         quickButton->setToolTip(toolTip);
 
@@ -2154,7 +2154,7 @@ void Channel::nicknameComboboxChanged()
 void Channel::changeNickname(const QString& newNickname)
 {
     if (!newNickname.isEmpty())
-        m_server->queue("NICK "+newNickname);
+        m_server->queue(QStringLiteral("NICK ")+newNickname);
 }
 
 void Channel::queueNicks(const QStringList& nicknameList)
@@ -2236,7 +2236,7 @@ void Channel::autoUserhost()
         {
             if(nick->getChannelNick()->getHostmask().isEmpty())
             {
-                if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + ' ';
+                if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + QLatin1Char(' ');
                 else break;
             }
         }
@@ -2393,7 +2393,7 @@ bool Channel::closeYourself(bool confirm)
             i18n("Leave Channel"),
             KGuiItem(i18n("Leave")),
             KStandardGuiItem::cancel(),
-            "QuitChannelTab");
+            QStringLiteral("QuitChannelTab"));
 
     if (result==KMessageBox::Continue)
     {
@@ -2643,12 +2643,12 @@ void Channel::addBan(const QString& ban)
 {
     for ( QStringList::iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
     {
-        if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
+        if ((*it).section(QLatin1Char(' '), 0, 0) == ban.section(QLatin1Char(' '), 0, 0))
         {
             // Ban is already in list.
             it = m_BanList.erase(it);
 
-            emit banRemoved(ban.section(' ', 0, 0));
+            emit banRemoved(ban.section(QLatin1Char(' '), 0, 0));
             if (it == m_BanList.end())
                 break;
         }
@@ -2663,7 +2663,7 @@ void Channel::removeBan(const QString& ban)
 {
   foreach(const QString &string, m_BanList)
   {
-    if (string.section(' ', 0, 0) == ban)
+    if (string.section(QLatin1Char(' '), 0, 0) == ban)
     {
       m_BanList.removeOne(string);
 
@@ -2787,14 +2787,14 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
                    bool skipNonAlfaNum, bool caseSensitive)
 {
     found.clear();
-    QString prefix('^');
+    QString prefix(QLatin1Char('^'));
     QString newNick;
     QString prefixCharacter = Preferences::self()->prefixCharacter();
     NickList foundNicks;
 
-    if((pattern.contains(QRegExp("^(\\d|\\w)"))) && skipNonAlfaNum)
+    if((pattern.contains(QRegExp(QStringLiteral("^(\\d|\\w)")))) && skipNonAlfaNum)
     {
-        prefix = "^([^\\d\\w]|[\\_]){0,}";
+        prefix = QStringLiteral("^([^\\d\\w]|[\\_]){0,}");
     }
 
     QRegExp regexp(prefix + QRegExp::escape(pattern));

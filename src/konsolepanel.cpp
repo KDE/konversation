@@ -42,7 +42,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 
     m_profileButton = new QToolButton(headerWidget);
     headerWidgetLayout->addWidget(m_profileButton);
-    m_profileButton->setIcon(QIcon::fromTheme("configure"));
+    m_profileButton->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
     m_profileButton->setToolTip(i18n("Manage Konsole Profiles"));
     m_profileButton->setAutoRaise(true);
     m_profileButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -53,7 +53,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
     KPluginFactory* fact = 0;
-    KService::Ptr service = KService::serviceByDesktopName("konsolepart");
+    KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("konsolepart"));
     if( service )
     {
         fact = KPluginLoader(service->library()).factory();

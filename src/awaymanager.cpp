@@ -165,7 +165,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
         simulateUserActivity();
 
     Application* konvApp = static_cast<Application*>(kapp);
-    KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
+    KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
     Konversation::TrayIcon* trayIcon = konvApp->getMainWindow()->systemTrayIcon();
 
     if (!awayAction)
@@ -185,14 +185,14 @@ void AwayManager::updateGlobalAwayAction(bool away)
         if (awayCount == serverList.count())
         {
             awayAction->setChecked(true);
-            awayAction->setIcon(QIcon::fromTheme("im-user-away"));
+            awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
             if (trayIcon) trayIcon->setAway(true);
         }
     }
     else
     {
         awayAction->setChecked(false);
-        awayAction->setIcon(QIcon::fromTheme("im-user"));
+        awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-suser")));
         if (trayIcon) trayIcon->setAway(false);
     }
 }

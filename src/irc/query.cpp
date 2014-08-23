@@ -49,7 +49,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     queryHostmask=new KSqueezedTextLabel(m_headerSplitter);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(queryHostmask), 0);
     queryHostmask->setTextElideMode(Qt::ElideRight);
-    queryHostmask->setObjectName("query_hostmask");
+    queryHostmask->setObjectName(QStringLiteral("query_hostmask"));
 
     QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar. The full name and hostmask is shown.</p><p>See the <i>Konversation Handbook</i> for an explanation of what the hostmask is.</p></qt>");
     queryHostmask->setWhatsThis(whatsthis);
@@ -64,7 +64,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // This box holds the input line
     QWidget* inputBox=new QWidget(this);
     QHBoxLayout* inputBoxLayout = new QHBoxLayout(inputBox);
-    inputBox->setObjectName("input_log_box");
+    inputBox->setObjectName(QStringLiteral("input_log_box"));
     inputBoxLayout->setSpacing(spacing());
     inputBoxLayout->setMargin(0);
 
@@ -74,7 +74,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     blowfishLabel = new QLabel(inputBox);
     inputBoxLayout->addWidget(blowfishLabel);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
+    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon(QStringLiteral("document-encrypt"), KIconLoader::Toolbar));
     m_inputBar=new IRCInput(inputBox);
     inputBoxLayout->addWidget(m_inputBar);
 
@@ -230,7 +230,7 @@ void Query::sendText(const QString& sendLine)
     m_server->getOutputFilter()->replaceAliases(outputAll, this);
 
     // Send all strings, one after another
-    QStringList outList = outputAll.split('\n', QString::SkipEmptyParts);
+    QStringList outList = outputAll.split(QLatin1Char('\n'), QString::SkipEmptyParts);
     for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
@@ -280,7 +280,7 @@ void Query::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline = text.split('\n', QString::SkipEmptyParts);
+        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
         for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
@@ -359,10 +359,10 @@ void Query::nickInfoChanged()
         setName(m_nickInfo->getNickname());
         QString text = m_nickInfo->getBestAddresseeName();
         if(!m_nickInfo->getHostmask().isEmpty() && !text.isEmpty())
-            text += " - ";
+            text += QStringLiteral(" - ");
         text += m_nickInfo->getHostmask();
         if(m_nickInfo->isAway() && !m_nickInfo->getAwayMessage().isEmpty())
-            text += " (" + m_nickInfo->getAwayMessage() + ") ";
+            text += QStringLiteral(" (") + m_nickInfo->getAwayMessage() + QStringLiteral(") ");
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
         QString strTooltip;
@@ -421,7 +421,7 @@ bool Query::closeYourself(bool confirm)
             i18n("Close Query"),
             KStandardGuiItem::close(),
             KStandardGuiItem::cancel(),
-            "QuitQueryTab");
+            QStringLiteral("QuitQueryTab"));
 
     if (result == KMessageBox::Continue)
     {
@@ -466,7 +466,7 @@ void Query::quitNick(const QString& reason)
     else
     {
         if (hasIRCMarkups(displayReason))
-            displayReason+="\017";
+            displayReason+=QStringLiteral("\017");
 
         appendCommandMessage(i18nc("Message type", "Quit"), i18nc("%1 = nick, %2 = hostmask, %3 = reason", "%1 (%2) has left this server (%3).",
             getName(), getNickInfo()->getHostmask(), displayReason), false);

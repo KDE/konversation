@@ -30,14 +30,14 @@ KonviBookmarkHandler::KonviBookmarkHandler(QMenu *menu, MainWindow* mainWindow)
 KBookmarkOwner(),
 m_mainWindow(mainWindow)
 {
-    setObjectName("KonviBookmarkHandler");
+    setObjectName(QStringLiteral("KonviBookmarkHandler"));
 
-    m_file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "konversation/bookmarks.xml" );
+    m_file = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/bookmarks.xml") );
 
     if ( m_file.isEmpty() )
-        m_file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "konversation/bookmarks.xml" ;
+        m_file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QStringLiteral("konversation/bookmarks.xml") ;
 
-    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
+    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, QStringLiteral("konversation"));
     manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
     manager->setUpdate( true );
 

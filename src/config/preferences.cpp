@@ -58,19 +58,19 @@ Preferences::Preferences()
 
     QStringList nickList;
     nickList.append(user.loginName());
-    nickList.append(user.loginName() + '_');
-    nickList.append(user.loginName() + "__");
+    nickList.append(user.loginName() + QLatin1Char('_'));
+    nickList.append(user.loginName() + QStringLiteral("__"));
     mIdentity->setNicknameList(nickList);
 
     Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
-    serverGroup->setName("freenode");
+    serverGroup->setName(QStringLiteral("freenode"));
     Konversation::ServerSettings server;
-    server.setHost("chat.freenode.net");
+    server.setHost(QStringLiteral("chat.freenode.net"));
     server.setPort(8001);
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
-    channel.setName("#konversation");
+    channel.setName(QStringLiteral("#konversation"));
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
     mServerGroupHash.insert(0, serverGroup);
@@ -91,14 +91,14 @@ const Konversation::ServerGroupHash Preferences::serverGroupHash()
 
 const QStringList Preferences::defaultQuickButtonList()
 {
-    return QStringList() << "Op,/OP %u%n"
-                         << "DeOp,/DEOP %u%n"
-                         << "WhoIs,/WHOIS %s,%%u%n"
-                         << "Version,/CTCP %s,%%u VERSION%n"
-                         << "Kick,/KICK %u%n"
-                         << "Ban,/BAN %u%n"
-                         << "Part,/PART %c Leaving...%n"
-                         << "Quit,/QUIT Leaving...%n";
+    return QStringList() << QStringLiteral("Op,/OP %u%n")
+                         << QStringLiteral("DeOp,/DEOP %u%n")
+                         << QStringLiteral("WhoIs,/WHOIS %s,%%u%n")
+                         << QStringLiteral("Version,/CTCP %s,%%u VERSION%n")
+                         << QStringLiteral("Kick,/KICK %u%n")
+                         << QStringLiteral("Ban,/BAN %u%n")
+                         << QStringLiteral("Part,/PART %c Leaving...%n")
+                         << QStringLiteral("Quit,/QUIT Leaving...%n");
 }
 
 const QStringList Preferences::quickButtonList()
@@ -121,8 +121,8 @@ void Preferences::clearQuickButtonList()
 const QList<QStringList> Preferences::defaultAutoreplaceList()
 {
     QList<QStringList> defaultList;
-    defaultList.append(QStringList() << "1" << "o" << "\\[\\[([^\\s]+)\\]\\]" << "http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1");
-    defaultList.append(QStringList() << "1" << "o" << "(BUG:|bug:)([0-9]+)" << "https://bugs.kde.org/show_bug.cgi?id=%2");
+    defaultList.append(QStringList() << QStringLiteral("1") << QStringLiteral("o") << QStringLiteral("\\[\\[([^\\s]+)\\]\\]") << QStringLiteral("http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1"));
+    defaultList.append(QStringList() << QStringLiteral("1") << QStringLiteral("o") << QStringLiteral("(BUG:|bug:)([0-9]+)") << QStringLiteral("https://bugs.kde.org/show_bug.cgi?id=%2"));
     return defaultList;
 }
 
@@ -236,7 +236,7 @@ void Preferences::setIgnoreList(QList<Ignore*> newList)
 
 void Preferences::addIgnore(const QString &newIgnore)
 {
-    QStringList ignore = newIgnore.split(',');
+    QStringList ignore = newIgnore.split(QLatin1Char(','));
     self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
 
@@ -259,7 +259,7 @@ bool Preferences::isIgnored(const QString &nickname)
 {
     foreach (Ignore *ignore, self()->mIgnoreList)
     {
-        if (ignore->getName().section('!',0,0).toLower()==nickname.toLower())
+        if (ignore->getName().section(QLatin1Char('!'),0,0).toLower()==nickname.toLower())
         {
             return true;
         }
@@ -280,7 +280,7 @@ const QStringList Preferences::notifyListByGroupId(int serverGroupId)
 
 const QString Preferences::notifyStringByGroupId(int serverGroupId)
 {
-    return notifyListByGroupId(serverGroupId).join(" ");
+    return notifyListByGroupId(serverGroupId).join(QStringLiteral(" "));
 }
 
 bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
@@ -392,7 +392,7 @@ const IdentityPtr Preferences::identityById(int id)
 QStringList Preferences::defaultAliasList()
 {
     // Auto-alias scripts
-    const QStringList scripts = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/scripts/*");
+    const QStringList scripts = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/scripts/*"));
     QFileInfo* fileInfo = new QFileInfo();
     QStringList aliasList;
     QString newAlias;
@@ -402,7 +402,7 @@ QStringList Preferences::defaultAliasList()
         fileInfo->setFile(*it);
         if (fileInfo->isExecutable())
         {
-            newAlias = (*it).section('/',-1)+' '+"/exec "+(*it).section('/', -1 );
+            newAlias = (*it).section(QLatin1Char('/'),-1)+QLatin1Char(' ')+QStringLiteral("/exec ")+(*it).section(QLatin1Char('/'), -1 );
             aliasList.append(newAlias);
 
             // FIXME: Historically, defaultAliasList() is primarily used to dynamically
@@ -413,10 +413,10 @@ QStringList Preferences::defaultAliasList()
             // capability to differentiate  between audio and video media. This method
             // needs at the very least to be split up in two, or scripts may in the
             // future determine what aliases they want to add.
-            if ((*it).section('/',-1) == "media")
+            if ((*it).section(QLatin1Char('/'),-1) == QStringLiteral("media"))
             {
-                aliasList.append("audio /exec media audio");
-                aliasList.append("video /exec media video");
+                aliasList.append(QStringLiteral("audio /exec media audio"));
+                aliasList.append(QStringLiteral("video /exec media video"));
             }
         }
     }
@@ -583,7 +583,7 @@ const QHash< QString, QHash< QString, QString > > Preferences::serverSpellChecki
 
 const QString Preferences::defaultNicknameSortingOrder()
 {
-  return "qpohv-";
+  return QStringLiteral("qpohv-");
 }
 
 // override to add %u if needed
@@ -591,8 +591,8 @@ QString Preferences::webBrowserCmd()
 {
   // add %u to command if it's not in there
   QString cmd=self()->mWebBrowserCmd;
-  if (!cmd.contains("%u"))
-      cmd += " %u";
+  if (!cmd.contains(QStringLiteral("%u")))
+      cmd += QStringLiteral(" %u");
   return cmd;
 }
 

@@ -52,16 +52,16 @@ namespace Konversation
                                           "alternate nicknames for yourself. If your first choice is rejected by the server, "
                                           "Konversation will try the alternate nicknames."));
 
-        newBtn->setIcon(QIcon::fromTheme("list-add"));
+        newBtn->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
-        copyBtn->setIcon(QIcon::fromTheme("edit-copy"));
+        copyBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
-        m_editBtn->setIcon(QIcon::fromTheme("edit-rename"));
+        m_editBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
-        m_delBtn->setIcon(QIcon::fromTheme("edit-delete"));
+        m_delBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
         foreach(const IdentityPtr &id, Preferences::identityList()) {
@@ -75,11 +75,11 @@ namespace Konversation
         m_additionalAuthInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
-        m_authTypeCombo->addItem(i18n("Standard NickServ"), "nickserv");
-        m_authTypeCombo->addItem(i18n("Server Password"), "serverpw");
-        m_authTypeCombo->addItem(i18n("SASL"), "saslplain");
+        m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
+        m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
+        m_authTypeCombo->addItem(i18n("SASL"), QStringLiteral("saslplain"));
 #if KDE_IS_VERSION(4, 8, 3)
-m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
+m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclientcert"));
 #endif
 
         // add encodings to combo box
@@ -94,8 +94,8 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         // Set up signals / slots for identity page
         //connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
 
-        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change identity information")));
-        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
+        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), QStringLiteral("dialog-ok"), i18n("Change identity information")));
+        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
         connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
@@ -273,7 +273,7 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
         }
 
         if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Delete Identity"),
-            KGuiItem(i18n("Delete"), "edit-delete")) == KMessageBox::Continue)
+            KGuiItem(i18n("Delete"), QStringLiteral("edit-delete"))) == KMessageBox::Continue)
         {
             m_identityList.removeOne(m_currentIdentity);
             m_currentIdentity = 0;
@@ -355,10 +355,10 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), "pemclientcert");
     {
         QString authType = m_authTypeCombo->itemData(index).toString();
 
-        bool isNickServ = (authType == "nickserv");
-        bool isSaslPlain = (authType == "saslplain");
-        bool isServerPw = (authType == "serverpw");
-        bool isPemClientCert = (authType == "pemclientcert");
+        bool isNickServ = (authType == QStringLiteral("nickserv"));
+        bool isSaslPlain = (authType == QStringLiteral("saslplain"));
+        bool isServerPw = (authType == QStringLiteral("serverpw"));
+        bool isPemClientCert = (authType == QStringLiteral("pemclientcert"));
 
         nickservNicknameLabel->setVisible(isNickServ);
         m_nickservNicknameEdit->setVisible(isNickServ);

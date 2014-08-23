@@ -44,7 +44,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QLabel* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
     portLabel->setWhatsThis(portWT);
-    portInput = new KLineEdit("6667", page );
+    portInput = new KLineEdit(QStringLiteral("6667"), page );
     portInput->setWhatsThis(portWT);
     portLabel->setBuddy(portInput);
     portLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -67,7 +67,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     passwordLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
     sslCheckBox = new QCheckBox(page);
-    sslCheckBox->setObjectName("sslCheckBox");
+    sslCheckBox->setObjectName(QStringLiteral("sslCheckBox"));
     sslCheckBox->setText(i18n("&Use SSL"));
 
     layout->addWidget(hostNameLabel, 0, 0);
@@ -84,7 +84,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 
     hostNameInput->setFocus();
 
-    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),"network-connect",i18n("Connect to the server")));
+    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),QStringLiteral("network-connect"),i18n("Connect to the server")));
 
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
     connect( hostNameInput, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );

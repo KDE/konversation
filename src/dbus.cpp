@@ -31,7 +31,7 @@ using namespace Konversation;
 DBus::DBus(QObject *parent) : QObject(parent)
 {
     QDBusConnection bus = QDBusConnection::sessionBus();
-    bus.connect("org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver", "ActiveChanged", this, SLOT(changeAwayStatus(bool)));
+    bus.connect(QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("/ScreenSaver"), QStringLiteral("org.freedesktop.ScreenSaver"), QStringLiteral("ActiveChanged"), this, SLOT(changeAwayStatus(bool)));
 }
 
 void DBus::raw(const QString& server,const QString& command)
@@ -116,12 +116,12 @@ void DBus::setBack()
 
 void DBus::sayToAll(const QString &message)
 {
-    emit dbusMultiServerRaw("msg " + sterilizeUnicode(message));
+    emit dbusMultiServerRaw(QStringLiteral("msg ") + sterilizeUnicode(message));
 }
 
 void DBus::actionToAll(const QString &message)
 {
-    emit dbusMultiServerRaw("me " + sterilizeUnicode(message));
+    emit dbusMultiServerRaw(QStringLiteral("me ") + sterilizeUnicode(message));
 }
 
 void DBus::say(const QString& _server,const QString& _target,const QString& _command)
@@ -135,12 +135,12 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
         qDebug() <<  "DBus::say() requires 3 arguments.";
     else
     {
-        command.replace('\n',"\\n");
-        command.replace('\r',"\\r");
-        target.remove('\n');
-        target.remove('\r');
-        server.remove('\n');
-        server.remove('\r');
+        command.replace(QLatin1Char('\n'),QStringLiteral("\\n"));
+        command.replace(QLatin1Char('\r'),QStringLiteral("\\r"));
+        target.remove(QLatin1Char('\n'));
+        target.remove(QLatin1Char('\r'));
+        server.remove(QLatin1Char('\n'));
+        server.remove(QLatin1Char('\r'));
         // Act as if the user typed it
         emit dbusSay(server,target,command);
     }

@@ -25,7 +25,7 @@
 
 namespace Konversation
 {
-    Sound::Sound(QObject* parent, const char* name)
+    Sound::Sound(QObject* parent, const QString& name)
         : QObject(parent)
     {
         setObjectName(name);

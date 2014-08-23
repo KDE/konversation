@@ -38,7 +38,7 @@ InviteDialog::InviteDialog(QWidget* parent)
     setMainWidget(mainWidget);
     setupUi(mainWidget);
 
-    m_iconLabel->setPixmap(QIcon::fromTheme("irc-join-channel").pixmap(48));
+    m_iconLabel->setPixmap(QIcon::fromTheme(QStringLiteral("irc-join-channel")).pixmap(48));
 
     m_channelModel = new InviteChannelListModel(m_channelView);
     m_channelView->setModel(m_channelModel);
@@ -68,10 +68,10 @@ void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
 {
     if (buttonCode == KDialog::Ok)
     {
-	KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
-	KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
-	cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
-	cg.sync();
+    KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
+    KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
+    cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
+    cg.sync();
     }
 }
 bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
@@ -80,15 +80,15 @@ bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 
-    if (dontAsk == "1")
+    if (dontAsk == QStringLiteral("1"))
     {
-	buttonCode = KDialog::Ok;
-	return false;
+    buttonCode = KDialog::Ok;
+    return false;
     }
-    else if (dontAsk == "2")
+    else if (dontAsk == QStringLiteral("2"))
     {
-	buttonCode = KDialog::Cancel;
-	return false;
+    buttonCode = KDialog::Cancel;
+    return false;
     }
 
     return true;
@@ -110,7 +110,7 @@ void InviteChannelListModel::addInvite(const QString& nickname, const QString& c
     {
         if(!m_channelMap[channel].nicknames.contains(nickname))
         {
-            m_channelMap[channel].nicknames += ", " + nickname;
+            m_channelMap[channel].nicknames += QStringLiteral(", ") + nickname;
         }
     }
     else
@@ -201,7 +201,7 @@ QString InviteChannelListModel::selectedChannels() const
             channels.append(item.channel);
     }
 
-    return channels.join(",");
+    return channels.join(QStringLiteral(","));
 }
 
 bool InviteChannelListModel::setData(const QModelIndex& index, const QVariant& value, int role)

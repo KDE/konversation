@@ -37,22 +37,22 @@ namespace Konversation
         // this ensures that height is calculated properly and that allignement is handled right
         // in the status bar. Which KSqueezedTextLabel doesn't.
         m_mainLabel->setSizePolicy(QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred, QSizePolicy::Label ));
-        m_mainLabel->setObjectName("mainLabel");
+        m_mainLabel->setObjectName(QStringLiteral("mainLabel"));
         setMainLabelText(i18n("Ready."));
         m_mainLabel->setMinimumWidth(0);
 
         m_infoLabel = new QLabel(m_window->statusBar());
-        m_infoLabel->setObjectName("infoLabel");
+        m_infoLabel->setObjectName(QStringLiteral("infoLabel"));
         m_infoLabel->hide();
         m_infoLabel->setWhatsThis(i18n("<qt><p>This shows the number of users in the channel, and the number of those that are operators (ops).</p><p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</p></qt>"));
 
         m_lagLabel = new QLabel(i18n("Lag: Unknown"), m_window->statusBar());
-        m_lagLabel->setObjectName("lagLabel");
+        m_lagLabel->setObjectName(QStringLiteral("lagLabel"));
         m_lagLabel->hide();
 
         m_sslLabel = new SSLLabel(m_window->statusBar());
-        m_sslLabel->setObjectName("sslLabel");
-        m_sslLabel->setPixmap(SmallIcon("security-high"));
+        m_sslLabel->setObjectName(QStringLiteral("sslLabel"));
+        m_sslLabel->setPixmap(SmallIcon(QStringLiteral("security-high")));
         m_sslLabel->hide();
         m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
@@ -143,7 +143,7 @@ namespace Konversation
         {
             setMainLabelText(i18n("Ready."));
 
-            QString lagString = lagServer->getServerName() + " - ";
+            QString lagString = lagServer->getServerName() + QStringLiteral(" - ");
 
             if (msec == -1)
                 lagString += i18n("Lag: Unknown");
@@ -210,7 +210,7 @@ namespace Konversation
 
         if (lagServer==m_window->getViewContainer()->getFrontServer())
         {
-            QString lagString = lagServer->getServerName() + " - ";
+            QString lagString = lagServer->getServerName() + QStringLiteral(" - ");
             lagString.append(i18n("Lag: %1 s", msec/1000));
 
             if (m_lagLabel->isHidden()) m_lagLabel->show();
