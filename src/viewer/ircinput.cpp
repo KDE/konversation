@@ -19,6 +19,7 @@
 #include <QClipboard>
 #include <QKeyEvent>
 #include <QMenu>
+#include <QMimeData>
 
 #include <KMessageBox>
 #include <KCompletionBox>

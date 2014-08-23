@@ -40,6 +40,7 @@
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
+#include <KGlobal>
 
 // For the Web Shortcuts context menu sub-menu.
 #include <KToolInvocation>

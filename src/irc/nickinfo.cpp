@@ -23,6 +23,8 @@
 #include "mainwindow.h"
 #include "server.h"
 
+#include <KLocale>
+
 NickInfo::NickInfo(const QString& nick, Server* server): QSharedData()
 {
     m_nickname = nick;

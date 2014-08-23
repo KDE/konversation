@@ -25,6 +25,7 @@
 
 #include <QDragMoveEvent>
 #include <QTabBar>
+#include <QMimeData>
 
 ViewSpringLoader::ViewSpringLoader(ViewContainer* viewContainer) : QObject(viewContainer)
 {

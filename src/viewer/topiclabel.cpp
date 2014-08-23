@@ -18,6 +18,7 @@
 #include <QResizeEvent>
 #include <QTextCursor>
 #include <QTextDocument>
+#include <QMimeData>
 
 #include <KIconLoader>
 #include <kio/pixmaploader.h>

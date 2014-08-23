@@ -28,12 +28,14 @@
 #include <QTextBlock>
 #include <QPainter>
 #include <QTextDocumentFragment>
+#include <QMimeData>
 
 #include <KIconLoader>
 #include <KStandardShortcut>
 #include <kio/pixmaploader.h>
 #include <KLocale>
 #include <KUrlMimeData>
+#include <KDebug>
 
 using namespace Konversation;
 

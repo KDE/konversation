@@ -40,6 +40,8 @@
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <K4AboutData>
+#include <KGlobal>
+#include <KDebug>
 
 #include <QTextDocument>
 #include <QTextBlock>
