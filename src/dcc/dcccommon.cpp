@@ -54,7 +54,7 @@ namespace Konversation
 
             default:
                 qDebug() << "unspported protocol: " << ipString;
-                return "";
+                return QString();
             }
         }
 

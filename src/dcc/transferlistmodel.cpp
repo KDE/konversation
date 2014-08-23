@@ -52,7 +52,7 @@ namespace Konversation
                 case TypeIcon:
                     return i18n("Type");
                 default:
-                    return "";
+                    return QString();
             };
         }
 
@@ -469,7 +469,7 @@ namespace Konversation
                 default:
                     return secToHMS(timeleft);
                 case Transfer::NotInTransfer:
-                    return "";
+                    return QString();
             }
         }
 

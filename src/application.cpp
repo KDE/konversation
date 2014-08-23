@@ -368,9 +368,9 @@ void Application::readOptions()
     KConfigGroup cgSortNicknames(KSharedConfig::openConfig()->group("Sort Nicknames"));
 
     QString sortOrder=cgSortNicknames.readEntry("SortOrder");
-    QStringList sortOrderList=sortOrder.split("");
+    QStringList sortOrderList=sortOrder.split(QString());
     sortOrderList.sort();
-    if (sortOrderList.join("")!="-hopqv")
+    if (sortOrderList.join(QString())!="-hopqv")
     {
         sortOrder=Preferences::defaultNicknameSortingOrder();
         Preferences::self()->setSortOrder(sortOrder);

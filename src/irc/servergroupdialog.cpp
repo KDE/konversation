@@ -149,7 +149,7 @@ namespace Konversation
             return m_serverList[m_editedServerIndex];
         }
 
-        return ServerSettings("");
+        return ServerSettings(QString());
     }
 
     int ServerGroupDialog::execAndEditServer(ServerSettings server)
@@ -346,7 +346,7 @@ namespace Konversation
         }
 
         m_mainWidget->m_removeChannelButton->setEnabled(channelBoxSelection.count());
-        m_mainWidget->m_changeChannelButton->setEnabled(channelBoxSelection.count());   
+        m_mainWidget->m_changeChannelButton->setEnabled(channelBoxSelection.count());
     }
 
     void ServerGroupDialog::moveChannelUp()

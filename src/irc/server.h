@@ -497,7 +497,7 @@ class Server : public QObject
         void startNotifyTimer(int msec=0);
         void notifyTimeout();
         void sendJoinCommand(const QString& channelName, const QString& password = QString());
-        void requestAway(const QString& reason = "");
+        void requestAway(const QString& reason = QString());
         void requestUnaway();
         void requestChannelList();
         void requestWhois(const QString& nickname);

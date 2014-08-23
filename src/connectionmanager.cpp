@@ -113,7 +113,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
         qDebug() << settings.name() << " - "
                  << settings.server().host() << settings.server().port()
                  << settings.server().password() << " - "
-                 << (settings.serverGroup()?settings.serverGroup()->name():"");
+                 << (settings.serverGroup()?settings.serverGroup()->name():QString());
 
         QString sname = (settings.serverGroup() ? settings.serverGroup()->name()
             : (QString(settings.server().host()) + QString(':') + QString(settings.server().port())));

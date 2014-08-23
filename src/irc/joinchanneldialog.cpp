@@ -33,7 +33,7 @@ namespace Konversation
 
         button(KDialog::Ok)->setEnabled(false);
         connect(m_ui.channelCombo, SIGNAL(editTextChanged(QString)),
-        	this, SLOT(slotChannelChanged(QString)));
+            this, SLOT(slotChannelChanged(QString)));
 
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
@@ -69,14 +69,14 @@ namespace Konversation
     }
 
     QString JoinChannelDialog::channel() const
-    {    
+    {
         QString channel = m_ui.channelCombo->currentText();
 
         if (!channel.isEmpty())
         {
             int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
             Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
-	 
+
             if (server && !server->isAChannel(channel))
                 channel = '#' + channel;
         }
@@ -152,7 +152,7 @@ namespace Konversation
         bool joined = false;
         // Append an empty string as first item
         QStringList channelHistory;
-        channelHistory << "";
+        channelHistory << QString();
         for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
         {
           // Don't add empty items to the combobox

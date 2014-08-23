@@ -118,10 +118,10 @@ namespace Konversation
 
             void connectTo(Konversation::ConnectionFlag flag,
                            const QString& hostName,
-                           const QString& port = "",
-                           const QString& password = "",
-                           const QString& nick = "",
-                           const QString& channel = "",
+                           const QString& port = QString(),
+                           const QString& password = QString(),
+                           const QString& nick = QString(),
+                           const QString& channel = QString(),
                            bool useSSL = false
             );
 

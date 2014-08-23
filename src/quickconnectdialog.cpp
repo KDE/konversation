@@ -112,7 +112,7 @@ void QuickConnectDialog::slotOk()
                             portInput->text(),
                             passwordInput->text(),
                             nickInput->text(),
-                            "",
+                            QString(),
                             sslCheckBox->isChecked());
         delayedDestruct();
     }

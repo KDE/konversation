@@ -993,10 +993,10 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit acceptDccGet("","");
+                        emit acceptDccGet(QString(),QString());
                         break;
                     case 2:
-                        emit acceptDccGet(parameterList.at(1),"");
+                        emit acceptDccGet(parameterList.at(1),QString());
                         break;
                     case 3:
                         emit acceptDccGet(parameterList.at(1),parameterList.at(2));
@@ -1012,7 +1012,7 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit openDccChat("");
+                        emit openDccChat(QString());
                         break;
                     case 2:
                         emit openDccChat(parameterList[1]);
@@ -1028,7 +1028,7 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit openDccWBoard("");
+                        emit openDccWBoard(QString());
                         break;
                     case 2:
                         emit openDccWBoard(parameterList[1]);

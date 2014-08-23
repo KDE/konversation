@@ -875,7 +875,7 @@ int IrcContextMenus::extractActionId(QAction* action)
 
 void IrcContextMenus::commandToServer(Server* server, const QString& command, const QString& destination)
 {
-    Konversation::OutputFilterResult result = server->getOutputFilter()->parse("", Preferences::self()->commandChar() + command, destination);
+    Konversation::OutputFilterResult result = server->getOutputFilter()->parse(QString(), Preferences::self()->commandChar() + command, destination);
 
     server->queue(result.toServer);
 

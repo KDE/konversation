@@ -345,7 +345,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 insertPlainText("%G");
             // support ^U (delete text in input box)
             else if(e->text().unicode()->toLatin1() == 21)
-                setText("");
+                setText(QString());
     }
 
     KTextEdit::keyPressEvent(e);
@@ -421,7 +421,7 @@ void IRCInput::getHistory(bool up)
         if(lineNum==0)
         {
             if(!toPlainText().isEmpty()) addHistory(toPlainText());
-            setText("");
+            setText(QString());
         }
         // If we aren't at the top of the list, decrement the line counter
         else
@@ -519,7 +519,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
               // remember old line, in case the user does not paste eventually
               addHistory(pasteText);
               // delete input text
-              setText("");
+              setText(QString());
             }
         }
         // otherwise let the KLineEdit handle the pasting

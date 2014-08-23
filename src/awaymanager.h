@@ -33,7 +33,7 @@ class AwayManager : public QObject
         void identityOnline(int identityId);
         void identityOffline(int identityId);
 
-        void requestAllAway(const QString& reason = "");
+        void requestAllAway(const QString& reason = QString());
         void requestAllUnaway();
 
         /**

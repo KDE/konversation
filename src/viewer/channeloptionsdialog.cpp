@@ -57,7 +57,7 @@ namespace Konversation
         m_ui.topicHistoryView->setServer(m_channel->getServer());
         m_ui.topicHistoryView->setModel(m_channel->getTopicHistory());
         m_ui.topicHistorySearchLine->setProxy(static_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
-        m_ui.topicHistorySearchLine->lineEdit()->setPlaceholderText("");
+        m_ui.topicHistorySearchLine->lineEdit()->setPlaceholderText(QString());
 
         m_editingTopic = false;
 
@@ -184,7 +184,7 @@ namespace Konversation
                 if (modeString[0] == 'k')
                     m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
                 else
-                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(""));
+                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(QString()));
             }
         }
         hide();
@@ -322,7 +322,7 @@ namespace Konversation
         m_ui.moderatedModeChBox->setChecked(false);
         m_ui.secretModeChBox->setChecked(false);
         m_ui.keyModeChBox->setChecked(false);
-        m_ui.keyModeEdit->setText("");
+        m_ui.keyModeEdit->setText(QString());
 
         QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
         for (int i = 0; i < modesModel->rowCount(); ++i)

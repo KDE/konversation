@@ -138,7 +138,7 @@ namespace Konversation
         bool XMLContentHandler::startElement(const QString &, const QString & localName, const QString &,
                                             const QXmlAttributes & )
         {
-            tmp = "";
+            tmp = QString();
             switch (status_stack.top())
             {
             case TOPLEVEL:
@@ -214,7 +214,7 @@ namespace Konversation
             }
 
             // reset tmp
-            tmp = "";
+            tmp = QString();
             return true;
         }
 

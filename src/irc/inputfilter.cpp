@@ -909,7 +909,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                 m_server->setPrefixes(QString(), value);
                                 // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
                                 if (value.length() || property.length())
-                                    m_server->appendStatusMessage("", "XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
+                                    m_server->appendStatusMessage(QString(), "XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
                             }
                             else
                             {

@@ -77,7 +77,7 @@ IRCQueue::~IRCQueue()
 QString IRCQueue::pop()
 {
     if (m_pending.isEmpty())
-        return QString("");
+        return QString();
 
     IRCMessage msg=m_pending.first();
     m_pending.pop_front();

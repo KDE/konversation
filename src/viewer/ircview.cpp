@@ -562,7 +562,7 @@ void IRCView::updateAppearance()
     }
 
     if (!viewport()->styleSheet().isEmpty())
-        viewport()->setStyleSheet("");
+        viewport()->setStyleSheet(QString());
 
     QPalette p;
     p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));

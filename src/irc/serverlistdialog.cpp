@@ -72,7 +72,7 @@ namespace Konversation
 
         m_selectedItem = false;
         m_selectedItemPtr = 0;
-        m_selectedServer = ServerSettings("");
+        m_selectedServer = ServerSettings(QString());
 
         // Load server list
         updateServerList();
@@ -186,7 +186,7 @@ namespace Konversation
 
                         m_selectedItem = true;
                         m_selectedServerGroupId = serverGroup->id();
-                        m_selectedServer = ServerSettings("");
+                        m_selectedServer = ServerSettings(QString());
 
                         *serverGroup = *dlg->serverGroupSettings();
 
@@ -365,7 +365,7 @@ namespace Konversation
             if (item->data(0,IsServer).toBool())
                 m_selectedServer = Preferences::serverGroupById(m_selectedServerGroupId)->serverByIndex(item->data(0,ServerId).toInt());
             else
-                m_selectedServer = ServerSettings("");
+                m_selectedServer = ServerSettings(QString());
         }
 
         m_serverList->setUpdatesEnabled(false);

@@ -171,7 +171,7 @@ void DBus::insertMarkerLine()
 
 void DBus::connectToServer(const QString& address, int port, const QString& channel, const QString& password)
 {
-    emit connectTo(Konversation::SilentlyReuseConnection, sterilizeUnicode(address), QString::number(port), sterilizeUnicode(password), "", sterilizeUnicode(channel));
+    emit connectTo(Konversation::SilentlyReuseConnection, sterilizeUnicode(address), QString::number(port), sterilizeUnicode(password), QString(), sterilizeUnicode(channel));
 }
 
 QString DBus::getNickname(const QString& server_Name)
