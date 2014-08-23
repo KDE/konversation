@@ -31,7 +31,7 @@ QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filt
 {
     //setDirectory(startDir);
     setStartDir(startDir);
-    
+
     setFilter(filter);
 
     //setAcceptMode(QFileDialog::AcceptOpen);
@@ -39,8 +39,9 @@ QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filt
 
     //setFileMode(QFileDialog::ExistingFile);
     setMode( KFile::Files | KFile::ExistingOnly );
-    
+
     //setCaption(caption.isEmpty() ? i18n("Open") : caption);
+    setWindowTitle(caption.isEmpty() ? i18n("Open") : caption);
 
     exec();
     return selectedUrls();

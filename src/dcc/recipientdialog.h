@@ -20,7 +20,7 @@
 
 #include <QModelIndex>
 
-#include <KDialog>
+#include <QDialog>
 
 class KLineEdit;
 
@@ -28,7 +28,7 @@ namespace Konversation
 {
     namespace DCC
     {
-        class RecipientDialog : public KDialog
+        class RecipientDialog : public QDialog
         {
             Q_OBJECT
 
