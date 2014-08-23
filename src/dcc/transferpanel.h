@@ -25,9 +25,7 @@
 
 #include <kdeversion.h>
 
-#include <KDialog>
 #include <KLocalizedString>
-// #include <baloo/filemetadatawidget.h> FIXME KF5 port
 
 class QSplitter;
 class QMenu;
@@ -40,38 +38,6 @@ namespace Konversation
         class TransferDetailedInfoPanel;
         class TransferView;
         class Transfer;
-
-        class FileMetaDataDialog : public KDialog
-        {
-            public:
-                explicit FileMetaDataDialog(const QUrl &file, QWidget *parent = 0)
-                    : KDialog(parent)
-                {
-                    setCaption( i18nc("%1=filename", "File Information for %1",  file.fileName() ) );
-                    setButtons( KDialog::Ok );
-
-                    /* FIXME KF5 port
-                    m_fileMetaDataWidget = new Baloo::FileMetaDataWidget(this);
-
-                    KFileItemList fileList;
-                    fileList.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, file));
-                    m_fileMetaDataWidget->setItems(fileList);
-
-                    setMainWidget(m_fileMetaDataWidget);
-                    */
-
-                    //known Qt problem, minimum size is not set, limitation of X11 window manager
-                    setMinimumSize(QSize(sizeHint().height()*2, sizeHint().width()));
-                }
-
-                ~FileMetaDataDialog()
-                {
-                    //delete m_fileMetaDataWidget; FIXME KF5 port
-                }
-
-            private:
-                // Baloo::FileMetaDataWidget* m_fileMetaDataWidget; FIXME KF5 port
-        };
 
         class TransferPanel : public ChatWindow
         {
@@ -97,7 +63,6 @@ namespace Konversation
                 void clearCompletedDcc();
                 void runDcc();
                 void openLocation();
-                void showFileInfo();
                 void selectAll();
                 void selectAllCompleted();
 
@@ -127,7 +92,6 @@ namespace Konversation
                 QAction *m_accept;
                 QAction *m_clear;
                 QAction *m_clearCompleted;
-                QAction *m_info;
                 QAction *m_open;
                 QAction *m_openLocation;
                 QAction *m_selectAll;

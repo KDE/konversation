@@ -38,13 +38,6 @@ find_package(KF5 REQUIRED
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 include_directories(${PHONON_INCLUDES})
 
-#FIXME KF5 port Reenable when TransferPanel uses it again.
-#find_package(BalooWidgets REQUIRED)
-#set_package_properties(BalooWidgets PROPERTIES DESCRIPTION "Baloos Widgets"
-#                       URL "http://www.kde.org"
-#                       TYPE REQUIRED
-#                       )
-
 find_package(QCA2 2.1.0)
 set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "http://delta.affinix.com/qca"

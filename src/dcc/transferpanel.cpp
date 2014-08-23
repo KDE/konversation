@@ -98,7 +98,6 @@ namespace Konversation
             m_open->setStatusTip(i18n("Run the file"));
             m_openLocation = m_popup->addAction(QIcon::fromTheme("document-open-folder"), i18n("Open Location"), this, SLOT(openLocation()));
             m_openLocation->setStatusTip(i18n("Open the file location"));
-            m_info = m_popup->addAction(QIcon::fromTheme("dialog-information"), i18n("File &Information"), this, SLOT(showFileInfo()));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(m_transferView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(popupRequested(QPoint)));
@@ -201,7 +200,6 @@ namespace Konversation
             m_open->setEnabled(open);
             m_openLocation->setEnabled(openLocation);
             m_resend->setEnabled(resend);
-            m_info->setEnabled(info);
         }
 
         void TransferPanel::setDetailPanelItem (const QItemSelection &/*newindex*/, const QItemSelection &/*oldindex*/)
@@ -484,18 +482,6 @@ namespace Konversation
             }
         }
 
-        void TransferPanel::showFileInfo()
-        {
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
-                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
-                if (transfer)
-                {
-                    openFileInfoDialog(transfer);
-                }
-            }
-        }
-
         void TransferPanel::selectAll()
         {
             m_transferView->selectAll();
@@ -541,16 +527,6 @@ namespace Konversation
                 QUrl url(QUrl::fromLocalFile(urlString));
                 //url.setFileName(QString());
                 new KRun(url, 0, true);
-            }
-        }
-
-        void TransferPanel::openFileInfoDialog(Transfer *transfer)
-        {
-            if (transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done)
-            {
-                QPointer<FileMetaDataDialog> fileDialog = new FileMetaDataDialog(transfer->getFileURL(), this);
-                fileDialog->exec();
-                delete fileDialog;
             }
         }
 
