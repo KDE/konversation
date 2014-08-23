@@ -377,27 +377,26 @@ namespace Konversation
         bool TransferRecv::createDirs(const QUrl &dirURL) const
         {
             QUrl kurl(dirURL);
-            QString surl = kurl.url();
 
             //First we split directories until we reach to the top,
             //since we need to create directories one by one
 
-            QStringList dirList;
-            while (surl != KIO::upUrl(kurl).url())
+            QList<QUrl> dirList;
+            while (kurl != KIO::upUrl(kurl))
             {
-                dirList.prepend(surl);
+                dirList.prepend(kurl);
                 kurl = KIO::upUrl(kurl);
-                surl = kurl.url();
             }
 
             //Now we create the directories
 
-            QStringList::ConstIterator it;
+            QList<QUrl>::ConstIterator it;
             for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
             {
-                if (!KIO::NetAccess::exists(QUrl(*it), KIO::NetAccess::SourceSide, NULL))
+                if (!KIO::NetAccess::exists(*it, KIO::NetAccess::SourceSide, NULL))
                 {
-                    if (!KIO::NetAccess::mkdir(QUrl(*it), NULL, -1))
+                    KIO::MkdirJob* job = KIO::mkdir(*it, -1);
+                    if (!job->exec())
                     {
                         return false;
                     }
