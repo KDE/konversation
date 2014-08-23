@@ -233,6 +233,7 @@ target_link_libraries(konversation
     KF5::SonnetCore
     KF5::Wallet
     KF5::WidgetsAddons
+    KF5::GlobalAccel
     Phonon::phonon4qt5)
 
 if (QCA2_FOUND)

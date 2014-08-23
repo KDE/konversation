@@ -50,6 +50,7 @@
 #include <KActionMenu>
 #include <KNotifyConfigWidget>
 #include <KGlobalSettings>
+#include <KGlobalAccel>
 
 MainWindow::MainWindow() : KXmlGuiWindow(0)
 {
@@ -284,7 +285,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction("next_active_tab", action);
-    // action->setGlobalShortcut(QKeySequence()); FIXME KF5 port: Use KGlobalAccel
+    KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
 
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
@@ -508,7 +509,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action->setText(i18n("Show/Hide Konversation"));
     connect(action, SIGNAL(triggered()), this, SLOT(toggleVisibility()));
     actionCollection()->addAction("toggle_mainwindow_visibility", action);
-    // action->setGlobalShortcut(QKeySequence()); FIXME KF5 port: Use KGlobalaccel
+    KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
 
     action=new KToggleAction(this);
     action->setEnabled(true);

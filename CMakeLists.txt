@@ -32,6 +32,7 @@ find_package(KF5 REQUIRED
     Sonnet
     Wallet
     WidgetsAddons
+    GlobalAccel
 )
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
