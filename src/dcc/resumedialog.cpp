@@ -21,9 +21,9 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
+#include <QUrl>
 
 #include <KLocale>
-#include <QUrl>
 #include <KUrlRequester>
 
 namespace Konversation
@@ -32,22 +32,22 @@ namespace Konversation
     {
         ResumeDialog::ReceiveAction ResumeDialog::ask(TransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
         {
-            QFlags<KDialog::ButtonCode> enabledButtonCodes = 0;
-            KDialog::ButtonCode defaultButtonCode = KDialog::Ok;
+            QFlags<QDialogButtonBox::StandardButton> enabledButtonCodes = QDialogButtonBox::NoButton;
+            QDialogButtonBox::StandardButton defaultButtonCode = QDialogButtonBox::Ok;
 
             if(enabledActions & RA_Rename || enabledActions & RA_Overwrite)
-                enabledButtonCodes |= KDialog::Ok;
+                enabledButtonCodes |= QDialogButtonBox::Ok;
             if(enabledActions & RA_Resume)
-                enabledButtonCodes |= KDialog::User1;
+                enabledButtonCodes |= QDialogButtonBox::Retry;
             if(enabledActions & RA_Cancel)
-                enabledButtonCodes |= KDialog::Cancel;
+                enabledButtonCodes |= QDialogButtonBox::Cancel;
 
             if(defaultAction == RA_Rename || defaultAction == RA_Overwrite)
-                defaultButtonCode = KDialog::Ok;
+                defaultButtonCode = QDialogButtonBox::Ok;
             else if(defaultAction == RA_Resume)
-                defaultButtonCode = KDialog::User1;
+                defaultButtonCode = QDialogButtonBox::Retry;
             else if(defaultAction == RA_Cancel)
-                defaultButtonCode = KDialog::Cancel;
+                defaultButtonCode = QDialogButtonBox::Cancel;
 
             QPointer<ResumeDialog> dlg = new ResumeDialog(item, i18n("DCC Receive Question"), message, enabledActions, enabledButtonCodes, defaultButtonCode);
             dlg->exec();
@@ -68,40 +68,34 @@ namespace Konversation
             return ra;
         }
 
-        ResumeDialog::ResumeDialog(TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes,
-                         KDialog::ButtonCode defaultButtonCode)
-        : KDialog(0)
+        ResumeDialog::ResumeDialog(TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<QDialogButtonBox::StandardButton> enabledButtonCodes,
+                         QDialogButtonBox::StandardButton defaultButtonCode)
+        : QDialog(0)
         , m_overwriteDefaultPathCheckBox(0)
         , m_item(item)
         , m_enabledActions(enabledActions)
         , m_selectedAction(RA_Cancel)
         {
-            setCaption(caption);
+            setWindowTitle(caption);
             setModal(true);
-            setButtons(enabledButtonCodes);
-            setDefaultButton(defaultButtonCode);
-            if(enabledButtonCodes & KDialog::User1)
-                setButtonText(KDialog::User1, i18n("&Resume"));
 
-            QWidget* page = mainWidget();
-            QVBoxLayout* pageLayout = new QVBoxLayout(page);
+            QVBoxLayout *mainLayout = new QVBoxLayout;
+            setLayout(mainLayout);
 
-            QLabel* labelMessage = new QLabel(page);
+            QLabel* labelMessage = new QLabel(this);
             labelMessage->setText(message);
 
-            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL(), page);
+            m_urlreqFileURL = new KUrlRequester(m_item->getFileURL(), this);
             m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
-            //m_urlreqFileURL->fileDialog()->setKeepLocation(true);
             connect(m_urlreqFileURL, SIGNAL(textChanged(QString)), this, SLOT(updateDialogButtons()));
 
-            pageLayout->addWidget(labelMessage);
-            pageLayout->addWidget(m_urlreqFileURL);
+            mainLayout->addWidget(labelMessage);
+            mainLayout->addWidget(m_urlreqFileURL);
 
             if (m_enabledActions & RA_Rename)
             {
-                QFrame* filePathToolsFrame = new QFrame(page);
+                QFrame* filePathToolsFrame = new QFrame(this);
                 QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
-                filePathToolsLayout->setSpacing(spacingHint());
 
                 QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);
                 QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"),filePathToolsFrame);
@@ -111,63 +105,75 @@ namespace Konversation
                 connect(btnSuggestNewName, SIGNAL(clicked()), this, SLOT(suggestNewName()));
                 connect(btnDefaultName, SIGNAL(clicked()), this, SLOT(setDefaultName()));
 
-                pageLayout->addWidget(filePathToolsFrame);
+                mainLayout->addWidget(filePathToolsFrame);
             }
             if (m_enabledActions & RA_OverwriteDefaultPath)
             {
-                QFrame* settingsFrame = new QFrame(page);
+                QFrame* settingsFrame = new QFrame(this);
                 QVBoxLayout* settingsLayout = new QVBoxLayout(settingsFrame);
 
                 m_overwriteDefaultPathCheckBox = new QCheckBox(i18n("Use as new default download folder"), settingsFrame);
                 settingsLayout->addWidget(m_overwriteDefaultPathCheckBox);
 
-                pageLayout->addWidget(settingsFrame);
+                mainLayout->addWidget(settingsFrame);
             }
 
+            m_buttonBox = new QDialogButtonBox(enabledButtonCodes);
+            QPushButton *defaultButton = m_buttonBox->button(defaultButtonCode);
+            defaultButton->setDefault(true);
+
+            if (enabledButtonCodes & QDialogButtonBox::Retry)
+                m_buttonBox->button(QDialogButtonBox::Retry)->setText(i18n("&Resume"));
+            mainLayout->addWidget(m_buttonBox);
+
+            connect (m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+
             updateDialogButtons();
-            setInitialSize(QSize(500, sizeHint().height()));
         }
 
         ResumeDialog::~ResumeDialog()
         {
         }
 
-        void ResumeDialog::slotButtonClicked(int button)
+        void ResumeDialog::buttonClicked(QAbstractButton* button)
         {
-            switch (button)
+            if (m_buttonBox->button(QDialogButtonBox::Ok) == button)
             {
-                case KDialog::Ok:
-                    if (m_item->getFileURL() == m_urlreqFileURL->url())
-                        m_selectedAction = RA_Overwrite;
-                    else
-                        m_selectedAction = RA_Rename;
-                    break;
-                case KDialog::User1:
-                    m_selectedAction = RA_Resume;
-                    accept();
-                    break;
-                case KDialog::Cancel:
-                    m_selectedAction = RA_Cancel;
-                    break;
+                if (m_item->getFileURL() == m_urlreqFileURL->url())
+                    m_selectedAction = RA_Overwrite;
+                else
+                    m_selectedAction = RA_Rename;
+                accept();
             }
-            KDialog::slotButtonClicked(button);
+            else if (m_buttonBox->button(QDialogButtonBox::Cancel) == button)
+            {
+                m_selectedAction = RA_Cancel;
+                reject();
+            }
+            else if (m_buttonBox->button(QDialogButtonBox::Retry) == button)
+            {
+                m_selectedAction = RA_Resume;
+                accept();
+            }
         }
 
         void ResumeDialog::updateDialogButtons() // slot
         {
             if(m_item->getFileURL() == m_urlreqFileURL->url())
             {
-                setButtonText(KDialog::Ok, i18n("&Overwrite"));
-                enableButton(KDialog::Ok, m_enabledActions & RA_Overwrite);
-                enableButton(KDialog::User1, true);
+                m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("&Overwrite"));
+                m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Overwrite);
+
+                m_buttonBox->button(QDialogButtonBox::QDialogButtonBox::Retry)->setEnabled(true);
                 if (m_enabledActions & RA_OverwriteDefaultPath)
                     m_overwriteDefaultPathCheckBox->setEnabled(false);
             }
             else
             {
-                setButtonText(KDialog::Ok, i18n("R&ename"));
-                enableButton(KDialog::Ok, m_enabledActions & RA_Rename);
-                enableButton(KDialog::User1, false);
+                m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("R&ename"));
+                m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Rename);
+
+                m_buttonBox->button(QDialogButtonBox::QDialogButtonBox::Retry)->setEnabled(false);
                 if (m_enabledActions & RA_OverwriteDefaultPath)
                     m_overwriteDefaultPathCheckBox->setEnabled(true);
             }

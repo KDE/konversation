@@ -14,10 +14,12 @@
 #ifndef DCCRESUMEDIALOG_H
 #define DCCRESUMEDIALOG_H
 
-#include <KDialog>
+#include <QDialog>
+#include <QDialogButtonBox>
 
 class KUrlRequester;
 class QCheckBox;
+class QAbstractButton;
 
 namespace Konversation
 {
@@ -25,7 +27,7 @@ namespace Konversation
     {
         class TransferRecv;
 
-        class ResumeDialog : public KDialog
+        class ResumeDialog : public QDialog
         {
             Q_OBJECT
 
@@ -44,17 +46,19 @@ namespace Konversation
                 static ReceiveAction ask(TransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 
             protected slots:
-                void slotButtonClicked(int button);
                 void suggestNewName();
                 void setDefaultName();
                 void updateDialogButtons();
 
+                void buttonClicked(QAbstractButton*);
+
             protected:
-                ResumeDialog(TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes, KDialog::ButtonCode defaultButtonCode);
+                ResumeDialog(Konversation::DCC::TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<QDialogButtonBox::StandardButton> enabledButtonCodes, QDialogButtonBox::StandardButton defaultButtonCode);
 
                 // UI
                 KUrlRequester* m_urlreqFileURL;
                 QCheckBox* m_overwriteDefaultPathCheckBox;
+                QDialogButtonBox* m_buttonBox;
 
                 // data
                 TransferRecv* m_item;
