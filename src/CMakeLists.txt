@@ -219,7 +219,6 @@ add_executable(konversation ${konversation_SRCS})
 target_link_libraries(konversation
     Qt5::Widgets
     KF5::Archive
-#   KF5::BalooWidgets FIXME KF5 port
     KF5::Bookmarks
     KF5::ConfigWidgets
     KF5::Emoticons
