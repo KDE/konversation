@@ -286,11 +286,7 @@ namespace Konversation
 
         void TransferDetailedInfoPanel::globalSettingsChanged(int category)
         {
-#if KDE_IS_VERSION(4,8,1)
             if (category == KGlobalSettings::SETTINGS_STYLE)
-#else
-            Q_UNUSED(category);
-#endif
                 m_autoViewUpdateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
                                                     KGlobalSettings::graphicEffectsLevel()));
         }
