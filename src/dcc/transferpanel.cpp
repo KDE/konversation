@@ -521,11 +521,10 @@ namespace Konversation
 
         void TransferPanel::openLocation(Transfer *transfer)
         {
-            QString urlString = transfer->getFileURL().path();
+            QString urlString = transfer->getFileURL().toString(QUrl::PreferLocalFile|QUrl::RemoveFilename|QUrl::StripTrailingSlash);
             if (!urlString.isEmpty())
             {
                 QUrl url(QUrl::fromLocalFile(urlString));
-                //url.setFileName(QString());
                 new KRun(url, 0, true);
             }
         }
