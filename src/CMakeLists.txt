@@ -212,8 +212,6 @@ ki18n_wrap_ui(konversation_SRCS
 
 kconfig_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
 
-# kde4_add_app_icon(konversation_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/hi*-app-konversation.png") FIXME KF5 port
-
 add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation
