@@ -30,8 +30,8 @@
 
 #include <QSignalMapper>
 #include <QSplitter>
+#include <QMenuBar>
 
-#include <KMenuBar>
 #include <KActionCollection>
 #include <QAction>
 #include <KToggleAction>

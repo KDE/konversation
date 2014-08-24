@@ -40,7 +40,6 @@
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <K4AboutData>
-#include <KGlobal>
 #include <KDebug>
 
 #include <QTextDocument>
@@ -1855,7 +1854,7 @@ namespace Konversation
         QTextStream serverOut(&result.toServer);
         QTextStream myOut(&result.output); //<--because seek is unimplemented in QTextStreamPrivate::write(const QString &data)
         myOut
-            << "Konversation: " << KGlobal::mainComponent().aboutData()->version()
+            << "Konversation: " << KComponentData::mainComponent().aboutData()->version()
             << ", Qt " << QString::fromLatin1(qVersion())
             << ", KDE SC " << KDE::versionString()
             ;
