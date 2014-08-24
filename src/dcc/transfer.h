@@ -148,11 +148,6 @@ namespace Konversation
                 KIO::fileoffset_t m_transferringPosition;
                 KIO::fileoffset_t m_transferStartPosition;
 
-                /*
-                QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
-                QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
-                */
-
                 // we'll communicate with the partner via this server
                 int m_connectionId;
                 QString m_partnerNick;
