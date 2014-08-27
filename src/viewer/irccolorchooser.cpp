@@ -21,13 +21,11 @@
 #include <KLocalizedString>
 
 IRCColorChooser::IRCColorChooser(QWidget* parent)
-: KDialog(parent)
+: QDialog(parent)
 {
-    setButtons( KDialog::Ok|KDialog::Cancel );
-    setDefaultButton( KDialog::Ok );
-    setCaption( i18n("IRC Color Chooser") );
+    setWindowTitle( i18n("IRC Color Chooser") );
     setModal( true );
-    m_ui.setupUi(mainWidget());
+    m_ui.setupUi(this);
     initColors(m_ui.m_fgColorCBox);
     initColors(m_ui.m_bgColorCBox);
     m_ui.m_bgColorCBox->insertItem(0, i18n("None"));
@@ -38,6 +36,9 @@ IRCColorChooser::IRCColorChooser(QWidget* parent)
     m_ui.m_bgColorCBox->setCurrentIndex(0);
 
     m_ui.m_previewLbl->setAutoFillBackground(true);
+
+    connect(m_ui.m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_ui.m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     updatePreview();
 }

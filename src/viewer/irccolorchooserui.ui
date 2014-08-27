@@ -11,9 +11,6 @@
    </rect>
   </property>
   <layout class="QGridLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
    <item row="2" column="0" colspan="2">
     <widget class="QLabel" name="m_previewLbl">
      <property name="toolTip">
@@ -74,7 +71,7 @@
 &lt;b&gt;Note:  Not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
      </property>
      <property name="text">
-      <string>&amp;Foreground color:</string>
+      <string>Fore&amp;ground color:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -136,10 +133,15 @@ Choosing the default &quot;&lt;i&gt;None&lt;/i&gt;&quot; will not change the bac
      </property>
     </widget>
    </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="m_buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
    <class>KComboBox</class>
@@ -147,10 +149,6 @@ Choosing the default &quot;&lt;i&gt;None&lt;/i&gt;&quot; will not change the bac
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">kcombobox.h</include>
-  <include location="local">kcombobox.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
