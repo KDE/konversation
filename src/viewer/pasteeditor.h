@@ -18,11 +18,11 @@
 
 #include "ui_pasteeditor.h"
 
-#include <KDialog>
+#include <QDialog>
 
 class QAction;
 
-class PasteEditor : public KDialog, private Ui::PasteEditor
+class PasteEditor : public QDialog, private Ui::PasteEditor
 {
     Q_OBJECT
     public:

@@ -27,16 +27,14 @@
 #include <QAction>
 
 PasteEditor::PasteEditor(QWidget* parent)
-    : KDialog(parent), Ui::PasteEditor(), m_autoReplaceActionWasEnabled(true), m_autoReplaceAction(0)
+    : QDialog(parent), Ui::PasteEditor(), m_autoReplaceActionWasEnabled(true), m_autoReplaceAction(0)
 {
-    setCaption(i18n("Edit Multiline Paste"));
+    setWindowTitle(i18n("Edit Multiline Paste"));
     setModal(true);
 
-    setButtonText(KDialog::Ok, i18n("&Send"));
+    setupUi(this);
 
-    QWidget* widget = new QWidget(this);
-    setupUi(widget);
-    setMainWidget(widget);
+    m_buttonBox->addButton(i18n("&Send"), QDialogButtonBox::AcceptRole);
 
     m_textEditor->enableFindReplace(true);
 
@@ -59,7 +57,10 @@ PasteEditor::PasteEditor(QWidget* parent)
     connect(m_removeNewlinesButton, SIGNAL(clicked()), this, SLOT(removeNewlines()));
     connect(m_addQuotesButton, SIGNAL(clicked()), this, SLOT(addQuotationIndicators()));
 
-    setInitialSize(Preferences::self()->multilineEditSize());
+    connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+    resize(Preferences::self()->multilineEditSize());
 }
 
 PasteEditor::~PasteEditor()
