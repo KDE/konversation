@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author>Copyright (C) 2006 Peter Simonsson &lt;psn@linux.se&gt;</author>
+ <author>Copyright (C) 2006, 2014 Peter Simonsson &lt;peter.simonsson@gmail.com&gt;</author>
  <comment>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -22,7 +22,16 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    </sizepolicy>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item row="0" column="0">
@@ -106,8 +115,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="4"/>
- <layoutfunction spacing="KDialog::spacingHint"/>
  <customwidgets>
   <customwidget>
    <class>KLineEdit</class>
@@ -115,10 +122,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    <header>klineedit.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
