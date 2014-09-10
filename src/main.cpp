@@ -22,6 +22,7 @@
 
 #include <KCmdLineArgs>
 #include <K4AboutData>
+#include <Kdelibs4ConfigMigrator>
 
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)
@@ -33,7 +34,21 @@
 
 int main(int argc, char* argv[])
 {
+
+    // Migrate pre-existing (4.x) configuration
+
+    QStringList configFiles;
+
+    configFiles.append(QLatin1String("konversationrc"));
+    configFiles.append(QLatin1String("konversation.notifyrc"));
+
+    Kdelibs4ConfigMigrator migrate(QLatin1String("konversation"));
+    migrate.setConfigFiles(configFiles);
+    migrate.setUiFiles(QStringList() << QLatin1String("konversationui.rc"));
+    migrate.migrate();
+
     // FIXME KF5 port: Use KAboutData.
+
     K4AboutData aboutData("konversation",
         "",
         ki18n("Konversation"),
