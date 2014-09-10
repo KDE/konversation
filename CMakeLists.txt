@@ -39,12 +39,10 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 include_directories(${PHONON_INCLUDES})
 
-find_package(QCA2 2.1.0)
-set_package_properties(QCA2 PROPERTIES DESCRIPTION "Support for encryption"
+find_package(Qca 2.1.0)
+set_package_properties(Qca PROPERTIES DESCRIPTION "Support for encryption"
                        URL "http://delta.affinix.com/qca"
                        TYPE OPTIONAL)
-set(HAVE_QCA2 ${QCA2_FOUND})
-
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
 check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)

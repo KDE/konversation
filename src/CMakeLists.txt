@@ -1,10 +1,6 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
-if (QCA2_FOUND)
-    include_directories(${QCA2_INCLUDE_DIR})
-endif (QCA2_FOUND)
-
 set(core_SRCS
     #====================================
     #=== Application
@@ -189,10 +185,10 @@ ki18n_wrap_ui(dcc_SRCS
      dcc/whiteboardfontchooserui.ui
 )
 
-if (QCA2_FOUND)
+if (Qca_FOUND)
     set(cipher_SRCS
         cipher.cpp)
-endif (QCA2_FOUND)
+endif (Qca_FOUND)
 
 set(upnp_SRCS
     upnp/soap.cpp
@@ -233,8 +229,8 @@ target_link_libraries(konversation
     KF5::GlobalAccel
     Phonon::phonon4qt5)
 
-if (QCA2_FOUND)
-    target_link_libraries(konversation QCA::QCA)
-endif (QCA2_FOUND)
+if (Qca_FOUND)
+    target_link_libraries(konversation qca)
+endif (Qca_FOUND)
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
