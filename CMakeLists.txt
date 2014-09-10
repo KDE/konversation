@@ -50,6 +50,8 @@ check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+set(HAVE_QCA2 ${Qca_FOUND})
+
 add_definitions(
   -DQT_USE_QSTRINGBUILDER
   -DQT_NO_CAST_TO_ASCII
