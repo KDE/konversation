@@ -239,6 +239,12 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>65535</number>
+        </property>
        </widget>
       </item>
       <item row="3" column="0">
