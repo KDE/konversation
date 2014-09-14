@@ -17,6 +17,7 @@
 #define APPLICATION_H
 
 #include <QUrl>
+#include <QNetworkConfigurationManager>
 
 #include "preferences.h"
 #include "mainwindow.h"
@@ -185,6 +186,8 @@ class Application : public KUniqueApplication
         Konversation::NotificationHandler* m_notificationHandler;
 
         KWallet::Wallet* m_wallet;
+
+        QNetworkConfigurationManager* m_networkConfigurationManager;
 };
 
 #endif

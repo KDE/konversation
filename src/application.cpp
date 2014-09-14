@@ -48,7 +48,6 @@
 #include <KToolInvocation>
 #include <KCharMacroExpander>
 #include <kwallet.h>
-#include <solid/networking.h>
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KGlobalSettings>
@@ -74,6 +73,7 @@ Application::Application()
     m_urlModel = 0;
     dbusObject = 0;
     identDBus = 0;
+    m_networkConfigurationManager = 0;
 }
 
 Application::~Application()
@@ -99,6 +99,8 @@ Application::~Application()
     delete osd;
     osd = 0;
     closeWallet();
+
+    delete m_networkConfigurationManager;
 
     if (m_restartScheduled) implementRestart();
 }
@@ -163,8 +165,8 @@ int Application::newInstance()
         connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
-        connect(Solid::Networking::notifier(), SIGNAL(shouldDisconnect()), m_connectionManager, SLOT(involuntaryQuitServers()));
-        connect(Solid::Networking::notifier(), SIGNAL(shouldConnect()), m_connectionManager, SLOT(reconnectInvoluntary()));
+        m_networkConfigurationManager = new QNetworkConfigurationManager();
+        connect(m_networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), m_connectionManager, SLOT(onOnlineStateChanged(bool)));
 
         m_scriptLauncher = new ScriptLauncher(this);
 

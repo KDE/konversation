@@ -85,6 +85,7 @@ class ConnectionManager : public QObject
 
         void handleReconnect(Server* server);
 
+        void onOnlineStateChanged(bool isOnline);
 
     private:
         void enlistConnection(int connectionId, Server* server);

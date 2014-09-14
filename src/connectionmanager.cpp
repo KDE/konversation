@@ -695,4 +695,16 @@ void ConnectionManager::reconnectInvoluntary()
         it.value()->reconnectInvoluntary();
 }
 
+void ConnectionManager::onOnlineStateChanged(bool isOnline)
+{
+    if (isOnline) {
+
+        reconnectInvoluntary();
+
+    } else {
+
+        involuntaryQuitServers();
+    }
+}
+
 #include "connectionmanager.moc"
