@@ -19,7 +19,7 @@
 #include <QHBoxLayout>
 
 #include <KApplication>
-#include <KDebug>
+#include <QDebug>
 #include <QIcon>
 #include <KLocalizedString>
 #include <KService>

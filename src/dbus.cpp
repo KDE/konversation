@@ -20,7 +20,7 @@
 #include "identity.h"
 #include "server.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 
 #include <QDBusConnection>

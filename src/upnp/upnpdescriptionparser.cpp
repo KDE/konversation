@@ -16,7 +16,7 @@
 #include <QXmlAttributes>
 #include <QStack>
 
-#include <KDebug>
+#include <QDebug>
 
 
 namespace Konversation

@@ -15,7 +15,7 @@
 #include <QStringList>
 
 #include <QUrl>
-#include <KDebug>
+#include <QDebug>
 
 #include <unistd.h>
 #include <sys/socket.h>

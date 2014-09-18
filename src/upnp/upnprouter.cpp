@@ -17,7 +17,7 @@
 #include <QCoreApplication>
 #include <QNetworkReply>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 #include <KIO/Job>
 #include <KIO/NetAccess>

@@ -44,7 +44,7 @@
 #include <QStringBuilder>
 #include <QInputDialog>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KShell>

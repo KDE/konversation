@@ -14,7 +14,7 @@
 #include "cipher.h"
 #include "preferences.h"
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocale>
 
 

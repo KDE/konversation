@@ -20,7 +20,7 @@
 
 #include <QRegExp>
 
-#include <KDebug>
+#include <QDebug>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <solid/networking.h>
