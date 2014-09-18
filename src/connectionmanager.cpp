@@ -33,7 +33,7 @@ ConnectionManager::ConnectionManager(QObject* parent)
 //    if (Solid::Networking::status() != Solid::Networking::Connected)
 //        m_overrideAutoReconnect = true;
 
-    connect(this, SIGNAL(requestReconnect(Server*)), this, SLOT(handleReconnect(Server*)));
+    connect(this, &ConnectionManager::requestReconnect, this, &ConnectionManager::handleReconnect);
 }
 
 ConnectionManager::~ConnectionManager()
@@ -157,12 +157,12 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     enlistConnection(server->connectionId(), server);
 
-    connect(server, SIGNAL(destroyed(int)), this, SLOT(delistConnection(int)));
+    connect(server, &Server::destroyed, this, &ConnectionManager::delistConnection);
 
     connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
             this, SLOT(handleConnectionStateChange(Server*,Konversation::ConnectionState)));
 
-    connect(server, SIGNAL(awayState(bool)), this, SIGNAL(connectionChangedAwayState(bool)));
+    connect(server, &Server::awayState, this, &ConnectionManager::connectionChangedAwayState);
 
     connect(server, SIGNAL(nicksNowOnline(Server*,QStringList,bool)),
         mainWindow, SLOT(setOnlineList(Server*,QStringList,bool)));

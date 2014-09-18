@@ -46,7 +46,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     m_profileButton->setToolTip(i18n("Manage Konsole Profiles"));
     m_profileButton->setAutoRaise(true);
     m_profileButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-    connect(m_profileButton, SIGNAL(clicked()), this, SLOT(manageKonsoleProfiles()));
+    connect(m_profileButton, &QToolButton::clicked, this, &KonsolePanel::manageKonsoleProfiles);
 
     m_konsoleLabel = new QLabel(headerWidget);
     headerWidgetLayout->addWidget(m_konsoleLabel);
@@ -69,16 +69,16 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     setFocusProxy(k_part->widget());
     k_part->widget()->setFocus();
 
-    connect(k_part, SIGNAL(setWindowCaption(QString)), m_konsoleLabel, SLOT(setText(QString)));
+    connect(k_part, &KParts::ReadOnlyPart::setWindowCaption, m_konsoleLabel, &QLabel::setText);
 
     TerminalInterface *terminal = qobject_cast<TerminalInterface *>(k_part);
     if (!terminal) return;
     terminal->showShellInDir(QDir::homePath());
 
-    connect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
+    connect(k_part, &KParts::ReadOnlyPart::destroyed, this, &KonsolePanel::partDestroyed);
 #if 0
 // TODO find the correct signal
-    connect(k_part, SIGNAL(receivedData(QString)), this, SLOT(konsoleChanged(QString)));
+    connect(k_part, &KParts::ReadOnlyPart::receivedData, this, &KonsolePanel::konsoleChanged);
 #endif
 }
 
@@ -88,7 +88,7 @@ KonsolePanel::~KonsolePanel()
     if ( k_part )
     {
         // make sure to prevent partDestroyed() signals from being sent
-        disconnect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
+        disconnect(k_part, &KParts::ReadOnlyPart::destroyed, this, &KonsolePanel::partDestroyed);
         delete k_part;
     }
 }
