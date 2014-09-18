@@ -13,7 +13,7 @@
 
 #include <KCharSelect>
 #include <KGuiItem>
-#include <KLocale>
+#include <KLocalizedString>
 #include <kdeversion.h>
 
 

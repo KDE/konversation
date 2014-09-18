@@ -23,7 +23,7 @@
 #include <QTreeView>
 
 #include <KGlobal>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KUser>
 #include <KSharedConfig>
 #include <QStandardPaths>

@@ -28,7 +28,7 @@
 #include <KToolBar>
 #include <KMessageBox>
 #include <QFileDialog>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KIO/CopyJob>
 #include <KJobUiDelegate>
 

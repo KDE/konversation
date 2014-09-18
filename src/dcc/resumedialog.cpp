@@ -23,7 +23,7 @@
 #include <QCheckBox>
 #include <QUrl>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KUrlRequester>
 
 namespace Konversation

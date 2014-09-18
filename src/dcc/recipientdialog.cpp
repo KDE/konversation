@@ -24,7 +24,7 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 
-#include <KLocale>
+#include <KLocalizedString>
 #include <KLineEdit>
 #include <KSharedConfig>
 #include <KWindowConfig>

@@ -15,7 +15,7 @@
 #include "preferences.h"
 
 #include <QDebug>
-#include <KLocale>
+#include <KLocalizedString>
 
 
 namespace Konversation

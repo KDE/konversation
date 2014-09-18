@@ -20,7 +20,7 @@
 
 #include <KApplication>
 #include <KGlobal>
-#include <KLocale>
+#include <KLocalizedString>
 #include <QIcon>
 #include <KConfigGroup>
 
