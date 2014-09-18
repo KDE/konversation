@@ -396,7 +396,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
         action=new QAction(this);
         action->setText(i18n("Go to Tab %1",i));
-        action->setShortcut(QKeySequence(QString(QStringLiteral("Alt+%1")).arg(i%10)));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(QString(QStringLiteral("Alt+%1")).arg(i%10)));
         connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
         actionCollection()->addAction(QString(QStringLiteral("go_to_tab_%1")).arg(i), action);
 
@@ -405,7 +405,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Clear &Marker Lines"));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+R")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+Shift+R")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear marker lines in the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
@@ -413,7 +413,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Clear Window"));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+L")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+L")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear the contents of the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearView()));
@@ -421,7 +421,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Clear &All Windows"));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+L")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+Shift+L")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear the contents of all open tabs"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearAllViews()));
@@ -429,7 +429,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     KToggleAction* awayAction = new KToggleAction(this);
     awayAction->setText(i18n("Global Away"));
-    awayAction->setShortcut(QKeySequence(QStringLiteral("Ctrl+Shift+A")));
+    actionCollection()->setDefaultShortcut(awayAction,QKeySequence(QStringLiteral("Ctrl+Shift+A")));
     awayAction->setEnabled(false);
     awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
     connect(awayAction, SIGNAL(triggered(bool)), Application::instance()->getAwayManager(), SLOT(setGlobalAway(bool)));
@@ -438,7 +438,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Join Channel..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("irc-join-channel")));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+J")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+J")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Join a new channel on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showJoinChannelDialog()));
@@ -454,7 +454,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&IRC Color..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("format-text-color")));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+K")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+K")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Set the color of your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertIRCColor()));
@@ -471,7 +471,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("Special &Character..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("character-set")));
-    action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+C")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Alt+Shift+C")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Insert any character into your current IRC message"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertCharacter()));
@@ -485,14 +485,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("Focus Input Box"));
-    action->setShortcut(QKeySequence(Qt::Key_Escape));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(Qt::Key_Escape));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(focusInputBox()));
     actionCollection()->addAction(QStringLiteral("focus_input_box"), action);
 
     action=new QAction(this);
     action->setText(i18n("Close &All Open Queries"));
-    action->setShortcut(QKeySequence(QStringLiteral("F11")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F11")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeQueries()));
     actionCollection()->addAction(QStringLiteral("close_queries"), action);
@@ -501,7 +501,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     if (Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
     toggleChannelNickListsAction->setText(i18n("Show Nicklist"));
-    toggleChannelNickListsAction->setShortcut(QKeySequence(QStringLiteral("Ctrl+H")));
+    actionCollection()->setDefaultShortcut(toggleChannelNickListsAction, QKeySequence(QStringLiteral("Ctrl+H")));
     connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
     actionCollection()->addAction(QStringLiteral("hide_nicknamelist"), toggleChannelNickListsAction);
 
