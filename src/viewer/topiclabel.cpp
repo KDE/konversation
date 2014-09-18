@@ -229,7 +229,7 @@ namespace Konversation
             setWordWrap(true);
         }
 
-        setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
+        setToolTip("<qt>" + m_fullText.toHtmlEscaped() + "</qt>");
         QLabel::setText("<qt>" + text + "</qt>");
     }
 

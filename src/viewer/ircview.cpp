@@ -783,7 +783,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
         prefix="<--";
     }
 
-    prefix=Qt::escape(prefix);
+    prefix=prefix.toHtmlEscaped();
 
     QString line;
     QChar::Direction dir;

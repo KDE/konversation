@@ -130,7 +130,7 @@ void LogfileReader::updateView()
 
         while(!stream.atEnd())
         {
-            str = Qt::escape(stream.readLine());
+            str = stream.readLine().toHtmlEscaped();
             getTextView()->appendLog(str);
         }
 

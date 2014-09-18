@@ -436,7 +436,7 @@ void IRCInput::getHistory(bool up)
 
 void IRCInput::paste(bool useSelection)
 {
-    insertFromMimeData(KApplication::clipboard()->mimeData(useSelection ? QClipboard::Selection : QClipboard::Clipboard));
+    insertFromMimeData(QApplication::clipboard()->mimeData(useSelection ? QClipboard::Selection : QClipboard::Clipboard));
 }
 
 void IRCInput::insertFromMimeData(const QMimeData * source)
