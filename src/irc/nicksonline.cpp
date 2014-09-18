@@ -51,7 +51,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_openQuery = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("office-address-book")), i18n("Open &Query"));
     m_toolBar->addSeparator();
     m_joinChannel = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18n("&Join Channel"));
-    connect(m_toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotPopupMenu_Activated(QAction*)));
+    connect(m_toolBar, &KToolBar::actionTriggered, this, &NicksOnline::slotPopupMenu_Activated);
 
     m_nickListView=new QTreeWidget(this);
 
@@ -101,7 +101,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     // Connect and start refresh timer.
     m_timer = new QTimer(this);
     m_timer->setObjectName(QStringLiteral("nicksOnlineTimer"));
-    connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
+    connect(m_timer, &QTimer::timeout, this, &NicksOnline::timerFired);
     // TODO: User preference for refresh interval.
     m_timer->start(8000);
 }
@@ -658,7 +658,7 @@ void NicksOnline::doCommand(QAction* id)
             }
         }
         EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
-        connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
+        connect(end, &EditNotifyDialog::notifyChanged, this, &NicksOnline::slotAddNickname);
         end->show();
         return;
     }
@@ -865,7 +865,7 @@ void NicksOnline::refreshItem(QTreeWidgetItem* item)
 
 void NicksOnline::childAdjustFocus() {}
 
-#include "nicksonline.moc"
+
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

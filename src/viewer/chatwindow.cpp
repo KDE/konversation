@@ -741,4 +741,4 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
     }
 }
 
-#include "chatwindow.moc"
+

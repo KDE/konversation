@@ -267,4 +267,4 @@ void SearchBar::showOptionsMenu()
   m_optionsButton->showMenu();
 }
 
-#include "searchbar.moc"
+

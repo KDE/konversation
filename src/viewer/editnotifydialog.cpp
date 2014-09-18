@@ -94,4 +94,4 @@ void EditNotifyDialog::slotOk()
     delayedDestruct();
 }
 
-#include "editnotifydialog.moc"
+

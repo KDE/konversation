@@ -45,7 +45,7 @@ InviteDialog::InviteDialog(QWidget* parent)
     m_channelView->setRootIsDecorated(false);
     m_channelView->setUniformRowHeights(true);
 
-    connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
+    connect(this, &InviteDialog::okClicked, this, &InviteDialog::slotOk);
     connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
             this, SLOT (saveShowAgainSetting(KDialog::ButtonCode)));
 }
@@ -216,4 +216,4 @@ bool InviteChannelListModel::setData(const QModelIndex& index, const QVariant& v
     return true;
 }
 
-#include "invitedialog.moc"
+

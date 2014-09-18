@@ -954,4 +954,4 @@ namespace Konversation
     }
 }
 
-#include "transferrecv.moc"
+

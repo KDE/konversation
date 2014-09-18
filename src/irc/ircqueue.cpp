@@ -60,7 +60,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
     //KX << _S(m_rate.m_rate) << _S(m_rate.m_interval) << _S(m_rate.m_type) << endl;
     m_timer=new QTimer(this);
     m_timer->setSingleShot(true);
-    connect(m_timer, SIGNAL(timeout()), SLOT(sendNow()));
+    connect(m_timer, &QTimer::timeout, this, &IRCQueue::sendNow);
     if (server)
     {
         connect(server, SIGNAL(serverOnline(bool)), SLOT(serverOnline(bool)));
@@ -199,4 +199,4 @@ void IRCQueue::serverOnline(bool on)
     }
 }
 
-#include "ircqueue.moc"
+

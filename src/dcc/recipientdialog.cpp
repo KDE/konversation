@@ -126,4 +126,4 @@ namespace Konversation
     }
 }
 
-#include "recipientdialog.moc"
+

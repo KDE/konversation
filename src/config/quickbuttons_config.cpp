@@ -248,4 +248,4 @@ void QuickButtons_Config::removeEntry()
   }
 }
 
-#include "quickbuttons_config.moc"
+

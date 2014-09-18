@@ -251,4 +251,4 @@ void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
     e->accept();
 }
 
-#include "queuetuner.moc"
+

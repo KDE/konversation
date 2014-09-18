@@ -369,4 +369,4 @@ namespace Konversation
     }
 }
 
-#include "topiclabel.moc"
+

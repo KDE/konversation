@@ -532,4 +532,4 @@ namespace Konversation
     }
 }
 
-#include "transferpanel.moc"
+

@@ -629,4 +629,4 @@ void Preferences::slotSetUseOSD(bool use)
     self()->setUseOSD(use);
 }
 
-#include "preferences.moc"
+

@@ -439,4 +439,4 @@ namespace Konversation
     }
 }
 
-#include "transfer.moc"
+

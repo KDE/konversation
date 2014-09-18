@@ -426,4 +426,4 @@ namespace Konversation
     }
 }
 
-#include "transfermanager.moc"
+

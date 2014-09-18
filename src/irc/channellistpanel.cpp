@@ -187,18 +187,18 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_channelListView, SIGNAL(customContextMenuRequested(QPoint)),
             this, SLOT(contextMenu(QPoint)) );
 
-    connect(m_regexBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
-    connect(m_topicBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
-    connect(m_channelBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
-    connect(m_minUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
-    connect(m_maxUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
+    connect(m_regexBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_topicBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_channelBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
+    connect(m_minUser, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
+    connect(m_maxUser, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
 
-    connect(m_filterLine, SIGNAL(returnPressed()), this, SLOT(applyFilterClicked()) );
-    connect(m_filterLine, SIGNAL(textChanged(QString)), this, SLOT(filterChanged()));
+    connect(m_filterLine, &KLineEdit::returnPressed, this, &ChannelListPanel::applyFilterClicked);
+    connect(m_filterLine, &KLineEdit::textChanged, this, &ChannelListPanel::filterChanged);
 
-    connect(m_filterTimer, SIGNAL(timeout()), this, SLOT(updateFilter()));
-    connect(m_progressTimer, SIGNAL(timeout()), this, SLOT(setProgress()));
-    connect(m_tempTimer, SIGNAL(timeout()), this, SLOT(endOfChannelList()));
+    connect(m_filterTimer, &QTimer::timeout, this, &ChannelListPanel::updateFilter);
+    connect(m_progressTimer, &QTimer::timeout, this, &ChannelListPanel::setProgress);
+    connect(m_tempTimer, &QTimer::timeout, this, &ChannelListPanel::endOfChannelList);
 
     updateUsersChannels();
 }
@@ -458,7 +458,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     joinAction->setText(i18n("Join Channel"));
     joinAction->setIcon(QIcon::fromTheme(QStringLiteral("irc-join-channel")));
     menu->addAction(joinAction);
-    connect(joinAction, SIGNAL(triggered()), this, SLOT(joinChannelClicked()));
+    connect(joinAction, &QAction::triggered, this, &ChannelListPanel::joinChannelClicked);
 
     // Adds a separator between the Join action and the URL(s) submenu
     menu->addSeparator();
@@ -482,7 +482,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
 
         showURLmenu->addAction(action);
 
-        connect(action, SIGNAL(triggered()), this, SLOT(openURL()));
+        connect(action, &QAction::triggered, this, &ChannelListPanel::openURL);
     }
 
     if (showURLmenu->actions().count()==0)
@@ -538,4 +538,4 @@ void ChannelListPanel::setFilter(const QString& filter)
     m_filterLine->setText(filter);
 }
 
-#include "channellistpanel.moc"
+

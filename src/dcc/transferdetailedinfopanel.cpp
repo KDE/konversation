@@ -294,4 +294,4 @@ namespace Konversation
     }
 }
 
-#include "transferdetailedinfopanel.moc"
+

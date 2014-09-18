@@ -707,4 +707,4 @@ void ConnectionManager::onOnlineStateChanged(bool isOnline)
     }
 }
 
-#include "connectionmanager.moc"
+

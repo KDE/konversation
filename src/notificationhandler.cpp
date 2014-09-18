@@ -422,4 +422,4 @@ namespace Konversation
 
 }
 
-#include "notificationhandler.moc"
+

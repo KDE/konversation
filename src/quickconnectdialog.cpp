@@ -118,4 +118,4 @@ void QuickConnectDialog::slotOk()
     }
 }
 
-#include "quickconnectdialog.moc"
+

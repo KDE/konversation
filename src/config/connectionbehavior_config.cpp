@@ -96,4 +96,4 @@ void ConnectionBehavior_Config::setPasswordChanged(bool changed)
     m_passwordChanged = changed;
 }
 
-#include "connectionbehavior_config.moc"
+

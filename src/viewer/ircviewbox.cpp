@@ -131,4 +131,4 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
     m_matchedOnce = match;
 }
 
-#include "ircviewbox.moc"
+

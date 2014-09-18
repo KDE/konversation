@@ -207,4 +207,4 @@ void Alias_Config::removeEntry()
     }
 }
 
-#include "alias_config.moc"
+

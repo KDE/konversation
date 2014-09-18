@@ -240,4 +240,4 @@ namespace Konversation
 
 }
 
-#include "statusbar.moc"
+

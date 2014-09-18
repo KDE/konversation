@@ -127,4 +127,4 @@ void ServerListView::dropEvent(QDropEvent *event)
     emit moved();
 }
 
-#include "serverlistview.moc"
+

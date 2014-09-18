@@ -87,4 +87,4 @@ DCC_Config::~DCC_Config()
 {
 }
 
-#include "dcc_config.moc"
+

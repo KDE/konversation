@@ -191,4 +191,4 @@ int LogfileReader::margin() { return KDialog::marginHint(); }
 int LogfileReader::spacing() { return KDialog::spacingHint(); }
 bool LogfileReader::searchView() { return true; }
 
-#include "logfilereader.moc"
+

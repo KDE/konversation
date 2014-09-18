@@ -70,4 +70,4 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
     }
 }
 
-#include "scriptlauncher.moc"
+

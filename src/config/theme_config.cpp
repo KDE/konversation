@@ -317,4 +317,4 @@ void Theme_Config::updateButtons()
     themeRC.close();
 }
 
-#include "theme_config.moc"
+

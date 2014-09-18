@@ -103,4 +103,4 @@ void KonviBookmarkHandler::openFolderinTabs(const KBookmarkGroup &group)
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, list);
 }
 
-#include "bookmarkhandler.moc"
+

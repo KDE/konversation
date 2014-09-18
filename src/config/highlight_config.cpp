@@ -319,4 +319,4 @@ void Highlight_Config::saveSettings()
     m_oldHighlightList=currentHighlightList();
 }
 
-#include "highlight_config.moc"
+

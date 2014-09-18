@@ -666,4 +666,4 @@ namespace Konversation
     }
 }
 
-#include "transferview.moc"
+

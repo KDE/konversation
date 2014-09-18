@@ -358,4 +358,4 @@ QIcon Images::getHighlightsLed()
         return m_highlightsLedOn;
 }
 
-#include "images.moc"
+

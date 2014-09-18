@@ -41,4 +41,4 @@ void AwayLabel::changeAwayMessage()
         emit awayMessageChanged(awayMessage);
 }
 
-#include "awaylabel.moc"
+

@@ -20,7 +20,7 @@ QPushButton(label,parent)
     id=newId;
     on=false;
     setCheckable(true);
-    connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
+    connect(this, &ModeButton::clicked, this, &ModeButton::wasClicked);
 }
 
 ModeButton::~ModeButton()
@@ -41,4 +41,4 @@ void ModeButton::wasClicked()
     setOn(on);
 }
 
-#include "modebutton.moc"
+

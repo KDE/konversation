@@ -508,4 +508,4 @@ namespace ShadowEngine
     }
 }
 
-#include "osd.moc"
+

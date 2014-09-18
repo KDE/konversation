@@ -2487,4 +2487,4 @@ void ViewContainer::closeNicksOnlinePanel()
     If the server is being removed this will fire with a null pointer.
 */
 
-#include "viewcontainer.moc"
+

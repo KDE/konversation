@@ -303,4 +303,4 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
 }
 
 
-#include "viewtree.moc"
+

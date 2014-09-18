@@ -587,4 +587,4 @@ QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
     }
 }
 
-#include "channeloptionsdialog.moc"
+

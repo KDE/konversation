@@ -424,4 +424,4 @@ QString IdentDBus::getAwayNickname(const QString &identity)
     return sterilizeUnicode(Preferences::identityByName(sterilizeUnicode(identity))->getAwayNickname());
 }
 
-#include "dbus.moc"
+

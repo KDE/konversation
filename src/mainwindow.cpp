@@ -892,4 +892,4 @@ void MainWindow::toggleVisibility()
     }
 }
 
-#include "mainwindow.moc"
+

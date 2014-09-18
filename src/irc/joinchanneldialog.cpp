@@ -47,14 +47,14 @@ namespace Konversation
         connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotSelectedConnectionChanged(int)));
         // Clear channel history when the history combo box is cleared
-        connect(m_ui.channelCombo, SIGNAL(cleared()), this, SLOT(slotChannelHistoryCleared()));
+        connect(m_ui.channelCombo, &KHistoryComboBox::cleared, this, &JoinChannelDialog::slotChannelHistoryCleared);
         // Preselect the current network
         m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(server->connectionId()));
         // If the server is the first item, current index wont be changed
         // So channel history combo wont be populated, so force it
         slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
-        connect( this, SIGNAL(okClicked()), this, SLOT(slotOk()) );
+        connect(this, &JoinChannelDialog::okClicked, this, &JoinChannelDialog::slotOk);
         connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
                 this, SLOT(slotConnectionListChanged()));
     }
@@ -134,7 +134,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+          connect(server, &Server::nicknameChanged, this, &JoinChannelDialog::slotNicknameChanged);
         }
       }
     }
@@ -192,4 +192,4 @@ namespace Konversation
           server->getServerGroup()->clearChannelHistory();
     }
 }
-#include "joinchanneldialog.moc"
+

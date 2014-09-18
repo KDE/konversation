@@ -120,4 +120,4 @@ const QString& /*channelName*/, bool /*joined*/)
     m_ISONList_invalid = true;
 }
 
-#include "serverison.moc"
+

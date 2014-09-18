@@ -351,4 +351,4 @@ void AwayManager::identityOnAutoAwayWentOffline(int identityId)
     implementRemoveIdleTimeout(timerId);
 }
 
-#include "awaymanager.moc"
+

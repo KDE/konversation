@@ -325,4 +325,4 @@ void StatusPanel::setServer(Server* server)
     connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
-#include "statuspanel.moc"
+

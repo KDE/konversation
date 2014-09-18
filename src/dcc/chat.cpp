@@ -617,4 +617,4 @@ namespace Konversation
     }
 }
 
-#include "chat.moc"
+

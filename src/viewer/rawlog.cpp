@@ -124,4 +124,4 @@ void RawLog::appendRaw(RawLog::MessageDirection dir, const QByteArray& message)
     appendRaw(output, dir == RawLog::Outbound);
 }
 
-#include "rawlog.moc"
+

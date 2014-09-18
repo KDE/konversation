@@ -596,4 +596,4 @@ namespace Konversation
     }
 }
 
-#include "transfersend.moc"
+

@@ -624,4 +624,4 @@ char IRCInput::getCompletionMode() { return completionMode; }
 void IRCInput::setOldCursorPosition(int pos) { oldPos=pos; }
 int IRCInput::getOldCursorPosition() { return oldPos; }
 
-#include "ircinput.moc"
+

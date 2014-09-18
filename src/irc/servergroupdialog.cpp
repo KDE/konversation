@@ -537,4 +537,4 @@ namespace Konversation
 
 }
 
-#include "servergroupdialog.moc"
+

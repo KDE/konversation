@@ -66,7 +66,7 @@ namespace Konversation
         setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
         m_showAtStartup->setChecked(Preferences::self()->showServerList());
-        connect(m_showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
+        connect(m_showAtStartup, &QCheckBox::toggled, this, &ServerListDialog::setShowAtStartup);
 
         m_serverList->setFocus();
 
@@ -77,17 +77,17 @@ namespace Konversation
         // Load server list
         updateServerList();
 
-        connect(m_serverList, SIGNAL(aboutToMove()), this, SLOT(slotAboutToMove()));
-        connect(m_serverList, SIGNAL(moved()), this, SLOT(slotMoved()));
-        connect(m_serverList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(slotOk()));
-        connect(m_serverList, SIGNAL(itemSelectionChanged()), this, SLOT(updateButtons()));
-        connect(m_serverList, SIGNAL(itemExpanded(QTreeWidgetItem*)), this, SLOT(slotSetGroupExpanded(QTreeWidgetItem*)));
-        connect(m_serverList, SIGNAL(itemCollapsed(QTreeWidgetItem*)), this, SLOT(slotSetGroupCollapsed(QTreeWidgetItem*)));
-        connect(m_addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
-        connect(m_editButton, SIGNAL(clicked()), this, SLOT(slotEdit()));
-        connect(m_delButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
-        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
-        connect(this, SIGNAL(cancelClicked()), this, SLOT(slotClose()));
+        connect(m_serverList, &ServerListView::aboutToMove, this, &ServerListDialog::slotAboutToMove);
+        connect(m_serverList, &ServerListView::moved, this, &ServerListDialog::slotMoved);
+        connect(m_serverList, &ServerListView::itemDoubleClicked, this, &ServerListDialog::slotOk);
+        connect(m_serverList, &ServerListView::itemSelectionChanged, this, &ServerListDialog::updateButtons);
+        connect(m_serverList, &ServerListView::itemExpanded, this, &ServerListDialog::slotSetGroupExpanded);
+        connect(m_serverList, &ServerListView::itemCollapsed, this, &ServerListDialog::slotSetGroupCollapsed);
+        connect(m_addButton, &QPushButton::clicked, this, &ServerListDialog::slotAdd);
+        connect(m_editButton, &QPushButton::clicked, this, &ServerListDialog::slotEdit);
+        connect(m_delButton, &QPushButton::clicked, this, &ServerListDialog::slotDelete);
+        connect(this, &ServerListDialog::okClicked, this, &ServerListDialog::slotOk);
+        connect(this, &ServerListDialog::cancelClicked, this, &ServerListDialog::slotClose);
 
         updateButtons();
 
@@ -475,4 +475,4 @@ namespace Konversation
     }
 }
 
-#include "serverlistdialog.moc"
+
