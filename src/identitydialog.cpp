@@ -78,9 +78,7 @@ namespace Konversation
         m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
         m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
         m_authTypeCombo->addItem(i18n("SASL"), QStringLiteral("saslplain"));
-#if KDE_IS_VERSION(4, 8, 3)
-m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclientcert"));
-#endif
+        m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclientcert"));
 
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());

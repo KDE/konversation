@@ -27,9 +27,6 @@
 #include <KCategoryDrawer>
 #include <KGlobalSettings>
 
-#if !KDE_IS_VERSION(4, 8, 0)
-#include <QScrollBar>
-#endif
 
 #define MARGIN 2
 
@@ -325,33 +322,7 @@ void TopicHistoryView::updateSelectedItemWidgets()
 
 void TopicHistoryView::updateGeometries()
 {
-#if !KDE_IS_VERSION(4, 8, 0)
-     const Qt::ScrollBarPolicy verticalP = verticalScrollBarPolicy(), horizontalP = horizontalScrollBarPolicy();
-
-    if (m_proxyModel->isCategorizedModel())
-    {
-        setVerticalScrollBarPolicy((verticalP == Qt::ScrollBarAlwaysOn || verticalScrollBar()->isVisibleTo(this)) ?
-            Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
-        setHorizontalScrollBarPolicy((horizontalP == Qt::ScrollBarAlwaysOn || horizontalScrollBar()->isVisibleTo(this)) ?
-            Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
-    }
-#endif
     KCategorizedView::updateGeometries();
-#if !KDE_IS_VERSION(4, 8, 0)
-    if (!m_proxyModel->isCategorizedModel())
-        return;
-
-    setVerticalScrollBarPolicy(verticalP);
-    setHorizontalScrollBarPolicy(horizontalP);
-
-    bool validRange = verticalScrollBar()->maximum() != verticalScrollBar()->minimum();
-
-    if (verticalP == Qt::ScrollBarAsNeeded && (verticalScrollBar()->isVisibleTo(this) != validRange))
-        verticalScrollBar()->setVisible(validRange);
-    validRange = horizontalScrollBar()->maximum() > horizontalScrollBar()->minimum();
-    if (horizontalP == Qt::ScrollBarAsNeeded && (horizontalScrollBar()->isVisibleTo(this) != validRange))
-        horizontalScrollBar()->setVisible(validRange);
-#endif
 
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
