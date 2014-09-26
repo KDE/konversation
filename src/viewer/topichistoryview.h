@@ -27,7 +27,7 @@
 #include <KCategorizedSortFilterProxyModel>
 #include <KCategorizedView>
 #include <KWidgetItemDelegate>
-#include <kdeversion.h>
+
 
 #include <KTextEdit>
 

@@ -25,7 +25,7 @@
 #include "query.h"
 #include "viewcontainer.h"
 #include "outputfilterresolvejob.h"
-
+#include <kdeversion.h>
 #ifdef HAVE_QCA2
 #include "cipher.h"
 #endif

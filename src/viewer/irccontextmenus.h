@@ -27,7 +27,7 @@
 #include <QObject>
 #include <QPoint>
 
-#include <kdeversion.h>
+
 
 
 class Server;

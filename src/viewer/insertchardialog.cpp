@@ -14,7 +14,6 @@
 #include <KCharSelect>
 #include <KGuiItem>
 #include <KLocalizedString>
-#include <kdeversion.h>
 
 
 namespace Konversation

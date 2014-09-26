@@ -23,7 +23,7 @@
 #include <QModelIndex>
 #include <QItemSelection>
 
-#include <kdeversion.h>
+
 
 #include <KLocalizedString>
 

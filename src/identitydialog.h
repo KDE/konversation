@@ -17,7 +17,7 @@
 #include "ui_identitydialog.h"
 
 #include <KDialog>
-#include <kdeversion.h>
+
 
 class KEditListWidget;
 class KMessageWidget;

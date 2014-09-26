@@ -40,7 +40,7 @@
 #include <KStandardAction>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <kdeversion.h>
+
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>

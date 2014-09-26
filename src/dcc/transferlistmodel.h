@@ -23,7 +23,7 @@
 #include <QSortFilterProxyModel>
 
 #include <kio/global.h>
-#include <kdeversion.h>
+
 
 #include "transfer.h"
 

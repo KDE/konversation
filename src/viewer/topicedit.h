@@ -23,7 +23,7 @@
 #ifndef TOPICEDIT_H
 #define TOPICEDIT_H
 
-#include <kdeversion.h>
+
 #include <KTextEdit>
 
 class Channel;

@@ -18,7 +18,7 @@
 
 #include <QTreeView>
 
-#include <kdeversion.h>
+
 
 #include "transferlistmodel.h"
 
