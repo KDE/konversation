@@ -240,7 +240,7 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
                       "entry selection mode and a synchronized edit field, undo back to the "
                       "original text or close and reopen the dialog."));
 
-    connect(KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SLOT(updateSelectedItemWidgets()));
+    connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
 }
 
 TopicHistoryView::~TopicHistoryView()

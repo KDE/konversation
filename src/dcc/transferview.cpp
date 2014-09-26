@@ -68,9 +68,9 @@ namespace Konversation
             m_updateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
                                            KGlobalSettings::graphicEffectsLevel()));
 
-            connect(m_updateTimer, SIGNAL(timeout()), this, SLOT(update()));
+            connect(m_updateTimer, &QTimer::timeout, this, &TransferView::update);
 
-            connect(KGlobalSettings::self(), SIGNAL(settingsChanged(int)), this, SLOT(globalSettingsChanged(int)));
+            connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &TransferView::globalSettingsChanged);
 
             connect(model(), SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
                      this, SLOT(rowsAboutToBeRemovedFromModel(QModelIndex,int,int)));
@@ -333,31 +333,31 @@ namespace Konversation
         //                 connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleFilenameColumn(bool)));
         //                 break;
                     case TransferHeaderData::PartnerNick:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(togglePartnerNickColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::togglePartnerNickColumn);
                         break;
                     case TransferHeaderData::Progress:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleProgressColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleProgressColumn);
                         break;
                     case TransferHeaderData::OfferDate:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleStartedAtColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleStartedAtColumn);
                         break;
                     case TransferHeaderData::Position:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(togglePositionColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::togglePositionColumn);
                         break;
                     case TransferHeaderData::CurrentSpeed:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleCurrentSpeedColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleCurrentSpeedColumn);
                         break;
                     case TransferHeaderData::SenderAdress:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleSenderAdressColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleSenderAdressColumn);
                         break;
                     case TransferHeaderData::Status:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleStatusColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleStatusColumn);
                         break;
                     case TransferHeaderData::TimeLeft:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toggleTimeLeftColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toggleTimeLeftColumn);
                         break;
                     case TransferHeaderData::TypeIcon:
-                        connect (tAction, SIGNAL(toggled(bool)), this, SLOT(toogleTypeIconColumn(bool)));
+                        connect(tAction, &QAction::toggled, this, &TransferView::toogleTypeIconColumn);
                         break;
                 }
 

@@ -61,8 +61,8 @@ OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
 
     m_timer->setSingleShot( true );
 
-    connect( m_timer,     SIGNAL(timeout()), SLOT(hide()) );
-    connect( m_timerMin,  SIGNAL(timeout()), SLOT(minReached()) );
+    connect(m_timer, &QTimer::timeout, this, &OSDWidget::hide);
+    connect(m_timerMin, &QTimer::timeout, this, &OSDWidget::minReached);
 
     //or crashes, KWindowSystem bug I think, crashes in QWidget::icon()
     kapp->setTopWidget( this );

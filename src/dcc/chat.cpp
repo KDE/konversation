@@ -131,7 +131,7 @@ namespace Konversation
 
                         if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                         {
-                            connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
+                            connect(router, &UPnPRouter::forwardComplete, this, &Chat::sendRequest);
                         }
                         else
                         {
@@ -175,7 +175,7 @@ namespace Konversation
 
                         if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                         {
-                            connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
+                            connect(router, &UPnPRouter::forwardComplete, this, &Chat::sendReverseAck);
                         }
                         else
                         {
@@ -360,7 +360,7 @@ namespace Konversation
                 return;
             }
 
-            connect(m_dccServer, SIGNAL(newConnection()), this, SLOT(heardPartner()));
+            connect(m_dccServer, &QTcpServer::newConnection, this, &Chat::heardPartner);
 
             // Get our own port number
             m_ownPort = m_dccServer->serverPort();
@@ -468,10 +468,10 @@ namespace Konversation
             m_dccSocket = new QTcpSocket(this);
 
             //connect(m_dccSocket, SIGNAL(hostFound()), this, SLOT(lookupFinished()));
-            connect(m_dccSocket, SIGNAL(connected()), this, SLOT(connectionEstablished()));
-            connect(m_dccSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(connectionFailed(QAbstractSocket::SocketError)));
-            connect(m_dccSocket, SIGNAL(readyRead()), this, SLOT(readData()));
-            connect(m_dccSocket, SIGNAL(disconnected()), this, SLOT(socketClosed()));
+            connect(m_dccSocket, &QTcpSocket::connected, this, &Chat::connectionEstablished);
+            connect(m_dccSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Chat::connectionFailed);
+            connect(m_dccSocket, &QTcpSocket::readyRead, this, &Chat::readData);
+            connect(m_dccSocket, &QTcpSocket::disconnected, this, &Chat::socketClosed);
 
             m_dccSocket->connectToHost(m_partnerIp, m_partnerPort);
         }
@@ -554,9 +554,9 @@ namespace Konversation
                 return;
             }
 
-            connect(m_dccSocket, SIGNAL(readyRead()), this, SLOT(readData()));
-            connect(m_dccSocket, SIGNAL(disconnected()), this, SLOT(socketClosed()));
-            connect(m_dccSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(connectionFailed(QAbstractSocket::SocketError)));
+            connect(m_dccSocket, &QTcpSocket::readyRead, this, &Chat::readData);
+            connect(m_dccSocket, &QTcpSocket::disconnected, this, &Chat::socketClosed);
+            connect(m_dccSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Chat::connectionFailed);
 
             // the listen socket isn't needed anymore
             disconnect(m_dccServer, 0, 0, 0);

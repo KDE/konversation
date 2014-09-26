@@ -67,7 +67,7 @@ namespace Konversation
 
             m_connectionTimer = new QTimer(this);
             m_connectionTimer->setSingleShot(true);
-            connect(m_connectionTimer, SIGNAL(timeout()), this, SLOT(connectionTimeout()));
+            connect(m_connectionTimer, &QTimer::timeout, this, &TransferRecv::connectionTimeout);
             //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
         }
 
@@ -350,9 +350,9 @@ namespace Konversation
             }
 
             transferJob->setAutoDelete(true);
-            connect(transferJob, SIGNAL(canResume(KIO::Job*,KIO::filesize_t)), this, SLOT(slotLocalCanResume(KIO::Job*,KIO::filesize_t)));
-            connect(transferJob, SIGNAL(result(KJob*)), this, SLOT(slotLocalGotResult(KJob*)));
-            connect(transferJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(slotLocalReady(KIO::Job*)));
+            connect(transferJob, &KIO::TransferJob::canResume, this, &TransferRecv::slotLocalCanResume);
+            connect(transferJob, &KIO::TransferJob::result, this, &TransferRecv::slotLocalGotResult);
+            connect(transferJob, &KIO::TransferJob::dataReq, this, &TransferRecv::slotLocalReady);
         }
 
         void TransferRecv::askAndPrepareLocalKio(const QString &message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition)
@@ -508,8 +508,8 @@ namespace Konversation
 
             m_writeCacheHandler = new TransferRecvWriteCacheHandler(transferJob);
 
-            connect(m_writeCacheHandler, SIGNAL(done()), this, SLOT(slotLocalWriteDone()));
-            connect(m_writeCacheHandler, SIGNAL(gotError(QString)), this, SLOT(slotLocalGotWriteError(QString)));
+            connect(m_writeCacheHandler, &TransferRecvWriteCacheHandler::done, this, &TransferRecv::slotLocalWriteDone);
+            connect(m_writeCacheHandler, &TransferRecvWriteCacheHandler::gotError, this, &TransferRecv::slotLocalGotWriteError);
 
             if (!m_resumed)
             {
@@ -546,7 +546,7 @@ namespace Konversation
 
                     if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                     {
-                        connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
+                        connect(router, &UPnP::UPnPRouter::forwardComplete, this, &TransferRecv::sendReverseAck);
                     }
                     else
                     {
@@ -651,8 +651,8 @@ namespace Konversation
 
             m_recvSocket = new QTcpSocket(this);
 
-            connect(m_recvSocket, SIGNAL(connected()), this, SLOT(startReceiving()));
-            connect(m_recvSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(connectionFailed(QAbstractSocket::SocketError)));
+            connect(m_recvSocket, &QTcpSocket::connected, this, &TransferRecv::startReceiving);
+            connect(m_recvSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
 
             qDebug() << "Attempting to connect to " << m_partnerIp << ":" << m_partnerPort;
 
@@ -678,7 +678,7 @@ namespace Konversation
                 return false;
             }
 
-            connect(m_serverSocket, SIGNAL(newConnection()), this, SLOT(slotServerSocketReadyAccept()));
+            connect(m_serverSocket, &QTcpServer::newConnection, this, &TransferRecv::slotServerSocketReadyAccept);
 
             startConnectionTimer(30);
 
@@ -696,7 +696,7 @@ namespace Konversation
                 return;
             }
 
-            connect(m_recvSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(connectionFailed(QAbstractSocket::SocketError)));
+            connect(m_recvSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
 
             // we don't need ServerSocket anymore
             m_serverSocket->close();
@@ -719,7 +719,7 @@ namespace Konversation
             qDebug();
             stopConnectionTimer();
 
-            connect(m_recvSocket, SIGNAL(readyRead()), this, SLOT(readData()));
+            connect(m_recvSocket, &QTcpSocket::readyRead, this, &TransferRecv::readData);
 
             m_transferStartPosition = m_transferringPosition;
 
@@ -831,8 +831,8 @@ namespace Konversation
             m_writeReady = true;
             m_cacheStream = 0;
 
-            connect(m_transferJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(slotKIODataReq(KIO::Job*,QByteArray&)));
-            connect(m_transferJob, SIGNAL(result(KJob*)), this, SLOT(slotKIOResult(KJob*)));
+            connect(m_transferJob, &KIO::TransferJob::dataReq, this, &TransferRecvWriteCacheHandler::slotKIODataReq);
+            connect(m_transferJob, &KIO::TransferJob::result, this, &TransferRecvWriteCacheHandler::slotKIOResult);
 
             m_transferJob->setAsyncDataEnabled(m_writeAsyncMode = true);
         }

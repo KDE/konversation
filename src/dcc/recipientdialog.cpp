@@ -57,8 +57,8 @@ namespace Konversation
             dialogLayout->addWidget(nicknameList);
             dialogLayout->addWidget(nicknameInput);
 
-            connect(nicknameList, SIGNAL(clicked(QModelIndex)), this, SLOT(newNicknameSelected(QModelIndex)));
-            connect(nicknameList, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(newNicknameSelectedQuit(QModelIndex)));
+            connect(nicknameList, &QListView::clicked, this, &RecipientDialog::newNicknameSelected);
+            connect(nicknameList, &QListView::doubleClicked, this, &RecipientDialog::newNicknameSelectedQuit);
 
             QDialogButtonBox* buttonBox = new QDialogButtonBox(this);
             dialogLayout->addWidget(buttonBox);
@@ -73,8 +73,8 @@ namespace Konversation
 
             KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(KSharedConfig::openConfig(), "DCCRecipientDialog"));
 
-            connect( buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()) );
-            connect( buttonBox, SIGNAL(rejected()), this, SLOT(slotCancel()) );
+            connect(buttonBox, &QDialogButtonBox::accepted, this, &RecipientDialog::slotOk);
+            connect(buttonBox, &QDialogButtonBox::rejected, this, &RecipientDialog::slotCancel);
         }
 
         RecipientDialog::~RecipientDialog()

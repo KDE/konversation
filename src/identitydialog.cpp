@@ -53,16 +53,16 @@ namespace Konversation
                                           "Konversation will try the alternate nicknames."));
 
         newBtn->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
-        connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
+        connect(newBtn, &QPushButton::clicked, this, &IdentityDialog::newIdentity);
 
         copyBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-copy")));
-        connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
+        connect(copyBtn, &QPushButton::clicked, this, &IdentityDialog::copyIdentity);
 
         m_editBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
-        connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
+        connect(m_editBtn, &QPushButton::clicked, this, &IdentityDialog::renameIdentity);
 
         m_delBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
-        connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
+        connect(m_delBtn, &QPushButton::clicked, this, &IdentityDialog::deleteIdentity);
 
         foreach(const IdentityPtr &id, Preferences::identityList()) {
             m_identityCBox->addItem(id->getName());
@@ -74,7 +74,7 @@ namespace Konversation
         m_additionalAuthInfo->setCloseButtonVisible(false);
         m_additionalAuthInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        connect(m_authTypeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(authTypeChanged(int)));
+        connect(m_authTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::authTypeChanged);
         m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
         m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
         m_authTypeCombo->addItem(i18n("SASL"), QStringLiteral("saslplain"));
@@ -98,8 +98,8 @@ m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclie
         setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
-        connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
-        connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
+        connect(m_identityCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::updateIdentity);
+        connect(this, &IdentityDialog::identitiesChanged, awayManager, &AwayManager::identitiesChanged);
     }
 
     void IdentityDialog::updateIdentity(int index)

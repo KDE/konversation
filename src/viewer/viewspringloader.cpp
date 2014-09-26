@@ -32,7 +32,7 @@ ViewSpringLoader::ViewSpringLoader(ViewContainer* viewContainer) : QObject(viewC
     m_viewContainer = viewContainer;
 
     m_hoverTimer.setSingleShot(true);
-    connect(&m_hoverTimer, SIGNAL(timeout()), this, SLOT(springLoad()));
+    connect(&m_hoverTimer, &QTimer::timeout, this, &ViewSpringLoader::springLoad);
 }
 
 ViewSpringLoader::~ViewSpringLoader()

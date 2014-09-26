@@ -203,7 +203,7 @@ void ChatWindow::setServer(Server* newServer)
     else
     {
         m_server=newServer;
-        connect(m_server,SIGNAL (serverOnline(bool)),this,SLOT (serverOnline(bool)) );
+        connect(m_server, &Server::serverOnline, this, &ChatWindow::serverOnline);
 
         // check if we need to set up the signals
         if(getType() != ChannelList)
@@ -253,9 +253,9 @@ void ChatWindow::setTextView(IRCView* newView)
     textView->setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
     textView->setChatWin(this);
-    connect(textView,SIGNAL(textToLog(QString)), this,SLOT(logText(QString)));
-    connect(textView,SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
-    connect(textView,SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
+    connect(textView, &IRCView::textToLog, this, &ChatWindow::logText);
+    connect(textView, &IRCView::setStatusBarTempText, this, &ChatWindow::setStatusBarTempText);
+    connect(textView, &IRCView::clearStatusBarTempText, this, &ChatWindow::clearStatusBarTempText);
 }
 
 void ChatWindow::appendRaw(const QString& message, bool self)

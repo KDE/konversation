@@ -154,7 +154,7 @@ namespace Konversation
             // downlaod XML description into a temporary file in /tmp
             qDebug() << "Downloading XML file " << location << endl;
             KIO::Job* job = KIO::storedGet(location,KIO::NoReload, KIO::Overwrite | KIO::HideProgressInfo);
-            connect(job,SIGNAL(result(KJob*)),this,SLOT(downloadFinished(KJob*)));
+            connect(job, &KIO::Job::result, this, &UPnPRouter::downloadFinished);
         }
 
         KJob *UPnPRouter::getStatusInfo(UPnPService s)
@@ -327,10 +327,10 @@ namespace Konversation
             soap_data_out[req] = QByteArray();
             soap_data_in[req]  = QByteArray();
 
-            connect( req, SIGNAL(data(KIO::Job*,QByteArray)), this, SLOT(recvSoapData(KIO::Job*,QByteArray)) );
-            connect( req, SIGNAL(dataReq(KIO::Job*,QByteArray&)), this, SLOT(sendSoapData(KIO::Job*,QByteArray&)) );
+            connect(req, &KIO::TransferJob::data, this, &UPnPRouter::recvSoapData);
+            connect(req, &KIO::TransferJob::dataReq, this, &UPnPRouter::sendSoapData);
 
-            connect( req, SIGNAL(result(KJob*)), this, SLOT(onRequestFinished(KJob*)) );
+            connect(req, &KIO::TransferJob::result, this, &UPnPRouter::onRequestFinished);
 
             return req;
         }

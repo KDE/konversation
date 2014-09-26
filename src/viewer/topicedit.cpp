@@ -205,7 +205,7 @@ void TopicEdit::showWarning()
 #endif
 
         QAction* trimExcessAction = new QAction(i18n("Delete excess text"), m_warning);
-        connect(trimExcessAction, SIGNAL(triggered(bool)), this, SLOT(trimExcessText()));
+        connect(trimExcessAction, &QAction::triggered, this, &TopicEdit::trimExcessText);
 
         m_warning->addAction(trimExcessAction);
 

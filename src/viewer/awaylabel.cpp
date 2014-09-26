@@ -23,10 +23,10 @@ AwayLabel::AwayLabel(QWidget *parent)
 {
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
     QAction *action = new QAction(i18n("&Unaway"),this);
-    connect(action, SIGNAL(triggered()), this, SIGNAL(unaway()));
+    connect(action, &QAction::triggered, this, &AwayLabel::unaway);
     this->addAction(action);
     action = new QAction(i18n("&Change away message..."),this);
-    connect(action, SIGNAL(triggered()), this, SLOT(changeAwayMessage()));
+    connect(action, &QAction::triggered, this, &AwayLabel::changeAwayMessage);
     this->addAction(action);
 }
 

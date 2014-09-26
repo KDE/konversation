@@ -87,7 +87,7 @@ namespace Konversation
 
             m_urlreqFileURL = new KUrlRequester(m_item->getFileURL(), this);
             m_urlreqFileURL->setMode(KFile::File | KFile::LocalOnly);
-            connect(m_urlreqFileURL, SIGNAL(textChanged(QString)), this, SLOT(updateDialogButtons()));
+            connect(m_urlreqFileURL, &KUrlRequester::textChanged, this, &ResumeDialog::updateDialogButtons);
 
             mainLayout->addWidget(labelMessage);
             mainLayout->addWidget(m_urlreqFileURL);
@@ -102,8 +102,8 @@ namespace Konversation
                 filePathToolsLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
                 filePathToolsLayout->addWidget(btnDefaultName);
                 filePathToolsLayout->addWidget(btnSuggestNewName);
-                connect(btnSuggestNewName, SIGNAL(clicked()), this, SLOT(suggestNewName()));
-                connect(btnDefaultName, SIGNAL(clicked()), this, SLOT(setDefaultName()));
+                connect(btnSuggestNewName, &QPushButton::clicked, this, &ResumeDialog::suggestNewName);
+                connect(btnDefaultName, &QPushButton::clicked, this, &ResumeDialog::setDefaultName);
 
                 mainLayout->addWidget(filePathToolsFrame);
             }
@@ -126,7 +126,7 @@ namespace Konversation
                 m_buttonBox->button(QDialogButtonBox::Retry)->setText(i18n("&Resume"));
             mainLayout->addWidget(m_buttonBox);
 
-            connect (m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
+            connect(m_buttonBox, &QDialogButtonBox::clicked, this, &ResumeDialog::buttonClicked);
 
             updateDialogButtons();
         }

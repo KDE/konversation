@@ -114,8 +114,8 @@ namespace Konversation
             connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
                     this, SLOT(updateLineWidthPixmap(int)));
 
-            connect(m_clearPushButton, SIGNAL(clicked()), this, SLOT(clearClicked()));
-            connect(m_savePushButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
+            connect(m_clearPushButton, &QPushButton::clicked, this, &WhiteBoardToolBar::clearClicked);
+            connect(m_savePushButton, &QPushButton::clicked, this, &WhiteBoardToolBar::saveClicked);
 
             setFormOptionVisible(false);
             setLineWidthVisible(true);
@@ -205,16 +205,16 @@ namespace Konversation
         void WhiteBoardToolBar::connectToggleButtons()
         {
             qDebug();
-            connect(m_pencilPushButton, SIGNAL(toggled(bool)), this, SLOT(pencilToggled(bool)));
-            connect(m_linePushButton, SIGNAL(toggled(bool)), this, SLOT(lineToggled(bool)));
-            connect(m_rectanglePushButton, SIGNAL(toggled(bool)), this, SLOT(rectangleToggled(bool)));
-            connect(m_ellipsePushButton, SIGNAL(toggled(bool)), this, SLOT(ellipseToggled(bool)));
-            connect(m_textPushButton, SIGNAL(toggled(bool)), this, SLOT(textToggled(bool)));
-            connect(m_selectionPushButton, SIGNAL(toggled(bool)), this, SLOT(selectionToggled(bool)));
-            connect(m_eraserPushButton, SIGNAL(toggled(bool)), this, SLOT(eraseToggled(bool)));
-            connect(m_fillPushButton, SIGNAL(toggled(bool)), this, SLOT(fillToggled(bool)));
-            connect(m_arrowPushButton, SIGNAL(toggled(bool)), this, SLOT(arrowToggled(bool)));
-            connect(m_colorPickerPushButton, SIGNAL(toggled(bool)), this, SLOT(colorPickerToggled(bool)));
+            connect(m_pencilPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::pencilToggled);
+            connect(m_linePushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::lineToggled);
+            connect(m_rectanglePushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::rectangleToggled);
+            connect(m_ellipsePushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::ellipseToggled);
+            connect(m_textPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::textToggled);
+            connect(m_selectionPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::selectionToggled);
+            connect(m_eraserPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::eraseToggled);
+            connect(m_fillPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::fillToggled);
+            connect(m_arrowPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::arrowToggled);
+            connect(m_colorPickerPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::colorPickerToggled);
         }
 
         void WhiteBoardToolBar::disconnectToggleButtons()

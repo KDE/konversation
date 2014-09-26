@@ -103,7 +103,7 @@ namespace Konversation
         {
             TransferRecv* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
-            connect( transfer, SIGNAL(removed(Konversation::DCC::Transfer*)), this, SLOT(removeRecvItem(Konversation::DCC::Transfer*)));
+            connect(transfer, &TransferRecv::removed, this, &TransferManager::removeRecvItem);
             initTransfer( transfer );
             return transfer;
         }
@@ -112,7 +112,7 @@ namespace Konversation
         {
             TransferSend* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
-            connect( transfer, SIGNAL(removed(Konversation::DCC::Transfer*)), this, SLOT(removeSendItem(Konversation::DCC::Transfer*)));
+            connect(transfer, &TransferSend::removed, this, &TransferManager::removeSendItem);
             initTransfer( transfer );
             return transfer;
         }
@@ -121,7 +121,7 @@ namespace Konversation
         {
             Chat* chat = new Chat(this);
             m_chatItems.append(chat);
-            connect( chat, SIGNAL(removed(Konversation::DCC::Chat*)), this, SLOT(removeChatItem(Konversation::DCC::Chat*)));
+            connect(chat, &Chat::removed, this, &TransferManager::removeChatItem);
             return chat;
         }
 
@@ -311,7 +311,7 @@ namespace Konversation
 
         void TransferManager::initTransfer( Transfer* transfer )
         {
-            connect( transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*,int,int)) );
+            connect(transfer, &TransferSend::statusChanged, this, &TransferManager::slotTransferStatusChanged);
 
             emit newTransferAdded( transfer );
         }

@@ -49,7 +49,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     // reset completion mode
     setCompletionMode('\0');
     completionBox = new KCompletionBox(this);
-    connect(completionBox, SIGNAL(activated(QString)), this, SLOT(insertCompletion(QString)));
+    connect(completionBox, &KCompletionBox::activated, this, &IRCInput::insertCompletion);
 
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
@@ -62,9 +62,9 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     setWhatsThis(i18n("<qt><p>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.</p><p>To automatically complete the nickname you began typing, press Tab. If you have not begun typing, the last successfully completed nickname will be used.</p><p>You can also send special commands:</p><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.</p><p>A message cannot contain multiple lines.</p></qt>"));
 
     m_disableSpellCheckTimer = new QTimer(this);
-    connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
+    connect(m_disableSpellCheckTimer, &QTimer::timeout, this, &IRCInput::disableSpellChecking);
 
-    connect(this, SIGNAL(aboutToShowContextMenu(QMenu*)), this, SLOT(insertLanguageMenu(QMenu*)));
+    connect(this, &IRCInput::aboutToShowContextMenu, this, &IRCInput::insertLanguageMenu);
 
     document()->adjustSize();
 
@@ -113,7 +113,7 @@ void IRCInput::insertLanguageMenu(QMenu* contextMenu)
                 && m_speller->defaultLanguage() == i.value()));
             languageAction->setData(i.value());
             languageAction->setActionGroup(languagesGroup);
-            connect(languageAction, SIGNAL(triggered(bool)), this, SLOT(languageSelected()));
+            connect(languageAction, &QAction::triggered, this, &IRCInput::languageSelected);
         }
 
         contextMenu->insertMenu(spellCheckAction, languagesMenu);
@@ -167,7 +167,7 @@ void IRCInput::showEvent(QShowEvent* /* e */)
     m_disableSpellCheckTimer->stop();
     setCheckSpellingEnabled(Preferences::self()->spellChecking());
     setSpellCheckingLanguage(spellCheckingLanguage());
-    connect(this, SIGNAL(checkSpellingChanged(bool)), this, SLOT(setSpellChecking(bool)));
+    connect(this, &IRCInput::checkSpellingChanged, this, &IRCInput::setSpellChecking);
 }
 
 void IRCInput::hideEvent(QHideEvent* /* event */)
@@ -228,9 +228,9 @@ void IRCInput::updateAppearance()
     setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
 
     if (m_multiRow)
-        connect(this, SIGNAL(textChanged()), this, SLOT(maybeResize()));
+        connect(this, &IRCInput::textChanged, this, &IRCInput::maybeResize);
     else
-        disconnect(this, SIGNAL(textChanged()), this, SLOT(maybeResize()));
+        disconnect(this, &IRCInput::textChanged, this, &IRCInput::maybeResize);
 
     maybeResize();
     ensureCursorVisible(); //appears to trigger updateGeometry

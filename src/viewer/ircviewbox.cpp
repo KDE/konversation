@@ -37,9 +37,9 @@ IRCViewBox::IRCViewBox(QWidget* parent)
             this, SLOT(slotSearchPrevious()));
     connect(m_ircView, SIGNAL(doSearch()),
         SLOT(slotSearch()));
-    connect(m_ircView, SIGNAL(doSearchNext()), this, SLOT(slotSearchNext()));
-    connect(m_ircView, SIGNAL(doSearchPrevious()), this, SLOT(slotSearchPrevious()));
-    connect(m_searchBar, SIGNAL(hidden()), m_ircView, SIGNAL(gotFocus()));
+    connect(m_ircView, &IRCView::doSearchNext, this, &IRCViewBox::slotSearchNext);
+    connect(m_ircView, &IRCView::doSearchPrevious, this, &IRCViewBox::slotSearchPrevious);
+    connect(m_searchBar, &SearchBar::hidden, m_ircView, &IRCView::gotFocus);
 }
 
 IRCViewBox::~IRCViewBox()

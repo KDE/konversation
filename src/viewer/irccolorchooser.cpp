@@ -30,15 +30,15 @@ IRCColorChooser::IRCColorChooser(QWidget* parent)
     initColors(m_ui.m_bgColorCBox);
     m_ui.m_bgColorCBox->insertItem(0, i18n("None"));
 
-    connect(m_ui.m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
-    connect(m_ui.m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
+    connect(m_ui.m_fgColorCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &IRCColorChooser::updatePreview);
+    connect(m_ui.m_bgColorCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &IRCColorChooser::updatePreview);
     m_ui.m_fgColorCBox->setCurrentIndex(1);
     m_ui.m_bgColorCBox->setCurrentIndex(0);
 
     m_ui.m_previewLbl->setAutoFillBackground(true);
 
-    connect(m_ui.m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(m_ui.m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_ui.m_buttonBox, &QDialogButtonBox::accepted, this, &IRCColorChooser::accept);
+    connect(m_ui.m_buttonBox, &QDialogButtonBox::rejected, this, &IRCColorChooser::reject);
 
     updatePreview();
 }

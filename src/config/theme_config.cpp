@@ -48,11 +48,11 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     // load the current settings
     loadSettings();
 
-    connect(iconThemeIndex,SIGNAL(currentRowChanged(int)),this,SLOT(updatePreview(int)));
-    connect(iconThemeIndex,SIGNAL(itemSelectionChanged()),this,SLOT(updateButtons()));
-    connect(iconThemeIndex,SIGNAL(itemSelectionChanged()),this,SIGNAL(modified()));
-    connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
-    connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
+    connect(iconThemeIndex, &QListWidget::currentRowChanged, this, &Theme_Config::updatePreview);
+    connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::updateButtons);
+    connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::modified);
+    connect(installButton, &QPushButton::clicked, this, &Theme_Config::installTheme);
+    connect(removeButton, &QPushButton::clicked, this, &Theme_Config::removeTheme);
 }
 
 Theme_Config::~Theme_Config()
@@ -266,7 +266,7 @@ void Theme_Config::removeTheme()
         QByteArray encoded = QFile::encodeName(dir);
         unlink(encoded.data());
         KIO::DeleteJob* job = KIO::del(QUrl(dir.remove("index.desktop")));
-        connect(job, SIGNAL(result(KJob*)), this, SLOT(postRemoveTheme(KJob*)));
+        connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
     }
 }
 

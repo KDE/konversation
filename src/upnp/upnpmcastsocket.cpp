@@ -35,8 +35,8 @@ namespace Konversation
 
         UPnPMCastSocket::UPnPMCastSocket()
         {
-            QObject::connect(this,SIGNAL(readyRead()),this,SLOT(onReadyRead()));
-            QObject::connect(this,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(error(QAbstractSocket::SocketError)));
+            QObject::connect(this, &UPnPMCastSocket::readyRead, this, &UPnPMCastSocket::onReadyRead);
+            QObject::connect(this, &UPnPMCastSocket::error, this, &UPnPMCastSocket::error);
 
             for (quint32 i = 0;i < 10;i++)
             {

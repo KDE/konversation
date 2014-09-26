@@ -44,9 +44,9 @@ namespace Konversation
             m_autoViewUpdateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
                                                  KGlobalSettings::graphicEffectsLevel()));
 
-            connect(KGlobalSettings::self(), SIGNAL(settingsChanged(int)), this, SLOT(globalSettingsChanged(int)));
+            connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &TransferDetailedInfoPanel::globalSettingsChanged);
 
-            connect(m_locationInfo.m_urlreqLocation, SIGNAL(textChanged(QString)), this, SLOT(slotLocationChanged(QString)));
+            connect(m_locationInfo.m_urlreqLocation, &KUrlRequester::textChanged, this, &TransferDetailedInfoPanel::slotLocationChanged);
             connect(Application::instance()->getDccTransferManager(), SIGNAL(fileURLChanged(Konversation::DCC::TransferRecv*)),
                     this, SLOT(updateView()));  // it's a little rough..
 
@@ -71,7 +71,7 @@ namespace Konversation
             m_transfer = item;
 
             // set up the auto view-update timer
-            connect(m_autoViewUpdateTimer, SIGNAL(timeout()), this, SLOT(updateChangeableView()));
+            connect(m_autoViewUpdateTimer, &QTimer::timeout, this, &TransferDetailedInfoPanel::updateChangeableView);
 
             // If the file is already being transferred, the timer must be started here,
             // otherwise the information will not be updated every 0.5sec

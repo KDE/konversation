@@ -306,7 +306,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
                 action = new QAction(searchProvider, m_webShortcutsMenu);
                 action->setIcon(QIcon::fromTheme(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
-                connect(action, SIGNAL(triggered()), this, SLOT(processWebShortcutAction()));
+                connect(action, &QAction::triggered, this, &IrcContextMenus::processWebShortcutAction);
                 m_webShortcutsMenu->addAction(action);
             }
 
@@ -314,7 +314,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
             action = new QAction(i18n("Configure Web Shortcuts..."), m_webShortcutsMenu);
             action->setIcon(QIcon::fromTheme("configure"));
-            connect(action, SIGNAL(triggered()), this, SLOT(configureWebShortcuts()));
+            connect(action, &QAction::triggered, this, &IrcContextMenus::configureWebShortcuts);
             m_webShortcutsMenu->addAction(action);
 
             m_webShortcutsMenu->menuAction()->setVisible(true);

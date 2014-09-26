@@ -67,11 +67,11 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
-    connect(m_inputBar,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
-    connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT(textPasted(QString)) );
+    connect(m_inputBar, &IRCInput::submit, this, &StatusPanel::statusTextEntered);
+    connect(m_inputBar, &IRCInput::textPasted, this, &StatusPanel::textPasted);
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
 
-    connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
+    connect(nicknameCombobox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &StatusPanel::nicknameComboboxChanged);
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editable.  if we design it so it isn't, remove these lines.
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));

@@ -100,10 +100,10 @@ namespace Konversation
             m_openLocation->setStatusTip(i18n("Open the file location"));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
-            connect(m_transferView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(popupRequested(QPoint)));
+            connect(m_transferView, &TransferView::customContextMenuRequested, this, &TransferPanel::popupRequested);
 
             // misc.
-            connect(m_transferView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(doubleClicked(QModelIndex)));
+            connect(m_transferView, &TransferView::doubleClicked, this, &TransferPanel::doubleClicked);
             connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
                     this, SLOT(setDetailPanelItem(QItemSelection,QItemSelection)));
 

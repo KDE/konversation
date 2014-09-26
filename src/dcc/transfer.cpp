@@ -66,7 +66,7 @@ namespace Konversation
             m_bufferSize = Preferences::self()->dccBufferSize();
             m_buffer = new char[m_bufferSize];
 
-            connect(&m_loggerTimer, SIGNAL(timeout()), this, SLOT(logTransfer()));
+            connect(&m_loggerTimer, &QTimer::timeout, this, &Transfer::logTransfer);
 
             m_timeOffer = QDateTime::currentDateTime();
         }

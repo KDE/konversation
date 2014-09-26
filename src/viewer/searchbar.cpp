@@ -54,28 +54,28 @@ SearchBar::SearchBar(QWidget* parent)
     m_closeShortcut = new QShortcut(QKeySequence(Qt::Key_Escape), this, SLOT(hide()));
     m_closeShortcut->setEnabled(false);
 
-    connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
-    connect(m_searchEdit, SIGNAL(textChanged(QString)), SLOT(slotTextChanged()));
-    connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
-    connect(m_findNextButton, SIGNAL(clicked()), SLOT(slotFindNext()));
-    connect(m_findPreviousButton, SIGNAL(clicked()), SLOT(slotFindPrevious()));
-    connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
-    connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
+    connect(m_timer, &QTimer::timeout, this, &SearchBar::slotFind);
+    connect(m_searchEdit, &KLineEdit::textChanged, this, &SearchBar::slotTextChanged);
+    connect(m_searchEdit, &KLineEdit::returnPressed, this, &SearchBar::slotFindNext);
+    connect(m_findNextButton, &QPushButton::clicked, this, &SearchBar::slotFindNext);
+    connect(m_findPreviousButton, &QPushButton::clicked, this, &SearchBar::slotFindPrevious);
+    connect(m_closeButton, &QToolButton::clicked, this, &SearchBar::hide);
+    connect(m_optionsButton, &QToolButton::clicked, this, &SearchBar::showOptionsMenu);
 
     QAction *action = 0;
     m_optionsMenu = new QMenu(m_optionsButton);
     action = m_optionsMenu->addAction(i18n("Find Forward"));
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleSearchFoward(bool)));
+    connect(action, &QAction::toggled, this, &SearchBar::toggleSearchFoward);
     action = m_optionsMenu->addAction(i18n("Match Case"));
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleMatchCase(bool)));
+    connect(action, &QAction::toggled, this, &SearchBar::toggleMatchCase);
     action = m_optionsMenu->addAction(i18n("Whole Words Only"));
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleWholeWords(bool)));
+    connect(action, &QAction::toggled, this, &SearchBar::toggleWholeWords);
     action = m_optionsMenu->addAction(i18n("From Cursor"));
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleFromCursor(bool)));
+    connect(action, &QAction::toggled, this, &SearchBar::toggleFromCursor);
 
     m_optionsButton->setMenu(m_optionsMenu);
 }

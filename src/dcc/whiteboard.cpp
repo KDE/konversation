@@ -49,9 +49,9 @@ namespace Konversation
             connect(m_toolbar, SIGNAL(fontChanged(QFont)),
                     m_paintArea, SLOT(setFont(QFont)));
 
-            connect(m_toolbar, SIGNAL(clear()), this, SLOT(clear()));
-            connect(m_toolbar, SIGNAL(save(QString)), m_paintArea, SLOT(save(QString)));
-            connect(m_toolbar, SIGNAL(lineWidthChanged(int)), m_paintArea, SLOT(setPenWidth(int)));
+            connect(m_toolbar, &WhiteBoardToolBar::clear, this, &WhiteBoard::clear);
+            connect(m_toolbar, &WhiteBoardToolBar::save, m_paintArea, &WhiteBoardPaintArea::save);
+            connect(m_toolbar, &WhiteBoardToolBar::lineWidthChanged, m_paintArea, &WhiteBoardPaintArea::setPenWidth);
 
             connect(m_paintArea, SIGNAL(drawedPencil(int,QColor,QColor,int,int,int,int)),
                     this, SLOT(drawedPencil(int,QColor,QColor,int,int,int,int)));

@@ -51,14 +51,14 @@ PasteEditor::PasteEditor(QWidget* parent)
         m_autoReplaceActionWasEnabled = m_autoReplaceAction->isEnabled();
         m_autoReplaceAction->setEnabled(true);
         addAction(m_autoReplaceAction);
-        connect(m_autoReplaceAction, SIGNAL(triggered(bool)), this, SLOT(doInlineAutoreplace()));
+        connect(m_autoReplaceAction, &QAction::triggered, this, &PasteEditor::doInlineAutoreplace);
     }
 
-    connect(m_removeNewlinesButton, SIGNAL(clicked()), this, SLOT(removeNewlines()));
-    connect(m_addQuotesButton, SIGNAL(clicked()), this, SLOT(addQuotationIndicators()));
+    connect(m_removeNewlinesButton, &QPushButton::clicked, this, &PasteEditor::removeNewlines);
+    connect(m_addQuotesButton, &QPushButton::clicked, this, &PasteEditor::addQuotationIndicators);
 
-    connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_buttonBox, &QDialogButtonBox::accepted, this, &PasteEditor::accept);
+    connect(m_buttonBox, &QDialogButtonBox::rejected, this, &PasteEditor::reject);
 
     resize(Preferences::self()->multilineEditSize());
 }

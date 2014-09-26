@@ -59,7 +59,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
     toolBar->addWidget(sizeSpin);
-    connect(sizeSpin, SIGNAL(valueChanged(int)), this, SLOT(storeBufferSize(int)));
+    connect(sizeSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &LogfileReader::storeBufferSize);
 
     IRCViewBox* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());
@@ -166,7 +166,7 @@ void LogfileReader::saveLog()
     {
         KIO::Job* job = KIO::copy(logUrl, destination);
 
-        connect(job,SIGNAL(result(KJob*)),this,SLOT(copyResult(KJob*)));
+        connect(job, &KIO::Job::result, this, &LogfileReader::copyResult);
     }
 }
 

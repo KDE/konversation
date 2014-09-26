@@ -18,7 +18,7 @@ Tabs_Config::Tabs_Config(QWidget *parent, const char *name)
     setObjectName(QString::fromLatin1(name));
     setupUi(this);
 
-    connect(kcfg_TabPlacement, SIGNAL(activated(int)), this, SLOT(toggleCheckBoxes(int)));
+    connect(kcfg_TabPlacement, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &Tabs_Config::toggleCheckBoxes);
 }
 
 Tabs_Config::~Tabs_Config()

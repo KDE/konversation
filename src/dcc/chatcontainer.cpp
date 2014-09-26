@@ -54,7 +54,7 @@ namespace Konversation
                 m_whiteBoard = new WhiteBoard(chatSplitter);
                 connect(m_whiteBoard, SIGNAL(rawWhiteBoardCommand(QString)),
                         m_chat, SLOT(sendRawLine(QString)));
-                connect(m_chat, SIGNAL(connected()), m_whiteBoard, SLOT(connected()));
+                connect(m_chat, &Chat::connected, m_whiteBoard, &WhiteBoard::connected);
                 //chatSplitter->setStretchFactor(chatSplitter->indexOf(paintLabel), 1);
 
                 IRCViewBox *ircViewBox = new IRCViewBox(chatSplitter);
@@ -74,13 +74,13 @@ namespace Konversation
             getTextView()->installEventFilter(m_inputBar);
             m_inputBar->setReadOnly(true);
 
-            connect(m_chat, SIGNAL(receivedRawLine(QString)), this, SLOT(receivedLine(QString)));
+            connect(m_chat, &Chat::receivedRawLine, this, &ChatContainer::receivedLine);
             connect(m_chat, SIGNAL(statusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)),
                     this, SLOT(chatStatusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)));
-            connect(m_chat, SIGNAL(upnpError(QString)), this, SLOT(upnpError(QString)));
+            connect(m_chat, &Chat::upnpError, this, &ChatContainer::upnpError);
 
-            connect(m_inputBar, SIGNAL(submit()), this, SLOT(textEntered()));
-            connect(m_inputBar, SIGNAL(textPasted(QString)), this, SLOT(textPasted(QString)));
+            connect(m_inputBar, &IRCInput::submit, this, &ChatContainer::textEntered);
+            connect(m_inputBar, &IRCInput::textPasted, this, &ChatContainer::textPasted);
 
             connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
             connect(getTextView(), SIGNAL(gotFocus()), m_inputBar, SLOT(setFocus()));

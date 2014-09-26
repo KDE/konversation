@@ -52,7 +52,7 @@ namespace Konversation
 
             m_connectionTimer = new QTimer(this);
             m_connectionTimer->setSingleShot(true);
-            connect(m_connectionTimer, SIGNAL(timeout()), this, SLOT(slotConnectionTimeout()));
+            connect(m_connectionTimer, &QTimer::timeout, this, &TransferSend::slotConnectionTimeout);
 
             // set defualt values
             m_reverse = Preferences::self()->dccPassiveSend();
@@ -288,7 +288,7 @@ namespace Konversation
                     return;
                 }
 
-                connect(m_serverSocket, SIGNAL(newConnection()), this, SLOT(acceptClient()));
+                connect(m_serverSocket, &QTcpServer::newConnection, this, &TransferSend::acceptClient);
 
                 // Get own port number
                 m_ownPort = m_serverSocket->serverPort();
@@ -301,7 +301,7 @@ namespace Konversation
 
                     if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                     {
-                        connect(router, SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
+                        connect(router, &UPnPRouter::forwardComplete, this, &TransferSend::sendRequest);
                     }
                     else
                     {
@@ -371,8 +371,8 @@ namespace Konversation
 
             m_sendSocket = new QTcpSocket(this);
 
-            connect(m_sendSocket, SIGNAL(connected()), this, SLOT(startSending()));
-            connect(m_sendSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotGotSocketError(QAbstractSocket::SocketError)));
+            connect(m_sendSocket, &QTcpSocket::connected, this, &TransferSend::startSending);
+            connect(m_sendSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
 
             setStatus(Connecting);
 
@@ -412,7 +412,7 @@ namespace Konversation
                 failed(i18n("Could not accept the connection (socket error)."));
                 return;
             }
-            connect(m_sendSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotGotSocketError(QAbstractSocket::SocketError)));
+            connect(m_sendSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
 
             // we don't need ServerSocket anymore
             m_serverSocket->close();
@@ -434,8 +434,8 @@ namespace Konversation
         {
             stopConnectionTimer();
 
-            connect(m_sendSocket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
-            connect(m_sendSocket, SIGNAL(readyRead()), this, SLOT(getAck()));
+            connect(m_sendSocket, &QTcpSocket::bytesWritten, this, &TransferSend::bytesWritten);
+            connect(m_sendSocket, &QTcpSocket::readyRead, this, &TransferSend::getAck);
 
             m_partnerIp = m_sendSocket->peerAddress().toString();
             m_partnerPort = m_sendSocket->peerPort();

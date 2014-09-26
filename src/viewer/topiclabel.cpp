@@ -38,8 +38,8 @@ namespace Konversation
         m_isOnChannel = false;
         m_server = NULL;
 
-        connect(this, SIGNAL(linkActivated(QString)), this, SLOT(openLink(QString)));
-        connect(this, SIGNAL(linkHovered(QString)), this, SLOT(highlightedSlot(QString)));
+        connect(this, &TopicLabel::linkActivated, this, &TopicLabel::openLink);
+        connect(this, &TopicLabel::linkHovered, this, &TopicLabel::highlightedSlot);
     }
 
     TopicLabel::~TopicLabel()
