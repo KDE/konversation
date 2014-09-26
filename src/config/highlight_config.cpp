@@ -60,16 +60,16 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     }
     // End copy
 
-    connect(highlightListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT (highlightSelected(QTreeWidgetItem*)));
-    connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT (patternChanged(QString)));
-    connect(enableNotificationsCheckbox, SIGNAL(toggled(bool)), this, SLOT(notifyModeChanged(bool)));
-    connect(patternColor, SIGNAL(changed(QColor)), this, SLOT (colorChanged(QColor)));
-    connect(soundURL, SIGNAL(textChanged(QString)), this, SLOT(soundURLChanged(QString)));
-    connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
-    connect(autoTextInput, SIGNAL(textChanged(QString)), this, SLOT (autoTextChanged(QString)));
-    connect(chatWindowsInput, SIGNAL(textChanged(QString)), this, SLOT (chatWindowsChanged(QString)));
-    connect(newButton, SIGNAL(clicked()), this, SLOT (addHighlight()));
-    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeHighlight()));
+    connect(highlightListView, &QTreeWidget::currentItemChanged, this, &Highlight_Config::highlightSelected);
+    connect(patternInput, &KLineEdit::textChanged, this, &Highlight_Config::patternChanged);
+    connect(enableNotificationsCheckbox, &QCheckBox::toggled, this, &Highlight_Config::notifyModeChanged);
+    connect(patternColor, &KColorButton::changed, this, &Highlight_Config::colorChanged);
+    connect(soundURL, &KUrlRequester::textChanged, this, &Highlight_Config::soundURLChanged);
+    connect(soundPlayBtn, &QToolButton::clicked, this, &Highlight_Config::playSound);
+    connect(autoTextInput, &KLineEdit::textChanged, this, &Highlight_Config::autoTextChanged);
+    connect(chatWindowsInput, &KLineEdit::textChanged, this, &Highlight_Config::chatWindowsChanged);
+    connect(newButton, &QPushButton::clicked, this, &Highlight_Config::addHighlight);
+    connect(removeButton, &QPushButton::clicked, this, &Highlight_Config::removeHighlight);
 
     updateButtons();
 }

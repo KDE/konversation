@@ -234,10 +234,10 @@ void ConfigDialog::ConfigDialogPrivate::setupManagerConnections(KConfigDialogMan
     q->connect(manager, SIGNAL(widgetModified()), q, SLOT(_k_updateButtons()));
 
     QDialogButtonBox *buttonBox = q->buttonBox();
-    q->connect(buttonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()), manager, SLOT(updateSettings()));
-    q->connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), manager, SLOT(updateSettings()));
-    q->connect(buttonBox->button(QDialogButtonBox::Cancel), SIGNAL(clicked()), manager, SLOT(updateWidgets()));
-    q->connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), manager, SLOT(updateWidgetsDefault()));
+    q->connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
+    q->connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
+    q->connect(buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgets);
+    q->connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgetsDefault);
 }
 
 void ConfigDialog::ConfigDialogPrivate::setApplyButtonEnabled(bool enabled)

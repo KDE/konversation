@@ -17,7 +17,7 @@
 #include <QLabel>
 
 #include <KLocalizedString>
-#include <KStatusBar>
+#include <QStatusBar>
 #include <KSqueezedTextLabel>
 #include <KIconLoader>
 

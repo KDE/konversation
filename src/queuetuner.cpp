@@ -35,21 +35,21 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
     setupUi(this);
 
     m_closeButton->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
-    connect(m_closeButton, SIGNAL(clicked()), SLOT(close()));
+    connect(m_closeButton, &QToolButton::clicked, this, &QueueTuner::close);
     connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
-    connect(&m_timer, SIGNAL(timeout()), SLOT(timerFired()));
+    connect(&m_timer, &QTimer::timeout, this, &QueueTuner::timerFired);
 
-    connect(m_slowRate, SIGNAL(valueChanged(int)), SLOT(slowRateChanged(int)));
-    connect(m_slowType, SIGNAL(activated(int)), SLOT(slowTypeChanged(int)));
-    connect(m_slowInterval, SIGNAL(valueChanged(int)), SLOT(slowIntervalChanged(int)));
+    connect(m_slowRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::slowRateChanged);
+    connect(m_slowType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::slowTypeChanged);
+    connect(m_slowInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::slowIntervalChanged);
 
-    connect(m_normalRate, SIGNAL(valueChanged(int)), SLOT(normalRateChanged(int)));
-    connect(m_normalType, SIGNAL(activated(int)), SLOT(normalTypeChanged(int)));
-    connect(m_normalInterval, SIGNAL(valueChanged(int)), SLOT(normalIntervalChanged(int)));
+    connect(m_normalRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::normalRateChanged);
+    connect(m_normalType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::normalTypeChanged);
+    connect(m_normalInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::normalIntervalChanged);
 
-    connect(m_fastRate, SIGNAL(valueChanged(int)), SLOT(fastRateChanged(int)));
-    connect(m_fastType, SIGNAL(activated(int)), SLOT(fastTypeChanged(int)));
-    connect(m_fastInterval, SIGNAL(valueChanged(int)), SLOT(fastIntervalChanged(int)));
+    connect(m_fastRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::fastRateChanged);
+    connect(m_fastType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::fastTypeChanged);
+    connect(m_fastInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::fastIntervalChanged);
 
     m_timer.setObjectName(QStringLiteral("qTuner"));
 }

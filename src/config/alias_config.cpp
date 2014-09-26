@@ -25,13 +25,13 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  connect(aliasListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(entrySelected(QTreeWidgetItem*)));
+  connect(aliasListView, &QTreeWidget::currentItemChanged, this, &Alias_Config::entrySelected);
 
-  connect(aliasInput, SIGNAL(textChanged(QString)), this, SLOT(nameChanged(QString)));
-  connect(replacementInput, SIGNAL(textChanged(QString)), this, SLOT(actionChanged(QString)));
+  connect(aliasInput, &KLineEdit::textChanged, this, &Alias_Config::nameChanged);
+  connect(replacementInput, &KLineEdit::textChanged, this, &Alias_Config::actionChanged);
 
-  connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
-  connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEntry()));
+  connect(newButton, &QPushButton::clicked, this, &Alias_Config::addEntry);
+  connect(removeButton, &QPushButton::clicked, this, &Alias_Config::removeEntry);
 }
 
 Alias_Config::~Alias_Config()

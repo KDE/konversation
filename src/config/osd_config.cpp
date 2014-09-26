@@ -48,9 +48,9 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     kcfg_OSDScreen->setEnabled(enableScreenChooser);
 
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
-    connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
+    connect(m_pOSDPreview, &OSDPreviewWidget::positionChanged, this, &OSD_Config::slotPositionChanged);
 
-    connect( kcfg_OSDFont, SIGNAL(fontSelected(QFont)), this, SLOT(slotUpdateFont(QFont)));
+    connect(kcfg_OSDFont, &KFontRequester::fontSelected, this, &OSD_Config::slotUpdateFont);
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
     slotCustomColorsChanged(kcfg_OSDUseCustomColors->isChecked());
@@ -63,12 +63,12 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     kcfg_OSDAlignment->hide();
 
     //Connect config page entries to control the OSDPreview
-    connect ( kcfg_UseOSD,  SIGNAL(toggled(bool)), this, SLOT(slotOSDEnabledChanged(bool)) );
-    connect ( kcfg_OSDUseCustomColors, SIGNAL(toggled(bool)), this, SLOT(slotCustomColorsChanged(bool)));
-    connect ( kcfg_OSDTextColor, SIGNAL(changed(QColor)), this, SLOT(slotTextColorChanged(QColor)));
-    connect ( kcfg_OSDBackgroundColor, SIGNAL(changed(QColor)), this, SLOT(slotBackgroundColorChanged(QColor)));
-    connect ( kcfg_OSDScreen, SIGNAL(activated(int)), this, SLOT(slotScreenChanged(int)));
-    connect ( kcfg_OSDDrawShadow, SIGNAL(toggled(bool)), this, SLOT(slotDrawShadowChanged(bool)));
+    connect(kcfg_UseOSD, &QCheckBox::toggled, this, &OSD_Config::slotOSDEnabledChanged);
+    connect(kcfg_OSDUseCustomColors, &QGroupBox::toggled, this, &OSD_Config::slotCustomColorsChanged);
+    connect(kcfg_OSDTextColor, &KColorButton::changed, this, &OSD_Config::slotTextColorChanged);
+    connect(kcfg_OSDBackgroundColor, &KColorButton::changed, this, &OSD_Config::slotBackgroundColorChanged);
+    connect(kcfg_OSDScreen, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &OSD_Config::slotScreenChanged);
+    connect(kcfg_OSDDrawShadow, &QCheckBox::toggled, this, &OSD_Config::slotDrawShadowChanged);
 }
 
 OSD_Config::~OSD_Config()

@@ -37,15 +37,15 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  connect(patternListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(entrySelected(QTreeWidgetItem*)));
+  connect(patternListView, &QTreeWidget::currentItemChanged, this, &Autoreplace_Config::entrySelected);
 
-  connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
+  connect(directionCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &Autoreplace_Config::directionChanged);
 
-  connect(patternInput, SIGNAL(textChanged(QString)), this, SLOT(patternChanged(QString)));
-  connect(replacementInput, SIGNAL(textChanged(QString)), this, SLOT(replacementChanged(QString)));
+  connect(patternInput, &KLineEdit::textChanged, this, &Autoreplace_Config::patternChanged);
+  connect(replacementInput, &KLineEdit::textChanged, this, &Autoreplace_Config::replacementChanged);
 
-  connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
-  connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEntry()));
+  connect(newButton, &QPushButton::clicked, this, &Autoreplace_Config::addEntry);
+  connect(removeButton, &QPushButton::clicked, this, &Autoreplace_Config::removeEntry);
 }
 
 Autoreplace_Config::~Autoreplace_Config()

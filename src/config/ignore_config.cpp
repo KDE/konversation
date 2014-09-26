@@ -32,13 +32,13 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
 	this,SLOT(removeAllIgnore()));
     connect(ignoreListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
         this,SLOT(select(QTreeWidgetItem*)));
-    connect(chkChannel, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(chkQuery, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(chkNotice, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(chkCTCP, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(chkDCC, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(chkInvite, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    connect(txtPattern, SIGNAL(textChanged(QString)), this, SLOT(flagCheckboxChanged()));
+    connect(chkChannel, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(chkQuery, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(chkNotice, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(chkCTCP, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(chkDCC, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(chkInvite, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
+    connect(txtPattern, &KLineEdit::textChanged, this, &Ignore_Config::flagCheckboxChanged);
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     loadSettings();
 
