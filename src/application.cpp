@@ -155,15 +155,15 @@ int Application::newInstance()
 
     if (!mainWindow)
     {
-        connect(this, SIGNAL(aboutToQuit()), this, SLOT(prepareShutdown()));
+        connect(this, &Application::aboutToQuit, this, &Application::prepareShutdown);
 
         m_connectionManager = new ConnectionManager(this);
 
         m_awayManager = new AwayManager(this);
 
-        connect(m_connectionManager, SIGNAL(identityOnline(int)), m_awayManager, SLOT(identityOnline(int)));
-        connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
-        connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
+        connect(m_connectionManager, &ConnectionManager::identityOnline, m_awayManager, &AwayManager::identityOnline);
+        connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
+        connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
 
         m_networkConfigurationManager = new QNetworkConfigurationManager();
         connect(m_networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), m_connectionManager, SLOT(onOnlineStateChanged(bool)));
@@ -208,15 +208,15 @@ int Application::newInstance()
         // TODO: check if this works now as intended
         //    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
-        connect(KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SIGNAL(appearanceChanged()));
+        connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Application::appearanceChanged);
 
         // open main window
         mainWindow = new MainWindow();
         //setMainWidget(mainWindow); //TODO FIXME do we need any of the other semantics this use to gain us?
 
-        connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
-        connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
-        connect(mainWindow, SIGNAL(endNotification()), osd, SLOT(hide()) );
+        connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
+        connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
+        connect(mainWindow.data(), &MainWindow::endNotification, osd, &OSDWidget::hide);
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings
@@ -274,7 +274,7 @@ int Application::newInstance()
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
 
-        connect(this, SIGNAL(appearanceChanged()), this, SLOT(updateProxySettings()));
+        connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
     }
     else if (args->isSet("restart"))
     {
@@ -1345,7 +1345,7 @@ KWallet::Wallet* Application::wallet()
         if(!m_wallet)
             return NULL;
 
-        connect(m_wallet, SIGNAL(walletClosed()), this, SLOT(closeWallet()));
+        connect(m_wallet, &KWallet::Wallet::walletClosed, this, &Application::closeWallet);
 
         if(!m_wallet->hasFolder(QStringLiteral("Konversation")))
         {

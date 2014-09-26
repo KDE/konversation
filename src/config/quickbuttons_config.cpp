@@ -29,13 +29,13 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  connect(buttonListView,SIGNAL (currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT (entrySelected(QTreeWidgetItem*)) );
+  connect(buttonListView, &QTreeWidget::currentItemChanged, this, &QuickButtons_Config::entrySelected);
 
-  connect(nameInput,SIGNAL (textChanged(QString)),this,SLOT (nameChanged(QString)) );
-  connect(actionInput,SIGNAL (textChanged(QString)),this,SLOT (actionChanged(QString)) );
+  connect(nameInput, &KLineEdit::textChanged, this, &QuickButtons_Config::nameChanged);
+  connect(actionInput, &KLineEdit::textChanged, this, &QuickButtons_Config::actionChanged);
 
-  connect(newButton,SIGNAL (clicked()),this,SLOT (addEntry()));
-  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeEntry()));
+  connect(newButton, &QPushButton::clicked, this, &QuickButtons_Config::addEntry);
+  connect(removeButton, &QPushButton::clicked, this, &QuickButtons_Config::removeEntry);
 }
 
 QuickButtons_Config::~QuickButtons_Config()

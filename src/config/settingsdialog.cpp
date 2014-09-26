@@ -74,7 +74,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confThemeWdg = new Theme_Config( this, "Theme" );
   konviAddSubPage(interfaceGroup, m_confThemeWdg, i18n("Nicklist Themes"), QLatin1String("preferences-desktop-icons"));
   m_pages.append(m_confThemeWdg);
-  connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confThemeWdg, &Theme_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 
   //Interface/Colors
   Ui::ColorsAppearance_Config confColorsAppearance;
@@ -92,7 +92,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
   konviAddSubPage(interfaceGroup, m_confQuickButtonsWdg, i18n("Quick Buttons"), QLatin1String("preferences-desktop-keyboard"));
   m_pages.append(m_confQuickButtonsWdg);
-  connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confQuickButtonsWdg, &QuickButtons_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 
   //Interface/Tabs
   m_confTabBarWdg = new Tabs_Config( this, "TabBar" );
@@ -122,25 +122,25 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
   konviAddSubPage(behaviorGroup, m_confNicklistBehaviorWdg, i18n("Nickname List"), QLatin1String("preferences-contact-list"));
-  connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confNicklistBehaviorWdg, &NicklistBehavior_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
   m_pages.append(m_confNicklistBehaviorWdg);
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config( this, "Alias" );
   konviAddSubPage(behaviorGroup, m_confAliasWdg, i18n("Command Aliases"), QLatin1String("edit-rename"));
   m_pages.append(m_confAliasWdg);
-  connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confAliasWdg, &Alias_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 
   //Behaviour/Auto Replace
   m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
   konviAddSubPage(behaviorGroup, m_confAutoreplaceWdg, i18n("Auto Replace"), QLatin1String("edit-rename"));
   m_pages.append(m_confAutoreplaceWdg);
-  connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confAutoreplaceWdg, &Autoreplace_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
   konviAddSubPage(behaviorGroup, m_confIgnoreWdg, i18nc("@title:tab", "Ignore"), QLatin1String("process-stop"));
-  connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confIgnoreWdg, &Ignore_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
   m_pages.append(m_confIgnoreWdg);
 
   //Behaviour/Logging
@@ -163,7 +163,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
   konviAddSubPage(notificationGroup, m_confHighlightWdg, i18n("Highlight"), QLatin1String("flag-red"));
-  connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confHighlightWdg, &Highlight_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
   m_pages.append(m_confHighlightWdg);
 
   //Notification/Watched Nicknames
@@ -182,7 +182,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
   konviAddSubPage(notificationGroup, m_confWarningsWdg, i18n("Warning Dialogs"), QLatin1String("dialog-warning"));
   m_pages.append(m_confWarningsWdg);
-  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confWarningsWdg, &Warnings_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 }
 
 void KonviSettingsDialog::modifiedSlot()
