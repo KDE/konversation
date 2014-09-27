@@ -121,7 +121,11 @@ class kde(Sensor):
 
         cmd.append('--version')
 
-        version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+        try:
+            version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+        except OSError:
+            self.data['version'] = "5"
+            return
 
         for line in version.splitlines():
             if line.startswith('KDE'):
