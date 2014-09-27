@@ -123,7 +123,7 @@ class kde(Sensor):
 
         try:
             version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
-        except OSError:
+        except (OSError, subprocess.CalledProcessError):
             self.data['version'] = "5"
             return
 
