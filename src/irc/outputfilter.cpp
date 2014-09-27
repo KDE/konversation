@@ -25,7 +25,7 @@
 #include "query.h"
 #include "viewcontainer.h"
 #include "outputfilterresolvejob.h"
-#include <kdeversion.h>
+#include <kxmlgui_version.h>
 #ifdef HAVE_QCA2
 #include "cipher.h"
 #endif
@@ -1856,12 +1856,12 @@ namespace Konversation
         myOut
             << "Konversation: " << KComponentData::mainComponent().aboutData()->version()
             << ", Qt " << QString::fromLatin1(qVersion())
-            << ", KDE SC " << KDE::versionString()
+            << ", KDE Frameworks " << QString::fromLatin1(KXMLGUI_VERSION_STRING);
             ;
-        if (QString::fromLatin1(KDE_VERSION_STRING) != KDE::versionString())
-            myOut << ", KDE DP " << QString::fromLatin1(KDE_VERSION_STRING);
-        if (qgetenv("KDE_FULL_SESSION").isEmpty())
-            myOut << ", no KDE";
+        if (!qgetenv("KDE_FULL_SESSION").isEmpty() && !qgetenv("KDE_SESSION_VERSION").isEmpty())
+            myOut << ", Plasma " << QString::fromLatin1(qgetenv("KDE_SESSION_VERSION"));
+        else
+            myOut << ", no Plasma";
 
         serverOut << "PRIVMSG " << input.destination << " :" << result.output;
         return result;
