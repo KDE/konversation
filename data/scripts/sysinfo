@@ -29,7 +29,7 @@ format_strings = {
     'host'    : '$hostname',
     'distro'  : 'on $name $version',
     'kernel'  : 'powered by $name $version',
-    'kde'     : '$mode KDE $version', # $mode is 'inside' or 'against'.
+    'kde'     : '$mode $product $version', # $mode is 'inside' or 'against'; $product is 'KDE Plasma' or 'KDE Frameworks'
     'cpu'     : 'CPU: $model at $mhz MHz',
     'ram'     : 'RAM: $used/$total MB', # Also available: $free.
     'storage' : 'Storage: $used/$total GB', # Also available: $free.
@@ -105,20 +105,30 @@ class host(Sensor):
 
 class kde(Sensor):
     def gather(self):
-        kde = 'KDE_FULL_SESSION' in os.environ
+        kde = 'KDE_FULL_SESSION' in os.environ and 'KDE_SESSION_VERSION' in os.environ
+
         self.data['mode'] = ('against', 'inside')[kde]
+        self.data['product'] = ('KDE Frameworks', 'KDE Plasma')[kde]
 
         if kde and os.environ['KDE_SESSION_VERSION'] == '3':
             cmd = ['kde-config']
-        else:
+        elif kde and os.environ['KDE_SESSION_VERSION'] == '4':
             cmd = ['kde4-config']
+        elif kde and os.environ['KDE_SESSION_VERSION'] == '5':
+            cmd = ['plasmashell']
+        else:
+            cmd = ['kconfig_compiler_kf5']
 
         cmd.append('--version')
+
         version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
 
         for line in version.splitlines():
             if line.startswith('KDE'):
                 self.data['version'] = line.split(':')[1].split()[0]
+                break
+            elif line.startswith('plasmashell ') or line.startswith('kconfig_compiler '):
+                self.data['version'] = line.split()[-1]
                 break
 
 class distro(Sensor):
