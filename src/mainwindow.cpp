@@ -44,7 +44,6 @@
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
-#include <KShortcut>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KActionMenu>
