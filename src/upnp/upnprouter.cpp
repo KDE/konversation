@@ -18,7 +18,7 @@
 #include <QNetworkReply>
 
 #include <QDebug>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KIO/Job>
 #include <KIO/NetAccess>
 #include <kio/jobclasses.h>

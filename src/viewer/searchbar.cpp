@@ -20,7 +20,6 @@
 
 #include <KActionCollection>
 #include <KColorScheme>
-#include <KShortcut>
 #include <KStandardAction>
 #include <QMenu>
 
