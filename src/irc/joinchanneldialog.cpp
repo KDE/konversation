@@ -17,21 +17,34 @@
 #include "servergroupsettings.h"
 
 #include <QPushButton>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 
 namespace Konversation
 {
 
     JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
-        setCaption(i18n("Join Channel"));
-        setButtons( KDialog::Ok|KDialog::Cancel );
-        setDefaultButton( KDialog::Ok );
+        setWindowTitle(i18n("Join Channel"));
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+        mOkButton->setDefault(true);
+        mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        mOkButton->setDefault(true);
         setModal( true );
-        m_ui.setupUi(mainWidget());
+        m_ui.setupUi(mainWidget);
+        mainLayout->addWidget(mainWidget);
+        mainLayout->addWidget(buttonBox);
         m_ui.channelCombo->setFocus();
 
-        button(KDialog::Ok)->setEnabled(false);
+        mOkButton->setEnabled(false);
         connect(m_ui.channelCombo, SIGNAL(editTextChanged(QString)),
             this, SLOT(slotChannelChanged(QString)));
 
@@ -54,7 +67,7 @@ namespace Konversation
         // So channel history combo wont be populated, so force it
         slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
-        connect(this, &JoinChannelDialog::okClicked, this, &JoinChannelDialog::slotOk);
+        connect(mOkButton, &QPushButton::clicked, this, &JoinChannelDialog::slotOk);
         connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
                 this, SLOT(slotConnectionListChanged()));
     }
@@ -179,7 +192,7 @@ namespace Konversation
 
     void JoinChannelDialog::slotChannelChanged(const QString& text)
     {
-        button(KDialog::Ok)->setEnabled(!text.isEmpty());
+        mOkButton->setEnabled(!text.isEmpty());
     }
 
 
