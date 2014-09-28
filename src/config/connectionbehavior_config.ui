@@ -323,7 +323,6 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
  </tabstops>
  <includes>
   <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
-  <include location="local">knuminput.h</include>
  </includes>
  <resources/>
  <connections/>
