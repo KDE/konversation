@@ -603,7 +603,7 @@ bool MainWindow::queryClose()
 {
     Application* konvApp = static_cast<Application*>(kapp);
 
-    if (!konvApp->sessionSaving())
+    if (!konvApp->isSavingSession())
     {
         if (sender() == m_trayIcon)
             m_closeApp = true;
