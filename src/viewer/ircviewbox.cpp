@@ -29,14 +29,10 @@ IRCViewBox::IRCViewBox(QWidget* parent)
     m_searchBar->hide();
     m_matchedOnce = false;
 
-    connect(m_searchBar, SIGNAL(signalSearchChanged(QString)),
-        this, SLOT(slotSearchChanged(QString)));
-    connect(m_searchBar, SIGNAL(signalSearchNext()),
-        this, SLOT(slotSearchNext()));
-    connect(m_searchBar, SIGNAL(signalSearchPrevious()),
-            this, SLOT(slotSearchPrevious()));
-    connect(m_ircView, SIGNAL(doSearch()),
-        SLOT(slotSearch()));
+    connect(m_searchBar, &SearchBar::signalSearchChanged, this, &IRCViewBox::slotSearchChanged);
+    connect(m_searchBar, &SearchBar::signalSearchNext, this, &IRCViewBox::slotSearchNext);
+    connect(m_searchBar, &SearchBar::signalSearchPrevious, this, &IRCViewBox::slotSearchPrevious);
+    connect(m_ircView, &IRCView::doSearch, this, &IRCViewBox::slotSearch);
     connect(m_ircView, &IRCView::doSearchNext, this, &IRCViewBox::slotSearchNext);
     connect(m_ircView, &IRCView::doSearchPrevious, this, &IRCViewBox::slotSearchPrevious);
     connect(m_searchBar, &SearchBar::hidden, m_ircView, &IRCView::gotFocus);
