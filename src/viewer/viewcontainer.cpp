@@ -348,7 +348,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     }
 
     if (role == Qt::DisplayRole) {
-        return m_tabWidget->tabText(row);
+        return m_tabWidget->tabText(row).replace("&&", "&");
     } else if (role == Qt::DecorationRole) {
         return m_tabWidget->tabIcon(row);
     } else if (role == ColorRole) {
