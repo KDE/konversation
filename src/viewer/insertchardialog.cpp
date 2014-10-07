@@ -14,24 +14,36 @@
 #include <KCharSelect>
 #include <KGuiItem>
 #include <KLocalizedString>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 
 namespace Konversation
 {
 
     InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
-        setButtons( KDialog::Ok | KDialog::Close );
-        setDefaultButton( KDialog::Ok );
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Close);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotAccepted()));
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
         setModal( false );
-        setCaption(  i18n("Insert Character") );
-        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
+        setWindowTitle(  i18n("Insert Character") );
+        KGuiItem::assign(okButton, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
 
         m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos|KCharSelect::SearchLine);
 
         m_charTable->setCurrentFont( QFont( font ) );
-        setMainWidget(m_charTable);
+        mainLayout->addWidget(m_charTable);
+        mainLayout->addWidget(buttonBox);
         connect(m_charTable, &KCharSelect::charSelected, this, &InsertCharDialog::charSelected);
     }
 
@@ -53,15 +65,12 @@ namespace Konversation
     {
         emit insertChar(m_charTable->currentChar());
     }
-
-    void InsertCharDialog::slotButtonClicked(int button)
+    void InsertCharDialog::slotAccepted()
     {
-        if (button == KDialog::Ok)
-            charSelected();
-        else
-            KDialog::slotButtonClicked(button);
+        charSelected();
+        accept();
+  
     }
-
 }
 
 
