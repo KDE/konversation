@@ -23,10 +23,10 @@
 #include <QBitmap>
 #include <QRegExp>
 #include <QTimer>
+#include <QDebug>
 
 #include <KApplication>
-#include <KLocale>
-#include <KDebug>
+#include <KLocalizedString>
 
 
 namespace ShadowEngine
