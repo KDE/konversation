@@ -26,16 +26,27 @@
 
 #include <QStringList>
 #include <KSharedConfig>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 InviteDialog::InviteDialog(QWidget* parent)
-    : KDialog(parent), Ui::InviteDialog()
+    : QDialog(parent), Ui::InviteDialog()
 {
     setAttribute(Qt::WA_DeleteOnClose);
-    setCaption(i18n("Channel Invites"));
-    setButtons(KDialog::Ok | KDialog::Cancel);
+    setWindowTitle(i18n("Channel Invites"));
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     QWidget* mainWidget = new QWidget(this);
-    setMainWidget(mainWidget);
+    mainLayout->addWidget(mainWidget);
+    mainLayout->addWidget(buttonBox);
     setupUi(mainWidget);
 
     m_iconLabel->setPixmap(QIcon::fromTheme(QStringLiteral("irc-join-channel")).pixmap(48));
@@ -45,9 +56,6 @@ InviteDialog::InviteDialog(QWidget* parent)
     m_channelView->setRootIsDecorated(false);
     m_channelView->setUniformRowHeights(true);
 
-    connect(this, &InviteDialog::okClicked, this, &InviteDialog::slotOk);
-    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
-            this, SLOT (saveShowAgainSetting(KDialog::ButtonCode)));
 }
 
 void InviteDialog::addInvite(const QString& nickname, const QString& channel)
@@ -62,19 +70,13 @@ void InviteDialog::slotOk()
 
     if(!channels.isEmpty())
         emit joinChannelsRequested(channels);
-}
-
-void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
-{
-    if (buttonCode == KDialog::Ok)
-    {
     KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
     KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
     cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
     cg.sync();
-    }
 }
-bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
+
+bool InviteDialog::shouldBeShown(QDialogButtonBox::StandardButton& buttonCode)
 {
     KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
     cg.sync();
@@ -82,12 +84,12 @@ bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
 
     if (dontAsk == QStringLiteral("1"))
     {
-    buttonCode = KDialog::Ok;
+    buttonCode = QDialogButtonBox::Ok;
     return false;
     }
     else if (dontAsk == QStringLiteral("2"))
     {
-    buttonCode = KDialog::Cancel;
+    buttonCode = QDialogButtonBox::Cancel;
     return false;
     }
 

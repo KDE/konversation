@@ -21,7 +21,8 @@
 
 #include "ui_invitedialog.h"
 
-#include <KDialog>
+#include <QDialog>
+#include <QDialogButtonBox>
 
 #include <QAbstractListModel>
 #include <QMap>
@@ -55,7 +56,7 @@ class InviteChannelListModel : public QAbstractListModel
         QMap<QString, ChannelItem> m_channelMap;
 };
 
-class InviteDialog : public KDialog, protected Ui::InviteDialog
+class InviteDialog : public QDialog, protected Ui::InviteDialog
 {
     Q_OBJECT
     public:
@@ -63,11 +64,10 @@ class InviteDialog : public KDialog, protected Ui::InviteDialog
 
         void addInvite(const QString& nickname, const QString& channel);
 
-        static bool shouldBeShown(KDialog::ButtonCode& buttonCode);
+        static bool shouldBeShown(QDialogButtonBox::StandardButton& buttonCode);
 
     protected slots:
         void slotOk();
-        void saveShowAgainSetting(KDialog::ButtonCode);
 
     private:
         InviteChannelListModel* m_channelModel;

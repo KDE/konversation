@@ -3665,11 +3665,11 @@ void Server::invitation(const QString& nick,const QString& channel)
 {
     if(!m_inviteDialog)
     {
-        KDialog::ButtonCode buttonCode = KDialog::Cancel;
+        QDialogButtonBox::StandardButton buttonCode = QDialogButtonBox::Cancel;
 
         if(!InviteDialog::shouldBeShown(buttonCode))
         {
-            if (buttonCode == KDialog::Ok)
+            if (buttonCode == QDialogButtonBox::Ok)
                 sendJoinCommand(channel);
 
             return;
