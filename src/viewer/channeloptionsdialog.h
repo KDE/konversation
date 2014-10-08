@@ -19,14 +19,13 @@
 #include <QStringList>
 #include <QAbstractListModel>
 
-#include <kdialog.h>
+#include <QDialog>
 
 
 namespace Konversation
 {
-    class TopicListModel;
 
-    class ChannelOptionsDialog : public KDialog
+    class ChannelOptionsDialog : public QDialog
     {
         Q_OBJECT
             public:

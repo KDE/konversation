@@ -17,8 +17,6 @@
 #include "preferences.h"
 
 #include <QDir>
-#include <KStandardDirs>
-#include <KGlobal>
 #include <KSharedConfig>
 #include <QStandardPaths>
 

@@ -21,7 +21,6 @@
 #include <QMap>
 
 class Server;
-class Query;
 class QDateTime;
 
 class InputFilter : public QObject

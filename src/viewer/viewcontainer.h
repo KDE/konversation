@@ -21,7 +21,6 @@
 #include <QTabWidget>
 
 class QSplitter;
-class QTabBar;
 
 class KActionCollection;
 
@@ -42,7 +41,6 @@ namespace Konversation
 
     namespace DCC
     {
-        class TransferPanel;
         class Chat;
     }
 }

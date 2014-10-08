@@ -16,7 +16,6 @@
 #include "chat.h"
 
 class QSplitter;
-class IRCInput;
 
 namespace Konversation
 {

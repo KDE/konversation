@@ -22,7 +22,6 @@
 #include <QHeaderView>
 #include <QTreeView>
 
-#include <KGlobal>
 #include <KLocalizedString>
 #include <KUser>
 #include <KSharedConfig>

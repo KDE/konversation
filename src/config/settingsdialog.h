@@ -27,7 +27,6 @@ class Alias_Config;
 class QuickButtons_Config;
 class Autoreplace_Config;
 class DCC_Config;
-class WatchedNicknames_Config;
 class Highlight_Config;
 class OSD_Config;
 class Ignore_Config;

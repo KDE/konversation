@@ -28,20 +28,33 @@
 #include <QTreeWidget>
 #include <KSharedConfig>
 #include <KLocale>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 
 namespace Konversation
 {
     ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
-        : KDialog(channel)
+        : QDialog(channel)
     {
-        setCaption(  i18n("Channel Settings for %1", channel->getName() ) );
-        setButtons( KDialog::Ok|KDialog::Cancel );
-        setDefaultButton( KDialog::Ok );
+        setWindowTitle(  i18n("Channel Settings for %1", channel->getName() ) );
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &ChannelOptionsDialog::changeOptions);
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        mainLayout->addWidget(buttonBox);
+        buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 
         Q_ASSERT(channel);
         m_channel = channel;
 
-        m_ui.setupUi(mainWidget());
+        m_ui.setupUi(mainWidget);
 
         m_ui.addBan->setIcon(QIcon::fromTheme("list-add"));
         m_ui.updateBan->setIcon(QIcon::fromTheme("edit-rename"));
@@ -73,8 +86,6 @@ namespace Konversation
         connect(m_channel, &Channel::modesChanged, this, &ChannelOptionsDialog::refreshModes);
         connect(m_channel->getServer(), SIGNAL(channelNickChanged(QString)), this, SLOT(refreshEnableModes()));
 
-        connect(this, &ChannelOptionsDialog::okClicked, this, &ChannelOptionsDialog::changeOptions);
-
         connect(m_channel, &Channel::banAdded, this, &ChannelOptionsDialog::addBan);
         connect(m_channel, &Channel::banRemoved, this, &ChannelOptionsDialog::removeBan);
         connect(m_channel, &Channel::banListCleared, m_ui.banList, &QTreeWidget::clear);
@@ -97,7 +108,7 @@ namespace Konversation
 
         refreshBanList();
 
-        setInitialSize(QSize(450, 420));
+        resize(QSize(450, 420));
     }
 
     ChannelOptionsDialog::~ChannelOptionsDialog()
@@ -126,7 +137,7 @@ namespace Konversation
             Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
         }
 
-        KDialog::showEvent(event);
+        QDialog::showEvent(event);
     }
 
     void ChannelOptionsDialog::hideEvent(QHideEvent* event)
@@ -138,7 +149,7 @@ namespace Konversation
 
         Preferences::saveColumnState(m_ui.banList, "BanList ViewSettings");
 
-        KDialog::hideEvent(event);
+        QDialog::hideEvent(event);
     }
 
     void ChannelOptionsDialog::changeOptions()

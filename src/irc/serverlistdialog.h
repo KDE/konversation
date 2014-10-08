@@ -21,7 +21,6 @@
 
 class ConnectionSettings;
 class QTreeWidgetItem;
-class QCheckBox;
 
 namespace Konversation
 {
