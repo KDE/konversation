@@ -16,7 +16,7 @@
 #include "identity.h"
 #include "ui_identitydialog.h"
 
-#include <KDialog>
+#include <QDialog>
 
 
 class KEditListWidget;
@@ -25,7 +25,7 @@ class KMessageWidget;
 namespace Konversation
 {
 
-    class IdentityDialog : public KDialog, private Ui::IdentityDialog
+    class IdentityDialog : public QDialog, private Ui::IdentityDialog
     {
         Q_OBJECT
         public:

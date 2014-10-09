@@ -18,25 +18,38 @@
 #include <QInputDialog>
 
 #include <KEditListWidget>
-#include <KDialog>
 #include <KMessageBox>
 #include <KMessageWidget>
 #include <KUser>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <KGuiItem>
+#include <QVBoxLayout>
 
 namespace Konversation
 {
 
     IdentityDialog::IdentityDialog(QWidget *parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
-        setCaption( i18n("Identities") );
-        setButtons( Ok|Cancel );
-        setDefaultButton( Ok );
+        setWindowTitle( i18n("Identities") );
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        okButton->setDefault(true);
 
         // Initialize the dialog widget
         QWidget* w = new QWidget(this);
         setupUi(w);
-        setMainWidget(w);
+        mainLayout->addWidget(w);
+        mainLayout->addWidget(buttonBox);
+
 
         QGroupBox* nickGroupBox = new QGroupBox(i18n("Nickname"));
         verticalLayout->insertWidget(1, nickGroupBox);
@@ -92,8 +105,8 @@ namespace Konversation
         // Set up signals / slots for identity page
         //connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
 
-        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), QStringLiteral("dialog-ok"), i18n("Change identity information")));
-        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
+        KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), QStringLiteral("dialog-ok"), i18n("Change identity information")));
+        KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"),QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
         connect(m_identityCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::updateIdentity);
@@ -199,7 +212,7 @@ namespace Konversation
         Preferences::setIdentityList(m_identityList);
         static_cast<Application*>(kapp)->saveOptions(true);
         emit identitiesChanged();
-        KDialog::accept();
+        QDialog::accept();
     }
 
     void IdentityDialog::newIdentity()

@@ -18,20 +18,34 @@
 #include <QCheckBox>
 
 #include <KLineEdit>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <KGuiItem>
+#include <QVBoxLayout>
 
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
-:KDialog(parent)
+:QDialog(parent)
 {
-    showButtonSeparator( true );
-    setButtons( KDialog::Ok | KDialog::Cancel );
-    setDefaultButton( KDialog::Ok );
-    setCaption(  i18n("Quick Connect") );
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mainWidget);
+    mOkButton = buttonBox->button(QDialogButtonBox::Ok);
+    mOkButton->setDefault(true);
+    mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    mainLayout->addWidget(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
+    setWindowTitle(  i18n("Quick Connect") );
     setModal( true );
-    QWidget* page = mainWidget();
+    QWidget* page = mainWidget;
 
-    QGridLayout* layout = new QGridLayout(mainWidget());
-    layout->setSpacing(spacingHint());
+    QGridLayout* layout = new QGridLayout(mainWidget);
+    //QT5 layout->setSpacing(spacingHint());
 
     QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
     QString hostNameWT = i18n("Enter the host of the network here.");
@@ -84,9 +98,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 
     hostNameInput->setFocus();
 
-    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),QStringLiteral("network-connect"),i18n("Connect to the server")));
+    KGuiItem::assign(mOkButton, KGuiItem(i18n("C&onnect"),QStringLiteral("network-connect"),i18n("Connect to the server")));
 
-    connect(this, &QuickConnectDialog::okClicked, this, &QuickConnectDialog::slotOk);
     connect(hostNameInput, &KLineEdit::textChanged, this, &QuickConnectDialog::slotServerNameChanged);
     slotServerNameChanged( hostNameInput->text() );
 }
@@ -97,7 +110,7 @@ QuickConnectDialog::~QuickConnectDialog()
 
 void QuickConnectDialog::slotServerNameChanged( const QString &text )
 {
-    enableButtonOk( !text.isEmpty() );
+    mOkButton->setEnabled( !text.isEmpty() );
 }
 
 void QuickConnectDialog::slotOk()
@@ -118,4 +131,12 @@ void QuickConnectDialog::slotOk()
     }
 }
 
+void QuickConnectDialog::delayedDestruct()
+{
+    if (isVisible()) {
+        hide();
+    }
+
+    deleteLater();
+}
 

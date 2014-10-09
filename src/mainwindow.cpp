@@ -128,7 +128,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Server List..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("network-server")));
-    action->setShortcut(QKeySequence(QStringLiteral("F2")));
+    actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("F2")));
     action->setStatusTip(i18n("Manage networks and servers"));
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
     actionCollection()->addAction(QStringLiteral("open_server_list"), action);
@@ -136,7 +136,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("Quick &Connect..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("network-connect")));
-    action->setShortcut(QKeySequence(QStringLiteral("F7")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F7")));
     action->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
     actionCollection()->addAction(QStringLiteral("quick_connect_dialog"), action);
@@ -161,7 +161,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Identities..."));
     action->setIcon(QIcon::fromTheme(QStringLiteral("user-identity")));
-    action->setShortcut(QKeySequence(QStringLiteral("F8")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F8")));
     action->setStatusTip(i18n("Manage your nick, away and other identity settings"));
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
     actionCollection()->addAction(QStringLiteral("identities_dialog"), action);
@@ -169,7 +169,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new KToggleAction(this);
     action->setText(i18n("&Watched Nicks"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("im-user")));
-    action->setShortcut(QKeySequence(QStringLiteral("F4")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F4")));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
     actionCollection()->addAction(QStringLiteral("open_nicksonline_window"), action);
 
@@ -177,7 +177,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new KToggleAction(this);
     action->setText(i18n("&DCC Status"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right-double")));
-    action->setShortcut(QKeySequence(QStringLiteral("F9")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F9")));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleDccPanel()));
     actionCollection()->addAction(QStringLiteral("open_dccstatus_window"), action);
 
@@ -186,7 +186,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Open Logfile"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("view-history")));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+O")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+O")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the known history for this channel in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
@@ -203,7 +203,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new KToggleAction(this);
     action->setText(i18n("Channel &List"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("view-list-text")));
-    action->setShortcut(QKeySequence(QStringLiteral("F5")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F5")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Show a list of all the known channels on this server"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
@@ -212,7 +212,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new KToggleAction(this);
     action->setText(i18n("&URL Catcher"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("text-html")));
-    action->setShortcut(QKeySequence(QStringLiteral("F6")));
+    actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("F6")));
     action->setStatusTip(i18n("List all URLs that have been mentioned recently in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
     actionCollection()->addAction(QStringLiteral("open_url_catcher"), action);
@@ -266,21 +266,21 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("Close &Tab"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("tab-close-other")));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+w")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+w")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
     actionCollection()->addAction(QStringLiteral("close_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("Last Focused Tab"));
-    action->setShortcut(QKeySequence(QStringLiteral("Alt+Space")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Alt+Space")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showLastFocusedView()));
     actionCollection()->addAction(QStringLiteral("last_focused_tab"), action);
 
     action=new QAction(this);
     action->setText(i18n("Next Active Tab"));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+Alt+Space")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+Alt+Space")));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction(QStringLiteral("next_active_tab"), action);
@@ -291,7 +291,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action=new QAction(this);
         action->setText(i18n("Move Tab Up"));
         action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
-        action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
+        actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Alt+Shift+Left")));
         action->setEnabled(false);
         action->setStatusTip(i18n("Move this tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
@@ -302,7 +302,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         action=new QAction(this);
         action->setText(i18n("Move Tab Down"));
         action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
-        action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
+        actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Alt+Shift+Right")));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
         actionCollection()->addAction(QStringLiteral("move_tab_right"), action);
     }
@@ -313,7 +313,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
             action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right")));
-            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
+            actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Alt+Shift+Right")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
@@ -322,7 +322,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
             action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-left")));
-            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
+            actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Alt+Shift+Left")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
@@ -334,7 +334,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action=new QAction(this);
             action->setText(i18n("Move Tab Left"));
             action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-left")));
-            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Left")));
+            actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Alt+Shift+Left")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
@@ -343,7 +343,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             action=new QAction(this);
             action->setText(i18n("Move Tab Right"));
             action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right")));
-            action->setShortcut(QKeySequence(QStringLiteral("Alt+Shift+Right")));
+            actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Alt+Shift+Right")));
             action->setEnabled(false);
             action->setStatusTip(i18n("Move this tab"));
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
@@ -461,7 +461,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new QAction(this);
     action->setText(i18n("&Marker Line"));
-    action->setShortcut(QKeySequence(QStringLiteral("Ctrl+R")));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+R")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Insert a horizontal line into the current tab that only you can see"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertMarkerLine()));

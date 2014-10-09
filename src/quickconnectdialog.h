@@ -17,13 +17,14 @@
 
 #include "common.h"
 
-#include <KDialog>
+#include <QDialog>
 
 
 class QCheckBox;
 class KLineEdit;
+class QPushButton;
 
-class QuickConnectDialog : public KDialog
+class QuickConnectDialog : public QDialog
 {
     Q_OBJECT
 
@@ -44,11 +45,15 @@ class QuickConnectDialog : public KDialog
     protected slots:
         void slotOk();
     void slotServerNameChanged( const QString& );
+
+    private:
+        void delayedDestruct();
     protected:
         KLineEdit*      hostNameInput;
         KLineEdit*      portInput;
         KLineEdit*  passwordInput;
         KLineEdit*      nickInput;
         QCheckBox*      sslCheckBox;
+        QPushButton*    mOkButton;
 };
 #endif
