@@ -14,7 +14,7 @@
 #ifndef EDITNOTIFYDIALOG_H
 #define EDITNOTIFYDIALOG_H
 
-#include <kdialog.h>
+#include <QDialog>
 
 /**
   The EditNotifyDialog implements the dialog for user to add or edit a
@@ -28,7 +28,7 @@
 class KLineEdit;
 class KComboBox;
 
-class EditNotifyDialog : public KDialog
+class EditNotifyDialog : public QDialog
 {
     Q_OBJECT
 
@@ -46,5 +46,8 @@ class EditNotifyDialog : public KDialog
     protected:
         KComboBox* m_networkNameCombo;
         KLineEdit* m_nicknameInput;
+
+    private:
+        void delayedDestruct();
 };
 #endif

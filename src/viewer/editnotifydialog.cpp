@@ -20,19 +20,35 @@
 
 #include <KLineEdit>
 #include <KComboBox>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <KGuiItem>
+#include <QVBoxLayout>
 
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
 int serverGroupId,
 const QString& nickname):
-    KDialog(parent)
+    QDialog(parent)
 
 {
-    setCaption( i18n("Edit Watched Nickname") );
+    setWindowTitle( i18n("Edit Watched Nickname") );
     setModal( true );
-    setButtons( KDialog::Ok | KDialog::Cancel );
-    setDefaultButton( KDialog::Ok );
-    QWidget* page = mainWidget();
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    QWidget *mainWidget = new QWidget(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    setLayout(mainLayout);
+    mainLayout->addWidget(mainWidget);
+    QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setDefault(true);
+    okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    //PORTING SCRIPT: WARNING mainLayout->addWidget(buttonBox) must be last item in layout. Please move it.
+    mainLayout->addWidget(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
+    QWidget* page = mainWidget;
 
     QGridLayout* layout = new QGridLayout(page);
 
@@ -69,9 +85,9 @@ const QString& nickname):
     layout->addWidget(nicknameLabel, 1, 0);
     layout->addWidget(m_nicknameInput, 1, 1);
 
-    setButtonGuiItem( KDialog::Ok, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
-    setButtonGuiItem( KDialog::Cancel, KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
-    connect(this, &EditNotifyDialog::okClicked, this, &EditNotifyDialog::slotOk);
+
+    KGuiItem::assign(okButton, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
+    KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
 
     m_nicknameInput->setFocus();
 }
@@ -94,4 +110,12 @@ void EditNotifyDialog::slotOk()
     delayedDestruct();
 }
 
+void EditNotifyDialog::delayedDestruct()
+{
+    if (isVisible()) {
+        hide();
+    }
+
+    deleteLater();
+}
 
