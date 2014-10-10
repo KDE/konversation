@@ -25,7 +25,7 @@
 #include "irccharsets.h"
 
 #include <KColorScheme>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KMessageWidget>
 
 #include <QAction>

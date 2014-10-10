@@ -23,7 +23,6 @@
 #include <QStringList>
 
 #include <kxmlguiwindow.h>
-#include <kaction.h>
 
 
 class KToggleAction;

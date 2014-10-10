@@ -18,7 +18,7 @@
 #include "application.h"
 
 #include <QPushButton>
-#include <KLocale>
+#include <KLocalizedString>
 #include <KActionCollection>
 
 #include <QTextCursor>
