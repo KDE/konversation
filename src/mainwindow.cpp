@@ -250,7 +250,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Next Tab"));
     action->setIcon(QIcon::fromTheme(nextIcon));
-    action->setShortcuts(nextShortcut);
+    actionCollection()->setDefaultShortcuts(action,nextShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
     actionCollection()->addAction(QStringLiteral("next_tab"), action);
@@ -258,7 +258,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     action=new QAction(this);
     action->setText(i18n("&Previous Tab"));
     action->setIcon(QIcon::fromTheme(prevIcon));
-    action->setShortcuts(prevShortcut);
+    actionCollection()->setDefaultShortcuts(action, prevShortcut);
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
     actionCollection()->addAction(QStringLiteral("previous_tab"), action);
