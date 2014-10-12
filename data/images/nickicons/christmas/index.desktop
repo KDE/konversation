@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Christmas Theme
+Name[ar]=سمة الكريسماس
 Name[ast]=Tema Christmes
 Name[bg]=Коледна тема
 Name[bs]=Božićna tema
@@ -51,6 +52,7 @@ Name[x-test]=xxChristmas Themexx
 Name[zh_CN]=圣诞主题
 Name[zh_TW]=聖誕節
 Comment="Christmas Theme" by Kenichiro Takahashi
+Comment[ar]="سمة الكريسماس" لـ Kenichiro Takahashi
 Comment[ast]=Tema «Christmes» de Kenichiro Takahashi
 Comment[bg]="Коледна тема" от Kenichiro Takahashi
 Comment[bs]=„Božićna tema“ Keničira Takahašija
