@@ -14,7 +14,6 @@
 #include <QTextCodec>
 
 #include <KCharsets>
-#include <KGlobal>
 
 
 namespace Konversation
@@ -27,7 +26,7 @@ namespace Konversation
 
 }
 
-K_GLOBAL_STATIC(Konversation::IRCCharsetsSingleton, s_charsets)
+Q_GLOBAL_STATIC(Konversation::IRCCharsetsSingleton, s_charsets)
 
 namespace Konversation
 {
