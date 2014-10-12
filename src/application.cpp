@@ -43,7 +43,6 @@
 #include <KRun>
 #include <KCmdLineArgs>
 #include <KConfig>
-#include <KGlobal>
 #include <KShell>
 #include <KToolInvocation>
 #include <KCharMacroExpander>
