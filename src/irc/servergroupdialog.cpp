@@ -26,24 +26,39 @@
 
 #include <KMessageBox>
 #include <QPushButton>
+#include <KConfigGroup>
+#include <QDialogButtonBox>
+#include <KGuiItem>
+#include <QVBoxLayout>
 
 
 namespace Konversation
 {
 
     ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent)
-        : KDialog(parent)
+        : QDialog(parent)
     {
-        setCaption(title);
-        setButtons(Ok|Cancel);
+        setWindowTitle(title);
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
+        okButton->setDefault(true);
+        okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        //PORTING SCRIPT: WARNING mainLayout->addWidget(buttonBox) must be last item in layout. Please move it.
+        mainLayout->addWidget(buttonBox);
 
         m_id = -1;
         m_identitiesNeedsUpdate = false;
         m_editedServer = false;
 
         m_mainWidget = new Ui::ServerGroupDialogUI();
-        m_mainWidget->setupUi(mainWidget());
-        mainWidget()->layout()->setMargin(0);
+        m_mainWidget->setupUi(mainWidget);
+        mainLayout->setMargin(0);
         m_mainWidget->serverWidget->layout()->setMargin(0);
         m_mainWidget->channelWidget->layout()->setMargin(0);
 
@@ -76,12 +91,12 @@ namespace Konversation
         connect(m_mainWidget->m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
         connect(m_mainWidget->m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
-        setButtonGuiItem(Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change network information")));
-        setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
+        KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change network information")));
+        KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         m_mainWidget->m_nameEdit->setFocus();
 
-        setInitialSize(QSize(320, 400));
+        resize(QSize(320, 400));
     }
 
     ServerGroupDialog::~ServerGroupDialog()
@@ -163,7 +178,7 @@ namespace Konversation
     {
         QPointer<ServerDialog> dlg = new ServerDialog(i18n("Add Server"), this);
 
-        if(dlg->exec() == KDialog::Accepted)
+        if(dlg->exec() == QDialog::Accepted)
         {
             ServerSettings server = dlg->serverSettings();
             m_mainWidget->m_serverLBox->addItem(server.host());
@@ -182,7 +197,7 @@ namespace Konversation
             QPointer <ServerDialog> dlg = new ServerDialog(i18n("Edit Server"), this);
             dlg->setServerSettings(m_serverList[current]);
 
-            if(dlg->exec() == KDialog::Accepted)
+            if(dlg->exec() == QDialog::Accepted)
             {
                 ServerSettings server = dlg->serverSettings();
                 m_mainWidget->m_serverLBox->item(current)->setText(server.host());
@@ -286,7 +301,7 @@ namespace Konversation
     {
         QPointer<ChannelDialog> dlg = new ChannelDialog(i18n("Add Channel"), this);
 
-        if(dlg->exec() == KDialog::Accepted)
+        if(dlg->exec() == QDialog::Accepted)
         {
             ChannelSettings channel = dlg->channelSettings();
             m_mainWidget->m_channelLBox->addItem(channel.name());
@@ -305,7 +320,7 @@ namespace Konversation
             QPointer<ChannelDialog> dlg = new ChannelDialog(i18n("Edit Channel"), this);
             dlg->setChannelSettings(m_channelList[current]);
 
-            if(dlg->exec() == KDialog::Accepted)
+            if(dlg->exec() == QDialog::Accepted)
             {
                 ChannelSettings channel = dlg->channelSettings();
                 m_mainWidget->m_channelLBox->item(current)->setText(channel.name());
@@ -386,7 +401,7 @@ namespace Konversation
         QPointer<IdentityDialog> dlg = new IdentityDialog(this);
         dlg->setCurrentIdentity(m_mainWidget->m_identityCBox->currentIndex());
 
-        if(dlg->exec() == KDialog::Accepted)
+        if(dlg->exec() == QDialog::Accepted)
         {
             IdentityList identities = Preferences::identityList();
             m_mainWidget->m_identityCBox->clear();
@@ -425,21 +440,31 @@ namespace Konversation
         }
         else
         {
-            KDialog::accept();
+            QDialog::accept();
         }
     }
 
     ServerDialog::ServerDialog(const QString& title, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
     {
-        setCaption(title);
-        setButtons(Ok|Cancel);
+        setWindowTitle(title);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        m_okButton = buttonBox->button(QDialogButtonBox::Ok);
+        m_okButton->setDefault(true);
+        m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        mainLayout->addWidget(buttonBox);
 
         m_mainWidget = new Ui::ServerDialogUI();
-        m_mainWidget->setupUi(mainWidget());
+        m_mainWidget->setupUi(mainWidget);
         m_mainWidget->m_serverEdit->setFocus();
 
-        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
+        connect(m_okButton, SIGNAL(clicked()), this, SLOT(slotOk()));
         connect( m_mainWidget->m_serverEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
         slotServerNameChanged( m_mainWidget->m_serverEdit->text() );
     }
@@ -450,7 +475,7 @@ namespace Konversation
 
     void ServerDialog::slotServerNameChanged( const QString &text )
     {
-        enableButtonOk( !text.isEmpty() );
+        m_okButton->setEnabled( !text.isEmpty() );
     }
 
     void ServerDialog::setServerSettings(const ServerSettings& server)
@@ -485,16 +510,25 @@ namespace Konversation
     }
 
     ChannelDialog::ChannelDialog(const QString& title, QWidget *parent)
-    : KDialog(parent)
+    : QDialog(parent)
     {
-        setCaption(title);
-        setButtons(Ok|Cancel);
+        setWindowTitle(title);
+        QWidget *mainWidget = new QWidget(this);
+        QVBoxLayout *mainLayout = new QVBoxLayout;
+        setLayout(mainLayout);
+        mainLayout->addWidget(mainWidget);
+        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        m_okButton = buttonBox->button(QDialogButtonBox::Ok);
+        m_okButton->setDefault(true);
+        m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        mainLayout->addWidget(buttonBox);
 
         m_mainWidget = new Ui::ChannelDialogUI();
-        m_mainWidget->setupUi(mainWidget());
+        m_mainWidget->setupUi(mainWidget);
 
         m_mainWidget->m_channelEdit->setFocus();
-        connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
+        connect(m_okButton,SIGNAL(clicked()),this,SLOT(slotOk()));
         connect(m_mainWidget->m_channelEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
         slotServerNameChanged( m_mainWidget->m_channelEdit->text() );
     }
@@ -505,7 +539,7 @@ namespace Konversation
 
     void ChannelDialog::slotServerNameChanged( const QString &text )
     {
-        enableButtonOk( !text.isEmpty() );
+        m_okButton->setEnabled( !text.isEmpty() );
     }
 
     void ChannelDialog::setChannelSettings(const ChannelSettings& channel)

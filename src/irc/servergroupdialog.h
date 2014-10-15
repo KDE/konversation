@@ -15,8 +15,8 @@
 
 #include "servergroupsettings.h"
 
-#include <kdialog.h>
-
+#include <QDialog>
+class QPushButton;
 
 namespace Ui
 {
@@ -27,7 +27,7 @@ class ServerDialogUI;
 
 namespace Konversation
 {
-    class ServerGroupDialog : public KDialog
+    class ServerGroupDialog : public QDialog
     {
         Q_OBJECT
         public:
@@ -81,7 +81,7 @@ namespace Konversation
             ChannelList m_channelHistory;
     };
 
-    class ServerDialog : public KDialog
+    class ServerDialog : public QDialog
     {
         Q_OBJECT
         public:
@@ -96,10 +96,11 @@ namespace Konversation
             void slotServerNameChanged( const QString& );
         private:
             Ui::ServerDialogUI* m_mainWidget;
+            QPushButton *m_okButton;
     };
 
     class ChannelSettings;
-    class ChannelDialog : public KDialog
+    class ChannelDialog : public QDialog
     {
         Q_OBJECT
         public:
@@ -115,6 +116,7 @@ namespace Konversation
 
         private:
             Ui::ChannelDialogUI* m_mainWidget;
+            QPushButton *m_okButton;
     };
 }
 #endif
