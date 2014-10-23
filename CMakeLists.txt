@@ -21,6 +21,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Bookmarks
     Config
     ConfigWidgets
+    CoreAddons
     DocTools
     Emoticons
     I18n
