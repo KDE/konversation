@@ -1899,7 +1899,7 @@ void ViewContainer::insertIRCColor()
     // TODO FIXME
     QPointer<IRCColorChooser> dlg = new IRCColorChooser(m_window);
 
-    if (dlg->exec() == KDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         if(m_frontView)
             m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);

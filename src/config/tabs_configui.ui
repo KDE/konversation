@@ -150,7 +150,6 @@ the Free Software Foundation; either version 2 of the License, or
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <customwidgets>
   <customwidget>
    <class>KComboBox</class>
@@ -158,9 +157,6 @@ the Free Software Foundation; either version 2 of the License, or
    <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
- </includes>
  <resources/>
  <connections/>
 </ui>

@@ -209,10 +209,6 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
- <includes>
-  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
- </includes>
  <resources/>
  <connections/>
 </ui>

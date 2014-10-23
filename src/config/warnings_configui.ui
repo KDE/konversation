@@ -33,9 +33,6 @@
    </item>
   </layout>
  </widget>
- <includes>
-  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
- </includes>
  <resources/>
  <connections/>
 </ui>

@@ -146,7 +146,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
    <class>KLineEdit</class>
