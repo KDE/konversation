@@ -361,7 +361,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
             if (Preferences::self()->inputFieldsBackgroundColor()) {
                 return Preferences::self()->color(Preferences::ChannelMessage);
             } else {
-                m_window->palette().color(QPalette::Text);
+                return m_window->palette().color(QPalette::Text);
             }
         } else {
             return color;
