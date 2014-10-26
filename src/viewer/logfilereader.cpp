@@ -24,7 +24,6 @@
 #include <QTextCodec>
 #include <QKeyEvent>
 
-#include <KDialog>
 #include <KToolBar>
 #include <KMessageBox>
 #include <QFileDialog>
@@ -187,8 +186,14 @@ void LogfileReader::childAdjustFocus()
   getTextView()->setFocus();
 }
 
-int LogfileReader::margin() { return KDialog::marginHint(); }
-int LogfileReader::spacing() { return KDialog::spacingHint(); }
+int LogfileReader::margin()
+{
+    return style()->pixelMetric(QStyle::PM_LayoutLeftMargin);
+}
+
+int LogfileReader::spacing()
+{
+    return style()->layoutSpacing(QSizePolicy::DefaultType, QSizePolicy::DefaultType, Qt::Horizontal);
+}
+
 bool LogfileReader::searchView() { return true; }
-
-

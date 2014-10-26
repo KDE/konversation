@@ -179,7 +179,7 @@ class ChatWindow : public QWidget
         virtual void serverOnline(bool online);
 
     protected:
-	virtual void childEvent(QChildEvent* event);
+        virtual void childEvent(QChildEvent* event);
 
         /** Some children may handle the name themselves, and not want this public.
          *  Increase the visibility in the subclass if you want outsiders to call this.

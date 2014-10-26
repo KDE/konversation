@@ -26,7 +26,6 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 
-#include <KDialog>
 #include <KUser>
 #include <KLocale>
 
@@ -536,7 +535,7 @@ int ChatWindow::spacing()
     if(Preferences::self()->useSpacing())
         return Preferences::self()->spacing();
     else
-        return KDialog::spacingHint();
+        return style()->layoutSpacing(QSizePolicy::DefaultType, QSizePolicy::DefaultType, Qt::Vertical);
 }
 
 int ChatWindow::margin()
