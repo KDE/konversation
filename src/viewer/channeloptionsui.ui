@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
-    <height>342</height>
+    <width>458</width>
+    <height>377</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -43,7 +43,16 @@ the Free Software Foundation; either version 2 of the License, or
          </property>
          <widget class="QWidget" name="widget" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_2">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -355,14 +364,7 @@ the Free Software Foundation; either version 2 of the License, or
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
-  <customwidget>
-   <class>KFilterProxySearchLine</class>
-   <extends>QWidget</extends>
-   <header>kfilterproxysearchline.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
@@ -370,8 +372,13 @@ the Free Software Foundation; either version 2 of the License, or
   </customwidget>
   <customwidget>
    <class>KTreeWidgetSearchLine</class>
-   <extends>KLineEdit</extends>
+   <extends>QLineEdit</extends>
    <header>ktreewidgetsearchline.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KFilterProxySearchLine</class>
+   <extends>QWidget</extends>
+   <header>kfilterproxysearchline.h</header>
   </customwidget>
   <customwidget>
    <class>TopicEdit</class>
@@ -385,7 +392,6 @@ the Free Software Foundation; either version 2 of the License, or
   </customwidget>
  </customwidgets>
  <includes>
-  <include location="local">kdialog.h</include><!-- KF5 port: KDialog hack -->
   <include location="local">ktextedit.h</include>
   <include location="local">klineedit.h</include>
   <include location="local">topicedit.h</include>
