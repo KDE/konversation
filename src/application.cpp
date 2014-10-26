@@ -39,12 +39,12 @@
 #include <QStandardItemModel>
 #include <QFileInfo>
 #include <QTextCursor>
+#include <QDesktopServices>
 
 #include <KRun>
 #include <KCmdLineArgs>
 #include <KConfig>
 #include <KShell>
-#include <KToolInvocation>
 #include <KCharMacroExpander>
 #include <kwallet.h>
 #include <KTextEdit>
@@ -1260,12 +1260,12 @@ void Application::openUrl(const QString& url)
         if (url.startsWith(QLatin1String("irc://")) || url.startsWith(QLatin1String("ircs://")))
             Application::instance()->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
         else if (url.startsWith(QLatin1String("mailto:")))
-            KToolInvocation::invokeMailer(QUrl(url));
+            QDesktopServices::openUrl(QUrl(url));
         else
 #ifndef Q_OS_WIN
             new KRun(QUrl(url), Application::instance()->getMainWindow());
 #else
-            KToolInvocation::invokeBrowser(url);
+            QDesktopServices::openUrl(QUrl::fromUserInput(url));
 #endif
     }
     else
