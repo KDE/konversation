@@ -82,6 +82,23 @@ void TabWidget::contextMenuEvent(QContextMenuEvent* event)
     }
 }
 
+void TabWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+    if(event->button() == Qt::MiddleButton)
+    {
+        event->accept();
+        QPoint pos = event->globalPos();
+        int tabIndex = tabBar()->tabAt(tabBar()->mapFromGlobal(pos));
+
+        if(tabIndex != -1)
+        {
+            emit tabBarMiddleClicked(tabIndex);
+        }
+    }
+
+    QTabWidget::mouseReleaseEvent(event);
+}
+
 
 ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_window(window)
@@ -218,9 +235,9 @@ void ViewContainer::setupTabWidget()
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
 
     connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (viewSwitched(int)));
-    connect(m_tabWidget, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
+    connect(m_tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeView(int)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
-    connect(m_tabWidget, SIGNAL(mouseMiddleClick(QWidget*)), this, SLOT(closeViewMiddleClick(QWidget*)));
+    connect(m_tabWidget, SIGNAL(tabBarMiddleClicked(int)), this, SLOT(closeViewMiddleClick(int)));
     connect(m_tabWidget, SIGNAL(removedTab(int)), this, SLOT(removedTab(int)));
     connect(m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), this, SLOT(movedTab(int,int)));
 
@@ -1461,9 +1478,9 @@ void ViewContainer::moveViewRight()
     m_popupViewIndex = -1;
 }
 
-void ViewContainer::closeView(QWidget* view)
+void ViewContainer::closeView(int view)
 {
-    ChatWindow* viewToClose = static_cast<ChatWindow*>(view);
+    ChatWindow* viewToClose = static_cast<ChatWindow*>(m_tabWidget->widget(view));
 
     closeView(viewToClose);
 }
@@ -1531,7 +1548,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     }
 }
 
-void ViewContainer::closeViewMiddleClick(QWidget* view)
+void ViewContainer::closeViewMiddleClick(int view)
 {
     if (Preferences::self()->middleClickClose())
         closeView(view);
@@ -1577,9 +1594,9 @@ void ViewContainer::renameKonsole()
 void ViewContainer::closeCurrentView()
 {
     if (m_popupViewIndex == -1)
-        closeView(m_tabWidget->currentWidget());
+        closeView(m_tabWidget->currentIndex());
     else
-        closeView(m_tabWidget->widget(m_popupViewIndex));
+        closeView(m_popupViewIndex);
 
     m_popupViewIndex = -1;
 }

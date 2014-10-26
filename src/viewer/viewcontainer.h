@@ -56,11 +56,13 @@ class TabWidget : public QTabWidget
     Q_SIGNALS:
         void removedTab(int index) const;
         void contextMenu(QWidget* widget, const QPoint& pos);
+        void tabBarMiddleClicked(int index);
 
     protected:
         void tabRemoved(int index);
 
         virtual void contextMenuEvent(QContextMenuEvent* event);
+        virtual void mouseReleaseEvent(QMouseEvent* event);
 };
 
 class ViewContainer : public QAbstractItemModel
@@ -127,9 +129,9 @@ class ViewContainer : public QAbstractItemModel
         void moveViewLeft();
         void moveViewRight();
 
-        void closeView(QWidget* view);
+        void closeView(int view);
         void closeView(ChatWindow* view);
-        void closeViewMiddleClick(QWidget* view);
+        void closeViewMiddleClick(int view);
         void closeCurrentView();
         void renameKonsole();
         void cleanupAfterClose(ChatWindow* view);
