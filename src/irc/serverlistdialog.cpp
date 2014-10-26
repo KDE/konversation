@@ -55,15 +55,14 @@ namespace Konversation
     }
 
     ServerListDialog::ServerListDialog(const QString& title, QWidget *parent)
-    : KDialog(parent), Ui::ServerListDialogUI()
+    : QDialog(parent), Ui::ServerListDialogUI()
     {
-        setCaption(title);
-        setButtons(Ok|Close);
+        setWindowTitle(title);
 
-        setupUi(mainWidget());
-        mainWidget()->layout()->setMargin(0);
+        setupUi(this);
 
-        setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
+        KGuiItem::assign(m_buttonBox->button(QDialogButtonBox::Ok), KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"),
+                                                                             i18n("Click here to connect to the selected IRC network and channel.")));
 
         m_showAtStartup->setChecked(Preferences::self()->showServerList());
         connect(m_showAtStartup, &QCheckBox::toggled, this, &ServerListDialog::setShowAtStartup);
@@ -86,8 +85,8 @@ namespace Konversation
         connect(m_addButton, &QPushButton::clicked, this, &ServerListDialog::slotAdd);
         connect(m_editButton, &QPushButton::clicked, this, &ServerListDialog::slotEdit);
         connect(m_delButton, &QPushButton::clicked, this, &ServerListDialog::slotDelete);
-        connect(this, &ServerListDialog::okClicked, this, &ServerListDialog::slotOk);
-        connect(this, &ServerListDialog::cancelClicked, this, &ServerListDialog::slotClose);
+        connect(m_buttonBox, &QDialogButtonBox::accepted, this, &ServerListDialog::slotOk);
+        connect(m_buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
         updateButtons();
 
@@ -108,12 +107,6 @@ namespace Konversation
         KConfigGroup config(KSharedConfig::openConfig(), "ServerListDialog");
         config.writeEntry("Size", size());
         config.writeEntry("ServerListHeaderState", m_serverList->header()->saveState());
-    }
-
-    void ServerListDialog::slotClose()
-    {
-//         slotApply();
-        accept();
     }
 
     void ServerListDialog::slotOk()
@@ -140,7 +133,7 @@ namespace Konversation
     {
         QPointer<ServerGroupDialog> dlg = new ServerGroupDialog(i18n("New Network"), this);
 
-        if(dlg->exec() == KDialog::Accepted)
+        if(dlg->exec() == QDialog::Accepted)
         {
             addServerGroup(dlg->serverGroupSettings());
 
@@ -165,7 +158,7 @@ namespace Konversation
 
                 if (item->data(0,IsServer).toBool())
                 {
-                    if(dlg->execAndEditServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt())) == KDialog::Accepted)
+                    if(dlg->execAndEditServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt())) == QDialog::Accepted)
                     {
                         delete item;
 
@@ -180,7 +173,7 @@ namespace Konversation
                 }
                 else
                 {
-                    if(dlg->exec() == KDialog::Accepted)
+                    if(dlg->exec() == QDialog::Accepted)
                     {
                         delete item;
 
@@ -334,7 +327,7 @@ namespace Konversation
         int count = m_serverList->selectedItems().count();
         bool enable = (count > 0);
 
-        enableButtonOk(enable);
+        m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enable);
         m_delButton->setEnabled(enable);
 
         enable = (count == 1);

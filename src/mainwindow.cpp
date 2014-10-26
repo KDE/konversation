@@ -807,7 +807,7 @@ void MainWindow::openServerList()
                 konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,int)));
         connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag,ConnectionSettings)),
                 konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,ConnectionSettings)));
-        connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
+        connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(reject()));
     }
 
     m_serverListDialog->show();
@@ -822,7 +822,7 @@ void MainWindow::openQuickConnectDialog()
 void MainWindow::openIdentitiesDialog()
 {
     QPointer<Konversation::IdentityDialog> dlg = new Konversation::IdentityDialog(this);
-    if (dlg->exec() == KDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         if (m_serverListDialog)
             m_serverListDialog->updateServerList();
@@ -838,7 +838,7 @@ IdentityPtr MainWindow::editIdentity(IdentityPtr identity)
     QPointer<Konversation::IdentityDialog> dlg = new Konversation::IdentityDialog(this);
     newIdentity = dlg->setCurrentIdentity(identity);
 
-    if ((dlg->exec() == KDialog::Accepted) && m_serverListDialog)
+    if ((dlg->exec() == QDialog::Accepted) && m_serverListDialog)
     {
         m_serverListDialog->updateServerList();
         delete dlg;

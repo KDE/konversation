@@ -17,7 +17,7 @@
 #include "servergroupsettings.h"
 #include "serverlistview.h"
 #include "ui_serverlistdialogui.h"
-#include <kdialog.h>
+#include <QDialog>
 
 class ConnectionSettings;
 class QTreeWidgetItem;
@@ -36,7 +36,7 @@ namespace Konversation
             };
     };
 
-    class ServerListDialog : public KDialog, private Ui::ServerListDialogUI
+    class ServerListDialog : public QDialog, private Ui::ServerListDialogUI
     {
         Q_OBJECT
 
@@ -61,7 +61,6 @@ namespace Konversation
 
         protected slots:
             virtual void slotOk();
-            void slotClose();
             void slotAdd();
             void slotEdit();
             void slotDelete();
