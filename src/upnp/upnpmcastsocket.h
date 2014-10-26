@@ -56,7 +56,7 @@ namespace Konversation
 
         private slots:
             void onReadyRead();
-            void error(QAbstractSocket::SocketError err);
+            void onError(QAbstractSocket::SocketError err);
             void onXmlFileDownloaded(UPnPRouter* r,bool success);
 
         signals:

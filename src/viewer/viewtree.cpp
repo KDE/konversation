@@ -20,6 +20,7 @@
 #include <QCoreApplication>
 #include <QFontDatabase>
 #include <QPainter>
+#include <QItemSelectionModel>
 
 // FIXME KF5 port, ViewTree port: Not DPI-aware.
 #define LED_ICON_SIZE 14
@@ -172,14 +173,19 @@ ViewTree::ViewTree(QWidget* parent) : QListView(parent)
 
     setItemDelegate(new ViewTreeDelegate(this));
 
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
-
     hide();
 }
 
 ViewTree::~ViewTree()
 {
+}
+
+void ViewTree::setModel (QAbstractItemModel *model)
+{
+    QListView::setModel(model);
+
+    connect(selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &ViewTree::selectionChanged);
 }
 
 void ViewTree::updateAppearance()

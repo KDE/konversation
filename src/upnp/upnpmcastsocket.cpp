@@ -33,10 +33,10 @@ namespace Konversation
     namespace UPnP
     {
 
-        UPnPMCastSocket::UPnPMCastSocket()
+        UPnPMCastSocket::UPnPMCastSocket() : QUdpSocket ()
         {
             QObject::connect(this, &UPnPMCastSocket::readyRead, this, &UPnPMCastSocket::onReadyRead);
-            QObject::connect(this, &UPnPMCastSocket::error, this, &UPnPMCastSocket::error);
+            QObject::connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onError(QAbstractSocket::SocketError)));
 
             for (quint32 i = 0;i < 10;i++)
             {
@@ -187,7 +187,7 @@ namespace Konversation
             }
         }
 
-        void UPnPMCastSocket::error(QAbstractSocket::SocketError )
+        void UPnPMCastSocket::onError(QAbstractSocket::SocketError )
         {
             qDebug() << "UPnPMCastSocket Error : " << errorString() << endl;
         }

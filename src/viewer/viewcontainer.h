@@ -227,6 +227,7 @@ class ViewContainer : public QAbstractItemModel
         void viewSwitched(int newIndex);
         void removedTab(int index);
         void movedTab(int from, int to);
+        void onViewTreeDestroyed(QObject *object);
 
     private:
         void setupTabWidget();
