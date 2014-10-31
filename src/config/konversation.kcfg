@@ -5,12 +5,13 @@
                            http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <include>qfont.h</include>
   <include>qsize.h</include>
-  <include>kdialog.h</include>
   <include>QDir</include>
   <include>kuser.h</include>
   <include>QStandardPaths</include>
   <include>QFontDatabase</include>
   <include>QUrl</include>
+  <include>QStyle</include>
+  <include>QApplication</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -124,12 +125,12 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="Spacing" type="Int">
-      <default>KDialog::spacingHint()</default>
+      <default>QApplication::style()->layoutSpacing(QSizePolicy::DefaultType, QSizePolicy::DefaultType, Qt::Horizontal)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
     <entry key="Margin" type="Int">
-      <default>KDialog::marginHint()</default>
+      <default>QApplication::style()->pixelMetric(QStyle::PM_LayoutLeftMargin)</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -838,9 +839,9 @@
   </group>
   <group name="External Log Viewer">
     <entry key="UseExternalLogViewer" type="Bool">
-	<default>false</default>
-	<label></label>
-	<whatsthis></whatsthis>
+        <default>false</default>
+        <label></label>
+        <whatsthis></whatsthis>
     </entry>
   </group>
   <group name="Themes">
