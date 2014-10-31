@@ -45,7 +45,7 @@
 #include <KRun>
 #include <KConfig>
 #include <KShell>
-#include <KCharMacroExpander>
+#include <KMacroExpander>
 #include <kwallet.h>
 #include <KTextEdit>
 #include <KSharedConfig>

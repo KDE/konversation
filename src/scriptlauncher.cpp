@@ -17,15 +17,13 @@
 
 #include <QFileInfo>
 
-#include <KGlobal>
 #include <KProcess>
-#include <KLocale>
 #include <QStandardPaths>
 
 
 ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
-    qputenv("KONVERSATION_LANG", KLocale::global()->language().toLatin1());
+    qputenv("KONVERSATION_LANG", QLocale().name().toLatin1());
 
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value(QStringLiteral("PYTHONPATH")).split(QLatin1Char(':'), QString::SkipEmptyParts));
     pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/scripting_support/python"),

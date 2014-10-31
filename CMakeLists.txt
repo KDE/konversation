@@ -36,6 +36,10 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WidgetsAddons
     GlobalAccel
     DBusAddons
+    Notifications
+    WindowSystem
+    IconThemes
+    ItemViews
 )
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)

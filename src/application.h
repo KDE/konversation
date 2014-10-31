@@ -59,7 +59,6 @@ namespace KWallet
 }
 
 
-// FIXME KF5 port: See frameworks-qapp branch for start of port to QApplication and QCommandLineParser.
 class Application : public QApplication
 {
     Q_OBJECT

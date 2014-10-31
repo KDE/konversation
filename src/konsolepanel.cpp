@@ -18,7 +18,6 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-#include <KApplication>
 #include <QDebug>
 #include <QIcon>
 #include <KLocalizedString>
@@ -116,7 +115,7 @@ void KonsolePanel::partDestroyed()
 void KonsolePanel::manageKonsoleProfiles()
 {
     QMetaObject::invokeMethod(k_part, "showManageProfilesDialog",
-        Qt::QueuedConnection, Q_ARG(QWidget*, KApplication::activeWindow()));
+        Qt::QueuedConnection, Q_ARG(QWidget*, QApplication::activeWindow()));
 }
 
 void KonsolePanel::konsoleChanged(const QString& /* data */)

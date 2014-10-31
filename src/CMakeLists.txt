@@ -229,6 +229,10 @@ target_link_libraries(konversation
     KF5::GlobalAccel
     KF5::DBusAddons
     KF5::CoreAddons
+    KF5::Notifications
+    KF5::WindowSystem
+    KF5::IconThemes
+    KF5::ItemViews
     Phonon::phonon4qt5)
 
 if (Qca_FOUND)

@@ -31,9 +31,7 @@
 #include <QFileDialog>
 #include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
-#include <KGlobal>
 #include <QIcon>
-#include <KLocale>
 #include <KLocalizedString>
 #include <QMenu>
 #include <KMessageBox>
@@ -52,7 +50,7 @@ UrlDateItem::~UrlDateItem()
 QVariant UrlDateItem::data(int role) const
 {
     if (role == Qt::DisplayRole)
-        return KLocale::global()->formatDateTime(QStandardItem::data().toDateTime(), KLocale::ShortDate, true);
+        return QLocale().toString(QStandardItem::data().toDateTime(), QLocale::ShortFormat);
 
     return QStandardItem::data(role);
 }
@@ -367,7 +365,7 @@ void UrlCatcher::saveUrlModel()
         QTextStream stream(&file);
 
         stream << i18n("Konversation URL List: %1\n\n",
-            KLocale::global()->formatDateTime(QDateTime::currentDateTime(), KLocale::LongDate, true));
+            QLocale().toString(QDateTime::currentDateTime(), QLocale::LongFormat));
 
         for (int r = 0; r < rows; r++)
         {
