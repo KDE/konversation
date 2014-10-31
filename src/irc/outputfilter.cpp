@@ -41,7 +41,6 @@
 #include <KMessageBox>
 #include <K4AboutData>
 #include <KDebug>
-#include <KComponentData>
 
 #include <QTextDocument>
 #include <QTextBlock>
@@ -1855,7 +1854,7 @@ namespace Konversation
         QTextStream serverOut(&result.toServer);
         QTextStream myOut(&result.output); //<--because seek is unimplemented in QTextStreamPrivate::write(const QString &data)
         myOut
-            << "Konversation: " << KComponentData::mainComponent().aboutData()->version()
+            << "Konversation: " << qApp->applicationVersion()
             << ", Qt " << QString::fromLatin1(qVersion())
             << ", KDE Frameworks " << QString::fromLatin1(KXMLGUI_VERSION_STRING);
             ;

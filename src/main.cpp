@@ -19,19 +19,14 @@
 
 #include <QMutex>
 #include <QWaitCondition>
+#include <QCommandLineParser>
 
-#include <KCmdLineArgs>
-#include <K4AboutData>
+#include <KAboutData>
 #include <Kdelibs4ConfigMigrator>
 #include <KDBusAddons/KDBusService>
 
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)
-
-/*
-  Don't use i18n() here, use ki18n() instead!
-  i18n() will only work as soon as a kapplication object was made.
-*/
 
 int main(int argc, char* argv[])
 {
@@ -48,86 +43,90 @@ int main(int argc, char* argv[])
     migrate.setUiFiles(QStringList() << QLatin1String("konversationui.rc"));
     migrate.migrate();
 
-    // FIXME KF5 port: Use KAboutData.
+    Application app(argc, argv);
 
-    K4AboutData aboutData("konversation",
-        "",
-        ki18n("Konversation"),
+    KAboutData aboutData("konversation",
+        i18n("Konversation"),
         KONVI_VERSION " #" STRHACK(COMMIT),
-        ki18n("A user-friendly IRC client"),
-        K4AboutData::License_GPL,
-        ki18n("(C) 2002-2014 by the Konversation team"),
-        ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
+        i18n("A user-friendly IRC client"),
+        KAboutLicense::GPL,
+        i18n("(C) 2002-2014 by the Konversation team"),
+        i18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
-        "http://konversation.kde.org/");
+        QStringLiteral("http://konversation.kde.org/"));
 
-    aboutData.addAuthor(ki18n("Dario Abatianni"),ki18n("Original Author, Project Founder"),"eisfuchs@tigress.com");
-    aboutData.addAuthor(ki18n("Peter Simonsson"),ki18n("Maintainer"),"psn@linux.se");
-    aboutData.addAuthor(ki18n("Eike Hein"),ki18n("Maintainer, Release Manager, User interface, Connection management, Protocol handling, Auto-away"),"hein@kde.org");
-    aboutData.addAuthor(ki18n("Shintaro Matsuoka"),ki18n("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
-    aboutData.addAuthor(ki18n("Eli MacKenzie"),ki18n("Protocol handling, Input line"),"argonel@gmail.com");
-    aboutData.addAuthor(ki18n("İsmail Dönmez"),ki18n("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
-    aboutData.addAuthor(ki18n("John Tapsell"),ki18n("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
-    aboutData.addAuthor(ki18n("Bernd Buschinski"),ki18n("DCC port to KDE 4, various DCC improvements"), "b.buschinski@web.de");
+    aboutData.addAuthor(i18n("Dario Abatianni"),i18n("Original Author, Project Founder"),"eisfuchs@tigress.com");
+    aboutData.addAuthor(i18n("Peter Simonsson"),i18n("Maintainer"),"peter.simonsson@gmail.com");
+    aboutData.addAuthor(i18n("Eike Hein"),i18n("Maintainer, Release Manager, User interface, Connection management, Protocol handling, Auto-away"),"hein@kde.org");
+    aboutData.addAuthor(i18n("Shintaro Matsuoka"),i18n("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
+    aboutData.addAuthor(i18n("Eli MacKenzie"),i18n("Protocol handling, Input line"),"argonel@gmail.com");
+    aboutData.addAuthor(i18n("İsmail Dönmez"),i18n("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
+    aboutData.addAuthor(i18n("John Tapsell"),i18n("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
+    aboutData.addAuthor(i18n("Bernd Buschinski"),i18n("DCC port to KDE 4, various DCC improvements"), "b.buschinski@web.de");
 
-    aboutData.addCredit(ki18n("Olivier Bédard"),ki18n("Website hosting"));
-    aboutData.addCredit(ki18n("Jędrzej Lisowski"),ki18n("Website maintenance"),"yesoos@gmail.com");
-    aboutData.addCredit(ki18n("Christian Muehlhaeuser"),ki18n("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
-    aboutData.addCredit(ki18n("Gary Cramblitt"),ki18n("Documentation, Watched Nicks improvements, Custom web browser extension"),"garycramblitt@comcast.net");
-    aboutData.addCredit(ki18n("Matthias Gierlings"),ki18n("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
-    aboutData.addCredit(ki18n("Alex Zepeda"),ki18n("DCOP interface"),"garbanzo@hooked.net");
-    aboutData.addCredit(ki18n("Stanislav Karchebny"),ki18n("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
-    aboutData.addCredit(ki18n("Mickael Marchand"),ki18n("Konsole part view"),"marchand@kde.org");
-    aboutData.addCredit(ki18n("Michael Goettsche"),ki18n("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
-    aboutData.addCredit(ki18n("Benjamin Meyer"),ki18n("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
-    aboutData.addCredit(ki18n("Jakub Stachowski"),ki18n("Drag&Drop improvements"),"qbast@go2.pl");
-    aboutData.addCredit(ki18n("Sebastian Sariego"),ki18n("Artwork"),"segfault@kde.cl");
-    aboutData.addCredit(ki18n("Renchi Raju"),ki18n("Firefox style searchbar"));
-    aboutData.addCredit(ki18n("Michael Kreitzer"),ki18n("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
-    aboutData.addCredit(ki18n("Frauke Oster"),ki18n("System tray patch"),"frauke@frsv.de");
-    aboutData.addCredit(ki18n("Lucijan Busch"),ki18n("Bug fixes"),"lucijan@kde.org");
-    aboutData.addCredit(ki18n("Sascha Cunz"),ki18n("Extended user modes patch"),"mail@sacu.de");
-    aboutData.addCredit(ki18n("Steve Wollkind"),ki18n("Close visible tab with shortcut patch"),"steve@njord.org");
-    aboutData.addCredit(ki18n("Thomas Nagy"),ki18n("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
-    aboutData.addCredit(ki18n("Tobias Olry"),ki18n("Channel ownership mode patch"),"tobias.olry@web.de");
-    aboutData.addCredit(ki18n("Ruud Nabben"),ki18n("Option to enable IRC color filtering"),"r.nabben@gawab.com");
-    aboutData.addCredit(ki18n("Lothar Braun"),ki18n("Bug fixes"),"mail@lobraun.de");
-    aboutData.addCredit(ki18n("Ivor Hewitt"),ki18n("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
-    aboutData.addCredit(ki18n("Emil Obermayr"),ki18n("Sysinfo script"),"nobs@tigress.com");
-    aboutData.addCredit(ki18n("Stanislav Nikolov"),ki18n("Bug fixes"),"valsinats@gmail.com");
-    aboutData.addCredit(ki18n("Juan Carlos Torres"),ki18n("Auto-join context menu"),"carlosdgtorres@gmail.com");
-    aboutData.addCredit(ki18n("Travis McHenry"),ki18n("Various fixes, ported encryption to QCA2, added DH1080 key exchange support."),"tmchenryaz@cox.net");
-    aboutData.addCredit(ki18n("Modestas Vainius"),ki18n("Bug fixes and enhancements."),"modestas@vainius.eu");
-    aboutData.addCredit(ki18n("Abdurrahman AVCI"),ki18n("Various bug fixes and enhancements."),"abdurrahmanavci@gmail.com");
-    aboutData.addCredit(ki18n("Martin Blumenstingl"),ki18n("KStatusNotifierItem support, KIdleTime support, other enhancements"),"darklight.xdarklight@googlemail.com");
+    aboutData.addCredit(i18n("Olivier Bédard"),i18n("Website hosting"));
+    aboutData.addCredit(i18n("Jędrzej Lisowski"),i18n("Website maintenance"),"yesoos@gmail.com");
+    aboutData.addCredit(i18n("Christian Muehlhaeuser"),i18n("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
+    aboutData.addCredit(i18n("Gary Cramblitt"),i18n("Documentation, Watched Nicks improvements, Custom web browser extension"),"garycramblitt@comcast.net");
+    aboutData.addCredit(i18n("Matthias Gierlings"),i18n("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
+    aboutData.addCredit(i18n("Alex Zepeda"),i18n("DCOP interface"),"garbanzo@hooked.net");
+    aboutData.addCredit(i18n("Stanislav Karchebny"),i18n("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
+    aboutData.addCredit(i18n("Mickael Marchand"),i18n("Konsole part view"),"marchand@kde.org");
+    aboutData.addCredit(i18n("Michael Goettsche"),i18n("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
+    aboutData.addCredit(i18n("Benjamin Meyer"),i18n("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
+    aboutData.addCredit(i18n("Jakub Stachowski"),i18n("Drag&Drop improvements"),"qbast@go2.pl");
+    aboutData.addCredit(i18n("Sebastian Sariego"),i18n("Artwork"),"segfault@kde.cl");
+    aboutData.addCredit(i18n("Renchi Raju"),i18n("Firefox style searchbar"));
+    aboutData.addCredit(i18n("Michael Kreitzer"),i18n("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
+    aboutData.addCredit(i18n("Frauke Oster"),i18n("System tray patch"),"frauke@frsv.de");
+    aboutData.addCredit(i18n("Lucijan Busch"),i18n("Bug fixes"),"lucijan@kde.org");
+    aboutData.addCredit(i18n("Sascha Cunz"),i18n("Extended user modes patch"),"mail@sacu.de");
+    aboutData.addCredit(i18n("Steve Wollkind"),i18n("Close visible tab with shortcut patch"),"steve@njord.org");
+    aboutData.addCredit(i18n("Thomas Nagy"),i18n("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
+    aboutData.addCredit(i18n("Tobias Olry"),i18n("Channel ownership mode patch"),"tobias.olry@web.de");
+    aboutData.addCredit(i18n("Ruud Nabben"),i18n("Option to enable IRC color filtering"),"r.nabben@gawab.com");
+    aboutData.addCredit(i18n("Lothar Braun"),i18n("Bug fixes"),"mail@lobraun.de");
+    aboutData.addCredit(i18n("Ivor Hewitt"),i18n("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
+    aboutData.addCredit(i18n("Emil Obermayr"),i18n("Sysinfo script"),"nobs@tigress.com");
+    aboutData.addCredit(i18n("Stanislav Nikolov"),i18n("Bug fixes"),"valsinats@gmail.com");
+    aboutData.addCredit(i18n("Juan Carlos Torres"),i18n("Auto-join context menu"),"carlosdgtorres@gmail.com");
+    aboutData.addCredit(i18n("Travis McHenry"),i18n("Various fixes, ported encryption to QCA2, added DH1080 key exchange support."),"tmchenryaz@cox.net");
+    aboutData.addCredit(i18n("Modestas Vainius"),i18n("Bug fixes and enhancements."),"modestas@vainius.eu");
+    aboutData.addCredit(i18n("Abdurrahman AVCI"),i18n("Various bug fixes and enhancements."),"abdurrahmanavci@gmail.com");
+    aboutData.addCredit(i18n("Martin Blumenstingl"),i18n("KStatusNotifierItem support, KIdleTime support, other enhancements"),"darklight.xdarklight@googlemail.com");
 
-    // FIXME KF5 port: Switch to QCommandLineFoo.
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineOptions options;
-    options.add( "+[url]", ki18n("irc:// URL or server hostname"), 0);
-    options.add( "server <server>", ki18n("Server to connect"), 0 );
-    options.add( "port <port>", ki18n("Port to use"), "6667");
-    options.add( "channel <channel>", ki18n("Channel to join after connection"), "");
-    options.add( "nick <nickname>", ki18n("Nickname to use"),"");
-    options.add( "password <password>", ki18n("Password for connection"),"");
-    options.add( "ssl", ki18n("Use SSL for connection"),"false");
-    options.add( "noautoconnect", ki18n("Disable auto-connecting to any IRC networks"));
-    options.add( "startupdelay <msec>", ki18n("Delay D-Bus activity and UI creation by the specified amount of miliseconds"), "2000");
-    options.add( "restart", ki18n("Quits and restarts Konversation (if running, otherwise has no effect)"));
+    KAboutData::setApplicationData(aboutData);
+
+    app.setApplicationName(aboutData.componentName());
+    app.setOrganizationDomain(aboutData.organizationDomain());
+    app.setApplicationVersion(aboutData.version());
+    app.setApplicationDisplayName(aboutData.displayName());
+
+    QCommandLineParser cmdLineParser;
+    cmdLineParser.addHelpOption();
+    cmdLineParser.addVersionOption();
+
+    cmdLineParser.addPositionalArgument(QStringLiteral("url"), i18n("irc:// URL or server hostname"));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("server"), i18n("Server to connect"), i18n("server")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("port"), i18n("Port to use"), i18n("port"), "6667"));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("channel"), i18n("Channel to join after connection"), i18n("channel")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("nick"), i18n("Nickname to use"), i18n("nickname")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("password"), i18n("Password for connection"), i18n("password")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("ssl"), i18n("Use SSL for connection")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("noautoconnect"), i18n("Disable auto-connecting to any IRC networks")));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("startupdelay"), i18n("Delay D-Bus activity and UI creation by the specified amount of miliseconds"), i18n("msec"), "2000"));
+//    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("restart"), i18n("Quits and restarts Konversation (if running, otherwise has no effect)"))); FIXME KF5 port need a new DBus based implementation
 #ifndef QT_NO_DEBUG
-    options.add( "nui", ki18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"));
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("nui"), i18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)")));
 #endif
+    aboutData.setupCommandLine(&cmdLineParser);
 
-    KCmdLineArgs::addCmdLineOptions(options);
-    KCmdLineArgs::addStdCmdLineOptions();
-//    KUniqueApplication::addCmdLineOptions(); FIXME QApp porting
+    cmdLineParser.process(app);
 
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-
-    if (args->isSet("startupdelay"))
+    if (cmdLineParser.isSet(QStringLiteral("startupdelay")))
     {
         bool ok;
-        ulong delay = args->getOption("startupdelay").toULong(&ok);
+        ulong delay = cmdLineParser.value(QStringLiteral("startupdelay")).toULong(&ok);
 
         if (ok)
         {
@@ -141,18 +140,14 @@ int main(int argc, char* argv[])
     KDBusService::StartupOptions startOptions = KDBusService::Unique;
 
 #ifndef QT_NO_DEBUG
-    if (args->isSet("nui"))
+    if (cmdLineParser.isSet(QStringLiteral("nui")))
         startOptions = KDBusService::Multiple;
 #endif
 
-    Application app(args->qtArgc(), args->qtArgv());
-    app.setApplicationName(QStringLiteral("konversation"));
-    app.setOrganizationDomain(QStringLiteral("kde.org"));
-    app.setApplicationDisplayName(i18n("Konversation"));
-
     KDBusService dbusService(startOptions);
 
-    app.newInstance();
+    aboutData.processCommandLine(&cmdLineParser);
+    app.newInstance(&cmdLineParser);
 
     return app.exec();
 }

@@ -36,6 +36,7 @@ class QuickConnectDialog;
 class Images;
 class ServerGroupSettings;
 class QStandardItemModel;
+class QCommandLineParser;
 
 class KTextEdit;
 
@@ -126,7 +127,7 @@ class Application : public QApplication
         // inline auto replacement for input lines
         void doInlineAutoreplace(KTextEdit* textEdit);
 
-        void newInstance();
+        void newInstance(QCommandLineParser *args);
 
         static void openUrl(const QString& url);
 

@@ -40,9 +40,9 @@
 #include <QFileInfo>
 #include <QTextCursor>
 #include <QDesktopServices>
+#include <QCommandLineParser>
 
 #include <KRun>
-#include <KCmdLineArgs>
 #include <KConfig>
 #include <KShell>
 #include <KCharMacroExpander>
@@ -106,6 +106,7 @@ Application::~Application()
 
 void Application::implementRestart()
 {
+#if 0 //FIXME KF5 port
     QStringList argumentList;
 
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
@@ -143,14 +144,14 @@ void Application::implementRestart()
         argumentList << QStringLiteral("--startupdelay") << QStringLiteral("2000");
 
     KProcess::startDetached(QCoreApplication::applicationFilePath(), argumentList);
+#endif
 }
 
-void Application::newInstance()
+void Application::newInstance(QCommandLineParser *args)
 {
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     QString url;
-    if (args->count() > 0)
-        url = args->arg(0);
+    if (args->positionalArguments().count() > 0)
+        url = args->positionalArguments().at(0);
 
     if (!mainWindow)
     {
@@ -231,7 +232,7 @@ void Application::newInstance()
         // handle autoconnect on startup
         Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
-        if (args->isSet("autoconnect") && url.isEmpty() && !args->isSet("server"))
+        if (args->isSet(QStringLiteral("autoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
         {
             QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
             while(it.hasNext())
@@ -275,24 +276,26 @@ void Application::newInstance()
 
         connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
     }
-    else if (args->isSet("restart"))
+#if 0 //FIXME KF5 port
+    else if (args->isSet(QStringLiteral("restart")))
     {
         restart();
 
         return;
     }
+#endif
 
     if (!url.isEmpty())
         getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
-    else if (args->isSet("server"))
+    else if (args->isSet(QStringLiteral("server")))
     {
         getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection,
-                                          args->getOption("server"),
-                                          args->getOption("port"),
-                                          args->getOption("password"),
-                                          args->getOption("nick"),
-                                          args->getOption("channel"),
-                                          args->isSet("ssl"));
+                                          args->value(QStringLiteral("server")),
+                                          args->value(QStringLiteral("port")),
+                                          args->value(QStringLiteral("password")),
+                                          args->value(QStringLiteral("nick")),
+                                          args->value(QStringLiteral("channel")),
+                                          args->isSet(QStringLiteral("ssl")));
     }
 
     return;
