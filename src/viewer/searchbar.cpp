@@ -43,7 +43,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_closeButton->setIcon(QIcon::fromTheme("dialog-close"));
     m_findNextButton->setIcon(m_goUpSearch);
     m_findPreviousButton->setIcon(m_goDownSearch);
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
 
@@ -103,7 +103,7 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
 
     if (focusEvent)
     {
-        Application* konvApp = static_cast<Application*>(kapp);
+        Application* konvApp = Application::instance();
         QAction * action = static_cast<QAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
 
         if (action->shortcut().matches(QKeySequence(Qt::Key_Escape)))
@@ -225,7 +225,7 @@ bool SearchBar::fromCursor() const
 
 void SearchBar::toggleSearchFoward(bool value)
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     if (value) {
       m_findNextButton->setIcon(m_goDownSearch);
       m_findPreviousButton->setIcon(m_goUpSearch);

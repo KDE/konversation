@@ -168,7 +168,7 @@ namespace Konversation
 
     void TopicLabel::mouseMoveEvent(QMouseEvent* ev)
     {
-        if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
+        if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance())
         {
             setSelection(0, 0);
 

@@ -25,7 +25,7 @@
 
 AwayManager::AwayManager(QObject* parent) : QObject(parent)
 {
-    m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
+    m_connectionManager = Application::instance()->getConnectionManager();
 
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
@@ -164,7 +164,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
     if (!away)
         simulateUserActivity();
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
     Konversation::TrayIcon* trayIcon = konvApp->getMainWindow()->systemTrayIcon();
 

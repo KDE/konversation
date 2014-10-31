@@ -553,7 +553,7 @@ QSize MainWindow::sizeHint() const
 
 int MainWindow::confirmQuit()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     if (konvApp->getConnectionManager()->connectionCount() == 0)
         return KMessageBox::Continue;
@@ -601,7 +601,7 @@ void MainWindow::quitProgram()
 
 bool MainWindow::queryClose()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     if (!konvApp->isSavingSession())
     {
@@ -666,7 +666,7 @@ bool MainWindow::event(QEvent* e)
     {
         m_statusBar->clearMainLabelTempText();
 
-        if (kapp->activeModalWidget() == 0)
+        if (qApp->activeModalWidget() == 0)
             emit triggerRememberLine();
     }
 
@@ -797,7 +797,7 @@ void MainWindow::openServerList()
     if (!m_serverListDialog)
     {
         m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
-        Application* konvApp = static_cast<Application*>(kapp);
+        Application* konvApp = Application::instance();
 
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
                 konvApp, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
@@ -858,7 +858,7 @@ void MainWindow::openNotifications()
 
 void MainWindow::notifyAction(int connectionId, const QString& nick)
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     Server* server = konvApp->getConnectionManager()->getServerByConnectionId(connectionId);
     if (server) server->notifyAction(nick);
 }

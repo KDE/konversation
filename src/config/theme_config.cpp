@@ -219,7 +219,7 @@ void Theme_Config::installTheme()
 
         KTar themeArchive(tmpThemeFile);
         themeArchive.open(QIODevice::ReadOnly);
-        kapp->processEvents();
+        qApp->processEvents();
 
         const KArchiveDirectory* themeDir = themeArchive.directory();;
         QStringList allEntries = themeDir->entries();

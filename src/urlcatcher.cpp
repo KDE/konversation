@@ -175,7 +175,7 @@ void UrlCatcher::setupUrlTree()
     connect(m_urlTree, &QTreeView::customContextMenuRequested, this, &UrlCatcher::openContextMenu);
     connect(m_urlTree, &QTreeView::doubleClicked, this, &UrlCatcher::openUrl);
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     QStandardItemModel* urlModel = konvApp->getUrlModel();
     QStandardItem* item = new QStandardItem(i18n("From"));
     urlModel->setHorizontalHeaderItem(0, item);
@@ -211,7 +211,7 @@ void UrlCatcher::updateItemActionStates()
 
 void UrlCatcher::updateListActionStates()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     bool enable = konvApp->getUrlModel()->rowCount();
 
     foreach(QAction* action, m_listActions) action->setEnabled(enable);
@@ -330,7 +330,7 @@ void UrlCatcher::deleteSelectedUrls()
     foreach(const QPersistentModelIndex& index, m_urlTree->selectionModel()->selectedIndexes())
         selectedIndices << index;
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     foreach(const QPersistentModelIndex& index, selectedIndices)
         if (index.isValid()) konvApp->getUrlModel()->removeRow(index.row());
@@ -343,7 +343,7 @@ void UrlCatcher::saveUrlModel()
 
     if (!target.isEmpty())
     {
-        Application* konvApp = static_cast<Application*>(kapp);
+        Application* konvApp = Application::instance();
         QStandardItemModel* urlModel = konvApp->getUrlModel();
 
         int nickColumnWidth = 0;
@@ -384,7 +384,7 @@ void UrlCatcher::saveUrlModel()
 
 void UrlCatcher::clearUrlModel()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     urlModel->removeRows(0, urlModel->rowCount());
@@ -395,7 +395,7 @@ void UrlCatcher::checkLocaleChanged(int category)
     if (category != KGlobalSettings::SETTINGS_LOCALE)
         return;
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));

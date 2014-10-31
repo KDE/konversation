@@ -53,7 +53,7 @@ void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb
 {
     Q_UNUSED(mb);
     Q_UNUSED(km);
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, bm.url().url());
 }
 
@@ -99,7 +99,7 @@ void KonviBookmarkHandler::openFolderinTabs(const KBookmarkGroup &group)
 {
     const QList<QUrl> list = group.groupUrlList();
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, list);
 }
 

@@ -23,6 +23,7 @@
 #include <KCmdLineArgs>
 #include <K4AboutData>
 #include <Kdelibs4ConfigMigrator>
+#include <KDBusAddons/KDBusService>
 
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)
@@ -119,7 +120,7 @@ int main(int argc, char* argv[])
 
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs::addStdCmdLineOptions();
-    KUniqueApplication::addCmdLineOptions();
+//    KUniqueApplication::addCmdLineOptions(); FIXME QApp porting
 
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
 
@@ -137,16 +138,21 @@ int main(int argc, char* argv[])
         }
     }
 
-    KUniqueApplication::StartFlags startFlags;
+    KDBusService::StartupOptions startOptions = KDBusService::Unique;
 
 #ifndef QT_NO_DEBUG
     if (args->isSet("nui"))
-        startFlags = KUniqueApplication::NonUniqueInstance;
+        startOptions = KDBusService::Multiple;
 #endif
 
-    if (!KUniqueApplication::start(startFlags)) return 0;
+    Application app(args->qtArgc(), args->qtArgv());
+    app.setApplicationName(QStringLiteral("konversation"));
+    app.setOrganizationDomain(QStringLiteral("kde.org"));
+    app.setApplicationDisplayName(i18n("Konversation"));
 
-    Application app;
+    KDBusService dbusService(startOptions);
+
+    app.newInstance();
 
     return app.exec();
 }

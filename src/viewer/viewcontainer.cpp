@@ -2132,7 +2132,7 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
 {
     if (!chat->selfOpened()) // Someone else initiated dcc chat
     {
-        Application* konv_app=static_cast<Application*>(KApplication::kApplication());
+        Application* konv_app=Application::instance();
         konv_app->notificationHandler()->dccChat(m_frontView, chat->partnerNick());
     }
 

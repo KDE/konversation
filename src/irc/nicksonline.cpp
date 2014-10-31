@@ -410,7 +410,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
 NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickname)
 {
     // Get list of pointers to all servers.
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     foreach (Server* server, serverList)
     {
@@ -431,7 +431,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
  */
 void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     foreach (Server* server, serverList)
     {
@@ -471,7 +471,7 @@ void NicksOnline::updateNotifyList()
   // update notify list
   Preferences::setNotifyList(notifyList);
   // save notify list
-  static_cast<Application*>(kapp)->saveOptions(false);
+  Application::instance()->saveOptions(false);
 }
 
 /**
@@ -479,7 +479,7 @@ void NicksOnline::updateNotifyList()
  */
 void NicksOnline::refreshAllServerOnlineLists()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     // Remove servers no longer connected.
     for (int i = 0; i < m_nickListView->invisibleRootItem()->childCount(); ++i)
@@ -833,7 +833,7 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
 void NicksOnline::slotAddNickname(int serverGroupId, const QString& nickname)
 {
     Preferences::addNotify(serverGroupId, nickname);
-    static_cast<Application*>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 /**

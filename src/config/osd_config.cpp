@@ -87,7 +87,7 @@ void OSD_Config::restorePageToDefaults()
 void OSD_Config::saveSettings()
 {
     //Update the current OSD.
-    Application *konvApp=static_cast<Application *>(KApplication::kApplication());
+    Application *konvApp=Application::instance();
 
     konvApp->osd->setEnabled(kcfg_UseOSD->isChecked());
     if (kcfg_UseOSD->isChecked())

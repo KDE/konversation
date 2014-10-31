@@ -208,7 +208,7 @@ Server::~Server()
         qRegisterMetaType<ConnectionSettings>("ConnectionSettings");
         qRegisterMetaType<Konversation::ConnectionFlag>("Konversation::ConnectionFlag");
 
-        Application* konvApp = static_cast<Application*>(kapp);
+        Application* konvApp = Application::instance();
 
         QMetaObject::invokeMethod(konvApp->getConnectionManager(), "connectTo", Qt::QueuedConnection,
             Q_ARG(Konversation::ConnectionFlag, Konversation::CreateNewConnection),
@@ -318,7 +318,7 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(closeRawLog()), this, SLOT(closeRawLog()));
     connect(getOutputFilter(), SIGNAL(encodingChanged()), this, SLOT(updateEncoding()));
 
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
     connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
          konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
     connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
@@ -828,7 +828,7 @@ void Server::broken(KTcpSocket::Error error)
     }
     else
     {
-        static_cast<Application*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
+        Application::instance()->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
         QString error = i18n("Connection to server %1 (port %2) lost: %3.",
             getConnectionSettings().server().host(),
@@ -1876,7 +1876,7 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
         m_queryNicks.insert(lcNickname, nickInfo);
 
         if (!weinitiated)
-            static_cast<Application*>(kapp)->notificationHandler()->query(query, nickname);
+            Application::instance()->notificationHandler()->query(query, nickname);
     }
     else if (weinitiated)
     {
@@ -3015,7 +3015,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
     appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 is online (%2).", nickname, getServerName()), getStatusView());
 
-    static_cast<Application*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
+    Application::instance()->notificationHandler()->nickOnline(getStatusView(), nickname);
 
     nickInfo->setPrintedOnline(true);
     return nickInfo;
@@ -3029,7 +3029,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
 
-    static_cast<Application*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
+    Application::instance()->notificationHandler()->nickOffline(getStatusView(), nickname);
 
 }
 
@@ -3843,7 +3843,7 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
 
 ViewContainer* Server::getViewContainer() const
 {
-    Application* konvApp = static_cast<Application *>(kapp);
+    Application* konvApp = Application::instance();
     return konvApp->getMainWindow()->getViewContainer();
 }
 

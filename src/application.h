@@ -26,7 +26,7 @@
 #include "identity.h"
 #include "ircqueue.h"
 
-#include <KUniqueApplication>
+#include <QApplication>
 
 class ConnectionManager;
 class AwayManager;
@@ -59,7 +59,7 @@ namespace KWallet
 
 
 // FIXME KF5 port: See frameworks-qapp branch for start of port to QApplication and QCommandLineParser.
-class Application : public KUniqueApplication
+class Application : public QApplication
 {
     Q_OBJECT
 
@@ -85,7 +85,7 @@ class Application : public KUniqueApplication
         // URL-Catcher
         QStandardItemModel* getUrlModel() { return m_urlModel; }
 
-        Application();
+        Application(int &argc, char **argv);
         ~Application();
 
         static Application* instance();
@@ -126,7 +126,7 @@ class Application : public KUniqueApplication
         // inline auto replacement for input lines
         void doInlineAutoreplace(KTextEdit* textEdit);
 
-        int newInstance();
+        void newInstance();
 
         static void openUrl(const QString& url);
 

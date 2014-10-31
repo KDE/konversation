@@ -998,7 +998,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     bool doHighlight, bool parseURL, bool self, QChar::Direction* direction)
 {
     QString filteredLine(line);
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     //Since we can't turn off whitespace simplification withouteliminating text wrapping,
     //  if the line starts with a space turn it into a non-breaking space.
@@ -1019,7 +1019,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     {
         if (Preferences::self()->beep())
         {
-            kapp->beep();
+            qApp->beep();
         }
         //remove char after beep
         filteredLine.remove('\x07');
@@ -1950,7 +1950,7 @@ void IRCView::resizeEvent(QResizeEvent *event)
 
 void IRCView::mouseMoveEvent(QMouseEvent* ev)
 {
-    if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
+    if (m_mousePressedOnUrl && (m_mousePressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
         m_mousePressedOnUrl = false;
 

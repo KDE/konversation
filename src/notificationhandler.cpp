@@ -56,7 +56,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QLatin1Char('>'));
             }
@@ -70,7 +70,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QStringLiteral("> ") + cleanedMessage);
             }
@@ -100,7 +100,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt;", chatWin->getName(), fromNick));
             }
@@ -114,7 +114,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt; %3", chatWin->getName(), fromNick, cleanedMessage));
             }
@@ -141,7 +141,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(i18n("[Query] &lt;%1&gt;", fromNick));
             }
@@ -155,7 +155,7 @@ namespace Konversation
 
             if (osd)
             {
-                Application* konvApp = static_cast<Application*>(kapp);
+                Application* konvApp = Application::instance();
 
                 konvApp->osd->show(i18n("[Query] &lt;%1&gt; %2", fromNick, cleanedMessage));
             }
@@ -191,7 +191,7 @@ namespace Konversation
         if(Preferences::self()->oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            Application* konvApp = static_cast<Application*>(kapp);
+            Application* konvApp = Application::instance();
             konvApp->osd->show(i18n("%1 joined %2",nick, chatWin->getName()));
         }
     }
@@ -210,7 +210,7 @@ namespace Konversation
         if(Preferences::self()->oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            Application* konvApp = static_cast<Application*>(kapp);
+            Application* konvApp = Application::instance();
             konvApp->osd->show(i18n("%1 parted %2",nick, chatWin->getName()));
         }
     }
@@ -387,7 +387,7 @@ namespace Konversation
         if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            Application* konvApp = static_cast<Application*>(kapp);
+            Application* konvApp = Application::instance();
             // if there was no nick associated, this must be a command message, so don't try displaying
             // an empty nick in <>
             if(fromNick.isEmpty())

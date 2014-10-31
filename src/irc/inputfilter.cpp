@@ -2360,7 +2360,7 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
         source = prefix;
     }
 
-    Application* konv_app = static_cast<Application*>(kapp);
+    Application* konv_app = Application::instance();
     message = konv_app->doAutoreplace(message, false).first;
 
     if(isAChannel(parameterList.value(0)))

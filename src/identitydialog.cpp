@@ -108,7 +108,7 @@ namespace Konversation
         KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), QStringLiteral("dialog-ok"), i18n("Change identity information")));
         KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"),QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
 
-        AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
+        AwayManager* awayManager = Application::instance()->getAwayManager();
         connect(m_identityCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::updateIdentity);
         connect(this, &IdentityDialog::identitiesChanged, awayManager, &AwayManager::identitiesChanged);
     }
@@ -210,7 +210,7 @@ namespace Konversation
 
         refreshCurrentIdentity();
         Preferences::setIdentityList(m_identityList);
-        static_cast<Application*>(kapp)->saveOptions(true);
+        Application::instance()->saveOptions(true);
         emit identitiesChanged();
         QDialog::accept();
     }

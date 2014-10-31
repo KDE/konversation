@@ -43,7 +43,7 @@ void DBus::raw(const QString& server,const QString& command)
 
 QStringList DBus::listConnections()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     QStringList connections;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
@@ -56,7 +56,7 @@ QStringList DBus::listConnections()
 
 QStringList DBus::listServers()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     QStringList hosts;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
@@ -69,7 +69,7 @@ QStringList DBus::listServers()
 
 QStringList DBus::listConnectedServers()
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     QStringList connectedHosts;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
@@ -106,12 +106,12 @@ QStringList DBus::listJoinedChannels(const QString& serverName)
 
 void DBus::setAway(const QString& awaymessage)
 {
-    static_cast<Application*>(kapp)->getAwayManager()->requestAllAway(sterilizeUnicode(awaymessage));
+    Application::instance()->getAwayManager()->requestAllAway(sterilizeUnicode(awaymessage));
 }
 
 void DBus::setBack()
 {
-    static_cast<Application*>(kapp)->getAwayManager()->requestAllUnaway();
+    Application::instance()->getAwayManager()->requestAllUnaway();
 }
 
 void DBus::sayToAll(const QString &message)
@@ -195,7 +195,7 @@ QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 
 void DBus::changeAwayStatus(bool away)
 {
-    Application* konvApp = static_cast<Application*>(kapp);
+    Application* konvApp = Application::instance();
 
     if (away)
     {
@@ -283,7 +283,7 @@ void IdentDBus::setNickname(const QString &identity, int index,const QString& ni
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setNickname(index, sterilizeUnicode(nick));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getNickname(const QString &identity, int index)
@@ -295,7 +295,7 @@ void IdentDBus::setBot(const QString &identity, const QString& bot)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setNickservNickname(sterilizeUnicode(bot));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getBot(const QString &identity)
@@ -307,7 +307,7 @@ void IdentDBus::setPassword(const QString &identity, const QString& password)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setAuthPassword(sterilizeUnicode(password));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getPassword(const QString &identity)
@@ -319,7 +319,7 @@ void IdentDBus::setNicknameList(const QString &identity, const QStringList& newL
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setNicknameList(sterilizeUnicode(newList));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QStringList IdentDBus::getNicknameList(const QString &identity)
@@ -331,7 +331,7 @@ void IdentDBus::setQuitReason(const QString &identity, const QString& reason)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setQuitReason(sterilizeUnicode(reason));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getQuitReason(const QString &identity)
@@ -344,7 +344,7 @@ void IdentDBus::setPartReason(const QString &identity, const QString& reason)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setPartReason(sterilizeUnicode(reason));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getPartReason(const QString &identity)
@@ -356,7 +356,7 @@ void IdentDBus::setKickReason(const QString &identity, const QString& reason)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setKickReason(sterilizeUnicode(reason));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getKickReason(const QString &identity)
@@ -368,7 +368,7 @@ void IdentDBus::setRunAwayCommands(const QString &identity, bool run)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setRunAwayCommands(run);
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 bool IdentDBus::getRunAwayCommands(const QString &identity)
@@ -380,7 +380,7 @@ void IdentDBus::setAwayCommand(const QString &identity, const QString& command)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setAwayCommand(sterilizeUnicode(command));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getAwayCommand(const QString &identity)
@@ -392,7 +392,7 @@ void IdentDBus::setReturnCommand(const QString &identity, const QString& command
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setReturnCommand(sterilizeUnicode(command));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getReturnCommand(const QString &identity)
@@ -404,7 +404,7 @@ void IdentDBus::setAwayMessage(const QString &identity, const QString& message)
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setAwayMessage(sterilizeUnicode(message));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getAwayMessage(const QString &identity)
@@ -416,7 +416,7 @@ void IdentDBus::setAwayNickname(const QString &identity, const QString& nickname
 {
     const Identity *i = Preferences::identityByName(sterilizeUnicode(identity)).data();
     const_cast<Identity *>(i)->setAwayNickname(sterilizeUnicode(nickname));
-    static_cast<Application *>(kapp)->saveOptions(true);
+    Application::instance()->saveOptions(true);
 }
 
 QString IdentDBus::getAwayNickname(const QString &identity)

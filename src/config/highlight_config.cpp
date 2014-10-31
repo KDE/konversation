@@ -280,7 +280,7 @@ QStringList Highlight_Config::currentHighlightList()
 
 void Highlight_Config::playSound()
 {
-    Application *konvApp = static_cast<Application *>(KApplication::kApplication());
+    Application *konvApp = Application::instance();
     konvApp->sound()->play(soundURL->url());
 }
 

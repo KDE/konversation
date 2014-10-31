@@ -41,6 +41,7 @@
 #include <KMessageBox>
 #include <K4AboutData>
 #include <KDebug>
+#include <KComponentData>
 
 #include <QTextDocument>
 #include <QTextBlock>
@@ -1834,7 +1835,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_queuetuner(const OutputFilterInput& input)
     {
-        Application *konvApp = static_cast<Application*>(KApplication::kApplication());
+        Application *konvApp = Application::instance();
 
         if (input.parameter.isEmpty() || input.parameter == "on")
             konvApp->showQueueTuner(true);
@@ -1880,7 +1881,7 @@ namespace Konversation
         {
             if (isParameter("app", input.parameter))
             {
-                Application *konvApp = static_cast<Application*>(KApplication::kApplication());
+                Application *konvApp = Application::instance();
 
                 konvApp->restart();
             }

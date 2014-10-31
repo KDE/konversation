@@ -39,7 +39,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     //nor in compensating for it if my guess is incorrect. so, cache it.
     m_qtBoxPadding = document()->size().toSize().height() - fontMetrics().lineSpacing();
 
-    connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
+    connect(qApp, SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
     m_multiRow = Preferences::self()->useMultiRowInputBox();
 
     // add one empty line to the history (will be overwritten with newest entry)
@@ -314,7 +314,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(static_cast<Application*>(kapp)->doAutoreplace(toPlainText(), true).first);
+                    setText(Application::instance()->doAutoreplace(toPlainText(), true).first);
                     emit submit();
                 }
             }

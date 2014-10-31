@@ -54,8 +54,8 @@
 
 using namespace Konversation;
 
-Application::Application()
-: KUniqueApplication(true, true)
+Application::Application(int &argc, char **argv)
+: QApplication(argc, argv)
 {
     mainWindow = 0;
     m_restartScheduled = false;
@@ -145,7 +145,7 @@ void Application::implementRestart()
     KProcess::startDetached(QCoreApplication::applicationFilePath(), argumentList);
 }
 
-int Application::newInstance()
+void Application::newInstance()
 {
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     QString url;
@@ -279,7 +279,7 @@ int Application::newInstance()
     {
         restart();
 
-        return KUniqueApplication::newInstance();
+        return;
     }
 
     if (!url.isEmpty())
@@ -295,12 +295,12 @@ int Application::newInstance()
                                           args->isSet("ssl"));
     }
 
-    return KUniqueApplication::newInstance();
+    return;
 }
 
 Application* Application::instance()
 {
-    return static_cast<Application*>(KApplication::kApplication());
+    return static_cast<Application*>(QApplication::instance());
 }
 
 void Application::restart()
