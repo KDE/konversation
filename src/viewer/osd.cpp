@@ -25,7 +25,7 @@
 #include <QTimer>
 #include <QDebug>
 
-#include <KApplication>
+#include <QApplication>
 #include <KLocalizedString>
 
 
@@ -63,9 +63,6 @@ OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
 
     connect(m_timer, &QTimer::timeout, this, &OSDWidget::hide);
     connect(m_timerMin, &QTimer::timeout, this, &OSDWidget::minReached);
-
-    //or crashes, KWindowSystem bug I think, crashes in QWidget::icon()
-    kapp->setTopWidget( this );
 }
 
 OSDWidget::~OSDWidget()

@@ -18,7 +18,6 @@
 
 #include "invitedialog.h"
 
-#include <KApplication>
 #include <KGlobal>
 #include <KLocalizedString>
 #include <QIcon>
@@ -156,8 +155,8 @@ QVariant InviteChannelListModel::data(const QModelIndex& index, int role) const
     }
     if(role == Qt::SizeHintRole)
     {
-        return QSize(0, qMax(kapp->style()->sizeFromContents(QStyle::CT_CheckBox, 0, QSize(0, 0), 0).height(),
-                             kapp->fontMetrics().height()));
+        return QSize(0, qMax(qApp->style()->sizeFromContents(QStyle::CT_CheckBox, 0, QSize(0, 0), 0).height(),
+                             qApp->fontMetrics().height()));
     }
     else if(Qt::CheckStateRole && index.column() == 0)
     {
