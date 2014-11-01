@@ -12,42 +12,57 @@
 #include "dccfiledialog.h"
 
 #include <QCheckBox>
+#include <QGridLayout>
+#include <QPushButton>
 
 #include <KLocalizedString>
 #include <KFileWidget>
 
 #include <preferences.h>
 
-DccFileDialog::DccFileDialog(const QUrl &startDir, const QString& filter, QWidget* parent, QWidget* widget)
-    : KFileDialog(startDir, filter, parent, widget)
+DccFileDialog::DccFileDialog(QWidget* parent)
+    : QDialog(parent)
 {
+    QGridLayout* mainLayout = new QGridLayout(this);
+
+    m_fileWidget = new KFileWidget(QUrl(), this);
+    mainLayout->addWidget(m_fileWidget, 0, 0);
+
+    m_fileWidget->okButton()->show();
+    connect(m_fileWidget->okButton(), &QPushButton::clicked, m_fileWidget, &KFileWidget::slotOk);
+    connect(m_fileWidget, &KFileWidget::accepted, m_fileWidget, &KFileWidget::accept);
+    connect(m_fileWidget, &KFileWidget::accepted, this, &QDialog::accept);
+    m_fileWidget->cancelButton()->show();
+    connect(m_fileWidget->cancelButton(), &QPushButton::clicked, this, &QDialog::reject);
+
     m_checkBox = new QCheckBox(i18nc("passive dcc send", "Passive Send"));
-    fileWidget()->setCustomWidget(m_checkBox);
+    m_fileWidget->setCustomWidget(m_checkBox);
 
     m_checkBox->setCheckState(Preferences::self()->dccPassiveSend() ? Qt::Checked : Qt::Unchecked);
 }
 
 QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
 {
-    //setDirectory(startDir);
-    setStartDir(startDir);
+    m_fileWidget->setStartDir(startDir);
 
-    setFilter(filter);
+    m_fileWidget->setFilter(filter);
 
-    //setAcceptMode(QFileDialog::AcceptOpen);
-    setOperationMode( KFileDialog::Opening );
+    m_fileWidget->setOperationMode( KFileWidget::Opening );
 
-    //setFileMode(QFileDialog::ExistingFile);
-    setMode( KFile::Files | KFile::ExistingOnly );
+    m_fileWidget->setMode( KFile::Files | KFile::ExistingOnly );
 
-    //setCaption(caption.isEmpty() ? i18n("Open") : caption);
     setWindowTitle(caption.isEmpty() ? i18n("Open") : caption);
 
     exec();
-    return selectedUrls();
+    return m_fileWidget->selectedUrls();
 }
 
 bool DccFileDialog::passiveSend()
 {
     return m_checkBox->isChecked();
+}
+
+QSize DccFileDialog::sizeHint() const
+{
+    return m_fileWidget->dialogSizeHint();
 }

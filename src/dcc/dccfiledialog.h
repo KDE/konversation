@@ -12,20 +12,26 @@
 #ifndef DCCFILEDIALOG_H
 #define DCCFILEDIALOG_H
 
-#include <KFileDialog>
+#include <QDialog>
+#include <QUrl>
 
 class QCheckBox;
+class KFileWidget;
 
-class DccFileDialog : public KFileDialog
+class DccFileDialog : public QDialog
 {
 
 public:
-    DccFileDialog(const QUrl &startDir, const QString& filter, QWidget* parent, QWidget* widget = 0);
+    DccFileDialog(QWidget* parent);
 
     QList<QUrl> getOpenUrls(const QUrl &startDir = QUrl(), const QString& filter = QString(), const QString& caption = QString());
 
     bool passiveSend();
+
+    QSize sizeHint() const;
+
 private:
+    KFileWidget* m_fileWidget;
     QCheckBox* m_checkBox;
 };
 

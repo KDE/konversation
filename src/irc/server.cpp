@@ -2028,7 +2028,7 @@ void Server::requestDccSend(const QString &a_recipient)
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
-        QPointer<DccFileDialog> dlg = new DccFileDialog (QUrl(), QString(), getViewContainer()->getWindow());
+        QPointer<DccFileDialog> dlg = new DccFileDialog (getViewContainer()->getWindow());
         //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
         QList<QUrl> fileURLs = dlg->getOpenUrls(
             QUrl(),
