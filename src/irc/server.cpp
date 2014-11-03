@@ -491,7 +491,7 @@ void Server::connectToIRCServer()
                 m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
             }
 
-            m_socket->setAdvertisedSslVersion(KTcpSocket::TlsV1);
+            m_socket->setAdvertisedSslVersion(KTcpSocket::SecureProtocols);
 
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
