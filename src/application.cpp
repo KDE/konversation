@@ -232,7 +232,7 @@ void Application::newInstance(QCommandLineParser *args)
         // handle autoconnect on startup
         Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
-        if (args->isSet(QStringLiteral("autoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
+        if (!args->isSet(QStringLiteral("noautoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
         {
             QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
             while(it.hasNext())
