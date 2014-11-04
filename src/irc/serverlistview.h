@@ -29,7 +29,7 @@ class ServerListView : public QTreeWidget
 
     private:
         bool badDropSelection();
-    signals:
+    Q_SIGNALS:
         void moved();
         void aboutToMove();
         

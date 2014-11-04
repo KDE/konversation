@@ -27,11 +27,11 @@ class QuickButton : public QPushButton
 
         void setDefinition(const QString &newDefinition);
 
-        signals:
+        Q_SIGNALS:
         void clicked(int);
         void clicked(const QString &definition);
 
-    public slots:
+    public Q_SLOTS:
         void wasClicked();
 
     protected:

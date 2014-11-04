@@ -34,11 +34,11 @@ class PasteEditor : public QDialog, private Ui::PasteEditor
 
         static QString edit(QWidget* parent, const QString& text);
 
-    protected slots:
+    protected Q_SLOTS:
         void addQuotationIndicators();
         void removeNewlines();
 
-    private slots:
+    private Q_SLOTS:
         void doInlineAutoreplace();
 
     private:

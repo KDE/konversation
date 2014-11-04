@@ -37,10 +37,10 @@ class EditNotifyDialog : public QDialog
             const QString& nickname=QString());
         ~EditNotifyDialog();
 
-        signals:
+        Q_SIGNALS:
         void notifyChanged(int serverGroupId,
             const QString& nickname);
-    protected slots:
+    protected Q_SLOTS:
         void slotOk();
 
     protected:

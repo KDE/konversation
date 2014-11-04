@@ -118,7 +118,7 @@ public:
     ///Time in milliseconds that the previous message waited
     int lastWait() { return m_lastWait; }
 
-public slots:
+public Q_SLOTS:
     void sent(int bytes, int encodedBytes, IRCQueue *); ///< feedback statistics
     void sendNow(); ///< dumps a line to the socket
     void serverOnline(bool on); ///< server tells us that the socket is ready

@@ -35,10 +35,10 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
 
         virtual bool hasChanged();
 
-    signals:
+    Q_SIGNALS:
         void modified();
 
-    protected slots:
+    protected Q_SLOTS:
         void updatePreview(int id);
         void updateButtons();
         void installTheme();

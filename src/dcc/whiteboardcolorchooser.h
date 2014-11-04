@@ -43,12 +43,12 @@ namespace Konversation
             QColor foregroundColor() const;
             QColor backgroundColor() const;
 
-        public slots:
+        public Q_SLOTS:
             void setColor(ColorLayer layer, const QColor& color);
             void setForegroundColor(const QColor& color);
             void setBackgroundColor(const QColor& color);
 
-        signals:
+        Q_SIGNALS:
             void colorsSwapped(const QColor& newForegroundColor,
                                const QColor& newBackgroundColor);
             void foregroundColorChanged(const QColor& color);

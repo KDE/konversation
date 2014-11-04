@@ -52,7 +52,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         virtual void hideEvent(QHideEvent* e);
         bool focusedChild();
 
-    private slots:
+    private Q_SLOTS:
         void slotTextChanged();
         void slotFind();
         void slotFindNext();
@@ -65,7 +65,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         void showOptionsMenu();
 
-    signals:
+    Q_SIGNALS:
         void signalSearchChanged(const QString& pattern);
         void signalSearchNext();
         void signalSearchPrevious();

@@ -35,16 +35,16 @@ namespace Konversation
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
 
-        public slots:
+        public Q_SLOTS:
             virtual void accept();
 
-        signals:
+        Q_SIGNALS:
             void identitiesChanged();
 
         protected:
             bool checkCurrentIdentity();
 
-        protected slots:
+        protected Q_SLOTS:
             void updateIdentity(int index);
             void refreshCurrentIdentity();
 

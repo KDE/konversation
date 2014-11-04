@@ -32,7 +32,7 @@ class QuickConnectDialog : public QDialog
         explicit QuickConnectDialog(QWidget* parent=0);
         ~QuickConnectDialog();
 
-    signals:
+    Q_SIGNALS:
         void connectClicked(Konversation::ConnectionFlag flag,
                             const QString& hostName,
                             const QString& port,
@@ -42,7 +42,7 @@ class QuickConnectDialog : public QDialog
                             bool useSSL
             );
 
-    protected slots:
+    protected Q_SLOTS:
         void slotOk();
     void slotServerNameChanged( const QString& );
 

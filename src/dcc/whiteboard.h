@@ -33,7 +33,7 @@ namespace Konversation
 
                 static QStringList whiteboardCommands();
 
-            public slots:
+            public Q_SLOTS:
                 void receivedWhiteBoardLine(const QString& line);
                 void connected();
 
@@ -59,7 +59,7 @@ namespace Konversation
                 void usedText(int x, int y, const QString& text);
                 void usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text);
 
-            signals:
+            Q_SIGNALS:
                 void rawWhiteBoardCommand(const QString& command);
 
             private:

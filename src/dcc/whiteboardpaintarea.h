@@ -38,7 +38,7 @@ namespace Konversation
             explicit WhiteBoardPaintArea(QWidget* parent = 0);
             ~WhiteBoardPaintArea();
 
-        public slots:
+        public Q_SLOTS:
             void setTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
             void setForegroundColor(const QColor& color);
             void setBackgroundColor(const QColor& color);
@@ -68,7 +68,7 @@ namespace Konversation
 
             void save(const QString& fileName);
 
-        signals:
+        Q_SIGNALS:
             void drawedPencil(int lineWidth, const QColor& penColor, const QColor& brushColor,
                               int xFrom, int yFrom, int xTo, int yTo);
             void drawedLine(int lineWidth, const QColor& penColor, const QColor& brushColor,

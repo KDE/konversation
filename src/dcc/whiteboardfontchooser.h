@@ -35,13 +35,13 @@ namespace Konversation
                 QFont font() const;
                 int textStyle() const;
 
-            signals:
+            Q_SIGNALS:
                 void fontChanged(const QFont& font);
 
             protected:
                 virtual void closeEvent(QCloseEvent* event);
 
-            protected slots:
+            protected Q_SLOTS:
                 void currentFontChanged(const QFont& font);
                 void pointSizeChanged(const QString& size);
 

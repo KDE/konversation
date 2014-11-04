@@ -39,7 +39,7 @@ class LogfileReader : public ChatWindow
         virtual bool eventFilter(QObject* watched, QEvent* e);
 
 
-    protected slots:
+    protected Q_SLOTS:
         void updateView();
         void storeBufferSize(int kb);
         void clearLog();

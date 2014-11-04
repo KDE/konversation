@@ -31,10 +31,10 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
 
     virtual bool hasChanged();
 
-  signals:
+  Q_SIGNALS:
     void modified();
 
-  protected slots:
+  protected Q_SLOTS:
     void entrySelected(QTreeWidgetItem* quickButtonEntry);
     void nameChanged(const QString& newName);
     void actionChanged(const QString& newAction);

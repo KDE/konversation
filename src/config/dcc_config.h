@@ -24,7 +24,7 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
         DCC_Config(QWidget* parent, const char* name);
         ~DCC_Config();
 
-    protected slots:
+    protected Q_SLOTS:
         virtual void languageChange();
         void dccMethodChanged(int index);
         void dccUPnPChanged(int state);

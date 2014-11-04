@@ -33,17 +33,17 @@ class KonsolePanel : public ChatWindow
 
         QWidget* getWidget();
 
-    signals:
+    Q_SIGNALS:
         void closeView(ChatWindow* view);
 
-    public slots:
+    public Q_SLOTS:
         void partDestroyed();
         void manageKonsoleProfiles();
 
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
-    protected slots:
+    protected Q_SLOTS:
         void konsoleChanged(const QString& data);
 
     private:

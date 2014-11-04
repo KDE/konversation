@@ -32,11 +32,11 @@ namespace Konversation
             void setFont(const QFont &font);
             QChar chr();
 
-        protected slots:
+        protected Q_SLOTS:
             void charSelected();
             void slotAccepted();
 
-        signals:
+        Q_SIGNALS:
             void insertChar(const QChar&);
 
         private:

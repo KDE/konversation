@@ -31,7 +31,7 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
 
         virtual bool hasChanged();
 
-    public slots:
+    public Q_SLOTS:
         virtual void languageChange();
 
     protected:
@@ -39,7 +39,7 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
 
         QString m_oldWarningsChecked;     // for hasChanged()
 
-    signals:
+    Q_SIGNALS:
         void modified();
 };
 

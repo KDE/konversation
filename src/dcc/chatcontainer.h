@@ -49,17 +49,17 @@ namespace Konversation
                 /** Called from ChatWindow adjustFocus */
                 virtual void childAdjustFocus();
 
-            public slots:
+            public Q_SLOTS:
                 void setPartnerNick(const QString &nick);
 
-            public slots:
+            public Q_SLOTS:
                 void textEntered();
                 void textPasted(const QString &text);
 
                 void receivedLine(const QString &line);
                 void chatStatusChanged(Konversation::DCC::Chat *chat, Konversation::DCC::Chat::Status newstatus, Konversation::DCC::Chat::Status oldstatus);
 
-            protected slots:
+            protected Q_SLOTS:
                 void upnpError(const QString &errorMessage);
 
             private:

@@ -93,7 +93,7 @@ namespace Konversation
 
             static bool replaceAliases(QString& line, ChatWindow* context = 0);
 
-        signals:
+        Q_SIGNALS:
             void openDccSend(const QString &recipient, QUrl url);
             void requestDccSend();                // Choose Recipient and File from requester
                                                   // Choose File from requester
@@ -128,11 +128,11 @@ namespace Konversation
             void showView(ChatWindow* view);
             void encodingChanged ();
 
-        public slots:
+        public Q_SLOTS:
             OutputFilterResult execBan(const QString& mask,const QString& channels);
             OutputFilterResult execUnban(const QString& mask,const QString& channels);
 
-        private slots:
+        private Q_SLOTS:
             OutputFilterResult command_op(const OutputFilterInput& input);
             OutputFilterResult command_deop(const OutputFilterInput& input);
             OutputFilterResult command_hop(const OutputFilterInput& input);

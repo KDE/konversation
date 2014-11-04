@@ -38,7 +38,7 @@ class OutputFilterResolveJob : public QObject
         ~OutputFilterResolveJob();
 
 
-    private slots:
+    private Q_SLOTS:
         void resolved(QHostInfo hostInfo);
 
 

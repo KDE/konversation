@@ -171,14 +171,14 @@ namespace Konversation
             /// Get the current error (null string if there is none)
             QString getError() const {return error;}
 
-        private slots:
+        private Q_SLOTS:
             void onRequestFinished(KJob *reply);
             void downloadFinished(KJob* j);
 
             void sendSoapData(KIO::Job *job, QByteArray &data);
             void recvSoapData(KIO::Job *job, const QByteArray &data);
 
-        signals:
+        Q_SIGNALS:
             /**
             * Signal which indicates that the XML was downloaded successfully or not.
             * @param r The router which emitted the signal

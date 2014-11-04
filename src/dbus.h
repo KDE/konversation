@@ -33,7 +33,7 @@ class DBus : public QObject
         QString getNickname (const QString &server);
         QString getChannelEncoding(const QString& server, const QString& channel);
 
-    signals:
+    Q_SIGNALS:
         void dbusSay(const QString& server,const QString& target,const QString& command);
         void dbusInfo(const QString& string);
         void dbusInsertMarkerLine();
@@ -48,7 +48,7 @@ class DBus : public QObject
                        const QString& channel = QString(),
                        bool useSSL = false);
 
-    public slots:
+    public Q_SLOTS:
         void setAway(const QString &awaymessage);
         void setBack();
         void sayToAll(const QString &message);
@@ -65,7 +65,7 @@ class DBus : public QObject
         QStringList listConnectedServers();
         QStringList listJoinedChannels(const QString& server);
 
-    private slots:
+    private Q_SLOTS:
         void changeAwayStatus(bool away);
 };
 
@@ -77,7 +77,7 @@ class IdentDBus : public QObject
         public:
         explicit IdentDBus(QObject *parent = 0);
 
-    public slots:
+    public Q_SLOTS:
         void setrealName(const QString &identity, const QString& name);
         QString getrealName(const QString &identity);
         void setIdent(const QString &identity, const QString& ident);

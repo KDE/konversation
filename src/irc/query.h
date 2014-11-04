@@ -73,17 +73,17 @@ class Query : public ChatWindow
         Konversation::Cipher* getCipher();
         #endif
 
-    signals:
+    Q_SIGNALS:
         void sendFile(const QString& recipient);
         void updateQueryChrome(ChatWindow*, const QString&);
 
-    public slots:
+    public Q_SLOTS:
         void sendText(const QString& text);
         virtual void indicateAway(bool show);
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 
-    protected slots:
+    protected Q_SLOTS:
         void queryTextEntered();
         void queryPassthroughCommand();
         void sendFileMenu();

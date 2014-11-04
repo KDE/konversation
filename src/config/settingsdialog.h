@@ -40,7 +40,7 @@ class KonviSettingsDialog : public ConfigDialog
         explicit KonviSettingsDialog(QWidget *parent);
         ~KonviSettingsDialog();
 
-    protected slots:
+    protected Q_SLOTS:
         virtual void updateSettings();
         virtual void updateWidgets();
         virtual void updateWidgetsDefault();

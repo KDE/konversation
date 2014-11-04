@@ -38,7 +38,7 @@ namespace Konversation
                 Transfer *transfer() const;
                 void clear();
 
-            private slots:
+            private Q_SLOTS:
                 void updateView();
                 // Only updates labels that can change during transfer
                 void updateChangeableView();

@@ -37,7 +37,7 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
 
         QString m_oldSortingOrder;
 
-    signals:
+    Q_SIGNALS:
         void modified();
 };
 

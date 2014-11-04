@@ -33,7 +33,7 @@ namespace Konversation
             explicit StatusBar(MainWindow* parent);
             ~StatusBar();
 
-        public slots:
+        public Q_SLOTS:
             void updateAppearance();
 
             void resetStatusBar();

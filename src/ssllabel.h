@@ -27,7 +27,7 @@ class SSLLabel : public QLabel
     protected:
         void mouseReleaseEvent(QMouseEvent *e);
 
-        signals:
+        Q_SIGNALS:
         void clicked();
 };
 #endif

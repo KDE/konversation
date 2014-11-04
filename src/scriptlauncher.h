@@ -27,11 +27,11 @@ class ScriptLauncher : public QObject
 
         static QString scriptPath(const QString& script);
 
-    signals:
+    Q_SIGNALS:
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
 
-    public slots:
+    public Q_SLOTS:
         void launchScript(int connectionId, const QString& target, const QString& parameter);
 };
 #endif

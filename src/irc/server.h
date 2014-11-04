@@ -398,7 +398,7 @@ class Server : public QObject
 
         //These are really only here to limit where ircqueue.h is included
 
-    signals:
+    Q_SIGNALS:
         void destroyed(int connectionId);
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
@@ -456,7 +456,7 @@ class Server : public QObject
         void addDccPanel();
         void addDccChat(Konversation::DCC::Chat *chat);
 
-    public slots:
+    public Q_SLOTS:
         void connectToIRCServer();
         void connectToIRCServerIn(uint delay);
 
@@ -540,7 +540,7 @@ class Server : public QObject
         void capDenied(const QString& name);
         void sendAuthenticate(const QString& message);
 
-    protected slots:
+    protected Q_SLOTS:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
         void preShellCommandError(QProcess::ProcessError eror);
@@ -607,7 +607,7 @@ class Server : public QObject
 
         void requestOpenChannelListPanel(const QString& filter);
 
-    private slots:
+    private Q_SLOTS:
         void collectStats(int bytes, int encodedBytes);
 
         /** Called in the server constructor if the preferences are set to run a command on a new server instance.

@@ -56,7 +56,7 @@ class TopicEdit : public KTextEdit
         void moveEvent(QMoveEvent* event);
 
 
-    private slots:
+    private Q_SLOTS:
         void contentsChanged(int position, int charsRemoved, int charsAdded);
         void trimExcessText();
         void moveCursorToEnd();

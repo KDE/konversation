@@ -38,7 +38,7 @@ namespace Konversation
 
                 static QString getNickname(QWidget* parent, QAbstractListModel* model);
 
-            protected slots:
+            protected Q_SLOTS:
                 void newNicknameSelected(const QModelIndex& index);
                                                           // KDE double click
                 void newNicknameSelectedQuit(const QModelIndex& index);

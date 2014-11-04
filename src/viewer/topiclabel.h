@@ -37,11 +37,11 @@ namespace Konversation
 
             void setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on);
 
-        public slots:
+        public Q_SLOTS:
             virtual void openLink(const QString& link);
             void setText(const QString& text);
 
-        signals:
+        Q_SIGNALS:
             void setStatusBarTempText(const QString&);
             void clearStatusBarTempText();
 
@@ -56,7 +56,7 @@ namespace Konversation
             virtual void mousePressEvent(QMouseEvent* ev);
             virtual void mouseMoveEvent(QMouseEvent* ev);
 
-        protected slots:
+        protected Q_SLOTS:
             void highlightedSlot(const QString&);
 
         private:

@@ -38,7 +38,7 @@ class ConnectionBehavior_Config : public QWidget, public KonviSettingsPage, priv
 
         virtual bool hasChanged();
 
-    protected slots:
+    protected Q_SLOTS:
         void setPasswordChanged(bool changed = true);
 
     private:

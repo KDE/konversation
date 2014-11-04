@@ -39,7 +39,7 @@ class ViewSpringLoader : public QObject
         bool eventFilter(QObject* watched, QEvent* event);
 
 
-    private slots:
+    private Q_SLOTS:
         void springLoad();
 
 

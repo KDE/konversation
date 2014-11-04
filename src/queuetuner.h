@@ -33,7 +33,7 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
         ~QueueTuner();
         virtual void contextMenuEvent (QContextMenuEvent*);
 
-    public slots:
+    public Q_SLOTS:
         void setServer(Server* newServer);
         void getRates();
         void timerFired();
@@ -52,7 +52,7 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
         void fastIntervalChanged(int);
         void serverDestroyed(QObject*);
 
-    signals:
+    Q_SIGNALS:
         void hidden();
 
     private:

@@ -47,16 +47,16 @@ class StatusPanel : public ChatWindow
 
         virtual void setNotificationsEnabled(bool enable);
 
-    signals:
+    Q_SIGNALS:
         void sendFile();
 
-    public slots:
+    public Q_SLOTS:
         void setNickname(const QString& newNickname);
         virtual void indicateAway(bool show);
         void updateAppearance();
         void updateName();
 
-    protected slots:
+    protected Q_SLOTS:
         void sendFileMenu();
         void statusTextEntered();
         void sendText(const QString& line);

@@ -31,7 +31,7 @@ namespace Konversation
 
             void restore();
 
-        public slots:
+        public Q_SLOTS:
             void startNotification();
             void endNotification();
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }

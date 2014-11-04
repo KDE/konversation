@@ -84,7 +84,7 @@ class IRCView : public KTextBrowser
 
         void setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on);
 
-    signals:
+    Q_SIGNALS:
         void gotFocus(); // So we can set focus to input line
         void textToLog(const QString& text); ///< send the to the log file
         void sendFile(); ///< a command for a target to which we can DCC send
@@ -111,7 +111,7 @@ class IRCView : public KTextBrowser
         /// QTextCharFormat object types.
         enum ObjectFormats { MarkerLine = QTextFormat::UserObject, RememberLine};
 
-    public slots:
+    public Q_SLOTS:
         /// Inserts a marker line.
         /// Does not disturb m_rememberLineDirtyBit.
         void insertMarkerLine();
@@ -156,12 +156,12 @@ class IRCView : public KTextBrowser
         /// Shortcut to get an object format of the desired type
         QTextCharFormat getFormat(ObjectFormats);
 
-    public slots:
+    public Q_SLOTS:
         // Doesn't have to be a slot, but what the hay.
         /// Called *only* from ~Burr(), by QTextBlockData::free
         void blockDeleted(Burr* b);
 
-    private slots:
+    private Q_SLOTS:
         /** Called every time a change occurs to the document.
          *
          * Used to infer the clearing of the entire document,
@@ -176,7 +176,7 @@ class IRCView : public KTextBrowser
         IrcViewMarkerLine markerFormatObject; ///< a QTextObjectInterface
 
     //// Other stuff
-    public slots:
+    public Q_SLOTS:
         //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
         void append(const QString& nick, const QString& message);
         void appendRaw(const QString& message, bool self = false);
@@ -191,7 +191,7 @@ class IRCView : public KTextBrowser
         /// Appends a new line without any scrollback or notification checks
         void doRawAppend(const QString& newLine, bool rtl);
 
-    public slots:
+    public Q_SLOTS:
         void appendChannelAction(const QString& nick, const QString& message);
 
         void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
@@ -201,7 +201,7 @@ class IRCView : public KTextBrowser
     protected:
         void doAppend(const QString& line, bool rtl, bool self=false);
 
-    public slots:
+    public Q_SLOTS:
         /// Emits the doSeach signal.
         void findText();
         /// Emits the doSeachNext signal.
@@ -218,7 +218,7 @@ class IRCView : public KTextBrowser
         //! Again. Really? Two in a row? Couldn't be more inventive, whoever you are? Come on, show some personality. Let your vocabulary loose! Because right now its looking like you don't know what you're taking about.
         //void updateScrollBarPos();
 
-    protected slots:
+    protected Q_SLOTS:
         void highlightedSlot(const QString& link);
         void anchorClicked(const QUrl& url);
 

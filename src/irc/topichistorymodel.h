@@ -77,7 +77,7 @@ class TopicHistoryModel : public QAbstractListModel
         static QString authorPlaceholder();
 
 
-    signals:
+    Q_SIGNALS:
         void currentTopicChanged(const QString& text);
 
 

@@ -24,11 +24,11 @@ class AwayLabel : public QLabel
         explicit AwayLabel(QWidget *parent = 0);
         ~AwayLabel();
 
-    signals:
+    Q_SIGNALS:
         void awayMessageChanged(const QString&);
         void unaway();
 
-    protected slots:
+    protected Q_SLOTS:
         void changeAwayMessage();
 };
 

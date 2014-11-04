@@ -74,7 +74,7 @@ class UrlCatcher : public ChatWindow
         void childAdjustFocus();
 
 
-    private slots:
+    private Q_SLOTS:
         void updateItemActionStates();
         void updateListActionStates();
         void openContextMenu(const QPoint& p);

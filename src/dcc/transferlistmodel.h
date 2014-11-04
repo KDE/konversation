@@ -148,12 +148,12 @@ namespace Konversation
             static QString getSpeedPrettyText(transferspeed_t speed);
             static QString getTimeLeftPrettyText(int timeleft);
             static QString secToHMS(long sec);
-        signals:
+        Q_SIGNALS:
             //use our own signal that guarantees the data was removed from model
             //NOTE: rowsRemoved does not
             void rowsPermanentlyRemoved (int startrow, int endrow);
 
-        public slots:
+        public Q_SLOTS:
             void transferStatusChanged(Konversation::DCC::Transfer *transfer,
                                        int oldstatus, int newstatus);
 

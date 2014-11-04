@@ -39,16 +39,16 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
         QList<Ignore*> getIgnoreList(); // in prefs format
         void updateEnabledness();
 
-    public slots:
+    public Q_SLOTS:
         virtual void languageChange();
 
-    protected slots:
+    protected Q_SLOTS:
         void newIgnore();
         void removeIgnore();
         void flagCheckboxChanged();
         void select(QTreeWidgetItem* item);
         void removeAllIgnore();
-    signals:
+    Q_SIGNALS:
         void modified();
 };
 

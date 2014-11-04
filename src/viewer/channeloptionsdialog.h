@@ -42,7 +42,7 @@ namespace Konversation
              */
             static QString whatsThisForMode(char mode);
 
-        public slots:
+        public Q_SLOTS:
             void refreshAllowedChannelModes();
             void refreshModes();
             void refreshEnableModes(bool forceUpdate = false);
@@ -59,7 +59,7 @@ namespace Konversation
 
             void changeOptions();
 
-        protected slots:
+        protected Q_SLOTS:
             void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited(bool edited);
 

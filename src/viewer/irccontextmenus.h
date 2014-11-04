@@ -90,7 +90,7 @@ class IrcContextMenus : public QObject
             const QString& author);
 
 
-    protected slots:
+    protected Q_SLOTS:
         void processWebShortcutAction();
         void configureWebShortcuts();
         void updateQuickButtonMenu();

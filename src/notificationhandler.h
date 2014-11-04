@@ -32,7 +32,7 @@ namespace Konversation
             explicit NotificationHandler(Application* parent = 0);
             ~NotificationHandler();
 
-        public slots:
+        public Q_SLOTS:
             void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);
             void nick(ChatWindow* chatWin, const QString& fromNick, const QString& message);
             void join(ChatWindow* chatWin, const QString& nick);

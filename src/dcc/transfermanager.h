@@ -47,7 +47,7 @@ namespace Konversation
                 explicit TransferManager(QObject* parent = 0);
                 ~TransferManager();
 
-            signals:
+            Q_SIGNALS:
                 /*
                  * The status of the item is DccTransfer::Configuring when this signal is emitted.
                  */
@@ -100,7 +100,7 @@ namespace Konversation
                  */
                 void initTransfer(Transfer* transfer);
 
-            private slots:
+            private Q_SLOTS:
                 void slotTransferStatusChanged(Konversation::DCC::Transfer* item, int newStatus, int oldStatus);
                 void removeSendItem(Konversation::DCC::Transfer* item);
                 void removeRecvItem(Konversation::DCC::Transfer* item);

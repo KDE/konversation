@@ -36,7 +36,7 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
 
         virtual bool hasChanged();  // implement the interface, will not be used here, though
 
-    protected slots:
+    protected Q_SLOTS:
         void slotOSDEnabledChanged(bool on);
         void slotCustomColorsChanged(bool on);
         void slotTextColorChanged(const QColor& color);

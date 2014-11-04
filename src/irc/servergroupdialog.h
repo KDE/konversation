@@ -43,10 +43,10 @@ namespace Konversation
 
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
-        public slots:
+        public Q_SLOTS:
             virtual void accept();
 
-        protected slots:
+        protected Q_SLOTS:
             void addServer();
             void editServer();
             void editServer(ServerSettings server);
@@ -91,7 +91,7 @@ namespace Konversation
             void setServerSettings(const ServerSettings& server);
             ServerSettings serverSettings();
 
-        protected slots:
+        protected Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
         private:
@@ -110,7 +110,7 @@ namespace Konversation
             void setChannelSettings(const ChannelSettings& channel);
             ChannelSettings channelSettings();
 
-        protected slots:
+        protected Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
 

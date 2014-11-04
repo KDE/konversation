@@ -139,7 +139,7 @@ class ChatWindow : public QWidget
         void setMargin(int margin) { layout()->setMargin(margin); }
         void setSpacing(int spacing) { layout()->setSpacing(spacing); }
 
-    signals:
+    Q_SIGNALS:
         void nameChanged(ChatWindow* view, const QString& newName);
         //void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.
@@ -153,7 +153,7 @@ class ChatWindow : public QWidget
 
         void closing(ChatWindow* myself);
 
-    public slots:
+    public Q_SLOTS:
         void updateAppearance();
 
         void logText(const QString& text);
@@ -174,7 +174,7 @@ class ChatWindow : public QWidget
         void activateTabNotification(Konversation::TabNotifyType type);
         void resetTabNotification();
 
-    protected slots:
+    protected Q_SLOTS:
         ///Used to disable functions when not connected
         virtual void serverOnline(bool online);
 

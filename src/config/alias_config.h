@@ -30,10 +30,10 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
         virtual void restorePageToDefaults();
         virtual bool hasChanged();
 
-    signals:
+    Q_SIGNALS:
         void modified();
 
-    protected slots:
+    protected Q_SLOTS:
         void entrySelected(QTreeWidgetItem* aliasEntry);
         void nameChanged(const QString& newName);
         void actionChanged(const QString& newAction);

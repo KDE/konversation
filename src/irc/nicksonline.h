@@ -55,7 +55,7 @@ class NicksOnline : public ChatWindow
 
         virtual bool canBeFrontView()   { return true; }
 
-    signals:
+    Q_SIGNALS:
         /**
          * Emitted whenever user double-clicks a nick in the Watched Nicks tab.
          */
@@ -63,7 +63,7 @@ class NicksOnline : public ChatWindow
 
         void showView(ChatWindow* view);
 
-    public slots:
+    public Q_SLOTS:
 
         /**
          * Refresh the nicklistview for a single server.
@@ -71,7 +71,7 @@ class NicksOnline : public ChatWindow
          */
         void updateServerOnlineList(Server* server);
 
-    protected slots:
+    protected Q_SLOTS:
         /**
          * When a user double-clicks a nickname in the nicklistview, let server know so that
          * it can perform the user's chosen default action for that.

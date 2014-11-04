@@ -107,7 +107,7 @@ class ViewContainer : public QAbstractItemModel
 
         QList<QPair<QString,QString> > getChannelsURI();
 
-    public slots:
+    public Q_SLOTS:
         void updateAppearance();
         void saveSplitterSizes();
         void setViewTreeShown(bool show = false);
@@ -200,7 +200,7 @@ class ViewContainer : public QAbstractItemModel
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();
 
-    signals:
+    Q_SIGNALS:
         void viewChanged(const QModelIndex& idx);
         void removeView(ChatWindow* view);
         void setWindowCaption(const QString& caption);
@@ -222,7 +222,7 @@ class ViewContainer : public QAbstractItemModel
 
         void frontServerChanging(Server*);
 
-    private slots:
+    private Q_SLOTS:
         void setupIrcContextMenus();
         void viewSwitched(int newIndex);
         void removedTab(int index);

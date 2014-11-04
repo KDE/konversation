@@ -53,7 +53,7 @@ class MainWindow : public KXmlGuiWindow
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
 
-    signals:
+    Q_SIGNALS:
         void showQuickConnectDialog();
         void nicksNowOnline(Server*);
         void endNotification();
@@ -63,7 +63,7 @@ class MainWindow : public KXmlGuiWindow
         void cancelRememberLine();
         void insertMarkerLine();
 
-    public slots:
+    public Q_SLOTS:
         void quitProgram();
 
         void updateTrayIcon();
@@ -75,7 +75,7 @@ class MainWindow : public KXmlGuiWindow
 
         void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
 
-    protected slots:
+    protected Q_SLOTS:
         /** This is connected to the preferences settingsChanged signal and acts to compress
         *  multiple successively settingsChanged() signals into a single output
         *  appearanceChanged() signal.

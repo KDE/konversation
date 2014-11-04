@@ -135,11 +135,11 @@ class Application : public QApplication
 
         void abortScheduledRestart() { m_restartScheduled = false; }
 
-    signals:
+    Q_SIGNALS:
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged();
 
-    public slots:
+    public Q_SLOTS:
         void restart();
 
         void readOptions();
@@ -154,7 +154,7 @@ class Application : public QApplication
 
         void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
 
-    protected slots:
+    protected Q_SLOTS:
         void openQuickConnectDialog();
 
         void dbusMultiServerRaw(const QString &command);

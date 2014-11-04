@@ -47,19 +47,19 @@ namespace Konversation
             /// Set verbose mode
             void setVerbose(bool v) {verbose = v;}
 
-        public slots:
+        public Q_SLOTS:
             /**
             * Try to discover a UPnP device on the network.
             * A signal will be emitted when a device is found.
             */
             void discover();
 
-        private slots:
+        private Q_SLOTS:
             void onReadyRead();
             void onError(QAbstractSocket::SocketError err);
             void onXmlFileDownloaded(UPnPRouter* r,bool success);
 
-        signals:
+        Q_SIGNALS:
             /**
             * Emitted when a router or Internet gateway device is detected.
             * @param router The router

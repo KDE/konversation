@@ -52,7 +52,7 @@ namespace Konversation
                 void openLocation(Transfer *transfer);
                 void openFileInfoDialog(Transfer *transfer);
 
-            protected slots:
+            protected Q_SLOTS:
                 void slotNewTransferAdded(Konversation::DCC::Transfer *transfer);
                 void slotTransferStatusChanged();
 

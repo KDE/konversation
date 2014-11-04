@@ -93,12 +93,12 @@ namespace Konversation
                 // used public by transfermanager
                 void connectToPartner();
 
-            public slots:
+            public Q_SLOTS:
                 void sendText(const QString &text);
                 void sendAction(const QString &action);
                 void sendRawLine(const QString &text);
 
-            signals:
+            Q_SIGNALS:
                 void statusChanged(Konversation::DCC::Chat *chat, Konversation::DCC::Chat::Status newStatus, Konversation::DCC::Chat::Status oldStatus);
                 void removed(Konversation::DCC::Chat *chat);
 
@@ -112,7 +112,7 @@ namespace Konversation
 
                 void connected();
 
-            protected slots:
+            protected Q_SLOTS:
                 void connectionEstablished();
                 void connectionFailed(QAbstractSocket::SocketError errorCode);
                 void heardPartner();

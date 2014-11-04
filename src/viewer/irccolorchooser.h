@@ -29,7 +29,7 @@ class IRCColorChooser : public QDialog
         explicit IRCColorChooser(QWidget* parent);
         QString color();
 
-    protected slots:
+    protected Q_SLOTS:
         void updatePreview();
 
     protected:

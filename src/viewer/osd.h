@@ -35,7 +35,7 @@ class OSDWidget : public QWidget
         void setShadow( bool shadow ) { m_drawShadow = shadow; }
         void setOffset( int x, int y );
 
-    public slots:
+    public Q_SLOTS:
         /** calls setText() then show()  */
         void show( const QString &text, bool preemptive=false );
 
@@ -62,7 +62,7 @@ class OSDWidget : public QWidget
         void setText( const QString &text ) { m_currentText = text; }
         void setTranslucent( bool enabled ) { setWindowOpacity( enabled ? OSD_WINDOW_OPACITY : 1.0 ); }
 
-    protected slots:
+    protected Q_SLOTS:
         void minReached();
 
     protected:
@@ -105,7 +105,7 @@ public:
     int alignment() const { return m_alignment; }
     int y() const        { return m_y; }
 
-public slots:
+public Q_SLOTS:
     void setTextColor( const QColor &color ) { OSDWidget::setTextColor( color ); doUpdate(); }
     void setFont( const QFont &font ) { OSDWidget::setFont( font ); doUpdate(); }
     void setScreen( int screen ) { OSDWidget::setScreen( screen ); doUpdate(); }
@@ -120,7 +120,7 @@ public slots:
 private:
     inline void doUpdate() { if( !isHidden() ) show(); }
 
-signals:
+Q_SIGNALS:
     void positionChanged();
 
 protected:

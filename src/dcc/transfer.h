@@ -100,7 +100,7 @@ namespace Konversation
 
                 void removedFromView();
 
-            signals:
+            Q_SIGNALS:
                 void transferStarted(Konversation::DCC::Transfer *item);
                 //done is when the transfer is done, it will not get deleted after emiting this signal
                 void done(Konversation::DCC::Transfer *item);
@@ -108,7 +108,7 @@ namespace Konversation
                 //removed is when the transfer is removed from all visible views and ready to get deleted
                 void removed(Konversation::DCC::Transfer *item);
 
-            public slots:
+            public Q_SLOTS:
                 virtual bool queue();
                 virtual void start() {}
                 virtual void abort() {}
@@ -134,7 +134,7 @@ namespace Konversation
                 static QString sanitizeFileName(const QString &fileName);
                 static quint32 intel(quint32 value);
 
-            protected slots:
+            protected Q_SLOTS:
                 void logTransfer();
 
             protected:

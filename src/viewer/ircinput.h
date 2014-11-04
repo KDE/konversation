@@ -46,14 +46,14 @@ class IRCInput : public KTextEdit
 
         virtual void createHighlighter();
 
-    signals:
+    Q_SIGNALS:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over
         void textPasted(const QString& text);
         void submit();
         void envelopeCommand();
 
-    public slots:
+    public Q_SLOTS:
         void paste(bool useSelection);
         void showCompletionList(const QStringList& nicks);
         void setText(const QString& text, bool preserveContents = false);
@@ -61,7 +61,7 @@ class IRCInput : public KTextEdit
         virtual void setOverwriteMode(bool) { }
         virtual void updateAppearance();
 
-    protected slots:
+    protected Q_SLOTS:
         void getHistory(bool up);
         void insertCompletion(const QString& nick);
         void disableSpellChecking();

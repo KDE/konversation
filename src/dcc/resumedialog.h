@@ -45,7 +45,7 @@ namespace Konversation
 
                 static ReceiveAction ask(TransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 
-            protected slots:
+            protected Q_SLOTS:
                 void suggestNewName();
                 void setDefaultName();
                 void updateDialogButtons();

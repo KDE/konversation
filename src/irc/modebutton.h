@@ -27,10 +27,10 @@ class ModeButton : public QPushButton
 
         void setOn(bool state);
 
-        signals:
+        Q_SIGNALS:
         void clicked(int id,bool on);
 
-    public slots:
+    public Q_SLOTS:
         void wasClicked();
 
     protected:

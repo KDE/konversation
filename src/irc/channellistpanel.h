@@ -42,7 +42,7 @@ class ChannelListProxyModel : public QSortFilterProxyModel
         bool filterTopic() { return m_filterTopic; }
         bool filterChannel() { return m_filterChannel; }
 
-    public slots:
+    public Q_SLOTS:
         void setFilterMinimumUsers(int users);
         void setFilterMaximumUsers(int users);
 
@@ -94,11 +94,11 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         bool isInsertSupported() { return true; }
         QString getTextInLine() { return m_filterLine->text(); }
 
-    signals:
+    Q_SIGNALS:
         void refreshChannelList();
         void joinChannel(const QString& channelName);
 
-    public slots:
+    public Q_SLOTS:
         void refreshList();
         void addToChannelList(const QString& channel,int users,const QString& topic);
         void endOfChannelList();
@@ -107,7 +107,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         virtual void appendInputText(const QString&, bool fromCursor);
         void setFilter(const QString& filter);
 
-    protected slots:
+    protected Q_SLOTS:
         void saveList();
 
         void filterChanged();

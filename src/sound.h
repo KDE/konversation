@@ -45,10 +45,10 @@ namespace Konversation
             explicit Sound(QObject *parent = 0, const QString &name = QString());
             ~Sound();
 
-        public slots:
+        public Q_SLOTS:
             void play(const QUrl &url);
 
-        protected slots:
+        protected Q_SLOTS:
             void tryPlayNext(Phonon::State newState, Phonon::State oldState);
 
         protected:

@@ -46,7 +46,7 @@ namespace Konversation
                 QColor foregroundColor() const;
                 QColor backgroundColor() const;
 
-            public slots:
+            public Q_SLOTS:
                 void enableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
                 void disableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
 
@@ -56,7 +56,7 @@ namespace Konversation
                 void setForegroundColor(const QColor& foregroundColor);
                 void setBackgroundColor(const QColor& backgroundColor);
 
-            signals:
+            Q_SIGNALS:
                 void toolChanged(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
 
             // colorchooser signals
@@ -75,7 +75,7 @@ namespace Konversation
                 void save(const QString& filename);
                 void clear();
 
-            protected slots:
+            protected Q_SLOTS:
                 void clearClicked();
                 void saveClicked();
 

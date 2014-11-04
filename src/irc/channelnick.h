@@ -77,7 +77,7 @@ class ChannelNick : public QSharedData
 
         bool m_isChanged;
 
-    signals:
+    Q_SIGNALS:
         void channelNickChanged();
 };
 

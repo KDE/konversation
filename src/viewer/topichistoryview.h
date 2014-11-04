@@ -54,7 +54,7 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
         bool filterAcceptsColumn ( int source_column, const QModelIndex & source_parent ) const;
 
 
-    private slots:
+    private Q_SLOTS:
         void sourceDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 };
 
@@ -68,7 +68,7 @@ class TopicHistoryLabel : public KTextEdit
         ~TopicHistoryLabel();
 
 
-    public slots:
+    public Q_SLOTS:
         void setTextSelectable(bool selectable);
 };
 
@@ -117,7 +117,7 @@ class TopicHistoryView : public KCategorizedView
         bool eventFilter(QObject* watched, QEvent* event);
 
 
-    signals:
+    Q_SIGNALS:
         void textSelectableChanged(bool selectable);
 
 
@@ -127,7 +127,7 @@ class TopicHistoryView : public KCategorizedView
         void updateGeometries();
 
 
-    private slots:
+    private Q_SLOTS:
         void updateSelectedItemWidgets();
 
 

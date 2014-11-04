@@ -43,7 +43,7 @@ class ConnectionManager : public QObject
         Server* getServerByName(const QString& name, NameMatchFlags flags = MatchByName);
 
 
-    public slots:
+    public Q_SLOTS:
         void connectTo(Konversation::ConnectionFlag flag,
                        const QString& target,
                        const QString& port = QString(),
@@ -63,7 +63,7 @@ class ConnectionManager : public QObject
         void reconnectInvoluntary();
 
 
-    signals:
+    Q_SIGNALS:
         void connectionListChanged();
 
         void connectionChangedState(Server* server, Konversation::ConnectionState state);
@@ -78,7 +78,7 @@ class ConnectionManager : public QObject
         void closeServerList();
 
 
-    private slots:
+    private Q_SLOTS:
         void delistConnection(int connectionId);
 
         void handleConnectionStateChange(Server* server, Konversation::ConnectionState state);

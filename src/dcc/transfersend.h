@@ -57,7 +57,7 @@ namespace Konversation
                 // send got rejected
                 void reject();
 
-            public slots:
+            public Q_SLOTS:
                 virtual bool queue();
                 virtual void start();
                 virtual void abort();
@@ -65,7 +65,7 @@ namespace Konversation
                 // invoked when the receiver accepts the offer (Reverse DCC)
                 void connectToReceiver(const QString &partnerHost, quint16 partnerPort);
 
-            protected slots:
+            protected Q_SLOTS:
                 void acceptClient();
                 // it must be invoked when m_sendSocket is ready
                 void startSending();

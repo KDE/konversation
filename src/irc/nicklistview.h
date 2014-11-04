@@ -63,7 +63,7 @@ class NickListView : public QTreeWidget
                 }
         };
 
-    public slots:
+    public Q_SLOTS:
         /** Resort the listview. CAUTION: this might be CPU intensive
          */
         void resort();

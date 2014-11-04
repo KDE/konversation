@@ -51,15 +51,15 @@ namespace Konversation
                 ServerId = Qt::UserRole + 4
             };
 
-        public slots:
+        public Q_SLOTS:
             void updateServerList();
 
-        signals:
+        Q_SIGNALS:
             void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
             void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings connectionSettings);
             void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
 
-        protected slots:
+        protected Q_SLOTS:
             virtual void slotOk();
             void slotAdd();
             void slotEdit();

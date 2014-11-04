@@ -28,7 +28,7 @@ class IRCViewBox : public QWidget
 
         IRCView*   ircView() const;
 
-    public slots:
+    public Q_SLOTS:
 
         void slotSearch();
         void slotSearchNext();

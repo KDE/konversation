@@ -63,7 +63,7 @@ namespace Konversation
                 // OPTIONAL
                 void setReverse(bool reverse, const QString &reverseToken);
 
-            public slots:
+            public Q_SLOTS:
                 virtual bool queue();
 
                 /** The user has accepted the download.
@@ -79,7 +79,7 @@ namespace Konversation
                 virtual void abort();
                 void startResume(quint64 position);
 
-            protected slots:
+            protected Q_SLOTS:
                 // Local KIO
                 void slotLocalCanResume(KIO::Job *job, KIO::filesize_t size);
                 void slotLocalGotResult(KJob *job);
@@ -159,12 +159,12 @@ namespace Konversation
                 void close();
                 void closeNow();
 
-                signals:
+                Q_SIGNALS:
                 void done();                              // ->  DccTransferRecv::writeDone()
                                                           // ->  DccTransferRecv::slotWriteError()
                 void gotError(const QString &errorString);
 
-            protected slots:
+            protected Q_SLOTS:
                                                           // <-  m_transferJob->dataReq()
                 void slotKIODataReq(KIO::Job *job, QByteArray &data);
                 void slotKIOResult(KJob *job);          // <-  m_transferJob->result()
