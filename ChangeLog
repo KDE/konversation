@@ -1,13 +1,29 @@
-Changes since 1.5:
+Changes from 1.5 to 1.5.1:
+Konversation 1.5.1 is a maintenance release containing only bug fixes. The
+included changes address several minor behavioral defects and a low-risk DoS
+security defect in the Blowfish ECB support. The KDE Platform version depen-
+dency has increased to v4.9.0 to gain access to newer Qt socket transport
+security flags.
+
 * Fixed a bug causing wildcards in command alias replacement patterns not to
   be expanded.
 * Fixed a bug causing auto-joining of channels not starting in # or & to some-
   times fail because the auto-join command was generated before we got the
   CHANTYPES pronouncement by the server.
+* Added a size sanity check for incoming Blowfish ECB blocks. The blind
+  assumption of incoming blocks being the expected 12 bytes could lead to a
+  crash or up to 11 byte information leak due to an out-of-bounds read. This
+  fixes CVE-2014-8483.
+* Enabling SSL/TLS support for connections will now advertise the protocols
+  Qt considers secure by default, instead of being hardcoded to TLSv1.
 * Fixed the bundled 'sysinfo' script not coping with empty lines in
   /etc/os-release.
 * Made disk space info in the bundled 'sysinfo' script more robust by forcing
   the C locale for 'df'.
+* Added an audio player type hint for Cantata to the bundled 'media' script.
+* Fixed some minor comparison logic errors turned up by static analysis.
+* Konversation now depends on KDE Platform v4.9.0 or higher.
+
 
 Changes from 1.5-rc2 to 1.5:
 Konversation 1.5 adds numerous major features over the previous stable release.
