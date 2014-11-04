@@ -15,7 +15,6 @@
 
 #include "application.h"
 #include "version.h"
-#include "commit.h"
 
 #include <QWaitCondition>
 
