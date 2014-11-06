@@ -17,7 +17,6 @@
 
 #include <QHeaderView>
 
-#include <KGlobal>
 #include <KSharedConfig>
 #include <KConfigGroup>
 

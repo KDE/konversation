@@ -39,7 +39,6 @@
 
 #include <KPasswordDialog>
 #include <KMessageBox>
-#include <K4AboutData>
 #include <KDebug>
 
 #include <QTextDocument>
