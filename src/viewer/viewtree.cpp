@@ -173,7 +173,7 @@ ViewTree::ViewTree(QWidget* parent) : QListView(parent)
 
     setItemDelegate(new ViewTreeDelegate(this));
 
-    hide();
+    updateAppearance();
 }
 
 ViewTree::~ViewTree()

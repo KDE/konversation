@@ -248,9 +248,11 @@ void ViewContainer::setupViewTree()
 {
     m_viewTree = new ViewTree(m_viewTreeSplitter);
     m_viewTree->setModel(this);
+    m_viewTreeSplitter->insertWidget(0, m_viewTree);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
-    m_viewTree->hide();
     m_viewSpringLoader->addWidget(m_viewTree->viewport());
+
+    setViewTreeShown(m_tabWidget && m_tabWidget->count());
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
