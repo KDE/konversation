@@ -47,7 +47,7 @@ namespace Konversation
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::accepted, this, &ChannelOptionsDialog::changeOptions);
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ChannelOptionsDialog::reject);
         mainLayout->addWidget(buttonBox);
         buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 

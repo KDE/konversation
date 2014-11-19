@@ -36,8 +36,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &QuickConnectDialog::slotOk);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QuickConnectDialog::reject);
     mainLayout->addWidget(buttonBox);
     buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
     setWindowTitle(  i18n("Quick Connect") );

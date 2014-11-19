@@ -34,19 +34,13 @@ namespace Konversation
             m_strikeoutPushButton->setIcon(QIcon::fromTheme("format-text-strikethrough"));
             m_underlinePushButton->setIcon(QIcon::fromTheme("format-text-underline"));
 
-            connect(m_boldPushButton, SIGNAL(toggled(bool)),
-                    this, SLOT(boldToggled(bool)));
-            connect(m_italicPushButton, SIGNAL(toggled(bool)),
-                    this, SLOT(italicToggled(bool)));
-            connect(m_strikeoutPushButton, SIGNAL(toggled(bool)),
-                    this, SLOT(strikeoutToggled(bool)));
-            connect(m_underlinePushButton, SIGNAL(toggled(bool)),
-                    this, SLOT(underlineToggled(bool)));
+            connect(m_boldPushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::boldToggled);
+            connect(m_italicPushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::italicToggled);
+            connect(m_strikeoutPushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::strikeoutToggled);
+            connect(m_underlinePushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::underlineToggled);
 
-            connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)),
-                    this, SLOT(currentFontChanged(QFont)));
-            connect(m_fontPointComboBox, SIGNAL(currentIndexChanged(QString)),
-                    this, SLOT(pointSizeChanged(QString)));
+            connect(m_fontComboBox, &QFontComboBox::currentFontChanged, this, &WhiteBoardFontChooser::currentFontChanged);
+            connect(m_fontPointComboBox, static_cast<void (KComboBox::*)(const QString &)>(&KComboBox::currentIndexChanged), this, &WhiteBoardFontChooser::pointSizeChanged);
         }
 
         WhiteBoardFontChooser::~WhiteBoardFontChooser()

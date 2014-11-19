@@ -32,8 +32,8 @@ namespace Konversation
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotAccepted()));
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &InsertCharDialog::slotAccepted);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &InsertCharDialog::reject);
         buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
         setModal( false );
         setWindowTitle(  i18n("Insert Character") );

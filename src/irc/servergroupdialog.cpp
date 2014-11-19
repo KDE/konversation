@@ -47,8 +47,8 @@ namespace Konversation
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::accepted, this, &ServerGroupDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ServerGroupDialog::reject);
         //PORTING SCRIPT: WARNING mainLayout->addWidget(buttonBox) must be last item in layout. Please move it.
         mainLayout->addWidget(buttonBox);
 
@@ -62,7 +62,7 @@ namespace Konversation
         m_mainWidget->serverWidget->layout()->setMargin(0);
         m_mainWidget->channelWidget->layout()->setMargin(0);
 
-        connect(m_mainWidget->m_editIdentityButton, SIGNAL(clicked()), this, SLOT(editIdentity()));
+        connect(m_mainWidget->m_editIdentityButton, &QPushButton::clicked, this, &ServerGroupDialog::editIdentity);
 
         IdentityList identities = Preferences::identityList();
 
@@ -73,23 +73,23 @@ namespace Konversation
         m_mainWidget->m_upServerBtn->setIcon(QIcon::fromTheme("arrow-up"));
         m_mainWidget->m_downServerBtn->setIcon(QIcon::fromTheme("arrow-down"));
 
-        connect(m_mainWidget->m_addServerButton, SIGNAL(clicked()), this, SLOT(addServer()));
+        connect(m_mainWidget->m_addServerButton, &QPushButton::clicked, this, &ServerGroupDialog::addServer);
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
-        connect(m_mainWidget->m_removeServerButton, SIGNAL(clicked()), this, SLOT(deleteServer()));
-        connect(m_mainWidget->m_serverLBox, SIGNAL(itemSelectionChanged()), this, SLOT(updateServerArrows()));
-        connect(m_mainWidget->m_upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
-        connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
+        connect(m_mainWidget->m_removeServerButton, &QToolButton::clicked, this, &ServerGroupDialog::deleteServer);
+        connect(m_mainWidget->m_serverLBox, &QListWidget::itemSelectionChanged, this, &ServerGroupDialog::updateServerArrows);
+        connect(m_mainWidget->m_upServerBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveServerUp);
+        connect(m_mainWidget->m_downServerBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveServerDown);
 
         m_mainWidget->m_removeChannelButton->setIcon(QIcon::fromTheme("list-remove"));
         m_mainWidget->m_upChannelBtn->setIcon(QIcon::fromTheme("arrow-up"));
         m_mainWidget->m_downChannelBtn->setIcon(QIcon::fromTheme("arrow-down"));
 
-        connect(m_mainWidget->m_addChannelButton, SIGNAL(clicked()), this, SLOT(addChannel()));
-        connect(m_mainWidget->m_changeChannelButton, SIGNAL(clicked()), this, SLOT(editChannel()));
-        connect(m_mainWidget->m_removeChannelButton, SIGNAL(clicked()), this, SLOT(deleteChannel()));
-        connect(m_mainWidget->m_channelLBox, SIGNAL(itemSelectionChanged()), this, SLOT(updateChannelArrows()));
-        connect(m_mainWidget->m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
-        connect(m_mainWidget->m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
+        connect(m_mainWidget->m_addChannelButton, &QPushButton::clicked, this, &ServerGroupDialog::addChannel);
+        connect(m_mainWidget->m_changeChannelButton, &QPushButton::clicked, this, &ServerGroupDialog::editChannel);
+        connect(m_mainWidget->m_removeChannelButton, &QToolButton::clicked, this, &ServerGroupDialog::deleteChannel);
+        connect(m_mainWidget->m_channelLBox, &QListWidget::itemSelectionChanged, this, &ServerGroupDialog::updateChannelArrows);
+        connect(m_mainWidget->m_upChannelBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveChannelUp);
+        connect(m_mainWidget->m_downChannelBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveChannelDown);
 
         KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change network information")));
         KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
@@ -457,15 +457,15 @@ namespace Konversation
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
         m_okButton->setDefault(true);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ServerDialog::reject);
         mainLayout->addWidget(buttonBox);
 
         m_mainWidget = new Ui::ServerDialogUI();
         m_mainWidget->setupUi(mainWidget);
         m_mainWidget->m_serverEdit->setFocus();
 
-        connect(m_okButton, SIGNAL(clicked()), this, SLOT(slotOk()));
-        connect( m_mainWidget->m_serverEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
+        connect(m_okButton, &QPushButton::clicked, this, &ServerDialog::slotOk);
+        connect(m_mainWidget->m_serverEdit, &KLineEdit::textChanged, this, &ServerDialog::slotServerNameChanged);
         slotServerNameChanged( m_mainWidget->m_serverEdit->text() );
     }
 
@@ -521,15 +521,15 @@ namespace Konversation
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
         m_okButton->setDefault(true);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &ChannelDialog::reject);
         mainLayout->addWidget(buttonBox);
 
         m_mainWidget = new Ui::ChannelDialogUI();
         m_mainWidget->setupUi(mainWidget);
 
         m_mainWidget->m_channelEdit->setFocus();
-        connect(m_okButton,SIGNAL(clicked()),this,SLOT(slotOk()));
-        connect(m_mainWidget->m_channelEdit, SIGNAL(textChanged(QString)),this,SLOT(slotServerNameChanged(QString)) );
+        connect(m_okButton, &QPushButton::clicked, this, &ChannelDialog::slotOk);
+        connect(m_mainWidget->m_channelEdit, &KLineEdit::textChanged, this, &ChannelDialog::slotServerNameChanged);
         slotServerNameChanged( m_mainWidget->m_channelEdit->text() );
     }
 

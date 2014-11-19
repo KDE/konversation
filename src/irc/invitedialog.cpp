@@ -40,8 +40,8 @@ InviteDialog::InviteDialog(QWidget* parent)
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(slotOk()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &InviteDialog::slotOk);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &InviteDialog::reject);
 
     QWidget* mainWidget = new QWidget(this);
     mainLayout->addWidget(mainWidget);
