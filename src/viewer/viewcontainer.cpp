@@ -256,6 +256,7 @@ void ViewContainer::setupViewTree()
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+    connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));

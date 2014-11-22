@@ -216,6 +216,44 @@ void ViewTree::resizeEvent(QResizeEvent* event)
     emit sizeChanged();
 }
 
+void ViewTree::mousePressEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::RightButton) {
+        event->ignore();
+
+        return;
+    } else if (event->button() == Qt::MiddleButton && Preferences::self()->middleClickClose()) {
+        const QModelIndex& idx = indexAt(event->pos());
+
+        if (idx.isValid()) {
+            m_pressedView = static_cast<ChatWindow*>(idx.internalPointer());
+
+            event->ignore();
+
+            return;
+        }
+    }
+
+    QListView::mousePressEvent(event);
+}
+
+void ViewTree::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::MiddleButton && Preferences::self()->middleClickClose()) {
+        const QModelIndex& idx = indexAt(event->pos());
+
+        if (idx.isValid()) {
+            if (m_pressedView != 0 && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
+                emit closeView(m_pressedView.data());
+            }
+        }
+    }
+
+    m_pressedView = 0;
+
+    QListView::mouseReleaseEvent(event);
+}
+
 void ViewTree::contextMenuEvent(QContextMenuEvent* event)
 {
     const QModelIndex& idx = indexAt(event->pos());

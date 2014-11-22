@@ -14,10 +14,8 @@ FIXME ViewTree port
 
 Currently missing:
 
-- Custom delegate painting
 - Close buttons
 - DND
-- Middle click close
 - Seperator painting
 - Tooltips for elided items
 */
@@ -27,6 +25,7 @@ Currently missing:
 
 #include <QStyledItemDelegate>
 #include <QListView>
+#include <QPointer>
 
 class ChatWindow;
 class ViewTree;
@@ -66,16 +65,22 @@ class ViewTree : public QListView
     Q_SIGNALS:
         void sizeChanged() const;
         void showView(ChatWindow* view) const;
+        void closeView(ChatWindow* view) const;
         void showViewContextMenu(QWidget* widget, const QPoint& point) const;
 
     protected:
         void resizeEvent(QResizeEvent* event);
+        void mousePressEvent(QMouseEvent* event);
+        void mouseReleaseEvent(QMouseEvent* event);
         void contextMenuEvent(QContextMenuEvent* event);
         void wheelEvent(QWheelEvent* event);
         void keyPressEvent(QKeyEvent* event);
 
     private Q_SLOTS:
         void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+
+    private:
+        QPointer<ChatWindow> m_pressedView;
 };
 
 #endif
