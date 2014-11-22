@@ -474,7 +474,7 @@ void Application::readOptions()
             KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(*it));
             Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
             serverGroup->setName(cgServerGroup.readEntry("Name"));
-            serverGroup->setSortIndex(index);
+            serverGroup->setSortIndex(groups.at(index).section(' ', -1).toInt() );
             serverGroup->setIdentityId(Preferences::identityByName(cgServerGroup.readEntry("Identity"))->id());
             serverGroup->setConnectCommands(cgServerGroup.readEntry("ConnectCommands"));
             serverGroup->setAutoConnectEnabled(cgServerGroup.readEntry("AutoConnect", false));
