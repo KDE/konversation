@@ -172,7 +172,8 @@ namespace Konversation
                                                           m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
 
             // File Size:
-            // m_timeInfo.m_labelFileSize->setText(KLocale::global()->formatNumber(m_transfer->getFileSize(), 0)); FIXME KF5 port
+            // FIXME KF5 port: We lost KLocale::formatNumber() on this when porting to QLocale, which has no equivalent.
+            m_timeInfo.m_labelFileSize->setText(QString::number(m_transfer->getFileSize()));
 
             // Resumed:
             if (m_transfer->isResumed())
@@ -221,7 +222,8 @@ namespace Konversation
             m_locationInfo.m_progress->setValue(m_transfer->getProgress());
 
             // Current Position:
-            // m_timeInfo.m_labelCurrentPosition->setText(KLocale::global()->formatNumber(m_transfer->getTransferringPosition(), 0)); FIXME KF5 port
+            // FIXME KF5 port: We lost KLocale::formatNumber() on this when porting to QLocale, which has no equivalent.
+            m_timeInfo.m_labelCurrentPosition->setText(QString::number(m_transfer->getTransferringPosition()));
 
             // Current Speed:
             m_timeInfo.m_labelCurrentSpeed->setText(TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()));
