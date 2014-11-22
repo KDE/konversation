@@ -393,6 +393,8 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         } else {
             return color;
         }
+    } else if (role == HighlightRole) {
+        return (row == m_popupViewIndex);
     }
 
     return QVariant();
@@ -1735,13 +1737,17 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             m_contextServer = 0;
     }
 
-    if (menu->exec(pos) == 0)
-    {
-        m_popupViewIndex = -1;
-        view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
+    const QModelIndex& idx = index(m_popupViewIndex, 0);
 
-        if (view) updateViewEncoding(view);
-    }
+    emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
+
+    menu->exec(pos);
+
+    m_popupViewIndex = -1;
+
+    view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
+
+    if (view) updateViewEncoding(view);
 
     menu->removeAction(autoJoinAction);
     menu->removeAction(autoConnectAction);
@@ -1750,6 +1756,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
+
+    emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
 
     updateViewActions(m_tabWidget->currentIndex());
 }

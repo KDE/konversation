@@ -56,7 +56,15 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     const QColor& bgColor  = m_view->palette().color(m_view->backgroundRole());
     const QColor& selColor = m_view->palette().color(QPalette::Highlight);
     const QColor& midColor = mixColor(bgColor, selColor);
-    const QColor& background = selected ? selColor : m_view->palette().color(QPalette::Base);
+
+    QColor background;
+
+    if (!selected && index.data(ViewContainer::HighlightRole).toBool()) {
+        background = Preferences::self()->inputFieldsBackgroundColor()
+            ? Preferences::self()->color(Preferences::AlternateBackground) : m_view->palette().color(QPalette::AlternateBase);
+    } else {
+         background = selected ? selColor : m_view->palette().color(QPalette::Base);
+    }
 
     int y = option.rect.y();
     int height = option.rect.y() + option.rect.height();

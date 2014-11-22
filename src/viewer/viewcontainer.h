@@ -71,7 +71,8 @@ class ViewContainer : public QAbstractItemModel
 
     public:
         enum DataRoles {
-            ColorRole = Qt::UserRole + 1
+            ColorRole = Qt::UserRole + 1,
+            HighlightRole
         };
 
         explicit ViewContainer(MainWindow* window);
