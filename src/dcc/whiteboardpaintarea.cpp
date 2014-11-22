@@ -564,7 +564,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::keyPressEvent(QKeyEvent* event)
         {
-            // qDebug() << event->text() << event->text().length() << int(event->text()[0].toAscii());
+            // qDebug() << event->text() << event->text().length() << int(event->text()[0].toLatin1());
 
             if ((m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended) && isLastPosValid())
             {
