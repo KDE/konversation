@@ -392,8 +392,9 @@ namespace Konversation
             QList<QUrl>::ConstIterator it;
             for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
             {
-                /* FIXME KF5 port
-                if (!KIO::NetAccess::exists(*it, KIO::NetAccess::SourceSide, NULL))
+                KIO::StatJob* statJob = KIO::stat(*it, KIO::StatJob::SourceSide, 0);
+                statJob->exec();
+                if (statJob->error())
                 {
                     KIO::MkdirJob* job = KIO::mkdir(*it, -1);
                     if (!job->exec())
@@ -401,7 +402,6 @@ namespace Konversation
                         return false;
                     }
                 }
-                */
             }
 
 #ifndef Q_OS_WIN

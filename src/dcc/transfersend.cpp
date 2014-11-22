@@ -35,6 +35,8 @@
 // TODO: remove the dependence
 #include <KAuthorized>
 
+#include <KIO/Job>
+
 using namespace Konversation::UPnP;
 
 namespace Konversation
@@ -176,13 +178,13 @@ namespace Konversation
             qDebug() << "Fast DCC send: " << m_fastSend;
 
             //Check the file exists
-            /* FIXME KF 5 port
-            if (!KIO::NetAccess::exists(m_fileURL, KIO::NetAccess::SourceSide, NULL))
+            KIO::StatJob* statJob = KIO::stat(m_fileURL, KIO::StatJob::SourceSide, 0);
+            statJob->exec();
+            if (statJob->error())
             {
                 failed(i18n("The url \"%1\" does not exist", m_fileURL.toString()));
                 return false;
             }
-            */
 
             //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
             //Download the file.  Does nothing if it's local (file:/)
