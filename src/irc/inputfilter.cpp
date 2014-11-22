@@ -27,6 +27,7 @@
 #include <QStringList>
 #include <QDateTime>
 #include <QRegExp>
+#include <QLocale>
 
 
 InputFilter::InputFilter()
@@ -1049,12 +1050,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     QDateTime when;
                     when.setTime_t(parameterList.value(2).toUInt());
-                    /* FIXME KF5 port
                     m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Created"),
                         i18n("This channel was created on %1.",
-                            KLocale::global()->formatDateTime(when, KLocale::ShortDate))
+                            QLocale().toString(when, QLocale::ShortFormat))
                         );
-                        */
                 }
                 break;
             }
@@ -1170,23 +1169,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // See FIXME in RPL_TOPIC
                     if (getAutomaticRequest(QStringLiteral("TOPIC"), parameterList.value(1)) == 0)
                     {
-                        /* FIXME KF5 port
                         m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Topic"),
                             i18n("The topic was set by %1 on %2.",
-                            parameterList.value(2), KLocale::global()->formatDateTime(when, KLocale::ShortDate)),
+                            parameterList.value(2), QLocale().toString(when, QLocale::ShortFormat)),
                             false,
                             false);
-                            */
                     }
                     else
                     {
-                        /* FIXME KF5 port
                         m_server->appendMessageToFrontmost(i18n("Topic"), i18n("The topic for %1 was set by %2 on %3.",
                             parameterList.value(1),
                             parameterList.value(2),
-                            KLocale::global()->formatDateTime(when, KLocale::ShortDate)),
+                            QLocale().toString(when, QLocale::ShortFormat)),
                             false);
-                            */
                         setAutomaticRequest(QStringLiteral("TOPIC"),parameterList.value(1), false);
                     }
                     emit topicAuthor(parameterList.value(1), parameterList.value(2), when);
@@ -1844,11 +1839,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                         if (!signonTime.isNull())
                         {
-                            /* FIXME KF5 port
                             m_server->appendMessageToFrontmost(i18n("Whois"),
                                 i18n("%1 has been online since %2.",
-                                parameterList.value(1), KLocale::global()->formatDateTime(signonTime, KLocale::ShortDate, true)));
-                                */
+                                parameterList.value(1), QLocale().toString(signonTime, QLocale::ShortFormat)));
                         }
                     }
                 }
@@ -2015,12 +2008,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                         QString setter(parameterList.value(3, i18nc("The server didn't respond with the identity of the ban creator, so we say unknown (in brackets to avoid confusion with a real nickname)", "(unknown)")).section(QLatin1Char('!'), 0, 0));
 
-                        /* FIXME KF5 port
                         m_server->appendMessageToFrontmost(i18n("BanList:%1", parameterList.value(1)),
                                     i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3",
-                                        parameterList.value(2), setter, KLocale::global()->formatDateTime(when, KLocale::ShortDate))
+                                        parameterList.value(2), setter, QLocale().toString(when, QLocale::ShortFormat))
                                     );
-                                    */
                     }
                 }
                 break;

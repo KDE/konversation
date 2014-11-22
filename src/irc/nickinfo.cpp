@@ -103,9 +103,7 @@ bool NickInfo::isIdentified() const
 
 QString NickInfo::getPrettyOnlineSince() const
 {
-    // FIXME KF5 port
-    // return KLocale::global()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
-    return m_onlineSince.toString();
+    return QLocale().toString(m_onlineSince, QLocale::LongFormat);
 }
 
 // Return the Server object that owns this NickInfo object.

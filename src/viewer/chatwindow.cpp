@@ -27,6 +27,7 @@
 #include <QScrollBar>
 
 #include <KUser>
+#include <QLocale>
 
 
 ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
@@ -504,13 +505,8 @@ void ChatWindow::logText(const QString& text)
             }
 
             QDateTime dateTime = QDateTime::currentDateTime();
-            /* FIXME KF5 port
-            QString logLine(QString("[%1] [%2] %3\n").arg(KLocale::global()->formatDate(dateTime.date(), KLocale::LongDate)).
-                arg(KLocale::global()->formatTime(dateTime.time(), true)).arg(text));
-            */
-            QString logLine(QString("[%1] [%2] %3\n").arg("Port me").
-                arg("Port me").arg(text));
-
+            QString logLine(QString("[%1] [%2] %3\n").arg(QLocale().toString(dateTime.date(), QLocale::LongFormat)).
+                arg(QLocale().toString(dateTime.time(), QLocale::LongFormat)).arg(text));
             logStream << logLine;
 
             // detach stream from file

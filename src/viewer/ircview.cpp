@@ -34,6 +34,7 @@
 #include <KStandardShortcut>
 #include <kio/pixmaploader.h>
 #include <KUrlMimeData>
+#include <QLocale>
 
 using namespace Konversation;
 
@@ -924,12 +925,10 @@ QString IRCView::timeStamp()
         else
         {
             QDate date = QDate::currentDate();
-            /* FIXME KF5 port
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1 %2]</font> ")
-                    .arg(KLocale::global()->formatDate(date, KLocale::ShortDate),
+                    .arg(QLocale().toString(date, QLocale::ShortFormat),
                          time.toString(timeFormat));
-                         */
         }
 
         return timeString;

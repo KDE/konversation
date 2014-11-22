@@ -26,6 +26,7 @@
 #endif
 
 #include <KCategorizedSortFilterProxyModel>
+#include <QLocale>
 
 
 TopicHistoryModel::TopicHistoryModel(QObject* parent) : QAbstractListModel(parent)
@@ -164,9 +165,7 @@ QVariant TopicHistoryModel::data(const QModelIndex& index, int role) const
 
                 break;
             case 2:
-                //FIXME KF 5 port
-                // return KLocale::global()->formatDateTime(topic.timestamp, KLocale::ShortDate, true);
-                return topic.timestamp;
+                return QLocale().toString(topic.timestamp, QLocale::ShortFormat);
                 break;
         }
     }
