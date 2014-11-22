@@ -42,6 +42,7 @@ QSize ViewTreeDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
     const QRect& textRect = m_view->fontMetrics().boundingRect(index.data(Qt::DisplayRole).toString());
 
     size.setHeight(MARGIN + qMax(LED_ICON_SIZE, textRect.height()) + MARGIN);
+    size.setWidth(1);
 
     return size;
 }
