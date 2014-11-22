@@ -26,7 +26,6 @@
 
 #include <QSplitter>
 
-#include <KGlobal>
 #include <KMessageBox>
 #include <QMenu>
 #include <KRun>
@@ -217,7 +216,7 @@ namespace Konversation
 
             if (index.isValid())
             {
-                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (transfer)
                 {
                     m_detailPanel->setTransfer(transfer);
@@ -232,7 +231,7 @@ namespace Konversation
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Receive &&
                     index.data(TransferListModel::TransferStatus).toInt() == Transfer::Queued)
                 {
-                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                     if (transfer)
                     {
                         transfer->start();
@@ -248,7 +247,7 @@ namespace Konversation
             {
                 if (index.data(TransferListModel::TransferStatus).toInt() < Transfer::Done)
                 {
-                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                     if (transfer)
                     {
                         transfer->abort();
@@ -266,7 +265,7 @@ namespace Konversation
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
                     index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
-                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                     if (!transfer)
                     {
                         continue;
@@ -461,7 +460,7 @@ namespace Konversation
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send ||
                     index.data(TransferListModel::TransferStatus).toInt() == Transfer::Done)
                 {
-                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                     if (transfer)
                     {
                         transfer->runFile();
@@ -474,7 +473,7 @@ namespace Konversation
         {
             foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (transfer)
                 {
                     openLocation(transfer);
@@ -502,7 +501,7 @@ namespace Konversation
 
         void TransferPanel::doubleClicked(const QModelIndex &index)
         {
-            Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+            Transfer *transfer = static_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
             if (transfer)
             {
                 transfer->runFile();

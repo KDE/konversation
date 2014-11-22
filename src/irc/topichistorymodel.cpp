@@ -25,8 +25,6 @@
 #include "cipher.h"
 #endif
 
-#include <KGlobal>
-#include <KLocale>
 #include <KCategorizedSortFilterProxyModel>
 
 
@@ -166,7 +164,9 @@ QVariant TopicHistoryModel::data(const QModelIndex& index, int role) const
 
                 break;
             case 2:
-                return KLocale::global()->formatDateTime(topic.timestamp, KLocale::ShortDate, true);
+                //FIXME KF 5 port
+                // return KLocale::global()->formatDateTime(topic.timestamp, KLocale::ShortDate, true);
+                return topic.timestamp;
                 break;
         }
     }

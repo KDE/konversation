@@ -18,7 +18,7 @@
 #include <QHeaderView>
 
 
-Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
+Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )
     : QWidget( parent, fl )
 {
     setObjectName(QString::fromLatin1(name));
@@ -42,7 +42,7 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     loadSettings();
 
-    ignoreListView->header()->setMovable(false);
+    ignoreListView->header()->setSectionsMovable(false);
 }
 
 Ignore_Config::~Ignore_Config()

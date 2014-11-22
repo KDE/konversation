@@ -23,8 +23,6 @@
 #include "mainwindow.h"
 #include "server.h"
 
-#include <KLocale>
-
 NickInfo::NickInfo(const QString& nick, Server* server): QSharedData()
 {
     m_nickname = nick;
@@ -105,7 +103,9 @@ bool NickInfo::isIdentified() const
 
 QString NickInfo::getPrettyOnlineSince() const
 {
-    return KLocale::global()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
+    // FIXME KF5 port
+    // return KLocale::global()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
+    return m_onlineSince.toString();
 }
 
 // Return the Server object that owns this NickInfo object.

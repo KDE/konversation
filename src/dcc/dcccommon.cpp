@@ -32,7 +32,6 @@
 #include <QHostAddress>
 #include <QTcpServer>
 
-#include <kglobalsettings.h>
 
 namespace Konversation
 {
@@ -115,7 +114,7 @@ namespace Konversation
 #ifndef Q_OS_WIN
                 /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
                 struct ifreq ifr;
-                const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toAscii();
+                const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toLatin1();
                 const char* address = addressBa.constData();
                 int sock = socket(AF_INET, SOCK_DGRAM, 0);
                 strncpy(ifr.ifr_name, address, IF_NAMESIZE);
@@ -171,21 +170,6 @@ namespace Konversation
             }
 
             return socket;
-        }
-
-        int DccCommon::graphicEffectLevelToUpdateInterval(int value)
-        {
-            switch (value)
-            {
-                case KGlobalSettings::NoEffects:
-                case KGlobalSettings::GradientEffects:
-                    return 2000;
-                case KGlobalSettings::SimpleAnimationEffects:
-                    return 1000;
-                case KGlobalSettings::ComplexAnimationEffects:
-                default:
-                    return 500;
-            }
         }
     }
 }

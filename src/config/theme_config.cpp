@@ -26,7 +26,6 @@
 #include <KTar>
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
-#include <KIO/NetAccess>
 #include <KIO/CopyJob>
 
 #include <unistd.h> // unlink()
@@ -175,6 +174,8 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
+    /* FIXME KF5 port
+
     QUrl themeURL = QFileDialog::getOpenFileUrl(this,
         i18n("Select Theme Package"), QUrl (),
         i18n("Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)")
@@ -245,6 +246,7 @@ void Theme_Config::installTheme()
     loadSettings();
     KIO::NetAccess::removeTempFile(tmpThemeFile);
 
+    */
 }
 
 void Theme_Config::removeTheme()

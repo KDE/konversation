@@ -39,7 +39,6 @@
 
 #include <KPasswordDialog>
 #include <KMessageBox>
-#include <KDebug>
 
 #include <QTextDocument>
 #include <QTextBlock>
@@ -1950,11 +1949,13 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_dumpdoc(const OutputFilterInput& input)
     {
+        /* FIXME KF5 port
         if (input.context && input.context->getTextView())
         {
             KDebug::Block myBlock(qPrintable(QString::number((quintptr)(input.context->getTextView()), 16)));
             qDebug() << input.context->getTextView()->document();
         }
+        */
         return OutputFilterResult();
     }
 

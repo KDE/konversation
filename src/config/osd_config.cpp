@@ -26,7 +26,7 @@
 #include <kconfigdialog.h>
 
 
-OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
+OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )
     : QWidget(parent, fl)
 {
     setObjectName(QString::fromLatin1(name));

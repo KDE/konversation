@@ -94,7 +94,7 @@ namespace Konversation
         QSize newSize = size();
         newSize = config.readEntry("Size", newSize);
         resize(newSize);
-        m_serverList->header()->setMovable(false); // don't let the user reorder the header
+        m_serverList->header()->setSectionsMovable(false); // don't let the user reorder the header
         m_serverList->sortItems(0, Qt::AscendingOrder);
         m_serverList->header()->restoreState(config.readEntry<QByteArray>("ServerListHeaderState", QByteArray()));
         //because it sorts the first column in ascending order by default

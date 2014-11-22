@@ -27,7 +27,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     I18n
     IdleTime
     NotifyConfig
-    KDELibs4Support
     KIO
     Parts
     Solid

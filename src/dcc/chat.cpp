@@ -257,7 +257,7 @@ namespace Konversation
             if (m_encoding != encoding && !m_encoding.isEmpty())
             {
                 m_encoding = encoding;
-                QTextCodec *codec = QTextCodec::codecForName(m_encoding.toAscii());
+                QTextCodec *codec = QTextCodec::codecForName(m_encoding.toLatin1());
                 if (codec)
                 {
                     m_textStream.setCodec(codec);

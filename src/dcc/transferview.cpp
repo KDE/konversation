@@ -18,7 +18,6 @@
 #include <QMenu>
 #include <KCategoryDrawer>
 #include <KLocalizedString>
-#include <KGlobalSettings>
 
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -65,12 +64,9 @@ namespace Konversation
             m_activeTransfers = 0;
             m_itemCategoryToRemove = 0;
             m_updateTimer = new QTimer(this);
-            m_updateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
-                                           KGlobalSettings::graphicEffectsLevel()));
+            m_updateTimer->setInterval(1000);
 
             connect(m_updateTimer, &QTimer::timeout, this, &TransferView::update);
-
-            connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &TransferView::globalSettingsChanged);
 
             connect(model(), SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
                      this, SLOT(rowsAboutToBeRemovedFromModel(QModelIndex,int,int)));
@@ -299,7 +295,7 @@ namespace Konversation
 
             foreach (const QModelIndex &rowIndex, rowIndexes())
             {
-                Transfer *rowTransfer = static_cast<Transfer*>(qVariantValue<QObject*>(rowIndex.data(TransferListModel::TransferPointer)));
+                Transfer *rowTransfer = static_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (rowTransfer == transfer)
                 {
                     return rowIndex;
@@ -639,13 +635,6 @@ namespace Konversation
                     }
                 }
             }
-        }
-
-        void TransferView::globalSettingsChanged(int category)
-        {
-            if (category == KGlobalSettings::SETTINGS_STYLE)
-                m_updateTimer->setInterval(DccCommon::graphicEffectLevelToUpdateInterval(
-                                               KGlobalSettings::graphicEffectsLevel()));
         }
 
         int TransferView::removeItems(TransferItemData::ItemDisplayType displaytype)

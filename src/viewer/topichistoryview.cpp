@@ -25,7 +25,6 @@
 #include "topichistorymodel.h"
 
 #include <KCategoryDrawer>
-#include <KGlobalSettings>
 
 
 #define MARGIN 2
@@ -237,7 +236,8 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
                       "entry selection mode and a synchronized edit field, undo back to the "
                       "original text or close and reopen the dialog."));
 
-    connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
+    //FIXME KF5 port
+    //connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
 }
 
 TopicHistoryView::~TopicHistoryView()

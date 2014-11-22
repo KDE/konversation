@@ -22,7 +22,7 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
     Q_OBJECT
 
     public:
-        explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+        explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0 );
         ~Warnings_Config();
 
         virtual void restorePageToDefaults();

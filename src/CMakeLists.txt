@@ -219,7 +219,7 @@ target_link_libraries(konversation
     KF5::I18n
     KF5::IdleTime
     KF5::NotifyConfig
-    KF5::KDELibs4Support
+    KF5::KIOFileWidgets
     KF5::KIOWidgets
     KF5::Parts
     KF5::Solid

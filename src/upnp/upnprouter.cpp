@@ -20,7 +20,6 @@
 #include <QDebug>
 #include <KLocalizedString>
 #include <KIO/Job>
-#include <KIO/NetAccess>
 #include <kio/jobclasses.h>
 
 #include <stdlib.h>

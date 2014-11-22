@@ -49,7 +49,6 @@
 #include <kwallet.h>
 #include <KTextEdit>
 #include <KSharedConfig>
-#include <KGlobalSettings>
 
 
 using namespace Konversation;
@@ -208,7 +207,8 @@ void Application::newInstance(QCommandLineParser *args)
         // TODO: check if this works now as intended
         //    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
-        connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Application::appearanceChanged);
+        // FIXME KF5 port
+        //connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Application::appearanceChanged);
 
         // open main window
         mainWindow = new MainWindow();

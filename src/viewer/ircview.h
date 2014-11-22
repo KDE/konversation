@@ -20,7 +20,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QFontDatabase>
 
-#include <KTextBrowser>
+#include <QTextBrowser>
 #include <QUrl>
 
 
@@ -57,7 +57,7 @@ struct TextHtmlData
     QString defaultColor;
 };
 
-class IRCView : public KTextBrowser
+class IRCView : public QTextBrowser
 {
     Q_OBJECT
 

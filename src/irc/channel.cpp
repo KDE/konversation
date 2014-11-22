@@ -39,7 +39,6 @@
 #include <KMessageBox>
 #include <KIconLoader>
 #include <KComboBox>
-#include <KGlobalSettings>
 
 #define DELAYED_SORT_TRIGGER    10
 
@@ -196,7 +195,6 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // (this) The main Box, holding the channel view/topic and the input line
     m_horizSplitter = new QSplitter(m_vertSplitter);
     m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(m_horizSplitter), 1);
-    m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 
     // Server will be set later in setServer()
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter);
@@ -2259,8 +2257,8 @@ void Channel::setAutoUserhost(bool state)
         // Cannot use QHeaderView::ResizeToContents here because it is slow
         // and it gets triggered by setSortingEnabled(). Using timed resize
         // instead, see Channel::autoUserhost() above.
-        nicknameListView->header()->setResizeMode(Nick::NicknameColumn, QHeaderView::Fixed);
-        nicknameListView->header()->setResizeMode(Nick::HostmaskColumn, QHeaderView::Fixed);
+        nicknameListView->header()->setSectionResizeMode(Nick::NicknameColumn, QHeaderView::Fixed);
+        nicknameListView->header()->setSectionResizeMode(Nick::HostmaskColumn, QHeaderView::Fixed);
         userhostTimer.start(10000);
         m_nicknameListViewTextChanged |= 0xFF; // ResizeColumnsToContents
         QTimer::singleShot(0, this, SLOT(autoUserhost())); // resize columns ASAP
@@ -2268,7 +2266,7 @@ void Channel::setAutoUserhost(bool state)
     else
     {
         nicknameListView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        nicknameListView->header()->setResizeMode(Nick::NicknameColumn, QHeaderView::Stretch);
+        nicknameListView->header()->setSectionResizeMode(Nick::NicknameColumn, QHeaderView::Stretch);
         userhostTimer.stop();
     }
 }

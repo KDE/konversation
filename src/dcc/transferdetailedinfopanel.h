@@ -16,7 +16,6 @@
 #include "ui_transferdetailedinfopanelui.h"
 #include "ui_transferdetailedtimeinfopanelui.h"
 
-#include <KTabWidget>
 
 class QTimer;
 
@@ -26,7 +25,7 @@ namespace Konversation
     {
         class Transfer;
 
-        class TransferDetailedInfoPanel : public KTabWidget
+        class TransferDetailedInfoPanel : public QTabWidget
         {
             Q_OBJECT
 
@@ -44,8 +43,6 @@ namespace Konversation
                 void updateChangeableView();
                 void slotTransferStatusChanged(Konversation::DCC::Transfer *transfer, int newStatus, int oldStatus);
                 void slotLocationChanged(const QString& url);
-
-                void globalSettingsChanged(int category);
 
             private:
                 Ui::DccTransferDetailedInfoPanelUI m_locationInfo;

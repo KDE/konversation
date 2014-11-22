@@ -40,7 +40,6 @@
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
-#include <KGlobal>
 
 // For the Web Shortcuts context menu sub-menu.
 #include <KToolInvocation>
@@ -56,16 +55,14 @@ class IrcContextMenusPrivate
         IrcContextMenus instance;
 };
 
-K_GLOBAL_STATIC(IrcContextMenusPrivate, s_ircContextMenusPrivate)
+Q_GLOBAL_STATIC(IrcContextMenusPrivate, s_ircContextMenusPrivate)
 
 IrcContextMenusPrivate::IrcContextMenusPrivate()
 {
-    qAddPostRoutine(s_ircContextMenusPrivate.destroy);
 }
 
 IrcContextMenusPrivate::~IrcContextMenusPrivate()
 {
-    qRemovePostRoutine(s_ircContextMenusPrivate.destroy);
 }
 
 

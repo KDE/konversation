@@ -33,7 +33,6 @@
 #include <KUser>
 #include <KAuthorized>
 #include <KIO/Job>
-#include <KIO/NetAccess>
 
 /*
  *flow chart*
@@ -393,6 +392,7 @@ namespace Konversation
             QList<QUrl>::ConstIterator it;
             for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
             {
+                /* FIXME KF5 port
                 if (!KIO::NetAccess::exists(*it, KIO::NetAccess::SourceSide, NULL))
                 {
                     KIO::MkdirJob* job = KIO::mkdir(*it, -1);
@@ -401,6 +401,7 @@ namespace Konversation
                         return false;
                     }
                 }
+                */
             }
 
 #ifndef Q_OS_WIN

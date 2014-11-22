@@ -31,7 +31,6 @@
 #include <QTcpServer>
 #include <QInputDialog>
 
-#include <KIO/NetAccess>
 
 // TODO: remove the dependence
 #include <KAuthorized>
@@ -73,7 +72,7 @@ namespace Konversation
             finishTransferLogger();
             if (!m_tmpFile.isEmpty())
             {
-                KIO::NetAccess::removeTempFile(m_tmpFile);
+                // KIO::NetAccess::removeTempFile(m_tmpFile); FIXME KF5 port
             }
 
             m_tmpFile.clear();
@@ -177,20 +176,24 @@ namespace Konversation
             qDebug() << "Fast DCC send: " << m_fastSend;
 
             //Check the file exists
+            /* FIXME KF 5 port
             if (!KIO::NetAccess::exists(m_fileURL, KIO::NetAccess::SourceSide, NULL))
             {
                 failed(i18n("The url \"%1\" does not exist", m_fileURL.toString()));
                 return false;
             }
+            */
 
             //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
             //Download the file.  Does nothing if it's local (file:/)
+            /* FIXME KF5 port
             if (!KIO::NetAccess::download(m_fileURL, m_tmpFile, NULL))
             {
                 failed(i18n("Could not retrieve \"%1\"", m_fileURL.toString()));
                 qDebug() << "KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString();
                 return false;
             }
+            */
 
             //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
             if (m_fileName.isEmpty())

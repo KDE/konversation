@@ -35,7 +35,8 @@ ChannelListModel::ChannelListModel(QObject* parent) : QAbstractListModel(parent)
 void ChannelListModel::append(const ChannelItem& item)
 {
     m_channelList.append(item);
-    reset();
+    beginResetModel();
+    endResetModel();
 }
 
 int ChannelListModel::columnCount(const QModelIndex& /*parent*/) const

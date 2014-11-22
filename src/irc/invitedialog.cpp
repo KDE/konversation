@@ -18,7 +18,6 @@
 
 #include "invitedialog.h"
 
-#include <KGlobal>
 #include <KLocalizedString>
 #include <QIcon>
 #include <KConfigGroup>
@@ -123,7 +122,8 @@ void InviteChannelListModel::addInvite(const QString& nickname, const QString& c
         m_channelMap.insert(channel, item);
     }
 
-    reset();
+    beginResetModel();
+    endResetModel();
 }
 
 int InviteChannelListModel::rowCount(const QModelIndex&) const

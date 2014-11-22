@@ -49,8 +49,6 @@
 #include <KWindowSystem>
 #include <KShell>
 
-#include <solid/networking.h>
-
 #include <kio/sslui.h>
 
 using namespace Konversation;

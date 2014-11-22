@@ -22,14 +22,14 @@
 
 static const int WarningNameRole = Qt::UserRole + 100;
 
-Warnings_Config::Warnings_Config(QWidget* parent, const char* name, Qt::WFlags fl)
+Warnings_Config::Warnings_Config(QWidget* parent, const char* name, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setObjectName(QString::fromLatin1(name));
     setupUi(this);
 
-    dialogListView->header()->setClickable(false);
-    dialogListView->header()->setMovable(false);
+    dialogListView->header()->setSectionsClickable(false);
+    dialogListView->header()->setSectionsMovable(false);
 
     loadSettings();
 

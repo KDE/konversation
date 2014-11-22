@@ -36,7 +36,6 @@
 #include <QMenu>
 #include <KMessageBox>
 #include <KToolBar>
-#include <KGlobalSettings>
 
 UrlDateItem::UrlDateItem(const QDateTime& dateTime)
 {
@@ -165,7 +164,7 @@ void UrlCatcher::setupUrlTree()
     m_urlTree->setWhatsThis(i18n("List of Uniform Resource Locators mentioned in any of the Konversation windows during this session."));
     m_urlTree->setContextMenuPolicy(Qt::CustomContextMenu);
     m_urlTree->setSortingEnabled(true);
-    m_urlTree->header()->setMovable(false);
+    m_urlTree->header()->setSectionsMovable(false);
     m_urlTree->header()->setSortIndicatorShown(true);
     m_urlTree->setAllColumnsShowFocus(true);
     m_urlTree->setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -193,7 +192,9 @@ void UrlCatcher::setupUrlTree()
     m_urlTree->setModel(proxyModel);
     connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(updateItemActionStates()));
-    connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &UrlCatcher::checkLocaleChanged);
+
+    // FIXME KF5 port
+    //connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &UrlCatcher::checkLocaleChanged);
 
     searchLine->setProxy(proxyModel);
 
@@ -390,6 +391,7 @@ void UrlCatcher::clearUrlModel()
 
 void UrlCatcher::checkLocaleChanged(int category)
 {
+    /* FIXME KF5 port
     if (category != KGlobalSettings::SETTINGS_LOCALE)
         return;
 
@@ -397,6 +399,7 @@ void UrlCatcher::checkLocaleChanged(int category)
     QStandardItemModel* urlModel = konvApp->getUrlModel();
 
     m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));
+    */
 }
 
 void UrlCatcher::childAdjustFocus()

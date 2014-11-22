@@ -91,7 +91,6 @@ namespace Konversation
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,
                                                int start, int end);
             void rowsRemovedFromModel(int start, int end);
-            void globalSettingsChanged(int category);
 
         private:
             //extra enum needed because ItemDisplayType are not or-able

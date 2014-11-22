@@ -117,7 +117,7 @@ namespace Konversation
 
         UPnPRouter* UPnPMCastSocket::parseResponse(const QByteArray & arr)
         {
-            QStringList lines = QString::fromAscii(arr).split("\r\n");
+            QStringList lines = QString::fromLatin1(arr).split("\r\n");
             QString server;
             QUrl location;
             QString uuid;

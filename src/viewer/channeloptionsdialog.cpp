@@ -27,7 +27,6 @@
 #include <QItemSelectionModel>
 #include <QTreeWidget>
 #include <KSharedConfig>
-#include <KLocale>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
@@ -553,7 +552,8 @@ namespace Konversation
         setText(0, label1);
         setText(1, label2);
         m_timestamp.setTime_t(timestamp);
-        setText(2, KLocale::global()->formatDateTime(m_timestamp, KLocale::ShortDate, true));
+        // setText(2, KLocale::global()->formatDateTime(m_timestamp, KLocale::ShortDate, true)); FIXME KF5 port
+        setText(2, "Port me");
         setData(2, Qt::UserRole, m_timestamp);
         parent->addTopLevelItem(this);
     }

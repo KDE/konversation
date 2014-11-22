@@ -33,9 +33,7 @@
 #include <KIconLoader>
 #include <KStandardShortcut>
 #include <kio/pixmaploader.h>
-#include <KLocale>
 #include <KUrlMimeData>
-#include <KDebug>
 
 using namespace Konversation;
 
@@ -92,7 +90,7 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent) : KTextBrowser(parent), m_rememberLine(0), m_lastMarkerLine(0), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(0), m_lastMarkerLine(0), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
@@ -418,7 +416,7 @@ void IRCView::cullMarkedLine(int where, int rem, int add) //slot
     }
     if (showDebug)
     {
-        DebugBanner;
+        // DebugBanner; FIXME KF5 port
         qDebug() << output;
     }
 }
@@ -901,7 +899,7 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
 
     line.remove('\n');
 
-    KTextBrowser::append(line);
+    QTextBrowser::append(line);
 
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
@@ -926,10 +924,12 @@ QString IRCView::timeStamp()
         else
         {
             QDate date = QDate::currentDate();
+            /* FIXME KF5 port
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1 %2]</font> ")
                     .arg(KLocale::global()->formatDate(date, KLocale::ShortDate),
                          time.toString(timeFormat));
+                         */
         }
 
         return timeString;
@@ -1945,7 +1945,7 @@ QString IRCView::getColors(const QString& text, int start, QString& _fgColor, QS
 void IRCView::resizeEvent(QResizeEvent *event)
 {
     ScrollBarPin b(verticalScrollBar());
-    KTextBrowser::resizeEvent(event);
+    QTextBrowser::resizeEvent(event);
 }
 
 void IRCView::mouseMoveEvent(QMouseEvent* ev)
@@ -1981,7 +1981,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         m_urlToCopy = anchorAt(ev->pos());
     }
 
-    KTextBrowser::mouseMoveEvent(ev);
+    QTextBrowser::mouseMoveEvent(ev);
 }
 
 void IRCView::mousePressEvent(QMouseEvent* ev)
@@ -1997,7 +1997,7 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
         }
     }
 
-    KTextBrowser::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
 }
 
 void IRCView::mouseReleaseEvent(QMouseEvent *ev)
@@ -2022,7 +2022,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
         }
     }
 
-    KTextBrowser::mouseReleaseEvent(ev);
+    QTextBrowser::mouseReleaseEvent(ev);
 }
 
 void IRCView::keyPressEvent(QKeyEvent* ev)
@@ -2036,7 +2036,7 @@ void IRCView::keyPressEvent(QKeyEvent* ev)
         return;
     }
 
-    KTextBrowser::keyPressEvent(ev);
+    QTextBrowser::keyPressEvent(ev);
 }
 
 void IRCView::anchorClicked(const QUrl& url)
