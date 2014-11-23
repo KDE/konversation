@@ -1947,18 +1947,6 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_dumpdoc(const OutputFilterInput& input)
-    {
-        /* FIXME KF5 port
-        if (input.context && input.context->getTextView())
-        {
-            KDebug::Block myBlock(qPrintable(QString::number((quintptr)(input.context->getTextView()), 16)));
-            qDebug() << input.context->getTextView()->document();
-        }
-        */
-        return OutputFilterResult();
-    }
-
     OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,
                                                 char mode, char giveTake)
     {

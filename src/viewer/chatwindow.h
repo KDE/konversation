@@ -81,6 +81,7 @@ class ChatWindow : public QWidget
 
         void setType(WindowType newType);
         WindowType getType() const;
+        virtual bool isTopLevel() const;
 
         virtual void sendText(const QString& /*text*/) {}
 

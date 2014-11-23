@@ -69,85 +69,98 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     int y = option.rect.y();
     int height = option.rect.y() + option.rect.height();
     int width = option.rect.width();
+    int left = option.rect.left();
+    int right = option.rect.left() + width;
 
     painter->fillRect(option.rect, background);
 
     if (selected)
     {
-        bool isFirst = (index.row() == 0);
+        bool isFirst = (index.row() == 0 && !index.parent().isValid());
 
         painter->setPen(bgColor);
 
         if (!isFirst)
         {
-            painter->drawPoint(0, y);
-            painter->drawPoint(1, y);
-            painter->drawPoint(0, y + 1);
+            painter->drawPoint(left, y);
+            painter->drawPoint(left + 1, y);
+            painter->drawPoint(left, y + 1);
         }
 
-        painter->drawPoint(0, height - 1);
-        painter->drawPoint(1, height - 1);
-        painter->drawPoint(0, height - 2);
+        painter->drawPoint(left, height - 1);
+        painter->drawPoint(left + 1, height - 1);
+        painter->drawPoint(left, height - 2);
 
         painter->setPen(midColor);
 
         if (!isFirst)
         {
-            painter->drawPoint(2, y);
-            painter->drawPoint(0, y + 2);
+            painter->drawPoint(left + 2, y);
+            painter->drawPoint(left, y + 2);
         }
 
-        painter->drawPoint(2, height - 1);
-        painter->drawPoint(0, height - 3);
+        painter->drawPoint(left + 2, height - 1);
+        painter->drawPoint(left, height - 3);
     }
 
-    const QAbstractItemModel* model = index.model();
+    const QModelIndex idxAbove = m_view->indexAbove(index);
 
-    if (model) {
-        const QModelIndex idxBefore = model->index(index.row() - 1, 0);
+    if (idxAbove.isValid() && m_view->selectionModel()->isSelected(idxAbove)) {
+        painter->setPen(selColor);
+        painter->drawPoint(right - 1, y);
+        painter->drawPoint(right - 2, y);
+        painter->drawPoint(right - 1, y + 1);
+        painter->setPen(midColor);
+        painter->drawPoint(right - 3, y);
+        painter->drawPoint(right - 1, y + 2);
+    }
 
-        if (idxBefore.isValid() && m_view->selectionModel()->isSelected(idxBefore)) {
-            painter->setPen(selColor);
-            painter->drawPoint(width - 1, y);
-            painter->drawPoint(width - 2, y);
-            painter->drawPoint(width - 1, y + 1);
-            painter->setPen(midColor);
-            painter->drawPoint(width - 3, y);
-            painter->drawPoint(width - 1, y + 2);
-        }
+    const QModelIndex idxBelow = m_view->indexBelow(index);
 
-        const QModelIndex idxAfter = model->index(index.row() + 1, 0);
+    if (idxBelow.isValid() && m_view->selectionModel()->isSelected(idxBelow)) {
+        painter->setPen(selColor);
+        painter->drawPoint(right - 1, height - 1);
+        painter->drawPoint(right - 2, height - 1);
+        painter->drawPoint(right - 1, height - 2);
+        painter->setPen(midColor);
+        painter->drawPoint(right - 3, height - 1);
+        painter->drawPoint(right - 1, height - 3);
+    }
 
-        if (idxAfter.isValid() && m_view->selectionModel()->isSelected(idxAfter)) {
-            painter->setPen(selColor);
-            painter->drawPoint(width - 1, height - 1);
-            painter->drawPoint(width - 2, height - 1);
-            painter->drawPoint(width - 1, height - 2);
-            painter->setPen(midColor);
-            painter->drawPoint(width - 3, height - 1);
-            painter->drawPoint(width - 1, height - 3);
-        }
-
-        bool isLast = (index.row() == model->rowCount() - 1);
-
-        if (isLast && selected) {
-            painter->setPen(selColor);
-            painter->drawPoint(width - 1, height);
-            painter->drawPoint(width - 2, height);
-            painter->drawPoint(width - 1, height + 1);
-            painter->setPen(midColor);
-            painter->drawPoint(width - 3, height);
-            painter->drawPoint(width - 1, height + 2);
-        }
+    if (!idxBelow.isValid() && selected) {
+        painter->setPen(selColor);
+        painter->drawPoint(right - 1, height);
+        painter->drawPoint(right - 2, height);
+        painter->drawPoint(right - 1, height + 1);
+        painter->setPen(midColor);
+        painter->drawPoint(right - 3, height);
+        painter->drawPoint(right - 1, height + 2);
     }
 
     painter->restore();
 
     QStyleOptionViewItem _option = option;
     _option.state = QStyle::State_None;
-    _option.palette.setColor(QPalette::Text, index.data(ViewContainer::ColorRole).value<QColor>());
+
+    const QColor &textColor = index.data(ViewContainer::ColorRole).value<QColor>();
+
+    if (textColor.isValid()) {
+        _option.palette.setColor(QPalette::Text, textColor);
+    } else {
+        _option.palette.setColor(QPalette::Text, selected
+            ? m_view->palette().color(QPalette::HighlightedText)
+            : m_view->palette().color(QPalette::Text));
+    }
 
     QStyledItemDelegate::paint(painter, _option, index);
+
+    if (selected && idxAbove.isValid()) {
+        m_view->update(idxAbove);
+    }
+
+    if (selected && idxBelow.isValid()) {
+        m_view->update(idxBelow);
+    }
 }
 
 QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2) const
@@ -159,10 +172,13 @@ QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2) co
     return mixedColor;
 }
 
-ViewTree::ViewTree(QWidget* parent) : QListView(parent)
+ViewTree::ViewTree(QWidget* parent) : QTreeView(parent)
 {
-    setUniformItemSizes(true);
-    setResizeMode(QListView::Adjust);
+    setUniformRowHeights(true);
+    setRootIsDecorated(false);
+    setItemsExpandable(false);
+    setHeaderHidden(true);
+    setSortingEnabled(false);
 
     setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
 
@@ -180,7 +196,7 @@ ViewTree::ViewTree(QWidget* parent) : QListView(parent)
 
     setBackgroundRole(QPalette::Base);
 
-    setItemDelegate(new ViewTreeDelegate(this));
+    setItemDelegateForColumn(0, new ViewTreeDelegate(this));
 
     updateAppearance();
 }
@@ -191,7 +207,7 @@ ViewTree::~ViewTree()
 
 void ViewTree::setModel (QAbstractItemModel *model)
 {
-    QListView::setModel(model);
+    QTreeView::setModel(model);
 
     connect(selectionModel(), &QItemSelectionModel::selectionChanged,
             this, &ViewTree::selectionChanged);
@@ -219,7 +235,9 @@ void ViewTree::updateAppearance()
 
 void ViewTree::resizeEvent(QResizeEvent* event)
 {
-    QListView::resizeEvent(event);
+    setColumnWidth(0, event->size().width());
+
+    QTreeView::resizeEvent(event);
 
     emit sizeChanged();
 }
@@ -242,7 +260,7 @@ void ViewTree::mousePressEvent(QMouseEvent* event)
         }
     }
 
-    QListView::mousePressEvent(event);
+    QTreeView::mousePressEvent(event);
 }
 
 void ViewTree::mouseReleaseEvent(QMouseEvent* event)
@@ -259,7 +277,7 @@ void ViewTree::mouseReleaseEvent(QMouseEvent* event)
 
     m_pressedView = 0;
 
-    QListView::mouseReleaseEvent(event);
+    QTreeView::mouseReleaseEvent(event);
 }
 
 void ViewTree::contextMenuEvent(QContextMenuEvent* event)
@@ -296,6 +314,12 @@ void ViewTree::wheelEvent(QWheelEvent* event)
 
         if (up) {
             idx = model->index(model->rowCount() - 1, 0);
+
+            int count = model->rowCount(idx);
+
+            if (count) {
+                idx = idx.child(count - 1, 0);
+            }
         } else {
             idx = model->index(0, 0);
         }
@@ -308,7 +332,7 @@ void ViewTree::wheelEvent(QWheelEvent* event)
 void ViewTree::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down) {
-        QListView::keyPressEvent(event);
+        QTreeView::keyPressEvent(event);
     } else {
         const QModelIndex& idx = currentIndex();
 
@@ -340,7 +364,12 @@ void ViewTree::selectView(const QModelIndex& index)
 
 void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-    Q_UNUSED(deselected)
+    if (!deselected.indexes().isEmpty()) {
+        const QModelIndex& old = deselected.indexes().at(0);
+        update(old);
+        update(indexAbove(old));
+        update(indexBelow(old));
+    }
 
     const QModelIndexList& idxList = selected.indexes();
 

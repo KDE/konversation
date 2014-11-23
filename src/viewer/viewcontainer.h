@@ -54,13 +54,10 @@ class TabWidget : public QTabWidget
         ~TabWidget();
 
     Q_SIGNALS:
-        void removedTab(int index) const;
         void contextMenu(QWidget* widget, const QPoint& pos);
         void tabBarMiddleClicked(int index);
 
     protected:
-        void tabRemoved(int index);
-
         virtual void contextMenuEvent(QContextMenuEvent* event);
         virtual void mouseReleaseEvent(QMouseEvent* event);
 };
@@ -91,6 +88,7 @@ class ViewContainer : public QAbstractItemModel
         int columnCount(const QModelIndex& parent = QModelIndex()) const;
 
         QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        QModelIndex indexForView(ChatWindow* view) const;
         QModelIndex parent(const QModelIndex& index) const;
 
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -127,6 +125,8 @@ class ViewContainer : public QAbstractItemModel
         void showNextActiveView();
         void showLastFocusedView();
 
+        bool canMoveViewLeft() const;
+        bool canMoveViewRight() const;
         void moveViewLeft();
         void moveViewRight();
 
@@ -203,7 +203,6 @@ class ViewContainer : public QAbstractItemModel
 
     Q_SIGNALS:
         void viewChanged(const QModelIndex& idx);
-        void removeView(ChatWindow* view);
         void setWindowCaption(const QString& caption);
         void updateChannelAppearance();
         void contextMenuClosed();
@@ -226,8 +225,6 @@ class ViewContainer : public QAbstractItemModel
     private Q_SLOTS:
         void setupIrcContextMenus();
         void viewSwitched(int newIndex);
-        void removedTab(int index);
-        void movedTab(int from, int to);
         void onViewTreeDestroyed(QObject *object);
 
     private:

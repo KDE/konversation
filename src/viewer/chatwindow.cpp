@@ -193,6 +193,11 @@ ChatWindow::WindowType ChatWindow::getType() const
     return type;
 }
 
+bool ChatWindow::isTopLevel() const
+{
+    return true;
+}
+
 void ChatWindow::setServer(Server* newServer)
 {
     if (!newServer)

@@ -74,6 +74,8 @@ class Channel : public ChatWindow
         explicit Channel(QWidget* parent, const QString& name);
         ~Channel();
 //META
+
+        virtual bool isTopLevel() const;
         virtual bool canBeFrontView();
         virtual bool searchView();
 

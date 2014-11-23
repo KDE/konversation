@@ -53,6 +53,7 @@
 #include <KWindowSystem>
 #include <KIconLoader>
 
+
 using namespace Konversation;
 
 TabWidget::TabWidget(QWidget* parent) : QTabWidget(parent)
@@ -61,13 +62,6 @@ TabWidget::TabWidget(QWidget* parent) : QTabWidget(parent)
 
 TabWidget::~TabWidget()
 {
-}
-
-void TabWidget::tabRemoved(int index)
-{
-    QTabWidget::tabRemoved(index);
-
-    emit removedTab(index);
 }
 
 void TabWidget::contextMenuEvent(QContextMenuEvent* event)
@@ -223,10 +217,10 @@ void ViewContainer::setupTabWidget()
     vboxLayout->addWidget(m_queueTuner);
     m_queueTuner->hide();
 
-    m_tabWidget->setMovable(true);
+    m_tabWidget->setMovable(false); // FIXME KF5 Port: Tab DND is currently disabled because it doesn't implement nesting constraints.
     m_tabWidget->tabBar()->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 
-    m_vbox->hide();    //m_tabWidget->hide();
+    m_vbox->hide();
 
     QToolButton* closeBtn = new QToolButton(m_tabWidget);
     closeBtn->setIcon(SmallIcon("tab-close"));
@@ -238,8 +232,6 @@ void ViewContainer::setupTabWidget()
     connect(m_tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeView(int)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_tabWidget, SIGNAL(tabBarMiddleClicked(int)), this, SLOT(closeViewMiddleClick(int)));
-    connect(m_tabWidget, SIGNAL(removedTab(int)), this, SLOT(removedTab(int)));
-    connect(m_tabWidget->tabBar(), SIGNAL(tabMoved(int,int)), this, SLOT(movedTab(int,int)));
 
     updateTabWidgetAppearance();
 }
@@ -283,7 +275,7 @@ void ViewContainer::setupViewTree()
 
 void ViewContainer::onViewTreeDestroyed(QObject* object)
 {
-    Q_UNUSED (object)
+    Q_UNUSED(object)
 
     setViewTreeShown(false);
 }
@@ -332,10 +324,44 @@ void ViewContainer::removeViewTree()
 
 int ViewContainer::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent)
+    if (!m_tabWidget) {
+        return 0;
+    }
 
-    if (m_tabWidget) {
-        return m_tabWidget->count();
+    if (parent.isValid()) {
+        ChatWindow* statusView = static_cast<ChatWindow*>(parent.internalPointer());
+
+        if (!statusView) {
+            return 0;
+        }
+
+        int count = 0;
+
+        for (int i = m_tabWidget->indexOf(statusView) + 1; i < m_tabWidget->count(); ++i) {
+            const ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+            if (view != statusView && view->getServer() && view->getServer()->getStatusView() == statusView) {
+                ++count;
+            }
+
+            if (view->isTopLevel()) {
+                break;
+            }
+        }
+
+        return count;
+    } else {
+        int count = 0;
+
+        for (int i = 0; i < m_tabWidget->count(); ++i) {
+            const ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+            if (view->isTopLevel()) {
+                ++count;
+            }
+        }
+
+        return count;
     }
 
     return 0;
@@ -350,70 +376,128 @@ int ViewContainer::columnCount(const QModelIndex& parent) const
 
 QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent) const
 {
-    Q_UNUSED(parent)
+    if (!m_tabWidget || column != 0) {
+        return QModelIndex();
+    }
 
-    return createIndex(row, column, m_tabWidget ? m_tabWidget->widget(row) : 0);
+    int tabIndex = -1;
+
+    if (parent.isValid()) {
+        int parentTabIndex = m_tabWidget->indexOf(static_cast<QWidget*>(parent.internalPointer()));
+
+        if (parentTabIndex != -1) {
+            tabIndex = parentTabIndex + row + 1;
+        } else {
+            return QModelIndex();
+        }
+    } else {
+        int count = -1;
+
+        for (int i = 0; i < m_tabWidget->count(); ++i) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+                ++count;
+            }
+
+            if (count == row) {
+                tabIndex = i;
+
+                break;
+            }
+        }
+    }
+
+    if (tabIndex == -1) {
+        return QModelIndex();
+    }
+
+    return createIndex(row, column, m_tabWidget->widget(tabIndex));
+}
+
+QModelIndex ViewContainer::indexForView(ChatWindow* view) const
+{
+    if (!view || !m_tabWidget) {
+        return QModelIndex();
+    }
+
+    int index = m_tabWidget->indexOf(view);
+
+    if (index == -1) {
+        return QModelIndex();
+    }
+
+    if (view->isTopLevel()) {
+        int count = -1;
+
+        for (int i = 0; i <= index; ++i) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+                ++count;
+            }
+        }
+
+        return createIndex(count, 0, view);
+    } else {
+        if (!view->getServer() || !view->getServer()->getStatusView()) {
+            return QModelIndex();
+        }
+
+        ChatWindow* statusView = view->getServer()->getStatusView();
+
+        int statusViewIndex = m_tabWidget->indexOf(statusView);
+
+        return createIndex(index - statusViewIndex - 1, 0, view);
+    }
 }
 
 QModelIndex ViewContainer::parent(const QModelIndex& index) const
 {
-    Q_UNUSED(index)
+    if (!m_tabWidget) {
+        return QModelIndex();
+    }
 
-    return QModelIndex();
+    const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
+
+    if (!view || view->isTopLevel() || !view->getServer() || !view->getServer()->getStatusView()) {
+        return QModelIndex();
+    }
+
+    return indexForView(view->getServer()->getStatusView());
 }
 
 QVariant ViewContainer::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || !m_tabWidget) {
+    if (!index.isValid() || !index.internalPointer() || !m_tabWidget) {
         return QVariant();
     }
 
-    int row = index.row();
-
-    if (row >= m_tabWidget->count()) {
-        return QVariant();
-    }
+    int row = m_tabWidget->indexOf(static_cast<ChatWindow*>(index.internalPointer()));
 
     if (role == Qt::DisplayRole) {
         return m_tabWidget->tabText(row).replace("&&", "&");
     } else if (role == Qt::DecorationRole) {
+        // FIXME KF5 port: Don't show close buttons on the view tree for now.
+        if (m_viewTree && Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds()) {
+            return QVariant();
+        }
+
         return m_tabWidget->tabIcon(row);
     } else if (role == ColorRole) {
-        const ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(row));
-        const QColor& color = m_tabWidget->tabBar()->tabTextColor(row);
+        const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
 
-        // FIXME HACK ViewTree port: Do the colow window-vs-view color swap locally in the tree.
-        if (view->currentTabNotification() == Konversation::tnfNone
-            || color == m_window->palette().foreground().color()) {
-            if (Preferences::self()->inputFieldsBackgroundColor()) {
-                return Preferences::self()->color(Preferences::ChannelMessage);
-            } else {
-                return m_window->palette().color(QPalette::Text);
+        if (view->currentTabNotification() != Konversation::tnfNone) {
+            if ((view->currentTabNotification() == Konversation::tnfNormal && Preferences::self()->tabNotificationsMsgs())
+                || (view->currentTabNotification() == Konversation::tnfPrivate && Preferences::self()->tabNotificationsPrivate())
+                || (view->currentTabNotification() == Konversation::tnfSystem && Preferences::self()->tabNotificationsSystem())
+                || (view->currentTabNotification() == Konversation::tnfControl && Preferences::self()->tabNotificationsEvents())
+                || (view->currentTabNotification() == Konversation::tnfNick && Preferences::self()->tabNotificationsNick())
+                || (view->currentTabNotification() == Konversation::tnfHighlight && Preferences::self()->tabNotificationsHighlights())) {
+                return m_tabWidget->tabBar()->tabTextColor(row);
             }
-        } else {
-            return color;
         }
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
     }
 
     return QVariant();
-}
-
-void ViewContainer::removedTab(int index)
-{
-    if (!m_tabWidget->count() && m_viewTree) {
-        setViewTreeShown(false);
-    }
-
-    beginRemoveRows(QModelIndex(), index, index);
-    endRemoveRows();
-}
-
-void ViewContainer::movedTab(int from, int to)
-{
-    beginMoveRows(QModelIndex(), from, from, QModelIndex(), (to > from) ? to + 1 : to);
-    endMoveRows();
 }
 
 void ViewContainer::updateAppearance()
@@ -492,10 +576,10 @@ void ViewContainer::updateViewActions(int index)
 
         // FIXME ViewTree port: Take hierarchy into account.
         action = actionCollection()->action("move_tab_left");
-        if (action) action->setEnabled(index > 0);
+        if (action) action->setEnabled(canMoveViewLeft());
 
         action = actionCollection()->action("move_tab_right");
-        if (action) action->setEnabled(index < (m_tabWidget->count() - 1));
+        if (action) action->setEnabled(canMoveViewRight());
 
         if (server && (viewType == ChatWindow::Status || server == m_frontServer))
         {
@@ -889,7 +973,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
         }
 
         if (announce) {
-            const QModelIndex& idx = index(i, 0);
+            const QModelIndex& idx = indexForView(view);
             emit dataChanged(idx, idx);
         }
     }
@@ -1002,7 +1086,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             break;
     }
 
-    const QModelIndex& idx = index(tabIndex, 0);
+    const QModelIndex& idx = indexForView(view);
     emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
 }
 
@@ -1051,7 +1135,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
     m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
 
-    const QModelIndex& idx = index(tabIndex, 0);
+    const QModelIndex& idx = indexForView(view);
     emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
 
     m_activeViewOrderList.removeAll(view);
@@ -1147,7 +1231,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(Application::instance(), SIGNAL(appearanceChanged()), view, SLOT(updateAppearance()));
     connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
-    connect(view, SIGNAL(closing(ChatWindow*)), this, SIGNAL(removeView(ChatWindow*)));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
 
     // Please be careful about changing any of the grouping behavior in here,
@@ -1292,7 +1375,26 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
     }
 
-    beginInsertRows(QModelIndex(), placement, placement);
+    if (view->isTopLevel()) {
+        int diff = 0;
+
+        for (int i = 0; i < placement; ++i) {
+            if (!static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+                ++diff;
+            }
+        }
+
+        beginInsertRows(QModelIndex(), placement - diff, placement - diff);
+    } else {
+        int statusViewIndex = m_tabWidget->indexOf(view->getServer()->getStatusView());
+        const QModelIndex idx = indexForView(view->getServer()->getStatusView());
+
+        if (m_viewTree) {
+            m_viewTree->setExpanded(idx, true);
+        }
+
+        beginInsertRows(idx, placement - statusViewIndex - 1, placement - statusViewIndex - 1);
+    }
 
     m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', "&&"));
 
@@ -1333,7 +1435,7 @@ void ViewContainer::viewSwitched(int newIndex)
     m_lastFocusedView = m_currentView;
     m_currentView = view;
 
-    const QModelIndex &idx = index(newIndex, 0);
+    const QModelIndex &idx = indexForView(view);
     emit viewChanged(idx);
 
     if (m_frontView)
@@ -1455,41 +1557,68 @@ void ViewContainer::showLastFocusedView()
         showView(m_lastFocusedView);
 }
 
+bool ViewContainer::canMoveViewLeft() const
+{
+    if (!m_tabWidget || !m_tabWidget->count()) {
+        return false;
+    }
+
+    int index = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
+
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
+
+    if (view->isTopLevel() && index > 0) {
+        return true;
+    } else if (!view->isTopLevel()) {
+        ChatWindow* statusView = view->getServer()->getStatusView();
+        int statusViewIndex = m_tabWidget->indexOf(statusView);
+
+        index = index - statusViewIndex - 1;
+
+        return (index > 0);
+    }
+
+    return false;
+}
+
+bool ViewContainer::canMoveViewRight() const
+{
+    if (!m_tabWidget || !m_tabWidget->count()) {
+        return false;
+    }
+
+    int index = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
+
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
+
+    if (view->isTopLevel()) {
+        int lastTopLevelView = -1;
+
+        for (int i = m_tabWidget->count() - 1; i >= index; --i) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+                lastTopLevelView = i;
+                break;
+            }
+        }
+
+        return (index != lastTopLevelView);
+    } else if (!view->isTopLevel()) {
+        view = static_cast<ChatWindow*>(m_tabWidget->widget(index + 1));
+
+        return (view && !view->isTopLevel());
+    }
+
+    return false;
+}
 
 void ViewContainer::moveViewLeft()
 {
-    int index;
-
-    if (m_popupViewIndex == -1)
-        index = m_tabWidget->currentIndex();
-    else
-        index = m_popupViewIndex;
-
-    if (index)
-    {
-        m_tabWidget->tabBar()->moveTab(index, index - 1);
-        updateViewActions(index - 1);
-    }
-
-    m_popupViewIndex = -1;
+    appendToFrontmost(QLatin1String("WIP"), QLatin1String("Moving tabs will be back soon."), 0, false);
 }
 
 void ViewContainer::moveViewRight()
 {
-    int index;
-
-    if (m_popupViewIndex == -1)
-        index = m_tabWidget->currentIndex();
-    else
-        index = m_popupViewIndex;
-
-    if (index < (m_tabWidget->count() - 1))
-    {
-        m_tabWidget->tabBar()->moveTab(index, index + 1);
-        updateViewActions(index + 1);
-    }
-
-    m_popupViewIndex = -1;
+    appendToFrontmost(QLatin1String("WIP"), QLatin1String("Moving tabs will be back soon."), 0, false);
 }
 
 void ViewContainer::closeView(int view)
@@ -1535,9 +1664,19 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (m_tabWidget)
     {
-        const int idx = m_tabWidget->indexOf(view);
-        m_tabWidget->removeTab(idx);
-        emit removeView(view);
+        const int tabIndex = m_tabWidget->indexOf(view);
+        const QModelIndex& idx = indexForView(view);
+        bool valid = idx.isValid();
+
+        if (valid) {
+            beginRemoveRows(idx.parent(), idx.row(), idx.row());
+        }
+
+        m_tabWidget->removeTab(tabIndex);
+
+        if (valid) {
+            endRemoveRows();
+        }
 
         if (m_tabWidget->count() <= 0)
         {
@@ -1559,6 +1698,10 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     {
         QAction* action = actionCollection()->action("close_queries");
         if (action) action->setEnabled(false);
+    }
+
+    if (!m_tabWidget->count() && m_viewTree) {
+        setViewTreeShown(false);
     }
 }
 
@@ -1594,7 +1737,7 @@ void ViewContainer::renameKonsole()
 
         m_tabWidget->setTabText(popup, label);
 
-        const QModelIndex& idx = index(popup, 0);
+        const QModelIndex& idx = indexForView(view);
         emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
 
         if (popup == m_tabWidget->currentIndex())
@@ -1673,6 +1816,12 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
 
 void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 {
+    if (!tab) {
+        return;
+    }
+
+    ChatWindow* view = static_cast<ChatWindow*>(tab);
+
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
@@ -1680,7 +1829,6 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     if (!menu) return;
 
-    ChatWindow* view = static_cast<ChatWindow*>(tab);
     KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
     KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
     QAction* rejoinAction = actionCollection()->action("rejoin_channel");
@@ -1690,66 +1838,59 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     renameAct->setText(i18n("&Rename Tab..."));
     connect(renameAct, SIGNAL(triggered()), this, SLOT(renameKonsole()));
 
-    if (view)
+    ChatWindow::WindowType viewType = view->getType();
+
+    updateViewEncoding(view);
+
+    if (viewType == ChatWindow::Channel)
     {
-        ChatWindow::WindowType viewType = view->getType();
+        QAction* action = actionCollection()->action("tab_encoding");
+        menu->insertAction(action, autoJoinAction);
 
-        updateViewEncoding(view);
-
-        if (viewType == ChatWindow::Channel)
+        Channel *channel = static_cast<Channel*>(view);
+        if (channel->rejoinable() && rejoinAction)
         {
-            QAction* action = actionCollection()->action("tab_encoding");
-            menu->insertAction(action, autoJoinAction);
-
-            Channel *channel = static_cast<Channel*>(view);
-            if (channel->rejoinable() && rejoinAction)
-            {
-                menu->insertAction(closeAction, rejoinAction);
-                rejoinAction->setEnabled(true);
-            }
+            menu->insertAction(closeAction, rejoinAction);
+            rejoinAction->setEnabled(true);
         }
-
-        if (viewType == ChatWindow::Konsole)
-        {
-            QAction* action = actionCollection()->action("tab_encoding");
-            menu->insertAction(action, renameAct);
-        }
-
-        if (viewType == ChatWindow::Status)
-        {
-            QAction* action = actionCollection()->action("tab_encoding");
-            menu->insertAction(action, autoConnectAction);
-
-            QList<QAction *> serverActions;
-
-            action = actionCollection()->action("disconnect_server");
-            if (action) serverActions.append(action);
-            action = actionCollection()->action("reconnect_server");
-            if (action) serverActions.append(action);
-            action = actionCollection()->action("join_channel");
-            if (action) serverActions.append(action);
-            // TODO FIXME who wants to own this action?
-            action = new QAction(this);
-            action->setSeparator(true);
-            if (action) serverActions.append(action);
-            m_window->plugActionList("server_actions", serverActions);
-            m_contextServer = view->getServer();
-        }
-        else
-            m_contextServer = 0;
     }
 
-    const QModelIndex& idx = index(m_popupViewIndex, 0);
+    if (viewType == ChatWindow::Konsole)
+    {
+        QAction* action = actionCollection()->action("tab_encoding");
+        menu->insertAction(action, renameAct);
+    }
 
+    if (viewType == ChatWindow::Status)
+    {
+        QAction* action = actionCollection()->action("tab_encoding");
+        menu->insertAction(action, autoConnectAction);
+
+        QList<QAction *> serverActions;
+
+        action = actionCollection()->action("disconnect_server");
+        if (action) serverActions.append(action);
+        action = actionCollection()->action("reconnect_server");
+        if (action) serverActions.append(action);
+        action = actionCollection()->action("join_channel");
+        if (action) serverActions.append(action);
+        // TODO FIXME who wants to own this action?
+        action = new QAction(this);
+        action->setSeparator(true);
+        if (action) serverActions.append(action);
+        m_window->plugActionList("server_actions", serverActions);
+        m_contextServer = view->getServer();
+    }
+    else {
+        m_contextServer = 0;
+    }
+
+    const QModelIndex& idx = indexForView(view);
     emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
 
-    menu->exec(pos);
+    const QAction* action = menu->exec(pos);
 
     m_popupViewIndex = -1;
-
-    view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
-
-    if (view) updateViewEncoding(view);
 
     menu->removeAction(autoJoinAction);
     menu->removeAction(autoConnectAction);
@@ -1760,6 +1901,10 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     emit contextMenuClosed();
 
     emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
+
+    if (action != actionCollection()->action("close_tab")) {
+        updateViewEncoding(view);
+    }
 
     updateViewActions(m_tabWidget->currentIndex());
 }
@@ -2119,7 +2264,6 @@ void ViewContainer::closeDccPanel()
     if (m_dccPanel && m_dccPanelOpen)
     {
         // hide it from view, does not delete it
-        emit removeView(m_dccPanel);
         if (m_tabWidget) m_tabWidget->removeTab(m_tabWidget->indexOf(m_dccPanel));
         m_dccPanelOpen=false;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
@@ -2377,7 +2521,7 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
 
         m_tabWidget->setTabText(tabIndex, newName);
 
-        const QModelIndex& idx = index(tabIndex, 0);
+        const QModelIndex& idx = indexForView(view);
         emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
     }
 

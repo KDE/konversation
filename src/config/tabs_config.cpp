@@ -31,10 +31,12 @@ void Tabs_Config::showEvent(QShowEvent *event)
 
     if (kcfg_TabPlacement->currentIndex() == 0 || kcfg_TabPlacement->currentIndex() == 1)
     {
+        kcfg_CloseButtons->setEnabled(true);
         kcfg_ShowTabBarCloseButton->setEnabled(true);
     }
     else
     {
+        kcfg_CloseButtons->setEnabled(false);
         kcfg_ShowTabBarCloseButton->setEnabled(false);
     }
 }
@@ -43,10 +45,12 @@ void Tabs_Config::toggleCheckBoxes(int activated)
 {
     if (activated == 0 || activated == 1)
     {
+        kcfg_CloseButtons->setEnabled(true);
         kcfg_ShowTabBarCloseButton->setEnabled(true);
     }
     else
     {
+        kcfg_CloseButtons->setEnabled(false);
         kcfg_ShowTabBarCloseButton->setEnabled(false);
     }
 }

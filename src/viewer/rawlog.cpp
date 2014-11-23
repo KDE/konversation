@@ -50,6 +50,11 @@ bool RawLog::closeYourself()
     return true;
 }
 
+bool RawLog::isTopLevel() const
+{
+    return false;
+}
+
 bool RawLog::searchView() { return true; }
 
 bool RawLog::log() { return false; }

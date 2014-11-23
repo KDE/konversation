@@ -268,8 +268,6 @@ void IRCView::dropEvent(QDropEvent* e)
 
 #define _S(x) #x << (x)
 
-#define DebugBanner KDebug::Block myBlock(qPrintable(QString("%1 %2").arg(m_chatWin->getName()).arg(QString::number((quintptr)this, 16))))
-
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
 QDebug operator<<(QDebug d, QTextFrame* feed);
 QDebug operator<<(QDebug d, QTextDocument* document);
@@ -371,55 +369,12 @@ void IRCView::blockDeleted(Burr* b) //slot
         m_rememberLine = 0;
 }
 
-void IRCView::cullMarkedLine(int where, int rem, int add) //slot
+void IRCView::cullMarkedLine(int, int, int) //slot
 {
-    bool showDebug = false;
-    QString output;
-    QDebug d = QDebug(&output);//KDebug(QtDebugMsg, __FILE__, __LINE__, Q_FUNC_INFO)();
-
-    bool merged = (add!=0 && rem !=0); // i have never seen this happen, adds and removes are always separate
-    int blockCount = document()->blockCount();
-    void *view = this;
     QTextBlock prime = document()->firstBlock();
 
-    d << "================= cullMarkedLine" << _S(view) << _S(where) << _S(rem) << _S(add) << _S(blockCount) << _S(prime.length()) << _S(merged);
-
-    if (prime.length() == 1)
-    {
-        if (document()->blockCount() == 1) //the entire document was wiped. was a signal such a burden? apparently..
-        {
-            //showDebug = true;
-            d << "- wipeLineParagraphs()" << (void*)m_rememberLine << (void*)m_lastMarkerLine;
-            wipeLineParagraphs();
-        }
-        else if (document()->characterAt(0).unicode() == 0x2029)
-        {
-            //showDebug = true;
-            d << "- only QChar::ParagraphSeparator";
-            // this should never happen, it should be 0xfffc2029
-            if (dynamic_cast<Burr*>(prime.userData()))
-                d << "Burr!" << prime.userData();
-        }
-        else
-        {
-            //showDebug = true;
-            QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
-            d << "- block of length 1 but not 2029" << qPrintable(fc);
-        }
-    }
-    else if (prime.length() == 2)
-    {
-        //probably a Burr going to be culled next..
-        //showDebug = true;
-        QString fc = "0x" + QString::number(document()->characterAt(0).unicode(), 16).rightJustified(4, '0');
-        QString sc = "0x" + QString::number(document()->characterAt(1).unicode(), 16).rightJustified(4, '0');
-        d << "- prime(2)" << fc << sc;
-    }
-    if (showDebug)
-    {
-        // DebugBanner; FIXME KF5 port
-        qDebug() << output;
-    }
+    if (prime.length() == 1 && document()->blockCount() == 1) //the entire document was wiped. was a signal such a burden? apparently..
+        wipeLineParagraphs();
 }
 
 void IRCView::insertMarkerLine() //slot

@@ -17,14 +17,13 @@ Currently missing:
 - Close buttons
 - DND
 - Seperator painting
-- Tooltips for elided items
 */
 
 #ifndef VIEWTREE_H
 #define VIEWTREE_H
 
 #include <QStyledItemDelegate>
-#include <QListView>
+#include <QTreeView>
 #include <QPointer>
 
 class ChatWindow;
@@ -48,7 +47,7 @@ class ViewTreeDelegate : public QStyledItemDelegate
         ViewTree* m_view;
 };
 
-class ViewTree : public QListView
+class ViewTree : public QTreeView
 {
     Q_OBJECT
 

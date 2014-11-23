@@ -387,6 +387,11 @@ NickInfoPtr Query::getNickInfo()
     return m_nickInfo;
 }
 
+bool Query::isTopLevel() const
+{
+    return false;
+}
+
 bool Query::canBeFrontView()        { return true; }
 bool Query::searchView()       { return true; }
                                                   // virtual

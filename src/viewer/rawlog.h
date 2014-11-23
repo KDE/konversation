@@ -30,6 +30,7 @@ class RawLog : public ChatWindow
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
+        virtual bool isTopLevel() const;
         virtual bool searchView();
         virtual bool log();
         using ChatWindow::appendRaw;

@@ -2371,6 +2371,11 @@ void Channel::fadeActivity()
     }
 }
 
+bool Channel::isTopLevel() const
+{
+    return false;
+}
+
 bool Channel::canBeFrontView()
 {
     return true;
