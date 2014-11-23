@@ -9,15 +9,7 @@
   Copyright (C) 2006-2009 Eike Hein <hein@kde.org>
 */
 
-/* FIXME KF5 Port: ViewTree TODO.
-
-Currently missing:
-
-- Tooltips for elided items
-- Close buttons
-- DND
-- Seperator painting
-*/
+// FIXME KF5 Port: ViewTree TODO: Close buttons, DND, seperator painting.
 
 #ifndef VIEWTREE_H
 #define VIEWTREE_H
@@ -38,6 +30,7 @@ class ViewTreeDelegate : public QStyledItemDelegate
         ~ViewTreeDelegate();
 
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize preferredSizeHint(const QModelIndex& index) const;
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
@@ -68,6 +61,7 @@ class ViewTree : public QTreeView
         void showViewContextMenu(QWidget* widget, const QPoint& point) const;
 
     protected:
+        bool event(QEvent* event);
         void resizeEvent(QResizeEvent* event);
         void mousePressEvent(QMouseEvent* event);
         void mouseReleaseEvent(QMouseEvent* event);

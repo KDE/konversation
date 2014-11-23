@@ -21,8 +21,9 @@
 #include <QFontDatabase>
 #include <QPainter>
 #include <QItemSelectionModel>
+#include <QToolTip>
 
-// FIXME KF5 port, ViewTree port: Not DPI-aware.
+// FIXME KF5 Port: Not DPI-aware.
 #define LED_ICON_SIZE 14
 #define MARGIN 2
 
@@ -45,6 +46,15 @@ QSize ViewTreeDelegate::sizeHint(const QStyleOptionViewItem& option, const QMode
     size.setWidth(1);
 
     return size;
+}
+
+QSize ViewTreeDelegate::preferredSizeHint(const QModelIndex& index) const
+{
+    QStyleOptionViewItem option;
+
+    initStyleOption(&option, index);
+
+    return QStyledItemDelegate::sizeHint(option, index);
 }
 
 void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -231,6 +241,37 @@ void ViewTree::updateAppearance()
     }
 
     setPalette(palette);
+}
+
+bool ViewTree::event(QEvent* event)
+{
+    if (event->type() == QEvent::ToolTip) {
+        event->accept();
+
+        const QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+
+        const QModelIndex& idx = indexAt(helpEvent->pos());
+
+        if (idx.isValid()) {
+            const QString &text = idx.model()->data(idx, Qt::DisplayRole).toString();
+            const QSize& preferredSize = static_cast<ViewTreeDelegate*>(itemDelegate())->preferredSizeHint(idx);
+            const QRect& itemRect = visualRect(idx);
+
+            if (preferredSize.width() > itemRect.width()) {
+                event->accept();
+
+                QToolTip::showText(helpEvent->globalPos(), text, this);
+
+                return true;
+            }
+        }
+
+        QToolTip::hideText();
+
+        return true;
+    }
+
+    return QTreeView::event(event);
 }
 
 void ViewTree::resizeEvent(QResizeEvent* event)
