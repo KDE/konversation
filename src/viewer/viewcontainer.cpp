@@ -572,7 +572,7 @@ void ViewContainer::updateViewActions(int index)
             {
                 action->setEnabled(view->getInputBar() != 0);
 
-                if (view->getTextView() && view->getTextView()->parent())
+                if (view->getTextView() && view->getTextView()->parent()) {
                     //HACK See notes in SearchBar::eventFilter
                     QEvent e(static_cast<QEvent::Type>(QEvent::User+414)); // Magic number to avoid QEvent::registerEventType
                     Application::instance()->sendEvent(view->getTextView()->parent(), &e);
