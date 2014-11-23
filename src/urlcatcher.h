@@ -72,6 +72,7 @@ class UrlCatcher : public ChatWindow
 
     protected:
         void childAdjustFocus();
+        bool event(QEvent* event);
 
 
     private Q_SLOTS:
@@ -86,7 +87,6 @@ class UrlCatcher : public ChatWindow
         void deleteSelectedUrls();
         void saveUrlModel();
         void clearUrlModel();
-        void checkLocaleChanged(int category);
 
 
     private:

@@ -203,10 +203,6 @@ void Application::newInstance(QCommandLineParser *args)
         if(changed)
             Preferences::self()->setAliasList(aliasList);
 
-        // Setup system codec
-        // TODO: check if this works now as intended
-        //    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
-
         // FIXME KF5 port
         //connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Application::appearanceChanged);
 

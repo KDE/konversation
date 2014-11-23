@@ -193,9 +193,6 @@ void UrlCatcher::setupUrlTree()
     connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(updateItemActionStates()));
 
-    // FIXME KF5 port
-    //connect(KGlobalSettings::self(), &KGlobalSettings::settingsChanged, this, &UrlCatcher::checkLocaleChanged);
-
     searchLine->setProxy(proxyModel);
 
     Preferences::restoreColumnState(m_urlTree, QStringLiteral("UrlCatcher ViewSettings"), 2, Qt::DescendingOrder);
@@ -389,20 +386,19 @@ void UrlCatcher::clearUrlModel()
     urlModel->removeRows(0, urlModel->rowCount());
 }
 
-void UrlCatcher::checkLocaleChanged(int category)
-{
-    /* FIXME KF5 port
-    if (category != KGlobalSettings::SETTINGS_LOCALE)
-        return;
-
-    Application* konvApp = Application::instance();
-    QStandardItemModel* urlModel = konvApp->getUrlModel();
-
-    m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));
-    */
-}
-
 void UrlCatcher::childAdjustFocus()
 {
     m_urlTree->setFocus();
+}
+
+bool UrlCatcher::event(QEvent* event)
+{
+    if (event->type() == QEvent::LocaleChange) {
+        Application* konvApp = Application::instance();
+        QStandardItemModel* urlModel = konvApp->getUrlModel();
+
+        m_urlTree->dataChanged(urlModel->index(0, 0), urlModel->index(urlModel->rowCount() - 1, 2));
+    }
+
+    return ChatWindow::event(event);
 }
