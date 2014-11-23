@@ -105,7 +105,7 @@ Application::~Application()
 
 void Application::implementRestart()
 {
-#if 0 //FIXME KF5 port
+#if 0 // FIXME KF5 Port: --restart
     QStringList argumentList;
 
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
@@ -208,7 +208,6 @@ void Application::newInstance(QCommandLineParser *args)
 
         // open main window
         mainWindow = new MainWindow();
-        //setMainWidget(mainWindow); //TODO FIXME do we need any of the other semantics this use to gain us?
 
         connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
         connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
@@ -272,7 +271,7 @@ void Application::newInstance(QCommandLineParser *args)
 
         connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
     }
-#if 0 //FIXME KF5 port
+#if 0 //FIXME KF5 Port: --restart
     else if (args->isSet(QStringLiteral("restart")))
     {
         restart();

@@ -174,7 +174,7 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    /* FIXME KF5 port
+    /* FIXME KF5 Port: KIO::NetAccess.
 
     QUrl themeURL = QFileDialog::getOpenFileUrl(this,
         i18n("Select Theme Package"), QUrl (),

@@ -9,8 +9,7 @@
   Copyright (C) 2006-2009 Eike Hein <hein@kde.org>
 */
 
-/* FIXME KF5 port
-FIXME ViewTree port
+/* FIXME KF5 Port: ViewTree TODO.
 
 Currently missing:
 

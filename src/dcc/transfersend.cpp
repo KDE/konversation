@@ -74,7 +74,7 @@ namespace Konversation
             finishTransferLogger();
             if (!m_tmpFile.isEmpty())
             {
-                // KIO::NetAccess::removeTempFile(m_tmpFile); FIXME KF5 port
+                // KIO::NetAccess::removeTempFile(m_tmpFile); FIXME KF5 Port: KIO::NetAccess.
             }
 
             m_tmpFile.clear();
@@ -188,7 +188,7 @@ namespace Konversation
 
             //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
             //Download the file.  Does nothing if it's local (file:/)
-            /* FIXME KF5 port
+            /* FIXME KF5 Port: KIO::NetAccess.
             if (!KIO::NetAccess::download(m_fileURL, m_tmpFile, NULL))
             {
                 failed(i18n("Could not retrieve \"%1\"", m_fileURL.toString()));
