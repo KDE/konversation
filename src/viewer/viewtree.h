@@ -13,6 +13,7 @@
 
 Currently missing:
 
+- Tooltips for elided items
 - Close buttons
 - DND
 - Seperator painting

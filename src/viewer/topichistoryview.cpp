@@ -21,6 +21,7 @@
 */
 
 #include "topichistoryview.h"
+#include "application.h"
 #include "irccontextmenus.h"
 #include "topichistorymodel.h"
 
@@ -236,8 +237,7 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
                       "entry selection mode and a synchronized edit field, undo back to the "
                       "original text or close and reopen the dialog."));
 
-    //FIXME KF5 port
-    //connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
+    connect(Application::instance(), &Application::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
 }
 
 TopicHistoryView::~TopicHistoryView()

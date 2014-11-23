@@ -137,7 +137,7 @@ class Application : public QApplication
 
     Q_SIGNALS:
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
-        void appearanceChanged();
+        void appearanceChanged(); // FIXME TODO: Rather than relying on this catch-all, consumers should be rewritten to catch appropriate QEvents.
 
     public Q_SLOTS:
         void restart();
@@ -166,6 +166,9 @@ class Application : public QApplication
         void updateProxySettings();
 
         void closeWallet();
+
+    protected:
+        bool event(QEvent* event);
 
     private:
         void implementRestart();

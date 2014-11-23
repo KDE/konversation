@@ -203,9 +203,6 @@ void Application::newInstance(QCommandLineParser *args)
         if(changed)
             Preferences::self()->setAliasList(aliasList);
 
-        // FIXME KF5 port
-        //connect(KGlobalSettings::self(), &KGlobalSettings::appearanceChanged, this, &Application::appearanceChanged);
-
         // open main window
         mainWindow = new MainWindow();
 
@@ -215,7 +212,7 @@ void Application::newInstance(QCommandLineParser *args)
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings
-        emit appearanceChanged(); //TODO FIXME i do believe this signal is abused
+        emit appearanceChanged();
 
         if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
             mainWindow->hide();
@@ -327,6 +324,16 @@ void Application::prepareShutdown()
         delete m_connectionManager;
         m_connectionManager = 0;
     }
+}
+
+bool Application::event(QEvent* event)
+{
+    if (event->type() == QEvent::ApplicationPaletteChange
+        || event->type() == QEvent::ApplicationFontChange) {
+        emit appearanceChanged();
+    }
+
+    return QApplication::event(event);
 }
 
 void Application::showQueueTuner(bool p)

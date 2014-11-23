@@ -657,7 +657,11 @@ void MainWindow::leaveEvent(QEvent* e)
 
 bool MainWindow::event(QEvent* e)
 {
-    if (e->type() == QEvent::WindowActivate)
+    if (e->type() == QEvent::StyleChange)
+    {
+        QMetaObject::invokeMethod(Application::instance(), "appearanceChanged");
+    }
+    else if (e->type() == QEvent::WindowActivate)
     {
         emit endNotification();
         emit cancelRememberLine();
