@@ -1,3 +1,3 @@
 #ifndef KONVI_VERSION
-#define KONVI_VERSION "1.6-master"
+#define KONVI_VERSION "1.6-branch"
 #endif
