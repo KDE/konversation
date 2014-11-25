@@ -41,6 +41,7 @@
 #include <QModelIndex>
 #include <QSplitter>
 #include <QTabBar>
+#include <QWidget>
 
 #include <QInputDialog>
 #include <KMessageBox>
@@ -244,7 +245,10 @@ void ViewContainer::setupViewTree()
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewSpringLoader->addWidget(m_viewTree->viewport());
 
-    setViewTreeShown(m_tabWidget && m_tabWidget->count());
+    if (m_tabWidget) {
+        m_viewTree->selectView(indexForView(static_cast<ChatWindow*>(m_tabWidget->currentWidget())));
+        setViewTreeShown(m_tabWidget->count());
+    }
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
@@ -472,7 +476,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     int row = m_tabWidget->indexOf(static_cast<ChatWindow*>(index.internalPointer()));
 
     if (role == Qt::DisplayRole) {
-        return m_tabWidget->tabText(row).replace("&&", "&");
+        return static_cast<ChatWindow*>(index.internalPointer())->getName();
     } else if (role == Qt::DecorationRole) {
         // FIXME KF5 port: Don't show close buttons on the view tree for now.
         if (m_viewTree && Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds()) {

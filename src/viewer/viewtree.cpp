@@ -399,6 +399,10 @@ void ViewTree::keyPressEvent(QKeyEvent* event)
 
 void ViewTree::selectView(const QModelIndex& index)
 {
+    if (!index.isValid()) {
+        return;
+    }
+
     selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
     selectionModel()->setCurrentIndex(index, QItemSelectionModel::NoUpdate);
 }
