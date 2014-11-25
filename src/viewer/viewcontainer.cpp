@@ -248,6 +248,8 @@ void ViewContainer::setupViewTree()
     if (m_tabWidget) {
         m_viewTree->selectView(indexForView(static_cast<ChatWindow*>(m_tabWidget->currentWidget())));
         setViewTreeShown(m_tabWidget->count());
+    } else {
+        setViewTreeShown(false);
     }
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
