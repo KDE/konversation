@@ -245,7 +245,10 @@ void ViewContainer::setupViewTree()
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewSpringLoader->addWidget(m_viewTree->viewport());
 
-    setViewTreeShown(m_tabWidget && m_tabWidget->count());
+    if (m_tabWidget) {
+        m_viewTree->selectView(indexForView(static_cast<ChatWindow*>(m_tabWidget->currentWidget())));
+        setViewTreeShown(m_tabWidget->count());
+    }
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
