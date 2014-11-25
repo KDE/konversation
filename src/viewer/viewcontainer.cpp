@@ -41,6 +41,7 @@
 #include <QModelIndex>
 #include <QSplitter>
 #include <QTabBar>
+#include <QWidget>
 
 #include <QInputDialog>
 #include <KMessageBox>
@@ -472,7 +473,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     int row = m_tabWidget->indexOf(static_cast<ChatWindow*>(index.internalPointer()));
 
     if (role == Qt::DisplayRole) {
-        return m_tabWidget->tabText(row).replace("&&", "&");
+        return static_cast<ChatWindow*>(index.internalPointer())->getName();
     } else if (role == Qt::DecorationRole) {
         // FIXME KF5 port: Don't show close buttons on the view tree for now.
         if (m_viewTree && Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds()) {
