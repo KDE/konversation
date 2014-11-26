@@ -42,6 +42,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
     firstLog = true;
     m_server = 0;
     m_recreationScheduled = false;
+    m_isTopLevelView = true;
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
@@ -193,9 +194,9 @@ ChatWindow::WindowType ChatWindow::getType() const
     return type;
 }
 
-bool ChatWindow::isTopLevel() const
+bool ChatWindow::isTopLevelView() const
 {
-    return true;
+    return m_isTopLevelView;
 }
 
 void ChatWindow::setServer(Server* newServer)

@@ -37,6 +37,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // don't setName here! It will break logfiles!
     //   setName("QueryWidget");
     setType(ChatWindow::Query);
+    m_isTopLevelView = false;
 
     setChannelEncodingSupported(true);
 
@@ -385,11 +386,6 @@ void Query::nickInfoChanged()
 NickInfoPtr Query::getNickInfo()
 {
     return m_nickInfo;
-}
-
-bool Query::isTopLevel() const
-{
-    return false;
 }
 
 bool Query::canBeFrontView()        { return true; }

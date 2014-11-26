@@ -350,7 +350,7 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
                 ++count;
             }
 
-            if (view->isTopLevel()) {
+            if (view->isTopLevelView()) {
                 break;
             }
         }
@@ -362,7 +362,7 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
         for (int i = 0; i < m_tabWidget->count(); ++i) {
             const ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-            if (view->isTopLevel()) {
+            if (view->isTopLevelView()) {
                 ++count;
             }
         }
@@ -400,7 +400,7 @@ QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent)
         int count = -1;
 
         for (int i = 0; i < m_tabWidget->count(); ++i) {
-            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++count;
             }
 
@@ -431,11 +431,11 @@ QModelIndex ViewContainer::indexForView(ChatWindow* view) const
         return QModelIndex();
     }
 
-    if (view->isTopLevel()) {
+    if (view->isTopLevelView()) {
         int count = -1;
 
         for (int i = 0; i <= index; ++i) {
-            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++count;
             }
         }
@@ -462,7 +462,7 @@ QModelIndex ViewContainer::parent(const QModelIndex& index) const
 
     const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
 
-    if (!view || view->isTopLevel() || !view->getServer() || !view->getServer()->getStatusView()) {
+    if (!view || view->isTopLevelView() || !view->getServer() || !view->getServer()->getStatusView()) {
         return QModelIndex();
     }
 
@@ -1381,11 +1381,11 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
     }
 
-    if (view->isTopLevel()) {
+    if (view->isTopLevelView()) {
         int diff = 0;
 
         for (int i = 0; i < placement; ++i) {
-            if (!static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+            if (!static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++diff;
             }
         }
@@ -1573,9 +1573,9 @@ bool ViewContainer::canMoveViewLeft() const
 
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
 
-    if (view->isTopLevel() && index > 0) {
+    if (view->isTopLevelView() && index > 0) {
         return true;
-    } else if (!view->isTopLevel()) {
+    } else if (!view->isTopLevelView()) {
         ChatWindow* statusView = view->getServer()->getStatusView();
         int statusViewIndex = m_tabWidget->indexOf(statusView);
 
@@ -1597,21 +1597,21 @@ bool ViewContainer::canMoveViewRight() const
 
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
 
-    if (view->isTopLevel()) {
+    if (view->isTopLevelView()) {
         int lastTopLevelView = -1;
 
         for (int i = m_tabWidget->count() - 1; i >= index; --i) {
-            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevel()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 lastTopLevelView = i;
                 break;
             }
         }
 
         return (index != lastTopLevelView);
-    } else if (!view->isTopLevel()) {
+    } else if (!view->isTopLevelView()) {
         view = static_cast<ChatWindow*>(m_tabWidget->widget(index + 1));
 
-        return (view && !view->isTopLevel());
+        return (view && !view->isTopLevelView());
     }
 
     return false;

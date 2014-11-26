@@ -56,7 +56,6 @@ class Query : public ChatWindow
          */
         NickInfoPtr getNickInfo();
         virtual bool closeYourself(bool askForConfirmation=true);
-        virtual bool isTopLevel() const;
         virtual bool canBeFrontView();
         virtual bool searchView();
 
