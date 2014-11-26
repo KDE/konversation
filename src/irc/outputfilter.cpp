@@ -1889,6 +1889,11 @@ namespace Konversation
                 else
                     qDebug() << "Told to cycle the server, but current context doesn't have one.";
             }
+            else if (isParameter("viewcontainermodel", input.parameter))
+            {
+                if (m_server)
+                    m_server->getViewContainer()->reset();
+            }
             else if (m_server)
             {
                 if (isAChannel(input.parameter))
