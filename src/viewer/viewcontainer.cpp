@@ -506,6 +506,12 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
+void ViewContainer::reset()
+{
+    beginResetModel();
+    endResetModel();
+}
+
 void ViewContainer::updateAppearance()
 {
     if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
