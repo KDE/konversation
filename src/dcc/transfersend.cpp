@@ -30,7 +30,7 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 #include <QInputDialog>
-
+#include <QTemporaryFile>
 
 // TODO: remove the dependence
 #include <KAuthorized>
@@ -50,6 +50,7 @@ namespace Konversation
 
             m_serverSocket = 0;
             m_sendSocket = 0;
+            m_tmpFile = 0;
 
             m_connectionTimer = new QTimer(this);
             m_connectionTimer->setSingleShot(true);
@@ -72,12 +73,12 @@ namespace Konversation
             disconnect(m_connectionTimer, 0, 0, 0);
 
             finishTransferLogger();
-            if (!m_tmpFile.isEmpty())
+            if (m_tmpFile)
             {
-                // KIO::NetAccess::removeTempFile(m_tmpFile); FIXME KF5 Port: KIO::NetAccess.
+                delete m_tmpFile;
+                m_tmpFile = 0;
             }
 
-            m_tmpFile.clear();
             m_file.close();
             if (m_sendSocket)
             {
@@ -186,17 +187,6 @@ namespace Konversation
                 return false;
             }
 
-            //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
-            //Download the file.  Does nothing if it's local (file:/)
-            /* FIXME KF5 Port: KIO::NetAccess.
-            if (!KIO::NetAccess::download(m_fileURL, m_tmpFile, NULL))
-            {
-                failed(i18n("Could not retrieve \"%1\"", m_fileURL.toString()));
-                qDebug() << "KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString();
-                return false;
-            }
-            */
-
             //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
             if (m_fileName.isEmpty())
             {
@@ -220,20 +210,66 @@ namespace Konversation
                 m_fileName.replace(' ', '_');
             }
 
-            qDebug() << "m_tmpFile: " << m_tmpFile;
-            m_file.setFileName(m_tmpFile);
+            if (!m_fileURL.isLocalFile())
+            {
+                m_tmpFile = new QTemporaryFile();
+                m_tmpFile->open(); // create the file, and thus create m_tmpFile.fileName
+                m_tmpFile->close(); // no need to keep the file open, it isn't deleted until the destructor is called
+
+                QUrl tmpUrl = QUrl::fromLocalFile(m_tmpFile->fileName());
+                KIO::FileCopyJob *fileCopyJob = KIO::file_copy(m_fileURL, tmpUrl, -1, KIO::Overwrite);
+
+                connect(fileCopyJob, &KIO::FileCopyJob::result, this, &TransferSend::slotLocalCopyReady);
+                fileCopyJob.start();
+                setStatus(Preparing);
+                return false; // not ready to send yet
+            }
+
+            slotLocalCopyReady(0);
+            return true;
+        }
+
+        void TransferSend::slotLocalCopyReady(KJob *job)
+        {
+            QString fn = m_fileURL.toDisplayString();
+            bool remoteFile = job != 0;
+            int error = job ? job->error() : 0;
+
+            qDebug() << "m_tmpFile: " << fn << "error: " << error << "remote file: " << remoteFile;
+
+            if (error)
+            {
+                failed(i18n("Could not retrieve \"%1\"", fn));
+                return;
+            }
+
+            if (remoteFile)
+            {
+                m_file.setFileName(m_tmpFile->fileName());
+            }
+            else
+            {
+                m_file.setFileName(m_fileURL.toLocalFile());
+            }
 
             if (m_fileSize == 0)
             {
                 m_fileSize = m_file.size();
+
                 qDebug() << "filesize 0, new filesize: " << m_fileSize;
+
                 if (m_fileSize == 0)
                 {
                     failed(i18n("Unable to send a 0 byte file."));
+                    return;
                 }
             }
 
-            return Transfer::queue();
+            setStatus(Queued);
+            if (remoteFile)
+            {
+                start(); // addDccSend would have done it for us if this was a local file
+            }
         }
 
         void TransferSend::reject()
