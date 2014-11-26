@@ -81,7 +81,7 @@ class ChatWindow : public QWidget
 
         void setType(WindowType newType);
         WindowType getType() const;
-        virtual bool isTopLevel() const;
+        virtual bool isTopLevelView() const;
 
         virtual void sendText(const QString& /*text*/) {}
 
@@ -215,6 +215,8 @@ class ChatWindow : public QWidget
         Server* m_server;
         QFile logfile;
         WindowType type;
+
+        bool m_isTopLevelView;
 
         bool m_notificationsEnabled;
 

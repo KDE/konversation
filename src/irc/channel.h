@@ -75,7 +75,6 @@ class Channel : public ChatWindow
         ~Channel();
 //META
 
-        virtual bool isTopLevel() const;
         virtual bool canBeFrontView();
         virtual bool searchView();
 

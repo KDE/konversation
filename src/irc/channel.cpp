@@ -98,6 +98,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     channelSplitterHidden = false;
 
     setType(ChatWindow::Channel);
+    m_isTopLevelView = false;
 
     setChannelEncodingSupported(true);
 
@@ -2369,11 +2370,6 @@ void Channel::fadeActivity()
     foreach (Nick *nick,  nicknameList) {
         nick->getChannelNick()->lessActive();
     }
-}
-
-bool Channel::isTopLevel() const
-{
-    return false;
 }
 
 bool Channel::canBeFrontView()

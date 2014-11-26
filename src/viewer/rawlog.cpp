@@ -24,6 +24,7 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
 {
     setName(i18n("Raw Log"));
     setType(ChatWindow::RawLog);
+    m_isTopLevelView = false;
     IRCViewBox* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
 
@@ -48,11 +49,6 @@ bool RawLog::closeYourself()
     // make the server delete us so server can reset the pointer to us
     m_server->closeRawLog();
     return true;
-}
-
-bool RawLog::isTopLevel() const
-{
-    return false;
 }
 
 bool RawLog::searchView() { return true; }
