@@ -220,7 +220,7 @@ namespace Konversation
                 KIO::FileCopyJob *fileCopyJob = KIO::file_copy(m_fileURL, tmpUrl, -1, KIO::Overwrite);
 
                 connect(fileCopyJob, &KIO::FileCopyJob::result, this, &TransferSend::slotLocalCopyReady);
-                fileCopyJob.start();
+                fileCopyJob->start();
                 setStatus(Preparing);
                 return false; // not ready to send yet
             }
