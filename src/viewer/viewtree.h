@@ -48,7 +48,7 @@ class ViewTree : public QTreeView
         explicit ViewTree(QWidget *parent);
         ~ViewTree();
 
-        virtual void setModel (QAbstractItemModel *model);
+        virtual void setModel(QAbstractItemModel *model);
 
     public Q_SLOTS:
         void updateAppearance();
