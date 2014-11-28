@@ -499,6 +499,16 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
                 return m_tabWidget->tabBar()->tabTextColor(row);
             }
         }
+    } else if (role == DisabledRole) {
+        const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
+
+        if (view->getType() == ChatWindow::Channel) {
+            return !static_cast<const Channel*>(view)->joined();
+        } else if (view->getType() == ChatWindow::Query) {
+            return !view->getServer()->isConnected();
+        }
+
+        return false;
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
     }
@@ -1148,7 +1158,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
+    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole);
 
     m_activeViewOrderList.removeAll(view);
 }
