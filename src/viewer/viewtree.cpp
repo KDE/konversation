@@ -137,16 +137,6 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
         painter->drawPoint(right - 1, height - 3);
     }
 
-    if (!idxBelow.isValid() && selected) {
-        painter->setPen(selColor);
-        painter->drawPoint(right - 1, height);
-        painter->drawPoint(right - 2, height);
-        painter->drawPoint(right - 1, height + 1);
-        painter->setPen(midColor);
-        painter->drawPoint(right - 3, height);
-        painter->drawPoint(right - 1, height + 2);
-    }
-
     painter->restore();
 
     QStyleOptionViewItem _option = option;
@@ -173,7 +163,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     }
 }
 
-QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2) const
+QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2)
 {
     QColor mixedColor;
     mixedColor.setRgb( (color1.red()   + color2.red())   / 2,
@@ -274,6 +264,38 @@ bool ViewTree::event(QEvent* event)
     }
 
     return QTreeView::event(event);
+}
+
+void ViewTree::paintEvent(QPaintEvent* event)
+{
+    QTreeView::paintEvent(event);
+
+    QModelIndex idx = model()->index(model()->rowCount() - 1, 0);
+
+    int count = model()->rowCount(idx);
+
+    if (count) {
+        idx = idx.child(count - 1, 0);
+    }
+
+    if (selectionModel()->isSelected(idx)) {
+        const QColor& bgColor  = palette().color(backgroundRole());
+        const QColor& selColor = palette().color(QPalette::Highlight);
+        const QColor& midColor = ViewTreeDelegate::mixColor(bgColor, selColor);
+
+        const QRect &itemRect = visualRect(idx);
+        int right = itemRect.right();
+        int bottom = itemRect.bottom();
+
+        QPainter painter(viewport());
+        painter.setPen(selColor);
+        painter.drawPoint(right, bottom + 1);
+        painter.drawPoint(right - 1, bottom + 1);
+        painter.drawPoint(right, bottom + 2);
+        painter.setPen(midColor);
+        painter.drawPoint(right - 2, bottom + 1);
+        painter.drawPoint(right, bottom + 3);
+    }
 }
 
 void ViewTree::resizeEvent(QResizeEvent* event)
@@ -412,10 +434,17 @@ void ViewTree::selectView(const QModelIndex& index)
 void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
     if (!deselected.indexes().isEmpty()) {
-        const QModelIndex& old = deselected.indexes().at(0);
+        const QModelIndex old = deselected.indexes().at(0);
+        const QModelIndex belowOld = indexBelow(old);
+
         update(old);
         update(indexAbove(old));
-        update(indexBelow(old));
+
+        if (belowOld.isValid()) {
+            update(belowOld);
+        } else {
+            viewport()->update();
+        }
     }
 
     const QModelIndexList& idxList = selected.indexes();
@@ -427,6 +456,10 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
 
         if (view) {
             emit showView(view);
+        }
+
+        if (!indexBelow(idx).isValid()) {
+            viewport()->update();
         }
     }
 }
