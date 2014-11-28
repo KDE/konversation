@@ -142,14 +142,18 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     QStyleOptionViewItem _option = option;
     _option.state = QStyle::State_None;
 
-    const QColor &textColor = index.data(ViewContainer::ColorRole).value<QColor>();
-
-    if (textColor.isValid()) {
-        _option.palette.setColor(QPalette::Text, textColor);
+    if (index.data(ViewContainer::DisabledRole).toBool()) {
+        _option.palette.setColor(QPalette::Text, QGuiApplication::palette().color(QPalette::Disabled, QPalette::Text));
     } else {
-        _option.palette.setColor(QPalette::Text, selected
-            ? m_view->palette().color(QPalette::HighlightedText)
-            : m_view->palette().color(QPalette::Text));
+        const QColor &textColor = index.data(ViewContainer::ColorRole).value<QColor>();
+
+        if (textColor.isValid()) {
+            _option.palette.setColor(QPalette::Text, textColor);
+        } else {
+            _option.palette.setColor(QPalette::Text, selected
+                ? m_view->palette().color(QPalette::HighlightedText)
+                : m_view->palette().color(QPalette::Text));
+        }
     }
 
     QStyledItemDelegate::paint(painter, _option, index);
@@ -226,9 +230,7 @@ void ViewTree::updateAppearance()
 
     if (Preferences::self()->inputFieldsBackgroundColor())
     {
-        // Only override the active color to keep around the disabled text color
-        // for the disconnect label greyout.
-        palette.setColor(QPalette::Active, QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
+        palette.setColor(QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
         palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
     }
 
