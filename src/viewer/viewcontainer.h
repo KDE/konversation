@@ -108,7 +108,6 @@ class ViewContainer : public QAbstractItemModel
         QList<QPair<QString,QString> > getChannelsURI();
 
     public Q_SLOTS:
-        void reset();
         void updateAppearance();
         void saveSplitterSizes();
         void setViewTreeShown(bool show = false);
