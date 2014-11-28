@@ -516,12 +516,6 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-void ViewContainer::reset()
-{
-    beginResetModel();
-    endResetModel();
-}
-
 void ViewContainer::updateAppearance()
 {
     if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
@@ -1687,17 +1681,33 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     if (m_tabWidget)
     {
         const int tabIndex = m_tabWidget->indexOf(view);
-        const QModelIndex& idx = indexForView(view);
-        bool valid = idx.isValid();
 
-        if (valid) {
-            beginRemoveRows(idx.parent(), idx.row(), idx.row());
-        }
+        if (tabIndex != -1) {
+            m_tabWidget->blockSignals(true);
 
-        m_tabWidget->removeTab(tabIndex);
+            const QModelIndex& idx = indexForView(view);
 
-        if (valid) {
+            beginRemoveRows(QModelIndex(), idx.row(), idx.row());
+
+            if (view->getType() == ChatWindow::Status) {
+                for (int i = m_tabWidget->count() - 1; i >= 0; --i) {
+                    const ChatWindow* tab = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+                    if (!tab->isTopLevelView() && tab->getServer()
+                        && tab->getServer()->getStatusView()
+                        && tab->getServer()->getStatusView() == view) {
+                        m_tabWidget->removeTab(i);
+                    }
+                }
+            }
+
+            m_tabWidget->removeTab(tabIndex);
+
             endRemoveRows();
+
+            m_tabWidget->blockSignals(false);
+
+            viewSwitched(m_tabWidget->currentIndex());
         }
 
         if (m_tabWidget->count() <= 0)
