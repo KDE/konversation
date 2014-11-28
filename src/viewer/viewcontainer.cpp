@@ -1687,7 +1687,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
             const QModelIndex& idx = indexForView(view);
 
-            beginRemoveRows(QModelIndex(), idx.row(), idx.row());
+            beginRemoveRows(idx.parent(), idx.row(), idx.row());
 
             if (view->getType() == ChatWindow::Status) {
                 for (int i = m_tabWidget->count() - 1; i >= 0; --i) {
