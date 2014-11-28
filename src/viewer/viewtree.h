@@ -34,9 +34,9 @@ class ViewTreeDelegate : public QStyledItemDelegate
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
-    private:
-        QColor mixColor(const QColor& color1, const QColor& color2) const;
+        static QColor mixColor(const QColor& color1, const QColor& color2);
 
+    private:
         ViewTree* m_view;
 };
 
@@ -48,7 +48,7 @@ class ViewTree : public QTreeView
         explicit ViewTree(QWidget *parent);
         ~ViewTree();
 
-        virtual void setModel (QAbstractItemModel *model);
+        virtual void setModel(QAbstractItemModel *model);
 
     public Q_SLOTS:
         void updateAppearance();
@@ -62,6 +62,7 @@ class ViewTree : public QTreeView
 
     protected:
         bool event(QEvent* event);
+        void paintEvent(QPaintEvent* event);
         void resizeEvent(QResizeEvent* event);
         void mousePressEvent(QMouseEvent* event);
         void mouseReleaseEvent(QMouseEvent* event);
