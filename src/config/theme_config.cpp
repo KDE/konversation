@@ -240,12 +240,23 @@ void Theme_Config::installTheme()
     }
     else // we got a file
     {
+        QMimeDatabase db;
+        QMimeType mimeType = db.mimeTypeForFile(tmpThemeFile);
+        KArchive *themeArchive;
 
-        KTar themeArchive(tmpThemeFile);
-        themeArchive.open(QIODevice::ReadOnly);
+        if (mimeType.inherits(QStringLiteral("application/zip")))
+        {
+            themeArchive = new KZip(tmpThemeFile);
+        }
+        else
+        {
+            themeArchive = new KTar(tmpThemeFile);
+        }
+
+        themeArchive->open(QIODevice::ReadOnly);
         qApp->processEvents();
 
-        const KArchiveDirectory* themeDir = themeArchive.directory();;
+        const KArchiveDirectory* themeDir = themeArchive->directory();
         QStringList allEntries = themeDir->entries();
 
         for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
@@ -263,10 +274,11 @@ void Theme_Config::installTheme()
                 themeDir->copyTo(themesDir);
 
         }
-        themeArchive.close();
+        themeArchive->close();
     }
 
     loadSettings();
+    delete themeArchive;
 }
 
 void Theme_Config::removeTheme()
