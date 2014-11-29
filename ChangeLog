@@ -14,6 +14,8 @@ including some visual assets not having been updated to match KDE's new
 "Breeze" visual identity yet. We expect to resolve these issues in upcoming
 releases.
 
+* Konversation now depends on KDE Frameworks v5.2.0 and Qt v5.3.0.
+
 
 Changes from 1.5 to 1.5.1:
 Konversation 1.5.1 is a maintenance release containing only bug fixes. The
