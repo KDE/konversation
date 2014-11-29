@@ -69,8 +69,7 @@ namespace Konversation
 
             connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
                     this, SLOT(updateButton()));
-            connect(m_transferView, SIGNAL(runSelectedTransfers()),
-                    this, SLOT(runDcc()));
+            connect(m_transferView, &TransferView::runSelectedTransfers, this, &TransferPanel::runDcc);
 
             // detailed info panel
             m_detailPanel = new TransferDetailedInfoPanel(m_splitter);

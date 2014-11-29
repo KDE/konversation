@@ -37,47 +37,30 @@ namespace Konversation
             layout->addWidget(area);
             setLayout(layout);
 
-            connect(m_toolbar, SIGNAL(toolChanged(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool)),
-                    m_paintArea, SLOT(setTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool)));
+            connect(m_toolbar, &WhiteBoardToolBar::toolChanged, m_paintArea, &WhiteBoardPaintArea::setTool);
 
-            connect(m_toolbar, SIGNAL(foregroundColorChanged(QColor)),
-                    m_paintArea, SLOT(setForegroundColor(QColor)));
-            connect(m_toolbar, SIGNAL(backgroundColorChanged(QColor)),
-                    m_paintArea, SLOT(setBackgroundColor(QColor)));
-            connect(m_toolbar, SIGNAL(colorsSwapped(QColor,QColor)),
-                    m_paintArea, SLOT(swapColors(QColor,QColor)));
-            connect(m_toolbar, SIGNAL(fontChanged(QFont)),
-                    m_paintArea, SLOT(setFont(QFont)));
+            connect(m_toolbar, &WhiteBoardToolBar::foregroundColorChanged, m_paintArea, &WhiteBoardPaintArea::setForegroundColor);
+            connect(m_toolbar, &WhiteBoardToolBar::backgroundColorChanged, m_paintArea, &WhiteBoardPaintArea::setBackgroundColor);
+            connect(m_toolbar, &WhiteBoardToolBar::colorsSwapped, m_paintArea, &WhiteBoardPaintArea::swapColors);
+            connect(m_toolbar, &WhiteBoardToolBar::fontChanged, m_paintArea, &WhiteBoardPaintArea::setFont);
 
             connect(m_toolbar, &WhiteBoardToolBar::clear, this, &WhiteBoard::clear);
             connect(m_toolbar, &WhiteBoardToolBar::save, m_paintArea, &WhiteBoardPaintArea::save);
             connect(m_toolbar, &WhiteBoardToolBar::lineWidthChanged, m_paintArea, &WhiteBoardPaintArea::setPenWidth);
 
-            connect(m_paintArea, SIGNAL(drawedPencil(int,QColor,QColor,int,int,int,int)),
-                    this, SLOT(drawedPencil(int,QColor,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedLine(int,QColor,QColor,int,int,int,int)),
-                    this, SLOT(drawedLine(int,QColor,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedRectangle(int,QColor,int,int,int,int)),
-                    this, SLOT(drawedRectangle(int,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedFilledRectangle(int,QColor,QColor,int,int,int,int)),
-                    this, SLOT(drawedFilledRectangle(int,QColor,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedEllipse(int,QColor,int,int,int,int)),
-                    this, SLOT(drawedEllipse(int,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedFilledEllipse(int,QColor,QColor,int,int,int,int)),
-                    this, SLOT(drawedFilledEllipse(int,QColor,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(drawedArrow(int,QColor,int,int,int,int)),
-                    this, SLOT(drawedArrow(int,QColor,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(usedEraser(int,int,int,int,int)),
-                    this, SLOT(usedEraser(int,int,int,int,int)));
-            connect(m_paintArea, SIGNAL(usedFloodFill(int,int,QColor)),
-                    this, SLOT(usedFloodFill(int,int,QColor)));
-            connect(m_paintArea, SIGNAL(usedText(int,int,QString)),
-                    this, SLOT(usedText(int,int,QString)));
-            connect(m_paintArea, SIGNAL(usedTextExtended(int,int,QFont,QColor,QColor,QString)),
-                    this, SLOT(usedTextExtended(int,int,QFont,QColor,QColor,QString)));
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedPencil, this, &WhiteBoard::drawedPencil);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedLine, this, &WhiteBoard::drawedLine);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedRectangle, this, &WhiteBoard::drawedRectangle);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedFilledRectangle, this, &WhiteBoard::drawedFilledRectangle);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedEllipse, this, &WhiteBoard::drawedEllipse);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedFilledEllipse, this, &WhiteBoard::drawedFilledEllipse);
+            connect(m_paintArea, &WhiteBoardPaintArea::drawedArrow, this, &WhiteBoard::drawedArrow);
+            connect(m_paintArea, &WhiteBoardPaintArea::usedEraser, this, &WhiteBoard::usedEraser);
+            connect(m_paintArea, &WhiteBoardPaintArea::usedFloodFill, this, &WhiteBoard::usedFloodFill);
+            connect(m_paintArea, &WhiteBoardPaintArea::usedText, this, &WhiteBoard::usedText);
+            connect(m_paintArea, &WhiteBoardPaintArea::usedTextExtended, this, &WhiteBoard::usedTextExtended);
 
-            connect(m_paintArea, SIGNAL(colorPicked(QColor)),
-                    m_toolbar, SLOT(setForegroundColor(QColor)));
+            connect(m_paintArea, &WhiteBoardPaintArea::colorPicked, m_toolbar, &WhiteBoardToolBar::setForegroundColor);
         }
 
         WhiteBoard::~WhiteBoard()

@@ -36,7 +36,7 @@ namespace Konversation
         mOkButton = buttonBox->button(QDialogButtonBox::Ok);
         mOkButton->setDefault(true);
         mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+        connect(buttonBox, &QDialogButtonBox::rejected, this, &JoinChannelDialog::reject);
         mOkButton->setDefault(true);
         setModal( true );
         m_ui.setupUi(mainWidget);
@@ -45,8 +45,7 @@ namespace Konversation
         m_ui.channelCombo->setFocus();
 
         mOkButton->setEnabled(false);
-        connect(m_ui.channelCombo, SIGNAL(editTextChanged(QString)),
-            this, SLOT(slotChannelChanged(QString)));
+        connect(m_ui.channelCombo, &KHistoryComboBox::editTextChanged, this, &JoinChannelDialog::slotChannelChanged);
 
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
@@ -57,8 +56,7 @@ namespace Konversation
           connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
         // Update channel history when selected connection changes
-        connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
-                this, SLOT(slotSelectedConnectionChanged(int)));
+        connect(m_ui.networkNameCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &JoinChannelDialog::slotSelectedConnectionChanged);
         // Clear channel history when the history combo box is cleared
         connect(m_ui.channelCombo, &KHistoryComboBox::cleared, this, &JoinChannelDialog::slotChannelHistoryCleared);
         // Preselect the current network

@@ -81,8 +81,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setWhatsThis(nickListViewWT);
     m_nickListView->viewport()->installEventFilter(this);
 
-    connect(m_nickListView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-        this,SLOT(processDoubleClick(QTreeWidgetItem*,int)));
+    connect(m_nickListView, &QTreeWidget::itemDoubleClicked, this, &NicksOnline::processDoubleClick);
 
     setupToolbarActions(0);
 
@@ -90,10 +89,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_popupMenu = new QMenu(this);
     m_popupMenu->setObjectName(QStringLiteral("nicksonline_context_menu"));
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
-        this, SLOT(slotCustomContextMenuRequested(QPoint)));
-    connect(m_nickListView, SIGNAL(itemSelectionChanged()),
-            this, SLOT(slotNickListView_SelectionChanged()));
+    connect(m_nickListView, &QTreeWidget::customContextMenuRequested, this, &NicksOnline::slotCustomContextMenuRequested);
+    connect(m_nickListView, &QTreeWidget::itemSelectionChanged, this, &NicksOnline::slotNickListView_SelectionChanged);
 
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();

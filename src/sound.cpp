@@ -33,8 +33,7 @@ namespace Konversation
         m_audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory, this);
         Phonon::createPath(m_mediaObject, m_audioOutput);
 
-        connect(m_mediaObject, SIGNAL(stateChanged(Phonon::State,Phonon::State)),
-                this, SLOT(tryPlayNext(Phonon::State,Phonon::State)));
+        connect(m_mediaObject, &Phonon::MediaObject::stateChanged, this, &Sound::tryPlayNext);
 
         m_played = false;
     }

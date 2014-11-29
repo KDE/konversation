@@ -24,14 +24,10 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WindowFlags
     setObjectName(QString::fromLatin1(name));
     setupUi(this);
 
-    connect(newButton,SIGNAL(clicked()),
-        this,SLOT(newIgnore()));
-    connect(removeButton,SIGNAL(clicked()),
-        this,SLOT(removeIgnore()));
-    connect(removeAllButton,SIGNAL(clicked()),
-	this,SLOT(removeAllIgnore()));
-    connect(ignoreListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
-        this,SLOT(select(QTreeWidgetItem*)));
+    connect(newButton, &QPushButton::clicked, this, &Ignore_Config::newIgnore);
+    connect(removeButton, &QPushButton::clicked, this, &Ignore_Config::removeIgnore);
+    connect(removeAllButton, &QPushButton::clicked, this, &Ignore_Config::removeAllIgnore);
+    connect(ignoreListView, &QTreeWidget::currentItemChanged, this, &Ignore_Config::select);
     connect(chkChannel, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
     connect(chkQuery, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);
     connect(chkNotice, &QCheckBox::clicked, this, &Ignore_Config::flagCheckboxChanged);

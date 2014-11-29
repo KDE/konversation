@@ -74,8 +74,7 @@ namespace Konversation
             //the rows are not permanently removed from model,
             //so if we trigger a new removeRows in our slot,
             //the new remove happens before the old pending
-            connect(m_dccModel, SIGNAL(rowsPermanentlyRemoved(int,int)),
-                    this, SLOT(rowsRemovedFromModel(int,int)));
+            connect(m_dccModel, &TransferListModel::rowsPermanentlyRemoved, this, &TransferView::rowsRemovedFromModel);
         }
 
         TransferView::~TransferView()

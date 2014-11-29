@@ -52,8 +52,7 @@ namespace Konversation
                 QSplitter* chatSplitter = new QSplitter(Qt::Vertical);
 
                 m_whiteBoard = new WhiteBoard(chatSplitter);
-                connect(m_whiteBoard, SIGNAL(rawWhiteBoardCommand(QString)),
-                        m_chat, SLOT(sendRawLine(QString)));
+                connect(m_whiteBoard, &WhiteBoard::rawWhiteBoardCommand, m_chat, &Chat::sendRawLine);
                 connect(m_chat, &Chat::connected, m_whiteBoard, &WhiteBoard::connected);
                 //chatSplitter->setStretchFactor(chatSplitter->indexOf(paintLabel), 1);
 
@@ -75,8 +74,7 @@ namespace Konversation
             m_inputBar->setReadOnly(true);
 
             connect(m_chat, &Chat::receivedRawLine, this, &ChatContainer::receivedLine);
-            connect(m_chat, SIGNAL(statusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)),
-                    this, SLOT(chatStatusChanged(Konversation::DCC::Chat*,Konversation::DCC::Chat::Status,Konversation::DCC::Chat::Status)));
+            connect(m_chat, &Chat::statusChanged, this, &ChatContainer::chatStatusChanged);
             connect(m_chat, &Chat::upnpError, this, &ChatContainer::upnpError);
 
             connect(m_inputBar, &IRCInput::submit, this, &ChatContainer::textEntered);
