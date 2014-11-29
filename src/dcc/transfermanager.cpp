@@ -85,8 +85,7 @@ namespace Konversation
         {
             m_upnpSocket = new UPnPMCastSocket();
 
-            connect(m_upnpSocket, SIGNAL(discovered(Konversation::UPnP::UPnPRouter*)),
-                    this, SLOT(upnpRouterDiscovered(Konversation::UPnP::UPnPRouter*)) );
+            connect(m_upnpSocket, &UPnP::UPnPMCastSocket::discovered, this, &TransferManager::upnpRouterDiscovered);
 
             m_upnpSocket->discover();
         }

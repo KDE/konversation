@@ -102,17 +102,12 @@ namespace Konversation
             connectToggleButtons();
 
             //foreward colorchooser signals
-            connect(m_colorChooser, SIGNAL(colorsSwapped(QColor,QColor)),
-                    this, SIGNAL(colorsSwapped(QColor,QColor)));
-            connect(m_colorChooser, SIGNAL(foregroundColorChanged(QColor)),
-                    this, SIGNAL(foregroundColorChanged(QColor)));
-            connect(m_colorChooser, SIGNAL(backgroundColorChanged(QColor)),
-                    this, SIGNAL(backgroundColorChanged(QColor)));
+            connect(m_colorChooser, &Konversation::DCC::WhiteBoardColorChooser::colorsSwapped, this, &WhiteBoardToolBar::colorsSwapped);
+            connect(m_colorChooser, &Konversation::DCC::WhiteBoardColorChooser::foregroundColorChanged, this, &WhiteBoardToolBar::foregroundColorChanged);
+            connect(m_colorChooser, &Konversation::DCC::WhiteBoardColorChooser::backgroundColorChanged, this, &WhiteBoardToolBar::backgroundColorChanged);
 
-            connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
-                    this, SIGNAL(lineWidthChanged(int)));
-            connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
-                    this, SLOT(updateLineWidthPixmap(int)));
+            connect(m_lineWidthSlider, &QSlider::valueChanged, this, &WhiteBoardToolBar::lineWidthChanged);
+            connect(m_lineWidthSlider, &QSlider::valueChanged, this, &WhiteBoardToolBar::updateLineWidthPixmap);
 
             connect(m_clearPushButton, &QPushButton::clicked, this, &WhiteBoardToolBar::clearClicked);
             connect(m_savePushButton, &QPushButton::clicked, this, &WhiteBoardToolBar::saveClicked);
@@ -183,8 +178,7 @@ namespace Konversation
                     return;
                 }
                 m_fontDialog = new WhiteBoardFontChooser(this);
-                connect(m_fontDialog, SIGNAL(fontChanged(QFont)),
-                        this, SIGNAL(fontChanged(QFont)));
+                connect(m_fontDialog, &WhiteBoardFontChooser::fontChanged, this, &WhiteBoardToolBar::fontChanged);
             }
             else
             {
@@ -514,8 +508,7 @@ namespace Konversation
                     break;
                 }
             }
-            connect(m_formOptionListWidget, SIGNAL(itemSelectionChanged()),
-                    this, SLOT(formSelectionChanged()));
+            connect(m_formOptionListWidget, &QListWidget::itemSelectionChanged, this, &WhiteBoardToolBar::formSelectionChanged);
         }
     }
 }

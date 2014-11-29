@@ -215,8 +215,7 @@ void ViewTree::setModel (QAbstractItemModel *model)
 
     expandAll();
 
-    connect(selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &ViewTree::selectionChanged);
+    connect(selectionModel(), &QItemSelectionModel::selectionChanged, this, &ViewTree::selectionChanged);
 }
 
 void ViewTree::updateAppearance()
