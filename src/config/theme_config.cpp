@@ -197,13 +197,13 @@ void Theme_Config::installTheme()
         KIO::FileCopyJob *fileCopyJob = KIO::file_copy(themeURL, tmpUrl, -1, KIO::Overwrite);
         if (!fileCopyJob->exec())
         {
-            int errorCode = fileCopyJob.error();
+            int errorCode = fileCopyJob->error();
             QString errorString;
 
             if (errorCode != 0)
-                error = fileCopyJob->errorString();
+                errorString = fileCopyJob->errorString();
             else
-                error = i18n("Unknown error (0)");
+                errorString = i18n("Unknown error (0)");
 
             KMessageBox::error(0L,
                 errorString,
