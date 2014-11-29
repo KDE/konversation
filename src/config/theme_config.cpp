@@ -24,6 +24,7 @@
 #include <KMessageBox>
 #include <QFileDialog>
 #include <KTar>
+#include <KZip>
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
@@ -32,6 +33,8 @@
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QTemporaryFile>
+#include <QMimeDatabase>
 
 
 using namespace Konversation;
@@ -174,8 +177,6 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    /* FIXME KF5 Port: KIO::NetAccess.
-
     QUrl themeURL = QFileDialog::getOpenFileUrl(this,
         i18n("Select Theme Package"), QUrl (),
         i18n("Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)")
@@ -187,14 +188,38 @@ void Theme_Config::installTheme()
     QString themesDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "konversation/themes/");
     QString tmpThemeFile;
 
-    if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))
+    QTemporaryFile tmpFile; // file automatically deleted when object is destroyed
+
+    if (!themeURL.isLocalFile())
     {
-        KMessageBox::error(0L,
-            KIO::NetAccess::lastErrorString(),
-            i18n("Failed to Download Theme"),
-            KMessageBox::Notify
-            );
-        return;
+        tmpFile.open(); // create the file, and thus create tmpFile.fileName
+        tmpFile.close(); // no need to keep the file open, it isn't deleted until the destructor is called
+
+        QUrl tmpUrl = QUrl::fromLocalFile(tmpFile.fileName());
+        KIO::FileCopyJob *fileCopyJob = KIO::file_copy(themeURL, tmpUrl, -1, KIO::Overwrite);
+        if (!fileCopyJob->exec())
+        {
+            int errorCode = fileCopyJob->error();
+            QString errorString;
+
+            if (errorCode != 0)
+                errorString = fileCopyJob->errorString();
+            else
+                errorString = i18n("Unknown error (0)");
+
+            KMessageBox::error(0L,
+                errorString,
+                i18n("Failed to Download Theme"),
+                KMessageBox::Notify
+                );
+            return;
+
+        }
+        tmpThemeFile = tmpUrl.toLocalFile();
+    }
+    else
+    {
+        tmpThemeFile = themeURL.toLocalFile();
     }
 
     QDir themeInstallDir(tmpThemeFile);
@@ -204,7 +229,7 @@ void Theme_Config::installTheme()
         if(themeInstallDir.exists("index.desktop"))
         {
             KIO::CopyJob* job = KIO::copy(QUrl(tmpThemeFile), QUrl(themesDir));
-            job->exec();
+            job->exec(); //FIXME error handling
         }
         else
         {
@@ -217,12 +242,23 @@ void Theme_Config::installTheme()
     }
     else // we got a file
     {
+        QMimeDatabase db;
+        QMimeType mimeType = db.mimeTypeForFile(tmpThemeFile);
+        KArchive *themeArchive;
 
-        KTar themeArchive(tmpThemeFile);
-        themeArchive.open(QIODevice::ReadOnly);
+        if (mimeType.inherits(QStringLiteral("application/zip")))
+        {
+            themeArchive = new KZip(tmpThemeFile);
+        }
+        else
+        {
+            themeArchive = new KTar(tmpThemeFile);
+        }
+
+        themeArchive->open(QIODevice::ReadOnly);
         qApp->processEvents();
 
-        const KArchiveDirectory* themeDir = themeArchive.directory();;
+        const KArchiveDirectory* themeDir = themeArchive->directory();
         QStringList allEntries = themeDir->entries();
 
         for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
@@ -240,13 +276,11 @@ void Theme_Config::installTheme()
                 themeDir->copyTo(themesDir);
 
         }
-        themeArchive.close();
+        themeArchive->close();
+        delete themeArchive;
     }
 
     loadSettings();
-    KIO::NetAccess::removeTempFile(tmpThemeFile);
-
-    */
 }
 
 void Theme_Config::removeTheme()

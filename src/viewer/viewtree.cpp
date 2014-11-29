@@ -65,7 +65,6 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
     const QColor& bgColor  = m_view->palette().color(m_view->backgroundRole());
     const QColor& selColor = m_view->palette().color(QPalette::Highlight);
-    const QColor& midColor = mixColor(bgColor, selColor);
 
     QColor background;
 
@@ -76,6 +75,8 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
          background = selected ? selColor : m_view->palette().color(QPalette::Base);
     }
 
+    QColor midColor = mixColor(bgColor, selColor);
+
     int y = option.rect.y();
     int height = option.rect.y() + option.rect.height();
     int width = option.rect.width();
@@ -84,7 +85,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
     painter->fillRect(option.rect, background);
 
-    if (selected)
+    if (selected || index.data(ViewContainer::HighlightRole).toBool())
     {
         bool isFirst = (index.row() == 0 && !index.parent().isValid());
 
@@ -116,6 +117,10 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     const QModelIndex idxAbove = m_view->indexAbove(index);
 
     if (idxAbove.isValid() && m_view->selectionModel()->isSelected(idxAbove)) {
+        if (index.data(ViewContainer::HighlightRole).toBool()) {
+            midColor = mixColor(selColor, background);
+        }
+
         painter->setPen(selColor);
         painter->drawPoint(right - 1, y);
         painter->drawPoint(right - 2, y);
@@ -128,6 +133,10 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     const QModelIndex idxBelow = m_view->indexBelow(index);
 
     if (idxBelow.isValid() && m_view->selectionModel()->isSelected(idxBelow)) {
+        if (index.data(ViewContainer::HighlightRole).toBool()) {
+            midColor = mixColor(selColor, background);
+        }
+
         painter->setPen(selColor);
         painter->drawPoint(right - 1, height - 1);
         painter->drawPoint(right - 2, height - 1);
