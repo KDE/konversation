@@ -24,6 +24,7 @@
 #include <KMessageBox>
 #include <QFileDialog>
 #include <KTar>
+#include <KZip>
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
@@ -33,6 +34,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 #include <QTemporaryFile>
+#include <QMimeDatabase>
 
 
 using namespace Konversation;
@@ -275,10 +277,10 @@ void Theme_Config::installTheme()
 
         }
         themeArchive->close();
+        delete themeArchive;
     }
 
     loadSettings();
-    delete themeArchive;
 }
 
 void Theme_Config::removeTheme()
