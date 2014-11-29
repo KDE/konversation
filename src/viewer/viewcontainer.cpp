@@ -1629,12 +1629,110 @@ bool ViewContainer::canMoveViewRight() const
 
 void ViewContainer::moveViewLeft()
 {
-    appendToFrontmost(QLatin1String("WIP"), QLatin1String("Moving tabs will be back soon."), 0, false);
+    if (!m_tabWidget || !m_tabWidget->count()) {
+        return;
+    }
+
+    int tabIndex = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+    const QModelIndex idx = indexForView(view);
+
+    if (view->isTopLevelView()) {
+        const QModelIndex aboveIdx = index(idx.row() - 1, 0);
+        int aboveTabIndex = m_tabWidget->indexOf(static_cast<ChatWindow*>(aboveIdx.internalPointer()));
+
+        beginMoveRows(QModelIndex(), idx.row(), idx.row(), QModelIndex(), aboveIdx.row());
+
+        m_tabWidget->blockSignals(true);
+
+        if (view->getType() == ChatWindow::Status) {
+            for (int i = m_tabWidget->count() - 1; i > tabIndex; --i) {
+                ChatWindow* tab = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+                if (!tab->isTopLevelView() && tab->getServer()
+                    && tab->getServer()->getStatusView()
+                    && tab->getServer()->getStatusView() == view) {
+                    m_tabWidget->tabBar()->moveTab(i, aboveTabIndex);
+                    ++tabIndex;
+                    ++i;
+                }
+            }
+        }
+
+        m_tabWidget->tabBar()->moveTab(tabIndex, aboveTabIndex);
+
+        m_tabWidget->blockSignals(false);
+
+        endMoveRows();
+
+        viewSwitched(m_tabWidget->currentIndex());
+    } else {
+        beginMoveRows(idx.parent(), idx.row(), idx.row(), idx.parent(), idx.row() - 1);
+
+        m_tabWidget->blockSignals(true);
+        m_tabWidget->tabBar()->moveTab(tabIndex, tabIndex - 1);
+        m_tabWidget->blockSignals(false);
+
+        endMoveRows();
+
+        viewSwitched(m_tabWidget->currentIndex());
+    }
 }
 
 void ViewContainer::moveViewRight()
 {
-    appendToFrontmost(QLatin1String("WIP"), QLatin1String("Moving tabs will be back soon."), 0, false);
+    if (!m_tabWidget || !m_tabWidget->count()) {
+        return;
+    }
+
+    int tabIndex = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+    const QModelIndex idx = indexForView(view);
+
+    if (view->isTopLevelView()) {
+        const QModelIndex belowIdx = index(idx.row() + 1, 0);
+        int belowTabIndex = m_tabWidget->indexOf(static_cast<ChatWindow*>(belowIdx.internalPointer()));
+        int children = rowCount(belowIdx);
+
+        if (children) {
+            belowTabIndex = m_tabWidget->indexOf(static_cast<ChatWindow*>(belowIdx.child(children - 1, 0).internalPointer()));
+        }
+
+        beginMoveRows(QModelIndex(), idx.row(), idx.row(), QModelIndex(), belowIdx.row() + 1);
+
+        m_tabWidget->blockSignals(true);
+
+        m_tabWidget->tabBar()->moveTab(tabIndex, belowTabIndex);
+
+        if (view->getType() == ChatWindow::Status) {
+            ChatWindow* tab = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+
+            while (!tab->isTopLevelView() && tab->getServer()
+                && tab->getServer()->getStatusView()
+                && tab->getServer()->getStatusView() == view) {
+
+                m_tabWidget->tabBar()->moveTab(tabIndex, belowTabIndex);
+
+                tab = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+            }
+        }
+
+        m_tabWidget->blockSignals(false);
+
+        endMoveRows();
+
+        viewSwitched(m_tabWidget->currentIndex());
+    } else {
+        beginMoveRows(idx.parent(), idx.row(), idx.row(), idx.parent(), idx.row() + 2);
+
+        m_tabWidget->blockSignals(true);
+        m_tabWidget->tabBar()->moveTab(tabIndex, tabIndex + 1);
+        m_tabWidget->blockSignals(false);
+
+        endMoveRows();
+
+        viewSwitched(m_tabWidget->currentIndex());
+    }
 }
 
 void ViewContainer::closeView(int view)
