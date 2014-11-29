@@ -1788,7 +1788,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
             beginRemoveRows(idx.parent(), idx.row(), idx.row());
 
             if (view->getType() == ChatWindow::Status) {
-                for (int i = m_tabWidget->count() - 1; i >= 0; --i) {
+                for (int i = m_tabWidget->count() - 1; i > tabIndex; --i) {
                     const ChatWindow* tab = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
                     if (!tab->isTopLevelView() && tab->getServer()
