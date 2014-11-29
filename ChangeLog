@@ -1,3 +1,20 @@
+Changes in Konversation 1.6-beta1:
+Konversation 1.6-beta1 is the first release of Konversation built on the new
+KDE Frameworks 5 and Qt 5 library sets, and intended to allow you to help us
+test and shake out the remaining issues in the ported code. With stability
+despite many changes under the hood as the primary goal, the 1.6 release will
+not bring any new features, though Frameworks 5 and Qt 5 offer a host of
+efficiency improvements over the old stack and will enable us to support
+hi-dpi scaling and Wayland going forward.
+
+Known issues in this beta include a lack of addressbook integration support
+(the needed Frameworks dependencies have not yet been released), drag and
+drop support for tabs being disabled, and minor visual polish issues,
+including some visual assets not having been updated to match KDE's new
+"Breeze" visual identity yet. We expect to resolve these issues in upcoming
+releases.
+
+
 Changes from 1.5 to 1.5.1:
 Konversation 1.5.1 is a maintenance release containing only bug fixes. The
 included changes address several minor behavioral defects and a low-risk DoS
