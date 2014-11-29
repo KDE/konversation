@@ -204,7 +204,7 @@ void Theme_Config::installTheme()
         if(themeInstallDir.exists("index.desktop"))
         {
             KIO::CopyJob* job = KIO::copy(QUrl(tmpThemeFile), QUrl(themesDir));
-            job->exec();
+            job->exec(); //FIXME error handling
         }
         else
         {
