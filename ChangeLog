@@ -1,4 +1,4 @@
-Changes in Konversation 1.6-beta1:
+Changes from Konversation 1.5.1 to 1.6-beta1:
 Konversation 1.6-beta1 is the first release of Konversation built on the new
 KDE Frameworks 5 and Qt 5 library sets, and intended to allow you to help us
 test and shake out the remaining issues in the ported code. With stability
@@ -15,6 +15,12 @@ including some visual assets not having been updated to match KDE's new
 releases.
 
 * Konversation now depends on KDE Frameworks v5.2.0 and Qt v5.3.0.
+* The default nickname list theme has been updated to KDE's new Breeze visual
+  identity.
+* Notification events now have non-generic titles to prevent Plasma Desktop 5
+  from merging events from different sources.
+* Fixed a bug causing the "Focus Input Bar" action to be enabled/disabled at
+  incorrect times.
 
 
 Changes from 1.5 to 1.5.1:
