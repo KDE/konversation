@@ -76,11 +76,6 @@ add_subdirectory(doc)
 get_filename_component(_po_path po ABSOLUTE)
 get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
 
-if (EXISTS ${_po_path}/CMakeLists.txt OR EXISTS ${_doc_translations_path}/CMakeLists.txt)
-    find_package(Msgfmt REQUIRED)
-    find_package(Gettext REQUIRED)
-endif()
-
 if (EXISTS ${_po_path}/CMakeLists.txt)
     add_subdirectory(po)
 endif()
