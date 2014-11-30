@@ -77,7 +77,8 @@ get_filename_component(_po_path po ABSOLUTE)
 get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
 
 if (EXISTS ${_po_path}/CMakeLists.txt)
-    add_subdirectory(po)
+    find_package(KF5I18n CONFIG REQUIRED)
+    ki18n_install(po)
 endif()
 
 if (EXISTS ${_doc_translations_path}/CMakeLists.txt)
