@@ -209,7 +209,7 @@ void Images::initializeNickIcons()
             }
         }
     }
-    if ( icons.count() < 7 ) // Sanity
+    if ( icons.count() < 7 || icons.count() > 8) // Sanity
         return;
     icons.sort();
     QStringList::ConstIterator it = icons.constBegin();
@@ -222,6 +222,11 @@ void Images::initializeNickIcons()
     QPixmap elementAway(*it);
     nickIconAwayPath = *it;
     ++it;
+    QPixmap elementAwayStacked;
+    if (icons.count() == 8 && iconTheme == QLatin1String("default")) {
+        elementAwayStacked = (*it);
+        ++it;
+    }
     QPixmap elementHalfOp(*it);
     nickIconPaths[HalfOp] = *it;
     ++it;
@@ -241,27 +246,29 @@ void Images::initializeNickIcons()
     nickIcons[Normal][1] = overlayPixmaps( nickIcons[Normal][0], elementAway );
 
     nickIcons[Voice][0] = overlayPixmaps( elementNormal, elementVoice );
-    nickIcons[Voice][1] = overlayPixmaps( nickIcons[Voice][0], elementAway );
+    nickIcons[Voice][1] = overlayPixmaps( nickIcons[Voice][0], elementAwayStacked.isNull() ? elementAway : elementAwayStacked );
 
     nickIcons[HalfOp][0] = overlayPixmaps( elementNormal, elementHalfOp );
-    nickIcons[HalfOp][1] = overlayPixmaps( nickIcons[HalfOp][0], elementAway );
+    nickIcons[HalfOp][1] = overlayPixmaps( nickIcons[HalfOp][0], elementAwayStacked.isNull() ? elementAway : elementAwayStacked );
 
     nickIcons[Op][0] = overlayPixmaps( elementNormal, elementOp );
-    nickIcons[Op][1] = overlayPixmaps( nickIcons[Op][0], elementAway );
+    nickIcons[Op][1] = overlayPixmaps( nickIcons[Op][0], elementAwayStacked.isNull() ? elementAway : elementAwayStacked );
 
-    nickIcons[Owner][0] = overlayPixmaps( elementNormal, elementOwner );
+    if (iconTheme == QLatin1String("default")) {
+        nickIcons[Owner][0] = elementOwner;
+    } else {
+        nickIcons[Owner][0] = overlayPixmaps( elementNormal, elementOwner );
+    }
+
     nickIcons[Owner][1] = overlayPixmaps( nickIcons[Owner][0], elementAway );
 
-    nickIcons[Admin][0] = overlayPixmaps( elementNormal, elementAdmin );
-    nickIcons[Admin][1] = overlayPixmaps( nickIcons[Admin][0], elementAway );
+    if (iconTheme == QLatin1String("default")) {
+        nickIcons[Admin][0] = elementAdmin;
+    } else {
+        nickIcons[Admin][0] = overlayPixmaps( elementNormal, elementAdmin );
+    }
 
-    /*
-    // why doesn't it work?
-    nickIcons[Op][0] = elementNormal;
-    bitBlt( &nickIcons[Op][0], 0, 0, &elementOp, 0, 0, -1, -1, Qt::CopyROP );
-    nickIcons[Op][1] = nickIcons[Op][0];
-    bitBlt( &nickIcons[Op][1], 0, 0, &elementAway, 0, 0, -1, -1, Qt::CopyROP );
-    */
+    nickIcons[Admin][1] = overlayPixmaps( nickIcons[Admin][0], elementAway );
 }
 
 QIcon Images::getLed(const QColor& col,bool state)
