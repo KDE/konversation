@@ -15,6 +15,7 @@
 
 #include "application.h"
 #include "version.h"
+#include "commit.h"
 
 #include <QMutex>
 #include <QWaitCondition>
@@ -46,7 +47,7 @@ int main(int argc, char* argv[])
 
     KAboutData aboutData("konversation",
         i18n("Konversation"),
-        KONVI_VERSION,
+        KONVI_VERSION " #" STRHACK(COMMIT),
         i18n("A user-friendly IRC client"),
         KAboutLicense::GPL,
         i18n("(C) 2002-2014 by the Konversation team"),
