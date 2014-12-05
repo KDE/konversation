@@ -18,16 +18,16 @@
 
 #include <cstdlib>
 #include <sys/types.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
 #ifndef Q_CC_MSVC
+#   include <netinet/in.h>
+#   include <sys/socket.h>
 #   include <net/if.h>
 #   include <sys/ioctl.h>
 #   ifdef HAVE_STROPTS_H
 #       include <stropts.h>
 #   endif
+#   include <arpa/inet.h>
 #endif
-#include <arpa/inet.h>
 
 #include <QHostAddress>
 #include <QTcpServer>
