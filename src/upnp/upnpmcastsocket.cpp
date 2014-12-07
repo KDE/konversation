@@ -17,12 +17,15 @@
 #include <QUrl>
 #include <QDebug>
 
+
+#ifdef Q_OS_WIN
+#include <winsock.h>
+#else
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#ifndef Q_OS_WIN
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #endif
@@ -199,7 +202,7 @@ namespace Konversation
 
             memset(&mreq,0,sizeof(struct ip_mreq));
 
-            inet_aton("239.255.255.250",&mreq.imr_multiaddr);
+            mreq.imr_multiaddr.s_addr = inet_addr("239.255.255.250");
             mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 
     #ifndef Q_OS_WIN
@@ -219,7 +222,7 @@ namespace Konversation
 
             memset(&mreq,0,sizeof(struct ip_mreq));
 
-            inet_aton("239.255.255.250",&mreq.imr_multiaddr);
+            mreq.imr_multiaddr.s_addr = inet_addr("239.255.255.250");
             mreq.imr_interface.s_addr = htonl(INADDR_ANY);
 
     #ifndef Q_OS_WIN
