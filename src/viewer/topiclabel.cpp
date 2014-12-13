@@ -48,7 +48,7 @@ namespace Konversation
 
     QSize TopicLabel::minimumSizeHint() const
     {
-        int minHeight = fontMetrics().lineSpacing() + fontMetrics().descent();
+        int minHeight = fontMetrics().ascent() + fontMetrics().descent();
         return QSize(0, minHeight);
     }
 
@@ -219,7 +219,7 @@ namespace Konversation
 
         text = tagUrls(text, m_channelName);
 
-        if(height() < (fontMetrics().lineSpacing() * 2))
+        if(height() < ((fontMetrics().ascent() + fontMetrics().descent()) * 2))
         {
             text = rPixelSqueeze(text, width() - 10);
             setWordWrap(false);
