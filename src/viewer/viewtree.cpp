@@ -75,7 +75,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
          background = selected ? selColor : m_view->palette().color(QPalette::Base);
     }
 
-    QColor midColor = mixColor(bgColor, selColor);
+    QColor midColor = mixColor(bgColor, background);
 
     int y = option.rect.y();
     int height = option.rect.y() + option.rect.height();
