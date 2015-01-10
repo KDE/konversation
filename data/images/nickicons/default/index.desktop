@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Default Theme
-Name[ar]=السمة الافتراضية
+Name[ar]=السّمة الافتراضيّة
 Name[ast]=Tema predetermináu
 Name[bg]=Стандартна тема
 Name[bs]=Podrazumijevana tema
@@ -53,6 +53,7 @@ Name[x-test]=xxDefault Themexx
 Name[zh_CN]=默认主题
 Name[zh_TW]=預設主題
 Comment="Breeze" by Uri Herrera
+Comment[ar]="نسيم" لِـ Uri Herrera
 Comment[ca]=«Brisa» per Uri Herrera
 Comment[de]=„Breeze“ von Uri Herrera
 Comment[en_GB]="Breeze" by Uri Herrera

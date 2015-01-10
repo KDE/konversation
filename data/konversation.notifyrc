@@ -565,7 +565,7 @@ Action=None
 
 [Event/dcc_incoming]
 Name=Incoming file
-Name[ar]=ملف قادم
+Name[ar]=ملفّ قادم
 Name[ast]=Ficheru entrante
 Name[be]=Уваходны файл
 Name[bg]=Пристигащ файл
@@ -617,7 +617,7 @@ Name[x-test]=xxIncoming filexx
 Name[zh_CN]=正在传入的文件
 Name[zh_TW]=傳來檔案
 Comment=Someone wants to transmit a file to you over DCC
-Comment[ar]=يريد أحد نفل ملف إليك عبر DCC
+Comment[ar]=يريد أحد نقل ملفّ إليك عبر دي​سي​سي
 Comment[ast]=Daquién quier pasate un ficheru per DCC
 Comment[bg]=Някой иска да ви изпрати файл чрез DCC
 Comment[bs]=Neko želi da vam pošalje datoteku putem DCC‑a
@@ -669,7 +669,7 @@ Action=None
 
 [Event/dcc_error]
 Name=DCC transfer error
-Name[ar]=خطأ في نقل DCC
+Name[ar]=خطأ في نقل دي​سي​سي
 Name[ast]=Fallu de tresferencia DCC
 Name[bg]=Грешка при пренос DCC
 Name[bs]=Greška DCC prijenosa
@@ -716,7 +716,7 @@ Name[x-test]=xxDCC transfer errorxx
 Name[zh_CN]=DCC 传输错误
 Name[zh_TW]=DCC 傳輸錯誤
 Comment=An error occurred in a DCC transfer
-Comment[ar]=حدث خطأ في نقل DCC
+Comment[ar]=حدث خطأ في نقل دي​سي​سي
 Comment[ast]=Hebo un fallu nuna tresferencia DCC
 Comment[bg]=Получила се е грешка при пренос чрез DCC
 Comment[bs]=Greška u DCC prijenosu
@@ -765,7 +765,7 @@ Action=None
 
 [Event/dcctransfer_done]
 Name=DCC transfer complete
-Name[ar]=اكتمل نقل DCC
+Name[ar]=اكتمل نقل دي​سي​سي
 Name[ast]=Tresferencia DCC completa
 Name[bg]=Привършен пренос DCC
 Name[bs]=Završen DCC prijenos
@@ -812,7 +812,7 @@ Name[x-test]=xxDCC transfer completexx
 Name[zh_CN]=DCC 传输完成
 Name[zh_TW]=DCC 傳輸完成
 Comment=A DCC transfer successfully completed
-Comment[ar]=اكتمل نقل DCC بنجاح
+Comment[ar]=اكتمل نقل دي​سي​سي بنجاح
 Comment[ast]=Tresferencia DCC completada con éxitu
 Comment[bg]=Преносът чрез DCC е успешно приключен
 Comment[bs]=DCC prijenos je uspješno okončan
@@ -1668,7 +1668,7 @@ Action=Taskbar
 
 [Event/dccChat]
 Name=DCC Chat
-Name[ar]=محادثة DCC
+Name[ar]=محادثة دي​سي​سي
 Name[ast]=Charra per DCC
 Name[bg]=DCC разговор
 Name[bs]=DCC Chat
@@ -1719,7 +1719,7 @@ Name[x-test]=xxDCC Chatxx
 Name[zh_CN]=DCC 聊天
 Name[zh_TW]=DCC 聊天階段
 Comment=Someone started a DCC chat with you
-Comment[ar]=بدأ شخص ما محادثة DCC معك
+Comment[ar]=بدأ شخص ما محادثة دي​سي​سي معك
 Comment[ast]=Daquién entamó una charra DCC contigo
 Comment[bg]=Някой е започнал разговор с вас в DCC
 Comment[bs]=Neko je započeo DCC ćaskanje sa vama

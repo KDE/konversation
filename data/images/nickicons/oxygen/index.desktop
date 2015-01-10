@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Oxygen Theme
+Name[ar]=سمة أكسجين
 Name[ca]=Tema Oxygen
 Name[de]=Oxygen-Design
 Name[en_GB]=Oxygen Theme
@@ -22,7 +23,7 @@ Name[tr]=Oxygen Teması
 Name[uk]=Тема «Oxygen»
 Name[x-test]=xxOxygen Themexx
 Comment="Oxygen" by Nuno Pinheiro
-Comment[ar]="أوكسجين" لِـ Nuno Pinheiro
+Comment[ar]="أكسجين" لِـ Nuno Pinheiro
 Comment[ast]=«Oxygen» de Nuno Pinheiro
 Comment[bg]="Oxygen" от Nuno Pinheiro
 Comment[bs]=„Kiseonik“ Nuna Pinjeira
