@@ -44,9 +44,9 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 include_directories(${PHONON_INCLUDES})
 
-find_package(Qca 2.1.0)
-set_package_properties(Qca PROPERTIES DESCRIPTION "Support for encryption"
-                       URL "http://delta.affinix.com/qca"
+find_package(Qca-qt5 2.1.0)
+set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
+                       URL "http://download.kde.org/stable/qca-qt5/"
                        TYPE OPTIONAL)
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
@@ -55,7 +55,7 @@ check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-set(HAVE_QCA2 ${Qca_FOUND})
+set(HAVE_QCA2 ${Qca-qt5_FOUND})
 
 add_definitions(
   -DQT_USE_QSTRINGBUILDER

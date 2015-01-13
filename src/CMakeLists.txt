@@ -185,10 +185,10 @@ ki18n_wrap_ui(dcc_SRCS
      dcc/whiteboardfontchooserui.ui
 )
 
-if (Qca_FOUND)
+if (Qca-qt5_FOUND)
     set(cipher_SRCS
         cipher.cpp)
-endif (Qca_FOUND)
+endif (Qca-qt5_FOUND)
 
 set(upnp_SRCS
     upnp/soap.cpp
@@ -235,8 +235,8 @@ target_link_libraries(konversation
     KF5::ItemViews
     Phonon::phonon4qt5)
 
-if (Qca_FOUND)
-    target_link_libraries(konversation qca)
-endif (Qca_FOUND)
+if (Qca-qt5_FOUND)
+    target_link_libraries(konversation qca-qt5)
+endif ()
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
