@@ -114,7 +114,7 @@ namespace Konversation
         if(shortName == QStringLiteral("ISO 2022-JP"))
             return QTextCodec::codecForName( "jis7" );
         else
-            return QTextCodec::codecForName( shortName.toLatin1() );
+            return KCharsets::charsets()->codecForName( shortName.toLatin1() );
     }
 
     IRCCharsets::IRCCharsets()
