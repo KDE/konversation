@@ -1,3 +1,6 @@
+Changes since 1.6-beta1:
+* Improved support for character set aliases via KCharsets.
+
 Changes from Konversation 1.5.1 to 1.6-beta1:
 Konversation 1.6-beta1 is the first release of Konversation built on the new
 KDE Frameworks 5 and Qt 5 library sets, and intended to allow you to help us
