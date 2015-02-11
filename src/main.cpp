@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
     app.newInstance(&cmdLineParser);
 
     QObject::connect(&dbusService, &KDBusService::activateRequested,
-        app.instance()->getMainWindow(), &MainWindow::activateWindow,
+        app.instance()->getMainWindow(), &MainWindow::activateAndRaiseWindow,
         Qt::DirectConnection);
 
     return app.exec();

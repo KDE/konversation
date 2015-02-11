@@ -588,6 +588,17 @@ int MainWindow::confirmQuit()
     return result;
 }
 
+void MainWindow::activateAndRaiseWindow()
+{
+    if (isMinimized())
+        KWindowSystem::unminimizeWindow(winId());
+    else if (Preferences::self()->showTrayIcon() && !isVisible())
+        m_trayIcon->restore();
+
+    KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
+    KWindowSystem::activateWindow(winId());
+}
+
 void MainWindow::quitProgram()
 {
     if (Preferences::self()->showTrayIcon() &&
@@ -885,13 +896,7 @@ void MainWindow::toggleVisibility()
     }
     else
     {
-        if (isMinimized())
-            KWindowSystem::unminimizeWindow(winId());
-        else if (Preferences::self()->showTrayIcon() && !isVisible())
-            m_trayIcon->restore();
-
-        KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
-        KWindowSystem::activateWindow(winId());
+        activateAndRaiseWindow();
     }
 }
 
