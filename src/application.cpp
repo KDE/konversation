@@ -226,6 +226,7 @@ void Application::newInstance(QCommandLineParser *args)
 
         if (!args->isSet(QStringLiteral("noautoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
         {
+            QList<ServerGroupSettingsPtr> serversToAutoconnect;
             QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
             while(it.hasNext())
             {
@@ -233,8 +234,18 @@ void Application::newInstance(QCommandLineParser *args)
                 if (it.value()->autoConnectEnabled())
                 {
                     openServerList = false;
-                    m_connectionManager->connectTo(Konversation::CreateNewConnection, it.key());
+                    serversToAutoconnect << it.value();
                 }
+            }
+
+            std::sort(serversToAutoconnect.begin(), serversToAutoconnect.end(), [] (const ServerGroupSettingsPtr &left, const ServerGroupSettingsPtr &right)
+            {
+                return left->sortIndex() < right->sortIndex();
+            });
+
+            for (QList<ServerGroupSettingsPtr>::iterator it = serversToAutoconnect.begin(); it != serversToAutoconnect.end(); ++it)
+            {
+                m_connectionManager->connectTo(Konversation::CreateNewConnection, (*it)->id());
             }
         }
 
