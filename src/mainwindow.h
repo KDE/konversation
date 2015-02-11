@@ -64,6 +64,8 @@ class MainWindow : public KXmlGuiWindow
         void insertMarkerLine();
 
     public Q_SLOTS:
+        void activateAndRaiseWindow();
+
         void quitProgram();
 
         void updateTrayIcon();
