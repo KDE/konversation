@@ -1178,20 +1178,16 @@ void Server::autoCommandsAndChannels()
 void Server::resetNickSelection()
 {
     m_nickIndices.clear();
-    //for equivalence testing in case the identity gets changed underneath us
-    m_referenceNicklist = getIdentity()->getNicknameList();
-    //where in this identities nicklist will we have started?
-    int start = m_referenceNicklist.indexOf(getNickname());
-    int len = m_referenceNicklist.count();
 
-    //we first use this list of indices *after* we've already tried the current nick, which we don't want
-    //to retry if we wrapped, so exclude its index here
-    //if it wasn't in the list, we get -1 back, so then we *want* to include 0
-    for (int i=start+1; i<len; i++)
-        m_nickIndices.append(i);
-    //now, from the beginning of the list, to the item before start
-    for (int i=0; i<start; i++)
-        m_nickIndices.append(i);
+    // For equivalence testing in case the identity gets changed underneath us.
+    m_referenceNicklist = getIdentity()->getNicknameList();
+
+    for (int i = 0; i < m_referenceNicklist.length(); ++i) {
+        // Pointless to include the nick we're already going to use.
+        if (m_referenceNicklist.at(i) != getNickname()) {
+            m_nickIndices.append(i);
+        }
+    }
 }
 
 QString Server::getNextNickname()
