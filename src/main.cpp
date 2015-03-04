@@ -102,9 +102,7 @@ int main(int argc, char* argv[])
     app.setApplicationVersion(aboutData.version());
     app.setApplicationDisplayName(aboutData.displayName());
     app.setWindowIcon(QIcon::fromTheme(QLatin1String("konversation")));
-
-    // FIXME HIDPI: Opt into high-dpi pixmaps. See bug 341361.
-    // app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
     cmdLineParser.addHelpOption();
