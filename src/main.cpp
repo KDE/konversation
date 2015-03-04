@@ -101,9 +101,7 @@ int main(int argc, char* argv[])
     app.setOrganizationDomain(aboutData.organizationDomain());
     app.setApplicationVersion(aboutData.version());
     app.setApplicationDisplayName(aboutData.displayName());
-
-    // FIXME HIDPI: Opt into high-dpi pixmaps. See bug 341361.
-    // app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
     cmdLineParser.addHelpOption();
