@@ -1245,10 +1245,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         // Get the next nick from the list or ask for a new one
                         QString newNick = m_server->getNextNickname();
 
-                        // The user chose to disconnect
+                        // The user chose to disconnect...
                         if (newNick.isNull())
                         {
-                            m_server->disconnectServer();
+                            if (m_server->isConnecting()) // ... or did they?
+                                m_server->disconnectServer();
+                             else // No they didn't!
+                                 m_server->appendMessageToFrontmost(i18n("Info"), i18n("The nickname %1 was already in use, but the connection failed before you responded.", m_server->getNickname()));
                         }
                         else
                         {

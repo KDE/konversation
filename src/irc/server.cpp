@@ -782,16 +782,6 @@ void Server::broken(KTcpSocket::Error error)
 
     purgeData();
 
-    // HACK Only show one nick change dialog at connection time.
-    // This hack is a bit nasty as it assumes that the only QInputDialog
-    // child of the statusview will be the nick change dialog.
-    if (getStatusView())
-    {
-        QInputDialog* nickChangeDialog = getStatusView()->findChild<QInputDialog*>();
-
-        if (nickChangeDialog) nickChangeDialog->reject();
-    }
-
     emit resetLag(this);
     emit nicksNowOnline(this, QStringList(), true);
     m_prevISONList.clear();
@@ -837,6 +827,17 @@ void Server::broken(KTcpSocket::Error error)
 
         updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
     }
+
+    // HACK Only show one nick change dialog at connection time.
+    // This hack is a bit nasty as it assumes that the only QInputDialog
+    // child of the statusview will be the nick change dialog.
+    if (getStatusView())
+    {
+        QInputDialog* nickChangeDialog = getStatusView()->findChild<QInputDialog*>();
+
+        if (nickChangeDialog) nickChangeDialog->reject();
+    }
+
 }
 
 void Server::sslError( const QList<KSslError>& errors )
