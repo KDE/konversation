@@ -183,7 +183,7 @@
        </sizepolicy>
       </property>
       <property name="whatsThis">
-       <string>You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion.</string>
+       <string>You can limit the channel list to those channels with a minimum number of users here. Choosing "No Limit" disables this criterion.</string>
       </property>
       <property name="specialValueText">
        <string>No Limit</string>
@@ -202,7 +202,7 @@
        </sizepolicy>
       </property>
       <property name="whatsThis">
-       <string>You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion.</string>
+       <string>You can limit the channel list to those channels with a maximum number of users here. Choosing "No Limit" disables this criterion.</string>
       </property>
       <property name="specialValueText">
        <string>No Limit</string>
