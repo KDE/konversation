@@ -34,8 +34,6 @@ class ViewTreeDelegate : public QStyledItemDelegate
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
-        static QColor mixColor(const QColor& color1, const QColor& color2);
-
     private:
         ViewTree* m_view;
 };

@@ -26,6 +26,7 @@
 // FIXME KF5 Port: Not DPI-aware.
 #define LED_ICON_SIZE 14
 #define MARGIN 2
+#define RADIUS 4
 
 ViewTreeDelegate::ViewTreeDelegate(QObject* parent) : QStyledItemDelegate(parent)
 {
@@ -60,9 +61,69 @@ QSize ViewTreeDelegate::preferredSizeHint(const QModelIndex& index) const
 void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     bool selected = (option.state & QStyle::State_Selected);
+    bool highlighted = index.data(ViewContainer::HighlightRole).toBool();
+
+    painter->save();
+
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setPen(Qt::NoPen);
+
+    const QColor &selColor = m_view->palette().color(QPalette::Highlight);
+
+    if (selected || highlighted) {
+        QColor bgColor = selColor;
+
+        if (highlighted) {
+            bgColor = Preferences::self()->inputFieldsBackgroundColor()
+                ? Preferences::self()->color(Preferences::AlternateBackground)
+                : m_view->palette().color(QPalette::AlternateBase);
+        }
+
+        painter->setBrush(bgColor);
+
+        QRect baseRect = option.rect;
+
+        painter->drawRoundedRect(baseRect, RADIUS - 1, RADIUS - 1);
+
+        baseRect.setLeft(baseRect.left() + (baseRect.width() - RADIUS));
+        painter->drawRect(baseRect);
+
+
+    }
+
+    const QModelIndex idxAbove = m_view->indexAbove(index);
+
+    if (idxAbove.isValid() && m_view->selectionModel()->isSelected(idxAbove)) {
+        QPainterPath bottomWing;
+        const QPoint &startPos = option.rect.topRight() + QPoint(1, 0);
+        bottomWing.moveTo(startPos);
+        bottomWing.lineTo(bottomWing.currentPosition().x() - RADIUS, bottomWing.currentPosition().y());
+        bottomWing.moveTo(startPos);
+        bottomWing.lineTo(bottomWing.currentPosition().x(), bottomWing.currentPosition().y() + RADIUS);
+        bottomWing.quadTo(startPos, QPoint(bottomWing.currentPosition().x() - RADIUS,
+            bottomWing.currentPosition().y() - RADIUS));
+        painter->fillPath(bottomWing, selColor);
+    }
+
+    const QModelIndex idxBelow = m_view->indexBelow(index);
+
+    if (idxBelow.isValid() && m_view->selectionModel()->isSelected(idxBelow)) {
+        QPainterPath topWing;
+        const QPoint &startPos = option.rect.bottomRight() + QPoint(1, 1);
+        topWing.moveTo(startPos);
+        topWing.lineTo(topWing.currentPosition().x() - RADIUS, topWing.currentPosition().y());
+        topWing.moveTo(startPos);
+        topWing.lineTo(topWing.currentPosition().x(), topWing.currentPosition().y() - RADIUS);
+        topWing.quadTo(startPos, QPoint(topWing.currentPosition().x() - RADIUS,
+            topWing.currentPosition().y() + RADIUS));
+        painter->fillPath(topWing, selColor);
+    }
+
+    painter->restore();
 
     QStyleOptionViewItem _option = option;
     _option.state = QStyle::State_None;
+    _option.palette.setColor(QPalette::AlternateBase, Qt::transparent);
 
     if (index.data(ViewContainer::DisabledRole).toBool()) {
         _option.palette.setColor(QPalette::Text, QGuiApplication::palette().color(QPalette::Disabled, QPalette::Text));
@@ -79,15 +140,6 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     }
 
     QStyledItemDelegate::paint(painter, _option, index);
-}
-
-QColor ViewTreeDelegate::mixColor(const QColor& color1, const QColor& color2)
-{
-    QColor mixedColor;
-    mixedColor.setRgb( (color1.red()   + color2.red())   / 2,
-                       (color1.green() + color2.green()) / 2,
-                       (color1.blue()  + color2.blue())  / 2 );
-    return mixedColor;
 }
 
 ViewTree::ViewTree(QWidget* parent) : QTreeView(parent)
@@ -139,12 +191,15 @@ void ViewTree::updateAppearance()
     else
         setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
+    setAlternatingRowColors(Preferences::self()->inputFieldsBackgroundColor());
+
     QPalette palette;
 
     if (Preferences::self()->inputFieldsBackgroundColor())
     {
         palette.setColor(QPalette::Text, Preferences::self()->color(Preferences::ChannelMessage));
         palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
+        palette.setColor(QPalette::AlternateBase, Preferences::self()->color(Preferences::AlternateBackground));
     }
 
     setPalette(palette);
@@ -183,59 +238,42 @@ bool ViewTree::event(QEvent* event)
 
 void ViewTree::paintEvent(QPaintEvent* event)
 {
-    const QModelIndex &idx = selectionModel()->currentIndex();
+    QTreeView::paintEvent(event);
 
-    if (idx.isValid()) {
-        int radius = 4;
-        bool drawTopWing = false;
+    const QModelIndex &currentRow = selectionModel()->currentIndex();
 
-        QRect baseRect = visualRect(idx);
-
-        QRect boundingRect = baseRect;
-
-        if ((idx.row() > 0 || idx.parent().isValid()) && boundingRect.top() > radius) {
-            drawTopWing = true;
-            boundingRect.setTop(boundingRect.top() - radius);
-        }
-
-        boundingRect.setBottom(boundingRect.bottom() + radius);
-
-        if (boundingRect.intersects(event->rect())) {
-            QPainter painter(viewport());
-            painter.setRenderHint(QPainter::Antialiasing, true);
-            painter.setPen(Qt::NoPen);
-            painter.setBrush(palette().color(QPalette::Highlight));
-
-            painter.drawRoundedRect(baseRect, radius - 1, radius - 1);
-
-            baseRect.setLeft(baseRect.left() + (baseRect.width() - radius));
-            painter.drawRect(baseRect);
-
-            if (drawTopWing) {
-                QPainterPath topWing;
-                const QPoint &startPos = baseRect.topRight() + QPoint(1, 0);
-                topWing.moveTo(startPos);
-                topWing.lineTo(topWing.currentPosition().x() - radius, topWing.currentPosition().y());
-                topWing.moveTo(startPos);
-                topWing.lineTo(topWing.currentPosition().x(), topWing.currentPosition().y() - radius);
-                topWing.quadTo(startPos, QPoint(topWing.currentPosition().x() - radius,
-                    topWing.currentPosition().y() + radius));
-                painter.fillPath(topWing, painter.brush());
-            }
-
-            QPainterPath bottomWing;
-            const QPoint &startPos = baseRect.bottomRight() + QPoint(1, 1);
-            bottomWing.moveTo(startPos);
-            bottomWing.lineTo(bottomWing.currentPosition().x() - radius, bottomWing.currentPosition().y());
-            bottomWing.moveTo(startPos);
-            bottomWing.lineTo(bottomWing.currentPosition().x(), bottomWing.currentPosition().y() + radius);
-            bottomWing.quadTo(startPos, QPoint(bottomWing.currentPosition().x() - radius,
-                bottomWing.currentPosition().y() - radius));
-            painter.fillPath(bottomWing, painter.brush());
-        }
+    if (!currentRow.isValid()) {
+        return;
     }
 
-    QTreeView::paintEvent(event);
+    const QAbstractItemModel* model = currentRow.model();
+
+    QModelIndex lastRow = model->index(model->rowCount() - 1, 0);
+
+    int count = model->rowCount(lastRow);
+
+    if (count) {
+        lastRow = lastRow.child(count - 1, 0);
+    }
+
+    if (lastRow.isValid() && lastRow == currentRow) {
+        const QRect &baseRect = visualRect(lastRow);
+
+        QPainter painter(viewport());
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(palette().color(QPalette::Highlight));
+
+        QPainterPath bottomWing;
+        const QPoint &startPos = baseRect.bottomRight() + QPoint(1, 1);
+        bottomWing.moveTo(startPos);
+        bottomWing.lineTo(bottomWing.currentPosition().x() - RADIUS, bottomWing.currentPosition().y());
+        bottomWing.moveTo(startPos);
+        bottomWing.lineTo(bottomWing.currentPosition().x(), bottomWing.currentPosition().y() + RADIUS);
+        bottomWing.quadTo(startPos, QPoint(bottomWing.currentPosition().x() - RADIUS,
+            bottomWing.currentPosition().y() - RADIUS));
+        painter.fillPath(bottomWing, painter.brush());
+    }
 }
 
 void ViewTree::drawRow(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
