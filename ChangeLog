@@ -1,5 +1,29 @@
 Changes since 1.6-beta1:
 * Improved support for character set aliases via KCharsets.
+* Improved behavior when reconnecting and Konversation had to use an
+  alternate nickname for the previous connection because the preferred
+  nickname was already in use: Konversation will now try harder to go back
+  to nicknames sorted earlier in the identity's nickname list, instead of
+  advancing down the list without checking whether earlier nicknames have
+  become available again.
+* Konversation will no longer give up trying to connect when only a single
+  nickname is configured and not available at connection time. Instead, it
+  will do as many reconnection attempts as allowed by user configuration.
+* Fixed incorrect size calculations for the channel topic text label causing
+  cut-off text and unwanted collapsing of the topic area.
+* Fixed a bug causing auto-connect not to connect to networks in the order
+  they are listed in the Server List dialog.
+* Fixed a bug causing the main window not to be raised when an Konversation
+  is started an additional time and the window is currently minimized.
+* Fixed various rendering issues in the treelist version of the tab bar and
+  made it high-DPI scaling-capable.
+* Fixed a bug causing Channel List tabs not to be sorted below the status
+  tab of the server they belong to in the treelist version of the tab bar,
+  and corrupt its contents.
+* Fixed margins in the Edit Network dialog.
+* Konversation now opts into Qt's high-DPI pixmap handling.
+* Adjusted build system to use co-installable version of qca-qt5.
+* Fixed build failures on Windows.
 
 Changes from Konversation 1.5.1 to 1.6-beta1:
 Konversation 1.6-beta1 is the first release of Konversation built on the new

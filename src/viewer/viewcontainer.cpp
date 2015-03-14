@@ -257,6 +257,7 @@ void ViewContainer::setupViewTree()
     connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
+    connect(this, SIGNAL(contextMenuClosed()), m_viewTree->viewport(), SLOT(update()));
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
     connect(this, SIGNAL(viewChanged(QModelIndex)), m_viewTree, SLOT(selectView(QModelIndex)));
 
@@ -1922,9 +1923,9 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
                 codecAction->setEnabled(view->isChannelEncodingSupported());
                 QString encoding = view->getChannelEncoding();
 
-                if (m_frontServer)
+                if (view->getServer())
                 {
-                    codecAction->changeItem(0, i18nc("Default encoding", "Default ( %1 )", m_frontServer->getIdentity()->getCodecName()));
+                    codecAction->changeItem(0, i18nc("Default encoding", "Default ( %1 )", view->getServer()->getIdentity()->getCodecName()));
                 }
 
                 if (encoding.isEmpty())
