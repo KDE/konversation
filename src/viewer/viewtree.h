@@ -63,6 +63,7 @@ class ViewTree : public QTreeView
     protected:
         bool event(QEvent* event);
         void paintEvent(QPaintEvent* event);
+        void drawRow(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
         void resizeEvent(QResizeEvent* event);
         void mousePressEvent(QMouseEvent* event);
         void mouseReleaseEvent(QMouseEvent* event);

@@ -238,6 +238,15 @@ void ViewTree::paintEvent(QPaintEvent* event)
     QTreeView::paintEvent(event);
 }
 
+void ViewTree::drawRow(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    // Avoid style engine's row pre-fill.
+    QStyleOptionViewItem _option = option;
+    _option.palette.setColor(QPalette::Highlight, Qt::transparent);
+
+    QTreeView::drawRow(painter, _option, index);
+}
+
 void ViewTree::resizeEvent(QResizeEvent* event)
 {
     setColumnWidth(0, event->size().width());
