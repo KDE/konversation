@@ -1922,9 +1922,9 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
                 codecAction->setEnabled(view->isChannelEncodingSupported());
                 QString encoding = view->getChannelEncoding();
 
-                if (m_frontServer)
+                if (view->getServer())
                 {
-                    codecAction->changeItem(0, i18nc("Default encoding", "Default ( %1 )", m_frontServer->getIdentity()->getCodecName()));
+                    codecAction->changeItem(0, i18nc("Default encoding", "Default ( %1 )", view->getServer()->getIdentity()->getCodecName()));
                 }
 
                 if (encoding.isEmpty())
