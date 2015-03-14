@@ -144,6 +144,7 @@ void ChannelListProxyModel::setFilterChannel(bool filter)
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {
     setType(ChatWindow::ChannelList);
+    m_isTopLevelView = false;
     setName(i18n("Channel List"));
 
     m_firstRun = true;
