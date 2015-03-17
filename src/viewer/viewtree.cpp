@@ -73,7 +73,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     if (selected || highlighted) {
         QColor bgColor = selColor;
 
-        if (highlighted) {
+        if (highlighted && !selected) {
             bgColor = Preferences::self()->inputFieldsBackgroundColor()
                 ? Preferences::self()->color(Preferences::AlternateBackground)
                 : m_view->palette().color(QPalette::AlternateBase);
