@@ -216,8 +216,7 @@ void TopicEdit::showWarning()
         m_warningUndercarriage->setAutoFillBackground(true);
     }
 
-    // FIXME: This should read bytes instead of characters, but we're in string freeze.
-    m_warning->setText(i18n("Text past the server limit of %1 characters is shown in color.", m_maximumLength));
+    m_warning->setText(i18n("Text past the server limit of %1 bytes is shown in color.", m_maximumLength));
 
     updateWarningGeometry();
 
