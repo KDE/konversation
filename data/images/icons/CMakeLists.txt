@@ -1,1 +1,1 @@
-ecm_install_icons(ICONS hi128-apps-konversation.png  hi16-apps-konversation.png  hi22-actions-konv_message.png  hi22-apps-konversation.png  hi32-apps-konversation.png  hi48-apps-konversation.png  hi64-apps-konversation.png DESTINATION ${ICON_INSTALL_DIR})
+ecm_install_icons(ICONS 128-apps-konversation.png  16-apps-konversation.png  22-actions-konv_message.png  22-apps-konversation.png  32-apps-konversation.png  48-apps-konversation.png  64-apps-konversation.png DESTINATION ${ICON_INSTALL_DIR} THEME hicolor)
