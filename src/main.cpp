@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
 
     Application app(argc, argv);
 
+    KLocalizedString::setApplicationDomain("konversation");
+
     KAboutData aboutData("konversation",
         i18n("Konversation"),
         KONVI_VERSION " #" STRHACK(COMMIT),
