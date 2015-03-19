@@ -67,8 +67,6 @@ add_definitions(
   -DQT_USE_FAST_OPERATOR_PLUS
 )
 
-add_definitions(-DTRANSLATION_DOMAIN=\"konversation\")
-
 add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)
