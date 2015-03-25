@@ -391,36 +391,40 @@ const IdentityPtr Preferences::identityById(int id)
 QStringList Preferences::defaultAliasList()
 {
     // Auto-alias scripts
-    const QStringList scripts = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/scripts/*"));
-    QFileInfo* fileInfo = new QFileInfo();
-    QStringList aliasList;
-    QString newAlias;
+    const QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("scripts"), QStandardPaths::LocateDirectory);
+    QSet<QString> scripts;
 
-    for (QStringList::ConstIterator it = scripts.constBegin(); it != scripts.constEnd(); ++it)
-    {
-        fileInfo->setFile(*it);
-        if (fileInfo->isExecutable())
-        {
-            newAlias = (*it).section(QLatin1Char('/'),-1)+QLatin1Char(' ')+QStringLiteral("/exec ")+(*it).section(QLatin1Char('/'), -1 );
-            aliasList.append(newAlias);
+    foreach(const QString &dir, scriptDirs) {
 
-            // FIXME: Historically, defaultAliasList() is primarily used to dynamically
-            // compile a list of installed scripts and generate appropriate aliases for
-            // them. It's not only used when the alias preferences are reset or initia-
-            // lized, but also on application start. The following crudely adds two
-            // aliases when the 'media' script is found, to provide easy access to its
-            // capability to differentiate  between audio and video media. This method
-            // needs at the very least to be split up in two, or scripts may in the
-            // future determine what aliases they want to add.
-            if ((*it).section(QLatin1Char('/'),-1) == QStringLiteral("media"))
-            {
-                aliasList.append(QStringLiteral("audio /exec media audio"));
-                aliasList.append(QStringLiteral("video /exec media video"));
-            }
+        const QStringList &scriptFiles = QDir(dir).entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Executable);
+
+        foreach(const QString &script, scriptFiles) {
+            scripts << script;
         }
     }
 
-    delete fileInfo;
+    QStringList aliasList;
+
+    foreach(const QString& script, scripts)
+    {
+        aliasList.append(QString("%1 /exec %1").arg(script));
+
+        // FIXME: Historically, defaultAliasList() is primarily used to dynamically
+        // compile a list of installed scripts and generate appropriate aliases for
+        // them. It's not only used when the alias preferences are reset or initia-
+        // lized, but also on application start. The following crudely adds two
+        // aliases when the 'media' script is found, to provide easy access to its
+        // capability to differentiate  between audio and video media. This method
+        // needs at the very least to be split up in two, or scripts may in the
+        // future determine what aliases they want to add.
+        if (script == QStringLiteral("media"))
+        {
+            aliasList.append(QStringLiteral("audio /exec media audio"));
+            aliasList.append(QStringLiteral("video /exec media video"));
+        }
+    }
+
+    qDebug() << aliasList;
 
     return aliasList;
 }
