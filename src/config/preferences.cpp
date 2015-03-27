@@ -424,8 +424,6 @@ QStringList Preferences::defaultAliasList()
         }
     }
 
-    qDebug() << aliasList;
-
     return aliasList;
 }
 
