@@ -235,6 +235,8 @@ class ViewContainer : public QAbstractItemModel
         void updateTabWidgetAppearance();
 
         void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
+        int insertIndex(ChatWindow* view);
+        void unclutterTabs();
 
         void updateViewActions(int index);
         void updateFrontView();

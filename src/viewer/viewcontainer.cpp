@@ -218,7 +218,7 @@ void ViewContainer::setupTabWidget()
     vboxLayout->addWidget(m_queueTuner);
     m_queueTuner->hide();
 
-    m_tabWidget->setMovable(false); // FIXME KF5 Port: Tab DND is currently disabled because it doesn't implement nesting constraints.
+    m_tabWidget->setMovable(true);
     m_tabWidget->tabBar()->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 
     m_vbox->hide();
@@ -239,6 +239,8 @@ void ViewContainer::setupTabWidget()
 
 void ViewContainer::setupViewTree()
 {
+    unclutterTabs();
+
     m_viewTree = new ViewTree(m_viewTreeSplitter);
     m_viewTree->setModel(this);
     m_viewTreeSplitter->insertWidget(0, m_viewTree);
@@ -1237,9 +1239,7 @@ void ViewContainer::toggleConnectOnStartup()
 
 void ViewContainer::addView(ChatWindow* view, const QString& label, bool weinitiated)
 {
-    ChatWindow *tmp_ChatWindow;
-    int placement = m_tabWidget->count();
-    ChatWindow::WindowType wtype;
+    int placement = insertIndex(view);
     QIcon iconSet;
 
     if (Preferences::self()->closeButtons() && m_viewTree)
@@ -1250,38 +1250,11 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
 
-    // Please be careful about changing any of the grouping behavior in here,
-    // because it needs to match up with the sorting behavior of the tree list,
-    // otherwise they may become out of sync, wreaking havoc with the move
-    // actions. Yes, this would do well with a more reliable approach in the
-    // future. Then again, while this is ugly, it's also very fast.
     switch (view->getType())
     {
         case ChatWindow::Channel:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
-
-            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-            {
-                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
-
-                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
-                {
-                    for (int index = sindex + 1; index < m_tabWidget->count(); index++)
-                    {
-                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
-                        wtype = tmp_ChatWindow->getType();
-
-                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
-                        {
-                            placement = index;
-                            break;
-                        }
-                    }
-
-                    break;
-                }
-            }
 
             break;
 
@@ -1289,44 +1262,11 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
 
-            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-            {
-                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
-
-                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
-                {
-                    placement = sindex + 1;
-                    break;
-                }
-            }
-
             break;
 
         case ChatWindow::Query:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getPrivateLed(false);
-
-            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-            {
-                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
-
-                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
-                {
-                    for (int index = sindex + 1; index < m_tabWidget->count(); index++)
-                    {
-                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
-                        wtype = tmp_ChatWindow->getType();
-
-                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
-                        {
-                            placement = index;
-                            break;
-                        }
-                    }
-
-                    break;
-                }
-            }
 
             break;
 
@@ -1334,55 +1274,17 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
 
-            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-            {
-                tmp_ChatWindow = static_cast<ChatWindow*>(m_tabWidget->widget(sindex));
-                wtype = tmp_ChatWindow->getType();
-
-                if (wtype != ChatWindow::Status && wtype != ChatWindow::Channel
-                    && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query
-                    && wtype != ChatWindow::DccChat && wtype != ChatWindow::ChannelList)
-                {
-                    placement = sindex;
-                    break;
-                }
-            }
             break;
 
         case ChatWindow::Status:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getServerLed(false);
 
-            if (m_viewTree)
-            {
-                for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-                {
-                    tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
-
-                    if (tmp_ChatWindow->getType() != ChatWindow::Channel
-                        && tmp_ChatWindow->getType() != ChatWindow::Status
-                        && tmp_ChatWindow->getType() != ChatWindow::RawLog
-                        && tmp_ChatWindow->getType() != ChatWindow::Query
-                        && tmp_ChatWindow->getType() != ChatWindow::DccChat)
-                    {
-                        placement = sindex;
-                        break;
-                    }
-                }
-            }
             break;
 
         case ChatWindow::ChannelList:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-
-            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
-            {
-                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
-
-                if (tmp_ChatWindow->getServer() == view->getServer())
-                    placement = sindex + 1;
-            }
 
             break;
 
@@ -1442,6 +1344,182 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     if (m_viewTree && m_tabWidget->count() == 1) {
         setViewTreeShown(true);
     }
+}
+
+int ViewContainer::insertIndex(ChatWindow* view)
+{
+    int placement = m_tabWidget->count();
+    ChatWindow::WindowType wtype;
+    ChatWindow *tmp_ChatWindow;
+
+    // Please be careful about changing any of the grouping behavior in here,
+    // because it needs to match up with the sorting behavior of the tree list,
+    // otherwise they may become out of sync, wreaking havoc with the move
+    // actions. Yes, this would do well with a more reliable approach in the
+    // future. Then again, while this is ugly, it's also very fast.
+    switch (view->getType())
+    {
+        case ChatWindow::Channel:
+            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+            {
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+
+                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+                {
+                    for (int index = sindex + 1; index < m_tabWidget->count(); index++)
+                    {
+                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
+                        wtype = tmp_ChatWindow->getType();
+
+                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
+                        {
+                            placement = index;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            break;
+
+        case ChatWindow::RawLog:
+            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+            {
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+
+                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+                {
+                    placement = sindex + 1;
+                    break;
+                }
+            }
+
+            break;
+
+        case ChatWindow::Query:
+            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+            {
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+
+                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+                {
+                    for (int index = sindex + 1; index < m_tabWidget->count(); index++)
+                    {
+                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
+                        wtype = tmp_ChatWindow->getType();
+
+                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
+                        {
+                            placement = index;
+                            break;
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            break;
+
+        case ChatWindow::DccChat:
+            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+            {
+                tmp_ChatWindow = static_cast<ChatWindow*>(m_tabWidget->widget(sindex));
+                wtype = tmp_ChatWindow->getType();
+
+                if (wtype != ChatWindow::Status && wtype != ChatWindow::Channel
+                    && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query
+                    && wtype != ChatWindow::DccChat && wtype != ChatWindow::ChannelList)
+                {
+                    placement = sindex;
+                    break;
+                }
+            }
+            break;
+
+        case ChatWindow::Status:
+            if (m_viewTree)
+            {
+                for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+                {
+                    tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+
+                    if (tmp_ChatWindow->getType() != ChatWindow::Channel
+                        && tmp_ChatWindow->getType() != ChatWindow::Status
+                        && tmp_ChatWindow->getType() != ChatWindow::RawLog
+                        && tmp_ChatWindow->getType() != ChatWindow::Query
+                        && tmp_ChatWindow->getType() != ChatWindow::DccChat)
+                    {
+                        placement = sindex;
+                        break;
+                    }
+                }
+            }
+            break;
+
+        case ChatWindow::ChannelList:
+            for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
+            {
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+
+                if (tmp_ChatWindow->getServer() == view->getServer())
+                    placement = sindex + 1;
+            }
+
+            break;
+
+        default:
+            break;
+    }
+
+    return placement;
+}
+
+void ViewContainer::unclutterTabs()
+{
+    if (!m_tabWidget || !m_tabWidget->count()) {
+        return;
+    }
+
+    emit beginResetModel();
+
+    m_tabWidget->blockSignals(true);
+
+    QWidget* currentView = m_tabWidget->currentWidget();
+
+    QList<ChatWindow *> views;
+
+    while (m_tabWidget->count()) {
+        views << static_cast<ChatWindow* >(m_tabWidget->widget(0));
+        m_tabWidget->removeTab(0);
+    }
+
+    foreach(ChatWindow *view, views) {
+        if (view->isTopLevelView()) {
+            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', "&&"));
+            views.removeAll(view);
+        }
+    }
+
+    foreach(ChatWindow *view, views) {
+        if (!view->isTopLevelView()) {
+            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', "&&"));
+        }
+    }
+
+    updateViews();
+
+    if (currentView) {
+        m_tabWidget->setCurrentWidget(currentView);
+    }
+
+    m_tabWidget->blockSignals(false);
+
+    emit endResetModel();
+
+    emit viewSwitched(m_tabWidget->currentIndex());
 }
 
 void ViewContainer::viewSwitched(int newIndex)
