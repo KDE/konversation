@@ -46,7 +46,7 @@ except ValueError:
 
 try:
     url = 'https://bugs.kde.org/buglist.cgi?quicksearch={0}'.format(bug)
-    subprocess.call('xdg-open', url)
+    subprocess.call(['xdg-open', url])
 except OSError:
     konversation.dbus.error(i18n("xdg-open not found."), exit=True)
 except subprocess.CalledProcessError:
