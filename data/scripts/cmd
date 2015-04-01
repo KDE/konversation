@@ -46,8 +46,8 @@ command = ' '.join(sys.argv[3:])
 
 result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True).communicate()
 
-stdout = [line.rstrip() for line in result[0].decode().splitlines() if len(line.strip())]
-stderr = [line.rstrip() for line in result[1].decode().splitlines() if len(line.strip())]
+stdout = [line.rstrip() for line in result[0].decode('utf-8', 'replace').splitlines() if len(line.strip())]
+stderr = [line.rstrip() for line in result[1].decode('utf-8', 'replace').splitlines() if len(line.strip())]
 
 if not stdout and not stderr:
     import konversation.i18n
