@@ -207,11 +207,11 @@ namespace Konversation
         m_ui.otherModesList->setVisible(ison);
         if(ison)
         {
-            m_ui.toggleAdvancedModes->setText(i18n("&Hide Advanced Modes &lt;&lt;"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
         }
         else
         {
-            m_ui.toggleAdvancedModes->setText(i18n("&Show Advanced Modes &gt;&gt;"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Show Advanced Modes >>"));
         }
     }
 
