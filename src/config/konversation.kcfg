@@ -751,7 +751,7 @@
         <choice name="Bottom" />
         <choice name="Left" />
       </choices>
-      <default>Bottom</default>
+      <default>Left</default>
     </entry>
     <entry key="MiddleClickClose" type="Bool">
       <default>false</default>
