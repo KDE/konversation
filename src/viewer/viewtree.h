@@ -48,6 +48,8 @@ class ViewTree : public QTreeView
 
         virtual void setModel(QAbstractItemModel *model);
 
+        bool dropIndicatorOnItem() const;
+
     public Q_SLOTS:
         void updateAppearance();
         void selectView(const QModelIndex &index);
@@ -65,6 +67,9 @@ class ViewTree : public QTreeView
         void resizeEvent(QResizeEvent* event);
         void mousePressEvent(QMouseEvent* event);
         void mouseReleaseEvent(QMouseEvent* event);
+        void mouseMoveEvent(QMouseEvent *event);
+        void dragEnterEvent(QDragEnterEvent *event);
+        void dragMoveEvent(QDragMoveEvent *event);
         void contextMenuEvent(QContextMenuEvent* event);
         void wheelEvent(QWheelEvent* event);
         void keyPressEvent(QKeyEvent* event);
@@ -74,6 +79,8 @@ class ViewTree : public QTreeView
 
     private:
         QPointer<ChatWindow> m_pressedView;
+
+        QPoint m_pressPos;
 };
 
 #endif

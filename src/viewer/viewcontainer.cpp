@@ -57,6 +57,23 @@
 
 using namespace Konversation;
 
+ViewMimeData::ViewMimeData(ChatWindow *view) : QMimeData()
+, m_view(view)
+{
+    if (view) {
+        setData("application/x-konversation-chatwindow", view->getName().toUtf8());
+    }
+}
+
+ViewMimeData::~ViewMimeData()
+{
+}
+
+ChatWindow* ViewMimeData::view() const
+{
+    return m_view;
+}
+
 TabWidget::TabWidget(QWidget* parent) : QTabWidget(parent)
 {
 }
@@ -517,6 +534,145 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     }
 
     return QVariant();
+}
+
+Qt::DropActions ViewContainer::supportedDragActions() const
+{
+    return Qt::MoveAction;
+}
+
+Qt::DropActions ViewContainer::supportedDropActions() const
+{
+    return Qt::MoveAction;
+}
+
+Qt::ItemFlags ViewContainer::flags(const QModelIndex &index) const
+{
+    Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+
+    return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+}
+
+QStringList ViewContainer::mimeTypes() const
+{
+    return QStringList() << QLatin1String("application/x-konversation-chatwindow");
+}
+
+QMimeData* ViewContainer::mimeData(const QModelIndexList &indexes) const
+{
+    if (!indexes.length()) {
+        return new ViewMimeData(0);
+    }
+
+    const QModelIndex &idx = indexes.at(0);
+
+    if (!idx.isValid()) {
+        return new ViewMimeData(0);
+    }
+
+    return new ViewMimeData(static_cast<ChatWindow *>(idx.internalPointer()));
+}
+
+bool ViewContainer::canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const
+{
+    if (action != Qt::MoveAction) {
+        return false;
+    }
+
+    if (!data->hasFormat("application/x-konversation-chatwindow")) {
+        return false;
+    }
+
+    if (row == -1 || column != 0) {
+        return false;
+    }
+
+    ChatWindow *dragView = static_cast<const ViewMimeData *>(data)->view();
+
+    if (!dragView->isTopLevelView()
+        && (!parent.isValid()
+        || (dragView->getServer() != static_cast<ChatWindow* >(parent.internalPointer())->getServer()))) {
+        return false;
+    }
+
+    if (dragView->isTopLevelView() && parent.isValid()) {
+        return false;
+    }
+
+    if (m_viewTree && !m_viewTree->showDropIndicator()) {
+        m_viewTree->setDropIndicatorShown(true);
+        m_viewTree->viewport()->update();
+    }
+
+    return true;
+}
+
+bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+{
+    if (action != Qt::MoveAction) {
+        return false;
+    }
+
+    if (!data->hasFormat("application/x-konversation-chatwindow")) {
+        return false;
+    }
+
+    if (row == -1 || column != 0) {
+        return false;
+    }
+
+    ChatWindow *dragView = static_cast<const ViewMimeData *>(data)->view();
+    QModelIndex dragIdx = indexForView(dragView);
+
+    if (dragView->isTopLevelView()) {
+        if (parent.isValid()) {
+            return false;
+        }
+
+        for (int i = row < dragIdx.row() ? 0 : 1; i < std::abs(dragIdx.row() - row); ++i) {
+            (row < dragIdx.row()) ? moveViewLeft() : moveViewRight();
+        }
+
+        return true;
+    } else {
+        if (!parent.isValid()) {
+            return false;
+        }
+
+        int from = m_tabWidget->indexOf(dragView);
+        int to = m_tabWidget->indexOf(static_cast<ChatWindow* >(parent.internalPointer())) + row;
+
+        if (to < from) {
+            ++to;
+        }
+
+        if (from == to) {
+            return false;
+        }
+
+        beginMoveRows(parent, dragIdx.row(), dragIdx.row(), parent, row);
+
+        m_tabWidget->blockSignals(true);
+        m_tabWidget->tabBar()->moveTab(from, to);
+        m_tabWidget->blockSignals(false);
+
+        endMoveRows();
+
+        viewSwitched(m_tabWidget->currentIndex());
+
+        return true;
+    }
+
+    return false;
+}
+
+bool ViewContainer::removeRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(row)
+    Q_UNUSED(count)
+    Q_UNUSED(parent)
+
+    return true;
 }
 
 void ViewContainer::updateAppearance()
@@ -1519,7 +1675,7 @@ void ViewContainer::unclutterTabs()
 
     emit endResetModel();
 
-    emit viewSwitched(m_tabWidget->currentIndex());
+    viewSwitched(m_tabWidget->currentIndex());
 }
 
 void ViewContainer::viewSwitched(int newIndex)

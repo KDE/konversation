@@ -15,12 +15,24 @@ Changes since 1.6-beta1:
   they are listed in the Server List dialog.
 * Fixed a bug causing the main window not to be raised when an Konversation
   is started an additional time and the window is currently minimized.
+* The default tabs position is now 'Left', i.e. the treelist version of the
+  tab bar.
+* Tabs can now be reordered by drag and drop again.
 * Fixed various rendering issues in the treelist version of the tab bar and
   made it high-DPI scaling-capable.
 * Fixed a bug causing Channel List tabs not to be sorted below the status
   tab of the server they belong to in the treelist version of the tab bar,
   and corrupt its contents.
 * Fixed margins in the Edit Network dialog.
+* Improved wording and correctness of several interface messages.
+* Fixed a bug causing some interface messages and labels not to use their
+  translated versions when running with a language other than US English.
+* Fixed a bug causing Konversation not to generate default command aliases
+  for installed scripts at startup anymore.
+* The bundled 'cmd' script now defaults to trying to decode command output
+  as Utf-8 even when run on Python 2.
+* Fixed the bundled 'bug' script not working.
+* Fixed naming of bundled icons.
 * Konversation now opts into Qt's high-DPI pixmap handling.
 * Adjusted build system to use co-installable version of qca-qt5.
 * Fixed build failures on Windows.

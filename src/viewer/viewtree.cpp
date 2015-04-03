@@ -19,8 +19,10 @@
 #include <QContextMenuEvent>
 #include <QCoreApplication>
 #include <QFontDatabase>
+#include <QGuiApplication>
 #include <QPainter>
 #include <QItemSelectionModel>
+#include <QStyleHints>
 #include <QToolTip>
 
 // FIXME KF5 Port: Not DPI-aware.
@@ -157,12 +159,11 @@ ViewTree::ViewTree(QWidget* parent) : QTreeView(parent)
 
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    setDragEnabled(true); // We initiate drags ourselves below.
     setAcceptDrops(true);
     viewport()->setAcceptDrops(true);
     setDragDropMode(QAbstractItemView::DropOnly);
-
-    setDragEnabled(false);
-    setDropIndicatorShown(false);
+    setDropIndicatorShown(true);
 
     setBackgroundRole(QPalette::Base);
 
@@ -175,7 +176,7 @@ ViewTree::~ViewTree()
 {
 }
 
-void ViewTree::setModel (QAbstractItemModel *model)
+void ViewTree::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
 
@@ -184,6 +185,10 @@ void ViewTree::setModel (QAbstractItemModel *model)
     connect(selectionModel(), &QItemSelectionModel::selectionChanged, this, &ViewTree::selectionChanged);
 }
 
+bool ViewTree::dropIndicatorOnItem() const
+{
+    return (dropIndicatorPosition() == OnItem);
+}
 void ViewTree::updateAppearance()
 {
     if (Preferences::self()->customTabFont())
@@ -300,15 +305,13 @@ void ViewTree::mousePressEvent(QMouseEvent* event)
         event->ignore();
 
         return;
-    } else if (event->button() == Qt::MiddleButton && Preferences::self()->middleClickClose()) {
+    } else if (event->button() == Qt::MiddleButton) {
+        m_pressPos = event->pos();
+
         const QModelIndex& idx = indexAt(event->pos());
 
         if (idx.isValid()) {
             m_pressedView = static_cast<ChatWindow*>(idx.internalPointer());
-
-            event->ignore();
-
-            return;
         }
     }
 
@@ -317,12 +320,16 @@ void ViewTree::mousePressEvent(QMouseEvent* event)
 
 void ViewTree::mouseReleaseEvent(QMouseEvent* event)
 {
-    if (event->button() == Qt::MiddleButton && Preferences::self()->middleClickClose()) {
-        const QModelIndex& idx = indexAt(event->pos());
+    if (event->button() == Qt::MiddleButton) {
+        m_pressPos = QPoint();
 
-        if (idx.isValid()) {
-            if (m_pressedView != 0 && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
-                emit closeView(m_pressedView.data());
+        if (Preferences::self()->middleClickClose()) {
+            const QModelIndex& idx = indexAt(event->pos());
+
+            if (idx.isValid()) {
+                if (m_pressedView != 0 && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
+                    emit closeView(m_pressedView.data());
+                }
             }
         }
     }
@@ -330,6 +337,37 @@ void ViewTree::mouseReleaseEvent(QMouseEvent* event)
     m_pressedView = 0;
 
     QTreeView::mouseReleaseEvent(event);
+}
+
+void ViewTree::mouseMoveEvent(QMouseEvent* event)
+{
+    if (m_pressedView && (m_pressPos - event->pos()).manhattanLength() >= QGuiApplication::styleHints()->startDragDistance()) {
+        selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::ClearAndSelect);
+        startDrag(Qt::MoveAction);
+        m_pressPos = QPoint();
+        m_pressedView = 0;
+    }
+
+    QTreeView::mouseMoveEvent(event);
+}
+
+void ViewTree::dragEnterEvent(QDragEnterEvent* event)
+{
+    if (event->source() == this && event->possibleActions() & Qt::MoveAction) {
+        event->accept();
+        setState(DraggingState);
+    } else {
+        event->ignore();
+    }
+}
+
+void ViewTree::dragMoveEvent(QDragMoveEvent* event)
+{
+    QTreeView::dragMoveEvent(event);
+
+    // Work around Qt being idiotic and not hiding the drop indicator when we want it to.
+    setDropIndicatorShown(event->isAccepted() && !dropIndicatorOnItem());
+    viewport()->update();
 }
 
 void ViewTree::contextMenuEvent(QContextMenuEvent* event)
