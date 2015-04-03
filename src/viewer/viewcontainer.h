@@ -17,7 +17,7 @@
 #include "server.h"
 
 #include <QAbstractItemModel>
-
+#include <QMimeData>
 #include <QTabWidget>
 
 class QSplitter;
@@ -44,6 +44,18 @@ namespace Konversation
         class Chat;
     }
 }
+
+class ViewMimeData : public QMimeData
+{
+    public:
+        explicit ViewMimeData(ChatWindow *view);
+        ~ViewMimeData();
+
+        ChatWindow* view() const;
+
+    private:
+        ChatWindow *m_view;
+};
 
 class TabWidget : public QTabWidget
 {
@@ -93,6 +105,16 @@ class ViewContainer : public QAbstractItemModel
         QModelIndex parent(const QModelIndex& index) const;
 
         QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+
+        Qt::DropActions supportedDragActions() const;
+        Qt::DropActions supportedDropActions() const;
+        Qt::ItemFlags flags(const QModelIndex &index) const;
+        QStringList mimeTypes() const;
+        QMimeData* mimeData(const QModelIndexList &indexes) const;
+        bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const;
+        bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+
+        bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
 
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork = true);
