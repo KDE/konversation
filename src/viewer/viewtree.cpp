@@ -132,7 +132,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
     } else {
         const QColor &textColor = index.data(ViewContainer::ColorRole).value<QColor>();
 
-        if (textColor.isValid()) {
+        if (textColor.isValid() && !selected) {
             _option.palette.setColor(QPalette::Text, textColor);
         } else {
             _option.palette.setColor(QPalette::Text, selected
