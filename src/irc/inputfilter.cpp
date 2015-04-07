@@ -16,7 +16,6 @@
 #include "replycodes.h"
 #include "application.h"
 #include "version.h"
-#include "commit.h"
 #include "query.h"
 #include "channel.h"
 #include "statuspanel.h"
@@ -309,10 +308,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString(QStringLiteral("Konversation %1 Build %2 (C) 2002-2014 by the Konversation team"))
-                            .arg(QStringLiteral(KONVI_VERSION))
-                            .arg(QString::number(COMMIT));
-
+                        reply = QString(QStringLiteral("Konversation %1 (C) 2002-2015 by the Konversation team"))
+                            .arg(QStringLiteral(KONVI_VERSION));
                     }
 
                     if (!reply.isEmpty())
