@@ -1,11 +1,11 @@
 Changes from Konversation 1.6.1-beta1 to 1.6:
-Konversation is the first stable release of Konversation built on the new
-KDE Frameworks 5 and Qt 5 library sets, improving integration into many
+Konversation 1.6 is the first stable release of Konversation built on the
+new KDE Frameworks 5 and Qt 5 library sets, improving integration into many
 desktop environments, including Plasma Desktop 5, and adding first support
 for hi-dpi scaling. In addition to porting and reworking things for hi-dpi
 scaling, a number of behavior improvements and bug fixes were implemented,
 particularly improved nickname selection behavior at connection time and
-better layout behavior for the channel top area.
+better layout behavior for the channel topic area.
 
 Unfortunately the 1.6 release removes support for integrating with the KDE
 Address Book, as the interfaces Konversation was using to achieve this were
