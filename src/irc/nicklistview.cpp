@@ -111,7 +111,7 @@ bool NickListView::event(QEvent *event)
             {
                QString text =  Konversation::removeIrcMarkup(nick->getChannelNick()->tooltip());
                if( !text.isEmpty() )
-                       QToolTip::showText( helpEvent->globalPos(), text );
+                       QToolTip::showText( helpEvent->globalPos(), text, this );
                else
                        QToolTip::hideText();
             }
