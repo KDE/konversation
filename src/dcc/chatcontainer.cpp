@@ -18,6 +18,7 @@
 #include <ircviewbox.h>
 #include <topiclabel.h>
 #include <ircview.h>
+#include <notificationhandler.h>
 #include "whiteboard.h"
 
 #include <QSplitter>
@@ -322,6 +323,22 @@ namespace Konversation
             else
             {
                 getTextView()->append(m_chat->partnerNick(), line);
+
+                QRegExp regexp(QStringLiteral("(^|[^\\d\\w])") +
+                        QRegExp::escape(m_chat->ownNick()) +
+                        QStringLiteral("([^\\d\\w]|$)"));
+                regexp.setCaseSensitivity(Qt::CaseInsensitive);
+
+                if(line.contains(regexp))
+                {
+                    Application::instance()->notificationHandler()->nick(this,
+                            m_chat->partnerNick(), line);
+                }
+                else
+                {
+                    Application::instance()->notificationHandler()->message(this,
+                            m_chat->partnerNick(), line);
+                }
             }
         }
     }
