@@ -20,4 +20,3 @@ install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.20-quickbuttons.pl
                 updaters/konversation-0.20-customfonts.pl
                 DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
-install(FILES  konvirc.protocol konvircs.protocol konvirc6.protocol DESTINATION ${SERVICES_INSTALL_DIR})
