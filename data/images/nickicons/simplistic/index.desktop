@@ -2,6 +2,7 @@
 Type=Theme
 Name=KDE 3 Default Theme
 Name[ar]=سمة كدي 3 الافتراضيّة
+Name[ast]=Tema predetermináu KDE 3
 Name[bg]=Стандартна тема за KDE 3
 Name[bs]=Podrazumijevana tema KDE‑a 3
 Name[ca]=Tema per omissió del KDE 3
@@ -49,6 +50,7 @@ Name[zh_CN]=KDE 3 默认主题
 Name[zh_TW]=KDE 3 預設主題
 Comment="Simplistic" by Shintaro Matsuoka
 Comment[ar]="بساطة" لِـ Shintaro Matsuoka
+Comment[ast]="Simplistic" Shintaro Matsuoka
 Comment[bg]="Опростена" от Shintaro Matsuoka
 Comment[bs]=„Jednostavno“ Šintara Macuoke
 Comment[ca]=«Simplista» per Shintaro Matsuoka
