@@ -215,6 +215,7 @@ target_link_libraries(konversation
     KF5::Archive
     KF5::Bookmarks
     KF5::ConfigWidgets
+    KF5::Crash
     KF5::Emoticons
     KF5::I18n
     KF5::IdleTime
