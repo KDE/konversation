@@ -18,41 +18,11 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="hisc-apps-konversation.svg"
-   inkscape:export-filename="/home/phil/Projects/KDE/Konversation/konversation 64x64.png"
-   inkscape:export-xdpi="359"
-   inkscape:export-ydpi="359">
+   inkscape:export-filename="/home/phil/Projects/KDE/Konversation/new/Render/konversation 64x64.png"
+   inkscape:export-xdpi="45"
+   inkscape:export-ydpi="45">
   <defs
      id="defs4180">
-    <marker
-       inkscape:isstock="true"
-       style="overflow:visible"
-       id="DotL"
-       refX="0"
-       refY="0"
-       orient="auto"
-       inkscape:stockid="DotL">
-      <path
-         transform="matrix(0.8,0,0,0.8,5.92,0.8)"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
-         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
-         id="path4246"
-         inkscape:connector-curvature="0" />
-    </marker>
-    <marker
-       inkscape:isstock="true"
-       style="overflow:visible"
-       id="Arrow1Mstart"
-       refX="0"
-       refY="0"
-       orient="auto"
-       inkscape:stockid="Arrow1Mstart">
-      <path
-         transform="matrix(0.4,0,0,0.4,4,0)"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
-         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
-         id="path4191"
-         inkscape:connector-curvature="0" />
-    </marker>
     <linearGradient
        id="linearGradient4984"
        inkscape:collect="always">
@@ -64,33 +34,6 @@
          id="stop4988"
          offset="1"
          style="stop-color:#000000;stop-opacity:0" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient3369">
-      <stop
-         style="stop-color:#ee0029;stop-opacity:1"
-         offset="0"
-         id="stop4187" />
-      <stop
-         id="stop4520"
-         offset="0.16666608"
-         style="stop-color:#ea1313;stop-opacity:1" />
-      <stop
-         id="stop4516"
-         offset="0.27777728"
-         style="stop-color:#f02727;stop-opacity:1" />
-      <stop
-         style="stop-color:#f35530;stop-opacity:1"
-         offset="0.38888848"
-         id="stop4522" />
-      <stop
-         style="stop-color:#e27102;stop-opacity:1"
-         offset="0.55555528"
-         id="stop4518" />
-      <stop
-         style="stop-color:#fdc64f;stop-opacity:1"
-         offset="1"
-         id="stop4189" />
     </linearGradient>
     <linearGradient
        osb:paint="gradient"
@@ -115,28 +58,6 @@
          style="stop-color:#ffffff;stop-opacity:1"
          offset="1"
          id="stop4959-5" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient3369-9">
-      <stop
-         id="stop4187-7"
-         offset="0"
-         style="stop-color:#6b9a26;stop-opacity:1" />
-      <stop
-         id="stop4189-9"
-         offset="1"
-         style="stop-color:#c0da64;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient
-       id="linearGradient3369-5">
-      <stop
-         style="stop-color:#00b477;stop-opacity:1"
-         offset="0"
-         id="stop4187-0" />
-      <stop
-         style="stop-color:#49f191;stop-opacity:1"
-         offset="1"
-         id="stop4189-4" />
     </linearGradient>
     <linearGradient
        gradientTransform="translate(-39,1004.9403)"
@@ -171,13 +92,25 @@
     <linearGradient
        gradientTransform="translate(-423.57142,505.14233)"
        inkscape:collect="always"
-       xlink:href="#linearGradient3369-9"
+       xlink:href="#linearGradient4143"
        id="linearGradient4183-8"
        x1="402.85715"
        y1="533.79797"
        x2="402.63394"
        y2="503.798"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4143">
+      <stop
+         style="stop-color:#197cf1;stop-opacity:1"
+         offset="0"
+         id="stop4145" />
+      <stop
+         style="stop-color:#20bcfa;stop-opacity:1"
+         offset="1"
+         id="stop4147" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -186,12 +119,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="6.2574786"
-     inkscape:cy="44.322041"
+     inkscape:zoom="2.1360187"
+     inkscape:cx="52.131814"
+     inkscape:cy="30.336181"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:snap-bbox="true"
      inkscape:bbox-nodes="true"
      units="px"
@@ -261,7 +194,7 @@
          inkscape:connector-curvature="0"
          id="path4445-7"
          d="m -35,1008.9403 0,30 2.857143,0 11.428571,8.5714 0,-8.5714 25.714286,0 0,-30 z"
-         style="fill:url(#linearGradient4183-8);fill-opacity:1;fill-rule:evenodd;stroke:none" />
+         style="fill:url(#linearGradient4183-8);fill-opacity:1.0;fill-rule:evenodd;stroke:none" />
       <path
          inkscape:export-ydpi="359.96552"
          inkscape:export-xdpi="359.96552"
