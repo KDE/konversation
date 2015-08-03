@@ -86,10 +86,6 @@ namespace Konversation
         m_expanded = false;
     }
 
-    ServerGroupSettings::~ServerGroupSettings()
-    {
-    }
-
     void ServerGroupSettings::setServerList(const ServerList& list)
     {
         m_serverList.clear();
@@ -193,13 +189,6 @@ namespace Konversation
         setNotificationsEnabled(true);
     }
 
-    ChannelSettings::ChannelSettings(const ChannelSettings& settings)
-    {
-        setName(settings.name());
-        setPassword(settings.password());
-        setNotificationsEnabled(settings.enableNotifications());
-    }
-
     ChannelSettings::ChannelSettings(const QString& name)
     {
         setName(name);
@@ -226,10 +215,6 @@ namespace Konversation
             return true;
         else
             return false;
-    }
-
-    ChannelSettings::~ChannelSettings()
-    {
     }
 
 }

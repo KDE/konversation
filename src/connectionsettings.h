@@ -22,7 +22,6 @@ class ConnectionSettings
 {
     public:
         explicit ConnectionSettings();
-        ~ConnectionSettings();
 
         bool isValid();
 

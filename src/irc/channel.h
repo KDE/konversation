@@ -162,7 +162,7 @@ class Channel : public ChatWindow
 //Topic
     public:
         QString getTopic();
-        TopicHistoryModel* getTopicHistory() { return m_topicHistory; };
+        TopicHistoryModel* getTopicHistory() { return m_topicHistory; }
 
         void setTopic(const QString& text);
         void setTopic(const QString& nickname, const QString& text);

@@ -56,7 +56,7 @@ class NickListView : public QTreeWidget
                 NoSorting(NickListView *w) : w(w), enabled(w->isSortingEnabled())
                 {
                     if (enabled) w->fastSetSortingEnabled(false);
-                };
+                }
                 ~NoSorting()
                 {
                     if (enabled) w->fastSetSortingEnabled(true);

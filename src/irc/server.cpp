@@ -3177,6 +3177,7 @@ bool Server::isWatchedNick(const QString& nickname)
     else
         return false;
 
+    // ###### ERROR: not reached
     return getWatchList().contains(nickname, Qt::CaseInsensitive);
 }
 

@@ -18,10 +18,6 @@ ConnectionSettings::ConnectionSettings()
     m_reconnectCount = 0;
 }
 
-ConnectionSettings::~ConnectionSettings()
-{
-}
-
 bool ConnectionSettings::isValid()
 {
     if (m_server.host().isEmpty()) return false;

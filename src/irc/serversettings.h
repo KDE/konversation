@@ -22,9 +22,7 @@ namespace Konversation
     {
         public:
             ServerSettings();
-            ServerSettings(const ServerSettings& settings);
             explicit ServerSettings(const QString& host);
-            ~ServerSettings();
 
             void setHost(const QString& host);
             QString host() const { return m_host; }

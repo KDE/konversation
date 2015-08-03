@@ -27,11 +27,9 @@ namespace Konversation
     {
         public:
             ChannelSettings();
-            ChannelSettings(const ChannelSettings& settings);
             explicit ChannelSettings(const QString& name);
             ChannelSettings(const QString& name, const QString& password);
             ChannelSettings(const QString& name, const QString& password, bool enableNotifications);
-            ~ChannelSettings();
 
             void setName(const QString& name) { m_name = name; }
             QString name() const { return m_name; }
@@ -64,7 +62,6 @@ namespace Konversation
             explicit ServerGroupSettings(int id);
             explicit ServerGroupSettings(const ServerGroupSettings& settings);
             explicit ServerGroupSettings(const QString& name);
-            ~ServerGroupSettings();
 
             ServerGroupSettings& operator=(const ServerGroupSettings& settings);
 

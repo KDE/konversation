@@ -22,23 +22,11 @@ namespace Konversation
         setSSLEnabled(false);
     }
 
-    ServerSettings::ServerSettings(const ServerSettings& settings)
-    {
-        setHost(settings.host());
-        setPort(settings.port());
-        setPassword(settings.password());
-        setSSLEnabled(settings.SSLEnabled());
-    }
-
     ServerSettings::ServerSettings(const QString& host)
     {
         setHost(host);
         setPort(6667);
         setSSLEnabled(false);
-    }
-
-    ServerSettings::~ServerSettings()
-    {
     }
 
     bool ServerSettings::operator==(const ServerSettings& settings) const
