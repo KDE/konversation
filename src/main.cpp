@@ -30,6 +30,7 @@
 
 int main(int argc, char* argv[])
 {
+    Application app(argc, argv);
 
     // Migrate pre-existing (4.x) configuration
 
@@ -42,8 +43,6 @@ int main(int argc, char* argv[])
     migrate.setConfigFiles(configFiles);
     migrate.setUiFiles(QStringList() << QLatin1String("konversationui.rc"));
     migrate.migrate();
-
-    Application app(argc, argv);
 
     KLocalizedString::setApplicationDomain("konversation");
 
