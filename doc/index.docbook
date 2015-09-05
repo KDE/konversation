@@ -2577,9 +2577,11 @@ passing it <userinput><replaceable>uname -a</replaceable></userinput>.  This sen
 <link linkend="scripts_ref">Script Reference Guide</link></para>
 
 <para>To get a list of all available scripts, type the following command in a
-&konsole; screen.</para>
+&konversation; screen.</para>
 
-<para><userinput>ls `kde4-config --install data`konversation/scripts</userinput></para>
+<para><userinput>/exec --showpath media</userinput></para>
+
+<para>Then browse to folder from the output to see the list.</para>
 
 <para>You can write your own scripts.  Scripts are shell scripts and can be written in
 any shell language, such as bash, perl, or python.  When &konversation; runs a script, the
@@ -2615,7 +2617,7 @@ in the tab without sending it to other users, use <computeroutput>info</computer
 instead.  Look at the existing script files for more examples of writing scripts.</para>
 
 <para>To be able to run a script you have written, you must install it by copying
-it to <filename class="directory">`kde4-config --install data`konversation/scripts</filename> or to <filename class="directory">`kde4-config --localprefix`share/apps/konversation/scripts</filename>.  You must also give the file execute
+it to <filename class="directory">`qtpaths --paths GenericDataLocation`/konversation/scripts</filename>.  You must also give the file execute
 privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable></userinput>.</para>
 
 </sect1>
@@ -2668,19 +2670,6 @@ kernel bug report</replaceable></para>
 <para>Example: To output a progress bar with 50% completion to the current channel tab.</para>
 <para><userinput><command>/exec </command> <replaceable>gauge 50</replaceable></userinput></para>
 <para>Sample output: <replaceable>Beer load [          |          ] 50%</replaceable></para>
-</listitem>
-</varlistentry>
-
-<varlistentry>
-<term><userinput><command>/exec </command> <replaceable>kdeversion</replaceable></userinput>
-</term>
-<listitem>
-<para>This script is used to output the result of the command "kde4-config --version"</para>
-<para>Example: To output your current kdeversion. </para>
-<para><userinput><command>/exec </command> <replaceable>kdeversion</replaceable></userinput></para>
-<para>Sample output: <replaceable>Qt: 4.5.1
-                KDE: 4.2.85 (KDE 4.2.85 (KDE 4.3 Beta1))
-                kde4-config: 1.0</replaceable></para>
 </listitem>
 </varlistentry>
 
