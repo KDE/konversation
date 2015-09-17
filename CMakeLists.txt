@@ -53,10 +53,10 @@ check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
 check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 
+set(HAVE_QCA2 ${Qca-qt5_FOUND})
+
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
-set(HAVE_QCA2 ${Qca-qt5_FOUND})
 
 add_definitions(
   -DQT_USE_QSTRINGBUILDER
