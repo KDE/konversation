@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>297</width>
-    <height>91</height>
+    <height>129</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -96,6 +96,19 @@
      </property>
      <property name="text">
       <string>S&amp;ecure Connection (SSL)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QCheckBox" name="m_proxyChBox">
+     <property name="whatsThis">
+      <string>Check if you want to use the global proxy configuration to communicate with this server.</string>
+     </property>
+     <property name="text">
+      <string>&amp;Use global proxy</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

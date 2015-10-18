@@ -18,7 +18,7 @@
 
 #include <cstdlib>
 #include <sys/types.h>
-#ifndef Q_CC_MSVC
+#ifndef Q_OS_WIN
 #   include <netinet/in.h>
 #   include <sys/socket.h>
 #   include <net/if.h>

@@ -36,6 +36,9 @@ namespace Konversation
             void setSSLEnabled(bool enabled) { m_SSLEnabled = enabled; }
             bool SSLEnabled() const { return m_SSLEnabled; }
 
+            void setBypassProxy(bool bypass) { m_bypassProxy = bypass; }
+            bool bypassProxy() const { return m_bypassProxy; }
+
             bool operator== (const ServerSettings& settings) const;
 
         private:
@@ -43,6 +46,7 @@ namespace Konversation
             int m_port;
             QString m_password;
             bool m_SSLEnabled;
+            bool m_bypassProxy;
 
     };
 

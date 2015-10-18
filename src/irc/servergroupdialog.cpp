@@ -484,6 +484,7 @@ namespace Konversation
         m_mainWidget->m_portSBox->setValue(server.port());
         m_mainWidget->m_passwordEdit->setText(server.password());
         m_mainWidget->m_sslChBox->setChecked(server.SSLEnabled());
+        m_mainWidget->m_proxyChBox->setChecked(!server.bypassProxy());
     }
 
     ServerSettings ServerDialog::serverSettings()
@@ -493,6 +494,7 @@ namespace Konversation
         server.setPort(m_mainWidget->m_portSBox->value());
         server.setPassword(m_mainWidget->m_passwordEdit->text());
         server.setSSLEnabled(m_mainWidget->m_sslChBox->isChecked());
+        server.setBypassProxy(!m_mainWidget->m_proxyChBox->isChecked());
 
         return server;
     }
