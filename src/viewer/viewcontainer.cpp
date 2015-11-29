@@ -629,7 +629,7 @@ bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             return false;
         }
 
-        for (int i = row < dragIdx.row() ? 0 : 1; i < std::abs(dragIdx.row() - row); ++i) {
+        for (int i = row < dragIdx.row() ? 0 : 1; i < qAbs(dragIdx.row() - row); ++i) {
             (row < dragIdx.row()) ? moveViewLeft() : moveViewRight();
         }
 
