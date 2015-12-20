@@ -2915,8 +2915,6 @@ void ViewContainer::closeQueries()
         ++operations;
     }
 
-    m_queryViewCount = 0;
-
     actionCollection()->action("close_queries")->setEnabled(false);
 }
 
