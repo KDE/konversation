@@ -1219,7 +1219,7 @@ namespace Konversation
         {
             QStringList parameterList = input.parameter.split(' ');
 
-            if (isParameter("showpath", parameterList[0]) && !parameterList[1].isEmpty())
+            if (parameterList.length() >= 2 && isParameter("showpath", parameterList[0]) && !parameterList[1].isEmpty())
             {
                 result = info(i18nc("%2 is a filesystem path to the script file",
                     "The script file '%1' was found at: %2",
