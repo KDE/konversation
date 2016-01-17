@@ -52,7 +52,7 @@ namespace Konversation
                 return ip.toString();
 
             default:
-                qDebug() << "unspported protocol: " << ipString;
+                qDebug() << "unsupported protocol: " << ipString;
                 return QString();
             }
         }

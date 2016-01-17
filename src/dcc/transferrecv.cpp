@@ -630,7 +630,7 @@ namespace Konversation
 
             if ((quint64)m_transferringPosition != position)
             {
-                qDebug() << "remote responsed an unexpected position"<< endl
+                qDebug() << "remote responded with an unexpected position"<< endl
                     << "expected: " << m_transferringPosition << endl
                     << "remote response: " << position;
                 failed(i18n("Unexpected response from remote host"));
