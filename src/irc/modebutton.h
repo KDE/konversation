@@ -14,10 +14,10 @@
 #ifndef MODEBUTTON_H
 #define MODEBUTTON_H
 
-#include <QPushButton>
+#include <QToolButton>
 
 
-class ModeButton : public QPushButton
+class ModeButton : public QToolButton
 {
     Q_OBJECT
 

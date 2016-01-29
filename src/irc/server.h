@@ -155,6 +155,8 @@ class Server : public QObject
         QString banAddressListModes() { return m_banAddressListModes; }     // aka "TYPE A" modes http://tools.ietf.org/html/draft-brocklesby-irc-isupport-03#section-3.3
 
         void setPrefixes(const QString &modes, const QString& prefixes);
+        QString getServerNickPrefixes() const;
+
         void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
             bool& isHalfop,bool &hasVoice);
 

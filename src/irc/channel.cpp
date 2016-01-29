@@ -2678,7 +2678,7 @@ void Channel::clearBanList()
   emit banListCleared();
 }
 
-void Channel::append(const QString& nickname, const QString& message)
+void Channel::append(const QString& nickname, const QString& message, const QString& label)
 {
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
@@ -2688,7 +2688,7 @@ void Channel::append(const QString& nickname, const QString& message)
         }
     }
 
-    ChatWindow::append(nickname, message);
+    ChatWindow::append(nickname, message, label);
     nickActive(nickname);
 }
 

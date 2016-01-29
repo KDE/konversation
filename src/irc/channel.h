@@ -78,7 +78,7 @@ class Channel : public ChatWindow
         virtual bool canBeFrontView();
         virtual bool searchView();
 
-        virtual void append(const QString& nickname,const QString& message);
+        virtual void append(const QString& nickname,const QString& message, const QString& label = QString());
         virtual void appendAction(const QString& nickname,const QString& message);
         void nickActive(const QString& nickname);
         #ifdef HAVE_QCA2

@@ -570,6 +570,11 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
     m_serverNickPrefixes = prefixes;
 }
 
+QString Server::getServerNickPrefixes() const
+{
+    return m_serverNickPrefixes;
+}
+
 void Server::setChanModes(const QString& modes)
 {
     QStringList abcd = modes.split(QLatin1Char(','));
@@ -2838,8 +2843,20 @@ void Server::updateChannelModeWidgets(const QString &channelName, char mode, con
 
 Channel* Server::getChannelByName(const QString& name)
 {
+    if (name.isEmpty()) {
+        return nullptr;
+    }
+
     // Convert wanted channel name to lowercase
     QString wanted = name.toLower();
+
+    if (m_serverNickPrefixes.contains(wanted.at(0))) {
+        wanted.remove(0, 1);
+    }
+
+    if (name.isEmpty()) {
+        return nullptr;
+    }
 
     if (m_loweredChannelNameHash.contains(wanted))
         return m_loweredChannelNameHash.value(wanted);
@@ -3703,7 +3720,13 @@ bool Server::isAChannel(const QString &channel) const
 {
     if (channel.isEmpty()) return false;
 
-    return (getChannelTypes().contains(channel.at(0)) > 0);
+    uint index = 0;
+
+    if (m_serverNickPrefixes.contains(channel.at(0)) && channel.length() >= 2) {
+        ++index;
+    }
+
+    return (getChannelTypes().contains(channel.at(index)) > 0);
 }
 
 void Server::addRawLog(bool show)

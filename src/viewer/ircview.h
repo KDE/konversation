@@ -178,7 +178,7 @@ class IRCView : public QTextBrowser
     //// Other stuff
     public Q_SLOTS:
         //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
-        void append(const QString& nick, const QString& message);
+        void append(const QString& nick, const QString& message, const QString& label = QString());
         void appendRaw(const QString& message, bool self = false);
         void appendLog(const QString& message);
 

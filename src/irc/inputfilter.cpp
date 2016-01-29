@@ -2372,7 +2372,14 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
             Channel* channel = m_server->getChannelByName(parameterList.value(0));
             if(channel)
             {
-                channel->append(source, message);
+                QString label;
+
+                if (m_server->getServerNickPrefixes().contains(parameterList.value(0).at(0)))
+                {
+                    label = parameterList.value(0);
+                }
+
+                channel->append(source, message, label);
 
                 if(source != m_server->getNickname())
                 {

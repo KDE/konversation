@@ -275,10 +275,10 @@ void ChatWindow::appendLog(const QString& message)
     textView->appendLog(message);
 }
 
-void ChatWindow::append(const QString& nickname,const QString& message)
+void ChatWindow::append(const QString& nickname,const QString& message, const QString& label)
 {
-    if(!textView) return ;
-    textView->append(nickname,message);
+    if(!textView) return;
+    textView->append(nickname, message, label);
 }
 
 void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool inChannel)

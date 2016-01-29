@@ -15,10 +15,11 @@
 
 
 ModeButton::ModeButton(const QString& label,QWidget* parent,int newId) :
-QPushButton(label,parent)
+QToolButton(parent)
 {
     id=newId;
     on=false;
+    setText(label);
     setCheckable(true);
     connect(this, &ModeButton::clicked, this, &ModeButton::wasClicked);
 }
@@ -30,7 +31,7 @@ ModeButton::~ModeButton()
 void ModeButton::setOn(bool state)
 {
     on=state;
-    QPushButton::setChecked(state);
+    QToolButton::setChecked(state);
 }
 
 void ModeButton::wasClicked()

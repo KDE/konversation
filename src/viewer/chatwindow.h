@@ -85,7 +85,7 @@ class ChatWindow : public QWidget
 
         virtual void sendText(const QString& /*text*/) {}
 
-        virtual void append(const QString& nickname,const QString& message);
+        virtual void append(const QString& nickname,const QString& message, const QString& label = QString());
         virtual void appendRaw(const QString& message, bool self = false);
         virtual void appendLog(const QString& message);
         virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);

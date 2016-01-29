@@ -528,7 +528,7 @@ void IRCView::updateAppearance()
 
 // Data insertion
 
-void IRCView::append(const QString& nick, const QString& message)
+void IRCView::append(const QString& nick, const QString& message, const QString& label)
 {
     QString channelColor = Preferences::self()->color(Preferences::ChannelMessage).name();
 
@@ -545,6 +545,7 @@ void IRCView::append(const QString& nick, const QString& message)
     {
         line = RLE;
         line += LRE;
+        line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %3</font>";
         line += "<font color=\"" + channelColor + "\">" + nickLine +" %1" + PDF + RLM + " %3</font>";
     }
     else
@@ -552,6 +553,7 @@ void IRCView::append(const QString& nick, const QString& message)
         if (!QApplication::isLeftToRight())
             line += LRE;
 
+        line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %3</font>";
         line += "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
     }
 
