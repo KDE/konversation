@@ -545,7 +545,11 @@ void IRCView::append(const QString& nick, const QString& message, const QString&
     {
         line = RLE;
         line += LRE;
-        line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %3</font>";
+
+        if (!label.isEmpty()) {
+            line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %4</font>";
+        }
+
         line += "<font color=\"" + channelColor + "\">" + nickLine +" %1" + PDF + RLM + " %3</font>";
     }
     else
@@ -553,11 +557,14 @@ void IRCView::append(const QString& nick, const QString& message, const QString&
         if (!QApplication::isLeftToRight())
             line += LRE;
 
-        line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %3</font>";
+        if (!label.isEmpty()) {
+            line += "<font color=\"" + channelColor + "\"" + label + ">%1 <b>[</b>%2<b>]</b> %4</font>";
+        }
+
         line += "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
     }
 
-    line = line.arg(timeStamp(), nick, text);
+    line = line.arg(timeStamp(), nick, text, label);
 
     emit textToLog(QString("<%1>\t%2").arg(nick, message));
 
