@@ -94,16 +94,15 @@ namespace Konversation
 
     QString IRCCharsets::encodingForLocale()
     {
-        QString locale = QLocale::system().name();
-
         // Special cases
         // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
-        if ( locale == QStringLiteral("ja_JP") )
-            return QStringLiteral("jis7");
+        // Japanese networks prefer jis7 over Utf-8.
+        if (QLocale::system().name() == QStringLiteral("ja_JP"))
+            return QStringLiteral("ISO-2022-JP");
 
         // it's a little hacky..
-        for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
-            if ( QTextCodec::codecForName( (*it).toLatin1() ) == QTextCodec::codecForLocale() )
+        for (QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it)
+            if (QTextCodec::codecForName( (*it).toLatin1() ) == QTextCodec::codecForLocale())
                 return *it;
 
         return QStringLiteral("UTF-8");
@@ -111,10 +110,12 @@ namespace Konversation
 
     QTextCodec* IRCCharsets::codecForName( const QString& shortName )
     {
-        if(shortName == QStringLiteral("ISO 2022-JP"))
-            return QTextCodec::codecForName( "jis7" );
+        // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
+        // to assume existing user config.
+        if (shortName == QStringLiteral("jis7"))
+            return KCharsets::charsets()->codecForName("ISO-2022-JP");
         else
-            return KCharsets::charsets()->codecForName( shortName.toLatin1() );
+            return KCharsets::charsets()->codecForName(shortName.toLatin1());
     }
 
     IRCCharsets::IRCCharsets()
