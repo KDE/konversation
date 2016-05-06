@@ -22,6 +22,7 @@
 #include <QCommandLineParser>
 
 #include <KAboutData>
+#include <KCrash>
 #include <Kdelibs4ConfigMigrator>
 #include <KDBusAddons/KDBusService>
 
@@ -98,6 +99,8 @@ int main(int argc, char* argv[])
     aboutData.addCredit(i18n("Martin Blumenstingl"),i18n("KStatusNotifierItem support, KIdleTime support, other enhancements"),"darklight.xdarklight@googlemail.com");
 
     KAboutData::setApplicationData(aboutData);
+
+    KCrash::initialize();
 
     app.setApplicationName(aboutData.componentName());
     app.setOrganizationDomain(aboutData.organizationDomain());
