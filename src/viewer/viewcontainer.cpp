@@ -2629,7 +2629,14 @@ void ViewContainer::closeDccPanel()
     if (m_dccPanel && m_dccPanelOpen)
     {
         // hide it from view, does not delete it
-        if (m_tabWidget) m_tabWidget->removeTab(m_tabWidget->indexOf(m_dccPanel));
+        if (m_tabWidget)
+        {
+            if (m_popupViewIndex == m_tabWidget->indexOf(m_dccPanel)) {
+                m_popupViewIndex = -1;
+            }
+
+            cleanupAfterClose(m_dccPanel);
+        }
         m_dccPanelOpen=false;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
     }
