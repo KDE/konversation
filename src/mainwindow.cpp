@@ -217,7 +217,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
     actionCollection()->addAction(QStringLiteral("open_url_catcher"), action);
 
-    if (KAuthorized::authorizeKAction(QStringLiteral("shell_access")))
+    if (KAuthorized::authorize(QStringLiteral("shell_access")))
     {
         action=new QAction(this);
         action->setText(i18n("New &Konsole"));
