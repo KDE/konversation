@@ -1288,7 +1288,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             m_server->obtainNickInfo(m_server->getNickname()) ;
                             m_server->renameNick(m_server->getNickname(), newNick);
-                            m_server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1.", newNick));
+                            m_server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneous nickname. Changing nick to %1.", newNick));
                             m_server->queue(QStringLiteral("NICK ")+newNick);
                         }
                     }
