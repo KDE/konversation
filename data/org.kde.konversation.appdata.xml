@@ -7,7 +7,7 @@
   <summary>IRC client</summary>
   <description>
     <p>
-      Konversation is a IRC client which gives you speedy access to Freenode network's channels,
+      Konversation is an IRC client which gives you speedy access to Freenode network's channels,
       where you will find support for most distributions. Its defaults are such that it needs no
       configuration other than telling it the name of your distribution channel, to get started.
     </p>
