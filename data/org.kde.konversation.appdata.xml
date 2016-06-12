@@ -7,6 +7,7 @@
   <name xml:lang="ca">Konversation</name>
   <name xml:lang="de">Konversation</name>
   <name xml:lang="nl">Konversation</name>
+  <name xml:lang="pl">Konversation</name>
   <name xml:lang="pt">Konversation</name>
   <name xml:lang="sk">Konversation</name>
   <name xml:lang="sv">Konversation</name>
@@ -16,6 +17,7 @@
   <summary xml:lang="ca">Client d'IRC</summary>
   <summary xml:lang="de">IRC-Programm</summary>
   <summary xml:lang="nl">IRC-client</summary>
+  <summary xml:lang="pl">Klient IRC</summary>
   <summary xml:lang="pt">Cliente de IRC</summary>
   <summary xml:lang="sk">IRC klient</summary>
   <summary xml:lang="sv">IRC-klient</summary>
@@ -27,10 +29,19 @@
       where you will find support for most distributions. Its defaults are such that it needs no
       configuration other than telling it the name of your distribution channel, to get started.
     </p>
+    <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
+    <p xml:lang="de">Konversation ist ein IRC-Programm, mit dem Sie schnell auf Freenode-Kanäle zugreifen können, in denen Sie Unterstützung für die meisten Distributionen erhalten. Die Voreinstellungen sind so gewählt, dass Sie nur den Kanalnamen Ihrer Distribution eingeben müssen.</p>
+    <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
+    <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
+    <p xml:lang="pt">O Konversation é um cliente de IRC que lhe dá um acesso rápido aos canais da rede Freenode, onde poderá obter suporte para a maioria das distribuições. Tem um conjunto de definições por omissão suficientemente úteis que praticamente não necessita de mais configurações do que definir o nome do canal da sua distribuição para começar.</p>
+    <p xml:lang="sv">Konversation är en IRC-klient som ger snabb åtkomst till Freenode-nätverkets kanaler, där det finns stöd för de flesta distributioner. Standardinställningarna är sådana att ingen inställning behövs för att komma igång annat än att tala om namnet på distributionens kanal för den.</p>
+    <p xml:lang="uk">Konversation — клієнтська програма IRC, за допомогою якої ви зможете швидко отримати доступ до каналів мережі Freenode, на яких можна спілкуватися із іншими користувачами та розробниками. Якщо ви скористаєтеся типовими параметрами роботи програми, вам достатньо буде вказати лише назву потрібного вам каналу, щоб розпочати спілкування на ньому.</p>
+    <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sv">Funktioner:</p>
@@ -41,6 +52,7 @@
       <li xml:lang="ca">Funcionalitats estàndard de l'IRC</li>
       <li xml:lang="de">Standard-IRC-Funktionen</li>
       <li xml:lang="nl">Standaard IRC-functies</li>
+      <li xml:lang="pl">Standardowe możliwości IRC</li>
       <li xml:lang="pt">Funcionalidades normais do IRC</li>
       <li xml:lang="sk">Štandardné funkcie IRC</li>
       <li xml:lang="sv">Vanliga IRC-funktioner</li>
@@ -50,6 +62,7 @@
       <li xml:lang="ca">Permet un servidor SSL</li>
       <li xml:lang="de">Unterstützung für SSL-Server</li>
       <li xml:lang="nl">Ondersteuning voor SSL-server</li>
+      <li xml:lang="pl">Obsługa serwera SSL</li>
       <li xml:lang="pt">Suporte para o servidor em SSL</li>
       <li xml:lang="sk">Podpora SSL servera</li>
       <li xml:lang="sv">Stöd för SSL-server</li>
@@ -59,6 +72,7 @@
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="de">Unterstützung für Lesezeichen</li>
       <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
+      <li xml:lang="pl">Obsługa zakładek</li>
       <li xml:lang="pt">Suporte para favoritos</li>
       <li xml:lang="sk">Podpora záložiek</li>
       <li xml:lang="sv">Stöd för bokmärken</li>
@@ -68,6 +82,7 @@
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
       <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
+      <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
       <li xml:lang="pt">Interface de utilizador simples de usar</li>
       <li xml:lang="sk">Ľahko použiteľné používateľské rozhranie</li>
       <li xml:lang="sv">Lättanvänt grafiskt användargränssnitt</li>
@@ -77,6 +92,7 @@
       <li xml:lang="ca">Diversos servidors i canals en una única finestra</li>
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
       <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
+      <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
       <li xml:lang="pt">Vários canais e servidores numa única janela</li>
       <li xml:lang="sk">Viac serverov a kanálov v jednom okne</li>
       <li xml:lang="sv">Flera servrar och kanaler i ett enda fönster</li>
@@ -86,6 +102,7 @@
       <li xml:lang="ca">Transferència de fitxers DCC</li>
       <li xml:lang="de">DCC-Dateiübertragung</li>
       <li xml:lang="nl">DCC Bestandsoverdracht</li>
+      <li xml:lang="pl">Przesyłanie plików przez DCC</li>
       <li xml:lang="pt">Transferência de ficheiros por DCC</li>
       <li xml:lang="sk">Prenos súborov DCC</li>
       <li xml:lang="sv">DCC-filöverföring</li>
@@ -95,6 +112,7 @@
       <li xml:lang="ca">Diverses identitats per servidors diferents</li>
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
       <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
+      <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
       <li xml:lang="pt">Várias identidades para diferentes servidores</li>
       <li xml:lang="sk">Viac identít pre rôzne servery</li>
       <li xml:lang="sv">Fler identiteter för olika servrar</li>
@@ -104,6 +122,7 @@
       <li xml:lang="ca">Decoracions del text i colors</li>
       <li xml:lang="de">Textdekoration und -farben</li>
       <li xml:lang="nl">Tekstdecoraties en kleuren</li>
+      <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
       <li xml:lang="pt">Decorações e cores do texto</li>
       <li xml:lang="sk">Dekorácie a farby textu</li>
       <li xml:lang="sv">Textdekorationer och färger</li>
@@ -113,6 +132,7 @@
       <li xml:lang="ca">Mostra les notificacions en la pantalla</li>
       <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
       <li xml:lang="nl">Meldingen op het scherm tonen</li>
+      <li xml:lang="pl">Powiadomienia ekranowe</li>
       <li xml:lang="pt">Visualização no ecrã para as notificações</li>
       <li xml:lang="sk">OnScreen Display pre upozornenia</li>
       <li xml:lang="sv">Visning av underrättelser på skärmen</li>
@@ -122,6 +142,7 @@
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="de">Automatische UTF-8-Erkennung</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
+      <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
       <li xml:lang="pt">Detecção automática do UTF-8</li>
       <li xml:lang="sk">Automatická detekcia UTF-8</li>
       <li xml:lang="sv">Automatisk detektering av UTF-8</li>
@@ -131,6 +152,7 @@
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
       <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
+      <li xml:lang="pl">Kodowanie zależne od kanału</li>
       <li xml:lang="pt">Suporte de codificações diferentes por canal</li>
       <li xml:lang="sk">Podpora kódovania pre každý kanál</li>
       <li xml:lang="sv">Kodningsstöd per kanal</li>
@@ -140,6 +162,7 @@
       <li xml:lang="ca">Permet temes per icones de sobrenom</li>
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
       <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
+      <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
       <li xml:lang="pt">Suporte de temas para os ícones das alcunhas</li>
       <li xml:lang="sk">Podpora tém pre ikony prezývok</li>
       <li xml:lang="sv">Temastöd för smeknamnsikoner</li>
@@ -149,6 +172,7 @@
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="de">Sehr anpassbar</li>
       <li xml:lang="nl">Hoog instelbaar</li>
+      <li xml:lang="pl">Wysoce ustawialny</li>
       <li xml:lang="pt">Extremamente configurável</li>
       <li xml:lang="sk">Vysoko konfigurovateľné</li>
       <li xml:lang="sv">Mycket anpassningsbar</li>
