@@ -25,7 +25,9 @@
 
 
 SearchBar::SearchBar(QWidget* parent)
-: QWidget(parent), m_goUpSearch("go-up-search"), m_goDownSearch("go-down-search")
+: QWidget(parent),
+  m_goUpSearch(QIcon::fromTheme("go-up-search")),
+  m_goDownSearch(QIcon::fromTheme("go-down-search"))
 {
     setupUi(this);
 
