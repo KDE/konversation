@@ -66,8 +66,6 @@ class IRCInput : public KTextEdit
         void insertCompletion(const QString& nick);
         void disableSpellChecking();
         void setSpellChecking(bool set);
-        void insertLanguageMenu(QMenu* contextMenu);
-        void languageSelected();
 
         void maybeResize();
 
