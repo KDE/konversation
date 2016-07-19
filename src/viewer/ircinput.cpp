@@ -64,8 +64,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, &QTimer::timeout, this, &IRCInput::disableSpellChecking);
 
-    connect(this, &IRCInput::aboutToShowContextMenu, this, &IRCInput::insertLanguageMenu);
-
     document()->adjustSize();
 
     document()->setDocumentMargin(2);
@@ -73,58 +71,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
 IRCInput::~IRCInput()
 {
-}
-
-static inline QString i18n_kdelibs4(const char *str) { return ki18n(str).toString("kdelibs4"); }
-
-void IRCInput::insertLanguageMenu(QMenu* contextMenu)
-{
-    QAction* spellCheckAction = 0;
-
-    foreach(QAction* action, contextMenu->actions())
-    {
-        if (action->text() == i18n_kdelibs4("Auto Spell Check"))
-        {
-            spellCheckAction = action;
-
-            break;
-        }
-    }
-
-    if (spellCheckAction)
-    {
-        QMenu* languagesMenu = new QMenu(i18n("Spell Checking Language"), contextMenu);
-        QActionGroup* languagesGroup = new QActionGroup(languagesMenu);
-        languagesGroup->setExclusive(true);
-
-        if (!m_speller)
-            m_speller = new Sonnet::Speller();
-
-        QMapIterator<QString, QString> i(m_speller->availableDictionaries());
-        QAction* languageAction = 0;
-
-        while (i.hasNext())
-        {
-            i.next();
-
-            languageAction = languagesMenu->addAction(i.key());
-            languageAction->setCheckable(true);
-            languageAction->setChecked(spellCheckingLanguage() == i.value() || (spellCheckingLanguage().isEmpty()
-                && m_speller->defaultLanguage() == i.value()));
-            languageAction->setData(i.value());
-            languageAction->setActionGroup(languagesGroup);
-            connect(languageAction, &QAction::triggered, this, &IRCInput::languageSelected);
-        }
-
-        contextMenu->insertMenu(spellCheckAction, languagesMenu);
-    }
-}
-
-void IRCInput::languageSelected()
-{
-    QAction* languageAction = static_cast<QAction*>(QObject::sender());
-
-    setSpellCheckingLanguage(languageAction->data().toString());
 }
 
 void IRCInput::createHighlighter()
