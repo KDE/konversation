@@ -717,9 +717,9 @@ void ViewContainer::updateTabWidgetAppearance()
     m_tabWidget->setDocumentMode(true);
 
     if (Preferences::self()->customTabFont())
-        m_tabWidget->setFont(Preferences::self()->tabFont());
+        m_tabWidget->tabBar()->setFont(Preferences::self()->tabFont());
     else
-        m_tabWidget->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+        m_tabWidget->tabBar()->setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
     m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
         QTabWidget::North : QTabWidget::South);

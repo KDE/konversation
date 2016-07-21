@@ -1910,13 +1910,10 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
     emit modesChanged();
 }
 
-void Channel::updateQuickButtons(const QStringList &newButtonList)
+void Channel::updateQuickButtons()
 {
-    // remove quick buttons from memory and GUI
-    qDeleteAll(buttonList);
-    buttonList.clear();
-
     delete m_buttonsGrid;
+    m_buttonsGrid = 0;
 
     // the grid that holds the quick action buttons
     m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);
@@ -1927,6 +1924,9 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
 
     int col = 0;
     int row = 0;
+
+    const QStringList &newButtonList = Preferences::quickButtonList();
+
     // add new quick buttons
     for(int index=0;index<newButtonList.count();index++)
     {
@@ -1935,7 +1935,6 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
         col = index % 2;
         layout->addWidget (quickButton, row, col);
         row += col;
-        buttonList.append(quickButton);
 
         connect(quickButton, SIGNAL(clicked(QString)), this, SLOT(quickButtonClicked(QString)));
 
@@ -2125,7 +2124,7 @@ void Channel::updateAppearance()
     showTopic(Preferences::self()->showTopic());
     setAutoUserhost(Preferences::self()->autoUserhost());
 
-    updateQuickButtons(Preferences::quickButtonList());
+    QMetaObject::invokeMethod(this, "updateQuickButtons", Qt::QueuedConnection);
 
     // Nick sorting settings might have changed. Trigger timer
     if (m_delayedSortTimer)

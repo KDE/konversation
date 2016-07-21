@@ -214,7 +214,6 @@ class Channel : public ChatWindow
 //Specific GUI
     public:
         void updateModeWidgets(char mode, bool plus, const QString &parameter);
-        void updateQuickButtons(const QStringList &newButtonList);
 
         /// Sounds suspiciously like a destructor..
         virtual bool closeYourself(bool askForConfirmation=true);
@@ -232,6 +231,7 @@ class Channel : public ChatWindow
 
     public Q_SLOTS:
         void updateAppearance();
+        void updateQuickButtons();
         void channelTextEntered();
         void channelPassthroughCommand();
         void sendText(const QString& line);
@@ -319,8 +319,6 @@ class Channel : public ChatWindow
         QString oldNick; ///< GUI
         AwayLabel* awayLabel;
         QLabel* cipherLabel;
-
-        QList<QuickButton*> buttonList;
 
 //Members from here to end are not GUI
         bool m_joined;
