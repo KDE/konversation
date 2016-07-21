@@ -277,6 +277,11 @@ protected:
      */
     virtual void showEvent(QShowEvent *e);
 
+    /**
+     * @internal
+     */
+    virtual void moveEvent(QMoveEvent *e);
+
 private Q_SLOTS:
     /**
      * Slot which cleans up the KConfigDialogManager of the page.
