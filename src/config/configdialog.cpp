@@ -371,14 +371,14 @@ void ConfigDialog::showEvent(QShowEvent *e)
 
         d->shown = true;
     }
-    const QSize availableSize = QApplication::desktop()->availableGeometry().size();
+    const QSize & availableSize = QApplication::desktop()->availableGeometry(this).size();
     this->setMaximumSize(availableSize);
     KPageDialog::showEvent(e);
 }
 
 void ConfigDialog::moveEvent(QMoveEvent *e)
 {
-    const QSize availableSize = QApplication::desktop()->availableGeometry().size();
+    const QSize & availableSize = QApplication::desktop()->availableGeometry(this).size();
     this->setMaximumSize(availableSize);
     KPageDialog::moveEvent(e);
 }
