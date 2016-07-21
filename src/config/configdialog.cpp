@@ -29,6 +29,8 @@
 #include <kpagewidgetmodel.h>
 #include <khelpclient.h>
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QLayout>
@@ -36,6 +38,7 @@
 #include <QtCore/QMap>
 #include <QCoreApplication>
 #include <QDesktopServices>
+#include <QScrollArea>
 
 class ConfigDialog::ConfigDialogPrivate
 {
@@ -212,7 +215,15 @@ KPageWidgetItem *ConfigDialog::ConfigDialogPrivate::addPageInternal(KPageWidgetI
     QVBoxLayout *boxLayout = new QVBoxLayout(frame);
     boxLayout->setMargin(0);
 
-    boxLayout->addWidget(page);
+    QScrollArea *scroll = new QScrollArea(q);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scroll->setWidget(page);
+    scroll->setWidgetResizable(true);
+    scroll->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
+
+    boxLayout->addWidget(scroll);
     KPageWidgetItem *item = new KPageWidgetItem(frame, itemName);
     item->setHeader(header);
     if (!pixmapName.isEmpty()) {
@@ -360,7 +371,16 @@ void ConfigDialog::showEvent(QShowEvent *e)
 
         d->shown = true;
     }
+    const QSize availableSize = QApplication::desktop()->availableGeometry().size();
+    this->setMaximumSize(availableSize);
     KPageDialog::showEvent(e);
+}
+
+void ConfigDialog::moveEvent(QMoveEvent *e)
+{
+    const QSize availableSize = QApplication::desktop()->availableGeometry().size();
+    this->setMaximumSize(availableSize);
+    KPageDialog::moveEvent(e);
 }
 
 void ConfigDialog::updateSettings()
