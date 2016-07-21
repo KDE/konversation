@@ -1,3 +1,35 @@
+Changes from Konversation 1.6 to 1.6.1:
+Konversation 1.6.1 is a maintenance release that contains various bug fixes
+for the stable KDE Frameworks 5-based version of Konversation.
+
+* Added an option to allow a server to bypass the global proxy settings.
+* Fixed a crash when changing the Qt style engine.
+* Fixed a crash when running "/exec -showpath" with no script name.
+* Fixed notification events for DCC Chats not working.
+* Fixed crash when closing the DCC Status tab.
+* Fixed crashes with the ISO-2022-JP encoding.
+* Fixed the "Close All Open Queries" action not working properly.
+* Minor UI polish, e.g. the margin under the nicklist when the Quick Button
+  grid is disabled or emtpy.
+* Fixed missing icons on the Next/Previous buttons in the search bar.
+* On screens to small to fit Konversation's configuration dialog, the
+  dialog will now show scrollbars around its content instead of the dialog
+  buttons being forced off-screen.
+* Konversation now sets its window icon in a way that causes a hi-res icon
+  to be available in window switchers such as Plasma's Alt+Tab UI.
+* Removed the spell checking language submenu from the context menu of the
+  input bar - KDE Frameworks 5 now contains this upstream, leading to two
+  submenus.
+* Fixed installing the Oxygen nickname list theme.
+* Fixed changes to the tab bar font's font weight being applied to the chat
+  text area.
+* Minor changes to tooltips to support the Wayland windowing system better.
+* Fixed the Windows build.
+* Added KCrash (DrKonqi) support.
+* Improved support for the KDE Kiosk framework, fixing checks for the
+  "shell_command" privilege.
+* Added AppData metadata for app stores.
+
 Changes from Konversation 1.6.1-beta1 to 1.6:
 Konversation 1.6 is the first stable release of Konversation built on the
 new KDE Frameworks 5 and Qt 5 library sets, improving integration into many
