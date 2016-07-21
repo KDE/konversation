@@ -22,6 +22,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Config
     ConfigWidgets
     CoreAddons
+    Crash
     DocTools
     Emoticons
     I18n
