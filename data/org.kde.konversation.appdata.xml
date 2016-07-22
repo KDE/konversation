@@ -1,31 +1,236 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <component type="desktop">
   <id>org.kde.konversation.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Konversation</name>
+  <name xml:lang="ca">Konversation</name>
+  <name xml:lang="ca-valencia">Konversation</name>
+  <name xml:lang="cs">Konversation</name>
+  <name xml:lang="de">Konversation</name>
+  <name xml:lang="el">Konversation</name>
+  <name xml:lang="es">Konversation</name>
+  <name xml:lang="nl">Konversation</name>
+  <name xml:lang="pl">Konversation</name>
+  <name xml:lang="sk">Konversation</name>
+  <name xml:lang="sv">Konversation</name>
+  <name xml:lang="uk">Konversation</name>
+  <name xml:lang="x-test">xxKonversationxx</name>
   <summary>IRC client</summary>
+  <summary xml:lang="ca">Client d'IRC</summary>
+  <summary xml:lang="ca-valencia">Client d'IRC</summary>
+  <summary xml:lang="cs">Klient IRC</summary>
+  <summary xml:lang="de">IRC-Programm</summary>
+  <summary xml:lang="el">Εφαρμογή IRC</summary>
+  <summary xml:lang="es">Cliente de IRC</summary>
+  <summary xml:lang="he">לקוח IRC</summary>
+  <summary xml:lang="nl">IRC-client</summary>
+  <summary xml:lang="pl">Klient IRC</summary>
+  <summary xml:lang="sk">IRC klient</summary>
+  <summary xml:lang="sv">IRC-klient</summary>
+  <summary xml:lang="uk">Клієнт IRC</summary>
+  <summary xml:lang="x-test">xxIRC clientxx</summary>
   <description>
     <p>
       Konversation is an IRC client which gives you speedy access to Freenode network's channels,
       where you will find support for most distributions. Its defaults are such that it needs no
       configuration other than telling it the name of your distribution channel, to get started.
     </p>
+    <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
+    <p xml:lang="ca-valencia">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
+    <p xml:lang="de">Konversation ist ein IRC-Programm, mit dem Sie schnell auf Freenode-Kanäle zugreifen können, in denen Sie Unterstützung für die meisten Distributionen erhalten. Die Voreinstellungen sind so gewählt, dass Sie nur den Kanalnamen Ihrer Distribution eingeben müssen.</p>
+    <p xml:lang="el">Το Konversation είναι μια εφαρμογή πελάτη IRC, το οποίο παρέχει ταχεία πρόσβαση σε δικτυακά κανάλια Freenode, όπου θα βρείτε υποστήριξη για την πλειοψηφία των διανομών. Οι προκαθορισμένες ρυθμίσεις του καθιστούν περιττή την επιπλέον διαμόρφωση, με εξαίρεση το όνομα του καναλιού της διανομής σας για να ξεκινήσει.</p>
+    <p xml:lang="es">Konversation es un cliente de IRC que le proporciona un acceso rápido a los canales de la red Freenode, donde usted encontrará apoyo para muchas distribuciones. Sus opciones por omisión son tales que no necesita otra configuración que decirle el nombre del canal de distribución para empezar.</p>
+    <p xml:lang="he">שיחה KDE זה לקוח IRC שנותן גישה מהירה לערוצי רשתות Freenode, ותומך ברוב ההפצות. כברירת מחדל לא צריך להגדיר חוץ לבחור שם של אחד מערוצי ההפצות בשביל להתחיל.</p>
+    <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
+    <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
+    <p xml:lang="sv">Konversation är en IRC-klient som ger snabb åtkomst till Freenode-nätverkets kanaler, där det finns stöd för de flesta distributioner. Standardinställningarna är sådana att ingen inställning behövs för att komma igång annat än att tala om namnet på distributionens kanal för den.</p>
+    <p xml:lang="uk">Konversation — клієнтська програма IRC, за допомогою якої ви зможете швидко отримати доступ до каналів мережі Freenode, на яких можна спілкуватися із іншими користувачами та розробниками. Якщо ви скористаєтеся типовими параметрами роботи програми, вам достатньо буде вказати лише назву потрібного вам каналу, щоб розпочати спілкування на ньому.</p>
+    <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
     <p>Features:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="de">Funktionen:</p>
+    <p xml:lang="el">Λειτουργίες:</p>
+    <p xml:lang="es">Características:</p>
+    <p xml:lang="he">תכונות:</p>
+    <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pl">Możliwości:</p>
+    <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="x-test">xxFeatures:xx</p>
     <ul>
       <li>Standard IRC features</li>
+      <li xml:lang="ca">Funcionalitats estàndard de l'IRC</li>
+      <li xml:lang="ca-valencia">Funcionalitats estàndard de l'IRC</li>
+      <li xml:lang="de">Standard-IRC-Funktionen</li>
+      <li xml:lang="el">Τυπικές IRC λειτουργίες</li>
+      <li xml:lang="es">Características estándar de IRC</li>
+      <li xml:lang="he">תכונות IRC רגילות</li>
+      <li xml:lang="nl">Standaard IRC-functies</li>
+      <li xml:lang="pl">Standardowe możliwości IRC</li>
+      <li xml:lang="sk">Štandardné funkcie IRC</li>
+      <li xml:lang="sv">Vanliga IRC-funktioner</li>
+      <li xml:lang="uk">Стандартні можливості IRC</li>
+      <li xml:lang="x-test">xxStandard IRC featuresxx</li>
       <li>SSL server support</li>
+      <li xml:lang="ca">Permet un servidor SSL</li>
+      <li xml:lang="ca-valencia">Permet un servidor SSL</li>
+      <li xml:lang="de">Unterstützung für SSL-Server</li>
+      <li xml:lang="el">Υποστήριξη διακομιστή SSL</li>
+      <li xml:lang="es">Reconocimiento de servidor SSL</li>
+      <li xml:lang="he">תמיכה בשרתים מאובטחים ב־SSL</li>
+      <li xml:lang="nl">Ondersteuning voor SSL-server</li>
+      <li xml:lang="pl">Obsługa serwera SSL</li>
+      <li xml:lang="sk">Podpora SSL servera</li>
+      <li xml:lang="sv">Stöd för SSL-server</li>
+      <li xml:lang="uk">Підтримка роботи із серверами SSL</li>
+      <li xml:lang="x-test">xxSSL server supportxx</li>
       <li>Bookmarking support</li>
+      <li xml:lang="ca">Permet les adreces d'interès</li>
+      <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
+      <li xml:lang="de">Unterstützung für Lesezeichen</li>
+      <li xml:lang="el">Υποστήριξη σελιδοδεικτών</li>
+      <li xml:lang="es">Uso de marcadores</li>
+      <li xml:lang="he">תמיכה בסימניות</li>
+      <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
+      <li xml:lang="pl">Obsługa zakładek</li>
+      <li xml:lang="sk">Podpora záložiek</li>
+      <li xml:lang="sv">Stöd för bokmärken</li>
+      <li xml:lang="uk">Підтримка роботи із закладками</li>
+      <li xml:lang="x-test">xxBookmarking supportxx</li>
       <li>Easy to use graphical user interface</li>
+      <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
+      <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
+      <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
+      <li xml:lang="el">Ευκολόχρηστο γραφικό περιβάλλον χρήστη</li>
+      <li xml:lang="es">Interfaz gráfica fácil de usar</li>
+      <li xml:lang="he">ממשק משתמש גרפי קל לשימוש</li>
+      <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
+      <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
+      <li xml:lang="sk">Ľahko použiteľné používateľské rozhranie</li>
+      <li xml:lang="sv">Lättanvänt grafiskt användargränssnitt</li>
+      <li xml:lang="uk">Простий у користуванні графічний інтерфейс</li>
+      <li xml:lang="x-test">xxEasy to use graphical user interfacexx</li>
       <li>Multiple servers and channels in one single window</li>
+      <li xml:lang="ca">Diversos servidors i canals en una única finestra</li>
+      <li xml:lang="ca-valencia">Diversos servidors i canals en una única finestra</li>
+      <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
+      <li xml:lang="el">Πολλοί εξυπηρετητές και κανάλια σε ένα μόνο παράθυρο</li>
+      <li xml:lang="es">Varios servidores y canales en una sola ventana</li>
+      <li xml:lang="he">מספר שרתים וערוצים בחלון אחד</li>
+      <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
+      <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
+      <li xml:lang="sk">Viac serverov a kanálov v jednom okne</li>
+      <li xml:lang="sv">Flera servrar och kanaler i ett enda fönster</li>
+      <li xml:lang="uk">Показ даних декількох серверів та каналів у одному вікні</li>
+      <li xml:lang="x-test">xxMultiple servers and channels in one single windowxx</li>
       <li>DCC file transfer</li>
+      <li xml:lang="ca">Transferència de fitxers DCC</li>
+      <li xml:lang="ca-valencia">Transferència de fitxers DCC</li>
+      <li xml:lang="de">DCC-Dateiübertragung</li>
+      <li xml:lang="el">Μεταφορά αρχείων DCC</li>
+      <li xml:lang="es">Trasferencia de archivos DCC</li>
+      <li xml:lang="he">העברת קבצים באמצעות DCC</li>
+      <li xml:lang="nl">DCC Bestandsoverdracht</li>
+      <li xml:lang="pl">Przesyłanie plików przez DCC</li>
+      <li xml:lang="sk">Prenos súborov DCC</li>
+      <li xml:lang="sv">DCC-filöverföring</li>
+      <li xml:lang="uk">Передавання файлів за допомогою DCC</li>
+      <li xml:lang="x-test">xxDCC file transferxx</li>
       <li>Multiple identities for different servers</li>
+      <li xml:lang="ca">Diverses identitats per servidors diferents</li>
+      <li xml:lang="ca-valencia">Diverses identitats per servidors diferents</li>
+      <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
+      <li xml:lang="el">Πολλές ταυτότητες για διαφορετικούς διακομιστές</li>
+      <li xml:lang="es">Varias identidades para distintos servidores</li>
+      <li xml:lang="he">זהויות שונות לשרתים שונים</li>
+      <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
+      <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
+      <li xml:lang="sk">Viac identít pre rôzne servery</li>
+      <li xml:lang="sv">Fler identiteter för olika servrar</li>
+      <li xml:lang="uk">Можливість користування декількома профілями на різних серверах</li>
+      <li xml:lang="x-test">xxMultiple identities for different serversxx</li>
       <li>Text decorations and colors</li>
+      <li xml:lang="ca">Decoracions del text i colors</li>
+      <li xml:lang="ca-valencia">Decoracions del text i colors</li>
+      <li xml:lang="de">Textdekoration und -farben</li>
+      <li xml:lang="el">Διακόσμηση κειμένου και χρώματα</li>
+      <li xml:lang="es">Decoraciones de texto y colores</li>
+      <li xml:lang="he">עיצוב וצבעי טקסט</li>
+      <li xml:lang="nl">Tekstdecoraties en kleuren</li>
+      <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
+      <li xml:lang="sk">Dekorácie a farby textu</li>
+      <li xml:lang="sv">Textdekorationer och färger</li>
+      <li xml:lang="uk">Можливість декорування та розфарбовування тексту</li>
+      <li xml:lang="x-test">xxText decorations and colorsxx</li>
       <li>OnScreen Display for notifications</li>
+      <li xml:lang="ca">Mostra les notificacions en la pantalla</li>
+      <li xml:lang="ca-valencia">Mostra les notificacions en la pantalla</li>
+      <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
+      <li xml:lang="el">Εμφάνιση ειδοποιήσεων στην οθόνη</li>
+      <li xml:lang="es">Visualización en pantalla para notificaciones</li>
+      <li xml:lang="he">התראות על המסך</li>
+      <li xml:lang="nl">Meldingen op het scherm tonen</li>
+      <li xml:lang="pl">Powiadomienia ekranowe</li>
+      <li xml:lang="sk">OnScreen Display pre upozornenia</li>
+      <li xml:lang="sv">Visning av underrättelser på skärmen</li>
+      <li xml:lang="uk">Екранна панель для показу сповіщень</li>
+      <li xml:lang="x-test">xxOnScreen Display for notificationsxx</li>
       <li>Automatic UTF-8 detection</li>
+      <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
+      <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
+      <li xml:lang="de">Automatische UTF-8-Erkennung</li>
+      <li xml:lang="el">Αυτόματος εντοπισμός UTF-8</li>
+      <li xml:lang="es">Detección automática de UTF-8</li>
+      <li xml:lang="he">זיהוי UTF-8 אוטומטי</li>
+      <li xml:lang="nl">Automatische detectie van UTF-8</li>
+      <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
+      <li xml:lang="sk">Automatická detekcia UTF-8</li>
+      <li xml:lang="sv">Automatisk detektering av UTF-8</li>
+      <li xml:lang="uk">Автоматичне виявлення UTF-8</li>
+      <li xml:lang="x-test">xxAutomatic UTF-8 detectionxx</li>
       <li>Per channel encoding support</li>
+      <li xml:lang="ca">Permet codificació per canal</li>
+      <li xml:lang="ca-valencia">Permet codificació per canal</li>
+      <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
+      <li xml:lang="el">Υποστήριξη κωδικοποίησης ανά κανάλι</li>
+      <li xml:lang="es">Uso de codificación por canal</li>
+      <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
+      <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
+      <li xml:lang="pl">Kodowanie zależne od kanału</li>
+      <li xml:lang="sk">Podpora kódovania pre každý kanál</li>
+      <li xml:lang="sv">Kodningsstöd per kanal</li>
+      <li xml:lang="uk">Можливість встановлення окремого кодування символів для кожного з каналів</li>
+      <li xml:lang="x-test">xxPer channel encoding supportxx</li>
       <li>Theme support for nick icons</li>
+      <li xml:lang="ca">Permet temes per icones de sobrenom</li>
+      <li xml:lang="ca-valencia">Permet temes per icones de sobrenom</li>
+      <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
+      <li xml:lang="el">Υποστήριξη θεμάτων για εικονίδια ψευδωνύμων</li>
+      <li xml:lang="es">Uso de temas para iconos de apodos</li>
+      <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
+      <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
+      <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
+      <li xml:lang="sk">Podpora tém pre ikony prezývok</li>
+      <li xml:lang="sv">Temastöd för smeknamnsikoner</li>
+      <li xml:lang="uk">Підтримка тем для піктограм профілів</li>
+      <li xml:lang="x-test">xxTheme support for nick iconsxx</li>
       <li>Highly configurable</li>
+      <li xml:lang="ca">Altament configurable</li>
+      <li xml:lang="ca-valencia">Altament configurable</li>
+      <li xml:lang="de">Sehr anpassbar</li>
+      <li xml:lang="el">Πλήρως διαμορφώσιμο</li>
+      <li xml:lang="es">Altamente configurable</li>
+      <li xml:lang="he">הרבה אפשרויות הגדרה</li>
+      <li xml:lang="nl">Hoog instelbaar</li>
+      <li xml:lang="pl">Wysoce ustawialny</li>
+      <li xml:lang="sk">Vysoko konfigurovateľné</li>
+      <li xml:lang="sv">Mycket anpassningsbar</li>
+      <li xml:lang="uk">Широкі можливості із налаштовування</li>
+      <li xml:lang="x-test">xxHighly configurablexx</li>
     </ul>
   </description>
   <screenshots>
