@@ -224,7 +224,6 @@ target_link_libraries(konversation
     KF5::KIOWidgets
     KF5::Parts
     KF5::Solid
-    KF5::SonnetCore
     KF5::Wallet
     KF5::WidgetsAddons
     KF5::GlobalAccel

@@ -25,11 +25,7 @@
 #include <KCompletionBox>
 #include <KActionCollection>
 
-#include <sonnet/speller.h>
-
 #define MAXHISTORY 100
-
-Sonnet::Speller* IRCInput::m_speller = 0;
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {

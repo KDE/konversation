@@ -17,11 +17,6 @@
 
 #include <KTextEdit>
 
-namespace Sonnet
-{
-    class Speller;
-}
-
 class KCompletionBox;
 
 class IRCInput : public KTextEdit
@@ -92,6 +87,5 @@ class IRCInput : public KTextEdit
 
         QTimer* m_disableSpellCheckTimer;
 
-        static Sonnet::Speller* m_speller;
 };
 #endif

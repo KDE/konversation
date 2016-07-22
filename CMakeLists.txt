@@ -31,7 +31,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     KIO
     Parts
     Solid
-    Sonnet
     Wallet
     WidgetsAddons
     GlobalAccel
