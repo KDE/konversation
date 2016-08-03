@@ -29,6 +29,7 @@ namespace Konversation
         setPort(settings.port());
         setPassword(settings.password());
         setSSLEnabled(settings.SSLEnabled());
+        setBypassProxy(settings.bypassProxy());
     }
 
     ServerSettings::ServerSettings(const QString& host)
