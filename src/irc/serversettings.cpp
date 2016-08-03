@@ -23,6 +23,15 @@ namespace Konversation
         setBypassProxy(false);
     }
 
+    ServerSettings::ServerSettings(const ServerSettings& settings)
+    {
+        setHost(settings.host());
+        setPort(settings.port());
+        setPassword(settings.password());
+        setSSLEnabled(settings.SSLEnabled());
+        setBypassProxy(settings.bypassProxy());
+    }
+
     ServerSettings::ServerSettings(const QString& host)
     {
         setHost(host);

@@ -1,3 +1,11 @@
+Changes from Konversation 1.6.1 to 1.6.2:
+Konversation 1.6.2 is a hotfix release that fixes an unfortunate severe
+crash condition that crept into 1.6.1.
+
+* Fixed a bug causing various operations on server list data to crash, e.g.
+  pressing "Edit" on a server sub-item in the Server List dialog.
+* Translations for AppData metadata added in v1.6.1.
+
 Changes from Konversation 1.6 to 1.6.1:
 Konversation 1.6.1 is a maintenance release that contains various bug fixes
 for the stable KDE Frameworks 5-based version of Konversation.
