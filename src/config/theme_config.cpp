@@ -29,13 +29,15 @@
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
 
-#include <unistd.h> // unlink()
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QDebug>
 #include <QTemporaryFile>
 #include <QMimeDatabase>
 
+#ifndef Q_OS_WIN
+#include <unistd.h> // unlink()
+#endif
 
 using namespace Konversation;
 
