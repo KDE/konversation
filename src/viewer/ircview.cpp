@@ -541,28 +541,12 @@ void IRCView::append(const QString& nick, const QString& message, const QString&
     QString line;
     bool rtl = (dir == QChar::DirR);
 
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-
-        if (!label.isEmpty()) {
-            line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
-        }
-
-        line += "<font color=\"" + channelColor + "\">" + nickLine +" %1" + PDF + RLM + " %3</font>";
+    QChar directionOfLine = rtl ? RLM : LRM;
+    line = directionOfLine;
+    if (!label.isEmpty()) {
+        line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
     }
-    else
-    {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        if (!label.isEmpty()) {
-            line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
-        }
-
-        line += "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
-    }
+    line += "<font color=\"" + channelColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3";
 
     if (!label.isEmpty())
     {
@@ -612,20 +596,8 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     QString text(filter(message, queryColor, nick, true, true, false, &dir));
     bool rtl = (dir == QChar::DirR);
 
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-        line += "<font color=\"" + queryColor + "\">" + nickLine + " %1" + PDF + RLM + " %3</font>";
-    }
-    else
-    {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        line += "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
-    }
-
+    QChar directionOfLine = rtl ? RLM : LRM;
+    line = directionOfLine + "<font color=\"" + queryColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3";
     line = line.arg(timeStamp(), nick, text);
 
     if (inChannel) {
@@ -659,10 +631,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
 
     if (message.isEmpty())
     {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + "</font>";
+        line = LRM + "<font color=\"" + actionColor + "\">%1 * " + nickLine + "</font>";
 
         line = line.arg(timeStamp(), nick);
 
@@ -676,20 +645,8 @@ void IRCView::appendAction(const QString& nick, const QString& message)
         QString text(filter(message, actionColor, nick, true,true, false, &dir));
         bool rtl = (dir == QChar::DirR);
 
-        if (rtl)
-        {
-            line = RLE;
-            line += LRE;
-            line += "<font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font>";
-        }
-        else
-        {
-            if (!QApplication::isLeftToRight())
-                line += LRE;
-
-            line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
-        }
-
+        QChar directionOfLine = rtl ? RLM : LRM;
+        line = directionOfLine + "<font color=\"" + actionColor + "\">%1 " + directionOfLine + "* " + nickLine + directionOfLine + " %3</font>";
         line = line.arg(timeStamp(), nick, text);
 
         emit textToLog(QString("\t * %1 %2").arg(nick, message));
@@ -716,20 +673,8 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     QString text(filter(message, serverColor, 0 , true, parseURL, false, &dir));
     bool rtl = (dir == QChar::DirR);
 
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-        line += "<font color=\"" + serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font>";
-    }
-    else
-    {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        line += "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
-    }
-
+    QChar directionOfLine = rtl ? RLM : LRM;
+    line = directionOfLine + "<font color=\"" + serverColor + "\"" + fixed + ">%1 " + directionOfLine + "<b>[</b>%2<b>]</b>" + directionOfLine + " %3</font>";
     line = line.arg(timeStamp(), type, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
@@ -758,22 +703,10 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     QString line;
     QChar::Direction dir;
     QString text(filter(message, commandColor, 0, true, parseURL, self, &dir));
-    bool rtl = (dir == QChar::DirR);
+    bool rtl = text.isRightToLeft();
 
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-        line += "<font color=\"" + commandColor + "\">%2 %1" + PDF + " %3</font>";
-    }
-    else
-    {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        line += "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
-    }
-
+    QChar directionOfLine = rtl ? RLM : LRM;
+    line = directionOfLine + "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
     line = line.arg(timeStamp(), prefix, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
@@ -798,6 +731,10 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     {
         nick = '|' + nick + '|';
     }
+    else //It's a real nick
+    {
+        nick = LRM + nick + LRM;
+    }
 
     // Nicks are in "<nick>" format so replace the "<>"
     nick.replace('<',"&lt;");
@@ -806,22 +743,10 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString line;
     QChar::Direction dir;
     QString text(filter(message, backlogColor, NULL, false, false, false, &dir));
-    bool rtl = (dir == QChar::DirR);
+    bool rtl = nick.startsWith('|') ? text.isRightToLeft() : (dir == QChar::DirR);
 
-    if(rtl)
-    {
-        line = RLE;
-        line += LRE;
-        line += "<font color=\"" + backlogColor + "\">%2 %1" + PDF + " %3</font>";
-    }
-    else
-    {
-        if (!QApplication::isLeftToRight())
-            line += LRE;
-
-        line += "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
-    }
-
+    QChar directionOfLine = rtl ? RLM : LRM;
+    line = directionOfLine + "<font color=\"" + backlogColor + "\">%1 " + directionOfLine + "%2" + directionOfLine + " %3</font>";
     line = line.arg(time, nick, text);
 
     doAppend(line, rtl);
@@ -876,7 +801,7 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
 
-    format.setAlignment(rtl ? Qt::AlignRight : Qt::AlignLeft);
+    format.setAlignment(Qt::AlignAbsolute|(rtl ? Qt::AlignRight : Qt::AlignLeft));
     formatCursor.setBlockFormat(format);
 }
 
@@ -889,6 +814,9 @@ QString IRCView::timeStamp()
         QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
 
+        bool rtlLocale = (QLocale().zeroDigit() == QChar((ushort)0x0660)) or // ARABIC-INDIC DIGIT ZERO
+                         (QLocale().zeroDigit() == QChar((ushort)0x06F0));   // EXTENDED ARABIC-INDIC DIGIT ZERO
+
         if(!Preferences::self()->showDate())
         {
             timeString = QString(QLatin1String("<font color=\"") + timeColor + QLatin1String("\">[%1]</font> ")).arg(time.toString(timeFormat));
@@ -897,9 +825,11 @@ QString IRCView::timeStamp()
         {
             QDate date = QDate::currentDate();
             timeString = QString("<font color=\"" +
-                timeColor + "\">[%1 %2]</font> ")
-                    .arg(QLocale().toString(date, QLocale::ShortFormat),
-                         time.toString(timeFormat));
+                timeColor + "\">[%1%2 %3%4]</font> ")
+                    .arg(rtlLocale ? RLM : LRM,
+                         QLocale().toString(date, QLocale::ShortFormat),
+                         time.toString(timeFormat),
+                         !rtlLocale ? RLM : LRM);
         }
 
         return timeString;
@@ -910,7 +840,7 @@ QString IRCView::timeStamp()
 
 QString IRCView::createNickLine(const QString& nick, const QString& defaultColor, bool encapsulateNick, bool privMsg)
 {
-    QString nickLine = "%2";
+    QString nickLine = LRM + "%2" + LRM;
     QString nickColor;
 
     if (Preferences::self()->useColoredNicks())
