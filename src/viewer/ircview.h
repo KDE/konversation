@@ -65,7 +65,6 @@ class IRCView : public QTextBrowser
         explicit IRCView(QWidget* parent);
         ~IRCView();
 
-        //void clear();
         //! Some people apparently want the text in the view to be doublespaced :/
         void enableParagraphSpacing();
 
@@ -208,15 +207,6 @@ class IRCView : public QTextBrowser
         void findNextText();
         /// Emits the doSeachPrevious signal.
         void findPreviousText();
-
-        /// Overwritten so the scrollview remains not freaked out
-        //virtual void removeSelectedText(int selNum=0);
-        //! TODO FIXME meta, derived
-        //virtual void scrollToBottom();            // Overwritten for internal reasons
-
-        // Updates the scrollbar position
-        //! Again. Really? Two in a row? Couldn't be more inventive, whoever you are? Come on, show some personality. Let your vocabulary loose! Because right now its looking like you don't know what you're taking about.
-        //void updateScrollBarPos();
 
     protected Q_SLOTS:
         void highlightedSlot(const QString& link);
