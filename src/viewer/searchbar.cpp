@@ -48,6 +48,7 @@ SearchBar::SearchBar(QWidget* parent)
     Application* konvApp = Application::instance();
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
+    m_optionsButton->setIcon(QIcon::fromTheme("settings-configure"));
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -58,8 +59,8 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_timer, &QTimer::timeout, this, &SearchBar::slotFind);
     connect(m_searchEdit, &KLineEdit::textChanged, this, &SearchBar::slotTextChanged);
     connect(m_searchEdit, &KLineEdit::returnPressed, this, &SearchBar::slotFindNext);
-    connect(m_findNextButton, &QPushButton::clicked, this, &SearchBar::slotFindNext);
-    connect(m_findPreviousButton, &QPushButton::clicked, this, &SearchBar::slotFindPrevious);
+    connect(m_findNextButton, &QToolButton::clicked, this, &SearchBar::slotFindNext);
+    connect(m_findPreviousButton, &QToolButton::clicked, this, &SearchBar::slotFindPrevious);
     connect(m_closeButton, &QToolButton::clicked, this, &SearchBar::hide);
     connect(m_optionsButton, &QToolButton::clicked, this, &SearchBar::showOptionsMenu);
 

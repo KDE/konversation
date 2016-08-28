@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author>Copyright (C) 2006, 2014 Peter Simonsson &lt;peter.simonsson@gmail.com&gt;</author>
+ <author>Copyright (C) 2006, 2014, 2016 Peter Simonsson &lt;peter.simonsson@gmail.com&gt;</author>
  <comment>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -12,7 +12,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
     <x>0</x>
     <y>0</y>
     <width>502</width>
-    <height>28</height>
+    <height>36</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -63,25 +63,28 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
       <widget class="KLineEdit" name="m_searchEdit"/>
      </item>
      <item>
-      <widget class="QPushButton" name="m_findNextButton">
-       <property name="enabled">
-        <bool>false</bool>
+      <widget class="QToolButton" name="m_findNextButton">
+       <property name="toolTip">
+        <string>Jump to next match</string>
        </property>
        <property name="text">
         <string>&amp;Next</string>
        </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="m_findPreviousButton">
-       <property name="enabled">
-        <bool>false</bool>
+      <widget class="QToolButton" name="m_findPreviousButton">
+       <property name="toolTip">
+        <string>Jump to previous match</string>
        </property>
        <property name="text">
         <string>&amp;Previous</string>
        </property>
-       <property name="flat">
-        <bool>false</bool>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -103,11 +106,17 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
      </item>
      <item>
       <widget class="QToolButton" name="m_optionsButton">
+       <property name="toolTip">
+        <string>Modify seach behavior</string>
+       </property>
        <property name="text">
         <string>&amp;Options</string>
        </property>
        <property name="popupMode">
-        <enum>QToolButton::MenuButtonPopup</enum>
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
