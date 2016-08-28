@@ -7,6 +7,7 @@
 
 /*
   Copyright (C) 2005 Renchi Raju <renchi@pooh.tam.uiuc.edu>
+  Copyright (C) 2016 Peter Simonsson <peter.simonsson@gmail.com>
 */
 
 #include "ircviewbox.h"
@@ -75,36 +76,21 @@ void IRCViewBox::searchNext(bool reversed)
 {
     bool match = m_ircView->searchNext(reversed);
 
-    if (match)
+    if (!match && m_matchedOnce)
     {
-        m_searchBar->setHasMatch(true);
-        return;
+        if((m_searchBar->searchForward() && !reversed) || (!m_searchBar->searchForward() && reversed))
+        {
+            m_ircView->moveCursor(QTextCursor::Start);
+        }
+        else
+        {
+            m_ircView->moveCursor(QTextCursor::End);
+        }
+
+        match = m_ircView->searchNext(reversed);
     }
 
-    if (!m_matchedOnce)
-    {
-        m_searchBar->setHasMatch(false);
-        return;
-    }
-
-    if((m_searchBar->searchForward() && !reversed) || (!m_searchBar->searchForward() && reversed))
-    {
-        m_ircView->moveCursor(QTextCursor::Start);
-    }
-    else
-    {
-        m_ircView->moveCursor(QTextCursor::End);
-    }
-
-    match = m_ircView->searchNext(reversed);
-
-    if (!match)
-    {
-        m_searchBar->setHasMatch(false);
-        return;
-    }
-
-    m_searchBar->setHasMatch(true);
+    m_searchBar->setHasMatch(match);
 }
 
 void IRCViewBox::slotSearchChanged(const QString& pattern)
@@ -115,15 +101,7 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
         m_searchBar->searchForward(),
         m_searchBar->fromCursor());
 
-    if (match)
-    {
-        m_searchBar->setHasMatch(true);
-    }
-    else
-    {
-        m_searchBar->setHasMatch(false);
-    }
-
+    m_searchBar->setHasMatch(match);
     m_matchedOnce = match;
 }
 
