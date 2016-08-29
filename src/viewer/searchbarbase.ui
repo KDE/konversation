@@ -107,7 +107,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
      <item>
       <widget class="QToolButton" name="m_optionsButton">
        <property name="toolTip">
-        <string>Modify seach behavior</string>
+        <string>Modify search behavior</string>
        </property>
        <property name="text">
         <string>&amp;Options</string>

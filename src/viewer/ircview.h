@@ -201,11 +201,11 @@ class IRCView : public QTextBrowser
         void doAppend(const QString& line, bool rtl, bool self=false);
 
     public Q_SLOTS:
-        /// Emits the doSeach signal.
+        /// Emits the doSearch signal.
         void findText();
-        /// Emits the doSeachNext signal.
+        /// Emits the doSearchNext signal.
         void findNextText();
-        /// Emits the doSeachPrevious signal.
+        /// Emits the doSearchPrevious signal.
         void findPreviousText();
 
     protected Q_SLOTS:
