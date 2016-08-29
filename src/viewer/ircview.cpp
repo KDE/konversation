@@ -9,7 +9,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2010 Eike Hein <hein@kde.org>
   Copyright (C) 2004-2011 Eli Mackenzie <argonel@gmail.com>
 */
@@ -170,34 +170,30 @@ void IRCView::findPreviousText()
     emit doSearchPrevious();
 }
 
-bool IRCView::search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor)
+bool IRCView::search(const QString& pattern, QTextDocument::FindFlags flags, bool fromCursor)
 {
     if (pattern.isEmpty())
         return true;
 
     m_pattern       = pattern;
-    m_forward       = forward;
-    m_searchFlags = 0;
-    if (caseSensitive)
-        m_searchFlags |= QTextDocument::FindCaseSensitively;
-    if (wholeWords)
-        m_searchFlags |= QTextDocument::FindWholeWords;
+    m_searchFlags = flags;
+
     if (!fromCursor)
-        m_forward ? moveCursor(QTextCursor::Start) : moveCursor(QTextCursor::End);
+        moveCursor(QTextCursor::End);
+    else
+        moveCursor(QTextCursor::StartOfWord); // Do this to that if possible the same position is kept when changing search options
 
     return searchNext();
 }
 
 bool IRCView::searchNext(bool reversed)
 {
-    bool fwd = (reversed ? !m_forward : m_forward);
-    if (fwd) {
-        m_searchFlags &= ~QTextDocument::FindBackward;
-    }
-    else {
-        m_searchFlags |= QTextDocument::FindBackward;
-    }
-    return find(m_pattern, m_searchFlags);
+    QTextDocument::FindFlags flags = m_searchFlags;
+
+    if(!reversed)
+        flags |= QTextDocument::FindBackward;
+
+    return find(m_pattern, flags);
 }
 
 class IrcViewMimeData : public QMimeData

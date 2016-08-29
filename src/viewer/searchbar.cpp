@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2005 Renchi Raju <renchi@pooh.tam.uiuc.edu>
-  Copyright (C) 2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006, 2016 Peter Simonsson <peter.simonsson@gmail.com>
 */
 
 #include "searchbar.h"
@@ -36,9 +36,7 @@ SearchBar::SearchBar(QWidget* parent)
 
     parent->installEventFilter(this); // HACK See notes in SearchBar::eventFilter
 
-    m_searchFoward = false;
-    m_matchCase = false;
-    m_wholeWords = false;
+    m_flags = 0;
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
@@ -62,22 +60,16 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_findNextButton, &QToolButton::clicked, this, &SearchBar::slotFindNext);
     connect(m_findPreviousButton, &QToolButton::clicked, this, &SearchBar::slotFindPrevious);
     connect(m_closeButton, &QToolButton::clicked, this, &SearchBar::hide);
-    connect(m_optionsButton, &QToolButton::clicked, this, &SearchBar::showOptionsMenu);
+    connect(m_optionsButton, &QToolButton::clicked, m_optionsButton, &QToolButton::showMenu);
 
     QAction *action = 0;
     m_optionsMenu = new QMenu(m_optionsButton);
-    action = m_optionsMenu->addAction(i18n("Find Forward"));
-    action->setCheckable(true);
-    connect(action, &QAction::toggled, this, &SearchBar::toggleSearchFoward);
     action = m_optionsMenu->addAction(i18n("Match Case"));
     action->setCheckable(true);
     connect(action, &QAction::toggled, this, &SearchBar::toggleMatchCase);
     action = m_optionsMenu->addAction(i18n("Whole Words Only"));
     action->setCheckable(true);
     connect(action, &QAction::toggled, this, &SearchBar::toggleWholeWords);
-    action = m_optionsMenu->addAction(i18n("From Cursor"));
-    action->setCheckable(true);
-    connect(action, &QAction::toggled, this, &SearchBar::toggleFromCursor);
 
     m_optionsButton->setMenu(m_optionsMenu);
 }
@@ -149,6 +141,7 @@ void SearchBar::hideEvent(QHideEvent* e)
 
 void SearchBar::slotTextChanged()
 {
+    m_fromCursor = false;
     m_timer->start(50);
 }
 
@@ -206,19 +199,9 @@ QString SearchBar::pattern() const
     return m_searchEdit->text();
 }
 
-bool SearchBar::searchForward() const
+QTextDocument::FindFlags SearchBar::flags() const
 {
-    return m_searchFoward;
-}
-
-bool SearchBar::caseSensitive() const
-{
-    return m_matchCase;
-}
-
-bool SearchBar::wholeWords() const
-{
-    return m_wholeWords;
+    return m_flags;
 }
 
 bool SearchBar::fromCursor() const
@@ -226,47 +209,24 @@ bool SearchBar::fromCursor() const
     return m_fromCursor;
 }
 
-void SearchBar::toggleSearchFoward(bool value)
-{
-    Application* konvApp = Application::instance();
-    if (value) {
-      m_findNextButton->setIcon(m_goDownSearch);
-      m_findPreviousButton->setIcon(m_goUpSearch);
-      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goDownSearch);
-      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goUpSearch);
-    }
-    else
-    {
-      m_findNextButton->setIcon(m_goUpSearch);
-      m_findPreviousButton->setIcon(m_goDownSearch);
-      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
-      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
-    }
-    m_searchFoward = value;
-    slotTextChanged();
-}
-
 void SearchBar::toggleMatchCase(bool value)
 {
-    m_matchCase = value;
-    slotTextChanged();
+    if(value)
+        m_flags |= QTextDocument::FindCaseSensitively;
+    else
+        m_flags &= ~QTextDocument::FindCaseSensitively;
+
+    m_fromCursor = true;
+    slotFind();
 }
 
 void SearchBar::toggleWholeWords(bool value)
 {
-    m_wholeWords = value;
-    slotTextChanged();
+    if(value)
+        m_flags |= QTextDocument::FindWholeWords;
+    else
+        m_flags &= ~QTextDocument::FindWholeWords;
+
+    m_fromCursor = true;
+    slotFind();
 }
-
-void SearchBar::toggleFromCursor(bool value)
-{
-    m_fromCursor = value;
-    slotTextChanged();
-}
-
-void SearchBar::showOptionsMenu()
-{
-  m_optionsButton->showMenu();
-}
-
-

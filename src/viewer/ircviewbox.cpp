@@ -78,7 +78,7 @@ void IRCViewBox::searchNext(bool reversed)
 
     if (!match && m_matchedOnce)
     {
-        if((m_searchBar->searchForward() && !reversed) || (!m_searchBar->searchForward() && reversed))
+        if(reversed)
         {
             m_ircView->moveCursor(QTextCursor::Start);
         }
@@ -96,9 +96,7 @@ void IRCViewBox::searchNext(bool reversed)
 void IRCViewBox::slotSearchChanged(const QString& pattern)
 {
     bool match = m_ircView->search(pattern,
-        m_searchBar->caseSensitive(),
-        m_searchBar->wholeWords(),
-        m_searchBar->searchForward(),
+        m_searchBar->flags(),
         m_searchBar->fromCursor());
 
     m_searchBar->setHasMatch(match);

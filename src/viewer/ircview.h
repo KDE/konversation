@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -73,7 +73,7 @@ class IRCView : public QTextBrowser
         //! FIXME assumes the IRCView looks at a chatwin
         void setChatWin(ChatWindow* chatWin);
 
-        bool search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor);
+        bool search(const QString& pattern, QTextDocument::FindFlags flags, bool fromCursor);
         bool searchNext(bool reversed = false);
 
         //! FIXME maybe we should create some sort of palette of our own?

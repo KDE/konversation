@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2005 Renchi Raju <renchi@pooh.tam.uiuc.edu>
-  Copyright (C) 2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006, 2016 Peter Simonsson <peter.simonsson@gmail.com>
 */
 
 #ifndef SEARCHBAR_H
@@ -16,13 +16,7 @@
 #include "ui_searchbarbase.h"
 
 #include <QIcon>
-
-/* TODO:
-   - Changing case-sensitivity and search-forward restarts search from beginning.
-     fix to continue search from current position
-   - figure out what "from cursor" and "whole words" means and is it important for
-     the konvi gods
- */
+#include <QTextDocument>
 
 class QShortcut;
 
@@ -40,9 +34,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         QString pattern() const;
 
-        bool searchForward() const;
-        bool caseSensitive() const;
-        bool wholeWords() const;
+        QTextDocument::FindFlags flags() const;
+
         bool fromCursor() const;
 
         bool eventFilter(QObject* object, QEvent* e);
@@ -58,18 +51,13 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         void slotFindNext();
         void slotFindPrevious();
 
-        void toggleSearchFoward(bool value);
         void toggleMatchCase(bool value);
         void toggleWholeWords(bool value);
-        void toggleFromCursor(bool value);
-
-        void showOptionsMenu();
 
     Q_SIGNALS:
         void signalSearchChanged(const QString& pattern);
         void signalSearchNext();
         void signalSearchPrevious();
-        void signalPropertiesChanged();
         void hidden();
 
     private:
@@ -79,9 +67,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         QIcon m_goUpSearch;
         QIcon m_goDownSearch;
 
-        bool m_searchFoward;
-        bool m_matchCase;
-        bool m_wholeWords;
+        QTextDocument::FindFlags m_flags;
         bool m_fromCursor;
 
         QShortcut* m_closeShortcut;
