@@ -16,6 +16,7 @@
   <name xml:lang="nl">Konversation</name>
   <name xml:lang="pl">Konversation</name>
   <name xml:lang="pt">Konversation</name>
+  <name xml:lang="pt-BR">Konversation</name>
   <name xml:lang="sk">Konversation</name>
   <name xml:lang="sl">Konversation</name>
   <name xml:lang="sr">Конверзација</name>
@@ -39,6 +40,7 @@
   <summary xml:lang="nl">IRC-client</summary>
   <summary xml:lang="pl">Klient IRC</summary>
   <summary xml:lang="pt">Cliente de IRC</summary>
+  <summary xml:lang="pt-BR">Cliente IRC</summary>
   <summary xml:lang="sk">IRC klient</summary>
   <summary xml:lang="sl">Odjemalec za IRC</summary>
   <summary xml:lang="sr">ИРЦ клијент</summary>
@@ -66,6 +68,7 @@
     <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
     <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
     <p xml:lang="pt">O Konversation é um cliente de IRC que lhe dá um acesso rápido aos canais da rede Freenode, onde poderá obter suporte para a maioria das distribuições. Tem um conjunto de definições por omissão suficientemente úteis que praticamente não necessita de mais configurações do que definir o nome do canal da sua distribuição para começar.</p>
+    <p xml:lang="sk">Konversation je IRC klient, ktorý vám umožní rýchly prístup ku kanálom siete Freenode, kde nájdete podporu pre väčšinu distribúcií. Predvolene nepotrebuje žiadne nastavenie okrem názvu kanálu distribúcie na to, aby ste začali.</p>
     <p xml:lang="sl">Konversation je odjemalec za IRC, ki ponuja hiter dostop do kanalov omrežja Freenode, na katerih boste našli pomoč za večino distribucij. Nastavljen je tako, da za začetek ne potrebuje dodatnih nastavitev, ampak le ime kanala vaše distribucije.</p>
     <p xml:lang="sr">Конверзација је ИРЦ клијент који вам омогућава брз приступ каналима Фринодове мреже, где можете наћи подршку за већину дистрибуција. Подразумеване поставке су такве да не треба ништа да подешавате, већ само да унесете име канала дистрибуције, да бисте почели.</p>
     <p xml:lang="sr-Latn">Konverzacija je IRC klijent koji vam omogućava brz pristup kanalima Freenodeove mreže, gde možete naći podršku za većinu distribucija. Podrazumevane postavke su takve da ne treba ništa da podešavate, već samo da unesete ime kanala distribucije, da biste počeli.</p>
