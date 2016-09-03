@@ -538,7 +538,7 @@ void IRCView::append(const QString& nick, const QString& message, const QString&
     if (!label.isEmpty()) {
         line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
     }
-    line += "<font color=\"" + channelColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3";
+    line += "<font color=\"" + channelColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3</font>";
 
     if (!label.isEmpty())
     {
