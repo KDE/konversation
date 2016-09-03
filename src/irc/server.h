@@ -423,8 +423,6 @@ class Server : public QObject
          *  @param  encodedBytes    The count of bytes sent to the server after re-encoding.
          */
         void sentStat(int bytes, int encodedBytes, IRCQueue *whichQueue);
-        //FIXME can anyone who can connect to a Server signal not know about an IRCQueue?
-        void sentStat(int bytes, int encodedBytes);
 
         //Note that these signals haven't been implemented yet.
         /// Fires when the information in a NickInfo object changes.
@@ -610,8 +608,6 @@ class Server : public QObject
         void requestOpenChannelListPanel(const QString& filter);
 
     private Q_SLOTS:
-        void collectStats(int bytes, int encodedBytes);
-
         /** Called in the server constructor if the preferences are set to run a command on a new server instance.
          *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
         void doPreShellCommand();
@@ -729,6 +725,7 @@ class Server : public QObject
         QStringList m_inputBuffer;
 
         QList<IRCQueue *> m_queues;
+        // Stats used in QueueTuner
         int m_bytesSent, m_encodedBytesSent, m_linesSent, m_bytesReceived;
 
         QString m_nickname;
@@ -782,6 +779,8 @@ class Server : public QObject
 
         /// Creates a list of known users and returns the one chosen by the user
         inline QString recipientNick() const;
+
+        void collectStats(int bytes, int encodedBytes);
 
         /// Helper object to construct ISON (notify) list.
         ServerISON* m_serverISON;

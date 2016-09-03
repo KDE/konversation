@@ -381,9 +381,6 @@ void Server::connectSignals()
     connect(konvApp->getScriptLauncher(), SIGNAL(scriptExecutionError(QString)),
         this, SLOT(scriptExecutionError(QString)));
 
-    // Stats
-    connect(this, SIGNAL(sentStat(int,int)), SLOT(collectStats(int,int)));
-
     connect(Preferences::self(), SIGNAL(notifyListStarted(int)),
         this, SLOT(notifyListStarted(int)), Qt::QueuedConnection);
 }
@@ -1559,8 +1556,7 @@ void Server::toServer(QString&s, IRCQueue* q)
 
     int sizesent = _send_internal(s);
     emit sentStat(s.length(), sizesent, q); //tell the queues what we sent
-    //tell everyone else
-    emit sentStat(s.length(), sizesent);
+    collectStats(s.length(), sizesent);
 }
 
 void Server::collectStats(int bytes, int encodedBytes)
