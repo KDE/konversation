@@ -134,17 +134,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="UseParagraphSpacing" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="ParagraphSpacing" type="Int">
-      <default>2</default>
-      <min>0</min>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="ChannelSplitterSizes" type="IntList">
       <default></default>
       <label></label>

@@ -65,9 +65,6 @@ class IRCView : public QTextBrowser
         explicit IRCView(QWidget* parent);
         ~IRCView();
 
-        //! Some people apparently want the text in the view to be doublespaced :/
-        void enableParagraphSpacing();
-
         //! this function is proper given it is not nessary for the ircview to have a server for DCC.
         void setServer(Server* server);
         //! FIXME assumes the IRCView looks at a chatwin

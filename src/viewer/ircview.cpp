@@ -128,8 +128,6 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(0), m_l
     setTextInteractionFlags(Qt::TextBrowserInteraction);
     viewport()->setMouseTracking(true);
 
-    if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
-
     //HACK to workaround an issue with the QTextDocument
     //doing a relayout/scrollbar over and over resulting in 100%
     //proc usage. See bug 215256
@@ -489,8 +487,6 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 }
 
 // Other stuff
-
-void IRCView::enableParagraphSpacing() {}
 
 void IRCView::updateAppearance()
 {
