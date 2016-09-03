@@ -960,7 +960,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             while (it.hasNext())
             {
                 highlight = it.next();
-                QStringList highlightChatWindowList = highlight->getChatWindowList();
+                highlightChatWindowList = highlight->getChatWindowList();
                 if (highlightChatWindowList.isEmpty() ||
                     highlightChatWindowList.contains(m_chatWin->getName(), Qt::CaseInsensitive))
                 {
