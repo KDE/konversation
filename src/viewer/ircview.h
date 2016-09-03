@@ -306,7 +306,6 @@ class IRCView : public QTextBrowser
         //TODO FIXME light this on fire and send it sailing down an uncharted river riddled with arrows
         Konversation::TabNotifyType m_tabNotification;
 
-        //QString m_buffer; ///< our text
         Server* m_server; //! FIXME assumes we have a server
 
         //// RTL hack
