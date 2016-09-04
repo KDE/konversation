@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004, 2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -45,38 +45,6 @@ void InputFilter::setServer(Server* newServer)
 {
     m_server = newServer;
 }
-
-/*
-Prefix parsePrefix(QString prefix)
-{
-    //3 possibilities - bare nickname, nickname and a host with optional ident, or a server if there is no punct, its a nickname
-    //there must be at least 1 character before a symbol or its some kind of screwed up nickname
-    Prefix pre;
-    int id=prefix.indexOf("!");
-    int ad=prefix.indexOf("@");
-    if (prefix.indexOf(".") > 0 && id==-1 && ad==-1 ) // it is a server
-    {
-        pre.isServer=true;
-        pre.host=prefix;
-    }
-    else
-    {
-        if (ad >0)
-        {
-            pre.host=prefix.mid(ad+1);
-            prefix.truncate(ad);
-            if (id > 0 && id < ad)
-            {
-                pre.ident=prefix.mid(id+1);
-                prefix.truncate(id);
-            }
-        }
-        //else // consider all of it a nickname
-        pre.nickname=prefix;
-    }
-    return pre;
-}
-*/
 
 template<typename T>
 int posOrLen(T chr, const QString& str, int from=0)
