@@ -600,7 +600,7 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
         // cut off the prefix
         bool recognisedMode = false;
         // determine, whether status is like op or like voice
-        while((modeIndex)<int(m_serverNickPrefixes.length()) && !recognisedMode)
+        while(modeIndex < m_serverNickPrefixes.length() && !recognisedMode)
         {
             switch(m_serverNickPrefixes[modeIndex].toLatin1())
             {
