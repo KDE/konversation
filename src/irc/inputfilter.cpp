@@ -765,6 +765,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                         m_server->capDenied(name);
                 }
+
+                if(!m_server->capEndDelayed())
+                {
+                    m_server->capEndNegotiation();
+                }
             }
         }
         else if (command == QStringLiteral("authenticate") && plHas(1))

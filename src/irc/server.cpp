@@ -82,8 +82,9 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_processingIncoming = false;
     m_identifyMsg = false;
-    m_capRequested = false;
-    m_capAnswered = false;
+    m_capRequested = 0;
+    m_capAnswered = 0;
+    m_capEndDelayed = false;
     m_autoJoin = false;
 
     m_nickIndices.clear();
@@ -666,11 +667,8 @@ void Server::socketConnected()
     emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
-    if (getIdentity() && getIdentity()->getAuthType() == QStringLiteral("saslplain")
-        && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty())
-    {
-        capInitiateNegotiation();
-    }
+    capInitiateNegotiation(getIdentity() && getIdentity()->getAuthType() == QStringLiteral("saslplain")
+                           && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty());
 
     QStringList ql;
 
@@ -691,26 +689,37 @@ void Server::socketConnected()
     setNickname(getNickname());
 }
 
-void Server::capInitiateNegotiation()
+void Server::capInitiateNegotiation(bool useSASL)
 {
+    m_capRequested = 0;
+    m_capAnswered = 0;
+    m_capEndDelayed = false;
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiating capabilities with server..."));
 
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
-    queue(QStringLiteral("CAP REQ :sasl"), HighPriority);
+    if(useSASL)
+    {
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
+        queue(QStringLiteral("CAP REQ :sasl"), HighPriority);
+        m_capRequested++;
+    }
 
-    m_capRequested = true;
+    queue(QStringLiteral("CAP REQ :multi-prefix"), HighPriority);
+    m_capRequested++;
 }
 
 void Server::capReply()
 {
-    m_capAnswered = true;
+    m_capAnswered++;
 }
 
 void Server::capEndNegotiation()
 {
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Closing capabilities negotiation."));
-
-    queue(QStringLiteral("CAP END"), HighPriority);
+    if(m_capRequested == m_capAnswered)
+    {
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Closing capabilities negotiation."));
+        queue(QStringLiteral("CAP END"), HighPriority);
+        m_capAnswered = 0;
+    }
 }
 
 void Server::capCheckIgnored()
@@ -721,12 +730,11 @@ void Server::capCheckIgnored()
 
 void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers)
 {
-    m_capAnswered = true;
-
     if (name == QStringLiteral("sasl") && modifiers == Server::NoModifiers)
     {
         getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL PLAIN authentication..."));
         sendAuthenticate(QStringLiteral("PLAIN"));
+        m_capEndDelayed = true;
     }
 }
 
@@ -734,8 +742,6 @@ void Server::capDenied(const QString& name)
 {
     if (name == QStringLiteral("sasl"))
         getStatusView()->appendServerMessage(i18n("Error"), i18n("SASL capability denied or not supported by server."));
-
-    capEndNegotiation();
 }
 
 void Server::registerWithServices()

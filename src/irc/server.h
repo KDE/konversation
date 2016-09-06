@@ -385,6 +385,8 @@ class Server : public QObject
         void dccPassiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
         void dccReverseChatAck(const QString& partnerNick, const QString& extension, const QString& ownAddress, quint16 ownPort, const QString& reverseToken);
 
+        bool capEndDelayed() { return m_capEndDelayed; }
+
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
         void resetQueues(); ///< Tell all of the queues to reset
@@ -532,7 +534,7 @@ class Server : public QObject
         /// Will only reconnect if the connection state is involuntary disconnected.
         void reconnectInvoluntary();
 
-        void capInitiateNegotiation();
+        void capInitiateNegotiation(bool useSASL);
         void capReply();
         void capEndNegotiation();
         void capCheckIgnored();
@@ -823,8 +825,9 @@ class Server : public QObject
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
 
-        bool m_capRequested;
-        bool m_capAnswered;
+        int m_capRequested;
+        int m_capAnswered;
+        bool m_capEndDelayed;
         QString m_lastAuthenticateCommand;
 
         ConnectionSettings m_connectionSettings;
