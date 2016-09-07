@@ -711,6 +711,9 @@ void Server::capInitiateNegotiation(bool useSASL)
     queue(QStringLiteral("CAP REQ :away-notify"), HighPriority);
     m_hasAwayNotify = false;
     m_capRequested++;
+
+    queue(QStringLiteral("CAP REQ :account-notify"), HighPriority);
+    m_capRequested++;
 }
 
 void Server::capReply()

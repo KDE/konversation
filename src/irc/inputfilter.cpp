@@ -678,6 +678,20 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             qDebug() << "Recieved away message for unknown nick," << sourceNick;
         }
     }
+    else if (command == QStringLiteral("account") && plHas(1))
+    {
+        NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
+        QString account = parameterList.first();
+
+        if (account == "*")
+        {
+            nickInfo->setAccount(QString());
+        }
+        else
+        {
+            nickInfo->setAccount(account);
+        }
+    }
     else
     {
         qDebug() << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QStringLiteral(" "));

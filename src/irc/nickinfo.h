@@ -106,6 +106,9 @@ class NickInfo : public QSharedData
         void setPrintedOnline(bool printed);
         bool getPrintedOnline();
 
+        QString account() const { return m_account; }
+        void setAccount(const QString &name);
+
         bool isChanged() const { return m_changed; }
         void setChanged(bool c) { m_changed = c; }
 
@@ -134,6 +137,8 @@ class NickInfo : public QSharedData
         /* The color index for lookup on Preferences::NickColor(index).name()
            Internally stored as index-1 to allow checking for 0 */
         uint m_nickColor;
+
+        QString m_account;
 
         bool m_changed;
 };

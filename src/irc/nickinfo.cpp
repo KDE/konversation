@@ -223,6 +223,10 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     {
         tooltip << "<tr><td><b>" << i18n("Hostmask:") << "</b></td><td>" << getHostmask() << "</td></tr>";
     }
+    if(!m_account.isEmpty())
+    {
+        tooltip << "<tr><td><b>" << i18n("Account:") << "</b></td><td>" << m_account << "</td></tr>";
+    }
     if(isAway())
     {
         tooltip << "<tr><td><b>" << i18n("Away&nbsp;Message:") << "</b></td><td>";
@@ -247,4 +251,14 @@ void NickInfo::setPrintedOnline(bool printed)
 bool NickInfo::getPrintedOnline()
 {
     return m_printedOnline;
+}
+
+void NickInfo::setAccount(const QString &name)
+{
+    if (name == m_account)
+        return;
+
+    m_account = name;
+
+    startNickInfoChangedTimer();
 }
