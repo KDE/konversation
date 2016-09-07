@@ -10,7 +10,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
-  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eli J. MacKenzie <argonel at gmail.com>
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
@@ -86,6 +86,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_capAnswered = 0;
     m_capEndDelayed = false;
     m_autoJoin = false;
+
+    m_hasAwayNotify = false;
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -705,6 +707,10 @@ void Server::capInitiateNegotiation(bool useSASL)
 
     queue(QStringLiteral("CAP REQ :multi-prefix"), HighPriority);
     m_capRequested++;
+
+    queue(QStringLiteral("CAP REQ :away-notify"), HighPriority);
+    m_hasAwayNotify = false;
+    m_capRequested++;
 }
 
 void Server::capReply()
@@ -735,6 +741,10 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
         getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL PLAIN authentication..."));
         sendAuthenticate(QStringLiteral("PLAIN"));
         m_capEndDelayed = true;
+    }
+    else if (name == QStringLiteral("away-notify"))
+    {
+        m_hasAwayNotify = true;
     }
 }
 

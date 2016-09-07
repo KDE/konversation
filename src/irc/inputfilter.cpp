@@ -150,8 +150,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
     // remember hostmask for this nick, it could have changed
     m_server->addHostmaskToNick(sourceNick, sourceHostmask);
-    if (parameterList.isEmpty())
-        return;
 
     //PRIVMSG #channel :message
     if (command == QStringLiteral("privmsg") && plHas(2))
@@ -656,6 +654,28 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 i18n("%1 invited you to channel %2.", sourceNick, channel)
                 );
             emit invitation(sourceNick, channel);
+        }
+    }
+    else if (command == QStringLiteral("away"))
+    {
+        NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
+
+        if (nickInfo)
+        {
+            if (!parameterList.isEmpty())
+            {
+                nickInfo->setAway(true);
+                nickInfo->setAwayMessage(parameterList.first());
+            }
+            else
+            {
+                nickInfo->setAway(false);
+                nickInfo->setAwayMessage(QString());
+            }
+        }
+        else
+        {
+            qDebug() << "Recieved away message for unknown nick," << sourceNick;
         }
     }
     else

@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
-  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eli J. MacKenzie <argonel at gmail.com>
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
@@ -385,7 +385,9 @@ class Server : public QObject
         void dccPassiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
         void dccReverseChatAck(const QString& partnerNick, const QString& extension, const QString& ownAddress, quint16 ownPort, const QString& reverseToken);
 
-        bool capEndDelayed() { return m_capEndDelayed; }
+        bool capEndDelayed() const { return m_capEndDelayed; }
+
+        bool hasAwayNotify() const { return m_hasAwayNotify; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -848,6 +850,8 @@ class Server : public QObject
         QStringList m_changedChannels;
 
         bool m_recreationScheduled;
+
+        bool m_hasAwayNotify;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)

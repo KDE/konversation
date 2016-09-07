@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004-2006, 2009 Peter Simonsson <peter.simonsson@gmail.com>
+  Copyright (C) 2004-2016 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -2170,6 +2170,12 @@ void Channel::endOfNames()
     if (!m_initialNamesReceived)
     {
         m_initialNamesReceived = true;
+
+        if (m_server->hasAwayNotify() && !Preferences::self()->autoWhoContinuousEnabled())
+        {
+            // Do one who request to get the initial away state for the channel
+            QMetaObject::invokeMethod(m_server, "requestWho", Qt::QueuedConnection, Q_ARG(QString, getName()));
+        }
 
         scheduleAutoWho();
     }
