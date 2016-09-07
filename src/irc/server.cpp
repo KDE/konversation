@@ -88,6 +88,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_autoJoin = false;
 
     m_hasAwayNotify = false;
+    m_hasExtendedJoin = false;
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -714,6 +715,10 @@ void Server::capInitiateNegotiation(bool useSASL)
 
     queue(QStringLiteral("CAP REQ :account-notify"), HighPriority);
     m_capRequested++;
+
+    queue(QStringLiteral("CAP REQ :extended-join"), HighPriority);
+    m_hasExtendedJoin = false;
+    m_capRequested++;
 }
 
 void Server::capReply()
@@ -748,6 +753,10 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
     else if (name == QStringLiteral("away-notify"))
     {
         m_hasAwayNotify = true;
+    }
+    else if (name == QStringLiteral("extended-join"))
+    {
+        m_hasExtendedJoin = true;
     }
 }
 
@@ -3311,7 +3320,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
 }
 
-Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
+Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account, const QString &realName)
 {
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
@@ -3322,6 +3331,14 @@ Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nic
         if ((nickInfo->getHostmask() != hostmask) && !hostmask.isEmpty())
         {
             nickInfo->setHostmask(hostmask);
+        }
+        if (!account.isEmpty())
+        {
+            nickInfo->setAccount(account);
+        }
+        if (!realName.isEmpty())
+        {
+            nickInfo->setRealName(realName);
         }
         outChannel->joinNickname(channelNick);
     }

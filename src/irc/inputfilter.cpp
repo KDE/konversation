@@ -555,8 +555,26 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if (command==QStringLiteral("join") && plHas(1))
     {
-        QString channelName(trailing);
-        // Sometimes JOIN comes without ":" in front of the channel name
+        QString channelName;
+        QString account;
+        QString realName;
+
+        if (!m_server->hasExtendedJoin())
+        {
+            channelName = trailing;
+            // Sometimes JOIN comes without ":" in front of the channel name
+        }
+        else
+        {
+            channelName = parameterList[0];
+            account = parameterList[1];
+            realName = parameterList[2];
+
+            if (account == "*")
+            {
+                account = QString();
+            }
+        }
 
         // Did we join the channel, or was it someone else?
         if (m_server->isNickname(sourceNick))
@@ -592,7 +610,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         }
         else
         {
-            Channel* channel = m_server->nickJoinsChannel(channelName, sourceNick, sourceHostmask);
+            Channel* channel = m_server->nickJoinsChannel(channelName, sourceNick, sourceHostmask, account, realName);
             konv_app->notificationHandler()->join(channel, sourceNick);
         }
     }

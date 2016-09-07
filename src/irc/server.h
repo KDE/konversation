@@ -138,7 +138,7 @@ class Server : public QObject
         void resetNickSelection();
         void queueNicks(const QString& channelName, const QStringList& nicknameList);
         void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
-        Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
+        Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account, const QString &realName);
         void renameNick(const QString &nickname,const QString &newNick);
         Channel* removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
         void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
@@ -388,6 +388,7 @@ class Server : public QObject
         bool capEndDelayed() const { return m_capEndDelayed; }
 
         bool hasAwayNotify() const { return m_hasAwayNotify; }
+        bool hasExtendedJoin() const { return m_hasExtendedJoin; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -852,6 +853,7 @@ class Server : public QObject
         bool m_recreationScheduled;
 
         bool m_hasAwayNotify;
+        bool m_hasExtendedJoin;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
