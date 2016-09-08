@@ -988,6 +988,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                     m_server->setTopicLength(topicLength);
                             }
                         }
+                        else if (property == QStringLiteral("WHOX"))
+                        {
+                            m_server->setHasWHOX(true);
+                         }
                         else
                         {
                             //qDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
@@ -1560,6 +1564,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             //"/WHO #lounge"
             //[21:39] [352] #lounge jasmine bots.worldforge.org irc.worldforge.org jasmine H 0 jasmine
             //[21:39] [352] #lounge ~Nottingha worldforge.org irc.worldforge.org SherwoodSpirit H 0 Arboreal Entity
+            case RPL_WHOSPCRPL:
             case RPL_WHOREPLY:
             {
                 if (plHas(6))
@@ -1576,6 +1581,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         if(!bAway)
                         {
                             nickInfo->setAwayMessage(QString());
+                        }
+
+                        if(m_server->hasWHOX() && m_server->hasExtendedJoin())
+                        {
+                            nickInfo->setAccount(parameterList.value(8));
                         }
                     }
                     // Display message only if this was not an automatic request.

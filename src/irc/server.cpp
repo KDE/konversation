@@ -89,6 +89,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_hasAwayNotify = false;
     m_hasExtendedJoin = false;
+    m_hasWHOX = false;
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -1963,7 +1964,17 @@ void Server::requestWhois(const QString& nickname)
 void Server::requestWho(const QString& channel)
 {
     m_inputFilter.setAutomaticRequest(QStringLiteral("WHO"), channel, true);
-    queue(QStringLiteral("WHO ")+channel, LowPriority);
+    QString command(QStringLiteral("WHO ") + channel);
+
+    if (hasWHOX() && hasExtendedJoin())
+    {
+        // Request the account as well as the usual info.
+        // See http://faerion.sourceforge.net/doc/irc/whox.var
+        // for more info.
+        command += QStringLiteral(" nuhsa%cuhsnfdra");
+    }
+
+    queue(command, LowPriority);
 }
 
 void Server::requestUserhost(const QString& nicks)

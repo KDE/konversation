@@ -389,6 +389,8 @@ class Server : public QObject
 
         bool hasAwayNotify() const { return m_hasAwayNotify; }
         bool hasExtendedJoin() const { return m_hasExtendedJoin; }
+        void setHasWHOX(bool state) { m_hasWHOX = state; }
+        bool hasWHOX() const { return m_hasWHOX; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -854,6 +856,7 @@ class Server : public QObject
 
         bool m_hasAwayNotify;
         bool m_hasExtendedJoin;
+        bool m_hasWHOX;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
