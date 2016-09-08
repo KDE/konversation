@@ -823,6 +823,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     m_server->capEndNegotiation();
                 }
             }
+            else if (command == "ls" || command == "list")
+            {
+                m_server->appendStatusMessage(i18n("Capabilities"), parameterList.mid(2).join(QStringLiteral(" ")));
+            }
         }
         else if (command == QStringLiteral("authenticate") && plHas(1))
         {
