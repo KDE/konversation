@@ -185,14 +185,14 @@ void AwayManager::updateGlobalAwayAction(bool away)
         if (awayCount == serverList.count())
         {
             awayAction->setChecked(true);
-            awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
+            awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user")));
             if (trayIcon) trayIcon->setAway(true);
         }
     }
     else
     {
         awayAction->setChecked(false);
-        awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-suser")));
+        awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
         if (trayIcon) trayIcon->setAway(false);
     }
 }
