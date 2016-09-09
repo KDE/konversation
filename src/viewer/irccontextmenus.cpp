@@ -88,6 +88,8 @@ IrcContextMenus::~IrcContextMenus()
     delete m_nickMenu;
     delete m_quickButtonMenu;
     delete m_topicHistoryMenu;
+    delete m_modesMenu;
+    delete m_kickBanMenu;
 }
 
 IrcContextMenus* IrcContextMenus::self()
@@ -392,7 +394,7 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    m_modesMenu = new QMenu(m_nickMenu);
+    m_modesMenu = new QMenu();
     m_nickMenu->addMenu(m_modesMenu);
     m_modesMenu->setTitle(i18n("Modes"));
     createAction(m_modesMenu, GiveOp, QIcon::fromTheme("irc-operator"), i18n("Give Op"));
@@ -402,7 +404,7 @@ void IrcContextMenus::setupNickMenu()
     createAction(m_modesMenu, GiveVoice, QIcon::fromTheme("irc-voice"), i18n("Give Voice"));
     createAction(m_modesMenu, TakeVoice, QIcon::fromTheme("irc-unvoice"), i18n("Take Voice"));
 
-    m_kickBanMenu = new QMenu(m_nickMenu);
+    m_kickBanMenu = new QMenu();
     m_nickMenu->addMenu(m_kickBanMenu);
     m_kickBanMenu->setTitle(i18n("Kick / Ban"));
     createAction(m_kickBanMenu, Kick, i18n("Kick"));
