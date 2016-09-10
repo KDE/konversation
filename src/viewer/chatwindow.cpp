@@ -275,38 +275,38 @@ void ChatWindow::appendLog(const QString& message)
     textView->appendLog(message);
 }
 
-void ChatWindow::append(const QString& nickname,const QString& message, const QString& label)
+void ChatWindow::append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags, const QString& label)
 {
     if(!textView) return;
-    textView->append(nickname, message, label);
+    textView->append(nickname, message, messageTags, label);
 }
 
-void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool inChannel)
+void ChatWindow::appendQuery(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel)
 {
     if(!textView) return ;
-    textView->appendQuery(nickname,message, inChannel);
+    textView->appendQuery(nickname, message, messageTags, inChannel);
 }
 
-void ChatWindow::appendAction(const QString& nickname, const QString& message)
+void ChatWindow::appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags)
 {
     if(!textView) return;
 
     if (getType() == Query || getType() == DccChat)
-        textView->appendQueryAction(nickname, message);
+        textView->appendQueryAction(nickname, message, messageTags);
     else
-        textView->appendChannelAction(nickname, message);
+        textView->appendChannelAction(nickname, message, messageTags);
 }
 
-void ChatWindow::appendServerMessage(const QString& type,const QString& message, bool parseURL)
+void ChatWindow::appendServerMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL)
 {
     if(!textView) return ;
-    textView->appendServerMessage(type,message, parseURL);
+    textView->appendServerMessage(type, message, messageTags, parseURL);
 }
 
-void ChatWindow::appendCommandMessage(const QString& command, const QString& message, bool parseURL, bool self)
+void ChatWindow::appendCommandMessage(const QString& command, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL, bool self)
 {
     if(!textView) return ;
-    textView->appendCommandMessage(command,message,parseURL,self);
+    textView->appendCommandMessage(command, message, messageTags, parseURL, self);
 }
 
 void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& message)
@@ -717,7 +717,7 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
     else
         visualization = result;
 
-    appendQuery(recipient, visualization, true);
+    appendQuery(recipient, visualization, QHash<QString, QString>(), true);
 
     if (!getServer())
         return;

@@ -78,8 +78,8 @@ class Channel : public ChatWindow
         virtual bool canBeFrontView();
         virtual bool searchView();
 
-        virtual void append(const QString& nickname,const QString& message, const QString& label = QString());
-        virtual void appendAction(const QString& nickname,const QString& message);
+        virtual void append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString());
+        virtual void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>());
         void nickActive(const QString& nickname);
         #ifdef HAVE_QCA2
         Konversation::Cipher* getCipher();
@@ -137,11 +137,11 @@ class Channel : public ChatWindow
         ChannelNickPtr getOwnChannelNick() const;
         ChannelNickPtr getChannelNick(const QString &ircnick) const;
 
-        void joinNickname(ChannelNickPtr channelNick);
-        void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
-        void kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason);
+        void joinNickname(ChannelNickPtr channelNick, const QHash<QString, QString> &messageTags);
+        void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit, const QHash<QString, QString> &messageTags);
+        void kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason, const QHash<QString, QString> &messageTags);
         void addNickname(ChannelNickPtr channelNick);
-        void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
+        void nickRenamed(const QString &oldNick, const NickInfo& channelnick, const QHash<QString, QString> &messageTags);
         void queueNicks(const QStringList& nicknameList);
         void endOfNames();
         Nick *getNickByName(const QString& lookname) const;
@@ -164,8 +164,8 @@ class Channel : public ChatWindow
         QString getTopic();
         TopicHistoryModel* getTopicHistory() { return m_topicHistory; }
 
-        void setTopic(const QString& text);
-        void setTopic(const QString& nickname, const QString& text);
+        void setTopic(const QString& text, const QHash<QString, QString> &messageTags);
+        void setTopic(const QString& nickname, const QString& text, const QHash<QString, QString> &messageTags);
         void setTopicAuthor(const QString& author, QDateTime timestamp);
 
     Q_SIGNALS:
@@ -188,7 +188,7 @@ class Channel : public ChatWindow
          *  @param plus True if the mode is being granted, false if it's being taken away.
          *  @param parameter This depends on what the mode change is.  In most cases it is the nickname of the person that is being given voice/op/admin etc.  See the code.
          */
-        void updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter);
+        void updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter, const QHash<QString, QString> &messageTags);
 
     Q_SIGNALS:
         void modesChanged();

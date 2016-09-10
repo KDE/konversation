@@ -120,7 +120,7 @@ class ViewContainer : public QAbstractItemModel
         QString currentViewURL(bool passNetwork = true);
 
         void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
-                               bool parseURL = true);
+                               const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
 
         void showQueueTuner(bool);
 

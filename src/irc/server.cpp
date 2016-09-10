@@ -90,6 +90,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_hasAwayNotify = false;
     m_hasExtendedJoin = false;
     m_hasWHOX = false;
+    m_hasServerTime = false;
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -720,6 +721,12 @@ void Server::capInitiateNegotiation(bool useSASL)
     queue(QStringLiteral("CAP REQ :extended-join"), HighPriority);
     m_hasExtendedJoin = false;
     m_capRequested++;
+
+    queue(QStringLiteral("CAP REQ :server-time"), HighPriority);
+    m_hasServerTime = false;
+    m_capRequested++;
+    queue(QStringLiteral("CAP REQ :znc.in/server-time-iso"), HighPriority);
+    m_capRequested++;
 }
 
 void Server::capReply()
@@ -758,6 +765,10 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
     else if (name == QStringLiteral("extended-join"))
     {
         m_hasExtendedJoin = true;
+    }
+    else if (name == QStringLiteral("server-time") || name == QStringLiteral("znc.in/server-time-iso"))
+    {
+        m_hasServerTime = true;
     }
 }
 
@@ -2758,7 +2769,7 @@ void Server::sendJoinCommand(const QString& name, const QString& password)
     queue(result.toServer);
 }
 
-Channel* Server::joinChannel(const QString& name, const QString& hostmask)
+Channel* Server::joinChannel(const QString& name, const QString& hostmask, const QHash<QString, QString> &messageTags)
 {
     // (re-)join channel, open a new panel if needed
     Channel* channel = getChannelByName(name);
@@ -2793,7 +2804,7 @@ Channel* Server::joinChannel(const QString& name, const QString& hostmask)
         nickInfo->setHostmask(hostmask);
     }
 
-    channel->joinNickname(channelNick);
+    channel->joinNickname(channelNick, messageTags);
 
     return channel;
 }
@@ -2817,13 +2828,13 @@ void Server::removeChannel(Channel* channel)
         updateAutoJoin();
 }
 
-void Server::updateChannelMode(const QString &updater, const QString &channelName, char mode, bool plus, const QString &parameter)
+void Server::updateChannelMode(const QString &updater, const QString &channelName, char mode, bool plus, const QString &parameter, const QHash<QString, QString> &messageTags)
 {
 
     Channel* channel=getChannelByName(channelName);
 
     if(channel)                                   //Let the channel be verbose to the screen about the change, and update channelNick
-        channel->updateMode(updater, mode, plus, parameter);
+        channel->updateMode(updater, mode, plus, parameter, messageTags);
     // TODO: What is mode character for owner?
     // Answer from JOHNFLUX - I think that admin is the same as owner.  Channel.h has owner as "a"
     // "q" is the likely answer.. UnrealIRCd and euIRCd use it.
@@ -3067,7 +3078,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
     emit watchedNickChanged(this, nickname, true);
 
-    appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 is online (%2).", nickname, getServerName()), getStatusView());
+    appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 is online (%2).", nickname, getServerName()), QHash<QString, QString>(), getStatusView());
 
     Application::instance()->notificationHandler()->nickOnline(getStatusView(), nickname);
 
@@ -3081,7 +3092,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     emit watchedNickChanged(this, nickname, false);
 
-    appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
+    appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), QHash<QString, QString>(), getStatusView());
 
     Application::instance()->notificationHandler()->nickOffline(getStatusView(), nickname);
 
@@ -3331,7 +3342,8 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
 }
 
-Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account, const QString &realName)
+Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account,
+                                  const QString &realName, const QHash<QString, QString> &messageTags)
 {
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
@@ -3351,7 +3363,7 @@ Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nic
         {
             nickInfo->setRealName(realName);
         }
-        outChannel->joinNickname(channelNick);
+        outChannel->joinNickname(channelNick, messageTags);
     }
 
     return outChannel;
@@ -3370,7 +3382,7 @@ void Server::addHostmaskToNick(const QString& sourceNick, const QString& sourceH
     }
 }
 
-Channel* Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit)
+Channel* Server::removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, const QHash<QString, QString> &messageTags, bool quit)
 {
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
@@ -3379,7 +3391,7 @@ Channel* Server::removeNickFromChannel(const QString &channelName, const QString
         ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
         if(channelNick)
         {
-            outChannel->removeNick(channelNick,reason,quit);
+            outChannel->removeNick(channelNick,reason,quit, messageTags);
         }
     }
 
@@ -3397,7 +3409,7 @@ Channel* Server::removeNickFromChannel(const QString &channelName, const QString
     return outChannel;
 }
 
-void Server::nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason)
+void Server::nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason, const QHash<QString, QString> &messageTags)
 {
     Channel* outChannel = getChannelByName(channelName);
     if(outChannel)
@@ -3407,32 +3419,32 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
 
         if(channelNick)
         {
-          outChannel->kickNick(channelNick, kicker, reason);
+          outChannel->kickNick(channelNick, kicker, reason, messageTags);
           // Tell Nickinfo
           removeChannelNick(channelName,nickname);
         }
     }
 }
 
-void Server::removeNickFromServer(const QString &nickname,const QString &reason)
+void Server::removeNickFromServer(const QString &nickname,const QString &reason, const QHash<QString, QString> &messageTags)
 {
     foreach (Channel* channel, m_channelList)
     {
         channel->flushNickQueue();
         // Check if nick is in this channel or not.
         if(channel->getNickByName(nickname))
-            removeNickFromChannel(channel->getName(),nickname,reason,true);
+            removeNickFromChannel(channel->getName(), nickname, reason, messageTags, true);
     }
 
     Query* query = getQueryByName(nickname);
-    if (query) query->quitNick(reason);
+    if (query) query->quitNick(reason, messageTags);
 
     // Delete the nick from all channels and then delete the nickinfo,
     // emitting signal if on the watch list.
     setNickOffline(nickname);
 }
 
-void Server::renameNick(const QString &nickname, const QString &newNick)
+void Server::renameNick(const QString &nickname, const QString &newNick, const QHash<QString, QString> &messageTags)
 {
     if(nickname.isEmpty() || newNick.isEmpty())
     {
@@ -3462,7 +3474,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
             channel->flushNickQueue();
 
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
-            if (channel->getNickByName(nickname)) channel->nickRenamed(nickname, *nickInfo);
+            if (channel->getNickByName(nickname)) channel->nickRenamed(nickname, *nickInfo, messageTags);
         }
 
         //Watched nicknames stuff
@@ -3511,33 +3523,33 @@ void Server::gotOwnResolvedHostByUserhost(const QHostInfo& res)
         qDebug() << "Got error: " << res.errorString();
 }
 
-void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
+void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message, const QHash<QString, QString> &messageTags)
 {
     Channel* outChannel = getChannelByName(channel);
-    if (outChannel) outChannel->appendServerMessage(type,message);
+    if (outChannel) outChannel->appendServerMessage(type, message, messageTags);
 }
 
-void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message, bool highlight, bool parseURL)
+void Server::appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message, const QHash<QString, QString> &messageTags, bool highlight, bool parseURL)
 {
     Channel* outChannel = getChannelByName(channel);
     if (outChannel)
     {
-        outChannel->appendCommandMessage(command,message,parseURL,!highlight);
+        outChannel->appendCommandMessage(command, message, messageTags, parseURL, !highlight);
     }
     else
     {
-        appendStatusMessage(command, QString(QStringLiteral("%1 %2")).arg(channel).arg(message));
+        appendStatusMessage(command, QString(QStringLiteral("%1 %2")).arg(channel).arg(message), messageTags);
     }
 }
 
-void Server::appendStatusMessage(const QString& type,const QString& message)
+void Server::appendStatusMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags)
 {
-    getStatusView()->appendServerMessage(type,message);
+    getStatusView()->appendServerMessage(type, message, messageTags);
 }
 
-void Server::appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL)
+void Server::appendMessageToFrontmost(const QString& type, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL)
 {
-    getViewContainer()->appendToFrontmost(type, message, getStatusView(), parseURL);
+    getViewContainer()->appendToFrontmost(type, message, getStatusView(), messageTags, parseURL);
 }
 
 void Server::setNickname(const QString &newNickname)
@@ -3551,24 +3563,24 @@ void Server::setNickname(const QString &newNickname)
     emit nicknameChanged(newNickname);
 }
 
-void Server::setChannelTopic(const QString &channel, const QString &newTopic)
+void Server::setChannelTopic(const QString &channel, const QString &newTopic, const QHash<QString, QString> &messageTags)
 {
     Channel* outChannel = getChannelByName(channel);
     if(outChannel)
     {
         // encoding stuff is done in send()
-        outChannel->setTopic(newTopic);
+        outChannel->setTopic(newTopic, messageTags);
     }
 }
 
                                                   // Overloaded
-void Server::setChannelTopic(const QString& nickname, const QString &channel, const QString &newTopic)
+void Server::setChannelTopic(const QString& nickname, const QString &channel, const QString &newTopic, const QHash<QString, QString> &messageTags)
 {
     Channel* outChannel = getChannelByName(channel);
     if(outChannel)
     {
         // encoding stuff is done in send()
-        outChannel->setTopic(nickname,newTopic);
+        outChannel->setTopic(nickname, newTopic, messageTags);
     }
 }
 
@@ -3988,7 +4000,7 @@ void Server::requestUnaway()
     queue(QStringLiteral("AWAY"));
 }
 
-void Server::setAway(bool away)
+void Server::setAway(bool away, const QHash<QString, QString> &messageTags)
 {
     IdentityPtr identity = getIdentity();
 
@@ -4007,9 +4019,9 @@ void Server::setAway(bool away)
         }
 
         if (!m_awayReason.isEmpty())
-            appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away (reason: %1).",m_awayReason));
+            appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away (reason: %1).",m_awayReason), messageTags);
         else
-           appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."));
+           appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."), messageTags);
 
         if (identity && identity->getRunAwayCommands())
         {
@@ -4034,7 +4046,7 @@ void Server::setAway(bool away)
 
         if (m_away)
         {
-            appendMessageToFrontmost(i18n("Away"), i18n("You are no longer marked as being away."));
+            appendMessageToFrontmost(i18n("Away"), i18n("You are no longer marked as being away."), messageTags);
 
             if (identity && identity->getRunAwayCommands())
             {
@@ -4043,7 +4055,7 @@ void Server::setAway(bool away)
             }
         }
         else
-            appendMessageToFrontmost(i18n("Away"), i18n("You are not marked as being away."));
+            appendMessageToFrontmost(i18n("Away"), i18n("You are not marked as being away."), messageTags);
 
         m_away = false;
     }

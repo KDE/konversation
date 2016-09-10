@@ -2378,7 +2378,7 @@ void ViewContainer::findPrevText()
     }
 }
 
-void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)
+void ViewContainer::appendToFrontmost(const QString& type, const QString& message, ChatWindow* serverView, const QHash<QString, QString> &messageTags, bool parseURL)
 {
     if (!m_tabWidget) return;
 
@@ -2404,14 +2404,14 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
         Preferences::self()->redirectServerAndAppMsgToStatusPane())
     {
         // if not, take server specified fallback view instead
-        serverView->appendServerMessage(type,  message, parseURL);
+        serverView->appendServerMessage(type,  message, messageTags, parseURL);
         // FIXME: this signal should be sent from the status panel instead, so it
         //        can be using the correct highlight color, would be more consistent
         //        anyway!
         // FIXME newText(serverView,QString::null,true);
     }
     else
-        m_frontView->appendServerMessage(type, message, parseURL);
+        m_frontView->appendServerMessage(type, message, messageTags, parseURL);
 }
 
 void ViewContainer::insertCharacter()

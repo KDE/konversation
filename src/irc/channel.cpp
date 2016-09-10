@@ -1045,7 +1045,7 @@ bool Channel::shouldShowEvent(ChannelNickPtr channelNick)
         return true; // if hideUnimportantEvents is off we don't care and just show the event
 }
 
-void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
+void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo, const QHash<QString, QString> &messageTags)
 {
     QString newNick = nickInfo.getNickname();
     Nick *nick = getNickByName(oldNick);
@@ -1063,12 +1063,12 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
     {
         setNickname(newNick);
         if (displayCommandMessage)
-            appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.", newNick), true, true);
+            appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.", newNick), messageTags, true, true);
     }
     else if (displayCommandMessage)
     {
         /* No, must've been someone else */
-        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick));
+        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick), messageTags);
     }
 
     if (nick)
@@ -1080,7 +1080,7 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
     }
 }
 
-void Channel::joinNickname(ChannelNickPtr channelNick)
+void Channel::joinNickname(ChannelNickPtr channelNick, const QHash<QString, QString> &messageTags)
 {
     bool displayCommandMessage = shouldShowEvent(channelNick);
 
@@ -1090,7 +1090,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         emit joined(this);
         if (displayCommandMessage)
             appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 = our hostmask, %2 = channel",
-                                 "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), false, true);
+                                 "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), messageTags, false, true);
 
         // Prepare for impending NAMES.
         purgeNicks();
@@ -1118,12 +1118,12 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         QString hostname = channelNick->getHostmask();
         if (displayCommandMessage)
             appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 is the nick joining and %2 the hostmask of that nick",
-                                 "%1 (%2) has joined this channel.", nick, hostname), false);
+                                 "%1 (%2) has joined this channel.", nick, hostname), messageTags, false);
         addNickname(channelNick);
     }
 }
 
-void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit)
+void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit, const QHash<QString, QString> &messageTags)
 {
     bool displayCommandMessage = shouldShowEvent(channelNick);
 
@@ -1144,18 +1144,18 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (quit)
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18nc("Message type", "Quit"), i18n("You (%1) have left this server.", channelNick->getHostmask()));
+                    appendCommandMessage(i18nc("Message type", "Quit"), i18n("You (%1) have left this server.", channelNick->getHostmask()), messageTags);
                 else
                     appendCommandMessage(i18nc("Message type", "Quit"), i18nc("%1 = our hostmask, %2 = reason", "You (%1) have left this server (%2).",
-                        channelNick->getHostmask(), displayReason), false);
+                        channelNick->getHostmask(), displayReason), messageTags, false);
             }
             else
             {
                 if (displayReason.isEmpty())
-                    appendCommandMessage(i18nc("Message type", "Part"), i18n("You have left channel %1.", getName()));
+                    appendCommandMessage(i18nc("Message type", "Part"), i18n("You have left channel %1.", getName()), messageTags);
                 else
                     appendCommandMessage(i18nc("Message type", "Part"), i18nc("%1 = our hostmask, %2 = channel, %3 = reason",
-                        "You (%1) have left channel %2 (%3).", channelNick->getHostmask(), getName(), displayReason), false);
+                        "You (%1) have left channel %2 (%3).", channelNick->getHostmask(), getName(), displayReason), messageTags, false);
             }
         }
 
@@ -1169,19 +1169,19 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             {
                 if (displayReason.isEmpty())
                     appendCommandMessage(i18nc("Message type", "Quit"), i18n("%1 (%2) has left this server.", channelNick->getNickname(),
-                        channelNick->getHostmask()), false);
+                        channelNick->getHostmask()), messageTags, false);
                 else
                     appendCommandMessage(i18nc("Message type", "Quit"), i18nc("%1 = nick, %2 = hostname, %3 = reason",
-                        "%1 (%2) has left this server (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason), false);
+                        "%1 (%2) has left this server (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason), messageTags, false);
             }
             else
             {
                 if (displayReason.isEmpty())
                     appendCommandMessage(i18nc("Message type", "Part"), i18n("%1 (%2) has left this channel.", channelNick->getNickname(),
-                        channelNick->getHostmask()), false);
+                        channelNick->getHostmask()), messageTags, false);
                 else
                     appendCommandMessage(i18nc("Message type", "Part"), i18nc("%1 = nick, %2 = hostmask, %3 = reason",
-                        "%1 (%2) has left this channel (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason), false);
+                        "%1 (%2) has left this channel (%3).", channelNick->getNickname(), channelNick->getHostmask(), displayReason), messageTags, false);
             }
         }
 
@@ -1213,7 +1213,7 @@ void Channel::flushNickQueue()
     processQueuedNicks(true);
 }
 
-void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason)
+void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason, const QHash<QString, QString> &messageTags)
 {
     QString displayReason = reason;
 
@@ -1229,22 +1229,22 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.", getName()));
+                appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.", getName()), messageTags);
             else
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel and %2 the reason",
-                                              "You have kicked yourself from channel %1 (%2).", getName(), displayReason));
+                                              "You have kicked yourself from channel %1 (%2).", getName(), displayReason), messageTags);
         }
         else
         {
             if (displayReason.isEmpty())
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 adds the kicker",
-                                              "You have been kicked from channel %1 by %2.", getName(), kicker));
+                                              "You have been kicked from channel %1 by %2.", getName(), kicker), messageTags);
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 the kicker and %3 the reason",
-                                              "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason));
+                                              "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason), messageTags);
             }
 
             Application::instance()->notificationHandler()->kick(this,getName(), kicker);
@@ -1264,22 +1264,22 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.", channelNick->getNickname()));
+                appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.", channelNick->getNickname()), messageTags);
             else
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick and %2 the reason",
-                                     "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason));
+                                     "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason), messageTags);
         }
         else
         {
             if (displayReason.isEmpty())
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 adds the kicker",
-                                     "%1 has been kicked from the channel by %2.", channelNick->getNickname(), kicker));
+                                     "%1 has been kicked from the channel by %2.", channelNick->getNickname(), kicker), messageTags);
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 the kicker and %3 the reason",
-                                     "%1 has been kicked from the channel by %2 (%3).", channelNick->getNickname(), kicker, displayReason));
+                                     "%1 has been kicked from the channel by %2 (%3).", channelNick->getNickname(), kicker, displayReason), messageTags);
             }
         }
 
@@ -1357,7 +1357,7 @@ QString Channel::getTopic()
     return m_topicHistory->currentTopic();
 }
 
-void Channel::setTopic(const QString& text)
+void Channel::setTopic(const QString& text, const QHash<QString, QString> &messageTags)
 {
     QString cleanTopic = text;
 
@@ -1365,12 +1365,12 @@ void Channel::setTopic(const QString& text)
     if (!cleanTopic.isEmpty() && hasIRCMarkups(cleanTopic))
         cleanTopic += QStringLiteral("\017");
 
-    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic));
+    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic), messageTags);
 
     m_topicHistory->appendTopic(replaceIRCMarkups(Konversation::removeIrcMarkup(text)));
 }
 
-void Channel::setTopic(const QString& nickname, const QString& text)
+void Channel::setTopic(const QString& nickname, const QString& text, const QHash<QString, QString> &messageTags)
 {
     QString cleanTopic = text;
 
@@ -1379,9 +1379,9 @@ void Channel::setTopic(const QString& nickname, const QString& text)
         cleanTopic += QStringLiteral("\017");
 
     if (nickname == m_server->getNickname())
-        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic));
+        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", cleanTopic), messageTags);
     else
-        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, cleanTopic));
+        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, cleanTopic), messageTags);
 
     m_topicHistory->appendTopic(replaceIRCMarkups(Konversation::removeIrcMarkup(text)), nickname);
 }
@@ -1394,7 +1394,7 @@ void Channel::setTopicAuthor(const QString& author, QDateTime time)
     m_topicHistory->setCurrentTopicMetadata(author, time);
 }
 
-void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter)
+void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter, const QHash<QString, QString> &messageTags)
 {
     // Note for future expansion:
     //     m_server->getChannelNick(getName(), sourceNick);
@@ -1826,7 +1826,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
     if (!message.isEmpty() && !Preferences::self()->useLiteralModes())
     {
-        appendCommandMessage(i18n("Mode"), message);
+        appendCommandMessage(i18n("Mode"), message, messageTags);
     }
 
     updateModeWidgets(mode, plus, parameter);
@@ -2683,7 +2683,7 @@ void Channel::clearBanList()
   emit banListCleared();
 }
 
-void Channel::append(const QString& nickname, const QString& message, const QString& label)
+void Channel::append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags, const QString& label)
 {
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
@@ -2693,11 +2693,11 @@ void Channel::append(const QString& nickname, const QString& message, const QStr
         }
     }
 
-    ChatWindow::append(nickname, message, label);
+    ChatWindow::append(nickname, message, messageTags, label);
     nickActive(nickname);
 }
 
-void Channel::appendAction(const QString& nickname, const QString& message)
+void Channel::appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags)
 {
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
@@ -2707,7 +2707,7 @@ void Channel::appendAction(const QString& nickname, const QString& message)
         }
     }
 
-    ChatWindow::appendAction(nickname, message);
+    ChatWindow::appendAction(nickname, message, messageTags);
     nickActive(nickname);
 }
 

@@ -455,14 +455,14 @@ void Query::emitUpdateInfo()
 }
 
 // show quit message of nick if we see it
-void Query::quitNick(const QString& reason)
+void Query::quitNick(const QString& reason, const QHash<QString, QString> &messageTags)
 {
     QString displayReason = reason;
 
     if (displayReason.isEmpty())
     {
         appendCommandMessage(i18nc("Message type", "Quit"), i18nc("%1 = nick, %2 = hostmask", "%1 (%2) has left this server.",
-            getName(), getNickInfo()->getHostmask()), false);
+            getName(), getNickInfo()->getHostmask()), messageTags, false);
     }
     else
     {
@@ -470,7 +470,7 @@ void Query::quitNick(const QString& reason)
             displayReason+=QStringLiteral("\017");
 
         appendCommandMessage(i18nc("Message type", "Quit"), i18nc("%1 = nick, %2 = hostmask, %3 = reason", "%1 (%2) has left this server (%3).",
-            getName(), getNickInfo()->getHostmask(), displayReason), false);
+            getName(), getNickInfo()->getHostmask(), displayReason), messageTags, false);
     }
 }
 

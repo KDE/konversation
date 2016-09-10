@@ -85,13 +85,13 @@ class ChatWindow : public QWidget
 
         virtual void sendText(const QString& /*text*/) {}
 
-        virtual void append(const QString& nickname,const QString& message, const QString& label = QString());
+        virtual void append(const QString& nickname,const QString& message, const QHash<QString, QString> &messageTags, const QString& label = QString());
         virtual void appendRaw(const QString& message, bool self = false);
         virtual void appendLog(const QString& message);
-        virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);
-        virtual void appendAction(const QString& nickname,const QString& message);
-        virtual void appendServerMessage(const QString& type,const QString& message, bool parseURL = true);
-        virtual void appendCommandMessage(const QString& command, const QString& message,
+        virtual void appendQuery(const QString& nickname,const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool inChannel = false);
+        virtual void appendAction(const QString& nickname,const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>());
+        virtual void appendServerMessage(const QString& type,const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
+        virtual void appendCommandMessage(const QString& command, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(),
             bool parseURL = true, bool self = false);
         virtual void appendBacklogMessage(const QString& firstColumn,const QString& message);
 

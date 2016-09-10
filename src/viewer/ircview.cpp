@@ -520,7 +520,7 @@ void IRCView::updateAppearance()
 
 // Data insertion
 
-void IRCView::append(const QString& nick, const QString& message, const QString& label)
+void IRCView::append(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags, const QString& label)
 {
     QString channelColor = Preferences::self()->color(Preferences::ChannelMessage).name();
 
@@ -539,14 +539,11 @@ void IRCView::append(const QString& nick, const QString& message, const QString&
         line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
     }
     line += "<font color=\"" + channelColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3</font>";
+    line = line.arg(timeStamp(messageTags), nick, text);
 
     if (!label.isEmpty())
     {
-        line = line.arg(timeStamp(), nick, text, label);
-    }
-    else
-    {
-        line = line.arg(timeStamp(), nick, text);
+        line = line.arg(label);
     }
 
     emit textToLog(QString("<%1>\t%2").arg(nick, message));
@@ -560,7 +557,7 @@ void IRCView::appendRaw(const QString& message, bool self)
         : Preferences::self()->color(Preferences::ServerMessage);
     m_tabNotification = Konversation::tnfNone;
 
-    QString line = QString(timeStamp() + " <font color=\"" + color.name() + "\">" + message + "</font>");
+    QString line = QString(timeStamp(QHash<QString, QString>()) + " <font color=\"" + color.name() + "\">" + message + "</font>");
 
     doAppend(line, false, self);
 }
@@ -575,7 +572,7 @@ void IRCView::appendLog(const QString & message)
     doRawAppend(line, !QApplication::isLeftToRight());
 }
 
-void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
+void IRCView::appendQuery(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel)
 {
     QString queryColor=Preferences::self()->color(Preferences::QueryMessage).name();
 
@@ -590,7 +587,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
 
     QChar directionOfLine = rtl ? RLM : LRM;
     line = directionOfLine + "<font color=\"" + queryColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3";
-    line = line.arg(timeStamp(), nick, text);
+    line = line.arg(timeStamp(messageTags), nick, text);
 
     if (inChannel) {
         emit textToLog(QString("<-> %1>\t%2").arg(nick, message));
@@ -601,19 +598,19 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     doAppend(line, rtl);
 }
 
-void IRCView::appendChannelAction(const QString& nick, const QString& message)
+void IRCView::appendChannelAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags)
 {
     m_tabNotification = Konversation::tnfNormal;
-    appendAction(nick, message);
+    appendAction(nick, message, messageTags);
 }
 
-void IRCView::appendQueryAction(const QString& nick, const QString& message)
+void IRCView::appendQueryAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags)
 {
     m_tabNotification = Konversation::tnfPrivate;
-    appendAction(nick, message);
+    appendAction(nick, message, messageTags);
 }
 
-void IRCView::appendAction(const QString& nick, const QString& message)
+void IRCView::appendAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags)
 {
     QString actionColor = Preferences::self()->color(Preferences::ActionMessage).name();
 
@@ -625,7 +622,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     {
         line = LRM + "<font color=\"" + actionColor + "\">%1 * " + nickLine + "</font>";
 
-        line = line.arg(timeStamp(), nick);
+        line = line.arg(timeStamp(messageTags), nick);
 
         emit textToLog(QString("\t * %1").arg(nick));
 
@@ -639,7 +636,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
 
         QChar directionOfLine = rtl ? RLM : LRM;
         line = directionOfLine + "<font color=\"" + actionColor + "\">%1 " + directionOfLine + "* " + nickLine + directionOfLine + " %3</font>";
-        line = line.arg(timeStamp(), nick, text);
+        line = line.arg(timeStamp(messageTags), nick, text);
 
         emit textToLog(QString("\t * %1 %2").arg(nick, message));
 
@@ -647,7 +644,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     }
 }
 
-void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
+void IRCView::appendServerMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL)
 {
     QString serverColor = Preferences::self()->color(Preferences::ServerMessage).name();
     m_tabNotification = Konversation::tnfControl;
@@ -667,14 +664,14 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
 
     QChar directionOfLine = rtl ? RLM : LRM;
     line = directionOfLine + "<font color=\"" + serverColor + "\"" + fixed + ">%1 " + directionOfLine + "<b>[</b>%2<b>]</b>" + directionOfLine + " %3</font>";
-    line = line.arg(timeStamp(), type, text);
+    line = line.arg(timeStamp(messageTags), type, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
 
     doAppend(line, rtl);
 }
 
-void IRCView::appendCommandMessage(const QString& type,const QString& message, bool parseURL, bool self)
+void IRCView::appendCommandMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL, bool self)
 {
     QString commandColor = Preferences::self()->color(Preferences::CommandMessage).name();
     QString prefix="***";
@@ -699,7 +696,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
     QChar directionOfLine = rtl ? RLM : LRM;
     line = directionOfLine + "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
-    line = line.arg(timeStamp(), prefix, text);
+    line = line.arg(timeStamp(messageTags), prefix, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
 
@@ -797,11 +794,16 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
     formatCursor.setBlockFormat(format);
 }
 
-QString IRCView::timeStamp()
+QString IRCView::timeStamp(QHash<QString, QString> messageTags)
 {
     if(Preferences::self()->timestamping())
     {
-        QTime time = QTime::currentTime();
+        QDateTime serverTime;
+
+        if (messageTags.contains(QStringLiteral("time"))) // If it exists use the supplied server time.
+            serverTime = QDateTime::fromString(messageTags[QStringLiteral("time")], Qt::ISODate).toLocalTime();
+
+        QTime time = serverTime.isValid() ? serverTime.time() : QTime::currentTime();
         QString timeColor = Preferences::self()->color(Preferences::Time).name();
         QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
@@ -815,7 +817,7 @@ QString IRCView::timeStamp()
         }
         else
         {
-            QDate date = QDate::currentDate();
+            QDate date = serverTime.isValid() ? serverTime.date() : QDate::currentDate();
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1%2 %3%4]</font> ")
                     .arg(rtlLocale ? RLM : LRM,

@@ -174,24 +174,24 @@ class IRCView : public QTextBrowser
     //// Other stuff
     public Q_SLOTS:
         //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
-        void append(const QString& nick, const QString& message, const QString& label = QString());
+        void append(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString());
         void appendRaw(const QString& message, bool self = false);
         void appendLog(const QString& message);
 
-        void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
-        void appendQueryAction(const QString& nick, const QString& message);
+        void appendQuery(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel = false);
+        void appendQueryAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
     protected:
         //! FIXME why is this protected, and all alone down there?
-        void appendAction(const QString& nick, const QString& message);
+        void appendAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
 
         /// Appends a new line without any scrollback or notification checks
         void doRawAppend(const QString& newLine, bool rtl);
 
     public Q_SLOTS:
-        void appendChannelAction(const QString& nick, const QString& message);
+        void appendChannelAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
 
-        void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
-        void appendCommandMessage(const QString& command, const QString& message, bool parseURL=true, bool self=false);
+        void appendServerMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
+        void appendCommandMessage(const QString& command, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL=true, bool self=false);
         void appendBacklogMessage(const QString& firstColumn, const QString& message);
 
     protected:
@@ -283,7 +283,7 @@ class IRCView : public QTextBrowser
         QChar::Direction basicDirection(const QString &string);
 
         /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
-        QString timeStamp();
+        QString timeStamp(QHash<QString, QString> messageTags);
 
         /// Returns a formated nick string
         //! FIXME formatted in what way?

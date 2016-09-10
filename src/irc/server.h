@@ -138,11 +138,12 @@ class Server : public QObject
         void resetNickSelection();
         void queueNicks(const QString& channelName, const QStringList& nicknameList);
         void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
-        Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account, const QString &realName);
-        void renameNick(const QString &nickname,const QString &newNick);
-        Channel* removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
-        void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
-        void removeNickFromServer(const QString &nickname, const QString &reason);
+        Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask, const QString &account,
+                                  const QString &realName, const QHash<QString, QString> &messageTags);
+        void renameNick(const QString &nickname, const QString &newNick, const QHash<QString, QString> &messageTags);
+        Channel* removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, const QHash<QString, QString> &messageTags, bool quit=false);
+        void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason, const QHash<QString, QString> &messageTags);
+        void removeNickFromServer(const QString &nickname, const QString &reason, const QHash<QString, QString> &messageTags);
 
         void setChannelTypes(const QString &types);
         QString getChannelTypes() const;
@@ -171,13 +172,13 @@ class Server : public QObject
         InputFilter* getInputFilter() { return &m_inputFilter; }
         Konversation::OutputFilter* getOutputFilter() { return m_outputFilter; }
 
-        Channel* joinChannel(const QString& name, const QString& hostmask);
+        Channel* joinChannel(const QString& name, const QString& hostmask, const QHash<QString, QString> &messageTags);
         void removeChannel(Channel* channel);
-        void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
-        void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message,
+        void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message, const QHash<QString, QString> &messageTags);
+        void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message, const QHash<QString, QString> &messageTags,
                                            bool highlight = true, bool parseURL = true);
-        void appendStatusMessage(const QString& type,const QString& message);
-        void appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL = true);
+        void appendStatusMessage(const QString& type,const QString& message, const QHash<QString, QString> &messageTags);
+        void appendMessageToFrontmost(const QString& type,const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
 
         int getPreLength(const QString& command, const QString& dest);
 
@@ -186,10 +187,10 @@ class Server : public QObject
         void dbusInfo(const QString& string);
         void ctcpReply(const QString& receiver, const QString& text);
 
-        void setChannelTopic(const QString& channel, const QString& topic);
+        void setChannelTopic(const QString& channel, const QString& topic, const QHash<QString, QString> &messageTags);
                                                   // Overloaded
-        void setChannelTopic(const QString& nickname, const QString& channel, const QString& topic);
-        void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter);
+        void setChannelTopic(const QString& nickname, const QString& channel, const QString& topic, const QHash<QString, QString> &messageTags);
+        void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter, const QHash<QString, QString> &messageTags);
         void updateChannelModeWidgets(const QString& channel, char mode, const QString& parameter);
 
         Channel* getChannelByName(const QString& name);
@@ -213,7 +214,7 @@ class Server : public QObject
         QString getOwnIpByServerMessage();
 
         bool isAway() { return m_away; }
-        void setAway(bool away);
+        void setAway(bool away, const QHash<QString, QString> &messageTags);
         QString awayTime() const;
 
         void setAwayReason(const QString& reason) { m_awayReason = reason; }
@@ -391,6 +392,7 @@ class Server : public QObject
         bool hasExtendedJoin() const { return m_hasExtendedJoin; }
         void setHasWHOX(bool state) { m_hasWHOX = state; }
         bool hasWHOX() const { return m_hasWHOX; }
+        bool hasServerTime() const { return m_hasServerTime; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -857,6 +859,7 @@ class Server : public QObject
         bool m_hasAwayNotify;
         bool m_hasExtendedJoin;
         bool m_hasWHOX;
+        bool m_hasServerTime;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)

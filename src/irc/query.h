@@ -67,7 +67,7 @@ class Query : public ChatWindow
         /** call this when you see a nick quit from the server.
          *  @param reason The quit reason given by that user.
          */
-        void quitNick(const QString& reason);
+        void quitNick(const QString& reason, const QHash<QString, QString> &messageTags);
 
         #ifdef HAVE_QCA2
         Konversation::Cipher* getCipher();

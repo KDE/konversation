@@ -77,10 +77,12 @@ class InputFilter : public QObject
         void addDccChat(const QString& nick,const QStringList& arguments);
 
     protected:
-        void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList);
-        void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList);
-        void parseModes(const QString &sourceNick, const QStringList &parameterList);
-        void parsePrivMsg(const QString& prefix, QStringList& parameterList);
+        void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags);
+        void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags);
+        void parseModes(const QString &sourceNick, const QStringList &parameterList, const QHash<QString, QString> &messageTags);
+        void parsePrivMsg(const QString& prefix, QStringList& parameterList, const QHash<QString, QString> &messageTags);
+
+        QHash<QString, QString> parseMessageTags(const QString &line, int *startOfMessage);
 
         bool isAChannel(const QString &check);
         bool isIgnore(const QString &pattern, Ignore::Type type);
