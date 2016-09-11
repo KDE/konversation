@@ -106,7 +106,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt;", chatWin->getName(), fromNick));
+                konvApp->osd->show(i18n("[HighLight] (%1) <%2>", chatWin->getName(), fromNick));
             }
         }
         else
@@ -120,7 +120,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt; %3", chatWin->getName(), fromNick, cleanedMessage));
+                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3", chatWin->getName(), fromNick, cleanedMessage));
             }
         }
 
@@ -149,7 +149,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[Query] &lt;%1&gt;", fromNick));
+                konvApp->osd->show(i18n("[Query] <%1>", fromNick));
             }
         }
         else
@@ -163,7 +163,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[Query] &lt;%1&gt; %2", fromNick, cleanedMessage));
+                konvApp->osd->show(i18n("[Query] <%1> %2", fromNick, cleanedMessage));
             }
         }
 
@@ -406,7 +406,7 @@ namespace Konversation
                 konvApp->osd->show(i18n("[HighLight] (%1) *** %2",chatWin->getName(),cleanedMessage));
             // normal highlight message
             else
-                konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt; %3",chatWin->getName(),fromNick,cleanedMessage));
+                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
         }
     }
 
