@@ -73,7 +73,7 @@ void InputFilter::parseLine(const QString& line)
 
     if (line[start]==QLatin1Char(':'))
     {
-        prefix = line.mid(start + 1, end - 1); //skips the colon and does not include the trailing space
+        prefix = line.mid(start + 1, end - start - 1); //skips the colon and does not include the trailing space
         start = end + 1;
         end = posOrLen(' ', line, start);
     }
