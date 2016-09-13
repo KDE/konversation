@@ -16,6 +16,7 @@
   <name xml:lang="nl">Konversation</name>
   <name xml:lang="pl">Konversation</name>
   <name xml:lang="pt">Konversation</name>
+  <name xml:lang="pt-BR">Konversation</name>
   <name xml:lang="sk">Konversation</name>
   <name xml:lang="sl">Konversation</name>
   <name xml:lang="sr">Конверзација</name>
@@ -39,6 +40,7 @@
   <summary xml:lang="nl">IRC-client</summary>
   <summary xml:lang="pl">Klient IRC</summary>
   <summary xml:lang="pt">Cliente de IRC</summary>
+  <summary xml:lang="pt-BR">Cliente IRC</summary>
   <summary xml:lang="sk">IRC klient</summary>
   <summary xml:lang="sl">Odjemalec za IRC</summary>
   <summary xml:lang="sr">ИРЦ клијент</summary>
@@ -89,6 +91,7 @@
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="pt-BR">Recursos:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sr">Могућности:</p>
