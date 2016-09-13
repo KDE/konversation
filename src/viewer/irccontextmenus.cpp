@@ -90,6 +90,7 @@ IrcContextMenus::~IrcContextMenus()
     delete m_topicHistoryMenu;
     delete m_modesMenu;
     delete m_kickBanMenu;
+    delete m_webShortcutsMenu;
 }
 
 IrcContextMenus* IrcContextMenus::self()
@@ -169,7 +170,7 @@ void IrcContextMenus::setupTextMenu()
     action->setData(TextSelectAll);
     m_textMenu->addAction(action);
 
-    m_webShortcutsMenu = new QMenu(m_textMenu);
+    m_webShortcutsMenu = new QMenu();
     m_webShortcutsMenu->menuAction()->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
