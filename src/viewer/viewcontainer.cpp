@@ -254,6 +254,23 @@ void ViewContainer::setupTabWidget()
     updateTabWidgetAppearance();
 }
 
+void ViewContainer::resetFont()
+{
+    m_frontView->getTextView()->resetFontSize();
+}
+
+void ViewContainer::zoomIn()
+{
+    if (m_frontView->getTextView())
+        m_frontView->getTextView()->increaseFontSize();
+}
+
+void ViewContainer::zoomOut()
+{
+    if (m_frontView->getTextView())
+        m_frontView->getTextView()->decreaseFontSize();
+}
+
 void ViewContainer::setupViewTree()
 {
     unclutterTabs();
@@ -761,10 +778,8 @@ void ViewContainer::updateViewActions(int index)
             action = actionCollection()->action("reconnect_server");
             if (action) action->setEnabled(true);
 
-
             action = actionCollection()->action("disconnect_server");
             if (action) action->setEnabled(server->isConnected() || server->isConnecting() || server->isScheduledToConnect());
-
 
             action = actionCollection()->action("join_channel");
             if (action) action->setEnabled(server->isConnected());
@@ -824,6 +839,15 @@ void ViewContainer::updateViewActions(int index)
         if (action) action->setEnabled(m_queryViewCount > 0);
 
         action = actionCollection()->action("clear_tabs");
+        if (action) action->setEnabled(true);
+
+        action = actionCollection()->action("increase_font");
+        if (action) action->setEnabled(true);
+
+        action = actionCollection()->action("shrink_font");
+        if (action) action->setEnabled(true);
+
+        action = actionCollection()->action("reset_font");
         if (action) action->setEnabled(true);
 
         action = actionCollection()->action("toggle_away");

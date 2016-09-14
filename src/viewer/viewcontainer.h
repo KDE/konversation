@@ -190,6 +190,10 @@ class ViewContainer : public QAbstractItemModel
 
         void addKonsolePanel();
 
+        void zoomIn();
+        void zoomOut();
+        void resetFont();
+
         void addUrlCatcher();
         void closeUrlCatcher();
 

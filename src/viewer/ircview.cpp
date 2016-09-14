@@ -140,6 +140,25 @@ IRCView::~IRCView()
 {
 }
 
+void IRCView::increaseFontSize()
+{
+    QFont newFont;
+    newFont.setPointSize(font().pointSize() + 1);
+    setFont(newFont);
+}
+
+void IRCView::decreaseFontSize()
+{
+    QFont newFont;
+    newFont.setPointSize(font().pointSize() - 1);
+    setFont(newFont);
+}
+
+void IRCView::resetFontSize()
+{
+    setFont(Preferences::self()->textFont());
+}
+
 void IRCView::setServer(Server* newServer)
 {
     if (m_server == newServer)
@@ -1892,6 +1911,17 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
     }
 
     QTextBrowser::mousePressEvent(ev);
+}
+
+void IRCView::wheelEvent(QWheelEvent *ev)
+{
+    if(ev->modifiers()==Qt::ControlModifier)
+    {
+        if(ev->delta() < 0) decreaseFontSize();
+        if(ev->delta() > 0) increaseFontSize();
+    }
+
+    QTextBrowser::wheelEvent(ev);
 }
 
 void IRCView::mouseReleaseEvent(QMouseEvent *ev)

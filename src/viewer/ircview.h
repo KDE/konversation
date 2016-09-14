@@ -205,6 +205,10 @@ class IRCView : public QTextBrowser
         /// Emits the doSearchPrevious signal.
         void findPreviousText();
 
+        void increaseFontSize();
+        void decreaseFontSize();
+        void resetFontSize();
+
     protected Q_SLOTS:
         void highlightedSlot(const QString& link);
         void anchorClicked(const QUrl& url);
@@ -279,6 +283,7 @@ class IRCView : public QTextBrowser
         virtual void mouseMoveEvent(QMouseEvent* ev);
         virtual void keyPressEvent(QKeyEvent* ev);
         virtual void contextMenuEvent(QContextMenuEvent* ev);
+        virtual void wheelEvent(QWheelEvent* ev);
 
         QChar::Direction basicDirection(const QString &string);
 

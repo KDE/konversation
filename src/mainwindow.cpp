@@ -411,6 +411,33 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction(QStringLiteral("clear_lines"), action);
 
     action=new QAction(this);
+    action->setText(i18n("Enlarge Font Size"));
+    actionCollection()->setDefaultShortcuts(action, KStandardShortcut::zoomIn());
+    action->setEnabled(false);
+    action->setIcon(QIcon::fromTheme(QStringLiteral("zoom-in")));
+    action->setStatusTip(i18n("Increase the current font size"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(zoomIn()));
+    actionCollection()->addAction(QStringLiteral("increase_font"), action);
+
+    action=new QAction(this);
+    action->setText(i18n("Reset Font Size"));
+    actionCollection()->setDefaultShortcut(action, QKeySequence(QStringLiteral("Ctrl+0")));
+    action->setEnabled(false);
+    action->setIcon(QIcon::fromTheme(QStringLiteral("zoom-original")));
+    action->setStatusTip(i18n("Reset the current font size to settings values"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(resetFont()));
+    actionCollection()->addAction(QStringLiteral("reset_font"), action);
+
+    action=new QAction(this);
+    action->setText(i18n("Decrease Font Size"));
+    actionCollection()->setDefaultShortcuts(action, KStandardShortcut::zoomOut());
+    action->setEnabled(false);
+    action->setIcon(QIcon::fromTheme(QStringLiteral("zoom-out")));
+    action->setStatusTip(i18n("Decrease the current font size"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(zoomOut()));
+    actionCollection()->addAction(QStringLiteral("shrink_font"), action);
+
+    action=new QAction(this);
     action->setText(i18n("&Clear Window"));
     actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+L")));
     action->setEnabled(false);
