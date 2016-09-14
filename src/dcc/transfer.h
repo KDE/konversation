@@ -132,7 +132,6 @@ namespace Konversation
 
                 static QString transferFileName(const QString &fileName);
                 static QString sanitizeFileName(const QString &fileName);
-                static quint32 intel(quint32 value);
 
             protected Q_SLOTS:
                 void logTransfer();

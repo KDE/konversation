@@ -547,7 +547,7 @@ namespace Konversation
             while (m_sendSocket->bytesAvailable() >= 4)
             {
                 m_sendSocket->read((char*)&pos, 4);
-                pos = intel(pos);
+                pos = ntohl(pos);
 
                 //qDebug() << pos  << "/" << m_fileSize;
                 if (pos == m_fileSize)
