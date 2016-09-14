@@ -72,6 +72,8 @@ void InviteDialog::slotOk()
     KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
     cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
     cg.sync();
+
+    accept();
 }
 
 bool InviteDialog::shouldBeShown(QDialogButtonBox::StandardButton& buttonCode)
