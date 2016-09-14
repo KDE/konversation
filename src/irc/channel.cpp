@@ -543,7 +543,6 @@ void Channel::completeNick()
             pos = 0;
         else
             pos++;
-        qDebug() << line << pos << tmp.matchedLength();
         // copy search pattern (lowercase)
         QString pattern = line.mid(pos, oldPos - pos);
         // copy line to newLine-buffer
