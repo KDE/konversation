@@ -28,6 +28,7 @@
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 
+#include <QRegExp>
 #include <QSplitter>
 #include <QTimer>
 #include <QToolButton>
@@ -529,8 +530,20 @@ void Channel::completeNick()
         m_inputBar->setOldCursorPosition(pos);
         // remember old cursor position locally
         oldPos = pos;
-        // step back to last space or start of line
-        while(pos && line[pos-1] != QLatin1Char(' ')) pos--;
+        // step back to []{}-_^`\| or start of line
+        QString regexpStr("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|");
+
+        if(!Preferences::self()->prefixCharacter().isEmpty())
+            regexpStr += "\\" + Preferences::self()->prefixCharacter();
+
+        regexpStr += QLatin1Char(']');
+        QRegExp tmp(regexpStr);
+        pos = tmp.lastIndexIn(line, pos - 1);
+        if (pos < 0)
+            pos = 0;
+        else
+            pos++;
+        qDebug() << line << pos << tmp.matchedLength();
         // copy search pattern (lowercase)
         QString pattern = line.mid(pos, oldPos - pos);
         // copy line to newLine-buffer
