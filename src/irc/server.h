@@ -393,6 +393,7 @@ class Server : public QObject
         void setHasWHOX(bool state) { m_hasWHOX = state; }
         bool hasWHOX() const { return m_hasWHOX; }
         bool hasServerTime() const { return m_hasServerTime; }
+        bool hasUserHostInNames() const { return m_hasUserHostInNames; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -860,6 +861,7 @@ class Server : public QObject
         bool m_hasExtendedJoin;
         bool m_hasWHOX;
         bool m_hasServerTime;
+        bool m_hasUserHostInNames;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)

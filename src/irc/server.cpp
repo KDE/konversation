@@ -91,6 +91,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_hasExtendedJoin = false;
     m_hasWHOX = false;
     m_hasServerTime = false;
+    m_hasUserHostInNames = false;
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -727,6 +728,10 @@ void Server::capInitiateNegotiation(bool useSASL)
     m_capRequested++;
     queue(QStringLiteral("CAP REQ :znc.in/server-time-iso"), HighPriority);
     m_capRequested++;
+
+    queue(QStringLiteral("CAP REQ :userhost-in-names"), HighPriority);
+    m_hasUserHostInNames = false;
+    m_capRequested++;
 }
 
 void Server::capReply()
@@ -769,6 +774,10 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
     else if (name == QStringLiteral("server-time") || name == QStringLiteral("znc.in/server-time-iso"))
     {
         m_hasServerTime = true;
+    }
+    else if (name == QStringLiteral("userhost-in-names"))
+    {
+        m_hasUserHostInNames = true;
     }
 }
 

@@ -2507,6 +2507,19 @@ void Channel::processQueuedNicks(bool flush)
         while (nickname.isEmpty() && !m_nickQueue.isEmpty())
             nickname = m_nickQueue.takeFirst();
 
+        QString userHost;
+
+        if(m_server->hasUserHostInNames())
+        {
+            int index = nickname.indexOf(QLatin1Char('!'));
+
+            if(index >= 0)
+            {
+                userHost = nickname.mid(index + 1);
+                nickname = nickname.left(index);
+            }
+        }
+
         bool admin = false;
         bool owner = false;
         bool op = false;
@@ -2529,6 +2542,11 @@ void Channel::processQueuedNicks(bool flush)
             ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
             Q_ASSERT(nick);
             nick->setMode(mode);
+
+            if(!userHost.isEmpty())
+            {
+                nick->getNickInfo()->setHostmask(userHost);
+            }
 
             fastAddNickname(nick);
 
