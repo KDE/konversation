@@ -2040,6 +2040,9 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
         const int tabIndex = m_tabWidget->indexOf(view);
 
         if (tabIndex != -1) {
+            if (tabIndex == m_popupViewIndex)
+                m_popupViewIndex = -1;
+
             m_tabWidget->blockSignals(true);
 
             const QModelIndex& idx = indexForView(view);
