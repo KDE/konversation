@@ -1973,6 +1973,8 @@ void IRCView::openLink(const QUrl& url)
     QString link(url.toString());
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
     link = link.replace (' ', "%20");
+    // HACK Handle pipe as toString doesn't seem to decode that correctly
+    link = link.replace ("%7C", "|");
 
     if (!link.isEmpty() && !link.startsWith('#'))
         Application::openUrl(url.toEncoded());
