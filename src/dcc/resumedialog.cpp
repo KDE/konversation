@@ -164,7 +164,8 @@ namespace Konversation
                 m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("&Overwrite"));
                 m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Overwrite);
 
-                m_buttonBox->button(QDialogButtonBox::Retry)->setEnabled(true);
+                if(m_buttonBox->standardButtons() & QDialogButtonBox::Retry)
+                    m_buttonBox->button(QDialogButtonBox::Retry)->setEnabled(true);
                 if (m_enabledActions & RA_OverwriteDefaultPath)
                     m_overwriteDefaultPathCheckBox->setEnabled(false);
             }
@@ -173,7 +174,8 @@ namespace Konversation
                 m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("R&ename"));
                 m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Rename);
 
-                m_buttonBox->button(QDialogButtonBox::Retry)->setEnabled(false);
+                if(m_buttonBox->standardButtons() & QDialogButtonBox::Retry)
+                    m_buttonBox->button(QDialogButtonBox::Retry)->setEnabled(false);
                 if (m_enabledActions & RA_OverwriteDefaultPath)
                     m_overwriteDefaultPathCheckBox->setEnabled(true);
             }
