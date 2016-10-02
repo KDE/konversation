@@ -114,8 +114,6 @@ class TopicHistoryView : public KCategorizedView
 
         void setModel(QAbstractItemModel* model);
 
-        bool eventFilter(QObject* watched, QEvent* event);
-
 
     Q_SIGNALS:
         void textSelectableChanged(bool selectable);

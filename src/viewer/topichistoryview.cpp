@@ -267,23 +267,6 @@ void TopicHistoryView::setModel(QAbstractItemModel* model)
     KCategorizedView::setModel(m_proxyModel);
 }
 
-bool TopicHistoryView::eventFilter(QObject* watched, QEvent* event)
-{
-    Q_UNUSED(watched);
-
-    if (event->type() == QEvent::Show && !event->spontaneous())
-    {
-        selectionModel()->clearSelection();
-
-        const QModelIndex& currentTopic = model()->index(model()->rowCount() - 1, 0);
-
-        selectionModel()->select(currentTopic, QItemSelectionModel::Select);
-        scrollTo(currentTopic, QAbstractItemView::EnsureVisible);
-    }
-
-    return false;
-}
-
 void TopicHistoryView::resizeEvent(QResizeEvent* event)
 {
     KCategorizedView::resizeEvent(event);

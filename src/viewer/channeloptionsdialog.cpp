@@ -66,7 +66,6 @@ namespace Konversation
 
         m_ui.banListSearchLine->setTreeWidget(m_ui.banList);
 
-        installEventFilter(m_ui.topicHistoryView);
         m_ui.topicHistoryView->setServer(m_channel->getServer());
         m_ui.topicHistoryView->setModel(m_channel->getTopicHistory());
         m_ui.topicHistorySearchLine->setProxy(static_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
@@ -121,6 +120,14 @@ namespace Konversation
         {
             refreshAllowedChannelModes();
             refreshModes();
+
+            m_ui.topicEdit->clear();
+            m_editingTopic = false;
+
+            m_ui.topicHistoryView->selectionModel()->clearSelection();
+            const QModelIndex& currentTopic = m_ui.topicHistoryView->model()->index(m_ui.topicHistoryView->model()->rowCount() - 1, 0);
+            m_ui.topicHistoryView->selectionModel()->select(currentTopic, QItemSelectionModel::Select);
+            m_ui.topicHistoryView->scrollTo(currentTopic, QAbstractItemView::EnsureVisible);
 
             if (!m_ui.topicEdit->isReadOnly())
                 m_ui.topicEdit->setFocus();
@@ -230,10 +237,14 @@ namespace Konversation
     {
         if (!m_editingTopic)
         {
+            m_ui.topicEdit->clear();
+
             if (!selection.isEmpty())
+            {
+                m_ui.topicEdit->setUndoRedoEnabled(false);
                 m_ui.topicEdit->setPlainText(m_ui.topicHistoryView->model()->data(selection.indexes().first()).toString());
-            else
-                m_ui.topicEdit->clear();
+                m_ui.topicEdit->setUndoRedoEnabled(true);
+            }
         }
     }
 
