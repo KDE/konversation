@@ -26,6 +26,7 @@
   <name xml:lang="sv">Konversation</name>
   <name xml:lang="uk">Konversation</name>
   <name xml:lang="x-test">xxKonversationxx</name>
+  <name xml:lang="zh-CN">Konversation</name>
   <summary>IRC client</summary>
   <summary xml:lang="ca">Client d'IRC</summary>
   <summary xml:lang="ca-valencia">Client d'IRC</summary>
@@ -50,6 +51,7 @@
   <summary xml:lang="sv">IRC-klient</summary>
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="x-test">xxIRC clientxx</summary>
+  <summary xml:lang="zh-CN">IRC 客户端</summary>
   <description>
     <p>
       Konversation is an IRC client which gives you speedy access to Freenode network's channels,
