@@ -107,30 +107,23 @@ Application::~Application()
 
 void Application::implementRestart()
 {
-#if 0 // FIXME KF5 Port: --restart
-    QStringList argumentList;
-
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-
-    argumentList = args->allArguments();
-
     // Pop off the executable name. May not be the first argument in argv
     // everywhere, so verify first.
-    if (QFileInfo(argumentList.first()) == QFileInfo(QCoreApplication::applicationFilePath()))
-        argumentList.removeFirst();
+    if (QFileInfo(m_restartArguments.first()) == QFileInfo(QCoreApplication::applicationFilePath()))
+        m_restartArguments.removeFirst();
 
     // Don't round-trip --restart.
-    argumentList.removeAll(QStringLiteral("--restart"));
+    m_restartArguments.removeAll(QStringLiteral("--restart"));
 
     // Avoid accumulating multiple --startupdelay arguments across multiple
     // uses of restart().
-    if (argumentList.contains(QStringLiteral("--startupdelay")))
+    if (m_restartArguments.contains(QStringLiteral("--startupdelay")))
     {
-        int index = argumentList.lastIndexOf(QStringLiteral("--startupdelay"));
+        int index = m_restartArguments.lastIndexOf(QStringLiteral("--startupdelay"));
 
-        if (index < argumentList.count() - 1 && !argumentList.at(index + 1).startsWith(QLatin1Char('-')))
+        if (index < m_restartArguments.count() - 1 && !m_restartArguments.at(index + 1).startsWith(QLatin1Char('-')))
         {
-            QString delayArgument = argumentList.at(index + 1);
+            QString delayArgument = m_restartArguments.at(index + 1);
 
             bool ok;
 
@@ -138,14 +131,13 @@ void Application::implementRestart()
 
             // If the argument is invalid or too low, raise to at least 2000 msecs.
             if (!ok || delay < 2000)
-                argumentList.replace(index + 1, QStringLiteral("2000"));
+                m_restartArguments.replace(index + 1, QStringLiteral("2000"));
         }
     }
     else
-        argumentList << QStringLiteral("--startupdelay") << QStringLiteral("2000");
+        m_restartArguments << QStringLiteral("--startupdelay") << QStringLiteral("2000");
 
-    KProcess::startDetached(QCoreApplication::applicationFilePath(), argumentList);
-#endif
+    KProcess::startDetached(QCoreApplication::applicationFilePath(), m_restartArguments);
 }
 
 void Application::newInstance(QCommandLineParser *args)
@@ -281,14 +273,12 @@ void Application::newInstance(QCommandLineParser *args)
 
         connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
     }
-#if 0 //FIXME KF5 Port: --restart
     else if (args->isSet(QStringLiteral("restart")))
     {
         restart();
 
         return;
     }
-#endif
 
     if (!url.isEmpty())
         getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
@@ -1396,6 +1386,11 @@ void Application::closeWallet()
 void Application::handleActivate(const QStringList& arguments)
 {
     m_commandLineParser->parse(arguments);
+
+    if(m_commandLineParser->isSet(QStringLiteral("restart")))
+    {
+        m_restartArguments = arguments;
+    }
 
     newInstance(m_commandLineParser);
 

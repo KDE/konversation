@@ -199,6 +199,7 @@ class Application : public QApplication
         QNetworkConfigurationManager* m_networkConfigurationManager;
 
         QCommandLineParser *m_commandLineParser;
+        QStringList m_restartArguments;
 };
 
 #endif

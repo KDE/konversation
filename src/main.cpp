@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("ssl"), i18n("Use SSL for connection")));
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("noautoconnect"), i18n("Disable auto-connecting to any IRC networks")));
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("startupdelay"), i18n("Delay D-Bus activity and UI creation by the specified amount of milliseconds"), i18n("msec"), "2000"));
-    // cmdLineParser.addOption(QCommandLineOption(QStringLiteral("restart"), i18n("Quits and restarts Konversation (if running, otherwise has no effect)"))); FIXME KF5 Port: --restart
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("restart"), i18n("Quits and restarts Konversation (if running, otherwise has no effect)")));
 #ifndef QT_NO_DEBUG
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("nui"), i18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)")));
 #endif
