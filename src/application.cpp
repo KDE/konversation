@@ -49,6 +49,8 @@
 #include <kwallet.h>
 #include <KTextEdit>
 #include <KSharedConfig>
+#include <KStartupInfo>
+#include <KWindowSystem>
 
 
 using namespace Konversation;
@@ -1389,6 +1391,16 @@ void Application::closeWallet()
 {
     delete m_wallet;
     m_wallet = NULL;
+}
+
+void Application::handleActivate(const QStringList& arguments)
+{
+    m_commandLineParser->parse(arguments);
+
+    newInstance(m_commandLineParser);
+
+    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
+    KWindowSystem::forceActiveWindow(mainWindow->winId());
 }
 
 

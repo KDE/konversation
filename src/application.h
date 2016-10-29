@@ -135,6 +135,10 @@ class Application : public QApplication
 
         void abortScheduledRestart() { m_restartScheduled = false; }
 
+        /// The command line parser is needed for handling parsing arguments on new activations.
+        void setCommandLineParser(QCommandLineParser *parser) { m_commandLineParser = parser; }
+        QCommandLineParser *commandLineParser() const { return m_commandLineParser; }
+
     Q_SIGNALS:
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged(); // FIXME TODO: Rather than relying on this catch-all, consumers should be rewritten to catch appropriate QEvents.
@@ -153,6 +157,8 @@ class Application : public QApplication
         void prepareShutdown();
 
         void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
+
+        void handleActivate(const QStringList& arguments);
 
     protected Q_SLOTS:
         void openQuickConnectDialog();
@@ -191,6 +197,8 @@ class Application : public QApplication
         KWallet::Wallet* m_wallet;
 
         QNetworkConfigurationManager* m_networkConfigurationManager;
+
+        QCommandLineParser *m_commandLineParser;
 };
 
 #endif
