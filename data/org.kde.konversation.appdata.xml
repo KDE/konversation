@@ -27,6 +27,7 @@
   <name xml:lang="sv">Konversation</name>
   <name xml:lang="uk">Konversation</name>
   <name xml:lang="x-test">xxKonversationxx</name>
+  <name xml:lang="zh-TW">Konversation</name>
   <summary>IRC client</summary>
   <summary xml:lang="ca">Client d'IRC</summary>
   <summary xml:lang="ca-valencia">Client d'IRC</summary>
@@ -52,6 +53,7 @@
   <summary xml:lang="sv">IRC-klient</summary>
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="x-test">xxIRC clientxx</summary>
+  <summary xml:lang="zh-TW">IRC 客戶端程式</summary>
   <description>
     <p>
       Konversation is an IRC client which gives you speedy access to Freenode network's channels,
@@ -80,6 +82,7 @@
     <p xml:lang="sv">Konversation är en IRC-klient som ger snabb åtkomst till Freenode-nätverkets kanaler, där det finns stöd för de flesta distributioner. Standardinställningarna är sådana att ingen inställning behövs för att komma igång annat än att tala om namnet på distributionens kanal för den.</p>
     <p xml:lang="uk">Konversation — клієнтська програма IRC, за допомогою якої ви зможете швидко отримати доступ до каналів мережі Freenode, на яких можна спілкуватися із іншими користувачами та розробниками. Якщо ви скористаєтеся типовими параметрами роботи програми, вам достатньо буде вказати лише назву потрібного вам каналу, щоб розпочати спілкування на ньому.</p>
     <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
+    <p xml:lang="zh-TW">Konversation 是一個讓您可以快速連上 Freenode 網路頻道的 IRC 客戶端，在那裡您可以找到大多數散佈版的支援。</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
@@ -105,6 +108,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Standard IRC features</li>
       <li xml:lang="ca">Funcionalitats estàndard de l'IRC</li>
@@ -129,6 +133,7 @@
       <li xml:lang="sv">Vanliga IRC-funktioner</li>
       <li xml:lang="uk">Стандартні можливості IRC</li>
       <li xml:lang="x-test">xxStandard IRC featuresxx</li>
+      <li xml:lang="zh-TW">獨立的 IRC 功能</li>
       <li>SSL server support</li>
       <li xml:lang="ca">Permet un servidor SSL</li>
       <li xml:lang="ca-valencia">Permet un servidor SSL</li>
@@ -152,6 +157,7 @@
       <li xml:lang="sv">Stöd för SSL-server</li>
       <li xml:lang="uk">Підтримка роботи із серверами SSL</li>
       <li xml:lang="x-test">xxSSL server supportxx</li>
+      <li xml:lang="zh-TW">支援 SSL 伺服器</li>
       <li>Bookmarking support</li>
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
@@ -175,6 +181,7 @@
       <li xml:lang="sv">Stöd för bokmärken</li>
       <li xml:lang="uk">Підтримка роботи із закладками</li>
       <li xml:lang="x-test">xxBookmarking supportxx</li>
+      <li xml:lang="zh-TW">支援書籤</li>
       <li>Easy to use graphical user interface</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
@@ -198,6 +205,7 @@
       <li xml:lang="sv">Lättanvänt grafiskt användargränssnitt</li>
       <li xml:lang="uk">Простий у користуванні графічний інтерфейс</li>
       <li xml:lang="x-test">xxEasy to use graphical user interfacexx</li>
+      <li xml:lang="zh-TW">易於使用的圖形化使用者介面</li>
       <li>Multiple servers and channels in one single window</li>
       <li xml:lang="ca">Diversos servidors i canals en una única finestra</li>
       <li xml:lang="ca-valencia">Diversos servidors i canals en una única finestra</li>
@@ -221,6 +229,7 @@
       <li xml:lang="sv">Flera servrar och kanaler i ett enda fönster</li>
       <li xml:lang="uk">Показ даних декількох серверів та каналів у одному вікні</li>
       <li xml:lang="x-test">xxMultiple servers and channels in one single windowxx</li>
+      <li xml:lang="zh-TW">單一個視窗內可使用多個伺服器與頻道</li>
       <li>DCC file transfer</li>
       <li xml:lang="ca">Transferència de fitxers DCC</li>
       <li xml:lang="ca-valencia">Transferència de fitxers DCC</li>
@@ -244,6 +253,7 @@
       <li xml:lang="sv">DCC-filöverföring</li>
       <li xml:lang="uk">Передавання файлів за допомогою DCC</li>
       <li xml:lang="x-test">xxDCC file transferxx</li>
+      <li xml:lang="zh-TW">DCC 檔案傳輸</li>
       <li>Multiple identities for different servers</li>
       <li xml:lang="ca">Diverses identitats per servidors diferents</li>
       <li xml:lang="ca-valencia">Diverses identitats per servidors diferents</li>
@@ -267,6 +277,7 @@
       <li xml:lang="sv">Fler identiteter för olika servrar</li>
       <li xml:lang="uk">Можливість користування декількома профілями на різних серверах</li>
       <li xml:lang="x-test">xxMultiple identities for different serversxx</li>
+      <li xml:lang="zh-TW">同一個伺服器可以有多個不同的身份識別</li>
       <li>Text decorations and colors</li>
       <li xml:lang="ca">Decoracions del text i colors</li>
       <li xml:lang="ca-valencia">Decoracions del text i colors</li>
@@ -290,6 +301,7 @@
       <li xml:lang="sv">Textdekorationer och färger</li>
       <li xml:lang="uk">Можливість декорування та розфарбовування тексту</li>
       <li xml:lang="x-test">xxText decorations and colorsxx</li>
+      <li xml:lang="zh-TW">文字裝飾與色彩</li>
       <li>OnScreen Display for notifications</li>
       <li xml:lang="ca">Mostra les notificacions en la pantalla</li>
       <li xml:lang="ca-valencia">Mostra les notificacions en la pantalla</li>
@@ -313,6 +325,7 @@
       <li xml:lang="sv">Visning av underrättelser på skärmen</li>
       <li xml:lang="uk">Екранна панель для показу сповіщень</li>
       <li xml:lang="x-test">xxOnScreen Display for notificationsxx</li>
+      <li xml:lang="zh-TW">通知的 OSD 支援</li>
       <li>Automatic UTF-8 detection</li>
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
@@ -336,6 +349,7 @@
       <li xml:lang="sv">Automatisk detektering av UTF-8</li>
       <li xml:lang="uk">Автоматичне виявлення UTF-8</li>
       <li xml:lang="x-test">xxAutomatic UTF-8 detectionxx</li>
+      <li xml:lang="zh-TW">自動 UTF-8 偵測</li>
       <li>Per channel encoding support</li>
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="ca-valencia">Permet codificació per canal</li>
@@ -359,6 +373,7 @@
       <li xml:lang="sv">Kodningsstöd per kanal</li>
       <li xml:lang="uk">Можливість встановлення окремого кодування символів для кожного з каналів</li>
       <li xml:lang="x-test">xxPer channel encoding supportxx</li>
+      <li xml:lang="zh-TW">每個頻道各自使用不同的編碼的支援</li>
       <li>Theme support for nick icons</li>
       <li xml:lang="ca">Permet temes per icones de sobrenom</li>
       <li xml:lang="ca-valencia">Permet temes per icones de sobrenom</li>
@@ -382,6 +397,7 @@
       <li xml:lang="sv">Temastöd för smeknamnsikoner</li>
       <li xml:lang="uk">Підтримка тем для піктограм профілів</li>
       <li xml:lang="x-test">xxTheme support for nick iconsxx</li>
+      <li xml:lang="zh-TW">暱稱圖示的主題支援</li>
       <li>Highly configurable</li>
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="ca-valencia">Altament configurable</li>
@@ -405,6 +421,7 @@
       <li xml:lang="sv">Mycket anpassningsbar</li>
       <li xml:lang="uk">Широкі можливості із налаштовування</li>
       <li xml:lang="x-test">xxHighly configurablexx</li>
+      <li xml:lang="zh-TW">高度可自訂性</li>
     </ul>
   </description>
   <screenshots>
