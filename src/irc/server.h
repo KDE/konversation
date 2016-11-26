@@ -542,7 +542,8 @@ class Server : public QObject
         /// Will only reconnect if the connection state is involuntary disconnected.
         void reconnectInvoluntary();
 
-        void capInitiateNegotiation(bool useSASL);
+        void requestAvailableCapabilies ();
+        void capInitiateNegotiation(const QString &availableCaps);
         void capReply();
         void capEndNegotiation();
         void capCheckIgnored();

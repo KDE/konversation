@@ -673,8 +673,7 @@ void Server::socketConnected()
     emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
-    capInitiateNegotiation(getIdentity() && getIdentity()->getAuthType() == QStringLiteral("saslplain")
-                           && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty());
+    requestAvailableCapabilies();
 
     QStringList ql;
 
@@ -695,42 +694,66 @@ void Server::socketConnected()
     setNickname(getNickname());
 }
 
-void Server::capInitiateNegotiation(bool useSASL)
+void Server::requestAvailableCapabilies ()
 {
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiating capabilities with server..."));
+    m_inputFilter.setAutomaticRequest(QStringLiteral("CAP LS"), QString(), true);
+    queue(QStringLiteral("CAP LS"), HighPriority);
+}
+
+void Server::capInitiateNegotiation(const QString &availableCaps)
+{
+    bool useSASL = getIdentity() && getIdentity()->getAuthType() == QStringLiteral("saslplain")
+            && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty();
     m_capRequested = 0;
     m_capAnswered = 0;
     m_capEndDelayed = false;
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiating capabilities with server..."));
+    m_hasAwayNotify = false;
+    m_hasExtendedJoin = false;
+    m_hasServerTime = false;
+    m_hasUserHostInNames = false;
+    QStringList requestCaps;
+    QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
 
-    if(useSASL)
+    foreach(const QString &cap, capsList)
     {
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting SASL capability..."));
-        queue(QStringLiteral("CAP REQ :sasl"), HighPriority);
-        m_capRequested++;
+        if(useSASL && cap == QStringLiteral("sasl"))
+        {
+            requestCaps.append ("sasl");
+        }
+        else if(cap == QStringLiteral("multi-prefix"))
+        {
+            requestCaps.append ("multi-prefix");
+        }
+        else if(cap == QStringLiteral("away-notify"))
+        {
+            requestCaps.append ("away-notify");
+        }
+        else if(cap == QStringLiteral("account-notify"))
+        {
+            requestCaps.append ("account-notify");
+        }
+        else if(cap == QStringLiteral("extended-join"))
+        {
+            requestCaps.append ("extended-join");
+        }
+        else if(cap == QStringLiteral("server-time"))
+        {
+            requestCaps.append ("server-time");
+        }
+        else if(cap == QStringLiteral("znc.in/server-time-iso"))
+        {
+            requestCaps.append ("server-time-iso");
+        }
+        else if(cap == QStringLiteral("userhost-in-names"))
+        {
+            requestCaps.append ("userhost-in-names");
+        }
     }
 
-    queue(QStringLiteral("CAP REQ :multi-prefix"), HighPriority);
-    m_capRequested++;
-
-    queue(QStringLiteral("CAP REQ :away-notify"), HighPriority);
-    m_hasAwayNotify = false;
-    m_capRequested++;
-
-    queue(QStringLiteral("CAP REQ :account-notify"), HighPriority);
-    m_capRequested++;
-
-    queue(QStringLiteral("CAP REQ :extended-join"), HighPriority);
-    m_hasExtendedJoin = false;
-    m_capRequested++;
-
-    queue(QStringLiteral("CAP REQ :server-time"), HighPriority);
-    m_hasServerTime = false;
-    m_capRequested++;
-    queue(QStringLiteral("CAP REQ :znc.in/server-time-iso"), HighPriority);
-    m_capRequested++;
-
-    queue(QStringLiteral("CAP REQ :userhost-in-names"), HighPriority);
-    m_hasUserHostInNames = false;
+    QString capsString = requestCaps.join (QStringLiteral(" "));
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1").arg(capsString));
+    queue(QStringLiteral("CAP REQ :") + capsString, HighPriority);
     m_capRequested++;
 }
 
@@ -745,7 +768,6 @@ void Server::capEndNegotiation()
     {
         getStatusView()->appendServerMessage(i18n("Info"),i18n("Closing capabilities negotiation."));
         queue(QStringLiteral("CAP END"), HighPriority);
-        m_capAnswered = 0;
     }
 }
 
