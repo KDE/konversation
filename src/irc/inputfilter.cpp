@@ -1603,11 +1603,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     NickInfoPtr nickInfo = m_server->getNickInfo(parameterList.value(5));
                                                     // G=away G@=away,op G+=away,voice
                     bool bAway = parameterList.value(6).toUpper().startsWith(QLatin1Char('G'));
+                    QString realName = trailing;
+
+                    if (realName.indexOf (QRegExp(QStringLiteral("\\d\\s"))) == 0)
+                        realName = realName.mid (2);
+
                     if (nickInfo)
                     {
                         nickInfo->setHostmask(i18n("%1@%2", parameterList.value(2), parameterList.value(3)));
-                                                    //Strip off the "0 "
-                        nickInfo->setRealName(trailing.section(QLatin1Char(' '), 1));
+                        nickInfo->setRealName(realName);
                         nickInfo->setAway(bAway);
                         if(!bAway)
                         {
@@ -1628,7 +1632,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                 i18n("%1 is %2@%3 (%4)%5", parameterList.value(5),
                                     parameterList.value(2),
                                     parameterList.value(3),
-                                    trailing.section(QLatin1Char(' '), 1),
+                                    realName,
                                     bAway?i18n(" (Away)"):QString()), messageTags,
                                 false); // Don't parse as url
                         }
