@@ -37,7 +37,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
       <string>&lt;qt&gt;When checked, the &lt;b&gt;Watched Nicks&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
      </property>
      <property name="text">
-      <string>Show watched Watched Nicks tab on &amp;application startup</string>
+      <string>Show Watched Nicks tab on &amp;application startup</string>
      </property>
     </widget>
    </item>
