@@ -82,7 +82,7 @@ QSize IRCInput::sizeHint() const
 
     int h = document()->size().toSize().height() - fm.descent() + 2 * frameWidth();
 
-    QStyleOptionFrameV2 opt;
+    QStyleOptionFrame opt;
     opt.initFrom(this);
     opt.rect = QRect(0, 0, 100, h);
     opt.lineWidth = lineWidth();

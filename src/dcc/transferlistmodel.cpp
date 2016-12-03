@@ -124,18 +124,17 @@ namespace Konversation
                     return;
                 }
             }
-            QStyleOptionViewItemV4 _option(option);
-            QStyle* style = _option.widget ? _option.widget->style() : QApplication::style();
-            style->drawPrimitive(QStyle::PE_PanelItemViewItem, &_option, painter, _option.widget);
+            QStyle* style = option.widget ? option.widget->style() : QApplication::style();
+            style->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter, option.widget);
 
             QStyleOptionProgressBar progressBarOption;
-            progressBarOption.rect = _option.rect;
+            progressBarOption.rect = option.rect;
             progressBarOption.minimum = 0;
             progressBarOption.maximum = 100;
             progressBarOption.progress = index.data().toInt();
             progressBarOption.text = QString::number(progressBarOption.progress) + '%';
             progressBarOption.textVisible = true;
-            progressBarOption.state = _option.state;
+            progressBarOption.state = option.state;
 
             style->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
         }
