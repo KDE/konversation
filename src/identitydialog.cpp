@@ -105,8 +105,8 @@ namespace Konversation
         // Set up signals / slots for identity page
         //connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
 
-        KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), QStringLiteral("dialog-ok"), i18n("Change identity information")));
-        KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"),QStringLiteral("dialog-cancel"), i18n("Discards all changes made")));
+        okButton->setToolTip(i18n("Change identity information"));
+        buttonBox->button(QDialogButtonBox::Cancel)->setToolTip(i18n("Discards all changes made"));
 
         AwayManager* awayManager = Application::instance()->getAwayManager();
         connect(m_identityCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::updateIdentity);

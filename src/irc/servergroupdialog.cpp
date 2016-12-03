@@ -28,7 +28,6 @@
 #include <QPushButton>
 #include <KConfigGroup>
 #include <QDialogButtonBox>
-#include <KGuiItem>
 #include <QVBoxLayout>
 
 
@@ -91,8 +90,8 @@ namespace Konversation
         connect(m_mainWidget->m_upChannelBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveChannelUp);
         connect(m_mainWidget->m_downChannelBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveChannelDown);
 
-        KGuiItem::assign(okButton, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change network information")));
-        KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
+        okButton->setToolTip(i18n("Change network information"));
+        buttonBox->button(QDialogButtonBox::Cancel)->setToolTip(i18n("Discards all changes made"));
 
         m_mainWidget->m_nameEdit->setFocus();
 

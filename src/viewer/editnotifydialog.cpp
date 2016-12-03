@@ -23,7 +23,6 @@
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <KGuiItem>
 #include <QVBoxLayout>
 
 
@@ -86,8 +85,8 @@ const QString& nickname):
     layout->addWidget(m_nicknameInput, 1, 1);
 
 
-    KGuiItem::assign(okButton, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
-    KGuiItem::assign(buttonBox->button(QDialogButtonBox::Cancel), KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
+    okButton->setToolTip(i18n("Change notify information"));
+    buttonBox->button(QDialogButtonBox::Cancel)->setToolTip(i18n("Discards all changes made"));
 
     m_nicknameInput->setFocus();
 }
