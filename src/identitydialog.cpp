@@ -24,7 +24,7 @@
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <KGuiItem>
+#include <KStandardGuiItem>
 #include <QVBoxLayout>
 
 namespace Konversation
@@ -284,7 +284,7 @@ namespace Konversation
         }
 
         if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Delete Identity"),
-            KGuiItem(i18n("Delete"), QStringLiteral("edit-delete"))) == KMessageBox::Continue)
+            KStandardGuiItem::del()) == KMessageBox::Continue)
         {
             m_identityList.removeOne(m_currentIdentity);
             m_currentIdentity = 0;

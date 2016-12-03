@@ -25,6 +25,7 @@
 
 #include <KLocalizedString>
 #include <KUrlRequester>
+#include <KStandardGuiItem>
 
 namespace Konversation
 {
@@ -161,7 +162,7 @@ namespace Konversation
         {
             if(m_item->getFileURL() == m_urlreqFileURL->url())
             {
-                m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("&Overwrite"));
+                m_buttonBox->button(QDialogButtonBox::Ok)->setText(KStandardGuiItem::overwrite().text());
                 m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Overwrite);
 
                 if(m_buttonBox->standardButtons() & QDialogButtonBox::Retry)
