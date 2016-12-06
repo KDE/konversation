@@ -2,18 +2,13 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!-- Define an entity for your application if it is not part of KDE
        CVS -->
-  <!ENTITY kappname "&konversation;">
-  <!ENTITY package "extragear">
   <!ENTITY irc "<acronym>IRC</acronym>">
   <!ENTITY CTCP "<acronym>CTCP</acronym>">
   <!ENTITY i18n-nickname "<acronym>nickname</acronym>">
   <!ENTITY i18n-Nickname "<acronym>Nickname</acronym>">
   <!ENTITY led "<acronym>LED</acronym>">
   <!ENTITY osd "<acronym>OSD</acronym>">
-  <!ENTITY url "<acronym>URL</acronym>">
-  <!ENTITY mime "<acronym>MIME</acronym>">
   <!ENTITY konviwebsite "http://konversation.kde.org">
-  <!ENTITY % imageobjectco.module "INCLUDE">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"> <!-- ONLY If you are writing non-English
                                      original documentation, change
@@ -80,14 +75,14 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2010-10-14</date>
-<releaseinfo>1.3</releaseinfo>
+<date>2016-11-29</date>
+<releaseinfo>&konversation; 1.6</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
 <abstract>
 <para>
-&konversation; is a user-friendly &irc; client built on the &kde; platform.
+&konversation; is a user-friendly &irc; client built on &Qt; and &kf5-full;.
 </para>
 </abstract>
 
@@ -163,7 +158,7 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para>
-&konversation; is an &irc; client built on the &kde; platform.  It offers the following features:
+&konversation; is an &irc; client built on &Qt; and &kf5-full;.  It offers the following features:
 </para>
 
 <para>
@@ -192,7 +187,7 @@ regular expression pattern.</para></listitem>
 <para>The &konversation; website is
 <ulink url="&konviwebsite;">&konviwebsite;</ulink>.
 Further information like a FAQ and tips and tricks you find in the
-<ulink url="http://konversation.kde.org/wiki/Main_Page">&konversation; Wiki</ulink>.
+<ulink url="http://userbase.kde.org/Konversation">&konversation; UserBase page</ulink>.
 </para>
 
 <para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://chat.freenode.net/konversation">irc.freenode.net channel #konversation</ulink>.
@@ -458,11 +453,11 @@ whenever you perform an <userinput><command>/away</command></userinput> command,
 went away.  Other &irc; users do not see this horizontal line.
 </para></callout>
 <callout arearefs="pt-identity-away-3"><para>If you check this box,
-&konversation; will automatically send the <guilabel>Away message</guilabel> to all channels joined with this <guilabel>Identity</guilabel>.
+&konversation; will automatically send the <guilabel>Away command</guilabel> to all channels joined with this <guilabel>Identity</guilabel>.
 <userinput><replaceable>%s</replaceable></userinput> is replaced with
 <userinput><replaceable>msg</replaceable></userinput>.
 Whenever you perform an
-<userinput><command>/away</command></userinput> command, the <guilabel>Return message</guilabel> will be displayed in all channels joined with this <guilabel>Identity</guilabel>.</para>
+<userinput><command>/away</command></userinput> command, the <guilabel>Return command</guilabel> will be displayed in all channels joined with this <guilabel>Identity</guilabel>.</para>
 
 <note><para>Away messages are often considered annoying by other users.
 Use this option carefully, with consideration for your fellow &irc; users.
@@ -991,6 +986,7 @@ about the user.  You may change how the icons are displayed next to each &i18n-n
 the &i18n-nickname; icon theme.  See <link linkend="nickthemes">Configuring &i18n-nickname; themes</link>
  for more information.
 The <guilabel>Default Theme</guilabel>, as shown in the screen above, uses the following icons:
+<!--FIXME pngs in data/images/nickicons/default-->
 <itemizedlist>
 <listitem>
 <para><inlinemediaobject><imageobject><imagedata fileref="irc_normal.png" format="PNG"  /></imageobject></inlinemediaobject>
@@ -1333,14 +1329,14 @@ defining networks, servers, and auto join channels</link>.</para></note>
 <para>To activate the &i18n-nickname; watching feature, choose
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
-	<guisubmenu>Watched Nicks Online</guisubmenu>
+	<guisubmenu>Watched Nicks</guisubmenu>
 </menuchoice>
- on the main menu.  <action>The <guilabel>Watched Nicks Online</guilabel> screen will appear.</action>
+ on the main menu.  <action>The <guilabel>Watched Nicks</guilabel> screen will appear.</action>
 </para>
 
 <para>
 <screenshot>
-	<screeninfo>Watched Nicks Online.</screeninfo>
+	<screeninfo>Watched Nicks.</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -1356,7 +1352,7 @@ defining networks, servers, and auto join channels</link>.</para></note>
 			</imageobject>
 		</imageobjectco>
 		<textobject>
-			<phrase>Watched Nicks Online</phrase>
+			<phrase>Watched Nicks</phrase>
 		</textobject>
 	</mediaobjectco>
 </screenshot>
@@ -1373,7 +1369,7 @@ the icons that appear in the <interface>Nick Panel</interface> in the
 <link linkend="channel-screen-tour">channel</link> screens.
 </para></callout>
 <callout arearefs="pt-nicksonline-2"><para>The information known about the &i18n-nickname;
-is displayed here.  When the <guilabel>Watched Nicks Online</guilabel> screen is first
+is displayed here.  When the <guilabel>Watched Nicks</guilabel> screen is first
 displayed, this information is sparse.  Every 20 seconds,
 one <userinput><command>WHOIS</command></userinput> command is automatically sent to the server
 to request information for &i18n-nickname;s that do not have any information.  This continues until
@@ -1408,8 +1404,6 @@ The <guilabel>Watched Nicknames</guilabel> screen appears.
 				<area id="pt-notifylist-2" coords="1 1"/>
 				<area id="pt-notifylist-3" coords="1 1"/>
 				<area id="pt-notifylist-4" coords="1 1"/>
-				<area id="pt-notifylist-5" coords="1 1"/>
-				<area id="pt-notifylist-6" coords="1 1"/>
 			</areaspec>
 			<imageobject>
 				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
@@ -1428,27 +1422,23 @@ The <guilabel>Watched Nicknames</guilabel> screen appears.
 <callout arearefs="pt-notifylist-1"><para>Check this box to activate the &i18n-nickname; watcher feature.</para></callout>
 
 <callout arearefs="pt-notifylist-2"><para>If you want the
-<guilabel>Watched Nicks Online</guilabel> screen to automatically display when you
+<guilabel>Watched Nicks</guilabel> screen to automatically display when you
 open &konversation;, check this box.</para></callout>
 
-<callout arearefs="pt-notifylist-3"><para>The &i18n-nickname;s of the users you want to monitor are listed here.  Each &i18n-nickname; has an associated &irc; network.</para></callout>
-
-<callout arearefs="pt-notifylist-4"><para>Click these buttons to <guibutton>Add</guibutton> or <guibutton>Remove</guibutton> &i18n-nickname;s from the list.</para></callout>
-
-<callout arearefs="pt-notifylist-5"><para>The <guilabel>Watched Nicks Online</guilabel> feature works by periodically polling the server.  This box sets how often that occurs.  Avoid numbers less than 20 seconds because it places excessive load on the server.</para></callout>
-
-<callout arearefs="pt-notifylist-6"><para>In the <guilabel>Watched Nicks Online</guilabel>
-screen above, you may double click on any &i18n-nickname; and this command will be sent to the
+<callout arearefs="pt-notifylist-3"><para>In the <guilabel>Watched Nicks</guilabel>
+screen, you may double click on any &i18n-nickname; and this command will be sent to the
 server.  <userinput><command>%u</command></userinput> will be replaced with the
 &i18n-nickname;.  The <userinput><command>%n</command></userinput> is required at the
 end of the command.</para></callout>
+
+<callout arearefs="pt-notifylist-4"><para>The <guilabel>Watched Nicks</guilabel> feature works by periodically polling the server.  This box sets how often that occurs.  Avoid numbers less than 20 seconds because it places excessive load on the server.</para></callout>
 
 </calloutlist>
 </para>
 
 <para>Click the <guibutton>OK</guibutton> button when you have finished adding or removing &i18n-nickname;s.</para>
 
-<para><emphasis>Note: </emphasis>Whenever you display the <guilabel>Watched Nicks Online</guilabel> screen, it may take a while before any &i18n-nickname;s are displayed until &konversation; has polled the server.  Normally, you leave the <guilabel>Watched Nicks Online</guilabel> screen running.
+<para><emphasis>Note: </emphasis>Whenever you display the <guilabel>Watched Nicks</guilabel> screen, it may take a while before any &i18n-nickname;s are displayed until &konversation; has polled the server.  Normally, you leave the <guilabel>Watched Nicks</guilabel> screen running.
 </para>
 
 <para>&konversation; also displays a message in all the <link linkend="channel-screen-tour">channels</link> whenever a user in
@@ -1489,6 +1479,7 @@ your <guilabel>Watched Nicknames</guilabel> list connects or disconnects from th
 				<area id="pt-highlight-7" coords="1 1"/>
 				<area id="pt-highlight-8" coords="1 1"/>
 				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
 			</areaspec>
 			<imageobject>
 				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
@@ -1527,13 +1518,16 @@ automatically send a reply message when the pattern is matched, enter the
 message here.  Use this feature with caution, as you may annoy &irc; users
 with too much chatter if not careful.  You can also enter
 &irc; or &konversation; commands here.</para></callout>
-<callout arearefs="pt-highlight-7"><para>If you have configured sounds
+<callout arearefs="pt-highlight-8"><para>If you have configured sounds
 for any of your highlights, you can disable all of them by unchecking
 this box.</para></callout>
-<callout arearefs="pt-highlight-8"><para>If you check this box,
+<callout arearefs="pt-highlight-7"><para>This highlight will only be searched for
+in chat windows listed here by name, or in all chat windows if the field is left empty.
+Multiple names have to be separated by commas.</para></callout>
+<callout arearefs="pt-highlight-9"><para>If you check this box,
 whenever someone mentions your &i18n-nickname; in a message, the message
 will be displayed in the color you choose at the right.</para></callout>
-<callout arearefs="pt-highlight-9"><para>Normally, highlighting
+<callout arearefs="pt-highlight-10"><para>Normally, highlighting
 does not apply to messages you type.  If you wish to highlight the
 messages you type, check this box and choose a color at the right.</para></callout>
 
@@ -1557,7 +1551,7 @@ minimized in the system tray.</para>
 <screeninfo>Example of On Screen Display</screeninfo>
 	<mediaobject>
 		<imageobject>
-			<imagedata fileref="osd_demo.png" format="PNG"/>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
 		</imageobject>
 		<textobject>
 			<phrase>Example of On Screen Display</phrase>
@@ -1831,7 +1825,7 @@ Choose
 				<area id="pt-dccstatus-3" coords="1 1"/>
 			</areaspec>
 			<imageobject>
-				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
 			</imageobject>
 		</imageobjectco>
 		<textobject>
@@ -1987,20 +1981,20 @@ websites or other resources on the web.  You can double-click any such &URL; and
 the application associated with the &URL;.
 The application launched depends upon the &MIME; type of the &URL;.
 For example, a &URL; beginning with
-<interface>http:</interface> will activate your default &kde; web browser and display the web page.
+<interface>http:</interface> will activate your default web browser and display the web page.
 (You can also specify the <link linkend="webbrowser">web browser</link> to use.)
 If the &URL; scrolls off the screen, you might have trouble finding it
 again.  &konversation; can keep a convenient list of all &URL;s for you.  To activate this feature, choose
 <menuchoice>
 	<guisubmenu>Window</guisubmenu>
-	<guisubmenu>&url; Catcher</guisubmenu>
+	<guisubmenu>&URL; Catcher</guisubmenu>
 </menuchoice> on the main menu.
-<action>A new tab called <guilabel>&url; Catcher</guilabel> is created.</action>
+<action>A new tab called <guilabel>&URL; Catcher</guilabel> is created.</action>
 </para>
 
 <para>
 <screenshot>
-<screeninfo>The &url; Catcher tab.</screeninfo>
+<screeninfo>The &URL; Catcher tab.</screeninfo>
 	<mediaobjectco>
 		<imageobjectco>
 			<areaspec units="calspair">
@@ -2016,7 +2010,7 @@ again.  &konversation; can keep a convenient list of all &URL;s for you.  To act
 			</imageobject>
 		</imageobjectco>
 		<textobject>
-			<phrase>The &url; Catcher tab.</phrase>
+			<phrase>The &URL; Catcher tab.</phrase>
 		</textobject>
 	</mediaobjectco>
 </screenshot>
@@ -2033,7 +2027,7 @@ The application launched depends upon the &MIME; type of the &URL;.  For example
 <interface>http:</interface> will activate your default web browser and display the web page.  For web pages, you can
 also specify the <link linkend="webbrowser">web browser</link> to use.</para></callout>
 
-<callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the &kde; clipboard.</para></callout>
+<callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the clipboard.</para></callout>
 
 <callout arearefs="pt-urlcatcher-4"><para>Click here to delete the selected  &URL; from the list.</para></callout>
 
@@ -2052,10 +2046,10 @@ also specify the <link linkend="webbrowser">web browser</link> to use.</para></c
 <title>Setting your preferred web browser</title>
 
 <para>When you click on a highlighted &URL; anywhere in &konversation;, it will launch the default
-&kde; application associated with the &MIME; type of the &URL;.  For example, when clicking on
+application associated with the &MIME; type of the &URL;.  For example, when clicking on
 a &URL; beginning with <interface>http</interface>, &konqueror; is launched to display the
 web page.  You can specify an application different from the <guilabel>Default Applications</guilabel>
-module of the &kde; &systemsettings;.  For example, you can use <application>Firefox</application> instead.
+module of the &systemsettings;.  For example, you can use <application>Firefox</application> instead.
 </para>
 
 <para>To choose a different web browser from &konversation; app, choose
@@ -2102,7 +2096,7 @@ When you click on a &URL; <userinput><replaceable>%u</replaceable></userinput> w
 
 <para><emphasis>Note: </emphasis>The web browser setting does not apply to
 <interface>mailto:</interface> &URL;s.  <interface>mailto:</interface> &URL;s always launch the default
-&kde; mailer.
+mailer.
 </para>
 
 <para>Click <guibutton>Apply</guibutton> to save your changes.  You must reconnect to each server and
@@ -2243,7 +2237,7 @@ click on <guilabel>Logging</guilabel>.
 
 <sect1 id="konvi-cmds">
 <title>&konversation; commands</title>
-
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
 <para>The following commands are interpreted by &konversation; and may differ from standard
 &irc; commands.  Items inside square brackets are optional.  Items separated by bar (|) are
 alternate forms of the command.  Commands not listed here are sent to the server as entered.
@@ -2409,9 +2403,9 @@ the command is sent to all the servers you have connected in &konversation;.</pa
 scripts.</para>
 <para>Examples:</para>
 
-<para><userinput><replaceable>/exec kdeversion</replaceable></userinput></para>
+<para><userinput><replaceable>/sayversion</replaceable></userinput></para>
 
-<para>Sends your system's &kde; and &Qt; version numbers to the channel.</para>
+<para>Sends your system's &konversation;, &Qt;, &kf5; and &plasma; version numbers to the channel.</para>
 
 <para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
 
@@ -2423,7 +2417,7 @@ scripts.</para>
 <varlistentry>
 <term><userinput><command>/notify </command><replaceable>[nick]</replaceable></userinput></term>
 <listitem><para>Adds or removes <userinput><replaceable>nick</replaceable></userinput> from
-your <link linkend="nicksonline">Watched Nicks Online</link> list.  If the &i18n-nickname; is already
+your <link linkend="nicksonline">Watched Nicks</link> list.  If the &i18n-nickname; is already
 in the list, it is removed.  If it is not in the list, it is added.  If <userinput><replaceable>nick</replaceable></userinput> is omitted, displays the current list
 of watched &i18n-nickname;s.</para>
 </listitem>
@@ -2488,7 +2482,7 @@ to execute the command.  Two command characters (//) in a row does the same thin
 
 <varlistentry>
 <term><userinput><command>/konsole </command></userinput></term>
-<listitem><para>Opens a new tab running a &kde; &konsole;.
+<listitem><para>Opens a new tab running a &konsole;.
 </para></listitem>
 </varlistentry>
 
@@ -2563,9 +2557,9 @@ passing it (optional) <userinput><replaceable>parameters</replaceable></userinpu
 
 <para>For example, type the following command in a channel tab</para>
 
-<para><userinput><replaceable>/exec kdeversion</replaceable></userinput></para>
+<para><userinput><replaceable>/sayversion</replaceable></userinput></para>
 
-<para>to send your &kde; and &Qt; version numbers to the channel.</para>
+<para>to send your &konversation;, &Qt;, &kf5; and &plasma; version numbers to the channel.</para>
 
 <para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
 
@@ -2617,7 +2611,7 @@ in the tab without sending it to other users, use <computeroutput>info</computer
 instead.  Look at the existing script files for more examples of writing scripts.</para>
 
 <para>To be able to run a script you have written, you must install it by copying
-it to <filename class="directory">`qtpaths --paths GenericDataLocation`/konversation/scripts</filename>.  You must also give the file execute
+it to <filename class="directory">$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename>.  You must also give the file execute
 privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable></userinput>.</para>
 
 </sect1>
@@ -2626,7 +2620,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <title>Script Reference Guide</title>
 
 <para>&konversation; comes with several scripts installed by default, please refer to this guide to learn how to use them.</para>
-
+<!--FIXME in data/scripts-->
 <variablelist>
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>bug</replaceable> [<replaceable>Bug Number|Search String</replaceable>]</userinput></term>
@@ -2634,7 +2628,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
   <para>This script is used to open your browser to search for the given string or bug number on <ulink url="https://bugs.kde.org/">&kde;'s Bugzilla</ulink>.</para>
 <para>Example: To open your browser to search for bug 123456</para>
 <para><userinput><command>/exec </command> <replaceable>bug 123456</replaceable></userinput></para>
-<para>Sample action: The default browser in your &kde; &systemsettings; should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
+<para>Sample action: The default browser in your &systemsettings; should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -2644,8 +2638,8 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
 <listitem>
 <para>This script is used to have the output of the command line arguments to be written to your current channel.</para>
 <para>Example: To show everyone in your current channel what version of &konversation; you have installed.</para>
-<para><userinput><command>/exec </command> <replaceable>cmd konversation --version | grep Konversation</replaceable></userinput></para>
-<para>Sample output: <replaceable>Konversation: 1.2</replaceable></para>
+<para><userinput><command>/exec </command> <replaceable>cmd konversation --version</replaceable></userinput></para>
+<para>Sample output: <replaceable>Konversation: 1.6</replaceable></para>
 <para>WARNING! The output of the entire command is posted to everyone in the current channel tab! Please use with care.</para>
 </listitem>
 </varlistentry>
@@ -2672,7 +2666,7 @@ kernel bug report</replaceable></para>
 <para>Sample output: <replaceable>Beer load [          |          ] 50%</replaceable></para>
 </listitem>
 </varlistentry>
-
+<!--FIXME Error: No email folders were found that had a name containing 'foo'
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>mail</replaceable> [<replaceable>KMail Email Folder</replaceable>]</userinput>
 </term>
@@ -2683,7 +2677,7 @@ kernel bug report</replaceable></para>
 <para>Sample output: <replaceable>Email folder inbox has 30 unread messages, out of 800</replaceable></para>
 </listitem>
 </varlistentry>
-
+-->
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>media</replaceable> [<replaceable>audio|video|{player}</replaceable>]</userinput>
 </term>
@@ -2691,8 +2685,8 @@ kernel bug report</replaceable></para>
 <para>This is a Now Playing script for various media players. It also features a method to show Now Playing information
 for only audio players, or only video players via the optional command arguments <replaceable>audio</replaceable>
 and <replaceable>video</replaceable>. Additionally, it's possible to specify the media player you wish to query.</para>
-<para>The following media players are supported: Amarok (audio), JuK (audio), Noatun (audio, video), Kaffeine (video, audio),
-KMPlayer (video, audio), KPlayer (video, audio), KsCD (audio), kdetv (video), Yammi (audio), Audacious (audio),
+<para>The following media players are supported: Amarok (audio), JuK (audio), Kaffeine (video, audio),
+KMPlayer (video, audio), KPlayer (video, audio), kdetv (video), Yammi (audio), Audacious (audio),
 MPD (audio).</para>
 <para>Example: To output your currently playing song in Amarok.</para>
 <para><userinput><command>/exec </command> <replaceable>media amarok</replaceable></userinput></para>
@@ -2700,7 +2694,7 @@ MPD (audio).</para>
 on Slippery When Wet [Amarok]</replaceable></para>
 </listitem>
 </varlistentry>
-
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>sayclip</replaceable> [<replaceable>Optional Delay</replaceable>]</userinput>
 </term>
@@ -2711,7 +2705,7 @@ on Slippery When Wet [Amarok]</replaceable></para>
 <para>Sample output: <replaceable>Konversation sure is awesome!</replaceable></para>
 </listitem>
 </varlistentry>
-
+-->
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>sysinfo</replaceable></userinput>
 </term>
@@ -2720,9 +2714,7 @@ on Slippery When Wet [Amarok]</replaceable></para>
 formatting them appropriately.</para>
 <para>Example: To output some information about your system to the current channel tab.</para>
 <para><userinput><command>/exec </command> <replaceable>sysinfo</replaceable></userinput></para>
-<para>Sample output: <replaceable>Sysinfo for 'user-desktop': Linux 2.6.28-12-generic running KDE 4.2.85 (KDE 4.2.85 (KDE 4.3 Beta1)),
-CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), HD: 370/445GB, RAM: 1965/2012MB, 232 proc's,
-98.15d up</replaceable></para>
+<para>Sample output: <replaceable>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -2754,6 +2746,11 @@ CPU: Intel(R) Core 2 Quad  CPU   Q9450  @ 2.66GHz at 2666 MHz (5333 bogomips), H
 select <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Command Aliases</guimenuitem></menuchoice>
 to view, add, remove or edit command aliases.
 </para>
+
+<para>For more information about scripting please read the
+<ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide">Userbase Scripting guide</ulink>
+</para>
+
 </sect1>
 
 </chapter>
@@ -2800,7 +2797,14 @@ or menu bars. -->
 		<listitem><para><action>Displays the <link linkend="quickconnect">Quick Connect</link> screen for connecting to a server.
 		</action></para></listitem>
 	</varlistentry>
-	<!-- Disconnect -->
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>File</guimenu>
+			<guimenuitem>Disconnect</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Disconnects from all servers.
+		</action></para></listitem>
+	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
 			<guimenu>File</guimenu>
@@ -2880,6 +2884,9 @@ or menu bars. -->
 <!-- missing
 Find Previous Shift F3
 Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Decrease Font Size Ctrl+-
+Reset Font Size Ctrl+O
 -->
 	<varlistentry>
 		<term><menuchoice>
@@ -2955,7 +2962,7 @@ Clear Marker Lines Ctrl Shift R
 </sect2>
 
 <sect2>
-<title>The Bookmarks Menu</title>
+<title>The Bookmarks Menu</title><!--FIXME Copy to fundamentals + link?-->
 <para>
 <variablelist>
 	<varlistentry>
@@ -3020,38 +3027,6 @@ Clear Marker Lines Ctrl Shift R
 	</varlistentry>
 	<varlistentry>
 		<term><menuchoice>
-			<shortcut>
-				<keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo>
-			</shortcut>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Show Menubar</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Hides the main menu.  Hit
-				<keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo>
-		to display it again.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Show Toolbar</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Shows or hides the toolbar.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Show Statusbar</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Shows or hides the status bar at the bottom of the main screen.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
 				<shortcut><keycap>F8</keycap></shortcut>
 				<guimenu>Settings</guimenu>
 				<guimenuitem>Identities...</guimenuitem>
@@ -3059,42 +3034,6 @@ Clear Marker Lines Ctrl Shift R
 		<listitem><para><action>Displays the <link linkend="identity">Identities</link> screen
 		for setting your identification information.
 		</action></para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Configure Shortcuts</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Allows you to change keyboard shortcuts for &konversation;.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Configure Toolbars</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Allows you to add or remove buttons from the &konversation; toolbar.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Configure Notifications</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Displays the <link linkend="cfg-notifications">Notifications Settings</link> screen.</action>
-		</para></listitem>
-	</varlistentry>
-	<varlistentry>
-		<term><menuchoice>
-			<guimenu>Settings</guimenu>
-			<guimenuitem>Configure &konversation;</guimenuitem>
-		</menuchoice></term>
-		<listitem><para>
-			<action>Displays the <guilabel>Configure</guilabel> screen.</action>
-		</para></listitem>
 	</varlistentry>
 </variablelist>
 </para>
@@ -3171,10 +3110,10 @@ Set Encoding
 					<keycap>F4</keycap>
 				</shortcut>
 			<guimenu>Window</guimenu>
-			<guimenuitem>Watched Nicks Online</guimenuitem>
+			<guimenuitem>Watched Nicks</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>Displays the <guilabel>Watched Nicks Online</guilabel> screen.   See <link linkend="nicksonline">Monitoring who is online</link>.</action>
+			<action>Displays the <guilabel>Watched Nicks</guilabel> screen.   See <link linkend="nicksonline">Monitoring who is online</link>.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3183,10 +3122,10 @@ Set Encoding
 					<keycap>F6</keycap>
 				</shortcut>
 			<guimenu>Window</guimenu>
-			<guimenuitem>&url; Catcher</guimenuitem>
+			<guimenuitem>&URL; Catcher</guimenuitem>
 		</menuchoice></term>
 		<listitem><para>
-			<action>Displays the <link linkend="urlcatcher">&url; Catcher</link> screen.</action>
+			<action>Displays the <link linkend="urlcatcher">&URL; Catcher</link> screen.</action>
 		</para></listitem>
 	</varlistentry>
 	<varlistentry>
@@ -3251,12 +3190,10 @@ Set Encoding
 <sect2>
 <title>The Help Menu</title>
 
-<!-- Assuming you have a standard help menu (help, what's this, about -->
-<!-- &konversation;, about KDE) then the documentation is already written. -->
-<!-- The following entity is valid anywhere that a variablelist is -->
-<!-- valid.  -->
-
-&help.menu.documentation;
+<para>
+&konversation; has the common &kde; <guimenu>Help</guimenu> menu item, for more information read the section
+about the <ulink url="help:/fundamentals/ui.html#menus-help">Help Menu</ulink> of the &kde; Fundamentals.
+</para>
 
 </sect2>
 
@@ -3278,14 +3215,11 @@ This is also a great place to provide pointers to other FAQ's if your users
 must do some complicated configuration on other programs in order for your
 application work. -->
 
-&reporting.bugs;
-&updating.documentation;
-
 <qandaset id="faqlist">
-
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
 <qandaentry>
 <question>
-<para>When I start &konversation;, I'd like to connect to a server without joining any channels.   How do I do that?</para>
+<para>When I start &konversation;, I'd like to connect to a server without joining any channels. How do I do that?</para>
 </question>
 <answer>
 <para>In the <link linkend="serverlist-addnetwork">Edit Server</link> screen, leave the <guilabel>Channels</guilabel> frame empty.</para>
@@ -3324,7 +3258,7 @@ If you are behind a firewall, make sure the correct ports are enabled.  &konvers
 </itemizedlist>
 </para>
 
-<para>For more information on &irc; connection problems, see <ulink url="http://www.irchelp.org/irchelp/networks/connectprob.html">irchelp.org</ulink>.
+<para>For more information on &irc; connection problems, see <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md">irchelp.org</ulink>.
 </para>
 
 </listitem>
@@ -3347,7 +3281,7 @@ The
 <menuchoice>
 <guimenu>Window</guimenu>
 <guisubmenu>Channel List</guisubmenu>
-</menuchoice>  menu entry will be grayed-out if a non-channel tab, &eg; <guilabel>Watched Nicks Online</guilabel>, is currently being viewed.
+</menuchoice>  menu entry will be grayed-out if a non-channel tab, &eg; <guilabel>Watched Nicks</guilabel>, is currently being viewed.
 To make it selectable again go back to a channel tab or the server tab.
 </para>
 </answer>
@@ -3374,6 +3308,50 @@ Check the <guilabel>Automatic Away</guilabel> option.
 automatically replacing the text in the <interface>Input Line</interface> according to the options in the settings
 dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</guimenuitem></menuchoice>.
 </para></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>Where can I find the scripts included with &konversation;?</para>
+</question>
+<answer>
+<para>Run this command in &konversation;'s input line (using the media script as an example, since it comes with any &konversation; installation):
+</para>
+<para><userinput><command>/exec </command> <replaceable>--showpath media</replaceable></userinput></para>
+<para>Sample output: <replaceable>The script file 'media' was found at: /usr/share/konversation/scripts/media</replaceable></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>How do I make my text bold/italized/underlined?</para>
+</question>
+<answer>
+<para>Example: <userinput>This is my %Bbold%B text.</userinput></para>
+<para>Output: 
+<inlinemediaobject>
+<imageobject><imagedata fileref="bold-text.png" format="PNG" /></imageobject>
+</inlinemediaobject>
+</para>
+<para>Example: <userinput>This is my %Iitalized%I text.</userinput></para>
+<para>Output: 
+<inlinemediaobject>
+<imageobject><imagedata fileref="italic-text.png" format="PNG" /></imageobject>
+</inlinemediaobject>
+</para>
+<para>Example: <userinput>This is my %Uunderlined%U text.</userinput></para>
+<para>Output: 
+<inlinemediaobject>
+<imageobject><imagedata fileref="underline-text.png" format="PNG" /></imageobject>
+</inlinemediaobject>
+</para>
+<para>Example: <userinput>This is my %Sstruck-out%S text.</userinput></para>
+<para>Output: 
+<inlinemediaobject>
+<imageobject><imagedata fileref="struck-out-text.png" format="PNG" /></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
 </qandaentry>
 
 </qandaset>
@@ -3448,52 +3426,6 @@ Documentation Copyright &copy; 2003-2005 Gary R. Cramblitt <email>garycramblitt@
 &underGPL;        	 <!-- GPL License -->
 
 </chapter>
-
-<appendix id="installation">
-<title>Installation</title>
-
-<!-- =================================================================== -->
-
-<sect1 id="getting-kapp">
-<title>How to obtain &konversation;</title>
-
-<!-- This first entity contains boiler plate for applications that are
-part of KDE CVS.  You should remove it if you are releasing your
-application -->
-
- <!--&install.intro.documentation;-->
-
-<para>
-The latest versions of &konversation;, including source code and build instructions
-can be obtained from the
-<ulink url="&konviwebsite;">&konviwebsite; website</ulink>.
-</para>
-
-</sect1>
-
-<!-- =================================================================== -->
-
-<sect1 id="requirements">
-<title>Requirements</title>
-
-<!--
-List any special requirements for your application here. This should include:
-.Libraries or other software that is not included in kdesupport,
-kdelibs, or kdebase.
-.Hardware requirements like amount of RAM, disk space, graphics card
-capabilities, screen resolution, special expansion cards, etc.
-.Operating systems the app will run on. If your app is designed only for a
-specific OS, (you wrote a graphical LILO configurator for example) put this
-information here.
--->
-
-<para>
-In order to successfully use &konversation;, you need &kde; 4 and a network connection.
-If you will be running &konversation; from behind a firewall, see <link linkend="faq">Questions and Answers</link>.  If you wish to use SSL protocol, you may need OpenSSL.
-</para>
-
-</sect1>
-</appendix>
 
 &documentation.index;
 </book>
