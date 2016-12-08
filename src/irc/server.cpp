@@ -752,7 +752,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
     }
 
     QString capsString = requestCaps.join (QStringLiteral(" "));
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1").arg(capsString));
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1", capsString));
     queue(QStringLiteral("CAP REQ :") + capsString, HighPriority);
     m_capRequested++;
 }
