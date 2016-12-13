@@ -3324,7 +3324,7 @@ dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</g
 
 <qandaentry>
 <question>
-<para>How do I make my text bold/italized/underlined?</para>
+<para>How do I make my text bold/italicized/underlined?</para>
 </question>
 <answer>
 <para>Example: <userinput>This is my %Bbold%B text.</userinput></para>
@@ -3333,7 +3333,7 @@ dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</g
 <imageobject><imagedata fileref="bold-text.png" format="PNG" /></imageobject>
 </inlinemediaobject>
 </para>
-<para>Example: <userinput>This is my %Iitalized%I text.</userinput></para>
+<para>Example: <userinput>This is my %Iitalicized%I text.</userinput></para>
 <para>Output: 
 <inlinemediaobject>
 <imageobject><imagedata fileref="italic-text.png" format="PNG" /></imageobject>
