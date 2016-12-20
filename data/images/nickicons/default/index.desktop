@@ -2,7 +2,6 @@
 Type=Theme
 Name=Default Theme
 Name[ar]=السّمة الافتراضيّة
-Name[ast]=Tema por defeutu
 Name[bg]=Стандартна тема
 Name[bs]=Podrazumijevana tema
 Name[ca]=Tema per omissió
@@ -55,7 +54,6 @@ Name[zh_CN]=默认主题
 Name[zh_TW]=預設主題
 Comment="Breeze" by Uri Herrera
 Comment[ar]="نسيم" لِـ Uri Herrera
-Comment[ast]="Breeze" por Uri Herrera
 Comment[ca]=«Brisa» per Uri Herrera
 Comment[ca@valencia]=«Brisa» per Uri Herrera
 Comment[da]="Breeze" af Uri Herrera
