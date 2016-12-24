@@ -1,3 +1,5 @@
+include(ECMAddAppIcon)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
@@ -207,6 +209,10 @@ ki18n_wrap_ui(konversation_SRCS
 )
 
 kconfig_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
+
+# Sets the icon on Windows and OSX
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/*apps-konversation.png")
+ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})
 
 add_executable(konversation ${konversation_SRCS})
 
