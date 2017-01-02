@@ -91,6 +91,7 @@ set(config_SRCS
     config/quickbuttons_config.cpp
     config/warnings_config.cpp
     config/connectionbehavior_config.cpp
+    config/colorsappearance_config.cpp
 )
 
 ki18n_wrap_ui(config_SRCS

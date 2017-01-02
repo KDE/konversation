@@ -23,7 +23,7 @@
 #include "ui_fontappearance_config.h"
 #include "nicklistbehavior_config.h"
 #include "tabs_config.h"
-#include "ui_colorsappearance_config.h"
+#include "colorsappearance_config.h"
 #include "ui_generalbehavior_configui.h"
 #include "dcc_config.h"
 #include "osd_config.h"
@@ -77,10 +77,8 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confThemeWdg, &Theme_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
 
   //Interface/Colors
-  Ui::ColorsAppearance_Config confColorsAppearance;
-  w = new QWidget();
-  confColorsAppearance.setupUi(w);
-  konviAddSubPage(interfaceGroup, w, i18n("Colors"), QLatin1String("preferences-desktop-color"));
+  ColorsAppearance_Config *colorConfig = new ColorsAppearance_Config(this, "Colors");
+  konviAddSubPage(interfaceGroup, colorConfig, i18n("Colors"), QLatin1String("preferences-desktop-color"));
 
   //Interface/Fonts
   Ui::FontAppearance_Config confFontAppearance;
