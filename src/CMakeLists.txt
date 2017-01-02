@@ -92,6 +92,7 @@ set(config_SRCS
     config/warnings_config.cpp
     config/connectionbehavior_config.cpp
     config/highlighttreewidget.cpp
+    config/colorsappearance_config.cpp
 )
 
 ki18n_wrap_ui(config_SRCS
