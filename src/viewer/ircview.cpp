@@ -827,7 +827,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags)
         QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
 
-        bool rtlLocale = (QLocale().zeroDigit() == QChar((ushort)0x0660)) or // ARABIC-INDIC DIGIT ZERO
+        bool rtlLocale = (QLocale().zeroDigit() == QChar((ushort)0x0660)) || // ARABIC-INDIC DIGIT ZERO
                          (QLocale().zeroDigit() == QChar((ushort)0x06F0));   // EXTENDED ARABIC-INDIC DIGIT ZERO
 
         if(!Preferences::self()->showDate())
