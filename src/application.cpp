@@ -50,8 +50,6 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
-#include <KWindowSystem>
-
 
 using namespace Konversation;
 
@@ -1385,7 +1383,7 @@ void Application::closeWallet()
 
 void Application::handleActivate(const QStringList& arguments)
 {
-    m_commandLineParser->parse(arguments);
+    m_commandLineParser->parse(QStringList(applicationFilePath()) << arguments);
 
     if(m_commandLineParser->isSet(QStringLiteral("restart")))
     {
@@ -1395,7 +1393,8 @@ void Application::handleActivate(const QStringList& arguments)
     newInstance(m_commandLineParser);
 
     KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
-    KWindowSystem::forceActiveWindow(mainWindow->winId());
+    mainWindow->show();
+    mainWindow->raise();
 }
 
 
