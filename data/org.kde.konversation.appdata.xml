@@ -4,6 +4,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Konversation</name>
+  <name xml:lang="ar">محادثك</name>
   <name xml:lang="ast"> </name>
   <name xml:lang="ca">Konversation</name>
   <name xml:lang="ca-valencia">Konversation</name>
@@ -32,6 +33,7 @@
   <name xml:lang="zh-CN">Konversation</name>
   <name xml:lang="zh-TW">Konversation</name>
   <summary>IRC client</summary>
+  <summary xml:lang="ar">عميل آي‌آرسي</summary>
   <summary xml:lang="ca">Client d'IRC</summary>
   <summary xml:lang="ca-valencia">Client d'IRC</summary>
   <summary xml:lang="cs">Klient IRC</summary>
@@ -65,6 +67,7 @@
       where you will find support for most distributions. Its defaults are such that it needs no
       configuration other than telling it the name of your distribution channel, to get started.
     </p>
+    <p xml:lang="ar">«محادثك» هو عميل آي‌آرسي يعطيك وصول سريع إلى قنوات شبكة «فرينود»، حيث ستجد الدّعم لمختلف التّوزيعات. الافتراضيّات فيه مضبوطة بحيث لا تحتاج لأن تفعل شيئا عدا كتابة اسم قناة التّوزيعة، ومن ثمّ تبدأ الدّردشة.</p>
     <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
     <p xml:lang="ca-valencia">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
     <p xml:lang="de">Konversation ist ein IRC-Programm, mit dem Sie schnell auf Freenode-Kanäle zugreifen können, in denen Sie Unterstützung für die meisten Distributionen erhalten. Die Voreinstellungen sind so gewählt, dass Sie nur den Kanalnamen Ihrer Distribution eingeben müssen.</p>
@@ -89,6 +92,7 @@
     <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
     <p xml:lang="zh-TW">Konversation 是一個讓您可以快速連上 Freenode 網路頻道的 IRC 客戶端，在那裡您可以找到大多數散佈版的支援。其預設不需要任何設定，您只需要告訴它您散佈版頻道的名字就可以開始了。</p>
     <p>Features:</p>
+    <p xml:lang="ar">الميزات:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -117,6 +121,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Standard IRC features</li>
+      <li xml:lang="ar">ميزات آي‌آرسي القياسيّة</li>
       <li xml:lang="ca">Funcionalitats estàndard de l'IRC</li>
       <li xml:lang="ca-valencia">Funcionalitats estàndard de l'IRC</li>
       <li xml:lang="de">Standard-IRC-Funktionen</li>
@@ -141,6 +146,7 @@
       <li xml:lang="x-test">xxStandard IRC featuresxx</li>
       <li xml:lang="zh-TW">標準 IRC 功能</li>
       <li>SSL server support</li>
+      <li xml:lang="ar">دعم خواديم SSL</li>
       <li xml:lang="ca">Permet un servidor SSL</li>
       <li xml:lang="ca-valencia">Permet un servidor SSL</li>
       <li xml:lang="de">Unterstützung für SSL-Server</li>
@@ -165,6 +171,7 @@
       <li xml:lang="x-test">xxSSL server supportxx</li>
       <li xml:lang="zh-TW">支援 SSL 伺服器</li>
       <li>Bookmarking support</li>
+      <li xml:lang="ar">دعم العلامات</li>
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
       <li xml:lang="de">Unterstützung für Lesezeichen</li>
@@ -189,6 +196,7 @@
       <li xml:lang="x-test">xxBookmarking supportxx</li>
       <li xml:lang="zh-TW">支援書籤</li>
       <li>Easy to use graphical user interface</li>
+      <li xml:lang="ar">واجهة مستخدم سهلة الاستخدام</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
@@ -213,6 +221,7 @@
       <li xml:lang="x-test">xxEasy to use graphical user interfacexx</li>
       <li xml:lang="zh-TW">易於使用的圖形化使用者介面</li>
       <li>Multiple servers and channels in one single window</li>
+      <li xml:lang="ar">عدّة خواديم وقنوات في نافذة واحدة</li>
       <li xml:lang="ca">Diversos servidors i canals en una única finestra</li>
       <li xml:lang="ca-valencia">Diversos servidors i canals en una única finestra</li>
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
@@ -237,6 +246,7 @@
       <li xml:lang="x-test">xxMultiple servers and channels in one single windowxx</li>
       <li xml:lang="zh-TW">在單一視窗中查看多個伺服器與頻道</li>
       <li>DCC file transfer</li>
+      <li xml:lang="ar">نقل الملفّات عبر DCC</li>
       <li xml:lang="ca">Transferència de fitxers DCC</li>
       <li xml:lang="ca-valencia">Transferència de fitxers DCC</li>
       <li xml:lang="de">DCC-Dateiübertragung</li>
@@ -261,6 +271,7 @@
       <li xml:lang="x-test">xxDCC file transferxx</li>
       <li xml:lang="zh-TW">DCC 檔案傳輸</li>
       <li>Multiple identities for different servers</li>
+      <li xml:lang="ar">عدّة هويّات لمختلف الخواديم</li>
       <li xml:lang="ca">Diverses identitats per servidors diferents</li>
       <li xml:lang="ca-valencia">Diverses identitats per servidors diferents</li>
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
@@ -285,6 +296,7 @@
       <li xml:lang="x-test">xxMultiple identities for different serversxx</li>
       <li xml:lang="zh-TW">在不同伺服器可使用不同的憑證登入</li>
       <li>Text decorations and colors</li>
+      <li xml:lang="ar">زخرفة النّصوص وتلوينها</li>
       <li xml:lang="ca">Decoracions del text i colors</li>
       <li xml:lang="ca-valencia">Decoracions del text i colors</li>
       <li xml:lang="de">Textdekoration und -farben</li>
@@ -309,6 +321,7 @@
       <li xml:lang="x-test">xxText decorations and colorsxx</li>
       <li xml:lang="zh-TW">文字裝飾與色彩</li>
       <li>OnScreen Display for notifications</li>
+      <li xml:lang="ar">عرض الإخطارات على الشّاشة</li>
       <li xml:lang="ca">Mostra les notificacions en la pantalla</li>
       <li xml:lang="ca-valencia">Mostra les notificacions en la pantalla</li>
       <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
@@ -333,6 +346,7 @@
       <li xml:lang="x-test">xxOnScreen Display for notificationsxx</li>
       <li xml:lang="zh-TW">通知的 OSD 支援</li>
       <li>Automatic UTF-8 detection</li>
+      <li xml:lang="ar">اكتشاف آليّ ل‍UTF-8</li>
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
       <li xml:lang="de">Automatische UTF-8-Erkennung</li>
@@ -357,6 +371,7 @@
       <li xml:lang="x-test">xxAutomatic UTF-8 detectionxx</li>
       <li xml:lang="zh-TW">自動 UTF-8 偵測</li>
       <li>Per channel encoding support</li>
+      <li xml:lang="ar">دعم التّرميزات لكلّ قناة على حدة</li>
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="ca-valencia">Permet codificació per canal</li>
       <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
@@ -381,6 +396,7 @@
       <li xml:lang="x-test">xxPer channel encoding supportxx</li>
       <li xml:lang="zh-TW">每個頻道各自使用不同的編碼的支援</li>
       <li>Theme support for nick icons</li>
+      <li xml:lang="ar">دعم السّمات لأيقونات المستخدمين</li>
       <li xml:lang="ca">Permet temes per icones de sobrenom</li>
       <li xml:lang="ca-valencia">Permet temes per icones de sobrenom</li>
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
@@ -405,6 +421,7 @@
       <li xml:lang="x-test">xxTheme support for nick iconsxx</li>
       <li xml:lang="zh-TW">暱稱圖示的主題支援</li>
       <li>Highly configurable</li>
+      <li xml:lang="ar">عال التّخصيص والضّبط</li>
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="ca-valencia">Altament configurable</li>
       <li xml:lang="de">Sehr anpassbar</li>
