@@ -1,4 +1,13 @@
-Changes since 1.6.2:
+Changes from Konversation 1.6 to 1.7-rc1:
+Konversation v1.7-rc1 is the first release candidate for the next major
+version of Konversation. The focus of the v1.7 release is on greatly
+expanded protocol support, with newly-added support for many more IRC v3
+extensions and the much-requested support for 'server-time'. Many bugfixes
+and cleanups along with reinstated features initially lost in the first
+Frameworks 5-based release series v1.6.x are included as well. Finally,
+the handbook has been thoroughly refreshed in this release and building on
+Mac and Windows has seen several fixes.
+
 * Improved support for CAP negotiation
 * Output for CAP LS and CAP LIST is now shown in the server status view
 * Added support for IRCv3 CAP MULTI-PREFIX
