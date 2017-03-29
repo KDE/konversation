@@ -854,7 +854,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if (command == QStringLiteral("authenticate") && plHas(1))
         {
-            if (m_server->getLastAuthenticateCommand() == QStringLiteral("PLAIN") && parameterList.value(0) == QStringLiteral("+"))
+            if ((m_server->getLastAuthenticateCommand() == QStringLiteral("PLAIN")
+                || m_server->getLastAuthenticateCommand() == QStringLiteral("EXTERNAL"))
+                && parameterList.value(0) == QStringLiteral("+"))
                 m_server->registerWithServices();
         }
         // All yet unknown messages go into the frontmost window unaltered
