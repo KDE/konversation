@@ -90,7 +90,8 @@ namespace Konversation
         connect(m_authTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::authTypeChanged);
         m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
         m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
-        m_authTypeCombo->addItem(i18n("SASL"), QStringLiteral("saslplain"));
+        m_authTypeCombo->addItem(i18n("SASL PLAIN"), QStringLiteral("saslplain"));
+        m_authTypeCombo->addItem(i18nc("Cert = Certificate", "SASL EXTERNAL (Cert)"), QStringLiteral("saslexternal"));
         m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclientcert"));
 
         // add encodings to combo box
@@ -368,20 +369,24 @@ namespace Konversation
 
         bool isNickServ = (authType == QStringLiteral("nickserv"));
         bool isSaslPlain = (authType == QStringLiteral("saslplain"));
+        bool isSaslExernal = (authType == QStringLiteral("saslexternal"));
         bool isServerPw = (authType == QStringLiteral("serverpw"));
-        bool isPemClientCert = (authType == QStringLiteral("pemclientcert"));
+        bool isPemClientCert = (isSaslExernal || (authType == QStringLiteral("pemclientcert")));
 
         nickservNicknameLabel->setVisible(isNickServ);
         m_nickservNicknameEdit->setVisible(isNickServ);
         nickservCommandLabel->setVisible(isNickServ);
         m_nickservCommandEdit->setVisible(isNickServ);
-        saslAccountLabel->setVisible(isSaslPlain);
-        m_saslAccountEdit->setVisible(isSaslPlain);
+        saslAccountLabel->setVisible(isSaslPlain || isSaslExernal);
+        m_saslAccountEdit->setVisible(isSaslPlain || isSaslExernal);
         authPasswordLabel->setVisible(!isPemClientCert);
         m_authPasswordEdit->setVisible(!isPemClientCert);
         pemClientCertFileLabel->setVisible(isPemClientCert);
         m_pemClientCertFile->setVisible(isPemClientCert);
         m_additionalAuthInfo->setVisible(isServerPw || isPemClientCert);
+
+        // Clear.
+        m_saslAccountEdit->setPlaceholderText(QString());
 
         for (int i = 0; i < autoIdentifyLayout->count(); ++i)
             autoIdentifyLayout->removeItem(autoIdentifyLayout->itemAt(0));
@@ -406,11 +411,17 @@ namespace Konversation
             autoIdentifyLayout->addRow(saslAccountLabel, m_saslAccountEdit);
             autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
         }
-        else if (isPemClientCert)
+        else if (isSaslExernal)
+        {
+            autoIdentifyLayout->addRow(saslAccountLabel, m_saslAccountEdit);
+            m_saslAccountEdit->setPlaceholderText(i18nc("Shown in unfilled line edit", "(optional)"));
+        }
+
+        if (isPemClientCert)
         {
             autoIdentifyLayout->addRow(pemClientCertFileLabel, m_pemClientCertFile);
 
-            m_additionalAuthInfo->setText(i18n("SSL Client Certificate authentication forces SSL to be enabled for a connection, overriding any server settings."));
+            m_additionalAuthInfo->setText(i18n("Certificate-based authentication forces SSL to be enabled for a connection, overriding any server settings."));
             autoIdentifyLayout->addRow(0, m_additionalAuthInfo);
         }
     }

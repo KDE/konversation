@@ -489,12 +489,15 @@ void Server::connectToIRCServer()
         }
 
         // connect() will do a async lookup too
-        if(getConnectionSettings().server().SSLEnabled() || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
+        if (getConnectionSettings().server().SSLEnabled()
+            || getIdentity()->getAuthType() == QStringLiteral("saslexternal")
+            || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (socketConnected()));
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
 
-            if (getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
+            if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")
+                || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
             {
                 m_socket->setLocalCertificate(getIdentity()->getPemClientCertFile().toLocalFile());
                 m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
@@ -703,8 +706,21 @@ void Server::requestAvailableCapabilies ()
 
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
-    bool useSASL = getIdentity() && getIdentity()->getAuthType() == QStringLiteral("saslplain")
-            && !getIdentity()->getSaslAccount().isEmpty() && !getIdentity()->getAuthPassword().isEmpty();
+    bool useSASL = false;
+
+    if (getIdentity()) {
+        // A username is optional SASL EXTERNAL and a client cert substitutes
+        // for the password.
+        if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) {
+            useSASL = true;
+        // PLAIN on the other hand requires both.
+        } else if (getIdentity()->getAuthType() == QStringLiteral("saslplain")
+            && !getIdentity()->getSaslAccount().isEmpty()
+            && !getIdentity()->getAuthPassword().isEmpty()) {
+            useSASL = true;
+        }
+    }
+
     m_capRequested = 0;
     m_capAnswered = 0;
     m_capEndDelayed = false;
@@ -781,8 +797,13 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
 {
     if (name == QStringLiteral("sasl") && modifiers == Server::NoModifiers)
     {
-        getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL PLAIN authentication..."));
-        sendAuthenticate(QStringLiteral("PLAIN"));
+        const QString &authCommand = (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) ?
+            QStringLiteral("EXTERNAL") : QStringLiteral("PLAIN");
+
+        getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL %1 authentication...", authCommand));
+
+        sendAuthenticate(authCommand);
+
         m_capEndDelayed = true;
     }
     else if (name == QStringLiteral("away-notify"))
@@ -834,6 +855,18 @@ void Server::registerWithServices()
         authString.append(getIdentity()->getSaslAccount());
         authString.append(QChar(QChar::Null));
         authString.append(getIdentity()->getAuthPassword());
+
+        sendAuthenticate(QLatin1String(authString.toLatin1().toBase64()));
+    }
+    else if (getIdentity()->getAuthType() == QStringLiteral("saslexternal"))
+    {
+        QString authString = getIdentity()->getSaslAccount();
+
+        // An account name is optional with SASL EXTERNAL.
+        if (!authString.isEmpty()) {
+            authString.append(QChar(QChar::Null));
+            authString.append(getIdentity()->getSaslAccount());
+        }
 
         sendAuthenticate(QLatin1String(authString.toLatin1().toBase64()));
     }
