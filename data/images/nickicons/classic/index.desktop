@@ -1,7 +1,8 @@
 [Desktop Entry]
 Type=Theme
 Name=Classic Theme
-Name[ar]=السّمة التّقليديّة
+Name[ar]=السمة التقليديّة
+Name[ast]=Tema Classic
 Name[be]=Класічная тэма
 Name[bg]=Класическа тема
 Name[bs]=Klasična tema
@@ -55,6 +56,7 @@ Name[zh_CN]=经典主题
 Name[zh_TW]=傳統
 Comment="LED" by Dario Abatianni
 Comment[ar]="أضواء" لِـ Dario Abatianni
+Comment[ast]=«LED» de Dario Abatianni
 Comment[bg]="LED" от Dario Abatianni
 Comment[bs]=„LED“ Darija Abatijanija
 Comment[ca]=«LED» per Dario Abatianni
