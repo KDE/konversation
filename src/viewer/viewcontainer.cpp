@@ -2454,18 +2454,18 @@ void ViewContainer::insertCharacter()
     if (!m_insertCharDialog)
     {
         m_insertCharDialog = new Konversation::InsertCharDialog(font.family(), m_window);
-        connect(m_insertCharDialog, SIGNAL(insertChar(QChar)), this, SLOT(insertChar(QChar)));
+        connect(m_insertCharDialog, SIGNAL(insertChar(uint)), this, SLOT(insertChar(uint)));
     }
 
     m_insertCharDialog->setFont(font);
     m_insertCharDialog->show();
 }
 
-void ViewContainer::insertChar(const QChar& chr)
+void ViewContainer::insertChar(uint chr)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
 
-    if (view) view->appendInputText(chr, true/*fromCursor*/);
+    if (view) view->appendInputText(QString::fromUcs4(&chr, 1), true/*fromCursor*/);
 }
 
 void ViewContainer::insertIRCColor()
