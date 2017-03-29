@@ -48,6 +48,7 @@ Mac and Windows has seen several fixes.
 * The Windows and Mac builds now have app icons
 * Improved code portability by using different byte swapping routines
 * Updated AppStream metadata
+* Konversation now depends on Qt 5.5+ and KDE Frameworks 5.25+
 
 Changes from Konversation 1.6.1 to 1.6.2:
 Konversation 1.6.2 is a hotfix release that fixes an unfortunate severe
