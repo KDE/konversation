@@ -19,8 +19,8 @@ this release and building on Mac and Windows has seen several fixes.
 * Added support for server-time and message tags
 * Added support for znc.in/server-time-iso, making buffer playback from
   ZNC much nicer
-* Added support for SASL EXTERNAL authentication, e.g. needed for using TOR
-  with freenode.
+* Added support for the SASL EXTERNAL authentication mechanism, e.g. needed
+  for using Tor with freenode.
 * Redesigned search bar in chat views
 * Added support for font zooming to chat views
 * Improved bi-di text handling in chat views
