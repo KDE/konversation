@@ -44,7 +44,7 @@ this release and building on Mac and Windows has seen several fixes.
   porting away from deprecated API, and more
 * Overhauled and corrected handbook & refreshed handbook screenshots to
   Frameworks 5 version
-* Build fixes for MSVC
+* Build fixes for Windows (MSVC compatibility and winsock linking)
 * The Windows and Mac builds now have app icons
 * Improved code portability by using different byte swapping routines
 * Updated AppStream metadata
