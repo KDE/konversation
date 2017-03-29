@@ -17,6 +17,14 @@
   (at your option) any later version.
 */
 
+#include <qglobal.h>
+
+#ifdef Q_OS_WIN
+// Prevent windows system header files from defining min/max as macros.
+#define NOMINMAX 1
+#include <winsock2.h>
+#endif
+
 #include "transferrecv.h"
 #include "dcccommon.h"
 #include "transfermanager.h"

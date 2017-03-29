@@ -41,10 +41,11 @@ namespace Konversation
 
         m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos|KCharSelect::SearchLine);
 
+        m_charTable->setAllPlanesEnabled(true);
         m_charTable->setCurrentFont( QFont( font ) );
         mainLayout->addWidget(m_charTable);
         mainLayout->addWidget(buttonBox);
-        connect(m_charTable, &KCharSelect::charSelected, this, &InsertCharDialog::charSelected);
+        connect(m_charTable, &KCharSelect::codePointSelected, this, &InsertCharDialog::charSelected);
     }
 
     InsertCharDialog::~InsertCharDialog()
@@ -56,14 +57,14 @@ namespace Konversation
         m_charTable->setFont(font.family());
     }
 
-    QChar InsertCharDialog::chr()
+    uint InsertCharDialog::chr()
     {
-        return m_charTable->currentChar();
+        return m_charTable->currentCodePoint();
     }
 
     void InsertCharDialog::charSelected()
     {
-        emit insertChar(m_charTable->currentChar());
+        emit insertChar(m_charTable->currentCodePoint());
     }
     void InsertCharDialog::slotAccepted()
     {

@@ -30,14 +30,14 @@ namespace Konversation
             ~InsertCharDialog();
 
             void setFont(const QFont &font);
-            QChar chr();
+            uint chr();
 
         protected Q_SLOTS:
             void charSelected();
             void slotAccepted();
 
         Q_SIGNALS:
-            void insertChar(const QChar&);
+            void insertChar(uint);
 
         private:
             KCharSelect* m_charTable;
