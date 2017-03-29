@@ -244,5 +244,8 @@ target_link_libraries(konversation
 if (Qca-qt5_FOUND)
     target_link_libraries(konversation qca-qt5)
 endif ()
+if (WIN32)
+  target_link_libraries(konversation ws2_32) # for symbols from winsock2.h: ntohl, etc.
+endif()
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
