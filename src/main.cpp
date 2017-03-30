@@ -150,6 +150,8 @@ int main(int argc, char* argv[])
         startOptions = KDBusService::Multiple;
 #endif
 
+    startOptions |= KDBusService::NoExitOnFailure;
+
     KDBusService dbusService(startOptions);
 
     aboutData.processCommandLine(&cmdLineParser);
