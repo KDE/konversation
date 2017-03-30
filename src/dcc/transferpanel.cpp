@@ -184,7 +184,7 @@ namespace Konversation
                 }
             }
 
-            if (!KAuthorized::authorizeKAction("allow_downloading"))
+            if (!KAuthorized::authorizeAction("allow_downloading"))
             {
                 accept = false;
             }

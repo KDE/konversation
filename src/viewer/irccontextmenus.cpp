@@ -457,7 +457,7 @@ void IrcContextMenus::createSharedNickSettingsActions()
 
 void IrcContextMenus::createSharedDccActions()
 {
-    if (KAuthorized::authorizeKAction("allow_downloading"))
+    if (KAuthorized::authorizeAction("allow_downloading"))
         m_sharedDccActions << createAction(DccSend, QIcon::fromTheme("arrow-right-double"), i18n("Send &File..."));
 
     m_sharedDccActions << createAction(StartDccChat, i18n("Open DCC Chat"));

@@ -195,7 +195,7 @@ namespace Konversation
                 m_ownIp = DccCommon::getOwnIp(Application::instance()->getConnectionManager()->getServerByConnectionId(m_connectionId));
             }
 
-            if (!KAuthorized::authorizeKAction("allow_downloading"))
+            if (!KAuthorized::authorizeAction("allow_downloading"))
             {
                 //note we have this after the initialisations so that item looks okay
                 //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
