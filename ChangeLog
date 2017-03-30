@@ -1,4 +1,4 @@
-Changes from Konversation 1.6 to 1.7-rc1:
+Changes from Konversation 1.6.2 to 1.7-rc1:
 Konversation v1.7-rc1 is the first release candidate for the next major
 version of Konversation. The focus of the v1.7 release is on greatly
 expanded protocol support, with newly-added support for many more IRC v3
@@ -8,47 +8,47 @@ initially lost in the first Frameworks 5-based release series v1.6.x are
 included as well. Finally, the handbook has been thoroughly refreshed in
 this release and building on Mac and Windows has seen several fixes.
 
-* Improved support for CAP negotiation
-* Output for CAP LS and CAP LIST is now shown in the server status view
-* Added support for IRCv3 CAP MULTI-PREFIX
-* Added support for IRCv3 CAP AWAY-NOTIFY
-* Added support for IRCv3 CAP ACCOUNT-NOTIFY
-* Added support for IRCv3 CAP EXTENDED-JOIN
-* Added support for IRCv3 CAP USERHOST-IN-NAMES
-* Added support for extended WHO
-* Added support for server-time and message tags
+* Improved support for CAP negotiation.
+* Output for CAP LS and CAP LIST is now shown in the server status view.
+* Added support for IRCv3 CAP MULTI-PREFIX.
+* Added support for IRCv3 CAP AWAY-NOTIFY.
+* Added support for IRCv3 CAP ACCOUNT-NOTIFY.
+* Added support for IRCv3 CAP EXTENDED-JOIN.
+* Added support for IRCv3 CAP USERHOST-IN-NAMES.
+* Added support for extended WHO.
+* Added support for server-time and message tags.
 * Added support for znc.in/server-time-iso, making buffer playback from
-  ZNC much nicer
+  ZNC much nicer.
 * Added support for the SASL EXTERNAL authentication mechanism, e.g. needed
   for using Tor with freenode.
-* Redesigned search bar in chat views
-* Added support for font zooming to chat views
-* Improved bi-di text handling in chat views
-* The --restart command line argument works again
+* Redesigned search bar in chat views.
+* Added support for font zooming to chat views.
+* Improved bi-di text handling in chat views.
+* The --restart command line argument works again.
 * Fixed command line argument parsing when Konversation is already running
 * Fixed tab completion not working when pressing tab after a full existing
-  nickname as prefix
-* Fixed the topic editor not updating when the topic changes
-* Fixed nickname links including the pipe character
-* Fixed the Invite dialog not closing on OK
-* Fixed angle bracket display in OSD message bubbles
-* Fixes to core protocol handling, e.g. in prefix parsing
-* Fixed crash on close when the nick menu has been shown
-* Fixed crash on quit
-* Fixed crash when closing views
-* Fixed crash in DCC resume dialogs without a Retry button
-* Fixed incorrect icon for the global away action
+  nickname as prefix.
+* Fixed the topic editor not updating when the topic changes.
+* Fixed nickname links including the pipe character.
+* Fixed the Invite dialog not closing on OK.
+* Fixed angle bracket display in OSD message bubbles.
+* Fixes to core protocol handling, e.g. in prefix parsing.
+* Fixed crash on close when the nick menu has been shown.
+* Fixed crash on quit.
+* Fixed crash when closing views.
+* Fixed crash in DCC resume dialogs without a Retry button.
+* Fixed incorrect icon for the global away action.
 * Minor UI layout cleanups, e.g. in the Behavior -> Chat Window settings page
-  and fixes to tooltips
+  and fixes to tooltips.
 * Code cleanups, e.g. removal of unused settings and related code paths,
-  porting away from deprecated API, and more
+  porting away from deprecated API, and more.
 * Overhauled and corrected handbook & refreshed handbook screenshots to
-  Frameworks 5 version
-* Build fixes for Windows (MSVC compatibility and winsock linking)
-* The Windows and Mac builds now have app icons
-* Improved code portability by using different byte swapping routines
-* Updated AppStream metadata
-* Konversation now depends on Qt 5.5+ and KDE Frameworks 5.25+
+  Frameworks 5 version.
+* Build fixes for Windows (MSVC compatibility and winsock linking).
+* The Windows and Mac builds now have app icons.
+* Improved code portability by using different byte swapping routines.
+* Updated AppStream metadata.
+* Konversation now depends on Qt 5.5+ and KDE Frameworks 5.25+.
 
 Changes from Konversation 1.6.1 to 1.6.2:
 Konversation 1.6.2 is a hotfix release that fixes an unfortunate severe
