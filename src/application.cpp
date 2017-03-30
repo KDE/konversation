@@ -141,8 +141,8 @@ void Application::implementRestart()
 void Application::newInstance(QCommandLineParser *args)
 {
     QString url;
-    if (args->positionalArguments().count() > 0)
-        url = args->positionalArguments().at(0);
+    if (args->positionalArguments().count() > 1)
+        url = args->positionalArguments().at(1);
 
     if (!mainWindow)
     {
