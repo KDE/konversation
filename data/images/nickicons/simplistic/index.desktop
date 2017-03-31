@@ -1,8 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=KDE 3 Default Theme
-Name[ar]=سمة كدي 3 الافتراضية
-Name[ast]=Tema predetermináu KDE 3
+Name[ar]=سمة كدي 3 الافتراضيّة
 Name[bg]=Стандартна тема за KDE 3
 Name[bs]=Podrazumijevana tema KDE‑a 3
 Name[ca]=Tema per omissió del KDE 3
@@ -44,14 +43,13 @@ Name[sr@ijekavian]=Подразумијевана тема КДЕ‑а 3
 Name[sr@ijekavianlatin]=Podrazumijevana tema KDE‑a 3
 Name[sr@latin]=Podrazumevana tema KDE‑a 3
 Name[sv]=KDE 3 standardtema
-Name[tr]=KDE3 Öntanımlı Teması
+Name[tr]=KDE3 Varsayılan Teması
 Name[uk]=Типова тема KDE 3
 Name[x-test]=xxKDE 3 Default Themexx
 Name[zh_CN]=KDE 3 默认主题
 Name[zh_TW]=KDE 3 預設主題
 Comment="Simplistic" by Shintaro Matsuoka
 Comment[ar]="بساطة" لِـ Shintaro Matsuoka
-Comment[ast]=«Simplistic» de Shintaro Matsuoka
 Comment[bg]="Опростена" от Shintaro Matsuoka
 Comment[bs]=„Jednostavno“ Šintara Macuoke
 Comment[ca]=«Simplista» per Shintaro Matsuoka
