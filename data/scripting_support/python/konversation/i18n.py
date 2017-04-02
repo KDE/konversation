@@ -138,9 +138,9 @@ def locale_directories():
     """
 
     dirs = ''
-    
+
     try:
-        dirs = subprocess.check_output(('kde4-config', '--path', 'locale'))
+        dirs = subprocess.check_output(('qtpaths', '--locate-dirs', 'GenericDataLocation', 'locale'))
     except (OSError, subprocess.CalledProcessError):
         dbus.error("A problem occured while looking for directories containing translation files. "
                    "The output of this script will not be translated.")
