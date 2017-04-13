@@ -28,6 +28,7 @@
   <name xml:lang="sr-ijekavian">Конверзација</name>
   <name xml:lang="sr-ijekavianlatin">Konverzacija</name>
   <name xml:lang="sv">Konversation</name>
+  <name xml:lang="tr">Konversation</name>
   <name xml:lang="uk">Konversation</name>
   <name xml:lang="x-test">xxKonversationxx</name>
   <name xml:lang="zh-CN">Konversation</name>
@@ -57,6 +58,7 @@
   <summary xml:lang="sr-ijekavian">ИРЦ клијент</summary>
   <summary xml:lang="sr-ijekavianlatin">IRC klijent</summary>
   <summary xml:lang="sv">IRC-klient</summary>
+  <summary xml:lang="tr">IRC istemcisi</summary>
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="x-test">xxIRC clientxx</summary>
   <summary xml:lang="zh-CN">IRC 客户端</summary>
@@ -88,6 +90,7 @@
     <p xml:lang="sr-ijekavian">Конверзација је ИРЦ клијент који вам омогућава брз приступ каналима Фринодове мреже, где можете наћи подршку за већину дистрибуција. Подразумеване поставке су такве да не треба ништа да подешавате, већ само да унесете име канала дистрибуције, да бисте почели.</p>
     <p xml:lang="sr-ijekavianlatin">Konverzacija je IRC klijent koji vam omogućava brz pristup kanalima Freenodeove mreže, gde možete naći podršku za većinu distribucija. Podrazumevane postavke su takve da ne treba ništa da podešavate, već samo da unesete ime kanala distribucije, da biste počeli.</p>
     <p xml:lang="sv">Konversation är en IRC-klient som ger snabb åtkomst till Freenode-nätverkets kanaler, där det finns stöd för de flesta distributioner. Standardinställningarna är sådana att ingen inställning behövs för att komma igång annat än att tala om namnet på distributionens kanal för den.</p>
+    <p xml:lang="tr">Konversation, çoğu dağıtım için destek bulacağınız Freenode ağ kanallarına hızlı erişim sağlayan bir IRC istemcisidir. Varsayılanları, başlamak için dağıtım kanalınızın adını söylemekten başka bir yapılandırmaya ihtiyaç duymayacak şekildedir.</p>
     <p xml:lang="uk">Konversation — клієнтська програма IRC, за допомогою якої ви зможете швидко отримати доступ до каналів мережі Freenode, на яких можна спілкуватися із іншими користувачами та розробниками. Якщо ви скористаєтеся типовими параметрами роботи програми, вам достатньо буде вказати лише назву потрібного вам каналу, щоб розпочати спілкування на ньому.</p>
     <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
     <p xml:lang="zh-TW">Konversation 是一個讓您可以快速連上 Freenode 網路頻道的 IRC 客戶端，在那裡您可以找到大多數散佈版的支援。其預設不需要任何設定，您只需要告訴它您散佈版頻道的名字就可以開始了。</p>
@@ -116,6 +119,7 @@
     <p xml:lang="sr-ijekavian">Могућности:</p>
     <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
     <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-TW">功能：</p>
@@ -142,6 +146,7 @@
       <li xml:lang="sr-ijekavian">стандардне ИРЦ могућности</li>
       <li xml:lang="sr-ijekavianlatin">standardne IRC mogućnosti</li>
       <li xml:lang="sv">Vanliga IRC-funktioner</li>
+      <li xml:lang="tr">Standart IRC özellikleri</li>
       <li xml:lang="uk">Стандартні можливості IRC</li>
       <li xml:lang="x-test">xxStandard IRC featuresxx</li>
       <li xml:lang="zh-TW">標準 IRC 功能</li>
@@ -167,6 +172,7 @@
       <li xml:lang="sr-ijekavian">подршка за ССЛ сервере</li>
       <li xml:lang="sr-ijekavianlatin">podrška za SSL servere</li>
       <li xml:lang="sv">Stöd för SSL-server</li>
+      <li xml:lang="tr">SSL sunucu desteği</li>
       <li xml:lang="uk">Підтримка роботи із серверами SSL</li>
       <li xml:lang="x-test">xxSSL server supportxx</li>
       <li xml:lang="zh-TW">支援 SSL 伺服器</li>
@@ -192,6 +198,7 @@
       <li xml:lang="sr-ijekavian">подршка за обележиваче</li>
       <li xml:lang="sr-ijekavianlatin">podrška za obeleživače</li>
       <li xml:lang="sv">Stöd för bokmärken</li>
+      <li xml:lang="tr">Yer imi desteği</li>
       <li xml:lang="uk">Підтримка роботи із закладками</li>
       <li xml:lang="x-test">xxBookmarking supportxx</li>
       <li xml:lang="zh-TW">支援書籤</li>
@@ -217,6 +224,7 @@
       <li xml:lang="sr-ijekavian">предусретљиво графичко корисничко сучеље</li>
       <li xml:lang="sr-ijekavianlatin">predusretljivo grafičko korisničko sučelje</li>
       <li xml:lang="sv">Lättanvänt grafiskt användargränssnitt</li>
+      <li xml:lang="tr">Kullanımı kolay grafik kullanıcı arayüzü</li>
       <li xml:lang="uk">Простий у користуванні графічний інтерфейс</li>
       <li xml:lang="x-test">xxEasy to use graphical user interfacexx</li>
       <li xml:lang="zh-TW">易於使用的圖形化使用者介面</li>
@@ -242,6 +250,7 @@
       <li xml:lang="sr-ijekavian">више сервера и канала у једном прозору</li>
       <li xml:lang="sr-ijekavianlatin">više servera i kanala u jednom prozoru</li>
       <li xml:lang="sv">Flera servrar och kanaler i ett enda fönster</li>
+      <li xml:lang="tr">Tek bir pencerede birden çok sunucu ve kanal</li>
       <li xml:lang="uk">Показ даних декількох серверів та каналів у одному вікні</li>
       <li xml:lang="x-test">xxMultiple servers and channels in one single windowxx</li>
       <li xml:lang="zh-TW">在單一視窗中查看多個伺服器與頻道</li>
@@ -267,6 +276,7 @@
       <li xml:lang="sr-ijekavian">ДЦЦ пренос фајлова</li>
       <li xml:lang="sr-ijekavianlatin">DCC prenos fajlova</li>
       <li xml:lang="sv">DCC-filöverföring</li>
+      <li xml:lang="tr">DCC dosya aktarımı</li>
       <li xml:lang="uk">Передавання файлів за допомогою DCC</li>
       <li xml:lang="x-test">xxDCC file transferxx</li>
       <li xml:lang="zh-TW">DCC 檔案傳輸</li>
@@ -292,6 +302,7 @@
       <li xml:lang="sr-ijekavian">вишеструки идентитети за различите сервере</li>
       <li xml:lang="sr-ijekavianlatin">višestruki identiteti za različite servere</li>
       <li xml:lang="sv">Fler identiteter för olika servrar</li>
+      <li xml:lang="tr">Farklı sunucular için birden fazla kimlik</li>
       <li xml:lang="uk">Можливість користування декількома профілями на різних серверах</li>
       <li xml:lang="x-test">xxMultiple identities for different serversxx</li>
       <li xml:lang="zh-TW">在不同伺服器可使用不同的憑證登入</li>
@@ -317,6 +328,7 @@
       <li xml:lang="sr-ijekavian">декорације и бојење текста</li>
       <li xml:lang="sr-ijekavianlatin">dekoracije i bojenje teksta</li>
       <li xml:lang="sv">Textdekorationer och färger</li>
+      <li xml:lang="tr">Metin süslemeleri ve renkleri</li>
       <li xml:lang="uk">Можливість декорування та розфарбовування тексту</li>
       <li xml:lang="x-test">xxText decorations and colorsxx</li>
       <li xml:lang="zh-TW">文字裝飾與色彩</li>
@@ -342,6 +354,7 @@
       <li xml:lang="sr-ijekavian">екрански приказ за обавештења</li>
       <li xml:lang="sr-ijekavianlatin">ekranski prikaz za obaveštenja</li>
       <li xml:lang="sv">Visning av underrättelser på skärmen</li>
+      <li xml:lang="tr">Bildirimler için Ekran Gösterimleri</li>
       <li xml:lang="uk">Екранна панель для показу сповіщень</li>
       <li xml:lang="x-test">xxOnScreen Display for notificationsxx</li>
       <li xml:lang="zh-TW">通知的 OSD 支援</li>
@@ -367,6 +380,7 @@
       <li xml:lang="sr-ijekavian">аутоматско откривање УТФ‑8</li>
       <li xml:lang="sr-ijekavianlatin">automatsko otkrivanje UTF‑8</li>
       <li xml:lang="sv">Automatisk detektering av UTF-8</li>
+      <li xml:lang="tr">Otomatik UTF-8 algılama</li>
       <li xml:lang="uk">Автоматичне виявлення UTF-8</li>
       <li xml:lang="x-test">xxAutomatic UTF-8 detectionxx</li>
       <li xml:lang="zh-TW">自動 UTF-8 偵測</li>
@@ -392,6 +406,7 @@
       <li xml:lang="sr-ijekavian">подршка за кодирање по каналу</li>
       <li xml:lang="sr-ijekavianlatin">podrška za kodiranje po kanalu</li>
       <li xml:lang="sv">Kodningsstöd per kanal</li>
+      <li xml:lang="tr">Kanal başına şifreleme desteği</li>
       <li xml:lang="uk">Можливість встановлення окремого кодування символів для кожного з каналів</li>
       <li xml:lang="x-test">xxPer channel encoding supportxx</li>
       <li xml:lang="zh-TW">每個頻道各自使用不同的編碼的支援</li>
@@ -417,6 +432,7 @@
       <li xml:lang="sr-ijekavian">тематска подршка за иконице надимака</li>
       <li xml:lang="sr-ijekavianlatin">tematska podrška za ikonice nadimaka</li>
       <li xml:lang="sv">Temastöd för smeknamnsikoner</li>
+      <li xml:lang="tr">Takma ad simgeleri için tema desteği</li>
       <li xml:lang="uk">Підтримка тем для піктограм профілів</li>
       <li xml:lang="x-test">xxTheme support for nick iconsxx</li>
       <li xml:lang="zh-TW">暱稱圖示的主題支援</li>
@@ -442,6 +458,7 @@
       <li xml:lang="sr-ijekavian">висока подесивост</li>
       <li xml:lang="sr-ijekavianlatin">visoka podesivost</li>
       <li xml:lang="sv">Mycket anpassningsbar</li>
+      <li xml:lang="tr">Son derece yapılandırılabilir</li>
       <li xml:lang="uk">Широкі можливості із налаштовування</li>
       <li xml:lang="x-test">xxHighly configurablexx</li>
       <li xml:lang="zh-TW">高度可自訂性</li>
