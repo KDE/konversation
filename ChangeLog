@@ -1,3 +1,22 @@
+Changes from Konversation 1.7-rc1 to 1.7:
+Konversation v1.7 is a major feature release focusing on greatly expanded
+protocol support, with newly-added support for many more IRC v3
+extensions and the much-requested support for SASL EXTERNAL and
+'server-time'. Many bugfixes and cleanups along with reinstated features
+initially lost in the first Frameworks 5-based release series v1.6.x are
+included as well. Finally, the handbook has been thoroughly refreshed in
+this release, and building and running on macOS and Windows have seen
+several fixes.
+
+* Two-finger scroll on the vertical channel list is now less sensitive.
+* Fixed execution of bundled scripts showing an error about locating
+  translation files when running on a system without kde4-config installed.
+* Fixed a bug in executable command line parsing for passed URLs.
+* Fixed Konversation failing to start on Windows systems without D-Bus
+  (it would previously exit if it failed to initialize its D-Bus service).
+* Ported from deprecated KDE Frameworks APIs to 5.24+ API (v1.7 requires
+  Frameworks 5.25 or higher).
+
 Changes from Konversation 1.6.2 to 1.7-rc1:
 Konversation v1.7-rc1 is the first release candidate for the next major
 version of Konversation. The focus of the v1.7 release is on greatly
