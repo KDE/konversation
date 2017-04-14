@@ -145,6 +145,8 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 }
 
 ViewTree::ViewTree(QWidget* parent) : QTreeView(parent)
+    , m_accumulatedWheelDelta(0)
+    , m_lastWheelDeltaDirection(false)
 {
     setUniformRowHeights(true);
     setRootIsDecorated(false);
@@ -391,9 +393,34 @@ void ViewTree::wheelEvent(QWheelEvent* event)
 {
     event->accept();
 
-    bool up = (event->angleDelta().y() > 0);
+    bool direction = (event->angleDelta().y() > 0);
 
-    QModelIndex idx = moveCursor(up ? QAbstractItemView::MoveUp : QAbstractItemView::MoveDown, Qt::NoModifier);
+    if (m_lastWheelDeltaDirection != direction) {
+        m_accumulatedWheelDelta = 0;
+        m_lastWheelDeltaDirection = direction;
+    }
+
+    m_accumulatedWheelDelta += event->angleDelta().y();
+
+    bool thresholdReached = false;
+
+    // magic number 120
+    // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+    if (m_accumulatedWheelDelta >= 120) {
+        thresholdReached = true;
+        m_accumulatedWheelDelta -= 120;
+    }
+
+    if (m_accumulatedWheelDelta <= -120) {
+        thresholdReached = true;
+        m_accumulatedWheelDelta += 120;
+    }
+
+    if (!thresholdReached) {
+        return;
+    }
+
+    QModelIndex idx = moveCursor(direction ? QAbstractItemView::MoveUp : QAbstractItemView::MoveDown, Qt::NoModifier);
 
     if (idx == currentIndex()) {
         const QAbstractItemModel* model = idx.model();
@@ -402,7 +429,7 @@ void ViewTree::wheelEvent(QWheelEvent* event)
             return;
         }
 
-        if (up) {
+        if (direction) {
             idx = model->index(model->rowCount() - 1, 0);
 
             int count = model->rowCount(idx);

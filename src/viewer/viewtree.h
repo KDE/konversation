@@ -81,6 +81,9 @@ class ViewTree : public QTreeView
         QPointer<ChatWindow> m_pressedView;
 
         QPoint m_pressPos;
+
+        int m_accumulatedWheelDelta;
+        bool m_lastWheelDeltaDirection;
 };
 
 #endif
