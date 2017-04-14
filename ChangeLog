@@ -14,6 +14,8 @@ several fixes.
 * Fixed a bug in executable command line parsing for passed URLs.
 * Fixed Konversation failing to start on Windows systems without D-Bus
   (it would previously exit if it failed to initialize its D-Bus service).
+* Ported from deprecated KDE Frameworks APIs to 5.24+ API (v1.7 requires
+  Frameworks 5.25 or higher).
 
 Changes from Konversation 1.6.2 to 1.7-rc1:
 Konversation v1.7-rc1 is the first release candidate for the next major
