@@ -759,7 +759,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         }
         else if(cap == QStringLiteral("znc.in/server-time-iso"))
         {
-            requestCaps.append ("server-time-iso");
+            requestCaps.append ("znc.in/server-time-iso");
         }
         else if(cap == QStringLiteral("userhost-in-names"))
         {
