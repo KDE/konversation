@@ -59,6 +59,8 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     // End copy
 
     connect(highlightListView, &QTreeWidget::currentItemChanged, this, &Highlight_Config::highlightSelected);
+    connect(highlightListView, &QTreeWidget::itemChanged, this, &Highlight_Config::modified);
+    connect(highlightListView, &HighlightTreeWidget::itemDropped, this, &Highlight_Config::modified);
     connect(patternInput, &KLineEdit::textChanged, this, &Highlight_Config::patternChanged);
     connect(enableNotificationsCheckbox, &QCheckBox::toggled, this, &Highlight_Config::notifyModeChanged);
     connect(patternColor, &KColorButton::changed, this, &Highlight_Config::colorChanged);
