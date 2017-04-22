@@ -119,7 +119,7 @@
      </property>
      <layout class="QGridLayout" name="highlightLayout">
       <item row="0" column="0">
-       <widget class="QTreeWidget" name="highlightListView">
+       <widget class="HighlightTreeWidget" name="highlightListView">
         <property name="acceptDrops">
          <bool>true</bool>
         </property>
@@ -408,19 +408,24 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>KColorButton</class>
-   <extends>QPushButton</extends>
-   <header>kcolorbutton.h</header>
-  </customwidget>
-  <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
   </customwidget>
   <customwidget>
+   <class>KColorButton</class>
+   <extends>QPushButton</extends>
+   <header>kcolorbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>KUrlRequester</class>
    <extends>QWidget</extends>
    <header>kurlrequester.h</header>
+  </customwidget>
+  <customwidget>
+   <class>HighlightTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>highlighttreewidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
