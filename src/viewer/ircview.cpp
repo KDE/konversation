@@ -1975,6 +1975,8 @@ void IRCView::openLink(const QUrl& url)
     link = link.replace (' ', "%20");
     // HACK Handle pipe as toString doesn't seem to decode that correctly
     link = link.replace ("%7C", "|");
+    // HACK Handle ` as toString doesn't seem to decode that correctly
+    link = link.replace ("%60", "`");
 
     if (!link.isEmpty() && !link.startsWith('#'))
         Application::openUrl(url.toEncoded());
