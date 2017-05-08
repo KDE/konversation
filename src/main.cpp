@@ -101,10 +101,6 @@ int main(int argc, char* argv[])
 
     KCrash::initialize();
 
-    app.setApplicationName(aboutData.componentName());
-    app.setOrganizationDomain(aboutData.organizationDomain());
-    app.setApplicationVersion(aboutData.version());
-    app.setApplicationDisplayName(aboutData.displayName());
     app.setWindowIcon(QIcon::fromTheme(QLatin1String("konversation"), app.windowIcon()));
     app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
