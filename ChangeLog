@@ -1,3 +1,18 @@
+Changes from Konversation 1.7 to 1.7.1:
+Konversation v1.7.1 is a maintenance release that addresses issues with
+some of the new features introduced in the last major release, such as
+SASL EXTERNAL and server-time support, along with other minor fixes. As
+per usual this maintenance release also ships the latest round of
+translation updates.
+
+* Fixed requesting the znc.in/server-time-iso capability from the server.
+* Fixed SASL EXTERNAL authentication without an account name set in the
+  Identity settings.
+* Fixed clicking on nickname links containing the ` character.
+* Fixed the Highlight page in the Configure Konversation dialog not
+  enabling/disabling the Apply button correctly.
+* Minor cleanups in application metadata setup code.
+
 Changes from Konversation 1.7-rc1 to 1.7:
 Konversation v1.7 is a major feature release focusing on greatly expanded
 protocol support, with newly-added support for many more IRC v3
