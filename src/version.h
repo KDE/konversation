@@ -1,3 +1,3 @@
 #ifndef KONVI_VERSION
-#define KONVI_VERSION "1.7.2"
+#define KONVI_VERSION "1.7-branch"
 #endif
