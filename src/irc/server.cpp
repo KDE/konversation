@@ -875,7 +875,12 @@ void Server::registerWithServices()
 void Server::sendAuthenticate(const QString& message)
 {
     m_lastAuthenticateCommand = message;
-    queue(QStringLiteral("AUTHENTICATE ") + message, HighPriority);
+
+    if (message.isEmpty()) {
+        queue(QStringLiteral("AUTHENTICATE +"), HighPriority);
+    } else {
+        queue(QStringLiteral("AUTHENTICATE ") + message, HighPriority);
+    }
 }
 
 void Server::broken(KTcpSocket::Error error)
