@@ -76,7 +76,7 @@ namespace Konversation
 
             protected:
                 /** Called from ChatWindow adjustFocus */
-                virtual void childAdjustFocus();
+                void childAdjustFocus() Q_DECL_OVERRIDE;
 
             private:
                 inline void initGUI();

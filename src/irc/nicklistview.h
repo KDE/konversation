@@ -70,15 +70,15 @@ class NickListView : public QTreeWidget
 
     protected:
         //! Reimplemented for dynamic tooltips
-        virtual bool event(QEvent* ev);
-        virtual void contextMenuEvent(QContextMenuEvent* ev);
+        bool event(QEvent* ev) Q_DECL_OVERRIDE;
+        void contextMenuEvent(QContextMenuEvent* ev) Q_DECL_OVERRIDE;
 
         // Drag & Drop support
-        virtual QStringList mimeTypes () const;
+        QStringList mimeTypes () const Q_DECL_OVERRIDE;
         bool canDecodeMime(QDropEvent const *event) const;
-        virtual bool dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action);
-        virtual void dragEnterEvent(QDragEnterEvent *event);
-        virtual void dragMoveEvent(QDragMoveEvent *event);
+        bool dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action) Q_DECL_OVERRIDE;
+        void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
+        void dragMoveEvent(QDragMoveEvent *event) Q_DECL_OVERRIDE;
 
         Channel *channel;
         QTimer *m_resortTimer;

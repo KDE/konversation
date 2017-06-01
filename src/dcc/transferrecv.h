@@ -64,19 +64,19 @@ namespace Konversation
                 void setReverse(bool reverse, const QString &reverseToken);
 
             public Q_SLOTS:
-                virtual bool queue();
+                bool queue() Q_DECL_OVERRIDE;
 
                 /** The user has accepted the download.
                  *  Check we are saving it somewhere valid, create any directories needed, and
                  *  connect to remote host.
                  */
-                virtual void start();
+                void start() Q_DECL_OVERRIDE;
                 /** The user has chosen to abort.
                  *  Either by chosen to abort directly, or by choosing cancel when
                  *  prompted for information on where to save etc.
                  *  Not called when it fails due to another problem.
                  */
-                virtual void abort();
+                void abort() Q_DECL_OVERRIDE;
                 void startResume(quint64 position);
 
             protected Q_SLOTS:
@@ -101,7 +101,7 @@ namespace Konversation
                 void sendReverseAck(bool error, quint16 port);
 
             protected:
-                void cleanUp();
+                void cleanUp() Q_DECL_OVERRIDE;
 
                                                           // (startPosition == 0) means "don't resume"
                 void prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0);

@@ -43,14 +43,14 @@ class InviteChannelListModel : public QAbstractListModel
         void addInvite(const QString& nickname, const QString& channel);
         QString selectedChannels() const;
 
-        virtual int rowCount(const QModelIndex& parent = QModelIndex()) const;
-        virtual int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
-        virtual QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-        virtual Qt::ItemFlags flags(const QModelIndex& index) const;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;
 
-        virtual bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+        bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
 
     private:
         QMap<QString, ChannelItem> m_channelMap;

@@ -29,7 +29,7 @@ namespace Konversation
         public:
             ServerListItem(QTreeWidget* tree, QStringList & strings);
             ServerListItem(QTreeWidgetItem* parent, QStringList & strings);
-            bool operator<(const QTreeWidgetItem &other) const;
+            bool operator<(const QTreeWidgetItem &other) const Q_DECL_OVERRIDE;
             enum DataRole
             {
                 SortIndex = Qt::UserRole + 2

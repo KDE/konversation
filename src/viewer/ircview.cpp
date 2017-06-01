@@ -217,10 +217,10 @@ class IrcViewMimeData : public QMimeData
 {
 public:
     IrcViewMimeData(const QTextDocumentFragment& _fragment): fragment(_fragment) {}
-    virtual QStringList formats() const;
+    QStringList formats() const Q_DECL_OVERRIDE;
 
 protected:
-    virtual QVariant retrieveData(const QString &mimeType, QVariant::Type type) const;
+    QVariant retrieveData(const QString &mimeType, QVariant::Type type) const Q_DECL_OVERRIDE;
 
 private:
     mutable QTextDocumentFragment fragment;

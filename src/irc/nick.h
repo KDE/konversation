@@ -31,8 +31,8 @@ class Nick : public QTreeWidgetItem
 
         ChannelNickPtr getChannelNick() const;
 
-        virtual QVariant data(int column, int role) const;
-        virtual bool operator<(const QTreeWidgetItem& other) const;
+        QVariant data(int column, int role) const Q_DECL_OVERRIDE;
+        bool operator<(const QTreeWidgetItem& other) const Q_DECL_OVERRIDE;
 
         void refresh();
         void repositionMe();

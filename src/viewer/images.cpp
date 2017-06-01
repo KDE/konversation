@@ -33,9 +33,9 @@ class LedIconEngine : public QIconEngine
         }
 
         // QIconEngine
-        virtual void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state);
-        virtual QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
-        virtual QIconEngine* clone() const;
+        void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) Q_DECL_OVERRIDE;
+        QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state) Q_DECL_OVERRIDE;
+        QIconEngine* clone() const Q_DECL_OVERRIDE;
 
     private:
         const QColor m_color;

@@ -53,7 +53,7 @@ class NicksOnline : public ChatWindow
         QTreeWidget* getNickListView();
         NickInfoPtr getNickInfo(const QTreeWidgetItem* item);
 
-        virtual bool canBeFrontView()   { return true; }
+        bool canBeFrontView()   Q_DECL_OVERRIDE { return true; }
 
     Q_SIGNALS:
         /**
@@ -104,9 +104,9 @@ class NicksOnline : public ChatWindow
 
     protected:
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() Q_DECL_OVERRIDE;
     //! Reimplemented for dynamic tooltips
-    virtual bool eventFilter(QObject*obj, QEvent *ev);
+    bool eventFilter(QObject*obj, QEvent *ev) Q_DECL_OVERRIDE;
     private:
         /**
         * Returns the named child of parent item in a NicksOnlineItem

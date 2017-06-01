@@ -34,10 +34,10 @@ class ServerListView : public QTreeWidget
         void aboutToMove();
         
     protected:        
-        void dragMoveEvent(QDragMoveEvent *e);
-        void dragLeaveEvent(QDragLeaveEvent *);
-        void dragEnterEvent(QDragEnterEvent *);
-        void dropEvent(QDropEvent *event);
+        void dragMoveEvent(QDragMoveEvent *e) Q_DECL_OVERRIDE;
+        void dragLeaveEvent(QDragLeaveEvent *) Q_DECL_OVERRIDE;
+        void dragEnterEvent(QDragEnterEvent *) Q_DECL_OVERRIDE;
+        void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
 };
 
 #endif

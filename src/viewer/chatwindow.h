@@ -108,7 +108,7 @@ class ChatWindow : public QWidget
 
         virtual bool notificationsEnabled() { return m_notificationsEnabled; }
 
-        virtual bool eventFilter(QObject* watched, QEvent* e);
+        bool eventFilter(QObject* watched, QEvent* e) Q_DECL_OVERRIDE;
 
         QString logFileName() { return logfile.fileName(); }
 
@@ -180,7 +180,7 @@ class ChatWindow : public QWidget
         virtual void serverOnline(bool online);
 
     protected:
-        virtual void childEvent(QChildEvent* event);
+        void childEvent(QChildEvent* event) Q_DECL_OVERRIDE;
 
         /** Some children may handle the name themselves, and not want this public.
          *  Increase the visibility in the subclass if you want outsiders to call this.

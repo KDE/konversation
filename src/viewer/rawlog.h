@@ -30,8 +30,8 @@ class RawLog : public ChatWindow
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
-        virtual bool searchView();
-        virtual bool log();
+        bool searchView() Q_DECL_OVERRIDE;
+        bool log() Q_DECL_OVERRIDE;
         using ChatWindow::appendRaw;
         virtual void appendRaw(MessageDirection dir, const QByteArray& message);
     public Q_SLOTS:
@@ -39,7 +39,7 @@ class RawLog : public ChatWindow
 
     protected:
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() Q_DECL_OVERRIDE;
 };
 
 #endif /* RAWLOG_H */

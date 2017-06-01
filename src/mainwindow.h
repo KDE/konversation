@@ -106,17 +106,17 @@ class MainWindow : public KXmlGuiWindow
 
         void toggleVisibility();
 
-        void showEvent(QShowEvent* e);
-        void hideEvent(QHideEvent* e);
-        void leaveEvent(QEvent* e);
+        void showEvent(QShowEvent* e) Q_DECL_OVERRIDE;
+        void hideEvent(QHideEvent* e) Q_DECL_OVERRIDE;
+        void leaveEvent(QEvent* e) Q_DECL_OVERRIDE;
 
 
     protected:
-        virtual QSize sizeHint() const;
+        QSize sizeHint() const Q_DECL_OVERRIDE;
 
         int confirmQuit();
-        bool queryClose();
-        virtual bool event(QEvent* e);
+        bool queryClose() Q_DECL_OVERRIDE;
+        bool event(QEvent* e) Q_DECL_OVERRIDE;
 
         ViewContainer* m_viewContainer;
         Konversation::StatusBar* m_statusBar;

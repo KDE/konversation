@@ -275,12 +275,12 @@ protected:
     /**
      * @internal
      */
-    virtual void showEvent(QShowEvent *e);
+    void showEvent(QShowEvent *e) Q_DECL_OVERRIDE;
 
     /**
      * @internal
      */
-    virtual void moveEvent(QMoveEvent *e);
+    void moveEvent(QMoveEvent *e) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     /**

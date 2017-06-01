@@ -41,7 +41,7 @@ class UrlDateItem : public QStandardItem
         explicit UrlDateItem(const QDateTime& dateTime);
         ~UrlDateItem();
 
-        QVariant data(int role) const;
+        QVariant data(int role) const Q_DECL_OVERRIDE;
 };
 
 
@@ -53,11 +53,11 @@ class UrlSortFilterProxyModel : public QSortFilterProxyModel
         explicit UrlSortFilterProxyModel(QObject* parent = 0);
         ~UrlSortFilterProxyModel();
 
-        Qt::ItemFlags flags(const QModelIndex& index) const;
+        Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;
 
 
     protected:
-        bool lessThan(const QModelIndex& left, const QModelIndex& right) const;
+        bool lessThan(const QModelIndex& left, const QModelIndex& right) const Q_DECL_OVERRIDE;
 };
 
 
@@ -71,8 +71,8 @@ class UrlCatcher : public ChatWindow
 
 
     protected:
-        void childAdjustFocus();
-        bool event(QEvent* event);
+        void childAdjustFocus() Q_DECL_OVERRIDE;
+        bool event(QEvent* event) Q_DECL_OVERRIDE;
 
 
     private Q_SLOTS:

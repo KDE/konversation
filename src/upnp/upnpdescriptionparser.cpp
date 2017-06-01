@@ -40,12 +40,12 @@ namespace Konversation
             virtual ~XMLContentHandler();
 
 
-            bool startDocument();
-            bool endDocument();
+            bool startDocument() Q_DECL_OVERRIDE;
+            bool endDocument() Q_DECL_OVERRIDE;
             bool startElement(const QString &, const QString & localName, const QString &,
-                            const QXmlAttributes & atts);
-            bool endElement(const QString & , const QString & localName, const QString &  );
-            bool characters(const QString & ch);
+                            const QXmlAttributes & atts) Q_DECL_OVERRIDE;
+            bool endElement(const QString & , const QString & localName, const QString &  ) Q_DECL_OVERRIDE;
+            bool characters(const QString & ch) Q_DECL_OVERRIDE;
 
             bool interestingDeviceField(const QString & name);
             bool interestingServiceField(const QString & name);

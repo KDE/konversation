@@ -50,7 +50,7 @@ class ChannelListProxyModel : public QSortFilterProxyModel
         void setFilterChannel(bool filter);
 
     protected:
-        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const Q_DECL_OVERRIDE;
 
     private:
         bool usersInRange(int users) const;
@@ -69,11 +69,11 @@ class ChannelListModel : public QAbstractListModel
 
         void append(const ChannelItem& item);
 
-        int columnCount(const QModelIndex& parent = QModelIndex()) const;
-        int rowCount(const QModelIndex& parent = QModelIndex()) const;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
 
-        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
-        QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
 
     private:
         QList<ChannelItem> m_channelList;
@@ -89,10 +89,10 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
-        virtual void emitUpdateInfo();
+        void emitUpdateInfo() Q_DECL_OVERRIDE;
 
-        bool isInsertSupported() { return true; }
-        QString getTextInLine() { return m_filterLine->text(); }
+        bool isInsertSupported() Q_DECL_OVERRIDE { return true; }
+        QString getTextInLine() Q_DECL_OVERRIDE { return m_filterLine->text(); }
 
     Q_SIGNALS:
         void refreshChannelList();
@@ -104,7 +104,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void endOfChannelList();
         void applyFilterClicked();
 
-        virtual void appendInputText(const QString&, bool fromCursor);
+        void appendInputText(const QString&, bool fromCursor) Q_DECL_OVERRIDE;
         void setFilter(const QString& filter);
 
     protected Q_SLOTS:
@@ -121,12 +121,12 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void contextMenu(const QPoint& pos);
         void openURL();
         //Used to disable functions when not connected
-        virtual void serverOnline(bool online);
+        void serverOnline(bool online) Q_DECL_OVERRIDE;
 
     protected:
 
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus(){}
+        void childAdjustFocus()Q_DECL_OVERRIDE {}
 
         void countUsers(const QModelIndex& index, int pos);
 

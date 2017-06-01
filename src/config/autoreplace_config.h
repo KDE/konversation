@@ -25,11 +25,11 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
     explicit Autoreplace_Config(QWidget* parent, const char* name=NULL);
     ~Autoreplace_Config();
 
-    virtual void saveSettings();
-    virtual void loadSettings();
-    virtual void restorePageToDefaults();
+    void saveSettings() Q_DECL_OVERRIDE;
+    void loadSettings() Q_DECL_OVERRIDE;
+    void restorePageToDefaults() Q_DECL_OVERRIDE;
 
-    virtual bool hasChanged();
+    bool hasChanged() Q_DECL_OVERRIDE;
 
   Q_SIGNALS:
     void modified();

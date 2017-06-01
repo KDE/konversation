@@ -36,7 +36,7 @@ namespace Konversation
             IdentityPtr currentIdentity() const;
 
         public Q_SLOTS:
-            virtual void accept();
+            void accept() Q_DECL_OVERRIDE;
 
         Q_SIGNALS:
             void identitiesChanged();
