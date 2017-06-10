@@ -575,21 +575,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         QString account;
         QString realName;
 
-        if (!m_server->hasExtendedJoin())
-        {
-            channelName = trailing;
-            // Sometimes JOIN comes without ":" in front of the channel name
-        }
-        else
-        {
-            channelName = parameterList[0];
-            account = parameterList[1];
-            realName = parameterList[2];
+        channelName = parameterList[0];
 
-            if (account == "*")
-            {
-                account = QString();
-            }
+        if (m_server->hasExtendedJoin() && plHas(3))
+        {
+            if (parameterList[1] != "*")
+                account = parameterList[1];
+
+            realName = parameterList[2];
         }
 
         // Did we join the channel, or was it someone else?
