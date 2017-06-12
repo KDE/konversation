@@ -21,6 +21,7 @@
 #include "transfer.h"
 
 #include <QTextDocument>
+#include <QWindow>
 
 #include <KLocalizedString>
 #include <KNotification>
@@ -54,7 +55,7 @@ namespace Konversation
 
         if (message.isEmpty())
         {
-            KNotification::event(QLatin1String("message"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
+            auto msg = KNotification::event(QLatin1String("message"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -98,9 +99,10 @@ namespace Konversation
 
         QString eventTitle = i18nc("Notification title; see Event/nick in konversation.notifyrc", "Your nick was mentioned by %1 in %2", fromNick, chatWin->getName());
 
+        KNotification* msg;
         if (message.isEmpty())
         {
-            KNotification::event(QLatin1String("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -114,7 +116,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            KNotification::event(QLatin1String("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -123,6 +125,9 @@ namespace Konversation
                 konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3", chatWin->getName(), fromNick, cleanedMessage));
             }
         }
+
+        msg->setDefaultAction(i18n("Open"));
+        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
 
         startTrayNotification(chatWin);
     }
@@ -141,9 +146,10 @@ namespace Konversation
 
         QString eventTitle = i18nc("Notification title; see Event/message in konversation.notifyrc", "New query message from %1", chatWin->getName());
 
+        KNotification* msg;
         if (message.isEmpty()) // TODO document how this can happen, seems nonsensical
         {
-            KNotification::event(QLatin1String("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -157,7 +163,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            KNotification::event(QLatin1String("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -166,6 +172,9 @@ namespace Konversation
                 konvApp->osd->show(i18n("[Query] <%1> %2", fromNick, cleanedMessage));
             }
         }
+
+        msg->setDefaultAction(i18n("Open"));
+        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
 
         startTrayNotification(chatWin);
     }

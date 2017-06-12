@@ -745,4 +745,14 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
     }
 }
 
+void ChatWindow::activateView()
+{
+    for(QWidget* widget = this; widget; widget = widget->parentWidget()) {
+        if (widget->window()) {
+            widget->show();
+            widget->activateWindow();
+            widget->raise();
+        }
+    }
+}
 

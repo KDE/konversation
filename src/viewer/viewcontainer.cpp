@@ -1429,6 +1429,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
+    connect(view, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
 
     switch (view->getType())
     {

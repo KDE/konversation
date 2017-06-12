@@ -139,6 +139,7 @@ class ChatWindow : public QWidget
 
         void setMargin(int margin) { layout()->setMargin(margin); }
         void setSpacing(int spacing) { layout()->setSpacing(spacing); }
+        void activateView();
 
     Q_SIGNALS:
         void nameChanged(ChatWindow* view, const QString& newName);
@@ -153,6 +154,7 @@ class ChatWindow : public QWidget
         void clearStatusBarTempText();
 
         void closing(ChatWindow* myself);
+        void showView(ChatWindow* myself);
 
     public Q_SLOTS:
         void updateAppearance();
