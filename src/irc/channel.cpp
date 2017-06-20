@@ -292,7 +292,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
 
     if(nicknameCombobox->lineEdit())
-        connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));
+        connect(nicknameCombobox->lineEdit(), SIGNAL (returnPressed()),this,SLOT(nicknameComboboxChanged()));
 
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
