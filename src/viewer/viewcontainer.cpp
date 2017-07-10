@@ -2786,9 +2786,8 @@ void ViewContainer::showJoinChannelDialog()
     if (dlg->exec() == QDialog::Accepted)
     {
         Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(dlg->connectionId());
-        if (!server)
-          return;
-        server->sendJoinCommand(dlg->channel(), dlg->password());
+        if (server)
+            server->sendJoinCommand(dlg->channel(), dlg->password());
     }
     delete dlg;
 }
