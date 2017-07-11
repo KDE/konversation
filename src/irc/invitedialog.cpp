@@ -160,7 +160,7 @@ QVariant InviteChannelListModel::data(const QModelIndex& index, int role) const
         return QSize(0, qMax(qApp->style()->sizeFromContents(QStyle::CT_CheckBox, 0, QSize(0, 0), 0).height(),
                              qApp->fontMetrics().height()));
     }
-    else if(Qt::CheckStateRole && index.column() == 0)
+    else if((role == Qt::CheckStateRole) && (index.column() == 0))
     {
         return m_channelMap.values().at(index.row()).checkState;
     }
