@@ -125,6 +125,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
     QStyleOptionViewItem _option = option;
     _option.state = QStyle::State_None;
+    _option.palette.setColor(QPalette::Base, Qt::transparent);
     _option.palette.setColor(QPalette::AlternateBase, Qt::transparent);
 
     if (index.data(ViewContainer::DisabledRole).toBool()) {
