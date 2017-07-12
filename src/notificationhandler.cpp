@@ -52,10 +52,11 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView()));
 
         QString eventTitle = i18nc("Notification title; see Event/message in konversation.notifyrc", "New message from %1 in %2", fromNick, chatWin->getName());
+        KNotification* msg;
 
         if (message.isEmpty())
         {
-            auto msg = KNotification::event(QLatin1String("message"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("message"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -69,7 +70,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            KNotification::event(QLatin1String("message"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QLatin1String("message"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -78,6 +79,9 @@ namespace Konversation
                 konvApp->osd->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QStringLiteral("> ") + cleanedMessage);
             }
         }
+
+        msg->setDefaultAction(i18n("Open"));
+        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
 
         if (!Preferences::self()->trayNotifyOnlyOwnNick())
         {
