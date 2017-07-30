@@ -17,6 +17,7 @@
   <name xml:lang="et">Konversation</name>
   <name xml:lang="fi">Konversation</name>
   <name xml:lang="fr">Konversation</name>
+  <name xml:lang="gl">Konversation</name>
   <name xml:lang="it">Konversation</name>
   <name xml:lang="nl">Konversation</name>
   <name xml:lang="pl">Konversation</name>
@@ -47,6 +48,7 @@
   <summary xml:lang="et">IRC klient</summary>
   <summary xml:lang="fi">IRC-asiakas</summary>
   <summary xml:lang="fr">Client IRC</summary>
+  <summary xml:lang="gl">Cliente de IRC</summary>
   <summary xml:lang="he">לקוח IRC</summary>
   <summary xml:lang="it">Client IRC</summary>
   <summary xml:lang="nl">IRC-client</summary>
@@ -81,6 +83,7 @@
     <p xml:lang="et">Konversation on IRC klient, mis lubab sul edukalt tegutseda Freenode'i võrgu kanalitel. Rakenduse vaikimisi seadistused on niisugused, et sul pole alustamiseks üldjuhul vaja midagi rohkemat, kui ainult teada kanalit, millega ühineda.</p>
     <p xml:lang="fi">Konversation on IRC-asiakas, jolla pääset nopeasti Freenoden verkkokanaville, mistä löydät useimpien jakelujen tuen. Sen oletusasetukset ovat sellaiset, ettei sinun tarvitse kuin vain kertoa jakelusi kanava päästäksesi alkuun.</p>
     <p xml:lang="fr">Konversation est un client IRC qui vous donne un accès rapide aux canaux du réseau Freenode où vous trouverez du support pour la plupart des distributions. Ses configurations par défaut sont telles que vous devez uniquement spécifier le nom de votre distribution pour débuter.</p>
+    <p xml:lang="gl">Konversation é un cliente de IRC que lle da acceso rápido ás canles da rede Freenode, onde atopará asistencia técnica para a meirande parte das distribucións. A configuración predeterminada está deseñada para que só teña que indicar o nome da canle da distribución para comezar.</p>
     <p xml:lang="he">שיחה KDE זה לקוח IRC שנותן גישה מהירה לערוצי רשתות Freenode, ותומך ברוב ההפצות. כברירת מחדל לא צריך להגדיר חוץ לבחור שם של אחד מערוצי ההפצות בשביל להתחיל.</p>
     <p xml:lang="it">Konversation è un client IRC che fornisce un acceso rapido ai canali della rete Freenode, dove troverai supporto per la maggior parte delle distribuzioni. I suoi valori predefiniti fanno sì che non ci sia bisogno di configurazione ulteriore a parte il nome del canale della distribuzione per poter iniziare.</p>
     <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
@@ -110,6 +113,7 @@
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
+    <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="he">תכונות:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
@@ -140,6 +144,7 @@
       <li xml:lang="et">Tavapärased IRC omadused</li>
       <li xml:lang="fi">IRCin vakio-ominaisuudet</li>
       <li xml:lang="fr">Fonctionnalités standards IRC</li>
+      <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
       <li xml:lang="he">תכונות IRC רגילות</li>
       <li xml:lang="it">Funzionalità di base di IRC</li>
       <li xml:lang="nl">Standaard IRC-functies</li>
@@ -167,6 +172,7 @@
       <li xml:lang="et">SSL-serveri toetus</li>
       <li xml:lang="fi">SSL-palvelintuki</li>
       <li xml:lang="fr">Prise en charge de serveurs SSL</li>
+      <li xml:lang="gl">Compatibilidade con servidores SSL.</li>
       <li xml:lang="he">תמיכה בשרתים מאובטחים ב־SSL</li>
       <li xml:lang="it">Supporto per i server SSL</li>
       <li xml:lang="nl">Ondersteuning voor SSL-server</li>
@@ -194,6 +200,7 @@
       <li xml:lang="et">Järjehoidjate toetus</li>
       <li xml:lang="fi">Kirjanmerkkituki</li>
       <li xml:lang="fr">Prise en charge des signets</li>
+      <li xml:lang="gl">Marcadores.</li>
       <li xml:lang="he">תמיכה בסימניות</li>
       <li xml:lang="it">Supporto per i segnalibri</li>
       <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
@@ -221,6 +228,7 @@
       <li xml:lang="et">Hõlpsasti mõistetav graafiline kasutajaliides</li>
       <li xml:lang="fi">Helppokäyttöinen graafinen käyttöliittymä</li>
       <li xml:lang="fr">Interface graphique simple d'utilisation</li>
+      <li xml:lang="gl">Interface de usuario fácil de usar.</li>
       <li xml:lang="he">ממשק משתמש גרפי קל לשימוש</li>
       <li xml:lang="it">Interfaccia grafica semplice da usare</li>
       <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
@@ -248,6 +256,7 @@
       <li xml:lang="et">Eri serverite ja kanalite koondamine ühte aknasse</li>
       <li xml:lang="fi">Useampi palvelin ja kanava yhdessä ikkunassa</li>
       <li xml:lang="fr">Multiples serveurs et canaux dans une unique fenêtre</li>
+      <li xml:lang="gl">Varios servidores e canles nunha mesma xanela.</li>
       <li xml:lang="he">מספר שרתים וערוצים בחלון אחד</li>
       <li xml:lang="it">Diversi server e canali in un'unica finestra</li>
       <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
@@ -275,6 +284,7 @@
       <li xml:lang="et">DCC-failiedastus</li>
       <li xml:lang="fi">DCC-tiedostonsiirto</li>
       <li xml:lang="fr">Transfert de fichier DCC</li>
+      <li xml:lang="gl">Transferencia de ficheiros por DCC.</li>
       <li xml:lang="he">העברת קבצים באמצעות DCC</li>
       <li xml:lang="it">Trasferimento file tramite DCC</li>
       <li xml:lang="nl">DCC Bestandsoverdracht</li>
@@ -302,6 +312,7 @@
       <li xml:lang="et">Eri serverites eri identiteedi kasutamise võimalus</li>
       <li xml:lang="fi">Useampi henkilöys eri palvelimiin</li>
       <li xml:lang="fr">Multiples identités pour différents serveurs</li>
+      <li xml:lang="gl">Varias identidades para distintos servidores.</li>
       <li xml:lang="he">זהויות שונות לשרתים שונים</li>
       <li xml:lang="it">Identità multiple per i vari server</li>
       <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
@@ -329,6 +340,7 @@
       <li xml:lang="et">Teksti dekoratsioonid ja värvid</li>
       <li xml:lang="fi">Tekstitehosteet ja -värit</li>
       <li xml:lang="fr">Décorations du texte et couleurs</li>
+      <li xml:lang="gl">Decoracións e cores de texto.</li>
       <li xml:lang="he">עיצוב וצבעי טקסט</li>
       <li xml:lang="it">Decorazioni e colori per il testo</li>
       <li xml:lang="nl">Tekstdecoraties en kleuren</li>
@@ -356,6 +368,7 @@
       <li xml:lang="et">Märguannete kuvamine ekraanil</li>
       <li xml:lang="fi">Ilmoitusten ruutunäyttö</li>
       <li xml:lang="fr">Affichage à l'écran des notifications</li>
+      <li xml:lang="gl">Notificacións visualizadas na pantalla.</li>
       <li xml:lang="he">התראות על המסך</li>
       <li xml:lang="it">Notifiche a schermo (OnScreen Display)</li>
       <li xml:lang="nl">Meldingen op het scherm tonen</li>
@@ -383,6 +396,7 @@
       <li xml:lang="et">Automaatne UTF-8 tuvastamine</li>
       <li xml:lang="fi">Automaattinen UTF-8-tunnistus</li>
       <li xml:lang="fr">Détection automatique de l'UTF-8</li>
+      <li xml:lang="gl">Detección automática de UTF-8.</li>
       <li xml:lang="he">זיהוי UTF-8 אוטומטי</li>
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
@@ -410,6 +424,7 @@
       <li xml:lang="et">Võimalus määrata kodeeringut igal kanalil eraldi</li>
       <li xml:lang="fi">Kanavakohtainen merkistökoodaustuki</li>
       <li xml:lang="fr">Prise en charge de l'encodage par canal</li>
+      <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
       <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
       <li xml:lang="it">Supporto di codifiche per canale</li>
       <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
@@ -437,6 +452,7 @@
       <li xml:lang="et">Kasutajate ikoonidel teemavälimuse kasutamise võimalus</li>
       <li xml:lang="fi">Teematuki tunnuskuvakkeille</li>
       <li xml:lang="fr">Prise en charge de thèmes pour les images de pseudonyme</li>
+      <li xml:lang="gl">Temas para iconas de alcumes.</li>
       <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
       <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
@@ -464,6 +480,7 @@
       <li xml:lang="et">Igati seadistatav</li>
       <li xml:lang="fi">Laajalti mukautettavissa</li>
       <li xml:lang="fr">Hautement configurable</li>
+      <li xml:lang="gl">Altamente configurábel.</li>
       <li xml:lang="he">הרבה אפשרויות הגדרה</li>
       <li xml:lang="it">Altamente configurabile</li>
       <li xml:lang="nl">Hoog instelbaar</li>
