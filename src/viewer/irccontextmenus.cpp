@@ -72,10 +72,10 @@ IrcContextMenus::IrcContextMenus()
     createSharedNickSettingsActions();
     createSharedDccActions();
 
-    setupChannelMenu();
     setupQuickButtonMenu();
     setupNickMenu();
-    setupTextMenu();
+    setupTextMenu(); // creates m_textCopyAction needed by the channel menu
+    setupChannelMenu();
     setupTopicHistoryMenu();
 
     updateQuickButtonMenu();
@@ -83,8 +83,8 @@ IrcContextMenus::IrcContextMenus()
 
 IrcContextMenus::~IrcContextMenus()
 {
-    delete m_textMenu;
     delete m_channelMenu;
+    delete m_textMenu;
     delete m_nickMenu;
     delete m_quickButtonMenu;
     delete m_topicHistoryMenu;
@@ -349,6 +349,8 @@ void IrcContextMenus::setupChannelMenu()
 
     createAction(m_channelMenu, Topic, i18n("Get &topic"));
     createAction(m_channelMenu, Names, i18n("Get &user list"));
+    
+    m_channelMenu->addAction(m_textCopyAction);
 }
 
 void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QString& channel)
@@ -365,6 +367,8 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
     QAction* action = channelMenu->exec(pos);
 
+    self()->m_textCopyAction->setEnabled(false);
+    
     switch (extractActionId(action))
     {
         case Join:
@@ -375,6 +379,9 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
             break;
         case Names:
             commandToServer(server, "names " + channel);
+            break;
+        case TextCopy:
+            qApp->clipboard()->setText(channel, QClipboard::Clipboard);
             break;
         default:
             break;
