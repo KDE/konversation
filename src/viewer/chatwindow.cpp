@@ -153,7 +153,11 @@ QString ChatWindow::getURI(bool passNetwork)
         protocol = "irc://";
 
     if (getType() == Channel)
+    {
         channel = getName().replace(QRegExp("^#"), QString());
+        // must protect second #, but might as well protect all of them
+        channel.replace("#", "%23");
+    }
 
     if (passNetwork)
     {
