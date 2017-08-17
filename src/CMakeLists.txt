@@ -3,6 +3,8 @@ include(ECMAddAppIcon)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
+add_subdirectory(qtquick)
+
 set(core_SRCS
     #====================================
     #=== Application
@@ -63,6 +65,8 @@ set (irc_SRCS
     irc/serverlistdialog.cpp
     irc/serverlistview.cpp
     irc/serversettings.cpp
+
+    irc/messagemodel.cpp # WIPQTQUICK
 )
 
 ki18n_wrap_ui(irc_SRCS
@@ -219,6 +223,8 @@ add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation
     Qt5::Widgets
+    Qt5::Quick # WIPQTQUICK
+    Qt5::QuickWidgets  # WIPQTQUICK
     KF5::Archive
     KF5::Bookmarks
     KF5::ConfigWidgets
@@ -240,6 +246,7 @@ target_link_libraries(konversation
     KF5::WindowSystem
     KF5::IconThemes
     KF5::ItemViews
+    KF5::Package # WIPQTQUICK: Used to load the QML UI package
     Phonon::phonon4qt5)
 
 if (Qca-qt5_FOUND)

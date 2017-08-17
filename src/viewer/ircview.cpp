@@ -22,6 +22,7 @@
 #include "sound.h"
 #include "emoticons.h"
 #include "notificationhandler.h"
+#include "messagemodel.h" // WIPQTQUICK
 
 #include <QDrag>
 #include <QScrollBar>
@@ -566,6 +567,25 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
     }
 
     emit textToLog(QString("<%1>\t%2").arg(nick, message));
+
+    /* BEGIN: WIPQTQUICK */
+    Application* konvApp = Application::instance();
+    MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+
+    QDateTime serverTime;
+
+    if (messageTags.contains(QStringLiteral("time"))) // If it exists use the supplied server time.
+        serverTime = QDateTime::fromString(messageTags[QStringLiteral("time")], Qt::ISODate).toLocalTime();
+
+    QTime time = serverTime.isValid() ? serverTime.time() : QTime::currentTime();
+
+    msgModel->appendMessage(QString::number(m_server->connectionId()) + "-" + m_chatWin->getName(),
+        time.toString(Preferences::self()->timestampFormat()),
+        nick,
+        nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+        text
+    );
+    /* END: WIPQTQUICK */
 
     doAppend(line, rtl);
 }

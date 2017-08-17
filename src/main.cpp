@@ -118,9 +118,10 @@ int main(int argc, char* argv[])
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("noautoconnect"), i18n("Disable auto-connecting to any IRC networks")));
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("startupdelay"), i18n("Delay D-Bus activity and UI creation by the specified amount of milliseconds"), i18n("msec"), "2000"));
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("restart"), i18n("Quits and restarts Konversation (if running, otherwise has no effect)")));
-#ifndef QT_NO_DEBUG
+//#ifndef QT_NO_DEBUG WIPQTQUICK
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("nui"), i18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)")));
-#endif
+//#endif WIPQTQUICK
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("qtquick"), i18n("Starts experimental Qt Quick UI"))); // WIPQTQUICK
     aboutData.setupCommandLine(&cmdLineParser);
 
     cmdLineParser.process(app);
@@ -141,10 +142,10 @@ int main(int argc, char* argv[])
 
     KDBusService::StartupOptions startOptions = KDBusService::Unique;
 
-#ifndef QT_NO_DEBUG
+//#ifndef QT_NO_DEBUG WIPQTQUICK
     if (cmdLineParser.isSet(QStringLiteral("nui")))
         startOptions = KDBusService::Multiple;
-#endif
+//#endif WIPQTQUICK
 
     startOptions |= KDBusService::NoExitOnFailure;
 

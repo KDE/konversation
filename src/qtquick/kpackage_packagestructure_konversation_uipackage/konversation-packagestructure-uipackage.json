@@ -1,0 +1,17 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "hein@kde.org",
+                "Name": "Eike Hein"
+            }
+        ],
+        "Id": "Konversation/UiPackage",
+        "Name": "Konversation UI Packages",
+        "ServiceTypes": [
+            "KPackage/PackageStructure"
+        ],
+        "Version": "1"
+    },
+    "X-KDE-ParentApp": "org.kde.konversation"
+}

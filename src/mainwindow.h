@@ -24,12 +24,14 @@
 
 #include <kxmlguiwindow.h>
 
+class QQuickWidget; // WIPQTQUICK
 
 class KToggleAction;
 
 class Server;
 class KonviSettingsDialog;
 class ViewContainer;
+class MessageModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -48,6 +50,8 @@ class MainWindow : public KXmlGuiWindow
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
+
+        MessageModel* getMessageModel() { return m_messageModel; } // WIPQTQUICK
 
         /** Some errors need to be shown, even when konversation is minimized.
          */
@@ -126,6 +130,9 @@ class MainWindow : public KXmlGuiWindow
 
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
+
+        QQuickWidget *m_quickWidget; // WIPQTQUICK
+        MessageModel *m_messageModel; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

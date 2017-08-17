@@ -27,10 +27,15 @@
 #include "connectionmanager.h"
 #include "awaymanager.h"
 #include "transfermanager.h"
+#include "messagemodel.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
 #include <QMenuBar>
+#include <QIcon>
+#include <QMenu>
+#include <QQmlContext> // WIPQTQUICK
+#include <QQuickWidget> // WIPQTQUICK
 
 #include <KActionCollection>
 #include <QAction>
@@ -40,9 +45,6 @@
 #include <KStandardAction>
 #include <KLocalizedString>
 #include <KMessageBox>
-
-#include <QIcon>
-#include <QMenu>
 #include <KWindowSystem>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
@@ -50,6 +52,7 @@
 #include <KNotifyConfigWidget>
 #include <KGlobalAccel>
 #include <KIconLoader>
+#include <KPackage/PackageLoader> // WIPQTQUICK
 
 MainWindow::MainWindow() : KXmlGuiWindow(0)
 {
@@ -60,7 +63,41 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     m_settingsDialog = NULL;
 
     m_viewContainer = new ViewContainer(this);
-    setCentralWidget(m_viewContainer->getWidget());
+
+    // BEGIN: WIPQTQUICK
+    m_messageModel = new MessageModel(this);
+
+    m_quickWidget = new QQuickWidget(this);
+    m_quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_quickWidget->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
+    m_quickWidget->rootContext()->setContextProperty(QLatin1String("messageModel"), m_messageModel);
+
+    setCentralWidget(m_quickWidget);
+
+    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
+        QStringLiteral("org.kde.konversation.uipackages.default"));
+
+    qDebug() << "Package root:" << p.defaultPackageRoot();
+
+    auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
+
+    qDebug() << "Package list (name / id):";
+
+    for (const auto &pkg : plist) {
+        qDebug() << "  " << pkg.name() << "/" << pkg.pluginId();
+    }
+
+    qDebug() << "Required files:" << p.requiredFiles();
+    qDebug() << "Required directories:" << p.requiredDirectories();
+
+    if (p.isValid()) {
+        qDebug() << "Package is valid.";
+        qDebug() << "File path for 'window':" << p.filePath("window");
+        m_quickWidget->setSource(QUrl::fromLocalFile(p.filePath("window")));
+    } else {
+        qDebug() << "Package is invalid.";
+    }
+    // END: WIPQTQUICK
 
     //used for event compression. See header file for resetHasDirtySettings()
     connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(resetHasDirtySettings()));

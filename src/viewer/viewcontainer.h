@@ -78,21 +78,36 @@ class ViewContainer : public QAbstractItemModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString currentViewId READ currentViewId NOTIFY currentViewIdChanged) // WIPQTQUICK
+    Q_PROPERTY(QString currentNick READ currentNick NOTIFY currentNickChanged) // WIPQTQUICK
+    Q_PROPERTY(QString currentTopic READ currentTopic NOTIFY currentTopicChanged) // WIPQTQUICK
+
     public:
         enum DataRoles {
             ColorRole = Qt::UserRole + 1,
             DisabledRole,
-            HighlightRole
+            HighlightRole,
+            ViewIdRole, // WIPQTQUICK
+            ChatWindowRole, // WIPQTQUICK
         };
+        Q_ENUM(DataRoles) // WIPQTQUICK
 
         explicit ViewContainer(MainWindow* window);
         ~ViewContainer();
+
+        QHash<int, QByteArray> roleNames() const override; // WIPQTQUICK
+
+        QString currentViewId() const; // WIPQTQUICK
+        QString currentNick() const; // WIPQTQUICK
+        QString currentTopic() const; // WIPQTQUICK
+        Q_INVOKABLE void sendTextToFrontView(const QString &text); // WIPQTQUICK
+        Q_INVOKABLE void setCurrentNick(const QString &text);
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }
         MainWindow* getWindow() { return m_window; }
         KActionCollection* actionCollection() { return m_window->actionCollection(); }
 
-        QPointer<ChatWindow> getFrontView() { return m_frontView; }
+        QPointer<ChatWindow> getFrontView() { return m_frontView; } // WIPQTQUICK
         Server* getFrontServer() { return m_frontServer; }
 
         void prepareShutdown();
@@ -141,7 +156,7 @@ class ViewContainer : public QAbstractItemModel
         void toggleAutoJoin();
         void toggleConnectOnStartup();
 
-        void showView(ChatWindow* view);
+        void showView(QObject* view); // WIPQTQUICK
         void goToView(int page);
         void showNextView();
         void showPreviousView();
@@ -230,6 +245,9 @@ class ViewContainer : public QAbstractItemModel
 
     Q_SIGNALS:
         void viewChanged(const QModelIndex& idx);
+        void currentViewIdChanged(); // WIPQTQUICK
+        void currentNickChanged(); // WIPQTQUICK
+        void currentTopicChanged(); // WIPQTQUICK
         void setWindowCaption(const QString& caption);
         void updateChannelAppearance();
         void contextMenuClosed();

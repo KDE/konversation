@@ -1,0 +1,2 @@
+add_subdirectory(kpackage_packagestructure_konversation_uipackage)
+add_subdirectory(uipackages)

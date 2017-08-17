@@ -42,6 +42,7 @@
 #include <QSplitter>
 #include <QTabBar>
 #include <QWidget>
+#include <QMetaEnum> // WIPQTQUICK
 
 #include <QInputDialog>
 #include <KMessageBox>
@@ -156,6 +157,19 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 
 ViewContainer::~ViewContainer()
 {
+}
+
+QHash<int, QByteArray> ViewContainer::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+
+    QMetaEnum e = metaObject()->enumerator(metaObject()->indexOfEnumerator("DataRoles"));
+
+    for (int i = 0; i < e.keyCount(); ++i) {
+        roles.insert(e.value(i), e.key(i));
+    }
+
+    return roles;
 }
 
 void ViewContainer::setupIrcContextMenus()
@@ -548,6 +562,11 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         return false;
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
+    } else if (role == ViewIdRole) {
+        const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
+        return QString(QString::number(view->getServer()->connectionId()) + "-" + view->getName());
+    } else if (role == ChatWindowRole) {
+        return qVariantFromValue<QObject*>(static_cast<QObject*>(index.internalPointer()));
     }
 
     return QVariant();
@@ -1703,6 +1722,57 @@ void ViewContainer::unclutterTabs()
     viewSwitched(m_tabWidget->currentIndex());
 }
 
+QString ViewContainer::currentViewId() const
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
+
+    if (view) {
+        return QString::number(view->getServer()->connectionId()) + "-" + view->getName();
+    }
+
+    return QString();
+}
+
+QString ViewContainer::currentTopic() const
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
+
+    if (view && view->getType() == ChatWindow::Channel) {
+        return static_cast<Channel*>(view)->getTopic();
+    }
+
+    return QString();
+}
+
+QString ViewContainer::currentNick() const
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
+
+    if (view) {
+        return view->getServer()->getNickname();
+    }
+
+    return QString();
+}
+
+void ViewContainer::setCurrentNick(const QString &nick)
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
+
+    if (view) {
+        view->getServer()->queue(QStringLiteral("NICK ")+nick.simplified());
+    }
+}
+
+void ViewContainer::sendTextToFrontView(const QString &text)
+{
+    ChatWindow* view = getFrontView();
+
+    if (view) {
+        view->sendText(text);
+    }
+}
+
 void ViewContainer::viewSwitched(int newIndex)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
@@ -1756,14 +1826,18 @@ void ViewContainer::viewSwitched(int newIndex)
         emit setWindowCaption(tabName);
     else
         emit setWindowCaption(QString());
+
+    emit currentViewIdChanged(); // WIPQTQUICK
+    emit currentNickChanged(); // WIPQTQUICK
+    emit currentTopicChanged(); // WIPQTQUICK
 }
 
-void ViewContainer::showView(ChatWindow* view)
+void ViewContainer::showView(QObject* view)
 {
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
     if (m_tabWidget->isVisible()) {
-        m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(view));
+        m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(static_cast<ChatWindow*>(view)));
     }
 }
 
