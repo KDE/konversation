@@ -344,6 +344,9 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
         if (!channel.contains(QRegExp(QStringLiteral("^[#+&]{1}"))))
             channel = QLatin1Char('#') + channel;
 
+        // Qt already encoded |, we've forced # as well
+        channel = QUrl::fromPercentEncoding(channel.toUtf8());
+
         channelSettings.setName(channel);
     }
 
