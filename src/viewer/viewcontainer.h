@@ -78,7 +78,6 @@ class ViewContainer : public QAbstractItemModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString currentViewId READ currentViewId NOTIFY currentViewIdChanged) // WIPQTQUICK
     Q_PROPERTY(QString currentNick READ currentNick NOTIFY currentNickChanged) // WIPQTQUICK
     Q_PROPERTY(QString currentTopic READ currentTopic NOTIFY currentTopicChanged) // WIPQTQUICK
 
@@ -97,7 +96,6 @@ class ViewContainer : public QAbstractItemModel
 
         QHash<int, QByteArray> roleNames() const override; // WIPQTQUICK
 
-        QString currentViewId() const; // WIPQTQUICK
         QString currentNick() const; // WIPQTQUICK
         QString currentTopic() const; // WIPQTQUICK
         Q_INVOKABLE void sendTextToFrontView(const QString &text); // WIPQTQUICK
@@ -245,7 +243,6 @@ class ViewContainer : public QAbstractItemModel
 
     Q_SIGNALS:
         void viewChanged(const QModelIndex& idx);
-        void currentViewIdChanged(); // WIPQTQUICK
         void currentNickChanged(); // WIPQTQUICK
         void currentTopicChanged(); // WIPQTQUICK
         void setWindowCaption(const QString& caption);

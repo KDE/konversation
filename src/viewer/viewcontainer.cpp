@@ -1722,17 +1722,6 @@ void ViewContainer::unclutterTabs()
     viewSwitched(m_tabWidget->currentIndex());
 }
 
-QString ViewContainer::currentViewId() const
-{
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
-
-    if (view) {
-        return QString::number(view->getServer()->connectionId()) + "-" + view->getName();
-    }
-
-    return QString();
-}
-
 QString ViewContainer::currentTopic() const
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
@@ -1827,7 +1816,6 @@ void ViewContainer::viewSwitched(int newIndex)
     else
         emit setWindowCaption(QString());
 
-    emit currentViewIdChanged(); // WIPQTQUICK
     emit currentNickChanged(); // WIPQTQUICK
     emit currentTopicChanged(); // WIPQTQUICK
 }

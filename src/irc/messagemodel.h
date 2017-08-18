@@ -9,16 +9,42 @@
   Copyright (C) 2017 Eike Hein <hein@kde.org>
 */
 
-#include <QAbstractListModel>
+#include "chatwindow.h"
+
+#include <QSortFilterProxyModel>
 
 #include <QColor>
+#include <QPointer>
 
 struct Message {
-    QString viewId; // HACK
+    QObject *view;
     QString timeStamp;
     QString nick;
     QColor nickColor;
     QString text;
+};
+
+class FilteredMessageModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QObject* filterView READ filterView WRITE setFilterView NOTIFY filterViewChanged)
+
+    public:
+        explicit FilteredMessageModel(QObject *parent = 0);
+        virtual ~FilteredMessageModel();
+
+        QObject *filterView() const;
+        void setFilterView(QObject *view);
+
+    signals:
+        void filterViewChanged() const;
+
+    protected:
+        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+
+    private:
+        QObject *m_filterView;
 };
 
 class MessageModel : public QAbstractListModel
@@ -27,7 +53,7 @@ class MessageModel : public QAbstractListModel
 
 public:
     enum AdditionalRoles {
-        ViewId = Qt::UserRole + 1,
+        View = Qt::UserRole + 1,
         TimeStamp,
         Nick,
         NickColor
@@ -42,12 +68,14 @@ public:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    Q_INVOKABLE void appendMessage(const QString &viewId,
+    Q_INVOKABLE void appendMessage(QObject *view,
         const QString &timeStamp,
         const QString &nick,
         const QColor &nickColor,
         const QString &text);
 
+    void cullMessages(const QObject *view);
+
 private:
-    QList<Message> m_messageList;
+    QList<Message> m_messages;
 };

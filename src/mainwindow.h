@@ -32,6 +32,7 @@ class Server;
 class KonviSettingsDialog;
 class ViewContainer;
 class MessageModel; // WIPQTQUICK
+class FilteredMessageModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -133,6 +134,7 @@ class MainWindow : public KXmlGuiWindow
 
         QQuickWidget *m_quickWidget; // WIPQTQUICK
         MessageModel *m_messageModel; // WIPQTQUICK
+        FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

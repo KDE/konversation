@@ -579,7 +579,7 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
 
     QTime time = serverTime.isValid() ? serverTime.time() : QTime::currentTime();
 
-    msgModel->appendMessage(QString::number(m_server->connectionId()) + "-" + m_chatWin->getName(),
+    msgModel->appendMessage(m_chatWin,
         time.toString(Preferences::self()->timestampFormat()),
         nick,
         nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),

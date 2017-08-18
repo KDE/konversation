@@ -13,6 +13,50 @@
 
 #include <QMetaEnum>
 
+FilteredMessageModel::FilteredMessageModel(QObject *parent)
+    : QSortFilterProxyModel(parent)
+    , m_filterView(nullptr)
+{
+}
+
+FilteredMessageModel::~FilteredMessageModel()
+{
+}
+
+QObject *FilteredMessageModel::filterView() const
+{
+    return m_filterView;
+}
+
+void FilteredMessageModel::setFilterView(QObject *view)
+{
+    if (m_filterView != view) {
+        m_filterView = view;
+
+        invalidateFilter();
+
+        emit filterViewChanged();
+    }
+}
+
+bool FilteredMessageModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    Q_UNUSED(sourceParent)
+
+    if (!m_filterView) {
+        return false;
+    }
+
+    const QModelIndex &sourceIdx = sourceModel()->index(sourceRow, 0);
+    const QObject *view = qvariant_cast<QObject *>(sourceIdx.data(MessageModel::View));
+
+    if (view && view == m_filterView) {
+        return true;
+    }
+
+    return false;
+}
+
 MessageModel::MessageModel(QObject *parent)
     : QAbstractListModel(parent)
 {
@@ -37,16 +81,16 @@ QHash<int, QByteArray> MessageModel::roleNames() const
 
 QVariant MessageModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || index.row() >= m_messageList.count()) {
+    if (!index.isValid() || index.row() >= m_messages.count()) {
         return QVariant();
     }
 
-    const Message &msg = m_messageList.at(index.row());
+    const Message &msg = m_messages.at(index.row());
 
     if (role == Qt::DisplayRole) {
         return msg.text;
-    } else if (role == ViewId) {
-        return msg.viewId;
+    } else if (role == View) {
+        return qVariantFromValue<QObject *>(msg.view);
     } else if (role == TimeStamp) {
         return msg.timeStamp;
     } else if (role == Nick) {
@@ -60,26 +104,43 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
 
 int MessageModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : m_messageList.count();
+    return parent.isValid() ? 0 : m_messages.count();
 }
 
-void MessageModel::appendMessage(const QString &viewId,
+void MessageModel::appendMessage(QObject *view,
     const QString &timeStamp,
     const QString &nick,
     const QColor &nickColor,
     const QString &text)
 {
-    beginInsertRows(QModelIndex(), m_messageList.count(), m_messageList.count());
+    beginInsertRows(QModelIndex(), m_messages.count(), m_messages.count());
 
     Message msg;
 
-    msg.viewId = viewId;
+    msg.view = view;
     msg.timeStamp = timeStamp;
     msg.nick = nick;
     msg.nickColor = nickColor;
     msg.text = text;
 
-    m_messageList.append(msg);
+    m_messages.append(msg);
 
     endInsertRows();
+}
+
+void MessageModel::cullMessages(const QObject *view)
+{
+    int i = 0;
+
+    while (i < m_messages.count()) {
+        const Message &msg = m_messages.at(i);
+
+        if (msg.view == view) {
+            beginRemoveRows(QModelIndex(), i, i);
+            m_messages.removeAt(i);
+            endRemoveRows();
+        } else {
+            ++i;
+        }
+    }
 }

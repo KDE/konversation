@@ -204,15 +204,6 @@ Item {
         }
     }
 
-    PlasmaCore.SortFilterModel {
-        id: filteredMessageModel
-
-        sourceModel: messageModel
-
-        filterRole: "ViewId"
-        filterString: viewModel.currentViewId
-    }
-
     Rectangle {
         id: topicArea
 
@@ -271,7 +262,7 @@ Item {
         anchors.bottom: inputFieldBorder.top
 
         ListView {
-            model: filteredMessageModel
+            model: messageModel
 
             delegate: Message {}
 

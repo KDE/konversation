@@ -67,10 +67,46 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     // BEGIN: WIPQTQUICK
     m_messageModel = new MessageModel(this);
 
+    m_filteredMessageModel = new FilteredMessageModel(this);
+    m_filteredMessageModel->setSourceModel(m_messageModel);
+
+    // Filter on the new view.
+    connect(m_viewContainer, &ViewContainer::viewChanged, this,
+        [this](const QModelIndex &idx) {
+            m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
+        }
+    );
+
+
+    QObject::connect(m_viewContainer, &QAbstractItemModel::rowsAboutToBeRemoved, this,
+        [this](const QModelIndex &parent, int first, int last) {
+            Q_UNUSED(parent)
+
+            for (int i = first; i <= last; ++i) {
+                const QModelIndex &idx = m_viewContainer->index(i, 0);
+                const QObject *view = static_cast<QObject *>(idx.internalPointer());
+
+                // Update filter if the filter view is closing.
+                if (m_filteredMessageModel->filterView() == view) {
+                    m_filteredMessageModel->setFilterView(nullptr);
+                }
+
+                m_messageModel->cullMessages(view);
+            }
+        }
+    );
+
+    // Update filter when Viewcontainer resets.
+    QObject::connect(m_viewContainer, &QAbstractItemModel::modelAboutToBeReset, this,
+        [this]() {
+            m_filteredMessageModel->setFilterView(nullptr);
+        }
+    );
+
     m_quickWidget = new QQuickWidget(this);
     m_quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickWidget->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
-    m_quickWidget->rootContext()->setContextProperty(QLatin1String("messageModel"), m_messageModel);
+    m_quickWidget->rootContext()->setContextProperty(QLatin1String("messageModel"), m_filteredMessageModel);
 
     setCentralWidget(m_quickWidget);
 
