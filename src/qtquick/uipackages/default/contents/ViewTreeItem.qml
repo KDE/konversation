@@ -20,14 +20,15 @@
 
 import QtQuick 2.0
 
+import org.kde.kirigami 2.1 as Kirigami
 
 Rectangle {
-    height: text.font.pixelSize + 26 // HACK
-    width: viewTree.width // HACK
+    height: text.font.pixelSize + Kirigami.Units.gridUnit
+    width: viewTree.width // HACK Coupling to parent components is bad
 
     property int textMargin: 0
 
-    color: model.ViewIdRole == viewModel.currentViewId ? "#ececec" : "#fcfcfc"
+    color: model.IsFrontViewRole ? "#ececec" : "#fcfcfc"
 
     Text {
         id: text
@@ -37,7 +38,7 @@ Rectangle {
 
         text: model.display
 
-        color: "black" // model.ColorRole
+        color: "black" // HACK Use model.ColorRole
         opacity: 0.7
 
         elide: Text.ElideRight

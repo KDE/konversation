@@ -20,14 +20,16 @@
 
 import QtQuick 2.7
 
+import org.kde.kirigami 2.1 as Kirigami
+
 Item {
-    width: parent.width
-    height: nick.height + messageText.height + 25
+    width: textArea.width // HACK Coupling to parent components is bad
+    height: nick.height + messageText.height + Kirigami.Units.gridUnit
 
     Rectangle {
         id: avatar
 
-        x: 15
+        x: Kirigami.Units.gridUnit / 2
 
         width: height
         height: (nick.height * 2)
@@ -42,25 +44,26 @@ Item {
             anchors.fill: parent
 
             color: "white"
-            text: model.Nick.match(/[a-zA-Z]/).pop().toUpperCase() // HACK
+
             font.weight: Font.Bold
+            font.pointSize: 100
+            minimumPointSize: theme.defaultFont.pointSize
+            fontSizeMode: Text.Fit
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
 
-            Component.onCompleted: {
-                font.pixelSize = font.pixelSize * 2.7;
-            }
+            text: model.Nick.match(/[a-zA-Z]/).pop().toUpperCase() // HACK
         }
     }
 
     Text {
         id: nick
 
-        y: 8
+        y: Kirigami.Units.gridUnit / 2
 
         anchors.left: avatar.right
-        anchors.leftMargin: 15
+        anchors.leftMargin: Kirigami.Units.gridUnit / 2
 
         text: model.Nick
         color: model.NickColor
@@ -74,12 +77,12 @@ Item {
     Text {
         id: timeStamp
 
-        y: 8
+        y: Kirigami.Units.gridUnit / 2
 
         height: nick.height
 
         anchors.left: nick.right
-        anchors.leftMargin: 10
+        anchors.leftMargin: Kirigami.Units.gridUnit / 2
 
         text: model.TimeStamp
         color: "grey"
@@ -91,10 +94,9 @@ Item {
         id: messageText
 
         anchors.left: avatar.right
-        anchors.leftMargin: 15
+        anchors.leftMargin: Kirigami.Units.gridUnit / 2
         anchors.right: parent.right
         anchors.top: nick.bottom
-        anchors.topMargin: 3
 
         text: model.display
         textFormat: Text.StyledText

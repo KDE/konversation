@@ -303,7 +303,7 @@ void ViewContainer::setupViewTree()
     }
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
-    connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+    connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
     connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
@@ -566,7 +566,9 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
         return QString(QString::number(view->getServer()->connectionId()) + "-" + view->getName());
     } else if (role == ChatWindowRole) {
-        return qVariantFromValue<QObject*>(static_cast<QObject*>(index.internalPointer()));
+        return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
+    } else if (role == IsFrontViewRole) {
+        return (static_cast<ChatWindow *>(index.internalPointer()) == m_frontView);
     }
 
     return QVariant();
@@ -1448,7 +1450,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
-    connect(view, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+    connect(view, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
 
     switch (view->getType())
     {
@@ -1818,6 +1820,10 @@ void ViewContainer::viewSwitched(int newIndex)
 
     emit currentNickChanged(); // WIPQTQUICK
     emit currentTopicChanged(); // WIPQTQUICK
+
+    const QModelIndex &lastFocusedViewIdx = indexForView(m_lastFocusedView);
+    emit dataChanged(lastFocusedViewIdx, lastFocusedViewIdx, QVector<int>{IsFrontViewRole}); // WIPQTQUICK
+    emit dataChanged(idx, idx, QVector<int>{IsFrontViewRole}); // WIPQTQUICK
 }
 
 void ViewContainer::showView(QObject* view)

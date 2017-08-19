@@ -56,7 +56,7 @@ class ViewTree : public QTreeView
 
     Q_SIGNALS:
         void sizeChanged() const;
-        void showView(ChatWindow* view) const;
+        void showView(QObject* view) const; // WIPQTQUICK
         void closeView(ChatWindow* view) const;
         void showViewContextMenu(QWidget* widget, const QPoint& point) const;
 

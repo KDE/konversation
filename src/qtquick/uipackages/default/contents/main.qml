@@ -18,282 +18,292 @@
   along with this program. If not, see http://www.gnu.org/licenses/.
 */
 
-import QtQuick 2.9
+import QtQuick 2.7
 
-import QtQuick.Controls 1.4
 import QtQml.Models 2.2
+import QtQuick.Controls 1.4 as QQC1
+import QtQuick.Controls 2.2 as QQC2
 
-Item {
-    Rectangle { // HACK
-        width: viewTree.width
+import org.kde.kirigami 2.1 as Kirigami
 
-        anchors.top: viewTree.top
-        anchors.bottom: viewTree.bottom
+Kirigami.ApplicationItem {
+    pageStack.initialPage: Kirigami.Page {
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
 
-        color: "#fcfcfc"
-    }
+        Rectangle {
+            width: viewTree.width
 
-    ScrollView {
-        id: viewTree
+            anchors.top: viewTree.top
+            anchors.bottom: viewTree.bottom
 
-        width: 350
+            color: "#fcfcfc"
+        }
 
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: inputField.height + inputFieldBorder.height
+        QQC2.ScrollView {
+            id: viewTree
 
-        frameVisible: false
+            width: Kirigami.Units.gridUnit * 11
 
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+            anchors.top: parent.top
+            anchors.bottom: optionsArea.top
+            anchors.bottomMargin: viewTreeBottomBorder.height
 
-        Column {
-            Repeater {
-                id: topLevelEntries
+            clip: true
+            background: Rectangle { color: "#fcfcfc" }
 
-                model: viewModel
+            Column {
+                Repeater {
+                    id: topLevelEntries
 
-                delegate: Column {
-                    ViewTreeItem { textMargin: 15 /* HACK */ }
+                    model: viewModel
 
-                    DelegateModel {
-                        id: subLevelEntries
+                    delegate: Column {
+                        ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
 
-                        model: viewModel
-                        rootIndex: modelIndex(index)
+                        DelegateModel {
+                            id: subLevelEntries
 
-                        delegate: ViewTreeItem { textMargin: 55 /* HACK */ }
+                            model: viewModel
+                            rootIndex: modelIndex(index)
+
+                            delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                        }
+
+                        Column { Repeater { model: subLevelEntries } }
                     }
-
-                    Column { Repeater { model: subLevelEntries } }
                 }
             }
         }
-    }
 
-    Rectangle { // HACK
-        id: optionsArea
+        Rectangle {
+            id: optionsArea
 
-        width: viewTree.width
-        height: inputField.height
+            width: viewTree.width
+            height: inputField.height
 
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
 
-        color: "grey"
+            color: "grey"
 
-        opacity: 0.06
-    }
-
-    ComboBox {
-        anchors.fill: optionsArea
-        anchors.leftMargin: optionsArea.height
-
-        editable: true
-
-        model: [viewModel.currentNick]
-
-        onAccepted: viewModel.setCurrentNick(currentText)
-    }
-
-    Text {
-        id: optionsButton
-
-        width: optionsArea.height
-        height: width
-
-        anchors.left: optionsArea.left
-        anchors.top: optionsArea.top
-        anchors.topMargin: -3
-
-        color: optionsMouseArea.containsMouse ? "blue" : "black"
-
-        text: "⚙"
-
-        opacity: 0.6
-
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-
-        Component.onCompleted: {
-            font.pixelSize = Math.ceil((optionsArea.height/5) * 4);
-        }
-    }
-
-    MouseArea {
-        id: optionsMouseArea
-
-        anchors.fill: optionsButton
-
-        hoverEnabled: true
-
-        onClicked: {}
-    }
-
-    Rectangle {
-        id: viewTreeRightBorder
-
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.left: viewTree.right
-
-        width: 2
-
-        color: "grey"
-
-        opacity: 0.5
-    }
-
-    Rectangle {
-        id: viewTreeBottomBorder
-
-        anchors.left: parent.left
-        anchors.right: viewTree.right
-        anchors.top: viewTree.bottom
-
-        height: 1
-
-        color: "grey"
-
-        opacity: 0.5
-    }
-
-    Rectangle {
-        id: inputFieldBorder
-
-        anchors.left: viewTreeRightBorder.right
-        anchors.right: parent.right
-        anchors.bottom: inputField.top
-
-        height: 1
-
-        color: "grey"
-
-        opacity: 0.5
-    }
-
-    TextArea {
-        id: inputField
-
-        height: font.pixelSize + 40 // HACK
-
-        anchors.left: viewTreeRightBorder.right
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        focus: true
-
-        frameVisible: false
-
-        verticalAlignment: Text.AlignVCenter
-        textMargin: 10 // HACK
-
-        wrapMode: TextEdit.NoWrap
-
-        Keys.onPressed: {
-            if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
-                event.accepted = true;
-                viewModel.sendTextToFrontView(text);
-                text = "";
-            }
+            opacity: 0.06
         }
 
-        Component.onCompleted: {
-            font.pixelSize = font.pixelSize * 1.1;
+        QQC1.ComboBox {
+            anchors.fill: optionsArea
+            anchors.leftMargin: optionsArea.height
+
+            editable: true
+
+            model: [viewModel.currentNick]
+
+            onAccepted: viewModel.setCurrentNick(currentText)
         }
-    }
-
-    Rectangle {
-        id: topicArea
-
-        visible: viewModel.currentTopic != ""
-
-        anchors.top: parent.top
-        anchors.left: viewTreeRightBorder.right
-        anchors.right: parent.right
-        height: topic.contentHeight + 20
-
-        color: "#fcfcfc"
 
         Text {
-            id: topic
+            id: optionsButton
 
-            x: 10
-            y: 10
+            width: optionsArea.height
+            height: width
 
-            width: parent.width - 20
+            anchors.left: optionsArea.left
+            anchors.top: optionsArea.top
 
-            text: viewModel.currentTopic
-            textFormat: Text.StyledText
+            opacity: 0.6
 
-            wrapMode: Text.WordWrap
+            color: optionsMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
 
-            onLinkActivated: Qt.openUrlExternally(link)
+            font.weight: Font.Bold
+            font.pointSize: 100
+            minimumPointSize: theme.defaultFont.pointSize
+            fontSizeMode: Text.Fit
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+
+            text: "⚙"
+        }
+
+        MouseArea {
+            id: optionsMouseArea
+
+            anchors.fill: optionsButton
+
+            hoverEnabled: true
+
+            onClicked: {}
+        }
+
+        Rectangle {
+            id: viewTreeRightBorder
+
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.left: viewTree.right
+
+            width: Math.max(2, Kirigami.Units.devicePixelRatio)
+
+            color: "grey"
+
+            opacity: 0.5
+        }
+
+        Rectangle {
+            id: viewTreeBottomBorder
+
+            anchors.left: parent.left
+            anchors.right: viewTree.right
+            anchors.top: viewTree.bottom
+
+            height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
+
+            color: "grey"
+
+            opacity: 0.5
+        }
+
+        Rectangle {
+            id: inputFieldBorder
+
+            anchors.left: viewTreeRightBorder.right
+            anchors.right: parent.right
+            anchors.bottom: inputField.top
+
+            height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
+
+            color: "grey"
+
+            opacity: 0.5
+        }
+
+        QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
+            id: inputField
+
+            height: font.pixelSize + (Kirigami.Units.smallSpacing * 6)
+
+            anchors.left: viewTreeRightBorder.right
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            focus: true
+
+            background: Rectangle {}
+
+            verticalAlignment: Text.AlignVCenter
+
+            wrapMode: TextEdit.NoWrap
+
+            Keys.onPressed: {
+                if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+                    event.accepted = true;
+                    viewModel.sendTextToFrontView(text);
+                    text = "";
+                }
+            }
 
             Component.onCompleted: {
                 font.pixelSize = font.pixelSize * 1.1;
             }
         }
-    }
 
-    Rectangle {
-        id: topicBorder
+        Rectangle {
+            id: topicArea
 
-        visible: viewModel.currentTopic != ""
+            visible: viewModel.currentTopic != ""
 
-        anchors.left: viewTreeRightBorder.right
-        anchors.right: parent.right
-        anchors.top: topicArea.bottom
+            anchors.top: parent.top
+            anchors.left: viewTreeRightBorder.right
+            anchors.right: parent.right
+            height: visible ? topic.contentHeight + (Kirigami.Units.smallSpacing * 4) : 0
 
-        height: visible ? 1 : 0
+            color: "#fcfcfc"
 
-        color: "grey"
+            Text {
+                id: topic
 
-        opacity: 0.5
-    }
+                x: (Kirigami.Units.smallSpacing * 2)
+                y: (Kirigami.Units.smallSpacing * 2)
 
-    ScrollView {
-        id: textArea
+                width: parent.width - Kirigami.Units.gridUnit
 
-        anchors.top: topicBorder.bottom
-        anchors.left: viewTreeRightBorder.right
-        anchors.right: parent.right
-        anchors.bottom: inputFieldBorder.top
+                text: viewModel.currentTopic
+                textFormat: Text.StyledText
 
-        ListView {
-            model: messageModel
+                wrapMode: Text.WordWrap
 
-            delegate: Message {}
+                onLinkActivated: Qt.openUrlExternally(link)
 
-            ListView.onAdd: positionViewAtEnd()
+                Component.onCompleted: {
+                    font.pixelSize = font.pixelSize * 1.1;
+                }
+            }
         }
-    }
 
-    Rectangle {
-        id: fakeNickListUncollapseThumb
+        Rectangle {
+            id: topicBorder
 
-        width: 15
-        height: 80
+            visible: viewModel.currentTopic != ""
 
-        anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
+            anchors.left: viewTreeRightBorder.right
+            anchors.right: parent.right
+            anchors.top: topicArea.bottom
 
-        color: "#ececec"
-
-        Text {
-            anchors.fill: parent
-
-            font.weight: Font.Bold
+            height: visible ? Math.max(1, Kirigami.Units.devicePixelRatio / 2) : 0
 
             color: "grey"
-            opacity: 0.6
 
-            text: "◀"
+            opacity: 0.5
+        }
 
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+        QQC2.ScrollView {
+            id: textArea
 
-            Component.onCompleted: {
-                font.pixelSize = parent.width - 4;
+            anchors.top: topicBorder.bottom
+            anchors.left: viewTreeRightBorder.right
+            anchors.right: parent.right
+            anchors.bottom: inputFieldBorder.top
+
+            background: Rectangle {}
+
+            ListView {
+                model: messageModel
+
+                delegate: Message {}
+
+                ListView.onAdd: positionViewAtEnd()
+            }
+        }
+
+        Rectangle {
+            id: fakeNickListUncollapseThumb
+
+            width: Kirigami.Units.gridUnit / 2
+            height: Kirigami.Units.gridUnit * 3
+
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+
+            color: "#ececec"
+
+            Text {
+                anchors.fill: parent
+
+                font.weight: Font.Bold
+
+                color: "grey"
+                opacity: 0.6
+
+                text: "◀"
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+
+                Component.onCompleted: {
+                    font.pixelSize = parent.width - (Kirigami.Units.devicePixelRatio * 2);
+                }
             }
         }
     }

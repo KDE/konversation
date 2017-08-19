@@ -493,7 +493,7 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
     if (idxList.count()) {
         const QModelIndex& idx = idxList.at(0);
 
-        ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());
+        QObject* view = static_cast<QObject*>(idx.internalPointer()); // WIPQTQUICK
 
         if (view) {
             emit showView(view);

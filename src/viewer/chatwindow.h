@@ -154,7 +154,7 @@ class ChatWindow : public QWidget
         void clearStatusBarTempText();
 
         void closing(ChatWindow* myself);
-        void showView(ChatWindow* myself);
+        void showView(QObject* myself); // WIPQTQUICK
 
     public Q_SLOTS:
         void updateAppearance();

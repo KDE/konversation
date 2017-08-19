@@ -88,6 +88,7 @@ class ViewContainer : public QAbstractItemModel
             HighlightRole,
             ViewIdRole, // WIPQTQUICK
             ChatWindowRole, // WIPQTQUICK
+            IsFrontViewRole // WIPQTQUICK
         };
         Q_ENUM(DataRoles) // WIPQTQUICK
 
