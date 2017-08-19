@@ -27,8 +27,8 @@ class ModeButton : public QToolButton
 
         void setOn(bool state);
 
-        Q_SIGNALS:
-        void clicked(int id,bool on);
+    Q_SIGNALS:
+        void modeClicked(int id,bool on);
 
     public Q_SLOTS:
         void wasClicked();

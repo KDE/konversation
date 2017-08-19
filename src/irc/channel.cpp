@@ -171,14 +171,15 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     modeK->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('K'));
     modeL->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('L'));
 
-    connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeS,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeI,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeP,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeM,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeK,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
-    connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
+    connect(modeT, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeN, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeS, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeI, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeP, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeM, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeK, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeL, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
+    connect(modeT, &ModeButton::modeClicked, this, &Channel::modeButtonClicked);
 
     limit=new KLineEdit(modeBox);
     modeBoxLayout->addWidget(limit);

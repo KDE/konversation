@@ -13,7 +13,6 @@
 
 #include "modebutton.h"
 
-
 ModeButton::ModeButton(const QString& label,QWidget* parent,int newId) :
 QToolButton(parent)
 {
@@ -36,7 +35,7 @@ void ModeButton::setOn(bool state)
 
 void ModeButton::wasClicked()
 {
-    emit clicked(id,!on);
+    emit modeClicked(id, !on);
     // Keep button in old state, since we don't know if mode change will
     // eventually work. If we aren't channel operator, it won't.
     setOn(on);
