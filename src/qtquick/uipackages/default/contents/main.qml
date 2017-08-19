@@ -266,7 +266,7 @@ Kirigami.ApplicationItem {
             anchors.right: parent.right
             anchors.bottom: inputFieldBorder.top
 
-            background: Rectangle {}
+            background: Rectangle { color: "white" }
 
             ListView {
                 model: messageModel
