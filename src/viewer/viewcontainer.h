@@ -80,6 +80,7 @@ class ViewContainer : public QAbstractItemModel
 
     Q_PROPERTY(QString currentNick READ currentNick NOTIFY currentNickChanged) // WIPQTQUICK
     Q_PROPERTY(QString currentTopic READ currentTopic NOTIFY currentTopicChanged) // WIPQTQUICK
+    Q_PROPERTY(QAbstractItemModel* currentUsersModel READ currentUsersModel NOTIFY currentUsersModelChanged) // WIPQTQUICK
 
     public:
         enum DataRoles {
@@ -99,6 +100,7 @@ class ViewContainer : public QAbstractItemModel
 
         QString currentNick() const; // WIPQTQUICK
         QString currentTopic() const; // WIPQTQUICK
+        QAbstractItemModel* currentUsersModel() const; // WIPQTQUICK
         Q_INVOKABLE void sendTextToFrontView(const QString &text); // WIPQTQUICK
         Q_INVOKABLE void setCurrentNick(const QString &text);
 
@@ -246,6 +248,7 @@ class ViewContainer : public QAbstractItemModel
         void viewChanged(const QModelIndex& idx);
         void currentNickChanged(); // WIPQTQUICK
         void currentTopicChanged(); // WIPQTQUICK
+        void currentUsersModelChanged(); // WIPQTQUICK
         void setWindowCaption(const QString& caption);
         void updateChannelAppearance();
         void contextMenuClosed();

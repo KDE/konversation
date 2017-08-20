@@ -27,6 +27,47 @@ import QtQuick.Controls 2.2 as QQC2
 import org.kde.kirigami 2.1 as Kirigami
 
 Kirigami.ApplicationItem {
+    id: appItem
+
+    Component {
+        id: contextDrawerComponent
+
+        Kirigami.ContextDrawer {
+            width: Kirigami.Units.gridUnit * 15
+
+            QQC2.ScrollView {
+                id: userList
+
+                anchors.fill: parent
+
+                clip: true
+                background: Rectangle { color: "#fcfcfc" }
+
+                Column {
+                    Repeater {
+                        id: topLevelEntries
+
+                        model: viewModel.currentUsersModel
+
+                        delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                    }
+                }
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        // HACK QQC2.Popup (that's what Kirigami.ContextDrawer is) can't find
+        // the QQuickWidget's internal QQuickWindow if it's instanciated along-
+        // side the Kirigami.ApplicationItem immediately, so we do it later. I
+        // consider this a Qt bug.
+        Qt.callLater(setupContextDrawer);
+    }
+
+    function setupContextDrawer() {
+        contextDrawer = contextDrawerComponent.createObject(appItem, {'parent' : appItem });
+    }
+
     pageStack.initialPage: Kirigami.Page {
         leftPadding: 0
         rightPadding: 0
@@ -144,11 +185,9 @@ Kirigami.ApplicationItem {
             anchors.bottom: parent.bottom
             anchors.left: viewTree.right
 
-            width: Math.max(2, Kirigami.Units.devicePixelRatio)
+            width: Math.max(1.5, Kirigami.Units.devicePixelRatio)
 
-            color: "grey"
-
-            opacity: 0.5
+            color: "#c1c3c4"
         }
 
         Rectangle {
@@ -160,9 +199,7 @@ Kirigami.ApplicationItem {
 
             height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
 
-            color: "grey"
-
-            opacity: 0.5
+            color: "#c1c3c4"
         }
 
         Rectangle {
@@ -170,13 +207,12 @@ Kirigami.ApplicationItem {
 
             anchors.left: viewTreeRightBorder.right
             anchors.right: parent.right
+            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
             anchors.bottom: inputField.top
 
             height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
 
-            color: "grey"
-
-            opacity: 0.5
+            color: "#c1c3c4"
         }
 
         QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
@@ -249,13 +285,12 @@ Kirigami.ApplicationItem {
 
             anchors.left: viewTreeRightBorder.right
             anchors.right: parent.right
+            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
             anchors.top: topicArea.bottom
 
             height: visible ? Math.max(1, Kirigami.Units.devicePixelRatio / 2) : 0
 
-            color: "grey"
-
-            opacity: 0.5
+            color: "#c1c3c4"
         }
 
         QQC2.ScrollView {
@@ -284,19 +319,20 @@ Kirigami.ApplicationItem {
             height: Kirigami.Units.gridUnit * 3
 
             anchors.right: parent.right
+            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
             anchors.verticalCenter: parent.verticalCenter
 
-            color: "#ececec"
+            color: contextDrawer && contextDrawer.visible ? "#c1c3c4" : "#ececec"
 
             Text {
                 anchors.fill: parent
 
                 font.weight: Font.Bold
 
-                color: "grey"
+                color: fakeNickListUncollapseThumbMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
                 opacity: 0.6
 
-                text: "◀"
+                text: contextDrawer && contextDrawer.visible ? "▶" : "◀"
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -304,6 +340,16 @@ Kirigami.ApplicationItem {
                 Component.onCompleted: {
                     font.pixelSize = parent.width - (Kirigami.Units.devicePixelRatio * 2);
                 }
+            }
+
+            MouseArea {
+                id: fakeNickListUncollapseThumbMouseArea
+
+                anchors.fill: parent
+
+                hoverEnabled: true
+
+                onClicked: contextDrawer && contextDrawer.visible ? contextDrawer.close() : contextDrawer.open()
             }
         }
     }

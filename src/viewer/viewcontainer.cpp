@@ -37,6 +37,7 @@
 #include "irccontextmenus.h"
 #include "viewtree.h"
 #include "viewspringloader.h"
+#include <nicklistview.h> // WIPQTQUICK
 
 #include <QModelIndex>
 #include <QSplitter>
@@ -54,6 +55,8 @@
 #include <KSelectAction>
 #include <KWindowSystem>
 #include <KIconLoader>
+#include <nicklistview.h>
+#include <nicklistview.h>
 
 
 using namespace Konversation;
@@ -303,7 +306,7 @@ void ViewContainer::setupViewTree()
     }
 
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
-    connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
+    connect(m_viewTree, SIGNAL(showView(QObject*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
     connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
     connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
@@ -1450,7 +1453,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
-    connect(view, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
+    connect(view, SIGNAL(showView(QObject*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
 
     switch (view->getType())
     {
@@ -1746,6 +1749,17 @@ QString ViewContainer::currentNick() const
     return QString();
 }
 
+QAbstractItemModel *ViewContainer::currentUsersModel() const
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
+
+    if (view && view->getType() == ChatWindow::Channel) {
+        return static_cast<Channel *>(view)->getNickListView()->model();
+    }
+
+    return nullptr;
+}
+
 void ViewContainer::setCurrentNick(const QString &nick)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
@@ -1820,6 +1834,7 @@ void ViewContainer::viewSwitched(int newIndex)
 
     emit currentNickChanged(); // WIPQTQUICK
     emit currentTopicChanged(); // WIPQTQUICK
+    emit currentUsersModelChanged(); // WIPQTQUICK
 
     const QModelIndex &lastFocusedViewIdx = indexForView(m_lastFocusedView);
     emit dataChanged(lastFocusedViewIdx, lastFocusedViewIdx, QVector<int>{IsFrontViewRole}); // WIPQTQUICK
