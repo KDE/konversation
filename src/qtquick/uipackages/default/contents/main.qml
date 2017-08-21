@@ -29,43 +29,39 @@ import org.kde.kirigami 2.1 as Kirigami
 Kirigami.ApplicationItem {
     id: appItem
 
-    Component {
-        id: contextDrawerComponent
+    globalDrawer: Kirigami.GlobalDrawer {
+        edge: Qt.LeftEdge
+        handleVisible: true
+        visible: false
+        modal: true
+        actions: [
+            Kirigami.Action {
+                text: "menu stuff"
+            }
+        ]
+    }
+    contextDrawer: Kirigami.OverlayDrawer {
+        width: Kirigami.Units.gridUnit * 15
+        edge: Qt.RightEdge
+        handleVisible: true
 
-        Kirigami.ContextDrawer {
-            width: Kirigami.Units.gridUnit * 15
+        QQC2.ScrollView {
+            id: userList
 
-            QQC2.ScrollView {
-                id: userList
+            anchors.fill: parent
 
-                anchors.fill: parent
+            clip: true
+            background: Rectangle { color: "#fcfcfc" }
 
-                clip: true
-                background: Rectangle { color: "#fcfcfc" }
+            Column {
+                Repeater {
 
-                Column {
-                    Repeater {
-                        id: topLevelEntries
+                    model: viewModel.currentUsersModel
 
-                        model: viewModel.currentUsersModel
-
-                        delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
-                    }
+                    delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        // HACK QQC2.Popup (that's what Kirigami.ContextDrawer is) can't find
-        // the QQuickWidget's internal QQuickWindow if it's instanciated along-
-        // side the Kirigami.ApplicationItem immediately, so we do it later. I
-        // consider this a Qt bug.
-        Qt.callLater(setupContextDrawer);
-    }
-
-    function setupContextDrawer() {
-        contextDrawer = contextDrawerComponent.createObject(appItem, {'parent' : appItem });
     }
 
     pageStack.initialPage: Kirigami.Page {

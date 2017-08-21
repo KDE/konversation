@@ -35,7 +35,7 @@
 #include <QIcon>
 #include <QMenu>
 #include <QQmlContext> // WIPQTQUICK
-#include <QQuickWidget> // WIPQTQUICK
+#include <QQuickView> // WIPQTQUICK
 
 #include <KActionCollection>
 #include <QAction>
@@ -103,12 +103,13 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         }
     );
 
-    m_quickWidget = new QQuickWidget(this);
-    m_quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-    m_quickWidget->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
-    m_quickWidget->rootContext()->setContextProperty(QLatin1String("messageModel"), m_filteredMessageModel);
+    m_quickView = new QQuickView();
+    m_quickView->setResizeMode(QQuickView::SizeRootObjectToView);
+    m_quickView->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
+    m_quickView->rootContext()->setContextProperty(QLatin1String("messageModel"), m_filteredMessageModel);
+    QWidget *centralWidget = QWidget::createWindowContainer(m_quickView, this);
 
-    setCentralWidget(m_quickWidget);
+    setCentralWidget(centralWidget);
 
     KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
         QStringLiteral("org.kde.konversation.uipackages.default"));
@@ -129,7 +130,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     if (p.isValid()) {
         qDebug() << "Package is valid.";
         qDebug() << "File path for 'window':" << p.filePath("window");
-        m_quickWidget->setSource(QUrl::fromLocalFile(p.filePath("window")));
+        m_quickView->setSource(QUrl::fromLocalFile(p.filePath("window")));
     } else {
         qDebug() << "Package is invalid.";
     }
