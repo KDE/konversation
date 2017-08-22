@@ -331,14 +331,14 @@ void Server::connectSignals()
             this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
 
    // ViewContainer
-    connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
+    connect(this, SIGNAL(showView(QObject*)), getViewContainer(), SLOT(showView(QObject*))); // WIPQTQUICK
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
     connect(this, SIGNAL(addDccChat(Konversation::DCC::Chat*)),
             getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)), Qt::QueuedConnection);
     connect(this, SIGNAL(serverLag(Server*,int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*,int)));
     connect(this, SIGNAL(tooLongLag(Server*,int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*,int)));
     connect(this, SIGNAL(resetLag(Server*)), getViewContainer(), SIGNAL(resetStatusBarLagLabel(Server*)));
-    connect(getOutputFilter(), SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
+    connect(getOutputFilter(), SIGNAL(showView(QObject*)), getViewContainer(), SLOT(showView(QObject*))); // WIPQTQUICK
     connect(getOutputFilter(), SIGNAL(openKonsolePanel()), getViewContainer(), SLOT(addKonsolePanel()));
     connect(getOutputFilter(), SIGNAL(openChannelList(QString)), this, SLOT(requestOpenChannelListPanel(QString)));
     connect(getOutputFilter(), SIGNAL(closeDccPanel()), getViewContainer(), SLOT(closeDccPanel()));

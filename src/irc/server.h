@@ -462,7 +462,7 @@ class Server : public QObject
 
         void connectionStateChanged(Server* server, Konversation::ConnectionState state);
 
-        void showView(ChatWindow* view);
+        void showView(QObject* view); // WIPQTQUICK
         void addDccPanel();
         void addDccChat(Konversation::DCC::Chat *chat);
 

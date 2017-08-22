@@ -125,7 +125,7 @@ namespace Konversation
                            bool useSSL = false
             );
 
-            void showView(ChatWindow* view);
+            void showView(QObject* view); // WIPQTQUICK
             void encodingChanged ();
 
         public Q_SLOTS:
