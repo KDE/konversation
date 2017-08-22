@@ -29,21 +29,13 @@ import org.kde.kirigami 2.1 as Kirigami
 Kirigami.ApplicationItem {
     id: appItem
 
-    globalDrawer: Kirigami.GlobalDrawer {
-        edge: Qt.LeftEdge
-        handleVisible: true
-        visible: false
-        modal: true
-        actions: [
-            Kirigami.Action {
-                text: "menu stuff"
-            }
-        ]
-    }
     contextDrawer: Kirigami.OverlayDrawer {
-        width: Kirigami.Units.gridUnit * 15
+        width: Kirigami.Units.gridUnit * 12
         edge: Qt.RightEdge
-        handleVisible: true
+
+        handleVisible: false
+        drawerOpen: false
+
 
         QQC2.ScrollView {
             id: userList
@@ -309,26 +301,26 @@ Kirigami.ApplicationItem {
         }
 
         Rectangle {
-            id: fakeNickListUncollapseThumb
+            id: contextDrawerHandle
 
             width: Kirigami.Units.gridUnit / 2
             height: Kirigami.Units.gridUnit * 3
 
             anchors.right: parent.right
-            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
+            anchors.rightMargin: contextDrawer.drawerOpen ? contextDrawer.width : 0
             anchors.verticalCenter: parent.verticalCenter
 
-            color: contextDrawer && contextDrawer.visible ? "#c1c3c4" : "#ececec"
+            color: contextDrawer.drawerOpen ? "#c1c3c4" : "#ececec"
 
             Text {
                 anchors.fill: parent
 
                 font.weight: Font.Bold
 
-                color: fakeNickListUncollapseThumbMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
+                color: contextDrawerHandleMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
                 opacity: 0.6
 
-                text: contextDrawer && contextDrawer.visible ? "▶" : "◀"
+                text: contextDrawer.drawerOpen ? "▶" : "◀"
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -339,13 +331,13 @@ Kirigami.ApplicationItem {
             }
 
             MouseArea {
-                id: fakeNickListUncollapseThumbMouseArea
+                id: contextDrawerHandleMouseArea
 
                 anchors.fill: parent
 
                 hoverEnabled: true
 
-                onClicked: contextDrawer && contextDrawer.visible ? contextDrawer.close() : contextDrawer.open()
+                onClicked: contextDrawer.drawerOpen ? contextDrawer.close() : contextDrawer.open()
             }
         }
     }
