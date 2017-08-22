@@ -24,8 +24,6 @@
 
 #include <kxmlguiwindow.h>
 
-class QQuickView; // WIPQTQUICK
-
 class KToggleAction;
 
 class Server;
@@ -132,7 +130,6 @@ class MainWindow : public KXmlGuiWindow
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
 
-        QQuickView *m_quickView; // WIPQTQUICK
         MessageModel *m_messageModel; // WIPQTQUICK
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
 

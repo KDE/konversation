@@ -26,7 +26,7 @@ import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.1 as Kirigami
 
-Kirigami.ApplicationItem {
+Kirigami.ApplicationWindow {
     id: appItem
 
     contextDrawer: Kirigami.OverlayDrawer {
@@ -130,8 +130,7 @@ Kirigami.ApplicationItem {
             width: Kirigami.Units.gridUnit * 11
 
             anchors.top: parent.top
-            anchors.bottom: optionsArea.top
-            anchors.bottomMargin: viewTreeBottomBorder.height
+            anchors.bottom: parent.bottom
 
             clip: true
             background: Rectangle { color: "#fcfcfc" }
@@ -161,65 +160,6 @@ Kirigami.ApplicationItem {
         }
 
         Rectangle {
-            id: optionsArea
-
-            width: viewTree.width
-            height: inputField.height
-
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-
-            color: "grey"
-
-            opacity: 0.06
-        }
-
-        QQC1.ComboBox {
-            anchors.fill: optionsArea
-            anchors.leftMargin: optionsArea.height
-
-            editable: true
-
-            model: [viewModel.currentNick]
-
-            onAccepted: viewModel.setCurrentNick(currentText)
-        }
-
-        Text {
-            id: optionsButton
-
-            width: optionsArea.height
-            height: width
-
-            anchors.left: optionsArea.left
-            anchors.top: optionsArea.top
-
-            opacity: 0.6
-
-            color: optionsMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
-
-            font.weight: Font.Bold
-            font.pointSize: 100
-            minimumPointSize: theme.defaultFont.pointSize
-            fontSizeMode: Text.Fit
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            text: "⚙"
-        }
-
-        MouseArea {
-            id: optionsMouseArea
-
-            anchors.fill: optionsButton
-
-            hoverEnabled: true
-
-            onClicked: {}
-        }
-
-        Rectangle {
             id: viewTreeRightBorder
 
             anchors.top: parent.top
@@ -231,68 +171,13 @@ Kirigami.ApplicationItem {
             color: "#c1c3c4"
         }
 
-        Rectangle {
-            id: viewTreeBottomBorder
-
-            anchors.left: parent.left
-            anchors.right: viewTree.right
-            anchors.top: viewTree.bottom
-
-            height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
-
-            color: "#c1c3c4"
-        }
-
-        Rectangle {
-            id: inputFieldBorder
-
-            anchors.left: viewTreeRightBorder.right
-            anchors.right: parent.right
-            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
-            anchors.bottom: inputField.top
-
-            height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
-
-            color: "#c1c3c4"
-        }
-
-        QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
-            id: inputField
-
-            height: font.pixelSize + (Kirigami.Units.smallSpacing * 6)
-
-            anchors.left: viewTreeRightBorder.right
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-
-            focus: true
-
-            background: Rectangle {}
-
-            verticalAlignment: Text.AlignVCenter
-
-            wrapMode: TextEdit.NoWrap
-
-            Keys.onPressed: {
-                if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
-                    event.accepted = true;
-                    viewModel.sendTextToFrontView(text);
-                    text = "";
-                }
-            }
-
-            Component.onCompleted: {
-                font.pixelSize = font.pixelSize * 1.1;
-            }
-        }
-
         QQC2.ScrollView {
             id: textArea
 
-            anchors.top: parent.top
             anchors.left: viewTreeRightBorder.right
             anchors.right: parent.right
-            anchors.bottom: inputFieldBorder.top
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
 
             background: Rectangle { color: "white" }
 
@@ -305,13 +190,132 @@ Kirigami.ApplicationItem {
             }
         }
 
+        footer: Item {
+            id: footer
+
+            height: inputField.height + footerBorder.height
+
+            Rectangle {
+                id: footerBorder
+
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                height: Math.max(1, Kirigami.Units.devicePixelRatio / 2)
+
+                color: "#c1c3c4"
+            }
+
+            Rectangle {
+                id: optionsArea
+
+                width: viewTree.width
+                height: inputField.height
+
+                anchors.top: footerBorder.bottom
+                anchors.left: parent.left
+
+                color: "#e8e9ea"
+
+                Text {
+                    id: optionsButton
+
+                    width: optionsArea.height
+                    height: width
+
+                    anchors.left: optionsArea.left
+                    anchors.top: optionsArea.top
+
+                    opacity: 0.6
+
+                    color: optionsMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
+
+                    font.weight: Font.Bold
+                    font.pointSize: 100
+                    minimumPointSize: theme.defaultFont.pointSize
+                    fontSizeMode: Text.Fit
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    text: "⚙"
+                }
+
+                MouseArea {
+                    id: optionsMouseArea
+
+                    anchors.fill: optionsButton
+
+                    hoverEnabled: true
+
+                    onClicked: {}
+                }
+
+                QQC1.ComboBox {
+                    anchors.fill: optionsArea
+                    anchors.leftMargin: optionsButton.width
+
+                    editable: true
+
+                    model: [viewModel.currentNick]
+
+                    onAccepted: viewModel.setCurrentNick(currentText)
+                }
+            }
+
+            Rectangle {
+                id: optionsAreaBorder
+
+                anchors.top: footerBorder.bottom
+                anchors.bottom: parent.bottom
+                anchors.left: optionsArea.right
+
+                width: Math.max(1.5, Kirigami.Units.devicePixelRatio)
+
+                color: "#c1c3c4"
+            }
+
+            QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
+                id: inputField
+
+                height: font.pixelSize + (Kirigami.Units.smallSpacing * 6)
+
+                anchors.left: optionsAreaBorder.right
+                anchors.right: parent.right
+                anchors.top: footerBorder.bottom
+                anchors.bottom: parent.bottom
+
+                focus: true
+
+                clip: true
+                background: Rectangle {}
+
+                verticalAlignment: Text.AlignVCenter
+
+                wrapMode: TextEdit.NoWrap
+
+                Keys.onPressed: {
+                    if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+                        event.accepted = true;
+                        viewModel.sendTextToFrontView(text);
+                        text = "";
+                    }
+                }
+
+                Component.onCompleted: {
+                    font.pixelSize = font.pixelSize * 1.1;
+                }
+            }
+        }
+
         Rectangle {
             id: contextDrawerHandle
 
             width: Kirigami.Units.gridUnit / 2
             height: Kirigami.Units.gridUnit * 3
 
-            visible: !contextDrawer.drawerOpen
+            visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
 
             anchors.right: parent.right
             anchors.rightMargin: 0 // contextDrawer.drawerOpen ? contextDrawer.width + Kirigami.Units.devicePixelRatio : 0

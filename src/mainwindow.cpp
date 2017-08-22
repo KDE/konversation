@@ -35,8 +35,10 @@
 #include <QIcon>
 #include <QMenu>
 #include <QQmlContext> // WIPQTQUICK
-#include <QQuickView> // WIPQTQUICK
+#include <QQuickItem> // WIPQTQUICK
+#include <QQmlApplicationEngine> // WIPQTQUICK
 #include <QStackedWidget> // WIPQTQUICK
+#include <QWindow> // WIPQTQUICK
 
 #include <KActionCollection>
 #include <QAction>
@@ -107,16 +109,6 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
-    m_quickView = new QQuickView();
-    m_quickView->setResizeMode(QQuickView::SizeRootObjectToView);
-    m_quickView->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
-    m_quickView->rootContext()->setContextProperty(QLatin1String("messageModel"), m_filteredMessageModel);
-    uiStack->addWidget(QWidget::createWindowContainer(m_quickView, this));
-
-    if (raiseQtQuickUi) {
-        uiStack->setCurrentIndex(1);
-    }
-
     auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
 
     qDebug() << "Available Qt Quick UI packages (name / id):";
@@ -138,7 +130,16 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     if (p.isValid()) {
         qDebug() << "Package is valid.";
         qDebug() << "File path for 'window':" << p.filePath("window");
-        m_quickView->setSource(QUrl::fromLocalFile(p.filePath("window")));
+
+        QQmlApplicationEngine *engine = new QQmlApplicationEngine(this);
+        engine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
+        engine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+        engine->load(QUrl::fromLocalFile(p.filePath("window")));
+        uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(engine->rootObjects().first()), this));
+
+        if (raiseQtQuickUi) {
+            uiStack->setCurrentIndex(1);
+        }
     } else {
         qDebug() << "Package is invalid.";
         delete uiStack->widget(1);
