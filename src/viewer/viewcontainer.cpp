@@ -1845,7 +1845,7 @@ void ViewContainer::showView(QObject* view)
 {
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
-    if (m_tabWidget->isVisible()) {
+    if (1 /* m_tabWidget->isVisible() */) { // WIPQTQUICK
         m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(static_cast<ChatWindow*>(view)));
     }
 }

@@ -30,17 +30,70 @@ Kirigami.ApplicationItem {
     id: appItem
 
     contextDrawer: Kirigami.OverlayDrawer {
-        width: Kirigami.Units.gridUnit * 12
+        width: Kirigami.Units.gridUnit * 15
         edge: Qt.RightEdge
 
-        handleVisible: false
+        modal: true
+        handleVisible: drawerOpen
         drawerOpen: false
 
+        leftPadding: 0
+        rightPadding: 0
+        topPadding: 0
+        bottomPadding: 0
+
+        Rectangle {
+            id: topicArea
+
+            visible: viewModel.currentTopic != ""
+
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: visible ? topic.contentHeight + (Kirigami.Units.smallSpacing * 4) : 0
+
+            Text {
+                id: topic
+
+                x: (Kirigami.Units.smallSpacing * 2)
+                y: (Kirigami.Units.smallSpacing * 2)
+
+                width: parent.width - (Kirigami.Units.smallSpacing * 4)
+
+                text: viewModel.currentTopic
+                textFormat: Text.StyledText
+
+                wrapMode: Text.WordWrap
+
+                onLinkActivated: Qt.openUrlExternally(link)
+
+                Component.onCompleted: {
+                    font.pixelSize = font.pixelSize * 1.1;
+                }
+            }
+        }
+
+        Rectangle {
+            id: topicBorder
+
+            visible: viewModel.currentTopic != ""
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: topicArea.bottom
+
+            height: visible ? Math.max(1, Kirigami.Units.devicePixelRatio / 2) : 0
+
+            color: "#c1c3c4"
+        }
 
         QQC2.ScrollView {
             id: userList
 
-            anchors.fill: parent
+            anchors.top: topicBorder.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
 
             clip: true
             background: Rectangle { color: "#fcfcfc" }
@@ -50,7 +103,7 @@ Kirigami.ApplicationItem {
 
                     model: viewModel.currentUsersModel
 
-                    delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                    delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
                 }
             }
         }
@@ -233,58 +286,10 @@ Kirigami.ApplicationItem {
             }
         }
 
-        Rectangle {
-            id: topicArea
-
-            visible: viewModel.currentTopic != ""
-
-            anchors.top: parent.top
-            anchors.left: viewTreeRightBorder.right
-            anchors.right: parent.right
-            height: visible ? topic.contentHeight + (Kirigami.Units.smallSpacing * 4) : 0
-
-            color: "#fcfcfc"
-
-            Text {
-                id: topic
-
-                x: (Kirigami.Units.smallSpacing * 2)
-                y: (Kirigami.Units.smallSpacing * 2)
-
-                width: parent.width - Kirigami.Units.gridUnit
-
-                text: viewModel.currentTopic
-                textFormat: Text.StyledText
-
-                wrapMode: Text.WordWrap
-
-                onLinkActivated: Qt.openUrlExternally(link)
-
-                Component.onCompleted: {
-                    font.pixelSize = font.pixelSize * 1.1;
-                }
-            }
-        }
-
-        Rectangle {
-            id: topicBorder
-
-            visible: viewModel.currentTopic != ""
-
-            anchors.left: viewTreeRightBorder.right
-            anchors.right: parent.right
-            anchors.rightMargin: contextDrawer && contextDrawer.visible ? Kirigami.Units.devicePixelRatio : 0
-            anchors.top: topicArea.bottom
-
-            height: visible ? Math.max(1, Kirigami.Units.devicePixelRatio / 2) : 0
-
-            color: "#c1c3c4"
-        }
-
         QQC2.ScrollView {
             id: textArea
 
-            anchors.top: topicBorder.bottom
+            anchors.top: parent.top
             anchors.left: viewTreeRightBorder.right
             anchors.right: parent.right
             anchors.bottom: inputFieldBorder.top
@@ -306,8 +311,10 @@ Kirigami.ApplicationItem {
             width: Kirigami.Units.gridUnit / 2
             height: Kirigami.Units.gridUnit * 3
 
+            visible: !contextDrawer.drawerOpen
+
             anchors.right: parent.right
-            anchors.rightMargin: contextDrawer.drawerOpen ? contextDrawer.width : 0
+            anchors.rightMargin: 0 // contextDrawer.drawerOpen ? contextDrawer.width + Kirigami.Units.devicePixelRatio : 0
             anchors.verticalCenter: parent.verticalCenter
 
             color: contextDrawer.drawerOpen ? "#c1c3c4" : "#ececec"
@@ -320,7 +327,7 @@ Kirigami.ApplicationItem {
                 color: contextDrawerHandleMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : "black"
                 opacity: 0.6
 
-                text: contextDrawer.drawerOpen ? "▶" : "◀"
+                text: "◀" // contextDrawer.drawerOpen ? "▶" : "◀"
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

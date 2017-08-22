@@ -38,7 +38,7 @@ Rectangle {
 
         text: model.display
 
-        color: "black" // HACK Use model.ColorRole
+        color: model.ColorRole != undefined ? model.ColorRole : "black"
         opacity: 0.7
 
         elide: Text.ElideRight
