@@ -36,6 +36,7 @@
 #include <QMenu>
 #include <QQmlContext> // WIPQTQUICK
 #include <QQuickView> // WIPQTQUICK
+#include <QStackedWidget> // WIPQTQUICK
 
 #include <KActionCollection>
 #include <QAction>
@@ -54,7 +55,7 @@
 #include <KIconLoader>
 #include <KPackage/PackageLoader> // WIPQTQUICK
 
-MainWindow::MainWindow() : KXmlGuiWindow(0)
+MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiWindow(0) // WIPQTQUICK
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
@@ -62,9 +63,13 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     m_trayIcon = 0;
     m_settingsDialog = NULL;
 
-    m_viewContainer = new ViewContainer(this);
-
     // BEGIN: WIPQTQUICK
+    QStackedWidget *uiStack = new QStackedWidget(this);
+    setCentralWidget(uiStack);
+
+    m_viewContainer = new ViewContainer(this);
+    uiStack->addWidget(m_viewContainer->getWidget());
+
     m_messageModel = new MessageModel(this);
 
     m_filteredMessageModel = new FilteredMessageModel(this);
@@ -76,7 +81,6 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
             m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
         }
     );
-
 
     QObject::connect(m_viewContainer, &QAbstractItemModel::rowsAboutToBeRemoved, this,
         [this](const QModelIndex &parent, int first, int last) {
@@ -107,22 +111,26 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     m_quickView->setResizeMode(QQuickView::SizeRootObjectToView);
     m_quickView->rootContext()->setContextProperty(QLatin1String("viewModel"), m_viewContainer);
     m_quickView->rootContext()->setContextProperty(QLatin1String("messageModel"), m_filteredMessageModel);
-    QWidget *centralWidget = QWidget::createWindowContainer(m_quickView, this);
+    uiStack->addWidget(QWidget::createWindowContainer(m_quickView, this));
 
-    setCentralWidget(centralWidget);
-
-    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
-        QStringLiteral("org.kde.konversation.uipackages.default"));
-
-    qDebug() << "Package root:" << p.defaultPackageRoot();
+    if (raiseQtQuickUi) {
+        uiStack->setCurrentIndex(1);
+    }
 
     auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
 
-    qDebug() << "Package list (name / id):";
+    qDebug() << "Available Qt Quick UI packages (name / id):";
 
     for (const auto &pkg : plist) {
         qDebug() << "  " << pkg.name() << "/" << pkg.pluginId();
     }
+
+    QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
+
+    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
+        uiPackage.startsWith(packageNamePrefix) ? uiPackage : packageNamePrefix + uiPackage);
+
+    qDebug() << "Package root:" << p.defaultPackageRoot();
 
     qDebug() << "Required files:" << p.requiredFiles();
     qDebug() << "Required directories:" << p.requiredDirectories();
@@ -133,6 +141,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
         m_quickView->setSource(QUrl::fromLocalFile(p.filePath("window")));
     } else {
         qDebug() << "Package is invalid.";
+        delete uiStack->widget(1);
     }
     // END: WIPQTQUICK
 
@@ -191,6 +200,15 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     KStandardAction::configureNotifications(this, SLOT(openNotifications()), actionCollection());
 
     QAction* action;
+
+    // WIPQTQUICK
+    action=new QAction(this);
+    action->setText(i18n("Toggle UIs"));
+    actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F10")));
+    connect(action, &QAction::triggered, this,
+        [uiStack]() { uiStack->setCurrentIndex(uiStack->currentIndex() ? 0 : 1); }
+    );
+    actionCollection()->addAction(QStringLiteral("toggle_ui"), action);
 
     action=new QAction(this);
     action->setText(i18n("Restart"));

@@ -46,7 +46,7 @@ class MainWindow : public KXmlGuiWindow
     Q_OBJECT
 
     public:
-        MainWindow();
+        MainWindow(bool raiseQtQuickUi, const QString& uiPackage = QStringLiteral("default")); // WIPQTQUICK
         ~MainWindow();
 
         ViewContainer* getViewContainer() { return m_viewContainer; }

@@ -196,7 +196,8 @@ void Application::newInstance(QCommandLineParser *args)
             Preferences::self()->setAliasList(aliasList);
 
         // open main window
-        mainWindow = new MainWindow();
+        mainWindow = new MainWindow(args->isSet(QStringLiteral("qtquick")),
+            args->value(QStringLiteral("uipackage"))); // WIPQTQUICK
 
         connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
         connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
