@@ -1,0 +1,3 @@
+module org.kde.konversation.uicomponents
+
+singleton ExtraColors 1.0 ExtraColors.qml
