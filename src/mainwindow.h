@@ -24,6 +24,8 @@
 
 #include <kxmlguiwindow.h>
 
+class QQmlApplicationEngine; // WIPQTQUICK
+
 class KToggleAction;
 
 class Server;
@@ -97,6 +99,7 @@ class MainWindow : public KXmlGuiWindow
         void resetHasDirtySettings();
 
         void toggleMenubar(bool dontShowWarning = false);
+        void showMenubar(bool show); // WIPQTQUICK
 
         void openPrefsDialog();
         void openKeyBindings();
@@ -132,6 +135,7 @@ class MainWindow : public KXmlGuiWindow
 
         MessageModel *m_messageModel; // WIPQTQUICK
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
+        QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

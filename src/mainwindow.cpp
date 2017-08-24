@@ -131,18 +131,19 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         qDebug() << "Package is valid.";
         qDebug() << "File path for 'window':" << p.filePath("window");
 
-        QQmlApplicationEngine *engine = new QQmlApplicationEngine(this);
+        m_qmlEngine = new QQmlApplicationEngine(this);
         qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
-        engine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
-        engine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
-        engine->load(QUrl::fromLocalFile(p.filePath("window")));
-        uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(engine->rootObjects().first()), this));
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+        m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
+        uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this));
 
         if (raiseQtQuickUi) {
             uiStack->setCurrentIndex(1);
         }
     } else {
         qDebug() << "Package is invalid.";
+        m_qmlEngine = nullptr;
         delete uiStack->widget(1);
     }
     // END: WIPQTQUICK
@@ -654,13 +655,25 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
     setAutoSaveSettings();
 
-    // Apply menubar show/hide pref
-    m_showMenuBarAction->setChecked(Preferences::self()->showMenuBar());
+    // BEGIN WIPQTQUICK
+    if (m_qmlEngine) {
+        // Hide menubar by default.
+        m_showMenuBarAction->setChecked(false);
+    } else {
+        // Apply menubar show/hide pref
+        m_showMenuBarAction->setChecked(Preferences::self()->showMenuBar());
+    }
+
     toggleMenubar(true);
+
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(showMenuBar(bool)),
+        this, SLOT(showMenubar(bool)));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(openLegacyConfigDialog()),
+        this, SLOT(openPrefsDialog()));
+    // END WIPQTQUICK
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();
-
 }
 
 MainWindow::~MainWindow()
@@ -877,6 +890,14 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
     }
 
     Preferences::self()->setShowMenuBar(m_showMenuBarAction->isChecked());
+}
+
+void MainWindow::showMenubar(bool show)
+{
+    Q_UNUSED(show)
+
+    m_showMenuBarAction->setChecked(show);
+    toggleMenubar(true /* dontShowWarning */);
 }
 
 void MainWindow::focusAndShowErrorMessage(const QString &errorMsg)

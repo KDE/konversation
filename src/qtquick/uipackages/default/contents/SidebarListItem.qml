@@ -15,16 +15,24 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Rectangle {
-    id: viewItem
+    id: item
 
     height: text.font.pixelSize + Kirigami.Units.gridUnit
 
     property int textMargin: 0
-    property bool isFrontView: (model.ChatWindowRole == viewModel.currentView)
+    property bool isActive: {
+        if ("ChatWindowRole" in model) {
+            return (model.ChatWindowRole == viewModel.currentView);
+        } else {
+            return (index == ListView.view.currentIndex);
+        }
+    }
 
-    signal triggered(var view)
+    property alias text: text.text
 
-    color: isFrontView ? Kirigami.Theme.highlightColor : KUIC.ExtraColors.spotColor
+    signal triggered(var value)
+
+    color: isActive ? Kirigami.Theme.highlightColor : KUIC.ExtraColors.spotColor
 
     Text {
         id: text
@@ -32,16 +40,15 @@ Rectangle {
         anchors.fill: parent
         anchors.leftMargin: textMargin
 
-        text: model.display
-
         font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
 
         color: {
-            if (isFrontView) {
+            if (isActive) {
                 return Kirigami.Theme.highlightedTextColor;
             }
 
-            return (model.ColorRole != undefined ? model.ColorRole : KUIC.ExtraColors.spotTextColor);
+            return ("ColorRole" in model && model.ColorRole != undefined
+                ? model.ColorRole : KUIC.ExtraColors.spotTextColor);
         }
 
         elide: Text.ElideRight
@@ -52,7 +59,13 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
 
-        onClicked: viewItem.triggered(model.ChatWindowRole)
+        onClicked: {
+            if ("ChatWindowRole" in model) {
+                item.triggered(model.ChatWindowRole);
+            } else {
+                item.triggered(index);
+            }
+        }
     }
 }
 
