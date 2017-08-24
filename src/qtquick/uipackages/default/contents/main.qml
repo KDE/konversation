@@ -247,7 +247,7 @@ Kirigami.ApplicationWindow {
                                     text: model.display
                                     textMargin: Kirigami.Units.gridUnit * 2
 
-                                    onTriggered: viewTreeList.showView(topLevelIndex, view)
+                                    onTriggered: viewTreeList.showView(topLevelIndex, value)
                                 }
                             }
 
