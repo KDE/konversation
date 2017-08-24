@@ -70,6 +70,8 @@ class Server : public QObject
     friend class IRCQueue;
     friend class QueueTuner;
 
+    Q_PROPERTY(QString nickname READ getNickname WRITE setNickname NOTIFY nicknameChanged)
+
     public:
         enum QueuePriority
         {

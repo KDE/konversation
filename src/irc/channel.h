@@ -86,6 +86,7 @@ class Channel : public ChatWindow
         #endif
 //General administrative stuff
     public:
+        QString getDescription() const Q_DECL_OVERRIDE;
         void setName(const QString& newName) Q_DECL_OVERRIDE;
         QString getPassword();
 
@@ -161,7 +162,7 @@ class Channel : public ChatWindow
         void updateChannelNicks(const QString& channel);
 //Topic
     public:
-        QString getTopic();
+        QString getTopic() const;
         TopicHistoryModel* getTopicHistory() { return m_topicHistory; }
 
         void setTopic(const QString& text, const QHash<QString, QString> &messageTags);

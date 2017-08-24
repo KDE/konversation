@@ -29,6 +29,10 @@ class ChatWindow : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString name READ getName NOTIFY nameChanged)
+    Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
+    Q_PROPERTY(QString description READ getDescription NOTIFY descriptionChanged)
+
     public:
         explicit ChatWindow(QWidget* parent);
         ~ChatWindow();
@@ -75,8 +79,10 @@ class ChatWindow : public QWidget
         IRCInput* getInputBar() { return m_inputBar; }
         virtual bool log();
 
+        // WIPQTQUICK Holy does all of this mess need cleaning some day
         QString getName() const;
         QString getTitle() const;
+        virtual QString getDescription() const;
         QString getURI(bool passNetwork = true);
 
         void setType(WindowType newType);
@@ -143,6 +149,8 @@ class ChatWindow : public QWidget
 
     Q_SIGNALS:
         void nameChanged(ChatWindow* view, const QString& newName);
+        void titleChanged();
+        void descriptionChanged();
         //void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.
          *  It is ignored if this tab isn't focused.

@@ -678,6 +678,11 @@ void Channel::endCompleteNick()
     else completionPosition=nicknameList.count()-1;
 }
 
+QString Channel::getDescription() const
+{
+    return getTopic();
+}
+
 void Channel::setName(const QString& newName)
 {
     ChatWindow::setName(newName);
@@ -1364,7 +1369,7 @@ void Channel::emitUpdateInfo()
     emit updateInfo(info);
 }
 
-QString Channel::getTopic()
+QString Channel::getTopic() const
 {
     return m_topicHistory->currentTopic();
 }
@@ -1380,6 +1385,8 @@ void Channel::setTopic(const QString& text, const QHash<QString, QString> &messa
     appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", cleanTopic), messageTags);
 
     m_topicHistory->appendTopic(replaceIRCMarkups(Konversation::removeIrcMarkup(text)));
+
+    emit descriptionChanged();
 }
 
 void Channel::setTopic(const QString& nickname, const QString& text, const QHash<QString, QString> &messageTags)

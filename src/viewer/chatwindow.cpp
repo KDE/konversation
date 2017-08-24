@@ -113,8 +113,11 @@ void ChatWindow::updateAppearance()
 
 void ChatWindow::setName(const QString& newName)
 {
-    name=newName;
-    emit nameChanged(this,newName);
+    if (name != newName) {
+        name=newName;
+        emit nameChanged(this,newName);
+        emit titleChanged();
+    }
 }
 
 QString ChatWindow::getName() const
@@ -137,6 +140,11 @@ QString ChatWindow::getTitle() const
     }
 
     return title;
+}
+
+QString ChatWindow::getDescription() const
+{
+    return QString();
 }
 
 QString ChatWindow::getURI(bool passNetwork)
@@ -205,7 +213,7 @@ void ChatWindow::setServer(Server* newServer)
     {
         qDebug() << "ChatWindow::setServer(0)!";
     }
-    else
+    else if (m_server != newServer)
     {
         m_server=newServer;
         connect(m_server, &Server::serverOnline, this, &ChatWindow::serverOnline);
@@ -218,6 +226,7 @@ void ChatWindow::setServer(Server* newServer)
         }
 
         serverOnline(m_server->isConnected());
+        emit titleChanged();
     }
 
     if (getInputBar())

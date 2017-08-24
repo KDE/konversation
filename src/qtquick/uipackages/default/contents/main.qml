@@ -62,7 +62,7 @@ Kirigami.ApplicationWindow {
                 x: (Kirigami.Units.smallSpacing * 2)
 
                 level: 2
-                //text: viewTree.currentViewName
+                text: viewModel.currentView ? viewModel.currentView.name : ""
 
                 color: KUIC.ExtraColors.alternateSpotTextColor
                 opacity: 1.0 // Override
@@ -76,7 +76,7 @@ Kirigami.ApplicationWindow {
 
                 width: parent.width - (Kirigami.Units.smallSpacing * 4)
 
-                text: viewModel.currentTopic
+                text: viewModel.currentView ? viewModel.currentView.description : ""
                 textFormat: Text.StyledText
 
                 color: KUIC.ExtraColors.spotTextColor
@@ -132,8 +132,6 @@ Kirigami.ApplicationWindow {
 
                 QQC2.ScrollView {
                     id: viewTree
-
-                    property string currentViewName: ""
 
                     background: Rectangle { color: KUIC.ExtraColors.spotColor }
 
@@ -215,6 +213,8 @@ Kirigami.ApplicationWindow {
 
                 onTriggered: {
                     pageStack.currentIndex = 1;
+                    console.log(viewModel.currentView, viewModel.currentView.description);
+                    console.log(viewModel.currentServer, viewModel.currentServer.nickname);
                 }
             }
 
@@ -253,11 +253,18 @@ Kirigami.ApplicationWindow {
                     anchors.fill: sidebarFooter
                     anchors.leftMargin: optionsButton.width
 
+                    visible: viewModel.currentServer
+
                     editable: true
 
-                    model: [viewModel.currentNick]
+                    model: viewModel.currentServer ? [viewModel.currentServer.nickname] : []
 
-                    onAccepted: viewModel.setCurrentNick(currentText)
+                    onAccepted: {
+                        return; // WIPQTQUICK TODO Server::setNickname does something weird
+                        if (viewModel.currentServer) {
+                            viewModel.currentServer.setNickname(currentText);
+                        }
+                    }
                 }
             }
         }
@@ -344,7 +351,7 @@ Kirigami.ApplicationWindow {
 
                 anchors.right: parent.right
 
-                visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
+                visible: viewModel.currentView && viewModel.currentView.description != "" && !contextDrawer.drawerOpen
 
                 iconName: "go-previous"
 

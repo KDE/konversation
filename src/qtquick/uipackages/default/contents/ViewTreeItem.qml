@@ -19,11 +19,7 @@ Rectangle {
     width: viewTree.width // HACK Coupling to parent components is bad
 
     property int textMargin: 0
-    property bool isFrontView: model.IsFrontViewRole
-
-    onIsFrontViewChanged: { // HACK While we don't have a backend prop for it
-        viewTree.currentViewName = model.display;
-    }
+    property bool isFrontView: (model.ChatWindowRole == viewModel.currentView)
 
     color: isFrontView ? Kirigami.Theme.highlightColor : KUIC.ExtraColors.spotColor
 

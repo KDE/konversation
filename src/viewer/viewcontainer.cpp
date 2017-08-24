@@ -565,13 +565,8 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         return false;
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
-    } else if (role == ViewIdRole) {
-        const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
-        return QString(QString::number(view->getServer()->connectionId()) + "-" + view->getName());
     } else if (role == ChatWindowRole) {
         return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
-    } else if (role == IsFrontViewRole) {
-        return (static_cast<ChatWindow *>(index.internalPointer()) == m_frontView);
     }
 
     return QVariant();
@@ -1727,39 +1722,6 @@ void ViewContainer::unclutterTabs()
     viewSwitched(m_tabWidget->currentIndex());
 }
 
-QString ViewContainer::currentTopic() const
-{
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
-
-    if (view && view->getType() == ChatWindow::Channel) {
-        return static_cast<Channel*>(view)->getTopic();
-    }
-
-    return QString();
-}
-
-QString ViewContainer::currentNick() const
-{
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
-
-    if (view) {
-        return view->getServer()->getNickname();
-    }
-
-    return QString();
-}
-
-QAbstractItemModel *ViewContainer::currentUsersModel() const
-{
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
-
-    if (view && view->getType() == ChatWindow::Channel) {
-        return static_cast<Channel *>(view)->getNickListView()->model();
-    }
-
-    return nullptr;
-}
-
 void ViewContainer::setCurrentNick(const QString &nick)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(m_tabWidget->currentIndex()));
@@ -1787,7 +1749,6 @@ void ViewContainer::viewSwitched(int newIndex)
     m_currentView = view;
 
     const QModelIndex &idx = indexForView(view);
-    emit viewChanged(idx);
 
     if (m_frontView)
     {
@@ -1832,13 +1793,7 @@ void ViewContainer::viewSwitched(int newIndex)
     else
         emit setWindowCaption(QString());
 
-    emit currentNickChanged(); // WIPQTQUICK
-    emit currentTopicChanged(); // WIPQTQUICK
-    emit currentUsersModelChanged(); // WIPQTQUICK
-
-    const QModelIndex &lastFocusedViewIdx = indexForView(m_lastFocusedView);
-    emit dataChanged(lastFocusedViewIdx, lastFocusedViewIdx, QVector<int>{IsFrontViewRole}); // WIPQTQUICK
-    emit dataChanged(idx, idx, QVector<int>{IsFrontViewRole}); // WIPQTQUICK
+    emit viewChanged(idx);
 }
 
 void ViewContainer::showView(QObject* view)

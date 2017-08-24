@@ -78,29 +78,23 @@ class ViewContainer : public QAbstractItemModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString currentNick READ currentNick NOTIFY currentNickChanged) // WIPQTQUICK
-    Q_PROPERTY(QString currentTopic READ currentTopic NOTIFY currentTopicChanged) // WIPQTQUICK
-    Q_PROPERTY(QAbstractItemModel* currentUsersModel READ currentUsersModel NOTIFY currentUsersModelChanged) // WIPQTQUICK
+    Q_PROPERTY(QObject* currentView READ getFrontView NOTIFY viewChanged) // WIPQTQUICK TODO Fix inconsistent naming
+    Q_PROPERTY(QObject* currentServer READ getFrontServer NOTIFY viewChanged) // WIPQTQUICK
 
     public:
         enum DataRoles {
             ColorRole = Qt::UserRole + 1,
             DisabledRole,
             HighlightRole,
-            ViewIdRole, // WIPQTQUICK
             ChatWindowRole, // WIPQTQUICK
-            IsFrontViewRole // WIPQTQUICK
         };
-        Q_ENUM(DataRoles) // WIPQTQUICK
+        Q_ENUM(DataRoles)
 
         explicit ViewContainer(MainWindow* window);
         ~ViewContainer();
 
         QHash<int, QByteArray> roleNames() const override; // WIPQTQUICK
 
-        QString currentNick() const; // WIPQTQUICK
-        QString currentTopic() const; // WIPQTQUICK
-        QAbstractItemModel* currentUsersModel() const; // WIPQTQUICK
         Q_INVOKABLE void sendTextToFrontView(const QString &text); // WIPQTQUICK
         Q_INVOKABLE void setCurrentNick(const QString &text);
 
