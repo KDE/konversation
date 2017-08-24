@@ -113,7 +113,7 @@ void MessageModel::appendMessage(QObject *view,
     const QColor &nickColor,
     const QString &text)
 {
-    beginInsertRows(QModelIndex(), m_messages.count(), m_messages.count());
+    beginInsertRows(QModelIndex(), 0, 0);
 
     Message msg;
 
@@ -123,7 +123,7 @@ void MessageModel::appendMessage(QObject *view,
     msg.nickColor = nickColor;
     msg.text = text;
 
-    m_messages.append(msg);
+    m_messages.prepend(msg);
 
     endInsertRows();
 }

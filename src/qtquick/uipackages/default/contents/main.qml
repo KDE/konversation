@@ -167,6 +167,8 @@ Kirigami.ApplicationWindow {
             ListView {
                 id: textAreaList
 
+                verticalLayoutDirection: ListView.BottomToTop
+
                 model: messageModel
 
                 delegate: Message {}
