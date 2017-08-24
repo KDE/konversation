@@ -1,3 +1,4 @@
 module org.kde.konversation.uicomponents
 
+ScrollHelper 1.0 ScrollHelper.qml
 singleton ExtraColors 1.0 ExtraColors.qml

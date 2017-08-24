@@ -81,7 +81,7 @@ Kirigami.ApplicationWindow {
             }
         }
 
-        QQC2.ScrollView {
+        ListView {
             id: userList
 
             anchors.top: topicArea.bottom
@@ -90,15 +90,16 @@ Kirigami.ApplicationWindow {
             anchors.bottom: parent.bottom
 
             clip: true
-            background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
 
-            Column {
-                Repeater {
+            model: viewModel.currentUsersModel
 
-                    model: viewModel.currentUsersModel
+            delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
 
-                    delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
-                }
+            //ScrollBar.vertical: QQC2.ScrollBar {}
+
+            KUIC.ScrollHelper {
+                flickable: userList
+                anchors.fill: userList
             }
         }
     }
@@ -122,26 +123,33 @@ Kirigami.ApplicationWindow {
             clip: true
             background: Rectangle { color: KUIC.ExtraColors.spotColor }
 
-            Column {
-                Repeater {
-                    id: topLevelEntries
+            ListView {
+                id: viewTreeList
 
-                    model: viewModel
+                anchors.fill: parent
 
-                    delegate: Column {
-                        ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                clip: true
 
-                        DelegateModel {
-                            id: subLevelEntries
+                model: viewModel
 
-                            model: viewModel
-                            rootIndex: modelIndex(index)
+                delegate: Column {
+                    ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
 
-                            delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
-                        }
+                    DelegateModel {
+                        id: subLevelEntries
 
-                        Column { Repeater { model: subLevelEntries } }
+                        model: viewModel
+                        rootIndex: modelIndex(index)
+
+                        delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
                     }
+
+                    Column { Repeater { model: subLevelEntries } }
+                }
+
+                KUIC.ScrollHelper {
+                    flickable: viewTreeList
+                    anchors.fill: viewTreeList
                 }
             }
         }
@@ -157,11 +165,18 @@ Kirigami.ApplicationWindow {
             background: Rectangle { color: KUIC.ExtraColors.alternateSpotTextColor }
 
             ListView {
+                id: textAreaList
+
                 model: messageModel
 
                 delegate: Message {}
 
                 ListView.onAdd: positionViewAtEnd()
+
+                KUIC.ScrollHelper {
+                    flickable: textAreaList
+                    anchors.fill: textAreaList
+                }
             }
         }
 
