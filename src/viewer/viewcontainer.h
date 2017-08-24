@@ -93,16 +93,15 @@ class ViewContainer : public QAbstractItemModel
         explicit ViewContainer(MainWindow* window);
         ~ViewContainer();
 
-        QHash<int, QByteArray> roleNames() const override; // WIPQTQUICK
+        QHash<int, QByteArray> roleNames() const override;
 
-        Q_INVOKABLE void sendTextToFrontView(const QString &text); // WIPQTQUICK
         Q_INVOKABLE void setCurrentNick(const QString &text);
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }
         MainWindow* getWindow() { return m_window; }
         KActionCollection* actionCollection() { return m_window->actionCollection(); }
 
-        QPointer<ChatWindow> getFrontView() { return m_frontView; } // WIPQTQUICK
+        QPointer<ChatWindow> getFrontView() { return m_frontView; }
         Server* getFrontServer() { return m_frontServer; }
 
         void prepareShutdown();
@@ -153,8 +152,8 @@ class ViewContainer : public QAbstractItemModel
 
         void showView(QObject* view); // WIPQTQUICK
         void goToView(int page);
-        void showNextView();
-        void showPreviousView();
+        Q_INVOKABLE void showNextView();
+        Q_INVOKABLE void showPreviousView();
         void showNextActiveView();
         void showLastFocusedView();
 

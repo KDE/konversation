@@ -23,16 +23,21 @@ Kirigami.ApplicationWindow {
     id: konvApp
 
     property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
+    property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
     property int sidebarWidth: defaultSidebarWidth
     property int footerHeight: ((Kirigami.Theme.defaultFont.pixelSize * 1.1)
         + (Kirigami.Units.smallSpacing * 6))
+
+    property Item inputField: null
 
     pageStack.defaultColumnWidth: sidebarWidth
     pageStack.initialPage: [sidebarComponent, contentComponent]
     // pageStack.separatorVisible: false TODO Needs https://phabricator.kde.org/D7509
 
     contextDrawer: Kirigami.OverlayDrawer {
-        width: Kirigami.Units.gridUnit * 17
+        id: contextDrawer
+
+        width: defaultContextDrawerWidth
         edge: Qt.RightEdge
 
         modal: true
@@ -91,23 +96,29 @@ Kirigami.ApplicationWindow {
             }
         }
 
-        ListView {
-            id: userList
-
+        QQC2.ScrollView {
             anchors.top: topicArea.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            clip: true
+            background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
 
-            model: viewModel.currentUsersModel
+            ListView {
+                id: userList
 
-            delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
+                visible: viewModel.currentView && "userModel" in viewModel.currentView
 
-            KUIC.ScrollHelper {
-                flickable: userList
-                anchors.fill: userList
+                clip: true
+
+                model: visible ? viewModel.currentView.userModel : null
+
+                delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
+
+                KUIC.ScrollHelper {
+                    flickable: userList
+                    anchors.fill: userList
+                }
             }
         }
     }
@@ -116,10 +127,20 @@ Kirigami.ApplicationWindow {
         id: sidebarComponent
 
         Kirigami.Page {
+            id: sidebar
+
             leftPadding: 0
             rightPadding: 0
             topPadding: 0
             bottomPadding: 0
+
+            MouseArea {
+                anchors.fill: parent
+
+                onClicked: {
+                    viewTreeList.forceActiveFocus();
+                }
+            }
 
             QQC2.StackView {
                 anchors.fill: parent
@@ -144,8 +165,20 @@ Kirigami.ApplicationWindow {
 
                         model: viewModel
 
+                        function showView(index, view) {
+                            viewModel.showView(view);
+                            viewTreeList.forceActiveFocus();
+                            viewTreeList.positionViewAtIndex(index, ListView.Visible);
+                        }
+
                         delegate: Column {
-                            ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                            property int topLevelIndex: index
+
+                            ViewTreeItem {
+                                textMargin: Kirigami.Units.gridUnit
+
+                                onTriggered: viewTreeList.showView(topLevelIndex, view)
+                            }
 
                             DelegateModel {
                                 id: subLevelEntries
@@ -153,7 +186,11 @@ Kirigami.ApplicationWindow {
                                 model: viewModel
                                 rootIndex: modelIndex(index)
 
-                                delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                                delegate: ViewTreeItem {
+                                    textMargin: Kirigami.Units.gridUnit * 2
+
+                                    onTriggered: viewTreeList.showView(topLevelIndex, view)
+                                }
                             }
 
                             Column { Repeater { model: subLevelEntries } }
@@ -163,43 +200,33 @@ Kirigami.ApplicationWindow {
                             flickable: viewTreeList
                             anchors.fill: viewTreeList
                         }
+
+                        Keys.onUpPressed: {
+                            event.accept = true;
+                            viewModel.showPreviousView();
+                        }
+
+                        Keys.onDownPressed: {
+                            event.accept = true;
+                            viewModel.showNextView();
+                        }
                     }
                 }
             }
 
-            MouseArea {
-                id: sidebarSplitterHandle
-
-                property int lastX: -1
-
+            DragHandle {
                 enabled: konvApp.pageStack.wideMode
 
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
                 anchors.right: parent.right
 
-                width: Kirigami.Units.devicePixelRatio * 2
+                defaultWidth: konvApp.defaultSidebarWidth
 
-                cursorShape: Qt.SplitHCursor
+                target: sidebar
 
-                onPressed: {
-                    lastX = mouseX;
-                }
-
-                onPositionChanged: {
-                    if (mouse.x > lastX) {
-                        konvApp.sidebarWidth = Math.min((konvApp.defaultSidebarWidth
-                            + (Kirigami.Units.gridUnit * 3)),
-                            sidebarWidth + (mouse.x - lastX));
-                    } else if (mouse.x < lastX) {
-                        konvApp.sidebarWidth = Math.max((konvApp.defaultSidebarWidth
-                            - (Kirigami.Units.gridUnit * 3)),
-                            sidebarWidth - (lastX - mouse.x));
-                    }
-                }
+                onNewWidth: konvApp.sidebarWidth = newWidth
             }
 
-            EdgeHandle {
+            PageHandle {
                 id: sidebarRightPaginationHandle
 
                 anchors.right: parent.right
@@ -267,6 +294,15 @@ Kirigami.ApplicationWindow {
                     }
                 }
             }
+
+            Keys.onPressed: {
+                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                // to make things like deadkeys work
+                if (event.text != "" && inputField && !inputField.activeFocus) {
+                    event.accept = true;
+                    inputField.textForward(event.text);
+                }
+            }
         }
     }
 
@@ -313,7 +349,7 @@ Kirigami.ApplicationWindow {
 
                 height: footerHeight
 
-                focus: true
+                enabled: viewModel.currentView
 
                 background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 
@@ -322,19 +358,30 @@ Kirigami.ApplicationWindow {
                 wrapMode: TextEdit.NoWrap
 
                 Keys.onPressed: {
+                    // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                    // to make things like deadkeys work
                     if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
                         event.accepted = true;
-                        viewModel.sendTextToFrontView(text);
+                        viewModel.currentView.sendText(text);
                         text = "";
                     }
                 }
 
+                function textForward(text) {
+                    forceActiveFocus();
+                    insert(length, text);
+                    cursorPosition = length;
+                }
+
                 Component.onCompleted: {
                     font.pixelSize = font.pixelSize * 1.1;
+
+                    konvApp.inputField = inputField;
+                    forceActiveFocus();
                 }
             }
 
-            EdgeHandle {
+            PageHandle {
                 id: contentLeftPaginationHandle
 
                 anchors.left: parent.left
@@ -346,7 +393,7 @@ Kirigami.ApplicationWindow {
                 onTriggered: pageStack.currentIndex = 0
             }
 
-            EdgeHandle {
+            PageHandle {
                 id: contentRightPaginationHandle
 
                 anchors.right: parent.right

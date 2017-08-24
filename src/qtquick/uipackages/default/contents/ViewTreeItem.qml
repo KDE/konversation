@@ -15,11 +15,15 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Rectangle {
+    id: viewItem
+
     height: text.font.pixelSize + Kirigami.Units.gridUnit
     width: viewTree.width // HACK Coupling to parent components is bad
 
     property int textMargin: 0
     property bool isFrontView: (model.ChatWindowRole == viewModel.currentView)
+
+    signal triggered(var view)
 
     color: isFrontView ? Kirigami.Theme.highlightColor : KUIC.ExtraColors.spotColor
 
@@ -51,7 +55,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
 
-        onClicked: viewModel.showView(model.ChatWindowRole)
+        onClicked: viewItem.triggered(model.ChatWindowRole)
     }
 }
 

@@ -20,7 +20,6 @@
 #include <QWidget>
 #include <QVBoxLayout>
 
-
 class IRCView;
 class IRCInput;
 class Server;

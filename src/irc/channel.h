@@ -27,7 +27,7 @@
 #include <QTimer>
 #include <QString>
 
-
+class QAbstractItemModel; // WIPQTQUICK
 class QLabel;
 class QTimer;
 class QTreeWidgetItem;
@@ -67,6 +67,8 @@ class NickList : public QList<Nick*>
 class Channel : public ChatWindow
 {
     Q_OBJECT
+
+    Q_PROPERTY(QAbstractItemModel* userModel READ getUserModel CONSTANT)
 
     friend class Nick;
 
@@ -224,6 +226,7 @@ class Channel : public ChatWindow
         QStringList getSelectedNickList();
 
         NickListView* getNickListView() const { return nicknameListView; }
+        QAbstractItemModel *getUserModel() const; // WIPQTQUICK
 
         Konversation::ChannelSettings channelSettings() const;
 

@@ -1731,15 +1731,6 @@ void ViewContainer::setCurrentNick(const QString &nick)
     }
 }
 
-void ViewContainer::sendTextToFrontView(const QString &text)
-{
-    ChatWindow* view = getFrontView();
-
-    if (view) {
-        view->sendText(text);
-    }
-}
-
 void ViewContainer::viewSwitched(int newIndex)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));

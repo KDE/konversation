@@ -28,6 +28,7 @@
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 
+#include <QAbstractItemModel> // WIPQTQUICK
 #include <QRegExp>
 #include <QSplitter>
 #include <QTimer>
@@ -1324,6 +1325,11 @@ Nick* Channel::getNickByName(const QString &lookname) const
     QString lcLookname(lookname.toLower());
 
     return m_nicknameNickHash.value(lcLookname);
+}
+
+QAbstractItemModel *Channel::getUserModel() const
+{
+    return nicknameListView->model();
 }
 
 void Channel::adjustNicks(int value)
