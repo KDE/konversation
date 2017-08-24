@@ -262,7 +262,7 @@ Kirigami.ApplicationWindow {
                 focus: true
 
                 clip: true
-                background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
+                background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.025) }
 
                 verticalAlignment: Text.AlignVCenter
 
@@ -285,33 +285,23 @@ Kirigami.ApplicationWindow {
         Rectangle {
             id: contextDrawerHandle
 
-            width: Kirigami.Units.gridUnit / 2
+            width: Kirigami.Units.gridUnit
             height: Kirigami.Units.gridUnit * 3
 
             visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
 
             anchors.right: parent.right
-            anchors.rightMargin: 0
             anchors.verticalCenter: parent.verticalCenter
 
             color: Kirigami.Theme.buttonBackgroundColor
 
-            Text {
+
+            Kirigami.Icon {
                 anchors.fill: parent
 
-                font.weight: Font.Bold
+                selected: contextDrawerHandleMouseArea
 
-                color: contextDrawerHandleMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : KUIC.ExtraColors.spotColor
-
-                text: "◀"
-                textFormat: Text.PlainText
-
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-
-                Component.onCompleted: {
-                    font.pixelSize = parent.width - (Kirigami.Units.devicePixelRatio * 2);
-                }
+                source: "go-previous"
             }
 
             MouseArea {
