@@ -14,6 +14,7 @@ import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 1.4 as QQC1
 import QtQuick.Controls 2.2 as QQC2
+import QtQuick.Layouts 1.0
 
 import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation.uicomponents 1.0 as KUIC
@@ -110,74 +111,80 @@ Kirigami.ApplicationWindow {
         topPadding: 0
         bottomPadding: 0
 
-        QQC2.ScrollView {
-            id: viewTree
+        QQC1.SplitView {
+            anchors.fill: parent
 
-            width: Kirigami.Units.gridUnit * 11
+            handleDelegate: Item {}
 
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            QQC2.ScrollView {
+                id: viewTree
 
-            property string currentViewName: ""
+                Layout.minimumWidth: Kirigami.Units.gridUnit * 8
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 20
 
-            clip: true
-            background: Rectangle { color: KUIC.ExtraColors.spotColor }
+                Layout.fillHeight: true
 
-            ListView {
-                id: viewTreeList
+                width: Kirigami.Units.gridUnit * 11
 
-                anchors.fill: parent
+                property string currentViewName: ""
 
                 clip: true
+                background: Rectangle { color: KUIC.ExtraColors.spotColor }
 
-                model: viewModel
+                ListView {
+                    id: viewTreeList
 
-                delegate: Column {
-                    ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                    anchors.fill: parent
 
-                    DelegateModel {
-                        id: subLevelEntries
+                    clip: true
 
-                        model: viewModel
-                        rootIndex: modelIndex(index)
+                    model: viewModel
 
-                        delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                    delegate: Column {
+                        ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+
+                        DelegateModel {
+                            id: subLevelEntries
+
+                            model: viewModel
+                            rootIndex: modelIndex(index)
+
+                            delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                        }
+
+                        Column { Repeater { model: subLevelEntries } }
                     }
 
-                    Column { Repeater { model: subLevelEntries } }
-                }
-
-                KUIC.ScrollHelper {
-                    flickable: viewTreeList
-                    anchors.fill: viewTreeList
+                    KUIC.ScrollHelper {
+                        flickable: viewTreeList
+                        anchors.fill: viewTreeList
+                    }
                 }
             }
-        }
 
-        QQC2.ScrollView {
-            id: textArea
+            QQC2.ScrollView {
+                id: textArea
 
-            anchors.left: viewTree.right
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+                Layout.fillWidth: true
+                Layout.fillHeight: true
 
-            background: Rectangle { color: KUIC.ExtraColors.alternateSpotTextColor }
+                background: Rectangle { color: KUIC.ExtraColors.alternateSpotTextColor }
 
-            ListView {
-                id: textAreaList
+                ListView {
+                    id: textAreaList
 
-                verticalLayoutDirection: ListView.BottomToTop
+                    verticalLayoutDirection: ListView.BottomToTop
 
-                model: messageModel
+                    model: messageModel
 
-                delegate: Message {}
+                    delegate: Message {}
 
-                ListView.onAdd: positionViewAtEnd()
+                    ListView.onAdd: positionViewAtEnd()
 
-                KUIC.ScrollHelper {
-                    flickable: textAreaList
-                    anchors.fill: textAreaList
+                    KUIC.ScrollHelper {
+                        flickable: textAreaList
+                        anchors.fill: textAreaList
+                    }
                 }
             }
         }
