@@ -284,7 +284,7 @@ Kirigami.ApplicationWindow {
             visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
 
             anchors.right: parent.right
-            anchors.rightMargin: 0 // contextDrawer.drawerOpen ? contextDrawer.width + Kirigami.Units.devicePixelRatio : 0
+            anchors.rightMargin: 0
             anchors.verticalCenter: parent.verticalCenter
 
             color: Kirigami.Theme.buttonBackgroundColor
@@ -296,7 +296,8 @@ Kirigami.ApplicationWindow {
 
                 color: contextDrawerHandleMouseArea.containsMouse ? Kirigami.Theme.buttonHoverColor : KUIC.ExtraColors.spotColor
 
-                text: "◀" // contextDrawer.drawerOpen ? "▶" : "◀"
+                text: "◀"
+                textFormat: Text.PlainText
 
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
