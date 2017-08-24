@@ -299,7 +299,7 @@ Kirigami.ApplicationWindow {
             Kirigami.Icon {
                 anchors.fill: parent
 
-                selected: contextDrawerHandleMouseArea
+                selected: contextDrawerHandleMouseArea.containsMouse
 
                 source: "go-previous"
             }
