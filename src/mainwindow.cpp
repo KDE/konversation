@@ -132,6 +132,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         qDebug() << "File path for 'window':" << p.filePath("window");
 
         QQmlApplicationEngine *engine = new QQmlApplicationEngine(this);
+        qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
         engine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
         engine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
         engine->load(QUrl::fromLocalFile(p.filePath("window")));

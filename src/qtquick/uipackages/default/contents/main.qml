@@ -17,6 +17,7 @@ import QtQuick.Controls 2.2 as QQC2
 import QtQuick.Layouts 1.0
 
 import org.kde.kirigami 2.1 as Kirigami
+
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Kirigami.ApplicationWindow {
@@ -25,8 +26,8 @@ Kirigami.ApplicationWindow {
     property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
     property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
     property int sidebarWidth: defaultSidebarWidth
-    property int footerHeight: ((Kirigami.Theme.defaultFont.pixelSize * 1.1)
-        + (Kirigami.Units.smallSpacing * 6))
+    property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
+    property int footerHeight: largerFontSize + (Kirigami.Units.smallSpacing * 6)
 
     property Item inputField: null
 
@@ -84,15 +85,12 @@ Kirigami.ApplicationWindow {
                 text: viewModel.currentView ? viewModel.currentView.description : ""
                 textFormat: Text.StyledText
 
+                font.pixelSize: largerFontSize
                 color: KUIC.ExtraColors.spotTextColor
 
                 wrapMode: Text.WordWrap
 
                 onLinkActivated: Qt.openUrlExternally(link)
-
-                Component.onCompleted: {
-                    font.pixelSize = font.pixelSize * 1.1;
-                }
             }
         }
 
@@ -169,12 +167,18 @@ Kirigami.ApplicationWindow {
                             viewModel.showView(view);
                             viewTreeList.forceActiveFocus();
                             viewTreeList.positionViewAtIndex(index, ListView.Visible);
+
+                            if (!konvApp.pageStack.wideMode) {
+                                konvApp.pageStack.currentIndex = 1;
+                            }
                         }
 
                         delegate: Column {
                             property int topLevelIndex: index
 
                             ViewTreeItem {
+                                width: viewTreeList.width
+
                                 textMargin: Kirigami.Units.gridUnit
 
                                 onTriggered: viewTreeList.showView(topLevelIndex, view)
@@ -187,6 +191,8 @@ Kirigami.ApplicationWindow {
                                 rootIndex: modelIndex(index)
 
                                 delegate: ViewTreeItem {
+                                    width: viewTreeList.width
+
                                     textMargin: Kirigami.Units.gridUnit * 2
 
                                     onTriggered: viewTreeList.showView(topLevelIndex, view)
@@ -353,6 +359,8 @@ Kirigami.ApplicationWindow {
 
                 background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 
+                font.pixelSize: largerFontSize
+
                 verticalAlignment: Text.AlignVCenter
 
                 wrapMode: TextEdit.NoWrap
@@ -374,8 +382,6 @@ Kirigami.ApplicationWindow {
                 }
 
                 Component.onCompleted: {
-                    font.pixelSize = font.pixelSize * 1.1;
-
                     konvApp.inputField = inputField;
                     forceActiveFocus();
                 }

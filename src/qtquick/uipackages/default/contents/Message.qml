@@ -13,92 +13,149 @@ import QtQuick 2.7
 
 import org.kde.kirigami 2.1 as Kirigami
 
+import org.kde.konversation 1.0 as Konversation
+
 Item {
-    width: textArea.width // HACK Coupling to parent components is bad
-    height: nick.height + messageText.height + Kirigami.Units.gridUnit
+    id: msg
 
-    Rectangle {
-        id: avatar
+    width: ListView.view.width
+    height: (metabitsLoader.active
+        ? (konvApp.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
+        : messageText.height)
 
-        x: Kirigami.Units.gridUnit / 2
+    property string user: model.Nick
+    property int row: index
+    property int avatarSize: nick.height * 2
 
-        width: height
-        height: (nick.height * 2)
+    onRowChanged: metabitsLoader.active = showMetabits()
 
-        anchors.verticalCenter: parent.verticalCenter
-
-        color: model.NickColor
-
-        radius: width * 0.5
-
-        Text {
-            anchors.fill: parent
-
-            color: "white"
-
-            font.weight: Font.Bold
-            font.pointSize: 100
-            minimumPointSize: theme.defaultFont.pointSize
-            fontSizeMode: Text.Fit
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            text: model.Nick.match(/[a-zA-Z]/).pop().toUpperCase() // HACK
+    function showMetabits() {
+        if (row == (messageModel.rowCount() - 1)) {
+            return true;
         }
+
+        var prevNick = messageModel.data(messageModel.index(row + 1, 0),
+            Konversation.MessageModel.Nick);
+
+        return (prevNick != model.Nick);
     }
 
-    Text {
+    Text { // WIPQTQUICK TODO Only outside loader to set avatar height
         id: nick
 
+        visible: metabitsLoader.active
+
         y: Kirigami.Units.gridUnit / 2
 
-        anchors.left: avatar.right
-        anchors.leftMargin: Kirigami.Units.gridUnit / 2
+        anchors.left: parent.left
+        anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
 
         text: model.Nick
-        color: model.NickColor
-        font.weight: Font.Bold
 
-        Component.onCompleted: {
-            font.pixelSize = font.pixelSize * 1.1;
-        }
+        font.weight: Font.Bold
+        font.pixelSize: konvApp.largerFontSize
+        color: model.NickColor
     }
 
-    Text {
-        id: timeStamp
+    Loader {
+        id: metabitsLoader
 
-        y: Kirigami.Units.gridUnit / 2
+        active: false
 
-        height: nick.height
+        anchors.fill: parent
 
-        anchors.left: nick.right
-        anchors.leftMargin: Kirigami.Units.gridUnit / 2
+        sourceComponent: metabitsComponent
+    }
 
-        text: model.TimeStamp
-        color: "grey"
+    Component {
+        id: metabitsComponent
 
-        verticalAlignment: Text.AlignVCenter
+        Item {
+            anchors.fill: parent
+
+            Rectangle {
+                id: avatar
+
+                x: Kirigami.Units.gridUnit / 2
+                y: Kirigami.Units.gridUnit / 2
+
+                width: avatarSize
+                height: avatarSize
+
+                color: model.NickColor
+
+                radius: width * 0.5
+
+                Text {
+                    anchors.fill: parent
+
+                    color: "white"
+
+                    font.weight: Font.Bold
+                    font.pointSize: 100
+                    minimumPointSize: theme.defaultFont.pointSize
+                    fontSizeMode: Text.Fit
+
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+
+                    text: model.Nick.match(/[a-zA-Z]/).pop().toUpperCase() // HACK
+                }
+            }
+
+            Text {
+                id: timeStamp
+
+                y: Kirigami.Units.gridUnit / 2
+
+                height: nick.height
+
+                anchors.left: parent.left
+                anchors.leftMargin: (avatarSize
+                    + Kirigami.Units.gridUnit
+                    + nick.width
+                    + (Kirigami.Units.gridUnit / 2))
+
+                text: model.TimeStamp
+                color: "grey"
+
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
     }
 
     Text {
         id: messageText
 
-        anchors.left: avatar.right
-        anchors.leftMargin: Kirigami.Units.gridUnit / 2
+        anchors.left: parent.left
+        anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
         anchors.right: parent.right
-        anchors.top: nick.bottom
+        anchors.bottom: parent.bottom
 
-        text: model.display
+        text: {
+            if (metabitsLoader.active) {
+                return model.display;
+            } else {
+                var prevTimeStamp = messageModel.data(messageModel.index(row + 1, 0),
+            Konversation.MessageModel.TimeStamp);
+
+                if (model.TimeStamp != prevTimeStamp) {
+                    return model.display + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
+                }
+            }
+
+            return model.display;
+        }
+
         textFormat: Text.StyledText
+
+        font.pixelSize: konvApp.largerFontSize
 
         wrapMode: Text.WordWrap
 
         onLinkActivated: Qt.openUrlExternally(link)
-
-        Component.onCompleted: {
-            font.pixelSize = font.pixelSize * 1.1;
-        }
     }
+
+    Component.onCompleted: metabitsLoader.active = showMetabits()
 }
 

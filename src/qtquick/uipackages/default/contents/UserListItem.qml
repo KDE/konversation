@@ -9,13 +9,13 @@
   Copyright (C) 2017 Eike Hein <hein@kde.org>
 */
 
-import QtQuick 2.0
+import QtQuick 2.7
 
 import org.kde.kirigami 2.1 as Kirigami
 
 Rectangle {
     height: text.font.pixelSize + Kirigami.Units.gridUnit
-    width: userList.width // HACK Coupling to parent components is bad
+    width: ListView.view.width
 
     property int textMargin: 0
 
@@ -27,16 +27,12 @@ Rectangle {
 
         text: model.display
 
-        color: "black" // HACK
-        opacity: 0.7
+        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+        color: Kirigami.Theme.viewTextColor
 
         elide: Text.ElideRight
 
         verticalAlignment: Text.AlignVCenter
-
-        Component.onCompleted: {
-            font.pixelSize = font.pixelSize * 1.2;
-        }
     }
 }
 

@@ -18,7 +18,6 @@ Rectangle {
     id: viewItem
 
     height: text.font.pixelSize + Kirigami.Units.gridUnit
-    width: viewTree.width // HACK Coupling to parent components is bad
 
     property int textMargin: 0
     property bool isFrontView: (model.ChatWindowRole == viewModel.currentView)
@@ -35,6 +34,8 @@ Rectangle {
 
         text: model.display
 
+        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+
         color: {
             if (isFrontView) {
                 return Kirigami.Theme.highlightedTextColor;
@@ -46,10 +47,6 @@ Rectangle {
         elide: Text.ElideRight
 
         verticalAlignment: Text.AlignVCenter
-
-        Component.onCompleted: {
-            font.pixelSize = font.pixelSize * 1.2;
-        }
     }
 
     MouseArea {
