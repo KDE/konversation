@@ -540,10 +540,16 @@ void Server::showSSLDialog()
         */
 }
 
+void Server::rebuildTargetPrefixMatcher()
+{
+    m_targetMatcher.setPattern(QLatin1String("^([") + getServerNickPrefixes() + QLatin1String("]*)([") + getChannelTypes() + QLatin1String("])(.+)"));
+}
+
 // set available channel types according to 005 RPL_ISUPPORT
 void Server::setChannelTypes(const QString &pre)
 {
     m_channelPrefixes = pre;
+    rebuildTargetPrefixMatcher();
 
     if (getConnectionSettings().reconnectCount() == 0) {
         updateAutoJoin(m_connectionSettings.oneShotChannelList());
@@ -575,6 +581,7 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
     // modes which relates to the network's nick-prefixes
     m_serverNickPrefixModes = modes;
     m_serverNickPrefixes = prefixes;
+    rebuildTargetPrefixMatcher();
 }
 
 QString Server::getServerNickPrefixes() const
@@ -2965,18 +2972,18 @@ Channel* Server::getChannelByName(const QString& name)
     // Convert wanted channel name to lowercase
     QString wanted = name.toLower();
 
-    if (m_serverNickPrefixes.contains(wanted.at(0))) {
-        wanted.remove(0, 1);
+    QRegularExpressionMatch p = m_targetMatcher.match(wanted);
+    int index = p.capturedStart(2);
+
+    if (index >= 0)
+    {
+        wanted = wanted.mid(index);
+
+        if (m_loweredChannelNameHash.contains(wanted))
+            return m_loweredChannelNameHash.value(wanted);
     }
 
-    if (name.isEmpty()) {
-        return nullptr;
-    }
-
-    if (m_loweredChannelNameHash.contains(wanted))
-        return m_loweredChannelNameHash.value(wanted);
-
-    return 0;
+    return nullptr;
 }
 
 Query* Server::getQueryByName(const QString& name)
@@ -3844,13 +3851,10 @@ bool Server::isAChannel(const QString &channel) const
 {
     if (channel.isEmpty()) return false;
 
-    uint index = 0;
+    QRegularExpressionMatch x = m_targetMatcher.match(channel);
+    int index = x.capturedStart(2);
 
-    if (m_serverNickPrefixes.contains(channel.at(0)) && channel.length() >= 2) {
-        ++index;
-    }
-
-    return (getChannelTypes().contains(channel.at(index)) > 0);
+    return (index >= 0 && getChannelTypes().contains(channel.at(index)) > 0);
 }
 
 void Server::addRawLog(bool show)

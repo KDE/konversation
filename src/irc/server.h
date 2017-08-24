@@ -713,8 +713,11 @@ class Server : public QObject
         QStringListModel* m_nickListModel;
 
         // TODO roll these into a QMap.
-        QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode
-        QString m_serverNickPrefixModes;            // if supplied: modes related to those prefixes
+        QString m_serverNickPrefixes;               ///< Nickname prefixes used by the server to indicate a mode
+        QString m_serverNickPrefixModes;            ///< if supplied: mode flags related to nickname prefixes
+
+        QRegularExpression m_targetMatcher;         ///< a character set composed of m_serverNickPrefixes and m_channelPrefixes
+        void rebuildTargetPrefixMatcher();          ///< updates the regexp when prefixes change
 
         QString m_banAddressListModes;              // "TYPE A" modes from RPL_ISUPPORT CHANMODES=A,B,C,D
 

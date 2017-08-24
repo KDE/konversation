@@ -2,6 +2,7 @@ Changes since 1.7.2:
 * Added an easier method of copying text starting with #
 * Fixed handling of IRC URLs for channels starting with more than one #
 * Re-enabled channel mode buttons
+* Fixed handling of nick and channel prefix characters potentially using the same set of symbols
 
 Changes from Konversation 1.7.1 to 1.7.2:
 Konversation v1.7.2 is a repackage of v1.7.1 with incomplete and
