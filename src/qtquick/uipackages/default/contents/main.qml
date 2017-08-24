@@ -20,7 +20,16 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Kirigami.ApplicationWindow {
-    id: appItem
+    id: konvApp
+
+    property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
+    property int sidebarWidth: defaultSidebarWidth
+    property int footerHeight: ((Kirigami.Theme.defaultFont.pixelSize * 1.1)
+        + (Kirigami.Units.smallSpacing * 6))
+
+    pageStack.defaultColumnWidth: sidebarWidth
+    pageStack.initialPage: [sidebarComponent, contentComponent]
+    // pageStack.separatorVisible: false TODO Needs https://phabricator.kde.org/D7509
 
     contextDrawer: Kirigami.OverlayDrawer {
         width: Kirigami.Units.gridUnit * 17
@@ -53,7 +62,7 @@ Kirigami.ApplicationWindow {
                 x: (Kirigami.Units.smallSpacing * 2)
 
                 level: 2
-                text: viewTree.currentViewName
+                //text: viewTree.currentViewName
 
                 color: KUIC.ExtraColors.alternateSpotTextColor
                 opacity: 1.0 // Override
@@ -96,8 +105,6 @@ Kirigami.ApplicationWindow {
 
             delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
 
-            //ScrollBar.vertical: QQC2.ScrollBar {}
-
             KUIC.ScrollHelper {
                 flickable: userList
                 anchors.fill: userList
@@ -105,70 +112,176 @@ Kirigami.ApplicationWindow {
         }
     }
 
-    pageStack.initialPage: Kirigami.Page {
-        leftPadding: 0
-        rightPadding: 0
-        topPadding: 0
-        bottomPadding: 0
+    Component {
+        id: sidebarComponent
 
-        QQC1.SplitView {
-            anchors.fill: parent
+        Kirigami.Page {
+            leftPadding: 0
+            rightPadding: 0
+            topPadding: 0
+            bottomPadding: 0
 
-            handleDelegate: Item {}
+            QQC2.StackView {
+                anchors.fill: parent
 
-            QQC2.ScrollView {
-                id: viewTree
+                initialItem: viewTreeComponent
+            }
 
-                Layout.minimumWidth: Kirigami.Units.gridUnit * 8
-                Layout.maximumWidth: Kirigami.Units.gridUnit * 20
+            Component {
+                id: viewTreeComponent
 
-                Layout.fillHeight: true
+                QQC2.ScrollView {
+                    id: viewTree
 
-                width: Kirigami.Units.gridUnit * 11
+                    property string currentViewName: ""
 
-                property string currentViewName: ""
+                    background: Rectangle { color: KUIC.ExtraColors.spotColor }
 
-                clip: true
-                background: Rectangle { color: KUIC.ExtraColors.spotColor }
+                    ListView {
+                        id: viewTreeList
 
-                ListView {
-                    id: viewTreeList
+                        anchors.fill: parent
 
-                    anchors.fill: parent
+                        clip: true
 
-                    clip: true
+                        model: viewModel
 
-                    model: viewModel
+                        delegate: Column {
+                            ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
 
-                    delegate: Column {
-                        ViewTreeItem { textMargin: Kirigami.Units.gridUnit }
+                            DelegateModel {
+                                id: subLevelEntries
 
-                        DelegateModel {
-                            id: subLevelEntries
+                                model: viewModel
+                                rootIndex: modelIndex(index)
 
-                            model: viewModel
-                            rootIndex: modelIndex(index)
+                                delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                            }
 
-                            delegate: ViewTreeItem { textMargin: Kirigami.Units.gridUnit * 2}
+                            Column { Repeater { model: subLevelEntries } }
                         }
 
-                        Column { Repeater { model: subLevelEntries } }
-                    }
-
-                    KUIC.ScrollHelper {
-                        flickable: viewTreeList
-                        anchors.fill: viewTreeList
+                        KUIC.ScrollHelper {
+                            flickable: viewTreeList
+                            anchors.fill: viewTreeList
+                        }
                     }
                 }
+            }
+
+            MouseArea {
+                id: sidebarSplitterHandle
+
+                property int lastX: -1
+
+                enabled: konvApp.pageStack.wideMode
+
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+
+                width: Kirigami.Units.devicePixelRatio * 2
+
+                cursorShape: Qt.SplitHCursor
+
+                onPressed: {
+                    lastX = mouseX;
+                }
+
+                onPositionChanged: {
+                    if (mouse.x > lastX) {
+                        konvApp.sidebarWidth = Math.min((konvApp.defaultSidebarWidth
+                            + (Kirigami.Units.gridUnit * 3)),
+                            sidebarWidth + (mouse.x - lastX));
+                    } else if (mouse.x < lastX) {
+                        konvApp.sidebarWidth = Math.max((konvApp.defaultSidebarWidth
+                            - (Kirigami.Units.gridUnit * 3)),
+                            sidebarWidth - (lastX - mouse.x));
+                    }
+                }
+            }
+
+            EdgeHandle {
+                id: sidebarRightPaginationHandle
+
+                anchors.right: parent.right
+
+                visible: !konvApp.pageStack.wideMode
+
+                iconName: "go-previous"
+                iconSelected: true
+
+                color: KUIC.ExtraColors.alternateSpotColor
+
+                onTriggered: {
+                    pageStack.currentIndex = 1;
+                }
+            }
+
+            footer: Rectangle {
+                id: sidebarFooter
+
+                width: parent.width
+                height: footerHeight
+
+                color: KUIC.ExtraColors.alternateSpotColor
+
+                Kirigami.Icon {
+                    id: optionsButton
+
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    width: sidebarFooter.height
+                    height: sidebarFooter.height - (Kirigami.Units.smallSpacing * 2)
+
+                    selected: true
+
+                    source: "application-menu"
+                }
+
+                MouseArea {
+                    id: optionsMouseArea
+
+                    anchors.fill: optionsButton
+
+                    hoverEnabled: true
+
+                    onClicked: {}
+                }
+
+                QQC1.ComboBox {
+                    anchors.fill: sidebarFooter
+                    anchors.leftMargin: optionsButton.width
+
+                    editable: true
+
+                    model: [viewModel.currentNick]
+
+                    onAccepted: viewModel.setCurrentNick(currentText)
+                }
+            }
+        }
+    }
+
+    Component {
+        id: contentComponent
+
+        Kirigami.Page {
+            leftPadding: 0
+            rightPadding: 0
+            topPadding: 0
+            bottomPadding: 0
+
+            onWidthChanged: {
+                konvApp.pageStack.currentIndex = 1;
             }
 
             QQC2.ScrollView {
                 id: textArea
 
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+                anchors.fill: parent
 
-                background: Rectangle { color: KUIC.ExtraColors.alternateSpotTextColor }
+                background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
 
                 ListView {
                     id: textAreaList
@@ -187,81 +300,14 @@ Kirigami.ApplicationWindow {
                     }
                 }
             }
-        }
 
-        footer: Item {
-            id: footer
-
-            height: inputField.height
-
-            Rectangle {
-                id: optionsArea
-
-                width: viewTree.width
-                height: inputField.height
-
-                anchors.top: parent.top
-                anchors.left: parent.left
-
-                color: KUIC.ExtraColors.alternateSpotColor
-
-                Text {
-                    id: optionsButton
-
-                    width: optionsArea.height
-                    height: width
-
-                    anchors.left: optionsArea.left
-                    anchors.top: optionsArea.top
-
-                    color: optionsMouseArea.containsMouse ? Kirigami.Theme.highlightColor : "white"
-
-                    font.weight: Font.Bold
-                    font.pointSize: 100
-                    minimumPointSize: theme.defaultFont.pointSize
-                    fontSizeMode: Text.Fit
-
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-
-                    text: "⚙"
-                }
-
-                MouseArea {
-                    id: optionsMouseArea
-
-                    anchors.fill: optionsButton
-
-                    hoverEnabled: true
-
-                    onClicked: {}
-                }
-
-                QQC1.ComboBox {
-                    anchors.fill: optionsArea
-                    anchors.leftMargin: optionsButton.width
-
-                    editable: true
-
-                    model: [viewModel.currentNick]
-
-                    onAccepted: viewModel.setCurrentNick(currentText)
-                }
-            }
-
-            QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
+            footer: QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
                 id: inputField
 
-                height: font.pixelSize + (Kirigami.Units.smallSpacing * 6)
-
-                anchors.left: optionsArea.right
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
+                height: footerHeight
 
                 focus: true
 
-                clip: true
                 background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 
                 verticalAlignment: Text.AlignVCenter
@@ -280,38 +326,29 @@ Kirigami.ApplicationWindow {
                     font.pixelSize = font.pixelSize * 1.1;
                 }
             }
-        }
 
-        Rectangle {
-            id: contextDrawerHandle
+            EdgeHandle {
+                id: contentLeftPaginationHandle
 
-            width: Kirigami.Units.gridUnit
-            height: Kirigami.Units.gridUnit * 3
+                anchors.left: parent.left
 
-            visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
+                visible: !pageStack.wideMode
 
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
+                iconName: "go-next"
 
-            color: Kirigami.Theme.buttonBackgroundColor
-
-
-            Kirigami.Icon {
-                anchors.fill: parent
-
-                selected: contextDrawerHandleMouseArea.containsMouse
-
-                source: "go-previous"
+                onTriggered: pageStack.currentIndex = 0
             }
 
-            MouseArea {
-                id: contextDrawerHandleMouseArea
+            EdgeHandle {
+                id: contentRightPaginationHandle
 
-                anchors.fill: parent
+                anchors.right: parent.right
 
-                hoverEnabled: true
+                visible: viewModel.currentTopic != "" && !contextDrawer.drawerOpen
 
-                onClicked: contextDrawer.drawerOpen ? contextDrawer.close() : contextDrawer.open()
+                iconName: "go-previous"
+
+                onTriggered: contextDrawer.drawerOpen ? contextDrawer.close() : contextDrawer.open()
             }
         }
     }
