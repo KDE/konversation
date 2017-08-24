@@ -170,21 +170,21 @@ Kirigami.ApplicationWindow {
                     }
                 }
 
-                pushExit: null /* WIPQTQUICK TODO Transition {
+                pushExit: Transition {
                     OpacityAnimator {
                         from: 1.0
                         to: 0.0
                         duration: Kirigami.Units.longDuration * 2
                     }
-                } */
+                }
 
-                popEnter: null /* WIPQTQUICK TODO Transition {
+                popEnter: Transition {
                     OpacityAnimator {
                         from: 0.0
                         to: 1.0
                         duration: Kirigami.Units.longDuration * 2
                     }
-                } */
+                }
 
                 popExit: Transition {
                     YAnimator {
