@@ -262,7 +262,7 @@ Kirigami.ApplicationWindow {
                 focus: true
 
                 clip: true
-                background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.025) }
+                background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 
                 verticalAlignment: Text.AlignVCenter
 
