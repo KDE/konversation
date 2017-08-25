@@ -133,18 +133,24 @@ Item {
         anchors.bottom: parent.bottom
 
         text: {
+            var text = model.display;
+
+            if (model.Type == Konversation.MessageModel.ActionMessage) {
+                text = "<i>" + model.Nick + "&nbsp;" + text + "</i>";
+            }
+
             if (metabitsLoader.active) {
-                return model.display;
+                return text;
             } else {
                 var prevTimeStamp = messageModel.data(messageModel.index(row + 1, 0),
             Konversation.MessageModel.TimeStamp);
 
                 if (model.TimeStamp != prevTimeStamp) {
-                    return model.display + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
+                    return text + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
                 }
             }
 
-            return model.display;
+            return text;
         }
 
         textFormat: Text.StyledText

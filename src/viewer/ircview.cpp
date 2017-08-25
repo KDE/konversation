@@ -634,6 +634,18 @@ void IRCView::appendQuery(const QString& nick, const QString& message, const QHa
         emit textToLog(QString("<%1>\t%2").arg(nick, message));
     }
 
+    /* BEGIN: WIPQTQUICK */
+    Application* konvApp = Application::instance();
+    MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+
+    msgModel->appendMessage(m_chatWin,
+        QTime::currentTime().toString(Preferences::self()->timestampFormat()),
+        nick,
+        nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+        text
+    );
+    /* END: WIPQTQUICK */
+
     doAppend(line, rtl);
 }
 
@@ -665,6 +677,19 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
 
         emit textToLog(QString("\t * %1").arg(nick));
 
+        /* BEGIN: WIPQTQUICK */
+        Application* konvApp = Application::instance();
+        MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+
+        msgModel->appendMessage(m_chatWin,
+            QTime::currentTime().toString(Preferences::self()->timestampFormat()),
+            nick,
+            nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+            QString(),
+            MessageModel::ActionMessage
+        );
+        /* END: WIPQTQUICK */
+
         doAppend(line, false);
     }
     else
@@ -678,6 +703,19 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
         line = line.arg(timeStamp(messageTags), nick, text);
 
         emit textToLog(QString("\t * %1 %2").arg(nick, message));
+
+        /* BEGIN: WIPQTQUICK */
+        Application* konvApp = Application::instance();
+        MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+
+        msgModel->appendMessage(m_chatWin,
+            QTime::currentTime().toString(Preferences::self()->timestampFormat()),
+            nick,
+            nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+            text,
+            MessageModel::ActionMessage
+        );
+        /* END: WIPQTQUICK */
 
         doAppend(line, rtl);
     }

@@ -86,7 +86,7 @@ class ViewContainer : public QAbstractItemModel
             ColorRole = Qt::UserRole + 1,
             DisabledRole,
             HighlightRole,
-            ChatWindowRole, // WIPQTQUICK
+            ViewRole, // WIPQTQUICK
         };
         Q_ENUM(DataRoles)
 

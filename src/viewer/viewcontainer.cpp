@@ -565,7 +565,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         return false;
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
-    } else if (role == ChatWindowRole) {
+    } else if (role == ViewRole) {
         return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
     }
 

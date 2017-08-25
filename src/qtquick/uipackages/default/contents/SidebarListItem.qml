@@ -21,8 +21,8 @@ Rectangle {
 
     property int textMargin: 0
     property bool isActive: {
-        if ("ChatWindowRole" in model) {
-            return (model.ChatWindowRole == viewModel.currentView);
+        if ("ViewRole" in model) {
+            return (model.ViewRole == viewModel.currentView);
         } else {
             return (index == ListView.view.currentIndex);
         }
@@ -60,8 +60,8 @@ Rectangle {
         anchors.fill: parent
 
         onClicked: {
-            if ("ChatWindowRole" in model) {
-                item.triggered(model.ChatWindowRole);
+            if ("ViewRole" in model) {
+                item.triggered(model.ViewRole);
             } else {
                 item.triggered(index);
             }

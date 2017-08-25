@@ -89,6 +89,8 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole) {
         return msg.text;
+    } else if (role == Type) {
+        return (msg.action ? ActionMessage : NormalMessage);
     } else if (role == View) {
         return qVariantFromValue<QObject *>(msg.view);
     } else if (role == TimeStamp) {
@@ -111,7 +113,8 @@ void MessageModel::appendMessage(QObject *view,
     const QString &timeStamp,
     const QString &nick,
     const QColor &nickColor,
-    const QString &text)
+    const QString &text,
+    const MessageType type)
 {
     beginInsertRows(QModelIndex(), 0, 0);
 
@@ -122,6 +125,7 @@ void MessageModel::appendMessage(QObject *view,
     msg.nick = nick;
     msg.nickColor = nickColor;
     msg.text = text;
+    msg.action = (type == ActionMessage);
 
     m_messages.prepend(msg);
 

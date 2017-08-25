@@ -22,6 +22,7 @@ struct Message {
     QString nick;
     QColor nickColor;
     QString text;
+    bool action;
 };
 
 class FilteredMessageModel : public QSortFilterProxyModel
@@ -53,12 +54,19 @@ class MessageModel : public QAbstractListModel
 
 public:
     enum AdditionalRoles {
-        View = Qt::UserRole + 1,
+        Type = Qt::UserRole + 1,
+        View,
         TimeStamp,
         Nick,
         NickColor
     };
     Q_ENUM(AdditionalRoles)
+
+    enum MessageType {
+        NormalMessage = 0,
+        ActionMessage
+    };
+    Q_ENUM(MessageType)
 
     explicit MessageModel(QObject *parent = 0);
     virtual ~MessageModel();
@@ -72,7 +80,8 @@ public:
         const QString &timeStamp,
         const QString &nick,
         const QColor &nickColor,
-        const QString &text);
+        const QString &text,
+        const MessageType type = NormalMessage);
 
     void cullMessages(const QObject *view);
 
