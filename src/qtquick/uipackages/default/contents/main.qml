@@ -50,7 +50,15 @@ Kirigami.ApplicationWindow {
 
         modal: true
         handleVisible: drawerOpen
+
         drawerOpen: false
+
+        onDrawerOpenChanged: {
+            if (drawerOpen) {
+                userList.forceActiveFocus();
+                userList.currentIndex = -1;
+            }
+        }
 
         leftPadding: 0
         rightPadding: 0
@@ -123,9 +131,11 @@ Kirigami.ApplicationWindow {
                 clip: true
 
                 currentIndex: -1
-                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Visible)
+                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
                 model: visible ? viewModel.currentView.userModel : null
+
+                onModelChanged: currentIndex = -1
 
                 delegate: ListItem {
                     width: userList.width
@@ -271,9 +281,8 @@ Kirigami.ApplicationWindow {
                         model: viewModel
 
                         function showView(index, view) {
-                            viewModel.showView(view);
                             viewTreeList.forceActiveFocus();
-                            viewTreeList.positionViewAtIndex(index, ListView.Visible);
+                            viewModel.showView(view);
 
                             if (!konvApp.pageStack.wideMode) {
                                 konvApp.pageStack.currentIndex = 1;
@@ -353,7 +362,7 @@ Kirigami.ApplicationWindow {
 
                         currentIndex: -1
 
-                        onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Visible)
+                        onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
                         model: ListModel {
                             ListElement { name: "Dummy 1" }
