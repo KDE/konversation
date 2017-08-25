@@ -286,8 +286,6 @@ Kirigami.ApplicationWindow {
                     KUIC.ListView {
                         id: viewTreeList
 
-                        anchors.fill: parent
-
                         clip: true
 
                         model: viewModel
@@ -365,8 +363,6 @@ Kirigami.ApplicationWindow {
 
                     KUIC.ListView {
                         id: settingsTreeList
-
-                        anchors.fill: parent
 
                         focus: true
 
