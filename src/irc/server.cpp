@@ -1966,6 +1966,11 @@ QString Server::getOwnIpByServerMessage()
         return QString();
 }
 
+void Server::addQuery(const QString &nickname)
+{
+    addQuery(obtainNickInfo(nickname), true);
+}
+
 Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 {
     QString nickname = nickInfo->getNickname();

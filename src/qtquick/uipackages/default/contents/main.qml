@@ -101,6 +101,12 @@ Kirigami.ApplicationWindow {
             }
         }
 
+        MouseArea {
+            anchors.fill: parent
+
+            onClicked: userList.forceActiveFocus()
+        }
+
         QQC2.ScrollView {
             anchors.top: topicArea.bottom
             anchors.left: parent.left
@@ -116,9 +122,59 @@ Kirigami.ApplicationWindow {
 
                 clip: true
 
+                currentIndex: -1
+                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Visible)
+
                 model: visible ? viewModel.currentView.userModel : null
 
-                delegate: UserListItem { textMargin: Kirigami.Units.gridUnit }
+                delegate: ListItem {
+                    width: userList.width
+
+                    text: model.display
+                    textMargin: Kirigami.Units.gridUnit
+
+                    onClicked: {
+                        userList.forceActiveFocus();
+                        userList.currentIndex = index;
+                    }
+
+                    onDoubleClicked: {
+                        viewModel.currentServer.addQuery(model.display);
+                        contextDrawer.close();
+                    }
+                }
+
+                Keys.onUpPressed: {
+                    event.accept = true;
+
+                    if (currentIndex == -1) {
+                        currentIndex = 0;
+                        return;
+                    }
+
+                    decrementCurrentIndex();
+                }
+
+                Keys.onDownPressed: {
+                    event.accept = true;
+
+                    if (currentIndex == -1) {
+                        currentIndex = 0;
+                        return;
+                    }
+
+                    incrementCurrentIndex();
+                }
+            }
+
+            Keys.onPressed: {
+                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                // to make things like deadkeys work
+                if (event.text != "" && inputField && !inputField.activeFocus) {
+                    contextDrawer.close();
+                    event.accept = true;
+                    inputField.textForward(event.text);
+                }
             }
         }
     }
@@ -158,6 +214,7 @@ Kirigami.ApplicationWindow {
                 onBusyChanged: {
                     if (!busy && depth == 2) {
                         currentItem.currentIndex = 0;
+                        currentItem.forceActiveFocus();
                     }
                 }
 
@@ -226,13 +283,16 @@ Kirigami.ApplicationWindow {
                         delegate: Column {
                             property int topLevelIndex: index
 
-                            SidebarListItem {
+                            ListItem {
                                 width: viewTreeList.width
+
+                                textColor: KUIC.ExtraColors.spotTextColor
+                                backgroundColor: KUIC.ExtraColors.spotColor
 
                                 text: model.display
                                 textMargin: Kirigami.Units.gridUnit
 
-                                onTriggered: viewTreeList.showView(topLevelIndex, value)
+                                onClicked: viewTreeList.showView(topLevelIndex, value)
                             }
 
                             DelegateModel {
@@ -241,13 +301,16 @@ Kirigami.ApplicationWindow {
                                 model: viewModel
                                 rootIndex: modelIndex(index)
 
-                                delegate: SidebarListItem {
+                                delegate: ListItem {
                                     width: viewTreeList.width
+
+                                    textColor: KUIC.ExtraColors.spotTextColor
+                                    backgroundColor: KUIC.ExtraColors.spotColor
 
                                     text: model.display
                                     textMargin: Kirigami.Units.gridUnit * 2
 
-                                    onTriggered: viewTreeList.showView(topLevelIndex, value)
+                                    onClicked: viewTreeList.showView(topLevelIndex, value)
                                 }
                             }
 
@@ -284,9 +347,13 @@ Kirigami.ApplicationWindow {
 
                         anchors.fill: parent
 
+                        focus: true
+
                         clip: true
 
                         currentIndex: -1
+
+                        onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Visible)
 
                         model: ListModel {
                             ListElement { name: "Dummy 1" }
@@ -294,8 +361,11 @@ Kirigami.ApplicationWindow {
                             ListElement { name: "Dummy 3" }
                         }
 
-                        delegate: SidebarListItem {
+                        delegate: ListItem {
                             width: settingsTreeList.width
+
+                            textColor: KUIC.ExtraColors.spotTextColor
+                            backgroundColor: KUIC.ExtraColors.spotColor
 
                             text: name
                             textMargin: Kirigami.Units.gridUnit
@@ -306,9 +376,32 @@ Kirigami.ApplicationWindow {
                                 }
                             }
 
-                            onTriggered: {
+                            onClicked: {
+                                settingsTreeList.forceActiveFocus();
                                 settingsTreeList.currentIndex = index;
                             }
+                        }
+
+                        Keys.onUpPressed: {
+                            event.accept = true;
+
+                            if (currentIndex == -1) {
+                                currentIndex = 0;
+                                return;
+                            }
+
+                            decrementCurrentIndex();
+                        }
+
+                        Keys.onDownPressed: {
+                            event.accept = true;
+
+                            if (currentIndex == -1) {
+                                currentIndex = 0;
+                                return;
+                            }
+
+                            incrementCurrentIndex();
                         }
                     }
                 }
@@ -376,6 +469,8 @@ Kirigami.ApplicationWindow {
                             }
 
                             konvApp.showMenuBar(false);
+
+                            inputField.forceActiveFocus();
                         }
                     }
 

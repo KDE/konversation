@@ -483,6 +483,7 @@ class Server : public QObject
          *  @param weinitiated This is whether we initiated this - did we do /query, or somebody else sending us a message.
          *  @return A pointer to a new or already-existing query.  Guaranteed to be non-null
          */
+        Q_INVOKABLE void addQuery(const QString& nick); // WIPQTQUICK
         Query *addQuery(const NickInfoPtr & nickInfo, bool weinitiated);
         void closeQuery(const QString &name);
         void closeChannel(const QString &name);

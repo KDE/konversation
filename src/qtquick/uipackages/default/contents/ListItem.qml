@@ -19,6 +19,8 @@ Rectangle {
 
     height: text.font.pixelSize + Kirigami.Units.gridUnit
 
+    property color textColor: Kirigami.Theme.viewTextColor
+    property color backgroundColor: Kirigami.Theme.viewBackgroundColor
     property int textMargin: 0
     property bool isActive: {
         if ("ViewRole" in model) {
@@ -30,9 +32,10 @@ Rectangle {
 
     property alias text: text.text
 
-    signal triggered(var value)
+    signal clicked(var value)
+    signal doubleClicked(var value)
 
-    color: isActive ? Kirigami.Theme.highlightColor : KUIC.ExtraColors.spotColor
+    color: isActive ? Kirigami.Theme.highlightColor : backgroundColor
 
     Text {
         id: text
@@ -48,7 +51,7 @@ Rectangle {
             }
 
             return ("ColorRole" in model && model.ColorRole != undefined
-                ? model.ColorRole : KUIC.ExtraColors.spotTextColor);
+                ? model.ColorRole : textColor);
         }
 
         elide: Text.ElideRight
@@ -61,9 +64,17 @@ Rectangle {
 
         onClicked: {
             if ("ViewRole" in model) {
-                item.triggered(model.ViewRole);
+                item.clicked(model.ViewRole);
             } else {
-                item.triggered(index);
+                item.clicked(index);
+            }
+        }
+
+        onDoubleClicked: {
+            if ("ViewRole" in model) {
+                item.doubleClicked(model.ViewRole);
+            } else {
+                item.doubleClicked(index);
             }
         }
     }
