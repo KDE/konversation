@@ -44,5 +44,9 @@ Item {
             text: "Open Legacy Config Dialog"
             onClicked: konvApp.openLegacyConfigDialog()
         }
+
+        QQC2.Label {
+            text: "Note: You can press F10 at any time to switch between the old and new UI!"
+        }
     }
 }
