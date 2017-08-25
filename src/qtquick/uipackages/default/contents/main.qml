@@ -143,14 +143,26 @@ Kirigami.ApplicationWindow {
                     text: model.display
                     textMargin: Kirigami.Units.gridUnit
 
+                    function openQuery() {
+                        viewModel.currentServer.addQuery(model.display);
+                        contextDrawer.close();
+                    }
+
                     onClicked: {
                         userList.forceActiveFocus();
                         userList.currentIndex = index;
                     }
 
-                    onDoubleClicked: {
-                        viewModel.currentServer.addQuery(model.display);
-                        contextDrawer.close();
+                    onDoubleClicked: openQuery();
+
+                    Keys.onEnterPressed: {
+                        event.accept = true;
+                        openQuery();
+                    }
+
+                    Keys.onReturnPressed: {
+                        event.accept = true;
+                        openQuery();
                     }
                 }
 
