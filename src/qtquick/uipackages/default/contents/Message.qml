@@ -40,7 +40,7 @@ Item {
         return (prevNick != model.Nick);
     }
 
-    Text { // WIPQTQUICK TODO Only outside loader to set avatar height
+    Text { // WIPQTQUICK TODO Only outside loader to set avatar height.
         id: nick
 
         visible: metabitsLoader.active
@@ -50,11 +50,13 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
 
-        text: model.Nick
+        renderType: Text.NativeRendering
+        color: model.NickColor
 
         font.weight: Font.Bold
         font.pixelSize: konvApp.largerFontSize
-        color: model.NickColor
+
+        text: model.Nick
     }
 
     Loader {
@@ -90,6 +92,7 @@ Item {
                     anchors.fill: parent
                     anchors.margins: Kirigami.Units.smallSpacing
 
+                    renderType: Text.QtRendering
                     color: "white"
 
                     font.weight: Font.Bold
@@ -127,9 +130,10 @@ Item {
                     + nick.width
                     + (Kirigami.Units.gridUnit / 2))
 
-                text: model.TimeStamp
+                renderType: Text.NativeRendering
                 color: "grey"
 
+                text: model.TimeStamp
                 verticalAlignment: Text.AlignVCenter
             }
         }
@@ -163,6 +167,8 @@ Item {
 
             return text;
         }
+
+        renderType: Text.NativeRendering
 
         textFormat: Text.StyledText
 

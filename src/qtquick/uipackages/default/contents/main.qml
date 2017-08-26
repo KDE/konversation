@@ -669,6 +669,8 @@ Kirigami.ApplicationWindow {
 
                         enabled: viewModel.currentView
 
+                        renderType: Text.NativeRendering
+
                         font.pixelSize: largerFontSize
 
                         verticalAlignment: Text.AlignVCenter

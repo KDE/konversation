@@ -43,8 +43,7 @@ Rectangle {
         anchors.fill: parent
         anchors.leftMargin: textMargin
 
-        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
-
+        renderType: Text.NativeRendering
         color: {
             if (isActive) {
                 return Kirigami.Theme.highlightedTextColor;
@@ -53,6 +52,8 @@ Rectangle {
             return ("ColorRole" in model && model.ColorRole != undefined
                 ? model.ColorRole : textColor);
         }
+
+        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
 
         elide: Text.ElideRight
 
