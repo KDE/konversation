@@ -130,6 +130,12 @@ Kirigami.ApplicationWindow {
 
                 visible: viewModel.currentView && "userModel" in viewModel.currentView
 
+                onHeightChanged: {
+                    if (currentIndex != -1) {
+                        positionViewAtIndex(currentIndex, ListView.Contain);
+                    }
+                }
+
                 clip: true
 
                 currentIndex: -1
@@ -605,13 +611,68 @@ Kirigami.ApplicationWindow {
                     KUIC.ListView {
                         id: textViewList
 
+                        onHeightChanged: {
+                            if (currentIndex != -1) {
+                                positionViewAtIndex(currentIndex, ListView.Contain);
+                            }
+                        }
+
                         verticalLayoutDirection: ListView.BottomToTop
 
                         model: messageModel
 
                         delegate: Message {}
 
-                        ListView.onAdd: positionViewAtEnd()
+                        ListView.onAdd: {
+                            currentIndex = (count - 1);
+                            positionViewAtIndex(currentIndex, ListView.Contain);
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            property Item hoveredMessage: null
+
+                            acceptedButtons: Qt.NoButton
+                            hoverEnabled: true
+
+                            cursorShape: {
+                                if (hoveredMessage) {
+                                    if (hoveredMessage.linkHovered) {
+                                        return Qt.OpenHandCursor;
+                                    } else {
+                                        return Qt.IBeamCursor;
+                                    }
+                                }
+
+                                return Qt.ArrowCursor;
+                            }
+
+                            onContainsMouseChanged: {
+                                if (!containsMouse && hoveredMessage) {
+                                    hoveredMessage.selectable = false;
+                                    hoveredMessage = null;
+                                    inputField.forceActiveFocus();
+                                }
+                            }
+
+                            onPositionChanged: {
+                                var pos = mapToItem(textViewList.contentItem, mouse.x, mouse.y);
+                                var msg = textViewList.itemAt(pos.x, pos.y);
+
+                                if (hoveredMessage && hoveredMessage != msg) {
+                                    hoveredMessage.selectable = false;
+                                }
+
+                                hoveredMessage = msg;
+
+                                if (hoveredMessage) {
+                                    hoveredMessage.selectable = true;
+                                } else {
+                                    inputField.forceActiveFocus();
+                                }
+                            }
+                        }
                     }
                 }
             }

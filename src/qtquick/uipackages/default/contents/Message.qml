@@ -27,7 +27,23 @@ Item {
     property int row: index
     property int avatarSize: nick.height * 2
 
+    property bool selectable: false
+    property Item selectableText: null
+
+    property bool linkHovered: selectableText && selectableText.hoveredLink != ""
+
+
+
     onRowChanged: metabitsLoader.active = showMetabits()
+
+    onSelectableChanged: {
+        if (selectable) {
+            selectableText = selectableTextComponent.createObject(msg);
+            selectableText.forceActiveFocus();
+        } else if (selectableText) {
+            selectableText.destroy();
+        }
+    }
 
     function showMetabits() {
         if (row == (messageModel.rowCount() - 1)) {
@@ -142,10 +158,19 @@ Item {
     Text {
         id: messageText
 
+        visible: !selectable
+
         anchors.left: parent.left
         anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+
+        renderType: Text.NativeRendering
+        textFormat: Text.RichText
+
+        font.pixelSize: konvApp.largerFontSize
+
+        wrapMode: Text.WordWrap
 
         text: {
             var text = model.display;
@@ -168,15 +193,30 @@ Item {
             return text;
         }
 
-        renderType: Text.NativeRendering
-
-        textFormat: Text.StyledText
-
-        font.pixelSize: konvApp.largerFontSize
-
-        wrapMode: Text.WordWrap
-
         onLinkActivated: Qt.openUrlExternally(link)
+    }
+
+    Component {
+        id: selectableTextComponent
+
+        TextEdit {
+            anchors.fill: messageText
+
+            readOnly: true
+            selectByMouse: true
+            persistentSelection: true
+
+            renderType: Text.NativeRendering
+            textFormat: Text.RichText
+
+            font.pixelSize: konvApp.largerFontSize
+
+            wrapMode: Text.WordWrap
+
+            text: messageText.text
+
+            onLinkActivated: Qt.openUrlExternally(link)
+        }
     }
 
     Component.onCompleted: metabitsLoader.active = showMetabits()
