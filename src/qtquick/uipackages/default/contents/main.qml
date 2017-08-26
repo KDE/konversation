@@ -40,7 +40,7 @@ Kirigami.ApplicationWindow {
 
     pageStack.defaultColumnWidth: sidebarWidth
     pageStack.initialPage: [sidebarComponent, contentComponent]
-    // pageStack.separatorVisible: false TODO Needs https://phabricator.kde.org/D7509
+    pageStack.separatorVisible: false
 
     contextDrawer: Kirigami.OverlayDrawer {
         id: contextDrawer
