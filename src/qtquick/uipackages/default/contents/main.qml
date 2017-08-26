@@ -23,17 +23,19 @@ import org.kde.konversation.uicomponents 1.0 as KUIC
 Kirigami.ApplicationWindow {
     id: konvApp
 
-    property bool settingsMode: false
-
     property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
     property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
     property int sidebarWidth: defaultSidebarWidth
     property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
     property int footerHeight: largerFontSize + (Kirigami.Units.smallSpacing * 6)
 
-    property Item sidebarStackView
-    property Item contentStackView
+    property Item sidebarStackView: null
+    property Item contentStackView: null
+    property Item contentFooterStackView: null
     property Item inputField: null
+
+    property bool settingsMode: false
+    property Item settingsModeButtons: null
 
     signal openLegacyConfigDialog
     signal showMenuBar(bool show)
@@ -375,9 +377,7 @@ Kirigami.ApplicationWindow {
                             viewModel.showNextView();
                         }
 
-                        Component.onCompleted: {
-                            sidebar.viewTreeList = viewTreeList;
-                        }
+                        Component.onCompleted: sidebar.viewTreeList = viewTreeList
                     }
                 }
             }
@@ -419,6 +419,7 @@ Kirigami.ApplicationWindow {
                             onIsActiveChanged: {
                                 if (isActive && konvApp.contentStackView.depth == 1) {
                                     konvApp.contentStackView.push("SettingsPage.qml", {"title": name});
+                                    //konvApp.settingsModeButtons.enabled = true;
                                 }
                             }
 
@@ -495,11 +496,13 @@ Kirigami.ApplicationWindow {
 
                         if (checked) {
                             sidebarStackView.push(settingsTreeComponent);
+                            konvApp.contentFooterStackView.push("SettingsModeButtons.qml", {"enabled": false});
                         } else {
                             sidebarStackView.pop();
 
                             if (konvApp.contentStackView.depth == 2) {
                                 konvApp.contentStackView.pop();
+                                konvApp.contentFooterStackView.pop();
                             }
 
                             konvApp.showMenuBar(false);
@@ -613,41 +616,89 @@ Kirigami.ApplicationWindow {
                 }
             }
 
-            footer: QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
-                id: inputField
+            footer: QQC2.StackView {
+                id: contentFooterStackView
 
                 height: footerHeight
 
-                enabled: viewModel.currentView
-
                 background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 
-                font.pixelSize: largerFontSize
+                initialItem: inputFieldComponent
 
-                verticalAlignment: Text.AlignVCenter
-
-                wrapMode: TextEdit.NoWrap
-
-                Keys.onPressed: {
-                    // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                    // to make things like deadkeys work
-                    if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
-                        event.accepted = true;
-                        viewModel.currentView.sendText(text);
-                        text = "";
+                pushEnter: Transition {
+                    XAnimator {
+                        from: contentFooterStackView.width
+                        to: 0
+                        duration: Kirigami.Units.longDuration * 2
+                        easing.type: Easing.OutCubic
                     }
                 }
 
-                function textForward(text) {
-                    forceActiveFocus();
-                    insert(length, text);
-                    cursorPosition = length;
+                pushExit: Transition {
+                    OpacityAnimator {
+                        from: 1.0
+                        to: 0.0
+                        duration: Kirigami.Units.longDuration * 2
+                    }
                 }
 
-                Component.onCompleted: {
-                    konvApp.inputField = inputField;
-                    forceActiveFocus();
+                popEnter: Transition {
+                    OpacityAnimator {
+                        from: 0.0
+                        to: 1.0
+                        duration: Kirigami.Units.longDuration * 2
+                    }
                 }
+
+                popExit: Transition {
+                    XAnimator {
+                        from: 0
+                        to: contentFooterStackView.width
+                        duration: Kirigami.Units.longDuration * 2
+                        easing.type: Easing.OutCubic
+                    }
+                }
+
+                Component {
+                    id: inputFieldComponent
+
+                    QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
+                        id: inputField
+
+                        background: null
+
+                        enabled: viewModel.currentView
+
+                        font.pixelSize: largerFontSize
+
+                        verticalAlignment: Text.AlignVCenter
+
+                        wrapMode: TextEdit.NoWrap
+
+                        Keys.onPressed: {
+                            // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                            // to make things like deadkeys work
+                            if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+                                event.accepted = true;
+                                viewModel.currentView.sendText(text);
+                                text = "";
+                            }
+                        }
+
+                        function textForward(text) {
+                            forceActiveFocus();
+                            insert(length, text);
+                            cursorPosition = length;
+                        }
+
+                        Component.onCompleted: {
+                            konvApp.inputField = inputField;
+                            forceActiveFocus();
+                        }
+                    }
+                }
+
+                Component.onCompleted: konvApp.contentFooterStackView = contentFooterStackView
             }
 
             PageHandle {
