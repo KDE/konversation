@@ -173,24 +173,24 @@ Item {
         wrapMode: Text.WordWrap
 
         text: {
-            var text = model.display;
+            var t = model.display;
 
             if (model.Type == Konversation.MessageModel.ActionMessage) {
-                text = "<i>" + model.Nick + "&nbsp;" + text + "</i>";
+                t = "<i>" + model.Nick + "&nbsp;" + t + "</i>";
             }
 
             if (metabitsLoader.active) {
-                return text;
+                return t;
             } else {
                 var prevTimeStamp = messageModel.data(messageModel.index(row + 1, 0),
             Konversation.MessageModel.TimeStamp);
 
                 if (model.TimeStamp != prevTimeStamp) {
-                    return text + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
+                    return t + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
                 }
             }
 
-            return text;
+            return t;
         }
 
         onLinkActivated: Qt.openUrlExternally(link)
