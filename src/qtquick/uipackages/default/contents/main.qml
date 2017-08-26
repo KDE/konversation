@@ -723,7 +723,7 @@ Kirigami.ApplicationWindow {
                 Component {
                     id: inputFieldComponent
 
-                    QQC2.TextArea { // HACK Causes warning: 'unknown: file:///home/eike/devel/install/lib64/qml/QtQuick/Controls.2/org.kde.desktop/TextArea.qml:45: ReferenceError: Window is not defined'
+                    QQC2.TextField {
                         id: inputField
 
                         background: null
