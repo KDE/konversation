@@ -55,6 +55,8 @@ Kirigami.ApplicationWindow {
 
         drawerOpen: false
 
+        background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
+
         onDrawerOpenChanged: {
             if (drawerOpen) {
                 userList.forceActiveFocus();
@@ -117,84 +119,82 @@ Kirigami.ApplicationWindow {
             onClicked: userList.forceActiveFocus()
         }
 
-        QQC2.ScrollView {
+        KUIC.ListView {
+            id: userList
+
             anchors.top: topicArea.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
+            visible: viewModel.currentView && "userModel" in viewModel.currentView
 
-            KUIC.ListView {
-                id: userList
+            QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
-                visible: viewModel.currentView && "userModel" in viewModel.currentView
+            onHeightChanged: {
+                if (currentIndex != -1) {
+                    positionViewAtIndex(currentIndex, ListView.Contain);
+                }
+            }
 
-                onHeightChanged: {
-                    if (currentIndex != -1) {
-                        positionViewAtIndex(currentIndex, ListView.Contain);
-                    }
+            clip: true
+
+            currentIndex: -1
+            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+
+            model: visible ? viewModel.currentView.userModel : null
+
+            onModelChanged: currentIndex = -1
+
+            delegate: ListItem {
+                width: userList.width
+
+                text: model.display
+                textMargin: Kirigami.Units.gridUnit
+
+                function openQuery() {
+                    viewModel.currentServer.addQuery(model.display);
+                    contextDrawer.close();
                 }
 
-                clip: true
-
-                currentIndex: -1
-                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
-
-                model: visible ? viewModel.currentView.userModel : null
-
-                onModelChanged: currentIndex = -1
-
-                delegate: ListItem {
-                    width: userList.width
-
-                    text: model.display
-                    textMargin: Kirigami.Units.gridUnit
-
-                    function openQuery() {
-                        viewModel.currentServer.addQuery(model.display);
-                        contextDrawer.close();
-                    }
-
-                    onClicked: {
-                        userList.forceActiveFocus();
-                        userList.currentIndex = index;
-                    }
-
-                    onDoubleClicked: openQuery();
-
-                    Keys.onEnterPressed: {
-                        event.accept = true;
-                        openQuery();
-                    }
-
-                    Keys.onReturnPressed: {
-                        event.accept = true;
-                        openQuery();
-                    }
+                onClicked: {
+                    userList.forceActiveFocus();
+                    userList.currentIndex = index;
                 }
 
-                Keys.onUpPressed: {
+                onDoubleClicked: openQuery();
+
+                Keys.onEnterPressed: {
                     event.accept = true;
-
-                    if (currentIndex == -1) {
-                        currentIndex = 0;
-                        return;
-                    }
-
-                    decrementCurrentIndex();
+                    openQuery();
                 }
 
-                Keys.onDownPressed: {
+                Keys.onReturnPressed: {
                     event.accept = true;
-
-                    if (currentIndex == -1) {
-                        currentIndex = 0;
-                        return;
-                    }
-
-                    incrementCurrentIndex();
+                    openQuery();
                 }
+            }
+
+            Keys.onUpPressed: {
+                event.accept = true;
+
+                if (currentIndex == -1) {
+                    currentIndex = 0;
+                    return;
+                }
+
+                decrementCurrentIndex();
+            }
+
+            Keys.onDownPressed: {
+                event.accept = true;
+
+                if (currentIndex == -1) {
+                    currentIndex = 0;
+                    return;
+                }
+
+                incrementCurrentIndex();
             }
 
             Keys.onPressed: {
@@ -317,74 +317,72 @@ Kirigami.ApplicationWindow {
             Component {
                 id: viewTreeComponent
 
-                QQC2.ScrollView {
-                    id: viewTree
+                KUIC.ListView {
+                    id: viewTreeList
 
-                    KUIC.ListView {
-                        id: viewTreeList
+                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
-                        clip: true
+                    clip: true
 
-                        model: viewModel
+                    model: viewModel
 
-                        function showView(index, view) {
-                            viewTreeList.forceActiveFocus();
-                            viewModel.showView(view);
+                    function showView(index, view) {
+                        viewTreeList.forceActiveFocus();
+                        viewModel.showView(view);
 
-                            if (!konvApp.pageStack.wideMode) {
-                                konvApp.pageStack.currentIndex = 1;
-                            }
+                        if (!konvApp.pageStack.wideMode) {
+                            konvApp.pageStack.currentIndex = 1;
+                        }
+                    }
+
+                    delegate: Column {
+                        property int topLevelIndex: index
+
+                        ListItem {
+                            width: viewTreeList.width
+
+                            textColor: KUIC.ExtraColors.spotTextColor
+                            backgroundColor: KUIC.ExtraColors.spotColor
+
+                            text: model.display
+                            textMargin: Kirigami.Units.gridUnit
+
+                            onClicked: viewTreeList.showView(topLevelIndex, value)
                         }
 
-                        delegate: Column {
-                            property int topLevelIndex: index
+                        DelegateModel {
+                            id: subLevelEntries
 
-                            ListItem {
+                            model: viewModel
+                            rootIndex: modelIndex(index)
+
+                            delegate: ListItem {
                                 width: viewTreeList.width
 
                                 textColor: KUIC.ExtraColors.spotTextColor
                                 backgroundColor: KUIC.ExtraColors.spotColor
 
                                 text: model.display
-                                textMargin: Kirigami.Units.gridUnit
+                                textMargin: Kirigami.Units.gridUnit * 2
 
                                 onClicked: viewTreeList.showView(topLevelIndex, value)
                             }
-
-                            DelegateModel {
-                                id: subLevelEntries
-
-                                model: viewModel
-                                rootIndex: modelIndex(index)
-
-                                delegate: ListItem {
-                                    width: viewTreeList.width
-
-                                    textColor: KUIC.ExtraColors.spotTextColor
-                                    backgroundColor: KUIC.ExtraColors.spotColor
-
-                                    text: model.display
-                                    textMargin: Kirigami.Units.gridUnit * 2
-
-                                    onClicked: viewTreeList.showView(topLevelIndex, value)
-                                }
-                            }
-
-                            Column { Repeater { model: subLevelEntries } }
                         }
 
-                        Keys.onUpPressed: {
-                            event.accept = true;
-                            viewModel.showPreviousView();
-                        }
-
-                        Keys.onDownPressed: {
-                            event.accept = true;
-                            viewModel.showNextView();
-                        }
-
-                        Component.onCompleted: sidebar.viewTreeList = viewTreeList
+                        Column { Repeater { model: subLevelEntries } }
                     }
+
+                    Keys.onUpPressed: {
+                        event.accept = true;
+                        viewModel.showPreviousView();
+                    }
+
+                    Keys.onDownPressed: {
+                        event.accept = true;
+                        viewModel.showNextView();
+                    }
+
+                    Component.onCompleted: sidebar.viewTreeList = viewTreeList
                 }
             }
 
@@ -603,74 +601,66 @@ Kirigami.ApplicationWindow {
             Component {
                 id: textViewComponent
 
-                QQC2.ScrollView {
-                    id: textView
+                KUIC.ListView {
+                    id: textViewList
 
-                    background: Rectangle { color: Kirigami.Theme.viewBackgroundColor } // WIPQTQUICK Needed?
+                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
-                    KUIC.ListView {
-                        id: textViewList
+                    onHeightChanged: positionViewAtBeginning()
 
-                        onHeightChanged: {
-                            if (currentIndex != -1) {
-                                positionViewAtIndex(currentIndex, ListView.Contain);
-                            }
-                        }
+                    verticalLayoutDirection: ListView.BottomToTop
 
-                        verticalLayoutDirection: ListView.BottomToTop
+                    model: messageModel
 
-                        model: messageModel
+                    delegate: Message {}
 
-                        delegate: Message {}
+                    ListView.onAdd: {
+                        currentIndex = count - 1;
+                        positionViewAtIndex(currentIndex, ListView.Contain);
+                    }
 
-                        ListView.onAdd: {
-                            currentIndex = (count - 1);
-                            positionViewAtIndex(currentIndex, ListView.Contain);
-                        }
+                    MouseArea {
+                        anchors.fill: parent
 
-                        MouseArea {
-                            anchors.fill: parent
+                        property Item hoveredMessage: null
 
-                            property Item hoveredMessage: null
+                        acceptedButtons: Qt.NoButton
+                        hoverEnabled: true
 
-                            acceptedButtons: Qt.NoButton
-                            hoverEnabled: true
-
-                            cursorShape: {
-                                if (hoveredMessage) {
-                                    if (hoveredMessage.linkHovered) {
-                                        return Qt.OpenHandCursor;
-                                    } else {
-                                        return Qt.IBeamCursor;
-                                    }
-                                }
-
-                                return Qt.ArrowCursor;
-                            }
-
-                            onContainsMouseChanged: {
-                                if (!containsMouse && hoveredMessage) {
-                                    hoveredMessage.selectable = false;
-                                    hoveredMessage = null;
-                                    inputField.forceActiveFocus();
-                                }
-                            }
-
-                            onPositionChanged: {
-                                var pos = mapToItem(textViewList.contentItem, mouse.x, mouse.y);
-                                var msg = textViewList.itemAt(pos.x, pos.y);
-
-                                if (hoveredMessage && hoveredMessage != msg) {
-                                    hoveredMessage.selectable = false;
-                                }
-
-                                hoveredMessage = msg;
-
-                                if (hoveredMessage) {
-                                    hoveredMessage.selectable = true;
+                        cursorShape: {
+                            if (hoveredMessage) {
+                                if (hoveredMessage.linkHovered) {
+                                    return Qt.OpenHandCursor;
                                 } else {
-                                    inputField.forceActiveFocus();
+                                    return Qt.IBeamCursor;
                                 }
+                            }
+
+                            return Qt.ArrowCursor;
+                        }
+
+                        onContainsMouseChanged: {
+                            if (!containsMouse && hoveredMessage) {
+                                hoveredMessage.selectable = false;
+                                hoveredMessage = null;
+                                inputField.forceActiveFocus();
+                            }
+                        }
+
+                        onPositionChanged: {
+                            var pos = mapToItem(textViewList.contentItem, mouse.x, mouse.y);
+                            var msg = textViewList.itemAt(pos.x, pos.y);
+
+                            if (hoveredMessage && hoveredMessage != msg) {
+                                hoveredMessage.selectable = false;
+                            }
+
+                            hoveredMessage = msg;
+
+                            if (hoveredMessage) {
+                                hoveredMessage.selectable = true;
+                            } else {
+                                inputField.forceActiveFocus();
                             }
                         }
                     }
