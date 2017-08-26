@@ -88,6 +88,7 @@ Item {
 
                 Text {
                     anchors.fill: parent
+                    anchors.margins: Kirigami.Units.smallSpacing
 
                     color: "white"
 
@@ -99,7 +100,17 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
 
-                    text: model.Nick.match(/[a-zA-Z]/).pop().toUpperCase() // HACK
+                    text: {
+                        // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
+                        var match = model.Nick.match(/([a-zA-Z])([a-zA-Z])/);
+                        var abbrev = match[1].toUpperCase();
+
+                        if (match.length > 2) {
+                            abbrev += match[2].toLowerCase();
+                        }
+
+                        return abbrev;
+                    }
                 }
             }
 
