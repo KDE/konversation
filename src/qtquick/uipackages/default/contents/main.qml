@@ -201,6 +201,35 @@ Kirigami.ApplicationWindow {
         }
     }
 
+    MouseArea {
+        id: dragHandle
+
+        visible: pageStack.wideMode
+
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+
+        x: sidebarWidth - (width / 2)
+        width: Kirigami.Units.devicePixelRatio * 2
+
+        property int dragRange: (Kirigami.Units.gridUnit * 5)
+        property int _lastX: -1
+
+        cursorShape: Qt.SplitHCursor
+
+        onPressed: _lastX = mouseX
+
+        onPositionChanged: {
+            if (mouse.x > _lastX) {
+                sidebarWidth = Math.min((defaultSidebarWidth + dragRange),
+                    sidebarWidth + (mouse.x - _lastX));
+            } else if (mouse.x < _lastX) {
+                sidebarWidth = Math.max((defaultSidebarWidth - dragRange),
+                    sidebarWidth - (_lastX - mouse.x));
+            }
+        }
+    }
+
     Component {
         id: sidebarComponent
 
@@ -422,18 +451,6 @@ Kirigami.ApplicationWindow {
                         }
                     }
                 }
-            }
-
-            DragHandle {
-                enabled: konvApp.pageStack.wideMode
-
-                anchors.right: parent.right
-
-                defaultWidth: konvApp.defaultSidebarWidth
-
-                target: sidebar
-
-                onNewWidth: konvApp.sidebarWidth = newWidth
             }
 
             PageHandle {
