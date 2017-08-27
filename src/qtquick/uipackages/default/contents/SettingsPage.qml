@@ -9,11 +9,44 @@
   Copyright (C) 2017 Eike Hein <hein@kde.org>
 */
 
-pragma Singleton
-
 import QtQuick 2.7
 
-Item {
-    property bool unifiedInputFieldHistory: false
-}
+import QtQuick.Controls 2.2 as QQC2
 
+import org.kde.kirigami 2.1 as Kirigami
+
+Item {
+    id: settingsPage
+
+    property alias title: pageTitle.text
+
+    Column {
+        anchors.fill: parent
+        anchors.leftMargin: Kirigami.Units.gridUnit
+
+        spacing: Kirigami.Units.gridUnit
+
+        Kirigami.Heading {
+            id: pageTitle
+
+            level: 1
+        }
+
+        QQC2.Button {
+            text: "Show Legacy Menu Bar"
+
+            checkable: true
+
+            onCheckedChanged: konvApp.showMenuBar(checked)
+        }
+
+        QQC2.Button {
+            text: "Open Legacy Config Dialog"
+            onClicked: konvApp.openLegacyConfigDialog()
+        }
+
+        QQC2.Label {
+            text: "Note: You can press F10 at any time to switch between the old and new UI!"
+        }
+    }
+}
