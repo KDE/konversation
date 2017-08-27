@@ -470,11 +470,7 @@ Kirigami.ApplicationWindow {
 
                 color: KUIC.ExtraColors.alternateSpotColor
 
-                onTriggered: {
-                    pageStack.currentIndex = 1;
-                    console.log(viewModel.currentView, viewModel.currentView.description);
-                    console.log(viewModel.currentServer, viewModel.currentServer.nickname);
-                }
+                onTriggered: pageStack.currentIndex = 1
             }
 
             footer: Rectangle {
