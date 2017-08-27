@@ -72,7 +72,7 @@ Kirigami.ApplicationWindow {
         Rectangle {
             id: topicArea
 
-            visible: viewModel.currentView.description != ""
+            visible: viewModel.currentView && viewModel.currentView.description != ""
 
             anchors.top: parent.top
             anchors.left: parent.left
