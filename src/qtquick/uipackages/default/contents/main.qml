@@ -72,7 +72,7 @@ Kirigami.ApplicationWindow {
         Rectangle {
             id: topicArea
 
-            visible: viewModel.currentTopic != ""
+            visible: viewModel.currentView.description != ""
 
             anchors.top: parent.top
             anchors.left: parent.left
@@ -770,7 +770,7 @@ Kirigami.ApplicationWindow {
                 anchors.right: parent.right
 
                 visible: (!konvApp.settingsMode
-                    && (viewModel.currentView && viewModel.currentView.description != "")
+                    && viewModel.currentView
                     && !contextDrawer.drawerOpen)
 
                 iconName: "go-previous"
