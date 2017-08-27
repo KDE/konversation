@@ -600,6 +600,8 @@ Kirigami.ApplicationWindow {
                 KUIC.ListView {
                     id: textViewList
 
+                    visible: !konvApp.settingsMode
+
                     QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
                     onHeightChanged: positionViewAtBeginning()
