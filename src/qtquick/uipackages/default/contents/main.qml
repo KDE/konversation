@@ -613,8 +613,8 @@ Kirigami.ApplicationWindow {
                     delegate: Message {}
 
                     ListView.onAdd: {
-                        currentIndex = count - 1;
-                        positionViewAtIndex(currentIndex, ListView.Contain);
+                        currentIndex = 0;
+                        positionViewAtIndex(0, ListView.Contain);
                     }
 
                     MouseArea {
