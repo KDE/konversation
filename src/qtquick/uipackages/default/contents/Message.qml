@@ -23,18 +23,12 @@ Item {
         ? (konvApp.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
         : messageText.height)
 
-    property string user: model.Nick
-    property int row: index
-    property int avatarSize: nick.height * 2
+    readonly property int avatarSize: nick.height * 2
 
     property bool selectable: false
     property Item selectableText: null
 
-    property bool linkHovered: selectableText && selectableText.hoveredLink != ""
-
-
-
-    onRowChanged: metabitsLoader.active = showMetabits()
+    readonly property bool linkHovered: selectableText && selectableText.hoveredLink != ""
 
     onSelectableChanged: {
         if (selectable) {
@@ -43,17 +37,6 @@ Item {
         } else if (selectableText) {
             selectableText.destroy();
         }
-    }
-
-    function showMetabits() {
-        if (row == (messageModel.rowCount() - 1)) {
-            return true;
-        }
-
-        var prevNick = messageModel.data(messageModel.index(row + 1, 0),
-            Konversation.MessageModel.Nick);
-
-        return (prevNick != model.Nick);
     }
 
     Text { // WIPQTQUICK TODO Only outside loader to set avatar height.
@@ -72,13 +55,13 @@ Item {
         font.weight: Font.Bold
         font.pixelSize: konvApp.largerFontSize
 
-        text: model.Nick
+        text: model.Author
     }
 
     Loader {
         id: metabitsLoader
 
-        active: false
+        active: !model.AuthorMatchesPrecedingMessage
 
         anchors.fill: parent
 
@@ -121,7 +104,7 @@ Item {
 
                     text: {
                         // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
-                        var match = model.Nick.match(/([a-zA-Z])([a-zA-Z])/);
+                        var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
                         var abbrev = match[1].toUpperCase();
 
                         if (match.length > 2) {
@@ -181,13 +164,8 @@ Item {
 
             if (metabitsLoader.active) {
                 return t;
-            } else {
-                var prevTimeStamp = messageModel.data(messageModel.index(row + 1, 0),
-            Konversation.MessageModel.TimeStamp);
-
-                if (model.TimeStamp != prevTimeStamp) {
-                    return t + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
-                }
+            } else if (!model.TimeStampMatchesPrecedingMessage) {
+                return t + "&nbsp;&nbsp;<font color=\"grey\">" + model.TimeStamp + "</font>";
             }
 
             return t;
@@ -218,7 +196,5 @@ Item {
             onLinkActivated: Qt.openUrlExternally(link)
         }
     }
-
-    Component.onCompleted: metabitsLoader.active = showMetabits()
 }
 

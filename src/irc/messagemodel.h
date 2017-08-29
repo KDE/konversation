@@ -38,6 +38,8 @@ class FilteredMessageModel : public QSortFilterProxyModel
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
+        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
     signals:
         void filterViewChanged() const;
 
@@ -57,8 +59,10 @@ public:
         Type = Qt::UserRole + 1,
         View,
         TimeStamp,
-        Nick,
-        NickColor
+        TimeStampMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
+        Author,
+        AuthorMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
+        NickColor,
     };
     Q_ENUM(AdditionalRoles)
 

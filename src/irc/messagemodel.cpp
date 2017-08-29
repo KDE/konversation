@@ -57,6 +57,29 @@ bool FilteredMessageModel::filterAcceptsRow(int sourceRow, const QModelIndex &so
     return false;
 }
 
+QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
+{
+    if (role == MessageModel::AuthorMatchesPrecedingMessage) {
+        const int precedingMessageRow = index.row() + 1;
+
+        if (precedingMessageRow < rowCount()) {
+            const QModelIndex &precedingMessage = QSortFilterProxyModel::index(precedingMessageRow, 0);
+            return (index.data(MessageModel::Author) == precedingMessage.data(MessageModel::Author));
+        }
+    }
+
+    if (role == MessageModel::TimeStampMatchesPrecedingMessage) {
+        const int precedingMessageRow = index.row() + 1;
+
+        if (precedingMessageRow < rowCount()) {
+            const QModelIndex &precedingMessage = QSortFilterProxyModel::index(precedingMessageRow, 0);
+            return (index.data(MessageModel::TimeStamp) == precedingMessage.data(MessageModel::TimeStamp));
+        }
+    }
+
+    return QSortFilterProxyModel::data(index, role);
+}
+
 MessageModel::MessageModel(QObject *parent)
     : QAbstractListModel(parent)
 {
@@ -95,7 +118,7 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
         return qVariantFromValue<QObject *>(msg.view);
     } else if (role == TimeStamp) {
         return msg.timeStamp;
-    } else if (role == Nick) {
+    } else if (role == Author) {
         return msg.nick;
     } else if (role == NickColor) {
         return msg.nickColor;
