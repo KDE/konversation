@@ -28,6 +28,7 @@
 #include "awaymanager.h"
 #include "transfermanager.h"
 #include "messagemodel.h" // WIPQTQUICK
+#include "identitymodel.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
@@ -71,6 +72,8 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
     m_viewContainer = new ViewContainer(this);
     uiStack->addWidget(m_viewContainer->getWidget());
+
+    m_identityModel = new IdentityModel(this);
 
     m_messageModel = new MessageModel(this);
 
@@ -136,6 +139,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
         m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
         uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this));
 

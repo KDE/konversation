@@ -33,6 +33,7 @@ class KonviSettingsDialog;
 class ViewContainer;
 class MessageModel; // WIPQTQUICK
 class FilteredMessageModel; // WIPQTQUICK
+class IdentityModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -135,6 +136,7 @@ class MainWindow : public KXmlGuiWindow
 
         MessageModel *m_messageModel; // WIPQTQUICK
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
+        IdentityModel *m_identityModel;
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
