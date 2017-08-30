@@ -13,6 +13,10 @@
 
 #include <QMetaEnum>
 
+#define MAX_MESSAGES 500000
+#define MAX_MESSAGES_TOLERANCE 501000
+#define ALLOCATION_BATCH_SIZE 500
+
 FilteredMessageModel::FilteredMessageModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , m_filterView(nullptr)
@@ -82,7 +86,10 @@ QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
 
 MessageModel::MessageModel(QObject *parent)
     : QAbstractListModel(parent)
+    , m_allocCount(0)
 {
+    // Pre-allocate batch.
+    m_messages.reserve(ALLOCATION_BATCH_SIZE);
 }
 
 MessageModel::~MessageModel()
@@ -129,7 +136,8 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
 
 int MessageModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? 0 : m_messages.count();
+    // Limit model to MAX_MESSAGES.
+    return parent.isValid() ? 0 : qMax(MAX_MESSAGES, m_messages.count());
 }
 
 void MessageModel::appendMessage(QObject *view,
@@ -153,6 +161,22 @@ void MessageModel::appendMessage(QObject *view,
     m_messages.prepend(msg);
 
     endInsertRows();
+
+    ++m_allocCount;
+
+    // Grow the list in batches to make the insertion a little
+    // faster.
+    if (m_allocCount == ALLOCATION_BATCH_SIZE) {
+        m_allocCount = 0;
+        m_messages.reserve(m_messages.count() + ALLOCATION_BATCH_SIZE);
+    }
+
+    // Whenever we grow above MAX_MESSAGES_TOLERANCE, cull to
+    // MAX_MESSAGES. I.e. we cull in batches, not on every new
+    // message.
+    if (m_messages.count() > MAX_MESSAGES_TOLERANCE) {
+        m_messages = m_messages.mid(0, MAX_MESSAGES);
+    }
 }
 
 void MessageModel::cullMessages(const QObject *view)

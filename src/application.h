@@ -128,7 +128,7 @@ class Application : public QApplication
 
         void newInstance(QCommandLineParser *args);
 
-        static void openUrl(const QString& url);
+        Q_INVOKABLE static void openUrl(const QString& url);
 
         /// The wallet used to store passwords. Opens the wallet if it's closed.
         KWallet::Wallet* wallet();

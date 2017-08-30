@@ -14,14 +14,13 @@ import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 1.4 as QQC1
 import QtQuick.Controls 2.2 as QQC2
-import QtQuick.Layouts 1.0
 
 import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Kirigami.ApplicationWindow {
-    id: konvApp
+    id: konvUi
 
     property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
     property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
@@ -43,6 +42,13 @@ Kirigami.ApplicationWindow {
     pageStack.defaultColumnWidth: sidebarWidth
     pageStack.initialPage: [sidebarComponent, contentComponent]
     pageStack.separatorVisible: false
+
+    TextMetrics {
+        id: largerFontMetrics
+
+        font.pixelSize: largerFontSize
+        text: "M"
+    }
 
     contextDrawer: Kirigami.OverlayDrawer {
         id: contextDrawer
@@ -311,7 +317,7 @@ Kirigami.ApplicationWindow {
                     }
                 }
 
-                Component.onCompleted: konvApp.sidebarStackView = sidebarStackView
+                Component.onCompleted: konvUi.sidebarStackView = sidebarStackView
             }
 
             Component {
@@ -330,8 +336,8 @@ Kirigami.ApplicationWindow {
                         viewTreeList.forceActiveFocus();
                         viewModel.showView(view);
 
-                        if (!konvApp.pageStack.wideMode) {
-                            konvApp.pageStack.currentIndex = 1;
+                        if (!konvUi.pageStack.wideMode) {
+                            konvUi.pageStack.currentIndex = 1;
                         }
                     }
 
@@ -421,9 +427,9 @@ Kirigami.ApplicationWindow {
                             textMargin: Kirigami.Units.gridUnit
 
                             onIsActiveChanged: {
-                                if (isActive && konvApp.contentStackView.depth == 1) {
-                                    konvApp.contentStackView.push("SettingsPage.qml", {"title": name});
-                                    //konvApp.settingsModeButtons.enabled = true;
+                                if (isActive && konvUi.contentStackView.depth == 1) {
+                                    konvUi.contentStackView.push("SettingsPage.qml", {"title": name});
+                                    //konvUi.settingsModeButtons.enabled = true;
                                 }
                             }
 
@@ -463,7 +469,7 @@ Kirigami.ApplicationWindow {
 
                 anchors.right: parent.right
 
-                visible: !konvApp.pageStack.wideMode
+                visible: !konvUi.pageStack.wideMode
 
                 iconName: "go-previous"
                 iconSelected: true
@@ -492,20 +498,20 @@ Kirigami.ApplicationWindow {
                     color: checked ? Kirigami.Theme.highlightColor: KUIC.ExtraColors.alternateSpotColor
 
                     onCheckedChanged: {
-                        konvApp.settingsMode = checked;
+                        konvUi.settingsMode = checked;
 
                         if (checked) {
                             sidebarStackView.push(settingsTreeComponent);
-                            konvApp.contentFooterStackView.push("SettingsModeButtons.qml", {"enabled": false});
+                            konvUi.contentFooterStackView.push("SettingsModeButtons.qml", {"enabled": false});
                         } else {
                             sidebarStackView.pop();
 
-                            if (konvApp.contentStackView.depth == 2) {
-                                konvApp.contentStackView.pop();
-                                konvApp.contentFooterStackView.pop();
+                            if (konvUi.contentStackView.depth == 2) {
+                                konvUi.contentStackView.pop();
+                                konvUi.contentFooterStackView.pop();
                             }
 
-                            konvApp.showMenuBar(false);
+                            konvUi.showMenuBar(false);
 
                             inputField.forceActiveFocus();
                         }
@@ -569,7 +575,7 @@ Kirigami.ApplicationWindow {
             bottomPadding: 0
 
             onWidthChanged: {
-                konvApp.pageStack.currentIndex = 1;
+                konvUi.pageStack.currentIndex = 1;
             }
 
             Rectangle {
@@ -584,84 +590,14 @@ Kirigami.ApplicationWindow {
                 anchors.fill: parent
                 anchors.bottomMargin: Kirigami.Units.smallSpacing
 
-                initialItem: textViewComponent
-
                 pushEnter: null
                 pushExit: null
                 popEnter: null
                 popExit: null
 
-                Component.onCompleted: konvApp.contentStackView = contentStackView
-            }
-
-            Component {
-                id: textViewComponent
-
-                KUIC.ListView {
-                    id: textViewList
-
-                    visible: !konvApp.settingsMode
-
-                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
-
-                    onHeightChanged: positionViewAtBeginning()
-
-                    verticalLayoutDirection: ListView.BottomToTop
-
-                    model: messageModel
-
-                    delegate: Message {}
-
-                    ListView.onAdd: {
-                        currentIndex = 0;
-                        positionViewAtIndex(0, ListView.Contain);
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        property Item hoveredMessage: null
-
-                        acceptedButtons: Qt.NoButton
-                        hoverEnabled: true
-
-                        cursorShape: {
-                            if (hoveredMessage) {
-                                if (hoveredMessage.linkHovered) {
-                                    return Qt.OpenHandCursor;
-                                } else {
-                                    return Qt.IBeamCursor;
-                                }
-                            }
-
-                            return Qt.ArrowCursor;
-                        }
-
-                        onContainsMouseChanged: {
-                            if (!containsMouse && hoveredMessage) {
-                                hoveredMessage.selectable = false;
-                                hoveredMessage = null;
-                                inputField.forceActiveFocus();
-                            }
-                        }
-
-                        onPositionChanged: {
-                            var pos = mapToItem(textViewList.contentItem, mouse.x, mouse.y);
-                            var msg = textViewList.itemAt(pos.x, pos.y);
-
-                            if (hoveredMessage && hoveredMessage != msg) {
-                                hoveredMessage.selectable = false;
-                            }
-
-                            hoveredMessage = msg;
-
-                            if (hoveredMessage) {
-                                hoveredMessage.selectable = true;
-                            } else {
-                                inputField.forceActiveFocus();
-                            }
-                        }
-                    }
+                Component.onCompleted: {
+                    contentStackView.push("TextView.qml");
+                    konvUi.contentStackView = contentStackView;
                 }
             }
 
@@ -728,7 +664,7 @@ Kirigami.ApplicationWindow {
 
                         Keys.onPressed: {
                             // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                            // to make things like deadkeys work
+                                // to make things like deadkeys work
                             if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
                                 event.accepted = true;
                                 viewModel.currentView.sendText(text);
@@ -743,13 +679,13 @@ Kirigami.ApplicationWindow {
                         }
 
                         Component.onCompleted: {
-                            konvApp.inputField = inputField;
+                            konvUi.inputField = inputField;
                             forceActiveFocus();
                         }
                     }
                 }
 
-                Component.onCompleted: konvApp.contentFooterStackView = contentFooterStackView
+                Component.onCompleted: konvUi.contentFooterStackView = contentFooterStackView
             }
 
             PageHandle {
@@ -769,7 +705,7 @@ Kirigami.ApplicationWindow {
 
                 anchors.right: parent.right
 
-                visible: (!konvApp.settingsMode
+                visible: (!konvUi.settingsMode
                     && viewModel.currentView
                     && !contextDrawer.drawerOpen)
 

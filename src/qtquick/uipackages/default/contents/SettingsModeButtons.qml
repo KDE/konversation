@@ -63,5 +63,5 @@ Row {
         Component.onOnCompleted: settingsButtons.cancelButton = cancelButton
     }
 
-    Component.onCompleted: konvApp.settingsModeButtons = settingsModeButtons
+    Component.onCompleted: konvUi.settingsModeButtons = settingsModeButtons
 }

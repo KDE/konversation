@@ -133,6 +133,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
         m_qmlEngine = new QQmlApplicationEngine(this);
         qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
         m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));

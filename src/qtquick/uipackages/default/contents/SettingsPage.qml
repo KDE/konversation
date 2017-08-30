@@ -37,12 +37,12 @@ Item {
 
             checkable: true
 
-            onCheckedChanged: konvApp.showMenuBar(checked)
+            onCheckedChanged: konvUi.showMenuBar(checked)
         }
 
         QQC2.Button {
             text: "Open Legacy Config Dialog"
-            onClicked: konvApp.openLegacyConfigDialog()
+            onClicked: konvUi.openLegacyConfigDialog()
         }
 
         QQC2.Label {
