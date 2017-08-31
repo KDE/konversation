@@ -90,6 +90,6 @@ public:
     void cullMessages(const QObject *view);
 
 private:
-    QList<Message> m_messages;
+    QVector<Message> m_messages;
     int m_allocCount;
 };

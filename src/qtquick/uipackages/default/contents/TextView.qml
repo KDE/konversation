@@ -18,179 +18,187 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
-KUIC.ListView {
-    id: textViewList
+Item {
+    id: textView
 
-    visible: !konvUi.settingsMode
+    KUIC.ListView {
+        id: textViewList
 
-    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+        anchors.bottom: parent.bottom
 
-    onHeightChanged: positionViewAtBeginning()
+        width: parent.width
+        height: Math.min(contentItem.height, parent.height)
 
-    readonly property int msgWidth: width - QQC2.ScrollBar.vertical.width
+        visible: !konvUi.settingsMode
 
-    verticalLayoutDirection: ListView.BottomToTop
+        QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
-    model: messageModel
-    delegate: msgComponent
+        readonly property int msgWidth: width - QQC2.ScrollBar.vertical.width
 
-    ListView.onAdd: {
-        currentIndex = 0;
-        positionViewAtIndex(0, ListView.Contain);
-    }
+        model: messageModel
+        delegate: msgComponent
 
-    Component {
-        id: msgComponent
+        onHeightChanged: positionViewAtEnd()
 
-        Loader {
-            id: msg
+        onCountChanged: {
+            currentIndex = (count - 1);
+            positionViewAtEnd();
+        }
 
-            width: ListView.view.msgWidth
-            height: (active ? (konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
-                : messageText.height)
+        Component {
+            id: msgComponent
 
-            readonly property int avatarSize: konvUi.largerFontSize * 3.6
-            property var authorSize: Qt.point(0, 0)
+            Loader {
+                id: msg
 
-            readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
-            property Item timeStamp: null
+                width: ListView.view.msgWidth
+                height: (active ? (konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
+                    : messageText.height)
 
-            active: !model.AuthorMatchesPrecedingMessage
-            sourceComponent: metabitsComponent
+                readonly property int avatarSize: konvUi.largerFontSize * 3.6
+                property var authorSize: Qt.point(0, 0)
 
-            onShowTimeStampChanged: {
-                if (!showTimeStamp) {
-                    if (timeStamp) {
-                        timeStamp.destroy();
-                    }
-                } else {
-                    timeStamp = timeStampComponent.createObject(msg);
-                }
-            }
+                readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
+                property Item timeStamp: null
 
-            Component {
-                id: timeStampComponent
+                active: !model.AuthorMatchesPrecedingMessage
+                sourceComponent: metabitsComponent
 
-                Text {
-                    id: timeStamp
-
-                    readonly property bool collides: (messageText.x
-                        + messageText.implicitWidth
-                        + Kirigami.Units.smallSpacing + width > parent.width)
-                    readonly property int margin: Kirigami.Units.gridUnit / 2
-
-                    x: messageText.x + margin + (active ? authorSize.x : messageText.contentWidth)
-
-                    y: {
-                        if (!active) {
-                            return messageText.y + ((largerFontMetrics.height / 2) - (height / 2));
-                        } else {
-                            return (Kirigami.Units.gridUnit / 2) + ((authorSize.y / 2) - (height / 2));
+                onShowTimeStampChanged: {
+                    if (!showTimeStamp) {
+                        if (timeStamp) {
+                            timeStamp.destroy();
                         }
+                    } else {
+                        timeStamp = timeStampComponent.createObject(msg);
                     }
-
-                    renderType: Text.NativeRendering
-                    color: "grey"
-
-                    text: model.TimeStamp
                 }
-            }
 
-            Component {
-                id: metabitsComponent
-
-                Item {
-                    anchors.fill: parent
-
-                    Rectangle {
-                        id: avatar
-
-                        x: Kirigami.Units.gridUnit / 2
-                        y: Kirigami.Units.gridUnit / 2
-
-                        width: avatarSize
-                        height: avatarSize
-
-                        color: model.NickColor
-
-                        radius: width * 0.5
-
-                        Text {
-                            anchors.fill: parent
-                            anchors.margins: Kirigami.Units.smallSpacing
-
-                            renderType: Text.QtRendering
-                            color: "white"
-
-                            font.weight: Font.Bold
-                            font.pointSize: 100
-                            minimumPointSize: theme.defaultFont.pointSize
-                            fontSizeMode: Text.Fit
-
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-
-                            text: {
-                                // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
-                                var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
-                                var abbrev = match[1].toUpperCase();
-
-                                if (match.length > 2) {
-                                    abbrev += match[2].toLowerCase();
-                                }
-
-                                return abbrev;
-                            }
-                        }
-                    }
+                Component {
+                    id: timeStampComponent
 
                     Text {
-                        id: author
+                        id: timeStamp
 
-                        y: Kirigami.Units.gridUnit / 2
+                        readonly property bool collides: (messageText.x
+                            + messageText.implicitWidth
+                            + Kirigami.Units.smallSpacing + width > parent.width)
+                        readonly property int margin: Kirigami.Units.gridUnit / 2
 
-                        anchors.left: parent.left
-                        anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
+                        x: messageText.x + margin + (active ? authorSize.x : messageText.contentWidth)
+
+                        y: {
+                            if (!active) {
+                                return messageText.y + ((largerFontMetrics.height / 2) - (height / 2));
+                            } else {
+                                return (Kirigami.Units.gridUnit / 2) + ((authorSize.y / 2) - (height / 2));
+                            }
+                        }
 
                         renderType: Text.NativeRendering
-                        color: model.NickColor
+                        color: "grey"
 
-                        font.weight: Font.Bold
-                        font.pixelSize: konvUi.largerFontSize
-
-                        text: model.Author
-
-                        onWidthChanged: msg.authorSize = Qt.point(width, height)
+                        text: model.TimeStamp
                     }
                 }
-            }
 
-            Text {
-                id: messageText
+                Component {
+                    id: metabitsComponent
 
-                anchors.left: parent.left
-                anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
-                anchors.right: parent.right
-                anchors.rightMargin: (timeStamp && timeStamp.collides
-                    ? timeStamp.margin + timeStamp.width : 0)
-                anchors.bottom: parent.bottom
+                    Item {
+                        anchors.fill: parent
 
-                renderType: Text.NativeRendering
-                textFormat: Text.StyledText
+                        Rectangle {
+                            id: avatar
 
-                font.pixelSize: konvUi.largerFontSize
+                            x: Kirigami.Units.gridUnit / 2
+                            y: Kirigami.Units.gridUnit / 2
 
-                wrapMode: Text.Wrap
+                            width: avatarSize
+                            height: avatarSize
 
-                text: (model.Type == Konversation.MessageModel.ActionMessage
-                    ? actionWrap(model.display) : model.display)
+                            color: model.NickColor
 
-                function actionWrap(text) {
-                    return "<i>" + model.Author + "&nbsp;" + text + "</i>";
+                            radius: width * 0.5
+
+                            Text {
+                                anchors.fill: parent
+                                anchors.margins: Kirigami.Units.smallSpacing
+
+                                renderType: Text.QtRendering
+                                color: "white"
+
+                                font.weight: Font.Bold
+                                font.pointSize: 100
+                                minimumPointSize: theme.defaultFont.pointSize
+                                fontSizeMode: Text.Fit
+
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+
+                                text: {
+                                    // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
+                                    var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
+                                    var abbrev = match[1].toUpperCase();
+
+                                    if (match.length > 2) {
+                                        abbrev += match[2].toLowerCase();
+                                    }
+
+                                    return abbrev;
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: author
+
+                            y: Kirigami.Units.gridUnit / 2
+
+                            anchors.left: parent.left
+                            anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
+
+                            renderType: Text.NativeRendering
+                            color: model.NickColor
+
+                            font.weight: Font.Bold
+                            font.pixelSize: konvUi.largerFontSize
+
+                            text: model.Author
+
+                            onWidthChanged: msg.authorSize = Qt.point(width, height)
+                        }
+                    }
                 }
 
-                onLinkActivated: konvApp.openUrl(link)
+                Text {
+                    id: messageText
+
+                    anchors.left: parent.left
+                    anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
+                    anchors.right: parent.right
+                    anchors.rightMargin: (timeStamp && timeStamp.collides
+                        ? timeStamp.margin + timeStamp.width : 0)
+                    anchors.bottom: parent.bottom
+
+                    renderType: Text.NativeRendering
+                    textFormat: Text.StyledText
+
+                    font.pixelSize: konvUi.largerFontSize
+
+                    wrapMode: Text.Wrap
+
+                    text: (model.Type == Konversation.MessageModel.ActionMessage
+                        ? actionWrap(model.display) : model.display)
+
+                    function actionWrap(text) {
+                        return "<i>" + model.Author + "&nbsp;" + text + "</i>";
+                    }
+
+                    onLinkActivated: konvApp.openUrl(link)
+                }
             }
         }
     }
+
 }

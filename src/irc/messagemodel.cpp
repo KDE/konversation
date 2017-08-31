@@ -64,21 +64,25 @@ bool FilteredMessageModel::filterAcceptsRow(int sourceRow, const QModelIndex &so
 QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
 {
     if (role == MessageModel::AuthorMatchesPrecedingMessage) {
-        const int precedingMessageRow = index.row() + 1;
+        const int precedingMessageRow = index.row() - 1;
 
-        if (precedingMessageRow < rowCount()) {
+        if (precedingMessageRow >= 0) {
             const QModelIndex &precedingMessage = QSortFilterProxyModel::index(precedingMessageRow, 0);
             return (index.data(MessageModel::Author) == precedingMessage.data(MessageModel::Author));
         }
+
+        return false;
     }
 
     if (role == MessageModel::TimeStampMatchesPrecedingMessage) {
         const int precedingMessageRow = index.row() + 1;
 
-        if (precedingMessageRow < rowCount()) {
+        if (precedingMessageRow >= 0) {
             const QModelIndex &precedingMessage = QSortFilterProxyModel::index(precedingMessageRow, 0);
             return (index.data(MessageModel::TimeStamp) == precedingMessage.data(MessageModel::TimeStamp));
         }
+
+        return false;
     }
 
     return QSortFilterProxyModel::data(index, role);
@@ -147,7 +151,7 @@ void MessageModel::appendMessage(QObject *view,
     const QString &text,
     const MessageType type)
 {
-    beginInsertRows(QModelIndex(), 0, 0);
+    beginInsertRows(QModelIndex(), m_messages.count(), m_messages.count());
 
     Message msg;
 
@@ -158,7 +162,7 @@ void MessageModel::appendMessage(QObject *view,
     msg.text = text;
     msg.action = (type == ActionMessage);
 
-    m_messages.prepend(msg);
+    m_messages.append(msg);
 
     endInsertRows();
 
@@ -175,7 +179,7 @@ void MessageModel::appendMessage(QObject *view,
     // MAX_MESSAGES. I.e. we cull in batches, not on every new
     // message.
     if (m_messages.count() > MAX_MESSAGES_TOLERANCE) {
-        m_messages = m_messages.mid(0, MAX_MESSAGES);
+        m_messages = m_messages.mid(MAX_MESSAGES_TOLERANCE, MAX_MESSAGES);
     }
 }
 
