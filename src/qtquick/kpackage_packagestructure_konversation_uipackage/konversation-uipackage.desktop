@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=Konversation/UiPackage
+Name=Konversation UI Packages
+Comment=Provides a user interface for Konversation
+

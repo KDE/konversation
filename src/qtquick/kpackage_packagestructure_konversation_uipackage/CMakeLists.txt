@@ -10,3 +10,5 @@ target_link_libraries(konversation_packagestructure_uipackage
 )
 
 install(TARGETS konversation_packagestructure_uipackage DESTINATION ${KDE_INSTALL_PLUGINDIR}/kpackage/packagestructure)
+
+install(FILES konversation-uipackage.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
