@@ -123,6 +123,7 @@ int main(int argc, char* argv[])
 #endif
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("qtquick"), i18n("Default to the Qt Quick UI"))); // WIPQTQUICK
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("uipackage"), i18n("Qt Quick UI package to load"), i18n("uipackage"), QStringLiteral("default"))); // WIPQTQUICK
+    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("reloaduipackage"), i18n("Reloads the current Qt Quick UI package (if running, otherwise has no effect)"))); // WIPQTQUICK
     aboutData.setupCommandLine(&cmdLineParser);
 
     cmdLineParser.process(app);

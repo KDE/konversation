@@ -25,6 +25,7 @@
 #include <kxmlguiwindow.h>
 
 class QQmlApplicationEngine; // WIPQTQUICK
+class QStackedWidget; // WIPQTQUICK
 
 class KToggleAction;
 
@@ -54,6 +55,8 @@ class MainWindow : public KXmlGuiWindow
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
 
         MessageModel* getMessageModel() { return m_messageModel; } // WIPQTQUICK
+        bool loadUiPackage(const QString &packageName, bool raise = false);
+        bool reloadUiPackage();
 
         /** Some errors need to be shown, even when konversation is minimized.
          */
@@ -138,6 +141,8 @@ class MainWindow : public KXmlGuiWindow
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
         IdentityModel *m_identityModel;
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
+        QString m_currentUiPackage; // WIPQTQUICK
+        QStackedWidget *m_uiStack; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

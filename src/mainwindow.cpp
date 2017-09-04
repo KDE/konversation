@@ -67,11 +67,11 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_settingsDialog = NULL;
 
     // BEGIN: WIPQTQUICK
-    QStackedWidget *uiStack = new QStackedWidget(this);
-    setCentralWidget(uiStack);
+    m_uiStack = new QStackedWidget(this);
+    setCentralWidget(m_uiStack);
 
     m_viewContainer = new ViewContainer(this);
-    uiStack->addWidget(m_viewContainer->getWidget());
+    m_uiStack->addWidget(m_viewContainer->getWidget());
 
     m_identityModel = new IdentityModel(this);
 
@@ -112,45 +112,14 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
-    auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
+    m_qmlEngine = new QQmlApplicationEngine(this);
+    qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
 
-    qDebug() << "Available Qt Quick UI packages (name / id):";
-
-    for (const auto &pkg : plist) {
-        qDebug() << "  " << pkg.name() << "/" << pkg.pluginId();
-    }
-
-    QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
-
-    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
-        uiPackage.startsWith(packageNamePrefix) ? uiPackage : packageNamePrefix + uiPackage);
-
-    qDebug() << "Package root:" << p.defaultPackageRoot();
-
-    qDebug() << "Required files:" << p.requiredFiles();
-    qDebug() << "Required directories:" << p.requiredDirectories();
-
-    if (p.isValid()) {
-        qDebug() << "Package is valid.";
-        qDebug() << "File path for 'window':" << p.filePath("window");
-
-        m_qmlEngine = new QQmlApplicationEngine(this);
-        qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
-        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
-        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
-        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
-        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
-        m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
-        uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this));
-
-        if (raiseQtQuickUi) {
-            uiStack->setCurrentIndex(1);
-        }
-    } else {
-        qDebug() << "Package is invalid.";
-        m_qmlEngine = nullptr;
-        delete uiStack->widget(1);
-    }
+    loadUiPackage(uiPackage, raiseQtQuickUi);
     // END: WIPQTQUICK
 
     //used for event compression. See header file for resetHasDirtySettings()
@@ -214,7 +183,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     action->setText(i18n("Toggle UIs"));
     actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F10")));
     connect(action, &QAction::triggered, this,
-        [uiStack]() { uiStack->setCurrentIndex(uiStack->currentIndex() ? 0 : 1); }
+        [this]() { m_uiStack->setCurrentIndex(m_uiStack->currentIndex() ? 0 : 1); }
     );
     actionCollection()->addAction(QStringLiteral("toggle_ui"), action);
 
@@ -683,6 +652,89 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
 MainWindow::~MainWindow()
 {
+}
+
+bool MainWindow::loadUiPackage(const QString &packageName, bool raise)
+{
+    if (packageName.isEmpty()) {
+        qDebug() << "Error loading UI package: Package name is empty. Doing nothing.";
+
+        return false;
+    }
+
+    QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
+    QString fixedName(packageName.startsWith(packageNamePrefix) ? packageName : packageNamePrefix + packageName);
+
+    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
+        fixedName);
+
+    if (!p.isValid()) {
+        qDebug() << "Error loading UI package: Package" << packageName << "is invalid.";
+
+        qDebug() << "Available Qt Quick UI packages for Konversation (name / id):";
+
+        auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
+
+        for (const auto &pkg : plist) {
+            qDebug() << "  " << pkg.name() << "/" << pkg.pluginId();
+        }
+
+        return false;
+    }
+
+    if (m_qmlEngine->rootObjects().count()) {
+        qDebug() << "Unloading current UI package:" << m_currentUiPackage;
+
+        // Keep track of the current UI.
+        if (m_uiStack->currentIndex() == 1) {
+            raise = true;
+        }
+
+        // Close the window.
+        static_cast<QWindow *>(m_qmlEngine->rootObjects().first())->close();
+
+        QWidget *quickWindowContainer = m_uiStack->widget(1);
+
+        // Remove the window container widget from the stack.
+        m_uiStack->removeWidget(quickWindowContainer);
+
+        // Reparent and hide the container.
+        quickWindowContainer->setParent(nullptr);
+        quickWindowContainer->close();
+
+        // Delete window container.
+        delete quickWindowContainer;
+
+        // Delete the root object.
+        qDeleteAll(m_qmlEngine->rootObjects());
+
+        // Clear the component cache.
+        m_qmlEngine->clearComponentCache();
+    }
+
+    m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
+
+    m_uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this));
+
+    m_currentUiPackage = fixedName;
+
+    if (raise) {
+        qDebug() << "Raising Qt Quick UI ...";
+        m_uiStack->setCurrentIndex(1);
+    }
+
+    return true;
+}
+
+bool MainWindow::reloadUiPackage()
+{
+    if (m_currentUiPackage.isEmpty()) {
+        qDebug() << "Error reloading UI package: Currently no UI package loaded.";
+
+        return false;
+    }
+
+    return loadUiPackage(m_currentUiPackage);
 }
 
 QSize MainWindow::sizeHint() const

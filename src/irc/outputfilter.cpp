@@ -1889,6 +1889,12 @@ namespace Konversation
                 else
                     qDebug() << "Told to cycle the server, but current context doesn't have one.";
             }
+            if (isParameter("uipackage", input.parameter))
+            {
+                Application *konvApp = Application::instance();
+
+                konvApp->getMainWindow()->reloadUiPackage();
+            }
             else if (m_server)
             {
                 if (isAChannel(input.parameter))
@@ -1900,7 +1906,7 @@ namespace Konversation
                 else if (m_server->getQueryByName(input.parameter))
                     m_server->getQueryByName(input.parameter)->cycle();
                 else
-                    return usage(i18n("%1CYCLE [-APP | -SERVER] [channel | nickname]", Preferences::self()->commandChar()));
+                    return usage(i18n("%1CYCLE [-APP | -SERVER | -UIPACKAGE] [channel | nickname]", Preferences::self()->commandChar()));
             }
         }
 

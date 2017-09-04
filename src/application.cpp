@@ -1396,6 +1396,12 @@ void Application::handleActivate(const QStringList& arguments)
     KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
     mainWindow->show();
     mainWindow->raise();
+
+    // WIPQTQUICK
+    if (m_commandLineParser->isSet(QStringLiteral("reloaduipackage")))
+    {
+        mainWindow->reloadUiPackage();
+    }
 }
 
 
