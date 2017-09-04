@@ -27,7 +27,7 @@ Item {
         anchors.bottom: parent.bottom
 
         width: parent.width
-        height: Math.min(contentItem.height, parent.height)
+        height: Math.min(contentItem.childrenRect.height, parent.height)
 
         visible: !konvUi.settingsMode
 
