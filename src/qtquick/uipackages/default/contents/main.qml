@@ -213,35 +213,30 @@ Kirigami.ApplicationWindow {
                 }
             }
         }
+
+        KUIC.HorizontalDragHandle {
+            id: contextDrawerDragHandle
+
+            anchors.left: parent.left
+
+            target: contextDrawer
+            defaultWidth: defaultContextDrawerWidth
+
+            onNewWidth: contextDrawer.width = width
+        }
     }
 
-    MouseArea {
-        id: dragHandle
+    KUIC.HorizontalDragHandle {
+        id: sidebarDragHandle
 
         visible: pageStack.wideMode
 
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-
         x: sidebarWidth - (width / 2)
-        width: Kirigami.Units.devicePixelRatio * 2
 
-        property int dragRange: (Kirigami.Units.gridUnit * 5)
-        property int _lastX: -1
+        target: sidebarStackView
+        defaultWidth: defaultSidebarWidth
 
-        cursorShape: Qt.SplitHCursor
-
-        onPressed: _lastX = mouseX
-
-        onPositionChanged: {
-            if (mouse.x > _lastX) {
-                sidebarWidth = Math.min((defaultSidebarWidth + dragRange),
-                    sidebarWidth + (mouse.x - _lastX));
-            } else if (mouse.x < _lastX) {
-                sidebarWidth = Math.max((defaultSidebarWidth - dragRange),
-                    sidebarWidth - (_lastX - mouse.x));
-            }
-        }
+        onNewWidth: konvUi.sidebarWidth = width
     }
 
     Component {
