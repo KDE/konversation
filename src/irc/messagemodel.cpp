@@ -75,7 +75,7 @@ QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
     }
 
     if (role == MessageModel::TimeStampMatchesPrecedingMessage) {
-        const int precedingMessageRow = index.row() + 1;
+        const int precedingMessageRow = index.row() - 1;
 
         if (precedingMessageRow >= 0) {
             const QModelIndex &precedingMessage = QSortFilterProxyModel::index(precedingMessageRow, 0);
