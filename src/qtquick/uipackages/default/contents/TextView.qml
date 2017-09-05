@@ -38,12 +38,15 @@ Item {
         model: messageModel
         delegate: msgComponent
 
-        onHeightChanged: positionViewAtEnd()
-
-        onCountChanged: {
-            currentIndex = (count - 1);
+        function scrollToEnd() {
+            var newIndex = (count - 1);
             positionViewAtEnd();
+            currentIndex = newIndex;
         }
+
+        onHeightChanged: scrollToEnd()
+        onCountChanged: scrollToEnd()
+        ListView.onAdd: scrollToEnd()
 
         Component {
             id: msgComponent
@@ -55,7 +58,7 @@ Item {
                 height: (active ? (konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
                     : messageText.height)
 
-                readonly property int avatarSize: konvUi.largerFontSize * 3.6
+                readonly property int avatarSize: konvUi.largerFontSize * 3.4
                 property var authorSize: Qt.point(0, 0)
 
                 readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
@@ -123,7 +126,7 @@ Item {
 
                             Text {
                                 anchors.fill: parent
-                                anchors.margins: Kirigami.Units.smallSpacing
+                                anchors.margins: Kirigami.Units.devicePixelRatio * 5
 
                                 renderType: Text.QtRendering
                                 color: "white"
