@@ -37,7 +37,8 @@
 #include "irccontextmenus.h"
 #include "viewtree.h"
 #include "viewspringloader.h"
-#include <nicklistview.h> // WIPQTQUICK
+#include "nicklistview.h" // WIPQTQUICK
+#include "messagemodel.h" // WIPQTQUICK
 
 #include <QModelIndex>
 #include <QSplitter>
@@ -2057,6 +2058,14 @@ void ViewContainer::closeView(ChatWindow* view)
 
 void ViewContainer::cleanupAfterClose(ChatWindow* view)
 {
+    // BEGIN: WIPQTQUICK
+    if (m_window->getFilteredMessageModel()->filterView() == view) {
+        m_window->getFilteredMessageModel()->setFilterView(nullptr);
+    }
+
+    m_window->getMessageModel()->cullMessages(view);
+    // END: WIPQTQUICK
+
     if (view == m_frontView) m_frontView = 0;
 
     if (view == m_lastFocusedView)

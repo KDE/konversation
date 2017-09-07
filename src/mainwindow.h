@@ -55,6 +55,7 @@ class MainWindow : public KXmlGuiWindow
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
 
         MessageModel* getMessageModel() { return m_messageModel; } // WIPQTQUICK
+        FilteredMessageModel* getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
         bool loadUiPackage(const QString &packageName, bool raise = false);
         bool reloadUiPackage();
 

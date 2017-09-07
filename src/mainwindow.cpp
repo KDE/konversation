@@ -87,24 +87,6 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
-    QObject::connect(m_viewContainer, &QAbstractItemModel::rowsAboutToBeRemoved, this,
-        [this](const QModelIndex &parent, int first, int last) {
-            Q_UNUSED(parent)
-
-            for (int i = first; i <= last; ++i) {
-                const QModelIndex &idx = m_viewContainer->index(i, 0);
-                const QObject *view = static_cast<QObject *>(idx.internalPointer());
-
-                // Update filter if the filter view is closing.
-                if (m_filteredMessageModel->filterView() == view) {
-                    m_filteredMessageModel->setFilterView(nullptr);
-                }
-
-                m_messageModel->cullMessages(view);
-            }
-        }
-    );
-
     // Update filter when Viewcontainer resets.
     QObject::connect(m_viewContainer, &QAbstractItemModel::modelAboutToBeReset, this,
         [this]() {
