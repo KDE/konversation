@@ -95,6 +95,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
+    qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
     m_qmlEngine = new QQmlApplicationEngine(this);
     qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
