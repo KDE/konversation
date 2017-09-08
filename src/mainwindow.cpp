@@ -40,6 +40,7 @@
 #include <QQmlApplicationEngine> // WIPQTQUICK
 #include <QStackedWidget> // WIPQTQUICK
 #include <QWindow> // WIPQTQUICK
+#include <QStatusBar> // WIPQTQUICK
 
 #include <KActionCollection>
 #include <QAction>
@@ -621,6 +622,8 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     }
 
     toggleMenubar(true);
+
+    statusBar()->hide();
 
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(showMenuBar(bool)),
         this, SLOT(showMenubar(bool)));
