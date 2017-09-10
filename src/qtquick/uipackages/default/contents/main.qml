@@ -252,298 +252,308 @@ Kirigami.ApplicationWindow {
 
             property Item viewTreeList: null
 
-            MouseArea {
+            Kirigami.ColorScope {
                 anchors.fill: parent
 
-                onClicked: {
-                    if (viewTreeList) {
-                        viewTreeList.forceActiveFocus();
-                    }
-                }
-            }
+                context: Kirigami.ColorScope.Complementary
 
-            QQC2.StackView {
-                id: sidebarStackView
+                MouseArea {
+                    anchors.fill: parent
 
-                anchors.fill: parent
-
-                background: Rectangle { color: KUIC.ExtraColors.spotColor }
-
-                initialItem: viewTreeComponent
-
-                onBusyChanged: {
-                    if (!busy && depth == 2) {
-                        currentItem.currentIndex = 0;
-                        currentItem.forceActiveFocus();
+                    onClicked: {
+                        if (viewTreeList) {
+                            viewTreeList.forceActiveFocus();
+                        }
                     }
                 }
 
-                pushEnter: Transition {
-                    YAnimator {
-                        from: sidebarStackView.height
-                        to: 0
-                        duration: Kirigami.Units.longDuration * 2
-                        easing.type: Easing.OutCubic
-                    }
-                }
+                QQC2.StackView {
+                    id: sidebarStackView
 
-                pushExit: Transition {
-                    OpacityAnimator {
-                        from: 1.0
-                        to: 0.0
-                        duration: Kirigami.Units.longDuration * 2
-                    }
-                }
+                    anchors.fill: parent
 
-                popEnter: Transition {
-                    OpacityAnimator {
-                        from: 0.0
-                        to: 1.0
-                        duration: Kirigami.Units.longDuration * 2
-                    }
-                }
+                    background: Rectangle { color: Kirigami.Theme.backgroundColor }
 
-                popExit: Transition {
-                    YAnimator {
-                        from: 0
-                        to: sidebarStackView.height
-                        duration: Kirigami.Units.longDuration * 2
-                        easing.type: Easing.OutCubic
-                    }
-                }
+                    initialItem: viewTreeComponent
 
-                Component.onCompleted: konvUi.sidebarStackView = sidebarStackView
-            }
-
-            Component {
-                id: viewTreeComponent
-
-                KUIC.ListView {
-                    id: viewTreeList
-
-                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
-
-                    clip: true
-
-                    model: viewModel
-
-                    function showView(index, view) {
-                        viewTreeList.forceActiveFocus();
-                        viewModel.showView(view);
-
-                        if (!konvUi.pageStack.wideMode) {
-                            konvUi.pageStack.currentIndex = 1;
+                    onBusyChanged: {
+                        if (!busy && depth == 2) {
+                            currentItem.currentIndex = 0;
+                            currentItem.forceActiveFocus();
                         }
                     }
 
-                    delegate: Column {
-                        property int topLevelIndex: index
-
-                        ListItem {
-                            width: viewTreeList.width
-
-                            textColor: KUIC.ExtraColors.spotTextColor
-                            backgroundColor: KUIC.ExtraColors.spotColor
-
-                            text: model.display
-                            textMargin: Kirigami.Units.gridUnit
-
-                            onClicked: viewTreeList.showView(topLevelIndex, value)
+                    pushEnter: Transition {
+                        YAnimator {
+                            from: sidebarStackView.height
+                            to: 0
+                            duration: Kirigami.Units.longDuration * 2
+                            easing.type: Easing.OutCubic
                         }
+                    }
 
-                        DelegateModel {
-                            id: subLevelEntries
-
-                            model: viewModel
-                            rootIndex: modelIndex(index)
-
-                            delegate: ListItem {
-                                width: viewTreeList.width
-
-                                textColor: KUIC.ExtraColors.spotTextColor
-                                backgroundColor: KUIC.ExtraColors.spotColor
-
-                                text: model.display
-                                textMargin: Kirigami.Units.gridUnit * 2
-
-                                onClicked: viewTreeList.showView(topLevelIndex, value)
-                            }
+                    pushExit: Transition {
+                        OpacityAnimator {
+                            from: 1.0
+                            to: 0.0
+                            duration: Kirigami.Units.longDuration * 2
                         }
-
-                        Column { Repeater { model: subLevelEntries } }
                     }
 
-                    Keys.onUpPressed: {
-                        event.accept = true;
-                        viewModel.showPreviousView();
+                    popEnter: Transition {
+                        OpacityAnimator {
+                            from: 0.0
+                            to: 1.0
+                            duration: Kirigami.Units.longDuration * 2
+                        }
                     }
 
-                    Keys.onDownPressed: {
-                        event.accept = true;
-                        viewModel.showNextView();
+                    popExit: Transition {
+                        YAnimator {
+                            from: 0
+                            to: sidebarStackView.height
+                            duration: Kirigami.Units.longDuration * 2
+                            easing.type: Easing.OutCubic
+                        }
                     }
 
-                    Component.onCompleted: sidebar.viewTreeList = viewTreeList
+                    Component.onCompleted: konvUi.sidebarStackView = sidebarStackView
                 }
-            }
 
-            Component {
-                id: settingsTreeComponent
-
-                QQC2.ScrollView {
-                    id: viewTree
-
-                    property alias currentIndex: settingsTreeList.currentIndex
+                Component {
+                    id: viewTreeComponent
 
                     KUIC.ListView {
-                        id: settingsTreeList
+                        id: viewTreeList
 
-                        focus: true
+                        QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
                         clip: true
 
-                        currentIndex: -1
+                        model: viewModel
 
-                        onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+                        function showView(index, view) {
+                            viewTreeList.forceActiveFocus();
+                            viewModel.showView(view);
 
-                        model: ListModel {
-                            ListElement { name: "Dummy 1" }
-                            ListElement { name: "Dummy 2" }
-                            ListElement { name: "Dummy 3" }
+                            if (!konvUi.pageStack.wideMode) {
+                                konvUi.pageStack.currentIndex = 1;
+                            }
                         }
 
-                        delegate: ListItem {
-                            width: settingsTreeList.width
+                        delegate: Column {
+                            property int topLevelIndex: index
 
-                            textColor: KUIC.ExtraColors.spotTextColor
-                            backgroundColor: KUIC.ExtraColors.spotColor
+                            ListItem {
+                                width: viewTreeList.width
 
-                            text: name
-                            textMargin: Kirigami.Units.gridUnit
+                                textColor: Kirigami.Theme.textColor
+                                backgroundColor: Kirigami.Theme.backgroundColor
 
-                            onIsActiveChanged: {
-                                if (isActive && konvUi.contentStackView.depth == 1) {
-                                    konvUi.contentStackView.push("SettingsPage.qml", {"title": name});
-                                    //konvUi.settingsModeButtons.enabled = true;
+                                text: model.display
+                                textMargin: Kirigami.Units.gridUnit
+
+                                onClicked: viewTreeList.showView(topLevelIndex, value)
+                            }
+
+                            DelegateModel {
+                                id: subLevelEntries
+
+                                model: viewModel
+                                rootIndex: modelIndex(index)
+
+                                delegate: ListItem {
+                                    width: viewTreeList.width
+
+                                    textColor: Kirigami.Theme.textColor
+                                    backgroundColor: Kirigami.Theme.backgroundColor
+
+                                    text: model.display
+                                    textMargin: Kirigami.Units.gridUnit * 2
+
+                                    onClicked: viewTreeList.showView(topLevelIndex, value)
                                 }
                             }
 
-                            onClicked: {
-                                settingsTreeList.forceActiveFocus();
-                                settingsTreeList.currentIndex = index;
-                            }
+                            Column { Repeater { model: subLevelEntries } }
                         }
 
                         Keys.onUpPressed: {
                             event.accept = true;
-
-                            if (currentIndex == -1) {
-                                currentIndex = 0;
-                                return;
-                            }
-
-                            decrementCurrentIndex();
+                            viewModel.showPreviousView();
                         }
 
                         Keys.onDownPressed: {
                             event.accept = true;
+                            viewModel.showNextView();
+                        }
 
-                            if (currentIndex == -1) {
-                                currentIndex = 0;
-                                return;
+                        Component.onCompleted: sidebar.viewTreeList = viewTreeList
+                    }
+                }
+
+                Component {
+                    id: settingsTreeComponent
+
+                    QQC2.ScrollView {
+                        id: viewTree
+
+                        property alias currentIndex: settingsTreeList.currentIndex
+
+                        KUIC.ListView {
+                            id: settingsTreeList
+
+                            focus: true
+
+                            clip: true
+
+                            currentIndex: -1
+
+                            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+
+                            model: ListModel {
+                                ListElement { name: "Dummy 1" }
+                                ListElement { name: "Dummy 2" }
+                                ListElement { name: "Dummy 3" }
                             }
 
-                            incrementCurrentIndex();
+                            delegate: ListItem {
+                                width: settingsTreeList.width
+
+                                textColor: Kirigami.Theme.textColor
+                                backgroundColor: Kirigami.Theme.backgroundColor
+
+                                text: name
+                                textMargin: Kirigami.Units.gridUnit
+
+                                onIsActiveChanged: {
+                                    if (isActive && konvUi.contentStackView.depth == 1) {
+                                        konvUi.contentStackView.push("SettingsPage.qml", {"title": name});
+                                        //konvUi.settingsModeButtons.enabled = true;
+                                    }
+                                }
+
+                                onClicked: {
+                                    settingsTreeList.forceActiveFocus();
+                                    settingsTreeList.currentIndex = index;
+                                }
+                            }
+
+                            Keys.onUpPressed: {
+                                event.accept = true;
+
+                                if (currentIndex == -1) {
+                                    currentIndex = 0;
+                                    return;
+                                }
+
+                                decrementCurrentIndex();
+                            }
+
+                            Keys.onDownPressed: {
+                                event.accept = true;
+
+                                if (currentIndex == -1) {
+                                    currentIndex = 0;
+                                    return;
+                                }
+
+                                incrementCurrentIndex();
+                            }
                         }
                     }
                 }
+
+                PageHandle {
+                    id: sidebarRightPaginationHandle
+
+                    anchors.right: parent.right
+
+                    visible: !konvUi.pageStack.wideMode
+
+                    iconName: "go-previous"
+                    iconSelected: true
+
+                    color: Qt.lighter(Kirigami.Theme.backgroundColor, 1.02)
+
+                    onTriggered: pageStack.currentIndex = 1
+                }
             }
 
-            PageHandle {
-                id: sidebarRightPaginationHandle
-
-                anchors.right: parent.right
-
-                visible: !konvUi.pageStack.wideMode
-
-                iconName: "go-previous"
-                iconSelected: true
-
-                color: KUIC.ExtraColors.alternateSpotColor
-
-                onTriggered: pageStack.currentIndex = 1
-            }
-
-            footer: Rectangle {
-                id: sidebarFooter
-
+            footer: Kirigami.ColorScope {
                 width: parent.width
                 height: footerHeight
 
-                color: KUIC.ExtraColors.alternateSpotColor
-
                 Rectangle {
-                    id: settingsModeToggleButton
+                    id: sidebarFooter
 
-                    width: sidebarFooter.height
-                    height: width
+                    anchors.fill: parent
 
-                    property bool checked: false
+                    color: Qt.lighter(Kirigami.Theme.backgroundColor, 1.02)
 
-                    color: checked ? Kirigami.Theme.highlightColor: KUIC.ExtraColors.alternateSpotColor
+                    Rectangle {
+                        id: settingsModeToggleButton
 
-                    onCheckedChanged: {
-                        konvUi.settingsMode = checked;
+                        width: sidebarFooter.height
+                        height: width
 
-                        if (checked) {
-                            sidebarStackView.push(settingsTreeComponent);
-                            konvUi.contentFooterStackView.push("SettingsModeButtons.qml", {"enabled": false});
-                        } else {
-                            sidebarStackView.pop();
+                        property bool checked: false
 
-                            if (konvUi.contentStackView.depth == 2) {
-                                konvUi.contentStackView.pop();
-                                konvUi.contentFooterStackView.pop();
+                        color: checked ? Kirigami.Theme.highlightColor : Qt.lighter(Kirigami.Theme.backgroundColor, 1.02)
+
+                        onCheckedChanged: {
+                            konvUi.settingsMode = checked;
+
+                            if (checked) {
+                                sidebarStackView.push(settingsTreeComponent);
+                                konvUi.contentFooterStackView.push("SettingsModeButtons.qml", {"enabled": false});
+                            } else {
+                                sidebarStackView.pop();
+
+                                if (konvUi.contentStackView.depth == 2) {
+                                    konvUi.contentStackView.pop();
+                                    konvUi.contentFooterStackView.pop();
+                                }
+
+                                konvUi.showMenuBar(false);
+
+                                inputField.forceActiveFocus();
                             }
+                        }
 
-                            konvUi.showMenuBar(false);
+                        Kirigami.Icon {
+                            anchors.centerIn: parent
 
-                            inputField.forceActiveFocus();
+                            width: parent.width - (Kirigami.Units.smallSpacing * 4)
+                            height: width
+
+                            selected: true
+
+                            source: "application-menu"
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+
+                            onClicked: parent.checked = !parent.checked
                         }
                     }
 
-                    Kirigami.Icon {
-                        anchors.centerIn: parent
+                    QQC1.ComboBox {
+                        anchors.fill: sidebarFooter
+                        anchors.leftMargin: settingsModeToggleButton.width
 
-                        width: parent.width - (Kirigami.Units.smallSpacing * 4)
-                        height: width
+                        visible: viewModel.currentServer
 
-                        selected: true
+                        editable: true
 
-                        source: "application-menu"
-                    }
+                        model: viewModel.currentServer ? [viewModel.currentServer.nickname] : []
 
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: parent.checked = !parent.checked
-                    }
-                }
-
-                QQC1.ComboBox {
-                    anchors.fill: sidebarFooter
-                    anchors.leftMargin: settingsModeToggleButton.width
-
-                    visible: viewModel.currentServer
-
-                    editable: true
-
-                    model: viewModel.currentServer ? [viewModel.currentServer.nickname] : []
-
-                    onAccepted: {
-                        return; // WIPQTQUICK TODO Server::setNickname does something weird
-                        if (viewModel.currentServer) {
-                            viewModel.currentServer.setNickname(currentText);
+                        onAccepted: {
+                            return; // WIPQTQUICK TODO Server::setNickname does something weird
+                            if (viewModel.currentServer) {
+                                viewModel.currentServer.setNickname(currentText);
+                            }
                         }
                     }
                 }
