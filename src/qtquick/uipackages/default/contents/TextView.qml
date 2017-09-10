@@ -27,7 +27,7 @@ Item {
         anchors.bottom: parent.bottom
 
         width: parent.width
-        height: Math.min(contentItem.height, parent.height)
+        height: parent.height
 
         visible: !konvUi.settingsMode
 
@@ -44,9 +44,34 @@ Item {
             currentIndex = newIndex;
         }
 
-        onHeightChanged: scrollToEnd()
-        onCountChanged: scrollToEnd()
-        ListView.onAdd: scrollToEnd()
+        Connections {
+            target: textViewList.contentItem
+
+            onHeightChanged: {
+                if (textViewList.contentItem.height <= textView.height) {
+                    textViewList.height = textViewList.contentItem.height;
+                } else {
+                    textViewList.height = textView.height;
+                }
+            }
+        }
+
+        Connections {
+            target: messageModel
+
+            onRowsInserted: scrollDownTimer.restart()
+            onRowsRemoved: scrollDownTimer.restart()
+            onModelReset: scrollDownTimer.restart()
+        }
+
+        Timer {
+            id: scrollDownTimer
+
+            interval: 0
+            repeat: false
+
+            onTriggered: textViewList.scrollToEnd()
+        }
 
         Component {
             id: msgComponent
