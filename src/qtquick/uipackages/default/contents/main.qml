@@ -125,91 +125,91 @@ Kirigami.ApplicationWindow {
             onClicked: userList.forceActiveFocus()
         }
 
-        KUIC.ListView {
-            id: userList
-
+        QQC2.ScrollView {
             anchors.top: topicArea.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: viewModel.currentView && "userModel" in viewModel.currentView
+            ListView {
+                id: userList
 
-            QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+                visible: viewModel.currentView && "userModel" in viewModel.currentView
 
-            onHeightChanged: {
-                if (currentIndex != -1) {
-                    positionViewAtIndex(currentIndex, ListView.Contain);
-                }
-            }
-
-            clip: true
-
-            currentIndex: -1
-            onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
-
-            model: visible ? viewModel.currentView.userModel : null
-
-            onModelChanged: currentIndex = -1
-
-            delegate: ListItem {
-                width: userList.width
-
-                text: model.display
-                textMargin: Kirigami.Units.gridUnit
-
-                function openQuery() {
-                    viewModel.currentServer.addQuery(model.display);
-                    contextDrawer.close();
+                onHeightChanged: {
+                    if (currentIndex != -1) {
+                        positionViewAtIndex(currentIndex, ListView.Contain);
+                    }
                 }
 
-                onClicked: {
-                    userList.forceActiveFocus();
-                    userList.currentIndex = index;
+                clip: true
+
+                currentIndex: -1
+                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
+
+                model: visible ? viewModel.currentView.userModel : null
+
+                onModelChanged: currentIndex = -1
+
+                delegate: ListItem {
+                    width: userList.width
+
+                    text: model.display
+                    textMargin: Kirigami.Units.gridUnit
+
+                    function openQuery() {
+                        viewModel.currentServer.addQuery(model.display);
+                        contextDrawer.close();
+                    }
+
+                    onClicked: {
+                        userList.forceActiveFocus();
+                        userList.currentIndex = index;
+                    }
+
+                    onDoubleClicked: openQuery();
+
+                    Keys.onEnterPressed: {
+                        event.accept = true;
+                        openQuery();
+                    }
+
+                    Keys.onReturnPressed: {
+                        event.accept = true;
+                        openQuery();
+                    }
                 }
 
-                onDoubleClicked: openQuery();
-
-                Keys.onEnterPressed: {
+                Keys.onUpPressed: {
                     event.accept = true;
-                    openQuery();
+
+                    if (currentIndex == -1) {
+                        currentIndex = 0;
+                        return;
+                    }
+
+                    decrementCurrentIndex();
                 }
 
-                Keys.onReturnPressed: {
+                Keys.onDownPressed: {
                     event.accept = true;
-                    openQuery();
-                }
-            }
 
-            Keys.onUpPressed: {
-                event.accept = true;
+                    if (currentIndex == -1) {
+                        currentIndex = 0;
+                        return;
+                    }
 
-                if (currentIndex == -1) {
-                    currentIndex = 0;
-                    return;
+                    incrementCurrentIndex();
                 }
 
-                decrementCurrentIndex();
-            }
-
-            Keys.onDownPressed: {
-                event.accept = true;
-
-                if (currentIndex == -1) {
-                    currentIndex = 0;
-                    return;
-                }
-
-                incrementCurrentIndex();
-            }
-
-            Keys.onPressed: {
-                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                // to make things like deadkeys work
-                if (event.text != "" && inputField && !inputField.activeFocus) {
-                    contextDrawer.close();
-                    event.accept = true;
-                    inputField.textForward(event.text);
+                Keys.onPressed: {
+                    // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                    // to make things like deadkeys work
+                    if (event.text != "" && inputField && !inputField.activeFocus) {
+                        contextDrawer.close();
+                        event.accept = true;
+                        inputField.textForward(event.text);
+                    }
                 }
             }
         }
@@ -318,72 +318,72 @@ Kirigami.ApplicationWindow {
             Component {
                 id: viewTreeComponent
 
-                KUIC.ListView {
-                    id: viewTreeList
+                QQC2.ScrollView {
+                    ListView {
+                        id: viewTreeList
 
-                    QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+                        clip: true
 
-                    clip: true
+                        model: viewModel
 
-                    model: viewModel
+                        function showView(index, view) {
+                            viewTreeList.forceActiveFocus();
+                            viewModel.showView(view);
 
-                    function showView(index, view) {
-                        viewTreeList.forceActiveFocus();
-                        viewModel.showView(view);
-
-                        if (!konvUi.pageStack.wideMode) {
-                            konvUi.pageStack.currentIndex = 1;
-                        }
-                    }
-
-                    delegate: Column {
-                        property int topLevelIndex: index
-
-                        ListItem {
-                            width: viewTreeList.width
-
-                            textColor: KUIC.ExtraColors.spotTextColor
-                            backgroundColor: KUIC.ExtraColors.spotColor
-
-                            text: model.display
-                            textMargin: Kirigami.Units.gridUnit
-
-                            onClicked: viewTreeList.showView(topLevelIndex, value)
+                            if (!konvUi.pageStack.wideMode) {
+                                konvUi.pageStack.currentIndex = 1;
+                            }
                         }
 
-                        DelegateModel {
-                            id: subLevelEntries
+                        delegate: Column {
+                            property int topLevelIndex: index
 
-                            model: viewModel
-                            rootIndex: modelIndex(index)
-
-                            delegate: ListItem {
+                            ListItem {
                                 width: viewTreeList.width
 
                                 textColor: KUIC.ExtraColors.spotTextColor
                                 backgroundColor: KUIC.ExtraColors.spotColor
 
                                 text: model.display
-                                textMargin: Kirigami.Units.gridUnit * 2
+                                textMargin: Kirigami.Units.gridUnit
 
                                 onClicked: viewTreeList.showView(topLevelIndex, value)
                             }
+
+                            DelegateModel {
+                                id: subLevelEntries
+
+                                model: viewModel
+                                rootIndex: modelIndex(index)
+
+                                delegate: ListItem {
+                                    width: viewTreeList.width
+
+                                    textColor: KUIC.ExtraColors.spotTextColor
+                                    backgroundColor: KUIC.ExtraColors.spotColor
+
+                                    text: model.display
+                                    textMargin: Kirigami.Units.gridUnit * 2
+
+                                    onClicked: viewTreeList.showView(topLevelIndex, value)
+                                }
+                            }
+
+                            Column { Repeater { model: subLevelEntries } }
                         }
 
-                        Column { Repeater { model: subLevelEntries } }
-                    }
+                        Keys.onUpPressed: {
+                            event.accept = true;
+                            viewModel.showPreviousView();
+                        }
 
-                    Keys.onUpPressed: {
-                        event.accept = true;
-                        viewModel.showPreviousView();
-                    }
+                        Keys.onDownPressed: {
+                            event.accept = true;
+                            viewModel.showNextView();
+                        }
 
-                    Keys.onDownPressed: {
-                        event.accept = true;
-                        viewModel.showNextView();
+                        Component.onCompleted: sidebar.viewTreeList = viewTreeList
                     }
-
-                    Component.onCompleted: sidebar.viewTreeList = viewTreeList
                 }
             }
 
@@ -395,7 +395,7 @@ Kirigami.ApplicationWindow {
 
                     property alias currentIndex: settingsTreeList.currentIndex
 
-                    KUIC.ListView {
+                    ListView {
                         id: settingsTreeList
 
                         focus: true

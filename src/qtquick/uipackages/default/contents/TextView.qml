@@ -18,10 +18,10 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
-Item {
+QQC2.ScrollView {
     id: textView
 
-    KUIC.ListView {
+    ListView {
         id: textViewList
 
         anchors.bottom: parent.bottom
@@ -80,10 +80,10 @@ Item {
                 id: msg
 
                 width: ListView.view.msgWidth
-                height: (active ? (konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit)
+                height: (active ? (Math.max(avatarSize, konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit))
                     : messageText.height)
 
-                readonly property int avatarSize: konvUi.largerFontSize * 3.4
+                readonly property int avatarSize: konvUi.largerFontSize * 3.3
                 property var authorSize: Qt.point(0, 0)
 
                 readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
@@ -228,5 +228,4 @@ Item {
             }
         }
     }
-
 }
