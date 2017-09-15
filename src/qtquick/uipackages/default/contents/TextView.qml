@@ -126,6 +126,7 @@ Item {
 
                         Rectangle {
                             anchors.fill: parent
+                            anchors.topMargin: msg.active ? (Kirigami.Units.gridUnit / 2) : 0
 
                             z: 0
 
