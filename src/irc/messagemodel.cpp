@@ -11,6 +11,8 @@
 
 #include "messagemodel.h"
 
+#include <QGuiApplication>
+#include <QItemSelectionModel>
 #include <QMetaEnum>
 
 #define MAX_MESSAGES 500000
@@ -21,6 +23,9 @@ FilteredMessageModel::FilteredMessageModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , m_filterView(nullptr)
 {
+    m_selectionModel = new QItemSelectionModel(this, this);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged,
+            this, &FilteredMessageModel::selectionChanged);
 }
 
 FilteredMessageModel::~FilteredMessageModel()
@@ -37,10 +42,116 @@ void FilteredMessageModel::setFilterView(QObject *view)
     if (m_filterView != view) {
         m_filterView = view;
 
+        clearSelection();
         invalidateFilter();
 
         emit filterViewChanged();
     }
+}
+
+bool FilteredMessageModel::hasSelection()
+{
+    return m_selectionModel->hasSelection();
+}
+
+bool FilteredMessageModel::isSelected(int row)
+{
+    if (row < 0) {
+        return false;
+    }
+
+    return m_selectionModel->isSelected(index(row, 0));
+}
+
+void FilteredMessageModel::setSelected(int row)
+{
+    if (row < 0) {
+        return;
+    }
+
+    m_selectionModel->select(index(row, 0), QItemSelectionModel::Select);
+}
+
+void FilteredMessageModel::toggleSelected(int row)
+{
+    if (row < 0) {
+        return;
+    }
+
+    m_selectionModel->select(index(row, 0), QItemSelectionModel::Toggle);
+}
+
+void FilteredMessageModel::setRangeSelected(int anchor, int to)
+{
+    if (anchor < 0 || to < 0) {
+        return;
+    }
+
+    QItemSelection selection(index(anchor, 0), index(to, 0));
+    m_selectionModel->select(selection, QItemSelectionModel::ClearAndSelect);
+}
+
+void FilteredMessageModel::updateSelection(const QVariantList &rows, bool toggle)
+{
+    Q_UNUSED(toggle)
+
+    QItemSelection newSelection;
+
+    int iRow = -1;
+
+    foreach (const QVariant &row, rows) {
+        iRow = row.toInt();
+
+        if (iRow < 0) {
+            return;
+        }
+
+        const QModelIndex &idx = index(iRow, 0);
+        newSelection.select(idx, idx);
+    }
+
+    m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
+}
+
+void FilteredMessageModel::clearSelection()
+{
+    if (m_selectionModel->hasSelection()) {
+        m_selectionModel->clear();
+    }
+}
+
+void FilteredMessageModel::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    QModelIndexList indices = selected.indexes();
+    indices.append(deselected.indexes());
+
+    foreach(const QModelIndex index, indices) {
+        emit dataChanged(index, index,  QVector<int>{MessageModel::Selected});
+    }
+
+    copySelectionToClipboard(QClipboard::Selection);
+}
+
+void FilteredMessageModel::copySelectionToClipboard(QClipboard::Mode mode)
+{
+    if (!hasSelection()) {
+        return;
+    }
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+
+    if (!clipboard) {
+        return;
+    }
+
+    QStringList selected;
+
+    foreach (const QModelIndex &index, m_selectionModel->selectedIndexes())
+    {
+        selected.append(index.data(MessageModel::ClipboardSerialization).toString());
+    }
+
+    clipboard->setText(selected.join('\n'), mode);
 }
 
 bool FilteredMessageModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -63,7 +174,9 @@ bool FilteredMessageModel::filterAcceptsRow(int sourceRow, const QModelIndex &so
 
 QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
 {
-    if (role == MessageModel::AuthorMatchesPrecedingMessage) {
+    if (role == MessageModel::Selected) {
+        return m_selectionModel->isSelected(index);
+    } else if (role == MessageModel::AuthorMatchesPrecedingMessage) {
         const int precedingMessageRow = index.row() - 1;
 
         if (precedingMessageRow >= 0) {
@@ -72,9 +185,7 @@ QVariant FilteredMessageModel::data(const QModelIndex &index, int role) const
         }
 
         return false;
-    }
-
-    if (role == MessageModel::TimeStampMatchesPrecedingMessage) {
+    } else if (role == MessageModel::TimeStampMatchesPrecedingMessage) {
         const int precedingMessageRow = index.row() - 1;
 
         if (precedingMessageRow >= 0) {
@@ -133,6 +244,8 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
         return msg.nick;
     } else if (role == NickColor) {
         return msg.nickColor;
+    } else if (role == ClipboardSerialization) {
+        return clipboardSerialization(msg);
     }
 
     return QVariant();
@@ -198,4 +311,11 @@ void MessageModel::cullMessages(const QObject *view)
             ++i;
         }
     }
+}
+
+QString MessageModel::clipboardSerialization(const Message& msg) const
+{
+    // WIPQTQUICK TODO: msg.text is preformatted HTML, we need the raw in the
+    // model to derive this properly.
+    return QString("[%1] <%2> %3").arg(msg.timeStamp).arg(msg.nick).arg(msg.text);
 }

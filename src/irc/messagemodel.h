@@ -13,8 +13,11 @@
 
 #include <QSortFilterProxyModel>
 
+#include <QClipboard>
 #include <QColor>
 #include <QPointer>
+
+class QItemSelectionModel;
 
 struct Message {
     QObject *view;
@@ -38,16 +41,29 @@ class FilteredMessageModel : public QSortFilterProxyModel
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
+        Q_INVOKABLE bool hasSelection();
+        Q_INVOKABLE bool isSelected(int row);
+        Q_INVOKABLE void setSelected(int row);
+        Q_INVOKABLE void toggleSelected(int row);
+        Q_INVOKABLE void setRangeSelected(int anchor, int to);
+        Q_INVOKABLE void updateSelection(const QVariantList &rows, bool toggle);
+        Q_INVOKABLE void clearSelection();
+        Q_INVOKABLE void copySelectionToClipboard(QClipboard::Mode mode = QClipboard::Clipboard);
+
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    signals:
+    Q_SIGNALS:
         void filterViewChanged() const;
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
+    private Q_SLOTS:
+        void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     private:
         QObject *m_filterView;
+        QItemSelectionModel *m_selectionModel;
 };
 
 class MessageModel : public QAbstractListModel
@@ -56,13 +72,15 @@ class MessageModel : public QAbstractListModel
 
 public:
     enum AdditionalRoles {
-        Type = Qt::UserRole + 1,
+        Selected = Qt::UserRole + 1, // WIPQTQUICK TODO This is implemented by FMM, maybe I should extend roles there.
+        Type,
         View,
         TimeStamp,
         TimeStampMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
         Author,
         AuthorMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
         NickColor,
+        ClipboardSerialization
     };
     Q_ENUM(AdditionalRoles)
 
@@ -90,6 +108,8 @@ public:
     void cullMessages(const QObject *view);
 
 private:
+    QString clipboardSerialization(const Message &msg) const;
+
     QVector<Message> m_messages;
     int m_allocCount;
 };
