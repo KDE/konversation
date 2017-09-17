@@ -140,13 +140,13 @@ Item {
                     property var authorSize: Qt.point(0, 0)
 
                     property int contentWidth: {
-                        var width = Math.ceil(Kirigami.Units.devicePixelRatio);
+                        var width = 0;;
 
                         if (timeStamp) {
-                            width += Math.max(timeStamp.x + timeStamp.width,
+                            width = Math.max(timeStamp.x + timeStamp.width,
                                 messageText.x + messageText.contentWidth);
                         } else {
-                            width += Math.max(messageText.x + messageText.contentWidth,
+                            width = Math.max(messageText.x + messageText.contentWidth,
                                 avatarSize + Kirigami.Units.gridUnit + authorSize.x);
                         }
 
