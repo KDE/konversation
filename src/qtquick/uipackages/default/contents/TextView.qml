@@ -552,7 +552,7 @@ Item {
                 var messageTextPos = mapToItem(item.messageTextArea, mouse.x, mouse.y);
                 hoveredLink = item.messageTextArea.linkAt(messageTextPos.x, messageTextPos.y);
 
-                if (hoveredLink) {
+                if (!mouseOverlay.tapSelecting && hoveredLink) {
                     cursorShape = Qt.PointingHandCursor;
 
                     return;
