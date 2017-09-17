@@ -652,6 +652,19 @@ Item {
         }
 
         onReleased: {
+            if (inlineSelectionItem) {
+                var mPos = mapToItem(inlineSelectionItem.inlineSelectionTextItem.textArea,
+                    mouse.x,
+                    mouse.y);
+                eventGenerator.sendMouseEvent(inlineSelectionItem.inlineSelectionTextItem.textArea,
+                    KQuickControlsAddons.EventGenerator.MouseButtonRelease,
+                    mPos.x,
+                    mPos.y,
+                    Qt.LeftButton,
+                    Qt.LeftButton,
+                    0);
+            }
+
             pressedRow = -1;
             pressAndHoldTimer.stop();
             textListView.cancelAutoScroll();
