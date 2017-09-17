@@ -15,8 +15,6 @@
 #include <QItemSelectionModel>
 #include <QMetaEnum>
 
-#include <QQuickItem>
-
 #define MAX_MESSAGES 500000
 #define MAX_MESSAGES_TOLERANCE 501000
 #define ALLOCATION_BATCH_SIZE 500
@@ -32,13 +30,6 @@ FilteredMessageModel::FilteredMessageModel(QObject *parent)
 
 FilteredMessageModel::~FilteredMessageModel()
 {
-}
-
-void FilteredMessageModel::bla(QObject *obj)
-{
-    QQuickItem *item = qobject_cast<QQuickItem *>(obj);
-    //item->setKeepMouseGrab(false);
-    item->ungrabMouse();
 }
 
 QObject *FilteredMessageModel::filterView() const

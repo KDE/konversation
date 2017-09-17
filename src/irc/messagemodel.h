@@ -50,8 +50,6 @@ class FilteredMessageModel : public QSortFilterProxyModel
 
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-        Q_INVOKABLE void bla(QObject *obj);
-
     Q_SIGNALS:
         void filterViewChanged() const;
         void hasSelectionChanged() const;
