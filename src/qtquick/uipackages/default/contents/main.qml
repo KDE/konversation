@@ -36,6 +36,8 @@ Kirigami.ApplicationWindow {
     property bool settingsMode: false
     property Item settingsModeButtons: null
 
+    property bool shiftPressed: false
+
     signal openLegacyConfigDialog
     signal showMenuBar(bool show)
 
@@ -242,7 +244,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: sidebarComponent
 
-        Kirigami.Page {
+        KUIC.Page {
             id: sidebar
 
             leftPadding: 0
@@ -563,7 +565,7 @@ Kirigami.ApplicationWindow {
     Component {
         id: contentComponent
 
-        Kirigami.Page {
+        KUIC.Page {
             leftPadding: 0
             rightPadding: 0
             topPadding: 0

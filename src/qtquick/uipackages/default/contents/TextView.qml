@@ -14,6 +14,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
@@ -36,16 +37,63 @@ Item {
 
             QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
 
+            property bool scrollUp: false
+            property bool scrollDown: false
+
             readonly property int msgWidth: width - QQC2.ScrollBar.vertical.width
 
             model: messageModel
             delegate: msgComponent
 
             function scrollToEnd() {
+                if (messageModel.hasSelection
+                    || (mouseOverlay.inlineSelectionItem
+                    && mouseOverlay.inlineSelectionItem.hasSelectedText)) {
+                    return;
+                }
+
                 var newIndex = (count - 1);
                 positionViewAtEnd();
                 currentIndex = newIndex;
             }
+
+            function cancelAutoScroll() {
+                scrollUp = false;
+                scrollDown = false;
+            }
+
+            onContentYChanged: {
+                if (contentY == 0) {
+                    scrollUp = false;
+                }
+
+                if (contentY == contentItem.height - height) {
+                    scrollDown = false;
+                }
+            }
+
+            onScrollUpChanged: {
+                if (scrollUp && visibleArea.heightRatio < 1.0) {
+                    smoothY.enabled = true;
+                    contentY = 0;
+                } else {
+                    contentY = contentY;
+                    smoothY.enabled = false;
+                }
+            }
+
+            onScrollDownChanged: {
+                if (scrollDown && visibleArea.heightRatio < 1.0) {
+                    smoothY.enabled = true;
+                    contentY = contentItem.height - height;
+                } else {
+                    contentY = contentY;
+                    smoothY.enabled = false;
+                }
+            }
+
+            Behavior on contentX { id: smoothX; enabled: false; SmoothedAnimation { velocity: 500 } }
+            Behavior on contentY { id: smoothY; enabled: false; SmoothedAnimation { velocity: 500 } }
 
             Connections {
                 target: textListView.contentItem
@@ -91,14 +139,33 @@ Item {
                     readonly property int avatarSize: konvUi.largerFontSize * 3.3
                     property var authorSize: Qt.point(0, 0)
 
+                    property int contentWidth: {
+                        var width = Math.ceil(Kirigami.Units.devicePixelRatio);
+
+                        if (timeStamp) {
+                            width += Math.max(timeStamp.x + timeStamp.width,
+                                messageText.x + messageText.contentWidth);
+                        } else {
+                            width += Math.max(messageText.x + messageText.contentWidth,
+                                avatarSize + Kirigami.Units.gridUnit + authorSize.x);
+                        }
+
+                        return Math.min(textView.width, width);
+                    }
+
                     property bool selected: model.Selected === true
+                    property bool hasSelectedText: (inlineSelectionTextItem
+                        && inlineSelectionTextItem.selectedText.length)
+
+                    property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
+                        && !mouseOverlay.tapSelecting)
 
                     readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
+
                     property Item timeStamp: null
-
                     property Item messageTextArea: messageText
-
                     property Item selectedBackgroundItem: null
+                    property Item inlineSelectionTextItem: null
 
                     active: !model.AuthorMatchesPrecedingMessage
                     sourceComponent: metabitsComponent
@@ -108,6 +175,7 @@ Item {
                             selectedBackgroundItem = selectedBackgroundItemComponent.createObject(msg);
                         } else if (!selected && selectedBackgroundItem) {
                             selectedBackgroundItem.destroy();
+                            selectedBackgroundItem = null;
                         }
                     }
 
@@ -115,9 +183,21 @@ Item {
                         if (!showTimeStamp) {
                             if (timeStamp) {
                                 timeStamp.destroy();
+                                timeStamp = null;
                             }
                         } else {
                             timeStamp = timeStampComponent.createObject(msg);
+                        }
+                    }
+
+                    onAllowInlineSelectionChanged: {
+                        if (allowInlineSelection && !inlineSelectionTextItem) {
+                            inlineSelectionTextItem = inlineSelectionTextItemComponent.createObject(msg);
+                        } else if (!allowInlineSelection
+                            && inlineSelectionTextItem
+                            && !inlineSelectionTextItem.selectedText.length) {
+                            inlineSelectionTextItem.destroy();
+                            inlineSelectionTextItem = null;
                         }
                     }
 
@@ -125,8 +205,13 @@ Item {
                         id: selectedBackgroundItemComponent
 
                         Rectangle {
-                            anchors.fill: parent
+                            anchors.top: parent.top
                             anchors.topMargin: msg.active ? (Kirigami.Units.gridUnit / 2) : 0
+
+                            x: messageText.x
+
+                            height: (messageText.y + messageText.contentHeight) - anchors.topMargin
+                            width: msg.contentWidth - x
 
                             z: 0
 
@@ -140,7 +225,7 @@ Item {
                         Text {
                             id: timeStamp
 
-                            z: 1
+                            z: 2
 
                             readonly property bool collides: (messageText.x
                                 + messageText.implicitWidth
@@ -158,7 +243,7 @@ Item {
                             }
 
                             renderType: Text.NativeRendering
-                            color: Kirigami.Theme.disabledTextColor
+                            color: selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
 
                             text: model.TimeStamp
                         }
@@ -223,7 +308,7 @@ Item {
                                 anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
 
                                 renderType: Text.NativeRendering
-                                color: model.NickColor
+                                color: selected ? Kirigami.Theme.highlightedTextColor : model.NickColor
 
                                 font.weight: Font.Bold
                                 font.pixelSize: konvUi.largerFontSize
@@ -235,8 +320,88 @@ Item {
                         }
                     }
 
+                    Component {
+                        id: inlineSelectionTextItemComponent
+
+                        Item {
+                            id: inlineSelectionText
+
+                            anchors.fill: messageText
+
+                            z: 1
+
+                            property Item textArea: textArea
+                            property alias selectedText: textArea.selectedText
+
+                            Connections {
+                                target: mouseOverlay
+
+                                onClearInlineSelectedText: {
+                                    inlineSelectionText.destroy();
+                                    msg.inlineSelectionTextItem = null;
+                                }
+
+                                onTapSelectingChanged: {
+                                    if (!mouseOverlay.tapSelecting) {
+                                        inlineSelectionText.destroy();
+                                        msg.inlineSelectionTextItem = null;
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: mouseOverlay.inlineSelectionItem
+
+                                enabled: mouseOverlay.inlineSelectionItem != msg
+
+                                onHasSelectedTextChanged: {
+                                    inlineSelectionText.destroy();
+                                    msg.inlineSelectionTextItem = null;
+                                }
+                            }
+
+                            QQC2.TextArea {
+                                id: textArea
+
+                                anchors.fill: parent
+
+                                // Init from messageText.
+                                renderType: messageText.renderType
+                                textFormat: Text.RichText
+                                font: messageText.font
+                                wrapMode: messageText.wrapMode
+                                color: messageText.color
+                                text: messageText.text
+
+                                leftPadding: 0
+                                rightPadding: 0
+                                topPadding: 0
+                                bottomPadding: 0
+
+                                readOnly: true
+
+                                selectByMouse: true
+                                persistentSelection: true
+
+                                onSelectedTextChanged: {
+                                    if (!selectedText.length
+                                        && !msg.allowInlineSelection) {
+                                        inlineSelectionText.destroy();
+                                        msg.inlineSelectionTextItem = null;
+                                    }
+                                }
+
+                                Component.onCompleted: {
+                                    forceActiveFocus();
+                                }
+                            }
+                        }
+                    }
+
                     Text {
                         id: messageText
+
+                        opacity: allowInlineSelection ? 0.0 : 1.0
 
                         z: 1
 
@@ -262,8 +427,6 @@ Item {
                         function actionWrap(text) {
                             return "<i>" + model.Author + "&nbsp;" + text + "</i>";
                         }
-
-                        onLinkActivated: konvApp.openUrl(link)
                     }
                 }
             }
@@ -278,21 +441,264 @@ Item {
     }
 
     MouseArea {
+        id: mouseOverlay
+
         anchors.fill: parent
 
-        onClicked: {
+        property var rowsToSelect: []
+        property int pressedRow: -1
+        property bool tapSelecting: false
+
+        property Item inlineSelectionItem: null
+
+        property string hoveredLink: ""
+
+        signal clearInlineSelectedText
+
+        hoverEnabled: true
+
+        function itemAt(x, y) {
+            var cPos = mapToItem(textListView.contentItem, x, y);
+            return textListView.itemAt(cPos.x, cPos.y);
+        }
+
+        function toggleSelected(row) {
+            var index = rowsToSelect.indexOf(row);
+
+            if (index != -1) {
+                var selection = rowsToSelect;
+                selection.splice(index, 1);
+                rowsToSelect = selection;
+            } else {
+                var selection = rowsToSelect;
+                selection.push(row);
+                selection.sort();
+                rowsToSelect = selection;
+            }
+        }
+
+        function processClick(x, y) {
+            var item = itemAt(x, y);
+
+            // Adding a gridUnit for bigger finger targets.
+            if (item
+                && x >= item.messageTextArea.x
+                && x <= (item.contentWidth + Kirigami.Units.gridUnit)) {
+
+                if (rowsToSelect.length && konvUi.shiftPressed) {
+                    var start = Math.min(rowsToSelect[0], item.row);
+                    var end = Math.max(rowsToSelect[0], item.row);
+                    var selection = [];
+
+                    for (var i = start; i <= end; ++i) {
+                        selection.push(i);
+                    }
+
+                    rowsToSelect = selection;
+                } else {
+                    toggleSelected(item.row);
+                }
+            } else {
+                rowsToSelect = [];
+            }
+        }
+
+        onRowsToSelectChanged: messageModel.clearAndSelect(rowsToSelect)
+
+        onContainsMouseChanged: {
+            if (!containsMouse) {
+                pressAndHoldTimer.stop();
+                hoveredLink = "";
+
+                if (inlineSelectionItem
+                    && !inlineSelectionItem.hasSelectedText) {
+                    inlineSelectionItem = null;
+                }
+            }
+        }
+
+        onPositionChanged: {
             mouse.accepted = false;
 
-            var cPos = mapToItem(textListView.contentItem, mouse.x, mouse.y);
-            var item = textListView.itemAt(cPos.x, cPos.y);
+            var item = itemAt(mouse.x, mouse.y);
 
             if (item) {
-                messageModel.toggleSelected(item.row);
+                if (pressedRow != -1) {
+                    // Trigger auto-scroll.
+                    // WIPQTQUICK TODO: The selection should be updated even without
+                    // pointer movement while autoscrolling.
+                    textListView.scrollUp = (mouse.y <= 0 && textListView.contentY > 0);
+                    textListView.scrollDown = (mouse.y >= textListView.height
+                        && textListView.contentY < textListView.contentItem.height - textListView.height);
+
+                    if (item.row != pressedRow && pressed) {
+                        var start = Math.min(pressedRow, item.row);
+                        var end = Math.max(pressedRow, item.row);
+                        var selection = [];
+
+                        for (var i = start; i <= end; ++i) {
+                            selection.push(i);
+                        }
+
+                        rowsToSelect = selection;
+
+                        pressAndHoldTimer.stop();
+                    } else if (rowsToSelect.length) {
+                        rowsToSelect = [item.row];
+                    }
+                }
+
+                var messageTextPos = mapToItem(item.messageTextArea, mouse.x, mouse.y);
+                hoveredLink = item.messageTextArea.linkAt(messageTextPos.x, messageTextPos.y);
+
+                if (hoveredLink) {
+                    cursorShape = Qt.PointingHandCursor;
+
+                    return;
+                }
+
+                if (mouse.x >= item.messageTextArea.x && mouse.x <= item.contentWidth) {
+                    cursorShape = Qt.IBeamCursor;
+
+                    if (!messageModel.hasSelection && !tapSelecting) {
+                        inlineSelectionItem = item;
+
+                        eventGenerator.sendMouseEvent(inlineSelectionItem.inlineSelectionTextItem.textArea,
+                            KQuickControlsAddons.EventGenerator.MouseMove,
+                            messageTextPos.x,
+                            messageTextPos.y,
+                            Qt.LeftButton,
+                            Qt.LeftButton,
+                            0);
+                    }
+
+                    return;
+                }
+            } else {
+                pressAndHoldTimer.stop();
+
+                if (inlineSelectionItem && !inlineSelectionItem.hasSelectedText) {
+                    inlineSelectionItem = null;
+                }
+
+                if (pressedRow != -1) {
+                    if (mouse.y < 0) {
+                        var topRow = itemAt(0, 0).row;
+                        var start = Math.min(pressedRow, topRow);
+                        var end = Math.max(pressedRow, topRow);
+                        var selection = [];
+
+                        for (var i = start; i <= end; ++i) {
+                            selection.push(i);
+                        }
+
+                        rowsToSelect = selection;
+                    } else if (mouse.y > height) {
+                        var bottomRow = itemAt(0, height - 1).row;
+                        var start = Math.min(pressedRow, bottomRow);
+                        var end = Math.max(pressedRow, bottomRow);
+                        var selection = [];
+
+                        for (var i = start; i <= end; ++i) {
+                            selection.push(i);
+                        }
+
+                        rowsToSelect = selection;
+                    }
+                }
             }
 
-            if (messageModel.hasSelection()) {
-                textListView.forceActiveFocus();
+            cursorShape = Qt.ArrowCursor;
+        }
+
+        onPressed: {
+            mouse.accepted = true;
+
+            textListView.forceActiveFocus();
+
+            if (tapSelecting) {
+                processClick(mouse.x, mouse.y);
+            } else {
+                rowsToSelect = [];
+
+                var item = itemAt(mouse.x, mouse.y);
+
+                if (item && cursorShape == Qt.IBeamCursor) {
+                    pressedRow = item.row;
+
+                    if (inlineSelectionItem) {
+                        var mPos = mapToItem(inlineSelectionItem.inlineSelectionTextItem.textArea,
+                            mouse.x,
+                            mouse.y);
+                        eventGenerator.sendMouseEvent(inlineSelectionItem.inlineSelectionTextItem.textArea,
+                            KQuickControlsAddons.EventGenerator.MouseButtonPress,
+                            mPos.x,
+                            mPos.y,
+                            Qt.LeftButton,
+                            Qt.LeftButton,
+                            0);
+
+                        if (!inlineSelectionItem.hasSelectedText) {
+                            pressAndHoldTimer.restart();
+                        }
+                    }
+                } else {
+                    pressedRow = -1;
+                    inlineSelectionItem = null;
+                    clearInlineSelectedText();
+                    pressAndHoldTimer.stop();
+                }
             }
+        }
+
+        onReleased: {
+            pressedRow = -1;
+            pressAndHoldTimer.stop();
+            textListView.cancelAutoScroll();
+        }
+
+        onClicked: {
+            if (hoveredLink) {
+                konvApp.openUrl(hoveredLink)
+            }
+        }
+
+        Connections {
+            target: messageModel
+
+            onHasSelectionChanged: {
+                if (!messageModel.hasSelection) {
+                    mouseOverlay.tapSelecting = false;
+                } else {
+                    mouseOverlay.inlineSelectionItem = null;
+                    mouseOverlay.clearInlineSelectedText();
+                }
+            }
+        }
+
+        Timer {
+            id: pressAndHoldTimer
+
+            interval: mouseOverlay.pressAndHoldInterval
+            repeat: false
+
+            onTriggered: {
+                if (mouseOverlay.inlineSelectionItem
+                    && mouseOverlay.inlineSelectionItem.hasSelectedText) {
+                    return;
+                }
+
+                if (messageModel.hasSelection) {
+                    return;
+                }
+
+                mouseOverlay.tapSelecting = true;
+                mouseOverlay.processClick(mouseOverlay.mouseX, mouseOverlay.mouseY);
+            }
+        }
+
+        KQuickControlsAddons.EventGenerator {
+            id: eventGenerator
         }
     }
 }

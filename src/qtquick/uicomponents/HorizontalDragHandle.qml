@@ -44,6 +44,8 @@ MouseArea {
     }
 
     onPressedChanged: {
+        // Runtime search for the 'interactive' property because
+        // Kirigami currently imports old QQC2.
         if (target && "interactive" in target) {
             target.interactive = !pressed;
         }

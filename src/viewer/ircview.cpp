@@ -583,6 +583,7 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
         time.toString(Preferences::self()->timestampFormat()),
         nick,
         nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+        Konversation::removeIrcMarkup(message),
         text
     );
     /* END: WIPQTQUICK */
@@ -642,6 +643,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, const QHa
         QTime::currentTime().toString(Preferences::self()->timestampFormat()),
         nick,
         nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+        Konversation::removeIrcMarkup(message),
         text
     );
     /* END: WIPQTQUICK */
@@ -686,6 +688,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
             nick,
             nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
             QString(),
+            QString(),
             MessageModel::ActionMessage
         );
         /* END: WIPQTQUICK */
@@ -712,6 +715,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
             QTime::currentTime().toString(Preferences::self()->timestampFormat()),
             nick,
             nick != m_server->getNickname() ? Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()) : Preferences::self()->nickColor(8),
+            Konversation::removeIrcMarkup(message),
             text,
             MessageModel::ActionMessage
         );

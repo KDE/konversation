@@ -25,6 +25,7 @@ struct Message {
     QString nick;
     QColor nickColor;
     QString text;
+    QString formattedText;
     bool action;
 };
 
@@ -33,6 +34,7 @@ class FilteredMessageModel : public QSortFilterProxyModel
     Q_OBJECT
 
     Q_PROPERTY(QObject* filterView READ filterView WRITE setFilterView NOTIFY filterViewChanged)
+    Q_PROPERTY(bool hasSelection READ hasSelection NOTIFY hasSelectionChanged)
 
     public:
         explicit FilteredMessageModel(QObject *parent = 0);
@@ -41,19 +43,18 @@ class FilteredMessageModel : public QSortFilterProxyModel
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
-        Q_INVOKABLE bool hasSelection();
-        Q_INVOKABLE bool isSelected(int row);
-        Q_INVOKABLE void setSelected(int row);
-        Q_INVOKABLE void toggleSelected(int row);
-        Q_INVOKABLE void setRangeSelected(int anchor, int to);
-        Q_INVOKABLE void updateSelection(const QVariantList &rows, bool toggle);
-        Q_INVOKABLE void clearSelection();
+        bool hasSelection();
+
+        Q_INVOKABLE void clearAndSelect(const QVariantList &rows);
         Q_INVOKABLE void copySelectionToClipboard(QClipboard::Mode mode = QClipboard::Clipboard);
 
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+        Q_INVOKABLE void bla(QObject *obj);
+
     Q_SIGNALS:
         void filterViewChanged() const;
+        void hasSelectionChanged() const;
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
@@ -103,6 +104,7 @@ public:
         const QString &nick,
         const QColor &nickColor,
         const QString &text,
+        const QString &formattedText,
         const MessageType type = NormalMessage);
 
     void cullMessages(const QObject *view);

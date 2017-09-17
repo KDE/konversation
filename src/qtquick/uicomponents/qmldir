@@ -1,4 +1,5 @@
 module org.kde.konversation.uicomponents
 
-HorizontalDragHandle 1.0 HorizontalDragHandle.qml
 singleton ExtraColors 1.0 ExtraColors.qml
+HorizontalDragHandle 1.0 HorizontalDragHandle.qml
+Page 1.0 Page.qml

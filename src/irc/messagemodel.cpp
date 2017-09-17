@@ -15,6 +15,8 @@
 #include <QItemSelectionModel>
 #include <QMetaEnum>
 
+#include <QQuickItem>
+
 #define MAX_MESSAGES 500000
 #define MAX_MESSAGES_TOLERANCE 501000
 #define ALLOCATION_BATCH_SIZE 500
@@ -32,6 +34,13 @@ FilteredMessageModel::~FilteredMessageModel()
 {
 }
 
+void FilteredMessageModel::bla(QObject *obj)
+{
+    QQuickItem *item = qobject_cast<QQuickItem *>(obj);
+    //item->setKeepMouseGrab(false);
+    item->ungrabMouse();
+}
+
 QObject *FilteredMessageModel::filterView() const
 {
     return m_filterView;
@@ -42,7 +51,7 @@ void FilteredMessageModel::setFilterView(QObject *view)
     if (m_filterView != view) {
         m_filterView = view;
 
-        clearSelection();
+        m_selectionModel->clear();
         invalidateFilter();
 
         emit filterViewChanged();
@@ -54,47 +63,8 @@ bool FilteredMessageModel::hasSelection()
     return m_selectionModel->hasSelection();
 }
 
-bool FilteredMessageModel::isSelected(int row)
+void FilteredMessageModel::clearAndSelect(const QVariantList &rows)
 {
-    if (row < 0) {
-        return false;
-    }
-
-    return m_selectionModel->isSelected(index(row, 0));
-}
-
-void FilteredMessageModel::setSelected(int row)
-{
-    if (row < 0) {
-        return;
-    }
-
-    m_selectionModel->select(index(row, 0), QItemSelectionModel::Select);
-}
-
-void FilteredMessageModel::toggleSelected(int row)
-{
-    if (row < 0) {
-        return;
-    }
-
-    m_selectionModel->select(index(row, 0), QItemSelectionModel::Toggle);
-}
-
-void FilteredMessageModel::setRangeSelected(int anchor, int to)
-{
-    if (anchor < 0 || to < 0) {
-        return;
-    }
-
-    QItemSelection selection(index(anchor, 0), index(to, 0));
-    m_selectionModel->select(selection, QItemSelectionModel::ClearAndSelect);
-}
-
-void FilteredMessageModel::updateSelection(const QVariantList &rows, bool toggle)
-{
-    Q_UNUSED(toggle)
-
     QItemSelection newSelection;
 
     int iRow = -1;
@@ -113,13 +83,6 @@ void FilteredMessageModel::updateSelection(const QVariantList &rows, bool toggle
     m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
 }
 
-void FilteredMessageModel::clearSelection()
-{
-    if (m_selectionModel->hasSelection()) {
-        m_selectionModel->clear();
-    }
-}
-
 void FilteredMessageModel::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     QModelIndexList indices = selected.indexes();
@@ -128,6 +91,8 @@ void FilteredMessageModel::selectionChanged(const QItemSelection &selected, cons
     foreach(const QModelIndex index, indices) {
         emit dataChanged(index, index,  QVector<int>{MessageModel::Selected});
     }
+
+    emit hasSelectionChanged();
 
     copySelectionToClipboard(QClipboard::Selection);
 }
@@ -233,7 +198,7 @@ QVariant MessageModel::data(const QModelIndex &index, int role) const
     const Message &msg = m_messages.at(index.row());
 
     if (role == Qt::DisplayRole) {
-        return msg.text;
+        return msg.formattedText;
     } else if (role == Type) {
         return (msg.action ? ActionMessage : NormalMessage);
     } else if (role == View) {
@@ -262,6 +227,7 @@ void MessageModel::appendMessage(QObject *view,
     const QString &nick,
     const QColor &nickColor,
     const QString &text,
+    const QString &formattedText,
     const MessageType type)
 {
     beginInsertRows(QModelIndex(), m_messages.count(), m_messages.count());
@@ -273,6 +239,7 @@ void MessageModel::appendMessage(QObject *view,
     msg.nick = nick;
     msg.nickColor = nickColor;
     msg.text = text;
+    msg.formattedText = formattedText;
     msg.action = (type == ActionMessage);
 
     m_messages.append(msg);
@@ -317,5 +284,10 @@ QString MessageModel::clipboardSerialization(const Message& msg) const
 {
     // WIPQTQUICK TODO: msg.text is preformatted HTML, we need the raw in the
     // model to derive this properly.
+    if (msg.action) {
+        return QString("[%1] * %2 %3").arg(msg.timeStamp).arg(msg.nick).arg(msg.text);
+    }
+
     return QString("[%1] <%2> %3").arg(msg.timeStamp).arg(msg.nick).arg(msg.text);
+
 }
