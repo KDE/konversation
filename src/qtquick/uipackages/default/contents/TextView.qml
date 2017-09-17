@@ -668,7 +668,7 @@ Item {
                     0);
             }
 
-            if (hoveredLink && hoveredLink === pressedLink) {
+            if (!tapSelecting && hoveredLink && hoveredLink === pressedLink) {
                 konvApp.openUrl(hoveredLink);
             }
 
