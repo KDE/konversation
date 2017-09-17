@@ -452,6 +452,7 @@ Item {
         property Item inlineSelectionItem: null
 
         property string hoveredLink: ""
+        property string pressedLink: ""
 
         signal clearInlineSelectedText
 
@@ -616,6 +617,8 @@ Item {
 
             textListView.forceActiveFocus();
 
+            pressedLink = hoveredLink;
+
             if (tapSelecting) {
                 processClick(mouse.x, mouse.y);
             } else {
@@ -665,15 +668,14 @@ Item {
                     0);
             }
 
+            if (hoveredLink && hoveredLink === pressedLink) {
+                konvApp.openUrl(hoveredLink);
+            }
+
             pressedRow = -1;
+            pressedLink = "";
             pressAndHoldTimer.stop();
             textListView.cancelAutoScroll();
-        }
-
-        onClicked: {
-            if (hoveredLink) {
-                konvApp.openUrl(hoveredLink)
-            }
         }
 
         Connections {
