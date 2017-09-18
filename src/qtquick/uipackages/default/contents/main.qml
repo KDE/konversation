@@ -136,8 +136,6 @@ Kirigami.ApplicationWindow {
             ListView {
                 id: userList
 
-                visible: viewModel.currentView && "userModel" in viewModel.currentView
-
                 onHeightChanged: {
                     if (currentIndex != -1) {
                         positionViewAtIndex(currentIndex, ListView.Contain);
@@ -149,7 +147,7 @@ Kirigami.ApplicationWindow {
                 currentIndex: -1
                 onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
-                model: visible ? viewModel.currentView.userModel : null
+                model: contextDrawer.drawerOpen ? userModel : null
 
                 onModelChanged: currentIndex = -1
 

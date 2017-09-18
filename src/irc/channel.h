@@ -68,8 +68,6 @@ class Channel : public ChatWindow
 {
     Q_OBJECT
 
-    Q_PROPERTY(QAbstractItemModel* userModel READ getUserModel CONSTANT)
-
     friend class Nick;
 
     public:
@@ -226,7 +224,6 @@ class Channel : public ChatWindow
         QStringList getSelectedNickList();
 
         NickListView* getNickListView() const { return nicknameListView; }
-        QAbstractItemModel *getUserModel() const; // WIPQTQUICK
 
         Konversation::ChannelSettings channelSettings() const;
 

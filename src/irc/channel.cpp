@@ -1327,11 +1327,6 @@ Nick* Channel::getNickByName(const QString &lookname) const
     return m_nicknameNickHash.value(lcLookname);
 }
 
-QAbstractItemModel *Channel::getUserModel() const
-{
-    return nicknameListView->model();
-}
-
 void Channel::adjustNicks(int value)
 {
     if((nicks == 0) && (value <= 0))

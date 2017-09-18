@@ -73,6 +73,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_reconnectImmediately = false;
 
+    m_userModel = new UserModel(this);
+
     for (int i=0; i <= Application::instance()->countOfQueues(); i++)
     {
         //QList<int> r=Preferences::queueRate(i);
@@ -228,6 +230,7 @@ void Server::purgeData()
 {
     // Delete all the NickInfos and ChannelNick structures.
     m_allNicks.clear();
+    m_userModel->clear(); // WIPQTQUICK
 
     ChannelMembershipMap::ConstIterator it;
 
@@ -1818,6 +1821,7 @@ NickInfoPtr Server::obtainNickInfo(const QString& nickname)
     {
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(QString(nickname.toLower()), nickInfo);
+        m_userModel->add(nickInfo); // WIPQTQUICK
     }
     return nickInfo;
 }
@@ -3030,6 +3034,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     {
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(lcNickname, nickInfo);
+        m_userModel->add(nickInfo); // WIPQTQUICK
         doWatchedNickChangedSignal = isWatchedNick(nickname);
     }
     // if nickinfo already exists update nickname, in case we created the nickinfo based
@@ -3093,6 +3098,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
     {
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(lcNickname, nickInfo);
+        m_userModel->add(nickInfo); // WIPQTQUICK
         doWatchedNickChangedSignal = isWatchedNick(nickname);
     }
     // Move the channel from joined list (if present) to unjoined list.
@@ -3148,6 +3154,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
         QString lcNickname(nickname.toLower());
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(lcNickname, nickInfo);
+        m_userModel->add(nickInfo); // WIPQTQUICK
     }
 
     emit watchedNickChanged(this, nickname, true);
@@ -3194,7 +3201,10 @@ bool Server::setNickOffline(const QString& nickname)
         }
 
         // Delete NickInfo.
-        if (m_allNicks.contains(lcNickname)) m_allNicks.remove(lcNickname);
+        if (m_allNicks.contains(lcNickname)) {
+            m_allNicks.remove(lcNickname);
+            m_userModel->remove(nickInfo); // WIPQTQUICK
+        }
         // If the nick was in the watch list, emit various signals and messages.
         if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, nickInfo);
 
@@ -3222,6 +3232,7 @@ bool Server::deleteNickIfUnlisted(const QString &nickname)
         QStringList nickChannels = getNickChannels(nickname);
         if (nickChannels.isEmpty())
         {
+            m_userModel->remove(m_allNicks[lcNickname]); // WIPQTQUICK
             m_allNicks.remove(lcNickname);
             return true;
         }
@@ -3388,6 +3399,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
         QString lcNewname(newname.toLower());
         // Rename the key in m_allNicks list.
         m_allNicks.remove(lcNickname);
+        m_userModel->changed(nickInfo); // WIPQTQUICK Necessary? Probably not ...
         m_allNicks.insert(lcNewname, nickInfo);
         // Rename key in the joined and unjoined lists.
         QStringList nickChannels = getNickChannels(lcNickname);
@@ -4371,6 +4383,7 @@ void Server::sendNickInfoChangedSignals()
     {
         if(nickInfo->isChanged())
         {
+            m_userModel->changed(nickInfo); // WIPQTQUICK
             emit nickInfoChanged(this, nickInfo);
             nickInfo->setChanged(false);
         }

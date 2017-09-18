@@ -68,6 +68,7 @@ set (irc_SRCS
     irc/serversettings.cpp
 
     irc/messagemodel.cpp # WIPQTQUICK
+    irc/usermodel.cpp # WIPQTQUICK
 )
 
 ki18n_wrap_ui(irc_SRCS

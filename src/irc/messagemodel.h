@@ -9,6 +9,9 @@
   Copyright (C) 2017 Eike Hein <hein@kde.org>
 */
 
+#ifndef MESSAGEMODEL_H
+#define MESSAGEMODEL_H
+
 #include "chatwindow.h"
 
 #include <QSortFilterProxyModel>
@@ -69,47 +72,49 @@ class MessageModel : public QAbstractListModel
 {
     Q_OBJECT
 
-public:
-    enum AdditionalRoles {
-        Selected = Qt::UserRole + 1, // WIPQTQUICK TODO This is implemented by FMM, maybe I should extend roles there.
-        Type,
-        View,
-        TimeStamp,
-        TimeStampMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
-        Author,
-        AuthorMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
-        NickColor,
-        ClipboardSerialization
-    };
-    Q_ENUM(AdditionalRoles)
+    public:
+        enum AdditionalRoles {
+            Selected = Qt::UserRole + 1, // WIPQTQUICK TODO This is implemented by FMM, maybe I should extend roles there.
+            Type,
+            View,
+            TimeStamp,
+            TimeStampMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
+            Author,
+            AuthorMatchesPrecedingMessage, // Implemented in FilteredMessageModel for search efficiency.
+            NickColor,
+            ClipboardSerialization
+        };
+        Q_ENUM(AdditionalRoles)
 
-    enum MessageType {
-        NormalMessage = 0,
-        ActionMessage
-    };
-    Q_ENUM(MessageType)
+        enum MessageType {
+            NormalMessage = 0,
+            ActionMessage
+        };
+        Q_ENUM(MessageType)
 
-    explicit MessageModel(QObject *parent = 0);
-    virtual ~MessageModel();
+        explicit MessageModel(QObject *parent = 0);
+        virtual ~MessageModel();
 
-    QHash<int, QByteArray> roleNames() const override;
+        QHash<int, QByteArray> roleNames() const override;
 
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-    Q_INVOKABLE void appendMessage(QObject *view,
-        const QString &timeStamp,
-        const QString &nick,
-        const QColor &nickColor,
-        const QString &text,
-        const QString &formattedText,
-        const MessageType type = NormalMessage);
+        Q_INVOKABLE void appendMessage(QObject *view,
+            const QString &timeStamp,
+            const QString &nick,
+            const QColor &nickColor,
+            const QString &text,
+            const QString &formattedText,
+            const MessageType type = NormalMessage);
 
-    void cullMessages(const QObject *view);
+        void cullMessages(const QObject *view);
 
-private:
-    QString clipboardSerialization(const Message &msg) const;
+    private:
+        QString clipboardSerialization(const Message &msg) const;
 
-    QVector<Message> m_messages;
-    int m_allocCount;
+        QVector<Message> m_messages;
+        int m_allocCount;
 };
+
+#endif

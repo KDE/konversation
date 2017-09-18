@@ -35,6 +35,7 @@ class ViewContainer;
 class MessageModel; // WIPQTQUICK
 class FilteredMessageModel; // WIPQTQUICK
 class IdentityModel; // WIPQTQUICK
+class FilteredUserModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -56,6 +57,7 @@ class MainWindow : public KXmlGuiWindow
 
         MessageModel* getMessageModel() { return m_messageModel; } // WIPQTQUICK
         FilteredMessageModel* getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
+        FilteredUserModel* getFilteredUserModel() { return m_filteredUserModel; } // WIPQTQUICK
         bool loadUiPackage(const QString &packageName, bool raise = false);
         bool reloadUiPackage();
 
@@ -140,6 +142,7 @@ class MainWindow : public KXmlGuiWindow
 
         MessageModel *m_messageModel; // WIPQTQUICK
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
+        FilteredUserModel *m_filteredUserModel; // WIPQTQUICK
         IdentityModel *m_identityModel;
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
         QString m_currentUiPackage; // WIPQTQUICK

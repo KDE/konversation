@@ -81,10 +81,13 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_filteredMessageModel = new FilteredMessageModel(this);
     m_filteredMessageModel->setSourceModel(m_messageModel);
 
+    m_filteredUserModel = new FilteredUserModel(this);
+
     // Filter on the new view.
     connect(m_viewContainer, &ViewContainer::viewChanged, this,
         [this](const QModelIndex &idx) {
             m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
+            m_filteredUserModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
         }
     );
 
@@ -101,6 +104,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
 
     loadUiPackage(uiPackage, raiseQtQuickUi);

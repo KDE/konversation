@@ -26,6 +26,7 @@
 #include "connectionsettings.h"
 #include "statuspanel.h"
 #include "invitedialog.h"
+#include "usermodel.h" // WIPQTQUICK
 #include <config-konversation.h>
 
 #ifdef HAVE_QCA2
@@ -52,6 +53,7 @@ class ChannelListPanel;
 class ServerISON;
 class ChatWindow;
 class ViewContainer;
+class UserModel; // WIPQTQUICK
 
 class IRCQueue;
 
@@ -71,6 +73,7 @@ class Server : public QObject
     friend class QueueTuner;
 
     Q_PROPERTY(QString nickname READ getNickname WRITE setNickname NOTIFY nicknameChanged)
+    Q_PROPERTY(UserModel* userModel READ getUserModel CONSTANT) // WIPQTQUICK
 
     public:
         enum QueuePriority
@@ -108,6 +111,8 @@ class Server : public QObject
 
         QString getDisplayName() { return m_connectionSettings.name(); }
         QString getServerName() { return m_connectionSettings.server().host(); }
+
+        UserModel *getUserModel() { return m_userModel; } // WIPQTQUICK
 
         Konversation::ServerGroupSettingsPtr getServerGroup() { return m_connectionSettings.serverGroup(); }
         IdentityPtr getIdentity() { return m_connectionSettings.identity(); }
@@ -866,6 +871,8 @@ class Server : public QObject
         bool m_hasWHOX;
         bool m_hasServerTime;
         bool m_hasUserHostInNames;
+
+        UserModel *m_userModel; // WIPQTQUICK
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
