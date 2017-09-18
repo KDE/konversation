@@ -365,6 +365,13 @@ Item {
 
                                 anchors.fill: parent
 
+                                background: Item {}
+
+                                leftPadding: 0
+                                rightPadding: 0
+                                topPadding: 0
+                                bottomPadding: 0
+
                                 // Init from messageText.
                                 renderType: messageText.renderType
                                 textFormat: Text.RichText
@@ -372,11 +379,6 @@ Item {
                                 wrapMode: messageText.wrapMode
                                 color: messageText.color
                                 text: messageText.text
-
-                                leftPadding: 0
-                                rightPadding: 0
-                                topPadding: 0
-                                bottomPadding: 0
 
                                 readOnly: true
 
