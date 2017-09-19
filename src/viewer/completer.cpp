@@ -110,14 +110,14 @@ void Completer::setContextView(QObject *view)
         // WIPQTQUICK HACK
         const ChatWindow *chatWin = qobject_cast<ChatWindow *>(view);
 
-        QObject::connect(view, &QObject::destroyed, this,
-            [this]() {
-                m_userCompletionModel->setSourceModel(nullptr);
-                m_matchesModel->setPinnedMatch(QString());
-            }
-        );
-
         if (view) {
+            QObject::connect(view, &QObject::destroyed, this,
+                [this]() {
+                    m_userCompletionModel->setSourceModel(nullptr);
+                    m_matchesModel->setPinnedMatch(QString());
+                }
+            );
+
             m_userCompletionModel->setServer(chatWin->getServer());
         }
 

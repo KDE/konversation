@@ -37,8 +37,10 @@ void UserCompletionModel::setServer(Server *server)
     if (m_server != server) {
         m_server = server;
 
-        QObject::connect(server, &QObject::destroyed,
-            this, [this]() { invalidateFilter(); });
+        if (server) {
+            QObject::connect(server, &QObject::destroyed,
+                this, [this]() { invalidateFilter(); });
+        }
 
         invalidateFilter();
     }
@@ -135,10 +137,10 @@ void FilteredUserModel::setFilterView(QObject *view)
     if (m_filterView != view) {
         m_filterView = view;
 
-        QObject::connect(view, &QObject::destroyed,
-            this, [this]() { invalidateFilter(); });
-
         if (view) {
+            QObject::connect(view, &QObject::destroyed,
+                this, [this]() { invalidateFilter(); });
+
             setSourceModel(chatWin->getServer()->getUserModel());
         }
 
@@ -157,16 +159,18 @@ void FilteredUserModel::setSourceModel(QAbstractItemModel *sourceModel)
 
     QSortFilterProxyModel::setSourceModel(sourceModel);
 
-    QObject::connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved, this,
-        [this](const QModelIndex &parent, int first, int last) {
-            Q_UNUSED(parent)
+    if (sourceModel) {
+        QObject::connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved, this,
+            [this](const QModelIndex &parent, int first, int last) {
+                Q_UNUSED(parent)
 
-            for (int i = first; i <= last; ++i) {
-                const QModelIndex &sourceIdx = QSortFilterProxyModel::sourceModel()->index(i, 0);
-                m_channelNickCache.remove(static_cast<NickInfo *>(sourceIdx.internalPointer()));
+                for (int i = first; i <= last; ++i) {
+                    const QModelIndex &sourceIdx = QSortFilterProxyModel::sourceModel()->index(i, 0);
+                    m_channelNickCache.remove(static_cast<NickInfo *>(sourceIdx.internalPointer()));
+                }
             }
-        }
-    );
+        );
+    }
 }
 
 bool FilteredUserModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
