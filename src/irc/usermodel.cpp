@@ -230,6 +230,8 @@ ChannelNickPtr FilteredUserModel::getChannelNick(const NickInfo *nickInfo)
     // WIPQTQUICK HACK
     const ChatWindow *chatWin = qobject_cast<ChatWindow *>(m_filterView);
 
+    // WIPQTQUICK TODO This does tons of string comparisons instead of just
+    // comparing pointers: Can be faster.
     const ChannelNickPtr channelNick = chatWin->getServer()->getChannelNick(chatWin->getName(),
         nickInfo->getNickname());
     m_channelNickCache.insert(nickInfo, channelNick);
