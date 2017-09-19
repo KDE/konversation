@@ -238,7 +238,8 @@ void ChannelNick::lessActive()
 
 void ChannelNick::setTimeStamp(uint stamp)
 {
-  m_timeStamp = stamp;
+    m_timeStamp = stamp;
+    markAsChanged();
 }
 
 void ChannelNick::markAsChanged()

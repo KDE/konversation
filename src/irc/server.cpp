@@ -3077,7 +3077,10 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     Q_ASSERT(channelNick);                        //Since we just added it if it didn't exist, it should be guaranteed to exist now
     if (doWatchedNickChangedSignal) emit watchedNickChanged(this, nickname, true);
     if (doChannelJoinedSignal) emit channelJoinedOrUnjoined(this, channelName, true);
-    if (doChannelMembersChangedSignal) emit channelMembersChanged(this, channelName, true, false, nickname);
+    if (doChannelMembersChangedSignal) {
+        m_userModel->changed(nickInfo); // WIPQTQUICK
+        emit channelMembersChanged(this, channelName, true, false, nickname);
+    }
     return channelNick;
 }
 
@@ -3130,6 +3133,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
         channelNick = new ChannelNick(nickInfo, lcChannelName);
         channel->insert(lcNickname, channelNick);
         doChannelMembersChangedSignal = true;
+        m_userModel->changed(nickInfo); // WIPQTQUICK
     }
     channelNick = (*channel)[lcNickname];
     // Set the mode for the nick in this channel.
@@ -3288,7 +3292,11 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
             }
         }
     }
-    if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
+
+    if (doSignal) {
+        m_userModel->changed(m_allNicks[lcNickname]); // WIPQTQUICK
+        emit channelMembersChanged(this, channelName, joined, true, nickname);
+    }
 }
 
 QStringList Server::getWatchList()

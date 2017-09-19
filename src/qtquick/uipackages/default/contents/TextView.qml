@@ -365,7 +365,7 @@ Item {
 
                                 anchors.fill: parent
 
-                                background: Item {}
+                                background: null
 
                                 leftPadding: 0
                                 rightPadding: 0

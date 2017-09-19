@@ -64,7 +64,7 @@ class FilteredMessageModel : public QSortFilterProxyModel
         void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
     private:
-        QObject *m_filterView;
+        QPointer<QObject> m_filterView;
         QItemSelectionModel *m_selectionModel;
 };
 

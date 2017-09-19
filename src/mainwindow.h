@@ -34,8 +34,9 @@ class KonviSettingsDialog;
 class ViewContainer;
 class MessageModel; // WIPQTQUICK
 class FilteredMessageModel; // WIPQTQUICK
-class IdentityModel; // WIPQTQUICK
 class FilteredUserModel; // WIPQTQUICK
+class IdentityModel; // WIPQTQUICK
+class Completer; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -144,6 +145,7 @@ class MainWindow : public KXmlGuiWindow
         FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
         FilteredUserModel *m_filteredUserModel; // WIPQTQUICK
         IdentityModel *m_identityModel;
+        Completer *m_completer; // WIPQTQUICK
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
         QString m_currentUiPackage; // WIPQTQUICK
         QStackedWidget *m_uiStack; // WIPQTQUICK

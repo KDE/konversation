@@ -15,9 +15,35 @@
 #include "chatwindow.h"
 #include "channelnick.h"
 
+#include <QPointer>
 #include <QSortFilterProxyModel>
 
 class NickInfo;
+class Server;
+
+class UserCompletionModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+    public:
+        explicit UserCompletionModel(QObject *parent = 0);
+        virtual ~UserCompletionModel();
+
+        Server *server() const;
+        void setServer(Server *server);
+
+        QString lastActiveUser();
+
+        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
+
+        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    protected:
+        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+
+    private:
+        QPointer<Server> m_server;
+};
 
 class FilteredUserModel : public QSortFilterProxyModel
 {
@@ -29,10 +55,10 @@ class FilteredUserModel : public QSortFilterProxyModel
         explicit FilteredUserModel(QObject *parent = 0);
         virtual ~FilteredUserModel();
 
-        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
-
         QObject *filterView() const;
         void setFilterView(QObject *view);
+
+        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
 
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
@@ -45,7 +71,7 @@ class FilteredUserModel : public QSortFilterProxyModel
     private:
         ChannelNickPtr getChannelNick(const NickInfo *nickInfo);
 
-        QObject *m_filterView;
+        QPointer<QObject> m_filterView;
         QHash<const NickInfo *, ChannelNickPtr> m_channelNickCache;
 };
 

@@ -155,6 +155,7 @@ set(viewer_SRCS
     viewer/topicedit.cpp
     viewer/topichistoryview.cpp
     viewer/viewtree.cpp
+    viewer/completer.cpp
 )
 
 ki18n_wrap_ui(viewer_SRCS

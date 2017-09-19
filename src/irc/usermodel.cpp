@@ -16,6 +16,93 @@
 
 #include <QMetaEnum>
 
+UserCompletionModel::UserCompletionModel(QObject *parent)
+    : QSortFilterProxyModel(parent)
+{
+    setSortRole(UserModel::LowercaseName);
+    sort(0);
+}
+
+UserCompletionModel::~UserCompletionModel()
+{
+}
+
+Server *UserCompletionModel::server() const
+{
+    return m_server;
+}
+
+void UserCompletionModel::setServer(Server *server)
+{
+    if (m_server != server) {
+        m_server = server;
+
+        QObject::connect(server, &QObject::destroyed,
+            this, [this]() { invalidateFilter(); });
+
+        invalidateFilter();
+    }
+}
+
+QString UserCompletionModel::lastActiveUser()
+{
+    QString name;
+    uint latestTimeStamp = 0;
+
+    for (int i = 0; i < rowCount(); ++i) {
+        const QModelIndex &idx = index(i, 0);
+        const uint timeStamp = idx.data(UserModel::TimeStamp).toUInt();
+
+        if (timeStamp > latestTimeStamp) {
+            name = idx.data().toString();
+            latestTimeStamp = timeStamp;
+        }
+    }
+
+    return name;
+}
+
+void UserCompletionModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    if (QSortFilterProxyModel::sourceModel() == sourceModel) {
+        return;
+    }
+
+    QSortFilterProxyModel::setSourceModel(sourceModel);
+}
+
+QVariant UserCompletionModel::data(const QModelIndex &index, int role) const
+{
+    if (role == Qt::EditRole /* Default role used by QCompleter */) {
+        QString mangled(data(index, UserModel::LowercaseName).toString());
+
+        for (int i = mangled.length(); i >= 0; --i) {
+            const QChar &c = mangled[i];
+
+            if (!c.isLetterOrNumber()) {
+                mangled.remove(i, 1);
+            }
+        }
+
+        return mangled;
+    }
+
+    return QSortFilterProxyModel::data(index, role);
+}
+
+bool UserCompletionModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+    Q_UNUSED(sourceParent)
+
+    if (!m_server) {
+        return false;
+    }
+
+    const QModelIndex &sourceIdx = sourceModel()->index(sourceRow, 0);
+
+    return (m_server->loweredNickname() != sourceIdx.data(UserModel::LowercaseName).toString());
+}
+
 FilteredUserModel::FilteredUserModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , m_filterView(nullptr)
@@ -26,26 +113,6 @@ FilteredUserModel::FilteredUserModel(QObject *parent)
 
 FilteredUserModel::~FilteredUserModel()
 {
-}
-
-void FilteredUserModel::setSourceModel(QAbstractItemModel *sourceModel)
-{
-    if (QSortFilterProxyModel::sourceModel() == sourceModel) {
-        return;
-    }
-
-    QSortFilterProxyModel::setSourceModel(sourceModel);
-
-    QObject::connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved, this,
-        [this](const QModelIndex &parent, int first, int last) {
-            Q_UNUSED(parent)
-
-            for (int i = first; i <= last; ++i) {
-                const QModelIndex &sourceIdx = QSortFilterProxyModel::sourceModel()->index(i, 0);
-                m_channelNickCache.remove(static_cast<NickInfo *>(sourceIdx.internalPointer()));
-            }
-        }
-    );
 }
 
 QObject *FilteredUserModel::filterView() const
@@ -68,6 +135,9 @@ void FilteredUserModel::setFilterView(QObject *view)
     if (m_filterView != view) {
         m_filterView = view;
 
+        QObject::connect(view, &QObject::destroyed,
+            this, [this]() { invalidateFilter(); });
+
         if (view) {
             setSourceModel(chatWin->getServer()->getUserModel());
         }
@@ -77,6 +147,26 @@ void FilteredUserModel::setFilterView(QObject *view)
 
         emit filterViewChanged();
     }
+}
+
+void FilteredUserModel::setSourceModel(QAbstractItemModel *sourceModel)
+{
+    if (QSortFilterProxyModel::sourceModel() == sourceModel) {
+        return;
+    }
+
+    QSortFilterProxyModel::setSourceModel(sourceModel);
+
+    QObject::connect(sourceModel, &QAbstractItemModel::rowsAboutToBeRemoved, this,
+        [this](const QModelIndex &parent, int first, int last) {
+            Q_UNUSED(parent)
+
+            for (int i = first; i <= last; ++i) {
+                const QModelIndex &sourceIdx = QSortFilterProxyModel::sourceModel()->index(i, 0);
+                m_channelNickCache.remove(static_cast<NickInfo *>(sourceIdx.internalPointer()));
+            }
+        }
+    );
 }
 
 bool FilteredUserModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -114,7 +204,8 @@ QVariant FilteredUserModel::data(const QModelIndex &index, int role) const
         const ChannelNickPtr channelNick = const_cast<FilteredUserModel *>(this)->getChannelNick(static_cast<NickInfo *>(sourceIdx.internalPointer()));
 
         if (channelNick) {
-            channelNick->timeStamp();
+            qDebug() << channelNick->timeStamp();
+            return channelNick->timeStamp();
         }
     }
 
@@ -189,19 +280,7 @@ QVariant UserModel::data(const QModelIndex &index, int role) const
         return nick->getNickname();
     } else if (role == LowercaseName) {
         return nick->loweredNickname();
-    } /*if (role == CompletionMangling) {
-        QString mangled(nick->getNickname());
-
-        for (int i = mangled.length(); i >= 0; --i) {
-            const QChar &char = mangled[i];
-
-            if (!char.isLetterOrNumber()) {
-                mangled.remove(i, 1);
-            }
-        }
-
-        return mangled;
-    }*/
+    }
 
     return QVariant();
 }

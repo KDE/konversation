@@ -28,7 +28,9 @@
 #include "awaymanager.h"
 #include "transfermanager.h"
 #include "messagemodel.h" // WIPQTQUICK
+#include "usermodel.h" // WIPQTQUICK
 #include "identitymodel.h" // WIPQTQUICK
+#include "completer.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
@@ -83,11 +85,15 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
     m_filteredUserModel = new FilteredUserModel(this);
 
+    m_completer = new Completer(this);
+    m_completer->setSourceModel(m_filteredUserModel);
+
     // Filter on the new view.
     connect(m_viewContainer, &ViewContainer::viewChanged, this,
         [this](const QModelIndex &idx) {
             m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
             m_filteredUserModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
+            m_completer->setContextView(static_cast<QObject *>(idx.internalPointer()));
         }
     );
 
@@ -106,6 +112,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("completer"), m_completer);
 
     loadUiPackage(uiPackage, raiseQtQuickUi);
     // END: WIPQTQUICK

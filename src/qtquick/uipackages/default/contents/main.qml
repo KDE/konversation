@@ -285,7 +285,7 @@ Kirigami.ApplicationWindow {
                         duration: Kirigami.Units.longDuration * 2
                         easing.type: Easing.OutCubic
                     }
-                }
+                    }
 
                 pushExit: Transition {
                     OpacityAnimator {
@@ -645,9 +645,13 @@ Kirigami.ApplicationWindow {
                     QQC2.TextField {
                         id: inputField
 
-                        background: null
-
                         enabled: viewModel.currentView
+
+                        property string lastCompletion: ""
+                        property int nextMatch: 0
+                        property bool completionResetLock: false
+
+                        background: null
 
                         renderType: Text.NativeRendering
 
@@ -657,13 +661,80 @@ Kirigami.ApplicationWindow {
 
                         wrapMode: TextEdit.NoWrap
 
+                        function insertNextMatch() {
+                            lastCompletion = completer.matches.at(nextMatch);
+
+                            completionResetLock = true;
+                            insert(cursorPosition, lastCompletion)
+                            completionResetLock = false;
+
+                            ++nextMatch;
+
+                            if (nextMatch == completer.matches.rowCount()) {
+                                nextMatch = 0;
+                            }
+                        }
+
+                        function resetCompletion() {
+                            completer.prefix = "";
+                            nextMatch = 0;
+                        }
+
+                        onFocusChanged: {
+                            if (!focus) {
+                                resetCompletion();
+                            }
+                        }
+
+                        onCursorPositionChanged: {
+                            if (!completionResetLock) {
+                                resetCompletion();
+                            }
+                        }
+
                         Keys.onPressed: {
-                            // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                                // to make things like deadkeys work
-                            if (text != "" && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+                            if (event.key == Qt.Key_Tab) {
                                 event.accepted = true;
-                                viewModel.currentView.sendText(text);
-                                text = "";
+
+                                if (!text.length && lastCompletion.length) {
+                                    text = lastCompletion;
+                                    cursorPosition = cursorPosition + lastCompletion.length;
+                                } else if (cursorPosition > 0) {
+                                    if (completer.matches.rowCount()) {
+                                        completionResetLock = true;
+                                        remove(cursorPosition - lastCompletion.length,
+                                            (cursorPosition - lastCompletion.length) + lastCompletion.length);
+                                        completionResetLock = false;
+
+                                        insertNextMatch();
+                                    } else {
+                                        // WIPQTQUICK TODO There's faster ways than splitting all words.
+                                        var prefix = getText(0, cursorPosition).split(/[\s]+/).pop();
+
+                                        if (prefix.length) {
+                                            completer.prefix = prefix;
+
+                                            if (completer.matches.rowCount()) {
+                                                completionResetLock = true;
+                                                remove(cursorPosition - completer.prefix.length,
+                                                    (cursorPosition - completer.prefix.length) + completer.prefix.length);
+                                                completionResetLock = false;
+
+                                                insertNextMatch();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                return;
+                            } else if (text != "") {
+                                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
+                                // to make things like deadkeys work
+                                if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+                                    event.accepted = true;
+                                    viewModel.currentView.sendText(text);
+                                    text = "";
+                                }
                             }
                         }
 

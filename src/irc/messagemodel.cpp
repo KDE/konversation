@@ -42,6 +42,9 @@ void FilteredMessageModel::setFilterView(QObject *view)
     if (m_filterView != view) {
         m_filterView = view;
 
+        QObject::connect(view, &QObject::destroyed,
+            this, [this]() { invalidateFilter(); });
+
         m_selectionModel->clear();
         invalidateFilter();
 
