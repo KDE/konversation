@@ -169,11 +169,13 @@ void Completer::setPrefix(const QString &prefix)
                 m_matchesModel->setPinnedMatch(QString());
 
                 m_completer->setModel(m_sortedCommandsModel);
+                m_completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
             } else {
                 m_userCompletionModel->setSourceModel(m_sourceModel);
                 m_matchesModel->setPinnedMatch(m_userCompletionModel->lastActiveUser());
 
                 m_completer->setModel(m_userCompletionModel);
+                m_completer->setModelSorting(QCompleter::UnsortedModel);
             }
         } else {
             m_completer->setModel(nullptr);

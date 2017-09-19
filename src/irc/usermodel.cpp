@@ -204,7 +204,6 @@ QVariant FilteredUserModel::data(const QModelIndex &index, int role) const
         const ChannelNickPtr channelNick = const_cast<FilteredUserModel *>(this)->getChannelNick(static_cast<NickInfo *>(sourceIdx.internalPointer()));
 
         if (channelNick) {
-            qDebug() << channelNick->timeStamp();
             return channelNick->timeStamp();
         }
     }
