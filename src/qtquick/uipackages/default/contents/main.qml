@@ -618,7 +618,8 @@ Kirigami.ApplicationWindow {
             footer: QQC2.StackView {
                 id: contentFooterStackView
 
-                height: footerHeight
+                height: ((settingsMode || konvUi.settings.constrictInputField || !konvUi.inputField)
+                    ? footerHeight : inputField.height)
 
                 background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
 

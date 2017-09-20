@@ -16,6 +16,9 @@ import QtQuick.Controls 2.2 as QQC2
 QQC2.ScrollView {
     id: inputField
 
+    height: (konvUi.settings.constrictInputField
+        ? parent.height : Math.max(inputFieldTextArea.implicitHeight, konvUi.footerHeight))
+
     property Item completionPopup: null
 
     QQC2.ScrollBar.horizontal: null
@@ -55,13 +58,16 @@ QQC2.ScrollView {
 
         background: null
 
+        topPadding: Kirigami.Units.smallSpacing
+        bottomPadding: Kirigami.Units.smallSpacing
+
         renderType: Text.NativeRendering
 
         font.pixelSize: largerFontSize
 
         verticalAlignment: Text.AlignVCenter
 
-        wrapMode: TextEdit.NoWrap
+        wrapMode: konvUi.settings.constrictInputField ? TextEdit.NoWrap : TextEdit.Wrap
 
         function insertMatch(match) {
             completionResetLock = true;
