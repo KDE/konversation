@@ -21,7 +21,7 @@ Kirigami.Page {
         // to make things like deadkeys work
         } else if (konvUi.inputField && !konvUi.inputField.activeFocus && event.text != "") {
             event.accept = true;
-            inputField.textForward(event.text);
+            konvUi.inputField.textForward(event.text);
         }
     }
 

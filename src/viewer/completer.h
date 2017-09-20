@@ -27,6 +27,8 @@ class MatchesModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+
     public:
         explicit MatchesModel(Completer *completer);
         virtual ~MatchesModel();
@@ -35,6 +37,9 @@ class MatchesModel : public QSortFilterProxyModel
         void setPinnedMatch(const QString &pinnedMatch);
 
         Q_INVOKABLE QString at(int row);
+
+    Q_SIGNALS:
+        void countChanged() const;
 
     protected:
         bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;

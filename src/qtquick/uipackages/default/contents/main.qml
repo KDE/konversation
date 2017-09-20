@@ -22,11 +22,14 @@ import org.kde.konversation.uicomponents 1.0 as KUIC
 Kirigami.ApplicationWindow {
     id: konvUi
 
-    property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
-    property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
+    readonly property int defaultSidebarWidth: Kirigami.Units.gridUnit * 11
+    readonly property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
     property int sidebarWidth: defaultSidebarWidth
-    property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
-    property int footerHeight: largerFontSize + (Kirigami.Units.smallSpacing * 6)
+    readonly property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
+    readonly property int listItemFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+    readonly property int footerHeight: largerFontSize + (Kirigami.Units.smallSpacing * 6)
+
+    property var settings: settingsObj
 
     property Item sidebarStackView: null
     property Item contentStackView: null
@@ -50,6 +53,10 @@ Kirigami.ApplicationWindow {
 
         font.pixelSize: largerFontSize
         text: "M"
+    }
+
+    Settings {
+        id: settingsObj
     }
 
     contextDrawer: Kirigami.OverlayDrawer {
@@ -205,10 +212,10 @@ Kirigami.ApplicationWindow {
                 Keys.onPressed: {
                     // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
                     // to make things like deadkeys work
-                    if (event.text != "" && inputField && !inputField.activeFocus) {
+                    if (event.text != "" && konvUi.inputField && !konvUi.inputField.activeFocus) {
                         contextDrawer.close();
                         event.accept = true;
-                        inputField.textForward(event.text);
+                        konvUi.inputField.textForward(event.text);
                     }
                 }
             }
@@ -508,7 +515,7 @@ Kirigami.ApplicationWindow {
 
                             konvUi.showMenuBar(false);
 
-                            inputField.forceActiveFocus();
+                            konvUi.inputField.forceActiveFocus();
                         }
                     }
 
@@ -552,9 +559,9 @@ Kirigami.ApplicationWindow {
             Keys.onPressed: {
                 // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
                 // to make things like deadkeys work
-                if (event.text != "" && inputField && !inputField.activeFocus) {
+                if (event.text != "" && konvUi.inputField && !konvUi.inputField.activeFocus) {
                     event.accept = true;
-                    inputField.textForward(event.text);
+                    konvUi.inputField.textForward(event.text);
                 }
             }
         }
@@ -564,6 +571,8 @@ Kirigami.ApplicationWindow {
         id: contentComponent
 
         KUIC.Page {
+            id: content
+
             leftPadding: 0
             rightPadding: 0
             topPadding: 0
@@ -577,6 +586,16 @@ Kirigami.ApplicationWindow {
                 anchors.fill: parent
 
                 color: Kirigami.Theme.viewBackgroundColor
+            }
+
+            CompletionPopup {
+                id: completionPopup
+
+                anchors.bottom: parent.bottom
+
+                width: parent.width
+
+                Component.onCompleted: konvUi.inputField.completionPopup = completionPopup
             }
 
             QQC2.StackView {
@@ -642,120 +661,10 @@ Kirigami.ApplicationWindow {
                 Component {
                     id: inputFieldComponent
 
-                    QQC2.TextField {
+                    InputField {
                         id: inputField
 
-                        enabled: viewModel.currentView
-
-                        property string lastCompletion: ""
-                        property int nextMatch: 0
-                        property bool completionResetLock: false
-
-                        background: null
-
-                        renderType: Text.NativeRendering
-
-                        font.pixelSize: largerFontSize
-
-                        verticalAlignment: Text.AlignVCenter
-
-                        wrapMode: TextEdit.NoWrap
-
-                        function insertNextMatch() {
-                            lastCompletion = completer.matches.at(nextMatch);
-
-                            completionResetLock = true;
-                            insert(cursorPosition, lastCompletion)
-                            completionResetLock = false;
-
-                            ++nextMatch;
-
-                            if (nextMatch == completer.matches.rowCount()) {
-                                nextMatch = 0;
-                            }
-                        }
-
-                        function resetCompletion() {
-                            completer.prefix = "";
-                            nextMatch = 0;
-                        }
-
-                        onFocusChanged: {
-                            if (!focus) {
-                                resetCompletion();
-                            }
-                        }
-
-                        onCursorPositionChanged: {
-                            if (!completionResetLock) {
-                                resetCompletion();
-                            }
-                        }
-
-                        onTextChanged: {
-                            if (!completionResetLock) {
-                                resetCompletion();
-                            }
-                        }
-
-                        Keys.onPressed: {
-                            if (event.key == Qt.Key_Tab) {
-                                event.accepted = true;
-
-                                if (!text.length && lastCompletion.length) {
-                                    text = lastCompletion;
-                                    cursorPosition = cursorPosition + lastCompletion.length;
-                                } else if (cursorPosition > 0) {
-                                    if (completer.matches.rowCount()) {
-                                        completionResetLock = true;
-                                        remove(cursorPosition - lastCompletion.length,
-                                            (cursorPosition - lastCompletion.length) + lastCompletion.length);
-                                        completionResetLock = false;
-
-                                        insertNextMatch();
-                                    } else {
-                                        // WIPQTQUICK TODO There's faster ways than splitting all words.
-                                        var prefix = getText(0, cursorPosition).split(/[\s]+/).pop();
-
-                                        if (prefix.length) {
-                                            completer.prefix = prefix;
-
-                                            if (completer.matches.rowCount()) {
-                                                completionResetLock = true;
-                                                remove(cursorPosition - completer.prefix.length,
-                                                    (cursorPosition - completer.prefix.length) + completer.prefix.length);
-                                                completionResetLock = false;
-
-                                                insertNextMatch();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                return;
-                            } else if (text != "") {
-                                resetCompletion(); // WIPQTQUICK Possibly excessive.
-
-                                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                                // to make things like deadkeys work
-                                if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-                                    event.accepted = true;
-                                    viewModel.currentView.sendText(text);
-                                    text = "";
-                                }
-                            }
-                        }
-
-                        function textForward(text) {
-                            forceActiveFocus();
-                            insert(length, text);
-                            cursorPosition = length;
-                        }
-
-                        Component.onCompleted: {
-                            konvUi.inputField = inputField;
-                            forceActiveFocus();
-                        }
+                        Component.onCompleted: konvUi.inputField = inputField
                     }
                 }
 

@@ -48,5 +48,15 @@ Item {
         QQC2.Label {
             text: "Note: You can press F10 at any time to switch between the old and new UI!"
         }
+
+        QQC2.CheckBox {
+            text: "Don't show popup for user name completion (Tab completion)"
+
+            checked: konvUi.settings.hideCompletionPopup
+
+            onCheckedChanged: {
+                konvUi.settings.hideCompletionPopup = checked;
+            }
+        }
     }
 }

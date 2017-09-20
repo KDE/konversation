@@ -53,7 +53,7 @@ Rectangle {
                 ? model.ColorRole : textColor);
         }
 
-        font.pixelSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+        font.pixelSize: konvUi.listItemFontSize
 
         elide: Text.ElideRight
 

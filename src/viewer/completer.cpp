@@ -23,6 +23,10 @@ MatchesModel::MatchesModel(Completer *completer)
     , m_completer(completer)
 {
     sort(0);
+
+    QObject::connect(this, &QAbstractItemModel::modelReset, this, &MatchesModel::countChanged);
+    QObject::connect(this, &QAbstractItemModel::rowsInserted, this, &MatchesModel::countChanged);
+    QObject::connect(this, &QAbstractItemModel::rowsRemoved, this, &MatchesModel::countChanged);
 }
 
 MatchesModel::~MatchesModel()
@@ -73,7 +77,7 @@ bool MatchesModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePare
     const QModelIndex &sourceIdx = sourceModel()->index(sourceRow, 0);
 
     // Filter out matches that are identical to the prefix.
-    if (sourceIdx.data().toString() == m_completer->prefix()) {
+    if (sourceIdx.data().toString().toLower() == m_completer->prefix()) {
         return false;
     }
 
@@ -89,8 +93,6 @@ Completer::Completer(QObject *parent)
 {
     m_completer->setCompletionMode(QCompleter::InlineCompletion);
     m_completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-
-    m_matchesModel->setSourceModel(m_completer->completionModel());
 }
 
 Completer::~Completer()
@@ -177,9 +179,14 @@ void Completer::setPrefix(const QString &prefix)
                 m_completer->setModel(m_userCompletionModel);
                 m_completer->setModelSorting(QCompleter::UnsortedModel);
             }
+
+            m_completer->setCompletionPrefix(prefix.toLower());
+            m_matchesModel->setSourceModel(m_completer->completionModel());
         } else {
             m_completer->setModel(nullptr);
             m_userCompletionModel->setSourceModel(nullptr);
+            m_matchesModel->setSourceModel(nullptr);
+            m_completer->setCompletionPrefix(prefix);
         }
 
         m_completer->setCompletionPrefix(prefix.toLower());
