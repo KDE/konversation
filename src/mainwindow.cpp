@@ -91,6 +91,10 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     // Filter on the new view.
     connect(m_viewContainer, &ViewContainer::viewChanged, this,
         [this](const QModelIndex &idx) {
+            if (m_closeApp) {
+                return;
+            }
+
             m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
             m_filteredUserModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
             m_completer->setContextView(static_cast<QObject *>(idx.internalPointer()));
@@ -795,6 +799,7 @@ void MainWindow::quitProgram()
 
     // will call queryClose()
     m_closeApp = true;
+    m_messageModel->clear(); // WIPQTQUICK
     close();
 }
 

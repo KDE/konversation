@@ -108,6 +108,8 @@ class MessageModel : public QAbstractListModel
             const QString &formattedText,
             const MessageType type = NormalMessage);
 
+        Q_INVOKABLE void clear();
+
         void cullMessages(const QObject *view);
 
     private:

@@ -274,6 +274,15 @@ void MessageModel::cullMessages(const QObject *view)
     }
 }
 
+void MessageModel::clear()
+{
+    beginResetModel();
+
+    m_messages.clear();
+
+    endResetModel();
+}
+
 QString MessageModel::clipboardSerialization(const Message& msg) const
 {
     // WIPQTQUICK TODO: msg.text is preformatted HTML, we need the raw in the
