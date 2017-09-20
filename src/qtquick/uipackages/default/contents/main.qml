@@ -692,6 +692,12 @@ Kirigami.ApplicationWindow {
                             }
                         }
 
+                        onTextChanged: {
+                            if (!completionResetLock) {
+                                resetCompletion();
+                            }
+                        }
+
                         Keys.onPressed: {
                             if (event.key == Qt.Key_Tab) {
                                 event.accepted = true;
@@ -728,6 +734,8 @@ Kirigami.ApplicationWindow {
 
                                 return;
                             } else if (text != "") {
+                                resetCompletion(); // WIPQTQUICK Possibly excessive.
+
                                 // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
                                 // to make things like deadkeys work
                                 if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
