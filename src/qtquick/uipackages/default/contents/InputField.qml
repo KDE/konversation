@@ -75,7 +75,7 @@ QQC2.ScrollView {
             remove(cursorPosition - lastCompletion.length,
                 (cursorPosition - lastCompletion.length) + lastCompletion.length);
 
-            lastCompletion = completer.matches.at(match);
+            lastCompletion = completer.matches.at(match) + konvUi.settings.completionSuffix;
 
             insert(cursorPosition, lastCompletion)
 
