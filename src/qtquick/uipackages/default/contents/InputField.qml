@@ -75,7 +75,11 @@ QQC2.ScrollView {
             remove(cursorPosition - lastCompletion.length,
                 (cursorPosition - lastCompletion.length) + lastCompletion.length);
 
-            lastCompletion = completer.matches.at(match) + konvUi.settings.completionSuffix;
+            lastCompletion = completer.matches.at(match);
+
+            if (cursorPosition > 0) { // WIPQTQUICK TODO KConfigXT has different suffixes for each case
+                lastCompletion += konvUi.settings.completionSuffix;
+            }
 
             insert(cursorPosition, lastCompletion)
 
