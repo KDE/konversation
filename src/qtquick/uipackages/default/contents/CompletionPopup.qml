@@ -105,6 +105,21 @@ Loader {
                     next();
                 }
 
+                Keys.onEscapePressed: {
+                    event.accept;
+                    completionPopup.close();
+                }
+
+                Keys.onEnterPressed: {
+                    event.accept;
+                    completionPopup.close();
+                }
+
+                Keys.onReturnPressed: {
+                    event.accept;
+                    completionPopup.close();
+                }
+
                 Keys.onPressed: {
                     // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
                     // to make things like deadkeys work
