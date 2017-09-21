@@ -109,8 +109,8 @@ Loader {
 
                 Keys.onEscapePressed: {
                     event.accept;
-                    completionPopup.close();
                     completionPopup.cancelled();
+                    completionPopup.close();
                 }
 
                 Keys.onEnterPressed: {

@@ -13,6 +13,8 @@ import QtQuick 2.7
 
 import QtQuick.Controls 2.2 as QQC2
 
+import org.kde.kirigami 2.1 as Kirigami
+
 QQC2.ScrollView {
     id: inputField
 
@@ -104,6 +106,11 @@ QQC2.ScrollView {
             }
         }
 
+        function cancelCompletion() {
+            removeCompletion();
+            insert(cursorPosition, completer.prefix);
+        }
+
         function resetCompletion() {
             if (completionResetLock || completionPopup.currentIndex != -1) {
                 return;
@@ -125,7 +132,7 @@ QQC2.ScrollView {
                 }
             }
 
-            onCancelled: completionPopup.removeCompletion()
+            onCancelled: inputFieldTextArea.cancelCompletion()
         }
 
         Keys.onPressed: {
