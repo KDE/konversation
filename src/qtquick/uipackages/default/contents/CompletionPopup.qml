@@ -25,6 +25,8 @@ Loader {
     readonly property int currentIndex: active ? item.currentIndex : -1
     readonly property int _itemHeight: konvUi.listItemFontSize + Kirigami.Units.gridUnit
 
+    signal cancelled
+
     active: false
 
     sourceComponent: popupComponent
@@ -108,6 +110,7 @@ Loader {
                 Keys.onEscapePressed: {
                     event.accept;
                     completionPopup.close();
+                    completionPopup.cancelled();
                 }
 
                 Keys.onEnterPressed: {

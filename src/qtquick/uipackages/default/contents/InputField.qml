@@ -69,11 +69,19 @@ QQC2.ScrollView {
 
         wrapMode: konvUi.settings.constrictInputField ? TextEdit.NoWrap : TextEdit.Wrap
 
-        function insertMatch(match) {
-            completionResetLock = true;
+        function removeCompletion() {
+            if (!lastCompletion.length) {
+                return;
+            }
 
             remove(cursorPosition - lastCompletion.length,
                 (cursorPosition - lastCompletion.length) + lastCompletion.length);
+        }
+
+        function insertMatch(match) {
+            completionResetLock = true;
+
+            removeCompletion();
 
             lastCompletion = completer.matches.at(match);
 
@@ -116,6 +124,8 @@ QQC2.ScrollView {
                     inputFieldTextArea.insertMatch(completionPopup.currentIndex);
                 }
             }
+
+            onCancelled: completionPopup.removeCompletion()
         }
 
         Keys.onPressed: {
