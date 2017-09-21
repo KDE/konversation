@@ -39,6 +39,7 @@
 #include "viewspringloader.h"
 #include "nicklistview.h" // WIPQTQUICK
 #include "messagemodel.h" // WIPQTQUICK
+#include "inputhistorymodel.h" // WIPQTQUICK
 
 #include <QModelIndex>
 #include <QSplitter>
@@ -2061,9 +2062,12 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     // BEGIN: WIPQTQUICK
     if (m_window->getFilteredMessageModel()->filterView() == view) {
         m_window->getFilteredMessageModel()->setFilterView(nullptr);
+        m_window->getFilteredUserModel()->setFilterView(nullptr);
+        m_window->getFilteredInputHistoryModel()->setFilterView(nullptr);
     }
 
     m_window->getMessageModel()->cullMessages(view);
+    m_window->getInputHistoryModel()->cull(view);
     // END: WIPQTQUICK
 
     if (view == m_frontView) m_frontView = 0;

@@ -31,6 +31,7 @@
 #include "usermodel.h" // WIPQTQUICK
 #include "identitymodel.h" // WIPQTQUICK
 #include "completer.h" // WIPQTQUICK
+#include "inputhistorymodel.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
@@ -88,6 +89,10 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_completer = new Completer(this);
     m_completer->setSourceModel(m_filteredUserModel);
 
+    m_inputHistoryModel = new InputHistoryModel(this);
+    m_filteredInputHistoryModel = new FilteredInputHistoryModel(this);
+    m_filteredInputHistoryModel->setSourceModel(m_inputHistoryModel);
+
     // Filter on the new view.
     connect(m_viewContainer, &ViewContainer::viewChanged, this,
         [this](const QModelIndex &idx) {
@@ -111,12 +116,14 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
     m_qmlEngine = new QQmlApplicationEngine(this);
     qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
+    qmlRegisterUncreatableType<InputHistoryModel>("org.kde.konversation", 1, 0, "InputHistoryModel", "");
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("completer"), m_completer);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("inputHistoryModel"), m_filteredInputHistoryModel);
 
     loadUiPackage(uiPackage, raiseQtQuickUi);
     // END: WIPQTQUICK

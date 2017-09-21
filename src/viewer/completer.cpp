@@ -49,8 +49,12 @@ void MatchesModel::setPinnedMatch(const QString& pinnedMatch)
     }
 }
 
-QString MatchesModel::at(int row)
+QString MatchesModel::at(int row) const
 {
+    if (row < 0 || row >= rowCount()) {
+        return QString();
+    }
+
     return data(index(row, 0)).toString();
 }
 

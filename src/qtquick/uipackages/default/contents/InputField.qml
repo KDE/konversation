@@ -15,6 +15,8 @@ import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.1 as Kirigami
 
+import org.kde.konversation 1.0 as Konversation
+
 QQC2.ScrollView {
     id: inputField
 
@@ -34,9 +36,48 @@ QQC2.ScrollView {
     Connections {
         target: viewModel
 
+        property QtObject lastView: null
+
         onCurrentViewChanged: {
             completionPopup.close();
             inputFieldTextArea.resetCompletion();
+
+            if (!viewModel.currentView) {
+                lastView = viewModel.currentView;
+
+                return;
+            }
+
+            if (!konvUi.settings.sharedInputField) {
+                if (lastView) {
+                    if (inputFieldTextArea.historyCursor != -1) {
+                        var idx = inputHistoryModel.index(inputHistoryModel.count - 1, 0);
+
+                        if (inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing)) {
+                            inputHistoryModel.remove(idx);
+                        }
+                    } else if (inputFieldTextArea.text) {
+                        inputHistoryModel.append(lastView, inputFieldTextArea.text,
+                            true, inputFieldTextArea.cursorPosition);
+                        inputFieldTextArea.text = "";
+                    }
+                }
+
+                inputHistoryModel.filterView = viewModel.currentView;
+
+                if (inputHistoryModel.count) {
+                    var idx = inputHistoryModel.index(inputHistoryModel.count - 1, 0);
+
+                    if (inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing)) {
+                        inputFieldTextArea.text = inputHistoryModel.data(idx);
+                        inputFieldTextArea.cursorPosition = inputHistoryModel.data(idx,
+                            Konversation.InputHistoryModel.CursorPosition);
+                        inputHistoryModel.remove(idx);
+                    }
+                }
+
+                lastView = viewModel.currentView;
+            }
         }
     }
 
@@ -54,6 +95,11 @@ QQC2.ScrollView {
 
         enabled: viewModel.currentView
 
+        property bool upPressed: false
+        property bool downPressed: false
+        property int historyCursor: -1
+        property bool historyResetLock: false
+
         property string lastCompletion: ""
         property int nextMatch: 0
         property bool completionResetLock: false
@@ -70,6 +116,80 @@ QQC2.ScrollView {
         verticalAlignment: Text.AlignVCenter
 
         wrapMode: konvUi.settings.constrictInputField ? TextEdit.NoWrap : TextEdit.Wrap
+
+        onCursorPositionChanged: {
+            resetHistory();
+            resetCompletion();
+        }
+
+        onTextChanged: {
+            resetHistory();
+            resetCompletion();
+        }
+
+        function doHistory() {
+            historyResetLock = true;
+
+            if (upPressed) {
+                if (inputHistoryModel.count) {
+                    if (historyCursor == -1) {
+                        historyCursor = inputHistoryModel.count - 1;
+
+                        if (text) {
+                            inputHistoryModel.append(viewModel.currentView, text,
+                                true, cursorPosition);
+                        }
+
+                        text = inputHistoryModel.data(inputHistoryModel.index(historyCursor, 0));
+                        cursorPosition = length;
+                    } else if (historyCursor > 0) {
+                        --historyCursor;
+                        text = inputHistoryModel.data(inputHistoryModel.index(historyCursor, 0));
+                        cursorPosition = length;
+                    }
+                }
+
+                upPressed = false;
+            } else if (downPressed) {
+                if (historyCursor != -1) {
+                    if (historyCursor < (inputHistoryModel.count - 1)) {
+                        ++historyCursor;
+
+                        var idx = inputHistoryModel.index(historyCursor, 0);
+                        var editing = inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing);
+
+                        if (historyCursor == (inputHistoryModel.count - 1) && editing) {
+                            text = inputHistoryModel.data(idx);
+                            cursorPosition = inputHistoryModel.data(idx,
+                                Konversation.InputHistoryModel.CursorPosition);
+                            inputHistoryModel.remove(idx);
+                            historyCursor = -1;
+                        } else {
+                            text = inputHistoryModel.data(idx);
+                            cursorPosition = length;
+                        }
+                    } else {
+                        historyCursor = -1;
+                        text = "";
+                    }
+                } else if (text) {
+                    inputHistoryModel.append(viewModel.currentView, text);
+                    text = "";
+                }
+
+                downPressed = false;
+            }
+
+            historyResetLock = false;
+        }
+
+        function resetHistory() {
+            if (historyResetLock) {
+                return;
+            }
+
+            historyCursor = -1;
+        }
 
         function removeCompletion() {
             if (!lastCompletion.length) {
@@ -120,9 +240,6 @@ QQC2.ScrollView {
             nextMatch = 0;
         }
 
-        onCursorPositionChanged: resetCompletion()
-        onTextChanged: resetCompletion()
-
         Connections {
             target: completionPopup
 
@@ -135,45 +252,76 @@ QQC2.ScrollView {
             onCancelled: inputFieldTextArea.cancelCompletion()
         }
 
-        Keys.onPressed: {
-            if (event.key == Qt.Key_Tab) {
-                event.accepted = true;
+        Timer {
+            id: cursorMovementCheckTimer
 
-                if (!text.length && lastCompletion.length) {
-                    text = lastCompletion;
-                    cursorPosition = cursorPosition + lastCompletion.length;
-                } else if (cursorPosition > 0) {
-                    if (completer.matches.count) {
-                        insertNextMatch();
-                    } else {
-                        // WIPQTQUICK TODO There's faster ways than splitting all words.
-                        var prefix = getText(0, cursorPosition).split(/[\s]+/).pop();
+            property int cursorPosition: -1
 
-                        if (prefix.length) {
-                            completer.prefix = prefix;
+            repeat: false
+            interval: 0
 
-                            if (completer.matches.count) {
-                                lastCompletion = prefix;
+            onTriggered: {
+                if (cursorPosition == inputFieldTextArea.cursorPosition) {
+                    inputFieldTextArea.doHistory();
+                }
+            }
 
-                                if (konvUi.settings.hideCompletionPopup || completer.matches.count == 1) {
-                                    insertNextMatch();
-                                } else {
-                                    completionPopup.open();
-                                }
+            function expectMovement() {
+                cursorPosition = inputFieldTextArea.cursorPosition;
+                restart();
+            }
+        }
+
+        Keys.onUpPressed: {
+            event.accepted = false;
+            upPressed = true;
+            cursorMovementCheckTimer.expectMovement();
+        }
+
+        Keys.onDownPressed: {
+            event.accepted = false;
+            downPressed = true;
+            cursorMovementCheckTimer.expectMovement();
+        }
+
+        Keys.onTabPressed: {
+            event.accepted = true;
+
+            if (!text.length && lastCompletion.length) {
+                text = lastCompletion;
+                cursorPosition = cursorPosition + lastCompletion.length;
+            } else if (cursorPosition > 0) {
+                if (completer.matches.count) {
+                    insertNextMatch();
+                } else {
+                    // WIPQTQUICK TODO There's faster ways than splitting all words.
+                    var prefix = getText(0, cursorPosition).split(/[\s]+/).pop();
+
+                    if (prefix.length) {
+                        completer.prefix = prefix;
+
+                        if (completer.matches.count) {
+                            lastCompletion = prefix;
+
+                            if (konvUi.settings.hideCompletionPopup || completer.matches.count == 1) {
+                                insertNextMatch();
+                            } else {
+                                completionPopup.open();
                             }
                         }
                     }
                 }
+            }
+        }
 
-                return;
-            } else if (text != "") {
-                resetCompletion(); // WIPQTQUICK Possibly excessive.
-
+        Keys.onPressed: {
+            if (text != "") {
                 // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
                 // to make things like deadkeys work
                 if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
                     event.accepted = true;
                     viewModel.currentView.sendText(text);
+                    inputHistoryModel.append(viewModel.currentView, text);
                     text = "";
                 }
             }

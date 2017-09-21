@@ -58,5 +58,15 @@ Item {
                 konvUi.settings.hideCompletionPopup = checked;
             }
         }
+
+        QQC2.CheckBox {
+            text: "Share input field between all views"
+
+            checked: konvUi.settings.sharedInputField
+
+            onCheckedChanged: {
+                konvUi.settings.sharedInputField = checked;
+            }
+        }
     }
 }

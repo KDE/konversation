@@ -156,6 +156,7 @@ set(viewer_SRCS
     viewer/topichistoryview.cpp
     viewer/viewtree.cpp
     viewer/completer.cpp
+    viewer/inputhistorymodel.cpp
 )
 
 ki18n_wrap_ui(viewer_SRCS

@@ -100,16 +100,14 @@ class MessageModel : public QAbstractListModel
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
-        Q_INVOKABLE void appendMessage(QObject *view,
+        void appendMessage(QObject *view,
             const QString &timeStamp,
             const QString &nick,
             const QColor &nickColor,
             const QString &text,
             const QString &formattedText,
             const MessageType type = NormalMessage);
-
-        Q_INVOKABLE void clear();
-
+        void clear();
         void cullMessages(const QObject *view);
 
     private:

@@ -36,7 +36,7 @@ class MatchesModel : public QSortFilterProxyModel
         QString pinnedMatch() const;
         void setPinnedMatch(const QString &pinnedMatch);
 
-        Q_INVOKABLE QString at(int row);
+        Q_INVOKABLE QString at(int row) const;
 
     Q_SIGNALS:
         void countChanged() const;

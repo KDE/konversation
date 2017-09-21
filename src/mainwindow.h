@@ -37,6 +37,8 @@ class FilteredMessageModel; // WIPQTQUICK
 class FilteredUserModel; // WIPQTQUICK
 class IdentityModel; // WIPQTQUICK
 class Completer; // WIPQTQUICK
+class InputHistoryModel; // WIPQTQUICK
+class FilteredInputHistoryModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -56,11 +58,13 @@ class MainWindow : public KXmlGuiWindow
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
 
-        MessageModel* getMessageModel() { return m_messageModel; } // WIPQTQUICK
-        FilteredMessageModel* getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
-        FilteredUserModel* getFilteredUserModel() { return m_filteredUserModel; } // WIPQTQUICK
-        bool loadUiPackage(const QString &packageName, bool raise = false);
-        bool reloadUiPackage();
+        MessageModel *getMessageModel() { return m_messageModel; } // WIPQTQUICK
+        FilteredMessageModel *getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
+        FilteredUserModel *getFilteredUserModel() { return m_filteredUserModel; } // WIPQTQUICK
+        InputHistoryModel *getInputHistoryModel() { return m_inputHistoryModel; } // WIPQTQUICK
+        FilteredInputHistoryModel *getFilteredInputHistoryModel() { return m_filteredInputHistoryModel; } // WIPQTQUICK }
+        bool loadUiPackage(const QString &packageName, bool raise = false); // WIPQTQUICK
+        bool reloadUiPackage(); // WIPQTQUICK
 
         /** Some errors need to be shown, even when konversation is minimized.
          */
@@ -146,6 +150,8 @@ class MainWindow : public KXmlGuiWindow
         FilteredUserModel *m_filteredUserModel; // WIPQTQUICK
         IdentityModel *m_identityModel;
         Completer *m_completer; // WIPQTQUICK
+        InputHistoryModel *m_inputHistoryModel;
+        FilteredInputHistoryModel *m_filteredInputHistoryModel; // WIPQTQUICK
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
         QString m_currentUiPackage; // WIPQTQUICK
         QStackedWidget *m_uiStack; // WIPQTQUICK
