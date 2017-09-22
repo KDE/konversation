@@ -39,22 +39,17 @@ Item {
 
             property bool scrollUp: false
             property bool scrollDown: false
+            property bool scrollToEnd: true
 
             readonly property int msgWidth: width - QQC2.ScrollBar.vertical.width
 
             model: messageModel
             delegate: msgComponent
 
-            function scrollToEnd() {
-                if (messageModel.hasSelection
-                    || (mouseOverlay.inlineSelectionItem
-                    && mouseOverlay.inlineSelectionItem.hasSelectedText)) {
-                    return;
+            function checkScrollPosition() {
+                if (scrollToEnd) {
+                    contentY = contentItem.height - textListView.height;
                 }
-
-                var newIndex = (count - 1);
-                positionViewAtEnd();
-                currentIndex = newIndex;
             }
 
             function cancelAutoScroll() {
@@ -69,6 +64,9 @@ Item {
 
                 if (contentY == contentItem.height - height) {
                     scrollDown = false;
+                    scrollToEnd = true;
+                } else {
+                    scrollToEnd = false;
                 }
             }
 
@@ -96,32 +94,41 @@ Item {
             Behavior on contentY { id: smoothY; enabled: false; SmoothedAnimation { velocity: 500 } }
 
             Connections {
+                target: viewModel
+
+                onCurrentViewChanged: {
+                    textListView.scrollToEnd = true;
+                }
+            }
+
+            Connections {
+                target: textView
+
+                onHeightChanged: {
+                    if (textListView.contentItem.height <= textView.height) {
+                        textListView.height = textListView.contentItem.height;
+                        textListView.scrollToEnd = true;
+                    } else {
+                        textListView.height = textView.height;
+                    }
+
+                    textListView.checkScrollPosition();
+                }
+            }
+
+            Connections {
                 target: textListView.contentItem
 
                 onHeightChanged: {
                     if (textListView.contentItem.height <= textView.height) {
                         textListView.height = textListView.contentItem.height;
+                        textListView.scrollToEnd = true;
                     } else {
                         textListView.height = textView.height;
                     }
+
+                    textListView.checkScrollPosition();
                 }
-            }
-
-            Connections {
-                target: messageModel
-
-                onRowsInserted: scrollDownTimer.restart()
-                onRowsRemoved: scrollDownTimer.restart()
-                onModelReset: scrollDownTimer.restart()
-            }
-
-            Timer {
-                id: scrollDownTimer
-
-                interval: 0
-                repeat: false
-
-                onTriggered: textListView.scrollToEnd()
             }
 
             Component {
@@ -134,7 +141,7 @@ Item {
                     height: (active ? (Math.max(avatarSize, konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit))
                         : messageText.height)
 
-                    property int row: index
+                    readonly property int row: index
 
                     readonly property int avatarSize: konvUi.largerFontSize * 3.3
                     property var authorSize: Qt.point(0, 0)
@@ -153,17 +160,17 @@ Item {
                         return Math.min(textView.width, width);
                     }
 
-                    property bool selected: model.Selected === true
-                    property bool hasSelectedText: (inlineSelectionTextItem
+                    readonly property bool selected: model.Selected === true
+                    readonly property bool hasSelectedText: (inlineSelectionTextItem
                         && inlineSelectionTextItem.selectedText.length)
 
-                    property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
+                    readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
                         && !mouseOverlay.tapSelecting)
 
                     readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
 
                     property Item timeStamp: null
-                    property Item messageTextArea: messageText
+                    readonly property Item messageTextArea: messageText
                     property Item selectedBackgroundItem: null
                     property Item inlineSelectionTextItem: null
 
@@ -414,6 +421,8 @@ Item {
                             ? timeStamp.margin + timeStamp.width : 0)
                         anchors.bottom: parent.bottom
 
+                        property bool reused: false
+
                         renderType: Text.NativeRendering
                         textFormat: Text.StyledText
 
@@ -446,6 +455,7 @@ Item {
         id: mouseOverlay
 
         anchors.fill: parent
+        anchors.rightMargin: textListView.QQC2.ScrollBar.vertical.width
 
         property var rowsToSelect: []
         property int pressedRow: -1
