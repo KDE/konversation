@@ -122,7 +122,6 @@ Item {
                 onHeightChanged: {
                     if (textListView.contentItem.height <= textView.height) {
                         textListView.height = textListView.contentItem.height;
-                        textListView.scrollToEnd = true;
                     } else {
                         textListView.height = textView.height;
                     }
