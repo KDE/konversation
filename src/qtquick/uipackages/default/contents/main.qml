@@ -208,16 +208,6 @@ Kirigami.ApplicationWindow {
 
                     incrementCurrentIndex();
                 }
-
-                Keys.onPressed: {
-                    // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                    // to make things like deadkeys work
-                    if (event.text != "" && konvUi.inputField && !konvUi.inputField.activeFocus) {
-                        contextDrawer.close();
-                        event.accept = true;
-                        konvUi.inputField.textForward(event.text);
-                    }
-                }
             }
         }
 
@@ -553,15 +543,6 @@ Kirigami.ApplicationWindow {
                             viewModel.currentServer.setNickname(currentText);
                         }
                     }
-                }
-            }
-
-            Keys.onPressed: {
-                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                // to make things like deadkeys work
-                if (event.text != "" && konvUi.inputField && !konvUi.inputField.activeFocus) {
-                    event.accept = true;
-                    konvUi.inputField.textForward(event.text);
                 }
             }
         }

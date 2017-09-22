@@ -36,7 +36,6 @@ Loader {
     }
 
     function close() {
-        konvUi.inputField.forceActiveFocus();
         active = false;
     }
 
@@ -111,25 +110,19 @@ Loader {
                     event.accept;
                     completionPopup.cancelled();
                     completionPopup.close();
+                    konvUi.inputField.forceActiveFocus();
                 }
 
                 Keys.onEnterPressed: {
                     event.accept;
                     completionPopup.close();
+                    konvUi.inputField.forceActiveFocus();
                 }
 
                 Keys.onReturnPressed: {
                     event.accept;
                     completionPopup.close();
-                }
-
-                Keys.onPressed: {
-                    // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                    // to make things like deadkeys work
-                    if (event.text != "" && konvUi.inputField && !konvUi.inputField.activeFocus) {
-                        event.accept = true;
-                        konvUi.inputField.textForward(event.text);
-                    }
+                    konvUi.inputField.forceActiveFocus();
                 }
 
                 Component.onCompleted: forceActiveFocus()

@@ -127,6 +127,12 @@ QQC2.ScrollView {
             resetCompletion();
         }
 
+        function commit() {
+            viewModel.currentView.sendText(text);
+            inputHistoryModel.append(viewModel.currentView, text);
+            text = "";
+        }
+
         function doHistory() {
             historyResetLock = true;
 
@@ -244,7 +250,7 @@ QQC2.ScrollView {
             target: completionPopup
 
             onCurrentIndexChanged: {
-                if (!activeFocus) {
+                if (!activeFocus && completionPopup.currentIndex != -1) {
                     inputFieldTextArea.insertMatch(completionPopup.currentIndex);
                 }
             }
@@ -314,17 +320,14 @@ QQC2.ScrollView {
             }
         }
 
-        Keys.onPressed: {
-            if (text != "") {
-                // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-                // to make things like deadkeys work
-                if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-                    event.accepted = true;
-                    viewModel.currentView.sendText(text);
-                    inputHistoryModel.append(viewModel.currentView, text);
-                    text = "";
-                }
-            }
+        Keys.onEnterPressed: {
+            event.accepted = true;
+            commit();
+        }
+
+        Keys.onReturnPressed: {
+            event.accepted = true;
+            commit();
         }
 
         Component.onCompleted: forceActiveFocus()
