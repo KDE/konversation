@@ -35,20 +35,34 @@ Item {
 
             visible: !konvUi.settingsMode
 
-            QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+            QQC2.ScrollBar.vertical: QQC2.ScrollBar { id: verticalScrollbar }
 
             property bool scrollUp: false
             property bool scrollDown: false
             property bool scrollToEnd: true
+            property bool userScrolling: false
 
-            readonly property int msgWidth: width - QQC2.ScrollBar.vertical.width
+            readonly property int msgWidth: width - verticalScrollbar.width
 
             model: messageModel
             delegate: msgComponent
 
-            function checkScrollPosition() {
-                if (scrollToEnd) {
-                    contentY = contentItem.height - textListView.height;
+            function isScrolledToEnd() {
+                // This is absolutely terrible, but due to the intricacies
+                // of how ListView manages the size of its contentItem,
+                // there is no better way to determine that the view has
+                // been visually scrolled to its end (actually: we go "to
+                // the last message" here, as it's what we semantically
+                // care about). Trust me. No, atYEnd doesn't work. No,
+                // various calculations involving contentItem.height, originY,
+                // contentY and the list view height don't work. This works.
+                var mapped = mapToItem(contentItem, 0, height);
+                return (indexAt(0, mapped.y) == (count - 1));
+            }
+
+            function checkScrollToEnd() {
+                if (!userScrolling && scrollToEnd) {
+                    contentY = (contentItem.height - textListView.height) + originY;
                 }
             }
 
@@ -57,16 +71,22 @@ Item {
                 scrollDown = false;
             }
 
+            onMovementStarted: userScrolling = true
+            onMovementEnded: userScrolling = false
+
+            onUserScrollingChanged: {
+                if (!userScrolling) {
+                    scrollToEnd = isScrolledToEnd();
+                }
+            }
+
             onContentYChanged: {
                 if (contentY == 0) {
                     scrollUp = false;
                 }
 
-                if (contentY == contentItem.height - height) {
+                if (contentY == (contentItem.height - height) + originY) {
                     scrollDown = false;
-                    scrollToEnd = true;
-                } else {
-                    scrollToEnd = false;
                 }
             }
 
@@ -83,7 +103,7 @@ Item {
             onScrollDownChanged: {
                 if (scrollDown && visibleArea.heightRatio < 1.0) {
                     smoothY.enabled = true;
-                    contentY = contentItem.height - height;
+                    contentY = (contentItem.height - height) + originY;
                 } else {
                     contentY = contentY;
                     smoothY.enabled = false;
@@ -107,12 +127,10 @@ Item {
                 onHeightChanged: {
                     if (textListView.contentItem.height <= textView.height) {
                         textListView.height = textListView.contentItem.height;
-                        textListView.scrollToEnd = true;
                     } else {
                         textListView.height = textView.height;
+                        textListView.checkScrollToEnd();
                     }
-
-                    textListView.checkScrollPosition();
                 }
             }
 
@@ -124,9 +142,8 @@ Item {
                         textListView.height = textListView.contentItem.height;
                     } else {
                         textListView.height = textView.height;
+                        textListView.checkScrollToEnd();
                     }
-
-                    textListView.checkScrollPosition();
                 }
             }
 
@@ -454,7 +471,7 @@ Item {
         id: mouseOverlay
 
         anchors.fill: parent
-        anchors.rightMargin: textListView.QQC2.ScrollBar.vertical.width
+        anchors.rightMargin: Math.ceil(verticalScrollbar.width)
 
         property var rowsToSelect: []
         property int pressedRow: -1
