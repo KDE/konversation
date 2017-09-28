@@ -46,6 +46,8 @@ class Query : public ChatWindow
 
         ~Query();
 
+        IrcContextMenus::MenuOptions contextMenuOptions() const override;
+
         /** This will always be called soon after this object is created.
          *  @param nickInfo A nickinfo that must exist.
          */

@@ -14,6 +14,7 @@
 #include "nickinfo.h"
 #include "server.h"
 
+#include <QItemSelectionModel>
 #include <QMetaEnum>
 
 UserCompletionModel::UserCompletionModel(QObject *parent)
@@ -111,6 +112,10 @@ FilteredUserModel::FilteredUserModel(QObject *parent)
 {
     setSortRole(UserModel::LowercaseName);
     sort(0);
+
+    m_selectionModel = new QItemSelectionModel(this, this);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged,
+            this, &FilteredUserModel::selectionChanged);
 }
 
 FilteredUserModel::~FilteredUserModel()
@@ -145,10 +150,70 @@ void FilteredUserModel::setFilterView(QObject *view)
         }
 
         m_channelNickCache.clear();
+        m_selectionModel->clear();
         invalidateFilter();
 
         emit filterViewChanged();
     }
+}
+
+bool FilteredUserModel::hasSelection() const
+{
+    return m_selectionModel->hasSelection();
+}
+
+QStringList FilteredUserModel::selectedNames() const
+{
+    QStringList names;
+
+    if (m_selectionModel->hasSelection()) {
+        foreach(const QModelIndex &idx, m_selectionModel->selection().indexes()) {
+            names.append(idx.data().toString());
+        }
+    }
+
+    return names;
+}
+
+void FilteredUserModel::toggleSelected(int row)
+{
+    m_selectionModel->select(index(row, 0), QItemSelectionModel::Toggle);
+}
+
+void FilteredUserModel::clearAndSelect(const QVariantList &rows)
+{
+    QItemSelection newSelection;
+
+    int iRow = -1;
+
+    foreach (const QVariant &row, rows) {
+        iRow = row.toInt();
+
+        if (iRow < 0) {
+            return;
+        }
+
+        const QModelIndex &idx = index(iRow, 0);
+        newSelection.select(idx, idx);
+    }
+
+    m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
+}
+
+void FilteredUserModel::setRangeSelected(int anchor, int to)
+{
+    if (anchor < 0 || to < 0) {
+        return;
+    }
+
+    QItemSelection selection(index(anchor, 0), index(to, 0));
+    m_selectionModel->select(selection, QItemSelectionModel::ClearAndSelect);
+}
+
+void FilteredUserModel::selectAll()
+{
+    QItemSelection newSelection(index(0, 0), index(rowCount() - 1, 0));
+    m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
 }
 
 void FilteredUserModel::setSourceModel(QAbstractItemModel *sourceModel)
@@ -202,7 +267,9 @@ QVariant FilteredUserModel::data(const QModelIndex &index, int role) const
         return QSortFilterProxyModel::data(index, role);
     }
 
-    if (role == UserModel::TimeStamp) {
+    if (role == UserModel::Selected) {
+        return m_selectionModel->isSelected(index);
+    } else if (role == UserModel::TimeStamp) {
         const QModelIndex &sourceIdx = mapToSource(index);
         // WIPQTQUICK Oh my god the hoops/casts.
         const ChannelNickPtr channelNick = const_cast<FilteredUserModel *>(this)->getChannelNick(static_cast<NickInfo *>(sourceIdx.internalPointer()));
@@ -213,6 +280,19 @@ QVariant FilteredUserModel::data(const QModelIndex &index, int role) const
     }
 
     return QSortFilterProxyModel::data(index, role);
+}
+
+
+void FilteredUserModel::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    QModelIndexList indices = selected.indexes();
+    indices.append(deselected.indexes());
+
+    foreach(const QModelIndex index, indices) {
+        emit dataChanged(index, index,  QVector<int>{UserModel::Selected});
+    }
+
+    emit hasSelectionChanged();
 }
 
 ChannelNickPtr FilteredUserModel::getChannelNick(const NickInfo *nickInfo)

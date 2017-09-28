@@ -56,6 +56,7 @@ class IrcContextMenus : public QObject
             AddNotify, RemoveNotify,
             DccSend, StartDccChat, StartDccWhiteboard,
         };
+        Q_ENUM(ActionId)
 
         enum MenuOption
         {
@@ -69,24 +70,25 @@ class IrcContextMenus : public QObject
 
         };
         Q_DECLARE_FLAGS(MenuOptions, MenuOption)
+        Q_ENUM(MenuOptions)
 
         ~IrcContextMenus();
 
         static IrcContextMenus* self();
 
-        static int textMenu(const QPoint& pos, MenuOptions options, Server* server,
-            const QString& selectedText, const QString& link, const QString& nick = QString());
+        Q_INVOKABLE static int textMenu(const QPoint& pos, IrcContextMenus::MenuOptions options, Server* server,
+            const QString& selectedText, const QString& link, const QString& nick);
 
-        static void channelMenu(const QPoint& pos, Server* server, const QString& channel);
+        Q_INVOKABLE static void channelMenu(const QPoint& pos, Server* server, const QString& channel);
 
-        static void nickMenu(const QPoint& pos, MenuOptions options, Server* server,
+        Q_INVOKABLE static void nickMenu(const QPoint& pos, IrcContextMenus::MenuOptions options, Server* server,
             const QStringList& nicks, const QString& context);
-        static void processNickAction(int actionId, Server* server, const QStringList& nicks,
+        Q_INVOKABLE static void processNickAction(int actionId, Server* server, const QStringList& nicks,
             const QString& context);
 
-        static void processLinkAction(int actionId, const QString& link);
+        Q_INVOKABLE static void processLinkAction(int actionId, const QString& link);
 
-        static void topicHistoryMenu(const QPoint& pos, Server* server, const QString& text,
+        Q_INVOKABLE static void topicHistoryMenu(const QPoint& pos, Server* server, const QString& text,
             const QString& author);
 
 
@@ -153,5 +155,6 @@ class IrcContextMenus : public QObject
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(IrcContextMenus::MenuOptions)
+Q_DECLARE_METATYPE(IrcContextMenus::MenuOptions);
 
 #endif

@@ -15,19 +15,11 @@ import org.kde.kirigami 2.1 as Kirigami
 
 Kirigami.Page {
     Keys.onPressed: {
-        if (event.key == Qt.Key_Shift) {
-                konvUi.shiftPressed = true;
         // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
         // to make things like deadkeys work
-        } else if (konvUi.inputField && !konvUi.inputField.activeFocus && event.text != "") {
+        if (konvUi.inputField && !konvUi.inputField.activeFocus && event.text != "") {
             event.accept = true;
             konvUi.inputField.textForward(event.text);
-        }
-    }
-
-    Keys.onReleased: {
-        if (event.key == Qt.Key_Shift) {
-            konvUi.shiftPressed = false;
         }
     }
 }

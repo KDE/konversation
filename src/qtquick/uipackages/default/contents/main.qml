@@ -17,6 +17,7 @@ import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.1 as Kirigami
 
+import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Kirigami.ApplicationWindow {
@@ -39,10 +40,11 @@ Kirigami.ApplicationWindow {
     property bool settingsMode: false
     property Item settingsModeButtons: null
 
-    property bool shiftPressed: false
-
     signal openLegacyConfigDialog
     signal showMenuBar(bool show)
+
+    signal setStatusBarTempText(string text)
+    signal clearStatusBarTempText
 
     pageStack.defaultColumnWidth: sidebarWidth
     pageStack.initialPage: [sidebarComponent, contentComponent]
@@ -134,81 +136,13 @@ Kirigami.ApplicationWindow {
             onClicked: userList.forceActiveFocus()
         }
 
-        QQC2.ScrollView {
+        UserList {
+            id: userList
+
             anchors.top: topicArea.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-
-            ListView {
-                id: userList
-
-                onHeightChanged: {
-                    if (currentIndex != -1) {
-                        positionViewAtIndex(currentIndex, ListView.Contain);
-                    }
-                }
-
-                clip: true
-
-                currentIndex: -1
-                onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
-
-                model: contextDrawer.drawerOpen ? userModel : null
-
-                onModelChanged: currentIndex = -1
-
-                delegate: ListItem {
-                    width: userList.width
-
-                    text: model.display
-                    textMargin: Kirigami.Units.gridUnit
-
-                    function openQuery() {
-                        viewModel.currentServer.addQuery(model.display);
-                        contextDrawer.close();
-                    }
-
-                    onClicked: {
-                        userList.forceActiveFocus();
-                        userList.currentIndex = index;
-                    }
-
-                    onDoubleClicked: openQuery();
-
-                    Keys.onEnterPressed: {
-                        event.accept = true;
-                        openQuery();
-                    }
-
-                    Keys.onReturnPressed: {
-                        event.accept = true;
-                        openQuery();
-                    }
-                }
-
-                Keys.onUpPressed: {
-                    event.accept = true;
-
-                    if (currentIndex == -1) {
-                        currentIndex = 0;
-                        return;
-                    }
-
-                    decrementCurrentIndex();
-                }
-
-                Keys.onDownPressed: {
-                    event.accept = true;
-
-                    if (currentIndex == -1) {
-                        currentIndex = 0;
-                        return;
-                    }
-
-                    incrementCurrentIndex();
-                }
-            }
         }
 
         KUIC.HorizontalDragHandle {
@@ -323,8 +257,7 @@ Kirigami.ApplicationWindow {
 
                         model: viewModel
 
-                        function showView(index, view) {
-                            viewTreeList.forceActiveFocus();
+                        function showView(view) {
                             viewModel.showView(view);
 
                             if (!konvUi.pageStack.wideMode) {
@@ -344,7 +277,16 @@ Kirigami.ApplicationWindow {
                                 text: model.display
                                 textMargin: Kirigami.Units.gridUnit
 
-                                onClicked: viewTreeList.showView(topLevelIndex, value)
+                                onClicked: {
+                                    viewTreeList.forceActiveFocus();
+
+                                    if (mouse.button == Qt.RightButton) {
+                                        viewModel.showViewContextMenu(viewModel.index(index, 0),
+                                            mapToGlobal(mouse.x, mouse.y));
+                                    } else {
+                                        viewTreeList.showView(value);
+                                    }
+                                }
                             }
 
                             DelegateModel {
@@ -362,7 +304,17 @@ Kirigami.ApplicationWindow {
                                     text: model.display
                                     textMargin: Kirigami.Units.gridUnit * 2
 
-                                    onClicked: viewTreeList.showView(topLevelIndex, value)
+                                    onClicked: {
+                                        viewTreeList.forceActiveFocus();
+
+                                        if (mouse.button == Qt.RightButton) {
+                                            viewModel.showViewContextMenu(viewModel.index(index, 0,
+                                                subLevelEntries.rootIndex),
+                                                mapToGlobal(mouse.x, mouse.y));
+                                        } else {
+                                            viewTreeList.showView(value);
+                                        }
+                                    }
                                 }
                             }
 

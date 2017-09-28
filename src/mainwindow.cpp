@@ -32,6 +32,8 @@
 #include "identitymodel.h" // WIPQTQUICK
 #include "completer.h" // WIPQTQUICK
 #include "inputhistorymodel.h" // WIPQTQUICK
+#include "irccontextmenus.h" // WIPQTQUICK
+#include "qclipboardwrapper.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
@@ -117,6 +119,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_qmlEngine = new QQmlApplicationEngine(this);
     qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
     qmlRegisterUncreatableType<InputHistoryModel>("org.kde.konversation", 1, 0, "InputHistoryModel", "");
+    qmlRegisterUncreatableType<IrcContextMenus>("org.kde.konversation", 1, 0, "IrcContextMenus", "");
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
@@ -124,6 +127,8 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("completer"), m_completer);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("inputHistoryModel"), m_filteredInputHistoryModel);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("contextMenus"), IrcContextMenus::self());
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("clipboard"), new QClipboardWrapper(this));
 
     loadUiPackage(uiPackage, raiseQtQuickUi);
     // END: WIPQTQUICK
@@ -652,6 +657,10 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         this, SLOT(showMenubar(bool)));
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(openLegacyConfigDialog()),
         this, SLOT(openPrefsDialog()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(setStatusBarTempText(QString)),
+        m_statusBar, SLOT(setMainLabelTempText(QString)));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(clearStatusBarTempText()),
+        m_statusBar, SLOT(clearMainLabelTempText()));
     // END WIPQTQUICK
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())

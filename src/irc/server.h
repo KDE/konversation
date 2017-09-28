@@ -507,7 +507,7 @@ class Server : public QObject
         void notifyListStarted(int serverGroupId);
         void startNotifyTimer(int msec=0);
         void notifyTimeout();
-        void sendJoinCommand(const QString& channelName, const QString& password = QString());
+        Q_INVOKABLE void sendJoinCommand(const QString& channelName, const QString& password = QString()); // WIPQTQUICK
         void requestAway(const QString& reason = QString());
         void requestUnaway();
         void requestChannelList();

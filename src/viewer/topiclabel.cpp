@@ -106,7 +106,7 @@ namespace Konversation
         else
         {
             int contextMenuActionId = IrcContextMenus::textMenu(ev->globalPos(), m_contextMenuOptions,
-                m_server, selectedText(), m_currentUrl);
+                m_server, selectedText(), m_currentUrl, QString());
 
             switch (contextMenuActionId)
             {

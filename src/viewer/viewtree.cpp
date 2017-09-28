@@ -378,13 +378,8 @@ void ViewTree::contextMenuEvent(QContextMenuEvent* event)
     const QModelIndex& idx = indexAt(event->pos());
 
     if (idx.isValid()) {
-        QWidget* widget = static_cast<QWidget*>(idx.internalPointer());
-
-        if (widget) {
-            event->accept();
-
-            emit showViewContextMenu(widget, event->globalPos());
-        }
+        event->accept();
+        emit showViewContextMenu(idx, event->globalPos());
     }
 
     event->ignore();

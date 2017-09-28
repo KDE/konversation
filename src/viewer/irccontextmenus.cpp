@@ -79,6 +79,8 @@ IrcContextMenus::IrcContextMenus()
     setupTopicHistoryMenu();
 
     updateQuickButtonMenu();
+
+    qRegisterMetaType<MenuOptions>();
 }
 
 IrcContextMenus::~IrcContextMenus()

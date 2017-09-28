@@ -15,6 +15,7 @@
 
 #include "identity.h"
 #include "common.h"
+#include "irccontextmenus.h" // WIPQTQUICK
 
 #include <QFile>
 #include <QWidget>
@@ -31,6 +32,7 @@ class ChatWindow : public QWidget
     Q_PROPERTY(QString name READ getName NOTIFY nameChanged)
     Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
     Q_PROPERTY(QString description READ getDescription NOTIFY descriptionChanged)
+    Q_PROPERTY(IrcContextMenus::MenuOptions contextMenuOptions READ contextMenuOptions CONSTANT)
 
     public:
         explicit ChatWindow(QWidget* parent);
@@ -83,6 +85,7 @@ class ChatWindow : public QWidget
         QString getTitle() const;
         virtual QString getDescription() const;
         QString getURI(bool passNetwork = true);
+        virtual IrcContextMenus::MenuOptions contextMenuOptions() const;
 
         void setType(WindowType newType);
         WindowType getType() const;

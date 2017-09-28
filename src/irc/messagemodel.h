@@ -46,9 +46,10 @@ class FilteredMessageModel : public QSortFilterProxyModel
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
-        bool hasSelection();
+        bool hasSelection() const;
 
         Q_INVOKABLE void clearAndSelect(const QVariantList &rows);
+        Q_INVOKABLE void selectAll();
         Q_INVOKABLE void copySelectionToClipboard(QClipboard::Mode mode = QClipboard::Clipboard);
 
         virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

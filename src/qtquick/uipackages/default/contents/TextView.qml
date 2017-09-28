@@ -179,6 +179,7 @@ Item {
                     readonly property bool selected: model.Selected === true
                     readonly property bool hasSelectedText: (inlineSelectionTextItem
                         && inlineSelectionTextItem.selectedText.length)
+                    readonly property string selectedText: hasSelectedText ? inlineSelectionTextItem.selectedText : ""
 
                     readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
                         && !mouseOverlay.tapSelecting)
@@ -187,6 +188,7 @@ Item {
 
                     property Item timeStamp: null
                     readonly property Item messageTextArea: messageText
+                    property Item authorTextArea: null
                     property Item selectedBackgroundItem: null
                     property Item inlineSelectionTextItem: null
 
@@ -331,14 +333,18 @@ Item {
                                 anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
 
                                 renderType: Text.NativeRendering
-                                color: selected ? Kirigami.Theme.highlightedTextColor : model.NickColor
+                                textFormat: Text.StyledText
 
                                 font.weight: Font.Bold
                                 font.pixelSize: konvUi.largerFontSize
 
+                                color: selected ? Kirigami.Theme.highlightedTextColor : model.NickColor
+
                                 text: model.Author
 
                                 onWidthChanged: msg.authorSize = Qt.point(width, height)
+
+                                Component.onCompleted: msg.authorTextArea = author
                             }
                         }
                     }
@@ -484,6 +490,8 @@ Item {
 
         signal clearInlineSelectedText
 
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
         hoverEnabled: true
 
         function itemAt(x, y) {
@@ -506,7 +514,7 @@ Item {
             }
         }
 
-        function processClick(x, y) {
+        function processClick(x, y, shiftPressed) {
             var item = itemAt(x, y);
 
             // Adding a gridUnit for bigger finger targets.
@@ -514,7 +522,7 @@ Item {
                 && x >= item.messageTextArea.x
                 && x <= (item.contentWidth + Kirigami.Units.gridUnit)) {
 
-                if (rowsToSelect.length && konvUi.shiftPressed) {
+                if (rowsToSelect.length && shiftPressed) {
                     var start = Math.min(rowsToSelect[0], item.row);
                     var end = Math.max(rowsToSelect[0], item.row);
                     var selection = [];
@@ -578,7 +586,15 @@ Item {
                 }
 
                 var messageTextPos = mapToItem(item.messageTextArea, mouse.x, mouse.y);
-                hoveredLink = item.messageTextArea.linkAt(messageTextPos.x, messageTextPos.y);
+                var authorTextPos = item.active ? mapToItem(item.authorTextArea, mouse.x, mouse.y) : null;
+
+                if (item.active && item.authorTextArea.contains(authorTextPos)) {
+                    hoveredLink = "#" +  item.authorTextArea.text;
+                } else if (item.messageTextArea.contains(messageTextPos)) {
+                    hoveredLink = item.messageTextArea.linkAt(messageTextPos.x, messageTextPos.y)
+                } else {
+                    hoveredLink = "";
+                }
 
                 if (!mouseOverlay.tapSelecting && hoveredLink) {
                     cursorShape = Qt.PointingHandCursor;
@@ -647,8 +663,60 @@ Item {
 
             pressedLink = hoveredLink;
 
+            if (mouse.button == Qt.RightButton) {
+                var options = Konversation.IrcContextMenus.ShowTitle;
+
+                if (viewModel.currentView) {
+                    options = options | viewModel.currentView.contextMenuOptions;
+
+                    if (hoveredLink && !hoveredLink.startsWith("#")) {
+                        options = options | Konversation.IrcContextMenus.ShowLinkActions;
+                    }
+                }
+
+                if (hoveredLink.startsWith("##")) {
+                    contextMenus.channelMenu(mapToGlobal(mouse.x, mouse.y),
+                        viewModel.currentServer,
+                        hoveredLink.slice(1));
+                } else if (hoveredLink.startsWith("#")) {
+                    contextMenus.nickMenu(mapToGlobal(mouse.x, mouse.y),
+                        options,
+                        viewModel.currentServer,
+                        [hoveredLink.slice(1)],
+                        viewModel.name);
+                } else {
+                    var actionId = contextMenus.textMenu(mapToGlobal(mouse.x, mouse.y),
+                        options,
+                        viewModel.currentServer,
+                        (inlineSelectionItem && inlineSelectionItem.hasSelectedText)
+                            ? inlineSelectionItem.selectedText : "",
+                        hoveredLink,
+                        (viewModel.currentView
+                            && (viewModel.currentView.contextMenuOptions & Konversation.IrcContextMenus.ShowNickActions)
+                            ? viewModel.currentView.name : ""));
+
+                    if (actionId == Konversation.IrcContextMenus.TextCopy) {
+                        if (inlineSelectionItem && inlineSelectionItem.hasSelectedText) {
+                            clipboard.setClipboardText(inlineSelectionItem.selectedText);
+                        } else if (messageModel.hasSelection) {
+                            messageModel.copySelectionToClipboard();
+                        }
+                    } else if (actionId == Konversation.IrcContextMenus.TextSelectAll) {
+                        messageModel.selectAll();
+                    } else if (viewModel.currentView
+                        && (viewModel.currentView.contextMenuOptions & Konversation.IrcContextMenus.ShowNickActions)) {
+                        contextMenus.processNickAction(actionId,
+                            viewModel.currentServer,
+                            [viewModel.currentView.name],
+                            "");
+                    }
+                }
+
+                return;
+            }
+
             if (tapSelecting) {
-                processClick(mouse.x, mouse.y);
+                processClick(mouse.x, mouse.y, (mouse.modifiers & Qt.ShiftModifier));
             } else {
                 rowsToSelect = [];
 
@@ -697,13 +765,47 @@ Item {
             }
 
             if (!tapSelecting && hoveredLink && hoveredLink === pressedLink) {
-                konvApp.openUrl(hoveredLink);
+                // WIPQTQUICK TODO These replaces are copied from legacy IrcView
+                // code and really need reviewing if they're still necessary ...
+                // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
+                var link = hoveredLink.replace(" ", "%20");
+                // HACK Handle pipe as toString doesn't seem to decode that correctly
+                link = link.replace("%7C", "|");
+                // HACK Handle ` as toString doesn't seem to decode that correctly
+                link = link.replace("%60", "`");
+
+                if (hoveredLink.startsWith("##")) {
+                    viewModel.currentServer.sendJoinCommand(link.slice(1));
+                } else if (hoveredLink.startsWith("#")) {
+                    viewModel.currentServer.addQuery(link.replace("#", ""));
+                } else {
+                    konvApp.openUrl(link);
+                }
             }
 
             pressedRow = -1;
             pressedLink = "";
             pressAndHoldTimer.stop();
             textListView.cancelAutoScroll();
+        }
+
+        onHoveredLinkChanged: {
+            if (hoveredLink) {
+                if (hoveredLink.startsWith("##")) {
+                    // WIPQTQUICK TODO These replaces are copied from legacy IrcView
+                    // code and really need reviewing if they're still necessary ...
+                    // Replace spaces with %20 for channel links.
+                    konvUi.setStatusBarTempText(i18n("Join the channel %1",
+                        hoveredLink.slice(1).replace(" ", "%20")));
+                } else if (hoveredLink.startsWith("#")) {
+                    konvUi.setStatusBarTempText(i18n("Open a query with %1",
+                        hoveredLink.slice(1)));
+                } else {
+                    konvUi.setStatusBarTempText(hoveredLink);
+                }
+            } else {
+                konvUi.clearStatusBarTempText();
+            }
         }
 
         Connections {
@@ -736,7 +838,7 @@ Item {
                 }
 
                 mouseOverlay.tapSelecting = true;
-                mouseOverlay.processClick(mouseOverlay.mouseX, mouseOverlay.mouseY);
+                mouseOverlay.processClick(mouseOverlay.mouseX, mouseOverlay.mouseY, null);
             }
         }
 

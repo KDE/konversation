@@ -52,7 +52,7 @@ void FilteredMessageModel::setFilterView(QObject *view)
     }
 }
 
-bool FilteredMessageModel::hasSelection()
+bool FilteredMessageModel::hasSelection() const
 {
     return m_selectionModel->hasSelection();
 }
@@ -74,6 +74,12 @@ void FilteredMessageModel::clearAndSelect(const QVariantList &rows)
         newSelection.select(idx, idx);
     }
 
+    m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
+}
+
+void FilteredMessageModel::selectAll()
+{
+    QItemSelection newSelection(index(0, 0), index(rowCount() - 1, 0));
     m_selectionModel->select(newSelection, QItemSelectionModel::ClearAndSelect);
 }
 

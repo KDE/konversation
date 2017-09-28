@@ -13,6 +13,7 @@ include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMInstallIcons)
 include(FeatureSummary)
+include(ECMQMLModules)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Quick QuickWidgets) # WIPQTQUICK
 
@@ -41,6 +42,8 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     ItemViews
     Package # WIPQTQUICK: Used to load the QML UI package
 )
+
+ecm_find_qmlmodule(org.kde.kirigami 2.1) # WIPQTQUICK
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 include_directories(${PHONON_INCLUDES})

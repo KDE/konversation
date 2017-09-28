@@ -187,6 +187,11 @@ void Query::setName(const QString& newName)
     }
 }
 
+IrcContextMenus::MenuOptions Query::contextMenuOptions() const
+{
+    return IrcContextMenus::ShowNickActions;
+}
+
 void Query::setEncryptedOutput(bool e)
 {
     if (e)

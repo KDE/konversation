@@ -773,6 +773,11 @@ QString Channel::getPassword()
     return password;
 }
 
+IrcContextMenus::MenuOptions Channel::contextMenuOptions() const
+{
+    return IrcContextMenus::ShowChannelActions;
+}
+
 const Konversation::ChannelSettings Channel::channelSettings()
 {
     Konversation::ChannelSettings channel;

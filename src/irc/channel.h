@@ -89,6 +89,7 @@ class Channel : public ChatWindow
         QString getDescription() const Q_DECL_OVERRIDE;
         void setName(const QString& newName) Q_DECL_OVERRIDE;
         QString getPassword();
+        IrcContextMenus::MenuOptions contextMenuOptions() const override;
 
         const Konversation::ChannelSettings channelSettings();
 

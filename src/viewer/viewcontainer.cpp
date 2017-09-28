@@ -310,7 +310,7 @@ void ViewContainer::setupViewTree()
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(showView(QObject*)), this, SLOT(showView(QObject*))); // WIPQTQUICK
     connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-    connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
+    connect(m_viewTree, SIGNAL(showViewContextMenu(QModelIndex,QPoint)), this, SLOT(showViewContextMenu(QModelIndex,QPoint)));
     connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
     connect(this, SIGNAL(contextMenuClosed()), m_viewTree->viewport(), SLOT(update()));
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
@@ -2257,7 +2257,14 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
 
-    m_popupViewIndex = m_tabWidget->indexOf(tab);
+    showViewContextMenu(indexForView(view), pos);
+}
+
+void ViewContainer::showViewContextMenu(const QModelIndex &index, const QPoint& pos)
+{
+    ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
+
+    m_popupViewIndex = m_tabWidget->indexOf(view);
 
     updateViewActions(m_popupViewIndex);
     QMenu* menu = static_cast<QMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));

@@ -23,7 +23,9 @@ Rectangle {
     property color backgroundColor: Kirigami.Theme.viewBackgroundColor
     property int textMargin: 0
     property bool isActive: {
-        if ("ViewRole" in model) {
+        if ("Selected" in model) {
+            return model.Selected;
+        } else if ("ViewRole" in model) {
             return (model.ViewRole == viewModel.currentView);
         } else {
             return (index == ListView.view.currentIndex);
@@ -32,7 +34,7 @@ Rectangle {
 
     property alias text: text.text
 
-    signal clicked(var value)
+    signal clicked(var value, var mouse)
     signal doubleClicked(var value)
 
     color: isActive ? Kirigami.Theme.highlightColor : backgroundColor
@@ -63,11 +65,13 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
 
-        onClicked: {
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+        onPressed: {
             if ("ViewRole" in model) {
-                item.clicked(model.ViewRole);
+                item.clicked(model.ViewRole, mouse);
             } else {
-                item.clicked(index);
+                item.clicked(index, mouse);
             }
         }
 

@@ -78,8 +78,8 @@ class ViewContainer : public QAbstractItemModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QObject* currentView READ getFrontView NOTIFY viewChanged) // WIPQTQUICK TODO Fix inconsistent naming
-    Q_PROPERTY(QObject* currentServer READ getFrontServer NOTIFY viewChanged) // WIPQTQUICK
+    Q_PROPERTY(ChatWindow* currentView READ getFrontView NOTIFY viewChanged) // WIPQTQUICK TODO Fix inconsistent naming
+    Q_PROPERTY(Server* currentServer READ getFrontServer NOTIFY viewChanged) // WIPQTQUICK
 
     public:
         enum DataRoles {
@@ -150,7 +150,7 @@ class ViewContainer : public QAbstractItemModel
         void toggleAutoJoin();
         void toggleConnectOnStartup();
 
-        void showView(QObject* view); // WIPQTQUICK
+        void showView(QObject* view); // WIPQTQUICK TODO Use QModelIndex
         void goToView(int page);
         Q_INVOKABLE void showNextView();
         Q_INVOKABLE void showPreviousView();
@@ -173,6 +173,7 @@ class ViewContainer : public QAbstractItemModel
         void updateViewEncoding(ChatWindow* view);
 
         void showViewContextMenu(QWidget* tab, const QPoint& pos);
+        Q_INVOKABLE void showViewContextMenu(const QModelIndex &index, const QPoint& pos); // WIPQTQUICK
 
         void clearView();
         void clearAllViews();

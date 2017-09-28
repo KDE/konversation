@@ -192,6 +192,11 @@ QString ChatWindow::getURI(bool passNetwork)
     return url;
 }
 
+IrcContextMenus::MenuOptions ChatWindow::contextMenuOptions() const
+{
+    return IrcContextMenus::NoOptions;
+}
+
 void ChatWindow::setType(WindowType newType)
 {
     type=newType;

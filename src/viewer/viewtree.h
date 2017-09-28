@@ -58,7 +58,7 @@ class ViewTree : public QTreeView
         void sizeChanged() const;
         void showView(QObject* view) const; // WIPQTQUICK
         void closeView(ChatWindow* view) const;
-        void showViewContextMenu(QWidget* widget, const QPoint& point) const;
+        void showViewContextMenu(const QModelIndex &index, const QPoint& point) const;
 
     protected:
         bool event(QEvent* event) Q_DECL_OVERRIDE;
