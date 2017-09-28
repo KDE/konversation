@@ -37,6 +37,8 @@ namespace Konversation
 
             void setContextMenuOptions(IrcContextMenus::MenuOptions options, bool on);
 
+            static QString tagUrls(const QString& text, const QString& sender);
+
         public Q_SLOTS:
             virtual void openLink(const QString& link);
             void setText(const QString& text);
@@ -61,8 +63,6 @@ namespace Konversation
 
         private:
             void resetLinkHighlightState();
-
-            inline QString tagUrls(const QString& text, const QString& sender);
 
             Server* m_server;
             QString m_channelName;

@@ -16,6 +16,7 @@ import QtQuick.Controls 1.4 as QQC1
 import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
@@ -61,18 +62,22 @@ Kirigami.ApplicationWindow {
         id: settingsObj
     }
 
+    KQuickControlsAddons.EventGenerator {
+        id: eventGenerator
+    }
+
     contextDrawer: Kirigami.OverlayDrawer {
         id: contextDrawer
 
         width: defaultContextDrawerWidth
         edge: Qt.RightEdge
 
-        modal: true
+        modal: !drawerPinButton.checked
         handleVisible: drawerOpen
 
         drawerOpen: false
 
-        background: Rectangle { color: Kirigami.Theme.viewBackgroundColor }
+        background: Rectangle { color: contextDrawer.modal ? Kirigami.Theme.viewBackgroundColor : KUIC.ExtraColors.spotColor }
 
         onDrawerOpenChanged: {
             if (drawerOpen) {
@@ -86,54 +91,85 @@ Kirigami.ApplicationWindow {
         topPadding: 0
         bottomPadding: 0
 
-        Rectangle {
-            id: topicArea
-
-            visible: viewModel.currentView && viewModel.currentView.description != ""
-
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: visible ? channelName.height + topic.contentHeight + (Kirigami.Units.smallSpacing * 4): 0
-
-            color: KUIC.ExtraColors.spotColor
-
-            Kirigami.Heading {
-                id: channelName
-
-                x: (Kirigami.Units.smallSpacing * 2)
-
-                level: 2
-                text: viewModel.currentView ? viewModel.currentView.name : ""
-
-                color: KUIC.ExtraColors.alternateSpotTextColor
-                opacity: 1.0 // Override
-            }
-
-            Text {
-                id: topic
-
-                x: (Kirigami.Units.smallSpacing * 2)
-                y: channelName.height + (Kirigami.Units.smallSpacing * 2)
-
-                width: parent.width - (Kirigami.Units.smallSpacing * 4)
-
-                text: viewModel.currentView ? viewModel.currentView.description : ""
-                textFormat: Text.StyledText
-
-                font.pixelSize: largerFontSize
-                color: KUIC.ExtraColors.spotTextColor
-
-                wrapMode: Text.WordWrap
-
-                onLinkActivated: Qt.openUrlExternally(link)
-            }
-        }
-
         MouseArea {
             anchors.fill: parent
 
             onClicked: userList.forceActiveFocus()
+        }
+
+        Rectangle {
+            id: topicArea
+
+            visible: viewModel.currentView && viewModel.currentView.name != ""
+
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: (visible ?
+                (Math.max(viewName.height, drawerPinButton.height)
+                    + (topicLabel.visible ? topicLabel.contentHeight + (Kirigami.Units.smallSpacing * 4) : 0))
+                : 0)
+
+            color: contextDrawer.modal ? KUIC.ExtraColors.spotColor : KUIC.ExtraColors.alternateSpotColor
+
+            Kirigami.Heading {
+                id: viewName
+
+                anchors.left: parent.left
+                anchors.leftMargin: (Kirigami.Units.smallSpacing * 2)
+                anchors.right: parent.right
+                anchors.rightMargin: drawerPinButton.width
+
+                level: 2
+
+                elide: Text.ElideRight
+
+                color: KUIC.ExtraColors.alternateSpotTextColor
+                opacity: 1.0 // Override
+
+                text: viewModel.currentView ? viewModel.currentView.name : ""
+            }
+
+            Rectangle {
+                id: drawerPinButton
+
+                anchors.right: parent.right
+
+                width: footerHeight
+                height: width
+
+                property bool checked: false
+
+                color: checked ? Kirigami.Theme.highlightColor: KUIC.ExtraColors.spotColor
+
+                Kirigami.Icon {
+                    anchors.centerIn: parent
+
+                    width: parent.width - (Kirigami.Units.smallSpacing * 4)
+                    height: width
+
+                    selected: true
+
+                    source: "window-pin"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+
+                    onClicked: parent.checked = !parent.checked
+                }
+            }
+
+            TopicLabel {
+                id: topicLabel
+
+                visible: viewModel.currentView && viewModel.currentView.description != ""
+
+                x: (Kirigami.Units.smallSpacing * 2)
+                y: viewName.height + (Kirigami.Units.smallSpacing * 2)
+
+                width: parent.width - (Kirigami.Units.smallSpacing * 4)
+            }
         }
 
         UserList {

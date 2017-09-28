@@ -48,6 +48,9 @@ QQC2.ScrollView {
 
             isActive: model.Selected
 
+            textColor: contextDrawer.modal ? Kirigami.Theme.viewTextColor : KUIC.ExtraColors.spotTextColor
+            backgroundColor: contextDrawer.modal ? Kirigami.Theme.viewBackgroundColor : KUIC.ExtraColors.spotColor
+
             text: model.display
             textMargin: Kirigami.Units.gridUnit
 

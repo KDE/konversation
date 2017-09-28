@@ -681,7 +681,8 @@ void Channel::endCompleteNick()
 
 QString Channel::getDescription() const
 {
-    return getTopic();
+    // WIPQTQUICK TODO Clean up when/how formatting is done.
+    return TopicLabel::tagUrls(getTopic().replace('<', "\x0blt;").replace('>', "\x0bgt;"), getName());
 }
 
 void Channel::setName(const QString& newName)

@@ -117,6 +117,7 @@ Item {
                 target: viewModel
 
                 onCurrentViewChanged: {
+                    textListView.forceLayout();
                     textListView.scrollToEnd = true;
                 }
             }
@@ -546,6 +547,7 @@ Item {
             if (!containsMouse) {
                 pressAndHoldTimer.stop();
                 hoveredLink = "";
+                pressedLink = "";
 
                 if (inlineSelectionItem
                     && !inlineSelectionItem.hasSelectedText) {
@@ -751,6 +753,10 @@ Item {
         }
 
         onReleased: {
+            if (mouse.button == Qt.RightButton) {
+                return;
+            }
+
             if (inlineSelectionItem) {
                 var mPos = mapToItem(inlineSelectionItem.inlineSelectionTextItem.textArea,
                     mouse.x,
@@ -840,10 +846,6 @@ Item {
                 mouseOverlay.tapSelecting = true;
                 mouseOverlay.processClick(mouseOverlay.mouseX, mouseOverlay.mouseY, null);
             }
-        }
-
-        KQuickControlsAddons.EventGenerator {
-            id: eventGenerator
         }
     }
 }
