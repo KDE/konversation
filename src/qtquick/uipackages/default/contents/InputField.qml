@@ -17,6 +17,14 @@ import org.kde.kirigami 2.1 as Kirigami
 
 import org.kde.konversation 1.0 as Konversation
 
+/* WIPQTQUICK TODO Missing vs. ircinput.cpp - not all necessary needed anymore
+ * Paste handling
+ * ASCII BEL
+ * ^U
+ * Inline autoreplace
+ * History browsing by mouse wheel
+ */
+
 QQC2.ScrollView {
     id: inputField
 

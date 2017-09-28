@@ -19,6 +19,18 @@ import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
+/* WIPQTQUICK TODO Missing vs. ircview.cpp - not all necessary needed anymore
+ * Background images
+ * Bidi stuff
+ * Search
+ * Remember lines
+ * Drop handling
+ * Start text selection by press and move outside of text areas
+ * Text selection by keyboard
+ * Finish auto-scrolldown
+ * Scroll by keyboard
+ */
+
 Item {
     id: textView
 
