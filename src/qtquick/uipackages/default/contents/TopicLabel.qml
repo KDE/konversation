@@ -27,8 +27,6 @@ QQC2.TextArea {
 
     background: null
 
-    focus: true
-
     leftPadding: 0
     rightPadding: 0
     topPadding: 0
@@ -37,6 +35,7 @@ QQC2.TextArea {
     readOnly: true
 
     selectByMouse: true
+    persistentSelection: false
 
     renderType: Text.NativeRendering
     textFormat: Text.RichText
@@ -48,6 +47,12 @@ QQC2.TextArea {
     text: viewModel.currentView ? preText + viewModel.currentView.description + postText : ""
 
     wrapMode: Text.WordWrap
+
+    onActiveFocusChanged: {
+        if (!activeFocus) {
+            deselect();
+        }
+    }
 
     MouseArea {
         anchors.fill: parent
