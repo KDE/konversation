@@ -23,9 +23,7 @@ Rectangle {
     property color backgroundColor: Kirigami.Theme.viewBackgroundColor
     property int textMargin: 0
     property bool isActive: {
-        if ("Selected" in model) {
-            return model.Selected;
-        } else if ("ViewRole" in model) {
+        if ("ViewRole" in model) {
             return (model.ViewRole == viewModel.currentView);
         } else {
             return (index == ListView.view.currentIndex);

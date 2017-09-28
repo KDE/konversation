@@ -143,6 +143,8 @@ Kirigami.ApplicationWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+
+            model: contextDrawer.drawerOpen ? userModel : null
         }
 
         KUIC.HorizontalDragHandle {

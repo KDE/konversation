@@ -21,6 +21,9 @@ import org.kde.konversation.uicomponents 1.0 as KUIC
 QQC2.ScrollView {
     id: userList
 
+    property alias currentIndex: userListView.currentIndex
+    property alias model: userListView.model
+
     ListView {
         id: userListView
 
@@ -38,12 +41,12 @@ QQC2.ScrollView {
         currentIndex: -1
         onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
-        model: contextDrawer.drawerOpen ? userModel : null
-
         onModelChanged: currentIndex = -1
 
         delegate: ListItem {
             width: userListView.width
+
+            isActive: model.Selected
 
             text: model.display
             textMargin: Kirigami.Units.gridUnit
