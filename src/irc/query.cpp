@@ -85,7 +85,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // connect the signals and slots
     connect(m_inputBar, &IRCInput::submit, this, &Query::queryTextEntered);
     connect(m_inputBar, &IRCInput::envelopeCommand, this, &Query::queryPassthroughCommand);
-    connect(m_inputBar, &IRCInput::textPasted, this, &Query::textPasted);
+    connect(m_inputBar, &IRCInput::textPasted, this, &ChatWindow::textPasted);
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
@@ -280,22 +280,6 @@ void Query::sendText(const QString& sendLine)
         else
             m_server->queue(result.toServer);
     } // for
-}
-
-void Query::textPasted(const QString& text)
-{
-    if(m_server)
-    {
-        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
-            QString cChar(Preferences::self()->commandChar());
-            // make sure that lines starting with command char get escaped
-            if(line.startsWith(cChar)) line=cChar+line;
-            sendText(line);
-        }
-    }
 }
 
 void Query::indicateAway(bool show)

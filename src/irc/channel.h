@@ -261,8 +261,6 @@ class Channel : public ChatWindow
         // Dialogs
         void changeNickname(const QString& newNickname);
 
-        void textPasted(const QString& text); ///< connected to IRCInput::textPasted() - used to handle large/multiline pastings
-
         void sendFileMenu(); ///< connected to IRCInput::sendFile()
         void nicknameComboboxChanged();
         /// Enable/disable the mode buttons depending on whether you are op or not.

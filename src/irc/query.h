@@ -90,8 +90,6 @@ class Query : public ChatWindow
         void queryPassthroughCommand();
         void sendFileMenu();
         void urlsDropped(const QList<QUrl>& urls);
-        // connected to IRCInput::textPasted() - used to handle large/multiline pastes
-        void textPasted(const QString& text);
         void nickInfoChanged();
         void updateNickInfo(Server* server, NickInfoPtr nickInfo);
 

@@ -180,7 +180,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             QString ctcpArgument = hasArg ? ctcp.mid(ctcp.indexOf(QLatin1Char(' '))+1) : QString();
             hasArg = !ctcpArgument.isEmpty();
             if (hasArg)
-                ctcpArgument = konv_app->doAutoreplace(ctcpArgument, false).first;
+                ctcpArgument = konv_app->doAutoreplace(ctcpArgument, false)[0].toString();
 
             // If it was a ctcp action, build an action string
             if (ctcpCommand == QStringLiteral("action") && isChan)
@@ -2428,7 +2428,7 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
     }
 
     Application* konv_app = Application::instance();
-    message = konv_app->doAutoreplace(message, false).first;
+    message = konv_app->doAutoreplace(message, false)[0].toString();
 
     if(isAChannel(parameterList.value(0)))
     {

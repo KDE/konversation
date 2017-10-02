@@ -92,6 +92,7 @@ class ChatWindow : public QWidget
         virtual bool isTopLevelView() const;
 
         Q_INVOKABLE virtual void sendText(const QString& /*text*/) {}
+        Q_INVOKABLE virtual void textPasted(const QString& text);
 
         virtual void append(const QString& nickname,const QString& message, const QHash<QString, QString> &messageTags, const QString& label = QString());
         virtual void appendRaw(const QString& message, bool self = false);

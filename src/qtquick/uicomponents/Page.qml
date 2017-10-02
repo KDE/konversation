@@ -15,11 +15,18 @@ import org.kde.kirigami 2.1 as Kirigami
 
 Kirigami.Page {
     Keys.onPressed: {
+        if (!konvUi.inputField) {
+            return;
+        }
+
         // WIPQTQUICK TODO Evaluating text is not good enough, needs real key event fwd
-        // to make things like deadkeys work
-        if (konvUi.inputField && !konvUi.inputField.activeFocus && event.text != "") {
+        // to make things like deadkeys work.
+        if (event.text != "" && !konvUi.inputField.activeFocus) {
             event.accept = true;
             konvUi.inputField.textForward(event.text);
+        } else if (event.matches(StandardKey.Paste)) {
+            event.accepted = true;
+            konvUi.inputField.pasteFromClipboard();
         }
     }
 }

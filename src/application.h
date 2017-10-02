@@ -121,7 +121,7 @@ class Application : public QApplication
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
         // auto replacement for input or output lines
-        QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1);
+        Q_INVOKABLE QVariantList doAutoreplace(const QString& text, bool output, int cursorPos = -1);
 
         // inline auto replacement for input lines
         void doInlineAutoreplace(KTextEdit* textEdit);

@@ -559,7 +559,7 @@ Kirigami.ApplicationWindow {
                 color: Kirigami.Theme.viewBackgroundColor
             }
 
-            CompletionPopup {
+            CompletionPopup { // WIPQTQUICK TODO Lazy-load.
                 id: completionPopup
 
                 anchors.bottom: parent.bottom

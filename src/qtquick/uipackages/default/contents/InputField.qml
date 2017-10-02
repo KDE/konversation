@@ -18,11 +18,11 @@ import org.kde.kirigami 2.1 as Kirigami
 import org.kde.konversation 1.0 as Konversation
 
 /* WIPQTQUICK TODO Missing vs. ircinput.cpp - not all necessary needed anymore
- * Paste handling
  * ASCII BEL
  * ^U
  * Inline autoreplace
  * History browsing by mouse wheel
+ * Text drops
  */
 
 QQC2.ScrollView {
@@ -39,6 +39,66 @@ QQC2.ScrollView {
     function textForward(text) {
         inputFieldTextArea.forceActiveFocus();
         inputFieldTextArea.insert(inputFieldTextArea.cursorPosition, text);
+    }
+
+    function pasteFromClipboard() {
+        paste(clipboard.clipboardText());
+    }
+
+    function pasteFromSelection() {
+        paste(clipboard.selectionText());
+    }
+
+    function paste(text) {
+        if (!text.length) {
+            return;
+        }
+
+        completionPopup.close();
+        inputFieldTextArea.resetCompletion();
+
+        text = clipboard.simplifyPaste(text);
+
+        var multiLine = false;
+
+        if (text.indexOf("\n") != -1) {
+            var firstIndex = text.indexOf("\n");
+            var lastIndex = text.lastIndexOf("\n");
+
+            // Emit the signal if there's a line break in the middle of the text.
+            if (firstIndex > 0 && firstIndex != (text.length - 1)) {
+                multiLine = true;
+            }
+
+            // Emit the signal if there's more than one line break in the text.
+            if (firstIndex != lastIndex) {
+                multiLine = true;
+            }
+
+            // Remove the \n from end of the line if there's only one \n.
+            if (!multiLine) {
+                text.remove("\n");
+            }
+        }
+
+        if (multiLine) {
+            // Prepend text currently in the input field.
+            if (inputFieldTextArea.text.length) {
+                text = inputFieldTextArea.text + "\n" + text;
+            }
+
+            text = clipboard.handlePaste(text);
+
+            if (text.length && viewModel.currentView) {
+                viewModel.currentView.textPasted(text);
+                inputHistoryodel.append(viewModel.currentView, text);
+                inputFieldTextArea.text = "";
+            }
+        } else {
+            inputFieldTextArea.insert(inputFieldTextArea.cursorPosition, text);
+        }
+
+        inputFieldTextArea.forceActiveFocus();
     }
 
     Connections {
@@ -114,6 +174,8 @@ QQC2.ScrollView {
 
         background: null
 
+        focus: true
+
         topPadding: Kirigami.Units.smallSpacing
         bottomPadding: Kirigami.Units.smallSpacing
 
@@ -135,8 +197,15 @@ QQC2.ScrollView {
             resetCompletion();
         }
 
-        function commit() {
-            viewModel.currentView.sendText(text);
+        function commit(modifiers) {
+            var send = konvApp.doAutoreplace(text, true)[0];
+
+            if (modifiers & Qt.ControlModifier && send.startsWith("/")) { // WIPQTQUICK TODO Access command char pref.
+                viewModel.currentView.sendText("/" + send);
+            } else {
+                viewModel.currentView.sendText(send);
+            }
+
             inputHistoryModel.append(viewModel.currentView, text);
             text = "";
         }
@@ -225,7 +294,7 @@ QQC2.ScrollView {
                 lastCompletion += konvUi.settings.completionSuffix;
             }
 
-            insert(cursorPosition, lastCompletion)
+            insert(cursorPosition, lastCompletion);
 
             completionResetLock = false;
         }
@@ -330,14 +399,32 @@ QQC2.ScrollView {
 
         Keys.onEnterPressed: {
             event.accepted = true;
-            commit();
+            commit(event.modifiers);
         }
 
         Keys.onReturnPressed: {
             event.accepted = true;
-            commit();
+            commit(event.modifiers);
+        }
+
+        Keys.onPressed: {
+            if (event.matches(StandardKey.Paste)) {
+                event.accepted = true;
+                inputField.pasteFromClipboard();
+            }
         }
 
         Component.onCompleted: forceActiveFocus()
+
+        MouseArea {
+            anchors.fill: parent
+
+            acceptedButtons: Qt.MiddleButton
+
+            onClicked: {
+                mouse.accepted = true;
+                inputField.pasteFromSelection();
+            }
+        }
     }
 }

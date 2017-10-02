@@ -260,6 +260,22 @@ void ChatWindow::serverOnline(bool /* state */)
     //emit online(this,state);
 }
 
+void ChatWindow::textPasted(const QString& text)
+{
+    if (getServer())
+    {
+        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        for(int index=0;index<multiline.count();index++)
+        {
+            QString line=multiline[index];
+            QString cChar(Preferences::self()->commandChar());
+            // make sure that lines starting with command char get escaped
+            if(line.startsWith(cChar)) line=cChar+line;
+            sendText(line);
+        }
+    }
+}
+
 void ChatWindow::setTextView(IRCView* newView)
 {
     textView = newView;

@@ -464,22 +464,6 @@ void Channel::showOptionsDialog()
     m_optionsDialog->show();
 }
 
-void Channel::textPasted(const QString& text)
-{
-    if(m_server)
-    {
-        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
-            QString cChar(Preferences::self()->commandChar());
-            // make sure that lines starting with command char get escaped
-            if(line.startsWith(cChar)) line=cChar+line;
-            sendText(line);
-        }
-    }
-}
-
 // Will be connected to NickListView::doubleClicked()
 void Channel::doubleClickCommand(QTreeWidgetItem *item, int column)
 {

@@ -29,6 +29,8 @@ import org.kde.konversation.uicomponents 1.0 as KUIC
  * Text selection by keyboard
  * Finish auto-scrolldown
  * Scroll by keyboard
+ * Selecting by double and tripple click
+ * Text/file drops
  */
 
 Item {
@@ -503,7 +505,7 @@ Item {
 
         signal clearInlineSelectedText
 
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 
         hoverEnabled: true
 
@@ -805,6 +807,13 @@ Item {
             pressedLink = "";
             pressAndHoldTimer.stop();
             textListView.cancelAutoScroll();
+        }
+
+        onClicked: {
+            if (mouse.button == Qt.MiddleButton && konvUi.inputField) { // WIPQTQUICK TODO Less coupling please, use signal-slot.
+                mouse.accepted = true;
+                konvUi.inputField.pasteFromSelection();
+            }
         }
 
         onHoveredLinkChanged: {

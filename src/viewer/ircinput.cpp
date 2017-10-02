@@ -256,7 +256,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(Application::instance()->doAutoreplace(toPlainText(), true).first);
+                    setText(Application::instance()->doAutoreplace(toPlainText(), true)[0].toString());
                     emit submit();
                 }
             }
@@ -454,7 +454,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
             // ask the user on long pastes
             if(checkPaste(pasteText))
             {
-              pasteText = Application::instance()->doAutoreplace(pasteText, true).first;
+              pasteText = Application::instance()->doAutoreplace(pasteText, true)[0].toString();
 
               Konversation::sterilizeUnicode(pasteText);
               // signal pasted text

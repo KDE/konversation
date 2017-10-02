@@ -22,7 +22,15 @@ class QClipboardWrapper : public QObject
         explicit QClipboardWrapper(QObject *parent = 0);
         ~QClipboardWrapper();
 
+        Q_INVOKABLE QString clipboardText() const;
         Q_INVOKABLE void setClipboardText(const QString &text);
+
+        Q_INVOKABLE QString selectionText() const;
+        Q_INVOKABLE void setSelectionText(const QString &text);
+
+        Q_INVOKABLE QString simplifyPaste(const QString &text);
+
+        Q_INVOKABLE QString handlePaste(const QString &text);
 };
 
 #endif

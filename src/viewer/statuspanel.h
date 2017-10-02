@@ -60,8 +60,6 @@ class StatusPanel : public ChatWindow
         void sendFileMenu();
         void statusTextEntered();
         void sendText(const QString& line) Q_DECL_OVERRIDE;
-        // connected to IRCInput::textPasted() - used for large/multiline pastes
-        void textPasted(const QString& text);
         void changeNickname(const QString& newNickname);
         void nicknameComboboxChanged();
         //Used to disable functions when not connected

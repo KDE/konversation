@@ -68,7 +68,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     connect(m_inputBar, &IRCInput::submit, this, &StatusPanel::statusTextEntered);
-    connect(m_inputBar, &IRCInput::textPasted, this, &StatusPanel::textPasted);
+    connect(m_inputBar, &IRCInput::textPasted, this, &ChatWindow::textPasted);
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
 
     connect(nicknameCombobox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &StatusPanel::nicknameComboboxChanged);
@@ -131,22 +131,6 @@ void StatusPanel::statusTextEntered()
     m_inputBar->clear();
 
     if (!line.isEmpty()) sendText(line);
-}
-
-void StatusPanel::textPasted(const QString& text)
-{
-    if(m_server)
-    {
-        QStringList multiline=text.split('\n');
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
-            QString cChar(Preferences::self()->commandChar());
-            // make sure that lines starting with command char get escaped
-            if(line.startsWith(cChar)) line=cChar+line;
-            sendText(line);
-        }
-    }
 }
 
 void StatusPanel::updateAppearance()
