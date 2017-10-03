@@ -194,7 +194,10 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     action->setText(i18n("Toggle UIs"));
     actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F10")));
     connect(action, &QAction::triggered, this,
-        [this]() { m_uiStack->setCurrentIndex(m_uiStack->currentIndex() ? 0 : 1); }
+        [this]() {
+            m_uiStack->setCurrentIndex(m_uiStack->currentIndex() ? 0 : 1);
+            setFocusProxy(m_uiStack->currentIndex() == 1 ? m_uiStack->currentWidget() : nullptr);
+        }
     );
     actionCollection()->addAction(QStringLiteral("toggle_ui"), action);
 
@@ -731,13 +734,17 @@ bool MainWindow::loadUiPackage(const QString &packageName, bool raise)
 
     m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
 
-    m_uiStack->addWidget(QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this));
+    QWidget *container = QWidget::createWindowContainer(static_cast<QWindow *>(m_qmlEngine->rootObjects().first()), this);
+    container->setFocusPolicy(Qt::NoFocus);
+
+    m_uiStack->addWidget(container);
 
     m_currentUiPackage = fixedName;
 
     if (raise) {
         qDebug() << "Raising Qt Quick UI ...";
         m_uiStack->setCurrentIndex(1);
+        setFocusProxy(m_uiStack->currentWidget());
     }
 
     return true;
@@ -885,6 +892,11 @@ bool MainWindow::event(QEvent* e)
     {
         emit endNotification();
         emit cancelRememberLine();
+
+        if (m_uiStack->currentIndex() == 1) {
+            m_uiStack->currentWidget()->setFocus();
+            QMetaObject::invokeMethod(m_qmlEngine->rootObjects().first(), "requestActivate", Qt::QueuedConnection);
+        }
     }
     else if(e->type() == QEvent::WindowDeactivate)
     {
