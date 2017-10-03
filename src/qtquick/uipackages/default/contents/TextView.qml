@@ -39,13 +39,14 @@ Item {
     QQC2.ScrollView {
         anchors.fill: parent
 
+        anchors.topMargin: Math.max(0, textView.height - textListView.contentHeight)
+
         ListView {
             id: textListView
 
             anchors.bottom: parent.bottom
 
             width: parent.width
-            height: parent.height
 
             visible: !konvUi.settingsMode
 
@@ -60,6 +61,12 @@ Item {
 
             model: messageModel
             delegate: msgComponent
+
+            add: Transition {
+                SequentialAnimation {
+                    ScriptAction { script: Qt.callLater(textListView.checkScrollToEnd) }
+                }
+            }
 
             function isScrolledToEnd() {
                 // This is absolutely terrible, but due to the intricacies
@@ -76,7 +83,7 @@ Item {
 
             function checkScrollToEnd() {
                 if (!userScrolling && scrollToEnd) {
-                    contentY = (contentItem.height - textListView.height) + originY;
+                    positionViewAtEnd();
                 }
             }
 
@@ -128,38 +135,21 @@ Item {
             Behavior on contentY { id: smoothY; enabled: false; SmoothedAnimation { velocity: 500 } }
 
             Connections {
-                target: viewModel
+                target: messageModel
 
-                onCurrentViewChanged: {
-                    textListView.forceLayout();
-                    textListView.scrollToEnd = true;
-                }
+                onFilterViewChanged: textListView.scrollToEnd = true
             }
 
             Connections {
                 target: textView
 
-                onHeightChanged: {
-                    if (textListView.contentItem.height <= textView.height) {
-                        textListView.height = textListView.contentItem.height;
-                    } else {
-                        textListView.height = textView.height;
-                        textListView.checkScrollToEnd();
-                    }
-                }
+                onHeightChanged: textListView.checkScrollToEnd()
             }
 
             Connections {
                 target: textListView.contentItem
 
-                onHeightChanged: {
-                    if (textListView.contentItem.height <= textView.height) {
-                        textListView.height = textListView.contentItem.height;
-                    } else {
-                        textListView.height = textView.height;
-                        textListView.checkScrollToEnd();
-                    }
-                }
+                onHeightChanged: textListView.checkScrollToEnd()
             }
 
             Component {
