@@ -65,6 +65,8 @@ Rectangle {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
 
         onPressed: {
+            mouse.accepted = true;
+
             if ("ViewRole" in model) {
                 item.clicked(model.ViewRole, mouse);
             } else {

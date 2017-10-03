@@ -149,7 +149,7 @@ QQC2.ScrollView {
         }
     }
 
-    Connections {
+    Connections { // WIPQTQUICK TODO Less coupling.
         target: konvUi
 
         onSettingsModeChanged: {

@@ -46,7 +46,7 @@ QQC2.ScrollView {
         delegate: ListItem {
             width: userListView.width
 
-            isActive: model.Selected
+            isActive: (model.Selected === true)
 
             text: model.display
             textMargin: Kirigami.Units.gridUnit

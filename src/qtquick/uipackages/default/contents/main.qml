@@ -53,6 +53,8 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: [sidebarComponent, contentComponent]
     pageStack.separatorVisible: false
 
+    pageStack.interactive: false
+
     TextMetrics {
         id: largerFontMetrics
 
@@ -310,6 +312,10 @@ Kirigami.ApplicationWindow {
                             viewModel.showView(view);
 
                             if (!konvUi.pageStack.wideMode) {
+                                if (konvUi.inputField) {
+                                    konvUi.inputField.forceActiveFocus();
+                                }
+
                                 konvUi.pageStack.currentIndex = 1;
                             }
                         }
