@@ -11,7 +11,7 @@
 
 import QtQuick 2.7
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 
 Rectangle {
     id: handle
@@ -26,7 +26,8 @@ Rectangle {
 
     signal triggered
 
-    color: Kirigami.Theme.buttonBackgroundColor
+    Kirigami.Theme.colorSet: Kirigami.Theme.View
+    color: Qt.darker(Kirigami.Theme.backgroundColor, 1 + konvUi.colorDeltaDarker)
 
     Kirigami.Icon {
         id: icon

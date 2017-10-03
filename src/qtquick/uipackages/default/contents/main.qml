@@ -15,7 +15,7 @@ import QtQml.Models 2.2
 import QtQuick.Controls 1.4 as QQC1
 import QtQuick.Controls 2.2 as QQC2
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 
 import org.kde.konversation 1.0 as Konversation
@@ -29,6 +29,8 @@ Kirigami.ApplicationWindow {
     property int sidebarWidth: defaultSidebarWidth
     readonly property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
     readonly property int listItemFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
+    readonly property real colorDeltaLighter: 0.08
+    readonly property real colorDeltaDarker: 0.02
     readonly property int footerHeight: largerFontSize + (Kirigami.Units.smallSpacing * 6)
 
     property var settings: settingsObj
@@ -77,7 +79,10 @@ Kirigami.ApplicationWindow {
 
         drawerOpen: false
 
-        background: Rectangle { color: contextDrawer.modal ? Kirigami.Theme.viewBackgroundColor : KUIC.ExtraColors.spotColor }
+        Kirigami.Theme.colorSet: contextDrawer.modal ? Kirigami.Theme.View : Kirigami.Theme.Complementary
+        Kirigami.Theme.inherit: contextDrawer.modal ? true : false
+
+        background: Rectangle { color: Kirigami.Theme.backgroundColor }
 
         onDrawerOpenChanged: {
             if (drawerOpen) {
@@ -110,7 +115,10 @@ Kirigami.ApplicationWindow {
                     + (topicLabel.visible ? topicLabel.contentHeight + (Kirigami.Units.smallSpacing * 4) : 0))
                 : 0)
 
-            color: contextDrawer.modal ? KUIC.ExtraColors.spotColor : KUIC.ExtraColors.alternateSpotColor
+            Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+            Kirigami.Theme.inherit: false
+
+            color: Qt.lighter(Kirigami.Theme.backgroundColor, 1 + konvUi.colorDeltaLighter)
 
             Kirigami.Heading {
                 id: viewName
@@ -124,7 +132,7 @@ Kirigami.ApplicationWindow {
 
                 elide: Text.ElideRight
 
-                color: KUIC.ExtraColors.alternateSpotTextColor
+                color: Kirigami.Theme.textColor
                 opacity: 1.0 // Override
 
                 text: viewModel.currentView ? viewModel.currentView.name : ""
@@ -140,15 +148,13 @@ Kirigami.ApplicationWindow {
 
                 property bool checked: false
 
-                color: checked ? Kirigami.Theme.highlightColor: KUIC.ExtraColors.spotColor
+                color: checked ? Kirigami.Theme.highlightColor : topicArea.color
 
                 Kirigami.Icon {
                     anchors.centerIn: parent
 
                     width: parent.width - (Kirigami.Units.smallSpacing * 4)
                     height: width
-
-                    selected: true
 
                     source: "window-pin"
                 }
@@ -219,6 +225,9 @@ Kirigami.ApplicationWindow {
             topPadding: 0
             bottomPadding: 0
 
+            Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+            Kirigami.Theme.inherit: false
+
             property Item viewTreeList: null
 
             MouseArea {
@@ -236,7 +245,7 @@ Kirigami.ApplicationWindow {
 
                 anchors.fill: parent
 
-                background: Rectangle { color: KUIC.ExtraColors.spotColor }
+                background: Rectangle { color: Kirigami.Theme.backgroundColor }
 
                 initialItem: viewTreeComponent
 
@@ -309,9 +318,6 @@ Kirigami.ApplicationWindow {
                             ListItem {
                                 width: viewTreeList.width
 
-                                textColor: KUIC.ExtraColors.spotTextColor
-                                backgroundColor: KUIC.ExtraColors.spotColor
-
                                 text: model.display
                                 textMargin: Kirigami.Units.gridUnit
 
@@ -335,9 +341,6 @@ Kirigami.ApplicationWindow {
 
                                 delegate: ListItem {
                                     width: viewTreeList.width
-
-                                    textColor: KUIC.ExtraColors.spotTextColor
-                                    backgroundColor: KUIC.ExtraColors.spotColor
 
                                     text: model.display
                                     textMargin: Kirigami.Units.gridUnit * 2
@@ -402,9 +405,6 @@ Kirigami.ApplicationWindow {
                         delegate: ListItem {
                             width: settingsTreeList.width
 
-                            textColor: KUIC.ExtraColors.spotTextColor
-                            backgroundColor: KUIC.ExtraColors.spotColor
-
                             text: name
                             textMargin: Kirigami.Units.gridUnit
 
@@ -456,7 +456,7 @@ Kirigami.ApplicationWindow {
                 iconName: "go-previous"
                 iconSelected: true
 
-                color: KUIC.ExtraColors.alternateSpotColor
+                color: Qt.lighter(Kirigami.Theme.backgroundColor, 1 + konvUi.colorDeltaLighter)
 
                 onTriggered: pageStack.currentIndex = 1
             }
@@ -467,7 +467,7 @@ Kirigami.ApplicationWindow {
                 width: parent.width
                 height: footerHeight
 
-                color: KUIC.ExtraColors.alternateSpotColor
+                color: Qt.lighter(Kirigami.Theme.backgroundColor, 1 + konvUi.colorDeltaLighter)
 
                 Rectangle {
                     id: settingsModeToggleButton
@@ -477,7 +477,7 @@ Kirigami.ApplicationWindow {
 
                     property bool checked: false
 
-                    color: checked ? Kirigami.Theme.highlightColor: KUIC.ExtraColors.alternateSpotColor
+                    color: checked ? Kirigami.Theme.highlightColor : sidebarFooter.color
 
                     onCheckedChanged: {
                         konvUi.settingsMode = checked;
@@ -504,8 +504,6 @@ Kirigami.ApplicationWindow {
 
                         width: parent.width - (Kirigami.Units.smallSpacing * 4)
                         height: width
-
-                        selected: true
 
                         source: "application-menu"
                     }
@@ -549,6 +547,9 @@ Kirigami.ApplicationWindow {
             topPadding: 0
             bottomPadding: 0
 
+            Kirigami.Theme.colorSet: Kirigami.Theme.View
+            Kirigami.Theme.inherit: false
+
             onWidthChanged: {
                 konvUi.pageStack.currentIndex = 1;
             }
@@ -556,7 +557,7 @@ Kirigami.ApplicationWindow {
             Rectangle {
                 anchors.fill: parent
 
-                color: Kirigami.Theme.viewBackgroundColor
+                color: Kirigami.Theme.backgroundColor
             }
 
             CompletionPopup { // WIPQTQUICK TODO Lazy-load.
@@ -592,7 +593,7 @@ Kirigami.ApplicationWindow {
                 height: ((settingsMode || konvUi.settings.constrictInputField || !konvUi.inputField)
                     ? footerHeight : inputField.height)
 
-                background: Rectangle { color: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.02) }
+                background: Rectangle { color: Qt.darker(Kirigami.Theme.backgroundColor, 1 + konvUi.colorDeltaDarker) }
 
                 initialItem: inputFieldComponent
 

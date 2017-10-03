@@ -13,7 +13,7 @@ import QtQuick 2.7
 
 import QtQuick.Controls 2.2 as QQC2
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 
 import org.kde.konversation 1.0 as Konversation
 import org.kde.konversation.uicomponents 1.0 as KUIC
@@ -47,9 +47,6 @@ QQC2.ScrollView {
             width: userListView.width
 
             isActive: model.Selected
-
-            textColor: contextDrawer.modal ? Kirigami.Theme.viewTextColor : KUIC.ExtraColors.spotTextColor
-            backgroundColor: contextDrawer.modal ? Kirigami.Theme.viewBackgroundColor : KUIC.ExtraColors.spotColor
 
             text: model.display
             textMargin: Kirigami.Units.gridUnit

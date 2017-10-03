@@ -11,7 +11,7 @@
 
 import QtQuick 2.7
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 
 Kirigami.Page {
     Keys.onPressed: {

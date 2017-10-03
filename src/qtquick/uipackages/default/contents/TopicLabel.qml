@@ -13,7 +13,7 @@ import QtQuick 2.7
 
 import QtQuick.Controls 2.2 as QQC2
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
 
 import org.kde.konversation 1.0 as Konversation
@@ -22,8 +22,11 @@ import org.kde.konversation.uicomponents 1.0 as KUIC
 QQC2.TextArea {
     id: topicLabel
 
-    readonly property string preText: "<html><head><style> a { color: " + KUIC.ExtraColors.spotTextColor + "; }</style><body>"
+    readonly property string preText: "<html><head><style> a { color: " + Kirigami.Theme.textColor + "; }</style><body>"
     readonly property string postText: "</body></html>"
+
+    Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+    Kirigami.Theme.inherit: false
 
     background: null
 
@@ -42,7 +45,7 @@ QQC2.TextArea {
 
     font.pixelSize: konvUi.largerFontSize
 
-    color: KUIC.ExtraColors.spotTextColor
+    color: Kirigami.Theme.textColor
 
     text: viewModel.currentView ? preText + viewModel.currentView.description + postText : ""
 

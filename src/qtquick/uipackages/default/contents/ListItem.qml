@@ -11,7 +11,7 @@
 
 import QtQuick 2.7
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 import org.kde.konversation.uicomponents 1.0 as KUIC
 
 Rectangle {
@@ -19,8 +19,7 @@ Rectangle {
 
     height: text.font.pixelSize + Kirigami.Units.gridUnit
 
-    property color textColor: Kirigami.Theme.viewTextColor
-    property color backgroundColor: Kirigami.Theme.viewBackgroundColor
+    property color backgroundColor: Kirigami.Theme.backgroundColor
     property int textMargin: 0
     property bool isActive: {
         if ("ViewRole" in model) {
@@ -50,7 +49,7 @@ Rectangle {
             }
 
             return ("ColorRole" in model && model.ColorRole != undefined
-                ? model.ColorRole : textColor);
+                ? model.ColorRole : Kirigami.Theme.textColor);
         }
 
         font.pixelSize: konvUi.listItemFontSize

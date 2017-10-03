@@ -13,7 +13,7 @@ import QtQuick 2.7
 
 import QtQuick.Controls 2.2 as QQC2
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 
 import org.kde.konversation 1.0 as Konversation
 

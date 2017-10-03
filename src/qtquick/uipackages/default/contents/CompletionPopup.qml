@@ -13,7 +13,7 @@ import QtQuick 2.7
 
 import QtQuick.Controls 2.2 as QQC2
 
-import org.kde.kirigami 2.1 as Kirigami
+import org.kde.kirigami 2.2 as Kirigami
 
 Loader {
     id: completionPopup
@@ -45,6 +45,9 @@ Loader {
         QQC2.ScrollView {
             property alias currentIndex: completionList.currentIndex
 
+            Kirigami.Theme.colorSet: Kirigami.Theme.View
+            Kirigami.Theme.inherit: false
+
             ListView {
                 id: completionList
 
@@ -67,7 +70,7 @@ Loader {
                     width: completionList.width
                     height: completionPopup._itemHeight
 
-                    backgroundColor: Qt.darker(Kirigami.Theme.viewBackgroundColor, 1.016)
+                    backgroundColor: Qt.darker(Kirigami.Theme.backgroundColor, 1 + (konvUi.colorDeltaDarker / 2))
 
                     text: model.display
                     textMargin: Kirigami.Units.gridUnit
