@@ -88,6 +88,8 @@ Kirigami.ApplicationWindow {
             if (drawerOpen) {
                 userList.forceActiveFocus();
                 userList.currentIndex = -1;
+            } else if (konvUi.inputField) {
+                inputField.forceActiveFocus();
             }
         }
 
