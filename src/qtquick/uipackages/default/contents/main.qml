@@ -251,8 +251,6 @@ Kirigami.ApplicationWindow {
 
                 background: Rectangle { color: Kirigami.Theme.backgroundColor }
 
-                initialItem: viewSwitcherComponent
-
                 onBusyChanged: {
                     if (!busy && depth == 2) {
                         currentItem.currentIndex = 0;
@@ -294,75 +292,23 @@ Kirigami.ApplicationWindow {
                     }
                 }
 
-                Component.onCompleted: konvUi.sidebarStackView = sidebarStackView
-            }
-
-            Component {
-                id: viewSwitcherComponent
-
-                QQC2.ScrollView {
-                    ListView {
-                        id: viewListView
-
-                        clip: true
-
-                        model: viewListModel
-
-                        function showView(view) {
-                            viewModel.showView(view);
-
-                            if (!konvUi.pageStack.wideMode) {
-                                if (konvUi.inputField) {
-                                    konvUi.inputField.forceActiveFocus();
-                                }
-
-                                konvUi.pageStack.currentIndex = 1;
-                            }
-                        }
-
-                        delegate: ListItem {
-                            width: viewListView.width
-
-                            text: model.display
-                            textMargin: model.IsChild ? Kirigami.Units.gridUnit * 2 : Kirigami.Units.gridUnit
-
-                            onClicked: {
-                                viewListView.forceActiveFocus();
-
-                                if (mouse.button == Qt.RightButton) {
-                                    viewModel.showViewContextMenu(viewModel.index(index, 0),
-                                        mapToGlobal(mouse.x, mouse.y));
-                                } else {
-                                    viewListView.showView(value);
-                                }
-                            }
-                        }
-
-                        Keys.onUpPressed: {
-                            event.accept = true;
-                            viewModel.showPreviousView();
-                        }
-
-                        Keys.onDownPressed: {
-                            event.accept = true;
-                            viewModel.showNextView();
-                        }
-
-                        Component.onCompleted: sidebar.viewListView = viewListView
-                    }
+                Component.onCompleted: {
+                    sidebarStackView.push("ViewSwitcher.qml");
+                    konvUi.sidebarStackView = sidebarStackView;
                 }
             }
+
 
             Component {
                 id: settingsTreeComponent
 
                 QQC2.ScrollView {
-                    id: viewSwitcher
+                    id: settingsPageSwitcher
 
-                    property alias currentIndex: settingsTreeList.currentIndex
+                    property alias currentIndex: settingsPageList.currentIndex
 
                     ListView {
-                        id: settingsTreeList
+                        id: settingsPageList
 
                         focus: true
 
@@ -379,10 +325,10 @@ Kirigami.ApplicationWindow {
                         }
 
                         delegate: ListItem {
-                            width: settingsTreeList.width
+                            width: settingsPageList.width
 
                             text: name
-                            textMargin: Kirigami.Units.gridUnit
+                            textMarginLeft: Kirigami.Units.gridUnit
 
                             onIsActiveChanged: {
                                 if (isActive && konvUi.contentStackView.depth == 1) {
@@ -392,8 +338,8 @@ Kirigami.ApplicationWindow {
                             }
 
                             onClicked: {
-                                settingsTreeList.forceActiveFocus();
-                                settingsTreeList.currentIndex = index;
+                                settingsPageList.forceActiveFocus();
+                                settingsPageList.currentIndex = index;
                             }
                         }
 

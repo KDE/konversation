@@ -49,7 +49,7 @@ QQC2.ScrollView {
             isActive: (model.Selected === true)
 
             text: model.display
-            textMargin: Kirigami.Units.gridUnit
+            textMarginLeft: Kirigami.Units.gridUnit
 
             function openQuery() {
                 viewModel.currentServer.addQuery(model.display);

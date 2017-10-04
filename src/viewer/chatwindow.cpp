@@ -46,6 +46,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
+    m_unreadMentions = 0;
 }
 
 ChatWindow::~ChatWindow()
@@ -706,6 +707,12 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
     if (!notificationsEnabled())
         return;
 
+    if (type < Konversation::tnfNormal &&
+        (!m_server || m_server->getViewContainer()->getFrontView() != this)) {
+        ++m_unreadMentions;
+        emit unreadMentionsChanged();
+    }
+
     if(type > m_currentTabNotify)
         return;
 
@@ -717,6 +724,8 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 void ChatWindow::resetTabNotification()
 {
     m_currentTabNotify = Konversation::tnfNone;
+    m_unreadMentions = 0;
+    emit unreadMentionsChanged();
 }
 
 void ChatWindow::msgHelper(const QString& recipient, const QString& message)

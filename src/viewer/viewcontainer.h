@@ -87,7 +87,8 @@ class ViewContainer : public QAbstractItemModel
             DisabledRole,
             HighlightRole,
             ViewRole, // WIPQTQUICK
-            IsChild // WIPQTQUICK HACK
+            IsChild, // WIPQTQUICK HACK
+            HasActivity, // WIPQTQUICK
         };
         Q_ENUM(DataRoles)
 

@@ -19,8 +19,10 @@ Rectangle {
 
     height: text.font.pixelSize + Kirigami.Units.gridUnit
 
+    property color textColor: Kirigami.Theme.textColor
     property color backgroundColor: Kirigami.Theme.backgroundColor
-    property int textMargin: 0
+    property int textMarginLeft: 0
+    property int textMarginRight: 0
     property bool isActive: {
         if ("ViewRole" in model) {
             return (model.ViewRole == viewModel.currentView);
@@ -40,17 +42,11 @@ Rectangle {
         id: text
 
         anchors.fill: parent
-        anchors.leftMargin: textMargin
+        anchors.leftMargin: textMarginLeft
+        anchors.rightMargin: textMarginRight
 
         renderType: Text.NativeRendering
-        color: {
-            if (isActive) {
-                return Kirigami.Theme.highlightedTextColor;
-            }
-
-            return ("ColorRole" in model && model.ColorRole != undefined
-                ? model.ColorRole : Kirigami.Theme.textColor);
-        }
+        color: isActive ? Kirigami.Theme.highlightedTextColor : textColor
 
         font.pixelSize: konvUi.listItemFontSize
 

@@ -309,7 +309,7 @@ Item {
 
                                     font.weight: Font.Bold
                                     font.pointSize: 100
-                                    minimumPointSize: theme.defaultFont.pointSize
+                                    minimumPointSize: Kirigami.Theme.defaultFont.pointSize
                                     fontSizeMode: Text.Fit
 
                                     horizontalAlignment: Text.AlignHCenter

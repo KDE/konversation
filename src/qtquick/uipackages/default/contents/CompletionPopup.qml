@@ -73,7 +73,7 @@ Loader {
                     backgroundColor: Qt.darker(Kirigami.Theme.backgroundColor, 1 + (konvUi.colorDeltaDarker / 2))
 
                     text: model.display
-                    textMargin: Kirigami.Units.gridUnit
+                    textMarginLeft: Kirigami.Units.gridUnit
 
                     onClicked: completionList.currentIndex = index
                 }

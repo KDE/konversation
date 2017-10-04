@@ -33,6 +33,7 @@ class ChatWindow : public QWidget
     Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
     Q_PROPERTY(QString description READ getDescription NOTIFY descriptionChanged)
     Q_PROPERTY(IrcContextMenus::MenuOptions contextMenuOptions READ contextMenuOptions CONSTANT)
+    Q_PROPERTY(int unreadMentions READ unreadMentions NOTIFY unreadMentionsChanged)
 
     public:
         explicit ChatWindow(QWidget* parent);
@@ -86,6 +87,7 @@ class ChatWindow : public QWidget
         virtual QString getDescription() const;
         QString getURI(bool passNetwork = true);
         virtual IrcContextMenus::MenuOptions contextMenuOptions() const;
+        int unreadMentions() const { return m_unreadMentions; }
 
         void setType(WindowType newType);
         WindowType getType() const;
@@ -160,6 +162,7 @@ class ChatWindow : public QWidget
          */
         void updateInfo(const QString &info);
         void updateTabNotification(ChatWindow* chatWin, const Konversation::TabNotifyType& type);
+        void unreadMentionsChanged() const;
 
         void setStatusBarTempText(const QString&);
         void clearStatusBarTempText();
@@ -236,6 +239,7 @@ class ChatWindow : public QWidget
         bool m_channelEncodingSupported;
 
         Konversation::TabNotifyType m_currentTabNotify;
+        int m_unreadMentions;
 
         bool m_recreationScheduled;
 };

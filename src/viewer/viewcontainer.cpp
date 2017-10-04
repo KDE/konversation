@@ -572,6 +572,9 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
     } else if (role == IsChild) {
         return index.parent().isValid();
+    } else if (role == HasActivity) {
+        const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
+        return (view->currentTabNotification() < Konversation::tnfSystem);
     }
 
     return QVariant();
@@ -1312,7 +1315,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     const QModelIndex& idx = indexForView(view);
 
     if (!m_dataChangedLock) {
-        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << HasActivity); // WIPQTQUICK
     }
 }
 
@@ -1364,7 +1367,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     const QModelIndex& idx = indexForView(view);
 
     if (!m_dataChangedLock) {
-        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole);
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole << HasActivity); // WIPQTQUICK
     }
 
     m_activeViewOrderList.removeAll(view);
@@ -1781,9 +1784,9 @@ void ViewContainer::viewSwitched(int newIndex)
 
     updateFrontView();
 
-    unsetViewNotification(view);
-
     view->resetTabNotification();
+
+    unsetViewNotification(view);
 
     if (!m_viewTree || !m_viewTree->hasFocus()) view->adjustFocus();
 
