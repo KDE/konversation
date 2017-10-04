@@ -232,14 +232,14 @@ Kirigami.ApplicationWindow {
             Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
             Kirigami.Theme.inherit: false
 
-            property Item viewTreeList: null
+            property Item viewListView: null
 
             MouseArea {
                 anchors.fill: parent
 
                 onClicked: {
-                    if (viewTreeList) {
-                        viewTreeList.forceActiveFocus();
+                    if (viewListView) {
+                        viewListView.forceActiveFocus();
                     }
                 }
             }
@@ -251,7 +251,7 @@ Kirigami.ApplicationWindow {
 
                 background: Rectangle { color: Kirigami.Theme.backgroundColor }
 
-                initialItem: viewTreeComponent
+                initialItem: viewSwitcherComponent
 
                 onBusyChanged: {
                     if (!busy && depth == 2) {
@@ -298,15 +298,15 @@ Kirigami.ApplicationWindow {
             }
 
             Component {
-                id: viewTreeComponent
+                id: viewSwitcherComponent
 
                 QQC2.ScrollView {
                     ListView {
-                        id: viewTreeList
+                        id: viewListView
 
                         clip: true
 
-                        model: viewModel
+                        model: viewListModel
 
                         function showView(view) {
                             viewModel.showView(view);
@@ -320,54 +320,22 @@ Kirigami.ApplicationWindow {
                             }
                         }
 
-                        delegate: Column {
-                            property int topLevelIndex: index
+                        delegate: ListItem {
+                            width: viewListView.width
 
-                            ListItem {
-                                width: viewTreeList.width
+                            text: model.display
+                            textMargin: model.IsChild ? Kirigami.Units.gridUnit * 2 : Kirigami.Units.gridUnit
 
-                                text: model.display
-                                textMargin: Kirigami.Units.gridUnit
+                            onClicked: {
+                                viewListView.forceActiveFocus();
 
-                                onClicked: {
-                                    viewTreeList.forceActiveFocus();
-
-                                    if (mouse.button == Qt.RightButton) {
-                                        viewModel.showViewContextMenu(viewModel.index(index, 0),
-                                            mapToGlobal(mouse.x, mouse.y));
-                                    } else {
-                                        viewTreeList.showView(value);
-                                    }
+                                if (mouse.button == Qt.RightButton) {
+                                    viewModel.showViewContextMenu(viewModel.index(index, 0),
+                                        mapToGlobal(mouse.x, mouse.y));
+                                } else {
+                                    viewListView.showView(value);
                                 }
                             }
-
-                            DelegateModel {
-                                id: subLevelEntries
-
-                                model: viewModel
-                                rootIndex: modelIndex(index)
-
-                                delegate: ListItem {
-                                    width: viewTreeList.width
-
-                                    text: model.display
-                                    textMargin: Kirigami.Units.gridUnit * 2
-
-                                    onClicked: {
-                                        viewTreeList.forceActiveFocus();
-
-                                        if (mouse.button == Qt.RightButton) {
-                                            viewModel.showViewContextMenu(viewModel.index(index, 0,
-                                                subLevelEntries.rootIndex),
-                                                mapToGlobal(mouse.x, mouse.y));
-                                        } else {
-                                            viewTreeList.showView(value);
-                                        }
-                                    }
-                                }
-                            }
-
-                            Column { Repeater { model: subLevelEntries } }
                         }
 
                         Keys.onUpPressed: {
@@ -380,7 +348,7 @@ Kirigami.ApplicationWindow {
                             viewModel.showNextView();
                         }
 
-                        Component.onCompleted: sidebar.viewTreeList = viewTreeList
+                        Component.onCompleted: sidebar.viewListView = viewListView
                     }
                 }
             }
@@ -389,7 +357,7 @@ Kirigami.ApplicationWindow {
                 id: settingsTreeComponent
 
                 QQC2.ScrollView {
-                    id: viewTree
+                    id: viewSwitcher
 
                     property alias currentIndex: settingsTreeList.currentIndex
 

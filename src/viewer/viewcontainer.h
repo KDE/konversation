@@ -87,6 +87,7 @@ class ViewContainer : public QAbstractItemModel
             DisabledRole,
             HighlightRole,
             ViewRole, // WIPQTQUICK
+            IsChild // WIPQTQUICK HACK
         };
         Q_ENUM(DataRoles)
 
@@ -313,6 +314,8 @@ class ViewContainer : public QAbstractItemModel
 
         int m_popupViewIndex;
         int m_queryViewCount;
+
+        bool m_dataChangedLock; // WIPQTQUICK TODO HACK Cleanup.
 
         QList<ChatWindow*> m_activeViewOrderList;
 

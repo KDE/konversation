@@ -41,6 +41,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     IconThemes
     ItemViews
     Package # WIPQTQUICK: Used to load the QML UI package
+    ItemModels # WIPQTQUICK Destructuring ViewContainer to flat list
 )
 
 ecm_find_qmlmodule(org.kde.kirigami 2.1) # WIPQTQUICK

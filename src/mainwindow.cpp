@@ -63,6 +63,7 @@
 #include <KGlobalAccel>
 #include <KIconLoader>
 #include <KPackage/PackageLoader> // WIPQTQUICK
+#include <KDescendantsProxyModel> // WIPQTQUICK
 
 MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiWindow(0) // WIPQTQUICK
 {
@@ -115,6 +116,9 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
+    KDescendantsProxyModel *viewListModel = new KDescendantsProxyModel(this);
+    viewListModel->setSourceModel(m_viewContainer);
+
     qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
     m_qmlEngine = new QQmlApplicationEngine(this);
     qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
@@ -122,6 +126,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     qmlRegisterUncreatableType<IrcContextMenus>("org.kde.konversation", 1, 0, "IrcContextMenus", "");
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewListModel"), viewListModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);

@@ -252,6 +252,7 @@ target_link_libraries(konversation
     KF5::IconThemes
     KF5::ItemViews
     KF5::Package # WIPQTQUICK: Used to load the QML UI package
+    KF5::ItemModels # WIPQTQUICK Destructuring ViewContainer to flat list
     Phonon::phonon4qt5)
 
 if (Qca-qt5_FOUND)

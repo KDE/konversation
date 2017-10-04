@@ -129,6 +129,7 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_dccPanel(0)
 , m_insertCharDialog(0)
 , m_queryViewCount(0)
+, m_dataChangedLock(false)
 {
     m_viewSpringLoader = new ViewSpringLoader(this);
 
@@ -569,6 +570,8 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         return (row == m_popupViewIndex);
     } else if (role == ViewRole) {
         return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
+    } else if (role == IsChild) {
+        return index.parent().isValid();
     }
 
     return QVariant();
@@ -1192,7 +1195,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
                 setViewNotification(view, view->currentTabNotification());
         }
 
-        if (announce) {
+        if (announce && !m_dataChangedLock) {
             const QModelIndex& idx = indexForView(view);
             emit dataChanged(idx, idx);
         }
@@ -1307,7 +1310,10 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     }
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
+
+    if (!m_dataChangedLock) {
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
+    }
 }
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
@@ -1356,7 +1362,10 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole);
+
+    if (!m_dataChangedLock) {
+        emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole);
+    }
 
     m_activeViewOrderList.removeAll(view);
 }
@@ -1505,6 +1514,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             }
         }
 
+        m_dataChangedLock = true;
         beginInsertRows(QModelIndex(), placement - diff, placement - diff);
     } else {
         int statusViewIndex = m_tabWidget->indexOf(view->getServer()->getStatusView());
@@ -1514,12 +1524,14 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             m_viewTree->setExpanded(idx, true);
         }
 
+        m_dataChangedLock = true;
         beginInsertRows(idx, placement - statusViewIndex - 1, placement - statusViewIndex - 1);
     }
 
     m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', "&&"));
 
     endInsertRows();
+    m_dataChangedLock = false;
 
     m_vbox->show();
 
@@ -2328,6 +2340,7 @@ void ViewContainer::showViewContextMenu(const QModelIndex &index, const QPoint& 
     }
 
     const QModelIndex& idx = indexForView(view);
+
     emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
 
     const QAction* action = menu->exec(pos);
