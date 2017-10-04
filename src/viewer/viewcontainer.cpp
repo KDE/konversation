@@ -1762,6 +1762,11 @@ void ViewContainer::viewSwitched(int newIndex)
     {
         m_frontView->resetTabNotification();
 
+        if (!m_dataChangedLock) {
+            const QModelIndex &oldIdx = indexForView(m_frontView);
+            emit dataChanged(oldIdx, oldIdx, QVector<int>() << Qt::DecorationRole << ColorRole << HasActivity);
+        }
+
         disconnect(m_frontView, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
 
         if (Preferences::self()->automaticRememberLine() && m_frontView->getTextView() != 0)

@@ -80,10 +80,6 @@ Item {
                     for (var i = 0; i < firstIndex; ++i) {
                         var item = delegates[i];
 
-                        if (item.row != i) {
-                            console.log("Buggy");
-                        }
-
                         if (item.unreadMentions) {
                             topMention = true;
                             break;
@@ -99,10 +95,6 @@ Item {
                 if (lastIndex != -1 && lastIndex < (count - 1)) {
                     for (var i = lastIndex + 1; i < count; ++i) {
                         var item = delegates[i];
-
-                        if (item.row != i) {
-                            console.log("Buggy");
-                        }
 
                         if (item.unreadMentions) {
                             bottomMention = true;
@@ -167,7 +159,7 @@ Item {
                     viewListView.forceActiveFocus();
 
                     if (mouse.button == Qt.RightButton) {
-                        viewModel.showViewContextMenu(viewModel.index(index, 0),
+                        viewModel.showViewContextMenu(viewModel.indexForView(model.ViewRole),
                             mapToGlobal(mouse.x, mouse.y));
                     } else {
                         viewListView.showView(value);
