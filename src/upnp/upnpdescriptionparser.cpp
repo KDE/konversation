@@ -37,7 +37,7 @@ namespace Konversation
             QStack<Status> status_stack;
         public:
             XMLContentHandler(UPnPRouter* router);
-            virtual ~XMLContentHandler();
+            ~XMLContentHandler() override;
 
 
             bool startDocument() Q_DECL_OVERRIDE;
@@ -52,12 +52,10 @@ namespace Konversation
         };
 
 
-        UPnPDescriptionParser::UPnPDescriptionParser()
-        {}
+        UPnPDescriptionParser::UPnPDescriptionParser() = default;
 
 
-        UPnPDescriptionParser::~UPnPDescriptionParser()
-        {}
+        UPnPDescriptionParser::~UPnPDescriptionParser() = default;
 
         bool UPnPDescriptionParser::parse(const QString & file,UPnPRouter* router)
         {
@@ -106,8 +104,7 @@ namespace Konversation
         XMLContentHandler::XMLContentHandler(UPnPRouter* router) : router(router)
         {}
 
-        XMLContentHandler::~XMLContentHandler()
-        {}
+        XMLContentHandler::~XMLContentHandler() = default;
 
 
         bool XMLContentHandler::startDocument()

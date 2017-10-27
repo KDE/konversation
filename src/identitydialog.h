@@ -29,8 +29,8 @@ namespace Konversation
     {
         Q_OBJECT
         public:
-            explicit IdentityDialog(QWidget *parent = 0);
-            ~IdentityDialog() {}
+            explicit IdentityDialog(QWidget *parent = nullptr);
+            ~IdentityDialog() override = default;
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;

@@ -24,8 +24,8 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
     Q_OBJECT
 
     public:
-        explicit Highlight_Config(QWidget *parent = 0, const char *name = 0);
-        ~Highlight_Config();
+        explicit Highlight_Config(QWidget *parent = nullptr, const char *name = nullptr);
+        ~Highlight_Config() override;
 
     public:
         void saveSettings() Q_DECL_OVERRIDE;

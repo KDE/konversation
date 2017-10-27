@@ -30,7 +30,7 @@ class Ignore
             Invite  = 1 << 5,
             All     = Channel|Query|Notice|CTCP|DCC|Invite,
 
-            Exception = 1 << 31
+            Exception = 1 << 30
         };
 
         Ignore(const QString &name,int flags);

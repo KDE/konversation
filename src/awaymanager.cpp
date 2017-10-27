@@ -35,9 +35,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
-AwayManager::~AwayManager()
-{
-}
+AwayManager::~AwayManager() = default;
 
 int AwayManager::minutesToMilliseconds(int minutes)
 {

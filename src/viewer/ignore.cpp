@@ -20,9 +20,7 @@ Ignore::Ignore(const QString &newName,int newFlags)
     setName(newName);
 }
 
-Ignore::~Ignore()
-{
-}
+Ignore::~Ignore() = default;
 
 void Ignore::setName(const QString &newName) { name=newName; }
 void Ignore::setFlags(int newFlags)   { flags=newFlags; }

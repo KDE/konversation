@@ -55,8 +55,8 @@ class TopicHistoryModel : public QAbstractListModel
     Q_OBJECT
 
     public:
-        explicit TopicHistoryModel(QObject* parent = 0);
-        ~TopicHistoryModel();
+        explicit TopicHistoryModel(QObject* parent = nullptr);
+        ~TopicHistoryModel() override;
 
         QString currentTopic() const;
 

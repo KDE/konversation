@@ -64,7 +64,7 @@ namespace Konversation
                 };
 
                 Transfer(Type dccType, QObject *parent);
-                virtual ~Transfer();
+                ~Transfer() override;
 
                 Type               getType()                  const;
                 Status             getStatus()                const;

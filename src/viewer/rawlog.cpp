@@ -31,9 +31,7 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     updateAppearance();
 }
 
-RawLog::~RawLog()
-{
-}
+RawLog::~RawLog() = default;
 
 void RawLog::childAdjustFocus()
 {

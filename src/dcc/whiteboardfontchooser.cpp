@@ -43,9 +43,7 @@ namespace Konversation
             connect(m_fontPointComboBox, static_cast<void (KComboBox::*)(const QString &)>(&KComboBox::currentIndexChanged), this, &WhiteBoardFontChooser::pointSizeChanged);
         }
 
-        WhiteBoardFontChooser::~WhiteBoardFontChooser()
-        {
-        }
+        WhiteBoardFontChooser::~WhiteBoardFontChooser() = default;
 
         QFont WhiteBoardFontChooser::font() const
         {

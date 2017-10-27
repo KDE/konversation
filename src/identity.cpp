@@ -49,9 +49,7 @@ Identity::Identity(const Identity& original) : QSharedData()
     m_id = original.id();
 }
 
-Identity::~Identity()
-{
-}
+Identity::~Identity() = default;
 
 void Identity::init()
 {

@@ -24,9 +24,7 @@ UserCompletionModel::UserCompletionModel(QObject *parent)
     sort(0);
 }
 
-UserCompletionModel::~UserCompletionModel()
-{
-}
+UserCompletionModel::~UserCompletionModel() = default;
 
 Server *UserCompletionModel::server() const
 {
@@ -118,9 +116,7 @@ FilteredUserModel::FilteredUserModel(QObject *parent)
             this, &FilteredUserModel::selectionChanged);
 }
 
-FilteredUserModel::~FilteredUserModel()
-{
-}
+FilteredUserModel::~FilteredUserModel() = default;
 
 QObject *FilteredUserModel::filterView() const
 {
@@ -324,9 +320,7 @@ UserModel::UserModel(QObject *parent)
 {
 }
 
-UserModel::~UserModel()
-{
-}
+UserModel::~UserModel() = default;
 
 QHash<int, QByteArray> UserModel::roleNames() const
 {

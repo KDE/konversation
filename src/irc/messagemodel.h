@@ -40,8 +40,8 @@ class FilteredMessageModel : public QSortFilterProxyModel
     Q_PROPERTY(bool hasSelection READ hasSelection NOTIFY hasSelectionChanged)
 
     public:
-        explicit FilteredMessageModel(QObject *parent = 0);
-        virtual ~FilteredMessageModel();
+        explicit FilteredMessageModel(QObject *parent = nullptr);
+        ~FilteredMessageModel() override;
 
         QObject *filterView() const;
         void setFilterView(QObject *view);
@@ -52,7 +52,7 @@ class FilteredMessageModel : public QSortFilterProxyModel
         Q_INVOKABLE void selectAll();
         Q_INVOKABLE void copySelectionToClipboard(QClipboard::Mode mode = QClipboard::Clipboard);
 
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     Q_SIGNALS:
         void filterViewChanged() const;
@@ -93,12 +93,12 @@ class MessageModel : public QAbstractListModel
         };
         Q_ENUM(MessageType)
 
-        explicit MessageModel(QObject *parent = 0);
-        virtual ~MessageModel();
+        explicit MessageModel(QObject *parent = nullptr);
+        ~MessageModel() override;
 
         QHash<int, QByteArray> roleNames() const override;
 
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
         void appendMessage(QObject *view,

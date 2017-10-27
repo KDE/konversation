@@ -30,7 +30,7 @@ namespace Konversation
         Q_OBJECT
             public:
             explicit ChannelOptionsDialog(Channel *channel);
-            ~ChannelOptionsDialog();
+            ~ChannelOptionsDialog() override;
 
             QString topic();
             QStringList modes();

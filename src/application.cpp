@@ -56,22 +56,22 @@ using namespace Konversation;
 Application::Application(int &argc, char **argv)
 : QApplication(argc, argv)
 {
-    mainWindow = 0;
+    mainWindow = nullptr;
     m_restartScheduled = false;
-    m_connectionManager = 0;
-    m_awayManager = 0;
-    m_scriptLauncher = 0;
-    quickConnectDialog = 0;
-    osd = 0;
-    m_wallet = NULL;
-    m_images = 0;
-    m_sound = 0;
-    m_dccTransferManager = 0;
-    m_notificationHandler = 0;
-    m_urlModel = 0;
-    dbusObject = 0;
-    identDBus = 0;
-    m_networkConfigurationManager = 0;
+    m_connectionManager = nullptr;
+    m_awayManager = nullptr;
+    m_scriptLauncher = nullptr;
+    quickConnectDialog = nullptr;
+    osd = nullptr;
+    m_wallet = nullptr;
+    m_images = nullptr;
+    m_sound = nullptr;
+    m_dccTransferManager = nullptr;
+    m_notificationHandler = nullptr;
+    m_urlModel = nullptr;
+    dbusObject = nullptr;
+    identDBus = nullptr;
+    m_networkConfigurationManager = nullptr;
 }
 
 Application::~Application()
@@ -95,7 +95,7 @@ Application::~Application()
     //delete prefsDCOP;
     //delete identDBus;
     delete osd;
-    osd = 0;
+    osd = nullptr;
     closeWallet();
 
     delete m_networkConfigurationManager;
@@ -165,10 +165,10 @@ void Application::newInstance(QCommandLineParser *args)
         m_dccTransferManager = new DCC::TransferManager(this);
 
         // make sure all vars are initialized properly
-        quickConnectDialog = 0;
+        quickConnectDialog = nullptr;
 
         // Sound object used to play sound is created when needed.
-        m_sound = NULL;
+        m_sound = nullptr;
 
         // initialize OSD display here, so we can read the Preferences::properly
         osd = new OSDWidget( QStringLiteral("Konversation") );
@@ -236,9 +236,9 @@ void Application::newInstance(QCommandLineParser *args)
                 return left->sortIndex() < right->sortIndex();
             });
 
-            for (QList<ServerGroupSettingsPtr>::iterator it = serversToAutoconnect.begin(); it != serversToAutoconnect.end(); ++it)
+            for (auto & it : serversToAutoconnect)
             {
-                m_connectionManager->connectTo(Konversation::CreateNewConnection, (*it)->id());
+                m_connectionManager->connectTo(Konversation::CreateNewConnection, it->id());
             }
         }
 
@@ -316,7 +316,7 @@ void Application::prepareShutdown()
     {
         m_awayManager->blockSignals(true);
         delete m_awayManager;
-        m_awayManager = 0;
+        m_awayManager = nullptr;
     }
 
     if (m_connectionManager)
@@ -324,7 +324,7 @@ void Application::prepareShutdown()
         m_connectionManager->quitServers();
         m_connectionManager->blockSignals(true);
         delete m_connectionManager;
-        m_connectionManager = 0;
+        m_connectionManager = nullptr;
     }
 }
 
@@ -365,7 +365,7 @@ void Application::dbusSay(const QString& connection, const QString& target, cons
 
 void Application::dbusInfo(const QString& string)
 {
-    mainWindow->getViewContainer()->appendToFrontmost(i18n("D-Bus"), string, 0);
+    mainWindow->getViewContainer()->appendToFrontmost(i18n("D-Bus"), string, nullptr);
 }
 
 void Application::readOptions()
@@ -1110,7 +1110,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
                 return nickInfo;         //If we found one
         }
     }
-    return (NickInfoPtr)0;
+    return (NickInfoPtr) nullptr;
 }
 
 // auto replace on input/output
@@ -1353,7 +1353,7 @@ KWallet::Wallet* Application::wallet()
         m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), winid);
 
         if(!m_wallet)
-            return NULL;
+            return nullptr;
 
         connect(m_wallet, &KWallet::Wallet::walletClosed, this, &Application::closeWallet);
 
@@ -1363,7 +1363,7 @@ KWallet::Wallet* Application::wallet()
             {
                 qCritical() << "Failed to create folder Konversation in the network wallet.";
                 closeWallet();
-                return NULL;
+                return nullptr;
             }
         }
 
@@ -1371,7 +1371,7 @@ KWallet::Wallet* Application::wallet()
         {
             qCritical() << "Failed to set active folder to Konversation in the network wallet.";
             closeWallet();
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -1381,7 +1381,7 @@ KWallet::Wallet* Application::wallet()
 void Application::closeWallet()
 {
     delete m_wallet;
-    m_wallet = NULL;
+    m_wallet = nullptr;
 }
 
 void Application::handleActivate(const QStringList& arguments)

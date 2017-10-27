@@ -22,7 +22,7 @@
   User must pick the server network name from existing network names
   in the server list.
 
-  @author Gary Cramblitt <garycramblitt@comcast.net>
+  @author Gary Cramblitt <garycramblitt\@comcast.net>
 */
 
 class KLineEdit;
@@ -33,9 +33,9 @@ class EditNotifyDialog : public QDialog
     Q_OBJECT
 
     public:
-        explicit EditNotifyDialog(QWidget* parent=0, int serverGroupId=0,
+        explicit EditNotifyDialog(QWidget* parent=nullptr, int serverGroupId=0,
             const QString& nickname=QString());
-        ~EditNotifyDialog();
+        ~EditNotifyDialog() override;
 
         Q_SIGNALS:
         void notifyChanged(int serverGroupId,

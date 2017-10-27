@@ -49,7 +49,7 @@ class ViewMimeData : public QMimeData
 {
     public:
         explicit ViewMimeData(ChatWindow *view);
-        ~ViewMimeData();
+        ~ViewMimeData() override;
 
         ChatWindow* view() const;
 
@@ -62,8 +62,8 @@ class TabWidget : public QTabWidget
     Q_OBJECT
 
     public:
-        explicit TabWidget(QWidget* parent = 0);
-        ~TabWidget();
+        explicit TabWidget(QWidget* parent = nullptr);
+        ~TabWidget() override;
 
     Q_SIGNALS:
         void contextMenu(QWidget* widget, const QPoint& pos);
@@ -93,7 +93,7 @@ class ViewContainer : public QAbstractItemModel
         Q_ENUM(DataRoles)
 
         explicit ViewContainer(MainWindow* window);
-        ~ViewContainer();
+        ~ViewContainer() override;
 
         QHash<int, QByteArray> roleNames() const override;
 
@@ -235,7 +235,7 @@ class ViewContainer : public QAbstractItemModel
         void closeQueries();
 
         ChannelListPanel* addChannelListPanel(Server* server);
-        void openChannelList(Server* server = 0, const QString& filter = QString(), bool getList = false);
+        void openChannelList(Server* server = nullptr, const QString& filter = QString(), bool getList = false);
 
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();

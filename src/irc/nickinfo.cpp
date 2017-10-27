@@ -37,9 +37,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): QSharedData()
     m_nickColor = 0;
 }
 
-NickInfo::~NickInfo()
-{
-}
+NickInfo::~NickInfo() = default;
 
 // Get properties of NickInfo object.
 QString NickInfo::getNickname() const

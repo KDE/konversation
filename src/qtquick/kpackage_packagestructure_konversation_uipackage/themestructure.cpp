@@ -28,8 +28,8 @@ class ThemeStructure : public KPackage::PackageStructure
     Q_OBJECT
 
 public:
-    explicit ThemeStructure(QObject *parent = 0, const QVariantList &args = QVariantList())
-        : KPackage::PackageStructure(parent, args) {};
+    explicit ThemeStructure(QObject *parent = nullptr, const QVariantList &args = QVariantList())
+        : KPackage::PackageStructure(parent, args) {}
 
     void initPackage(KPackage::Package *package) Q_DECL_OVERRIDE
     {

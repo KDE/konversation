@@ -65,9 +65,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     document()->setDocumentMargin(2);
 }
 
-IRCInput::~IRCInput()
-{
-}
+IRCInput::~IRCInput() = default;
 
 void IRCInput::createHighlighter()
 {

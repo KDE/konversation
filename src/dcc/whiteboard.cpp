@@ -63,9 +63,7 @@ namespace Konversation
             connect(m_paintArea, &WhiteBoardPaintArea::colorPicked, m_toolbar, &WhiteBoardToolBar::setForegroundColor);
         }
 
-        WhiteBoard::~WhiteBoard()
-        {
-        }
+        WhiteBoard::~WhiteBoard() = default;
 
         QStringList WhiteBoard::whiteboardCommands()
         {

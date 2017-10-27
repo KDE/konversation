@@ -83,7 +83,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     connect(m_nickListView, &QTreeWidget::itemDoubleClicked, this, &NicksOnline::processDoubleClick);
 
-    setupToolbarActions(0);
+    setupToolbarActions(nullptr);
 
     // Create context menu.
     m_popupMenu = new QMenu(this);
@@ -156,13 +156,13 @@ QTreeWidget* NicksOnline::getNickListView()
  */
 QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type)
 {
-    if (!parent) return 0;
+    if (!parent) return nullptr;
     for (int i = 0; i < parent->childCount(); ++i)
     {
         QTreeWidgetItem* child = parent->child(i);
         if(static_cast<NicksOnlineItem*>(child)->type() == type && child->text(0) == name) return child;
     }
-    return 0;
+    return nullptr;
 }
 
 /**
@@ -173,13 +173,13 @@ QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const
  */
 QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type)
 {
-    if (!parent) return 0;
+    if (!parent) return nullptr;
     for (int i = 0; i < parent->childCount(); ++i)
     {
         QTreeWidgetItem* child = parent->child(i);
         if(static_cast<NicksOnlineItem*>(child)->type() == type) return child;
     }
-    return 0;
+    return nullptr;
 }
 
 /**
@@ -197,7 +197,7 @@ QTreeWidgetItem* NicksOnline::findNetworkRoot(int serverGroupId)
             return child;
     }
 
-    return 0;
+    return nullptr;
 }
 
 /**
@@ -340,7 +340,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (channelNick->isOp()) nickPrivilege = Images::Op;
                 if (channelNick->isOwner()) nickPrivilege = Images::Owner;
                 if (channelNick->isAdmin()) nickPrivilege = Images::Admin;
-                if (server->getJoinedChannelMembers(channelName) != 0)
+                if (server->getJoinedChannelMembers(channelName) != nullptr)
                     channelItem->setIcon(nlvcChannel,
                         QIcon(Application::instance()->images()->getNickIcon(nickPrivilege, false)));
                 else
@@ -417,7 +417,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
             if (nickInfo) return nickInfo;
         }
     }
-    return NickInfoPtr(); //TODO FIXME NULL NULL NULL
+    return NickInfoPtr(); //TODO FIXME nullptr nullptr nullptr
 }
 
 /**
@@ -592,14 +592,14 @@ NickInfoPtr NicksOnline::getNickInfo(const QTreeWidgetItem* item)
     getItemServerAndNick(item, serverName, nickname);
 
     if (serverName.isEmpty() || nickname.isEmpty())
-        return NickInfoPtr(); //TODO FIXME NULL NULL NULL
+        return NickInfoPtr(); //TODO FIXME nullptr nullptr nullptr
 
     Server* server = Application::instance()->getConnectionManager()->getServerByName(serverName);
 
     if (server)
         return server->getNickInfo(nickname);
 
-    return NickInfoPtr(); //TODO FIXME NULL NULL NULL
+    return NickInfoPtr(); //TODO FIXME nullptr nullptr nullptr
 }
 
 /**
@@ -615,12 +615,12 @@ QTreeWidgetItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 const QString& nickname)
 {
     Server* server = Application::instance()->getConnectionManager()->getServerByName(serverName);
-    if (!server) return 0;
+    if (!server) return nullptr;
     QString networkName = server->getDisplayName();
     QList<QTreeWidgetItem*> items = m_nickListView->findItems(networkName, Qt::MatchExactly | Qt::MatchCaseSensitive, nlvcNetwork);
-    if (items.count() == 0) return 0;
+    if (items.count() == 0) return nullptr;
     QTreeWidgetItem* networkRoot = items.at(0);
-    if (!networkRoot) return 0;
+    if (!networkRoot) return nullptr;
     QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
     return nickRoot;
 }
@@ -637,7 +637,7 @@ const QString& nickname)
  */
 void NicksOnline::doCommand(QAction* id)
 {
-    if(id == 0)
+    if(id == nullptr)
         return;
     if ( id == m_addNickname )
     {
@@ -724,7 +724,7 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   m_openQuery->setEnabled(false);
   m_joinChannel->setEnabled(false);
   // check for null
-  if (item == 0)
+  if (item == nullptr)
     return;
   // add items depending on the item type
   switch (item->type())
@@ -752,24 +752,24 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
   // clear the popup menu
   m_popupMenu->clear();
   // check for null
-  if (item == 0)
+  if (item == nullptr)
     return;
   // add items depending on the item type
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_popupMenu->insertAction(0, m_addNickname);
+    m_popupMenu->insertAction(nullptr, m_addNickname);
     break;
   case NicksOnlineItem::ChannelItem:
-    m_popupMenu->insertAction(0, m_joinChannel);
+    m_popupMenu->insertAction(nullptr, m_joinChannel);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_popupMenu->insertAction(0, m_removeNickname);
+    m_popupMenu->insertAction(nullptr, m_removeNickname);
     if (!item->isOffline())
     {
       m_popupMenu->addSeparator();
-      m_popupMenu->insertAction(0, m_whois);
-      m_popupMenu->insertAction(0, m_openQuery);
+      m_popupMenu->insertAction(nullptr, m_whois);
+      m_popupMenu->insertAction(nullptr, m_openQuery);
     }
     break;
   }
@@ -791,7 +791,7 @@ void NicksOnline::slotNickListView_SelectionChanged()
 void NicksOnline::slotCustomContextMenuRequested(const QPoint& point)
 {
     QTreeWidgetItem *item = m_nickListView->itemAt(point);
-    if (item == 0)
+    if (item == nullptr)
       return;
     // select the item
     item->setSelected(true);

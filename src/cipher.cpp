@@ -39,9 +39,7 @@ namespace Konversation
         setType(cipherType);
     }
 
-    Cipher::~Cipher()
-    {
-    }
+    Cipher::~Cipher() = default;
 
     bool Cipher::setKey(QByteArray key)
     {

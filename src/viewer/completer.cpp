@@ -29,9 +29,7 @@ MatchesModel::MatchesModel(Completer *completer)
     QObject::connect(this, &QAbstractItemModel::rowsRemoved, this, &MatchesModel::countChanged);
 }
 
-MatchesModel::~MatchesModel()
-{
-}
+MatchesModel::~MatchesModel() = default;
 
 QString MatchesModel::pinnedMatch() const
 {
@@ -99,9 +97,7 @@ Completer::Completer(QObject *parent)
     m_completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 }
 
-Completer::~Completer()
-{
-}
+Completer::~Completer() = default;
 
 QObject *Completer::contextView() const
 {

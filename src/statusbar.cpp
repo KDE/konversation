@@ -64,9 +64,7 @@ namespace Konversation
         m_window->statusBar()->setWhatsThis(i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
     }
 
-    StatusBar::~StatusBar()
-    {
-    }
+    StatusBar::~StatusBar() = default;
 
     void StatusBar::updateAppearance()
     {}
@@ -223,7 +221,7 @@ namespace Konversation
         if (server == m_window->getViewContainer()->getFrontServer()
             && server->getUseSSL() && server->isConnected())
         {
-            disconnect(m_sslLabel,0,0,0);
+            disconnect(m_sslLabel,nullptr,nullptr,nullptr);
             connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
             m_sslLabel->setToolTip(server->getSSLInfo());
             m_sslLabel->show();
@@ -234,7 +232,7 @@ namespace Konversation
 
     void StatusBar::removeSSLLabel()
     {
-        disconnect(m_sslLabel,0,0,0);
+        disconnect(m_sslLabel,nullptr,nullptr,nullptr);
         m_sslLabel->hide();
     }
 

@@ -38,9 +38,7 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
   connect(removeButton, &QPushButton::clicked, this, &QuickButtons_Config::removeEntry);
 }
 
-QuickButtons_Config::~QuickButtons_Config()
-{
-}
+QuickButtons_Config::~QuickButtons_Config() = default;
 
 void QuickButtons_Config::loadSettings()
 {
@@ -114,7 +112,7 @@ QStringList QuickButtons_Config::currentButtonList()
 {
   QStringList newList;
 
-  QTreeWidgetItem* item = 0;
+  QTreeWidgetItem* item = nullptr;
 
   for (int index = 0; index < buttonListView->topLevelItemCount(); index++)
   {
@@ -241,7 +239,7 @@ void QuickButtons_Config::removeEntry()
     else
     {
       // no next item found, this means the list is empty
-      entrySelected(0);
+      entrySelected(nullptr);
     }
     // tell the config system that somethig has changed
     emit modified();

@@ -29,7 +29,7 @@
 
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
-: QWidget(parent), m_server(0), m_timer(this),
+: QWidget(parent), m_server(nullptr), m_timer(this),
     m_vis(Preferences::self()->showQueueTunerItem()->value())
 {
     setupUi(this);
@@ -54,9 +54,7 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
     m_timer.setObjectName(QStringLiteral("qTuner"));
 }
 
-QueueTuner::~QueueTuner()
-{
-}
+QueueTuner::~QueueTuner() = default;
 
 //lps, lpm, bps, kbps
 static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, KComboBox* t, QSpinBox *i)
@@ -69,7 +67,7 @@ static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, KComboBox* t
 void QueueTuner::serverDestroyed(QObject* ref)
 {
     if (ref == m_server)
-        setServer(0);
+        setServer(nullptr);
 }
 
 void QueueTuner::setServer(Server* newServer)
@@ -110,7 +108,7 @@ void QueueTuner::timerFired()
 {
     if (m_server)
     {
-        IRCQueue *q=0;
+        IRCQueue *q = nullptr;
 
         q=m_server->m_queues[0];
         m_slowAge->setNum(q->currentWait()/1000);

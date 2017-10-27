@@ -31,7 +31,7 @@ namespace Konversation
 
             public:
                 ChatContainer(QWidget *parent, Chat *chat);
-                ~ChatContainer();
+                ~ChatContainer() override;
 
             // ChatWindow
                 bool closeYourself(bool askForConfirmation=true) Q_DECL_OVERRIDE;
@@ -54,7 +54,7 @@ namespace Konversation
 
             public Q_SLOTS:
                 void textEntered();
-                void textPasted(const QString &text);
+                void textPasted(const QString &text) override;
 
                 void receivedLine(const QString &line);
                 void chatStatusChanged(Konversation::DCC::Chat *chat, Konversation::DCC::Chat::Status newstatus, Konversation::DCC::Chat::Status oldstatus);

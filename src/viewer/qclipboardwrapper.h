@@ -19,8 +19,8 @@ class QClipboardWrapper : public QObject
     Q_OBJECT
 
     public:
-        explicit QClipboardWrapper(QObject *parent = 0);
-        ~QClipboardWrapper();
+        explicit QClipboardWrapper(QObject *parent = nullptr);
+        ~QClipboardWrapper() override;
 
         Q_INVOKABLE QString clipboardText() const;
         Q_INVOKABLE void setClipboardText(const QString &text);

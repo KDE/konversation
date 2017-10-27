@@ -25,7 +25,7 @@
 #include <kde_terminal_interface.h>
 
 
-KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
+KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
 {
     setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
@@ -51,7 +51,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     headerWidgetLayout->addWidget(m_konsoleLabel);
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
-    KPluginFactory* fact = 0;
+    KPluginFactory* fact = nullptr;
     KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("konsolepart"));
     if( service )
     {
@@ -97,7 +97,7 @@ QWidget* KonsolePanel::getWidget()
     if (k_part)
         return k_part->widget();
     else
-        return 0;
+        return nullptr;
 }
 
 void KonsolePanel::childAdjustFocus()
@@ -107,7 +107,7 @@ void KonsolePanel::childAdjustFocus()
 
 void KonsolePanel::partDestroyed()
 {
-    k_part = 0;
+    k_part = nullptr;
 
     emit closeView(this);
 }

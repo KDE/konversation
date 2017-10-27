@@ -78,9 +78,9 @@ namespace Konversation
     int IRCCharsets::shortNameToIndex( const QString& shortName )
     {
         int index = 0;
-        for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
+        for (auto & m_shortName : m_shortNames)
         {
-            if ( (*it) == shortName )
+            if ( m_shortName == shortName )
                 return index;
             ++index;
         }
@@ -101,9 +101,9 @@ namespace Konversation
             return QStringLiteral("ISO-2022-JP");
 
         // it's a little hacky..
-        for (QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it)
-            if (QTextCodec::codecForName( (*it).toLatin1() ) == QTextCodec::codecForLocale())
-                return *it;
+        for (auto & m_shortName : m_shortNames)
+            if (QTextCodec::codecForName( m_shortName.toLatin1() ) == QTextCodec::codecForLocale())
+                return m_shortName;
 
         return QStringLiteral("UTF-8");
     }

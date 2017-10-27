@@ -40,8 +40,8 @@ namespace Konversation
             connect( Application::instance(), SIGNAL(appearanceChanged()),
                      this, SLOT(slotSettingsChanged()) );
 
-            m_upnpRouter = 0;
-            m_upnpSocket = 0;
+            m_upnpRouter = nullptr;
+            m_upnpSocket = nullptr;
 
             if (Preferences::self()->dccUPnP())
                 startupUPnP();
@@ -81,7 +81,7 @@ namespace Konversation
             shutdownUPnP();
         }
 
-        void TransferManager::startupUPnP(void)
+        void TransferManager::startupUPnP()
         {
             m_upnpSocket = new UPnPMCastSocket();
 
@@ -90,12 +90,12 @@ namespace Konversation
             m_upnpSocket->discover();
         }
 
-        void TransferManager::shutdownUPnP(void)
+        void TransferManager::shutdownUPnP()
         {
             // This deletes the router too.
             delete m_upnpSocket;
-            m_upnpSocket = 0;
-            m_upnpRouter = 0;
+            m_upnpSocket = nullptr;
+            m_upnpRouter = nullptr;
         }
 
         TransferRecv* TransferManager::newDownload()
@@ -126,7 +126,7 @@ namespace Konversation
 
         TransferSend* TransferManager::rejectSend(int connectionId, const QString& partnerNick, const QString& fileName)
         {
-            TransferSend* transfer = 0;
+            TransferSend* transfer = nullptr;
 
             // find applicable one
             foreach (TransferSend* it, m_sendItems )
@@ -150,7 +150,7 @@ namespace Konversation
 
         Chat* TransferManager::rejectChat(int connectionId, const QString& partnerNick)
         {
-            Chat* chat = 0;
+            Chat* chat = nullptr;
 
             // find applicable one
             foreach (Chat* it, m_chatItems)
@@ -172,7 +172,7 @@ namespace Konversation
 
         TransferRecv* TransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position )
         {
-            TransferRecv* transfer = 0;
+            TransferRecv* transfer = nullptr;
 
             // find applicable one
             foreach (TransferRecv* it, m_recvItems )
@@ -201,7 +201,7 @@ namespace Konversation
 
         TransferSend* TransferManager::resumeUpload( int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position )
         {
-            TransferSend* transfer = 0;
+            TransferSend* transfer = nullptr;
 
             // find applicable one
             foreach ( TransferSend* it, m_sendItems )
@@ -231,7 +231,7 @@ namespace Konversation
         TransferSend* TransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, quint16 partnerPort, quint64 fileSize, const QString& token )
         {
             qDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token;
-            TransferSend* transfer = 0;
+            TransferSend* transfer = nullptr;
 
             // find applicable one
             foreach ( TransferSend* it, m_sendItems )
@@ -260,7 +260,7 @@ namespace Konversation
         Chat* TransferManager::startReverseChat(int connectionId, const QString& partnerNick, const QString& partnerHost, quint16 partnerPort, const QString& token)
         {
             qDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", token: " << token;
-            Chat* chat = 0;
+            Chat* chat = nullptr;
 
             // find applicable one
             foreach (Chat* it, m_chatItems)

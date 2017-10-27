@@ -468,9 +468,7 @@ namespace Konversation
         slotServerNameChanged( m_mainWidget->m_serverEdit->text() );
     }
 
-    ServerDialog::~ServerDialog()
-    {
-    }
+    ServerDialog::~ServerDialog() = default;
 
     void ServerDialog::slotServerNameChanged( const QString &text )
     {
@@ -534,9 +532,7 @@ namespace Konversation
         slotServerNameChanged( m_mainWidget->m_channelEdit->text() );
     }
 
-    ChannelDialog::~ChannelDialog()
-    {
-    }
+    ChannelDialog::~ChannelDialog() = default;
 
     void ChannelDialog::slotServerNameChanged( const QString &text )
     {

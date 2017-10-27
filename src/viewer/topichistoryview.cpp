@@ -36,9 +36,7 @@ TopicHistorySortfilterProxyModel::TopicHistorySortfilterProxyModel(QObject* pare
     setCategorizedModel(true);
 }
 
-TopicHistorySortfilterProxyModel::~TopicHistorySortfilterProxyModel()
-{
-}
+TopicHistorySortfilterProxyModel::~TopicHistorySortfilterProxyModel() = default;
 
 QVariant TopicHistorySortfilterProxyModel::data(const QModelIndex& index, int role) const
 {
@@ -104,9 +102,7 @@ TopicHistoryLabel::TopicHistoryLabel(QWidget* parent) : KTextEdit(parent)
     setTextSelectable(false);
 }
 
-TopicHistoryLabel::~TopicHistoryLabel()
-{
-}
+TopicHistoryLabel::~TopicHistoryLabel() = default;
 
 void TopicHistoryLabel::setTextSelectable(bool selectable)
 {
@@ -128,9 +124,7 @@ TopicHistoryItemDelegate::TopicHistoryItemDelegate(QAbstractItemView* itemView, 
     itemView->installEventFilter(this);
 }
 
-TopicHistoryItemDelegate::~TopicHistoryItemDelegate()
-{
-}
+TopicHistoryItemDelegate::~TopicHistoryItemDelegate() = default;
 
 bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
 {
@@ -194,7 +188,7 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 
         hack->rect.setHeight(hack->rect.height() - (2 * MARGIN) - 1);
 
-        itemView()->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, hack, painter, 0);
+        itemView()->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, hack, painter, nullptr);
     }
 }
 
@@ -240,9 +234,7 @@ TopicHistoryView::TopicHistoryView(QWidget* parent): KCategorizedView(parent)
     connect(Application::instance(), &Application::appearanceChanged, this, &TopicHistoryView::updateSelectedItemWidgets);
 }
 
-TopicHistoryView::~TopicHistoryView()
-{
-}
+TopicHistoryView::~TopicHistoryView() = default;
 
 bool TopicHistoryView::textSelectable() const
 {

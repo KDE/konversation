@@ -31,7 +31,7 @@ class MatchesModel : public QSortFilterProxyModel
 
     public:
         explicit MatchesModel(Completer *completer);
-        virtual ~MatchesModel();
+        ~MatchesModel() override;
 
         QString pinnedMatch() const;
         void setPinnedMatch(const QString &pinnedMatch);
@@ -58,8 +58,8 @@ class Completer : public QObject
     Q_PROPERTY(QAbstractItemModel *matches READ matches CONSTANT)
 
     public:
-        explicit Completer(QObject *parent = 0);
-        virtual ~Completer();
+        explicit Completer(QObject *parent = nullptr);
+        ~Completer() override;
 
         QObject *contextView() const;
         void setContextView(QObject *view);

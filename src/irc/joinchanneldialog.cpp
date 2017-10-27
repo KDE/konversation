@@ -70,9 +70,7 @@ namespace Konversation
                 this, SLOT(slotConnectionListChanged()));
     }
 
-    JoinChannelDialog::~JoinChannelDialog()
-    {
-    }
+    JoinChannelDialog::~JoinChannelDialog() = default;
 
     int JoinChannelDialog::connectionId() const
     {

@@ -31,7 +31,7 @@ namespace Konversation
 
         public:
             explicit StatusBar(MainWindow* parent);
-            ~StatusBar();
+            ~StatusBar() override;
 
         public Q_SLOTS:
             void updateAppearance();
@@ -49,7 +49,7 @@ namespace Konversation
 
             void setLagLabelShown(bool shown);
             void updateLagLabel(Server* lagServer, int msec);
-            void resetLagLabel(Server* lagServer = 0);
+            void resetLagLabel(Server* lagServer = nullptr);
             void setTooLongLag(Server* lagServer, int msec);
 
             void updateSSLLabel(Server* server);

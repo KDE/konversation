@@ -37,10 +37,10 @@ ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
     mainLayout->setSpacing(spacing());
 
     setName("ChatWindowObject");
-    setTextView(0);
-    setInputBar(0);
+    setTextView(nullptr);
+    setInputBar(nullptr);
     firstLog = true;
-    m_server = 0;
+    m_server = nullptr;
     m_recreationScheduled = false;
     m_isTopLevelView = true;
     m_notificationsEnabled = true;
@@ -67,7 +67,7 @@ ChatWindow::~ChatWindow()
     }
 
     emit closing(this);
-    m_server=0;
+    m_server=nullptr;
 }
 
 void ChatWindow::childEvent(QChildEvent* event)
@@ -495,7 +495,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     firstColumns = firstColumnsInPacket + firstColumns;
                     messages = messagesInPacket + messages;
                 }
-                backlog.setDevice(0);
+                backlog.setDevice(nullptr);
                 logfile.close();
 
                 // trim
@@ -547,7 +547,7 @@ void ChatWindow::logText(const QString& text)
             logStream << logLine;
 
             // detach stream from file
-            logStream.setDevice(0);
+            logStream.setDevice(nullptr);
 
             // close file
             logfile.close();

@@ -85,6 +85,7 @@ ki18n_wrap_ui(irc_SRCS
 set(config_SRCS
     config/configdialog.cpp
     config/settingsdialog.cpp
+    config/settingspage.cpp
     config/alias_config.cpp
     config/autoreplace_config.cpp
     config/dcc_config.cpp

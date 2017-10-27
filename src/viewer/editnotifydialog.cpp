@@ -91,9 +91,7 @@ const QString& nickname):
     m_nicknameInput->setFocus();
 }
 
-EditNotifyDialog::~EditNotifyDialog()
-{
-}
+EditNotifyDialog::~EditNotifyDialog() = default;
 
 void EditNotifyDialog::slotOk()
 {

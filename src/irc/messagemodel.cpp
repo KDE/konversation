@@ -28,9 +28,7 @@ FilteredMessageModel::FilteredMessageModel(QObject *parent)
             this, &FilteredMessageModel::selectionChanged);
 }
 
-FilteredMessageModel::~FilteredMessageModel()
-{
-}
+FilteredMessageModel::~FilteredMessageModel() = default;
 
 QObject *FilteredMessageModel::filterView() const
 {
@@ -172,9 +170,7 @@ MessageModel::MessageModel(QObject *parent)
     m_messages.reserve(ALLOCATION_BATCH_SIZE);
 }
 
-MessageModel::~MessageModel()
-{
-}
+MessageModel::~MessageModel() = default;
 
 QHash<int, QByteArray> MessageModel::roleNames() const
 {

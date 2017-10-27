@@ -34,9 +34,7 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   connect(removeButton, &QPushButton::clicked, this, &Alias_Config::removeEntry);
 }
 
-Alias_Config::~Alias_Config()
-{
-}
+Alias_Config::~Alias_Config() = default;
 
 void Alias_Config::loadSettings()
 {
@@ -200,7 +198,7 @@ void Alias_Config::removeEntry()
         else
         {
             // no next item found, this means the list is empty
-            entrySelected(0);
+            entrySelected(nullptr);
         }
         // tell the config system that somethig has changed
         emit modified();

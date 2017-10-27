@@ -19,9 +19,7 @@ IdentityModel::IdentityModel(QObject *parent): QAbstractListModel(parent)
 {
 }
 
-IdentityModel::~IdentityModel()
-{
-}
+IdentityModel::~IdentityModel() = default;
 
 QHash<int, QByteArray> IdentityModel::roleNames() const
 {

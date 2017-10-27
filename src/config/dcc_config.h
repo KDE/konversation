@@ -22,7 +22,7 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
 
     public:
         DCC_Config(QWidget* parent, const char* name);
-        ~DCC_Config();
+        ~DCC_Config() override;
 
     protected Q_SLOTS:
         virtual void languageChange();

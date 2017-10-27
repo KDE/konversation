@@ -42,7 +42,7 @@ class Images : public QObject
         };
 
         Images();
-        virtual ~Images();
+        ~Images() override;
 
         QIcon getLed(const QColor& col, bool state = true);
 

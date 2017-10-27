@@ -31,7 +31,7 @@ class NickListView : public QTreeWidget
 
         public:
         NickListView(QWidget* parent, Channel *chan);
-        ~NickListView();
+        ~NickListView() override;
 
         /** Call when the icons have been changed.
          */

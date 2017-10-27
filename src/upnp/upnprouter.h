@@ -123,8 +123,8 @@ namespace Konversation
             * @param location The location of it's xml description file
             * @param verbose Print lots of debug info
             */
-            UPnPRouter(const QString & server,const QUrl &location,const QString & uuid);
-            virtual ~UPnPRouter();
+            UPnPRouter(QString  server,QUrl location,QString  uuid);
+            ~UPnPRouter() override;
 
             /// Get the name  of the server
             QString getServer() const {return server;}

@@ -377,11 +377,11 @@ const IdentityPtr Preferences::identityByName(const QString& name)
 const IdentityPtr Preferences::identityById(int id)
 {
     QList<IdentityPtr> identList = identityList();
-    for(QList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
+    for(auto & it : identList)
     {
-        if((*it)->id() == id)
+        if(it->id() == id)
         {
-            return (*it);
+            return it;
         }
     }
 

@@ -44,8 +44,8 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                explicit TransferManager(QObject* parent = 0);
-                ~TransferManager();
+                explicit TransferManager(QObject* parent = nullptr);
+                ~TransferManager() override;
 
             Q_SIGNALS:
                 /*
@@ -91,8 +91,8 @@ namespace Konversation
                 bool hasActiveChats();
 
                 UPnP::UPnPRouter *getUPnPRouter();
-                void startupUPnP(void);
-                void shutdownUPnP(void);
+                void startupUPnP();
+                void shutdownUPnP();
 
             private:
                 /*

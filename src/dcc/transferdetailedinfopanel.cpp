@@ -38,7 +38,7 @@ namespace Konversation
             m_timeInfo.setupUi(tab);
             addTab(tab, i18n("Details"));
 
-            m_transfer = 0;
+            m_transfer = nullptr;
             m_autoViewUpdateTimer = new QTimer(this);
             m_autoViewUpdateTimer->setInterval(1000);
 
@@ -52,9 +52,7 @@ namespace Konversation
             m_locationInfo.m_urlreqLocation->setMode(KFile::File | KFile::LocalOnly);
         }
 
-        TransferDetailedInfoPanel::~TransferDetailedInfoPanel()
-        {
-        }
+        TransferDetailedInfoPanel::~TransferDetailedInfoPanel() = default;
 
         void TransferDetailedInfoPanel::setTransfer(Transfer *item)
         {
@@ -94,7 +92,7 @@ namespace Konversation
             // we can't do disconnect( m_item->transfer(), 0, this, 0 ) here
             // because m_item can have been deleted already.
 
-            m_transfer = 0;
+            m_transfer = nullptr;
 
             m_locationInfo.m_urlreqLocation->lineEdit()->setReadOnly(true);
             m_locationInfo.m_urlreqLocation->lineEdit()->setFrame(false);

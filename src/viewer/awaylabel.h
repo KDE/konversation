@@ -21,8 +21,8 @@ class AwayLabel : public QLabel
     Q_OBJECT
 
     public:
-        explicit AwayLabel(QWidget *parent = 0);
-        ~AwayLabel();
+        explicit AwayLabel(QWidget *parent = nullptr);
+        ~AwayLabel() override;
 
     Q_SIGNALS:
         void awayMessageChanged(const QString&);

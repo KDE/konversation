@@ -22,8 +22,8 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
   Q_OBJECT
 
   public:
-    explicit QuickButtons_Config(QWidget* parent, const char* name=NULL);
-    ~QuickButtons_Config();
+    explicit QuickButtons_Config(QWidget* parent, const char* name = nullptr);
+    ~QuickButtons_Config() override;
 
     void saveSettings() Q_DECL_OVERRIDE;
     void loadSettings() Q_DECL_OVERRIDE;

@@ -70,7 +70,7 @@ namespace Konversation
         m_serverList->setFocus();
 
         m_selectedItem = false;
-        m_selectedItemPtr = 0;
+        m_selectedItemPtr = nullptr;
         m_selectedServer = ServerSettings(QString());
 
         // Load server list
@@ -195,7 +195,7 @@ namespace Konversation
     {
         QList<QTreeWidgetItem*> selectedItems;
         // Make sure we're not deleting a network's only servers
-        QTreeWidgetItem* parent = 0;
+        QTreeWidgetItem* parent = nullptr;
         QTreeWidgetItemIterator it(m_serverList, QTreeWidgetItemIterator::Selected);
         while (*it)
         {
@@ -243,7 +243,7 @@ namespace Konversation
         foreach (QTreeWidgetItem* item, selectedItems)
         {
             if (item == m_selectedItemPtr)
-                m_selectedItemPtr = 0;
+                m_selectedItemPtr = nullptr;
 
             rootItem->removeChild(item);
             if (item->data(0,IsServer).toBool())
@@ -367,7 +367,7 @@ namespace Konversation
         Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
         QHashIterator<int, ServerGroupSettingsPtr> it(serverGroups);
 
-        QTreeWidgetItem* networkItem = 0;
+        QTreeWidgetItem* networkItem = nullptr;
         while(it.hasNext())
         {
             it.next();

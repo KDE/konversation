@@ -65,13 +65,13 @@
 #include <KPackage/PackageLoader> // WIPQTQUICK
 #include <KDescendantsProxyModel> // WIPQTQUICK
 
-MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiWindow(0) // WIPQTQUICK
+MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiWindow(nullptr) // WIPQTQUICK
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
-    m_serverListDialog = 0;
-    m_trayIcon = 0;
-    m_settingsDialog = NULL;
+    m_serverListDialog = nullptr;
+    m_trayIcon = nullptr;
+    m_settingsDialog = nullptr;
 
     // BEGIN: WIPQTQUICK
     m_uiStack = new QStackedWidget(this);
@@ -675,9 +675,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         m_viewContainer->openNicksOnlinePanel();
 }
 
-MainWindow::~MainWindow()
-{
-}
+MainWindow::~MainWindow() = default;
 
 bool MainWindow::loadUiPackage(const QString &packageName, bool raise)
 {
@@ -907,7 +905,7 @@ bool MainWindow::event(QEvent* e)
     {
         m_statusBar->clearMainLabelTempText();
 
-        if (qApp->activeModalWidget() == 0)
+        if (qApp->activeModalWidget() == nullptr)
             emit triggerRememberLine();
     }
 
@@ -954,7 +952,7 @@ void MainWindow::updateTrayIcon()
     else
     {
         delete m_trayIcon;
-        m_trayIcon = 0;
+        m_trayIcon = nullptr;
     }
 }
 

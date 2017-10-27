@@ -104,9 +104,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     slotServerNameChanged( hostNameInput->text() );
 }
 
-QuickConnectDialog::~QuickConnectDialog()
-{
-}
+QuickConnectDialog::~QuickConnectDialog() = default;
 
 void QuickConnectDialog::slotServerNameChanged( const QString &text )
 {

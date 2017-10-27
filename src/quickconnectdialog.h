@@ -29,8 +29,8 @@ class QuickConnectDialog : public QDialog
     Q_OBJECT
 
     public:
-        explicit QuickConnectDialog(QWidget* parent=0);
-        ~QuickConnectDialog();
+        explicit QuickConnectDialog(QWidget* parent = nullptr);
+        ~QuickConnectDialog() override;
 
     Q_SIGNALS:
         void connectClicked(Konversation::ConnectionFlag flag,

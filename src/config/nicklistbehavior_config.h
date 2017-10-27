@@ -22,8 +22,8 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
     Q_OBJECT
 
     public:
-        explicit NicklistBehavior_Config(QWidget *parent = 0, const char *name = 0);
-        ~NicklistBehavior_Config();
+        explicit NicklistBehavior_Config(QWidget *parent = nullptr, const char *name = nullptr);
+        ~NicklistBehavior_Config() override;
 
         void saveSettings() Q_DECL_OVERRIDE;
         void loadSettings() Q_DECL_OVERRIDE;

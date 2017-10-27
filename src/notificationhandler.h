@@ -29,8 +29,8 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit NotificationHandler(Application* parent = 0);
-            ~NotificationHandler();
+            explicit NotificationHandler(Application* parent = nullptr);
+            ~NotificationHandler() override;
 
         public Q_SLOTS:
             void message(ChatWindow* chatWin, const QString& fromNick, const QString& message);

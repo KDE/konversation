@@ -23,9 +23,7 @@ QTreeWidgetItem(parent, QStringList() << name)
     setFlags(newFlags);
 }
 
-IgnoreListViewItem::~IgnoreListViewItem()
-{
-}
+IgnoreListViewItem::~IgnoreListViewItem() = default;
 
 void IgnoreListViewItem::setFlag(int flag,bool active)
 {

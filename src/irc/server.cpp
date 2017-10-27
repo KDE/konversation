@@ -101,16 +101,16 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_nickListModel = new QStringListModel(this);
 
     m_currentLag = -1;
-    m_rawLog = 0;
-    m_channelListPanel = 0;
-    m_serverISON = 0;
+    m_rawLog = nullptr;
+    m_channelListPanel = nullptr;
+    m_serverISON = nullptr;
     m_away = false;
-    m_socket = 0;
+    m_socket = nullptr;
     m_prevISONList = QStringList();
     m_bytesReceived = 0;
-    m_encodedBytesSent=0;
-    m_bytesSent=0;
-    m_linesSent=0;
+    m_encodedBytesSent = 0;
+    m_bytesSent = 0;
+    m_linesSent = 0;
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     m_serverNickPrefixModes = QStringLiteral("ovh");
     m_serverNickPrefixes = QStringLiteral("@+%");
@@ -168,7 +168,7 @@ Server::~Server()
 
     // Delete helper object.
     delete m_serverISON;
-    m_serverISON = 0;
+    m_serverISON = nullptr;
 
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
@@ -244,7 +244,7 @@ void Server::purgeData()
 
     m_queryNicks.clear();
     delete m_serverISON;
-    m_serverISON = 0;
+    m_serverISON = nullptr;
 
 }
 
@@ -467,7 +467,7 @@ void Server::connectToIRCServer()
 
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
-        m_socket = 0;
+        m_socket = nullptr;
         if (m_referenceNicklist != getIdentity()->getNicknameList())
             m_nickListModel->setStringList(getIdentity()->getNicknameList());
         resetNickSelection();
@@ -1016,9 +1016,9 @@ void Server::sslError( const QList<KSslError>& errors )
 
         QString errorReason;
 
-        for (int i = 0; i < errors.size(); ++i)
+        for (const auto & error : errors)
         {
-            errorReason += errors.at(i).errorString() + QLatin1Char(' ');
+            errorReason += error.errorString() + QLatin1Char(' ');
         }
 
         QString error = i18n("Could not connect to %1 (port %2) using SSL encryption. Either the server does not support SSL (did you use the correct port?) or you rejected the certificate. %3",
@@ -1277,16 +1277,16 @@ void Server::autoCommandsAndChannels()
 
     if (getAutoJoin())
     {
-        for ( QStringList::Iterator it = m_autoJoinCommands.begin(); it != m_autoJoinCommands.end(); ++it )
-            queue((*it));
+        for (auto & m_autoJoinCommand : m_autoJoinCommands)
+            queue(m_autoJoinCommand);
     }
 
     if (!m_connectionSettings.oneShotChannelList().isEmpty())
     {
         QStringList oneShotJoin = generateJoinCommand(m_connectionSettings.oneShotChannelList());
-        for ( QStringList::Iterator it = oneShotJoin.begin(); it != oneShotJoin.end(); ++it )
+        for (auto & it : oneShotJoin)
         {
-            queue((*it));
+            queue(it);
         }
         m_connectionSettings.clearOneShotChannelList();
     }
@@ -1583,7 +1583,7 @@ int Server::_send_internal(QString outputLine)
         else //if we're connecting to a server manually
             channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
     }
-    QTextCodec* codec = 0;
+    QTextCodec* codec = nullptr;
     if (channelCodecName.isEmpty())
         codec = getIdentity()->getCodec();
     else
@@ -1768,7 +1768,7 @@ void Server::dbusSay(const QString& target,const QString& command)
     else
     {
         Query* query = getQueryByName(target);
-        if(query==0)
+        if(query == nullptr)
         {
             NickInfoPtr nickinfo = obtainNickInfo(target);
             query=addQuery(nickinfo, true);
@@ -1837,7 +1837,7 @@ const ChannelNickMap *Server::getJoinedChannelMembers(const QString& channelName
     if (m_joinedChannels.contains(lcChannelName))
         return m_joinedChannels[lcChannelName];
     else
-        return 0;
+        return nullptr;
 }
 
 // Returns the list of members for a channel in the unjoinedChannels list.
@@ -1849,7 +1849,7 @@ const ChannelNickMap *Server::getUnjoinedChannelMembers(const QString& channelNa
     if (m_unjoinedChannels.contains(lcChannelName))
         return m_unjoinedChannels[lcChannelName];
     else
-        return 0;
+        return nullptr;
 }
 
 // Searches the Joined and Unjoined lists for the given channel and returns the member list.
@@ -2278,7 +2278,7 @@ quint16 Server::stringToPort(const QString &port, bool *ok)
             *ok = true;
         }
     }
-    return (quint16)uPort32;
+    return static_cast<quint16>(uPort32);
 }
 
 QString Server::recipientNick() const
@@ -2577,7 +2577,7 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
     qDebug() << "token: " << token;
 
     if (!ok || dtm->startReverseChat(connectionId(), sourceNick,
-                                    partnerIP, port, token) == 0)
+                                    partnerIP, port, token) == nullptr)
     {
         // DTM could not find a matched item
         appendMessageToFrontmost(i18n("Error"),
@@ -2613,7 +2613,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
                                  port,  // partner port
                                  fileSize,  // filesize
                                  token  // Reverse DCC token
-         ) == 0)
+         ) == nullptr)
     {
         // DTM could not find a matched item
         appendMessageToFrontmost(i18n("Error"),
@@ -2649,7 +2649,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     }
     //do we need the token here?
 
-    DCC::TransferRecv* dccTransfer = 0;
+    DCC::TransferRecv* dccTransfer = nullptr;
     if (ok)
     {
         dccTransfer = dtm->resumeDownload(connectionId(), sourceNick, fileName, ownPort, position);
@@ -2705,7 +2705,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         fileName = recoverDccFileName(dccArguments, 2); //port filepos
     }
 
-    DCC::TransferSend* dccTransfer = 0;
+    DCC::TransferSend* dccTransfer = nullptr;
     if (ok)
     {
         dccTransfer = dtm->resumeUpload(connectionId(), sourceNick, fileName, ownPort, position);
@@ -2985,7 +2985,7 @@ Channel* Server::getChannelByName(const QString& name)
     if (m_loweredChannelNameHash.contains(wanted))
         return m_loweredChannelNameHash.value(wanted);
 
-    return 0;
+    return nullptr;
 }
 
 Query* Server::getQueryByName(const QString& name)
@@ -2999,7 +2999,7 @@ Query* Server::getQueryByName(const QString& name)
         if(lookQuery->getName().toLower()==wanted) return lookQuery;
     }
     // No query by that name found? Must be a new query request. Return 0
-    return 0;
+    return nullptr;
 }
 
 ChatWindow* Server::getChannelOrQueryByName(const QString& name)
@@ -3307,10 +3307,13 @@ QStringList Server::getWatchList()
     else
         return QStringList();
 
+    // unreachable code, commented out
+/*
     if (m_serverISON)
         return m_serverISON->getWatchList();
     else
         return QStringList();
+*/
 }
 
 QStringList Server::getISONList()
@@ -3321,10 +3324,13 @@ QStringList Server::getISONList()
     else
         return QStringList();
 
+    // unreachable code, commented out
+/*
     if (m_serverISON)
         return m_serverISON->getISONList();
     else
         return QStringList();
+*/
 }
 
 QString Server::getISONListString() { return getISONList().join(QStringLiteral(" ")); }
@@ -3340,8 +3346,8 @@ bool Server::isWatchedNick(const QString& nickname)
     else
         return false;
 
-    // ###### ERROR: not reached
-    return getWatchList().contains(nickname, Qt::CaseInsensitive);
+    // unreachable code, commented out
+    //return getWatchList().contains(nickname, Qt::CaseInsensitive);
 }
 
 /**
@@ -3768,7 +3774,7 @@ const QString& inputLineText
                                                   // append part before the %
         out.append(toParse.mid(index,found-index));
         index = found + 1;                        // skip the part before, including %
-        if (index >= (int)toParse.length())
+        if (index >= static_cast<int>(toParse.length()))
             break;                                // % was the last char (not valid)
         toExpand = toParse.at(index++);
         if (toExpand == QLatin1Char('s'))

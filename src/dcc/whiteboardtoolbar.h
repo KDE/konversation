@@ -41,7 +41,7 @@ namespace Konversation
                 };
 
                 explicit WhiteBoardToolBar(QWidget* parent);
-                ~WhiteBoardToolBar();
+                ~WhiteBoardToolBar() override;
 
                 QColor foregroundColor() const;
                 QColor backgroundColor() const;

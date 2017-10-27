@@ -51,6 +51,8 @@ namespace Konversation
             //ipv6 is not numerical, it is just normal text, "0:c00:0:0:1f::" for example
                 return ip.toString();
 
+            case QAbstractSocket::AnyIPProtocol:
+            case QAbstractSocket::UnknownNetworkLayerProtocol:
             default:
                 qDebug() << "unsupported protocol: " << ipString;
                 return QString();
@@ -154,7 +156,7 @@ namespace Konversation
                     if ( failedReason )
                         *failedReason = i18n( "No vacant port" );
                     delete socket;
-                    return 0;
+                    return nullptr;
                 }
             }
             else
@@ -165,7 +167,7 @@ namespace Konversation
                     if ( failedReason )
                         *failedReason = i18n( "Could not open a socket" );
                     delete socket;
-                    return 0;
+                    return nullptr;
                 }
             }
 

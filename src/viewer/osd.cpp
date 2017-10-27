@@ -27,6 +27,7 @@
 
 #include <QApplication>
 #include <KLocalizedString>
+#include <utility>
 
 
 namespace ShadowEngine
@@ -34,9 +35,9 @@ namespace ShadowEngine
     QImage makeShadow( const QPixmap &textPixmap, const QColor &bgColor );
 }
 
-OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
+OSDWidget::OSDWidget(QString appName, QWidget *parent, const char *name )
     : QWidget( parent )
-    , m_appName( appName )
+    , m_appName(std::move( appName ))
     , m_duration( 5000 )
     , m_timer( new QTimer( this ) )
     , m_timerMin( new QTimer( this ) )

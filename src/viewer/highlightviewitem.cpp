@@ -31,9 +31,7 @@ HighlightViewItem::HighlightViewItem(QTreeWidget* parent, Highlight* highlight)
     setNotify(highlight->getNotify());
 }
 
-HighlightViewItem::~HighlightViewItem()
-{
-}
+HighlightViewItem::~HighlightViewItem() = default;
 
 void HighlightViewItem::setID(const int itemID)
 {

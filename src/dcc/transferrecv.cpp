@@ -68,9 +68,9 @@ namespace Konversation
         {
             qDebug();
 
-            m_serverSocket = 0;
-            m_recvSocket = 0;
-            m_writeCacheHandler = 0;
+            m_serverSocket = nullptr;
+            m_recvSocket = nullptr;
+            m_writeCacheHandler = nullptr;
 
             m_connectionTimer = new QTimer(this);
             m_connectionTimer->setSingleShot(true);
@@ -89,13 +89,13 @@ namespace Konversation
             qDebug();
 
             stopConnectionTimer();
-            disconnect(m_connectionTimer, 0, 0, 0);
+            disconnect(m_connectionTimer, nullptr, nullptr, nullptr);
 
             finishTransferLogger();
             if (m_serverSocket)
             {
                 m_serverSocket->close();
-                m_serverSocket = 0;
+                m_serverSocket = nullptr;
 
                 if (m_reverse && Preferences::self()->dccUPnP())
                 {
@@ -108,15 +108,15 @@ namespace Konversation
             }
             if (m_recvSocket)
             {
-                disconnect(m_recvSocket, 0, 0, 0);
+                disconnect(m_recvSocket, nullptr, nullptr, nullptr);
                 m_recvSocket->close();
-                m_recvSocket = 0;                         // the instance will be deleted automatically by its parent
+                m_recvSocket = nullptr;                         // the instance will be deleted automatically by its parent
             }
             if (m_writeCacheHandler)
             {
                 m_writeCacheHandler->closeNow();
                 m_writeCacheHandler->deleteLater();
-                m_writeCacheHandler = 0;
+                m_writeCacheHandler = nullptr;
             }
             Transfer::cleanUp();
         }
@@ -351,7 +351,7 @@ namespace Konversation
 
             if (!transferJob)
             {
-                qDebug() << "KIO::put() returned NULL. what happened?";
+                qDebug() << "KIO::put() returned nullptr. what happened?";
                 failed(i18n("Could not create a KIO instance"));
                 return;
             }
@@ -376,6 +376,7 @@ namespace Konversation
                     prepareLocalKio(false, false);
                     break;
                 case ResumeDialog::RA_Cancel:
+                case ResumeDialog::RA_OverwriteDefaultPath:
                 default:
                     setStatus(Queued);
             }
@@ -445,7 +446,7 @@ namespace Konversation
 
             if (size != 0)
             {
-                disconnect(transferJob, 0, 0, 0);
+                disconnect(transferJob, nullptr, nullptr, nullptr);
                 if (Preferences::self()->dccAutoResume())
                 {
                     prepareLocalKio(false, true, size);
@@ -476,7 +477,7 @@ namespace Konversation
             qDebug() << "[BEGIN]";
 
             KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
-            disconnect(transferJob, 0, 0, 0);
+            disconnect(transferJob, nullptr, nullptr, nullptr);
 
             switch (transferJob->error())
             {
@@ -513,7 +514,7 @@ namespace Konversation
 
             KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
 
-            disconnect(transferJob, 0, 0, 0);           // WriteCacheHandler will control the job after this
+            disconnect(transferJob, nullptr, nullptr, nullptr);           // WriteCacheHandler will control the job after this
 
             m_writeCacheHandler = new TransferRecvWriteCacheHandler(transferJob);
 
@@ -709,7 +710,7 @@ namespace Konversation
 
             // we don't need ServerSocket anymore
             m_serverSocket->close();
-            m_serverSocket = 0; // Will be deleted by parent
+            m_serverSocket = nullptr; // Will be deleted by parent
 
             if (Preferences::self()->dccUPnP())
             {
@@ -786,7 +787,7 @@ namespace Konversation
             if (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
             {
                 qDebug() << "Sent final ACK.";
-                disconnect(m_recvSocket, 0, 0, 0);
+                disconnect(m_recvSocket, nullptr, nullptr, nullptr);
                 m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
             }
             else if (m_transferringPosition > (KIO::fileoffset_t)m_fileSize)
@@ -838,7 +839,7 @@ namespace Konversation
             : m_transferJob(transferJob)
         {
             m_writeReady = true;
-            m_cacheStream = 0;
+            m_cacheStream = nullptr;
 
             connect(m_transferJob, &KIO::TransferJob::dataReq, this, &TransferRecvWriteCacheHandler::slotKIODataReq);
             connect(m_transferJob, &KIO::TransferJob::result, this, &TransferRecvWriteCacheHandler::slotKIOResult);
@@ -908,11 +909,11 @@ namespace Konversation
             if (m_transferJob)
             {
                 m_transferJob->kill();
-                m_transferJob = 0;
+                m_transferJob = nullptr;
             }
             m_cacheList.clear();
             delete m_cacheStream;
-            m_cacheStream = 0;
+            m_cacheStream = nullptr;
         }
 
         void TransferRecvWriteCacheHandler::slotKIODataReq(KIO::Job *job, QByteArray &data)
@@ -939,7 +940,7 @@ namespace Konversation
                 {
                     // finally, no data left to write or read.
                     qDebug() << "flushing done.";
-                    m_transferJob = 0;
+                    m_transferJob = nullptr;
                     emit done();                          // -> TransferRecv::slotLocalWriteDone()
                 }
             }
@@ -949,8 +950,8 @@ namespace Konversation
         {
             Q_ASSERT(m_transferJob);
 
-            disconnect(m_transferJob, 0, 0, 0);
-            m_transferJob = 0;
+            disconnect(m_transferJob, nullptr, nullptr, nullptr);
+            m_transferJob = nullptr;
 
             if (job->error())
             {

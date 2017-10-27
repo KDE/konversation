@@ -26,8 +26,8 @@ class ConnectionManager : public QObject
     Q_OBJECT
 
     public:
-        explicit ConnectionManager(QObject* parent = 0);
-        ~ConnectionManager();
+        explicit ConnectionManager(QObject* parent = nullptr);
+        ~ConnectionManager() override;
 
         uint connectionCount() const { return m_connectionList.count(); }
 

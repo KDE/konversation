@@ -59,7 +59,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   notificationGroup->setIcon(QIcon::fromTheme("preferences-desktop-notification"));
   KPageDialog::addPage(notificationGroup);
 
-  QWidget *w = 0;
+  QWidget *w = nullptr;
 
   //Interface/Chat Window
   Ui::ChatWindowAppearance_Config confChatWindowAppearance;
@@ -203,9 +203,7 @@ void KonviSettingsDialog::modifiedSlot()
   updateButtons();
 }
 
-KonviSettingsDialog::~KonviSettingsDialog()
-{
-}
+KonviSettingsDialog::~KonviSettingsDialog() = default;
 
 void KonviSettingsDialog::updateSettings()
 {

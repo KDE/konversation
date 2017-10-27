@@ -70,7 +70,7 @@ class KConfigDialogManager;
  * @see KPageDialog
  *
  * @see KConfigSkeleton
- * @author Waldo Bastian <bastian@kde.org>
+ * @author Waldo Bastian <bastian\@kde.org>
  */
 class ConfigDialog : public KPageDialog
 {
@@ -110,7 +110,7 @@ public:
      * Deletes private class.
      * @see exists()
      */
-    ~ConfigDialog();
+    ~ConfigDialog() override;
 
     /**
      * Adds page to the dialog and to KConfigDialogManager.  When an

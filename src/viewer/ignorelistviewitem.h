@@ -23,13 +23,13 @@ class IgnoreListViewItem : public QTreeWidgetItem
 {
     public:
         IgnoreListViewItem(QTreeWidget* parent, const QString& name, int flags);
-        ~IgnoreListViewItem();
+        ~IgnoreListViewItem() override;
 
         void setFlag(int flag,bool active);
-        bool getFlag(int flag) { return m_flags & flag; };
-        QString getName() { return text(0); };
-        void setName(QString name) { setText(0, name); };
-        int getFlags() { return m_flags; };
+        bool getFlag(int flag) { return m_flags & flag; }
+        QString getName() { return text(0); }
+        void setName(QString name) { setText(0, name); }
+        int getFlags() { return m_flags; }
 
         void setFlags(int flags);
     protected:

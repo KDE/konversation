@@ -26,8 +26,8 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
     Q_OBJECT
 
     public:
-        explicit Theme_Config(QWidget* parent, const char* name=NULL);
-        ~Theme_Config();
+        explicit Theme_Config(QWidget* parent, const char* name = nullptr);
+        ~Theme_Config() override;
 
         void restorePageToDefaults() Q_DECL_OVERRIDE;
         void saveSettings() Q_DECL_OVERRIDE;

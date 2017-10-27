@@ -25,7 +25,7 @@ class ServerListView : public QTreeWidget
     
     public:
         explicit ServerListView(QWidget *parent);
-        ~ServerListView();
+        ~ServerListView() override;
 
     private:
         bool badDropSelection();

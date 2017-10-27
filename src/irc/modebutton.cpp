@@ -24,9 +24,7 @@ QToolButton(parent)
     connect(this, &ModeButton::clicked, this, &ModeButton::wasClicked);
 }
 
-ModeButton::~ModeButton()
-{
-}
+ModeButton::~ModeButton() = default;
 
 void ModeButton::setOn(bool state)
 {

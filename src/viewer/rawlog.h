@@ -26,7 +26,7 @@ class RawLog : public ChatWindow
         enum MessageDirection { Inbound, Outbound };
 
         explicit RawLog(QWidget* parent);
-        ~RawLog();
+        ~RawLog() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();

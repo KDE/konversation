@@ -20,9 +20,8 @@ ServerListView::ServerListView(QWidget *parent)
 {
 }
 
-ServerListView::~ServerListView()
-{
-}
+ServerListView::~ServerListView() = default;
+
 void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 {
     QTreeWidgetItem* item = this->itemAt(e->pos());

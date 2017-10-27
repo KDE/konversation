@@ -48,9 +48,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   connect(removeButton, &QPushButton::clicked, this, &Autoreplace_Config::removeEntry);
 }
 
-Autoreplace_Config::~Autoreplace_Config()
-{
-}
+Autoreplace_Config::~Autoreplace_Config() = default;
 
 void Autoreplace_Config::loadSettings()
 {
@@ -336,7 +334,7 @@ void Autoreplace_Config::removeEntry()
     else
     {
       // no next item found, this means the list is empty
-      entrySelected(0);
+      entrySelected(nullptr);
     }
     // tell the config system that somethig has changed
     emit modified();

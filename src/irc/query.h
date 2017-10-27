@@ -44,7 +44,7 @@ class Query : public ChatWindow
         explicit Query(QWidget* parent, const QString& _name);
         void setServer(Server* newServer) Q_DECL_OVERRIDE;
 
-        ~Query();
+        ~Query() override;
 
         IrcContextMenus::MenuOptions contextMenuOptions() const override;
 

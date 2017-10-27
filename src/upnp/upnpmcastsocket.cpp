@@ -131,10 +131,10 @@ namespace Konversation
             {
                 // it is either a 200 OK or a NOTIFY
                 if (!line.contains("NOTIFY") && !line.contains("200 OK"))
-                    return 0;
+                    return nullptr;
             }
             else
-                return 0;
+                return nullptr;
 
             // quick check that the response being parsed is valid
             bool validDevice = false;
@@ -149,7 +149,7 @@ namespace Konversation
             if (!validDevice)
             {
             //	qDebug() << "Not a valid Internet Gateway Device" << endl;
-                return 0;
+                return nullptr;
             }
 
             // read all lines and try to find the server and location fields
@@ -160,13 +160,13 @@ namespace Konversation
                 {
                     location = QUrl(line.mid(line.indexOf(':') + 1).trimmed());
                     if (!location.isValid())
-                        return 0;
+                        return nullptr;
                 }
                 else if (line.startsWith(QLatin1String("Server"), Qt::CaseInsensitive))
                 {
                     server = line.mid(line.indexOf(':') + 1).trimmed();
                     if (server.length() == 0)
-                        return 0;
+                        return nullptr;
 
                 }
                 else if (line.contains("USN", Qt::CaseInsensitive) && line.contains("uuid", Qt::CaseInsensitive))
@@ -174,13 +174,13 @@ namespace Konversation
                     uuid = line.split(':').at(2);
 
                     if (uuid.length() == 0)
-                        return 0;
+                        return nullptr;
                 }
             }
 
             if (routers.contains(uuid))
             {
-                return 0;
+                return nullptr;
             }
             else
             {

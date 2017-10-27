@@ -38,8 +38,7 @@ namespace Konversation
         m_played = false;
     }
 
-    Sound::~Sound()
-    {}
+    Sound::~Sound() = default;
 
     void Sound::play(const QUrl &url)
     {

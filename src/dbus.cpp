@@ -241,11 +241,11 @@ void IdentDBus::setrealName(const QString &_id_name, const QString& name)
 
     IdentityList ids = Preferences::identityList();
 
-    for(IdentityList::iterator it = ids.begin(); it != ids.end(); ++it)
+    for(auto & id : ids)
     {
-        if ((*it)->getName() == id_name)
+        if (id->getName() == id_name)
         {
-            (*it)->setRealName(sterilizeUnicode(name));
+            id->setRealName(sterilizeUnicode(name));
             return;
         }
     }

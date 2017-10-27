@@ -22,9 +22,7 @@ FilteredInputHistoryModel::FilteredInputHistoryModel(QObject *parent)
     QObject::connect(this, &QAbstractItemModel::rowsRemoved, this, &FilteredInputHistoryModel::countChanged);
 }
 
-FilteredInputHistoryModel::~FilteredInputHistoryModel()
-{
-}
+FilteredInputHistoryModel::~FilteredInputHistoryModel() = default;
 
 QObject *FilteredInputHistoryModel::filterView() const
 {
@@ -89,9 +87,7 @@ InputHistoryModel::InputHistoryModel(QObject *parent)
 {
 }
 
-InputHistoryModel::~InputHistoryModel()
-{
-}
+InputHistoryModel::~InputHistoryModel() = default;
 
 QHash<int, QByteArray> InputHistoryModel::roleNames() const
 {

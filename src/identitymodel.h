@@ -53,12 +53,12 @@ public:
     };
     Q_ENUM(AdditionalRoles)
 
-    explicit IdentityModel(QObject *parent = 0);
-    virtual ~IdentityModel();
+    explicit IdentityModel(QObject *parent = nullptr);
+    ~IdentityModel() override;
 
     QHash<int, QByteArray> roleNames() const override;
 
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:

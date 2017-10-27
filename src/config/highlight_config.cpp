@@ -74,9 +74,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
     updateButtons();
 }
 
-Highlight_Config::~Highlight_Config()
-{
-}
+Highlight_Config::~Highlight_Config() = default;
 
 void Highlight_Config::restorePageToDefaults()
 {
@@ -135,7 +133,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
 
 void Highlight_Config::updateButtons()
 {
-    bool enabled = highlightListView->currentItem() != NULL;
+    bool enabled = highlightListView->currentItem() != nullptr;
     // enable or disable edit widgets
     patternLabel->setEnabled(enabled);
     patternInput->setEnabled(enabled);

@@ -34,7 +34,7 @@ namespace Konversation
 
             public:
                 RecipientDialog(QWidget* parent, QAbstractListModel* model);
-                ~RecipientDialog();
+                ~RecipientDialog() override;
 
                 static QString getNickname(QWidget* parent, QAbstractListModel* model);
 

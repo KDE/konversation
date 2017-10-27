@@ -24,9 +24,7 @@ namespace Konversation
         setToolTip("konversation", i18n("Konversation"), i18n("Konversation - IRC Client"));
     }
 
-    TrayIcon::~TrayIcon()
-    {
-    }
+    TrayIcon::~TrayIcon() = default;
 
     void TrayIcon::restore()
     {

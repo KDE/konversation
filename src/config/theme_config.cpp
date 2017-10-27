@@ -59,9 +59,7 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     connect(removeButton, &QPushButton::clicked, this, &Theme_Config::removeTheme);
 }
 
-Theme_Config::~Theme_Config()
-{
-}
+Theme_Config::~Theme_Config() = default;
 
 void Theme_Config::loadSettings()
 {
@@ -209,7 +207,7 @@ void Theme_Config::installTheme()
             else
                 errorString = i18n("Unknown error (0)");
 
-            KMessageBox::error(0L,
+            KMessageBox::error(nullptr,
                 errorString,
                 i18n("Failed to Download Theme"),
                 KMessageBox::Notify
@@ -235,7 +233,7 @@ void Theme_Config::installTheme()
         }
         else
         {
-            KMessageBox::error(0L,
+            KMessageBox::error(nullptr,
                 i18n("Theme archive is invalid."),
                 i18n("Cannot Install Theme"),
                 KMessageBox::Notify
@@ -265,9 +263,9 @@ void Theme_Config::installTheme()
 
         for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
         {
-            if(themeDir->entry(*it+"/index.desktop") == NULL)
+            if(themeDir->entry(*it+"/index.desktop") == nullptr)
             {
-                KMessageBox::error(0L,
+                KMessageBox::error(nullptr,
                     i18n("Theme archive is invalid."),
                     i18n("Cannot Install Theme"),
                     KMessageBox::Notify
@@ -292,7 +290,7 @@ void Theme_Config::removeTheme()
 
     dir = m_dirs[iconThemeIndex->currentRow()];
 
-    int remove = KMessageBox::warningContinueCancel(0L,
+    int remove = KMessageBox::warningContinueCancel(nullptr,
         i18n("Do you want to remove %1?", themeName),
         i18n("Remove Theme"),
         KStandardGuiItem::del(),KStandardGuiItem::cancel(),

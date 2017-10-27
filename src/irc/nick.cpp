@@ -35,9 +35,7 @@ Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& chann
     setFlags((flags() & ~Qt::ItemIsDragEnabled) | Qt::ItemIsDropEnabled);
 }
 
-Nick::~Nick()
-{
-}
+Nick::~Nick() = default;
 
 ChannelNickPtr Nick::getChannelNick() const
 {

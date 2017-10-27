@@ -42,9 +42,7 @@ UrlDateItem::UrlDateItem(const QDateTime& dateTime)
     setData(dateTime);
 }
 
-UrlDateItem::~UrlDateItem()
-{
-}
+UrlDateItem::~UrlDateItem() = default;
 
 QVariant UrlDateItem::data(int role) const
 {
@@ -58,9 +56,7 @@ UrlSortFilterProxyModel::UrlSortFilterProxyModel(QObject* parent) : QSortFilterP
 {
 }
 
-UrlSortFilterProxyModel::~UrlSortFilterProxyModel()
-{
-}
+UrlSortFilterProxyModel::~UrlSortFilterProxyModel() = default;
 
 Qt::ItemFlags UrlSortFilterProxyModel::flags(const QModelIndex& index) const
 {

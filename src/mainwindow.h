@@ -53,7 +53,7 @@ class MainWindow : public KXmlGuiWindow
 
     public:
         MainWindow(bool raiseQtQuickUi, const QString& uiPackage = QStringLiteral("default")); // WIPQTQUICK
-        ~MainWindow();
+        ~MainWindow() override;
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }

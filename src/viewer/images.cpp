@@ -19,6 +19,7 @@
 
 #include <QStandardPaths>
 #include <QDebug>
+#include <utility>
 
 
 using namespace Konversation;
@@ -27,8 +28,8 @@ using namespace Konversation;
 class LedIconEngine : public QIconEngine
 {
     public:
-        LedIconEngine(const QColor &color, bool state)
-            : QIconEngine(), m_color(color), m_state(state)
+        LedIconEngine(QColor color, bool state)
+            : QIconEngine(), m_color(std::move(color)), m_state(state)
         {
         }
 
@@ -134,9 +135,7 @@ Images::Images()
     initializeNickIcons();
 }
 
-Images::~Images()
-{
-}
+Images::~Images() = default;
 
 QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {

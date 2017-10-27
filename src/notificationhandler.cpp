@@ -36,9 +36,7 @@ namespace Konversation
         m_mainWindow = parent->getMainWindow();
     }
 
-    NotificationHandler::~NotificationHandler()
-    {
-    }
+    NotificationHandler::~NotificationHandler() = default;
 
     void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, const QString& message)
     {

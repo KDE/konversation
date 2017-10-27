@@ -38,7 +38,7 @@ class KonviSettingsDialog : public ConfigDialog
 
     public:
         explicit KonviSettingsDialog(QWidget *parent);
-        ~KonviSettingsDialog();
+        ~KonviSettingsDialog() override;
 
     protected Q_SLOTS:
         void updateSettings() Q_DECL_OVERRIDE;

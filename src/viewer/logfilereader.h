@@ -30,7 +30,7 @@ class LogfileReader : public ChatWindow
 
         public:
         LogfileReader(QWidget* parent, const QString& log, const QString& caption);
-        ~LogfileReader();
+        ~LogfileReader() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself() { closeLog(); return true; }

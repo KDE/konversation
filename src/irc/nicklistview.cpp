@@ -29,7 +29,7 @@
 class NickItemDelegate : public QStyledItemDelegate
 {
     public:
-        NickItemDelegate(QObject *parent = 0);
+        NickItemDelegate(QObject *parent = nullptr);
 
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
 };
@@ -82,9 +82,7 @@ NickListView::NickListView(QWidget* parent, Channel *chan) : QTreeWidget(parent)
     header()->setStretchLastSection(false);
 }
 
-NickListView::~NickListView()
-{
-}
+NickListView::~NickListView() = default;
 
 int NickListView::getMinimumRowHeight()
 {
@@ -188,7 +186,7 @@ void NickListView::setSortingEnabled(bool enable)
     // if sorting is enabled.
     if (enable && header()) {
         disconnect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-                this, 0);
+                this, nullptr);
     }
 }
 

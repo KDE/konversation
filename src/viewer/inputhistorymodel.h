@@ -35,13 +35,13 @@ class FilteredInputHistoryModel : public QSortFilterProxyModel
     Q_PROPERTY(QObject* filterView READ filterView WRITE setFilterView NOTIFY filterViewChanged)
 
     public:
-        explicit FilteredInputHistoryModel(QObject *parent = 0);
-        virtual ~FilteredInputHistoryModel();
+        explicit FilteredInputHistoryModel(QObject *parent = nullptr);
+        ~FilteredInputHistoryModel() override;
 
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
-        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
+        void setSourceModel(QAbstractItemModel *sourceModel) override;
 
         Q_INVOKABLE void append(QObject *view, const QString &text,
             bool editing = false, int cursorPosition = -1);
@@ -71,12 +71,12 @@ class InputHistoryModel : public QAbstractListModel
         };
         Q_ENUM(AdditionalRoles)
 
-        explicit InputHistoryModel(QObject *parent = 0);
-        virtual ~InputHistoryModel();
+        explicit InputHistoryModel(QObject *parent = nullptr);
+        ~InputHistoryModel() override;
 
         QHash<int, QByteArray> roleNames() const override;
 
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
         void append(QObject *view, const QString &text, bool editing, int cursorPosition);

@@ -76,9 +76,7 @@ namespace Konversation
         fillCommandList();
     }
 
-    OutputFilter::~OutputFilter()
-    {
-    }
+    OutputFilter::~OutputFilter() = default;
 
     // replace all aliases in the string and return true if anything got replaced at all
     bool OutputFilter::replaceAliases(QString& line, ChatWindow* context)
@@ -192,7 +190,7 @@ namespace Konversation
 
     bool OutputFilter::checkForEncodingConflict(QString *line, const QString& target)
     {
-        QTextCodec* codec = 0;
+        QTextCodec* codec = nullptr;
         QString encoding;
         QString oldLine(*line);
         if(m_server->getServerGroup())
@@ -1327,7 +1325,7 @@ namespace Konversation
         {
             QString nick((parameterList.count() == 1) ? parameterList[0] : input.myNick);
 
-            QPointer<KPasswordDialog> dialog = new KPasswordDialog(0, KPasswordDialog::ShowUsernameLine);
+            QPointer<KPasswordDialog> dialog = new KPasswordDialog(nullptr, KPasswordDialog::ShowUsernameLine);
             dialog->setPrompt(i18n("Enter username and password for IRC operator privileges:"));
             dialog->setUsername(nick);
             dialog->setWindowTitle(i18n("IRC Operator Password"));
@@ -1639,7 +1637,7 @@ namespace Konversation
             else if (parameterList.count() == 2)
             {
                 if (parameterList[0].contains(QRegExp(":[0-9]+$")))
-                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], 0, parameterList[1]);
+                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], nullptr, parameterList[1]);
                 else
                     emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
             }

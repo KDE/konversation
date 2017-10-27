@@ -22,8 +22,8 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
   Q_OBJECT
 
   public:
-    explicit Autoreplace_Config(QWidget* parent, const char* name=NULL);
-    ~Autoreplace_Config();
+    explicit Autoreplace_Config(QWidget* parent, const char* name = nullptr);
+    ~Autoreplace_Config() override;
 
     void saveSettings() Q_DECL_OVERRIDE;
     void loadSettings() Q_DECL_OVERRIDE;

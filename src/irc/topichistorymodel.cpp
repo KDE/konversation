@@ -32,13 +32,11 @@
 TopicHistoryModel::TopicHistoryModel(QObject* parent) : QAbstractListModel(parent)
 {
 #ifdef HAVE_QCA2
-    m_cipher = 0;
+    m_cipher = nullptr;
 #endif
 }
 
-TopicHistoryModel::~TopicHistoryModel()
-{
-}
+TopicHistoryModel::~TopicHistoryModel() = default;
 
 QString TopicHistoryModel::authorPlaceholder()
 {
@@ -124,7 +122,7 @@ void TopicHistoryModel::clearCipher()
     emit layoutAboutToBeChanged();
     beginResetModel();
 
-    m_cipher = 0;
+    m_cipher = nullptr;
 
     endResetModel();
     emit layoutChanged();

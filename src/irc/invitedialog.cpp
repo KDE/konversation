@@ -157,7 +157,7 @@ QVariant InviteChannelListModel::data(const QModelIndex& index, int role) const
     }
     if(role == Qt::SizeHintRole)
     {
-        return QSize(0, qMax(qApp->style()->sizeFromContents(QStyle::CT_CheckBox, 0, QSize(0, 0), 0).height(),
+        return QSize(0, qMax(qApp->style()->sizeFromContents(QStyle::CT_CheckBox, nullptr, QSize(0, 0), nullptr).height(),
                              qApp->fontMetrics().height()));
     }
     else if((role == Qt::CheckStateRole) && (index.column() == 0))

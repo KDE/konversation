@@ -31,15 +31,13 @@
 
 
 InputFilter::InputFilter()
-    : m_server(0),
+    : m_server(nullptr),
       m_lagMeasuring(false)
 {
     m_connecting = false;
 }
 
-InputFilter::~InputFilter()
-{
-}
+InputFilter::~InputFilter() = default;
 
 void InputFilter::setServer(Server* newServer)
 {
@@ -911,10 +909,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QString newModes = parameterList.value(4);
                     if(!allowed.isEmpty()) //attempt to merge the two
                     {
-                        for(int i=0; i < allowed.length(); i++)
+                        for(auto i : allowed)
                         {
-                            if(!newModes.contains(allowed.at(i)))
-                                newModes.append(allowed.at(i));
+                            if(!newModes.contains(i))
+                                newModes.append(i);
                         }
                     }
                     m_server->setAllowedChannelModes(newModes);
@@ -992,10 +990,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                 QString newModes = value.remove(QLatin1Char(','));
                                 if(!allowed.isEmpty()) //attempt to merge the two
                                 {
-                                    for(int i=0; i < allowed.length(); i++)
+                                    for(auto i : allowed)
                                     {
-                                        if(!newModes.contains(allowed.at(i)))
-                                            newModes.append(allowed.at(i));
+                                        if(!newModes.contains(i))
+                                            newModes.append(i);
                                     }
                                 }
                                 m_server->setAllowedChannelModes(newModes);
@@ -1044,10 +1042,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QString message = i18n("Channel modes: ") + modeString;
                     int parameterCount=3;
                     QHash<QChar,QString> channelModesHash = Konversation::getChannelModesHash();
-                    for (int index=0;index<modeString.length();index++)
+                    for (auto index : modeString)
                     {
                         QString parameter;
-                        char mode(modeString[index].toLatin1());
+                        char mode(index.toLatin1());
                         if(mode!='+')
                         {
                             if(!modesAre.isEmpty())
@@ -2311,9 +2309,9 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     QString parameterModes = QStringLiteral("aAoOvhkbleIq");
     QString message = i18n("%1 sets mode: %2", sourceNick, modestring);
 
-    for (int index=0;index<modestring.length();index++)
+    for (auto index : modestring)
     {
-        unsigned char mode(modestring[index].toLatin1());
+        unsigned char mode(index.toLatin1());
         QString parameter;
 
         // Check if this is a mode or a +/- qualifier

@@ -21,9 +21,7 @@ QPushButton(label,parent)
     connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
 }
 
-QuickButton::~QuickButton()
-{
-}
+QuickButton::~QuickButton() = default;
 
 void QuickButton::wasClicked()
 {

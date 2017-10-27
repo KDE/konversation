@@ -30,7 +30,7 @@ class ConnectionBehavior_Config : public QWidget, public KonviSettingsPage, priv
 {
     Q_OBJECT
     public:
-        explicit ConnectionBehavior_Config(QWidget* parent = NULL);
+        explicit ConnectionBehavior_Config(QWidget* parent = nullptr);
 
         void restorePageToDefaults() Q_DECL_OVERRIDE;
         void saveSettings() Q_DECL_OVERRIDE;

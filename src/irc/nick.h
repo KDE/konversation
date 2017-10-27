@@ -27,7 +27,7 @@ class Nick : public QTreeWidgetItem
     public:
         Nick(NickListView *listView, Channel* channel,
             const ChannelNickPtr& channelnick);
-        ~Nick();
+        ~Nick() override;
 
         ChannelNickPtr getChannelNick() const;
 

@@ -25,7 +25,7 @@ class IRCInput : public KTextEdit
 
     public:
         explicit IRCInput(QWidget* parent);
-        ~IRCInput();
+        ~IRCInput() override;
 
         void setCompletionMode(char mode);
         char getCompletionMode();

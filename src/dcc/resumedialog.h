@@ -41,7 +41,7 @@ namespace Konversation
                     RA_OverwriteDefaultPath = 1 << 4
                 };
 
-                virtual ~ResumeDialog();
+                ~ResumeDialog() override;
 
                 static ReceiveAction ask(TransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 

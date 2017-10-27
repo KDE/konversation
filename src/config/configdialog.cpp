@@ -44,7 +44,7 @@ class ConfigDialog::ConfigDialogPrivate
 {
 public:
     ConfigDialogPrivate(ConfigDialog *q, const QString &name, KCoreConfigSkeleton *config)
-        : q(q), shown(false), manager(0)
+        : q(q), shown(false), manager(nullptr)
     {
         q->setObjectName(name);
         q->setWindowTitle(tr("Configure"));
@@ -127,10 +127,10 @@ KPageWidgetItem *ConfigDialog::addPage(QWidget *page,
 {
     Q_ASSERT(page);
     if (!page) {
-        return 0;
+        return nullptr;
     }
 
-    KPageWidgetItem *item = d->addPageInternal(0, page, itemName, pixmapName, header);
+    KPageWidgetItem *item = d->addPageInternal(nullptr, page, itemName, pixmapName, header);
     if (manage) {
         d->manager->addWidget(page);
     }
@@ -155,12 +155,12 @@ KPageWidgetItem *ConfigDialog::konviAddSubPage(KPageWidgetItem *parent,
 {
     Q_ASSERT(parent);
     if (!parent) {
-        return 0;
+        return nullptr;
     }
 
     Q_ASSERT(page);
     if (!page) {
-        return 0;
+        return nullptr;
     }
 
     KPageWidgetItem *item = d->addPageInternal(parent, page, itemName, pixmapName, header);
@@ -187,10 +187,10 @@ KPageWidgetItem *ConfigDialog::addPage(QWidget *page,
 {
     Q_ASSERT(page);
     if (!page) {
-        return 0;
+        return nullptr;
     }
 
-    KPageWidgetItem *item = d->addPageInternal(0, page, itemName, pixmapName, header);
+    KPageWidgetItem *item = d->addPageInternal(nullptr, page, itemName, pixmapName, header);
     d->managerForPage[page] = new KConfigDialogManager(page, config);
     d->setupManagerConnections(d->managerForPage[page]);
 
@@ -289,7 +289,7 @@ ConfigDialog *ConfigDialog::exists(const QString &name)
     if (it != ConfigDialogPrivate::openDialogs.constEnd()) {
         return *it;
     }
-    return 0;
+    return nullptr;
 }
 
 bool ConfigDialog::showDialog(const QString &name)
@@ -298,7 +298,7 @@ bool ConfigDialog::showDialog(const QString &name)
     if (dialog) {
         dialog->show();
     }
-    return (dialog != NULL);
+    return (dialog != nullptr);
 }
 
 void ConfigDialog::ConfigDialogPrivate::_k_updateButtons()

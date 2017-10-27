@@ -74,9 +74,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
     connect(getTextView(), SIGNAL(gotFocus()), getTextView(), SLOT(setFocus()));
 }
 
-LogfileReader::~LogfileReader()
-{
-}
+LogfileReader::~LogfileReader() = default;
 
 bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
 {
@@ -133,7 +131,7 @@ void LogfileReader::updateView()
             getTextView()->appendLog(str);
         }
 
-        stream.setDevice(0);
+        stream.setDevice(nullptr);
         file.close();
     }
 }

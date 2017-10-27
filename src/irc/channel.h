@@ -72,7 +72,7 @@ class Channel : public ChatWindow
 
     public:
         explicit Channel(QWidget* parent, const QString& name);
-        ~Channel();
+        ~Channel() override;
 //META
 
         bool canBeFrontView() Q_DECL_OVERRIDE;
@@ -112,7 +112,7 @@ class Channel : public ChatWindow
 
     protected:
         // use with caution! does not check for duplicates
-        void fastAddNickname(ChannelNickPtr channelnick, Nick *nick=0);
+        void fastAddNickname(ChannelNickPtr channelnick, Nick *nick = nullptr);
         void setActive(bool active);
         void repositionNick(Nick *nick);
         bool shouldShowEvent(ChannelNickPtr channelNick);

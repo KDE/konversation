@@ -55,6 +55,10 @@ bool isUtf8(const QByteArray& text)
         case JapaneseCode::K_JIS:
             delete jc;
             return false;
+        case JapaneseCode::K_ASCII:
+        case JapaneseCode::K_EUC:
+        case JapaneseCode::K_UNICODE:
+        case JapaneseCode::K_UTF8:
         default:
             delete jc;
             break;

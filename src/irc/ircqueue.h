@@ -19,6 +19,7 @@
 #include <QObject>
 #include <QList>
 #include <QTime>
+#include <utility>
 
 class QTimer;
 class Server;
@@ -43,7 +44,7 @@ struct IRCMessage
         Note the constructor takes a QString, not a const QString& or a QString *. If you want to modify the
         contained text, put it back with setText.
     */
-    IRCMessage(QString i) : s(i), t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
+    IRCMessage(QString i) : s(std::move(i)), t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
     {}
 
     QString text() { return s; }
@@ -96,7 +97,7 @@ public:
     };
 
     IRCQueue(Server *server, EmptyingRate& rate, int myindex=0);
-    ~IRCQueue();
+    ~IRCQueue() override;
 
     void enqueue(const QString& line);
     void reset();

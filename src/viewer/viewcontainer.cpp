@@ -71,9 +71,7 @@ ViewMimeData::ViewMimeData(ChatWindow *view) : QMimeData()
     }
 }
 
-ViewMimeData::~ViewMimeData()
-{
-}
+ViewMimeData::~ViewMimeData() = default;
 
 ChatWindow* ViewMimeData::view() const
 {
@@ -84,9 +82,7 @@ TabWidget::TabWidget(QWidget* parent) : QTabWidget(parent)
 {
 }
 
-TabWidget::~TabWidget()
-{
-}
+TabWidget::~TabWidget() = default;
 
 void TabWidget::contextMenuEvent(QContextMenuEvent* event)
 {
@@ -120,14 +116,14 @@ void TabWidget::mouseReleaseEvent(QMouseEvent* event)
 
 ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_window(window)
-, m_tabWidget(0)
-, m_viewTree(0)
-, m_vbox(0)
-, m_queueTuner(0)
-, m_urlCatcherPanel(0)
-, m_nicksOnlinePanel(0)
-, m_dccPanel(0)
-, m_insertCharDialog(0)
+, m_tabWidget(nullptr)
+, m_viewTree(nullptr)
+, m_vbox(nullptr)
+, m_queueTuner(nullptr)
+, m_urlCatcherPanel(nullptr)
+, m_nicksOnlinePanel(nullptr)
+, m_dccPanel(nullptr)
+, m_insertCharDialog(nullptr)
 , m_queryViewCount(0)
 , m_dataChangedLock(false)
 {
@@ -161,9 +157,7 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
     QMetaObject::invokeMethod(this, "setupIrcContextMenus", Qt::QueuedConnection);
 }
 
-ViewContainer::~ViewContainer()
-{
-}
+ViewContainer::~ViewContainer() = default;
 
 QHash<int, QByteArray> ViewContainer::roleNames() const
 {
@@ -212,7 +206,7 @@ void ViewContainer::prepareShutdown()
 
     m_tabWidget->blockSignals(true);
 
-    m_tabWidget = 0;
+    m_tabWidget = nullptr;
 }
 
 void ViewContainer::initializeSplitterSizes()
@@ -382,7 +376,7 @@ void ViewContainer::removeViewTree()
     }
 
     delete m_viewTree;
-    m_viewTree = 0;
+    m_viewTree = nullptr;
 }
 
 int ViewContainer::rowCount(const QModelIndex& parent) const
@@ -426,8 +420,6 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
 
         return count;
     }
-
-    return 0;
 }
 
 int ViewContainer::columnCount(const QModelIndex& parent) const
@@ -605,13 +597,13 @@ QStringList ViewContainer::mimeTypes() const
 QMimeData* ViewContainer::mimeData(const QModelIndexList &indexes) const
 {
     if (!indexes.length()) {
-        return new ViewMimeData(0);
+        return new ViewMimeData(nullptr);
     }
 
     const QModelIndex &idx = indexes.at(0);
 
     if (!idx.isValid()) {
-        return new ViewMimeData(0);
+        return new ViewMimeData(nullptr);
     }
 
     return new ViewMimeData(static_cast<ChatWindow *>(idx.internalPointer()));
@@ -706,8 +698,6 @@ bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, i
 
         return true;
     }
-
-    return false;
 }
 
 bool ViewContainer::removeRows(int row, int count, const QModelIndex &parent)
@@ -721,7 +711,7 @@ bool ViewContainer::removeRows(int row, int count, const QModelIndex &parent)
 
 void ViewContainer::updateAppearance()
 {
-    if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
+    if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == nullptr)
     {
         m_saveSplitterSizesLock = true;
         setupViewTree();
@@ -781,7 +771,7 @@ void ViewContainer::updateViewActions(int index)
     if (!m_tabWidget) return;
 
     QAction* action;
-    ChatWindow* view = 0;
+    ChatWindow* view = nullptr;
 
     if (index != -1)
         view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
@@ -898,7 +888,7 @@ void ViewContainer::updateViewActions(int index)
             // to the active tab, e.g. when it was just changed.
 
             action = actionCollection()->action("insert_marker_line");
-            if (action)  action->setEnabled(textView != 0);
+            if (action)  action->setEnabled(textView != nullptr);
 
             action = actionCollection()->action("insert_character");
             if (action) action->setEnabled(insertSupported);
@@ -907,12 +897,12 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(insertSupported);
 
             action = actionCollection()->action("auto_replace");
-            if (action) action->setEnabled(view->getInputBar() != 0);
+            if (action) action->setEnabled(view->getInputBar() != nullptr);
 
             action = actionCollection()->action("focus_input_box");
             if (action)
             {
-                action->setEnabled(view->getInputBar() != 0);
+                action->setEnabled(view->getInputBar() != nullptr);
 
                 if (view->getTextView() && view->getTextView()->parent()) {
                     //HACK See notes in SearchBar::eventFilter
@@ -922,10 +912,10 @@ void ViewContainer::updateViewActions(int index)
             }
 
             action = actionCollection()->action("clear_lines");
-            if (action) action->setEnabled(textView != 0 && view->getTextView()->hasLines());
+            if (action) action->setEnabled(textView != nullptr && view->getTextView()->hasLines());
 
             action = actionCollection()->action("clear_window");
-            if (action) action->setEnabled(textView != 0);
+            if (action) action->setEnabled(textView != nullptr);
 
             action = actionCollection()->action("edit_find");
             if (action)
@@ -1078,7 +1068,7 @@ void ViewContainer::updateViewActions(int index)
     }
 
     action = actionCollection()->action("last_focused_tab");
-    if (action) action->setEnabled(m_lastFocusedView != 0);
+    if (action) action->setEnabled(m_lastFocusedView != nullptr);
 }
 
 void ViewContainer::updateFrontView()
@@ -1375,7 +1365,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
 void ViewContainer::toggleViewNotifications()
 {
-    ChatWindow* view = 0;
+    ChatWindow* view = nullptr;
 
     if (m_popupViewIndex == -1)
         view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
@@ -1405,7 +1395,7 @@ void ViewContainer::toggleViewNotifications()
 
 void ViewContainer::toggleAutoJoin()
 {
-    Channel* channel = 0;
+    Channel* channel = nullptr;
 
     if (m_popupViewIndex == -1)
         channel = static_cast<Channel*>(m_tabWidget->currentWidget());
@@ -1426,7 +1416,7 @@ void ViewContainer::toggleAutoJoin()
 
 void ViewContainer::toggleConnectOnStartup()
 {
-    ChatWindow* view = 0;
+    ChatWindow* view = nullptr;
 
     if (m_popupViewIndex == -1)
         view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());
@@ -1769,12 +1759,12 @@ void ViewContainer::viewSwitched(int newIndex)
 
         disconnect(m_frontView, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
 
-        if (Preferences::self()->automaticRememberLine() && m_frontView->getTextView() != 0)
+        if (Preferences::self()->automaticRememberLine() && m_frontView->getTextView() != nullptr)
             m_frontView->getTextView()->insertRememberLine();
     }
 
-    m_frontView = 0;
-    m_searchView = 0;
+    m_frontView = nullptr;
+    m_searchView = nullptr;
 
     setFrontServer(view->getServer());
 
@@ -1795,7 +1785,7 @@ void ViewContainer::viewSwitched(int newIndex)
 
     if (!m_viewTree || !m_viewTree->hasFocus()) view->adjustFocus();
 
-    if (view->getTextView() != 0) view->getTextView()->cancelRememberLine();
+    if (view->getTextView() != nullptr) view->getTextView()->cancelRememberLine();
 
     updateViewEncoding(view);
 
@@ -1813,7 +1803,7 @@ void ViewContainer::showView(QObject* view)
 {
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
-    if (1 /* m_tabWidget->isVisible() */) { // WIPQTQUICK
+    if (true /* m_tabWidget->isVisible() */) { // WIPQTQUICK
         m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(static_cast<ChatWindow*>(view)));
     }
 }
@@ -2090,7 +2080,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     m_window->getInputHistoryModel()->cull(view);
     // END: WIPQTQUICK
 
-    if (view == m_frontView) m_frontView = 0;
+    if (view == m_frontView) m_frontView = nullptr;
 
     if (view == m_lastFocusedView)
     {
@@ -2344,7 +2334,7 @@ void ViewContainer::showViewContextMenu(const QModelIndex &index, const QPoint& 
         m_contextServer = view->getServer();
     }
     else {
-        m_contextServer = 0;
+        m_contextServer = nullptr;
     }
 
     const QModelIndex& idx = indexForView(view);
@@ -2482,9 +2472,9 @@ void ViewContainer::appendToFrontmost(const QString& type, const QString& messag
 
     if (!serverView) // e.g. DCOP info call
     {
-        if (m_frontView) // m_frontView == NULL if canBeFrontView() == false for active ChatWindow
+        if (m_frontView) // m_frontView == nullptr if canBeFrontView() == false for active ChatWindow
             serverView = m_frontView->getServer()->getStatusView();
-        else if (m_frontServer) // m_frontView == NULL && m_frontServer != NULL if ChannelListPanel is active.
+        else if (m_frontServer) // m_frontView == nullptr && m_frontServer != nullptr if ChannelListPanel is active.
             serverView = m_frontServer->getStatusView();
     }
 
@@ -2573,7 +2563,7 @@ void ViewContainer::focusInputBox()
 
 void ViewContainer::clearViewLines()
 {
-    if (m_frontView && m_frontView->getTextView() != 0)
+    if (m_frontView && m_frontView->getTextView() != nullptr)
     {
         m_frontView->getTextView()->clearLines();
 
@@ -2586,7 +2576,7 @@ void ViewContainer::insertRememberLine()
 {
     if (Preferences::self()->automaticRememberLine())
     {
-        if (m_frontView && m_frontView->getTextView() != 0)
+        if (m_frontView && m_frontView->getTextView() != nullptr)
             m_frontView->getTextView()->insertRememberLine();
     }
 }
@@ -2597,14 +2587,14 @@ void ViewContainer::insertRememberLines(Server* server)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-        if (view->getServer() == server && view->getTextView() != 0)
+        if (view->getServer() == server && view->getTextView() != nullptr)
             view->getTextView()->insertRememberLine();
     }
 }
 
 void ViewContainer::cancelRememberLine()
 {
-    if (m_frontView && m_frontView->getTextView() != 0)
+    if (m_frontView && m_frontView->getTextView() != nullptr)
     {
         m_frontView->getTextView()->cancelRememberLine();
 
@@ -2624,16 +2614,16 @@ void ViewContainer::insertMarkerLine()
         {
             view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-            if (view->getTextView() != 0) view->getTextView()->insertMarkerLine();
+            if (view->getTextView() != nullptr) view->getTextView()->insertMarkerLine();
         }
     }
     else
     {
-        if (m_frontView && m_frontView->getTextView() != 0)
+        if (m_frontView && m_frontView->getTextView() != nullptr)
             m_frontView->getTextView()->insertMarkerLine();
     }
 
-    if (m_frontView && m_frontView->getTextView() != 0)
+    if (m_frontView && m_frontView->getTextView() != nullptr)
     {
         QAction* action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
@@ -2664,7 +2654,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
             LogfileReader* logReader = new LogfileReader(m_tabWidget, file, caption);
             addView(logReader, logReader->getName());
 
-            logReader->setServer(0);
+            logReader->setServer(nullptr);
         }
     }
 }
@@ -2680,9 +2670,9 @@ void ViewContainer::addKonsolePanel()
 
 void ViewContainer::addUrlCatcher()
 {
-    if (m_urlCatcherPanel == 0)
+    if (m_urlCatcherPanel == nullptr)
     {
-        m_urlCatcherPanel=new UrlCatcher(m_tabWidget);
+        m_urlCatcherPanel = new UrlCatcher(m_tabWidget);
         addView(m_urlCatcherPanel, i18n("URL Catcher"));
 
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
@@ -2696,7 +2686,7 @@ void ViewContainer::closeUrlCatcher()
     if (m_urlCatcherPanel)
     {
         delete m_urlCatcherPanel;
-        m_urlCatcherPanel = 0;
+        m_urlCatcherPanel = nullptr;
 
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
     }
@@ -2704,7 +2694,7 @@ void ViewContainer::closeUrlCatcher()
 
 void ViewContainer::toggleDccPanel()
 {
-    if (m_dccPanel==0 || !m_dccPanelOpen)
+    if (m_dccPanel == nullptr || !m_dccPanelOpen)
         addDccPanel();
     else
         closeDccPanel();
@@ -2746,7 +2736,7 @@ void ViewContainer::deleteDccPanel()
     {
         closeDccPanel();
         delete m_dccPanel;
-        m_dccPanel=0;
+        m_dccPanel = nullptr;
     }
 }
 
@@ -2817,7 +2807,7 @@ RawLog* ViewContainer::addRawLog(Server* server)
 
 void ViewContainer::reconnectFrontServer()
 {
-    Server* server = 0;
+    Server* server = nullptr;
 
     if (m_contextServer)
         server = m_contextServer;
@@ -2829,7 +2819,7 @@ void ViewContainer::reconnectFrontServer()
 
 void ViewContainer::disconnectFrontServer()
 {
-    Server* server = 0;
+    Server* server = nullptr;
 
     if (m_contextServer)
         server = m_contextServer;
@@ -2842,7 +2832,7 @@ void ViewContainer::disconnectFrontServer()
 
 void ViewContainer::showJoinChannelDialog()
 {
-    Server* server = 0;
+    Server* server = nullptr;
 
     if (m_contextServer)
         server = m_contextServer;
@@ -2865,7 +2855,7 @@ void ViewContainer::showJoinChannelDialog()
 
 void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
 {
-    Server* updateServer = 0;
+    Server* updateServer = nullptr;
 
     if (m_contextServer)
         updateServer = m_contextServer;
@@ -2922,7 +2912,7 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
 
 void ViewContainer::rejoinChannel()
 {
-    Channel* channel = 0;
+    Channel* channel = nullptr;
 
     if (m_popupViewIndex == -1)
         channel = static_cast<Channel*>(m_tabWidget->currentWidget());
@@ -3123,7 +3113,7 @@ void ViewContainer::openNicksOnlinePanel()
 void ViewContainer::closeNicksOnlinePanel()
 {
     delete m_nicksOnlinePanel;
-    m_nicksOnlinePanel = 0;
+    m_nicksOnlinePanel = nullptr;
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
 }
 

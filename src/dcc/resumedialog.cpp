@@ -71,8 +71,8 @@ namespace Konversation
 
         ResumeDialog::ResumeDialog(TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<QDialogButtonBox::StandardButton> enabledButtonCodes,
                          QDialogButtonBox::StandardButton defaultButtonCode)
-        : QDialog(0)
-        , m_overwriteDefaultPathCheckBox(0)
+        : QDialog(nullptr)
+        , m_overwriteDefaultPathCheckBox(nullptr)
         , m_item(item)
         , m_enabledActions(enabledActions)
         , m_selectedAction(RA_Cancel)
@@ -132,9 +132,7 @@ namespace Konversation
             updateDialogButtons();
         }
 
-        ResumeDialog::~ResumeDialog()
-        {
-        }
+        ResumeDialog::~ResumeDialog() = default;
 
         void ResumeDialog::buttonClicked(QAbstractButton* button)
         {

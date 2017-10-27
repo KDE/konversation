@@ -47,7 +47,7 @@ namespace Konversation
             setRootIsDecorated(false); //not implemented for special items
             setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-            m_categoryDrawer = new KCategoryDrawer(0);
+            m_categoryDrawer = new KCategoryDrawer(nullptr);
 
             setItemDelegate(new TransferSizeDelegate(m_categoryDrawer, this));
 
@@ -79,7 +79,7 @@ namespace Konversation
 
         TransferView::~TransferView()
         {
-            disconnect(m_updateTimer, 0, 0, 0);
+            disconnect(m_updateTimer, nullptr, nullptr, nullptr);
 
             saveColumns();
             clear();
@@ -130,12 +130,12 @@ namespace Konversation
             {
                 if (!(m_categorieFlags & SendCategory))
                 {
-                    addItem(0, TransferItemData::SendCategory);
+                    addItem(nullptr, TransferItemData::SendCategory);
                     m_categorieFlags |= SendCategory;
                 }
                 if ((m_categorieFlags & ReceiveCategory) && !(m_categorieFlags & SpacerRow))
                 {
-                    addItem(0, TransferItemData::SpaceRow);
+                    addItem(nullptr, TransferItemData::SpaceRow);
                     m_categorieFlags |= SpacerRow;
                 }
                 addItem(transfer, TransferItemData::SendItem);
@@ -144,12 +144,12 @@ namespace Konversation
             {
                 if (!(m_categorieFlags & ReceiveCategory))
                 {
-                    addItem(0, TransferItemData::ReceiveCategory);
+                    addItem(nullptr, TransferItemData::ReceiveCategory);
                     m_categorieFlags |= ReceiveCategory;
                 }
                 if ((m_categorieFlags & SendCategory) && !(m_categorieFlags & SpacerRow))
                 {
-                    addItem(0, TransferItemData::SpaceRow);
+                    addItem(nullptr, TransferItemData::SpaceRow);
                     m_categorieFlags |= SpacerRow;
                 }
                 addItem(transfer, TransferItemData::ReceiveItem);

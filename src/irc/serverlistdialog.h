@@ -41,8 +41,8 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit ServerListDialog(const QString& title, QWidget *parent = 0);
-            ~ServerListDialog();
+            explicit ServerListDialog(const QString& title, QWidget *parent = nullptr);
+            ~ServerListDialog() override;
             enum DataRole
             {
                 ServerGroupId = Qt::UserRole + 1,

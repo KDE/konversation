@@ -36,7 +36,7 @@ SearchBar::SearchBar(QWidget* parent)
 
     parent->installEventFilter(this); // HACK See notes in SearchBar::eventFilter
 
-    m_flags = 0;
+    m_flags = nullptr;
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
@@ -62,7 +62,7 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_closeButton, &QToolButton::clicked, this, &SearchBar::hide);
     connect(m_optionsButton, &QToolButton::clicked, m_optionsButton, &QToolButton::showMenu);
 
-    QAction *action = 0;
+    QAction *action = nullptr;
     m_optionsMenu = new QMenu(m_optionsButton);
     action = m_optionsMenu->addAction(i18n("Match Case"));
     action->setCheckable(true);
@@ -74,13 +74,11 @@ SearchBar::SearchBar(QWidget* parent)
     m_optionsButton->setMenu(m_optionsMenu);
 }
 
-SearchBar::~SearchBar()
-{
-}
+SearchBar::~SearchBar() = default;
 
 bool SearchBar::eventFilter(QObject* object, QEvent* e)
 {
-    QFocusEvent* focusEvent = 0;
+    QFocusEvent* focusEvent = nullptr;
 
     // HACK This event comes from the ViewContainer when
     // updateViewActions is called. ViewContainer can't
@@ -122,10 +120,10 @@ void SearchBar::showEvent(QShowEvent *e)
 
 bool SearchBar::focusedChild()
 {
-    QList<QWidget *> l = findChildren<QWidget *>();
+    const QList<QWidget *> children = findChildren<QWidget *>();
 
-    for (int i=0; i < l.size(); i++)
-        if (l.at(i)->hasFocus())
+    for (const auto child : children)
+        if (child->hasFocus())
             return true;
     return false;
 }

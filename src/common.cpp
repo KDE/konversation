@@ -28,7 +28,7 @@
 
 namespace Konversation
 {
-    void initChanModesHash()
+    static void initChanModesHash()
     {
         QHash<QChar,QString> myHash;
 
@@ -268,9 +268,9 @@ namespace Konversation
     {
         int nickvalue = 0;
 
-        for (int index = 0; index < nickname.length(); index++)
+        for (auto index : nickname)
         {
-            nickvalue += nickname[index].unicode();
+            nickvalue += index.unicode();
         }
 
         return (nickvalue % 8);

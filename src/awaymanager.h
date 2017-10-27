@@ -23,8 +23,8 @@ class AwayManager : public QObject
     Q_OBJECT
 
     public:
-        explicit AwayManager(QObject* parent = 0);
-        ~AwayManager();
+        explicit AwayManager(QObject* parent = nullptr);
+        ~AwayManager() override;
 
 
     public Q_SLOTS:

@@ -38,8 +38,8 @@ class TopicEdit : public KTextEdit
     Q_OBJECT
 
     public:
-        explicit TopicEdit(QWidget* parent = 0);
-        ~TopicEdit();
+        explicit TopicEdit(QWidget* parent = nullptr);
+        ~TopicEdit() override;
 
         Channel* channel() const;
         void setChannel(Channel* channel);

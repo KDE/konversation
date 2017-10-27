@@ -30,9 +30,7 @@ AwayLabel::AwayLabel(QWidget *parent)
     this->addAction(action);
 }
 
-AwayLabel::~AwayLabel()
-{
-}
+AwayLabel::~AwayLabel() = default;
 
 void AwayLabel::changeAwayMessage()
 {

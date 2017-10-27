@@ -35,8 +35,8 @@ namespace Konversation
             Q_OBJECT
 
         public:
-            explicit WhiteBoardPaintArea(QWidget* parent = 0);
-            ~WhiteBoardPaintArea();
+            explicit WhiteBoardPaintArea(QWidget* parent = nullptr);
+            ~WhiteBoardPaintArea() override;
 
         public Q_SLOTS:
             void setTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);

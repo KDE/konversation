@@ -36,9 +36,7 @@ ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const QString& channel)
     m_isChanged = false;
 }
 
-ChannelNick::~ChannelNick()
-{
-}
+ChannelNick::~ChannelNick() = default;
 
 bool ChannelNick::isOp() const
 {

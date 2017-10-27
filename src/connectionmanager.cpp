@@ -35,9 +35,7 @@ ConnectionManager::ConnectionManager(QObject* parent)
     connect(this, &ConnectionManager::requestReconnect, this, &ConnectionManager::handleReconnect);
 }
 
-ConnectionManager::~ConnectionManager()
-{
-}
+ConnectionManager::~ConnectionManager() = default;
 
 void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QString& target,
     const QString& port, const QString& password, const QString& nick, const QString& channel,
@@ -481,7 +479,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
 
 bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bool interactive)
 {
-    Server* dupe = 0;
+    Server* dupe = nullptr;
     ConnectionDupe dupeType;
     bool doReuse = true;
 
@@ -645,7 +643,7 @@ Server* ConnectionManager::getServerByConnectionId(int connectionId)
     if (m_connectionList.contains(connectionId))
         return m_connectionList[connectionId];
     else
-        return 0;
+        return nullptr;
 }
 
 Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags flags)
@@ -671,7 +669,7 @@ Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags f
             return it.value();
     }
 
-    return 0;
+    return nullptr;
 }
 
 void ConnectionManager::involuntaryQuitServers()

@@ -37,7 +37,7 @@ class ChatWindow : public QWidget
 
     public:
         explicit ChatWindow(QWidget* parent);
-        ~ChatWindow();
+        ~ChatWindow() override;
 
         enum WindowType
         {
@@ -136,7 +136,7 @@ class ChatWindow : public QWidget
         /** child classes have to override this and return true if they want the
          *  "insert character" item on the menu to be enabled.
          */
-        virtual bool isInsertSupported() { return m_inputBar != 0; }
+        virtual bool isInsertSupported() { return m_inputBar != nullptr; }
 
         /** child classes have to override this and return true if they want the
          *  "irc color" item on the menu to be enabled.

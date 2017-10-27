@@ -79,7 +79,7 @@ namespace Konversation
         class TransferSizeDelegate : public QStyledItemDelegate
         {
         public:
-            explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
+            explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = nullptr);
 
             QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const Q_DECL_OVERRIDE;
             void paint(QPainter *painter, const QStyleOptionViewItem & option,
@@ -91,7 +91,7 @@ namespace Konversation
         class TransferProgressBarDelegate : public QStyledItemDelegate
         {
         public:
-            explicit TransferProgressBarDelegate(QObject *parent = 0);
+            explicit TransferProgressBarDelegate(QObject *parent = nullptr);
 
             void paint(QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const Q_DECL_OVERRIDE;
@@ -101,7 +101,7 @@ namespace Konversation
         class TransferListProxyModel : public QSortFilterProxyModel
         {
         public:
-            explicit TransferListProxyModel(QObject *parent = 0);
+            explicit TransferListProxyModel(QObject *parent = nullptr);
 
             bool lessThan(const QModelIndex &left, const QModelIndex &right) const Q_DECL_OVERRIDE;
         };

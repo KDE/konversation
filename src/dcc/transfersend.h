@@ -40,7 +40,7 @@ namespace Konversation
 
             public:
                 explicit TransferSend(QObject *parent);
-                virtual ~TransferSend();
+                ~TransferSend() override;
 
                 // REQUIRED
                 void setFileURL(const QUrl &url);

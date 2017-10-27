@@ -34,7 +34,7 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 
         public:
         explicit KonviBookmarkHandler(QMenu *menu, MainWindow* mainWindow);
-        ~KonviBookmarkHandler();
+        ~KonviBookmarkHandler() override;
 
         // KBookmarkOwner interface:
         void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km) Q_DECL_OVERRIDE;

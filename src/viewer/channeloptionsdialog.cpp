@@ -110,9 +110,7 @@ namespace Konversation
         resize(QSize(450, 420));
     }
 
-    ChannelOptionsDialog::~ChannelOptionsDialog()
-    {
-    }
+    ChannelOptionsDialog::~ChannelOptionsDialog() = default;
 
     void ChannelOptionsDialog::showEvent(QShowEvent* event)
     {
@@ -311,17 +309,17 @@ namespace Konversation
         modesModel->clear();
         modesModel->setHorizontalHeaderLabels(QStringList() << i18n("Mode") << i18n("Parameter"));
 
-        for(int i = 0; i < modeString.length(); i++)
+        for(const QChar &mode : modeString)
         {
             QList<QStandardItem *> newRow;
-            QStandardItem *item = 0;
+            QStandardItem *item = nullptr;
 
-            if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(modeString[i]))
-                item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", modeString[i], getChannelModesHash().value(modeString[i])));
+            if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(mode))
+                item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", mode, getChannelModesHash().value(mode)));
             else
-                item = new QStandardItem(QString(modeString[i]));
+                item = new QStandardItem(QString(mode));
 
-            item->setData(QString(modeString[i]));
+            item->setData(QString(mode));
             item->setCheckable(true);
             item->setEditable(false);
             newRow.append(item);

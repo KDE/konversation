@@ -28,17 +28,17 @@ class UserCompletionModel : public QSortFilterProxyModel
     Q_OBJECT
 
     public:
-        explicit UserCompletionModel(QObject *parent = 0);
-        virtual ~UserCompletionModel();
+        explicit UserCompletionModel(QObject *parent = nullptr);
+        ~UserCompletionModel() override;
 
         Server *server() const;
         void setServer(Server *server);
 
         QString lastActiveUser();
 
-        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
+        void setSourceModel(QAbstractItemModel *sourceModel) override;
 
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     protected:
         bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
@@ -56,13 +56,13 @@ class FilteredUserModel : public QSortFilterProxyModel
     Q_PROPERTY(QStringList selectedNames READ selectedNames NOTIFY hasSelectionChanged)
 
     public:
-        explicit FilteredUserModel(QObject *parent = 0);
-        virtual ~FilteredUserModel();
+        explicit FilteredUserModel(QObject *parent = nullptr);
+        ~FilteredUserModel() override;
 
         QObject *filterView() const;
         void setFilterView(QObject *view);
 
-        virtual void setSourceModel(QAbstractItemModel *sourceModel) override;
+        void setSourceModel(QAbstractItemModel *sourceModel) override;
 
         bool hasSelection() const;
         QStringList selectedNames() const;
@@ -72,7 +72,7 @@ class FilteredUserModel : public QSortFilterProxyModel
         Q_INVOKABLE void setRangeSelected(int anchor, int to);
         Q_INVOKABLE void selectAll();
 
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     Q_SIGNALS:
         void filterViewChanged() const;
@@ -105,14 +105,14 @@ class UserModel : public QAbstractListModel
         };
         Q_ENUM(AdditionalRoles)
 
-        explicit UserModel(QObject *parent = 0);
-        virtual ~UserModel();
+        explicit UserModel(QObject *parent = nullptr);
+        ~UserModel() override;
 
         QHash<int, QByteArray> roleNames() const override;
 
-        virtual QModelIndex index(int row, int column,
+        QModelIndex index(int row, int column,
             const QModelIndex &parent = QModelIndex()) const override;
-        virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     protected:

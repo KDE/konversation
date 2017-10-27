@@ -25,9 +25,7 @@ QClipboardWrapper::QClipboardWrapper(QObject *parent)
 {
 }
 
-QClipboardWrapper::~QClipboardWrapper()
-{
-}
+QClipboardWrapper::~QClipboardWrapper() = default;
 
 QString QClipboardWrapper::clipboardText() const
 {

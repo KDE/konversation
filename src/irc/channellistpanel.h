@@ -35,7 +35,7 @@ class ChannelListProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
     public:
-        explicit ChannelListProxyModel(QObject *parent = 0);
+        explicit ChannelListProxyModel(QObject *parent = nullptr);
 
         int filterMinimumUsers() { return m_minUsers; }
         int filterMaximumUsers() { return m_maxUsers; }
@@ -85,7 +85,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
     public:
         explicit ChannelListPanel(QWidget* parent);
-        ~ChannelListPanel();
+        ~ChannelListPanel() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();

@@ -31,9 +31,7 @@ ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
     qputenv("PYTHONPATH", pythonPath.join(QStringLiteral(":")).toLocal8Bit());
 }
 
-ScriptLauncher::~ScriptLauncher()
-{
-}
+ScriptLauncher::~ScriptLauncher() = default;
 
 QString ScriptLauncher::scriptPath(const QString& script)
 {

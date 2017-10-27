@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <KLocalizedString>
 #include <KIO/Job>
+#include <utility>
 #include <kio/jobclasses.h>
 
 #include <stdlib.h>
@@ -92,7 +93,7 @@ namespace Konversation
 
         ///////////////////////////////////////
 
-        UPnPRouter::UPnPRouter(const QString & server,const QUrl &location,const QString & uuid) : server(server),location(location),uuid(uuid)
+        UPnPRouter::UPnPRouter(QString  server,QUrl location,QString  uuid) : server(std::move(server)),location(std::move(location)),uuid(std::move(uuid))
         {
         }
 
@@ -256,7 +257,7 @@ namespace Konversation
 
             if (service.ready)
             {
-                Forwarding *forward = NULL;
+                Forwarding *forward = nullptr;
 
                 QListIterator<Forwarding*> itr(forwards);
                 while (itr.hasNext())
@@ -267,7 +268,7 @@ namespace Konversation
                         forward = check;
                 }
 
-                if (forward == NULL || pending_forwards.keys(forward).size() > 0)
+                if (forward == nullptr || pending_forwards.keys(forward).size() > 0)
                     return false; // Either forward not found or forward is still pending
 
                 // add all the arguments for the command

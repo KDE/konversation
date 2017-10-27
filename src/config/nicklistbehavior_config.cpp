@@ -25,9 +25,7 @@ NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *na
   loadSettings();
 }
 
-NicklistBehavior_Config::~NicklistBehavior_Config()
-{
-}
+NicklistBehavior_Config::~NicklistBehavior_Config() = default;
 
 void NicklistBehavior_Config::restorePageToDefaults()
 {
@@ -44,11 +42,11 @@ void NicklistBehavior_Config::loadSettings()
 void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
 {
   sortOrder->clear();
-  for(int index = 0; index < sortingOrder.length() ; ++index)
+  for(auto index : sortingOrder)
   {
     // get next mode char
-    QChar mode=sortingOrder[index];
-    QTreeWidgetItem *item = 0;
+    QChar mode=index;
+    QTreeWidgetItem *item = nullptr;
     // find appropriate description
     if(mode=='-') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
     if(mode=='v') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Voice (+v)"));
