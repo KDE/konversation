@@ -129,7 +129,7 @@ QQC2.ScrollView {
                         if (inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing)) {
                             inputHistoryModel.remove(idx);
                         }
-                    } else if (inputFieldTextArea.text) {
+                    } else if (inputFieldTextArea.text.length) {
                         inputHistoryModel.append(lastView, inputFieldTextArea.text,
                             true, inputFieldTextArea.cursorPosition);
                         inputFieldTextArea.text = "";
@@ -141,7 +141,7 @@ QQC2.ScrollView {
                 if (inputHistoryModel.count) {
                     var idx = inputHistoryModel.index(inputHistoryModel.count - 1, 0);
 
-                    if (inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing)) {
+                    if (inputHistoryModel.data(idx, Konversation.InputHistoryModel.Editing) === true) {
                         inputFieldTextArea.text = inputHistoryModel.data(idx);
                         inputFieldTextArea.cursorPosition = inputHistoryModel.data(idx,
                             Konversation.InputHistoryModel.CursorPosition);
