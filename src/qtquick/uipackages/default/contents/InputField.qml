@@ -95,6 +95,11 @@ QQC2.ScrollView {
                 inputFieldTextArea.text = "";
             }
         } else {
+            if (inputFieldTextArea.selectedText.length) {
+                inputFieldTextArea.remove(inputFieldTextArea.selectionStart, inputFieldTextArea.selectionEnd);
+                inputFieldTextArea.deselect();
+            }
+
             inputFieldTextArea.insert(inputFieldTextArea.cursorPosition, text);
         }
 
