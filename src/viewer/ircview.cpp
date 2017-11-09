@@ -536,6 +536,63 @@ void IRCView::updateAppearance()
     viewport()->setPalette(p);
 }
 
+bool IRCView::dateRtlDirection()
+{
+    // Keep format synced with IRCView::timeStamp
+    return QLocale().toString(QDate::currentDate(), QLocale::ShortFormat).isRightToLeft();
+}
+
+// To minimize the use of bidi marks, for cases below, some bidi marks are
+// needed.
+// * left aligned lines in LTR locales, and
+// * right aligned lines in RTL locales
+//
+// First, check if the direction of the message is the same as the
+// direction of the timestamp, if not, then add a mark depending on
+// message's direction, so that timestamp don't be first strong character.
+//
+// If we have a LTR label, and the message is right-aligned, we prepend
+// it with LRM to look correct (check nickname case below), and then append
+// it with LRM also and then a RLM to preserve the direction of the
+// right-aligned line.
+//
+// Later, if the message is RTL, nicknames like "_nick]" will appear
+// as "[nick_".
+// First, add a LRM mark to make underscore on the left, next add the
+// nickname, and then another LRM mark. Since we use RTL/LTR count, the
+// message may start with a LTR word, and appear to the right of the
+// nickname. That's why we add a RLM mark before the nick to force it
+// appearing on left.
+QString IRCView::formatFinalLine(bool rtl, QString lineColor, QString label, QString nickLine, QString nickStar, QString text)
+{
+    // Nick correctly displayed: <_nick]>
+    QString line;
+    // It's right-aligned under LTR locale, or left-aligned under RTL locale
+    if (!rtl == dateRtlDirection())
+        line += (rtl ? RLM : LRM);
+    if (!label.isEmpty()) { // Label correctly displayed: [_label.]
+        if (rtl) line += LRM; // [.label_] -> [._label]
+        line += "<font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font>";
+        if (!label.isRightToLeft() == rtl)
+            line += LRM + RLM; // [._label] -> [_label.]
+    }
+    line += "<font color=\"" + lineColor + "\">%1";
+    if (!nickStar.isEmpty()) // Used for [timeStamp] * nick action
+        line += nickStar;
+    if (rtl) line += LRM; // <[nick_> -> <[_nick]>
+    line += nickLine;
+    if (rtl)
+    {
+        line += LRM; // <[_nick]> -> <_nick]>
+        // It might start with an English word, but it's RTL because of counting
+        if (!text.isEmpty() && !text.isRightToLeft())
+            line += RLM; // ARABIC_TEXT <_nick]> Hi -> ARABIC_TEXT Hi <_nick]>
+    }
+    if (text.isEmpty()) line += "</font>";
+    else line += " %3</font>";
+
+    return line;
+}
 
 // Data insertion
 
@@ -552,13 +609,10 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
     QString line;
     bool rtl = (dir == QChar::DirR);
 
-    QChar directionOfLine = rtl ? RLM : LRM;
-    line = directionOfLine;
-    if (!label.isEmpty()) {
-        line += "<font color=\"" + channelColor + "\"><b>[</b>%4<b>]</b></font>";
-    }
-    line += "<font color=\"" + channelColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3</font>";
-    line = line.arg(timeStamp(messageTags), nick, text);
+    // Normal chat lines
+    // [timestamp] <nickname> chat message
+    line = formatFinalLine(rtl, channelColor, label, nickLine, QString(), text);
+    line = line.arg(timeStamp(messageTags, rtl), nick, text);
 
     if (!label.isEmpty())
     {
@@ -576,7 +630,15 @@ void IRCView::appendRaw(const QString& message, bool self)
         : Preferences::self()->color(Preferences::ServerMessage);
     m_tabNotification = Konversation::tnfNone;
 
-    QString line = QString(timeStamp(QHash<QString, QString>()) + " <font color=\"" + color.name() + "\">" + message + "</font>");
+    // Raw log is always left-aligned
+    // [timestamp] << server line
+    // If the timedate string is RTL, prepend a LTR mark to force the direction
+    // to be LTR, as the datetime string is already returned as it's for a
+    // left-aligned line.
+
+    QString line;
+    if (dateRtlDirection()) line += LRM;
+    line += (timeStamp(QHash<QString, QString>(), false) + " <font color=\"" + color.name() + "\">" + message + "</font>");
 
     doAppend(line, false, self);
 }
@@ -586,9 +648,12 @@ void IRCView::appendLog(const QString & message)
     QColor channelColor = Preferences::self()->color(Preferences::ChannelMessage);
     m_tabNotification = Konversation::tnfNone;
 
+    // Log view is plain log files.
+    // Direction will be depending on the logfile line direction.
+
     QString line("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
 
-    doRawAppend(line, !QApplication::isLeftToRight());
+    doRawAppend(line, message.isRightToLeft());
 }
 
 void IRCView::appendQuery(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel)
@@ -604,9 +669,10 @@ void IRCView::appendQuery(const QString& nick, const QString& message, const QHa
     QString text(filter(message, queryColor, nick, true, true, false, &dir));
     bool rtl = (dir == QChar::DirR);
 
-    QChar directionOfLine = rtl ? RLM : LRM;
-    line = directionOfLine + "<font color=\"" + queryColor + "\">%1" + directionOfLine + nickLine + directionOfLine + " %3";
-    line = line.arg(timeStamp(messageTags), nick, text);
+    // Private chat lines
+    // [timestamp] <nickname> chat message
+    line = formatFinalLine(rtl, queryColor, QString(), nickLine, QString(), text);
+    line = line.arg(timeStamp(messageTags, rtl), nick, text);
 
     if (inChannel) {
         emit textToLog(QString("<-> %1>\t%2").arg(nick, message));
@@ -639,13 +705,17 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
 
     if (message.isEmpty())
     {
-        line = LRM + "<font color=\"" + actionColor + "\">%1 * " + nickLine + "</font>";
+        // No text to check direction. Better to check last line, if it's RTL,
+        // treat it as that.
+        QTextCursor formatCursor(document()->lastBlock());
+        bool rtl = (formatCursor.blockFormat().alignment().testFlag(Qt::AlignRight));
 
-        line = line.arg(timeStamp(messageTags), nick);
+        line = formatFinalLine(rtl, actionColor, QString(), nickLine, QString(" * "), QString());
+        line = line.arg(timeStamp(messageTags, rtl), nick);
 
         emit textToLog(QString("\t * %1").arg(nick));
 
-        doAppend(line, false);
+        doAppend(line, rtl);
     }
     else
     {
@@ -653,9 +723,10 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
         QString text(filter(message, actionColor, nick, true,true, false, &dir));
         bool rtl = (dir == QChar::DirR);
 
-        QChar directionOfLine = rtl ? RLM : LRM;
-        line = directionOfLine + "<font color=\"" + actionColor + "\">%1 " + directionOfLine + "* " + nickLine + directionOfLine + " %3</font>";
-        line = line.arg(timeStamp(messageTags), nick, text);
+        // Actions line
+        // [timestamp] * nickname action
+        line = formatFinalLine(rtl, actionColor, QString(), nickLine, QString(" * "), text);
+        line = line.arg(timeStamp(messageTags, rtl), nick, text);
 
         emit textToLog(QString("\t * %1 %2").arg(nick, message));
 
@@ -679,11 +750,17 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
     QString line;
     QChar::Direction dir;
     QString text(filter(message, serverColor, 0 , true, parseURL, false, &dir));
-    bool rtl = (dir == QChar::DirR);
+    // Server text may be translated strings. It's not user input: treat with first strong.
+    bool rtl = text.isRightToLeft();
 
-    QChar directionOfLine = rtl ? RLM : LRM;
-    line = directionOfLine + "<font color=\"" + serverColor + "\"" + fixed + ">%1 " + directionOfLine + "<b>[</b>%2<b>]</b>" + directionOfLine + " %3</font>";
-    line = line.arg(timeStamp(messageTags), type, text);
+    // It's right-aligned under LTR locale, or left-aligned under RTL locale
+    if (!rtl == dateRtlDirection())
+        line += (rtl ? RLM : LRM);
+    line += "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b>";
+    if (!rtl == type.isRightToLeft())
+        line += (rtl ? RLM : LRM); // [50 [ARABIC_TEXT users -> [ARABIC_TEXT] 50 users
+    line += " %3</font>";
+    line = line.arg(timeStamp(messageTags, rtl), type, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
 
@@ -711,11 +788,14 @@ void IRCView::appendCommandMessage(const QString& type, const QString& message, 
     QString line;
     QChar::Direction dir;
     QString text(filter(message, commandColor, 0, true, parseURL, self, &dir));
+    // Commands are translated and contain LTR IP addresses. Treat with first strong.
     bool rtl = text.isRightToLeft();
 
-    QChar directionOfLine = rtl ? RLM : LRM;
-    line = directionOfLine + "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
-    line = line.arg(timeStamp(messageTags), prefix, text);
+    // It's right-aligned under LTR locale, or left-aligned under RTL locale
+    if (!rtl == dateRtlDirection())
+        line += (rtl ? RLM : LRM);
+    line += "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
+    line = line.arg(timeStamp(messageTags, rtl), prefix, text);
 
     emit textToLog(QString("%1\t%2").arg(type, message));
 
@@ -739,10 +819,6 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     {
         nick = '|' + nick + '|';
     }
-    else //It's a real nick
-    {
-        nick = LRM + nick + LRM;
-    }
 
     // Nicks are in "<nick>" format so replace the "<>"
     nick.replace('<',"&lt;");
@@ -753,8 +829,34 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString text(filter(message, backlogColor, NULL, false, false, false, &dir));
     bool rtl = nick.startsWith('|') ? text.isRightToLeft() : (dir == QChar::DirR);
 
-    QChar directionOfLine = rtl ? RLM : LRM;
-    line = directionOfLine + "<font color=\"" + backlogColor + "\">%1 " + directionOfLine + "%2" + directionOfLine + " %3</font>";
+    // It's right-aligned under LTR locale, or left-aligned under RTL locale
+    if (!rtl == time.isRightToLeft())
+        line += (rtl ? RLM : LRM);
+
+    line += "<font color=\"" + backlogColor + "\">";
+    // Prepend and append timestamp's correct bidi mark if the time and text
+    // directions are different.
+    if (rtl == time.isRightToLeft())
+        line += "%1";
+    else
+        line += (time.isRightToLeft() ? RLM+"%1"+RLM : LRM+"%1"+LRM);
+
+    // Partially copied from IRCView::formatFinalLine
+    if (rtl)
+    {
+        // Return back to the normal direction after setting mark
+        if (!rtl == time.isRightToLeft()) line += (!time.isRightToLeft() ? RLM : LRM);
+        line += LRM; // <[nick_> -> <[_nick]>
+    }
+    line += "%2";
+    if (rtl)
+    {
+        line += LRM; // <[_nick]> -> <_nick]>
+        if (!text.isRightToLeft())
+            line += RLM; // ARABIC_TEXT <_nick]> Hi -> ARABIC_TEXT Hi <_nick]>
+    }
+
+    line +=  " %3</font>";
     line = line.arg(time, nick, text);
 
     doAppend(line, rtl);
@@ -813,7 +915,7 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
     formatCursor.setBlockFormat(format);
 }
 
-QString IRCView::timeStamp(QHash<QString, QString> messageTags)
+QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
 {
     if(Preferences::self()->timestamping())
     {
@@ -827,8 +929,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags)
         QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
 
-        bool rtlLocale = (QLocale().zeroDigit() == QChar((ushort)0x0660)) || // ARABIC-INDIC DIGIT ZERO
-                         (QLocale().zeroDigit() == QChar((ushort)0x06F0));   // EXTENDED ARABIC-INDIC DIGIT ZERO
+        bool dateRtl = dateRtlDirection();
 
         if(!Preferences::self()->showDate())
         {
@@ -839,10 +940,10 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags)
             QDate date = serverTime.isValid() ? serverTime.date() : QDate::currentDate();
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1%2 %3%4]</font> ")
-                    .arg(rtlLocale ? RLM : LRM,
-                         QLocale().toString(date, QLocale::ShortFormat),
-                         time.toString(timeFormat),
-                         !rtlLocale ? RLM : LRM);
+                    .arg((dateRtl==rtl) ? QString() : (dateRtl ? RLM : LRM),
+                        QLocale().toString(date, QLocale::ShortFormat),
+                        time.toString(timeFormat),
+                         (dateRtl==rtl) ? QString() : (!dateRtl ? RLM : LRM));
         }
 
         return timeString;
@@ -853,7 +954,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags)
 
 QString IRCView::createNickLine(const QString& nick, const QString& defaultColor, bool encapsulateNick, bool privMsg)
 {
-    QString nickLine = LRM + "%2" + LRM;
+    QString nickLine ="%2";
     QString nickColor;
 
     if (Preferences::self()->useColoredNicks())

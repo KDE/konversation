@@ -287,8 +287,14 @@ class IRCView : public QTextBrowser
 
         QChar::Direction basicDirection(const QString &string);
 
+        /// Returns true if the timestamp string is RTL, otherwise false
+        bool dateRtlDirection();
+
+        /// Format the line by adding needed bidi marks
+        QString formatFinalLine(bool rtl, QString lineColor, QString label, QString nickLine, QString nickStar, QString text);
+
         /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
-        QString timeStamp(QHash<QString, QString> messageTags);
+        QString timeStamp(QHash<QString, QString> messageTags, bool rtl);
 
         /// Returns a formated nick string
         //! FIXME formatted in what way?
