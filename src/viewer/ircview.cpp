@@ -142,14 +142,14 @@ IRCView::~IRCView()
 
 void IRCView::increaseFontSize()
 {
-    QFont newFont;
+    QFont newFont(font());
     newFont.setPointSize(font().pointSize() + 1);
     setFont(newFont);
 }
 
 void IRCView::decreaseFontSize()
 {
-    QFont newFont;
+    QFont newFont(font());
     newFont.setPointSize(font().pointSize() - 1);
     setFont(newFont);
 }
@@ -509,10 +509,16 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 
 void IRCView::updateAppearance()
 {
+    QFont newFont;
+    const int fontSize = font().pointSize();
+
     if (Preferences::self()->customTextFont())
-        setFont(Preferences::self()->textFont());
+        newFont = Preferences::self()->textFont();
     else
-        setFont(QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+        newFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+
+    newFont.setPointSize(fontSize);
+    setFont(newFont);
 
     setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
