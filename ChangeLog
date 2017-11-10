@@ -1,3 +1,6 @@
+Changes since 1.6.2:
+* Fixed a crash in parsing IRC color formatting codes.
+
 Changes from Konversation 1.6.1 to 1.6.2:
 Konversation 1.6.2 is a hotfix release that fixes an unfortunate severe
 crash condition that crept into 1.6.1.
@@ -115,7 +118,6 @@ releases.
   from merging events from different sources.
 * Fixed a bug causing the "Focus Input Bar" action to be enabled/disabled at
   incorrect times.
-
 
 Changes from 1.5 to 1.5.1:
 Konversation 1.5.1 is a maintenance release containing only bug fixes. The

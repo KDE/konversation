@@ -1595,7 +1595,8 @@ QString IRCView::closeToTagString(TextHtmlData* data, const QString& _tag)
     }
 
     // reopen relevant tags
-    ret += openTags(data, i);
+    if (i > -1)
+        ret += openTags(data, i);
 
     return ret;
 }
@@ -1603,7 +1604,8 @@ QString IRCView::closeToTagString(TextHtmlData* data, const QString& _tag)
 QString IRCView::openTags(TextHtmlData* data, int from)
 {
     QString ret, tag;
-    int i = from;
+    int i = from > -1 ? from : 0;
+
     for ( ;  i < data->openHtmlTags.count(); ++i)
     {
         tag = data->openHtmlTags.at(i);
