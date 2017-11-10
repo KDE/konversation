@@ -1,12 +1,41 @@
-Changes since 1.7.2:
-* Added an easier method of copying text starting with #
-* Fixed handling of IRC URLs for channels starting with more than one #
-* Re-enabled channel mode buttons
-* Fixed handling of nick and channel prefix characters potentially using the same set of symbols
-* Reduced emission of Unicode directional control characters
-* Removed unnecessary debug message sent as warning
-* Removed redundant escaping of angle brackets in GECOS ("realname") field
+Changes from Konversation 1.7.2 to 1.7.3:
+While the Konversation team is currently hard at work on the upcoming
+major version 2.0 (which will debut an all-new UI and Matrix support,
+and pave the way for mobile versions), we continue to support users of
+the stable version 1.7 with maintenance releases. Konversation v1.7.3
+re-enables the lost channel mode buttons, adds minor UI refinements and
+includes fixes for several annoyances and crashes. Most notable in this
+regard are fixed color scheme handling for the treelist version of the
+tab bar, and crash fixes in IRC v3 extended-join and IRC color
+formatting code parsing.
+
+* Added a copy action to the context menu of nicknames in the chat text
+  view.
+* Re-enabled channel mode buttons.
+* Reduced emission of Unicode directional control characters in the chat
+  text view. Unnecessary control characters could sometimes cause problems
+  with copying text from Konversation and pasting it into terminal
+  applications, confusing them.
+* Fixed handling of nick and channel prefix characters potentially using
+  the same set of symbols.
+* Removed redundant escaping of angle brackets in GECOS ("realname") field.
+* The nickname combobox will no longer change the nickname to the current
+  value whenvever it loses focus.
+* Fixed color scheme handling in the treelist version on the tab bar,
+  fixing an issue where the background and text color of the selected
+  item would sometimes be the same, rendering the item unreadable.
+* Fixed handling of IRC URLs for channels starting with more than one #,
+  addressing a percent-encoding problem with bookmarks of them.
+* Fixed custom chat text view font family reverting to system default font
+  family upon using the increase/decrease font size actions.
+* Fixed chat text view font size adjusted via the increase/decrease font
+  size actions reverting to configuration default when OK'ing the config
+  dialog.
+* Fixed incorrect checkbox states in the Channel Invite dialog.
+* Fixed a crash in IRC v3 extended-join parsing.
 * Fixed a crash in parsing IRC color formatting codes.
+* Fixed a minor memory leak in the Join Channel dialog code.
+* Removed unnecessary nickname list debug message sent as warning.
 
 Changes from Konversation 1.7.1 to 1.7.2:
 Konversation v1.7.2 is a repackage of v1.7.1 with incomplete and
