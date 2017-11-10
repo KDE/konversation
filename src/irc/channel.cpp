@@ -972,8 +972,8 @@ void Channel::addNickname(ChannelNickPtr channelnick)
         adjustNicks(1);
         requestNickListSort();
     }
-    else
-        qWarning() << "Nickname " << channelnick->getNickname() << " has not been added as it is already in the nickname list."<< endl;
+    // TODO (re)-investigate why it was thought unusual to add an already added nick
+    // -- see bug 333969
 }
 
 // Use with caution! Does not check for duplicates or may not
