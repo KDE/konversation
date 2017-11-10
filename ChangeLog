@@ -3,6 +3,9 @@ Changes since 1.7.2:
 * Fixed handling of IRC URLs for channels starting with more than one #
 * Re-enabled channel mode buttons
 * Fixed handling of nick and channel prefix characters potentially using the same set of symbols
+* Reduced emission of Unicode directional control characters
+* Removed unnecessary debug message sent as warning
+* Removed redundant escaping of angle brackets in GECOS ("realname") field
 
 Changes from Konversation 1.7.1 to 1.7.2:
 Konversation v1.7.2 is a repackage of v1.7.1 with incomplete and
