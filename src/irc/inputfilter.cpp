@@ -1515,7 +1515,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         // escape html tags
                         QString escapedRealName(trailing);
-                        escapedRealName.replace(QLatin1Char('<'), QStringLiteral("&lt;")).replace(QLatin1Char('>'), QStringLiteral("&gt;"));
+
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is %2@%3 (%4)",
                                 parameterList.value(1),
