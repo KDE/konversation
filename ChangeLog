@@ -21,7 +21,7 @@ formatting code parsing.
 * Removed redundant escaping of angle brackets in GECOS ("realname") field.
 * The nickname combobox will no longer change the nickname to the current
   value whenvever it loses focus.
-  * Fixed color scheme handling in the treelist version on the tab bar,
+* Fixed color scheme handling in the treelist version on the tab bar,
   fixing an issue where the background and text color of the selected
   item would sometimes be the same, rendering the item unreadable.
 * Fixed handling of IRC URLs for channels starting with more than one #,
