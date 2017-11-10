@@ -1,3 +1,6 @@
+Changes since 1.5.1:
+* Fixed a crash in parsing IRC color formatting codes.
+
 Changes from 1.5 to 1.5.1:
 Konversation 1.5.1 is a maintenance release containing only bug fixes. The
 included changes address several minor behavioral defects and a low-risk DoS
