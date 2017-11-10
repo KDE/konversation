@@ -1,4 +1,14 @@
-Changes since 1.7.2:
+Changes from Konversation 1.7.2 to 1.7.3:
+While the Konversation team is currently hard at work on the upcoming
+major version 2.0 (which will debut an all-new UI and Matrix support,
+and pave the way for mobile versions), we continue to support users of
+the stable version 1.7 with maintenance releases. Konversation v1.7.3
+re-enables the lost channel mode buttons, adds minor UI refinements and
+includes fixes for several annoyances and crashes. Most notable in this
+regard are fixed color scheme handling for the treelist version of the
+tab bar, and crash fixes in IRC v3 extended-join and IRC color
+formatting code parsing.
+
 * Added a copy action to the context menu of nicknames in the chat text
   view.
 * Re-enabled channel mode buttons.
@@ -22,7 +32,7 @@ Changes since 1.7.2:
   size actions reverting to configuration default when OK'ing the config
   dialog.
 * Fixed incorrect checkbox states in the Channel Invite dialog.
-* Fixed a crash in extended-join parsing.
+* Fixed a crash in IRC v3 extended-join parsing.
 * Fixed a crash in parsing IRC color formatting codes.
 * Fixed a minor memory leak in the Join Channel dialog code.
 * Removed unnecessary nickname list debug message sent as warning.
