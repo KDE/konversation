@@ -1,4 +1,7 @@
-Changes since Konversation 1.7.3:
+Changes from Konversation 1.7.3 to 1.7.4:
+Konversation v1.7.4 is a small bugfix release addressing a font settings
+regression that crept into v1.7.3.
+
 * Fixed a bug causing the size of a custom chat text view font set via
   the configuration dialog to be ignored. A font size modification done
   via the Enlarge/Decrease Font Size actions is now applied on top of
