@@ -340,6 +340,7 @@ class IRCView : public QTextBrowser
 
         //! TODO FIXME i'll bite. why do we have this in here?
         QFontDatabase m_fontDataBase;
+        int m_fontSizeDelta;
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;
