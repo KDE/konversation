@@ -91,7 +91,7 @@ QQC2.ScrollView {
 
             if (text.length && viewModel.currentView) {
                 viewModel.currentView.textPasted(text);
-                inputHistoryodel.append(viewModel.currentView, text);
+                inputHistoryModel.append(viewModel.currentView, text);
                 inputFieldTextArea.text = "";
             }
         } else {
