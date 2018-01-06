@@ -30,6 +30,7 @@
   <name xml:lang="sv">Konversation</name>
   <name xml:lang="uk">Konversation</name>
   <name xml:lang="x-test">xxKonversationxx</name>
+  <name xml:lang="zh-CN">Konversation</name>
   <name xml:lang="zh-TW">Konversation</name>
   <summary>IRC client</summary>
   <summary xml:lang="ca">Client d'IRC</summary>
@@ -59,6 +60,7 @@
   <summary xml:lang="sv">IRC-klient</summary>
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="x-test">xxIRC clientxx</summary>
+  <summary xml:lang="zh-CN">IRC 客户端</summary>
   <summary xml:lang="zh-TW">IRC 客戶端程式</summary>
   <description>
     <p>
