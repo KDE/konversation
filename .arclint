@@ -1,0 +1,9 @@
+{
+  "linters": {
+    "cppcheck": {
+      "type": "cppcheck",
+      "include": "(\\.(cpp|h|cxx|hpp)$)",
+      "flags": ["--language=c++", "--std=c++11"]
+    }
+  }
+}
