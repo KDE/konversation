@@ -114,8 +114,8 @@ void Query::setServer(Server* newServer)
 {
     if (m_server != newServer)
     {
-        connect(newServer, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+        connect(newServer, &Server::connectionStateChanged,
+                this, &Query::connectionStateChanged);
         connect(newServer, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
                 this, SLOT(updateNickInfo(Server*,NickInfoPtr)));
     }
@@ -129,13 +129,14 @@ void Query::setServer(Server* newServer)
     connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
-void Query::connectionStateChanged(Server* server, Konversation::ConnectionState state)
+void Query::connectionStateChanged(Konversation::ConnectionState state)
 {
+    auto server = static_cast<Server *>(sender());
     if (server == m_server)
     {
         ViewContainer* viewContainer = Application::instance()->getMainWindow()->getViewContainer();
 
-        if (state ==  Konversation::SSConnected)
+        if (state == Konversation::Connected)
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
             if (viewContainer->getFrontView() == this

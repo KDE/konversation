@@ -74,6 +74,7 @@ class Server : public QObject
 
     Q_PROPERTY(QString nickname READ getNickname WRITE setNickname NOTIFY nicknameChanged)
     Q_PROPERTY(UserModel* userModel READ getUserModel CONSTANT) // WIPQTQUICK
+    Q_PROPERTY(Konversation::ConnectionState connectionState READ getConnectionState NOTIFY connectionStateChanged)
 
     public:
         enum QueuePriority
@@ -119,9 +120,9 @@ class Server : public QObject
 
         Konversation::ConnectionState getConnectionState() { return m_connectionState; }
 
-        bool isConnected() { return (m_connectionState == Konversation::SSConnected); }
-        bool isConnecting() { return (m_connectionState == Konversation::SSConnecting); }
-        bool isScheduledToConnect() { return (m_connectionState == Konversation::SSScheduledToConnect); }
+        bool isConnected() { return (m_connectionState == Konversation::Connected); }
+        bool isConnecting() { return (m_connectionState == Konversation::Connecting); }
+        bool isScheduledToConnect() { return (m_connectionState == Konversation::ScheduledToConnect); }
 
         bool getUseSSL() const;
         QString getSSLInfo() const;
@@ -467,7 +468,7 @@ class Server : public QObject
         void sslInitFailure();
         void sslConnected(Server* server);
 
-        void connectionStateChanged(Server* server, Konversation::ConnectionState state);
+        void connectionStateChanged(Konversation::ConnectionState state);
 
         void showView(QObject* view); // WIPQTQUICK
         void addDccPanel();

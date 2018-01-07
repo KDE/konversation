@@ -19,6 +19,7 @@
 #include "common.h"
 #include "preferences.h"
 #include "ssllabel.h"
+#include "server.h"
 
 #include <QStringList>
 

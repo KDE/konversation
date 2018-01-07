@@ -34,6 +34,7 @@ class ChatWindow : public QWidget
     Q_PROPERTY(QString description READ getDescription NOTIFY descriptionChanged)
     Q_PROPERTY(IrcContextMenus::MenuOptions contextMenuOptions READ contextMenuOptions CONSTANT)
     Q_PROPERTY(int unreadMentions READ unreadMentions NOTIFY unreadMentionsChanged)
+    Q_PROPERTY(Server * server READ getServer NOTIFY serverChanged)
 
     public:
         explicit ChatWindow(QWidget* parent);
@@ -156,6 +157,7 @@ class ChatWindow : public QWidget
         void nameChanged(ChatWindow* view, const QString& newName);
         void titleChanged();
         void descriptionChanged();
+        void serverChanged();
         //void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.
          *  It is ignored if this tab isn't focused.

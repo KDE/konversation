@@ -324,8 +324,7 @@ void Channel::setServer(Server* server)
 {
     if (m_server != server)
     {
-        connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+        connect(server, &Server::connectionStateChanged, this, &Channel::connectionStateChanged);
         connect(server, SIGNAL(nickInfoChanged()),
                 this, SLOT(updateNickInfos()));
         connect(server, SIGNAL(channelNickChanged(QString)),
@@ -343,11 +342,12 @@ void Channel::setServer(Server* server)
     connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
 }
 
-void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
+void Channel::connectionStateChanged(Konversation::ConnectionState state)
 {
+    Server *server = static_cast<Server*>(sender());
     if (server == m_server)
     {
-        if (state !=  Konversation::SSConnected)
+        if (state != Konversation::Connected)
         {
             m_joined = false;
 

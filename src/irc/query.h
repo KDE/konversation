@@ -83,7 +83,7 @@ class Query : public ChatWindow
         void sendText(const QString& text) Q_DECL_OVERRIDE;
         void indicateAway(bool show) Q_DECL_OVERRIDE;
         void setEncryptedOutput(bool);
-        void connectionStateChanged(Server*, Konversation::ConnectionState);
+        void connectionStateChanged(Konversation::ConnectionState);
 
     protected Q_SLOTS:
         void queryTextEntered();

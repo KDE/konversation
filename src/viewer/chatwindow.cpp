@@ -217,18 +217,19 @@ void ChatWindow::setServer(Server* newServer)
 {
     if (!newServer)
     {
-        qDebug() << "ChatWindow::setServer(0)!";
+        qDebug() << "ChatWindow::setServer(nullptr)!";
     }
     else if (m_server != newServer)
     {
-        m_server=newServer;
+        m_server = newServer;
+        emit serverChanged();
         connect(m_server, &Server::serverOnline, this, &ChatWindow::serverOnline);
 
         // check if we need to set up the signals
         if(getType() != ChannelList)
         {
             if(textView) textView->setServer(newServer);
-            else qDebug() << "textView==0!";
+            else qDebug() << "textView == nullptr!";
         }
 
         serverOnline(m_server->isConnected());

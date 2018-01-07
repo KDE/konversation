@@ -63,7 +63,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     setConnectionSettings(settings);
 
-    m_connectionState = Konversation::SSNeverConnected;
+    m_connectionState = Konversation::NeverConnected;
 
     m_recreationScheduled = false;
 
@@ -148,7 +148,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     if (getIdentity()->getShellCommand().isEmpty())
         connectSignals();
     // TODO FIXME this disappeared in a merge, ensure it should have
-    updateConnectionState(Konversation::SSNeverConnected);
+    updateConnectionState(Konversation::NeverConnected);
 
     m_nickInfoChangedTimer = new QTimer(this);
     m_nickInfoChangedTimer->setSingleShot(true);
@@ -455,11 +455,11 @@ void Server::connectToIRCServer()
         // Reenable check when it works reliably for all backends
 //         if(Solid::Networking::status() != Solid::Networking::Connected)
 //         {
-//             updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+//             updateConnectionState(Konversation::InvoluntarilyDisconnected);
 //             return;
 //         }
 
-        updateConnectionState(Konversation::SSConnecting);
+        updateConnectionState(Konversation::Connecting);
 
         m_ownIpByUserhost.clear();
 
@@ -530,7 +530,7 @@ void Server::connectToIRCServerIn(uint delay)
     m_delayedConnectTimer->setInterval(delay * 1000);
     m_delayedConnectTimer->start();
 
-    updateConnectionState(Konversation::SSScheduledToConnect);
+    updateConnectionState(Konversation::ScheduledToConnect);
 }
 
 void Server::showSSLDialog()
@@ -889,7 +889,7 @@ void Server::sendAuthenticate(const QString& message)
 void Server::broken(KTcpSocket::Error error)
 {
     Q_UNUSED(error);
-    qDebug() << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
+    qDebug() << "Connection broken with state" << static_cast<int>(m_connectionState) << "and error:" << m_socket->errorString();
 
     m_socket->blockSignals(true);
 
@@ -924,9 +924,9 @@ void Server::broken(KTcpSocket::Error error)
                  getConnectionSettings().server().host(),
                  QString::number(getConnectionSettings().server().port())));
 
-        updateConnectionState(SSDeliberatelyDisconnected);
+        updateConnectionState(Konversation::DeliberatelyDisconnected);
     }
-    else if (getConnectionState() == Konversation::SSDeliberatelyDisconnected)
+    else if (getConnectionState() == Konversation::DeliberatelyDisconnected)
     {
         if (m_reconnectImmediately)
         {
@@ -946,7 +946,7 @@ void Server::broken(KTcpSocket::Error error)
 
         getStatusView()->appendServerMessage(i18n("Error"), error);
 
-        updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+        updateConnectionState(Konversation::InvoluntarilyDisconnected);
     }
 
     // HACK Only show one nick change dialog at connection time.
@@ -1012,7 +1012,7 @@ void Server::sslError( const QList<KSslError>& errors )
     {
         // Don't auto-reconnect if the user chose to ignore the SSL errors --
         // treat it as a deliberate disconnect.
-        updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+        updateConnectionState(Konversation::DeliberatelyDisconnected);
 
         QString errorReason;
 
@@ -1040,7 +1040,7 @@ void Server::connectionEstablished(const QString& ownHost)
     if (!ownHost.isEmpty())
         QHostInfo::lookupHost(ownHost, this, SLOT(gotOwnResolvedHostByWelcome(QHostInfo)));
 
-    updateConnectionState(Konversation::SSConnected);
+    updateConnectionState(Konversation::Connected);
 
     // Make a helper object to build ISON (notify) list.
     // TODO: Give the object a kick to get it started?
@@ -1101,12 +1101,12 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
     {
         m_connectionState = state;
 
-        if (m_connectionState == Konversation::SSConnected)
+        if (m_connectionState == Konversation::Connected)
             emit serverOnline(true);
-        else if (m_connectionState != Konversation::SSConnecting)
+        else if (m_connectionState != Konversation::Connecting)
             emit serverOnline(false);
 
-       emit connectionStateChanged(this, state);
+       emit connectionStateChanged(state);
     }
 }
 
@@ -1140,7 +1140,7 @@ void Server::quitServer(const QString& quitMessage)
     // Make clear this is deliberate even if the QUIT never actually goes through the queue
     // (i.e. this is not redundant with _send_internal()'s updateConnectionState() call for
     // a QUIT).
-    updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+    updateConnectionState(Konversation::DeliberatelyDisconnected);
 
     if (!m_socket) return;
 
@@ -1570,7 +1570,7 @@ int Server::_send_internal(QString outputLine)
     if (outboundCommand == 0 && outputLineSplit.count() >= 2) //"WHO"
         m_inputFilter.addWhoRequest(outputLineSplit[1]);
     else if (outboundCommand == 1) //"QUIT"
-        updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+        updateConnectionState(Konversation::DeliberatelyDisconnected);
 
     // set channel encoding if specified
     QString channelCodecName;
@@ -4435,17 +4435,17 @@ void Server::sendChannelNickChangedSignals()
 
 void Server::involuntaryQuit()
 {
-    if((m_connectionState == Konversation::SSConnected || m_connectionState == Konversation::SSConnecting) &&
+    if((m_connectionState == Konversation::Connected || m_connectionState == Konversation::Connecting) &&
        (m_socket->peerAddress() != QHostAddress(QHostAddress::LocalHost) && m_socket->peerAddress() != QHostAddress(QHostAddress::LocalHostIPv6)))
     {
         quitServer();
-        updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+        updateConnectionState(Konversation::InvoluntarilyDisconnected);
     }
 }
 
 void Server::reconnectInvoluntary()
 {
-    if(m_connectionState == Konversation::SSInvoluntarilyDisconnected)
+    if(m_connectionState == Konversation::InvoluntarilyDisconnected)
         reconnectServer();
 }
 

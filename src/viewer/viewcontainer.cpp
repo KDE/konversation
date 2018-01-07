@@ -432,30 +432,32 @@ int ViewContainer::columnCount(const QModelIndex& parent) const
 QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent) const
 {
     if (!m_tabWidget || column != 0) {
+        // we have only one column
         return QModelIndex();
     }
 
     int tabIndex = -1;
-
     if (parent.isValid()) {
+        // This looks like one of server tabs
         int parentTabIndex = m_tabWidget->indexOf(static_cast<QWidget*>(parent.internalPointer()));
-
         if (parentTabIndex != -1) {
             tabIndex = parentTabIndex + row + 1;
         } else {
             return QModelIndex();
         }
     } else {
+        // We don't have parent, this may be top-level view
         int count = -1;
-
         for (int i = 0; i < m_tabWidget->count(); ++i) {
-            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
+            // There can be more than one connected server, we should
+            // find correct top-level window for this row
+            auto window = static_cast<ChatWindow *>(m_tabWidget->widget(i));
+            if (window->isTopLevelView()) {
                 ++count;
             }
 
             if (count == row) {
                 tabIndex = i;
-
                 break;
             }
         }
@@ -561,7 +563,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
     } else if (role == HighlightRole) {
         return (row == m_popupViewIndex);
     } else if (role == ViewRole) {
-        return qVariantFromValue<QObject *>(static_cast<QObject *>(index.internalPointer()));
+        return qVariantFromValue(static_cast<QObject *>(index.internalPointer()));
     } else if (role == IsChild) {
         return index.parent().isValid();
     } else if (role == HasActivity) {
@@ -2866,11 +2868,11 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
     {
         QAction* action = actionCollection()->action("disconnect_server");
         if (action)
-            action->setEnabled(state == Konversation::SSConnected || state == Konversation::SSConnecting || state == Konversation::SSScheduledToConnect);
+            action->setEnabled(state == Konversation::Connected || state == Konversation::Connecting || state == Konversation::ScheduledToConnect);
 
         action = actionCollection()->action("join_channel");
         if (action)
-            action->setEnabled(state == Konversation::SSConnected);
+            action->setEnabled(state == Konversation::Connected);
 
         if (m_frontView && m_frontView->getServer() == server
             && m_frontView->getType() == ChatWindow::Channel)
@@ -2879,7 +2881,7 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
             Channel* channel = static_cast<Channel*>(view);
 
             action = actionCollection()->action("rejoin_channel");
-            if (action) action->setEnabled(state == Konversation::SSConnected && channel->rejoinable());
+            if (action) action->setEnabled(state == Konversation::Connected && channel->rejoinable());
         }
     }
 }

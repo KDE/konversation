@@ -156,8 +156,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     connect(server, &Server::destroyed, this, &ConnectionManager::delistConnection);
 
-    connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-            this, SLOT(handleConnectionStateChange(Server*,Konversation::ConnectionState)));
+    connect(server, &Server::connectionStateChanged, this, &ConnectionManager::handleConnectionStateChange);
 
     connect(server, &Server::awayState, this, &ConnectionManager::connectionChangedAwayState);
 
@@ -184,13 +183,14 @@ void ConnectionManager::delistConnection(int connectionId)
     emit connectionListChanged();
 }
 
-void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState state)
+void ConnectionManager::handleConnectionStateChange(Konversation::ConnectionState state)
 {
+    auto server = static_cast<Server *>(sender());
     emit connectionChangedState(server, state);
 
     int identityId = server->getIdentity()->id();
 
-    if (state == Konversation::SSConnected)
+    if (state == Konversation::Connected)
     {
         m_overrideAutoReconnect = false;
 
@@ -201,7 +201,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
             emit identityOnline(identityId);
         }
     }
-    else if (state != Konversation::SSConnecting)
+    else if (state != Konversation::Connecting)
     {
         if (m_activeIdentities.contains(identityId))
         {
@@ -211,14 +211,14 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         }
     }
 
-    if (state == Konversation::SSInvoluntarilyDisconnected && !m_overrideAutoReconnect)
+    if (state == Konversation::InvoluntarilyDisconnected && !m_overrideAutoReconnect)
     {
         // The asynchronous invocation of handleReconnect() makes sure that
         // connectionChangedState() is emitted and delivered before it runs
         // (and causes the next connection state change to occur).
         emit requestReconnect(server);
     }
-    else if (state == Konversation::SSInvoluntarilyDisconnected && m_overrideAutoReconnect)
+    else if (state == Konversation::InvoluntarilyDisconnected && m_overrideAutoReconnect)
     {
         server->getStatusView()->appendServerMessage(i18n("Info"), i18n ("Network is down, will reconnect automatically when it is back up."));
     }

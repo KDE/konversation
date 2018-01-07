@@ -81,7 +81,7 @@ class ConnectionManager : public QObject
     private Q_SLOTS:
         void delistConnection(int connectionId);
 
-        void handleConnectionStateChange(Server* server, Konversation::ConnectionState state);
+        void handleConnectionStateChange(Konversation::ConnectionState state);
 
         void handleReconnect(Server* server);
 

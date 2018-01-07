@@ -15,6 +15,8 @@ import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.2 as Kirigami
 
+import org.kde.konversation 1.0
+
 Item {
     id: viewSwitcher
 
@@ -134,7 +136,10 @@ Item {
                 readonly property int row: index
                 readonly property bool hasActivity: model.HasActivity
                 readonly property int unreadMentions: model.ViewRole.unreadMentions
+                property int connectionState: model.ViewRole ? model.ViewRole.server.connectionState : Konversation.NeverConnected
                 property Item unreadMentionsCounter: null
+                property Item loadingBar: null
+
 
                 text: model.display
                 textMarginLeft: model.IsChild ? Kirigami.Units.gridUnit * 2 : Kirigami.Units.gridUnit
@@ -155,6 +160,15 @@ Item {
                     Qt.callLater(ListView.view.updateOffViewportOverlay);
                 }
 
+                onConnectionStateChanged: {
+                    if (!loadingBar && connectionState == Konversation.Connecting) {
+                        loadingBar = loadingBarComponent.createObject(viewListItem);
+                    } else if (loadingBar) {
+                        loadingBar.destroy();
+                        loadingBar = null;
+                    }
+                }
+
                 onClicked: {
                     viewListView.forceActiveFocus();
 
@@ -163,6 +177,21 @@ Item {
                             mapToGlobal(mouse.x, mouse.y));
                     } else {
                         viewListView.showView(value);
+                    }
+                }
+
+                Component {
+                    id: loadingBarComponent
+
+                    QQC2.BusyIndicator {
+                        id: loadingAnimator
+                        running: true
+                        anchors.right: parent.right
+                        // we assume there won't be intersection with showing busy indicator and unread count
+                        anchors.rightMargin: verticalScrollbar.visible ? verticalScrollbar.width : Kirigami.Units.smallSpacing
+                        anchors.verticalCenter: parent.verticalCenter
+                        height: Kirigami.Units.iconSizes.smallMedium
+                        width: Kirigami.Units.iconSizes.smallMedium
                     }
                 }
 

@@ -13,6 +13,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <QObject>
 #include <QByteArray>
 #include <QHash>
 #include <QStringList>
@@ -22,6 +23,8 @@ class QPixmap;
 
 namespace Konversation
 {
+    Q_NAMESPACE
+
     static QRegExp colorRegExp(QStringLiteral("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x03|\x09|\x13|\x15|\x16|\x1d|\x1f)"));
     static QRegExp urlPattern(QString(QStringLiteral("\\b((?:(?:([a-z][\\w\\.-]+:/{1,3})|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|\\}\\]|[^\\s`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6])|[a-z0-9.\\-+_]+@[a-z0-9.\\-]+[.][a-z]{1,5}[^\\s/`!()\\[\\]{};:'\".,<>?%1%2%3%4%5%6]))")).arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019)));
     static QRegExp chanExp(QString(QStringLiteral("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>?%1%2%3%4%5%6])")).arg(QChar(0x00AB)).arg(QChar(0x00BB)).arg(QChar(0x201C)).arg(QChar(0x201D)).arg(QChar(0x2018)).arg(QChar(0x2019)));
@@ -39,13 +42,14 @@ namespace Konversation
 
     enum ConnectionState
     {
-        SSNeverConnected,
-        SSDeliberatelyDisconnected,
-        SSInvoluntarilyDisconnected,
-        SSScheduledToConnect,
-        SSConnecting,
-        SSConnected
+        NeverConnected,
+        DeliberatelyDisconnected,
+        InvoluntarilyDisconnected,
+        ScheduledToConnect,
+        Connecting,
+        Connected
     };
+    Q_ENUM_NS(ConnectionState)
 
     enum ConnectionFlag
     {

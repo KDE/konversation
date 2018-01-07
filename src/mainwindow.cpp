@@ -121,9 +121,15 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
 
     qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
     m_qmlEngine = new QQmlApplicationEngine(this);
+
+    // register common enums needed in QML
+    qRegisterMetaType<Konversation::ConnectionState>("Konversation::ConnectionState"); // C++ -> QML signal
+    qmlRegisterUncreatableMetaObject(Konversation::staticMetaObject, "org.kde.konversation", 1, 0, "Konversation", "Enums only");
     qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
     qmlRegisterUncreatableType<InputHistoryModel>("org.kde.konversation", 1, 0, "InputHistoryModel", "");
     qmlRegisterUncreatableType<IrcContextMenus>("org.kde.konversation", 1, 0, "IrcContextMenus", "");
+
+    // setup qml context
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewListModel"), viewListModel);
@@ -152,9 +158,8 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     connect(m_viewContainer, SIGNAL(autoConnectOnStartupToggled(Konversation::ServerGroupSettingsPtr)),
             Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(QString)), this, SLOT(setCaption(QString)));
-    connect(Application::instance()->getConnectionManager(),
-            SIGNAL(connectionChangedState(Server*,Konversation::ConnectionState)),
-            m_viewContainer, SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+    connect(Application::instance()->getConnectionManager(), &ConnectionManager::connectionChangedState,
+            m_viewContainer, &ViewContainer::connectionStateChanged);
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
     connect(this, SIGNAL(triggerRememberLines(Server*)), m_viewContainer, SLOT(insertRememberLines(Server*)));
     connect(this, SIGNAL(cancelRememberLine()), m_viewContainer, SLOT(cancelRememberLine()));

@@ -248,7 +248,7 @@ class Channel : public ChatWindow
 
         void setAutoJoin(bool autojoin);
 
-        void connectionStateChanged(Server*, Konversation::ConnectionState);
+        void connectionStateChanged(Konversation::ConnectionState state);
 
     protected Q_SLOTS:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
