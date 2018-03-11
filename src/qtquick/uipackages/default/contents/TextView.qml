@@ -255,22 +255,19 @@ Item {
                         Text {
                             id: timeStamp
 
-                            z: 2
-
-                            readonly property bool collides: (messageText.x
-                                + messageText.implicitWidth
-                                + Kirigami.Units.smallSpacing + width > parent.width)
-                            readonly property int margin: Kirigami.Units.gridUnit / 2
-
-                            x: messageText.x + margin + (active ? authorSize.x : messageText.contentWidth)
-
-                            y: {
+                            anchors.top: parent.top
+                            anchors.topMargin:  {
                                 if (!active) {
                                     return messageText.y + ((largerFontMetrics.height / 2) - (height / 2));
                                 } else {
                                     return (Kirigami.Units.gridUnit / 2) + ((authorSize.y / 2) - (height / 2));
                                 }
                             }
+
+                            anchors.left: msg.active ? msg.authorTextArea.right : msg.messageTextArea.right
+                            anchors.leftMargin: (Kirigami.Units.gridUnit / 2)
+
+                            z: 2
 
                             renderType: Text.NativeRendering
                             color: selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
@@ -331,6 +328,9 @@ Item {
 
                             Text {
                                 id: author
+
+                                // Allow time stamp to anchor as sibling.
+                                parent: msg
 
                                 y: Kirigami.Units.gridUnit / 2
 
@@ -441,11 +441,10 @@ Item {
 
                         z: 1
 
+                        width: Math.min(implicitWidth, (msg.timeStamp && !msg.active ? parent.width - timeStamp.width : parent.width) - messageText.x - (Kirigami.Units.gridUnit / 2))
+
                         anchors.left: parent.left
                         anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
-                        anchors.right: parent.right
-                        anchors.rightMargin: (timeStamp && timeStamp.collides
-                            ? timeStamp.margin + timeStamp.width : 0)
                         anchors.bottom: parent.bottom
 
                         property bool reused: false
