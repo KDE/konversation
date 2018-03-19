@@ -16,6 +16,7 @@
 #include "ui_transferdetailedinfopanelui.h"
 #include "ui_transferdetailedtimeinfopanelui.h"
 
+#include <QTabWidget>
 
 class QTimer;
 
