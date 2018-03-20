@@ -98,6 +98,7 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(0), m_l
     m_isOnChannel = false;
     m_chatWin = 0;
     m_server = 0;
+    m_fontSizeDelta = 0;
 
     setAcceptDrops(false);
 
@@ -142,21 +143,34 @@ IRCView::~IRCView()
 
 void IRCView::increaseFontSize()
 {
-    QFont newFont(font());
-    newFont.setPointSize(font().pointSize() + 1);
+    QFont newFont(Preferences::self()->customTextFont()
+        ? Preferences::self()->textFont() : QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+
+    ++m_fontSizeDelta;
+    newFont.setPointSize(newFont.pointSize() + m_fontSizeDelta);
+
     setFont(newFont);
 }
 
 void IRCView::decreaseFontSize()
 {
-    QFont newFont(font());
-    newFont.setPointSize(font().pointSize() - 1);
+    QFont newFont(Preferences::self()->customTextFont()
+        ? Preferences::self()->textFont() : QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+
+    --m_fontSizeDelta;
+    newFont.setPointSize(newFont.pointSize() + m_fontSizeDelta);
+
     setFont(newFont);
 }
 
 void IRCView::resetFontSize()
 {
-    setFont(Preferences::self()->textFont());
+    QFont newFont(Preferences::self()->customTextFont()
+        ? Preferences::self()->textFont() : QFontDatabase::systemFont(QFontDatabase::GeneralFont));
+
+    m_fontSizeDelta = 0;
+
+    setFont(newFont);
 }
 
 void IRCView::setServer(Server* newServer)
@@ -509,15 +523,11 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
 
 void IRCView::updateAppearance()
 {
-    QFont newFont;
-    const int fontSize = font().pointSize();
+    QFont newFont(Preferences::self()->customTextFont()
+        ? Preferences::self()->textFont() : QFontDatabase::systemFont(QFontDatabase::GeneralFont));
 
-    if (Preferences::self()->customTextFont())
-        newFont = Preferences::self()->textFont();
-    else
-        newFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+    newFont.setPointSize(newFont.pointSize() + m_fontSizeDelta);
 
-    newFont.setPointSize(fontSize);
     setFont(newFont);
 
     setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
