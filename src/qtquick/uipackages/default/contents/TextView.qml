@@ -6,11 +6,12 @@
 */
 
 /*
-  Copyright (C) 2017 Eike Hein <hein@kde.org>
+  Copyright (C) 2017-2018 Eike Hein <hein@kde.org>
 */
 
 import QtQuick 2.7
 
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as QQC2
 
 import org.kde.kirigami 2.2 as Kirigami
@@ -59,8 +60,340 @@ Item {
 
             readonly property int msgWidth: width - verticalScrollbar.width
 
+            spacing: Kirigami.Units.smallSpacing
+
             model: messageModel
-            delegate: msgComponent
+
+            Component {
+                id: avatarComponent
+
+                Rectangle {
+                    id: avatar
+
+                    width: parent.avatarSize
+                    height: parent.avatarSize
+
+                    Layout.column: 0
+                    Layout.rowSpan: parent.sectionLeader ? 2 : 1
+                    Layout.leftMargin: parent.columnSpacing
+                    Layout.alignment: Qt.AlignTop
+                    Layout.maximumWidth: width
+
+                    color: parent.m.NickColor
+
+                    radius: width * 0.5
+
+                    Text {
+                        anchors.fill: parent
+                        anchors.margins: Kirigami.Units.devicePixelRatio * 5
+
+                        renderType: Text.QtRendering
+                        color: "white"
+
+                        font.weight: Font.Bold
+                        font.pointSize: 100
+                        minimumPointSize: Kirigami.Theme.defaultFont.pointSize
+                        fontSizeMode: Text.Fit
+
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+
+                        text: {
+                            // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
+                            var match = parent.parent.m.Author.match(/([a-zA-Z])([a-zA-Z])/);
+                            var abbrev = match[1].toUpperCase();
+
+                            if (match.length > 2) {
+                                abbrev += match[2].toLowerCase();
+                            }
+
+                            return abbrev;
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: sectionHeaderComponent
+
+                Text {
+                    id: author
+
+                    Layout.row: 0
+                    Layout.column: 1
+                    Layout.columnSpan: parent.timeStamp ? 2 : 1
+
+                    renderType: Text.NativeRendering
+                    textFormat: Text.StyledText
+
+                    font.weight: Font.Bold
+                    font.pixelSize: konvUi.largerFontSize
+
+                    color: parent.parent.selected ? Kirigami.Theme.highlightedTextColor : parent.m.NickColor
+
+                    text: parent.m.Author
+
+                    Component.onCompleted: parent.parent.authorTextArea = author
+                }
+            }
+
+            Component {
+                id: timeStampComponent
+
+                Item {
+                    Layout.row: parent.sectionLeader ? 1 : 0
+                    Layout.column: 2
+                    Layout.minimumWidth: width
+                    Layout.alignment: Qt.AlignTop
+
+                    width: text.implicitWidth
+                    height: text.implicitHeight
+
+                    Text {
+                        id: text
+
+                        x: parent.parent.timeStampOffset
+                        width: parent.width
+
+                        renderType: Text.NativeRendering
+
+                        color: parent.parent.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+
+                        text: parent.parent.m.TimeStamp
+                    }
+                }
+            }
+
+            Component {
+                id: selectedBackgroundItemComponent
+
+                Rectangle {
+                    anchors.fill: parent
+                    anchors.leftMargin: parent.msgTextArea.x
+                    anchors.rightMargin: parent.width - parent.contentWidth
+
+                    z: 0
+
+                    color: Kirigami.Theme.highlightColor
+                }
+            }
+
+            Component {
+                id: inlineSelectionTextItemComponent
+
+                Item {
+                    id: inlineSelectionText
+
+                    x: parent.msgTextArea.x
+                    y: parent.msgTextArea.y
+
+                    width: parent.msgTextArea.width
+                    height: parent.msgTextArea.height
+
+                    z: 1
+
+                    property Item textArea: textArea
+                    property alias selectedText: textArea.selectedText
+
+                    Connections {
+                        target: mouseOverlay
+
+                        onClearInlineSelectedText: {
+                            inlineSelectionText.destroy();
+                            parent.inlineSelectionTextItem = null;
+                        }
+
+                        onTapSelectingChanged: {
+                            if (!mouseOverlay.tapSelecting) {
+                                inlineSelectionText.destroy();
+                                parent.inlineSelectionTextItem = null;
+                            }
+                        }
+                    }
+
+                    Connections {
+                        target: mouseOverlay.inlineSelectionItem
+
+                        enabled: mouseOverlay.inlineSelectionItem != parent
+
+                        onHasSelectedTextChanged: {
+                            inlineSelectionText.destroy();
+                            parent.inlineSelectionTextItem = null;
+                        }
+                    }
+
+                    QQC2.TextArea {
+                        id: textArea
+
+                        anchors.fill: parent
+
+                        background: null
+
+                        leftPadding: 0
+                        rightPadding: 0
+                        topPadding: 0
+                        bottomPadding: 0
+
+                        // Init from parent.msgTextArea.
+                        renderType: parent.parent.msgTextArea.renderType
+                        textFormat: Text.RichText
+                        font: parent.parent.msgTextArea.font
+                        wrapMode: parent.parent.msgTextArea.wrapMode
+                        color: parent.parent.msgTextArea.color
+                        text: parent.parent.msgTextArea.text
+
+                        readOnly: true
+
+                        selectByMouse: true
+                        persistentSelection: true
+
+                        onSelectedTextChanged: {
+                            if (!selectedText.length
+                                && !parent.parent.allowInlineSelection) {
+                                inlineSelectionText.destroy();
+                                parent.parent.inlineSelectionTextItem = null;
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            forceActiveFocus();
+                        }
+                    }
+                }
+            }
+
+            delegate: Item {
+                id: msg
+
+                width: ListView.view.msgWidth
+                implicitWidth: width
+                height: msgLayout.implicitHeight
+
+                readonly property int row: index
+
+                readonly property bool selected: model.Selected === true
+                readonly property bool hasSelectedText: (inlineSelectionTextItem
+                    && inlineSelectionTextItem.selectedText.length)
+                readonly property string selectedText: hasSelectedText ? inlineSelectionTextItem.selectedText : ""
+                readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
+                    && !mouseOverlay.tapSelecting)
+
+                readonly property int contentWidth: (msgLayout.timeStamp ? msgLayout.timeStamp.x + msgLayout.timeStamp.width
+                    : msgText.x + msgText.contentWidth)
+
+                readonly property Item msgTextArea: msgText
+                property Item authorTextArea: null
+                property Item selectedBackgroundItem: null
+                property Item inlineSelectionTextItem: null
+
+                onSelectedChanged: {
+                    if (selected && !selectedBackgroundItem) {
+                        selectedBackgroundItem = selectedBackgroundItemComponent.createObject(msg);
+                    } else if (!selected && selectedBackgroundItem) {
+                        selectedBackgroundItem.destroy();
+                        selectedBackgroundItem = null;
+                    }
+                }
+
+                onAllowInlineSelectionChanged: {
+                    if (allowInlineSelection && !inlineSelectionTextItem) {
+                        inlineSelectionTextItem = inlineSelectionTextItemComponent.createObject(msg);
+                    } else if (!allowInlineSelection
+                        && inlineSelectionTextItem
+                        && !inlineSelectionTextItem.selectedText.length) {
+                        inlineSelectionTextItem.destroy();
+                        inlineSelectionTextItem = null;
+                    }
+                }
+
+                GridLayout {
+                    id: msgLayout
+
+                    width: parent.width
+
+                    z: 1
+
+                    readonly property var m: model
+
+                    readonly property bool sectionLeader: !model.AuthorMatchesPrecedingMessage
+
+                    readonly property int avatarSize: konvUi.largerFontSize * 3.2
+                    property Item avatar: null
+
+                    property Item sectionHeader: null
+
+                    readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
+                    property Item timeStamp: null
+                    readonly property int timeStampOffset: -Math.max(msgText.width - msgText.implicitWidth,
+                        msgText.width - msgText.contentWidth)
+
+                    columnSpacing: Kirigami.Units.smallSpacing
+
+                    onSectionLeaderChanged: checkDeco()
+                    onShowTimeStampChanged: checkTimeStamp()
+
+                    function checkDeco() {
+                        if (!sectionLeader) {
+                            if (avatar) {
+                                avatar.destroy();
+                                avatar = null;
+                            }
+
+                            if (sectionHeader) {
+                                sectionHeader.destroy();
+                                sectionHeader = null;
+                            }
+                        } else if (!sectionHeader || !avatar) {
+                            avatar = avatarComponent.createObject(msgLayout);
+                            sectionHeader = sectionHeaderComponent.createObject(msgLayout);
+                        }
+                    }
+
+                    function checkTimeStamp() {
+                        if (!showTimeStamp) {
+                            if (timeStamp) {
+                                timeStamp.destroy();
+                                timeStamp = null;
+                            }
+                        } else if (!timeStamp) {
+                            timeStamp = timeStampComponent.createObject(msgLayout);
+                        }
+                    }
+
+                    Text {
+                        id: msgText
+
+                        opacity: allowInlineSelection ? 0.0 : 1.0
+
+                        Layout.row: parent.sectionLeader ? 1 : 0
+                        Layout.column: 1
+                        Layout.leftMargin: parent.avatar ? 0 : parent.avatarSize + (parent.columnSpacing * 2)
+                        Layout.alignment: Qt.AlignTop
+                        Layout.fillWidth: true
+
+                        renderType: Text.NativeRendering
+                        textFormat: Text.StyledText
+
+                        font.pixelSize: konvUi.largerFontSize
+
+                        wrapMode: Text.Wrap
+
+                        color: selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+
+                        text: (model.Type == Konversation.MessageModel.ActionMessage
+                            ? actionWrap(model.display) : model.display)
+
+                        function actionWrap(text) {
+                            return "<i>" + model.Author + "&nbsp;" + text + "</i>";
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        checkDeco();
+                        checkTimeStamp();
+                    }
+                }
+            }
 
             add: Transition {
                 SequentialAnimation {
@@ -152,322 +485,6 @@ Item {
                 onHeightChanged: textListView.checkScrollToEnd()
             }
 
-            Component {
-                id: msgComponent
-
-                Loader {
-                    id: msg
-
-                    width: ListView.view.msgWidth
-                    height: (active ? (Math.max(avatarSize, konvUi.largerFontSize + messageText.height + Kirigami.Units.gridUnit))
-                        : messageText.height)
-
-                    readonly property int row: index
-
-                    readonly property int avatarSize: konvUi.largerFontSize * 3.3
-                    property var authorSize: Qt.point(0, 0)
-
-                    property int contentWidth: {
-                        var width = 0;;
-
-                        if (timeStamp) {
-                            width = Math.max(timeStamp.x + timeStamp.width,
-                                messageText.x + messageText.contentWidth);
-                        } else {
-                            width = Math.max(messageText.x + messageText.contentWidth,
-                                avatarSize + Kirigami.Units.gridUnit + authorSize.x);
-                        }
-
-                        return Math.min(textView.width, width);
-                    }
-
-                    readonly property bool selected: model.Selected === true
-                    readonly property bool hasSelectedText: (inlineSelectionTextItem
-                        && inlineSelectionTextItem.selectedText.length)
-                    readonly property string selectedText: hasSelectedText ? inlineSelectionTextItem.selectedText : ""
-
-                    readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
-                        && !mouseOverlay.tapSelecting)
-
-                    readonly property bool showTimeStamp: !model.TimeStampMatchesPrecedingMessage
-
-                    property Item timeStamp: null
-                    readonly property Item messageTextArea: messageText
-                    property Item authorTextArea: null
-                    property Item selectedBackgroundItem: null
-                    property Item inlineSelectionTextItem: null
-
-                    active: !model.AuthorMatchesPrecedingMessage
-                    sourceComponent: metabitsComponent
-
-                    onSelectedChanged: {
-                        if (selected && !selectedBackgroundItem) {
-                            selectedBackgroundItem = selectedBackgroundItemComponent.createObject(msg);
-                        } else if (!selected && selectedBackgroundItem) {
-                            selectedBackgroundItem.destroy();
-                            selectedBackgroundItem = null;
-                        }
-                    }
-
-                    onShowTimeStampChanged: {
-                        if (!showTimeStamp) {
-                            if (timeStamp) {
-                                timeStamp.destroy();
-                                timeStamp = null;
-                            }
-                        } else {
-                            timeStamp = timeStampComponent.createObject(msg);
-                        }
-                    }
-
-                    onAllowInlineSelectionChanged: {
-                        if (allowInlineSelection && !inlineSelectionTextItem) {
-                            inlineSelectionTextItem = inlineSelectionTextItemComponent.createObject(msg);
-                        } else if (!allowInlineSelection
-                            && inlineSelectionTextItem
-                            && !inlineSelectionTextItem.selectedText.length) {
-                            inlineSelectionTextItem.destroy();
-                            inlineSelectionTextItem = null;
-                        }
-                    }
-
-                    Component {
-                        id: selectedBackgroundItemComponent
-
-                        Rectangle {
-                            anchors.top: parent.top
-                            anchors.topMargin: msg.active ? (Kirigami.Units.gridUnit / 2) : 0
-
-                            x: messageText.x
-
-                            height: (messageText.y + messageText.contentHeight) - anchors.topMargin
-                            width: msg.contentWidth - x
-
-                            z: 0
-
-                            color: Kirigami.Theme.highlightColor
-                        }
-                    }
-
-                    Component {
-                        id: timeStampComponent
-
-                        Text {
-                            id: timeStamp
-
-                            anchors.top: parent.top
-                            anchors.topMargin:  {
-                                if (!active) {
-                                    return messageText.y + ((largerFontMetrics.height / 2) - (height / 2));
-                                } else {
-                                    return (Kirigami.Units.gridUnit / 2) + ((authorSize.y / 2) - (height / 2));
-                                }
-                            }
-
-                            anchors.left: msg.active ? msg.authorTextArea.right : msg.messageTextArea.right
-                            anchors.leftMargin: (Kirigami.Units.gridUnit / 2)
-
-                            z: 2
-
-                            renderType: Text.NativeRendering
-                            color: selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
-
-                            text: model.TimeStamp
-                        }
-                    }
-
-                    Component {
-                        id: metabitsComponent
-
-                        Item {
-                            anchors.fill: parent
-
-                            z: 1
-
-                            Rectangle {
-                                id: avatar
-
-                                x: Kirigami.Units.gridUnit / 2
-                                y: Kirigami.Units.gridUnit / 2
-
-                                width: avatarSize
-                                height: avatarSize
-
-                                color: model.NickColor
-
-                                radius: width * 0.5
-
-                                Text {
-                                    anchors.fill: parent
-                                    anchors.margins: Kirigami.Units.devicePixelRatio * 5
-
-                                    renderType: Text.QtRendering
-                                    color: "white"
-
-                                    font.weight: Font.Bold
-                                    font.pointSize: 100
-                                    minimumPointSize: Kirigami.Theme.defaultFont.pointSize
-                                    fontSizeMode: Text.Fit
-
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-
-                                    text: {
-                                        // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
-                                        var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
-                                        var abbrev = match[1].toUpperCase();
-
-                                        if (match.length > 2) {
-                                            abbrev += match[2].toLowerCase();
-                                        }
-
-                                        return abbrev;
-                                    }
-                                }
-                            }
-
-                            Text {
-                                id: author
-
-                                // Allow time stamp to anchor as sibling.
-                                parent: msg
-
-                                y: Kirigami.Units.gridUnit / 2
-
-                                anchors.left: parent.left
-                                anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
-
-                                renderType: Text.NativeRendering
-                                textFormat: Text.StyledText
-
-                                font.weight: Font.Bold
-                                font.pixelSize: konvUi.largerFontSize
-
-                                color: selected ? Kirigami.Theme.highlightedTextColor : model.NickColor
-
-                                text: model.Author
-
-                                onWidthChanged: msg.authorSize = Qt.point(width, height)
-
-                                Component.onCompleted: msg.authorTextArea = author
-                            }
-                        }
-                    }
-
-                    Component {
-                        id: inlineSelectionTextItemComponent
-
-                        Item {
-                            id: inlineSelectionText
-
-                            anchors.fill: messageText
-
-                            z: 1
-
-                            property Item textArea: textArea
-                            property alias selectedText: textArea.selectedText
-
-                            Connections {
-                                target: mouseOverlay
-
-                                onClearInlineSelectedText: {
-                                    inlineSelectionText.destroy();
-                                    msg.inlineSelectionTextItem = null;
-                                }
-
-                                onTapSelectingChanged: {
-                                    if (!mouseOverlay.tapSelecting) {
-                                        inlineSelectionText.destroy();
-                                        msg.inlineSelectionTextItem = null;
-                                    }
-                                }
-                            }
-
-                            Connections {
-                                target: mouseOverlay.inlineSelectionItem
-
-                                enabled: mouseOverlay.inlineSelectionItem != msg
-
-                                onHasSelectedTextChanged: {
-                                    inlineSelectionText.destroy();
-                                    msg.inlineSelectionTextItem = null;
-                                }
-                            }
-
-                            QQC2.TextArea {
-                                id: textArea
-
-                                anchors.fill: parent
-
-                                background: null
-
-                                leftPadding: 0
-                                rightPadding: 0
-                                topPadding: 0
-                                bottomPadding: 0
-
-                                // Init from messageText.
-                                renderType: messageText.renderType
-                                textFormat: Text.RichText
-                                font: messageText.font
-                                wrapMode: messageText.wrapMode
-                                color: messageText.color
-                                text: messageText.text
-
-                                readOnly: true
-
-                                selectByMouse: true
-                                persistentSelection: true
-
-                                onSelectedTextChanged: {
-                                    if (!selectedText.length
-                                        && !msg.allowInlineSelection) {
-                                        inlineSelectionText.destroy();
-                                        msg.inlineSelectionTextItem = null;
-                                    }
-                                }
-
-                                Component.onCompleted: {
-                                    forceActiveFocus();
-                                }
-                            }
-                        }
-                    }
-
-                    Text {
-                        id: messageText
-
-                        opacity: allowInlineSelection ? 0.0 : 1.0
-
-                        z: 1
-
-                        width: Math.min(implicitWidth, (msg.timeStamp && !msg.active ? parent.width - timeStamp.width : parent.width) - messageText.x - (Kirigami.Units.gridUnit / 2))
-
-                        anchors.left: parent.left
-                        anchors.leftMargin: avatarSize + Kirigami.Units.gridUnit
-                        anchors.bottom: parent.bottom
-
-                        property bool reused: false
-
-                        renderType: Text.NativeRendering
-                        textFormat: Text.StyledText
-
-                        font.pixelSize: konvUi.largerFontSize
-
-                        wrapMode: Text.Wrap
-
-                        color: selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
-
-                        text: (model.Type == Konversation.MessageModel.ActionMessage
-                            ? actionWrap(model.display) : model.display)
-
-                        function actionWrap(text) {
-                            return "<i>" + model.Author + "&nbsp;" + text + "</i>";
-                        }
-                    }
-                }
-            }
-
             Keys.onPressed: {
                 if (event.matches(StandardKey.Copy) || event.matches(StandardKey.Cut)) {
                     event.accepted = true;
@@ -523,7 +540,7 @@ Item {
 
             // Adding a gridUnit for bigger finger targets.
             if (item
-                && x >= item.messageTextArea.x
+                && x >= item.msgTextArea.x
                 && x <= (item.contentWidth + Kirigami.Units.gridUnit)) {
 
                 if (rowsToSelect.length && shiftPressed) {
@@ -590,13 +607,13 @@ Item {
                     }
                 }
 
-                var messageTextPos = mapToItem(item.messageTextArea, mouse.x, mouse.y);
+                var messageTextPos = mapToItem(item.msgTextArea, mouse.x, mouse.y);
                 var authorTextPos = item.active ? mapToItem(item.authorTextArea, mouse.x, mouse.y) : null;
 
                 if (item.active && item.authorTextArea.contains(authorTextPos)) {
                     hoveredLink = "#" +  item.authorTextArea.text;
-                } else if (item.messageTextArea.contains(messageTextPos)) {
-                    hoveredLink = item.messageTextArea.linkAt(messageTextPos.x, messageTextPos.y)
+                } else if (item.msgTextArea.contains(messageTextPos)) {
+                    hoveredLink = item.msgTextArea.linkAt(messageTextPos.x, messageTextPos.y)
                 } else {
                     hoveredLink = "";
                 }
@@ -607,7 +624,7 @@ Item {
                     return;
                 }
 
-                if (mouse.x >= item.messageTextArea.x && mouse.x <= item.contentWidth) {
+                if (mouse.x >= item.msgTextArea.x && mouse.x <= item.contentWidth) {
                     cursorShape = Qt.IBeamCursor;
 
                     if (!messageModel.hasSelection && !tapSelecting) {
