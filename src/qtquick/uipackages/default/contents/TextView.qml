@@ -73,7 +73,7 @@ Item {
 
                     Layout.column: 0
                     Layout.rowSpan: parent.sectionLeader ? 2 : 1
-                    Layout.topMargin: Kirigami.Units.smallSpacing / 2
+                    Layout.topMargin: Kirigami.Units.smallSpacing
                     Layout.leftMargin: parent.columnSpacing
                     Layout.alignment: Qt.AlignTop
                     Layout.maximumWidth: width
@@ -121,7 +121,7 @@ Item {
                     Layout.row: 0
                     Layout.column: 1
                     Layout.columnSpan: parent.timeStamp ? 2 : 1
-                    Layout.topMargin: Kirigami.Units.smallSpacing
+                    Layout.topMargin: Kirigami.Units.smallSpacing + (Kirigami.Units.smallSpacing / 2)
 
                     renderType: Text.NativeRendering
                     textFormat: Text.StyledText
