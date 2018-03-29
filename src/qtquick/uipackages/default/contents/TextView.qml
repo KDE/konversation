@@ -372,7 +372,7 @@ Item {
                         Layout.row: parent.sectionLeader ? 1 : 0
                         Layout.column: 1
                         Layout.topMargin: parent.sectionLeader ? Kirigami.Units.smallSpacing / 2 : 0
-                        Layout.bottomMargin: index == (textListView.count - 1) ? 0 : Kirigami.Units.smallSpacing
+                        Layout.bottomMargin: index == (textListView.count - 1) ? 0 : Kirigami.Units.smallSpacing / 2
                         Layout.leftMargin: parent.avatar ? 0 : parent.avatarSize + (parent.columnSpacing * 2)
                         Layout.alignment: Qt.AlignTop
                         Layout.fillWidth: true
