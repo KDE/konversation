@@ -78,13 +78,19 @@ Item {
                     Layout.alignment: Qt.AlignTop
                     Layout.maximumWidth: width
 
-                    color: parent.m.NickColor
+                    property alias model: text.model
+
+                    color: model.NickColor
 
                     radius: width * 0.5
 
                     Text {
+                        id: text
+
                         anchors.fill: parent
                         anchors.margins: Kirigami.Units.devicePixelRatio * 5
+
+                        property var model
 
                         renderType: Text.QtRendering
                         color: "white"
@@ -99,7 +105,7 @@ Item {
 
                         text: {
                             // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
-                            var match = parent.parent.m.Author.match(/([a-zA-Z])([a-zA-Z])/);
+                            var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
                             var abbrev = match[1].toUpperCase();
 
                             if (match.length > 2) {
@@ -123,15 +129,16 @@ Item {
                     Layout.columnSpan: parent.timeStamp ? 2 : 1
                     Layout.topMargin: Kirigami.Units.smallSpacing + (Kirigami.Units.smallSpacing / 2)
 
+                    property var model
+
                     renderType: Text.NativeRendering
                     textFormat: Text.StyledText
 
                     font.weight: Font.Bold
                     font.pixelSize: konvUi.largerFontSize
 
-                    color: parent.parent.selected ? Kirigami.Theme.highlightedTextColor : parent.m.NickColor
-
-                    text: parent.m.Author
+                    color: parent.parent.selected ? Kirigami.Theme.highlightedTextColor : (model ? model.NickColor : Kirigami.Theme.textColor)
+                    text: model ? model.Author : ""
 
                     Component.onCompleted: parent.parent.authorTextArea = author
                 }
@@ -150,17 +157,21 @@ Item {
                     width: text.implicitWidth
                     height: text.implicitHeight
 
+                    property alias model: text.model
+
                     Text {
                         id: text
 
                         x: parent.parent.timeStampOffset
                         width: parent.width
 
+                        property var model
+
                         renderType: Text.NativeRendering
 
-                        color: parent.parent.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+                        color: parent.parent.parent.selected ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
 
-                        text: parent.parent.m.TimeStamp
+                        text: model.TimeStamp
                     }
                 }
             }
@@ -316,8 +327,6 @@ Item {
 
                     z: 1
 
-                    readonly property var m: model
-
                     readonly property bool sectionLeader: !model.AuthorMatchesPrecedingMessage
 
                     readonly property int avatarSize: (konvUi.largerFontMetrics.height * 2) + Kirigami.Units.smallSpacing
@@ -348,8 +357,8 @@ Item {
                                 sectionHeader = null;
                             }
                         } else if (!sectionHeader || !avatar) {
-                            avatar = avatarComponent.createObject(msgLayout);
-                            sectionHeader = sectionHeaderComponent.createObject(msgLayout);
+                            avatar = avatarComponent.createObject(msgLayout, {"model": model});
+                            sectionHeader = sectionHeaderComponent.createObject(msgLayout, {"model": model});
                         }
                     }
 
@@ -360,7 +369,7 @@ Item {
                                 timeStamp = null;
                             }
                         } else if (!timeStamp) {
-                            timeStamp = timeStampComponent.createObject(msgLayout);
+                            timeStamp = timeStampComponent.createObject(msgLayout, {"model": model});
                         }
                     }
 
