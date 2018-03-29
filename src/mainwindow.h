@@ -40,6 +40,7 @@ class IdentityModel; // WIPQTQUICK
 class Completer; // WIPQTQUICK
 class InputHistoryModel; // WIPQTQUICK
 class FilteredInputHistoryModel; // WIPQTQUICK
+class KDescendantsProxyModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -156,6 +157,7 @@ class MainWindow : public KXmlGuiWindow
         QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
         QString m_currentUiPackage; // WIPQTQUICK
         QStackedWidget *m_uiStack; // WIPQTQUICK
+        KDescendantsProxyModel *m_viewListModel; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

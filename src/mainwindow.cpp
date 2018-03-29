@@ -109,15 +109,15 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
         }
     );
 
-    // Update filter when Viewcontainer resets.
+    // Update filter when ViewContainer resets.
     QObject::connect(m_viewContainer, &QAbstractItemModel::modelAboutToBeReset, this,
         [this]() {
             m_filteredMessageModel->setFilterView(nullptr);
         }
     );
 
-    KDescendantsProxyModel *viewListModel = new KDescendantsProxyModel(this);
-    viewListModel->setSourceModel(m_viewContainer);
+    m_viewListModel = new KDescendantsProxyModel(this);
+    m_viewListModel->setSourceModel(m_viewContainer);
 
     qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
     m_qmlEngine = new QQmlApplicationEngine(this);
@@ -132,7 +132,7 @@ MainWindow::MainWindow(bool raiseQtQuickUi, const QString& uiPackage) : KXmlGuiW
     // setup qml context
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), m_viewContainer);
-    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewListModel"), viewListModel);
+    m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewListModel"), m_viewListModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
     m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
@@ -831,6 +831,7 @@ void MainWindow::quitProgram()
     // will call queryClose()
     m_closeApp = true;
     m_messageModel->clear(); // WIPQTQUICK
+    m_viewListModel->setSourceModel(nullptr); // WIPQTQUICK
     close();
 }
 
