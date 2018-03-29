@@ -121,7 +121,7 @@ Item {
                     Layout.row: 0
                     Layout.column: 1
                     Layout.columnSpan: parent.timeStamp ? 2 : 1
-                    Layout.topMargin: Kirigami.Units.smallSpacing * 2
+                    Layout.topMargin: Kirigami.Units.smallSpacing
 
                     renderType: Text.NativeRendering
                     textFormat: Text.StyledText
@@ -145,6 +145,7 @@ Item {
                     Layout.column: 2
                     Layout.minimumWidth: width
                     Layout.alignment: Qt.AlignTop
+                    Layout.topMargin: parent.sectionLeader ? Kirigami.Units.smallSpacing / 2 : 0
 
                     width: text.implicitWidth
                     height: text.implicitHeight
@@ -170,6 +171,7 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     anchors.topMargin: parent.authorTextArea ? parent.authorTextArea.y : 0
+                    anchors.bottomMargin: parent.msgTextArea.Layout.bottomMargin
                     anchors.leftMargin: parent.msgTextArea.x
                     anchors.rightMargin: parent.width - parent.contentWidth
 
@@ -369,6 +371,8 @@ Item {
 
                         Layout.row: parent.sectionLeader ? 1 : 0
                         Layout.column: 1
+                        Layout.topMargin: parent.sectionLeader ? Kirigami.Units.smallSpacing / 2 : 0
+                        Layout.bottomMargin: index == (textListView.count - 1) ? 0 : Kirigami.Units.smallSpacing
                         Layout.leftMargin: parent.avatar ? 0 : parent.avatarSize + (parent.columnSpacing * 2)
                         Layout.alignment: Qt.AlignTop
                         Layout.fillWidth: true
