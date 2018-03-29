@@ -169,6 +169,7 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
+                    anchors.topMargin: parent.authorTextArea ? parent.authorTextArea.y : 0
                     anchors.leftMargin: parent.msgTextArea.x
                     anchors.rightMargin: parent.width - parent.contentWidth
 
@@ -278,8 +279,8 @@ Item {
                 readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
                     && !mouseOverlay.tapSelecting)
 
-                readonly property int contentWidth: (msgLayout.timeStamp ? msgLayout.timeStamp.x + msgLayout.timeStamp.width
-                    : msgText.x + msgText.contentWidth)
+                readonly property int contentWidth: Math.max(msgLayout.timeStamp ? msgLayout.timeStamp.x + msgLayout.timeStamp.width + msgLayout.timeStampOffset
+                    : msgText.x + msgText.contentWidth, authorTextArea ? authorTextArea.x + authorTextArea.width : 0)
 
                 readonly property Item msgTextArea: msgText
                 property Item authorTextArea: null
