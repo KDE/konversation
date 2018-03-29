@@ -281,7 +281,7 @@ Item {
                 readonly property bool allowInlineSelection: (mouseOverlay.inlineSelectionItem == msg
                     && !mouseOverlay.tapSelecting)
 
-                readonly property int contentWidth: Math.max(msgLayout.timeStamp ? msgLayout.timeStamp.x + msgLayout.timeStamp.width + msgLayout.timeStampOffset
+                readonly property int contentWidth: Math.max(msgLayout.timeStamp ? msgLayout.timeStamp.x + msgLayout.timeStamp.width + msgLayout.timeStampOffset + 1
                     : msgText.x + msgText.contentWidth, authorTextArea ? authorTextArea.x + authorTextArea.width : 0)
 
                 readonly property Item msgTextArea: msgText
