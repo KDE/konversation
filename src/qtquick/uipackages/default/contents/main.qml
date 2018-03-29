@@ -28,6 +28,7 @@ Kirigami.ApplicationWindow {
     readonly property int defaultContextDrawerWidth: Kirigami.Units.gridUnit * 17
     property int sidebarWidth: defaultSidebarWidth
     readonly property int largerFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.1
+    readonly property QtObject largerFontMetrics: largerFontMetrics
     readonly property int listItemFontSize: Kirigami.Theme.defaultFont.pixelSize * 1.2
     readonly property real colorDeltaLighter: 0.08
     readonly property real colorDeltaDarker: 0.02

@@ -60,8 +60,6 @@ Item {
 
             readonly property int msgWidth: width - verticalScrollbar.width
 
-            spacing: Kirigami.Units.smallSpacing
-
             model: messageModel
 
             Component {
@@ -75,6 +73,7 @@ Item {
 
                     Layout.column: 0
                     Layout.rowSpan: parent.sectionLeader ? 2 : 1
+                    Layout.topMargin: Kirigami.Units.smallSpacing
                     Layout.leftMargin: parent.columnSpacing
                     Layout.alignment: Qt.AlignTop
                     Layout.maximumWidth: width
@@ -122,6 +121,7 @@ Item {
                     Layout.row: 0
                     Layout.column: 1
                     Layout.columnSpan: parent.timeStamp ? 2 : 1
+                    Layout.topMargin: Kirigami.Units.smallSpacing * 2
 
                     renderType: Text.NativeRendering
                     textFormat: Text.StyledText
@@ -318,7 +318,7 @@ Item {
 
                     readonly property bool sectionLeader: !model.AuthorMatchesPrecedingMessage
 
-                    readonly property int avatarSize: konvUi.largerFontSize * 3.2
+                    readonly property int avatarSize: (konvUi.largerFontMetrics.height * 2) + Kirigami.Units.smallSpacing
                     property Item avatar: null
 
                     property Item sectionHeader: null
@@ -328,6 +328,7 @@ Item {
                     readonly property int timeStampOffset: -Math.max(msgText.width - msgText.implicitWidth,
                         msgText.width - msgText.contentWidth)
 
+                    rowSpacing: 0
                     columnSpacing: Kirigami.Units.smallSpacing
 
                     onSectionLeaderChanged: checkDeco()
