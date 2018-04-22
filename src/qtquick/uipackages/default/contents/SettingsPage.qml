@@ -53,8 +53,9 @@ Item {
             onClicked: konvUi.openServerList()
         }
 
-        QQC2.Label {
-            text: "Note: You can press F10 at any time to switch between the old and new UI!"
+        QQC2.Button {
+            text: "Quit"
+            onClicked: konvUi.quitApp()
         }
 
         QQC2.CheckBox {

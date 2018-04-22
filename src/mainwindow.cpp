@@ -641,6 +641,7 @@ void MainWindow::quitProgram()
         confirmQuit() == KMessageBox::Cancel) return;
 
     // will call queryClose()
+    Application::instance()->getQuickMainWindow()->close(); // WIPQTQUICK
     m_closeApp = true;
     Application::instance()->getMessageModel()->clear(); // WIPQTQUICK
     Application::instance()->getViewListModel()->setSourceModel(nullptr); // WIPQTQUICK
