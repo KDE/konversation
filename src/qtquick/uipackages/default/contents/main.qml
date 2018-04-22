@@ -82,7 +82,7 @@ Kirigami.ApplicationWindow {
     Shortcut {
         context: Qt.ApplicationShortcut
         sequence: "F10"
-        onActivated: showLegacyMainWindow
+        onActivated: showLegacyMainWindow()
     }
 
     TextMetrics {
