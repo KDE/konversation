@@ -33,11 +33,9 @@ Item {
         }
 
         QQC2.Button {
-            text: "Show Legacy Menu Bar"
+            text: "Show Legacy Application Window"
 
-            checkable: true
-
-            onCheckedChanged: konvUi.showMenuBar(checked)
+            onClicked: konvUi.showLegacyMainWindow()
         }
 
         QQC2.Button {

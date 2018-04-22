@@ -28,7 +28,7 @@ namespace Konversation
 
     void TrayIcon::restore()
     {
-        activate(QPoint());
+        //activate(QPoint());
     }
 
     void TrayIcon::startNotification()

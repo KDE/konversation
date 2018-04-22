@@ -33,14 +33,6 @@ class KToggleAction;
 class Server;
 class KonviSettingsDialog;
 class ViewContainer;
-class MessageModel; // WIPQTQUICK
-class FilteredMessageModel; // WIPQTQUICK
-class FilteredUserModel; // WIPQTQUICK
-class IdentityModel; // WIPQTQUICK
-class Completer; // WIPQTQUICK
-class InputHistoryModel; // WIPQTQUICK
-class FilteredInputHistoryModel; // WIPQTQUICK
-class KDescendantsProxyModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -54,19 +46,13 @@ class MainWindow : public KXmlGuiWindow
     Q_OBJECT
 
     public:
-        MainWindow(bool raiseQtQuickUi, const QString& uiPackage = QStringLiteral("default")); // WIPQTQUICK
+        MainWindow(); // WIPQTQUICK
         ~MainWindow() override;
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
+        Konversation::StatusBar* getStatusBar() { return m_statusBar; } // WIPQTQUICK
+        bool getCloseApp() { return m_closeApp; } // WIPQTQUICK
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
-
-        MessageModel *getMessageModel() { return m_messageModel; } // WIPQTQUICK
-        FilteredMessageModel *getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
-        FilteredUserModel *getFilteredUserModel() { return m_filteredUserModel; } // WIPQTQUICK
-        InputHistoryModel *getInputHistoryModel() { return m_inputHistoryModel; } // WIPQTQUICK
-        FilteredInputHistoryModel *getFilteredInputHistoryModel() { return m_filteredInputHistoryModel; } // WIPQTQUICK }
-        bool loadUiPackage(const QString &packageName, bool raise = false); // WIPQTQUICK
-        bool reloadUiPackage(); // WIPQTQUICK
 
         /** Some errors need to be shown, even when konversation is minimized.
          */
@@ -113,7 +99,6 @@ class MainWindow : public KXmlGuiWindow
         void resetHasDirtySettings();
 
         void toggleMenubar(bool dontShowWarning = false);
-        void showMenubar(bool show); // WIPQTQUICK
 
         void openPrefsDialog();
         void openKeyBindings();
@@ -146,18 +131,6 @@ class MainWindow : public KXmlGuiWindow
 
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
-
-        MessageModel *m_messageModel; // WIPQTQUICK
-        FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
-        FilteredUserModel *m_filteredUserModel; // WIPQTQUICK
-        IdentityModel *m_identityModel;
-        Completer *m_completer; // WIPQTQUICK
-        InputHistoryModel *m_inputHistoryModel;
-        FilteredInputHistoryModel *m_filteredInputHistoryModel; // WIPQTQUICK
-        QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
-        QString m_currentUiPackage; // WIPQTQUICK
-        QStackedWidget *m_uiStack; // WIPQTQUICK
-        KDescendantsProxyModel *m_viewListModel; // WIPQTQUICK
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;

@@ -121,7 +121,6 @@ int main(int argc, char* argv[])
 #ifndef NDEBUG
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("nui"), i18n("Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)")));
 #endif
-    cmdLineParser.addOption(QCommandLineOption(QStringLiteral("qtquick"), i18n("Default to the Qt Quick UI"))); // WIPQTQUICK
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("uipackage"), i18n("Qt Quick UI package to load"), i18n("uipackage"), QStringLiteral("default"))); // WIPQTQUICK
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("reloaduipackage"), i18n("Reloads the current Qt Quick UI package (if running, otherwise has no effect)"))); // WIPQTQUICK
     aboutData.setupCommandLine(&cmdLineParser);

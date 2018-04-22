@@ -40,11 +40,11 @@ Item {
                 viewModel.showView(view);
 
                 if (!konvUi.pageStack.wideMode) {
+                    konvUi.pageStack.currentIndex = 1;
+
                     if (konvUi.inputField) {
                         konvUi.inputField.forceActiveFocus();
                     }
-
-                    konvUi.pageStack.currentIndex = 1;
                 }
             }
 

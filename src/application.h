@@ -37,6 +37,16 @@ class Images;
 class ServerGroupSettings;
 class QStandardItemModel;
 class QCommandLineParser;
+class QWindow;
+class ViewContainer; // WIPQTQUICK
+class MessageModel; // WIPQTQUICK
+class FilteredMessageModel; // WIPQTQUICK
+class FilteredUserModel; // WIPQTQUICK
+class IdentityModel; // WIPQTQUICK
+class Completer; // WIPQTQUICK
+class InputHistoryModel; // WIPQTQUICK
+class FilteredInputHistoryModel; // WIPQTQUICK
+class KDescendantsProxyModel; // WIPQTQUICK
 
 class KTextEdit;
 
@@ -73,12 +83,20 @@ class Application : public QApplication
          *  'main' one.
          */
         MainWindow* getMainWindow() { return mainWindow; }
+        QWindow* getQuickMainWindow(); // WIPQTQUICK
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
         AwayManager* getAwayManager() { return m_awayManager; }
         ScriptLauncher* getScriptLauncher() { return m_scriptLauncher; }
         Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
+        MessageModel *getMessageModel() { return m_messageModel; } // WIPQTQUICK
+        KDescendantsProxyModel *getViewListModel() { return m_viewListModel; } // WIPQTQUICK
+        FilteredMessageModel *getFilteredMessageModel() { return m_filteredMessageModel; } // WIPQTQUICK
+        FilteredUserModel *getFilteredUserModel() { return m_filteredUserModel; } // WIPQTQUICK
+        InputHistoryModel *getInputHistoryModel() { return m_inputHistoryModel; } // WIPQTQUICK
+        FilteredInputHistoryModel *getFilteredInputHistoryModel() { return m_filteredInputHistoryModel; } // WIPQTQUICK }
+        bool loadUiPackage(const QString &packageName); // WIPQTQUICK
         // HACK
         void showQueueTuner(bool);
 
@@ -200,6 +218,18 @@ class Application : public QApplication
 
         QCommandLineParser *m_commandLineParser;
         QStringList m_restartArguments;
+
+        MessageModel *m_messageModel; // WIPQTQUICK
+        FilteredMessageModel *m_filteredMessageModel; // WIPQTQUICK
+        FilteredUserModel *m_filteredUserModel; // WIPQTQUICK
+        IdentityModel *m_identityModel;
+        Completer *m_completer; // WIPQTQUICK
+        InputHistoryModel *m_inputHistoryModel;
+        FilteredInputHistoryModel *m_filteredInputHistoryModel; // WIPQTQUICK
+        QQmlApplicationEngine *m_qmlEngine; // WIPQTQUICK
+        QString m_currentUiPackage; // WIPQTQUICK
+        QStackedWidget *m_uiStack; // WIPQTQUICK
+        KDescendantsProxyModel *m_viewListModel; // WIPQTQUICK
 };
 
 #endif

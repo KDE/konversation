@@ -30,6 +30,15 @@
 #include "images.h"
 #include "notificationhandler.h"
 #include "awaymanager.h"
+#include "messagemodel.h" // WIPQTQUICK
+#include "usermodel.h" // WIPQTQUICK
+#include "identitymodel.h" // WIPQTQUICK
+#include "completer.h" // WIPQTQUICK
+#include "inputhistorymodel.h" // WIPQTQUICK
+#include "irccontextmenus.h" // WIPQTQUICK
+#include "qclipboardwrapper.h" // WIPQTQUICK
+#include "statusbar.h" // WIPQTQUICK
+#include "trayicon.h" // WIPQTQUICK
 
 #include <QTextCodec>
 #include <QRegExp>
@@ -41,6 +50,11 @@
 #include <QTextCursor>
 #include <QDesktopServices>
 #include <QCommandLineParser>
+#include <QQmlContext> // WIPQTQUICK
+#include <QQuickItem> // WIPQTQUICK
+#include <QQmlApplicationEngine> // WIPQTQUICK
+#include <QStackedWidget> // WIPQTQUICK
+#include <QWindow> // WIPQTQUICK
 
 #include <KRun>
 #include <KConfig>
@@ -50,6 +64,8 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
+#include <KPackage/PackageLoader> // WIPQTQUICK
+#include <KDescendantsProxyModel> // WIPQTQUICK
 
 using namespace Konversation;
 
@@ -196,8 +212,8 @@ void Application::newInstance(QCommandLineParser *args)
             Preferences::self()->setAliasList(aliasList);
 
         // open main window
-        mainWindow = new MainWindow(args->isSet(QStringLiteral("qtquick")),
-            args->value(QStringLiteral("uipackage"))); // WIPQTQUICK
+        mainWindow = new MainWindow();
+        mainWindow->hide(); // WIPQTQUICK
 
         connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
         connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
@@ -207,10 +223,89 @@ void Application::newInstance(QCommandLineParser *args)
         // apply GUI settings
         emit appearanceChanged();
 
+        // BEGIN WIPQTQUICK
+        mainWindow->hide();
+
+        m_identityModel = new IdentityModel(this);
+
+        m_messageModel = new MessageModel(this);
+
+        m_filteredMessageModel = new FilteredMessageModel(this);
+        m_filteredMessageModel->setSourceModel(m_messageModel);
+
+        m_filteredUserModel = new FilteredUserModel(this);
+
+        m_completer = new Completer(this);
+        m_completer->setSourceModel(m_filteredUserModel);
+
+        m_inputHistoryModel = new InputHistoryModel(this);
+        m_filteredInputHistoryModel = new FilteredInputHistoryModel(this);
+        m_filteredInputHistoryModel->setSourceModel(m_inputHistoryModel);
+
+        // Filter on the new view.
+        connect(mainWindow->getViewContainer(), &ViewContainer::viewChanged, this,
+            [this](const QModelIndex &idx) {
+                if (mainWindow->getCloseApp()) {
+                    return;
+                }
+
+                m_filteredMessageModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
+                m_filteredUserModel->setFilterView(static_cast<QObject *>(idx.internalPointer()));
+                m_completer->setContextView(static_cast<QObject *>(idx.internalPointer()));
+            }
+        );
+
+        // Update filter when ViewContainer resets.
+        QObject::connect(mainWindow->getViewContainer(), &QAbstractItemModel::modelAboutToBeReset, this,
+            [this]() {
+                m_filteredMessageModel->setFilterView(nullptr);
+            }
+        );
+
+        m_viewListModel = new KDescendantsProxyModel(this);
+        m_viewListModel->setSourceModel(mainWindow->getViewContainer());
+
+        QObject::connect(mainWindow->systemTrayIcon(), &KStatusNotifierItem::activateRequested, this,
+            [this](bool active, const QPoint &pos) {
+                Q_UNUSED(pos)
+
+                if (active) {
+                    getQuickMainWindow()->show();
+                } else {
+                    getQuickMainWindow()->hide();
+                }
+            }
+        );
+
+        qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
+        m_qmlEngine = new QQmlApplicationEngine(this);
+
+        // register common enums needed in QML
+        qRegisterMetaType<Konversation::ConnectionState>("Konversation::ConnectionState"); // C++ -> QML signal
+        qmlRegisterUncreatableMetaObject(Konversation::staticMetaObject, "org.kde.konversation", 1, 0, "Konversation", "Enums only");
+        qmlRegisterUncreatableType<MessageModel>("org.kde.konversation", 1, 0, "MessageModel", "");
+        qmlRegisterUncreatableType<InputHistoryModel>("org.kde.konversation", 1, 0, "InputHistoryModel", "");
+        qmlRegisterUncreatableType<IrcContextMenus>("org.kde.konversation", 1, 0, "IrcContextMenus", "");
+
+        // setup qml context
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("konvApp"), Application::instance());
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewModel"), mainWindow->getViewContainer());
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("viewListModel"), m_viewListModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("messageModel"), m_filteredMessageModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("userModel"), m_filteredUserModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("completer"), m_completer);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("inputHistoryModel"), m_filteredInputHistoryModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("contextMenus"), IrcContextMenus::self());
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("clipboard"), new QClipboardWrapper(this));
+
+        loadUiPackage(args->value(QStringLiteral("uipackage")));
+
         if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
-            mainWindow->hide();
+            getQuickMainWindow()->hide();
         else
-            mainWindow->show();
+            getQuickMainWindow()->show();
+        // END: WIPQTQUICK
 
         bool openServerList = Preferences::self()->showServerList();
 
@@ -298,6 +393,74 @@ void Application::newInstance(QCommandLineParser *args)
 Application* Application::instance()
 {
     return static_cast<Application*>(QApplication::instance());
+}
+
+bool Application::loadUiPackage(const QString &packageName)
+{
+    if (packageName.isEmpty()) {
+        qDebug() << "Error loading UI package: Package name is empty. Doing nothing.";
+
+        return false;
+    }
+
+    QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
+    QString fixedName(packageName.startsWith(packageNamePrefix) ? packageName : packageNamePrefix + packageName);
+
+    KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
+        fixedName);
+
+    if (!p.isValid()) {
+        qDebug() << "Error loading UI package: Package" << packageName << "is invalid.";
+
+        qDebug() << "Available Qt Quick UI packages for Konversation (name / id):";
+
+        auto plist = KPackage::PackageLoader::self()->listPackages(QStringLiteral("Konversation/UiPackage"));
+
+        for (const auto &pkg : plist) {
+            qDebug() << "  " << pkg.name() << "/" << pkg.pluginId();
+        }
+
+        return false;
+    }
+
+    if (m_qmlEngine->rootObjects().count()) {
+        qDebug() << "Unloading current UI package:" << m_currentUiPackage;
+
+        // Close the window.
+        static_cast<QWindow *>(m_qmlEngine->rootObjects().first())->close();
+
+        // Delete the root object.
+        qDeleteAll(m_qmlEngine->rootObjects());
+
+        // Clear the component cache.
+        m_qmlEngine->clearComponentCache();
+    }
+
+    m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
+
+    m_currentUiPackage = fixedName;
+
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(openServerList()),
+        mainWindow, SLOT(openServerList()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(openIdentities()),
+        mainWindow, SLOT(openIdentitiesDialog()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(showLegacyMainWindow()),
+        mainWindow, SLOT(show()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(openLegacyConfigDialog()),
+        mainWindow, SLOT(openPrefsDialog()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(quitApp()),
+        mainWindow, SLOT(quitProgram()));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(setStatusBarTempText(QString)),
+        mainWindow->getStatusBar(), SLOT(setMainLabelTempText(QString)));
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(clearStatusBarTempText()),
+        mainWindow->getStatusBar(), SLOT(clearMainLabelTempText()));
+
+    return true;
+}
+
+QWindow* Application::getQuickMainWindow()
+{
+    return static_cast<QWindow *>(m_qmlEngine->rootObjects().first());
 }
 
 void Application::restart()
@@ -1398,12 +1561,6 @@ void Application::handleActivate(const QStringList& arguments)
     KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
     mainWindow->show();
     mainWindow->raise();
-
-    // WIPQTQUICK
-    if (m_commandLineParser->isSet(QStringLiteral("reloaduipackage")))
-    {
-        mainWindow->reloadUiPackage();
-    }
 }
 
 

@@ -568,7 +568,7 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
 
     /* BEGIN: WIPQTQUICK */
     Application* konvApp = Application::instance();
-    MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+    MessageModel* msgModel = konvApp->getMessageModel();
 
     QDateTime serverTime;
 
@@ -635,7 +635,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, const QHa
 
     /* BEGIN: WIPQTQUICK */
     Application* konvApp = Application::instance();
-    MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+    MessageModel* msgModel = konvApp->getMessageModel();
 
     msgModel->appendMessage(m_chatWin,
         QTime::currentTime().toString(Preferences::self()->timestampFormat()),
@@ -679,7 +679,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
 
         /* BEGIN: WIPQTQUICK */
         Application* konvApp = Application::instance();
-        MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+        MessageModel* msgModel = konvApp->getMessageModel();
 
         msgModel->appendMessage(m_chatWin,
             QTime::currentTime().toString(Preferences::self()->timestampFormat()),
@@ -707,7 +707,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
 
         /* BEGIN: WIPQTQUICK */
         Application* konvApp = Application::instance();
-        MessageModel* msgModel = konvApp->getMainWindow()->getMessageModel();
+        MessageModel* msgModel = konvApp->getMessageModel();
 
         msgModel->appendMessage(m_chatWin,
             QTime::currentTime().toString(Preferences::self()->timestampFormat()),

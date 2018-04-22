@@ -2072,14 +2072,14 @@ void ViewContainer::closeView(ChatWindow* view)
 void ViewContainer::cleanupAfterClose(ChatWindow* view)
 {
     // BEGIN: WIPQTQUICK
-    if (m_window->getFilteredMessageModel()->filterView() == view) {
-        m_window->getFilteredMessageModel()->setFilterView(nullptr);
-        m_window->getFilteredUserModel()->setFilterView(nullptr);
-        m_window->getFilteredInputHistoryModel()->setFilterView(nullptr);
+    if (Application::instance()->getFilteredMessageModel()->filterView() == view) {
+        Application::instance()->getFilteredMessageModel()->setFilterView(nullptr);
+        Application::instance()->getFilteredUserModel()->setFilterView(nullptr);
+        Application::instance()->getFilteredInputHistoryModel()->setFilterView(nullptr);
     }
 
-    m_window->getMessageModel()->cullMessages(view);
-    m_window->getInputHistoryModel()->cull(view);
+    Application::instance()->getMessageModel()->cullMessages(view);
+    Application::instance()->getInputHistoryModel()->cull(view);
     // END: WIPQTQUICK
 
     if (view == m_frontView) m_frontView = nullptr;

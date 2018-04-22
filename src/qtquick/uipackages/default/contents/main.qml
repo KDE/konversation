@@ -13,7 +13,7 @@ import QtQuick 2.7
 
 import QtQml.Models 2.2
 import QtQuick.Controls 1.4 as QQC1
-import QtQuick.Controls 2.2 as QQC2
+import QtQuick.Controls 2.3 as QQC2
 
 import org.kde.kirigami 2.2 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
@@ -44,8 +44,11 @@ Kirigami.ApplicationWindow {
     property bool settingsMode: false
     property Item settingsModeButtons: null
 
+    signal openServerList
+    signal openIdentities
     signal openLegacyConfigDialog
-    signal showMenuBar(bool show)
+    signal showLegacyMainWindow
+    signal quitApp
 
     signal setStatusBarTempText(string text)
     signal clearStatusBarTempText
@@ -416,8 +419,6 @@ Kirigami.ApplicationWindow {
                                 konvUi.contentFooterStackView.pop();
                             }
 
-                            konvUi.showMenuBar(false);
-
                             konvUi.inputField.forceActiveFocus();
                         }
                     }
@@ -593,5 +594,35 @@ Kirigami.ApplicationWindow {
                 onTriggered: contextDrawer.drawerOpen ? contextDrawer.close() : contextDrawer.open()
             }
         }
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: "F2"
+        onActivated: openServerList()
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: "F8"
+        onActivated: openIdentities()
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: "F10"
+        onActivated: showLegacyMainWindow()
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: StandardKey.Preferences
+        onActivated: openLegacyConfigDialog()
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: StandardKey.Quit
+        onActivated: quitApp()
     }
 }

@@ -1887,12 +1887,6 @@ namespace Konversation
                 else
                     qDebug() << "Told to cycle the server, but current context doesn't have one.";
             }
-            if (isParameter("uipackage", input.parameter))
-            {
-                Application *konvApp = Application::instance();
-
-                konvApp->getMainWindow()->reloadUiPackage();
-            }
             else if (m_server)
             {
                 if (isAChannel(input.parameter))
