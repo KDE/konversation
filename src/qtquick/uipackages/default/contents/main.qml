@@ -59,6 +59,27 @@ Kirigami.ApplicationWindow {
 
     pageStack.interactive: false
 
+    Repeater {
+        model: shortcutsModel
+
+        onCountChanged: console.log("actions", count)
+
+        delegate: Item {
+                Shortcut {
+                context: Qt.ApplicationShortcut
+                sequence: model.KeySequence
+                onActivated: shortcutsModel.trigger(index)
+                Component.onCompleted: console.log(model.KeySequence)
+                }
+        }
+    }
+
+    Shortcut {
+        context: Qt.ApplicationShortcut
+        sequence: "F10"
+        onActivated: showLegacyMainWindow
+    }
+
     TextMetrics {
         id: largerFontMetrics
 
@@ -594,35 +615,5 @@ Kirigami.ApplicationWindow {
                 onTriggered: contextDrawer.drawerOpen ? contextDrawer.close() : contextDrawer.open()
             }
         }
-    }
-
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: "F2"
-        onActivated: openServerList()
-    }
-
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: "F8"
-        onActivated: openIdentities()
-    }
-
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: "F10"
-        onActivated: showLegacyMainWindow()
-    }
-
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: StandardKey.Preferences
-        onActivated: openLegacyConfigDialog()
-    }
-
-    Shortcut {
-        context: Qt.ApplicationShortcut
-        sequence: StandardKey.Quit
-        onActivated: quitApp()
     }
 }

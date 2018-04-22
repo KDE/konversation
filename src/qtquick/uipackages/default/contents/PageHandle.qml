@@ -18,8 +18,8 @@ Rectangle {
 
     anchors.verticalCenter: parent.verticalCenter
 
-    width: Kirigami.Settings.isMobile ? 3 * Kirigami.Units.gridUnit : Kirigami.Units.gridUnit
-    height: Kirigami.Settings.isMobile ? 6 * Kirigami.Units.gridUnit : 3 * Kirigami.Units.gridUnit
+    width: Kirigami.Settings.isMobile ? 2 * Kirigami.Units.gridUnit : Kirigami.Units.gridUnit
+    height: Kirigami.Settings.isMobile ? 4 * Kirigami.Units.gridUnit : 3 * Kirigami.Units.gridUnit
 
     property alias iconName: icon.source
     property alias iconSelected: icon.selected

@@ -28,6 +28,7 @@
 #include "awaymanager.h"
 #include "transfermanager.h"
 #include "messagemodel.h" // WIPQTQUICK
+#include "actioncollectionmodel.h" // WIPQTQUICK
 
 #include <QSignalMapper>
 #include <QSplitter>
@@ -553,6 +554,11 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr) // WIPQTQUICK
     action->setMenu(menu);
     new KonviBookmarkHandler(menu, this);
     actionCollection()->addAction(QStringLiteral("bookmarks") , action);
+
+    // BEGIN WIPQTQUICK
+    m_actionCollectionModel = new ActionCollectionModel(this);
+    m_actionCollectionModel->setActionCollection(actionCollection());
+    // END WIPQTQUICK
 
     // decide whether to show the tray icon or not
     updateTrayIcon();

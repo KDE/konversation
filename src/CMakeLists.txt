@@ -159,6 +159,7 @@ set(viewer_SRCS
     viewer/completer.cpp
     viewer/inputhistorymodel.cpp
     viewer/qclipboardwrapper.cpp
+    viewer/actioncollectionmodel.cpp
 )
 
 ki18n_wrap_ui(viewer_SRCS

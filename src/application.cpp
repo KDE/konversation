@@ -39,6 +39,7 @@
 #include "qclipboardwrapper.h" // WIPQTQUICK
 #include "statusbar.h" // WIPQTQUICK
 #include "trayicon.h" // WIPQTQUICK
+#include "actioncollectionmodel.h" // WIPQTQUICK
 
 #include <QTextCodec>
 #include <QRegExp>
@@ -296,6 +297,7 @@ void Application::newInstance(QCommandLineParser *args)
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("identityModel"), m_identityModel);
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("completer"), m_completer);
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("inputHistoryModel"), m_filteredInputHistoryModel);
+        m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("shortcutsModel"), mainWindow->getActionCollectionModel());
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("contextMenus"), IrcContextMenus::self());
         m_qmlEngine->rootContext()->setContextProperty(QStringLiteral("clipboard"), new QClipboardWrapper(this));
 

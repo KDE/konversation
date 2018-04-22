@@ -33,6 +33,7 @@ class KToggleAction;
 class Server;
 class KonviSettingsDialog;
 class ViewContainer;
+class ActionCollectionModel; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -50,6 +51,7 @@ class MainWindow : public KXmlGuiWindow
         ~MainWindow() override;
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
+        ActionCollectionModel* getActionCollectionModel() { return m_actionCollectionModel; } // WIPQTQUICK
         Konversation::StatusBar* getStatusBar() { return m_statusBar; } // WIPQTQUICK
         bool getCloseApp() { return m_closeApp; } // WIPQTQUICK
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
@@ -135,6 +137,8 @@ class MainWindow : public KXmlGuiWindow
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;
         bool m_closeApp;
+
+        ActionCollectionModel *m_actionCollectionModel; // WIPQTQUICK
 };
 
 #endif /* MAINWINDOW_H */
