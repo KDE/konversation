@@ -43,6 +43,16 @@ Item {
             onClicked: konvUi.openLegacyConfigDialog()
         }
 
+        QQC2.Button {
+            text: "Open Legacy Identities Dialog"
+            onClicked: konvUi.openIdentities()
+        }
+
+        QQC2.Button {
+            text: "Open Legacy Server List"
+            onClicked: konvUi.openServerList()
+        }
+
         QQC2.Label {
             text: "Note: You can press F10 at any time to switch between the old and new UI!"
         }
