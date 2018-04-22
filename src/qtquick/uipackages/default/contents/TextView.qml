@@ -105,7 +105,7 @@ Item {
 
                         text: {
                             // WIPQTQUICK HACK TODO Probably doesn't work with non-latin1.
-                            var match = model.Author.match(/([a-zA-Z])([a-zA-Z])/);
+                            var match = model.Author.match(/([a-zA-Z0-9])([a-zA-Z0-9])/);
                             var abbrev = match[1].toUpperCase();
 
                             if (match.length > 2) {
