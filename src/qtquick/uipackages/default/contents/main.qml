@@ -50,6 +50,8 @@ Kirigami.ApplicationWindow {
     signal showLegacyMainWindow
     signal quitApp
 
+    signal endNotification
+
     signal setStatusBarTempText(string text)
     signal clearStatusBarTempText
 
@@ -59,17 +61,20 @@ Kirigami.ApplicationWindow {
 
     pageStack.interactive: false
 
+    onActiveChanged: {
+        if (active) {
+            endNotification();
+        }
+    }
+
     Repeater {
         model: shortcutsModel
-
-        onCountChanged: console.log("actions", count)
 
         delegate: Item {
                 Shortcut {
                 context: Qt.ApplicationShortcut
                 sequence: model.KeySequence
                 onActivated: shortcutsModel.trigger(index)
-                Component.onCompleted: console.log(model.KeySequence)
                 }
         }
     }

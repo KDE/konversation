@@ -17,6 +17,7 @@
 class ChatWindow;
 class Application;
 class MainWindow;
+class QWindow; // WIPQTQUICK
 
 namespace Konversation
 {
@@ -58,6 +59,7 @@ namespace Konversation
 
         private:
             MainWindow* m_mainWindow;
+            QWindow* m_quickMainWindow; // WIPQTQUICK
     };
 
 }

@@ -34,6 +34,7 @@ namespace Konversation
         : QObject(parent)
     {
         m_mainWindow = parent->getMainWindow();
+        m_quickMainWindow = parent->getQuickMainWindow();
     }
 
     NotificationHandler::~NotificationHandler() = default;
@@ -47,7 +48,7 @@ namespace Konversation
             return;
 
         bool osd = Preferences::self()->oSDShowChannel() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView()));
+            (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView()));
 
         QString eventTitle = i18nc("Notification title; see Event/message in konversation.notifyrc", "New message from %1 in %2", fromNick, chatWin->getName());
         KNotification* msg;
@@ -96,7 +97,7 @@ namespace Konversation
             return;
 
         bool osd = (Preferences::self()->oSDShowChannel() || Preferences::self()->oSDShowOwnNick()) &&
-            (!m_mainWindow->isActiveWindow() ||
+            (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView()));
 
         QString eventTitle = i18nc("Notification title; see Event/nick in konversation.notifyrc", "Your nick was mentioned by %1 in %2", fromNick, chatWin->getName());
@@ -143,7 +144,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        bool osd = Preferences::self()->oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
+        bool osd = Preferences::self()->oSDShowQuery() && (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView()));
 
         QString eventTitle = i18nc("Notification title; see Event/message in konversation.notifyrc", "New query message from %1", chatWin->getName());
@@ -189,8 +190,12 @@ namespace Konversation
         if (!chatWin->getServer() || (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer()->isAway()))
             return;
 
-        if (!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected() && m_mainWindow->systemTrayIcon())
+        qDebug() << m_quickMainWindow->isActive();
+
+        if ((!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow()) && chatWin->getServer()->isConnected() && m_mainWindow->systemTrayIcon()) {
+            qDebug() << "starting";
             m_mainWindow->systemTrayIcon()->startNotification();
+        }
 
     }
 
@@ -206,7 +211,7 @@ namespace Konversation
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
+            (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             Application* konvApp = Application::instance();
             konvApp->osd->show(i18n("%1 joined %2",nick, chatWin->getName()));
@@ -225,7 +230,7 @@ namespace Konversation
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
+            (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             Application* konvApp = Application::instance();
             konvApp->osd->show(i18n("%1 parted %2",nick, chatWin->getName()));
@@ -408,7 +413,7 @@ namespace Konversation
         }
 
         if(Preferences::self()->oSDShowOwnNick() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
+            (!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             Application* konvApp = Application::instance();
             // if there was no nick associated, this must be a command message, so don't try displaying

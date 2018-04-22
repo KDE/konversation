@@ -452,6 +452,10 @@ bool Application::loadUiPackage(const QString &packageName)
         mainWindow, SLOT(openPrefsDialog()));
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(quitApp()),
         mainWindow, SLOT(quitProgram()));
+
+    QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(endNotification()),
+        mainWindow->systemTrayIcon(), SLOT(endNotification()));
+
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(setStatusBarTempText(QString)),
         mainWindow->getStatusBar(), SLOT(setMainLabelTempText(QString)));
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(clearStatusBarTempText()),
