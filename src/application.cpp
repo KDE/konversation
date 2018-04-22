@@ -61,7 +61,9 @@
 #include <KConfig>
 #include <KShell>
 #include <KMacroExpander>
-#include <kwallet.h>
+#ifdef WITH_KWALLET
+    #include <kwallet.h>
+#endif
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
@@ -80,7 +82,6 @@ Application::Application(int &argc, char **argv)
     m_scriptLauncher = nullptr;
     quickConnectDialog = nullptr;
     osd = nullptr;
-    m_wallet = nullptr;
     m_images = nullptr;
     m_sound = nullptr;
     m_dccTransferManager = nullptr;
@@ -408,6 +409,7 @@ bool Application::loadUiPackage(const QString &packageName)
     QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
     QString fixedName(packageName.startsWith(packageNamePrefix) ? packageName : packageNamePrefix + packageName);
 
+#ifndef Q_OS_ANDROID
     KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
         fixedName);
 
@@ -424,6 +426,7 @@ bool Application::loadUiPackage(const QString &packageName)
 
         return false;
     }
+#endif
 
     if (m_qmlEngine->rootObjects().count()) {
         qDebug() << "Unloading current UI package:" << m_currentUiPackage;
@@ -438,7 +441,11 @@ bool Application::loadUiPackage(const QString &packageName)
         m_qmlEngine->clearComponentCache();
     }
 
+#ifdef Q_OS_ANDROID
+    m_qmlEngine->load(QUrl("qrc:/default/contents/main.qml"));
+#else
     m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));
+#endif
 
     m_currentUiPackage = fixedName;
 
@@ -1489,8 +1496,9 @@ void Application::updateProxySettings()
         proxy.setHostName(Preferences::self()->proxyAddress());
         proxy.setPort(Preferences::self()->proxyPort());
         proxy.setUser(Preferences::self()->proxyUsername());
-        QString password;
 
+#ifdef WITH_KWALLET
+        QString password;
         if(wallet())
         {
             int ret = wallet()->readPassword(QStringLiteral("ProxyPassword"), password);
@@ -1502,6 +1510,7 @@ void Application::updateProxySettings()
         }
 
         proxy.setPassword(password);
+#endif
         QNetworkProxy::setApplicationProxy(proxy);
     }
     else
@@ -1510,6 +1519,7 @@ void Application::updateProxySettings()
     }
 }
 
+#ifdef WITH_KWALLET
 KWallet::Wallet* Application::wallet()
 {
     if(!m_wallet)
@@ -1546,11 +1556,14 @@ KWallet::Wallet* Application::wallet()
 
     return m_wallet;
 }
+#endif
 
 void Application::closeWallet()
 {
+#ifdef WITH_KWALLET
     delete m_wallet;
     m_wallet = nullptr;
+#endif
 }
 
 void Application::handleActivate(const QStringList& arguments)

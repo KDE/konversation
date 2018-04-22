@@ -63,10 +63,12 @@ namespace Konversation
     }
 }
 
+#ifdef WITH_KWALLET
 namespace KWallet
 {
     class Wallet;
 }
+#endif
 
 
 class Application : public QApplication
@@ -148,9 +150,10 @@ class Application : public QApplication
 
         Q_INVOKABLE static void openUrl(const QString& url);
 
+#ifdef WITH_KWALLET
         /// The wallet used to store passwords. Opens the wallet if it's closed.
         KWallet::Wallet* wallet();
-
+#endif
         void abortScheduledRestart() { m_restartScheduled = false; }
 
         /// The command line parser is needed for handling parsing arguments on new activations.
@@ -212,7 +215,9 @@ class Application : public QApplication
 
         Konversation::NotificationHandler* m_notificationHandler;
 
-        KWallet::Wallet* m_wallet;
+#ifdef WITH_KWALLET
+        KWallet::Wallet* m_wallet = nullptr;
+#endif
 
         QNetworkConfigurationManager* m_networkConfigurationManager;
 

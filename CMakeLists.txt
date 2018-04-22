@@ -18,6 +18,11 @@ include(ECMQMLModules)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Quick QuickWidgets) # WIPQTQUICK
 
+if (ANDROID)
+#   we want to make sure that generally all components are found
+
+    set(optionalComponents "OPTIONAL_COMPONENTS")
+endif()
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive
     Bookmarks
@@ -25,7 +30,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     ConfigWidgets
     CoreAddons
     Crash
-    DocTools
     Emoticons
     I18n
     IdleTime
@@ -33,7 +37,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     KIO
     Parts
     Solid
-    Wallet
     WidgetsAddons
     GlobalAccel
     DBusAddons
@@ -41,8 +44,11 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WindowSystem
     IconThemes
     ItemViews
-    Package # WIPQTQUICK: Used to load the QML UI package
     ItemModels # WIPQTQUICK Destructuring ViewContainer to flat list
+    ${optionalComponents}
+    Package # WIPQTQUICK: Used to load the QML UI package
+    Wallet
+    DocTools
 )
 
 ecm_find_qmlmodule(org.kde.kirigami 2.1) # WIPQTQUICK
@@ -63,6 +69,10 @@ set(HAVE_QCA2 ${Qca-qt5_FOUND})
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+if(KF5Wallet_FOUND)
+    add_definitions(-DWITH_KWALLET=1)
+endif()
+
 add_definitions(
   -DQT_USE_QSTRINGBUILDER
   -DQT_NO_CAST_TO_ASCII
@@ -75,9 +85,10 @@ add_definitions(
 
 add_subdirectory(src)
 add_subdirectory(data)
-add_subdirectory(doc)
-
-ki18n_install(po)
+if(KF5DocTools_FOUND)
+    add_subdirectory(doc)
+endif()
+# ki18n_install(po)
 
 get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
 

@@ -29,6 +29,9 @@
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)
 
+#ifdef Q_OS_ANDROID
+Q_DECL_EXPORT
+#endif
 int main(int argc, char* argv[])
 {
     Application app(argc, argv);

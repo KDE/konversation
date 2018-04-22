@@ -23,7 +23,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "preferences.h"
 
 #include <KLineEdit>
-#include <kwallet.h>
+#ifdef WITH_KWALLET
+    #include <kwallet.h>
+#endif
 #include <KLocalizedString>
 
 #include <config-konversation.h>
@@ -49,6 +51,7 @@ void ConnectionBehavior_Config::restorePageToDefaults()
 
 void ConnectionBehavior_Config::saveSettings()
 {
+#ifdef WITH_KWALLET
     if(kcfg_ProxyEnabled->isChecked () && m_passwordChanged)
     {
         if(Application::instance()->wallet())
@@ -63,10 +66,12 @@ void ConnectionBehavior_Config::saveSettings()
     }
 
     setPasswordChanged(false);
+#endif
 }
 
 void ConnectionBehavior_Config::loadSettings()
 {
+#ifdef WITH_KWALLET
     QString password;
 
     if(Preferences::self()->proxyEnabled())
@@ -84,6 +89,7 @@ void ConnectionBehavior_Config::loadSettings()
 
     m_ProxyPassword->setText(password);
     setPasswordChanged(false);
+#endif
 }
 
 bool ConnectionBehavior_Config::hasChanged()

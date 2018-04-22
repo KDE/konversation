@@ -3,8 +3,6 @@ include(ECMAddAppIcon)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
-add_subdirectory(qtquick)
-
 set(core_SRCS
     #====================================
     #=== Application
@@ -244,7 +242,6 @@ target_link_libraries(konversation
     KF5::KIOWidgets
     KF5::Parts
     KF5::Solid
-    KF5::Wallet
     KF5::WidgetsAddons
     KF5::GlobalAccel
     KF5::DBusAddons
@@ -257,6 +254,9 @@ target_link_libraries(konversation
     KF5::ItemModels # WIPQTQUICK Destructuring ViewContainer to flat list
     Phonon::phonon4qt5)
 
+if(TARGET KF5::Wallet)
+    target_link_libraries(konversation KF5::Wallet)
+endif()
 if (Qca-qt5_FOUND)
     target_link_libraries(konversation qca-qt5)
 endif ()
@@ -265,3 +265,5 @@ if (WIN32)
 endif()
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+add_subdirectory(qtquick)
