@@ -45,6 +45,10 @@
 
 #include <KIO/Job>
 
+#ifdef Q_OS_ANDROID
+#include <sys/endian.h>
+#endif
+
 using namespace Konversation::UPnP;
 
 namespace Konversation

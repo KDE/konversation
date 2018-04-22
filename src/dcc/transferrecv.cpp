@@ -33,6 +33,9 @@
 #include "server.h"
 #include "upnprouter.h"
 
+#ifdef Q_OS_ANDROID
+#include <sys/endian.h>
+#endif
 #include <QDateTime>
 #include <QTcpSocket>
 #include <QTcpServer>
