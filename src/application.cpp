@@ -67,7 +67,9 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
+#ifndef USE_QRC
 #include <KPackage/PackageLoader> // WIPQTQUICK
+#endif
 #include <KDescendantsProxyModel> // WIPQTQUICK
 
 using namespace Konversation;
@@ -409,7 +411,7 @@ bool Application::loadUiPackage(const QString &packageName)
     QLatin1Literal packageNamePrefix("org.kde.konversation.uipackages.");
     QString fixedName(packageName.startsWith(packageNamePrefix) ? packageName : packageNamePrefix + packageName);
 
-#ifndef Q_OS_ANDROID
+#ifndef USE_QRC
     KPackage::Package p = KPackage::PackageLoader::self()->loadPackage(QStringLiteral("Konversation/UiPackage"),
         fixedName);
 
@@ -441,7 +443,7 @@ bool Application::loadUiPackage(const QString &packageName)
         m_qmlEngine->clearComponentCache();
     }
 
-#ifdef Q_OS_ANDROID
+#ifdef USE_QRC
     m_qmlEngine->load(QUrl("qrc:/default/contents/main.qml"));
 #else
     m_qmlEngine->load(QUrl::fromLocalFile(p.filePath("window")));

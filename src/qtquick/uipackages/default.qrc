@@ -1,0 +1,16 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>default/contents/TextView.qml</file>
+<file>default/contents/CompletionPopup.qml</file>
+<file>default/contents/ListItem.qml</file>
+<file>default/contents/main.qml</file>
+<file>default/contents/SettingsPage.qml</file>
+<file>default/contents/PageHandle.qml</file>
+<file>default/contents/SettingsModeButtons.qml</file>
+<file>default/contents/InputField.qml</file>
+<file>default/contents/UserList.qml</file>
+<file>default/contents/Settings.qml</file>
+<file>default/contents/ViewSwitcher.qml</file>
+<file>default/contents/TopicLabel.qml</file>
+</qresource>
+</RCC>

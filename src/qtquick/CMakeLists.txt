@@ -1,8 +1,7 @@
 add_subdirectory(uicomponents)
-if (ANDROID)
-    set(CMAKE_AUTORCC ON)
-    target_sources(konversation PRIVATE qtquick/uipackages/default.qrc)
-else()
+
+if (NOT ${USE_QRC})
     add_subdirectory(uipackages)
     add_subdirectory(kpackage_packagestructure_konversation_uipackage)
 endif()
+

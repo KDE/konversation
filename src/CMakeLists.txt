@@ -250,10 +250,14 @@ target_link_libraries(konversation
     KF5::WindowSystem
     KF5::IconThemes
     KF5::ItemViews
-    KF5::Package # WIPQTQUICK: Used to load the QML UI package
     KF5::ItemModels # WIPQTQUICK Destructuring ViewContainer to flat list
     Phonon::phonon4qt5)
-
+if(USE_QRC)
+    target_compile_definitions(konversation PRIVATE -DUSE_QRC)
+    target_sources(konversation PRIVATE qtquick/uipackages/default.qrc)
+else()
+    target_link_libraries(konversation KF5::Package)
+endif()
 if(TARGET KF5::Wallet)
     target_link_libraries(konversation KF5::Wallet)
 endif()

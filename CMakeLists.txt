@@ -18,6 +18,8 @@ include(ECMQMLModules)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets Quick QuickWidgets) # WIPQTQUICK
 
+set(CMAKE_AUTORCC ON)
+
 if (ANDROID)
 #   we want to make sure that generally all components are found
 
@@ -82,6 +84,12 @@ add_definitions(
 # -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 Port: QCA includes cause trouble.
   -DQT_USE_FAST_OPERATOR_PLUS
 )
+
+set(USE_QRC_DEFAULT OFF)
+if(ANDROID)
+    set(USE_QRC_DEFAULT ON)
+endif()
+option(USE_QRC "use qrc instead of kpackage to integrate qml code" ${USE_QRC_DEFAULT})
 
 add_subdirectory(src)
 add_subdirectory(data)
