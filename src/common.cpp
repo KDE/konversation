@@ -344,3 +344,5 @@ namespace Konversation
     }
 
 }
+
+#include "moc_common.cpp"
