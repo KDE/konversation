@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         KONVI_VERSION " #" STRHACK(COMMIT),
         i18n("A user-friendly IRC client"),
         KAboutLicense::GPL,
-        i18n("(C) 2002-2017 by the Konversation team"),
+        i18n("(C) 2002-2018 by the Konversation team"),
         i18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
         QStringLiteral("http://konversation.kde.org/"));
