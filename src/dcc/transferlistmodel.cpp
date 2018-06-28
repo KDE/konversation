@@ -386,14 +386,8 @@ namespace Konversation
 
         QPixmap TransferListModel::getTypeIcon(Transfer::Type type) const
         {
-            if (type == Transfer::Send)
-            {
-                return KIconLoader::global()->loadIcon("arrow-up", KIconLoader::Small);
-            }
-            else
-            {
-                return KIconLoader::global()->loadIcon("arrow-down", KIconLoader::Small);
-            }
+            return KIconLoader::global()->loadIcon(
+                type == Transfer::Send ? "arrow-up" : "arrow-down", KIconLoader::Small);
         }
 
         QPixmap TransferListModel::getStatusIcon(Transfer::Status status) const
