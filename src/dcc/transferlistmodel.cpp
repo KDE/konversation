@@ -651,15 +651,9 @@ namespace Konversation
 
         QString TransferListModel::displayTypeToString (int type) const
         {
-            if (type == TransferItemData::ReceiveCategory)
-            {
-                return i18n("Incoming Transfers");
-            }
-            else
-            {
-                return i18n("Outgoing Transfers");
-            }
+            return type == TransferItemData::ReceiveCategory
+                ? i18n("Incoming Transfers")
+                : i18n("Outgoing Transfers");
         }
-
     }
 }
