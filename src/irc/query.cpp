@@ -195,10 +195,7 @@ IrcContextMenus::MenuOptions Query::contextMenuOptions() const
 
 void Query::setEncryptedOutput(bool e)
 {
-    if (e)
-        blowfishLabel->show();
-    else
-        blowfishLabel->hide();
+    blowfishLabel->setVisible(e);
 }
 
 void Query::queryTextEntered()
