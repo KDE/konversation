@@ -34,6 +34,7 @@
 #include <QDebug>
 #include <QTemporaryFile>
 #include <QMimeDatabase>
+#include <QScopedPointer>
 
 #ifndef Q_OS_WIN
 #include <unistd.h> // unlink()
@@ -236,16 +237,9 @@ void Theme_Config::installTheme()
     {
         QMimeDatabase db;
         QMimeType mimeType = db.mimeTypeForFile(tmpThemeFile);
-        KArchive *themeArchive;
-
-        if (mimeType.inherits(QStringLiteral("application/zip")))
-        {
-            themeArchive = new KZip(tmpThemeFile);
-        }
-        else
-        {
-            themeArchive = new KTar(tmpThemeFile);
-        }
+        QScopedPointer<KArchive> themeArchive(mimeType.inherits(QStringLiteral("application/zip")) ?
+            (KArchive*) new KZip(tmpThemeFile) :
+            (KArchive*) new KTar(tmpThemeFile));
 
         themeArchive->open(QIODevice::ReadOnly);
         qApp->processEvents();
@@ -269,7 +263,6 @@ void Theme_Config::installTheme()
 
         }
         themeArchive->close();
-        delete themeArchive;
     }
 
     loadSettings();
