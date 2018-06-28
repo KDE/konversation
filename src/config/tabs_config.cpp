@@ -26,31 +26,16 @@ Tabs_Config::~Tabs_Config() = default;
 void Tabs_Config::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
-
-    if (kcfg_TabPlacement->currentIndex() == 0 || kcfg_TabPlacement->currentIndex() == 1)
-    {
-        kcfg_CloseButtons->setEnabled(true);
-        kcfg_ShowTabBarCloseButton->setEnabled(true);
-    }
-    else
-    {
-        kcfg_CloseButtons->setEnabled(false);
-        kcfg_ShowTabBarCloseButton->setEnabled(false);
-    }
+    const bool shouldEnable = kcfg_TabPlacement->currentIndex() == 0 || kcfg_TabPlacement->currentIndex() == 1;
+    kcfg_CloseButtons->setEnabled(shouldEnable);
+    kcfg_ShowTabBarCloseButton->setEnabled(shouldEnable);
 }
 
 void Tabs_Config::toggleCheckBoxes(int activated)
 {
-    if (activated == 0 || activated == 1)
-    {
-        kcfg_CloseButtons->setEnabled(true);
-        kcfg_ShowTabBarCloseButton->setEnabled(true);
-    }
-    else
-    {
-        kcfg_CloseButtons->setEnabled(false);
-        kcfg_ShowTabBarCloseButton->setEnabled(false);
-    }
+    const bool shouldEnable = activated == 0 || activated == 1;
+    kcfg_CloseButtons->setEnabled(shouldEnable);
+    kcfg_ShowTabBarCloseButton->setEnabled(shouldEnable);
 }
 
 
