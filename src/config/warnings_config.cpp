@@ -83,11 +83,7 @@ void Warnings_Config::saveSettings()
             {
                 // Let's keep the old state if we got one.
                 QString state = grp.readEntry(warningName, QString());
-
-                if (!state.isEmpty())
-                    grp.writeEntry(warningName, state);
-                else
-                    grp.writeEntry(warningName, "true");
+                grp.writeEntry(warningName, state.isEmpty() ? "true" : state);
             }
         }
         else if (warningName == QLatin1String("Invitation"))
@@ -106,11 +102,7 @@ void Warnings_Config::saveSettings()
                 // If we already ignore the joining, keep it "2"
                 // else newly unchecked, always join "1"
                 QString state = grp.readEntry(warningName, QString());
-
-                if (state == "2")
-                    grp.writeEntry(warningName, state);
-                else
-                    grp.writeEntry(warningName, "1");
+                grp.writeEntry(warningName, state == "2" ? state : "1");
             }
         }
         else
