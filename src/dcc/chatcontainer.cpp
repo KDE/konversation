@@ -203,14 +203,9 @@ namespace Konversation
 
         void ChatContainer::emitUpdateInfo()
         {
-            //qDebug();
-            QString info;
-            if (m_chat && m_chat->partnerNick() == m_chat->ownNick())
-                info = i18n("Talking to yourself");
-            else if (m_chat)
-                info = m_chat->ownNick();
-            else
-                info = getName();
+            const QString info = (m_chat && m_chat->partnerNick() == m_chat->ownNick()) ?  i18n("Talking to yourself")
+                         : m_chat ? m_chat->ownNick()
+                         : getName();
 
             emit updateInfo(info);
         }
