@@ -209,18 +209,9 @@ namespace Konversation
                 }
 
                 // update the remaining time
-                if  (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
-                {
-                    m_timeLeft = 0;
-                }
-                else if (m_currentSpeed <= 0)
-                {
-                    m_timeLeft = Transfer::InfiniteValue;
-                }
-                else
-                {
-                    m_timeLeft = (int)((double)(m_fileSize - m_transferringPosition) / m_currentSpeed);
-                }
+                m_timeLeft = (m_transferringPosition == (KIO::fileoffset_t)m_fileSize) ? 0
+                           : m_currentSpeed <= 0 ? Transfer::InfiniteValue
+                           : (int)((double)(m_fileSize - m_transferringPosition) / m_currentSpeed);
             }
             else if (m_status >= Done)
             {
