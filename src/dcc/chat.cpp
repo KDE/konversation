@@ -364,19 +364,13 @@ namespace Konversation
 
         void Chat::setExtension(const QString& extension)
         {
-            QString ext = extension.toLower();
-            if (ext == "chat")
-            {
-                m_chatExtension = SimpleChat;
-                return;
-            }
-            else if (ext == "wboard")
-            {
-                m_chatExtension = Whiteboard;
-                return;
-            }
-            qDebug() << "unknown chat extension:" << extension;
-            m_chatExtension = Unknown;
+            const QString ext = extension.toLower();
+            m_chatExtension = ext == "chat" ? SimpleChat
+                            : ext == "wboard" ? Whiteboard
+                            : Unknown;
+
+            if (m_chatExtension == Unknown)
+                qDebug() << "unknown chat extension:" << extension;
             return;
         }
 
