@@ -199,16 +199,8 @@ void Theme_Config::installTheme()
         KIO::FileCopyJob *fileCopyJob = KIO::file_copy(themeURL, tmpUrl, -1, KIO::Overwrite);
         if (!fileCopyJob->exec())
         {
-            int errorCode = fileCopyJob->error();
-            QString errorString;
-
-            if (errorCode != 0)
-                errorString = fileCopyJob->errorString();
-            else
-                errorString = i18n("Unknown error (0)");
-
             KMessageBox::error(nullptr,
-                errorString,
+                fileCopyJob->error() != 0 ? fileCopyJob->errorString() : i18n("Unknown error (0)"),
                 i18n("Failed to Download Theme"),
                 KMessageBox::Notify
                 );
