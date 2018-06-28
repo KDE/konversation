@@ -69,7 +69,7 @@ void Alias_Config::setAliasListView(const QStringList& aliasList)
     for(int index=aliasList.count(); index!=0; index--)
     {
         QString item=aliasList[index-1];
-        QTreeWidgetItem *treeWidgetItem = new QTreeWidgetItem(aliasListView, QStringList() << item.section(' ',0,0) << item.section(' ',1));
+        QTreeWidgetItem *treeWidgetItem = new QTreeWidgetItem(aliasListView, { item.section(' ',0,0), item.section(' ',1)});
         treeWidgetItem->setFlags(treeWidgetItem->flags() &~ Qt::ItemIsDropEnabled);
     }
 

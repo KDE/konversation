@@ -90,14 +90,16 @@ const Konversation::ServerGroupHash Preferences::serverGroupHash()
 
 const QStringList Preferences::defaultQuickButtonList()
 {
-    return QStringList() << QStringLiteral("Op,/OP %u%n")
-                         << QStringLiteral("DeOp,/DEOP %u%n")
-                         << QStringLiteral("WhoIs,/WHOIS %s,%%u%n")
-                         << QStringLiteral("Version,/CTCP %s,%%u VERSION%n")
-                         << QStringLiteral("Kick,/KICK %u%n")
-                         << QStringLiteral("Ban,/BAN %u%n")
-                         << QStringLiteral("Part,/PART %c Leaving...%n")
-                         << QStringLiteral("Quit,/QUIT Leaving...%n");
+    return {
+        QStringLiteral("Op,/OP %u%n"),
+        QStringLiteral("DeOp,/DEOP %u%n"),
+        QStringLiteral("WhoIs,/WHOIS %s,%%u%n"),
+        QStringLiteral("Version,/CTCP %s,%%u VERSION%n"),
+        QStringLiteral("Kick,/KICK %u%n"),
+        QStringLiteral("Ban,/BAN %u%n"),
+        QStringLiteral("Part,/PART %c Leaving...%n"),
+        QStringLiteral("Quit,/QUIT Leaving...%n")
+    };
 }
 
 const QStringList Preferences::quickButtonList()
@@ -119,10 +121,20 @@ void Preferences::clearQuickButtonList()
 
 const QList<QStringList> Preferences::defaultAutoreplaceList()
 {
-    QList<QStringList> defaultList;
-    defaultList.append(QStringList() << QStringLiteral("1") << QStringLiteral("o") << QStringLiteral("\\[\\[([^\\s]+)\\]\\]") << QStringLiteral("http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1"));
-    defaultList.append(QStringList() << QStringLiteral("1") << QStringLiteral("o") << QStringLiteral("(BUG:|bug:)([0-9]+)") << QStringLiteral("https://bugs.kde.org/show_bug.cgi?id=%2"));
-    return defaultList;
+    return QList<QStringList> {
+        {
+            QStringLiteral("1"),
+            QStringLiteral("o"),
+            QStringLiteral("\\[\\[([^\\s]+)\\]\\]"),
+            QStringLiteral("http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1")
+        },
+        {
+            QStringLiteral("1"),
+            QStringLiteral("o"),
+            QStringLiteral("(BUG:|bug:)([0-9]+)"),
+            QStringLiteral("https://bugs.kde.org/show_bug.cgi?id=%2")
+        }
+    } ;
 }
 
 const QList<QStringList> Preferences::autoreplaceList()
