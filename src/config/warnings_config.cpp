@@ -209,18 +209,11 @@ void Warnings_Config::loadSettings()
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setData(0, WarningNameRole, flagName);
 
-        if (flagName == QLatin1String("LargePaste"))
-        {
-            item->setCheckState(0, grp.readEntry(flagName, QString()).isEmpty() ? Qt::Checked : Qt::Unchecked);
-        }
-        else if (flagName == QLatin1String("Invitation"))
-        {
-            item->setCheckState(0, grp.readEntry(flagName, QString("0")) == "0" ? Qt::Checked : Qt::Unchecked);
-        }
-        else
-        {
-            item->setCheckState(0, grp.readEntry(flagName, true) ? Qt::Checked : Qt::Unchecked);
-        }
+        const bool checkState = flagName == QLatin1String("LargePaste") ? grp.readEntry(flagName, QString()).isEmpty()
+                             : flagName == QLatin1String("Invitation") ? grp.readEntry(flagName, QString("0")) == "0"
+                             : grp.readEntry(flagName, true);
+
+        item->setCheckState(0, checkState ? Qt::Checked : Qt::Unchecked);
     }
 
     dialogListView->sortItems(0, Qt::AscendingOrder);
