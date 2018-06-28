@@ -347,24 +347,7 @@ namespace Konversation
                 m_ownPort = m_serverSocket->serverPort();
 
                 qDebug() << "Own Address=" << m_ownIp << ":" << m_ownPort;
-
-                if (Preferences::self()->dccUPnP())
-                {
-                    UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
-
-                    if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
-                    {
-                        connect(router, &UPnPRouter::forwardComplete, this, &TransferSend::sendRequest);
-                    }
-                    else
-                    {
-                        sendRequest(true, 0); // Just try w/o UPnP on failure
-                    }
-                }
-                else
-                {
-                    sendRequest(false, 0);
-                }
+                callMethodIfDccUpnp(this, &TransferSend::sendRequest, server, m_ownPort);
             }
             else
             {
