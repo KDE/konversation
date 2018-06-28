@@ -229,19 +229,11 @@ namespace Konversation
             // Transferring Time:
             if (!m_transfer->getTimeTransferStarted().isNull())
             {
-                int m_itemringTime;
+                int m_itemringTime = m_transfer->getTimeTransferStarted().secsTo(
+                    m_transfer->getTimeTransferFinished().isNull() ? QDateTime::currentDateTime() : m_transfer->getTimeTransferFinished());
 
-                // The m_item is still in progress
-                if (m_transfer->getTimeTransferFinished().isNull())
-                    m_itemringTime = m_transfer->getTimeTransferStarted().secsTo(QDateTime::currentDateTime());
-                // The m_item has finished
-                else
-                    m_itemringTime = m_transfer->getTimeTransferStarted().secsTo(m_transfer->getTimeTransferFinished());
-
-                if (m_itemringTime >= 1)
-                    m_timeInfo.m_labelTransferringTime->setText(TransferListModel::secToHMS(m_itemringTime));
-                else
-                    m_timeInfo.m_labelTransferringTime->setText(i18nc("less than 1 sec","&lt; 1sec"));
+                m_timeInfo.m_labelTransferringTime->setText(
+                    m_itemringTime >= 1 ? TransferListModel::secToHMS(m_itemringTime) : i18nc("less than 1 sec","&lt; 1sec"));
             }
 
             // Estimated Time Left:
