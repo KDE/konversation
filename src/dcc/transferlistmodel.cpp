@@ -423,7 +423,7 @@ namespace Konversation
         {
             if (speed == Transfer::Calculating || speed == Transfer::InfiniteValue)
             {
-                return QString("?");
+                return QStringLiteral("?");
             }
             else if (speed == Transfer::NotInTransfer)
             {
