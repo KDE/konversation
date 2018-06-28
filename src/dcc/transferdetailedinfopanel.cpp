@@ -144,13 +144,10 @@ namespace Konversation
             m_locationInfo.m_urlreqLocation->button()->setEnabled(m_transfer->getStatus() == Transfer::Queued);
 
             // Partner:
-            QString partnerInfoServerName;
-            if (m_transfer->getConnectionId() == -1)
-                partnerInfoServerName = i18n("Unknown server");
-            else if (Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId()))
-                partnerInfoServerName = Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId())->getServerName();
-            else
-                partnerInfoServerName = i18n("Unknown server");
+            auto server = Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId());
+            QString partnerInfoServerName = (m_transfer->getConnectionId() == -1) ? i18n("Unknown server")
+                                          : server ? server->getServerName()
+                                          : i18n("Unknown server");
 
             if (!m_transfer->getPartnerIp().isEmpty())
             {
