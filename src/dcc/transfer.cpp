@@ -76,7 +76,7 @@ namespace Konversation
             if (getStatus() != Configuring
                 || m_fileName.isEmpty()
                 || m_connectionId == -1
-                || m_partnerNick.isEmpty()
+                || m_partnerNick.isEmpty())
             {
                 return false;
             }
@@ -215,24 +215,12 @@ namespace Konversation
             }
             else if (m_status >= Done)
             {
-                if (m_timeTransferStarted.secsTo(m_timeTransferFinished) > 1)
-                {
-                    m_averageSpeed = (double)(m_transferringPosition - m_transferStartPosition) / (double)m_timeTransferStarted.secsTo(m_timeTransferFinished);
-                }
-                else
-                {
-                    m_averageSpeed = Transfer::InfiniteValue;
-                }
+                m_averageSpeed = m_timeTransferStarted.secsTo(m_timeTransferFinished) > 1
+                     ? (double)(m_transferringPosition - m_transferStartPosition) / (double)m_timeTransferStarted.secsTo(m_timeTransferFinished)
+                    : (double) Transfer::InfiniteValue;
 
                 m_currentSpeed = 0;
-                if (m_status == Done)
-                {
-                    m_timeLeft = 0;
-                }
-                else
-                {
-                    m_timeLeft = Transfer::NotInTransfer;
-                }
+                m_timeLeft = m_status == Done ? 0 : Transfer::NotInTransfer;
             }
             else
             {
