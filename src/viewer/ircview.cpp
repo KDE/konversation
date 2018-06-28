@@ -97,7 +97,6 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
     m_isOnChannel = false;
-    m_fontSizeDelta = 0;
     m_chatWin = nullptr;
     m_server = nullptr;
 
