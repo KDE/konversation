@@ -330,10 +330,7 @@ void Theme_Config::updateButtons()
     m_currentTheme = dir.section('/',-2,-2);
 
     // allow delete action only for themes that have been installed by the user
-    if(!themeRC.open(QIODevice::ReadOnly | QIODevice::WriteOnly))
-        removeButton->setEnabled(false);
-    else
-        removeButton->setEnabled(true);
+    removeButton->setEnabled(themeRC.open(QIODevice::ReadOnly | QIODevice::WriteOnly);
 
     themeRC.close();
 }
