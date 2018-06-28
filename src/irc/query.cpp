@@ -291,10 +291,7 @@ void Query::indicateAway(bool show)
     }
     else
     {
-        if(show)
-            awayLabel->show();
-        else
-            awayLabel->hide();
+        awayLabel->setVisible(show);
     }
 }
 
