@@ -134,7 +134,6 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
             QToolTip::showText( helpEvent->globalPos(), text );
     }
 
-
     return ChatWindow::eventFilter( obj, event );
 }
 

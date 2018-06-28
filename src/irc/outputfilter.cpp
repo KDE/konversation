@@ -2034,24 +2034,9 @@ namespace Konversation
     QString OutputFilter::addNickToEmptyNickList(const QString& nick, const QString& parameter)
     {
         QStringList nickList = parameter.split(' ');
-        QString newNickList;
-
-        if (nickList.count() == 0)
-        {
-            newNickList = nick;
-        }
-        // check if list contains only target channel
-        else if (nickList.count() == 1 && isAChannel(nickList[0]))
-        {
-            newNickList = nickList[0] + ' ' + nick;
-        }
-        // list contains at least one nick
-        else
-        {
-            newNickList = parameter;
-        }
-
-        return newNickList;
+        return nickList.count() == 0 ? nick
+             : nickList.count() == 1 && isAChannel(nickList[0]) ? nickList[0] + ' ' + nick
+             : parameter;
     }
 
     // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC,
