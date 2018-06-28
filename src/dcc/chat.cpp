@@ -329,14 +329,9 @@ namespace Konversation
 
             // Set up server socket
             QString failedReason;
-            if (Preferences::self()->dccSpecificChatPorts())
-            {
-                m_dccServer = DccCommon::createServerSocketAndListen(this, &failedReason, Preferences::self()->dccChatPortsFirst(), Preferences::self()->dccChatPortsLast());
-            }
-            else
-            {
-                m_dccServer = DccCommon::createServerSocketAndListen(this, &failedReason);
-            }
+            m_dccServer = (Preferences::self()->dccSpecificChatPorts())
+                ? DccCommon::createServerSocketAndListen(this, &failedReason, Preferences::self()->dccChatPortsFirst(), Preferences::self()->dccChatPortsLast())
+                : DccCommon::createServerSocketAndListen(this, &failedReason);
 
             if (!m_dccServer)
             {
