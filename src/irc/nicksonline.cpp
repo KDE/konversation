@@ -120,22 +120,18 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
 
         QTreeWidgetItem *item = m_nickListView->itemAt( helpEvent->pos() );
 
-        if( item )
-        {
-            NickInfoPtr nickInfo = getNickInfo(item);
-            if ( nickInfo )
-            {
-               QString text =  nickInfo->tooltip();
-               if( !text.isEmpty() )
-                       QToolTip::showText( helpEvent->globalPos(), text );
-               else
-                       QToolTip::hideText();
-            }
-            else
+        if(! item )
             QToolTip::hideText();
-        }
+
+        NickInfoPtr nickInfo = getNickInfo(item);
+        if (! nickInfo )
+            QToolTip::hideText();
+
+        QString text = nickInfo->tooltip();
+        if( text.isEmpty() )
+            QToolTip::hideText();
         else
-                QToolTip::hideText();
+            QToolTip::showText( helpEvent->globalPos(), text );
     }
 
 
