@@ -30,36 +30,29 @@ namespace Konversation
     namespace DCC
     {
         Transfer::Transfer(Type dccType, QObject *parent)
-            : QObject(parent)
+            : QObject(parent),
+            m_type(dccType),
+            m_status(Configuring),
+            m_resumed(false),
+            m_reverse(false),
+            m_transferringPosition(0),
+            m_transferStartPosition(0),
+            m_connectionId(-1),  // Not configured
+
+            m_ownPort(0),
+            m_bufferSize(Preferences::self()->dccBufferSize()),
+            m_buffer(new char[m_bufferSize]),
+            m_fileSize(0),
+            m_timeOffer(QDateTime::currentDateTime()),
+            m_averageSpeed(0.0),
+            m_currentSpeed(0.0),
+            m_timeLeft(Transfer::NotInTransfer)
         {
-            qDebug();
-
-            m_type = dccType;
-
-            m_status = Configuring;
-
-            m_ownPort = 0;
-            m_fileSize = 0;
-            m_resumed = false;
-            m_reverse = false;
-            m_connectionId = -1;  // Not configured
-            m_timeLeft = Transfer::NotInTransfer;
-            m_transferringPosition = 0;
-            m_transferStartPosition = 0;
-            m_averageSpeed = 0.0;
-            m_currentSpeed = 0.0;
-
-            m_bufferSize = Preferences::self()->dccBufferSize();
-            m_buffer = new char[m_bufferSize];
-
             connect(&m_loggerTimer, &QTimer::timeout, this, &Transfer::logTransfer);
-
-            m_timeOffer = QDateTime::currentDateTime();
         }
 
         Transfer::~Transfer()
         {
-            qDebug();
         }
 
         void Transfer::setConnectionId(int id)
