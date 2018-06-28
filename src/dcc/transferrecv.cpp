@@ -552,24 +552,7 @@ namespace Konversation
 
                 m_ownIp = DccCommon::getOwnIp(server);
                 m_ownPort = m_serverSocket->serverPort();
-
-                if (Preferences::self()->dccUPnP())
-                {
-                    UPnP::UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
-
-                    if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
-                    {
-                        connect(router, &UPnP::UPnPRouter::forwardComplete, this, &TransferRecv::sendReverseAck);
-                    }
-                    else
-                    {
-                        sendReverseAck(true, 0); // Try anyways on error
-                    }
-                }
-                else
-                {
-                    sendReverseAck(false, 0);
-                }
+                callMethodIfDccUpnp(this, &TransferRecv::sendReverseAck, server, m_ownPort);
             }
             else
             {

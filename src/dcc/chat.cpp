@@ -110,23 +110,6 @@ namespace Konversation
             }
             qDebug() << "ownip: " << m_ownIp;
 
-            // small helper lambda to call a method if we are in dccUPnP mode. 
-            auto requestLambda = [this, server](auto methodPtr) {
-                if (!Preferences::self()->dccUPnP())
-                {
-                    (this->*methodPtr)(false, 0);
-                }
-                UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
-                if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
-                {
-                    connect(router, &UPnPRouter::forwardComplete, this, methodPtr);
-                }
-                else
-                {
-                    (this->*methodPtr)(true, 0); // On error try anyways
-                }
-            };
-
             if (m_selfOpened)
             {
                 //we started the dcc chat
@@ -142,7 +125,7 @@ namespace Konversation
                 else
                 {
                     listenForPartner();
-                    requestLambda(&Chat::sendRequest);
+                    callMethodIfDccUpnp(this, &Chat::sendRequest, server, m_ownPort);
                 }
             }
             else
@@ -170,7 +153,7 @@ namespace Konversation
                 {
                     qDebug() << "partner1: passive:1";
                     listenForPartner();
-                    requestLambda(&Chat::sendReverseAck);
+                    callMethodIfDccUpnp(this, &Chat::sendReverseAck, server, m_ownPort);
                 }
                 else
                 {

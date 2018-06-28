@@ -14,16 +14,42 @@
 #define DCCCOMMON_H
 
 #include <QString>
+#include <QHostAddress>
+
+#include "upnprouter.h"
+#include "preferences.h"
+#include "transfermanager.h"
+#include "server.h"
+#include "application.h"
 
 class QObject;
 class QTcpServer;
-
-class Server;
 
 namespace Konversation
 {
     namespace DCC
     {
+        template<typename T, typename MethodPtr>
+        void callMethodIfDccUpnp(T thisPointer, MethodPtr methodPointer, Server *server, quint16 ownPort)
+        {
+            using namespace Konversation::UPnP;
+
+            // small helper lambda to call a method if we are in dccUPnP mode.
+            if (!Preferences::self()->dccUPnP())
+            {
+                (thisPointer->*methodPointer)(false, 0);
+            }
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
+            if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), ownPort, QAbstractSocket::TcpSocket))
+            {
+                QObject::connect(router, &UPnPRouter::forwardComplete, thisPointer, methodPointer);
+            }
+            else
+            {
+                (thisPointer->*methodPointer)(true, 0); // On error try anyways
+            }
+        }
+
         class DccCommon
         {
             public:
