@@ -205,14 +205,7 @@ QString NickInfo::tooltip() const
 
 QString NickInfo::getBestAddresseeName()
 {
-    if(!getRealName().isEmpty())
-    {
-        return getRealName();
-    }
-    else
-    {
-        return getNickname();
-    }
+    return !getRealName().isEmpty() : getRealName() : getNickname();
 }
 
 void NickInfo::tooltipTableData(QTextStream &tooltip) const
