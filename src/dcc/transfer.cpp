@@ -73,18 +73,10 @@ namespace Konversation
 
         bool Transfer::queue()
         {
-            qDebug();
-            if (getStatus() != Configuring)
-            {
-                return false;
-            }
-
-            if (m_fileName.isEmpty())
-            {
-                return false;
-            }
-
-            if (m_connectionId == -1 || m_partnerNick.isEmpty())
+            if (getStatus() != Configuring
+                || m_fileName.isEmpty()
+                || m_connectionId == -1
+                || m_partnerNick.isEmpty()
             {
                 return false;
             }
