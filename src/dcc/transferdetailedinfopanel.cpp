@@ -201,18 +201,12 @@ namespace Konversation
             }
 
             // Status:
-            if (m_transfer->getStatus() == Transfer::Transferring)
-            {
-                m_locationInfo.m_labelStatus->setText(TransferListModel::getStatusText(m_transfer->getStatus(),
-                                       m_transfer->getType()) + " ( " +
-                                       TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()) + " )");
-            }
-            else
-            {
-                m_locationInfo.m_labelStatus->setText(m_transfer->getStatusDetail().isEmpty() ?
-                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) :
-                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + " (" + m_transfer->getStatusDetail() + ')');
-            }
+            const QString statusTxt = TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType());
+            m_locationInfo.m_labelStatus->setText(
+                m_transfer->getStatus() == Transfer::Transferring 
+                ? statusTxt +  " ( " + TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()) + " )"
+                : m_transfer->getStatusDetail().isEmpty() ? statusTxt 
+                : statusTxt + " (" + m_transfer->getStatusDetail() + ')');
 
             // Progress:
             m_locationInfo.m_progress->setValue(m_transfer->getProgress());
