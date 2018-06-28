@@ -591,5 +591,3 @@ namespace Konversation
         }
     }
 }
-
-
