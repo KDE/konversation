@@ -58,6 +58,7 @@ Kirigami.ApplicationWindow {
     pageStack.defaultColumnWidth: sidebarWidth
     pageStack.initialPage: [sidebarComponent, contentComponent]
     pageStack.separatorVisible: false
+    pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
 
     pageStack.interactive: false
 
