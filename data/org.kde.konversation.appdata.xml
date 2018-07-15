@@ -18,6 +18,7 @@
   <name xml:lang="gl">Konversation</name>
   <name xml:lang="it">Konversation</name>
   <name xml:lang="nl">Konversation</name>
+  <name xml:lang="nn">Konversation</name>
   <name xml:lang="pl">Konversation</name>
   <name xml:lang="pt">Konversation</name>
   <name xml:lang="pt-BR">Konversation</name>
@@ -49,6 +50,7 @@
   <summary xml:lang="he">לקוח IRC</summary>
   <summary xml:lang="it">Client IRC</summary>
   <summary xml:lang="nl">IRC-client</summary>
+  <summary xml:lang="nn">IRC-klient</summary>
   <summary xml:lang="pl">Klient IRC</summary>
   <summary xml:lang="pt">Cliente de IRC</summary>
   <summary xml:lang="pt-BR">Cliente IRC</summary>
@@ -111,6 +113,7 @@
     <p xml:lang="he">תכונות:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Recursos:</p>
@@ -141,6 +144,7 @@
       <li xml:lang="he">תכונות IRC רגילות</li>
       <li xml:lang="it">Funzionalità di base di IRC</li>
       <li xml:lang="nl">Standaard IRC-functies</li>
+      <li xml:lang="nn">Standard IRC-funksjonar</li>
       <li xml:lang="pl">Standardowe możliwości IRC</li>
       <li xml:lang="pt">Funcionalidades normais do IRC</li>
       <li xml:lang="sk">Štandardné funkcie IRC</li>
@@ -167,6 +171,7 @@
       <li xml:lang="he">תמיכה בשרתים מאובטחים ב־SSL</li>
       <li xml:lang="it">Supporto per i server SSL</li>
       <li xml:lang="nl">Ondersteuning voor SSL-server</li>
+      <li xml:lang="nn">Støtte for SSL-tenarar</li>
       <li xml:lang="pl">Obsługa serwera SSL</li>
       <li xml:lang="pt">Suporte para o servidor em SSL</li>
       <li xml:lang="sk">Podpora SSL servera</li>
@@ -193,6 +198,7 @@
       <li xml:lang="he">תמיכה בסימניות</li>
       <li xml:lang="it">Supporto per i segnalibri</li>
       <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
+      <li xml:lang="nn">Bokmerkestøtte</li>
       <li xml:lang="pl">Obsługa zakładek</li>
       <li xml:lang="pt">Suporte para favoritos</li>
       <li xml:lang="sk">Podpora záložiek</li>
@@ -271,6 +277,7 @@
       <li xml:lang="he">העברת קבצים באמצעות DCC</li>
       <li xml:lang="it">Trasferimento file tramite DCC</li>
       <li xml:lang="nl">DCC Bestandsoverdracht</li>
+      <li xml:lang="nn">Filoverføring via DCC</li>
       <li xml:lang="pl">Przesyłanie plików przez DCC</li>
       <li xml:lang="pt">Transferência de ficheiros por DCC</li>
       <li xml:lang="sk">Prenos súborov DCC</li>
