@@ -85,6 +85,7 @@
     <p xml:lang="he">שיחה KDE זה לקוח IRC שנותן גישה מהירה לערוצי רשתות Freenode, ותומך ברוב ההפצות. כברירת מחדל לא צריך להגדיר חוץ לבחור שם של אחד מערוצי ההפצות בשביל להתחיל.</p>
     <p xml:lang="it">Konversation è un client IRC che fornisce un acceso rapido ai canali della rete Freenode, dove troverai supporto per la maggior parte delle distribuzioni. I suoi valori predefiniti fanno sì che non ci sia bisogno di configurazione ulteriore a parte il nome del canale della distribuzione per poter iniziare.</p>
     <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
+    <p xml:lang="nn">Konversation er ein IRC-klient som gjev deg rask tilgang til alle Freenode-kanalane, der du finn støtte for dei fleste distribusjonane. Standardverdiane er slik at det ikkje trengst noko vidare oppsett; du treng berre oppgje kanalen til distribusjonen din for å komma i gang.</p>
     <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
     <p xml:lang="pt">O Konversation é um cliente de IRC que lhe dá um acesso rápido aos canais da rede Freenode, onde poderá obter suporte para a maioria das distribuições. Tem um conjunto de definições por omissão suficientemente úteis que praticamente não necessita de mais configurações do que definir o nome do canal da sua distribuição para começar.</p>
     <p xml:lang="sk">Konversation je IRC klient, ktorý vám umožní rýchly prístup ku kanálom siete Freenode, kde nájdete podporu pre väčšinu distribúcií. Predvolene nepotrebuje žiadne nastavenie okrem názvu kanálu distribúcie na to, aby ste začali.</p>
@@ -225,6 +226,7 @@
       <li xml:lang="he">ממשק משתמש גרפי קל לשימוש</li>
       <li xml:lang="it">Interfaccia grafica semplice da usare</li>
       <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
+      <li xml:lang="nn">Brukarvennleg grafisk brukargrensesnitt</li>
       <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
       <li xml:lang="pt">Interface de utilizador simples de usar</li>
       <li xml:lang="sk">Ľahko použiteľné používateľské rozhranie</li>
@@ -251,6 +253,7 @@
       <li xml:lang="he">מספר שרתים וערוצים בחלון אחד</li>
       <li xml:lang="it">Diversi server e canali in un'unica finestra</li>
       <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
+      <li xml:lang="nn">Støtte for fleire tenarar og kanalar i same vindauge</li>
       <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
       <li xml:lang="pt">Vários canais e servidores numa única janela</li>
       <li xml:lang="sk">Viac serverov a kanálov v jednom okne</li>
@@ -304,6 +307,7 @@
       <li xml:lang="he">זהויות שונות לשרתים שונים</li>
       <li xml:lang="it">Identità multiple per i vari server</li>
       <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
+      <li xml:lang="nn">Fleire identitetar for ulike tenarar</li>
       <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
       <li xml:lang="pt">Várias identidades para diferentes servidores</li>
       <li xml:lang="sk">Viac identít pre rôzne servery</li>
@@ -330,6 +334,7 @@
       <li xml:lang="he">עיצוב וצבעי טקסט</li>
       <li xml:lang="it">Decorazioni e colori per il testo</li>
       <li xml:lang="nl">Tekstdecoraties en kleuren</li>
+      <li xml:lang="nn">Teksteffektar og fargar</li>
       <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
       <li xml:lang="pt">Decorações e cores do texto</li>
       <li xml:lang="sk">Dekorácie a farby textu</li>
@@ -356,6 +361,7 @@
       <li xml:lang="he">התראות על המסך</li>
       <li xml:lang="it">Notifiche a schermo (OnScreen Display)</li>
       <li xml:lang="nl">Meldingen op het scherm tonen</li>
+      <li xml:lang="nn">Vising av varslingar som skjermmeldingar</li>
       <li xml:lang="pl">Powiadomienia ekranowe</li>
       <li xml:lang="pt">Visualização no ecrã para as notificações</li>
       <li xml:lang="sk">OnScreen Display pre upozornenia</li>
@@ -382,6 +388,7 @@
       <li xml:lang="he">זיהוי UTF-8 אוטומטי</li>
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
+      <li xml:lang="nn">Automatisk UTF-8-oppdaging</li>
       <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
       <li xml:lang="pt">Detecção automática do UTF-8</li>
       <li xml:lang="sk">Automatická detekcia UTF-8</li>
@@ -408,6 +415,7 @@
       <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
       <li xml:lang="it">Supporto di codifiche per canale</li>
       <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
+      <li xml:lang="nn">Støtte for ulike teiknkodingar for ulike kanalar</li>
       <li xml:lang="pl">Kodowanie zależne od kanału</li>
       <li xml:lang="pt">Suporte de codificações diferentes por canal</li>
       <li xml:lang="sk">Podpora kódovania pre každý kanál</li>
@@ -434,6 +442,7 @@
       <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
       <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
+      <li xml:lang="nn">Temastøtte for deltakarikon</li>
       <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
       <li xml:lang="pt">Suporte de temas para os ícones das alcunhas</li>
       <li xml:lang="sk">Podpora tém pre ikony prezývok</li>
@@ -460,6 +469,7 @@
       <li xml:lang="he">הרבה אפשרויות הגדרה</li>
       <li xml:lang="it">Altamente configurabile</li>
       <li xml:lang="nl">Hoog instelbaar</li>
+      <li xml:lang="nn">Kan tilpassast på mange måtar</li>
       <li xml:lang="pl">Wysoce ustawialny</li>
       <li xml:lang="pt">Extremamente configurável</li>
       <li xml:lang="sk">Vysoko konfigurovateľné</li>
