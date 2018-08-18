@@ -19,6 +19,7 @@
   <name xml:lang="fr">Konversation</name>
   <name xml:lang="gl">Konversation</name>
   <name xml:lang="it">Konversation</name>
+  <name xml:lang="ko">Konversation</name>
   <name xml:lang="nl">Konversation</name>
   <name xml:lang="nn">Konversation</name>
   <name xml:lang="pl">Konversation</name>
@@ -53,6 +54,7 @@
   <summary xml:lang="gl">Cliente de IRC</summary>
   <summary xml:lang="he">לקוח IRC</summary>
   <summary xml:lang="it">Client IRC</summary>
+  <summary xml:lang="ko">IRC 클라이언트</summary>
   <summary xml:lang="nl">IRC-client</summary>
   <summary xml:lang="nn">IRC-klient</summary>
   <summary xml:lang="pl">Klient IRC</summary>
@@ -90,6 +92,7 @@
     <p xml:lang="gl">Konversation é un cliente de IRC que lle da acceso rápido ás canles da rede Freenode, onde atopará asistencia técnica para a meirande parte das distribucións. A configuración predeterminada está deseñada para que só teña que indicar o nome da canle da distribución para comezar.</p>
     <p xml:lang="he">שיחה KDE זה לקוח IRC שנותן גישה מהירה לערוצי רשתות Freenode, ותומך ברוב ההפצות. כברירת מחדל לא צריך להגדיר חוץ לבחור שם של אחד מערוצי ההפצות בשביל להתחיל.</p>
     <p xml:lang="it">Konversation è un client IRC che fornisce un acceso rapido ai canali della rete Freenode, dove troverai supporto per la maggior parte delle distribuzioni. I suoi valori predefiniti fanno sì che non ci sia bisogno di configurazione ulteriore a parte il nome del canale della distribuzione per poter iniziare.</p>
+    <p xml:lang="ko">Konversation은 여러 IRC 네트워크 채널에 빠르게 접근할 수 있는 IRC 클라이언트입니다. 대부분 리눅스 배포판 사용자와 대화할 수 있는 Freenode 네트워크 및 배포판 채널을 기본 설정으로 포함합니다.</p>
     <p xml:lang="nl">Konversation is een IRC-client die u snel toegang geeft tot networkkanalen van Freenode, waar u ondersteuning voor de meeste distributies zult vinden. Zijn standaarden zijn zo dat het geen instellingen nodig heeft anders dan het de naam van uw distributiekanaal te vertellen om van start te gaan.</p>
     <p xml:lang="nn">Konversation er ein IRC-klient som gjev deg rask tilgang til alle Freenode-kanalane, der du finn støtte for dei fleste distribusjonane. Standardverdiane er slik at det ikkje trengst noko vidare oppsett; du treng berre oppgje kanalen til distribusjonen din for å komma i gang.</p>
     <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
@@ -122,6 +125,7 @@
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="he">תכונות:</p>
     <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ko">기능:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
@@ -155,6 +159,7 @@
       <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
       <li xml:lang="he">תכונות IRC רגילות</li>
       <li xml:lang="it">Funzionalità di base di IRC</li>
+      <li xml:lang="ko">표준 IRC 기능</li>
       <li xml:lang="nl">Standaard IRC-functies</li>
       <li xml:lang="nn">Standard IRC-funksjonar</li>
       <li xml:lang="pl">Standardowe możliwości IRC</li>
@@ -185,6 +190,7 @@
       <li xml:lang="gl">Compatibilidade con servidores SSL.</li>
       <li xml:lang="he">תמיכה בשרתים מאובטחים ב־SSL</li>
       <li xml:lang="it">Supporto per i server SSL</li>
+      <li xml:lang="ko">SSL 서버 지원</li>
       <li xml:lang="nl">Ondersteuning voor SSL-server</li>
       <li xml:lang="nn">Støtte for SSL-tenarar</li>
       <li xml:lang="pl">Obsługa serwera SSL</li>
@@ -215,6 +221,7 @@
       <li xml:lang="gl">Funcionalidade de marcadores.</li>
       <li xml:lang="he">תמיכה בסימניות</li>
       <li xml:lang="it">Supporto per i segnalibri</li>
+      <li xml:lang="ko">책갈피 지원</li>
       <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
       <li xml:lang="nn">Bokmerkestøtte</li>
       <li xml:lang="pl">Obsługa zakładek</li>
@@ -245,6 +252,7 @@
       <li xml:lang="gl">Interface de usuario fácil de usar.</li>
       <li xml:lang="he">ממשק משתמש גרפי קל לשימוש</li>
       <li xml:lang="it">Interfaccia grafica semplice da usare</li>
+      <li xml:lang="ko">사용하기 쉬운 그래픽 사용자 인터페이스</li>
       <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
       <li xml:lang="nn">Brukarvennleg grafisk brukargrensesnitt</li>
       <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
@@ -275,6 +283,7 @@
       <li xml:lang="gl">Varios servidores e canles nunha mesma xanela.</li>
       <li xml:lang="he">מספר שרתים וערוצים בחלון אחד</li>
       <li xml:lang="it">Diversi server e canali in un'unica finestra</li>
+      <li xml:lang="ko">하나의 창에서 여러 서버와 채널 관리</li>
       <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
       <li xml:lang="nn">Støtte for fleire tenarar og kanalar i same vindauge</li>
       <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
@@ -305,6 +314,7 @@
       <li xml:lang="gl">Transferencia de ficheiros por DCC.</li>
       <li xml:lang="he">העברת קבצים באמצעות DCC</li>
       <li xml:lang="it">Trasferimento file tramite DCC</li>
+      <li xml:lang="ko">DCC 파일 전송</li>
       <li xml:lang="nl">DCC Bestandsoverdracht</li>
       <li xml:lang="nn">Filoverføring via DCC</li>
       <li xml:lang="pl">Przesyłanie plików przez DCC</li>
@@ -335,6 +345,7 @@
       <li xml:lang="gl">Varias identidades para distintos servidores.</li>
       <li xml:lang="he">זהויות שונות לשרתים שונים</li>
       <li xml:lang="it">Identità multiple per i vari server</li>
+      <li xml:lang="ko">개별 서버별 다중 프로필</li>
       <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
       <li xml:lang="nn">Fleire identitetar for ulike tenarar</li>
       <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
@@ -365,6 +376,7 @@
       <li xml:lang="gl">Decoracións e cores de texto.</li>
       <li xml:lang="he">עיצוב וצבעי טקסט</li>
       <li xml:lang="it">Decorazioni e colori per il testo</li>
+      <li xml:lang="ko">텍스트 장식과 색상</li>
       <li xml:lang="nl">Tekstdecoraties en kleuren</li>
       <li xml:lang="nn">Teksteffektar og fargar</li>
       <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
@@ -395,6 +407,7 @@
       <li xml:lang="gl">Notificacións visualizadas na pantalla.</li>
       <li xml:lang="he">התראות על המסך</li>
       <li xml:lang="it">Notifiche a schermo (OnScreen Display)</li>
+      <li xml:lang="ko">화면 디스플레이 알림</li>
       <li xml:lang="nl">Meldingen op het scherm tonen</li>
       <li xml:lang="nn">Vising av varslingar som skjermmeldingar</li>
       <li xml:lang="pl">Powiadomienia ekranowe</li>
@@ -425,6 +438,7 @@
       <li xml:lang="gl">Detección automática de UTF-8.</li>
       <li xml:lang="he">זיהוי UTF-8 אוטומטי</li>
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
+      <li xml:lang="ko">자동 UTF-8 감지</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
       <li xml:lang="nn">Automatisk UTF-8-oppdaging</li>
       <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
@@ -455,6 +469,7 @@
       <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
       <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
       <li xml:lang="it">Supporto di codifiche per canale</li>
+      <li xml:lang="ko">채널별 인코딩 지원</li>
       <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
       <li xml:lang="nn">Støtte for ulike teiknkodingar for ulike kanalar</li>
       <li xml:lang="pl">Kodowanie zależne od kanału</li>
@@ -485,6 +500,7 @@
       <li xml:lang="gl">Funcionalidade de temas para iconas de alcumes.</li>
       <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
+      <li xml:lang="ko">별명 아이콘 테마 지원</li>
       <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
       <li xml:lang="nn">Temastøtte for deltakarikon</li>
       <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
@@ -515,6 +531,7 @@
       <li xml:lang="gl">Altamente configurábel.</li>
       <li xml:lang="he">הרבה אפשרויות הגדרה</li>
       <li xml:lang="it">Altamente configurabile</li>
+      <li xml:lang="ko">다양하게 설정 가능</li>
       <li xml:lang="nl">Hoog instelbaar</li>
       <li xml:lang="nn">Kan tilpassast på mange måtar</li>
       <li xml:lang="pl">Wysoce ustawialny</li>
