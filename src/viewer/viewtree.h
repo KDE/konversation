@@ -9,7 +9,7 @@
   Copyright (C) 2006-2009 Eike Hein <hein@kde.org>
 */
 
-// FIXME KF5 Port: ViewTree TODO: Close buttons, DND, seperator painting.
+// FIXME KF5 Port: ViewTree TODO: Close buttons, DND, separator painting.
 
 #ifndef VIEWTREE_H
 #define VIEWTREE_H

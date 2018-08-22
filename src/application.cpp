@@ -33,7 +33,7 @@
 
 #include <QTextCodec>
 #include <QRegExp>
-#include <QtDBus/QDBusConnection>
+#include <QDBusConnection>
 #include <QNetworkProxy>
 #include <QWaitCondition>
 #include <QStandardItemModel>

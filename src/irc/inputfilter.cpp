@@ -702,7 +702,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         }
         else
         {
-            qDebug() << "Recieved away message for unknown nick," << sourceNick;
+            qDebug() << "Received away message for unknown nick," << sourceNick;
         }
     }
     else if (command == QStringLiteral("account") && plHas(1))
