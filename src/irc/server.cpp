@@ -87,11 +87,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_capEndDelayed = false;
     m_autoJoin = false;
 
-    m_hasAwayNotify = false;
-    m_hasExtendedJoin = false;
-    m_hasWHOX = false;
-    m_hasServerTime = false;
-    m_hasUserHostInNames = false;
+    m_capabilities = NoCapabilies;
+    initCapablityNames();
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
@@ -731,46 +728,20 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
     m_capRequested = 0;
     m_capAnswered = 0;
     m_capEndDelayed = false;
-    m_hasAwayNotify = false;
-    m_hasExtendedJoin = false;
-    m_hasServerTime = false;
-    m_hasUserHostInNames = false;
+    m_capabilities = NoCapabilies;
     QStringList requestCaps;
     QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
 
     foreach(const QString &cap, capsList)
     {
-        if(useSASL && cap == QStringLiteral("sasl"))
+        if(cap == QStringLiteral("sasl"))
         {
-            requestCaps.append ("sasl");
+            if(useSASL)
+                requestCaps.append ("sasl");
         }
-        else if(cap == QStringLiteral("multi-prefix"))
+        else if(m_capabilityNames.contains(cap))
         {
-            requestCaps.append ("multi-prefix");
-        }
-        else if(cap == QStringLiteral("away-notify"))
-        {
-            requestCaps.append ("away-notify");
-        }
-        else if(cap == QStringLiteral("account-notify"))
-        {
-            requestCaps.append ("account-notify");
-        }
-        else if(cap == QStringLiteral("extended-join"))
-        {
-            requestCaps.append ("extended-join");
-        }
-        else if(cap == QStringLiteral("server-time"))
-        {
-            requestCaps.append ("server-time");
-        }
-        else if(cap == QStringLiteral("znc.in/server-time-iso"))
-        {
-            requestCaps.append ("znc.in/server-time-iso");
-        }
-        else if(cap == QStringLiteral("userhost-in-names"))
-        {
-            requestCaps.append ("userhost-in-names");
+            requestCaps.append (cap);
         }
     }
 
@@ -813,22 +784,8 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
 
         m_capEndDelayed = true;
     }
-    else if (name == QStringLiteral("away-notify"))
-    {
-        m_hasAwayNotify = true;
-    }
-    else if (name == QStringLiteral("extended-join"))
-    {
-        m_hasExtendedJoin = true;
-    }
-    else if (name == QStringLiteral("server-time") || name == QStringLiteral("znc.in/server-time-iso"))
-    {
-        m_hasServerTime = true;
-    }
-    else if (name == QStringLiteral("userhost-in-names"))
-    {
-        m_hasUserHostInNames = true;
-    }
+
+    m_capabilities |= m_capabilityNames.value(name);
 }
 
 void Server::capDenied(const QString& name)
@@ -2053,7 +2010,7 @@ void Server::requestWho(const QString& channel)
     m_inputFilter.setAutomaticRequest(QStringLiteral("WHO"), channel, true);
     QString command(QStringLiteral("WHO ") + channel);
 
-    if (hasWHOX() && hasExtendedJoin())
+    if (capabilities() & WHOX && capabilities() & ExtendedJoin)
     {
         // Request the account as well as the usual info.
         // See http://faerion.sourceforge.net/doc/irc/whox.var
@@ -4421,6 +4378,17 @@ void Server::reconnectInvoluntary()
         reconnectServer();
 }
 
+void Server::initCapablityNames()
+{
+    m_capabilityNames.insert("away-notify", AwayNotify);
+    m_capabilityNames.insert("extended-join", ExtendedJoin);
+    m_capabilityNames.insert("server-time", ServerTime);
+    m_capabilityNames.insert("znc.in/server-time-iso", ServerTime);
+    m_capabilityNames.insert("userhost-in-names", UserHostInNames);
+    m_capabilityNames.insert("sasl", SASL);
+    m_capabilityNames.insert("multi-prefix", MultiPrefix);
+    m_capabilityNames.insert("account-notify", AccountNotify);
+}
 
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

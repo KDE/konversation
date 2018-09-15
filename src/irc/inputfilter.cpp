@@ -577,7 +577,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
         channelName = parameterList[0];
 
-        if (m_server->hasExtendedJoin() && plHas(3))
+        if (m_server->capabilities() & Server::ExtendedJoin && plHas(3))
         {
             if (parameterList[1] != "*")
                 account = parameterList[1];
@@ -1613,7 +1613,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             nickInfo->setAwayMessage(QString());
                         }
 
-                        if(m_server->hasWHOX() && m_server->hasExtendedJoin())
+                        if(m_server->capabilities() & Server::WHOX && m_server->capabilities() & Server::ExtendedJoin)
                         {
                             nickInfo->setAccount(parameterList.value(8));
                         }

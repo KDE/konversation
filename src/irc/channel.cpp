@@ -2184,7 +2184,7 @@ void Channel::endOfNames()
     {
         m_initialNamesReceived = true;
 
-        if (m_server->hasAwayNotify() && !Preferences::self()->autoWhoContinuousEnabled())
+        if (m_server->capabilities() & Server::AwayNotify && !Preferences::self()->autoWhoContinuousEnabled())
         {
             // Do one who request to get the initial away state for the channel
             QMetaObject::invokeMethod(m_server, "requestWho", Qt::QueuedConnection, Q_ARG(QString, getName()));
@@ -2510,7 +2510,7 @@ void Channel::processQueuedNicks(bool flush)
 
         QString userHost;
 
-        if(m_server->hasUserHostInNames())
+        if(m_server->capabilities() & Server::UserHostInNames)
         {
             int index = nickname.indexOf(QLatin1Char('!'));
 

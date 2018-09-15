@@ -93,6 +93,19 @@ class Server : public QObject
         };
         Q_DECLARE_FLAGS(CapModifiers, CapModifier)
 
+        enum CapabilityFlag {
+            NoCapabilies = 0x00,
+            AwayNotify = 0x01,
+            ExtendedJoin = 0x02,
+            WHOX = 0x04,
+            ServerTime = 0x08,
+            UserHostInNames = 0x10,
+            SASL = 0x20,
+            MultiPrefix = 0x40,
+            AccountNotify = 0x80,
+        };
+        Q_DECLARE_FLAGS(CapabilityFlags, CapabilityFlag)
+
         Server(QObject* parent, ConnectionSettings& settings);
         ~Server();
 
@@ -388,12 +401,8 @@ class Server : public QObject
 
         bool capEndDelayed() const { return m_capEndDelayed; }
 
-        bool hasAwayNotify() const { return m_hasAwayNotify; }
-        bool hasExtendedJoin() const { return m_hasExtendedJoin; }
-        void setHasWHOX(bool state) { m_hasWHOX = state; }
-        bool hasWHOX() const { return m_hasWHOX; }
-        bool hasServerTime() const { return m_hasServerTime; }
-        bool hasUserHostInNames() const { return m_hasUserHostInNames; }
+        void setHasWHOX(bool state) { m_capabilities.setFlag(WHOX, state); }
+        CapabilityFlags capabilities() const { return m_capabilities; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -796,6 +805,8 @@ class Server : public QObject
 
         void collectStats(int bytes, int encodedBytes);
 
+        void initCapablityNames();
+
         /// Helper object to construct ISON (notify) list.
         ServerISON* m_serverISON;
         /// All nicks known to this server.  Note this is NOT a list of all nicks on the server.
@@ -861,13 +872,11 @@ class Server : public QObject
 
         bool m_recreationScheduled;
 
-        bool m_hasAwayNotify;
-        bool m_hasExtendedJoin;
-        bool m_hasWHOX;
-        bool m_hasServerTime;
-        bool m_hasUserHostInNames;
+        CapabilityFlags m_capabilities;
+        QHash<QString, CapabilityFlag> m_capabilityNames;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapabilityFlags)
 
 #endif
