@@ -103,6 +103,7 @@ class Server : public QObject
             SASL = 0x20,
             MultiPrefix = 0x40,
             AccountNotify = 0x80,
+            SelfMessage = 0x100,
         };
         Q_DECLARE_FLAGS(CapabilityFlags, CapabilityFlag)
 

@@ -4388,6 +4388,7 @@ void Server::initCapablityNames()
     m_capabilityNames.insert("sasl", SASL);
     m_capabilityNames.insert("multi-prefix", MultiPrefix);
     m_capabilityNames.insert("account-notify", AccountNotify);
+    m_capabilityNames.insert("znc.in/self-message", SelfMessage);
 }
 
 

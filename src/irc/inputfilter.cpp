@@ -2470,8 +2470,16 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
     {
         if(!isIgnore(prefix,Ignore::Query))
         {
-            NickInfoPtr nickinfo = m_server->obtainNickInfo(source);
-            nickinfo->setHostmask(sourceHostmask);
+            QString queryName = source;
+
+            // Handle znc.in/self-message correctly
+            if (source == m_server->getNickname())
+                queryName = parameterList[0];
+
+            NickInfoPtr nickinfo = m_server->obtainNickInfo(queryName);
+
+            if (queryName == source)
+                nickinfo->setHostmask(sourceHostmask);
 
             // Create a new query (server will check for dupes)
             Query* query = m_server->addQuery(nickinfo, false /*we didn't initiate this*/ );
