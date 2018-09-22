@@ -81,6 +81,7 @@ class InputFilter : public QObject
         void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags);
         void parseModes(const QString &sourceNick, const QStringList &parameterList, const QHash<QString, QString> &messageTags);
         void parsePrivMsg(const QString& prefix, QStringList& parameterList, const QHash<QString, QString> &messageTags);
+        void parseNumeric(const QString &prefix, int command, QStringList &parameterList, const QHash<QString, QString> &messageTags);
 
         QHash<QString, QString> parseMessageTags(const QString &line, int *startOfMessage);
 
