@@ -223,13 +223,11 @@ bool ViewTree::event(QEvent* event)
         const QModelIndex& idx = indexAt(helpEvent->pos());
 
         if (idx.isValid()) {
-            const QString &text = idx.model()->data(idx, Qt::DisplayRole).toString();
-            const QSize& preferredSize = qobject_cast<ViewTreeDelegate*>(itemDelegate())->preferredSizeHint(idx);
+            const QSize& preferredSize = static_cast<ViewTreeDelegate*>(itemDelegate())->preferredSizeHint(idx);
             const QRect& itemRect = visualRect(idx);
 
             if (preferredSize.width() > itemRect.width()) {
-                event->accept();
-
+                const QString &text = idx.model()->data(idx, Qt::DisplayRole).toString();
                 QToolTip::showText(helpEvent->globalPos(), text, this);
 
                 return true;
