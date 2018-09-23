@@ -703,9 +703,13 @@ void Server::socketConnected()
 
 void Server::requestAvailableCapabilies ()
 {
+    m_capRequested = 0;
+    m_capAnswered = 0;
+    m_capEndDelayed = false;
+    m_capabilities = NoCapabilies;
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Negotiating capabilities with server..."));
     m_inputFilter.setAutomaticRequest(QStringLiteral("CAP LS"), QString(), true);
-    queue(QStringLiteral("CAP LS"), HighPriority);
+    queue(QStringLiteral("CAP LS 302"), HighPriority);
 }
 
 void Server::capInitiateNegotiation(const QString &availableCaps)
@@ -725,23 +729,22 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         }
     }
 
-    m_capRequested = 0;
-    m_capAnswered = 0;
-    m_capEndDelayed = false;
-    m_capabilities = NoCapabilies;
     QStringList requestCaps;
     QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
+    QStringList nameValue;
 
     foreach(const QString &cap, capsList)
     {
-        if(cap == QStringLiteral("sasl"))
+        nameValue = cap.split(QChar('='));
+
+        if(nameValue[0] == QStringLiteral("sasl"))
         {
             if(useSASL)
                 requestCaps.append ("sasl");
         }
-        else if(m_capabilityNames.contains(cap))
+        else if(m_capabilityNames.contains(nameValue[0]))
         {
-            requestCaps.append (cap);
+            requestCaps.append (nameValue[0]);
         }
     }
 

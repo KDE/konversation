@@ -841,12 +841,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             else if (command == "ls" || command == "list")
             {
-                m_server->appendStatusMessage(i18n("Capabilities"), parameterList.mid(2).join(QStringLiteral(" ")), messageTags);
+                m_server->appendStatusMessage(i18n("Capabilities"), trailing, messageTags);
 
                 if (getAutomaticRequest(QStringLiteral("CAP LS"), QString()) != 0)
                 {
-                    setAutomaticRequest (QStringLiteral("CAP LS"), QString (), false);
-                    m_server->capInitiateNegotiation (parameterList.mid(2).join(QStringLiteral(" ")));
+                    if (parameterList.count() == 3)
+                        setAutomaticRequest (QStringLiteral("CAP LS"), QString (), false);
+                    m_server->capInitiateNegotiation (trailing);
                 }
             }
         }
