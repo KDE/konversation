@@ -253,7 +253,7 @@ bool StatusPanel::closeYourself(bool confirm)
         m_server->quitServer();
         // This will delete the status view as well.
         m_server->deleteLater();
-        m_server = 0;
+        m_server = nullptr;
         return true;
     }
     else

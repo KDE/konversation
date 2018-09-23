@@ -51,13 +51,13 @@
 #include <KGlobalAccel>
 #include <KIconLoader>
 
-MainWindow::MainWindow() : KXmlGuiWindow(0)
+MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
-    m_serverListDialog = 0;
-    m_trayIcon = 0;
-    m_settingsDialog = NULL;
+    m_serverListDialog = nullptr;
+    m_trayIcon = nullptr;
+    m_settingsDialog = nullptr;
 
     m_viewContainer = new ViewContainer(this);
     setCentralWidget(m_viewContainer->getWidget());
@@ -708,7 +708,7 @@ bool MainWindow::event(QEvent* e)
     {
         m_statusBar->clearMainLabelTempText();
 
-        if (qApp->activeModalWidget() == 0)
+        if (qApp->activeModalWidget() == nullptr)
             emit triggerRememberLine();
     }
 
@@ -755,7 +755,7 @@ void MainWindow::updateTrayIcon()
     else
     {
         delete m_trayIcon;
-        m_trayIcon = 0;
+        m_trayIcon = nullptr;
     }
 }
 

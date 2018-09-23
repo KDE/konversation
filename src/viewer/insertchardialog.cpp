@@ -39,7 +39,7 @@ namespace Konversation
         setWindowTitle(  i18n("Insert Character") );
         KGuiItem::assign(okButton, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
 
-        m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos|KCharSelect::SearchLine);
+        m_charTable = new KCharSelect(this,nullptr, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos|KCharSelect::SearchLine);
 
         m_charTable->setAllPlanesEnabled(true);
         m_charTable->setCurrentFont( QFont( font ) );

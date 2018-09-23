@@ -314,7 +314,7 @@ namespace Konversation
         for(int i = 0; i < modeString.length(); i++)
         {
             QList<QStandardItem *> newRow;
-            QStandardItem *item = 0;
+            QStandardItem *item = nullptr;
 
             if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(modeString[i]))
                 item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", modeString[i], getChannelModesHash().value(modeString[i])));

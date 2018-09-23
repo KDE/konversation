@@ -194,7 +194,7 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 
         hack->rect.setHeight(hack->rect.height() - (2 * MARGIN) - 1);
 
-        itemView()->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, hack, painter, 0);
+        itemView()->style()->drawPrimitive(QStyle::PE_PanelItemViewItem, hack, painter, nullptr);
     }
 }
 

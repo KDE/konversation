@@ -27,7 +27,7 @@
 #include <QAction>
 
 PasteEditor::PasteEditor(QWidget* parent)
-    : QDialog(parent), Ui::PasteEditor(), m_autoReplaceActionWasEnabled(true), m_autoReplaceAction(0)
+    : QDialog(parent), Ui::PasteEditor(), m_autoReplaceActionWasEnabled(true), m_autoReplaceAction(nullptr)
 {
     setWindowTitle(i18n("Edit Multiline Paste"));
     setModal(true);

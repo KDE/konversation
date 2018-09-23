@@ -38,13 +38,13 @@
 
 TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)
 {
-    m_channel = 0;
+    m_channel = nullptr;
 
     m_maximumLength = -1;
     m_maxCursorPos = -1;
 
-    m_warning = 0;
-    m_warningUndercarriage = 0;
+    m_warning = nullptr;
+    m_warningUndercarriage = nullptr;
 
     viewport()->installEventFilter(this);
 

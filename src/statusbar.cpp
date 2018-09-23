@@ -223,7 +223,7 @@ namespace Konversation
         if (server == m_window->getViewContainer()->getFrontServer()
             && server->getUseSSL() && server->isConnected())
         {
-            disconnect(m_sslLabel,0,0,0);
+            disconnect(m_sslLabel,nullptr,nullptr,nullptr);
             connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
             m_sslLabel->setToolTip(server->getSSLInfo());
             m_sslLabel->show();
@@ -234,7 +234,7 @@ namespace Konversation
 
     void StatusBar::removeSSLLabel()
     {
-        disconnect(m_sslLabel,0,0,0);
+        disconnect(m_sslLabel,nullptr,nullptr,nullptr);
         m_sslLabel->hide();
     }
 

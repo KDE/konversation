@@ -135,7 +135,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
 
 void Highlight_Config::updateButtons()
 {
-    bool enabled = highlightListView->currentItem() != NULL;
+    bool enabled = highlightListView->currentItem() != nullptr;
     // enable or disable edit widgets
     patternLabel->setEnabled(enabled);
     patternInput->setEnabled(enabled);

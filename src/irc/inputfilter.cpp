@@ -31,7 +31,7 @@
 
 
 InputFilter::InputFilter()
-    : m_server(0),
+    : m_server(nullptr),
       m_lagMeasuring(false)
 {
     m_connecting = false;

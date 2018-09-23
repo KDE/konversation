@@ -256,7 +256,7 @@ namespace Konversation
 
             if (service.ready)
             {
-                Forwarding *forward = NULL;
+                Forwarding *forward = nullptr;
 
                 QListIterator<Forwarding*> itr(forwards);
                 while (itr.hasNext())
@@ -267,7 +267,7 @@ namespace Konversation
                         forward = check;
                 }
 
-                if (forward == NULL || pending_forwards.keys(forward).size() > 0)
+                if (forward == nullptr || pending_forwards.keys(forward).size() > 0)
                     return false; // Either forward not found or forward is still pending
 
                 // add all the arguments for the command

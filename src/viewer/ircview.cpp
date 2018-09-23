@@ -45,7 +45,7 @@ class ScrollBarPin
         ScrollBarPin(QScrollBar *scrollBar) : m_bar(scrollBar)
         {
             if (m_bar)
-                m_bar = m_bar->value() == m_bar->maximum()? m_bar : 0;
+                m_bar = m_bar->value() == m_bar->maximum()? m_bar : nullptr;
         }
         ~ScrollBarPin()
         {
@@ -91,13 +91,13 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(0), m_lastMarkerLine(0), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr), m_lastMarkerLine(nullptr), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
     m_isOnChannel = false;
-    m_chatWin = 0;
-    m_server = 0;
+    m_chatWin = nullptr;
+    m_server = nullptr;
     m_fontSizeDelta = 0;
 
     setAcceptDrops(false);
@@ -309,7 +309,7 @@ QDebug operator<<(QDebug d, QTextBlock b);
 struct Burr: public QTextBlockUserData
 {
     Burr(IRCView* o, Burr* prev, QTextBlock b, int objFormat)
-        : m_block(b), m_format(objFormat), m_prev(prev), m_next(0),
+        : m_block(b), m_format(objFormat), m_prev(prev), m_next(nullptr),
         m_owner(o)
     {
         if (m_prev)
@@ -393,7 +393,7 @@ void IRCView::blockDeleted(Burr* b) //slot
         m_lastMarkerLine = b->m_prev;
 
     if (b == m_rememberLine)
-        m_rememberLine = 0;
+        m_rememberLine = nullptr;
 }
 
 void IRCView::cullMarkedLine(int, int, int) //slot
@@ -458,10 +458,10 @@ void IRCView::appendRememberLine()
     {
         QTextBlock rem = m_rememberLine->m_block;
         voidLineBlock(rem);
-        if (m_rememberLine != 0)
+        if (m_rememberLine != nullptr)
         {
             // this probably means we had a block containing only 0x2029, so Scribe merged the userData/userState into the next
-            m_rememberLine = 0;
+            m_rememberLine = nullptr;
         }
     }
 
@@ -487,12 +487,12 @@ void IRCView::clearLines()
 
 void IRCView::wipeLineParagraphs()
 {
-    m_rememberLine = m_lastMarkerLine = 0;
+    m_rememberLine = m_lastMarkerLine = nullptr;
 }
 
 bool IRCView::hasLines()
 {
-    return m_lastMarkerLine != 0;
+    return m_lastMarkerLine != nullptr;
 }
 
 Burr* IRCView::appendLine(IRCView::ObjectFormats type)
@@ -765,7 +765,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, serverColor, 0 , true, parseURL, false, &dir));
+    QString text(filter(message, serverColor, nullptr , true, parseURL, false, &dir));
     // Server text may be translated strings. It's not user input: treat with first strong.
     bool rtl = text.isRightToLeft();
 
@@ -803,7 +803,7 @@ void IRCView::appendCommandMessage(const QString& type, const QString& message, 
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, commandColor, 0, true, parseURL, self, &dir));
+    QString text(filter(message, commandColor, nullptr, true, parseURL, self, &dir));
     // Commands are translated and contain LTR IP addresses. Treat with first strong.
     bool rtl = text.isRightToLeft();
 
@@ -842,7 +842,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, backlogColor, NULL, false, false, false, &dir));
+    QString text(filter(message, backlogColor, nullptr, false, false, false, &dir));
     bool rtl = nick.startsWith('|') ? text.isRightToLeft() : (dir == QChar::DirR);
 
     // It's right-aligned under LTR locale, or left-aligned under RTL locale

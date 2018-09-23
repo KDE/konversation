@@ -35,11 +35,11 @@ namespace Konversation
         ChatContainer::ChatContainer(QWidget *parent, Chat *chat)
             : ChatWindow(parent),
               m_chat(chat),
-              m_whiteBoard(0)
+              m_whiteBoard(nullptr)
         {
             setType(ChatWindow::DccChat);
             //dcc chat, not used here
-            setServer(0);
+            setServer(nullptr);
             setChannelEncodingSupported(true);
             setPartnerNick(m_chat->partnerNick());
 
@@ -93,10 +93,10 @@ namespace Konversation
             if (m_chat)
             {
                 //Do not delete the chat, its the transfermanagers job
-                disconnect(m_chat, 0, 0, 0);
+                disconnect(m_chat, nullptr, nullptr, nullptr);
                 m_chat->close();
                 m_chat->removedFromView();
-                m_chat = 0;
+                m_chat = nullptr;
             }
         }
 

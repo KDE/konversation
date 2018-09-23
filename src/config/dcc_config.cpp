@@ -65,11 +65,11 @@ void DCC_Config::dccUPnPChanged(int state)
 {
     DCC::TransferManager *transferManager = Application::instance()->getDccTransferManager();
 
-    if (state == Qt::Checked && transferManager->getUPnPRouter() == NULL)
+    if (state == Qt::Checked && transferManager->getUPnPRouter() == nullptr)
     {
         transferManager->startupUPnP();
     }
-    else if (state == Qt::Unchecked && transferManager->getUPnPRouter() != NULL)
+    else if (state == Qt::Unchecked && transferManager->getUPnPRouter() != nullptr)
     {
         transferManager->shutdownUPnP();
     }

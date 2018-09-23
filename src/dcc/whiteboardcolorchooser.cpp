@@ -146,7 +146,7 @@ namespace Konversation
             tPaint.fillRect(bgRectInside, m_backgroundColor);
             qDrawShadePanel(&tPaint, bgRect, palette(),
                             false/*not sunken*/, 2/*lineWidth*/,
-                            0/*never fill*/);
+                            nullptr/*never fill*/);
 
             QRect fgRect = foregroundRect();
             QRect fgRectInside = QRect(fgRect.x () + 2, fgRect.y () + 2,
@@ -154,7 +154,7 @@ namespace Konversation
             tPaint.fillRect(fgRectInside, m_foregroundColor);
             qDrawShadePanel(&tPaint, fgRect, palette (),
                             false/*not sunken*/, 2/*lineWidth*/,
-                            0/*never fill*/);
+                            nullptr/*never fill*/);
 
             tPaint.end();
         }

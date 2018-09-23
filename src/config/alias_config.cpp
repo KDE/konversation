@@ -200,7 +200,7 @@ void Alias_Config::removeEntry()
         else
         {
             // no next item found, this means the list is empty
-            entrySelected(0);
+            entrySelected(nullptr);
         }
         // tell the config system that somethig has changed
         emit modified();

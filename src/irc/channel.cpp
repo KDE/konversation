@@ -71,9 +71,9 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     //HACK I needed the channel name at time of setServer, but setName needs m_server..
     //     This effectively assigns the name twice, but none of the other logic has been moved or updated.
     name=_name;
-    m_ownChannelNick = 0;
-    m_optionsDialog = NULL;
-    m_delayedSortTimer = 0;
+    m_ownChannelNick = nullptr;
+    m_optionsDialog = nullptr;
+    m_delayedSortTimer = nullptr;
     m_delayedSortTrigger = 0;
     m_processedNicksCount = 0;
     m_processedOpsCount = 0;
@@ -217,7 +217,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     nicknameListView->installEventFilter(this);
 
     // initialize buttons grid, will be set up in updateQuickButtons
-    m_buttonsGrid = 0;
+    m_buttonsGrid = nullptr;
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QFrame(this);
@@ -310,7 +310,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     updateAppearance();
 
     #ifdef HAVE_QCA2
-    m_cipher = 0;
+    m_cipher = nullptr;
     #endif
 
     // Setup delayed sort timer
@@ -440,7 +440,7 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick) const
 
 void Channel::purgeNicks()
 {
-    m_ownChannelNick = 0;
+    m_ownChannelNick = nullptr;
 
     // Purge nickname list
     qDeleteAll(nicknameList);
@@ -949,7 +949,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 {
     QString nickname = channelnick->loweredNickname();
 
-    Nick* nick=0;
+    Nick* nick=nullptr;
 
     foreach (Nick* lookNick, nicknameList)
     {
@@ -960,7 +960,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
         }
     }
 
-    if (nick == 0)
+    if (nick == nullptr)
     {
         fastAddNickname(channelnick);
 
@@ -1302,7 +1302,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         adjustNicks(-1);
         Nick* nick = getNickByName(channelNick->loweredNickname());
 
-        if(nick == 0)
+        if(nick == nullptr)
         {
             qWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
@@ -1890,7 +1890,7 @@ void Channel::clearModeList()
 
 void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 {
-    ModeButton* widget=0;
+    ModeButton* widget=nullptr;
 
     if(mode=='t') widget=modeT;
     else if(mode=='n') widget=modeN;
@@ -1926,7 +1926,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 void Channel::updateQuickButtons()
 {
     delete m_buttonsGrid;
-    m_buttonsGrid = 0;
+    m_buttonsGrid = nullptr;
 
     // the grid that holds the quick action buttons
     m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);

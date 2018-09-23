@@ -303,7 +303,7 @@ namespace Konversation
             if (transfer && transfer->getStatus() >= Transfer::Done)
             {
                 //item will be gone
-                transfer = 0;
+                transfer = nullptr;
             }
 
             QModelIndexList indexes = m_transferView->selectedRows();
@@ -372,7 +372,7 @@ namespace Konversation
             if (transfer && transfer->getStatus() >= Transfer::Done)
             {
                 //item will be gone
-                transfer = 0;
+                transfer = nullptr;
             }
 
             QModelIndexList indexesToRemove;
@@ -523,7 +523,7 @@ namespace Konversation
             if (!urlString.isEmpty())
             {
                 QUrl url(QUrl::fromLocalFile(urlString));
-                new KRun(url, 0, true);
+                new KRun(url, nullptr, true);
             }
         }
 

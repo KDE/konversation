@@ -288,7 +288,7 @@ namespace Konversation
             KStandardGuiItem::del()) == KMessageBox::Continue)
         {
             m_identityList.removeOne(m_currentIdentity);
-            m_currentIdentity = 0;
+            m_currentIdentity = nullptr;
             m_identityCBox->removeItem(current);
         }
     }
@@ -404,7 +404,7 @@ namespace Konversation
             autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
 
             m_additionalAuthInfo->setText(i18n("The password entered here will override the one set in the server settings, if any."));
-            autoIdentifyLayout->addRow(0, m_additionalAuthInfo);
+            autoIdentifyLayout->addRow(nullptr, m_additionalAuthInfo);
         }
         else if (isSaslPlain)
         {
@@ -422,7 +422,7 @@ namespace Konversation
             autoIdentifyLayout->addRow(pemClientCertFileLabel, m_pemClientCertFile);
 
             m_additionalAuthInfo->setText(i18n("Certificate-based authentication forces SSL to be enabled for a connection, overriding any server settings."));
-            autoIdentifyLayout->addRow(0, m_additionalAuthInfo);
+            autoIdentifyLayout->addRow(nullptr, m_additionalAuthInfo);
         }
     }
 }

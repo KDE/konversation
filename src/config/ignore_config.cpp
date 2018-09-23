@@ -144,15 +144,15 @@ void Ignore_Config::updateEnabledness()
 {
     IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
 
-    chkChannel->setEnabled(selectedItem != NULL);
-    chkQuery->setEnabled(selectedItem != NULL);
-    chkNotice->setEnabled(selectedItem != NULL);
-    chkCTCP->setEnabled(selectedItem != NULL);
-    chkDCC->setEnabled(selectedItem != NULL);
-    chkInvite->setEnabled(selectedItem != NULL);
+    chkChannel->setEnabled(selectedItem != nullptr);
+    chkQuery->setEnabled(selectedItem != nullptr);
+    chkNotice->setEnabled(selectedItem != nullptr);
+    chkCTCP->setEnabled(selectedItem != nullptr);
+    chkDCC->setEnabled(selectedItem != nullptr);
+    chkInvite->setEnabled(selectedItem != nullptr);
 //	chkExceptions->setEnabled(selectedItem != NULL);
-    txtPattern->setEnabled(selectedItem != NULL);
-    removeButton->setEnabled(selectedItem != NULL);
+    txtPattern->setEnabled(selectedItem != nullptr);
+    removeButton->setEnabled(selectedItem != nullptr);
     removeAllButton->setEnabled(ignoreListView->topLevelItemCount() > 0);
 
 }

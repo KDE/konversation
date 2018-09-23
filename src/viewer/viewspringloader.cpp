@@ -81,8 +81,8 @@ bool ViewSpringLoader::eventFilter(QObject* watched, QEvent* event)
     else if (event->type() == QEvent::Drop || event->type() == QEvent::DragLeave)
     {
         m_hoverTimer.stop();
-        m_hoveredWidget = 0;
-        m_hoveredView = 0;
+        m_hoveredWidget = nullptr;
+        m_hoveredView = nullptr;
     }
 
     return QObject::eventFilter(watched, event);
@@ -94,7 +94,7 @@ void ViewSpringLoader::springLoad()
         m_hoveredWidget->mapFromGlobal(QCursor::pos())))
     {
         m_viewContainer->showView(m_hoveredView);
-        m_hoveredView = 0;
+        m_hoveredView = nullptr;
     }
 }
 
@@ -120,5 +120,5 @@ ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
         }
     }
 
-    return 0;
+    return nullptr;
 }

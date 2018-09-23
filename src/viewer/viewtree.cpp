@@ -330,14 +330,14 @@ void ViewTree::mouseReleaseEvent(QMouseEvent* event)
             const QModelIndex& idx = indexAt(event->pos());
 
             if (idx.isValid()) {
-                if (m_pressedView != 0 && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
+                if (m_pressedView != nullptr && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
                     emit closeView(m_pressedView.data());
                 }
             }
         }
     }
 
-    m_pressedView = 0;
+    m_pressedView = nullptr;
 
     QTreeView::mouseReleaseEvent(event);
 }
@@ -348,7 +348,7 @@ void ViewTree::mouseMoveEvent(QMouseEvent* event)
         selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::ClearAndSelect);
         startDrag(Qt::MoveAction);
         m_pressPos = QPoint();
-        m_pressedView = 0;
+        m_pressedView = nullptr;
     }
 
     QTreeView::mouseMoveEvent(event);

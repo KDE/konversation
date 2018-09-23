@@ -36,7 +36,7 @@ namespace Konversation
 
         m_mousePressedOnUrl = false;
         m_isOnChannel = false;
-        m_server = NULL;
+        m_server = nullptr;
 
         connect(this, &TopicLabel::linkActivated, this, &TopicLabel::openLink);
         connect(this, &TopicLabel::linkHovered, this, &TopicLabel::highlightedSlot);

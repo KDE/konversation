@@ -133,7 +133,7 @@ void LogfileReader::updateView()
             getTextView()->appendLog(str);
         }
 
-        stream.setDevice(0);
+        stream.setDevice(nullptr);
         file.close();
     }
 }

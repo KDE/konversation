@@ -95,7 +95,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     updateAppearance();
 
     #ifdef HAVE_QCA2
-    m_cipher = 0;
+    m_cipher = nullptr;
     #endif
 }
 

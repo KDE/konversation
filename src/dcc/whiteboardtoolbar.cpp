@@ -34,7 +34,7 @@ namespace Konversation
             : QWidget(parent),
               m_lineWidthPixmap(20, 20),
               m_textType(SimpleText),
-              m_fontDialog(0)
+              m_fontDialog(nullptr)
         {
             setupUi(this);
 
@@ -184,9 +184,9 @@ namespace Konversation
             {
                 if (m_fontDialog)
                 {
-                    disconnect(m_fontDialog, 0, 0, 0);
+                    disconnect(m_fontDialog, nullptr, nullptr, nullptr);
                     delete m_fontDialog;
-                    m_fontDialog = 0;
+                    m_fontDialog = nullptr;
                 }
             }
         }
@@ -214,16 +214,16 @@ namespace Konversation
         void WhiteBoardToolBar::disconnectToggleButtons()
         {
             qDebug();
-            disconnect(m_pencilPushButton, 0, 0, 0);
-            disconnect(m_linePushButton, 0, 0, 0);
-            disconnect(m_rectanglePushButton, 0, 0, 0);
-            disconnect(m_ellipsePushButton, 0, 0, 0);
-            disconnect(m_textPushButton, 0, 0, 0);
-            disconnect(m_selectionPushButton, 0, 0, 0);
-            disconnect(m_eraserPushButton, 0, 0, 0);
-            disconnect(m_fillPushButton, 0, 0, 0);
-            disconnect(m_arrowPushButton, 0, 0, 0);
-            disconnect(m_colorPickerPushButton, 0, 0, 0);
+            disconnect(m_pencilPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_linePushButton, nullptr, nullptr, nullptr);
+            disconnect(m_rectanglePushButton, nullptr, nullptr, nullptr);
+            disconnect(m_ellipsePushButton, nullptr, nullptr, nullptr);
+            disconnect(m_textPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_selectionPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_eraserPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_fillPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_arrowPushButton, nullptr, nullptr, nullptr);
+            disconnect(m_colorPickerPushButton, nullptr, nullptr, nullptr);
         }
 
         void WhiteBoardToolBar::clearClicked()
@@ -441,7 +441,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::fillFormOptionList(FormOption form)
         {
-            disconnect(m_formOptionListWidget, 0, 0, 0);
+            disconnect(m_formOptionListWidget, nullptr, nullptr, nullptr);
             m_formOptionListWidget->clear();
             const int width = m_formOptionListWidget->contentsRect().width() - m_formOptionListWidget->lineWidth()*4 - 3;
             const int drawHeight = 20 - 2;

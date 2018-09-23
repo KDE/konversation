@@ -154,7 +154,7 @@ namespace Konversation
                     if ( failedReason )
                         *failedReason = i18n( "No vacant port" );
                     delete socket;
-                    return 0;
+                    return nullptr;
                 }
             }
             else
@@ -165,7 +165,7 @@ namespace Konversation
                     if ( failedReason )
                         *failedReason = i18n( "Could not open a socket" );
                     delete socket;
-                    return 0;
+                    return nullptr;
                 }
             }
 

@@ -249,7 +249,7 @@ namespace Konversation
                 return headerData(index.column(), Qt::Horizontal, role);
             }
 
-            Transfer *transfer = 0;
+            Transfer *transfer = nullptr;
             if (m_transferList[index.row()].displayType == TransferItemData::ReceiveItem ||
                 m_transferList[index.row()].displayType == TransferItemData::SendItem)
             {

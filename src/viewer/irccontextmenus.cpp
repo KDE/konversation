@@ -161,12 +161,12 @@ void IrcContextMenus::setupTextMenu()
 
     m_textMenu->addSeparator();
 
-    m_textCopyAction = KStandardAction::copy(0, 0, this);
+    m_textCopyAction = KStandardAction::copy(nullptr, nullptr, this);
     m_textCopyAction->setData(TextCopy);
     m_textMenu->addAction(m_textCopyAction);
     m_textCopyAction->setEnabled(false);
 
-    QAction* action = KStandardAction::selectAll(0, 0, this);
+    QAction* action = KStandardAction::selectAll(nullptr, nullptr, this);
     action->setData(TextSelectAll);
     m_textMenu->addAction(action);
 
@@ -299,7 +299,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
         {
             m_webShortcutsMenu->setTitle(i18n("Search for '%1' with",  KStringHandler::rsqueeze(searchText, 21)));
 
-            QAction * action = 0;
+            QAction * action = nullptr;
 
             foreach(const QString& searchProvider, searchProviders)
             {

@@ -96,11 +96,11 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_nickListModel = new QStringListModel(this);
 
     m_currentLag = -1;
-    m_rawLog = 0;
-    m_channelListPanel = 0;
-    m_serverISON = 0;
+    m_rawLog = nullptr;
+    m_channelListPanel = nullptr;
+    m_serverISON = nullptr;
     m_away = false;
-    m_socket = 0;
+    m_socket = nullptr;
     m_prevISONList = QStringList();
     m_bytesReceived = 0;
     m_encodedBytesSent=0;
@@ -163,7 +163,7 @@ Server::~Server()
 
     // Delete helper object.
     delete m_serverISON;
-    m_serverISON = 0;
+    m_serverISON = nullptr;
 
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
@@ -238,7 +238,7 @@ void Server::purgeData()
 
     m_queryNicks.clear();
     delete m_serverISON;
-    m_serverISON = 0;
+    m_serverISON = nullptr;
 
 }
 
@@ -461,7 +461,7 @@ void Server::connectToIRCServer()
 
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
-        m_socket = 0;
+        m_socket = nullptr;
         if (m_referenceNicklist != getIdentity()->getNicknameList())
             m_nickListModel->setStringList(getIdentity()->getNicknameList());
         resetNickSelection();
@@ -1557,7 +1557,7 @@ int Server::_send_internal(QString outputLine)
         else //if we're connecting to a server manually
             channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
     }
-    QTextCodec* codec = 0;
+    QTextCodec* codec = nullptr;
     if (channelCodecName.isEmpty())
         codec = getIdentity()->getCodec();
     else
@@ -1742,7 +1742,7 @@ void Server::dbusSay(const QString& target,const QString& command)
     else
     {
         Query* query = getQueryByName(target);
-        if(query==0)
+        if(query==nullptr)
         {
             NickInfoPtr nickinfo = obtainNickInfo(target);
             query=addQuery(nickinfo, true);
@@ -1810,7 +1810,7 @@ const ChannelNickMap *Server::getJoinedChannelMembers(const QString& channelName
     if (m_joinedChannels.contains(lcChannelName))
         return m_joinedChannels[lcChannelName];
     else
-        return 0;
+        return nullptr;
 }
 
 // Returns the list of members for a channel in the unjoinedChannels list.
@@ -1822,7 +1822,7 @@ const ChannelNickMap *Server::getUnjoinedChannelMembers(const QString& channelNa
     if (m_unjoinedChannels.contains(lcChannelName))
         return m_unjoinedChannels[lcChannelName];
     else
-        return 0;
+        return nullptr;
 }
 
 // Searches the Joined and Unjoined lists for the given channel and returns the member list.
@@ -2545,7 +2545,7 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
     qDebug() << "token: " << token;
 
     if (!ok || dtm->startReverseChat(connectionId(), sourceNick,
-                                    partnerIP, port, token) == 0)
+                                    partnerIP, port, token) == nullptr)
     {
         // DTM could not find a matched item
         appendMessageToFrontmost(i18n("Error"),
@@ -2581,7 +2581,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
                                  port,  // partner port
                                  fileSize,  // filesize
                                  token  // Reverse DCC token
-         ) == 0)
+         ) == nullptr)
     {
         // DTM could not find a matched item
         appendMessageToFrontmost(i18n("Error"),
@@ -2617,7 +2617,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     }
     //do we need the token here?
 
-    DCC::TransferRecv* dccTransfer = 0;
+    DCC::TransferRecv* dccTransfer = nullptr;
     if (ok)
     {
         dccTransfer = dtm->resumeDownload(connectionId(), sourceNick, fileName, ownPort, position);
@@ -2673,7 +2673,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         fileName = recoverDccFileName(dccArguments, 2); //port filepos
     }
 
-    DCC::TransferSend* dccTransfer = 0;
+    DCC::TransferSend* dccTransfer = nullptr;
     if (ok)
     {
         dccTransfer = dtm->resumeUpload(connectionId(), sourceNick, fileName, ownPort, position);
@@ -2967,7 +2967,7 @@ Query* Server::getQueryByName(const QString& name)
         if(lookQuery->getName().toLower()==wanted) return lookQuery;
     }
     // No query by that name found? Must be a new query request. Return 0
-    return 0;
+    return nullptr;
 }
 
 ChatWindow* Server::getChannelOrQueryByName(const QString& name)

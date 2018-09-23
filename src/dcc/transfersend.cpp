@@ -56,9 +56,9 @@ namespace Konversation
         {
             qDebug();
 
-            m_serverSocket = 0;
-            m_sendSocket = 0;
-            m_tmpFile = 0;
+            m_serverSocket = nullptr;
+            m_sendSocket = nullptr;
+            m_tmpFile = nullptr;
 
             m_connectionTimer = new QTimer(this);
             m_connectionTimer->setSingleShot(true);
@@ -78,26 +78,26 @@ namespace Konversation
             qDebug();
 
             stopConnectionTimer();
-            disconnect(m_connectionTimer, 0, 0, 0);
+            disconnect(m_connectionTimer, nullptr, nullptr, nullptr);
 
             finishTransferLogger();
             if (m_tmpFile)
             {
                 delete m_tmpFile;
-                m_tmpFile = 0;
+                m_tmpFile = nullptr;
             }
 
             m_file.close();
             if (m_sendSocket)
             {
-                disconnect(m_sendSocket, 0, 0, 0);
+                disconnect(m_sendSocket, nullptr, nullptr, nullptr);
                 m_sendSocket->close();
-                m_sendSocket = 0;                         // the instance will be deleted automatically by its parent
+                m_sendSocket = nullptr;                         // the instance will be deleted automatically by its parent
             }
             if (m_serverSocket)
             {
                 m_serverSocket->close();
-                m_serverSocket = 0;                       // the instance will be deleted automatically by its parent
+                m_serverSocket = nullptr;                       // the instance will be deleted automatically by its parent
 
                 if (Preferences::self()->dccUPnP())
                 {
@@ -199,7 +199,7 @@ namespace Konversation
             if (m_fileName.isEmpty())
             {
                 bool pressedOk;
-                m_fileName = QInputDialog::getText(0, i18n("Enter Filename"),
+                m_fileName = QInputDialog::getText(nullptr, i18n("Enter Filename"),
                                                    i18n("<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick()),
                                                    QLineEdit::EchoMode::Normal, i18n("unknown"),
                                                    &pressedOk);
@@ -233,14 +233,14 @@ namespace Konversation
                 return false; // not ready to send yet
             }
 
-            slotLocalCopyReady(0);
+            slotLocalCopyReady(nullptr);
             return true;
         }
 
         void TransferSend::slotLocalCopyReady(KJob *job)
         {
             QString fn = m_fileURL.toDisplayString();
-            bool remoteFile = job != 0;
+            bool remoteFile = job != nullptr;
             int error = job ? job->error() : 0;
 
             qDebug() << "m_tmpFile: " << fn << "error: " << error << "remote file: " << remoteFile;
@@ -465,7 +465,7 @@ namespace Konversation
 
             // we don't need ServerSocket anymore
             m_serverSocket->close();
-            m_serverSocket = 0; // the instance will be deleted automatically by its parent
+            m_serverSocket = nullptr; // the instance will be deleted automatically by its parent
 
             if (Preferences::self()->dccUPnP())
             {

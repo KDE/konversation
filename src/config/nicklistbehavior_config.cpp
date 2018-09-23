@@ -48,7 +48,7 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
   {
     // get next mode char
     QChar mode=sortingOrder[index];
-    QTreeWidgetItem *item = 0;
+    QTreeWidgetItem *item = nullptr;
     // find appropriate description
     if(mode=='-') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
     if(mode=='v') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Voice (+v)"));

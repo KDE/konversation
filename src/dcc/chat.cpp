@@ -40,8 +40,8 @@ namespace Konversation
         Chat::Chat(QObject *parent)
             : QObject(parent),
               m_selfOpened(true),
-              m_dccSocket(0),
-              m_dccServer(0),
+              m_dccSocket(nullptr),
+              m_dccServer(nullptr),
               m_chatStatus(Configuring),
               m_chatExtension(Unknown)
         {
@@ -66,11 +66,11 @@ namespace Konversation
 
             emit aboutToClose();
 
-            m_textStream.setDevice(0);
+            m_textStream.setDevice(nullptr);
 
             if (m_dccServer)
             {
-                disconnect(m_dccServer, 0, 0, 0);
+                disconnect(m_dccServer, nullptr, nullptr, nullptr);
                 m_dccServer->close();
 
                 if (Preferences::self()->dccUPnP())
@@ -81,14 +81,14 @@ namespace Konversation
                         router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
                     }
                 }
-                m_dccServer = 0;
+                m_dccServer = nullptr;
             }
 
             if (m_dccSocket)
             {
-                disconnect(m_dccSocket, 0, 0, 0);
+                disconnect(m_dccSocket, nullptr, nullptr, nullptr);
                 m_dccSocket->close();
-                m_dccSocket = 0;
+                m_dccSocket = nullptr;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Konversation
             {
                 if (!Preferences::self()->dccChatAutoAccept())
                 {
-                    int ret = KMessageBox::questionYesNo(0,
+                    int ret = KMessageBox::questionYesNo(nullptr,
                                                          i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard", "%1 (on %2) offers to DCC %3 with you", m_partnerNick, server->getServerName(), localizedExtensionString()),
                                                          i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick", "DCC %1 offer from %2", localizedExtensionString(), m_partnerNick),
                                                          KGuiItem(i18n("Accept")),
@@ -493,7 +493,7 @@ namespace Konversation
 
         void Chat::readData()
         {
-            char *buffer = 0;
+            char *buffer = nullptr;
             QString line;
             QTextCodec *codec = m_textStream.codec();
             qint64 available = m_dccSocket->bytesAvailable();
@@ -559,9 +559,9 @@ namespace Konversation
             connect(m_dccSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Chat::connectionFailed);
 
             // the listen socket isn't needed anymore
-            disconnect(m_dccServer, 0, 0, 0);
+            disconnect(m_dccServer, nullptr, nullptr, nullptr);
             m_dccServer->close();
-            m_dccServer = 0;
+            m_dccServer = nullptr;
 
             if (Preferences::self()->dccUPnP())
             {

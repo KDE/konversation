@@ -104,7 +104,7 @@ namespace Konversation
         {
             if (getType() == Transfer::Send || getStatus() == Transfer::Done)
             {
-                new KRun(getFileURL(), 0);
+                new KRun(getFileURL(), nullptr);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Konversation
         {
             qDebug();
             delete[] m_buffer;
-            m_buffer = 0;
+            m_buffer = nullptr;
             m_loggerTimer.stop();
         }
 
