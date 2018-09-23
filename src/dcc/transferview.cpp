@@ -294,7 +294,7 @@ namespace Konversation
 
             foreach (const QModelIndex &rowIndex, rowIndexes())
             {
-                Transfer *rowTransfer = static_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
+                Transfer *rowTransfer = qobject_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (rowTransfer == transfer)
                 {
                     return rowIndex;

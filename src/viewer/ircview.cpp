@@ -984,7 +984,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
         }
         else if (m_chatWin->getType() == ChatWindow::DccChat)
         {
-            QString ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
+            QString ownNick = qobject_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
 
             if (nick != ownNick)
                 nickColor = Preferences::self()->nickColor(Konversation::colorForNick(ownNick)).name();
@@ -1066,7 +1066,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
-        ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
+        ownNick = qobject_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
     }
 
     if(doHighlight && (whoSent != ownNick) && !self)

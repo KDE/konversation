@@ -392,14 +392,14 @@ namespace Konversation
 
         void TransferManager::removeSendItem( Transfer* item )
         {
-            TransferSend* transfer = static_cast< TransferSend* > ( item );
+            TransferSend* transfer = qobject_cast< TransferSend* > ( item );
             m_sendItems.removeOne( transfer );
             item->deleteLater();
         }
 
         void TransferManager::removeRecvItem( Transfer* item )
         {
-            TransferRecv* transfer = static_cast< TransferRecv* > ( item );
+            TransferRecv* transfer = qobject_cast< TransferRecv* > ( item );
             m_recvItems.removeOne( transfer );
             item->deleteLater();
         }

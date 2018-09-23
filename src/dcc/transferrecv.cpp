@@ -475,7 +475,7 @@ namespace Konversation
         {
             qDebug() << "[BEGIN]";
 
-            KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
+            KIO::TransferJob* transferJob = qobject_cast<KIO::TransferJob*>(job);
             disconnect(transferJob, nullptr, nullptr, nullptr);
 
             switch (transferJob->error())
@@ -511,7 +511,7 @@ namespace Konversation
         {
             qDebug();
 
-            KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>(job);
+            KIO::TransferJob* transferJob = qobject_cast<KIO::TransferJob*>(job);
 
             disconnect(transferJob, nullptr, nullptr, nullptr);           // WriteCacheHandler will control the job after this
 
@@ -780,16 +780,16 @@ namespace Konversation
             //except for old mIRC versions, but they couldn't send or receive files over 4GB anyway.
             //Note: The resume and filesize are set via dcc send command and can be over 4GB
 
-            quint32 pos = htonl((quint32)m_transferringPosition);
+            quint32 pos = htonl(static_cast<quint32>(m_transferringPosition));
 
             m_recvSocket->write((char*)&pos, 4);
-            if (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
+            if (m_transferringPosition == static_cast<KIO::fileoffset_t>(m_fileSize))
             {
                 qDebug() << "Sent final ACK.";
                 disconnect(m_recvSocket, nullptr, nullptr, nullptr);
                 m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
             }
-            else if (m_transferringPosition > (KIO::fileoffset_t)m_fileSize)
+            else if (m_transferringPosition > static_cast<KIO::fileoffset_t>(m_fileSize))
             {
                 qDebug() << "The remote host sent larger data than expected: " << m_transferringPosition;
                 failed(i18n("Transfer error"));

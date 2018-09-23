@@ -68,7 +68,7 @@ namespace Konversation
 
         m_ui.topicHistoryView->setServer(m_channel->getServer());
         m_ui.topicHistoryView->setModel(m_channel->getTopicHistory());
-        m_ui.topicHistorySearchLine->setProxy(static_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
+        m_ui.topicHistorySearchLine->setProxy(qobject_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
         m_ui.topicHistorySearchLine->lineEdit()->setPlaceholderText(QString());
 
         m_editingTopic = false;

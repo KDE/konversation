@@ -163,7 +163,7 @@ QString Nick::calculateLabel2() const
 
 bool Nick::operator<(const QTreeWidgetItem& other) const
 {
-    const Nick& otherNick = static_cast<const Nick&>(other);
+    const Nick& otherNick = dynamic_cast<const Nick&>(other);
 
     if(Preferences::self()->sortByActivity())
     {

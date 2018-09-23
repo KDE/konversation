@@ -274,7 +274,7 @@ namespace Konversation
         {
             if (m_transfer &&  m_transfer->getType() == Transfer::Receive)
             {
-                TransferRecv *transfer = static_cast<TransferRecv*>(m_transfer);
+                TransferRecv *transfer = qobject_cast<TransferRecv*>(m_transfer);
                 transfer->setFileURL(QUrl::fromLocalFile(url));
                 updateView();
             }

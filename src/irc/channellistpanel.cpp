@@ -496,7 +496,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
 
 void ChannelListPanel::openURL()
 {
-    const QAction* action = static_cast<const QAction*>(sender());
+    const QAction* action = qobject_cast<const QAction*>(sender());
 
     if (action)
     {

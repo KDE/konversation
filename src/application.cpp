@@ -296,7 +296,7 @@ void Application::newInstance(QCommandLineParser *args)
 
 Application* Application::instance()
 {
-    return static_cast<Application*>(QApplication::instance());
+    return qobject_cast<Application*>(QApplication::instance());
 }
 
 void Application::restart()

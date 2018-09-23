@@ -83,7 +83,7 @@ QList<Ignore*> Ignore_Config::getIgnoreList()
     QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
     for (int i = 0; i < root->childCount(); ++i)
     {
-        IgnoreListViewItem* item = static_cast<IgnoreListViewItem *>(root->child(i));
+        IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
         Ignore* newItem=new Ignore(item->text(0),item->getFlags());
         newList.append(newItem);
     }
@@ -99,7 +99,7 @@ QStringList Ignore_Config::currentIgnoreList()
     QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
     for (int i = 0; i < root->childCount(); ++i)
     {
-        IgnoreListViewItem* item = static_cast<IgnoreListViewItem *>(root->child(i));
+        IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
         newList.append(item->text(0)+QLatin1Char(' ')+QString(item->getFlags()));
     }
 
@@ -142,7 +142,7 @@ void Ignore_Config::loadSettings()
 
 void Ignore_Config::updateEnabledness()
 {
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
+    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
 
     chkChannel->setEnabled(selectedItem != nullptr);
     chkQuery->setEnabled(selectedItem != nullptr);
@@ -160,7 +160,7 @@ void Ignore_Config::updateEnabledness()
 void Ignore_Config::select(QTreeWidgetItem* item)
 {
     updateEnabledness();
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
+    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(item);
 
     if(selectedItem)
     {
@@ -190,7 +190,7 @@ void Ignore_Config::flagCheckboxChanged()
     if(chkInvite->isChecked()) flags |= Ignore::Invite;
 
 //    if(chkExceptions->isChecked()) flags |= Ignore::Exceptions;
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
+    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
     if(selectedItem) {
         selectedItem->setFlags(flags);
 	selectedItem->setName(txtPattern->text());

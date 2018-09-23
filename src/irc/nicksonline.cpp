@@ -116,7 +116,7 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
 {
     if( ( obj == m_nickListView->viewport() ) && ( event->type() == QEvent::ToolTip ) )
     {
-        QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
+        QHelpEvent* helpEvent = dynamic_cast<QHelpEvent*>( event );
 
         QTreeWidgetItem *item = m_nickListView->itemAt( helpEvent->pos() );
 
@@ -160,7 +160,7 @@ QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const
     for (int i = 0; i < parent->childCount(); ++i)
     {
         QTreeWidgetItem* child = parent->child(i);
-        if(static_cast<NicksOnlineItem*>(child)->type() == type && child->text(0) == name) return child;
+        if(dynamic_cast<NicksOnlineItem*>(child)->type() == type && child->text(0) == name) return child;
     }
     return nullptr;
 }
@@ -177,7 +177,7 @@ QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksO
     for (int i = 0; i < parent->childCount(); ++i)
     {
         QTreeWidgetItem* child = parent->child(i);
-        if(static_cast<NicksOnlineItem*>(child)->type() == type) return child;
+        if(dynamic_cast<NicksOnlineItem*>(child)->type() == type) return child;
     }
     return nullptr;
 }
@@ -291,7 +291,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot)
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname, nickAdditionalInfo);
-            NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+            NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(nickRoot);
             nickitem->setConnectionId(server->connectionId ());
             // Mark nick as online
             nickitem->setOffline(false);
@@ -366,7 +366,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname);
             // remove channels from the nick
             qDeleteAll(nickRoot->takeChildren());
-            NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+            NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(nickRoot);
             nickitem->setConnectionId(servr->connectionId ());
             // Mark nick as offline
             nickitem->setOffline (true);
@@ -569,7 +569,7 @@ bool NicksOnline::getItemServerAndNick(const QTreeWidgetItem* item, QString& ser
 {
     if (!item) return false;
     // convert into NicksOnlineItem
-    const NicksOnlineItem* nlItem=static_cast<const NicksOnlineItem*>(item);
+    const NicksOnlineItem* nlItem=dynamic_cast<const NicksOnlineItem*>(item);
     // If on a network, return false;
     if (nlItem->type() == NicksOnlineItem::NetworkRootItem) return false;
     // get server name
@@ -691,7 +691,7 @@ void NicksOnline::doCommand(QAction* id)
         if (m_nickListView->selectedItems().count() > 0)
         {
             // only join real channels
-            if (static_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0))->type() == NicksOnlineItem::ChannelItem)
+            if (dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0))->type() == NicksOnlineItem::ChannelItem)
             {
                 QString contactChannel = m_nickListView->selectedItems().at(0)->text(nlvcChannel);
                 server->queue( QStringLiteral("JOIN ")+contactChannel );

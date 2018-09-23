@@ -204,7 +204,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
 
-    KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
+    KToggleAction* toggleMenuBarAction = qobject_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
 
     if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
         textMenu->insertAction(textMenu->actions().first(), toggleMenuBarAction);

@@ -115,7 +115,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
     if (item)
     {
         // make a highlight item out of the generic qlistviewitem
-        HighlightViewItem* highlightItem = static_cast<HighlightViewItem*>(item);
+        HighlightViewItem* highlightItem = dynamic_cast<HighlightViewItem*>(item);
 
         // tell all now emitted signals that we just clicked on a new item, so they should
         // not emit the modified() signal.
@@ -154,7 +154,7 @@ void Highlight_Config::updateButtons()
 
 void Highlight_Config::patternChanged(const QString& newPattern)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -165,7 +165,7 @@ void Highlight_Config::patternChanged(const QString& newPattern)
 
 void Highlight_Config::notifyModeChanged(bool enabled)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -176,7 +176,7 @@ void Highlight_Config::notifyModeChanged(bool enabled)
 
 void Highlight_Config::colorChanged(const QColor& newColor)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -187,7 +187,7 @@ void Highlight_Config::colorChanged(const QColor& newColor)
 
 void Highlight_Config::soundURLChanged(const QString& newURL)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -198,7 +198,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
 
 void Highlight_Config::autoTextChanged(const QString& newText)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -209,7 +209,7 @@ void Highlight_Config::autoTextChanged(const QString& newText)
 
 void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -232,13 +232,13 @@ void Highlight_Config::addHighlight()
 
 void Highlight_Config::removeHighlight()
 {
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (item)
     {
         delete item;
 
-        item = static_cast<HighlightViewItem*>(highlightListView->currentItem());
+        item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
         if (item)
         {
@@ -254,12 +254,12 @@ QList<Highlight*> Highlight_Config::getHighlightList()
 {
     QList<Highlight*> newList;
 
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
         newList.append(new Highlight(item->getPattern(), item->getRegExp(), item->getColor(),
             item->getSoundURL(), item->getAutoText(), item->getChatWindows(), item->getNotify()));
-        item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
+        item = dynamic_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
 
     return newList;
@@ -269,12 +269,12 @@ QStringList Highlight_Config::currentHighlightList()
 {
     QStringList newList;
 
-    HighlightViewItem* item = static_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
+    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
         newList.append(item->getPattern() + QString(item->getRegExp()) + item->getColor().name() +
             item->getSoundURL().url() + item->getAutoText() + item->getChatWindows() + QString::number(item->getNotify()));
-        item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
+        item = dynamic_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
 
     return newList;

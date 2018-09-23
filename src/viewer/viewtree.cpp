@@ -218,13 +218,13 @@ bool ViewTree::event(QEvent* event)
     if (event->type() == QEvent::ToolTip) {
         event->accept();
 
-        const QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+        const QHelpEvent* helpEvent = dynamic_cast<QHelpEvent*>(event);
 
         const QModelIndex& idx = indexAt(helpEvent->pos());
 
         if (idx.isValid()) {
             const QString &text = idx.model()->data(idx, Qt::DisplayRole).toString();
-            const QSize& preferredSize = static_cast<ViewTreeDelegate*>(itemDelegate())->preferredSizeHint(idx);
+            const QSize& preferredSize = qobject_cast<ViewTreeDelegate*>(itemDelegate())->preferredSizeHint(idx);
             const QRect& itemRect = visualRect(idx);
 
             if (preferredSize.width() > itemRect.width()) {
@@ -464,7 +464,7 @@ void ViewTree::keyPressEvent(QKeyEvent* event)
                     view->appendInputText(event->text(), true);
                 else if (view->getType() == ChatWindow::Konsole)
                 {
-                    KonsolePanel* panel = static_cast<KonsolePanel*>(view);
+                    KonsolePanel* panel = qobject_cast<KonsolePanel*>(view);
                     QCoreApplication::sendEvent(panel->getWidget(), event);
                 }
 

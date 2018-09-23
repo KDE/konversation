@@ -48,9 +48,9 @@ bool ViewSpringLoader::eventFilter(QObject* watched, QEvent* event)
 {
     if (event->type() == QEvent::DragEnter)
     {
-        if (!static_cast<QDragEnterEvent*>(event)->mimeData()->hasFormat("application/x-konversation-chatwindow"))
+        if (!dynamic_cast<QDragEnterEvent*>(event)->mimeData()->hasFormat("application/x-konversation-chatwindow"))
         {
-            m_hoveredWidget = static_cast<QWidget*>(watched);
+            m_hoveredWidget = qobject_cast<QWidget*>(watched);
 
             event->accept();
 
@@ -59,7 +59,7 @@ bool ViewSpringLoader::eventFilter(QObject* watched, QEvent* event)
     }
     else if (event->type() == QEvent::DragMove)
     {
-        QDragMoveEvent* dragMoveEvent = static_cast<QDragMoveEvent*>(event);
+        QDragMoveEvent* dragMoveEvent = dynamic_cast<QDragMoveEvent*>(event);
 
         if (!dragMoveEvent->mimeData()->hasFormat("application/x-konversation-chatwindow"))
         {

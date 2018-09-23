@@ -3676,7 +3676,7 @@ QString Server::parseWildcards(const QString& toParse, ChatWindow* context, QStr
         return parseWildcards(toParse, getNickname(), QString(), QString(), QString(), QString());
     else if (context->getType() == ChatWindow::Channel)
     {
-        Channel* channel = static_cast<Channel*>(context);
+        Channel* channel = qobject_cast<Channel*>(context);
 
         return parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(),
             nicks.count() ? nicks : channel->getSelectedNickList(), inputLineText);
