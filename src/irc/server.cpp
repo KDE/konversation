@@ -714,21 +714,6 @@ void Server::requestAvailableCapabilies ()
 
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
-    bool useSASL = false;
-
-    if (getIdentity()) {
-        // A username is optional SASL EXTERNAL and a client cert substitutes
-        // for the password.
-        if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) {
-            useSASL = true;
-        // PLAIN on the other hand requires both.
-        } else if (getIdentity()->getAuthType() == QStringLiteral("saslplain")
-            && !getIdentity()->getSaslAccount().isEmpty()
-            && !getIdentity()->getAuthPassword().isEmpty()) {
-            useSASL = true;
-        }
-    }
-
     QStringList requestCaps;
     QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
     QStringList nameValue;
@@ -739,8 +724,33 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
 
         if(nameValue[0] == QStringLiteral("sasl"))
         {
-            if(useSASL)
-                requestCaps.append ("sasl");
+            QString authCommand;
+
+            if (getIdentity()) {
+                // A username is optional SASL EXTERNAL and a client cert substitutes
+                // for the password.
+                if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) {
+                    authCommand = QStringLiteral("EXTERNAL");
+                // PLAIN on the other hand requires both.
+                } else if (getIdentity()->getAuthType() == QStringLiteral("saslplain")
+                    && !getIdentity()->getSaslAccount().isEmpty()
+                    && !getIdentity()->getAuthPassword().isEmpty()) {
+                    authCommand = QStringLiteral("PLAIN");
+                }
+            }
+
+            if(!authCommand.isEmpty())
+            {
+                QSet<QString> supportedSaslTypes;
+
+                if(nameValue.count() > 1)
+                    supportedSaslTypes = QSet<QString>::fromList(nameValue[1].split(QChar(',')));
+
+                if(!supportedSaslTypes.isEmpty() && !supportedSaslTypes.contains(authCommand))
+                    getStatusView()->appendServerMessage(i18n("Error"), i18n("Server does not support %1 as SASL authentication mechanism, skipping SASL authentication.", authCommand));
+                else
+                    requestCaps.append ("sasl");
+            }
         }
         else if(m_capabilityNames.contains(nameValue[0]))
         {
