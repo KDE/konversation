@@ -367,7 +367,7 @@ namespace Konversation
                     break;
                 case 'l':
                     m_ui.userLimitChBox->setChecked(true);
-                    m_ui.userLimitEdit->setValue(currentMode.mid(1).toInt());
+                    m_ui.userLimitEdit->setValue(currentMode.midRef(1).toInt());
                     break;
                 case 'i':
                     m_ui.inviteModeChBox->setChecked(true);

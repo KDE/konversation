@@ -3717,7 +3717,7 @@ const QString& inputLineText
     while ((found = toParse.indexOf(QLatin1Char('%'), index)) != -1)
     {
                                                   // append part before the %
-        out.append(toParse.mid(index,found-index));
+        out.append(toParse.midRef(index,found-index));
         index = found + 1;                        // skip the part before, including %
         if (index >= (int)toParse.length())
             break;                                // % was the last char (not valid)
@@ -3768,7 +3768,7 @@ const QString& inputLineText
     }
 
                                                   // append last part
-    out.append(toParse.mid(index,toParse.length()-index));
+    out.append(toParse.midRef(index,toParse.length()-index));
     return out;
 }
 
