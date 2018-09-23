@@ -2320,9 +2320,6 @@ QString ViewContainer::currentViewTitle()
 QString ViewContainer::currentViewURL(bool passNetwork)
 {
     QString url;
-    QString channel;
-    QString port;
-    QString server;
 
     if (m_frontServer && m_frontView)
     {

@@ -1462,7 +1462,6 @@ namespace Konversation
         {
             QStringList parameterList = input.parameter.split(' ');
             QString channel;
-            QString mask;
 
             // if the user specified a channel
             if (isAChannel(parameterList[0]))
@@ -1631,8 +1630,6 @@ namespace Konversation
         else
         {
             QStringList parameterList = input.parameter.split(' ');
-            QString host = parameterList[0];
-            QString password;
 
             if (parameterList.count() == 3)
                 emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);

@@ -2057,7 +2057,6 @@ void Server::resolveUserhost(const QString& nickname)
 
 void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
 {
-    QString hostmask;
     QString option=a_option.toLower();
 
     Channel* targetChannel=getChannelByName(channel);
