@@ -804,7 +804,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 foreach(const QString& capability, capabilities)
                 {
-                    int nameStart = capability.indexOf(QRegExp(QStringLiteral("[a-z0-9"), Qt::CaseInsensitive));
+                    int nameStart = capability.indexOf(QRegExp(QStringLiteral("[a-z0-9]"), Qt::CaseInsensitive));
                     QString modifierString = capability.left(nameStart);
                     QString name = capability.mid(nameStart);
 
