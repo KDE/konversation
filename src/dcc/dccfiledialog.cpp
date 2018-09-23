@@ -43,7 +43,7 @@ DccFileDialog::DccFileDialog(QWidget* parent)
 
 QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
 {
-    m_fileWidget->setStartDir(startDir);
+    KFileWidget::setStartDir(startDir);
 
     m_fileWidget->setFilter(filter);
 

@@ -1142,7 +1142,7 @@ void Server::notifyAction(const QString& nick)
 {
     QString out(Preferences::self()->notifyDoubleClickAction());
 
-    getOutputFilter()->replaceAliases(out);
+    OutputFilter::replaceAliases(out);
 
     // parse wildcards (toParse,nickname,channelName,nickList,parameter)
     out = parseWildcards(out, getNickname(), QString(), QString(), nick, QString());
@@ -1243,7 +1243,7 @@ void Server::autoCommandsAndChannels()
         {
             QString output(*iter);
             output = output.simplified();
-            getOutputFilter()->replaceAliases(output);
+            OutputFilter::replaceAliases(output);
             Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString());
             queue(result.toServer);
         }

@@ -241,14 +241,14 @@ KPageWidgetItem *ConfigDialog::ConfigDialogPrivate::addPageInternal(KPageWidgetI
 
 void ConfigDialog::ConfigDialogPrivate::setupManagerConnections(KConfigDialogManager *manager)
 {
-    q->connect(manager, SIGNAL(settingsChanged()), q, SLOT(_k_settingsChangedSlot()));
-    q->connect(manager, SIGNAL(widgetModified()), q, SLOT(_k_updateButtons()));
+    ConfigDialog::connect(manager, SIGNAL(settingsChanged()), q, SLOT(_k_settingsChangedSlot()));
+    ConfigDialog::connect(manager, SIGNAL(widgetModified()), q, SLOT(_k_updateButtons()));
 
     QDialogButtonBox *buttonBox = q->buttonBox();
-    q->connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
-    q->connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
-    q->connect(buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgets);
-    q->connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgetsDefault);
+    ConfigDialog::connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
+    ConfigDialog::connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
+    ConfigDialog::connect(buttonBox->button(QDialogButtonBox::Cancel), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgets);
+    ConfigDialog::connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked, manager, &KConfigDialogManager::updateWidgetsDefault);
 }
 
 void ConfigDialog::ConfigDialogPrivate::setApplyButtonEnabled(bool enabled)

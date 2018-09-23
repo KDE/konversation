@@ -331,7 +331,7 @@ void IrcContextMenus::processWebShortcutAction()
         KUriFilterData filterData(action->data().toString());
 
         if (KUriFilter::self()->filterSearchUri(filterData, KUriFilter::WebShortcutFilter))
-            Application::instance()->openUrl(filterData.uri().url());
+            Application::openUrl(filterData.uri().url());
     }
 }
 

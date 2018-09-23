@@ -1280,7 +1280,7 @@ void Application::openUrl(const QString& url)
     {
         QHash<QChar,QString> map;
         map.insert(QLatin1Char('u'), url);
-        const QString cmd = KMacroExpander::expandMacrosShellQuote(Preferences::self()->webBrowserCmd(), map);
+        const QString cmd = KMacroExpander::expandMacrosShellQuote(Preferences::webBrowserCmd(), map);
         const QStringList args = KShell::splitArgs(cmd);
 
         if (!args.isEmpty())

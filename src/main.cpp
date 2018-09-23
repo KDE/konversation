@@ -101,8 +101,8 @@ int main(int argc, char* argv[])
 
     KCrash::initialize();
 
-    app.setWindowIcon(QIcon::fromTheme(QLatin1String("konversation"), app.windowIcon()));
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+    QApplication::setWindowIcon(QIcon::fromTheme(QLatin1String("konversation"), QApplication::windowIcon()));
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
     cmdLineParser.addHelpOption();
@@ -158,5 +158,5 @@ int main(int argc, char* argv[])
                      &app, &Application::handleActivate,
                      Qt::DirectConnection);
 
-    return app.exec();
+    return QApplication::exec();
 }

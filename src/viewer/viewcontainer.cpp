@@ -1186,7 +1186,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (type < Konversation::tnfControl && !m_activeViewOrderList.contains(view))
         m_activeViewOrderList.append(view);
 
-    if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->self()->tabNotificationsText())
+    if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->tabNotificationsText())
         return;
 
     const int tabIndex = m_tabWidget->indexOf(view);

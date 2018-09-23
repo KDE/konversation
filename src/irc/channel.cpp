@@ -817,7 +817,7 @@ void Channel::sendText(const QString& sendLine)
     QString outputAll(sendLine);
 
     // replace aliases and wildcards
-    m_server->getOutputFilter()->replaceAliases(outputAll, this);
+    OutputFilter::replaceAliases(outputAll, this);
 
     // Send all strings, one after another
     QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);

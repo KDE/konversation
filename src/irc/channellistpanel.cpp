@@ -500,8 +500,7 @@ void ChannelListPanel::openURL()
 
     if (action)
     {
-        Application* konvApp = Application::instance();
-        konvApp->openUrl(action->data().toString());
+        Application::openUrl(action->data().toString());
     }
 }
 
