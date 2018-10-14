@@ -70,6 +70,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="ShowDateLine" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="TimestampFormat" type="String">
       <default>hh:mm</default>
       <label></label>

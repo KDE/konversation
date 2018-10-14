@@ -11,11 +11,20 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>401</width>
-    <height>502</height>
+    <height>558</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -27,10 +36,10 @@ the Free Software Foundation; either version 2 of the License, or
       <bool>true</bool>
      </property>
      <layout class="QGridLayout">
-      <item row="1" column="0" colspan="3">
-       <widget class="QCheckBox" name="kcfg_ShowDate">
-        <property name="text">
-         <string>Sho&amp;w dates</string>
+      <item row="0" column="1">
+       <widget class="KComboBox" name="kcfg_TimestampFormat">
+        <property name="editable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -47,10 +56,10 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="KComboBox" name="kcfg_TimestampFormat">
-        <property name="editable">
-         <bool>true</bool>
+      <item row="1" column="0" colspan="3">
+       <widget class="QCheckBox" name="kcfg_ShowDate">
+        <property name="text">
+         <string>Sho&amp;w dates</string>
         </property>
        </widget>
       </item>
@@ -69,6 +78,13 @@ the Free Software Foundation; either version 2 of the License, or
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QCheckBox" name="kcfg_ShowDateLine">
+        <property name="text">
+         <string>Show date marker when date changes</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -313,6 +329,7 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KUrlRequester</class>
    <extends>QFrame</extends>
    <header>kurlrequester.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>KComboBox</class>
@@ -350,12 +367,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>32</x>
+     <y>313</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>55</x>
+     <y>338</y>
     </hint>
    </hints>
   </connection>
@@ -366,12 +383,12 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>32</x>
+     <y>313</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>90</x>
+     <y>413</y>
     </hint>
    </hints>
   </connection>
@@ -382,12 +399,28 @@ the Free Software Foundation; either version 2 of the License, or
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>32</x>
+     <y>313</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>55</x>
+     <y>364</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_ShowDate</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_ShowDateLine</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>78</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>61</x>
+     <y>104</y>
     </hint>
    </hints>
   </connection>

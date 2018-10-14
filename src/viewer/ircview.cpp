@@ -91,7 +91,8 @@ class SelectionPin
 };
 
 
-IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr), m_lastMarkerLine(nullptr), m_rememberLineDirtyBit(false), markerFormatObject(this)
+IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr), m_lastMarkerLine(nullptr),
+    m_rememberLineDirtyBit(false), markerFormatObject(this), m_prevTimestamp(QDateTime::currentDateTime())
 {
     m_mousePressedOnUrl = false;
     m_isOnNick = false;
@@ -99,6 +100,7 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
     m_chatWin = nullptr;
     m_server = nullptr;
     m_fontSizeDelta = 0;
+    m_showDate = false;
 
     setAcceptDrops(false);
 
@@ -115,6 +117,7 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
 
     document()->documentLayout()->registerHandler(IRCView::MarkerLine, &markerFormatObject);
     document()->documentLayout()->registerHandler(IRCView::RememberLine, &markerFormatObject);
+    document()->documentLayout()->registerHandler(IRCView::DateLine, &markerFormatObject);
 
 
     connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
@@ -355,6 +358,11 @@ void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocu
             // pen.setStyle(Qt::DashDotDotLine);
             break;
 
+        case IRCView::BlockIsDateMarker:
+            pen.setColor(Preferences::self()->color(Preferences::Time));
+            pen.setStyle(Qt::DashLine);
+            break;
+
         default:
             //nice color, eh?
             pen.setColor(Qt::cyan);
@@ -508,15 +516,39 @@ Burr* IRCView::appendLine(IRCView::ObjectFormats type)
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
 
     QTextBlock block = cursor.block();
-    Burr *b = new Burr(this, m_lastMarkerLine, block, type == MarkerLine? BlockIsMarker : BlockIsRemember);
+    Burr *prevBurr = m_lastMarkerLine;
+    if(type == DateLine)
+        prevBurr = nullptr;
+    Burr *b = new Burr(this, prevBurr, block, objectFormatToBlockState(type));
     block.setUserData(b);
 
-    m_lastMarkerLine = b;
+    if(type != DateLine)
+        m_lastMarkerLine = b;
 
     //TODO figure out what this is for
     cursor.setPosition(block.position());
 
     return b;
+}
+
+IRCView::BlockStates IRCView::objectFormatToBlockState(ObjectFormats format)
+{
+    BlockStates state;
+
+    switch(format)
+    {
+    case MarkerLine:
+        state = BlockIsMarker;
+        break;
+    case RememberLine:
+        state = BlockIsRemember;
+        break;
+    case DateLine:
+        state = BlockIsDateMarker;
+        break;
+    }
+
+    return state;
 }
 
 // Other stuff
@@ -899,6 +931,14 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
         document()->setMaximumBlockCount(atBottom ? scrollMax : document()->maximumBlockCount() + 1);
     }
 
+    if (m_showDate)
+    {
+        QString timeColor = Preferences::self()->color(Preferences::Time).name();
+        doRawAppend(QString("<font color=\"%1\">%2</font>").arg(timeColor, QLocale().toString(m_prevTimestamp.date(), QLocale::ShortFormat)), rtl);
+        appendLine(DateLine);
+        m_showDate = false;
+    }
+
     doRawAppend(newLine, rtl);
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server to parse wildcards.
@@ -945,7 +985,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
         if (messageTags.contains(QLatin1String("time"))) // If it exists use the supplied server time.
             serverTime = QDateTime::fromString(messageTags[QStringLiteral("time")], Qt::ISODate).toLocalTime();
 
-        QTime time = serverTime.isValid() ? serverTime.time() : QTime::currentTime();
+        QDateTime dateTime = serverTime.isValid() ? serverTime : QDateTime::currentDateTime();
         QString timeColor = Preferences::self()->color(Preferences::Time).name();
         QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
@@ -954,19 +994,20 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
 
         if(!Preferences::self()->showDate())
         {
-            timeString = QString(QLatin1String("<font color=\"") + timeColor + QLatin1String("\">[%1]</font> ")).arg(time.toString(timeFormat));
+            timeString = QString(QLatin1String("<font color=\"") + timeColor + QLatin1String("\">[%1]</font> ")).arg(dateTime.time().toString(timeFormat));
+            m_showDate = Preferences::self()->showDateLine() && dateTime.date() != m_prevTimestamp.date();
         }
         else
         {
-            QDate date = serverTime.isValid() ? serverTime.date() : QDate::currentDate();
             timeString = QString("<font color=\"" +
                 timeColor + "\">[%1%2 %3%4]</font> ")
                     .arg((dateRtl==rtl) ? QString() : (dateRtl ? RLM : LRM),
-                        QLocale().toString(date, QLocale::ShortFormat),
-                        time.toString(timeFormat),
+                        QLocale().toString(dateTime.date(), QLocale::ShortFormat),
+                        dateTime.time().toString(timeFormat),
                          (dateRtl==rtl) ? QString() : (!dateRtl ? RLM : LRM));
         }
 
+        m_prevTimestamp = dateTime;
         return timeString;
     }
 

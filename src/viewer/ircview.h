@@ -22,6 +22,7 @@
 
 #include <QTextBrowser>
 #include <QUrl>
+#include <QDateTime>
 
 
 class Server;
@@ -102,10 +103,10 @@ class IRCView : public QTextBrowser
         bool hasLines();
 
         /// QTextBlockFormat states for setUserState.
-        enum BlockStates { None = -1, BlockIsMarker = 1, BlockIsRemember = 2 };
+        enum BlockStates { None = -1, BlockIsMarker = 1, BlockIsRemember = 2, BlockIsDateMarker = 3 };
 
         /// QTextCharFormat object types.
-        enum ObjectFormats { MarkerLine = QTextFormat::UserObject, RememberLine};
+        enum ObjectFormats { MarkerLine = QTextFormat::UserObject, RememberLine, DateLine };
 
     public Q_SLOTS:
         /// Inserts a marker line.
@@ -151,6 +152,8 @@ class IRCView : public QTextBrowser
 
         /// Shortcut to get an object format of the desired type
         QTextCharFormat getFormat(ObjectFormats);
+
+        BlockStates objectFormatToBlockState(ObjectFormats format);
 
     public Q_SLOTS:
         // Doesn't have to be a slot, but what the hay.
@@ -344,5 +347,8 @@ class IRCView : public QTextBrowser
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;
+
+        QDateTime m_prevTimestamp;
+        bool m_showDate;
 };
 #endif
