@@ -1489,7 +1489,6 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
 
                     pos += colorString.length() - 1;
                     linkOffset += colorString.length() -colorMatch.length();
-                    break;
                 }
                 break;
             case '\x0f': //reset to default
