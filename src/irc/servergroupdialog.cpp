@@ -43,7 +43,6 @@ namespace Konversation
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
-        okButton->setDefault(true);
         okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::accepted, this, &ServerGroupDialog::accept);
         connect(buttonBox, &QDialogButtonBox::rejected, this, &ServerGroupDialog::reject);
@@ -453,7 +452,6 @@ namespace Konversation
         
         QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
-        m_okButton->setDefault(true);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::rejected, this, &ServerDialog::reject);
         mainLayout->addWidget(buttonBox);
@@ -519,7 +517,6 @@ namespace Konversation
         mainLayout->addWidget(mainWidget);
         QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
-        m_okButton->setDefault(true);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::rejected, this, &ChannelDialog::reject);
         mainLayout->addWidget(buttonBox);
