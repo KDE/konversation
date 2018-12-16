@@ -25,6 +25,7 @@ namespace Konversation
 {
 
     StatusBar::StatusBar(MainWindow* window)
+        : QObject (window)
     {
         m_window = window;
 
