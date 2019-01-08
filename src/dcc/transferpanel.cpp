@@ -45,30 +45,30 @@ namespace Konversation
 
             initGUI();
 
-            connect(Application::instance()->getDccTransferManager(), SIGNAL(newTransferAdded(Konversation::DCC::Transfer*)),
-                    this, SLOT(slotNewTransferAdded(Konversation::DCC::Transfer*)));
+            connect(Application::instance()->getDccTransferManager(), &TransferManager::newTransferAdded,
+                    this, &TransferPanel::slotNewTransferAdded);
         }
 
         TransferPanel::~TransferPanel()
         {
             KConfigGroup config(KSharedConfig::openConfig(), "DCC Settings");
             const QByteArray state = m_splitter->saveState();
-            config.writeEntry(QString("PanelSplitter"), state.toBase64());
+            config.writeEntry(QStringLiteral("PanelSplitter"), state.toBase64());
         }
 
         void TransferPanel::initGUI()
         {
             setSpacing(0);
             m_toolBar = new KToolBar(this, true, true);
-            m_toolBar->setObjectName("dccstatus_toolbar");
+            m_toolBar->setObjectName(QStringLiteral("dccstatus_toolbar"));
 
             m_splitter = new QSplitter(this);
             m_splitter->setOrientation(Qt::Vertical);
 
             m_transferView = new TransferView(m_splitter);
 
-            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-                    this, SLOT(updateButton()));
+            connect(m_transferView->selectionModel(), &QItemSelectionModel::selectionChanged,
+                    this, &TransferPanel::updateButton);
             connect(m_transferView, &TransferView::runSelectedTransfers, this, &TransferPanel::runDcc);
 
             // detailed info panel
@@ -78,23 +78,23 @@ namespace Konversation
 
             // popup menu
             m_popup = new QMenu(this);
-            m_selectAll =  m_popup->addAction(i18n("&Select All Items"), this, SLOT(selectAll()));
-            m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"), this, SLOT(selectAllCompleted()));
+            m_selectAll =  m_popup->addAction(i18n("&Select All Items"), this, &TransferPanel::selectAll);
+            m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"), this, &TransferPanel::selectAllCompleted);
             m_popup->addSeparator();                           // -----
-            m_accept =  m_popup->addAction(QIcon::fromTheme("media-playback-start"), i18n("&Accept"), this, SLOT(acceptDcc()));
+            m_accept =  m_popup->addAction(QIcon::fromTheme(QStringLiteral("media-playback-start")), i18n("&Accept"), this, &TransferPanel::acceptDcc);
             m_accept->setStatusTip(i18n("Start receiving"));
-            m_abort = m_popup->addAction(QIcon::fromTheme("process-stop"),i18n("A&bort"), this, SLOT(abortDcc()));
+            m_abort = m_popup->addAction(QIcon::fromTheme(QStringLiteral("process-stop")),i18n("A&bort"), this, &TransferPanel::abortDcc);
             m_abort->setStatusTip(i18n("Abort the transfer(s)"));
             m_popup->addSeparator();                           // -----
-            m_resend = m_popup->addAction(QIcon::fromTheme("edit-redo"),i18n("Resend"), this, SLOT(resendFile()));
-            m_clear = m_popup->addAction(QIcon::fromTheme("edit-delete"),i18nc("clear selected dcctransfer","&Clear"), this, SLOT(clearDcc()));
+            m_resend = m_popup->addAction(QIcon::fromTheme(QStringLiteral("edit-redo")),i18n("Resend"), this, &TransferPanel::resendFile);
+            m_clear = m_popup->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")),i18nc("clear selected dcctransfer","&Clear"), this, &TransferPanel::clearDcc);
             m_clear->setStatusTip(i18n("Clear all selected Items"));
-            m_clearCompleted = m_popup->addAction(QIcon::fromTheme("edit-clear-list"),i18n("Clear Completed"), this, SLOT(clearCompletedDcc()));
+            m_clearCompleted = m_popup->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")),i18n("Clear Completed"), this, &TransferPanel::clearCompletedDcc);
             m_clearCompleted->setStatusTip(i18n("Clear Completed Items"));
             m_popup->addSeparator();                           // -----
-            m_open = m_popup->addAction(QIcon::fromTheme("system-run"), i18n("&Open File"), this, SLOT(runDcc()));
+            m_open = m_popup->addAction(QIcon::fromTheme(QStringLiteral("system-run")), i18n("&Open File"), this, &TransferPanel::runDcc);
             m_open->setStatusTip(i18n("Run the file"));
-            m_openLocation = m_popup->addAction(QIcon::fromTheme("document-open-folder"), i18n("Open Location"), this, SLOT(openLocation()));
+            m_openLocation = m_popup->addAction(QIcon::fromTheme(QStringLiteral("document-open-folder")), i18n("Open Location"), this, SLOT(openLocation()));
             m_openLocation->setStatusTip(i18n("Open the file location"));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -102,8 +102,8 @@ namespace Konversation
 
             // misc.
             connect(m_transferView, &TransferView::doubleClicked, this, &TransferPanel::doubleClicked);
-            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-                    this, SLOT(setDetailPanelItem(QItemSelection,QItemSelection)));
+            connect(m_transferView->selectionModel(), &QItemSelectionModel::selectionChanged,
+                    this, &TransferPanel::setDetailPanelItem);
 
             m_toolBar->addAction(m_accept);
             m_toolBar->addAction(m_abort);
@@ -126,7 +126,7 @@ namespace Konversation
 
         void TransferPanel::slotNewTransferAdded(Transfer *transfer)
         {
-            connect(transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(slotTransferStatusChanged()));
+            connect(transfer, &Transfer::statusChanged, this, &TransferPanel::slotTransferStatusChanged);
             m_transferView->addTransfer(transfer);
             if (m_transferView->itemCount() == 1)
             {
@@ -184,7 +184,7 @@ namespace Konversation
                 }
             }
 
-            if (!KAuthorized::authorizeAction("allow_downloading"))
+            if (!KAuthorized::authorizeAction(QStringLiteral("allow_downloading")))
             {
                 accept = false;
             }

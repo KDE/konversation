@@ -36,7 +36,7 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
 
     m_closeButton->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
     connect(m_closeButton, &QToolButton::clicked, this, &QueueTuner::close);
-    connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
+    connect(container, &ViewContainer::frontServerChanging, this, &QueueTuner::setServer);
     connect(&m_timer, &QTimer::timeout, this, &QueueTuner::timerFired);
 
     connect(m_slowRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::slowRateChanged);

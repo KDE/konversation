@@ -47,15 +47,15 @@ namespace Konversation
 
         void UPnPService::setProperty(const QString & name,const QString & value)
         {
-            if (name == "serviceType")
+            if (name == QLatin1String("serviceType"))
                 servicetype = value;
-            else if (name == "controlURL")
+            else if (name == QLatin1String("controlURL"))
                 controlurl = value;
-            else if (name == "eventSubURL")
+            else if (name == QLatin1String("eventSubURL"))
                 eventsuburl = value;
-            else if (name == "SCPDURL")
+            else if (name == QLatin1String("SCPDURL"))
                 scpdurl = value;
-            else if (name == "serviceId")
+            else if (name == QLatin1String("serviceId"))
                 serviceid = value;
         }
 
@@ -78,15 +78,15 @@ namespace Konversation
 
         void UPnPDeviceDescription::setProperty(const QString & name,const QString & value)
         {
-            if (name == "friendlyName")
+            if (name == QLatin1String("friendlyName"))
                 friendlyName = value;
-            else if (name == "manufacturer")
+            else if (name == QLatin1String("manufacturer"))
                 manufacturer = value;
-            else if (name == "modelDescription")
+            else if (name == QLatin1String("modelDescription"))
                 modelDescription = value;
-            else if (name == "modelName")
+            else if (name == QLatin1String("modelName"))
                 modelName = value;
-            else if (name == "modelNumber")
+            else if (name == QLatin1String("modelNumber"))
                 modelNumber = value;
         }
 
@@ -116,8 +116,8 @@ namespace Konversation
 
         void UPnPRouter::addService(const UPnPService & s)
         {
-            if (!( s.servicetype.contains("WANIPConnection") ||
-                   s.servicetype.contains("WANPPPConnection") ))
+            if (!( s.servicetype.contains(QLatin1String("WANIPConnection")) ||
+                   s.servicetype.contains(QLatin1String("WANPPPConnection")) ))
                 return;
 
             // Confirm this service is connected. Place in pending queue.
@@ -160,7 +160,7 @@ namespace Konversation
         {
             qDebug() << "UPnP - Checking service status: " << s.servicetype << endl;
 
-            QString action = "GetStatusInfo";
+            QString action = QStringLiteral("GetStatusInfo");
             QString comm = SOAP::createCommand(action,s.servicetype);
 
             return sendSoapQuery(comm,s.servicetype + '#' + action,s.controlurl);
@@ -175,42 +175,42 @@ namespace Konversation
                 // add all the arguments for the command
                 QList<SOAP::Arg> args;
                 SOAP::Arg a;
-                a.element = "NewRemoteHost";
+                a.element = QStringLiteral("NewRemoteHost");
                 args.append(a);
 
                 // the external port
-                a.element = "NewExternalPort";
+                a.element = QStringLiteral("NewExternalPort");
                 a.value = QString::number(port);
                 args.append(a);
 
                 // the protocol
-                a.element = "NewProtocol";
+                a.element = QStringLiteral("NewProtocol");
                 a.value = proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP";
                 args.append(a);
 
                 // the local port
-                a.element = "NewInternalPort";
+                a.element = QStringLiteral("NewInternalPort");
                 a.value = QString::number(port);
                 args.append(a);
 
                 // the local IP address
-                a.element = "NewInternalClient";
+                a.element = QStringLiteral("NewInternalClient");
                 a.value = host.toString();
                 args.append(a);
 
-                a.element = "NewEnabled";
+                a.element = QStringLiteral("NewEnabled");
                 a.value = '1';
                 args.append(a);
 
-                a.element = "NewPortMappingDescription";
-                a.value = QString("Konversation UPNP");
+                a.element = QStringLiteral("NewPortMappingDescription");
+                a.value = QStringLiteral("Konversation UPNP");
                 args.append(a);
 
-                a.element = "NewLeaseDuration";
+                a.element = QStringLiteral("NewLeaseDuration");
                 a.value = '0';
                 args.append(a);
 
-                QString action = "AddPortMapping";
+                QString action = QStringLiteral("AddPortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
 
                 Forwarding *forward = new Forwarding;
@@ -273,20 +273,20 @@ namespace Konversation
                 // add all the arguments for the command
                 QList<SOAP::Arg> args;
                 SOAP::Arg a;
-                a.element = "NewRemoteHost";
+                a.element = QStringLiteral("NewRemoteHost");
                 args.append(a);
 
                 // the external port
-                a.element = "NewExternalPort";
+                a.element = QStringLiteral("NewExternalPort");
                 a.value = QString::number(forward->port);
                 args.append(a);
 
                 // the protocol
-                a.element = "NewProtocol";
+                a.element = QStringLiteral("NewProtocol");
                 a.value = forward->proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP";
                 args.append(a);
 
-                QString action = "DeletePortMapping";
+                QString action = QStringLiteral("DeletePortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
 
                 if (KJob *req = sendSoapQuery(comm,service.servicetype + '#' + action,service.controlurl))
@@ -312,16 +312,16 @@ namespace Konversation
 
             QUrl address;
 
-            address.setScheme(QString("http"));
+            address.setScheme(QStringLiteral("http"));
             address.setHost(location.host());
             address.setPort(location.port());
             address.setPath(controlurl);
 
             KIO::TransferJob *req = KIO::http_post( address, query.toLatin1(), KIO::HideProgressInfo );
 
-            req->addMetaData("content-type", QString("text/xml"));
-            req->addMetaData("UserAgent", QString("Konversation UPnP"));
-            req->addMetaData("customHTTPHeader", QString("SOAPAction: ") + soapact);
+            req->addMetaData(QStringLiteral("content-type"), QStringLiteral("text/xml"));
+            req->addMetaData(QStringLiteral("UserAgent"), QStringLiteral("Konversation UPnP"));
+            req->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("SOAPAction: ") + soapact);
 
             soap_data_out[req] = QByteArray();
             soap_data_in[req]  = QByteArray();
@@ -379,7 +379,7 @@ namespace Konversation
 
                 if (pending_services.contains(r))
                 {
-                    if (reply.contains("Connected"))
+                    if (reply.contains(QLatin1String("Connected")))
                     {
                         // Lets just deal with one connected service for now. Last one wins.
                         service = pending_services[r];

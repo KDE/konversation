@@ -62,7 +62,7 @@ class TabWidget : public QTabWidget
     Q_OBJECT
 
     public:
-        explicit TabWidget(QWidget* parent = 0);
+        explicit TabWidget(QWidget* parent = nullptr);
         ~TabWidget();
 
     Q_SIGNALS:

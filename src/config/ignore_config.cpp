@@ -49,7 +49,7 @@ Ignore_Config::~Ignore_Config()
 void Ignore_Config::newIgnore()
 {
     QTreeWidgetItem *item = new IgnoreListViewItem(ignoreListView,
-        "new!new@new.new",
+        QStringLiteral("new!new@new.new"),
         Ignore::Channel |
         Ignore::Query |
         Ignore::Notice |

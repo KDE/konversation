@@ -61,7 +61,7 @@ namespace Konversation
 
         setupUi(this);
 
-        KGuiItem::assign(m_buttonBox->button(QDialogButtonBox::Ok), KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"),
+        KGuiItem::assign(m_buttonBox->button(QDialogButtonBox::Ok), KGuiItem(i18n("C&onnect"), QStringLiteral("network-connect"), i18n("Connect to the server"),
                                                                              i18n("Click here to connect to the selected IRC network and channel.")));
 
         m_showAtStartup->setChecked(Preferences::self()->showServerList());
@@ -400,7 +400,7 @@ namespace Konversation
         for(channelIt = begin; channelIt != channelList.end(); ++channelIt)
         {
             if (channelIt != begin)
-                channels += ", ";
+                channels += QLatin1String(", ");
 
             channels += (*channelIt).name();
         }
@@ -431,7 +431,7 @@ namespace Konversation
                 name += ':' + QString::number((*serverIt).port());
 
             if ((*serverIt).SSLEnabled())
-                name += " (SSL)";
+                name += QLatin1String(" (SSL)");
 
             // Insert the server into the list, as child of the server group list item
             QTreeWidgetItem* serverItem = new ServerListItem(networkItem, QStringList() << name);

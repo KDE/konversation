@@ -37,7 +37,7 @@ namespace Konversation
         buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
         setModal( false );
         setWindowTitle(  i18n("Insert Character") );
-        KGuiItem::assign(okButton, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
+        KGuiItem::assign(okButton, KGuiItem(i18n("&Insert"), QStringLiteral("dialog-ok"), i18n("Insert a character")));
 
         m_charTable = new KCharSelect(this,nullptr, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos|KCharSelect::SearchLine);
 

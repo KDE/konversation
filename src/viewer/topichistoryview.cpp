@@ -64,11 +64,11 @@ QVariant TopicHistorySortfilterProxyModel::data(const QModelIndex& index, int ro
 void TopicHistorySortfilterProxyModel::setSourceModel(QAbstractItemModel* model)
 {
     if (sourceModel())
-        disconnect(sourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+        disconnect(sourceModel(), &QAbstractItemModel::dataChanged, this, &TopicHistorySortfilterProxyModel::sourceDataChanged);
 
     KCategorizedSortFilterProxyModel::setSourceModel(model);
 
-    connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(sourceDataChanged(QModelIndex,QModelIndex)));
+    connect(model, &QAbstractItemModel::dataChanged, this, &TopicHistorySortfilterProxyModel::sourceDataChanged);
 }
 
 bool TopicHistorySortfilterProxyModel::filterAcceptsColumn(int source_column, const QModelIndex& source_parent) const
@@ -156,8 +156,8 @@ QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& i
     QList<QWidget*> widgets;
 
     TopicHistoryLabel* label = new TopicHistoryLabel();
-    connect(qobject_cast<TopicHistoryView*>(itemView()), SIGNAL(textSelectableChanged(bool)),
-        label, SLOT(setTextSelectable(bool)));
+    connect(qobject_cast<TopicHistoryView*>(itemView()), &TopicHistoryView::textSelectableChanged,
+        label, &TopicHistoryLabel::setTextSelectable);
     widgets << label;
 
     return widgets;

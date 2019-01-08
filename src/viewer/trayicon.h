@@ -24,7 +24,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit TrayIcon(QWidget* parent = 0);
+            explicit TrayIcon(QWidget* parent = nullptr);
             ~TrayIcon();
 
             bool notificationEnabled() { return m_notificationEnabled; }

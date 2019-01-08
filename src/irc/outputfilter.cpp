@@ -223,7 +223,7 @@ namespace Konversation
             i18n("Encoding Conflict Warning"),
             KStandardGuiItem::cont(),
             KStandardGuiItem::cancel(),
-            "WarnEncodingConflict");
+            QStringLiteral("WarnEncodingConflict"));
 
             *line = newLine; //set so we show it as it's sent
             if (ret != KMessageBox::Continue) return true;
@@ -244,7 +244,7 @@ namespace Konversation
 
         QString inputLine(originalLine);
 
-        if (inputLine.isEmpty() || inputLine == "\n" || checkForEncodingConflict(&inputLine, destination))
+        if (inputLine.isEmpty() || inputLine == QLatin1String("\n") || checkForEncodingConflict(&inputLine, destination))
             return result;
 
         //Protect against nickserv auth being sent as a message on the off chance
@@ -275,7 +275,7 @@ namespace Konversation
             QString command = inputLine.section(' ', 0, 0).mid(1).toLower();
             input.parameter = inputLine.section(' ', 1);
 
-            if (command != "topic")
+            if (command != QLatin1String("topic"))
                 input.parameter = input.parameter.trimmed();
 
             if (supportedCommands().contains(command))
@@ -301,7 +301,7 @@ namespace Konversation
             BYPASS_COMMAND_PARSING:
 
             QStringList outputList = splitForEncoding(destination, inputLine,
-                                                      m_server->getPreLength("PRIVMSG", destination));
+                                                      m_server->getPreLength(QStringLiteral("PRIVMSG"), destination));
 
             if (outputList.count() > 1)
             {
@@ -375,8 +375,8 @@ namespace Konversation
         OutputFilterInput input(_input);
         OutputFilterResult result;
 
-        if (input.parameter.contains(",")) // Protect against #foo,0 tricks
-            input.parameter = input.parameter.remove(",0");
+        if (input.parameter.contains(QLatin1String(","))) // Protect against #foo,0 tricks
+            input.parameter = input.parameter.remove(QStringLiteral(",0"));
         //else if(channelName == "0") // FIXME IRC RFC 2812 section 3.2.1
 
         if (input.parameter.isEmpty())
@@ -594,7 +594,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        result.toServer = "NAMES ";
+        result.toServer = QStringLiteral("NAMES ");
 
         if (input.parameter.isNull())
             result = error(i18n("%1NAMES with no target may disconnect you from the server. Specify "
@@ -686,7 +686,7 @@ namespace Konversation
 
         if (outputList.count() > 1)
         {
-            command = "PRIVMSG";
+            command = QStringLiteral("PRIVMSG");
 
             outputList += splitForEncoding(input.destination, outputList.at(1),
                                            m_server->getPreLength(command, input.destination));
@@ -833,11 +833,11 @@ namespace Konversation
         if (!message.isEmpty())
             out+= ' ' + message;
 
-        if (request == "PING")
+        if (request == QLatin1String("PING"))
         {
             unsigned int timeT = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(timeT);
-            result.output = i18n("Sending CTCP-%1 request to %2.", QString::fromLatin1("PING"), recipient);
+            result.output = i18n("Sending CTCP-%1 request to %2.", QStringLiteral("PING"), recipient);
         }
         else
         {
@@ -856,10 +856,10 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AME [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (isParameter("local", input.parameter.section(' ', 0, 0)))
+        if (isParameter(QStringLiteral("local"), input.parameter.section(' ', 0, 0)))
             m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(' ', 1));
         else
-            emit multiServerCommand("me", input.parameter);
+            emit multiServerCommand(QStringLiteral("me"), input.parameter);
 
         return OutputFilterResult();
     }
@@ -869,10 +869,10 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AMSG [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (isParameter("local", input.parameter.section(' ', 0, 0)))
+        if (isParameter(QStringLiteral("local"), input.parameter.section(' ', 0, 0)))
             m_server->sendToAllChannelsAndQueries(input.parameter.section(' ', 1));
         else
-            emit multiServerCommand("msg", input.parameter);
+            emit multiServerCommand(QStringLiteral("msg"), input.parameter);
 
         return OutputFilterResult();
     }
@@ -946,16 +946,16 @@ namespace Konversation
         }
         else
         {
-            QStringList parameterList = input.parameter.replace("\\ ", "%20").split(' ');
+            QStringList parameterList = input.parameter.replace(QLatin1String("\\ "), QLatin1String("%20")).split(' ');
 
             QString dccType = parameterList[0].toLower();
 
             //TODO close should not just refer to the gui-panel, let it close connections
-            if (dccType == "close")
+            if (dccType == QLatin1String("close"))
             {
                 emit closeDccPanel();
             }
-            else if (dccType == "send")
+            else if (dccType == QLatin1String("send"))
             {
                 if (parameterList.count() == 1) // DCC SEND
                 {
@@ -986,7 +986,7 @@ namespace Konversation
                     result = usage(i18n("Usage: %1DCC [SEND [nickname [filename]]]",
                                         Preferences::self()->commandChar()));
             }
-            else if (dccType == "get")
+            else if (dccType == QLatin1String("get"))
             {
                 //dcc get [nick [file]]
                 switch (parameterList.count())
@@ -1005,7 +1005,7 @@ namespace Konversation
                                             Preferences::self()->commandChar()));
                 }
             }
-            else if (dccType == "chat")
+            else if (dccType == QLatin1String("chat"))
             {
                 //dcc chat nick
                 switch (parameterList.count())
@@ -1021,7 +1021,7 @@ namespace Konversation
                                             Preferences::self()->commandChar()));
                 }
             }
-            else if (dccType == "whiteboard")
+            else if (dccType == QLatin1String("whiteboard"))
             {
                 //dcc whiteboard nick
                 switch (parameterList.count())
@@ -1219,14 +1219,14 @@ namespace Konversation
         {
             QStringList parameterList = input.parameter.split(' ');
 
-            if (parameterList.length() >= 2 && isParameter("showpath", parameterList[0]) && !parameterList[1].isEmpty())
+            if (parameterList.length() >= 2 && isParameter(QStringLiteral("showpath"), parameterList[0]) && !parameterList[1].isEmpty())
             {
                 result = info(i18nc("%2 is a filesystem path to the script file",
                     "The script file '%1' was found at: %2",
                     parameterList[1],
                     ScriptLauncher::scriptPath(parameterList[1])));
             }
-            else if (!parameterList[0].contains("../"))
+            else if (!parameterList[0].contains(QLatin1String("../")))
                 emit launchScript(m_server->connectionId(), input.destination, input.parameter);
             else
                 result = error(i18n("The script name may not contain \"../\"."));
@@ -1239,9 +1239,9 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        if (input.parameter.isEmpty() || input.parameter == "open")
+        if (input.parameter.isEmpty() || input.parameter == QLatin1String("open"))
             emit openRawLog(true);
-        else if (input.parameter == "close")
+        else if (input.parameter == QLatin1String("close"))
             emit closeRawLog();
         else
             result = usage(i18n("Usage: %1RAW [OPEN | CLOSE]", Preferences::self()->commandChar()));
@@ -1280,14 +1280,14 @@ namespace Konversation
             }
         }
 
-        QString list = Preferences::notifyListByGroupId(serverGroupId).join(", ");
+        QString list = Preferences::notifyListByGroupId(serverGroupId).join(QStringLiteral(", "));
 
         if (list.isEmpty())
         {
             if (removed.count())
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
                                       "The notify list has been emptied (removed %1).",
-                                      removed.join(", "));
+                                      removed.join(QStringLiteral(", ")));
             else
                 result.output = i18n("The notify list is currently empty.");
         }
@@ -1296,15 +1296,15 @@ namespace Konversation
             if (added.count() && !removed.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2).",
-                                      list, added.join(", "));
+                                      list, added.join(QStringLiteral(", ")));
             else if (removed.count() && !added.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (removed %2).",
-                                      list, removed.join(", "));
+                                      list, removed.join(QStringLiteral(", ")));
             else if (added.count() && removed.count())
                 result.output = i18nc("%1, %2 and %3 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2, removed %3).",
-                                      list, added.join(", "), removed.join(", "));
+                                      list, added.join(QStringLiteral(", ")), removed.join(QStringLiteral(", ")));
             else
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
                                       "Current notify list: %1.",
@@ -1366,10 +1366,10 @@ namespace Konversation
             QString channel;
             QString option;
             // check for option
-            bool host = isParameter("host", parameterList[0]);
-            bool domain = isParameter("domain", parameterList[0]);
-            bool uhost = isParameter("userhost", parameterList[0]);
-            bool udomain = isParameter("userdomain", parameterList[0]);
+            bool host = isParameter(QStringLiteral("host"), parameterList[0]);
+            bool domain = isParameter(QStringLiteral("domain"), parameterList[0]);
+            bool uhost = isParameter(QStringLiteral("userhost"), parameterList[0]);
+            bool udomain = isParameter(QStringLiteral("userdomain"), parameterList[0]);
 
             // remove possible option
             if (host || domain || uhost || udomain)
@@ -1411,7 +1411,7 @@ namespace Konversation
                         QString victim = parameterList[0];
                         parameterList.pop_front();
 
-                        QString reason = parameterList.join(" ");
+                        QString reason = parameterList.join(QStringLiteral(" "));
 
                         if (reason.isEmpty())
                             reason = m_server->getIdentity()->getKickReason();
@@ -1520,7 +1520,7 @@ namespace Konversation
             int value = Ignore::Channel | Ignore::Query;
 
             // user specified -all option
-            if (isParameter("all", parameterList[0]))
+            if (isParameter(QStringLiteral("all"), parameterList[0]))
             {
                 // ignore everything
                 value = Ignore::All;
@@ -1533,13 +1533,13 @@ namespace Konversation
                 for (int index=0;index<parameterList.count();index++)
                 {
                     if (!parameterList[index].contains('!'))
-                        parameterList[index] += "!*";
+                        parameterList[index] += QLatin1String("!*");
 
                     Preferences::removeIgnore(parameterList[index]);
                     Preferences::addIgnore(parameterList[index] + ',' + QString::number(value));
                 }
 
-                result.output = i18n("Added %1 to your ignore list.", parameterList.join(", "));
+                result.output = i18n("Added %1 to your ignore list.", parameterList.join(QStringLiteral(", ")));
                 result.typeString = i18n("Ignore");
                 result.type = Program;
 
@@ -1577,7 +1577,7 @@ namespace Konversation
                 if (!uign.contains('!'))
                 {
                     QString fixedPattern = uign;
-                    fixedPattern += "!*";
+                    fixedPattern += QLatin1String("!*");
 
                     bool success = false;
 
@@ -1610,14 +1610,14 @@ namespace Konversation
             // Print all successful unignores, in case there were any
             if (succeeded.count() >= 1)
             {
-                result.output = i18n("Removed %1 from your ignore list.", succeeded.join(", "));
+                result.output = i18n("Removed %1 from your ignore list.", succeeded.join(QStringLiteral(", ")));
                 result.typeString = i18n("Ignore");
                 result.type = Program;
             }
 
             // Any failed unignores
             if (failed.count() >= 1)
-                result = error(i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(", ")));
+                result = error(i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(QStringLiteral(", "))));
         }
 
         return result;
@@ -1696,7 +1696,7 @@ namespace Konversation
         if (!Cipher::isFeatureAvailable(Cipher::Blowfish))
             return error(i18n("Unable to set an encryption key for %1.", parms[0]) + ' ' + Cipher::runtimeError());
 
-        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(" ").toLocal8Bit());
+        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(QStringLiteral(" ")).toLocal8Bit());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
             m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
@@ -1831,9 +1831,9 @@ namespace Konversation
     {
         Application *konvApp = Application::instance();
 
-        if (input.parameter.isEmpty() || input.parameter == "on")
+        if (input.parameter.isEmpty() || input.parameter == QLatin1String("on"))
             konvApp->showQueueTuner(true);
-        else if (input.parameter == "off")
+        else if (input.parameter == QLatin1String("off"))
             konvApp->showQueueTuner(false);
         else
             return usage(i18n("Usage: %1queuetuner [on | off]", Preferences::self()->commandChar()));
@@ -1851,7 +1851,7 @@ namespace Konversation
         myOut
             << "Konversation: " << qApp->applicationVersion()
             << ", Qt " << QString::fromLatin1(qVersion())
-            << ", KDE Frameworks " << QString::fromLatin1(KXMLGUI_VERSION_STRING);
+            << ", KDE Frameworks " << QStringLiteral(KXMLGUI_VERSION_STRING);
             ;
         if (!qgetenv("KDE_FULL_SESSION").isEmpty() && !qgetenv("KDE_SESSION_VERSION").isEmpty())
             myOut << ", Plasma " << QString::fromLatin1(qgetenv("KDE_SESSION_VERSION"));
@@ -1873,13 +1873,13 @@ namespace Konversation
         }
         else
         {
-            if (isParameter("app", input.parameter))
+            if (isParameter(QStringLiteral("app"), input.parameter))
             {
                 Application *konvApp = Application::instance();
 
                 konvApp->restart();
             }
-            else if (isParameter("server", input.parameter))
+            else if (isParameter(QStringLiteral("server"), input.parameter))
             {
                 if (m_server)
                     m_server->cycle();
@@ -1915,7 +1915,7 @@ namespace Konversation
         }
         else if (m_server)
         {
-            if (isParameter("all", input.parameter))
+            if (isParameter(QStringLiteral("all"), input.parameter))
                 m_server->getViewContainer()->clearAllViews();
             else
             {
@@ -1974,7 +1974,7 @@ namespace Konversation
                 QString modeToken;
                 QString nickToken;
 
-                modeToken = QString(" ") + QChar(giveTake);
+                modeToken = QStringLiteral(" ") + QChar(giveTake);
 
                 tmpToken = token;
 
@@ -1986,7 +1986,7 @@ namespace Konversation
                         result.toServerList.append(token);
                         token = tmpToken;
                         nickToken.clear();
-                        modeToken = QString(" ") + QChar(giveTake);
+                        modeToken = QStringLiteral(" ") + QChar(giveTake);
                     }
                     nickToken += ' ' + nickList[index];
                     modeToken += mode;
@@ -2062,7 +2062,7 @@ namespace Konversation
             return false;
         Q_ASSERT(m_server);
                                                   // XXX if we ever see the assert, we need the ternary
-        return m_server? m_server->isAChannel(check) : bool(QString("#&").contains(check.at(0)));
+        return m_server? m_server->isAChannel(check) : bool(QStringLiteral("#&").contains(check.at(0)));
     }
 
     bool OutputFilter::isParameter(const QString& parameter, const QString& string)

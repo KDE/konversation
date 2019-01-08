@@ -23,7 +23,7 @@ namespace Konversation
     {
         public:
             Cipher();
-            explicit Cipher(QByteArray key, QString cipherType=QString("blowfish"));
+            explicit Cipher(QByteArray key, QString cipherType=QStringLiteral("blowfish"));
             ~Cipher();
 
             QByteArray decrypt(QByteArray cipher);

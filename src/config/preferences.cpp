@@ -130,7 +130,7 @@ const QList<QStringList> Preferences::autoreplaceList()
   return self()->mAutoreplaceList;
 }
 
-void Preferences::setAutoreplaceList(const QList<QStringList> newList)
+void Preferences::setAutoreplaceList(const QList<QStringList> &newList)
 {
   self()->mAutoreplaceList=newList;
 }
@@ -213,7 +213,7 @@ const QList<Highlight*> Preferences::highlightList()
     return self()->mHighlightList;
 }
 
-void Preferences::setHighlightList(QList<Highlight*> newList)
+void Preferences::setHighlightList(const QList<Highlight*> &newList)
 {
     qDeleteAll(self()->mHighlightList);
     self()->mHighlightList.clear();
@@ -227,7 +227,7 @@ void Preferences::addHighlight(const QString& highlight, bool regExp, const QCol
         QUrl(soundURL), autoText, chatWindows, notify));
 }
 
-void Preferences::setIgnoreList(QList<Ignore*> newList)
+void Preferences::setIgnoreList(const QList<Ignore*> &newList)
 {
     clearIgnoreList();
     self()->mIgnoreList=newList;
@@ -339,8 +339,8 @@ bool Preferences::isNotify(int serverGroupId, const QString& pattern)
 }
 
 // Default identity functions
-void Preferences::addIdentity(IdentityPtr identity) { self()->mIdentityList.append(identity); }
-void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.removeOne(identity); }
+void Preferences::addIdentity(const IdentityPtr &identity) { self()->mIdentityList.append(identity); }
+void Preferences::removeIdentity(const IdentityPtr &identity) { self()->mIdentityList.removeOne(identity); }
 
 void Preferences::clearIdentityList()
 {
@@ -407,7 +407,7 @@ QStringList Preferences::defaultAliasList()
 
     foreach(const QString& script, scripts)
     {
-        aliasList.append(QString("%1 /exec %1").arg(script));
+        aliasList.append(QStringLiteral("%1 /exec %1").arg(script));
 
         // FIXME: Historically, defaultAliasList() is primarily used to dynamically
         // compile a list of installed scripts and generate appropriate aliases for
@@ -532,7 +532,7 @@ const QStringList Preferences::channelEncodingsChannelList(int serverGroupId)
     return self()->mChannelEncodingsMap[serverGroupId].keys();
 }
 
-const QString Preferences::spellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key)
+const QString Preferences::spellCheckingLanguage(const Konversation::ServerGroupSettingsPtr &serverGroup, const QString& key)
 {
     if (self()->mServerGroupSpellCheckingLanguages.contains(serverGroup))
         return self()->mServerGroupSpellCheckingLanguages.value(serverGroup).value(key);
@@ -548,7 +548,7 @@ const QString Preferences::spellCheckingLanguage(const QString& server, const QS
     return QString();
 }
 
-void Preferences::setSpellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key, const QString& language)
+void Preferences::setSpellCheckingLanguage(const Konversation::ServerGroupSettingsPtr &serverGroup, const QString& key, const QString& language)
 {
     QHash<QString, QString> languageHash;
 
@@ -597,7 +597,7 @@ QString Preferences::webBrowserCmd()
   return cmd;
 }
 
-void Preferences::saveColumnState(QTreeView *treeView, QString name)
+void Preferences::saveColumnState(QTreeView *treeView, const QString &name)
 {
     KConfigGroup group(KSharedConfig::openConfig(), name);
 
@@ -610,7 +610,7 @@ void Preferences::saveColumnState(QTreeView *treeView, QString name)
     group.writeEntry("ColumnSortDescending", treeView->header()->sortIndicatorOrder() == Qt::DescendingOrder ? true : false );
 }
 
-void Preferences::restoreColumnState(QTreeView* treeView, QString name, int defaultColumn , Qt::SortOrder defaultSortOrder)
+void Preferences::restoreColumnState(QTreeView* treeView, const QString &name, int defaultColumn , Qt::SortOrder defaultSortOrder)
 {
     KConfigGroup group(KSharedConfig::openConfig(), name);
 

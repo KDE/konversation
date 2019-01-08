@@ -90,7 +90,7 @@ void QuickButtons_Config::saveSettings()
     for(int index=0;index<newList.count();index++)
     {
       // write the current button's name and definition
-      grp.writeEntry(QString("Button%1").arg(index),newList[index]);
+      grp.writeEntry(QStringLiteral("Button%1").arg(index),newList[index]);
     } // for
   }
   // if there were no buttons at all, write a dummy entry to prevent KConfigXT from "optimizing"

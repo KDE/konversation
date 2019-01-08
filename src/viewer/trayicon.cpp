@@ -21,7 +21,7 @@ namespace Konversation
 
         updateAppearance();
 
-        setToolTip("konversation", i18n("Konversation"), i18n("Konversation - IRC Client"));
+        setToolTip(QStringLiteral("konversation"), i18n("Konversation"), i18n("Konversation - IRC Client"));
     }
 
     TrayIcon::~TrayIcon()
@@ -57,9 +57,9 @@ namespace Konversation
 
     void TrayIcon::updateAppearance()
     {
-        setIconByName("konversation");
-        setAttentionIconByName("konv_message");
-        setOverlayIconByName(m_away ? "user-away" : QString());
+        setIconByName(QStringLiteral("konversation"));
+        setAttentionIconByName(QStringLiteral("konv_message"));
+        setOverlayIconByName(m_away ? QStringLiteral("user-away") : QString());
     }
 }
 

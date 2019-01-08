@@ -29,10 +29,10 @@ namespace Konversation
             m_fontPointComboBox->setValidator(new QIntValidator(2,300,m_fontPointComboBox));
             pointSizeChanged(m_fontPointComboBox->currentText());
 
-            m_boldPushButton->setIcon(QIcon::fromTheme("format-text-bold"));
-            m_italicPushButton->setIcon(QIcon::fromTheme("format-text-italic"));
-            m_strikeoutPushButton->setIcon(QIcon::fromTheme("format-text-strikethrough"));
-            m_underlinePushButton->setIcon(QIcon::fromTheme("format-text-underline"));
+            m_boldPushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-bold")));
+            m_italicPushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-italic")));
+            m_strikeoutPushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-strikethrough")));
+            m_underlinePushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-underline")));
 
             connect(m_boldPushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::boldToggled);
             connect(m_italicPushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::italicToggled);

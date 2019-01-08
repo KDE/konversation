@@ -189,8 +189,8 @@ namespace Konversation
 
             if (item.transfer)
             {
-                connect (item.transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
-                         this, SLOT(transferStatusChanged(Konversation::DCC::Transfer*,int,int)));
+                connect (item.transfer, &Transfer::statusChanged,
+                         this, &TransferListModel::transferStatusChanged);
             }
         }
 
@@ -275,7 +275,7 @@ namespace Konversation
                         case TransferHeaderData::Progress:
                             return transfer->getProgress();
                         case TransferHeaderData::OfferDate:
-                            return transfer->getTimeOffer().toString("hh:mm:ss");
+                            return transfer->getTimeOffer().toString(QStringLiteral("hh:mm:ss"));
                         case TransferHeaderData::Position:
                             return getPositionPrettyText(transfer->getTransferringPosition(),
                                                          transfer->getFileSize());
@@ -344,7 +344,7 @@ namespace Konversation
                             tooltip = QString::number(transfer->getProgress()) + '%';
                             break;
                         case TransferHeaderData::OfferDate:
-                            tooltip = transfer->getTimeOffer().toString("hh:mm:ss");
+                            tooltip = transfer->getTimeOffer().toString(QStringLiteral("hh:mm:ss"));
                             break;
                         case TransferHeaderData::Position:
                             tooltip = getPositionPrettyText(transfer->getTransferringPosition(),
@@ -388,11 +388,11 @@ namespace Konversation
         {
             if (type == Transfer::Send)
             {
-                return KIconLoader::global()->loadIcon("arrow-up", KIconLoader::Small);
+                return KIconLoader::global()->loadIcon(QStringLiteral("arrow-up"), KIconLoader::Small);
             }
             else
             {
-                return KIconLoader::global()->loadIcon("arrow-down", KIconLoader::Small);
+                return KIconLoader::global()->loadIcon(QStringLiteral("arrow-down"), KIconLoader::Small);
             }
         }
 
@@ -402,22 +402,22 @@ namespace Konversation
             switch (status)
             {
                 case Transfer::Queued:
-                    icon = "media-playback-stop";
+                    icon = QStringLiteral("media-playback-stop");
                     break;
                 case Transfer::Preparing:
                 case Transfer::WaitingRemote:
                 case Transfer::Connecting:
-                    icon = "network-disconnect";
+                    icon = QStringLiteral("network-disconnect");
                     break;
                 case Transfer::Transferring:
-                    icon = "media-playback-start";
+                    icon = QStringLiteral("media-playback-start");
                     break;
                 case Transfer::Done:
-                    icon = "dialog-ok";
+                    icon = QStringLiteral("dialog-ok");
                     break;
                 case Transfer::Aborted:
                 case Transfer::Failed:
-                    icon = "process-stop";
+                    icon = QStringLiteral("process-stop");
                     break;
                 default:
                 break;
@@ -429,7 +429,7 @@ namespace Konversation
         {
             if (speed == Transfer::Calculating || speed == Transfer::InfiniteValue)
             {
-                return QString("?");
+                return QStringLiteral("?");
             }
             else if (speed == Transfer::NotInTransfer)
             {
@@ -451,11 +451,11 @@ namespace Konversation
         {
             if (transfer->getType() == Transfer::Send)
             {
-                return QString("%1:%2").arg(transfer->getOwnIp()).arg(transfer->getOwnPort());
+                return QStringLiteral("%1:%2").arg(transfer->getOwnIp()).arg(transfer->getOwnPort());
             }
             else
             {
-                return QString("%1:%2").arg(transfer->getPartnerIp()).arg(transfer->getPartnerPort());
+                return QStringLiteral("%1:%2").arg(transfer->getPartnerIp()).arg(transfer->getPartnerPort());
             }
         }
 
@@ -481,7 +481,7 @@ namespace Konversation
             remSec -= remMin * 60;
 
             // remHour can be more than 25, so we can't use QTime here.
-            return QString("%1:%2:%3")
+            return QStringLiteral("%1:%2:%3")
                 .arg(QString::number(remHour).rightJustified(2, '0', false))
                 .arg(QString::number(remMin).rightJustified(2, '0'))
                 .arg(QString::number(remSec).rightJustified(2, '0'));

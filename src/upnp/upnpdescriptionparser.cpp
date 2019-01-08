@@ -124,15 +124,15 @@ namespace Konversation
 
         bool XMLContentHandler::interestingDeviceField(const QString & name)
         {
-            return name == "friendlyName" || name == "manufacturer" || name == "modelDescription" ||
-                    name == "modelName" || name == "modelNumber";
+            return name == QLatin1String("friendlyName") || name == QLatin1String("manufacturer") || name == QLatin1String("modelDescription") ||
+                    name == QLatin1String("modelName") || name == QLatin1String("modelNumber");
         }
 
 
         bool XMLContentHandler::interestingServiceField(const QString & name)
         {
-            return name == "serviceType" || name == "serviceId" || name == "SCPDURL" ||
-                    name == "controlURL" || name == "eventSubURL";
+            return name == QLatin1String("serviceType") || name == QLatin1String("serviceId") || name == QLatin1String("SCPDURL") ||
+                    name == QLatin1String("controlURL") || name == QLatin1String("eventSubURL");
         }
 
         bool XMLContentHandler::startElement(const QString &, const QString & localName, const QString &,
@@ -143,7 +143,7 @@ namespace Konversation
             {
             case TOPLEVEL:
                 // from toplevel we can only go to root
-                if (localName == "root")
+                if (localName == QLatin1String("root"))
                     status_stack.push(ROOT);
                 else
                     return false;
@@ -151,7 +151,7 @@ namespace Konversation
             case ROOT:
                 // from the root we can go to device or specVersion
                 // we are not interested in the specVersion
-                if (localName == "device")
+                if (localName == QLatin1String("device"))
                     status_stack.push(DEVICE);
                 else
                     status_stack.push(OTHER);
@@ -170,9 +170,9 @@ namespace Konversation
                     status_stack.push(OTHER);
                 break;
             case OTHER:
-                if (localName == "service")
+                if (localName == QLatin1String("service"))
                     status_stack.push(SERVICE);
-                else if (localName == "device")
+                else if (localName == QLatin1String("device"))
                     status_stack.push(DEVICE);
                 else
                     status_stack.push(OTHER);

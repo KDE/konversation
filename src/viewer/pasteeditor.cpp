@@ -44,7 +44,7 @@ PasteEditor::PasteEditor(QWidget* parent)
     m_textEditor->setFocus();
 
     // Get auto_replace action, check enabled state and make the connection
-    m_autoReplaceAction = Application::instance()->getMainWindow()->actionCollection()->action("auto_replace");
+    m_autoReplaceAction = Application::instance()->getMainWindow()->actionCollection()->action(QStringLiteral("auto_replace"));
     if (m_autoReplaceAction)
     {
         // Store action's original enabled state in ViewContainer
@@ -75,11 +75,11 @@ void PasteEditor::addQuotationIndicators()
 {
     QTextCursor cursor(m_textEditor->document());
     cursor.beginEditBlock();
-    cursor.insertText("> ");
+    cursor.insertText(QStringLiteral("> "));
 
     while(cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor))
     {
-        cursor.insertText("> ");
+        cursor.insertText(QStringLiteral("> "));
     }
 
     cursor.endEditBlock();

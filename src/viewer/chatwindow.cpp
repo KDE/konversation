@@ -36,7 +36,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
     mainLayout->setMargin(margin());
     mainLayout->setSpacing(spacing());
 
-    setName("ChatWindowObject");
+    setName(QStringLiteral("ChatWindowObject"));
     setTextView(nullptr);
     setInputBar(nullptr);
     firstLog = true;
@@ -127,7 +127,7 @@ QString ChatWindow::getTitle() const
     QString title;
     if (getType() == Channel)
     {
-       title = QString("%1 (%2)")
+       title = QStringLiteral("%1 (%2)")
              .arg(getName())
              .arg(getServer()->getDisplayName());
     }
@@ -148,15 +148,15 @@ QString ChatWindow::getURI(bool passNetwork)
     QString channel;
 
     if (getServer()->getUseSSL())
-        protocol = "ircs://";
+        protocol = QStringLiteral("ircs://");
     else
-        protocol = "irc://";
+        protocol = QStringLiteral("irc://");
 
     if (getType() == Channel)
     {
         channel = getName().replace(QRegExp("^#"), QString());
         // must protect second #, but might as well protect all of them
-        channel.replace("#", "%23");
+        channel.replace(QLatin1String("#"), QLatin1String("%23"));
     }
 
     if (passNetwork)
@@ -515,7 +515,7 @@ void ChatWindow::logText(const QString& text)
             }
 
             QDateTime dateTime = QDateTime::currentDateTime();
-            QString logLine(QString("[%1] [%2] %3\n").arg(QLocale().toString(dateTime.date(), QLocale::LongFormat)).
+            QString logLine(QStringLiteral("[%1] [%2] %3\n").arg(QLocale().toString(dateTime.date(), QLocale::LongFormat)).
                 arg(QLocale().toString(dateTime.time(), QLocale::LongFormat)).arg(text));
             logStream << logLine;
 
@@ -716,7 +716,7 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
         isAction = true;
 
         result = result.mid(4);
-        visualization = QString("* %1 %2").arg(m_server->getNickname()).arg(result);
+        visualization = QStringLiteral("* %1 %2").arg(m_server->getNickname()).arg(result);
     }
     else
         visualization = result;

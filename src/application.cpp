@@ -253,16 +253,16 @@ void Application::newInstance(QCommandLineParser *args)
 
         if (dbusObject)
         {
-            connect(dbusObject,SIGNAL (dbusMultiServerRaw(QString)),
-                this,SLOT (dbusMultiServerRaw(QString)) );
-            connect(dbusObject,SIGNAL (dbusRaw(QString,QString)),
-                this,SLOT (dbusRaw(QString,QString)) );
-            connect(dbusObject,SIGNAL (dbusSay(QString,QString,QString)),
-                this,SLOT (dbusSay(QString,QString,QString)) );
-            connect(dbusObject,SIGNAL (dbusInfo(QString)),
-                this,SLOT (dbusInfo(QString)) );
-            connect(dbusObject,SIGNAL (dbusInsertMarkerLine()),
-                mainWindow,SIGNAL(insertMarkerLine()));
+            connect(dbusObject,&DBus::dbusMultiServerRaw,
+                this,&Application::dbusMultiServerRaw );
+            connect(dbusObject,&DBus::dbusRaw,
+                this,&Application::dbusRaw );
+            connect(dbusObject,&DBus::dbusSay,
+                this,&Application::dbusSay );
+            connect(dbusObject,&DBus::dbusInfo,
+                this,&Application::dbusInfo );
+            connect(dbusObject,&DBus::dbusInsertMarkerLine,
+                mainWindow.data(),&MainWindow::insertMarkerLine);
             connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
                 m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
         }

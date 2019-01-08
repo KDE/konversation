@@ -53,7 +53,7 @@ void ConnectionBehavior_Config::saveSettings()
     {
         if(Application::instance()->wallet())
         {
-            int ret = Application::instance()->wallet()->writePassword("ProxyPassword", m_ProxyPassword->text());
+            int ret = Application::instance()->wallet()->writePassword(QStringLiteral("ProxyPassword"), m_ProxyPassword->text());
 
             if(ret != 0)
             {
@@ -73,7 +73,7 @@ void ConnectionBehavior_Config::loadSettings()
     {
         if(Application::instance()->wallet())
         {
-            int ret = Application::instance()->wallet()->readPassword("ProxyPassword", password);
+            int ret = Application::instance()->wallet()->readPassword(QStringLiteral("ProxyPassword"), password);
 
             if(ret != 0)
             {

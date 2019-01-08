@@ -158,15 +158,15 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     connect(server, &Server::destroyed, this, &ConnectionManager::delistConnection);
 
-    connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-            this, SLOT(handleConnectionStateChange(Server*,Konversation::ConnectionState)));
+    connect(server, &Server::connectionStateChanged,
+            this, &ConnectionManager::handleConnectionStateChange);
 
     connect(server, &Server::awayState, this, &ConnectionManager::connectionChangedAwayState);
 
-    connect(server, SIGNAL(nicksNowOnline(Server*,QStringList,bool)),
-        mainWindow, SLOT(setOnlineList(Server*,QStringList,bool)));
-    connect(server, SIGNAL(awayInsertRememberLine(Server*)),
-        mainWindow, SIGNAL(triggerRememberLines(Server*)));
+    connect(server, &Server::nicksNowOnline,
+        mainWindow, &MainWindow::setOnlineList);
+    connect(server, &Server::awayInsertRememberLine,
+        mainWindow, &MainWindow::triggerRememberLines);
 
     connect(server, SIGNAL(multiServerCommand(QString,QString)),
         konvApp, SLOT(sendMultiServerCommand(QString,QString)));

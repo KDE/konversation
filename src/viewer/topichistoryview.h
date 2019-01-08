@@ -64,7 +64,7 @@ class TopicHistoryLabel : public KTextEdit
     Q_OBJECT
 
     public:
-        explicit TopicHistoryLabel(QWidget* parent = 0);
+        explicit TopicHistoryLabel(QWidget* parent = nullptr);
         ~TopicHistoryLabel();
 
 
@@ -104,7 +104,7 @@ class TopicHistoryView : public KCategorizedView
     Q_OBJECT
 
     public:
-        explicit TopicHistoryView(QWidget* parent = 0);
+        explicit TopicHistoryView(QWidget* parent = nullptr);
         ~TopicHistoryView();
 
         void setServer(Server* server) { m_server = server; }

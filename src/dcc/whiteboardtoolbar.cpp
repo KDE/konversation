@@ -38,61 +38,61 @@ namespace Konversation
         {
             setupUi(this);
 
-            m_clearPushButton->setIcon(QIcon::fromTheme("document-edit"));
+            m_clearPushButton->setIcon(QIcon::fromTheme(QStringLiteral("document-edit")));
             m_clearPushButton->setToolTip(i18n("Clear Image"));
-            m_savePushButton->setIcon(QIcon::fromTheme("document-save"));
+            m_savePushButton->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
             m_savePushButton->setToolTip(i18n("Save As..."));
 
-            m_pencilPushButton->setIcon(QIcon::fromTheme("draw-freehand"));
+            m_pencilPushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-freehand")));
             m_pencilPushButton->setToolTip(i18n("Freehand Drawing"));
             m_pencilPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Pencil, m_pencilPushButton);
             m_pencilPushButton->setChecked(true);
 
-            m_linePushButton->setIcon(QIcon::fromTheme("draw-line"));
+            m_linePushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-line")));
             m_linePushButton->setToolTip(i18n("Draw a straight line"));
             m_linePushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Line, m_linePushButton);
 
-            m_rectanglePushButton->setIcon(QIcon::fromTheme("draw-rectangle"));
+            m_rectanglePushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-rectangle")));
             m_rectanglePushButton->setToolTip(i18n("Draw a rectangle"));
             m_rectanglePushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Rectangle, m_rectanglePushButton);
             m_toggleButtonHash.insert(WhiteBoardGlobals::FilledRectangle, m_rectanglePushButton);
 
-            m_ellipsePushButton->setIcon(QIcon::fromTheme("draw-circle"));
+            m_ellipsePushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-circle")));
             m_ellipsePushButton->setToolTip(i18n("Draw an ellipse"));
             m_ellipsePushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Ellipse, m_ellipsePushButton);
             m_toggleButtonHash.insert(WhiteBoardGlobals::FilledEllipse, m_ellipsePushButton);
 
-            m_textPushButton->setIcon(QIcon::fromTheme("draw-text"));
+            m_textPushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-text")));
             m_textPushButton->setToolTip(i18n("Draw text"));
             m_textPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Text, m_textPushButton);
 
             m_selectionPushButton->setEnabled(false); // it has no function in current whiteboard
-            m_selectionPushButton->setIcon(QIcon::fromTheme("select-rectangular"));
+            m_selectionPushButton->setIcon(QIcon::fromTheme(QStringLiteral("select-rectangular")));
             m_selectionPushButton->setToolTip(i18nc("dcc whiteboard selection tool", "Selection"));
             m_selectionPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Selection, m_selectionPushButton);
 
-            m_eraserPushButton->setIcon(QIcon::fromTheme("draw-eraser"));
+            m_eraserPushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-eraser")));
             m_eraserPushButton->setToolTip(i18n("Eraser"));
             m_eraserPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Eraser, m_eraserPushButton);
 
-            m_fillPushButton->setIcon(QIcon::fromTheme("fill-color"));
+            m_fillPushButton->setIcon(QIcon::fromTheme(QStringLiteral("fill-color")));
             m_fillPushButton->setToolTip(i18n("Fill a contiguous area with the foreground color"));
             m_fillPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::FloodFill, m_fillPushButton);
 
-            m_arrowPushButton->setIcon(QIcon::fromTheme("draw-arrow-forward"));
+            m_arrowPushButton->setIcon(QIcon::fromTheme(QStringLiteral("draw-arrow-forward")));
             m_arrowPushButton->setToolTip(i18n("Draw an arrow"));
             m_arrowPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::Arrow, m_arrowPushButton);
 
-            m_colorPickerPushButton->setIcon(QIcon::fromTheme("color-picker"));
+            m_colorPickerPushButton->setIcon(QIcon::fromTheme(QStringLiteral("color-picker")));
             m_colorPickerPushButton->setToolTip(i18n("Select a color from the image"));
             m_colorPickerPushButton->setFlat(true);
             m_toggleButtonHash.insert(WhiteBoardGlobals::ColorPicker, m_colorPickerPushButton);

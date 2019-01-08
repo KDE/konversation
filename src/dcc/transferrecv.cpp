@@ -195,7 +195,7 @@ namespace Konversation
                 m_ownIp = DccCommon::getOwnIp(Application::instance()->getConnectionManager()->getServerByConnectionId(m_connectionId));
             }
 
-            if (!KAuthorized::authorizeAction("allow_downloading"))
+            if (!KAuthorized::authorizeAction(QStringLiteral("allow_downloading")))
             {
                 //note we have this after the initialisations so that item looks okay
                 //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
@@ -204,7 +204,7 @@ namespace Konversation
             }
 
             // check if the sender IP is valid
-            if (m_partnerIp == "0.0.0.0")
+            if (m_partnerIp == QLatin1String("0.0.0.0"))
             {
                 failed(i18n("Invalid sender address (%1)", m_partnerIp));
                 return false;

@@ -225,7 +225,7 @@ namespace Konversation
             && server->getUseSSL() && server->isConnected())
         {
             disconnect(m_sslLabel,nullptr,nullptr,nullptr);
-            connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
+            connect(m_sslLabel,&SSLLabel::clicked,server,&Server::showSSLDialog);
             m_sslLabel->setToolTip(server->getSSLInfo());
             m_sslLabel->show();
         }

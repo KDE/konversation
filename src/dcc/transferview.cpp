@@ -58,8 +58,8 @@ namespace Konversation
             setProgressBarDeletegate();
 
             header()->setContextMenuPolicy(Qt::CustomContextMenu);
-            connect(header(), SIGNAL(customContextMenuRequested(QPoint)),
-                    this, SLOT(headerCustomContextMenuRequested(QPoint)));
+            connect(header(), &QWidget::customContextMenuRequested,
+                    this, &TransferView::headerCustomContextMenuRequested);
 
             m_activeTransfers = 0;
             m_itemCategoryToRemove = 0;
@@ -68,8 +68,8 @@ namespace Konversation
 
             connect(m_updateTimer, &QTimer::timeout, this, &TransferView::update);
 
-            connect(model(), SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)),
-                     this, SLOT(rowsAboutToBeRemovedFromModel(QModelIndex,int,int)));
+            connect(model(), &QAbstractItemModel::rowsAboutToBeRemoved,
+                     this, &TransferView::rowsAboutToBeRemovedFromModel);
             //we can't use rowsRemoved here, it seems when rowsRemoved is emitted
             //the rows are not permanently removed from model,
             //so if we trigger a new removeRows in our slot,
@@ -166,8 +166,8 @@ namespace Konversation
                 }
             }
 
-            connect (transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
-                     this, SLOT(transferStatusChanged(Konversation::DCC::Transfer*,int,int)));
+            connect (transfer, &Transfer::statusChanged,
+                     this, &TransferView::transferStatusChanged);
 
             clearSelection();
 

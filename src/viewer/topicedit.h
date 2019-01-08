@@ -38,7 +38,7 @@ class TopicEdit : public KTextEdit
     Q_OBJECT
 
     public:
-        explicit TopicEdit(QWidget* parent = 0);
+        explicit TopicEdit(QWidget* parent = nullptr);
         ~TopicEdit();
 
         Channel* channel() const;

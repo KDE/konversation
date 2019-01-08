@@ -83,24 +83,24 @@ namespace Konversation
                     {
                         return wboardCommands;
                     }
-                    wboardCommands.insert(QLatin1String("BLT"), BLT);
-                    wboardCommands.insert(QLatin1String("CAN"), CAN);
-                    wboardCommands.insert(QLatin1String("CANT"), CANT);
-                    wboardCommands.insert(QLatin1String("CLIP"), CLIP);
-                    wboardCommands.insert(QLatin1String("CLS"), CLS);
-                    wboardCommands.insert(QLatin1String("DR"), DR);
-                    wboardCommands.insert(QLatin1String("DO"), DO);
-                    wboardCommands.insert(QLatin1String("DONT"), DONT); //krazy:exclude=spelling
-                    wboardCommands.insert(QLatin1String("ENTRY"), ENTRY);
-                    wboardCommands.insert(QLatin1String("IMG"), IMG);
-                    wboardCommands.insert(QLatin1String("IMGDATE"), IMGDATA);
-                    wboardCommands.insert(QLatin1String("MAKEIMG"), MAKEIMG);
-                    wboardCommands.insert(QLatin1String("NOCLIP"), NOCLIP);
-                    wboardCommands.insert(QLatin1String("SETSTAMP"), SETSTAMP);
-                    wboardCommands.insert(QLatin1String("SETTOOL"), SETTOOL);
-                    wboardCommands.insert(QLatin1String("STAMP"), STAMP);
-                    wboardCommands.insert(QLatin1String("TXT"), TXT);
-                    wboardCommands.insert(QLatin1String("TXTEX"), TXTEX);
+                    wboardCommands.insert(QStringLiteral("BLT"), BLT);
+                    wboardCommands.insert(QStringLiteral("CAN"), CAN);
+                    wboardCommands.insert(QStringLiteral("CANT"), CANT);
+                    wboardCommands.insert(QStringLiteral("CLIP"), CLIP);
+                    wboardCommands.insert(QStringLiteral("CLS"), CLS);
+                    wboardCommands.insert(QStringLiteral("DR"), DR);
+                    wboardCommands.insert(QStringLiteral("DO"), DO);
+                    wboardCommands.insert(QStringLiteral("DONT"), DONT); //krazy:exclude=spelling
+                    wboardCommands.insert(QStringLiteral("ENTRY"), ENTRY);
+                    wboardCommands.insert(QStringLiteral("IMG"), IMG);
+                    wboardCommands.insert(QStringLiteral("IMGDATE"), IMGDATA);
+                    wboardCommands.insert(QStringLiteral("MAKEIMG"), MAKEIMG);
+                    wboardCommands.insert(QStringLiteral("NOCLIP"), NOCLIP);
+                    wboardCommands.insert(QStringLiteral("SETSTAMP"), SETSTAMP);
+                    wboardCommands.insert(QStringLiteral("SETTOOL"), SETTOOL);
+                    wboardCommands.insert(QStringLiteral("STAMP"), STAMP);
+                    wboardCommands.insert(QStringLiteral("TXT"), TXT);
+                    wboardCommands.insert(QStringLiteral("TXTEX"), TXTEX);
                     return wboardCommands;
                 }
 

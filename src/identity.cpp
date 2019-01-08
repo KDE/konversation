@@ -183,7 +183,7 @@ void Identity::setCodecName(const QString &newCodecName)
     m_codec = Konversation::IRCCharsets::self()->codecForName(codecName);
 
     if (!m_codec) {
-        setCodecName("UTF-8");
+        setCodecName(QStringLiteral("UTF-8"));
     }
 }
 

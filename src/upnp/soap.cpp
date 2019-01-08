@@ -42,7 +42,7 @@ namespace Konversation
             foreach (const Arg & a,args)
                 comm += '<' + a.element + '>' + a.value + "</" + a.element + '>';
 
-            comm += QString("</m:%1></SOAP-ENV:Body></SOAP-ENV:Envelope>").arg(action);
+            comm += QStringLiteral("</m:%1></SOAP-ENV:Body></SOAP-ENV:Envelope>").arg(action);
             return comm;
         }
     }

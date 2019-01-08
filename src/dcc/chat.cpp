@@ -386,12 +386,12 @@ namespace Konversation
         void Chat::setExtension(const QString& extension)
         {
             QString ext = extension.toLower();
-            if (ext == "chat")
+            if (ext == QLatin1String("chat"))
             {
                 m_chatExtension = SimpleChat;
                 return;
             }
-            else if (ext == "wboard")
+            else if (ext == QLatin1String("wboard"))
             {
                 m_chatExtension = Whiteboard;
                 return;
@@ -416,10 +416,10 @@ namespace Konversation
             switch (extension())
             {
                 case Whiteboard:
-                    return "wboard";
+                    return QStringLiteral("wboard");
                 case SimpleChat:
                 default:
-                    return "chat";
+                    return QStringLiteral("chat");
             }
         }
 

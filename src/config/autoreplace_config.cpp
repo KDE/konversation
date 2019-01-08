@@ -75,17 +75,17 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
     newItem->setCheckState(0, Qt::Unchecked);
     // Regular expression?
-    if (definition.at(0)=="1") newItem->setCheckState(0, Qt::Checked);
+    if (definition.at(0)==QLatin1String("1")) newItem->setCheckState(0, Qt::Checked);
     // direction input/output/both
-    if (definition.at(1)=="i")
+    if (definition.at(1)==QLatin1String("i"))
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
     }
-    else if (definition.at(1)=="o")
+    else if (definition.at(1)==QLatin1String("o"))
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     }
-    else if (definition.at(1)=="io")
+    else if (definition.at(1)==QLatin1String("io"))
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_BOTH));
     }
@@ -118,10 +118,10 @@ void Autoreplace_Config::saveSettings()
   if(newList.count())
   {
     // go through all patterns and save them into the configuration
-    QString regexString("Regex");
-    QString directString("Direction");
-    QString patternString("Pattern");
-    QString replaceString("Replace");
+    QString regexString(QStringLiteral("Regex"));
+    QString directString(QStringLiteral("Direction"));
+    QString patternString(QStringLiteral("Pattern"));
+    QString replaceString(QStringLiteral("Replace"));
     for(int index=0;index<newList.count();index++)
     {
         // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
@@ -200,9 +200,9 @@ void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
     // set combobox to selected item
     int itemIndex=0;
     QString direction=autoreplaceEntry->text(4);
-    if(direction=="i") itemIndex=DIRECTION_INPUT;
-    else if(direction=="o") itemIndex=DIRECTION_OUTPUT;
-    else if(direction=="io") itemIndex=DIRECTION_BOTH;
+    if(direction==QLatin1String("i")) itemIndex=DIRECTION_INPUT;
+    else if(direction==QLatin1String("o")) itemIndex=DIRECTION_OUTPUT;
+    else if(direction==QLatin1String("io")) itemIndex=DIRECTION_BOTH;
     directionCombo->setCurrentIndex(itemIndex);
     // re-enable modified() signal on text changes in edit widgets
     m_newItemSelected=false;
@@ -234,7 +234,7 @@ void Autoreplace_Config::directionChanged(int newDirection)
     // find the direction strings to set up in the item
     if(newDirection==DIRECTION_INPUT)       id='i';
     else if(newDirection==DIRECTION_OUTPUT) id='o';
-    else if(newDirection==DIRECTION_BOTH)   id="io";
+    else if(newDirection==DIRECTION_BOTH)   id=QStringLiteral("io");
     // rename direction
     item->setText(1,directionCombo->itemText(newDirection));
     item->setText(4,id);
@@ -298,7 +298,7 @@ void Autoreplace_Config::addEntry()
     // set default pattern name
     newItem->setText(2,i18nc("Default content of the \"Find:\" field of a newly-added auto-replace rule.", "New"));
     // set default direction
-    newItem->setText(4,"o");
+    newItem->setText(4,QStringLiteral("o"));
     // select new item and make it the current one
     patternListView->setCurrentItem(newItem);
     // set input focus on item pattern edit

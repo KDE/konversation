@@ -183,8 +183,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     // double click on channel entry joins the channel
     connect(m_channelListView, &QTreeView::doubleClicked, this, &ChannelListPanel::joinChannelClicked);
-    connect(m_channelListView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            this, SLOT(currentChanged(QModelIndex,QModelIndex)));
+    connect(m_channelListView->selectionModel(), &QItemSelectionModel::currentChanged,
+            this, &ChannelListPanel::currentChanged);
     connect(m_channelListView, &QTreeView::customContextMenuRequested, this, &ChannelListPanel::contextMenu);
 
     connect(m_regexBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);

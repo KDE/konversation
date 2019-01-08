@@ -64,7 +64,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
-    connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+    connect(getTextView(),&IRCView::sendFile,this,&StatusPanel::sendFileMenu );
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     connect(m_inputBar, &IRCInput::submit, this, &StatusPanel::statusTextEntered);
@@ -234,7 +234,7 @@ bool StatusPanel::closeYourself(bool confirm)
                 i18n("Close Tab"),
                 KStandardGuiItem::close(),
                 KStandardGuiItem::cancel(),
-                "QuitServerTab");
+                QStringLiteral("QuitServerTab"));
     }
     else
     {
@@ -244,7 +244,7 @@ bool StatusPanel::closeYourself(bool confirm)
             i18n("Disconnect From Server"),
             KGuiItem(i18n("Disconnect")),
             KStandardGuiItem::cancel(),
-            "QuitServerTab");
+            QStringLiteral("QuitServerTab"));
     }
 
     if (result==KMessageBox::Continue)
@@ -292,16 +292,16 @@ void StatusPanel::emitUpdateInfo()
 void StatusPanel::setChannelEncoding(const QString& encoding)
 {
     if(m_server->getServerGroup())
-        Preferences::setChannelEncoding(m_server->getServerGroup()->id(), ":server", encoding);
+        Preferences::setChannelEncoding(m_server->getServerGroup()->id(), QStringLiteral(":server"), encoding);
     else
-        Preferences::setChannelEncoding(m_server->getDisplayName(), ":server", encoding);
+        Preferences::setChannelEncoding(m_server->getDisplayName(), QStringLiteral(":server"), encoding);
 }
 
 QString StatusPanel::getChannelEncoding()         // virtual
 {
     if(m_server->getServerGroup())
-        return Preferences::channelEncoding(m_server->getServerGroup()->id(), ":server");
-    return Preferences::channelEncoding(m_server->getDisplayName(), ":server");
+        return Preferences::channelEncoding(m_server->getServerGroup()->id(), QStringLiteral(":server"));
+    return Preferences::channelEncoding(m_server->getDisplayName(), QStringLiteral(":server"));
 }
 
                                                   // virtual
@@ -321,8 +321,8 @@ void StatusPanel::setServer(Server* server)
 {
     ChatWindow::setServer(server);
     nicknameCombobox->setModel(m_server->nickListModel());
-    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
+    connect(awayLabel, &AwayLabel::unaway, m_server, &Server::requestUnaway);
+    connect(awayLabel, &AwayLabel::awayMessageChanged, m_server, &Server::requestAway);
 }
 
 

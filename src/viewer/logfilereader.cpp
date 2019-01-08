@@ -42,17 +42,17 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
     setSpacing(0);
 
     toolBar = new KToolBar(this, true, true);
-    toolBar->setObjectName("logfile_toolbar");
-    toolBar->addAction(QIcon::fromTheme("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
-    toolBar->addAction(QIcon::fromTheme("view-refresh"), i18n("Reload"), this, SLOT(updateView()));
-    toolBar->addAction(QIcon::fromTheme("edit-delete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
+    toolBar->setObjectName(QStringLiteral("logfile_toolbar"));
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18n("Save As..."), this, SLOT(saveLog()));
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Reload"), this, SLOT(updateView()));
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Clear Logfile"), this, SLOT(clearLog()));
 
     toolBar->addWidget(new QLabel(i18n("Show last:"),toolBar));
     sizeSpin = new QSpinBox(toolBar);
     sizeSpin->setMinimum(10);
     sizeSpin->setMaximum(1000);
     sizeSpin->setSingleStep(10);
-    sizeSpin->setObjectName("logfile_size_spinbox");
+    sizeSpin->setObjectName(QStringLiteral("logfile_size_spinbox"));
     sizeSpin->setWhatsThis(i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::self()->logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
@@ -145,7 +145,7 @@ void LogfileReader::clearLog()
         i18n("Clear Logfile"),
         KStandardGuiItem::del(),
         KStandardGuiItem::cancel(),
-        "ClearLogfileQuestion")==KMessageBox::Continue)
+        QStringLiteral("ClearLogfileQuestion"))==KMessageBox::Continue)
     {
         QFile::remove(fileName);
         updateView();
@@ -157,7 +157,7 @@ void LogfileReader::saveLog()
     KMessageBox::information(this,
         i18n("Note: By saving the logfile you will save all data in the file, not only the part you can see in this viewer."),
         i18n("Save Logfile"),
-        "SaveLogfileNote");
+        QStringLiteral("SaveLogfileNote"));
 
     QUrl logUrl = QUrl::fromLocalFile(fileName);
     QUrl destination = QFileDialog::getSaveFileUrl(this, i18n("Choose Destination Folder"), logUrl);

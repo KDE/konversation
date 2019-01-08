@@ -32,13 +32,13 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
     loadSettings();
 
-    soundPlayBtn->setIcon(QIcon::fromTheme("media-playback-start"));
+    soundPlayBtn->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
     soundURL->setWhatsThis(i18n("Select Sound File"));
 
     // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
     // find the first "sound"-resource that contains files
-    QStringList soundDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/sounds");
-    soundDirs += QStandardPaths::locate(QStandardPaths::GenericDataLocation, "sounds", QStandardPaths::LocateDirectory);
+    QStringList soundDirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/sounds"));
+    soundDirs += QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("sounds"), QStandardPaths::LocateDirectory);
 
     if (!soundDirs.isEmpty())
     {
@@ -295,7 +295,7 @@ void Highlight_Config::saveSettings()
     int i = 0;
     foreach (Highlight* hl, hiList)
     {
-        KConfigGroup grp = config->group(QString("Highlight%1").arg(i));
+        KConfigGroup grp = config->group(QStringLiteral("Highlight%1").arg(i));
         grp.writeEntry("Pattern", hl->getPattern());
         grp.writeEntry("RegExp", hl->getRegExp());
         grp.writeEntry("Color", hl->getColor());
@@ -309,9 +309,9 @@ void Highlight_Config::saveSettings()
     Preferences::setHighlightList(hiList);
 
     // Remove unused entries...
-    while (config->hasGroup(QString("Highlight%1").arg(i)))
+    while (config->hasGroup(QStringLiteral("Highlight%1").arg(i)))
     {
-        config->deleteGroup(QString("Highlight%1").arg(i));
+        config->deleteGroup(QStringLiteral("Highlight%1").arg(i));
         i++;
     }
 

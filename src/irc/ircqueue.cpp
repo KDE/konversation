@@ -63,8 +63,8 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
     connect(m_timer, &QTimer::timeout, this, &IRCQueue::sendNow);
     if (server)
     {
-        connect(server, SIGNAL(serverOnline(bool)), SLOT(serverOnline(bool)));
-        connect(server, SIGNAL(sentStat(int,int,IRCQueue*)), SLOT(sent(int,int,IRCQueue*)));
+        connect(server, &Server::serverOnline, this, &IRCQueue::serverOnline);
+        connect(server, &Server::sentStat, this, &IRCQueue::sent);
         m_blocked=!(m_server->isConnected());
     }
 }

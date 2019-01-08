@@ -138,9 +138,9 @@ QRect OSDWidget::determineMetrics( const int M )
     const QSize max = QApplication::desktop()->screen( m_screen )->size() - margin;
 
     // If we don't do that, the boundingRect() might not be suitable for drawText() (Qt issue N67674)
-    m_currentText.replace( QRegExp( " +\n" ), "\n" );
+    m_currentText.replace( QRegExp( " +\n" ), QStringLiteral("\n") );
     // remove consecutive line breaks
-    m_currentText.replace( QRegExp( "\n+" ), "\n" );
+    m_currentText.replace( QRegExp( "\n+" ), QStringLiteral("\n") );
 
     QFont titleFont = font();
     titleFont.setBold(true);
@@ -327,7 +327,7 @@ OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, con
         : OSDWidget( appName, parent, name )
         , m_dragging( false )
 {
-    setObjectName( "osdpreview" );
+    setObjectName( QStringLiteral("osdpreview") );
     m_currentText = i18n( "OSD Preview - drag to reposition" );
     m_duration = 0;
     //m_alignment = static_cast<Alignment>( AmarokConfig::osdAlignment() );

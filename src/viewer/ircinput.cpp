@@ -192,7 +192,7 @@ void IRCInput::setText(const QString& text, bool preserveContents)
 //take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->metaObject()->className() == QString("IRCView") || object->metaObject()->className() == QString("Konversation::TopicLabel"))
+    if (object->metaObject()->className() == QStringLiteral("IRCView") || object->metaObject()->className() == QStringLiteral("Konversation::TopicLabel"))
     {
         if (event->type() == QEvent::KeyPress)
         {
@@ -285,7 +285,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
             // support ASCII BEL
             if(e->text().unicode()->toLatin1() == 7)
-                insertPlainText("%G");
+                insertPlainText(QStringLiteral("%G"));
             // support ^U (delete text in input box)
             else if(e->text().unicode()->toLatin1() == 21)
                 setText(QString());
@@ -406,8 +406,8 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         // replace \r with \n to make xterm pastes happy
         pasteText.replace('\r','\n');
         // remove blank lines
-        while(pasteText.contains("\n\n"))
-            pasteText.replace("\n\n","\n");
+        while(pasteText.contains(QLatin1String("\n\n")))
+            pasteText.replace(QLatin1String("\n\n"),QLatin1String("\n"));
 
         QRegExp reTopSpace("^ *\n");
         while(pasteText.contains(reTopSpace))
@@ -493,7 +493,7 @@ bool IRCInput::checkPaste(QString& text)
             KGuiItem(i18n("Paste")),
             KGuiItem(i18n("&Edit...")),
             KStandardGuiItem::cancel(),
-            QString("LargePaste"),
+            QStringLiteral("LargePaste"),
             KMessageBox::Dangerous);
     }
 

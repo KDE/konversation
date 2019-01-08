@@ -53,7 +53,7 @@ namespace Konversation
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
-          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+          connect(server, &Server::nicknameChanged, this, &JoinChannelDialog::slotNicknameChanged);
         }
         // Update channel history when selected connection changes
         connect(m_ui.networkNameCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &JoinChannelDialog::slotSelectedConnectionChanged);

@@ -77,8 +77,8 @@ class InputFilter : public QObject
         void addDccChat(const QString& nick,const QStringList& arguments);
 
     protected:
-        void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags);
-        void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags);
+        void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList, const QHash<QString, QString> &messageTags);
+        void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, const QHash<QString, QString> &messageTags);
         void parseModes(const QString &sourceNick, const QStringList &parameterList, const QHash<QString, QString> &messageTags);
         void parsePrivMsg(const QString& prefix, QStringList& parameterList, const QHash<QString, QString> &messageTags);
         void parseNumeric(const QString &prefix, int command, QStringList &parameterList, const QHash<QString, QString> &messageTags);

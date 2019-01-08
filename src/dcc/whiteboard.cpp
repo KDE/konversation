@@ -91,7 +91,7 @@ namespace Konversation
             // qDebug() << "ctcpCommand" << ctcpCommand;
             // qDebug() << "firstSize" << firstSplit.size();
 
-            if (ctcpCommand == "DR" && firstSplit.size() == 2)
+            if (ctcpCommand == QLatin1String("DR") && firstSplit.size() == 2)
             {
                 // DR tooltype,width,pencolor,brushcolor,x1,y1,x2,y2
                 const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
@@ -207,7 +207,7 @@ namespace Konversation
                     break;
                 }
             }
-            else if (ctcpCommand == "TXT" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("TXT") && firstSplit.size() == 2)
             {
                 QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
                 if (txtArgsList.size() < 3)
@@ -235,11 +235,11 @@ namespace Konversation
 
                 txtArgsList.removeFirst();
                 txtArgsList.removeFirst();
-                QString text(txtArgsList.join(","));
+                QString text(txtArgsList.join(QStringLiteral(",")));
 
                 m_paintArea->useText(x1,y1,text);
             }
-            else if (ctcpCommand == "TXTEX" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("TXTEX") && firstSplit.size() == 2)
             {
                 QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
                 if (txtArgsList.size() < 8)
@@ -317,55 +317,55 @@ namespace Konversation
                 txtArgsList.removeFirst(); // fontstyle
                 txtArgsList.removeFirst(); // textcolor
                 txtArgsList.removeFirst(); // bgcolor
-                QString text(txtArgsList.join(","));
+                QString text(txtArgsList.join(QStringLiteral(",")));
                 // qDebug() << "TXTEX" << text << fontSize << fontName;
                 m_paintArea->useTextExtended(x1,y1,tFont,penColor,brushColor,text);
             }
-            else if (ctcpCommand == "CLS" && firstSplit.size() == 1)
+            else if (ctcpCommand == QLatin1String("CLS") && firstSplit.size() == 1)
             {
                 //CLS
                 m_paintArea->clear();
             }
-            else if (ctcpCommand == "CAN" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("CAN") && firstSplit.size() == 2)
             {
                 //TODO implement me
                 const QString& can = firstSplit.at(1).toLower();
-                if (can == "use-wb2")
+                if (can == QLatin1String("use-wb2"))
                 {
                     //no we currently can't, I lied
-                    emitDo("use-wb2");
+                    emitDo(QStringLiteral("use-wb2"));
                     return;
                 }
-                else if (can == "txtex")
+                else if (can == QLatin1String("txtex"))
                 {
-                    emitDo("TXTEX");
+                    emitDo(QStringLiteral("TXTEX"));
                     m_toolbar->setSupportedTextType(WhiteBoardToolBar::ExtentedText);
                     return;
                 }
                 qDebug() << "unhandled CAN" << firstSplit.at(1);
             }
-            else if (ctcpCommand == "CANT" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("CANT") && firstSplit.size() == 2)
             {
                 //TODO implement me
                 const QString& cannot = firstSplit.at(1).toLower();
-                if (cannot == "txtex")
+                if (cannot == QLatin1String("txtex"))
                 {
                     m_toolbar->setSupportedTextType(WhiteBoardToolBar::SimpleText);
                     return;
                 }
                 qDebug() << "unhandled CANT" << firstSplit.at(1);
             }
-            else if (ctcpCommand == "DO" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("DO") && firstSplit.size() == 2)
             {
                 //TODO implement me
                 const QString& doString = firstSplit.at(1).toLower();
-                if (doString == "txtex")
+                if (doString == QLatin1String("txtex"))
                 {
                     m_toolbar->setSupportedTextType(WhiteBoardToolBar::ExtentedText);
                     return;
                 }
             }
-            else if (ctcpCommand == "BLT" && firstSplit.size() == 2)
+            else if (ctcpCommand == QLatin1String("BLT") && firstSplit.size() == 2)
             {
                 // BLT x1src,y1src,x2src,y2src,xdest,ydest
                 const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
@@ -533,8 +533,8 @@ namespace Konversation
 
         void WhiteBoard::connected()
         {
-            emitCan("use-wb2");
-            emitCan("TXTEX");
+            emitCan(QStringLiteral("use-wb2"));
+            emitCan(QStringLiteral("TXTEX"));
         }
 
         void WhiteBoard::emitDRCommand(WhiteBoardGlobals::WhiteBoardTool tool, int lineWidth,

@@ -144,7 +144,7 @@ bool _plHas(int count, int x)
     return _plHad;
 }
 
-void InputFilter::parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags)
+void InputFilter::parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList, const QHash<QString, QString> &messageTags)
 {
     Application* konv_app = Application::instance();
     Q_ASSERT(konv_app);
@@ -434,7 +434,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 {
                     m_server->appendMessageToFrontmost(i18n("CTCP"),
                         i18n("Received CTCP-%1 request from %2, sending answer.",
-                            QString::fromLatin1("CLIENTINFO"), sourceNick), messageTags
+                            QStringLiteral("CLIENTINFO"), sourceNick), messageTags
                         );
                     m_server->ctcpReply(sourceNick, QStringLiteral("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
                 }
@@ -445,7 +445,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 {
                     m_server->appendMessageToFrontmost(i18n("CTCP"),
                         i18n("Received CTCP-%1 request from %2, sending answer.",
-                            QString::fromLatin1("TIME"), sourceNick), messageTags
+                            QStringLiteral("TIME"), sourceNick), messageTags
                         );
                     m_server->ctcpReply(sourceNick, QStringLiteral("TIME ")+QDateTime::currentDateTime().toString());
                 }
@@ -586,7 +586,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
         if (m_server->capabilities() & Server::ExtendedJoin && plHas(3))
         {
-            if (parameterList[1] != "*")
+            if (parameterList[1] != QLatin1String("*"))
                 account = parameterList[1];
 
             realName = parameterList[2];
@@ -717,7 +717,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
         QString account = parameterList.first();
 
-        if (account == "*")
+        if (account == QLatin1String("*"))
         {
             nickInfo->setAccount(QString());
         }
@@ -733,7 +733,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
 }
 
-void InputFilter::parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, QHash<QString, QString> messageTags)
+void InputFilter::parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList, const QHash<QString, QString> &messageTags)
 {
     bool isNumeric;
     int numeric = command.toInt(&isNumeric);
@@ -839,7 +839,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     m_server->capEndNegotiation();
                 }
             }
-            else if (command == "ls" || command == "list")
+            else if (command == QLatin1String("ls") || command == QLatin1String("list"))
             {
                 m_server->appendStatusMessage(i18n("Capabilities"), trailing, messageTags);
 

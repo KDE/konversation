@@ -27,14 +27,14 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
     Q_OBJECT
 
     public:
-        explicit OSD_Config( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0 );
-        ~OSD_Config();
+        explicit OSD_Config( QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {} );
+        ~OSD_Config() Q_DECL_OVERRIDE;
 
         void restorePageToDefaults() Q_DECL_OVERRIDE;
         void saveSettings() Q_DECL_OVERRIDE;
         void loadSettings() Q_DECL_OVERRIDE;
 
-        bool hasChanged();  // implement the interface, will not be used here, though
+        bool hasChanged() Q_DECL_OVERRIDE;  // implement the interface, will not be used here, though
 
     protected Q_SLOTS:
         void slotOSDEnabledChanged(bool on);

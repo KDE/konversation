@@ -24,15 +24,15 @@ ServerISON::ServerISON(Server* server) : m_server(server)
     connect( m_server, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
         this, SLOT(nickInfoChanged(Server*,NickInfoPtr)));
     connect( m_server,
-        SIGNAL(channelMembersChanged(Server*,QString,bool,bool,QString)),
+        &Server::channelMembersChanged,
         this,
-        SLOT(slotChannelMembersChanged(Server*,QString,bool,bool,QString)));
+        &ServerISON::slotChannelMembersChanged);
     connect( m_server,
-        SIGNAL(channelJoinedOrUnjoined(Server*,QString,bool)),
+        &Server::channelJoinedOrUnjoined,
         this,
-        SLOT(slotChannelJoinedOrUnjoined(Server*,QString,bool)));
-    connect(Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
-        this, SLOT(slotServerGroupsChanged()));
+        &ServerISON::slotChannelJoinedOrUnjoined);
+    connect(Application::instance(), &Application::serverGroupsChanged,
+        this, &ServerISON::slotServerGroupsChanged);
 }
 
 QStringList ServerISON::getWatchList()

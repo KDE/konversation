@@ -72,7 +72,7 @@ namespace Konversation
                     "MX:3\r\n"
                     "\r\n\0";
 
-            writeDatagram(data,strlen(data),QHostAddress("239.255.255.250"),1900);
+            writeDatagram(data,strlen(data),QHostAddress(QStringLiteral("239.255.255.250")),1900);
         }
 
         void UPnPMCastSocket::onXmlFileDownloaded(UPnPRouter* r,bool success)
@@ -109,8 +109,8 @@ namespace Konversation
             UPnPRouter* r = parseResponse(data);
             if (r)
             {
-                QObject::connect(r,SIGNAL(xmlFileDownloaded(UPnPRouter*,bool)),
-                        this,SLOT(onXmlFileDownloaded(UPnPRouter*,bool)));
+                QObject::connect(r,&UPnPRouter::xmlFileDownloaded,
+                        this,&UPnPMCastSocket::onXmlFileDownloaded);
 
                 // download it's xml file
                 r->downloadXMLFile();
@@ -120,17 +120,17 @@ namespace Konversation
 
         UPnPRouter* UPnPMCastSocket::parseResponse(const QByteArray & arr)
         {
-            QStringList lines = QString::fromLatin1(arr).split("\r\n");
+            QStringList lines = QString::fromLatin1(arr).split(QStringLiteral("\r\n"));
             QString server;
             QUrl location;
             QString uuid;
 
             // first read first line and see if contains a HTTP 200 OK message
             QString line = lines.first();
-            if (line.contains("HTTP"))
+            if (line.contains(QLatin1String("HTTP")))
             {
                 // it is either a 200 OK or a NOTIFY
-                if (!line.contains("NOTIFY") && !line.contains("200 OK"))
+                if (!line.contains(QLatin1String("NOTIFY")) && !line.contains(QLatin1String("200 OK")))
                     return nullptr;
             }
             else
@@ -141,7 +141,7 @@ namespace Konversation
             for (int idx = 0;idx < lines.count() && !validDevice; idx++)
             {
                 line = lines[idx];
-                if ((line.contains("ST:") || line.contains("NT:")) && line.contains("InternetGatewayDevice"))
+                if ((line.contains(QLatin1String("ST:")) || line.contains(QLatin1String("NT:"))) && line.contains(QLatin1String("InternetGatewayDevice")))
                 {
                     validDevice = true;
                 }
@@ -169,7 +169,7 @@ namespace Konversation
                         return nullptr;
 
                 }
-                else if (line.contains("USN", Qt::CaseInsensitive) && line.contains("uuid", Qt::CaseInsensitive))
+                else if (line.contains(QLatin1String("USN"), Qt::CaseInsensitive) && line.contains(QLatin1String("uuid"), Qt::CaseInsensitive))
                 {
                     uuid = line.split(':').at(2);
 

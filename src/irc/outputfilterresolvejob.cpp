@@ -67,7 +67,7 @@ OutputFilterResolveJob::~OutputFilterResolveJob()
 {
 }
 
-void OutputFilterResolveJob::resolved(QHostInfo hostInfo)
+void OutputFilterResolveJob::resolved(const QHostInfo &hostInfo)
 {
     QString result;
 

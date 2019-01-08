@@ -25,7 +25,7 @@ namespace Konversation
     Cipher::Cipher()
     {
         m_primeNum = QCA::BigInteger("12745216229761186769575009943944198619149164746831579719941140425076456621824834322853258804883232842877311723249782818608677050956745409379781245497526069657222703636504651898833151008222772087491045206203033063108075098874712912417029101508315117935752962862335062591404043092163187352352197487303798807791605274487594646923");
-        setType("blowfish");
+        setType(QStringLiteral("blowfish"));
         if(Preferences::self()->encryptionType())
             m_cbc = true;
         else
@@ -197,7 +197,7 @@ namespace Konversation
             return QByteArray();
 
         QByteArray sharedKey = privateKey.deriveKey(remotePub).toByteArray();
-        sharedKey = QCA::Hash("sha256").hash(sharedKey).toByteArray().toBase64();
+        sharedKey = QCA::Hash(QStringLiteral("sha256")).hash(sharedKey).toByteArray().toBase64();
 
         //remove trailing = because mircryption and fish think it's a swell idea.
         while(sharedKey.endsWith('=')) sharedKey.chop(1);
@@ -229,7 +229,7 @@ namespace Konversation
             return false;
 
         QByteArray sharedKey = m_tempKey.deriveKey(remotePub).toByteArray();
-        sharedKey = QCA::Hash("sha256").hash(sharedKey).toByteArray().toBase64();
+        sharedKey = QCA::Hash(QStringLiteral("sha256")).hash(sharedKey).toByteArray().toBase64();
 
         //remove trailng = because mircryption and fish think it's a swell idea.
         while(sharedKey.endsWith('=')) sharedKey.chop(1);
@@ -388,7 +388,7 @@ namespace Konversation
         int right = 0;
         int k = -1;
         int v;
-        QString base64 = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        QString base64 = QStringLiteral("./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
         QByteArray encoded;
         while (k < (text.length() - 1)) {
             k++;
@@ -433,7 +433,7 @@ namespace Konversation
 
     QByteArray Cipher::b64ToByte(QByteArray text)
     {
-        QString base64 = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        QString base64 = QStringLiteral("./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
         QByteArray decoded;
         int k = -1;
         while (k < (text.length() - 1)) {

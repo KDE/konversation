@@ -40,13 +40,13 @@ SearchBar::SearchBar(QWidget* parent)
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
-    m_closeButton->setIcon(QIcon::fromTheme("dialog-close"));
+    m_closeButton->setIcon(QIcon::fromTheme(QStringLiteral("dialog-close")));
     m_findNextButton->setIcon(m_goUpSearch);
     m_findPreviousButton->setIcon(m_goDownSearch);
     Application* konvApp = Application::instance();
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
     konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
-    m_optionsButton->setIcon(QIcon::fromTheme("settings-configure"));
+    m_optionsButton->setIcon(QIcon::fromTheme(QStringLiteral("settings-configure")));
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -99,7 +99,7 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
     if (focusEvent)
     {
         Application* konvApp = Application::instance();
-        QAction * action = static_cast<QAction*>(konvApp->getMainWindow()->actionCollection()->action("focus_input_box"));
+        QAction * action = static_cast<QAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("focus_input_box")));
 
         if (action->shortcut().matches(QKeySequence(Qt::Key_Escape)))
         {

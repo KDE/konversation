@@ -66,9 +66,9 @@ namespace Konversation
         for (IdentityList::ConstIterator it = identities.constBegin(); it != identities.constEnd(); ++it)
             m_mainWidget->m_identityCBox->addItem((*it)->getName());
 
-        m_mainWidget->m_removeServerButton->setIcon(QIcon::fromTheme("list-remove"));
-        m_mainWidget->m_upServerBtn->setIcon(QIcon::fromTheme("arrow-up"));
-        m_mainWidget->m_downServerBtn->setIcon(QIcon::fromTheme("arrow-down"));
+        m_mainWidget->m_removeServerButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
+        m_mainWidget->m_upServerBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
+        m_mainWidget->m_downServerBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
 
         connect(m_mainWidget->m_addServerButton, &QPushButton::clicked, this, &ServerGroupDialog::addServer);
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
@@ -77,9 +77,9 @@ namespace Konversation
         connect(m_mainWidget->m_upServerBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveServerUp);
         connect(m_mainWidget->m_downServerBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveServerDown);
 
-        m_mainWidget->m_removeChannelButton->setIcon(QIcon::fromTheme("list-remove"));
-        m_mainWidget->m_upChannelBtn->setIcon(QIcon::fromTheme("arrow-up"));
-        m_mainWidget->m_downChannelBtn->setIcon(QIcon::fromTheme("arrow-down"));
+        m_mainWidget->m_removeChannelButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
+        m_mainWidget->m_upChannelBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
+        m_mainWidget->m_downChannelBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
 
         connect(m_mainWidget->m_addChannelButton, &QPushButton::clicked, this, &ServerGroupDialog::addChannel);
         connect(m_mainWidget->m_changeChannelButton, &QPushButton::clicked, this, &ServerGroupDialog::editChannel);

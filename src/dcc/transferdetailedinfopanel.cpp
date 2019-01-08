@@ -43,8 +43,8 @@ namespace Konversation
             m_autoViewUpdateTimer->setInterval(1000);
 
             connect(m_locationInfo.m_urlreqLocation, &KUrlRequester::textChanged, this, &TransferDetailedInfoPanel::slotLocationChanged);
-            connect(Application::instance()->getDccTransferManager(), SIGNAL(fileURLChanged(Konversation::DCC::TransferRecv*)),
-                    this, SLOT(updateView()));  // it's a little rough..
+            connect(Application::instance()->getDccTransferManager(), &TransferManager::fileURLChanged,
+                    this, &TransferDetailedInfoPanel::updateView);  // it's a little rough..
 
             //only enable when needed
             m_locationInfo.m_urlreqLocation->lineEdit()->setReadOnly(true);
@@ -74,8 +74,8 @@ namespace Konversation
             if (m_transfer->getStatus() == Transfer::Transferring)
                 m_autoViewUpdateTimer->start(500);
 
-            connect(item, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
-                    this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*,int,int)));
+            connect(item, &Transfer::statusChanged,
+                    this, &TransferDetailedInfoPanel::slotTransferStatusChanged);
 
             updateView();
         }
@@ -158,13 +158,13 @@ namespace Konversation
             {
                 m_locationInfo.m_labelPartner->setText(i18nc("%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort",
                                                              "%1 on %2, %3 (port %4)",
-                                                             m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
+                                                             m_transfer->getPartnerNick().isEmpty() ? QStringLiteral("?") : m_transfer->getPartnerNick(),
                                                              partnerInfoServerName, m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort())));
             }
             else
             {
                 m_locationInfo.m_labelPartner->setText(i18nc("%1 = PartnerNick, %2 = Partner IRC Servername","%1 on %2",
-                                                             m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
+                                                             m_transfer->getPartnerNick().isEmpty() ? QStringLiteral("?") : m_transfer->getPartnerNick(),
                                                              partnerInfoServerName));
             }
 
@@ -183,16 +183,16 @@ namespace Konversation
                 m_timeInfo.m_labelIsResumed->setText(i18nc("no - not a resumed transfer","No"));
 
             // Offered at:
-            m_timeInfo.m_labelTimeOffered->setText(m_transfer->getTimeOffer().toString("hh:mm:ss"));
+            m_timeInfo.m_labelTimeOffered->setText(m_transfer->getTimeOffer().toString(QStringLiteral("hh:mm:ss")));
 
             // Started at:
             if (!m_transfer->getTimeTransferStarted().isNull())
-                m_timeInfo.m_labelTimeStarted->setText(m_transfer->getTimeTransferStarted().toString("hh:mm:ss"));
+                m_timeInfo.m_labelTimeStarted->setText(m_transfer->getTimeTransferStarted().toString(QStringLiteral("hh:mm:ss")));
 
             // Finished at:
             if (!m_transfer->getTimeTransferFinished().isNull())
             {
-                m_timeInfo.m_labelTimeFinished->setText(m_transfer->getTimeTransferFinished().toString("hh:mm:ss"));
+                m_timeInfo.m_labelTimeFinished->setText(m_transfer->getTimeTransferFinished().toString(QStringLiteral("hh:mm:ss")));
             }
 
             updateChangeableView();

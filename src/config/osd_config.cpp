@@ -47,7 +47,7 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )
 
     kcfg_OSDScreen->setEnabled(enableScreenChooser);
 
-    m_pOSDPreview = new OSDPreviewWidget("Konversation");
+    m_pOSDPreview = new OSDPreviewWidget(QStringLiteral("Konversation"));
     connect(m_pOSDPreview, &OSDPreviewWidget::positionChanged, this, &OSD_Config::slotPositionChanged);
 
     connect(kcfg_OSDFont, &KFontRequester::fontSelected, this, &OSD_Config::slotUpdateFont);

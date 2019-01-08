@@ -69,7 +69,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_delayedConnectTimer = new QTimer(this);
     m_delayedConnectTimer->setSingleShot(true);
-    connect(m_delayedConnectTimer, SIGNAL(timeout()), this, SLOT(connectToIRCServer()));
+    connect(m_delayedConnectTimer, &QTimer::timeout, this, &Server::connectToIRCServer);
 
     m_reconnectImmediately = false;
 
@@ -115,7 +115,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_sslErrorLock = false;
     m_topicLength = -1;
 
-    setObjectName(QString::fromLatin1("server_") + m_connectionSettings.name());
+    setObjectName(QLatin1String("server_") + m_connectionSettings.name());
 
     setNickname(m_connectionSettings.initialNick());
     obtainNickInfo(getNickname());
@@ -134,9 +134,9 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     updateAutoJoin(m_connectionSettings.oneShotChannelList());
 
     if (!getIdentity()->getShellCommand().isEmpty())
-        QTimer::singleShot(0, this, SLOT(doPreShellCommand()));
+        QTimer::singleShot(0, this, &Server::doPreShellCommand);
     else
-        QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
+        QTimer::singleShot(0, this, &Server::connectToIRCServer);
 
     initTimers();
 
@@ -148,12 +148,12 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_nickInfoChangedTimer = new QTimer(this);
     m_nickInfoChangedTimer->setSingleShot(true);
     m_nickInfoChangedTimer->setInterval(3000);
-    connect(m_nickInfoChangedTimer, SIGNAL(timeout()), this, SLOT(sendNickInfoChangedSignals()));
+    connect(m_nickInfoChangedTimer, &QTimer::timeout, this, &Server::sendNickInfoChangedSignals);
 
     m_channelNickChangedTimer = new QTimer(this);
     m_channelNickChangedTimer->setSingleShot(true);
     m_channelNickChangedTimer->setInterval(1000);
-    connect(m_channelNickChangedTimer, SIGNAL(timeout()), this, SLOT(sendChannelNickChangedSignals()));
+    connect(m_channelNickChangedTimer, &QTimer::timeout, this, &Server::sendChannelNickChangedSignals);
 }
 
 Server::~Server()
@@ -294,99 +294,99 @@ void Server::initTimers()
 void Server::connectSignals()
 {
     // Timers
-    connect(&m_incomingTimer, SIGNAL(timeout()), this, SLOT(processIncomingData()));
-    connect(&m_notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
-    connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
-    connect(&m_pingSendTimer, SIGNAL(timeout()), this, SLOT(sendPing()));
+    connect(&m_incomingTimer, &QTimer::timeout, this, &Server::processIncomingData);
+    connect(&m_notifyTimer, &QTimer::timeout, this, &Server::notifyTimeout);
+    connect(&m_pingResponseTimer, &QTimer::timeout, this, &Server::updateLongPongLag);
+    connect(&m_pingSendTimer, &QTimer::timeout, this, &Server::sendPing);
 
     // OutputFilter
     connect(getOutputFilter(), SIGNAL(requestDccSend()), this,SLOT(requestDccSend()), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(requestDccSend(QString)), this, SLOT(requestDccSend(QString)), Qt::QueuedConnection);
-    connect(getOutputFilter(), SIGNAL(multiServerCommand(QString,QString)),
-        this, SLOT(sendMultiServerCommand(QString,QString)));
-    connect(getOutputFilter(), SIGNAL(reconnectServer(QString)), this, SLOT(reconnectServer(QString)));
-    connect(getOutputFilter(), SIGNAL(disconnectServer(QString)), this, SLOT(disconnectServer(QString)));
-    connect(getOutputFilter(), SIGNAL(quitServer(QString)), this, SLOT(quitServer(QString)));
+    connect(getOutputFilter(), &OutputFilter::multiServerCommand,
+        this, &Server::sendMultiServerCommand);
+    connect(getOutputFilter(), &OutputFilter::reconnectServer, this, &Server::reconnectServer);
+    connect(getOutputFilter(), &OutputFilter::disconnectServer, this, &Server::disconnectServer);
+    connect(getOutputFilter(), &OutputFilter::quitServer, this, &Server::quitServer);
     connect(getOutputFilter(), SIGNAL(openDccSend(QString,QUrl)), this, SLOT(addDccSend(QString,QUrl)), Qt::QueuedConnection);
-    connect(getOutputFilter(), SIGNAL(openDccChat(QString)), this, SLOT(openDccChat(QString)), Qt::QueuedConnection);
-    connect(getOutputFilter(), SIGNAL(openDccWBoard(QString)), this, SLOT(openDccWBoard(QString)), Qt::QueuedConnection);
-    connect(getOutputFilter(), SIGNAL(acceptDccGet(QString,QString)),
-        this, SLOT(acceptDccGet(QString,QString)));
-    connect(getOutputFilter(), SIGNAL(sendToAllChannels(QString)), this, SLOT(sendToAllChannels(QString)));
-    connect(getOutputFilter(), SIGNAL(banUsers(QStringList,QString,QString)),
-        this, SLOT(requestBan(QStringList,QString,QString)));
-    connect(getOutputFilter(), SIGNAL(unbanUsers(QString,QString)),
-        this, SLOT(requestUnban(QString,QString)));
-    connect(getOutputFilter(), SIGNAL(openRawLog(bool)), this, SLOT(addRawLog(bool)));
-    connect(getOutputFilter(), SIGNAL(closeRawLog()), this, SLOT(closeRawLog()));
-    connect(getOutputFilter(), SIGNAL(encodingChanged()), this, SLOT(updateEncoding()));
+    connect(getOutputFilter(), &OutputFilter::openDccChat, this, &Server::openDccChat, Qt::QueuedConnection);
+    connect(getOutputFilter(), &OutputFilter::openDccWBoard, this, &Server::openDccWBoard, Qt::QueuedConnection);
+    connect(getOutputFilter(), &OutputFilter::acceptDccGet,
+        this, &Server::acceptDccGet);
+    connect(getOutputFilter(), &OutputFilter::sendToAllChannels, this, &Server::sendToAllChannels);
+    connect(getOutputFilter(), &OutputFilter::banUsers,
+        this, &Server::requestBan);
+    connect(getOutputFilter(), &OutputFilter::unbanUsers,
+        this, &Server::requestUnban);
+    connect(getOutputFilter(), &OutputFilter::openRawLog, this, &Server::addRawLog);
+    connect(getOutputFilter(), &OutputFilter::closeRawLog, this, &Server::closeRawLog);
+    connect(getOutputFilter(), &OutputFilter::encodingChanged, this, &Server::updateEncoding);
 
     Application* konvApp = Application::instance();
     connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
          konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
-    connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
-            this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
+    connect(konvApp->getDccTransferManager(), &DCC::TransferManager::newDccTransferQueued,
+            this, &Server::slotNewDccTransferItemQueued);
 
    // ViewContainer
-    connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
-    connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
+    connect(this, &Server::showView, getViewContainer(), &ViewContainer::showView);
+    connect(this, &Server::addDccPanel, getViewContainer(), &ViewContainer::addDccPanel);
     connect(this, SIGNAL(addDccChat(Konversation::DCC::Chat*)),
             getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)), Qt::QueuedConnection);
-    connect(this, SIGNAL(serverLag(Server*,int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*,int)));
-    connect(this, SIGNAL(tooLongLag(Server*,int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*,int)));
-    connect(this, SIGNAL(resetLag(Server*)), getViewContainer(), SIGNAL(resetStatusBarLagLabel(Server*)));
-    connect(getOutputFilter(), SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
-    connect(getOutputFilter(), SIGNAL(openKonsolePanel()), getViewContainer(), SLOT(addKonsolePanel()));
-    connect(getOutputFilter(), SIGNAL(openChannelList(QString)), this, SLOT(requestOpenChannelListPanel(QString)));
-    connect(getOutputFilter(), SIGNAL(closeDccPanel()), getViewContainer(), SLOT(closeDccPanel()));
-    connect(getOutputFilter(), SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
+    connect(this, &Server::serverLag, getViewContainer(), &ViewContainer::updateStatusBarLagLabel);
+    connect(this, &Server::tooLongLag, getViewContainer(), &ViewContainer::setStatusBarLagLabelTooLongLag);
+    connect(this, &Server::resetLag, getViewContainer(), &ViewContainer::resetStatusBarLagLabel);
+    connect(getOutputFilter(), &OutputFilter::showView, getViewContainer(), &ViewContainer::showView);
+    connect(getOutputFilter(), &OutputFilter::openKonsolePanel, getViewContainer(), &ViewContainer::addKonsolePanel);
+    connect(getOutputFilter(), &OutputFilter::openChannelList, this, &Server::requestOpenChannelListPanel);
+    connect(getOutputFilter(), &OutputFilter::closeDccPanel, getViewContainer(), &ViewContainer::closeDccPanel);
+    connect(getOutputFilter(), &OutputFilter::addDccPanel, getViewContainer(), &ViewContainer::addDccPanel);
 
     // Inputfilter - queued connections should be used for slots that have blocking UI
     connect(&m_inputFilter, SIGNAL(addDccChat(QString,QStringList)),
             this, SLOT(addDccChat(QString,QStringList)), Qt::QueuedConnection);
-    connect(&m_inputFilter, SIGNAL(rejectDccChat(QString)),
-            this, SLOT(rejectDccChat(QString)));
-    connect(&m_inputFilter, SIGNAL(startReverseDccChat(QString,QStringList)),
-            this, SLOT(startReverseDccChat(QString,QStringList)));
-    connect(&m_inputFilter, SIGNAL(welcome(QString)), this, SLOT(capCheckIgnored()));
-    connect(&m_inputFilter, SIGNAL(welcome(QString)), this, SLOT(connectionEstablished(QString)));
-    connect(&m_inputFilter, SIGNAL(notifyResponse(QString)), this, SLOT(notifyResponse(QString)));
-    connect(&m_inputFilter, SIGNAL(startReverseDccSendTransfer(QString,QStringList)),
-        this, SLOT(startReverseDccSendTransfer(QString,QStringList)));
-    connect(&m_inputFilter, SIGNAL(addDccGet(QString,QStringList)),
-            this, SLOT(addDccGet(QString,QStringList)), Qt::QueuedConnection);
-    connect(&m_inputFilter, SIGNAL(resumeDccGetTransfer(QString,QStringList)),
-        this, SLOT(resumeDccGetTransfer(QString,QStringList)));
-    connect(&m_inputFilter, SIGNAL(resumeDccSendTransfer(QString,QStringList)),
-        this, SLOT(resumeDccSendTransfer(QString,QStringList)));
-    connect(&m_inputFilter, SIGNAL(rejectDccSendTransfer(QString,QStringList)),
-        this, SLOT(rejectDccSendTransfer(QString,QStringList)));
-    connect(&m_inputFilter, SIGNAL(userhost(QString,QString,bool,bool)),
-        this, SLOT(userhost(QString,QString,bool,bool)) );
-    connect(&m_inputFilter, SIGNAL(topicAuthor(QString,QString,QDateTime)),
-        this, SLOT(setTopicAuthor(QString,QString,QDateTime)) );
-    connect(&m_inputFilter, SIGNAL(endOfWho(QString)),
-        this, SLOT(endOfWho(QString)) );
-    connect(&m_inputFilter, SIGNAL(endOfNames(QString)),
-        this, SLOT(endOfNames(QString)) );
-    connect(&m_inputFilter, SIGNAL(invitation(QString,QString)),
-        this,SLOT(invitation(QString,QString)) );
-    connect(&m_inputFilter, SIGNAL(addToChannelList(QString,int,QString)),
-        this, SLOT(addToChannelList(QString,int,QString)));
+    connect(&m_inputFilter, &InputFilter::rejectDccChat,
+            this, &Server::rejectDccChat);
+    connect(&m_inputFilter, &InputFilter::startReverseDccChat,
+            this, &Server::startReverseDccChat);
+    connect(&m_inputFilter, &InputFilter::welcome, this, &Server::capCheckIgnored);
+    connect(&m_inputFilter, &InputFilter::welcome, this, &Server::connectionEstablished);
+    connect(&m_inputFilter, &InputFilter::notifyResponse, this, &Server::notifyResponse);
+    connect(&m_inputFilter, &InputFilter::startReverseDccSendTransfer,
+        this, &Server::startReverseDccSendTransfer);
+    connect(&m_inputFilter, &InputFilter::addDccGet,
+            this, &Server::addDccGet, Qt::QueuedConnection);
+    connect(&m_inputFilter, &InputFilter::resumeDccGetTransfer,
+        this, &Server::resumeDccGetTransfer);
+    connect(&m_inputFilter, &InputFilter::resumeDccSendTransfer,
+        this, &Server::resumeDccSendTransfer);
+    connect(&m_inputFilter, &InputFilter::rejectDccSendTransfer,
+        this, &Server::rejectDccSendTransfer);
+    connect(&m_inputFilter, &InputFilter::userhost,
+        this, &Server::userhost );
+    connect(&m_inputFilter, &InputFilter::topicAuthor,
+        this, &Server::setTopicAuthor );
+    connect(&m_inputFilter, &InputFilter::endOfWho,
+        this, &Server::endOfWho );
+    connect(&m_inputFilter, &InputFilter::endOfNames,
+        this, &Server::endOfNames );
+    connect(&m_inputFilter, &InputFilter::invitation,
+        this,&Server::invitation );
+    connect(&m_inputFilter, &InputFilter::addToChannelList,
+        this, &Server::addToChannelList);
 
     // Status View
     connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
 
         // Scripts
-    connect(getOutputFilter(), SIGNAL(launchScript(int,QString,QString)),
-        konvApp->getScriptLauncher(), SLOT(launchScript(int,QString,QString)));
-    connect(konvApp->getScriptLauncher(), SIGNAL(scriptNotFound(QString)),
-        this, SLOT(scriptNotFound(QString)));
-    connect(konvApp->getScriptLauncher(), SIGNAL(scriptExecutionError(QString)),
-        this, SLOT(scriptExecutionError(QString)));
+    connect(getOutputFilter(), &OutputFilter::launchScript,
+        konvApp->getScriptLauncher(), &ScriptLauncher::launchScript);
+    connect(konvApp->getScriptLauncher(), &ScriptLauncher::scriptNotFound,
+        this, &Server::scriptNotFound);
+    connect(konvApp->getScriptLauncher(), &ScriptLauncher::scriptExecutionError,
+        this, &Server::scriptExecutionError);
 
-    connect(Preferences::self(), SIGNAL(notifyListStarted(int)),
-        this, SLOT(notifyListStarted(int)), Qt::QueuedConnection);
+    connect(Preferences::self(), &Preferences::notifyListStarted,
+        this, &Server::notifyListStarted, Qt::QueuedConnection);
 }
 
 int Server::getPort()
@@ -470,10 +470,10 @@ void Server::connectToIRCServer()
         m_socket->setObjectName(QStringLiteral("serverSocket"));
 
         connect(m_socket, SIGNAL(error(KTcpSocket::Error)), SLOT(broken(KTcpSocket::Error)) );
-        connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
-        connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
+        connect(m_socket, &QIODevice::readyRead, this, &Server::incoming);
+        connect(m_socket, &KTcpSocket::disconnected, this, &Server::closed);
 
-        connect(m_socket, SIGNAL(hostFound()), SLOT (hostFound()));
+        connect(m_socket, &KTcpSocket::hostFound, this, &Server::hostFound);
 
         getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port %2)...",
             getConnectionSettings().server().host(),
@@ -490,7 +490,7 @@ void Server::connectToIRCServer()
             || getIdentity()->getAuthType() == QStringLiteral("saslexternal")
             || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
         {
-            connect(m_socket, SIGNAL(encrypted()), SLOT (socketConnected()));
+            connect(m_socket, &KTcpSocket::encrypted, this, &Server::socketConnected);
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
 
             if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")
@@ -506,7 +506,7 @@ void Server::connectToIRCServer()
         }
         else
         {
-            connect(m_socket, SIGNAL(connected()), SLOT (socketConnected()));
+            connect(m_socket, &KTcpSocket::connected, this, &Server::socketConnected);
             m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port(), proxyPolicy);
         }
 
@@ -697,7 +697,7 @@ void Server::socketConnected()
 
     queueList(ql, HighPriority);
 
-    connect(this, SIGNAL(nicknameChanged(QString)), getStatusView(), SLOT(setNickname(QString)));
+    connect(this, &Server::nicknameChanged, getStatusView(), &StatusPanel::setNickname);
     setNickname(getNickname());
 }
 
@@ -749,7 +749,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
                 if(!supportedSaslTypes.isEmpty() && !supportedSaslTypes.contains(authCommand))
                     getStatusView()->appendServerMessage(i18n("Error"), i18n("Server does not support %1 as SASL authentication mechanism, skipping SASL authentication.", authCommand));
                 else
-                    requestCaps.append ("sasl");
+                    requestCaps.append (QStringLiteral("sasl"));
             }
         }
         else if(m_capabilityNames.contains(nameValue[0]))
@@ -1424,7 +1424,7 @@ void Server::incoming()
         QByteArray cKey = getKeyForRecipient(channelKey);
         if(!cKey.isEmpty())
         {
-            if(command == "privmsg")
+            if(command == QLatin1String("privmsg"))
             {
                 //only send encrypted text to decrypter
                 int index = first.indexOf(":",first.indexOf(":")+1);
@@ -1439,7 +1439,7 @@ void Server::incoming()
 
                 first.prepend(backup);
             }
-            else if(command == "332" || command == "topic")
+            else if(command == QLatin1String("332") || command == QLatin1String("topic"))
             {
                 //only send encrypted text to decrypter
                 int index = first.indexOf(":",first.indexOf(":")+1);
@@ -2149,13 +2149,13 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
         qDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
         if ( transfer->getType() == DCC::Transfer::Receive )
         {
-            connect( transfer, SIGNAL(done(Konversation::DCC::Transfer*)), this, SLOT(dccGetDone(Konversation::DCC::Transfer*)) );
-            connect( transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(dccStatusChanged(Konversation::DCC::Transfer*,int,int)) );
+            connect( transfer, &DCC::Transfer::done, this, &Server::dccGetDone );
+            connect( transfer, &DCC::Transfer::statusChanged, this, &Server::dccStatusChanged );
         }
         else
         {
-            connect( transfer, SIGNAL(done(Konversation::DCC::Transfer*)), this, SLOT(dccSendDone(Konversation::DCC::Transfer*)) );
-            connect( transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)), this, SLOT(dccStatusChanged(Konversation::DCC::Transfer*,int,int)) );
+            connect( transfer, &DCC::Transfer::done, this, &Server::dccSendDone );
+            connect( transfer, &DCC::Transfer::statusChanged, this, &Server::dccStatusChanged );
         }
     }
 }
@@ -2837,7 +2837,7 @@ Channel* Server::joinChannel(const QString& name, const QString& hostmask, const
         m_loweredChannelNameHash.insert(channel->getName().toLower(), channel);
 
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
-        connect(this, SIGNAL(nicknameChanged(QString)), channel, SLOT(setNickname(QString)));
+        connect(this, &Server::nicknameChanged, channel, &Channel::setNickname);
     }
 
     // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
@@ -3665,7 +3665,7 @@ QString Server::loweredNickname() const
     return m_loweredNickname;
 }
 
-QString Server::parseWildcards(const QString& toParse, ChatWindow* context, QStringList nicks)
+QString Server::parseWildcards(const QString& toParse, ChatWindow* context, const QStringList &nicks)
 {
     QString inputLineText;
 
@@ -3852,8 +3852,8 @@ ChannelListPanel* Server::addChannelListPanel()
     {
         m_channelListPanel = getViewContainer()->addChannelListPanel(this);
 
-        connect(&m_inputFilter, SIGNAL(endOfChannelList()), m_channelListPanel, SLOT(endOfChannelList()));
-        connect(m_channelListPanel, SIGNAL(refreshChannelList()), this, SLOT(requestChannelList()));
+        connect(&m_inputFilter, &InputFilter::endOfChannelList, m_channelListPanel.data(), &ChannelListPanel::endOfChannelList);
+        connect(m_channelListPanel.data(), &ChannelListPanel::refreshChannelList, this, &Server::requestChannelList);
         connect(m_channelListPanel, SIGNAL(joinChannel(QString)), this, SLOT(sendJoinCommand(QString)));
         connect(this, SIGNAL(serverOnline(bool)), m_channelListPanel, SLOT(serverOnline(bool)));
     }
@@ -4392,15 +4392,15 @@ void Server::reconnectInvoluntary()
 
 void Server::initCapablityNames()
 {
-    m_capabilityNames.insert("away-notify", AwayNotify);
-    m_capabilityNames.insert("extended-join", ExtendedJoin);
-    m_capabilityNames.insert("server-time", ServerTime);
-    m_capabilityNames.insert("znc.in/server-time-iso", ServerTime);
-    m_capabilityNames.insert("userhost-in-names", UserHostInNames);
-    m_capabilityNames.insert("sasl", SASL);
-    m_capabilityNames.insert("multi-prefix", MultiPrefix);
-    m_capabilityNames.insert("account-notify", AccountNotify);
-    m_capabilityNames.insert("znc.in/self-message", SelfMessage);
+    m_capabilityNames.insert(QStringLiteral("away-notify"), AwayNotify);
+    m_capabilityNames.insert(QStringLiteral("extended-join"), ExtendedJoin);
+    m_capabilityNames.insert(QStringLiteral("server-time"), ServerTime);
+    m_capabilityNames.insert(QStringLiteral("znc.in/server-time-iso"), ServerTime);
+    m_capabilityNames.insert(QStringLiteral("userhost-in-names"), UserHostInNames);
+    m_capabilityNames.insert(QStringLiteral("sasl"), SASL);
+    m_capabilityNames.insert(QStringLiteral("multi-prefix"), MultiPrefix);
+    m_capabilityNames.insert(QStringLiteral("account-notify"), AccountNotify);
+    m_capabilityNames.insert(QStringLiteral("znc.in/self-message"), SelfMessage);
 }
 
 

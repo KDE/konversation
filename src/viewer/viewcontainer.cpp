@@ -61,7 +61,7 @@ ViewMimeData::ViewMimeData(ChatWindow *view) : QMimeData()
 , m_view(view)
 {
     if (view) {
-        setData("application/x-konversation-chatwindow", view->getName().toUtf8());
+        setData(QStringLiteral("application/x-konversation-chatwindow"), view->getName().toUtf8());
     }
 }
 
@@ -129,7 +129,7 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
     images = Application::instance()->images();
 
     m_viewTreeSplitter = new QSplitter(m_window);
-    m_viewTreeSplitter->setObjectName("view_tree_splitter");
+    m_viewTreeSplitter->setObjectName(QStringLiteral("view_tree_splitter"));
     m_saveSplitterSizesLock = true;
 
     // The tree needs to be initialized before the tab widget so that it
@@ -226,10 +226,10 @@ void ViewContainer::setupTabWidget()
     QVBoxLayout* vboxLayout = new QVBoxLayout(m_vbox);
     vboxLayout->setMargin(0);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
-    m_vbox->setObjectName("main_window_right_side");
+    m_vbox->setObjectName(QStringLiteral("main_window_right_side"));
     m_tabWidget = new TabWidget(m_vbox);
     vboxLayout->addWidget(m_tabWidget);
-    m_tabWidget->setObjectName("main_window_tab_widget");
+    m_tabWidget->setObjectName(QStringLiteral("main_window_tab_widget"));
     m_viewSpringLoader->addWidget(m_tabWidget->tabBar());
     m_queueTuner = new QueueTuner(m_vbox, this);
     vboxLayout->addWidget(m_queueTuner);
@@ -244,12 +244,12 @@ void ViewContainer::setupTabWidget()
     closeBtn->setIcon(SmallIcon("tab-close"));
     closeBtn->adjustSize();
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
-    connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
+    connect(closeBtn, &QAbstractButton::clicked, this, &ViewContainer::closeCurrentView);
 
-    connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (viewSwitched(int)));
+    connect(m_tabWidget, &QTabWidget::currentChanged, this, &ViewContainer::viewSwitched);
     connect(m_tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeView(int)));
-    connect(m_tabWidget, SIGNAL(contextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
-    connect(m_tabWidget, SIGNAL(tabBarMiddleClicked(int)), this, SLOT(closeViewMiddleClick(int)));
+    connect(m_tabWidget, &TabWidget::contextMenu, this, &ViewContainer::showViewContextMenu);
+    connect(m_tabWidget, &TabWidget::tabBarMiddleClicked, this, &ViewContainer::closeViewMiddleClick);
 
     updateTabWidgetAppearance();
 }
@@ -288,31 +288,31 @@ void ViewContainer::setupViewTree()
         setViewTreeShown(false);
     }
 
-    connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
-    connect(m_viewTree, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+    connect(m_viewTree, &ViewTree::sizeChanged, this, &ViewContainer::saveSplitterSizes);
+    connect(m_viewTree, &ViewTree::showView, this, &ViewContainer::showView);
     connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-    connect(m_viewTree, SIGNAL(showViewContextMenu(QWidget*,QPoint)), this, SLOT(showViewContextMenu(QWidget*,QPoint)));
-    connect(m_viewTree, SIGNAL(destroyed(QObject*)), this, SLOT(onViewTreeDestroyed(QObject*)));
+    connect(m_viewTree, &ViewTree::showViewContextMenu, this, &ViewContainer::showViewContextMenu);
+    connect(m_viewTree, &QObject::destroyed, this, &ViewContainer::onViewTreeDestroyed);
     connect(this, SIGNAL(contextMenuClosed()), m_viewTree->viewport(), SLOT(update()));
-    connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
-    connect(this, SIGNAL(viewChanged(QModelIndex)), m_viewTree, SLOT(selectView(QModelIndex)));
+    connect(Application::instance(), &Application::appearanceChanged, m_viewTree, &ViewTree::updateAppearance);
+    connect(this, &ViewContainer::viewChanged, m_viewTree, &ViewTree::selectView);
 
     QAction* action;
 
-    action = actionCollection()->action("move_tab_left");
+    action = actionCollection()->action(QStringLiteral("move_tab_left"));
 
     if (action)
     {
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(QIcon::fromTheme("arrow-up"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
     }
 
-    action = actionCollection()->action("move_tab_right");
+    action = actionCollection()->action(QStringLiteral("move_tab_right"));
 
     if (action)
     {
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(QIcon::fromTheme("arrow-down"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
     }
 }
 
@@ -345,20 +345,20 @@ void ViewContainer::removeViewTree()
 {
     QAction* action;
 
-    action = actionCollection()->action("move_tab_left");
+    action = actionCollection()->action(QStringLiteral("move_tab_left"));
 
     if (action)
     {
         action->setText(i18n("Move Tab Left"));
-        action->setIcon(QIcon::fromTheme("arrow-left"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-left")));
     }
 
-    action = actionCollection()->action("move_tab_right");
+    action = actionCollection()->action(QStringLiteral("move_tab_right"));
 
     if (action)
     {
         action->setText(i18n("Move Tab Right"));
-        action->setIcon(QIcon::fromTheme("arrow-right"));
+        action->setIcon(QIcon::fromTheme(QStringLiteral("arrow-right")));
     }
 
     delete m_viewTree;
@@ -572,7 +572,7 @@ Qt::ItemFlags ViewContainer::flags(const QModelIndex &index) const
 
 QStringList ViewContainer::mimeTypes() const
 {
-    return QStringList() << QLatin1String("application/x-konversation-chatwindow");
+    return QStringList() << QStringLiteral("application/x-konversation-chatwindow");
 }
 
 QMimeData* ViewContainer::mimeData(const QModelIndexList &indexes) const
@@ -596,7 +596,7 @@ bool ViewContainer::canDropMimeData(const QMimeData *data, Qt::DropAction action
         return false;
     }
 
-    if (!data->hasFormat("application/x-konversation-chatwindow")) {
+    if (!data->hasFormat(QStringLiteral("application/x-konversation-chatwindow"))) {
         return false;
     }
 
@@ -630,7 +630,7 @@ bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return false;
     }
 
-    if (!data->hasFormat("application/x-konversation-chatwindow")) {
+    if (!data->hasFormat(QStringLiteral("application/x-konversation-chatwindow"))) {
         return false;
     }
 
@@ -709,7 +709,7 @@ void ViewContainer::updateAppearance()
     updateViews();
     updateTabWidgetAppearance();
 
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
+    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
     Q_ASSERT(action);
     action->setChecked(Preferences::self()->showNickList());
 
@@ -767,38 +767,38 @@ void ViewContainer::updateViewActions(int index)
         IRCView* textView = view->getTextView();
 
         // FIXME ViewTree port: Take hierarchy into account.
-        action = actionCollection()->action("move_tab_left");
+        action = actionCollection()->action(QStringLiteral("move_tab_left"));
         if (action) action->setEnabled(canMoveViewLeft());
 
-        action = actionCollection()->action("move_tab_right");
+        action = actionCollection()->action(QStringLiteral("move_tab_right"));
         if (action) action->setEnabled(canMoveViewRight());
 
         if (server && (viewType == ChatWindow::Status || server == m_frontServer))
         {
-            action = actionCollection()->action("reconnect_server");
+            action = actionCollection()->action(QStringLiteral("reconnect_server"));
             if (action) action->setEnabled(true);
 
-            action = actionCollection()->action("disconnect_server");
+            action = actionCollection()->action(QStringLiteral("disconnect_server"));
             if (action) action->setEnabled(server->isConnected() || server->isConnecting() || server->isScheduledToConnect());
 
-            action = actionCollection()->action("join_channel");
+            action = actionCollection()->action(QStringLiteral("join_channel"));
             if (action) action->setEnabled(server->isConnected());
         }
         else
         {
-            action = actionCollection()->action("reconnect_server");
+            action = actionCollection()->action(QStringLiteral("reconnect_server"));
             if (action) action->setEnabled(false);
 
 
-            action = actionCollection()->action("disconnect_server");
+            action = actionCollection()->action(QStringLiteral("disconnect_server"));
             if (action) action->setEnabled(false);
 
 
-            action = actionCollection()->action("join_channel");
+            action = actionCollection()->action(QStringLiteral("join_channel"));
             if (action) action->setEnabled(false);
         }
 
-        KToggleAction* notifyAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+        KToggleAction* notifyAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
         if (notifyAction)
         {
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
@@ -807,7 +807,7 @@ void ViewContainer::updateViewActions(int index)
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
-        KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+        KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
         Channel* channel = qobject_cast<Channel*>(view);
         if (autoJoinAction && viewType == ChatWindow::Channel && channel->getServer()->getServerGroup())
         {
@@ -820,7 +820,7 @@ void ViewContainer::updateViewActions(int index)
             autoJoinAction->setChecked(false);
         }
 
-        KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
+        KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
         if (autoConnectAction && server && (viewType == ChatWindow::Status || server == m_frontServer) && server->getServerGroup())
         {
             autoConnectAction->setEnabled(true);
@@ -832,37 +832,37 @@ void ViewContainer::updateViewActions(int index)
             autoConnectAction->setChecked(false);
         }
 
-        action = actionCollection()->action("rejoin_channel");
+        action = actionCollection()->action(QStringLiteral("rejoin_channel"));
         if (action) action->setEnabled(viewType == ChatWindow::Channel && channel->rejoinable());
 
-        action = actionCollection()->action("close_queries");
+        action = actionCollection()->action(QStringLiteral("close_queries"));
         if (action) action->setEnabled(m_queryViewCount > 0);
 
-        action = actionCollection()->action("clear_tabs");
+        action = actionCollection()->action(QStringLiteral("clear_tabs"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("increase_font");
+        action = actionCollection()->action(QStringLiteral("increase_font"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("shrink_font");
+        action = actionCollection()->action(QStringLiteral("shrink_font"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("reset_font");
+        action = actionCollection()->action(QStringLiteral("reset_font"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("toggle_away");
+        action = actionCollection()->action(QStringLiteral("toggle_away"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("next_tab");
+        action = actionCollection()->action(QStringLiteral("next_tab"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("previous_tab");
+        action = actionCollection()->action(QStringLiteral("previous_tab"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("next_active_tab");
+        action = actionCollection()->action(QStringLiteral("next_active_tab"));
         if (action) action->setEnabled(true);
 
-        action = actionCollection()->action("close_tab");
+        action = actionCollection()->action(QStringLiteral("close_tab"));
         if (action) action->setEnabled(true);
 
         if (index == m_tabWidget->currentIndex())
@@ -870,19 +870,19 @@ void ViewContainer::updateViewActions(int index)
             // The following only need to be updated when this run is related
             // to the active tab, e.g. when it was just changed.
 
-            action = actionCollection()->action("insert_marker_line");
+            action = actionCollection()->action(QStringLiteral("insert_marker_line"));
             if (action)  action->setEnabled(textView != nullptr);
 
-            action = actionCollection()->action("insert_character");
+            action = actionCollection()->action(QStringLiteral("insert_character"));
             if (action) action->setEnabled(insertSupported);
 
-            action = actionCollection()->action("irc_colors");
+            action = actionCollection()->action(QStringLiteral("irc_colors"));
             if (action) action->setEnabled(insertSupported);
 
-            action = actionCollection()->action("auto_replace");
+            action = actionCollection()->action(QStringLiteral("auto_replace"));
             if (action) action->setEnabled(view->getInputBar() != nullptr);
 
-            action = actionCollection()->action("focus_input_box");
+            action = actionCollection()->action(QStringLiteral("focus_input_box"));
             if (action)
             {
                 action->setEnabled(view->getInputBar() != nullptr);
@@ -894,13 +894,13 @@ void ViewContainer::updateViewActions(int index)
                 }
             }
 
-            action = actionCollection()->action("clear_lines");
+            action = actionCollection()->action(QStringLiteral("clear_lines"));
             if (action) action->setEnabled(textView != nullptr && view->getTextView()->hasLines());
 
-            action = actionCollection()->action("clear_window");
+            action = actionCollection()->action(QStringLiteral("clear_window"));
             if (action) action->setEnabled(textView != nullptr);
 
-            action = actionCollection()->action("edit_find");
+            action = actionCollection()->action(QStringLiteral("edit_find"));
             if (action)
             {
                 action->setText(i18n("Find Text..."));
@@ -908,19 +908,19 @@ void ViewContainer::updateViewActions(int index)
                 action->setStatusTip(i18n("Search for text in the current tab"));
             }
 
-            action = actionCollection()->action("edit_find_next");
+            action = actionCollection()->action(QStringLiteral("edit_find_next"));
             if (action) action->setEnabled(view->searchView());
 
-            action = actionCollection()->action("edit_find_prev");
+            action = actionCollection()->action(QStringLiteral("edit_find_prev"));
             if (action) action->setEnabled(view->searchView());
 
-            KToggleAction* channelListAction = qobject_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+            KToggleAction* channelListAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
             if (channelListAction)
             {
                 if (m_frontServer)
                 {
                     QString name = m_frontServer->getDisplayName();
-                    name = name.replace('&', "&&");
+                    name = name.replace('&', QLatin1String("&&"));
                     channelListAction->setEnabled(true);
                     channelListAction->setChecked(m_frontServer->getChannelListPanel());
                     channelListAction->setText(i18n("Channel &List for %1",name));
@@ -933,7 +933,7 @@ void ViewContainer::updateViewActions(int index)
                 }
             }
 
-            action = actionCollection()->action("open_logfile");
+            action = actionCollection()->action(QStringLiteral("open_logfile"));
             if (action)
             {
                 action->setEnabled(!view->logFileName().isEmpty());
@@ -942,15 +942,15 @@ void ViewContainer::updateViewActions(int index)
                 else
                 {
                     QString name = view->getName();
-                    name = name.replace('&', "&&");
+                    name = name.replace('&', QLatin1String("&&"));
                     action->setText(i18n("&Open Logfile for %1",name));
                 }
             }
 
-            action = actionCollection()->action("hide_nicknamelist");
+            action = actionCollection()->action(QStringLiteral("hide_nicknamelist"));
             if (action) action->setEnabled(view->getType() == ChatWindow::Channel);
 
-            action = actionCollection()->action("channel_settings");
+            action = actionCollection()->action(QStringLiteral("channel_settings"));
             if (action && view->getType() == ChatWindow::Channel)
             {
                 action->setEnabled(true);
@@ -965,92 +965,92 @@ void ViewContainer::updateViewActions(int index)
     }
     else
     {
-        action = actionCollection()->action("move_tab_left");
+        action = actionCollection()->action(QStringLiteral("move_tab_left"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("move_tab_right");
+        action = actionCollection()->action(QStringLiteral("move_tab_right"));
         if(action) action->setEnabled(false);
 
-        action = actionCollection()->action("next_tab");
+        action = actionCollection()->action(QStringLiteral("next_tab"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("previous_tab");
+        action = actionCollection()->action(QStringLiteral("previous_tab"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("close_tab");
+        action = actionCollection()->action(QStringLiteral("close_tab"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("next_active_tab");
+        action = actionCollection()->action(QStringLiteral("next_active_tab"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("tab_notifications");
+        action = actionCollection()->action(QStringLiteral("tab_notifications"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("tab_autojoin");
+        action = actionCollection()->action(QStringLiteral("tab_autojoin"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("tab_autoconnect");
+        action = actionCollection()->action(QStringLiteral("tab_autoconnect"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("rejoin_channel");
+        action = actionCollection()->action(QStringLiteral("rejoin_channel"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("insert_marker_line");
+        action = actionCollection()->action(QStringLiteral("insert_marker_line"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("insert_character");
+        action = actionCollection()->action(QStringLiteral("insert_character"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("irc_colors");
+        action = actionCollection()->action(QStringLiteral("irc_colors"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("clear_lines");
+        action = actionCollection()->action(QStringLiteral("clear_lines"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("clear_window");
+        action = actionCollection()->action(QStringLiteral("clear_window"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("clear_tabs");
+        action = actionCollection()->action(QStringLiteral("clear_tabs"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("edit_find");
+        action = actionCollection()->action(QStringLiteral("edit_find"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("edit_find_next");
+        action = actionCollection()->action(QStringLiteral("edit_find_next"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("edit_find_prev");
+        action = actionCollection()->action(QStringLiteral("edit_find_prev"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("open_channel_list");
+        action = actionCollection()->action(QStringLiteral("open_channel_list"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("open_logfile");
+        action = actionCollection()->action(QStringLiteral("open_logfile"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("toggle_away");
+        action = actionCollection()->action(QStringLiteral("toggle_away"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("join_channel");
+        action = actionCollection()->action(QStringLiteral("join_channel"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("disconnect_server");
+        action = actionCollection()->action(QStringLiteral("disconnect_server"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("reconnect_server");
+        action = actionCollection()->action(QStringLiteral("reconnect_server"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("hide_nicknamelist");
+        action = actionCollection()->action(QStringLiteral("hide_nicknamelist"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("channel_settings");
+        action = actionCollection()->action(QStringLiteral("channel_settings"));
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("close_queries");
+        action = actionCollection()->action(QStringLiteral("close_queries"));
         if (action) action->setEnabled(false);
     }
 
-    action = actionCollection()->action("last_focused_tab");
+    action = actionCollection()->action(QStringLiteral("last_focused_tab"));
     if (action) action->setEnabled(m_lastFocusedView != nullptr);
 }
 
@@ -1065,21 +1065,21 @@ void ViewContainer::updateFrontView()
     // Make sure that only views with info output get to be the m_frontView
     if (m_frontView)
     {
-        disconnect(m_frontView, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
+        disconnect(m_frontView.data(), &ChatWindow::updateInfo, this, &ViewContainer::setStatusBarInfoLabel);
     }
 
     if (view->canBeFrontView())
     {
         m_frontView = view;
 
-        connect(view, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
+        connect(view, &ChatWindow::updateInfo, this, &ViewContainer::setStatusBarInfoLabel);
         view->emitUpdateInfo();
     }
     else
     {
         QString viewName = Konversation::removeIrcMarkup(view->getName());
 
-        if(viewName != "ChatWindowObject")
+        if(viewName != QLatin1String("ChatWindowObject"))
             emit setStatusBarInfoLabel(viewName);
         else
             emit clearStatusBarInfoLabel();
@@ -1355,14 +1355,14 @@ void ViewContainer::toggleViewNotifications()
         {
             view->setNotificationsEnabled(true);
             updateViews();
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
             if (action) action->setChecked(view->notificationsEnabled());
         }
         else
         {
             view->setNotificationsEnabled(false);
             unsetViewNotification(view);
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
             if (action) action->setChecked(view->notificationsEnabled());
         }
     }
@@ -1423,13 +1423,13 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     QIcon iconSet;
 
     if (Preferences::self()->closeButtons() && m_viewTree)
-        iconSet = QIcon::fromTheme("dialog-close");
+        iconSet = QIcon::fromTheme(QStringLiteral("dialog-close"));
 
-    connect(Application::instance(), SIGNAL(appearanceChanged()), view, SLOT(updateAppearance()));
-    connect(view, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
-    connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
-    connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
-    connect(view, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+    connect(Application::instance(), &Application::appearanceChanged, view, &ChatWindow::updateAppearance);
+    connect(view, &ChatWindow::setStatusBarTempText, this, &ViewContainer::setStatusBarTempText);
+    connect(view, &ChatWindow::clearStatusBarTempText, this, &ViewContainer::clearStatusBarTempText);
+    connect(view, &ChatWindow::closing, this, &ViewContainer::cleanupAfterClose);
+    connect(view, &ChatWindow::showView, this, &ViewContainer::showView);
 
     switch (view->getType())
     {
@@ -1496,7 +1496,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         beginInsertRows(idx, placement - statusViewIndex - 1, placement - statusViewIndex - 1);
     }
 
-    m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', "&&"));
+    m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', QLatin1String("&&")));
 
     endInsertRows();
 
@@ -1679,14 +1679,14 @@ void ViewContainer::unclutterTabs()
 
     foreach(ChatWindow *view, views) {
         if (view->isTopLevelView()) {
-            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', "&&"));
+            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
             views.removeAll(view);
         }
     }
 
     foreach(ChatWindow *view, views) {
         if (!view->isTopLevelView()) {
-            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', "&&"));
+            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
         }
     }
 
@@ -1718,7 +1718,7 @@ void ViewContainer::viewSwitched(int newIndex)
     {
         m_frontView->resetTabNotification();
 
-        disconnect(m_frontView, SIGNAL(updateInfo(QString)), this, SIGNAL(setStatusBarInfoLabel(QString)));
+        disconnect(m_frontView.data(), &ChatWindow::updateInfo, this, &ViewContainer::setStatusBarInfoLabel);
 
         if (Preferences::self()->automaticRememberLine() && m_frontView->getTextView() != nullptr)
             m_frontView->getTextView()->insertRememberLine();
@@ -1752,7 +1752,7 @@ void ViewContainer::viewSwitched(int newIndex)
 
     QString tabName = Konversation::removeIrcMarkup(view->getName());
 
-    if (tabName != "ChatWindowObject")
+    if (tabName != QLatin1String("ChatWindowObject"))
         emit setWindowCaption(tabName);
     else
         emit setWindowCaption(QString());
@@ -2032,7 +2032,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (view == m_lastFocusedView)
     {
-        QAction* action = actionCollection()->action("last_focused_tab");
+        QAction* action = actionCollection()->action(QStringLiteral("last_focused_tab"));
         if (action) action->setEnabled(false);
     }
 
@@ -2089,7 +2089,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (m_queryViewCount == 0 && actionCollection())
     {
-        QAction* action = actionCollection()->action("close_queries");
+        QAction* action = actionCollection()->action(QStringLiteral("close_queries"));
         if (action) action->setEnabled(false);
     }
 
@@ -2176,7 +2176,7 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
-        KSelectAction* codecAction = qobject_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+        KSelectAction* codecAction = qobject_cast<KSelectAction*>(actionCollection()->action(QStringLiteral("tab_encoding")));
 
         if (codecAction)
         {
@@ -2218,18 +2218,18 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    QMenu* menu = qobject_cast<QMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
+    QMenu* menu = qobject_cast<QMenu*>(m_window->guiFactory()->container(QStringLiteral("tabContextMenu"), m_window));
 
     if (!menu) return;
 
-    KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
-    KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autoconnect"));
-    QAction* rejoinAction = actionCollection()->action("rejoin_channel");
-    QAction* closeAction = actionCollection()->action("close_tab");
+    KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
+    KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
+    QAction* rejoinAction = actionCollection()->action(QStringLiteral("rejoin_channel"));
+    QAction* closeAction = actionCollection()->action(QStringLiteral("close_tab"));
 
     QAction* renameAct = new QAction(this);
     renameAct->setText(i18n("&Rename Tab..."));
-    connect(renameAct, SIGNAL(triggered()), this, SLOT(renameKonsole()));
+    connect(renameAct, &QAction::triggered, this, &ViewContainer::renameKonsole);
 
     ChatWindow::WindowType viewType = view->getType();
 
@@ -2237,7 +2237,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     if (viewType == ChatWindow::Channel)
     {
-        QAction* action = actionCollection()->action("tab_encoding");
+        QAction* action = actionCollection()->action(QStringLiteral("tab_encoding"));
         menu->insertAction(action, autoJoinAction);
 
         Channel *channel = qobject_cast<Channel*>(view);
@@ -2250,28 +2250,28 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     if (viewType == ChatWindow::Konsole)
     {
-        QAction* action = actionCollection()->action("tab_encoding");
+        QAction* action = actionCollection()->action(QStringLiteral("tab_encoding"));
         menu->insertAction(action, renameAct);
     }
 
     if (viewType == ChatWindow::Status)
     {
-        QAction* action = actionCollection()->action("tab_encoding");
+        QAction* action = actionCollection()->action(QStringLiteral("tab_encoding"));
         menu->insertAction(action, autoConnectAction);
 
         QList<QAction *> serverActions;
 
-        action = actionCollection()->action("disconnect_server");
+        action = actionCollection()->action(QStringLiteral("disconnect_server"));
         if (action) serverActions.append(action);
-        action = actionCollection()->action("reconnect_server");
+        action = actionCollection()->action(QStringLiteral("reconnect_server"));
         if (action) serverActions.append(action);
-        action = actionCollection()->action("join_channel");
+        action = actionCollection()->action(QStringLiteral("join_channel"));
         if (action) serverActions.append(action);
         // TODO FIXME who wants to own this action?
         action = new QAction(this);
         action->setSeparator(true);
         if (action) serverActions.append(action);
-        m_window->plugActionList("server_actions", serverActions);
+        m_window->plugActionList(QStringLiteral("server_actions"), serverActions);
         m_contextServer = view->getServer();
     }
     else {
@@ -2289,13 +2289,13 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     menu->removeAction(autoConnectAction);
     menu->removeAction(rejoinAction);
     menu->removeAction(renameAct);
-    m_window->unplugActionList("server_actions");
+    m_window->unplugActionList(QStringLiteral("server_actions"));
 
     emit contextMenuClosed();
 
     emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
 
-    if (action != actionCollection()->action("close_tab")) {
+    if (action != actionCollection()->action(QStringLiteral("close_tab"))) {
         updateViewEncoding(view);
     }
 
@@ -2352,7 +2352,7 @@ QList<QPair<QString,QString> > ViewContainer::getChannelsURI()
         if (view->getType() == ChatWindow::Channel)
         {
             QString uri = view->getURI();
-            QString name = QString("%1 (%2)")
+            QString name = QStringLiteral("%1 (%2)")
                 .arg(view->getName())
                 .arg(view->getServer()->getDisplayName());
             URIList += QPair<QString,QString>(name,uri);
@@ -2452,7 +2452,7 @@ void ViewContainer::insertCharacter()
     if (!m_insertCharDialog)
     {
         m_insertCharDialog = new Konversation::InsertCharDialog(font.family(), m_window);
-        connect(m_insertCharDialog, SIGNAL(insertChar(uint)), this, SLOT(insertChar(uint)));
+        connect(m_insertCharDialog, &InsertCharDialog::insertChar, this, &ViewContainer::insertChar);
     }
 
     m_insertCharDialog->setFont(font);
@@ -2504,7 +2504,7 @@ void ViewContainer::clearViewLines()
     {
         m_frontView->getTextView()->clearLines();
 
-        QAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action(QStringLiteral("clear_lines"));
         if (action) action->setEnabled(false);
     }
 }
@@ -2535,7 +2535,7 @@ void ViewContainer::cancelRememberLine()
     {
         m_frontView->getTextView()->cancelRememberLine();
 
-        QAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action(QStringLiteral("clear_lines"));
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
     }
 }
@@ -2562,7 +2562,7 @@ void ViewContainer::insertMarkerLine()
 
     if (m_frontView && m_frontView->getTextView() != nullptr)
     {
-        QAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action(QStringLiteral("clear_lines"));
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
     }
 }
@@ -2612,7 +2612,7 @@ void ViewContainer::addUrlCatcher()
         m_urlCatcherPanel=new UrlCatcher(m_tabWidget);
         addView(m_urlCatcherPanel, i18n("URL Catcher"));
 
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
+        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher"))))->setChecked(true);
     }
     else
         closeUrlCatcher();
@@ -2625,7 +2625,7 @@ void ViewContainer::closeUrlCatcher()
         delete m_urlCatcherPanel;
         m_urlCatcherPanel = nullptr;
 
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
+        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher"))))->setChecked(false);
     }
 }
 
@@ -2644,7 +2644,7 @@ void ViewContainer::addDccPanel()
     {
         addView(m_dccPanel, i18n("DCC Status"));
         m_dccPanelOpen=true;
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
+        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window"))))->setChecked(true);
     }
 }
 
@@ -2663,7 +2663,7 @@ void ViewContainer::closeDccPanel()
             cleanupAfterClose(m_dccPanel);
         }
         m_dccPanelOpen=false;
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
+        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window"))))->setChecked(false);
     }
 }
 
@@ -2709,8 +2709,8 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
 
     if (server->getServerGroup()) statusView->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
 
-    QObject::connect(server, SIGNAL(sslInitFailure()), this, SIGNAL(removeStatusBarSSLLabel()));
-    QObject::connect(server, SIGNAL(sslConnected(Server*)), this, SIGNAL(updateStatusBarSSLLabel(Server*)));
+    QObject::connect(server, &Server::sslInitFailure, this, &ViewContainer::removeStatusBarSSLLabel);
+    QObject::connect(server, &Server::sslConnected, this, &ViewContainer::updateStatusBarSSLLabel);
 
     // ... then put it into the tab widget, otherwise we'd have a race with server member
     addView(statusView, label);
@@ -2801,11 +2801,11 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
 
     if (updateServer && updateServer == server)
     {
-        QAction* action = actionCollection()->action("disconnect_server");
+        QAction* action = actionCollection()->action(QStringLiteral("disconnect_server"));
         if (action)
             action->setEnabled(state == Konversation::SSConnected || state == Konversation::SSConnecting || state == Konversation::SSScheduledToConnect);
 
-        action = actionCollection()->action("join_channel");
+        action = actionCollection()->action(QStringLiteral("join_channel"));
         if (action)
             action->setEnabled(state == Konversation::SSConnected);
 
@@ -2815,7 +2815,7 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
             ChatWindow* view = m_frontView;
             Channel* channel = qobject_cast<Channel*>(view);
 
-            action = actionCollection()->action("rejoin_channel");
+            action = actionCollection()->action(QStringLiteral("rejoin_channel"));
             if (action) action->setEnabled(state == Konversation::SSConnected && channel->rejoinable());
         }
     }
@@ -2827,7 +2827,7 @@ void ViewContainer::channelJoined(Channel* channel)
 
     if (view == channel)
     {
-        QAction* action = actionCollection()->action("rejoin_channel");
+        QAction* action = actionCollection()->action(QStringLiteral("rejoin_channel"));
         if (action) action->setEnabled(false);
     }
 }
@@ -2871,7 +2871,7 @@ void ViewContainer::openChannelSettings()
 
 void ViewContainer::toggleChannelNicklists()
 {
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
+    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
 
     if (action)
     {
@@ -2892,12 +2892,12 @@ Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool
 
     // About to increase the number of queries, so enable the close action
     if (m_queryViewCount == 0)
-        actionCollection()->action("close_queries")->setEnabled(true);
+        actionCollection()->action(QStringLiteral("close_queries"))->setEnabled(true);
 
     ++m_queryViewCount;
 
     connect(query, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
-    connect(query, SIGNAL(updateQueryChrome(ChatWindow*,QString)), this, SLOT(updateQueryChrome(ChatWindow*,QString)));
+    connect(query, &Query::updateQueryChrome, this, &ViewContainer::updateQueryChrome);
     connect(server, SIGNAL(awayState(bool)), query, SLOT(indicateAway(bool)));
 
     return query;
@@ -2946,7 +2946,7 @@ void ViewContainer::closeQueries()
         ++operations;
     }
 
-    actionCollection()->action("close_queries")->setEnabled(false);
+    actionCollection()->action(QStringLiteral("close_queries"))->setEnabled(false);
 }
 
 ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)
@@ -2955,7 +2955,7 @@ ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)
     channelListPanel->setServer(server);
     addView(channelListPanel, i18n("Channel List"));
 
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
     if ((server == m_frontServer) && action) action->setChecked(true);
 
     return channelListPanel;
@@ -2975,7 +2975,7 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
             "query, channel or status window."
             ),
             i18n("Channel List"),
-            "ChannelListNoServerSelected");
+            QStringLiteral("ChannelListNoServerSelected"));
         return;
     }
 
@@ -2987,7 +2987,7 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
 
         if (server == m_frontServer)
         {
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
             if (action) action->setChecked(false);
         }
 
@@ -3007,14 +3007,14 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
                     i18n("Channel List Warning"),
                     KStandardGuiItem::cont(),
                     KStandardGuiItem::cancel(),
-                    "ChannelListWarning");
+                    QStringLiteral("ChannelListWarning"));
         }
 
         if (ret != KMessageBox::Continue)
         {
             if (server == m_frontServer)
             {
-                KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+                KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
                 if (action) action->setChecked(false);
             }
 
@@ -3037,8 +3037,8 @@ void ViewContainer::openNicksOnlinePanel()
         addView(m_nicksOnlinePanel, i18n("Watched Nicks"));
         connect(m_nicksOnlinePanel, SIGNAL(doubleClicked(int,QString)), m_window, SLOT(notifyAction(int,QString)));
         connect(m_nicksOnlinePanel, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
-        connect(m_window, SIGNAL(nicksNowOnline(Server*)), m_nicksOnlinePanel, SLOT(updateServerOnlineList(Server*)));
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
+        connect(m_window, &MainWindow::nicksNowOnline, m_nicksOnlinePanel, &NicksOnline::updateServerOnlineList);
+        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(true);
     }
     else
     {
@@ -3051,7 +3051,7 @@ void ViewContainer::closeNicksOnlinePanel()
 {
     delete m_nicksOnlinePanel;
     m_nicksOnlinePanel = nullptr;
-    (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
+    (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(false);
 }
 
 /*!

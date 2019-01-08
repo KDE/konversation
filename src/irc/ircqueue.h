@@ -43,13 +43,13 @@ struct IRCMessage
         Note the constructor takes a QString, not a const QString& or a QString *. If you want to modify the
         contained text, put it back with setText.
     */
-    IRCMessage(QString i) : s(i), t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
+    IRCMessage(const QString &i) : s(i), t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
     {}
 
     QString text() { return s; }
     int age() { return t.elapsed(); }
     QTime time() { return t; }
-    void setText(QString text) { s=text; }
+    void setText(const QString &text) { s=text; }
 private:
     QString s;
     QTime t;

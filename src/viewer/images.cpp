@@ -197,7 +197,7 @@ void Images::initializeNickIcons()
 
     if( icons.count() < 7 ) // Sanity
     {
-        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default/*.png");
+        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default/*.png"));
 
         foreach(const QString& dir, dirs)
         {

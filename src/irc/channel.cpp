@@ -123,15 +123,15 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_topicButton->setIcon(QIcon::fromTheme(QStringLiteral("document-edit")));
     m_topicButton->setToolTip(i18n("Edit Channel Settings"));
     m_topicButton->setAutoRaise(true);
-    connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
+    connect(m_topicButton, &QAbstractButton::clicked, this, &Channel::showOptionsDialog);
 
     topicLine = new Konversation::TopicLabel(topicWidget);
     topicLine->setContextMenuOptions(IrcContextMenus::ShowChannelActions | IrcContextMenus::ShowLogAction, true);
     topicLine->setChannelName(getName());
     topicLine->setWordWrap(true);
     topicLine->setWhatsThis(i18n("<qt><p>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.</p><p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</p></qt>"));
-    connect(topicLine, SIGNAL(setStatusBarTempText(QString)), this, SIGNAL(setStatusBarTempText(QString)));
-    connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
+    connect(topicLine, &TopicLabel::setStatusBarTempText, this, &ChatWindow::setStatusBarTempText);
+    connect(topicLine, &TopicLabel::clearStatusBarTempText, this, &ChatWindow::clearStatusBarTempText);
 
     m_topicHistory = new TopicHistoryModel(this);
     connect(m_topicHistory, SIGNAL(currentTopicChanged(QString)), topicLine, SLOT(setText(QString)));
@@ -186,7 +186,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     limit->setToolTip(i18n("Maximum users allowed in channel"));
     limit->setWhatsThis(i18n("<qt><p>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</p></qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
-    connect(limit,SIGNAL (editingFinished()), this, SLOT(channelLimitChanged()) );
+    connect(limit,&QLineEdit::editingFinished, this, &Channel::channelLimitChanged );
 
     topicLayout->addWidget(modeBox, 0, 2);
     topicLayout->setRowStretch(1, 10);
@@ -278,34 +278,34 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     getTextView()->setSizePolicy(greedy);
     nicknameListView->setSizePolicy(hmodest);
 
-    connect(m_inputBar,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
-    connect(m_inputBar,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
-    connect(m_inputBar,SIGNAL (nickCompletion()),this,SLOT (completeNick()) );
-    connect(m_inputBar,SIGNAL (endCompletion()),this,SLOT (endCompleteNick()) );
-    connect(m_inputBar,SIGNAL (textPasted(QString)),this,SLOT (textPasted(QString)) );
+    connect(m_inputBar,&IRCInput::submit,this,&Channel::channelTextEntered );
+    connect(m_inputBar,&IRCInput::envelopeCommand,this,&Channel::channelPassthroughCommand );
+    connect(m_inputBar,&IRCInput::nickCompletion,this,&Channel::completeNick );
+    connect(m_inputBar,&IRCInput::endCompletion,this,&Channel::endCompleteNick );
+    connect(m_inputBar,&IRCInput::textPasted,this,&Channel::textPasted );
 
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
-    connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+    connect(getTextView(),&IRCView::sendFile,this,&Channel::sendFileMenu );
     connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
-    connect(nicknameListView,SIGNAL (itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT (doubleClickCommand(QTreeWidgetItem*,int)) );
+    connect(nicknameListView,&QTreeWidget::itemDoubleClicked,this,&Channel::doubleClickCommand );
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
 
     if(nicknameCombobox->lineEdit())
-        connect(nicknameCombobox->lineEdit(), SIGNAL (returnPressed()),this,SLOT(nicknameComboboxChanged()));
+        connect(nicknameCombobox->lineEdit(), &QLineEdit::returnPressed,this,&Channel::nicknameComboboxChanged);
 
 
-    connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
+    connect(&userhostTimer,&QTimer::timeout,this,&Channel::autoUserhost);
 
     m_whoTimer.setSingleShot(true);
-    connect(&m_whoTimer, SIGNAL(timeout()), this, SLOT(autoWho()));
-    connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateAutoWho()));
+    connect(&m_whoTimer, &QTimer::timeout, this, &Channel::autoWho);
+    connect(Application::instance(), &Application::appearanceChanged, this, &Channel::updateAutoWho);
 
     // every 5 minutes decrease everyone's activity by 1 unit
     m_fadeActivityTimer.start(5*60*1000);
 
-    connect(&m_fadeActivityTimer, SIGNAL(timeout()), this, SLOT(fadeActivity()));
+    connect(&m_fadeActivityTimer, &QTimer::timeout, this, &Channel::fadeActivity);
 
     updateAppearance();
 
@@ -316,7 +316,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // Setup delayed sort timer
     m_delayedSortTimer = new QTimer(this);
     m_delayedSortTimer->setSingleShot(true);
-    connect(m_delayedSortTimer, SIGNAL(timeout()), this, SLOT(delayedSortNickList()));
+    connect(m_delayedSortTimer, &QTimer::timeout, this, &Channel::delayedSortNickList);
 }
 
 //FIXME there is some logic in setLogfileName that needs to be split out and called here if the server display name gets changed
@@ -324,12 +324,12 @@ void Channel::setServer(Server* server)
 {
     if (m_server != server)
     {
-        connect(server, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+        connect(server, &Server::connectionStateChanged,
+                this, &Channel::connectionStateChanged);
         connect(server, SIGNAL(nickInfoChanged()),
                 this, SLOT(updateNickInfos()));
-        connect(server, SIGNAL(channelNickChanged(QString)),
-                this, SLOT(updateChannelNicks(QString)));
+        connect(server, &Server::channelNickChanged,
+                this, &Channel::updateChannelNicks);
     }
 
     ChatWindow::setServer(server);
@@ -339,8 +339,8 @@ void Channel::setServer(Server* server)
     refreshModeButtons();
     nicknameCombobox->setModel(m_server->nickListModel());
 
-    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
+    connect(awayLabel, &AwayLabel::unaway, m_server, &Server::requestUnaway);
+    connect(awayLabel, &AwayLabel::awayMessageChanged, m_server, &Server::requestAway);
 }
 
 void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
@@ -532,7 +532,7 @@ void Channel::completeNick()
         // remember old cursor position locally
         oldPos = pos;
         // step back to []{}-_^`\| or start of line
-        QString regexpStr("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|");
+        QString regexpStr(QStringLiteral("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|"));
 
         if(!Preferences::self()->prefixCharacter().isEmpty())
             regexpStr += "\\" + Preferences::self()->prefixCharacter();
@@ -2280,7 +2280,7 @@ void Channel::setAutoUserhost(bool state)
         nicknameListView->header()->setSectionResizeMode(Nick::HostmaskColumn, QHeaderView::Fixed);
         userhostTimer.start(10000);
         m_nicknameListViewTextChanged |= 0xFF; // ResizeColumnsToContents
-        QTimer::singleShot(0, this, SLOT(autoUserhost())); // resize columns ASAP
+        QTimer::singleShot(0, this, &Channel::autoUserhost); // resize columns ASAP
     }
     else
     {

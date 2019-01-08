@@ -113,7 +113,7 @@ namespace Konversation
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.
         if (shortName == QStringLiteral("jis7"))
-            return KCharsets::charsets()->codecForName("ISO-2022-JP");
+            return KCharsets::charsets()->codecForName(QStringLiteral("ISO-2022-JP"));
         else
             return KCharsets::charsets()->codecForName(shortName.toLatin1());
     }

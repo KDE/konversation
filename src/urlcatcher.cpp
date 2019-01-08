@@ -190,8 +190,8 @@ void UrlCatcher::setupUrlTree()
     proxyModel->setFilterKeyColumn(-1);
 
     m_urlTree->setModel(proxyModel);
-    connect(m_urlTree->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-        this, SLOT(updateItemActionStates()));
+    connect(m_urlTree->selectionModel(), &QItemSelectionModel::selectionChanged,
+        this, &UrlCatcher::updateItemActionStates);
 
     searchLine->setProxy(proxyModel);
 

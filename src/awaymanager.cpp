@@ -27,7 +27,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
 {
     m_connectionManager = Application::instance()->getConnectionManager();
 
-    connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
+    connect(KIdleTime::instance(), &KIdleTime::resumingFromIdle, this, &AwayManager::resumeFromIdle);
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
 
     // Catch the first "resume event" (= user input) so we correctly catch the first

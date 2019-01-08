@@ -31,7 +31,7 @@ class ConnectionSettings
         void setServer(Konversation::ServerSettings server) { m_server = server; }
 
         Konversation::ServerGroupSettingsPtr serverGroup() const { return m_serverGroup; }
-        void setServerGroup(Konversation::ServerGroupSettingsPtr serverGroup) { m_serverGroup = serverGroup; }
+        void setServerGroup(const Konversation::ServerGroupSettingsPtr &serverGroup) { m_serverGroup = serverGroup; }
 
         IdentityPtr identity() const;
 

@@ -39,7 +39,7 @@ class OutputFilterResolveJob : public QObject
 
 
     private Q_SLOTS:
-        void resolved(QHostInfo hostInfo);
+        void resolved(const QHostInfo &hostInfo);
 
 
     private:

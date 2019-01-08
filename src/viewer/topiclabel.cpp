@@ -81,7 +81,7 @@ namespace Konversation
             if (link.startsWith('#') && m_server && m_server->isConnected())
             {
                 QString channel(link);
-                channel.replace("##","#");
+                channel.replace(QLatin1String("##"),QLatin1String("#"));
                 m_server->sendJoinCommand(channel);
             }
             else
@@ -247,7 +247,7 @@ namespace Konversation
         {
             QString tmp = text;
             int em = fontMetrics().maxWidth();
-            maxPixels -= fontMetrics().width("...");
+            maxPixels -= fontMetrics().width(QStringLiteral("..."));
             int len, delta;
 
             // On some MacOS system, maxWidth may return 0
@@ -330,7 +330,7 @@ namespace Konversation
     QString TopicLabel::tagUrls(const QString& text, const QString& sender)
     {
         QString htmlText(removeIrcMarkup(text));
-        QString link("<a href=\"#%1\">%2</a>");
+        QString link(QStringLiteral("<a href=\"#%1\">%2</a>"));
 
         QString original;
         TextChannelData channelData = extractChannelData(htmlText);
@@ -342,7 +342,7 @@ namespace Konversation
             htmlText.replace(range.first, range.second, link.arg(channelData.fixedChannels.at(i), original));
         }
 
-        link = "<a href=\"%1\">%2</a>";
+        link = QStringLiteral("<a href=\"%1\">%2</a>");
         TextUrlData urlData = extractUrlData(htmlText);
         for (int i = urlData.urlRanges.count()-1; i >= 0 ; --i)
         {
@@ -350,7 +350,7 @@ namespace Konversation
 
             int pos = range.first;
             // check if the matched text is already replaced as a channel
-            if (htmlText.lastIndexOf("<a", pos ) > htmlText.lastIndexOf("</a>", pos))
+            if (htmlText.lastIndexOf(QLatin1String("<a"), pos ) > htmlText.lastIndexOf(QLatin1String("</a>"), pos))
             {
                 continue;
             }
@@ -363,8 +363,8 @@ namespace Konversation
         }
 
         // Change & to &amp; to prevent html entities to do strange things to the text
-        htmlText.replace('&', "&amp;");
-        htmlText.replace("\x0b", "&");
+        htmlText.replace('&', QLatin1String("&amp;"));
+        htmlText.replace("\x0b", QLatin1String("&"));
         return htmlText;
     }
 }

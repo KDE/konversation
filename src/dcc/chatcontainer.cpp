@@ -83,7 +83,7 @@ namespace Konversation
 
             connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
             connect(getTextView(), SIGNAL(gotFocus()), m_inputBar, SLOT(setFocus()));
-            connect(getTextView(), SIGNAL(autoText(QString)), this, SLOT(textPasted(QString)));
+            connect(getTextView(), &IRCView::autoText, this, &ChatContainer::textPasted);
 
             updateAppearance();
         }
@@ -186,7 +186,7 @@ namespace Konversation
                                                                   "Close DCC %1", m_chat->localizedExtensionString()),
                                                             KStandardGuiItem::close(),
                                                             KStandardGuiItem::cancel(),
-                                                            "QuitDCCChatTab");
+                                                            QStringLiteral("QuitDCCChatTab"));
 
                 if (result == KMessageBox::Continue)
                 {
@@ -307,7 +307,7 @@ namespace Konversation
                 QString ctcpArgument(ctcp.section(' ', 1));
                 OutputFilter::replaceAliases(ctcpArgument);
 
-                if (ctcpCommand.toLower() == "action")
+                if (ctcpCommand.toLower() == QLatin1String("action"))
                 {
                     appendAction(m_chat->partnerNick(), ctcpArgument);
                 }

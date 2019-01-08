@@ -37,8 +37,8 @@ namespace Konversation
 
             m_defaultIncomingFolder = Preferences::self()->dccPath();
 
-            connect( Application::instance(), SIGNAL(appearanceChanged()),
-                     this, SLOT(slotSettingsChanged()) );
+            connect( Application::instance(), &Application::appearanceChanged,
+                     this, &TransferManager::slotSettingsChanged );
 
             m_upnpRouter = nullptr;
             m_upnpSocket = nullptr;

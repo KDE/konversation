@@ -31,7 +31,7 @@ namespace Konversation
     {
         Q_OBJECT
         public:
-            explicit ServerGroupDialog(const QString& title, QWidget* parent = 0);
+            explicit ServerGroupDialog(const QString& title, QWidget* parent = nullptr);
             ~ServerGroupDialog();
 
             void setServerGroupSettings(ServerGroupSettingsPtr settings);

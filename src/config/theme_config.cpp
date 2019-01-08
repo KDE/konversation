@@ -66,7 +66,7 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     // get list of theme dirs
-    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/", QStandardPaths::LocateDirectory);
+    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/"), QStandardPaths::LocateDirectory);
     m_dirs.clear();
 
     foreach(const QString& path, paths)
@@ -116,7 +116,7 @@ void Theme_Config::loadSettings()
                 currentThemeIndex = i;
             }
 
-            if (themeDir=="oxygen")
+            if (themeDir==QLatin1String("oxygen"))
                 m_defaultThemeIndex= i;
 
             // if there was a comment to the theme, add it to the listview entry string
@@ -136,7 +136,7 @@ void Theme_Config::loadSettings()
     // if there was no currently used theme found, use the default theme
     // If anyone knows how to get the default value from this, please change this!
     if(m_oldTheme.isEmpty())
-        m_oldTheme = "oxygen";
+        m_oldTheme = QStringLiteral("oxygen");
 
     // update enabled/disabled state of buttons
     updateButtons();
@@ -228,7 +228,7 @@ void Theme_Config::installTheme()
 
     if(themeInstallDir.exists()) // We got a directory not a file
     {
-        if(themeInstallDir.exists("index.desktop"))
+        if(themeInstallDir.exists(QStringLiteral("index.desktop")))
         {
             KIO::CopyJob* job = KIO::copy(QUrl(tmpThemeFile), QUrl(themesDir));
             job->exec(); //FIXME error handling
@@ -296,14 +296,14 @@ void Theme_Config::removeTheme()
         i18n("Do you want to remove %1?", themeName),
         i18n("Remove Theme"),
         KStandardGuiItem::del(),KStandardGuiItem::cancel(),
-        "warningRemoveTheme"
+        QStringLiteral("warningRemoveTheme")
         );
 
     if(remove == KMessageBox::Continue)
     {
         QByteArray encoded = QFile::encodeName(dir);
         unlink(encoded.data());
-        KIO::DeleteJob* job = KIO::del(QUrl(dir.remove("index.desktop")));
+        KIO::DeleteJob* job = KIO::del(QUrl(dir.remove(QStringLiteral("index.desktop"))));
         connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
     }
 }
@@ -319,7 +319,7 @@ void Theme_Config::updatePreview(int id)
         return;
     QString dir;
     dir = m_dirs[id];
-    dir.remove("/index.desktop");
+    dir.remove(QStringLiteral("/index.desktop"));
     QPixmap normal(dir+"/irc_normal.png");
 
     previewLabel1->setPixmap(normal);

@@ -75,9 +75,9 @@ void TopicEdit::setMaximumLength(int length)
     m_maximumLength = length;
 
     if (m_maximumLength != -1)
-        connect(document(), SIGNAL(contentsChange(int,int,int)), this, SLOT(contentsChanged(int,int,int)));
+        connect(document(), &QTextDocument::contentsChange, this, &TopicEdit::contentsChanged);
     else
-        disconnect(document(), SIGNAL(contentsChange(int,int,int)), this, SLOT(contentsChanged(int,int,int)));
+        disconnect(document(), &QTextDocument::contentsChange, this, &TopicEdit::contentsChanged);
 }
 
 void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)

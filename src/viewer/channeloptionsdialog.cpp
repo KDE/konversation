@@ -56,9 +56,9 @@ namespace Konversation
 
         m_ui.setupUi(mainWidget);
 
-        m_ui.addBan->setIcon(QIcon::fromTheme("list-add"));
-        m_ui.updateBan->setIcon(QIcon::fromTheme("edit-rename"));
-        m_ui.removeBan->setIcon(QIcon::fromTheme("list-remove"));
+        m_ui.addBan->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
+        m_ui.updateBan->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
+        m_ui.removeBan->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
 
         QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
         m_ui.otherModesList->setModel(modesModel);
@@ -76,8 +76,8 @@ namespace Konversation
         m_ui.topicEdit->setChannel(channel);
         m_ui.topicEdit->setMaximumLength(m_channel->getServer()->topicLength());
 
-        connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-                this, SLOT(topicHistoryItemClicked(QItemSelection)));
+        connect(m_ui.topicHistoryView->selectionModel(), &QItemSelectionModel::selectionChanged,
+                this, &ChannelOptionsDialog::topicHistoryItemClicked);
         connect(m_ui.toggleAdvancedModes, &QPushButton::clicked, this, &ChannelOptionsDialog::toggleAdvancedModes);
         connect(m_ui.topicEdit, &TopicEdit::undoAvailable, this, &ChannelOptionsDialog::topicBeingEdited);
         connect(this, &ChannelOptionsDialog::finished, m_ui.topicEdit, &TopicEdit::clear);
@@ -141,7 +141,7 @@ namespace Konversation
             if (!sizes.isEmpty())
                 m_ui.splitter->setSizes(sizes);
 
-            Preferences::restoreColumnState(m_ui.banList, "BanList ViewSettings");
+            Preferences::restoreColumnState(m_ui.banList, QStringLiteral("BanList ViewSettings"));
         }
 
         QDialog::showEvent(event);
@@ -154,7 +154,7 @@ namespace Konversation
         config.writeEntry("Size", size());
         config.writeEntry("SplitterSizes", m_ui.splitter->sizes());
 
-        Preferences::saveColumnState(m_ui.banList, "BanList ViewSettings");
+        Preferences::saveColumnState(m_ui.banList, QStringLiteral("BanList ViewSettings"));
 
         QDialog::hideEvent(event);
     }
@@ -183,7 +183,7 @@ namespace Konversation
         QStringList tmp;
         QString modeString;
         bool plus;
-        QString command("MODE %1 %2%3 %4");
+        QString command(QStringLiteral("MODE %1 %2%3 %4"));
 
         for(QStringList::ConstIterator it = newModeList.constBegin(); it != newModeList.constEnd(); ++it)
         {
@@ -193,16 +193,16 @@ namespace Konversation
 
             if(tmp.isEmpty() && plus)
             {
-                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("+").arg(modeString[0]).arg(modeString.mid(1)));
+                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("+")).arg(modeString[0]).arg(modeString.mid(1)));
             }
             else if(!tmp.isEmpty() && !plus)
             {
                 //FIXME: Bahamuth requires the key parameter for -k, but ircd breaks on -l with limit number.
                 //Hence two versions of this.
                 if (modeString[0] == 'k')
-                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
+                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("-")).arg(modeString[0]).arg(modeString.mid(1)));
                 else
-                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(QString()));
+                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("-")).arg(modeString[0]).arg(QString()));
             }
         }
         hide();
@@ -271,8 +271,8 @@ namespace Konversation
 
             if (model)
             {
-                QList<QStandardItem*> items = model->findItems("*", Qt::MatchWildcard, 0);
-                items += model->findItems("*", Qt::MatchWildcard, 1);
+                QList<QStandardItem*> items = model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 0);
+                items += model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 1);
 
                 foreach (QStandardItem* item, items)
                     item->setEnabled(m_isAnyTypeOfOp);

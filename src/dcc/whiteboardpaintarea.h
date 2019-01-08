@@ -35,7 +35,7 @@ namespace Konversation
             Q_OBJECT
 
         public:
-            explicit WhiteBoardPaintArea(QWidget* parent = 0);
+            explicit WhiteBoardPaintArea(QWidget* parent = nullptr);
             ~WhiteBoardPaintArea();
 
         public Q_SLOTS:

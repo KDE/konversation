@@ -275,7 +275,7 @@ namespace Konversation
             }
             if (fileNameTmp.isEmpty())
             {
-                fileNameTmp = "unnamed";
+                fileNameTmp = QStringLiteral("unnamed");
             }
             return fileNameTmp;
         }

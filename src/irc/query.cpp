@@ -60,7 +60,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     setTextView(ircViewBox->ircView());               // Server will be set later in setServer();
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowNickActions, true);
     textView->setAcceptDrops(true);
-    connect(textView,SIGNAL(urlsDropped(QList<QUrl>)),this,SLOT(urlsDropped(QList<QUrl>)));
+    connect(textView,&IRCView::urlsDropped,this,&Query::urlsDropped);
 
     // This box holds the input line
     QWidget* inputBox=new QWidget(this);
@@ -89,7 +89,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
 
-    connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
+    connect(textView,&IRCView::sendFile,this,&Query::sendFileMenu );
     connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
 
     updateAppearance();
@@ -114,8 +114,8 @@ void Query::setServer(Server* newServer)
 {
     if (m_server != newServer)
     {
-        connect(newServer, SIGNAL(connectionStateChanged(Server*,Konversation::ConnectionState)),
-                SLOT(connectionStateChanged(Server*,Konversation::ConnectionState)));
+        connect(newServer, &Server::connectionStateChanged,
+                this, &Query::connectionStateChanged);
         connect(newServer, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
                 this, SLOT(updateNickInfo(Server*,NickInfoPtr)));
     }
@@ -125,8 +125,8 @@ void Query::setServer(Server* newServer)
     if (!(newServer->getKeyForRecipient(getName()).isEmpty()))
         blowfishLabel->show();
 
-    connect(awayLabel, SIGNAL(unaway()), m_server, SLOT(requestUnaway()));
-    connect(awayLabel, SIGNAL(awayMessageChanged(QString)), m_server, SLOT(requestAway(QString)));
+    connect(awayLabel, &AwayLabel::unaway, m_server, &Server::requestUnaway);
+    connect(awayLabel, &AwayLabel::awayMessageChanged, m_server, &Server::requestAway);
 }
 
 void Query::connectionStateChanged(Server* server, Konversation::ConnectionState state)

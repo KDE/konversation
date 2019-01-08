@@ -103,7 +103,7 @@ void IrcContextMenus::setupQuickButtonMenu()
     //NOTE: if we depend on m_nickMenu we get an we an cyclic initialising
     m_quickButtonMenu = new QMenu();
     m_quickButtonMenu->setTitle(i18n("Quick Buttons"));
-    connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateQuickButtonMenu()));
+    connect(Application::instance(), &Application::appearanceChanged, this, &IrcContextMenus::updateQuickButtonMenu);
 }
 
 bool IrcContextMenus::shouldShowQuickButtonMenu()
@@ -122,7 +122,7 @@ void IrcContextMenus::updateQuickButtonMenu()
     {
         pattern = button.section(',', 1);
 
-        if (pattern.contains("%u"))
+        if (pattern.contains(QLatin1String("%u")))
         {
             action = new QAction(button.section(',', 0, 0), m_quickButtonMenu);
             action->setData(pattern);
@@ -151,13 +151,13 @@ void IrcContextMenus::setupTextMenu()
 
     m_textMenu->addSeparator();
 
-    m_linkActions << createAction(m_textMenu, LinkCopy, QIcon::fromTheme("edit-copy"), i18n("Copy Link Address"));
+    m_linkActions << createAction(m_textMenu, LinkCopy, QIcon::fromTheme(QStringLiteral("edit-copy")), i18n("Copy Link Address"));
     // Not using KStandardAction is intentional here since the Ctrl+B
     // shortcut it would show in the menu is already used by our IRC-
     // wide bookmarking feature.
-    m_linkActions << createAction(m_textMenu, LinkBookmark, QIcon::fromTheme("bookmark-new"), i18n("Add to Bookmarks"));
+    m_linkActions << createAction(m_textMenu, LinkBookmark, QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Add to Bookmarks"));
     m_linkActions << createAction(m_textMenu, LinkOpenWith, i18n("Open With..."));
-    m_linkActions << createAction(m_textMenu, LinkSaveAs, QIcon::fromTheme("document-save"), i18n("Save Link As..."));
+    m_linkActions << createAction(m_textMenu, LinkSaveAs, QIcon::fromTheme(QStringLiteral("document-save")), i18n("Save Link As..."));
 
     m_textMenu->addSeparator();
 
@@ -171,7 +171,7 @@ void IrcContextMenus::setupTextMenu()
     m_textMenu->addAction(action);
 
     m_webShortcutsMenu = new QMenu();
-    m_webShortcutsMenu->menuAction()->setIcon(QIcon::fromTheme("preferences-web-browser-shortcuts"));
+    m_webShortcutsMenu->menuAction()->setIcon(QIcon::fromTheme(QStringLiteral("preferences-web-browser-shortcuts")));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
 
@@ -204,7 +204,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
 
-    KToggleAction* toggleMenuBarAction = qobject_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
+    KToggleAction* toggleMenuBarAction = qobject_cast<KToggleAction*>(actionCollection->action(QStringLiteral("options_show_menubar")));
 
     if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
         textMenu->insertAction(textMenu->actions().first(), toggleMenuBarAction);
@@ -250,10 +250,10 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
         textMenu->insertAction(self()->m_textActionsSeparator, actionCollection->action(KStandardAction::name(KStandardAction::Find)));
 
     if (options.testFlag(ShowLogAction))
-        textMenu->addAction(actionCollection->action("open_logfile"));
+        textMenu->addAction(actionCollection->action(QStringLiteral("open_logfile")));
 
     if (options.testFlag(ShowChannelActions))
-        textMenu->addAction(actionCollection->action("channel_settings"));
+        textMenu->addAction(actionCollection->action(QStringLiteral("channel_settings")));
 
     QAction* action = textMenu->exec(pos);
 
@@ -267,8 +267,8 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     textMenu->removeAction(toggleMenuBarAction);
     textMenu->removeAction(actionCollection->action(KStandardAction::name(KStandardAction::Find)));
-    textMenu->removeAction(actionCollection->action("open_logfile"));
-    textMenu->removeAction(actionCollection->action("channel_settings"));
+    textMenu->removeAction(actionCollection->action(QStringLiteral("open_logfile")));
+    textMenu->removeAction(actionCollection->action(QStringLiteral("channel_settings")));
 
     return actionId;
 }
@@ -313,7 +313,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
             m_webShortcutsMenu->addSeparator();
 
             action = new QAction(i18n("Configure Web Shortcuts..."), m_webShortcutsMenu);
-            action->setIcon(QIcon::fromTheme("configure"));
+            action->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
             connect(action, &QAction::triggered, this, &IrcContextMenus::configureWebShortcuts);
             m_webShortcutsMenu->addAction(action);
 
@@ -337,14 +337,14 @@ void IrcContextMenus::processWebShortcutAction()
 
 void IrcContextMenus::configureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec("kcmshell5", QStringList() << "webshortcuts");
+    KToolInvocation::kdeinitExec(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
 }
 
 void IrcContextMenus::setupChannelMenu()
 {
     m_channelMenu = new QMenu();
 
-    QAction* defaultAction = createAction(m_channelMenu, Join, QIcon::fromTheme("irc-join-channel"), i18n("&Join Channel..."));
+    QAction* defaultAction = createAction(m_channelMenu, Join, QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18n("&Join Channel..."));
     m_channelMenu->setDefaultAction(defaultAction);
 
     createAction(m_channelMenu, Topic, i18n("Get &topic"));
@@ -405,12 +405,12 @@ void IrcContextMenus::setupNickMenu()
     m_modesMenu = new QMenu();
     m_nickMenu->addMenu(m_modesMenu);
     m_modesMenu->setTitle(i18n("Modes"));
-    createAction(m_modesMenu, GiveOp, QIcon::fromTheme("irc-operator"), i18n("Give Op"));
-    createAction(m_modesMenu, TakeOp, QIcon::fromTheme("irc-remove-operator"), i18n("Take Op"));
+    createAction(m_modesMenu, GiveOp, QIcon::fromTheme(QStringLiteral("irc-operator")), i18n("Give Op"));
+    createAction(m_modesMenu, TakeOp, QIcon::fromTheme(QStringLiteral("irc-remove-operator")), i18n("Take Op"));
     createAction(m_modesMenu, GiveHalfOp, i18n("Give HalfOp"));
     createAction(m_modesMenu, TakeHalfOp, i18n("Take HalfOp"));
-    createAction(m_modesMenu, GiveVoice, QIcon::fromTheme("irc-voice"), i18n("Give Voice"));
-    createAction(m_modesMenu, TakeVoice, QIcon::fromTheme("irc-unvoice"), i18n("Take Voice"));
+    createAction(m_modesMenu, GiveVoice, QIcon::fromTheme(QStringLiteral("irc-voice")), i18n("Give Voice"));
+    createAction(m_modesMenu, TakeVoice, QIcon::fromTheme(QStringLiteral("irc-unvoice")), i18n("Take Voice"));
 
     m_kickBanMenu = new QMenu();
     m_nickMenu->addMenu(m_kickBanMenu);
@@ -456,16 +456,16 @@ void IrcContextMenus::createSharedNickSettingsActions()
     m_unignoreAction = createAction(UnignoreNick, i18n("Unignore"));
     m_sharedNickSettingsActions << m_unignoreAction;
 
-    m_addNotifyAction = createAction(AddNotify, QIcon::fromTheme("list-add-user"), i18n("Add to Watched Nicks"));
+    m_addNotifyAction = createAction(AddNotify, QIcon::fromTheme(QStringLiteral("list-add-user")), i18n("Add to Watched Nicks"));
     m_sharedNickSettingsActions << m_addNotifyAction;
-    m_removeNotifyAction = createAction(RemoveNotify, QIcon::fromTheme("list-remove-user"), i18n("Remove From Watched Nicks"));
+    m_removeNotifyAction = createAction(RemoveNotify, QIcon::fromTheme(QStringLiteral("list-remove-user")), i18n("Remove From Watched Nicks"));
     m_sharedNickSettingsActions << m_removeNotifyAction;
 }
 
 void IrcContextMenus::createSharedDccActions()
 {
-    if (KAuthorized::authorizeAction("allow_downloading"))
-        m_sharedDccActions << createAction(DccSend, QIcon::fromTheme("arrow-right-double"), i18n("Send &File..."));
+    if (KAuthorized::authorizeAction(QStringLiteral("allow_downloading")))
+        m_sharedDccActions << createAction(DccSend, QIcon::fromTheme(QStringLiteral("arrow-right-double")), i18n("Send &File..."));
 
     m_sharedDccActions << createAction(StartDccChat, i18n("Open DCC Chat"));
     m_sharedDccActions << createAction(StartDccWhiteboard, i18n("Open DCC Whiteboard"));
@@ -521,79 +521,79 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
     switch (actionId)
     {
         case OpenQuery:
-            commandToServer(server, "query %1", nicks);
+            commandToServer(server, QStringLiteral("query %1"), nicks);
             break;
         case Whois:
-            commandToServer(server, "whois %1 %1", nicks);
+            commandToServer(server, QStringLiteral("whois %1 %1"), nicks);
             break;
         case Version:
-            commandToServer(server, "ctcp %1 VERSION", nicks);
+            commandToServer(server, QStringLiteral("ctcp %1 VERSION"), nicks);
             break;
         case Ping:
-            commandToServer(server, "ctcp %1 PING", nicks);
+            commandToServer(server, QStringLiteral("ctcp %1 PING"), nicks);
             break;
         case GiveOp:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c +%m %l";
+            pattern = QStringLiteral("MODE %c +%m %l");
             mode = 'o';
             break;
         case TakeOp:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c -%m %l";
+            pattern = QStringLiteral("MODE %c -%m %l");
             mode = 'o';
             break;
         case GiveHalfOp:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c +%m %l";
+            pattern = QStringLiteral("MODE %c +%m %l");
             mode = 'h';
             break;
         case TakeHalfOp:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c -%m %l";
+            pattern = QStringLiteral("MODE %c -%m %l");
             mode = 'h';
             break;
         case GiveVoice:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c +%m %l";
+            pattern = QStringLiteral("MODE %c +%m %l");
             mode = 'v';
             break;
         case TakeVoice:
             if (channel.isEmpty()) break;
-            pattern = "MODE %c -%m %l";
+            pattern = QStringLiteral("MODE %c -%m %l");
             mode = 'v';
             break;
         case Kick:
-            commandToServer(server, "kick %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kick %1"), nicks, channel);
             break;
         case KickBan:
-            commandToServer(server, "kickban %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kickban %1"), nicks, channel);
             break;
         case BanNick:
-            commandToServer(server, "ban %1", nicks, channel);
+            commandToServer(server, QStringLiteral("ban %1"), nicks, channel);
             break;
         case BanHost:
-            commandToServer(server, "ban -HOST %1", nicks, channel);
+            commandToServer(server, QStringLiteral("ban -HOST %1"), nicks, channel);
             break;
         case BanDomain:
-            commandToServer(server, "ban -DOMAIN %1", nicks, channel);
+            commandToServer(server, QStringLiteral("ban -DOMAIN %1"), nicks, channel);
             break;
         case BanUserHost:
-            commandToServer(server, "ban -USERHOST %1", nicks, channel);
+            commandToServer(server, QStringLiteral("ban -USERHOST %1"), nicks, channel);
             break;
         case BanUserDomain:
-            commandToServer(server, "ban -USERDOMAIN %1", nicks, channel);
+            commandToServer(server, QStringLiteral("ban -USERDOMAIN %1"), nicks, channel);
             break;
         case KickBanHost:
-            commandToServer(server, "kickban -HOST %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kickban -HOST %1"), nicks, channel);
             break;
         case KickBanDomain:
-            commandToServer(server, "kickban -DOMAIN %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kickban -DOMAIN %1"), nicks, channel);
             break;
         case KickBanUserHost:
-            commandToServer(server, "kickban -USERHOST %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kickban -USERHOST %1"), nicks, channel);
             break;
         case KickBanUserDomain:
-            commandToServer(server, "kickban -USERDOMAIN %1", nicks, channel);
+            commandToServer(server, QStringLiteral("kickban -USERDOMAIN %1"), nicks, channel);
             break;
         case IgnoreNick:
         {
@@ -610,11 +610,11 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 i18n("Ignore"),
                 KGuiItem(i18n("Ignore")),
                 KStandardGuiItem::cancel(),
-                "IgnoreNick"
+                QStringLiteral("IgnoreNick")
                 ) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "ignore -ALL " + nicks.join(" "));
+                commandToServer(server, "ignore -ALL " + nicks.join(QStringLiteral(" ")));
             }
 
             break;
@@ -641,10 +641,10 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 i18n("Unignore"),
                 KGuiItem(i18n("Unignore")),
                 KStandardGuiItem::cancel(),
-                "UnignoreNick") ==
+                QStringLiteral("UnignoreNick")) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "unignore " + selectedIgnoredNicks.join(" "));
+                commandToServer(server, "unignore " + selectedIgnoredNicks.join(QStringLiteral(" ")));
             }
 
             break;
@@ -668,13 +668,13 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
             break;
         }
         case DccSend:
-            commandToServer(server, "dcc send %1", nicks);
+            commandToServer(server, QStringLiteral("dcc send %1"), nicks);
             break;
         case StartDccChat:
-            commandToServer(server, "dcc chat %1", nicks);
+            commandToServer(server, QStringLiteral("dcc chat %1"), nicks);
             break;
         case StartDccWhiteboard:
-            commandToServer(server, "dcc whiteboard %1", nicks);
+            commandToServer(server, QStringLiteral("dcc whiteboard %1"), nicks);
             break;
         default:
             break;
@@ -682,7 +682,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
 
     if (!pattern.isEmpty())
     {
-        pattern.replace("%c", channel);
+        pattern.replace(QLatin1String("%c"), channel);
 
         QString command;
         QStringList partialList;
@@ -692,10 +692,10 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             command = pattern;
             partialList = nicks.mid(index, modesCount);
-            command = command.replace("%l", partialList.join(" "));
+            command = command.replace(QLatin1String("%l"), partialList.join(QStringLiteral(" ")));
             const QString repeatedMode = mode.repeated(partialList.count());
 
-            command = command.replace("%m", repeatedMode);
+            command = command.replace(QLatin1String("%m"), repeatedMode);
 
             server->queue(command);
         }
@@ -811,7 +811,7 @@ void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const 
             qApp->clipboard()->setText(text, QClipboard::Clipboard);
             break;
         case OpenQuery:
-            commandToServer(server, QString("query %1").arg(author));
+            commandToServer(server, QStringLiteral("query %1").arg(author));
             break;
         default:
             break;

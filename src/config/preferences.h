@@ -75,7 +75,7 @@ class Preferences : public PreferencesBase
         static bool isNotify(int serverGroupId, const QString& pattern);
 
         static const QList<Highlight*> highlightList();
-        static void setHighlightList(QList<Highlight*> newList);
+        static void setHighlightList(const QList<Highlight *> &newList);
         static void addHighlight(const QString& highlight, bool regExp, const QColor& color,
             const QString& soundURL, const QString& autoText,const QString& chatWindows, bool notify);
 
@@ -85,7 +85,7 @@ class Preferences : public PreferencesBase
         static bool isIgnored(const QString &nickname);
         static void clearIgnoreList();
         static const QList<Ignore*> ignoreList();
-        static void setIgnoreList(QList<Ignore*> newList);
+        static void setIgnoreList(const QList<Ignore *> &newList);
 
         static const QStringList quickButtonList();
         static const QStringList defaultQuickButtonList();
@@ -94,11 +94,11 @@ class Preferences : public PreferencesBase
 
         static const QList<QStringList> autoreplaceList();
         static const QList<QStringList> defaultAutoreplaceList();
-        static void setAutoreplaceList(const QList<QStringList> newList);
+        static void setAutoreplaceList(const QList<QStringList> &newList);
         static void clearAutoreplaceList();
 
-        static void addIdentity(IdentityPtr identity);
-        static void removeIdentity(IdentityPtr identity);
+        static void addIdentity(const IdentityPtr &identity);
+        static void removeIdentity(const IdentityPtr &identity);
         static void clearIdentityList();
         static const IdentityList identityList();
         static void setIdentityList(const IdentityList& list);
@@ -116,9 +116,9 @@ class Preferences : public PreferencesBase
         static const QList<int> channelEncodingsServerGroupIdList();
         static const QStringList channelEncodingsChannelList(int serverGroupId);
 
-        static const QString spellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key);
+        static const QString spellCheckingLanguage(const Konversation::ServerGroupSettingsPtr &serverGroup, const QString& key);
         static const QString spellCheckingLanguage(const QString& server, const QString& key);
-        static void setSpellCheckingLanguage(Konversation::ServerGroupSettingsPtr serverGroup, const QString& key, const QString& language);
+        static void setSpellCheckingLanguage(const Konversation::ServerGroupSettingsPtr &serverGroup, const QString& key, const QString& language);
         static void setSpellCheckingLanguage(const QString& server, const QString& key, const QString& language);
         static const QHash<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > serverGroupSpellCheckingLanguages();
         static const QHash<QString, QHash<QString, QString> > serverSpellCheckingLanguages();
@@ -129,8 +129,8 @@ class Preferences : public PreferencesBase
 
         static QString webBrowserCmd();
 
-        static void saveColumnState(QTreeView *treeView, QString name);
-        static void restoreColumnState(QTreeView *treeView, QString name, int defaultColumn = 0,
+        static void saveColumnState(QTreeView *treeView, const QString &name);
+        static void restoreColumnState(QTreeView *treeView, const QString &name, int defaultColumn = 0,
                                        Qt::SortOrder defaultSortOrder = Qt::AscendingOrder);
 
     public Q_SLOTS:

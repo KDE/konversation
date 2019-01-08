@@ -813,7 +813,7 @@ void NicksOnline::slotPopupMenu_Activated(QAction* id)
 /**
  * Received from server when a NickInfo changes its information.
  */
-void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo)
+void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr &nickInfo)
 {
     if (!nickInfo) return;
     QString nickname = nickInfo->getNickname();
