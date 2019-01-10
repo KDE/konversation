@@ -873,7 +873,7 @@ void MainWindow::openIdentitiesDialog()
     delete dlg;
 }
 
-IdentityPtr MainWindow::editIdentity(IdentityPtr identity)
+IdentityPtr MainWindow::editIdentity(const IdentityPtr &identity)
 {
     IdentityPtr newIdentity;
 

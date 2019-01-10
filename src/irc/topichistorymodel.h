@@ -60,8 +60,8 @@ class TopicHistoryModel : public QAbstractListModel
 
         QString currentTopic();
 
-        void appendTopic(const QString& text, const QString& author = QString(), QDateTime timestamp = QDateTime::currentDateTime());
-        void setCurrentTopicMetadata(const QString& author, QDateTime timestamp = QDateTime::currentDateTime());
+        void appendTopic(const QString& text, const QString& author = QString(), const QDateTime &timestamp = QDateTime::currentDateTime());
+        void setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp = QDateTime::currentDateTime());
 
 #ifdef HAVE_QCA2
         void setCipher(Konversation::Cipher* cipher);

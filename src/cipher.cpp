@@ -32,7 +32,7 @@ namespace Konversation
             m_cbc = false;
     }
 
-    Cipher::Cipher(QByteArray key, QString cipherType)
+    Cipher::Cipher(const QByteArray &key, const QString &cipherType)
     {
         m_primeNum = QCA::BigInteger("12745216229761186769575009943944198619149164746831579719941140425076456621824834322853258804883232842877311723249782818608677050956745409379781245497526069657222703636504651898833151008222772087491045206203033063108075098874712912417029101508315117935752962862335062591404043092163187352352197487303798807791605274487594646923");
         setKey(key);
@@ -43,7 +43,7 @@ namespace Konversation
     {
     }
 
-    bool Cipher::setKey(QByteArray key)
+    bool Cipher::setKey(const QByteArray &key)
     {
         if(key.isEmpty())
             return false;
@@ -171,7 +171,7 @@ namespace Konversation
         return publicKey.toBase64().append('A');
     }
 
-    QByteArray Cipher::parseInitKeyX(QByteArray key)
+    QByteArray Cipher::parseInitKeyX(const QByteArray &key)
     {
         QCA::Initializer init;
 
@@ -210,7 +210,7 @@ namespace Konversation
         return publicKey.toBase64().append('A');
     }
 
-    bool Cipher::parseFinishKeyX(QByteArray key)
+    bool Cipher::parseFinishKeyX(const QByteArray &key)
     {
         QCA::Initializer init;
 
@@ -382,7 +382,7 @@ namespace Konversation
     }
 
     //Custom non RFC 2045 compliant Base64 enc/dec code for mircryption / FiSH compatibility
-    QByteArray Cipher::byteToB64(QByteArray text)
+    QByteArray Cipher::byteToB64(const QByteArray &text)
     {
         int left = 0;
         int right = 0;
@@ -431,7 +431,7 @@ namespace Konversation
         return encoded;
     }
 
-    QByteArray Cipher::b64ToByte(QByteArray text)
+    QByteArray Cipher::b64ToByte(const QByteArray &text)
     {
         QString base64 = QStringLiteral("./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
         QByteArray decoded;

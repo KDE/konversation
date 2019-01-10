@@ -32,7 +32,7 @@ namespace Konversation
             explicit IdentityDialog(QWidget *parent = 0);
             ~IdentityDialog() {}
             void setCurrentIdentity(int index);
-            IdentityPtr setCurrentIdentity(IdentityPtr identity);
+            IdentityPtr setCurrentIdentity(const IdentityPtr &identity);
             IdentityPtr currentIdentity() const;
 
         public Q_SLOTS:

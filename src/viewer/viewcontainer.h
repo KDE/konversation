@@ -134,7 +134,7 @@ class ViewContainer : public QAbstractItemModel
         void saveSplitterSizes();
         void setViewTreeShown(bool show = false);
 
-        void updateViews(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
+        void updateViews(const Konversation::ServerGroupSettingsPtr &serverGroup = Konversation::ServerGroupSettingsPtr());
         void setViewNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
         void unsetViewNotification(ChatWindow* view);
         void toggleViewNotifications();

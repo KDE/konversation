@@ -28,7 +28,7 @@ class ConnectionSettings
         QString name() const;
 
         Konversation::ServerSettings server() const { return m_server; }
-        void setServer(Konversation::ServerSettings server) { m_server = server; }
+        void setServer(const Konversation::ServerSettings &server) { m_server = server; }
 
         Konversation::ServerGroupSettingsPtr serverGroup() const { return m_serverGroup; }
         void setServerGroup(const Konversation::ServerGroupSettingsPtr &serverGroup) { m_serverGroup = serverGroup; }

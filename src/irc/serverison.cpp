@@ -95,7 +95,7 @@ void ServerISON::slotServerGroupsChanged()
     m_ISONList_invalid = true;
 }
 
-void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/) {
+void ServerISON::nickInfoChanged(Server* /*server*/, const NickInfoPtr /*nickInfo*/&) {
 //We need to call recalculateAddressees before returning m_ISONList
 
 //Maybe we could do something like:

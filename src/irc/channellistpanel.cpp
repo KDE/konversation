@@ -321,7 +321,7 @@ void ChannelListPanel::updateFilter()
     updateUsersChannels();
 }
 
-void ChannelListPanel::currentChanged(QModelIndex current,QModelIndex previous)
+void ChannelListPanel::currentChanged(const QModelIndex &current,const QModelIndex &previous)
 {
     Q_UNUSED(previous);
     m_joinChannel->setEnabled(m_online && current.isValid());

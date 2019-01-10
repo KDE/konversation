@@ -323,7 +323,7 @@ namespace Konversation
         m_identityCBox->setCurrentIndex(index);
     }
 
-    IdentityPtr IdentityDialog::setCurrentIdentity(IdentityPtr identity)
+    IdentityPtr IdentityDialog::setCurrentIdentity(const IdentityPtr &identity)
     {
         int index = Preferences::identityList().indexOf(identity);
         setCurrentIdentity(index);

@@ -192,7 +192,7 @@ namespace Konversation
         private:
 
             KJob *sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
-            KJob *getStatusInfo(UPnPService s);
+            KJob *getStatusInfo(const UPnPService &s);
         };
     }
 }

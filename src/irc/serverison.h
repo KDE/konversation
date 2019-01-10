@@ -51,7 +51,7 @@ class ServerISON : public QObject
         QStringList getISONList();
 
     private Q_SLOTS:
-        void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
+        void nickInfoChanged(Server* server, const NickInfoPtr &nickInfo);
         void slotServerGroupsChanged();
         void slotChannelMembersChanged(Server* server, const QString& channelName, bool joined, bool parted, const QString& nickname);
         void slotChannelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);

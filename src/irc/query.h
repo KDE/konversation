@@ -91,7 +91,7 @@ class Query : public ChatWindow
         // connected to IRCInput::textPasted() - used to handle large/multiline pastes
         void textPasted(const QString& text);
         void nickInfoChanged();
-        void updateNickInfo(Server* server, NickInfoPtr nickInfo);
+        void updateNickInfo(Server* server, const NickInfoPtr &nickInfo);
 
     protected:
         void setName(const QString& newName) Q_DECL_OVERRIDE;

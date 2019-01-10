@@ -73,7 +73,7 @@ class MainWindow : public KXmlGuiWindow
         void openServerList();
 
         void openIdentitiesDialog();
-        IdentityPtr editIdentity(IdentityPtr identity);
+        IdentityPtr editIdentity(const IdentityPtr &identity);
 
         void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
 

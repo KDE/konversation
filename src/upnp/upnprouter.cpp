@@ -156,7 +156,7 @@ namespace Konversation
             connect(job, &KIO::Job::result, this, &UPnPRouter::downloadFinished);
         }
 
-        KJob *UPnPRouter::getStatusInfo(UPnPService s)
+        KJob *UPnPRouter::getStatusInfo(const UPnPService &s)
         {
             qDebug() << "UPnP - Checking service status: " << s.servicetype << endl;
 

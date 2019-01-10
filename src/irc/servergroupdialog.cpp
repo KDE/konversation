@@ -164,7 +164,7 @@ namespace Konversation
         return ServerSettings(QString());
     }
 
-    int ServerGroupDialog::execAndEditServer(ServerSettings server)
+    int ServerGroupDialog::execAndEditServer(const ServerSettings &server)
     {
         show();
         editServer(server);
@@ -204,7 +204,7 @@ namespace Konversation
         }
     }
 
-    void ServerGroupDialog::editServer(ServerSettings server)
+    void ServerGroupDialog::editServer(const ServerSettings &server)
     {
         // Track the server the Server List dialog told us to edit
         // and find out which server to select in the listbox

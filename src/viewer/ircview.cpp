@@ -298,7 +298,7 @@ void IRCView::dropEvent(QDropEvent* e)
 QDebug operator<<(QDebug dbg, QTextBlockUserData *bd);
 QDebug operator<<(QDebug d, QTextFrame* feed);
 QDebug operator<<(QDebug d, QTextDocument* document);
-QDebug operator<<(QDebug d, QTextBlock b);
+QDebug operator<<(QDebug d, const QTextBlock &b);
 
 // This object gets stuffed into the userData field of a text block.
 // Qt does not give us a way to track blocks, so we have to
@@ -308,7 +308,7 @@ QDebug operator<<(QDebug d, QTextBlock b);
 // however that should not result in a crash.
 struct Burr: public QTextBlockUserData
 {
-    Burr(IRCView* o, Burr* prev, QTextBlock b, int objFormat)
+    Burr(IRCView* o, Burr* prev, const QTextBlock &b, int objFormat)
         : m_block(b), m_format(objFormat), m_prev(prev), m_next(nullptr),
         m_owner(o)
     {
@@ -468,7 +468,7 @@ void IRCView::appendRememberLine()
     m_rememberLine = appendLine(IRCView::RememberLine);
 }
 
-void IRCView::voidLineBlock(QTextBlock rem)
+void IRCView::voidLineBlock(const QTextBlock &rem)
 {
     QTextCursor c(rem);
 
@@ -2362,7 +2362,7 @@ QDebug operator<<(QDebug d, QTextDocument* document)
     return d;
 }
 
-QDebug operator<<(QDebug d, QTextBlock b)
+QDebug operator<<(QDebug d, const QTextBlock &b)
 {
     QTextBlock::Iterator it = b.begin();
 

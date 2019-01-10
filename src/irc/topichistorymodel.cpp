@@ -54,7 +54,7 @@ QString TopicHistoryModel::currentTopic()
     return data(index(m_topicList.count() - 1, 0)).toString();
 }
 
-void TopicHistoryModel::appendTopic(const QString& text, const QString& author, QDateTime timestamp)
+void TopicHistoryModel::appendTopic(const QString& text, const QString& author, const QDateTime &timestamp)
 {
     int newIndex = m_topicList.count();
 
@@ -83,7 +83,7 @@ void TopicHistoryModel::appendTopic(const QString& text, const QString& author, 
     currentTopicChanged(text);
 }
 
-void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, QDateTime timestamp)
+void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp)
 {
     if (m_topicList.isEmpty())
         return;

@@ -131,7 +131,7 @@ void IrcContextMenus::updateQuickButtonMenu()
     }
 }
 
-void IrcContextMenus::processQuickButtonAction(QAction* action, Server* server, const QString& context, const QStringList nicks)
+void IrcContextMenus::processQuickButtonAction(QAction* action, Server* server, const QString& context, const QStringList &nicks)
 {
     ChatWindow* chatWindow = server->getChannelOrQueryByName(context);
     QString line = server->parseWildcards(action->data().toString(), chatWindow, nicks);

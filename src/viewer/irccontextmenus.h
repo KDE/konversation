@@ -104,7 +104,7 @@ class IrcContextMenus : public QObject
         QMenu* m_quickButtonMenu;
         bool shouldShowQuickButtonMenu();
         static void processQuickButtonAction(QAction* action, Server* server, const QString& context,
-            const QStringList nicks = QStringList());
+            const QStringList &nicks = QStringList());
 
         void setupTextMenu();
         QMenu* m_textMenu;

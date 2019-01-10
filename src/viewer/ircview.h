@@ -147,7 +147,7 @@ class IRCView : public QTextBrowser
         bool lastBlockIsLine(int select=-1);
 
         /// Causes a block to stop being a marker.
-        void voidLineBlock(QTextBlock rem);
+        void voidLineBlock(const QTextBlock &rem);
 
         /// Shortcut to get an object format of the desired type
         QTextCharFormat getFormat(ObjectFormats);

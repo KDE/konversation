@@ -345,7 +345,7 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo)
     nickInfoChanged();
 }
 
-void Query::updateNickInfo(Server* server, NickInfoPtr nickInfo)
+void Query::updateNickInfo(Server* server, const NickInfoPtr &nickInfo)
 {
     if (!m_nickInfo || server != m_server || nickInfo != m_nickInfo)
         return;

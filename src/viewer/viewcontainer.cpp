@@ -1106,7 +1106,7 @@ void ViewContainer::updateFrontView()
     updateViewActions(m_tabWidget->currentIndex());
 }
 
-void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serverGroup)
+void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serverGroup)
 {
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {

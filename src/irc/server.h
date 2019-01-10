@@ -504,7 +504,7 @@ class Server : public QObject
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient, QUrl fileURL, bool passive = Preferences::self()->dccPassiveSend(), const QString &altFileName = QString(), quint64 fileSize = 0);
+        void addDccSend(const QString &recipient, const QUrl &fileURL, bool passive = Preferences::self()->dccPassiveSend(), const QString &altFileName = QString(), quint64 fileSize = 0);
         void removeQuery(Query *query);
         void notifyListStarted(int serverGroupId);
         void startNotifyTimer(int msec=0);
@@ -602,7 +602,7 @@ class Server : public QObject
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
-        void setTopicAuthor(const QString& channel,const QString& author, QDateTime t);
+        void setTopicAuthor(const QString& channel,const QString& author, const QDateTime &t);
         void endOfWho(const QString& target);
         void endOfNames(const QString& target);
         void invitation(const QString& nick,const QString& channel);
@@ -670,7 +670,7 @@ class Server : public QObject
         * @param nickname           The nickname that is offline
         * @param nickInfo           Pointer to NickInfo for nick
         */
-        void setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo);
+        void setWatchedNickOffline(const QString& nickname, const NickInfoPtr &nickInfo);
 
         /**
          * If nickname is no longer on any channel list, or the query list, delete it altogether.

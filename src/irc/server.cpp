@@ -2160,7 +2160,7 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
     }
 }
 
-void Server::addDccSend(const QString &recipient, QUrl fileURL, bool passive, const QString &altFileName, quint64 fileSize)
+void Server::addDccSend(const QString &recipient, const QUrl &fileURL, bool passive, const QString &altFileName, quint64 fileSize)
 {
     if (!fileURL.isValid())
     {
@@ -3131,7 +3131,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     return nickInfo;
 }
 
-void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
+void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr &nickInfo)
 {
     Q_UNUSED(nickInfo)
 
@@ -3629,7 +3629,7 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
     }
 }
 
-void Server::setTopicAuthor(const QString& channel, const QString& author, QDateTime time)
+void Server::setTopicAuthor(const QString& channel, const QString& author, const QDateTime &time)
 {
     Channel* outChannel = getChannelByName(channel);
     if(outChannel)

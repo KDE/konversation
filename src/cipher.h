@@ -23,16 +23,16 @@ namespace Konversation
     {
         public:
             Cipher();
-            explicit Cipher(QByteArray key, QString cipherType=QStringLiteral("blowfish"));
+            explicit Cipher(const QByteArray &key, const QString &cipherType=QStringLiteral("blowfish"));
             ~Cipher();
 
             QByteArray decrypt(QByteArray cipher);
             QByteArray decryptTopic(QByteArray cipher);
             bool encrypt(QByteArray& cipher);
             QByteArray initKeyExchange();
-            QByteArray parseInitKeyX(QByteArray key);
-            bool parseFinishKeyX(QByteArray key);
-            bool setKey(QByteArray key);
+            QByteArray parseInitKeyX(const QByteArray &key);
+            bool parseFinishKeyX(const QByteArray &key);
+            bool setKey(const QByteArray &key);
             QByteArray key() const { return m_key; }
             bool setType(const QString &type);
             QString type() const { return m_type; }
@@ -45,8 +45,8 @@ namespace Konversation
             //direction is true for encrypt, false for decrypt
             QByteArray blowfishCBC(QByteArray cipherText, bool direction);
             QByteArray blowfishECB(QByteArray cipherText, bool direction);
-            QByteArray b64ToByte(QByteArray text);
-            QByteArray byteToB64(QByteArray text);
+            QByteArray b64ToByte(const QByteArray &text);
+            QByteArray byteToB64(const QByteArray &text);
 
             QCA::Initializer init;
             QByteArray m_key;

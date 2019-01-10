@@ -39,7 +39,7 @@ namespace Konversation
 
             ServerSettings editedServer();
 
-            int execAndEditServer(ServerSettings server);
+            int execAndEditServer(const ServerSettings &server);
 
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
@@ -49,7 +49,7 @@ namespace Konversation
         protected Q_SLOTS:
             void addServer();
             void editServer();
-            void editServer(ServerSettings server);
+            void editServer(const ServerSettings &server);
             void deleteServer();
             void updateServerArrows();
             void moveServerUp();
