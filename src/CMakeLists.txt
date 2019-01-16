@@ -249,4 +249,5 @@ if (WIN32)
   target_link_libraries(konversation ws2_32) # for symbols from winsock2.h: ntohl, etc.
 endif()
 
+set_target_properties(konversation PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/MacOSXBundleInfo.plist.in)
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
