@@ -24,12 +24,12 @@ Item {
     readonly property string mentionColor: "red" // WIPQTQUICK TODO Hard-coded red because Breeze' negativeTextColor is ugly.
 
     QQC2.ScrollView {
+        id: scrollView
+
         anchors.fill: parent
 
         ListView {
             id: viewListView
-
-            QQC2.ScrollBar.vertical: QQC2.ScrollBar { id: verticalScrollbar }
 
             clip: true
 
@@ -188,7 +188,7 @@ Item {
                         running: true
                         anchors.right: parent.right
                         // we assume there won't be intersection with showing busy indicator and unread count
-                        anchors.rightMargin: verticalScrollbar.visible ? verticalScrollbar.width : Kirigami.Units.smallSpacing
+                        anchors.rightMargin: scrollView.QQC2.ScrollBar.vertical.visible ? scrollView.QQC2.ScrollBar.vertical.width : Kirigami.Units.smallSpacing
                         anchors.verticalCenter: parent.verticalCenter
                         height: Kirigami.Units.iconSizes.smallMedium
                         width: Kirigami.Units.iconSizes.smallMedium
@@ -202,7 +202,7 @@ Item {
                         id: unreadMentionsCounter
 
                         anchors.right: parent.right
-                        anchors.rightMargin: verticalScrollbar.visible ? verticalScrollbar.width : Kirigami.Units.smallSpacing
+                        anchors.rightMargin: scrollView.QQC2.ScrollBar.vertical.visible ? scrollView.QQC2.ScrollBar.vertical.width : Kirigami.Units.smallSpacing
                         anchors.verticalCenter: parent.verticalCenter
 
                         height: Math.floor(unreadMentionsCounterText.paintedHeight)

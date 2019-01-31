@@ -38,6 +38,8 @@ Item {
     id: textView
 
     QQC2.ScrollView {
+        id: scrollView
+
         anchors.fill: parent
 
         anchors.topMargin: Math.max(0, textView.height - textListView.contentHeight)
@@ -51,14 +53,12 @@ Item {
 
             visible: !konvUi.settingsMode
 
-            QQC2.ScrollBar.vertical: QQC2.ScrollBar { id: verticalScrollbar }
-
             property bool scrollUp: false
             property bool scrollDown: false
             property bool scrollToEnd: true
             property bool userScrolling: false
 
-            readonly property int msgWidth: width - verticalScrollbar.width
+            readonly property int msgWidth: width - scrollView.QQC2.ScrollBar.vertical.width
 
             model: messageModel
 
@@ -513,7 +513,7 @@ Item {
         id: mouseOverlay
 
         anchors.fill: parent
-        anchors.rightMargin: Math.ceil(verticalScrollbar.width)
+        anchors.rightMargin: Math.ceil(scrollView.QQC2.ScrollBar.vertical.width)
 
         property var rowsToSelect: []
         property int pressedRow: -1
