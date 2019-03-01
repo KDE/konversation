@@ -42,7 +42,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     QWidget* commandLineBox=new QWidget(this);
     QHBoxLayout* commandLineBoxLayout = new QHBoxLayout(commandLineBox);
     commandLineBoxLayout->setSpacing(spacing());
-    commandLineBoxLayout->setMargin(0);
+    commandLineBoxLayout->setContentsMargins(0, 0, 0, 0);
 
     nicknameCombobox = new KComboBox(commandLineBox);
     commandLineBoxLayout->addWidget(nicknameCombobox);

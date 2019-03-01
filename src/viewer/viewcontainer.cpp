@@ -224,7 +224,7 @@ void ViewContainer::setupTabWidget()
 
     m_vbox = new QWidget(m_viewTreeSplitter);
     QVBoxLayout* vboxLayout = new QVBoxLayout(m_vbox);
-    vboxLayout->setMargin(0);
+    vboxLayout->setContentsMargins(0, 0, 0, 0);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
     m_vbox->setObjectName(QStringLiteral("main_window_right_side"));
     m_tabWidget = new TabWidget(m_vbox);

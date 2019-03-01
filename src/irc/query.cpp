@@ -67,7 +67,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     QHBoxLayout* inputBoxLayout = new QHBoxLayout(inputBox);
     inputBox->setObjectName(QStringLiteral("input_log_box"));
     inputBoxLayout->setSpacing(spacing());
-    inputBoxLayout->setMargin(0);
+    inputBoxLayout->setContentsMargins(0, 0, 0, 0);
 
     awayLabel=new AwayLabel(inputBox);
     inputBoxLayout->addWidget(awayLabel);

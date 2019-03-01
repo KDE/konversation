@@ -22,7 +22,7 @@ IRCViewBox::IRCViewBox(QWidget* parent)
 : QWidget(parent)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     m_ircView = new IRCView(this);
     mainLayout->addWidget(m_ircView);
     m_searchBar = new SearchBar(this);

@@ -207,7 +207,7 @@ void OSDWidget::paintEvent( QPaintEvent *e )
     QColor shadowColor;
     {
         int h, s, v;
-        palette().color( QPalette::Normal, QPalette::Foreground ).getHsv( &h, &s, &v );
+        palette().color( QPalette::Normal, QPalette::WindowText ).getHsv( &h, &s, &v );
         shadowColor = v > 128 ? Qt::black : Qt::white;
     }
 

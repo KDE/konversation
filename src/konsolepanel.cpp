@@ -30,13 +30,13 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
     setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
 
-    setMargin(0);
+    setContentsMargins(0, 0, 0, 0);
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
     QWidget* headerWidget = new QWidget(m_headerSplitter);
     QHBoxLayout* headerWidgetLayout = new QHBoxLayout(headerWidget);
-    headerWidgetLayout->setMargin(0);
+    headerWidgetLayout->setContentsMargins(0, 0, 0, 0);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(headerWidget), 0);
 
     m_profileButton = new QToolButton(headerWidget);

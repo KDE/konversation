@@ -116,7 +116,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(topicWidget), 0);
 
     QGridLayout* topicLayout = new QGridLayout(topicWidget);
-    topicLayout->setMargin(0);
+    topicLayout->setContentsMargins(0, 0, 0, 0);
     topicLayout->setSpacing(0);
 
     m_topicButton = new QToolButton(topicWidget);
@@ -142,7 +142,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // The box holding the channel modes
     modeBox = new QFrame(topicWidget);
     QHBoxLayout* modeBoxLayout = new QHBoxLayout(modeBox);
-    modeBoxLayout->setMargin(0);
+    modeBoxLayout->setContentsMargins(0, 0, 0, 0);
     modeBox->hide();
     modeBox->setSizePolicy(hfixed);
     modeT = new ModeButton(QStringLiteral("T"),modeBox,0);
@@ -210,7 +210,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(nickListButtons), 0);
     QVBoxLayout* nickListButtonsLayout = new QVBoxLayout(nickListButtons);
     nickListButtonsLayout->setSpacing(0);
-    nickListButtonsLayout->setMargin(0);
+    nickListButtonsLayout->setContentsMargins(0, 0, 0, 0);
 
     nicknameListView=new NickListView(nickListButtons, this);
     nickListButtons->layout()->addWidget(nicknameListView);
@@ -223,7 +223,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     commandLineBox = new QFrame(this);
     QHBoxLayout* commandLineLayout = new QHBoxLayout(commandLineBox);
     commandLineBox->setLayout(commandLineLayout);
-    commandLineLayout->setMargin(0);
+    commandLineLayout->setContentsMargins(0, 0, 0, 0);
     commandLineLayout->setSpacing(spacing());
 
     nicknameCombobox = new KComboBox(commandLineBox);
@@ -1933,7 +1933,7 @@ void Channel::updateQuickButtons()
     nickListButtons->layout()->addWidget(m_buttonsGrid);
     m_buttonsGrid->hide();
     QGridLayout* layout = new QGridLayout (m_buttonsGrid);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     int col = 0;
     int row = 0;

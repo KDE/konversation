@@ -55,9 +55,9 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerGroupDialogUI();
         m_mainWidget->setupUi(mainWidget);
-        mainLayout->setMargin(0);
-        m_mainWidget->serverWidget->layout()->setMargin(0);
-        m_mainWidget->channelWidget->layout()->setMargin(0);
+        mainLayout->setContentsMargins(0, 0, 0, 0);
+        m_mainWidget->serverWidget->layout()->setContentsMargins(0, 0, 0, 0);
+        m_mainWidget->channelWidget->layout()->setContentsMargins(0, 0, 0, 0);
 
         connect(m_mainWidget->m_editIdentityButton, &QPushButton::clicked, this, &ServerGroupDialog::editIdentity);
 
