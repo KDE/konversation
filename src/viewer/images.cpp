@@ -51,7 +51,7 @@ void LedIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode
     QPen pen;
 
     if (!m_state)
-        color = m_color.dark(180);
+        color = m_color.darker(180);
     else
         color = m_color;
 
@@ -83,7 +83,7 @@ void LedIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode
     // Draw the bright spot on the LED
     while (light_width)
     {
-        color = color.light( light_quote ); // make color lighter
+        color = color.lighter( light_quote ); // make color lighter
         pen.setColor( color );              // set color as pen color
         painter->setPen( pen );                // select the pen for drawing
         painter->drawEllipse( pos, pos, light_width, light_width ); // draw the ellipse (circle)
