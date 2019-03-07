@@ -319,7 +319,7 @@ namespace Konversation
 
             //sort QModelIndexList descending
             //NOTE: selectedRows() returned an unsorted list
-            qSort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
+            std::sort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
 
             //remove from last to first item, to keep a valid row
             foreach (const QModelIndex &index, indexesToRemove)
@@ -388,7 +388,7 @@ namespace Konversation
 
             //sort QModelIndexList descending
             //NOTE: selectedRows() returned an unsorted list
-            qSort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
+            std::sort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
 
             //remove from last to first item, to keep a valid row
             foreach (const QModelIndex &index, indexesToRemove)
