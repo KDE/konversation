@@ -1,5 +1,5 @@
-<!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="55">
+<!DOCTYPE gui SYSTEM "kpartgui.dtd">
+<gui name="konversation" version="55">
 
   <MenuBar>
     <Menu name="file">
@@ -79,5 +79,5 @@
     <Action name="close_tab" />
 </Menu>
 
-</kpartgui>
+</gui>
 
