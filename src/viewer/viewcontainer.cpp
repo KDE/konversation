@@ -1145,7 +1145,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
         }
 
         if (!Preferences::self()->tabNotificationsText()) {
-            m_tabWidget->tabBar()->setTabTextColor(i, m_window->palette().foreground().color());
+            m_tabWidget->tabBar()->setTabTextColor(i, m_window->palette().windowText().color());
             announce = true;
         }
 
@@ -1317,7 +1317,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         }
     }
 
-    QColor textColor = m_window->palette().foreground().color();
+    QColor textColor = m_window->palette().windowText().color();
 
     if (view->getType() == ChatWindow::Channel)
     {
