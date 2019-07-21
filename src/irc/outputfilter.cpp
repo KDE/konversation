@@ -32,6 +32,7 @@
 
 #include <QStringList>
 #include <QFile>
+#include <QMetaMethod>
 #include <QRegExp>
 #include <QTextCodec>
 #include <QByteArray>
