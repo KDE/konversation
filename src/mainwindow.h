@@ -54,8 +54,9 @@ class MainWindow : public KXmlGuiWindow
         ActionCollectionModel* getActionCollectionModel() { return m_actionCollectionModel; } // WIPQTQUICK
         Konversation::StatusBar* getStatusBar() { return m_statusBar; } // WIPQTQUICK
         bool getCloseApp() { return m_closeApp; } // WIPQTQUICK
+#ifndef Q_OS_ANDROID
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
-
+#endif
         /** Some errors need to be shown, even when konversation is minimized.
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
@@ -127,8 +128,9 @@ class MainWindow : public KXmlGuiWindow
 
         ViewContainer* m_viewContainer;
         Konversation::StatusBar* m_statusBar;
+#ifndef Q_OS_ANDROID
         Konversation::TrayIcon* m_trayIcon;
-
+#endif
         KToggleAction* m_showMenuBarAction;
 
         KonviSettingsDialog *m_settingsDialog;

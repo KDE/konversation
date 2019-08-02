@@ -59,7 +59,9 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr) // WIPQTQUICK
     m_hasDirtySettings = false;
     m_closeApp = false;
     m_serverListDialog = nullptr;
+#ifndef Q_OS_ANDROID
     m_trayIcon = nullptr;
+#endif
     m_settingsDialog = nullptr;
 
     m_viewContainer = new ViewContainer(this);
@@ -577,8 +579,10 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr) // WIPQTQUICK
 
 MainWindow::~MainWindow()
 {
+#ifndef Q_OS_ANDROID
     delete m_trayIcon; // WIPQTQUICK
     m_trayIcon = nullptr; // WIPQTQUICK
+#endif
 }
 
 QSize MainWindow::sizeHint() const
@@ -625,6 +629,7 @@ int MainWindow::confirmQuit()
 
 void MainWindow::activateAndRaiseWindow()
 {
+#ifndef Q_OS_ANDROID
     if (isMinimized())
         KWindowSystem::unminimizeWindow(winId());
     else if (Preferences::self()->showTrayIcon() && !isVisible())
@@ -632,13 +637,16 @@ void MainWindow::activateAndRaiseWindow()
 
     KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
     KWindowSystem::activateWindow(winId());
+#endif
 }
 
 void MainWindow::quitProgram()
 {
+#ifndef Q_OS_ANDROID
     if (Preferences::self()->showTrayIcon() &&
         sender() != m_trayIcon &&
         confirmQuit() == KMessageBox::Cancel) return;
+#endif
 
     // will call queryClose()
     Application::instance()->getQuickMainWindow()->close(); // WIPQTQUICK
@@ -654,9 +662,10 @@ bool MainWindow::queryClose()
 
     if (!konvApp->isSavingSession())
     {
+#ifndef Q_OS_ANDROID
         if (sender() == m_trayIcon)
             m_closeApp = true;
-
+#endif
         if (Preferences::self()->showTrayIcon() && !m_closeApp)
         {
             bool doit = KMessageBox::warningContinueCancel(this,
@@ -747,6 +756,7 @@ void MainWindow::resetHasDirtySettings()
 
 void MainWindow::updateTrayIcon()
 {
+#ifndef Q_OS_ANDROID
     if (Preferences::self()->showTrayIcon())
     {
         if (!m_trayIcon)
@@ -768,6 +778,7 @@ void MainWindow::updateTrayIcon()
         delete m_trayIcon;
         m_trayIcon = nullptr;
     }
+#endif
 }
 
 void MainWindow::toggleMenubar(bool dontShowWarning)

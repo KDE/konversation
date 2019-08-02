@@ -269,6 +269,7 @@ void Application::newInstance(QCommandLineParser *args)
         m_viewListModel = new KDescendantsProxyModel(this);
         m_viewListModel->setSourceModel(mainWindow->getViewContainer());
 
+#ifndef Q_OS_ANDROID
         QObject::connect(mainWindow->systemTrayIcon(), &KStatusNotifierItem::activateRequested, this,
             [this](bool active, const QPoint &pos) {
                 Q_UNUSED(pos)
@@ -280,6 +281,7 @@ void Application::newInstance(QCommandLineParser *args)
                 }
             }
         );
+#endif
 
         qputenv("QT_QUICK_CONTROLS_STYLE", "org.kde.desktop");
         m_qmlEngine = new QQmlApplicationEngine(this);
@@ -462,8 +464,10 @@ bool Application::loadUiPackage(const QString &packageName)
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(quitApp()),
         mainWindow, SLOT(quitProgram()));
 
+#ifndef Q_OS_ANDROID
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(endNotification()),
         mainWindow->systemTrayIcon(), SLOT(endNotification()));
+#endif
 
     QObject::connect(m_qmlEngine->rootObjects().first(), SIGNAL(setStatusBarTempText(QString)),
         mainWindow->getStatusBar(), SLOT(setMainLabelTempText(QString)));

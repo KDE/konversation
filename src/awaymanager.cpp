@@ -164,6 +164,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
 
     Application* konvApp = Application::instance();
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
+#ifndef Q_OS_ANDROID
     Konversation::TrayIcon* trayIcon = konvApp->getMainWindow()->systemTrayIcon();
 
     if (!awayAction)
@@ -193,6 +194,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
         awayAction->setIcon(QIcon::fromTheme(QStringLiteral("im-user-away")));
         if (trayIcon) trayIcon->setAway(false);
     }
+#endif
 }
 
 int AwayManager::calculateRemainingTime(int identityId)

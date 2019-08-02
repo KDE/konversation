@@ -148,7 +148,6 @@ set(viewer_SRCS
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
     viewer/irccontextmenus.cpp
-    viewer/trayicon.cpp
     viewer/viewspringloader.cpp
     viewer/channeloptionsdialog.cpp
     viewer/topicedit.cpp
@@ -159,6 +158,10 @@ set(viewer_SRCS
     viewer/qclipboardwrapper.cpp
     viewer/actioncollectionmodel.cpp
 )
+
+if(NOT ANDROID)
+    list(APPEND viewer_SRCS viewer/trayicon.cpp)
+endif()
 
 ki18n_wrap_ui(viewer_SRCS
     viewer/channeloptionsui.ui
@@ -266,6 +269,10 @@ if (Qca-qt5_FOUND)
 endif ()
 if (WIN32)
   target_link_libraries(konversation ws2_32) # for symbols from winsock2.h: ntohl, etc.
+endif()
+
+if (ANDROID)
+    target_link_libraries(konversation KF5::Kirigami2)
 endif()
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})

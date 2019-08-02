@@ -191,12 +191,12 @@ namespace Konversation
             return;
 
         qDebug() << m_quickMainWindow->isActive();
-
+#ifndef Q_OS_ANDROID
         if (((!m_quickMainWindow->isActive() && !m_mainWindow->isActiveWindow())) && chatWin->getServer()->isConnected() && m_mainWindow->systemTrayIcon()) {
             qDebug() << "starting";
             m_mainWindow->systemTrayIcon()->startNotification();
         }
-
+#endif
     }
 
     void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
