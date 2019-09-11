@@ -2885,7 +2885,7 @@ or menu bars. -->
 Find Previous Shift F3
 Clear Marker Lines Ctrl Shift R
 Enlarge Font Size Ctrl++
-Shrink Font Size Ctrl+-
+Decrease Font Size Ctrl+-
 Reset Font Size Ctrl+O
 -->
 	<varlistentry>
