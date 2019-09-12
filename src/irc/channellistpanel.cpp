@@ -485,7 +485,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
         connect(action, &QAction::triggered, this, &ChannelListPanel::openURL);
     }
 
-    if (showURLmenu->actions().count()==0)
+    if (showURLmenu->actions().isEmpty())
         showURLmenu->setEnabled(false);
 
     menu->addMenu(showURLmenu);

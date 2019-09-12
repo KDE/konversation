@@ -103,7 +103,7 @@ namespace Konversation
                 if (context)
                     aliasReplace = context->getServer()->parseWildcards(aliasReplace, context);
 
-                if (!aliasList[index].contains(QStringLiteral("%p")))
+                if (!aliasList[index].contains(QLatin1String("%p")))
                     aliasReplace.append(QLatin1Char(' ') + line.section(QLatin1Char(' '), 1));
 
                 // protect "%%"
@@ -245,7 +245,7 @@ namespace Konversation
 
         QString inputLine(originalLine);
 
-        if (inputLine.isEmpty() || inputLine == QLatin1String("\n") || checkForEncodingConflict(&inputLine, destination))
+        if (inputLine.isEmpty() || inputLine == QLatin1Char('\n') || checkForEncodingConflict(&inputLine, destination))
             return result;
 
         //Protect against nickserv auth being sent as a message on the off chance
@@ -267,7 +267,7 @@ namespace Konversation
         // Convert double command chars at the beginning to single ones
         if(line.startsWith(Preferences::self()->commandChar() + Preferences::self()->commandChar()) && !destination.isEmpty())
         {
-            inputLine = inputLine.mid(1);
+            inputLine.remove(0, 1);
             goto BYPASS_COMMAND_PARSING;
         }
         // Server command?
@@ -376,8 +376,8 @@ namespace Konversation
         OutputFilterInput input(_input);
         OutputFilterResult result;
 
-        if (input.parameter.contains(QLatin1String(","))) // Protect against #foo,0 tricks
-            input.parameter = input.parameter.remove(QStringLiteral(",0"));
+        if (input.parameter.contains(QLatin1Char(','))) // Protect against #foo,0 tricks
+            input.parameter.remove(QStringLiteral(",0"));
         //else if(channelName == "0") // FIXME IRC RFC 2812 section 3.2.1
 
         if (input.parameter.isEmpty())
@@ -1281,14 +1281,14 @@ namespace Konversation
             }
         }
 
-        QString list = Preferences::notifyListByGroupId(serverGroupId).join(QStringLiteral(", "));
+        QString list = Preferences::notifyListByGroupId(serverGroupId).join(QLatin1String(", "));
 
         if (list.isEmpty())
         {
             if (removed.count())
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
                                       "The notify list has been emptied (removed %1).",
-                                      removed.join(QStringLiteral(", ")));
+                                      removed.join(QLatin1String(", ")));
             else
                 result.output = i18n("The notify list is currently empty.");
         }
@@ -1297,15 +1297,15 @@ namespace Konversation
             if (added.count() && !removed.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2).",
-                                      list, added.join(QStringLiteral(", ")));
+                                      list, added.join(QLatin1String(", ")));
             else if (removed.count() && !added.count())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (removed %2).",
-                                      list, removed.join(QStringLiteral(", ")));
+                                      list, removed.join(QLatin1String(", ")));
             else if (added.count() && removed.count())
                 result.output = i18nc("%1, %2 and %3 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2, removed %3).",
-                                      list, added.join(QStringLiteral(", ")), removed.join(QStringLiteral(", ")));
+                                      list, added.join(QLatin1String(", ")), removed.join(QLatin1String(", ")));
             else
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
                                       "Current notify list: %1.",
@@ -1412,7 +1412,7 @@ namespace Konversation
                         QString victim = parameterList[0];
                         parameterList.pop_front();
 
-                        QString reason = parameterList.join(QStringLiteral(" "));
+                        QString reason = parameterList.join(QLatin1Char(' '));
 
                         if (reason.isEmpty())
                             reason = m_server->getIdentity()->getKickReason();
@@ -1540,7 +1540,7 @@ namespace Konversation
                     Preferences::addIgnore(parameterList[index] + ',' + QString::number(value));
                 }
 
-                result.output = i18n("Added %1 to your ignore list.", parameterList.join(QStringLiteral(", ")));
+                result.output = i18n("Added %1 to your ignore list.", parameterList.join(QLatin1String(", ")));
                 result.typeString = i18n("Ignore");
                 result.type = Program;
 
@@ -1611,14 +1611,14 @@ namespace Konversation
             // Print all successful unignores, in case there were any
             if (succeeded.count() >= 1)
             {
-                result.output = i18n("Removed %1 from your ignore list.", succeeded.join(QStringLiteral(", ")));
+                result.output = i18n("Removed %1 from your ignore list.", succeeded.join(QLatin1String(", ")));
                 result.typeString = i18n("Ignore");
                 result.type = Program;
             }
 
             // Any failed unignores
             if (failed.count() >= 1)
-                result = error(i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(QStringLiteral(", "))));
+                result = error(i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(QLatin1String(", "))));
         }
 
         return result;
@@ -1697,7 +1697,7 @@ namespace Konversation
         if (!Cipher::isFeatureAvailable(Cipher::Blowfish))
             return error(i18n("Unable to set an encryption key for %1.", parms[0]) + ' ' + Cipher::runtimeError());
 
-        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(QStringLiteral(" ")).toLocal8Bit());
+        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(QLatin1Char(' ')).toLocal8Bit());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
             m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
@@ -1719,7 +1719,7 @@ namespace Konversation
         #ifdef HAVE_QCA2
         QStringList parms = input.parameter.split(' ', QString::SkipEmptyParts);
 
-        if (parms.count() == 0 && !input.destination.isEmpty())
+        if (parms.isEmpty() && !input.destination.isEmpty())
             parms.prepend(input.destination);
         else if (parms.count() !=1)
             return usage(i18n("Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target.",
@@ -1975,7 +1975,7 @@ namespace Konversation
                 QString modeToken;
                 QString nickToken;
 
-                modeToken = QStringLiteral(" ") + QChar(giveTake);
+                modeToken = QLatin1String(" ") + QChar(giveTake);
 
                 tmpToken = token;
 
@@ -1987,7 +1987,7 @@ namespace Konversation
                         result.toServerList.append(token);
                         token = tmpToken;
                         nickToken.clear();
-                        modeToken = QStringLiteral(" ") + QChar(giveTake);
+                        modeToken = QLatin1String(" ") + QChar(giveTake);
                     }
                     nickToken += ' ' + nickList[index];
                     modeToken += mode;
@@ -2036,7 +2036,7 @@ namespace Konversation
         QStringList nickList = parameter.split(' ');
         QString newNickList;
 
-        if (nickList.count() == 0)
+        if (nickList.isEmpty())
         {
             newNickList = nick;
         }

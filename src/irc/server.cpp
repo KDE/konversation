@@ -487,14 +487,14 @@ void Server::connectToIRCServer()
 
         // connect() will do a async lookup too
         if (getConnectionSettings().server().SSLEnabled()
-            || getIdentity()->getAuthType() == QStringLiteral("saslexternal")
-            || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
+            || getIdentity()->getAuthType() == QLatin1String("saslexternal")
+            || getIdentity()->getAuthType() == QLatin1String("pemclientcert"))
         {
             connect(m_socket, &KTcpSocket::encrypted, this, &Server::socketConnected);
             connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
 
-            if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")
-                || getIdentity()->getAuthType() == QStringLiteral("pemclientcert"))
+            if (getIdentity()->getAuthType() == QLatin1String("saslexternal")
+                || getIdentity()->getAuthType() == QLatin1String("pemclientcert"))
             {
                 m_socket->setLocalCertificate(getIdentity()->getPemClientCertFile().toLocalFile());
                 m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
@@ -610,7 +610,7 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
     {
         if(nickname.isEmpty())
             return;
-        nickname = nickname.mid(1);
+        nickname.remove(0, 1);
         // cut off the prefix
         bool recognisedMode = false;
         // determine, whether status is like op or like voice
@@ -684,7 +684,7 @@ void Server::socketConnected()
 
     QStringList ql;
 
-    if (getIdentity() && getIdentity()->getAuthType() == QStringLiteral("serverpw")
+    if (getIdentity() && getIdentity()->getAuthType() == QLatin1String("serverpw")
         && !getIdentity()->getAuthPassword().isEmpty())
     {
         ql << QStringLiteral("PASS ") + getIdentity()->getAuthPassword();
@@ -722,17 +722,17 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
     {
         nameValue = cap.split(QChar('='));
 
-        if(nameValue[0] == QStringLiteral("sasl"))
+        if(nameValue[0] == QLatin1String("sasl"))
         {
             QString authCommand;
 
             if (getIdentity()) {
                 // A username is optional SASL EXTERNAL and a client cert substitutes
                 // for the password.
-                if (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) {
+                if (getIdentity()->getAuthType() == QLatin1String("saslexternal")) {
                     authCommand = QStringLiteral("EXTERNAL");
                 // PLAIN on the other hand requires both.
-                } else if (getIdentity()->getAuthType() == QStringLiteral("saslplain")
+                } else if (getIdentity()->getAuthType() == QLatin1String("saslplain")
                     && !getIdentity()->getSaslAccount().isEmpty()
                     && !getIdentity()->getAuthPassword().isEmpty()) {
                     authCommand = QStringLiteral("PLAIN");
@@ -758,7 +758,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         }
     }
 
-    QString capsString = requestCaps.join (QStringLiteral(" "));
+    QString capsString = requestCaps.join(QLatin1Char(' '));
     getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1", capsString));
     queue(QStringLiteral("CAP REQ :") + capsString, HighPriority);
     m_capRequested++;
@@ -786,9 +786,9 @@ void Server::capCheckIgnored()
 
 void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers)
 {
-    if (name == QStringLiteral("sasl") && modifiers == Server::NoModifiers)
+    if (name == QLatin1String("sasl") && modifiers == Server::NoModifiers)
     {
-        const QString &authCommand = (getIdentity()->getAuthType() == QStringLiteral("saslexternal")) ?
+        const QString &authCommand = (getIdentity()->getAuthType() == QLatin1String("saslexternal")) ?
             QStringLiteral("EXTERNAL") : QStringLiteral("PLAIN");
 
         getStatusView()->appendServerMessage(i18n("Info"), i18n("SASL capability acknowledged by server, attempting SASL %1 authentication...", authCommand));
@@ -803,7 +803,7 @@ void Server::capAcknowledged(const QString& name, Server::CapModifiers modifiers
 
 void Server::capDenied(const QString& name)
 {
-    if (name == QStringLiteral("sasl"))
+    if (name == QLatin1String("sasl"))
         getStatusView()->appendServerMessage(i18n("Error"), i18n("SASL capability denied or not supported by server."));
 }
 
@@ -816,7 +816,7 @@ void Server::registerWithServices()
     if (nickInfo && nickInfo->isIdentified())
         return;
 
-    if (getIdentity()->getAuthType() == QStringLiteral("nickserv"))
+    if (getIdentity()->getAuthType() == QLatin1String("nickserv"))
     {
         if (!getIdentity()->getNickservNickname().isEmpty()
             && !getIdentity()->getNickservCommand().isEmpty()
@@ -825,7 +825,7 @@ void Server::registerWithServices()
             queue(QStringLiteral("PRIVMSG ")+getIdentity()->getNickservNickname()+QStringLiteral(" :")+getIdentity()->getNickservCommand()+QLatin1Char(' ')+getIdentity()->getAuthPassword(), HighPriority);
         }
     }
-    else if (getIdentity()->getAuthType() == QStringLiteral("saslplain"))
+    else if (getIdentity()->getAuthType() == QLatin1String("saslplain"))
     {
         QString authString = getIdentity()->getSaslAccount();
         authString.append(QChar(QChar::Null));
@@ -835,7 +835,7 @@ void Server::registerWithServices()
 
         sendAuthenticate(QLatin1String(authString.toLatin1().toBase64()));
     }
-    else if (getIdentity()->getAuthType() == QStringLiteral("saslexternal"))
+    else if (getIdentity()->getAuthType() == QLatin1String("saslexternal"))
     {
         QString authString = getIdentity()->getSaslAccount();
 
@@ -1025,7 +1025,7 @@ void Server::connectionEstablished(const QString& ownHost)
     startNotifyTimer(1000);
 
     // Register with services
-    if (getIdentity() && getIdentity()->getAuthType() == QStringLiteral("nickserv"))
+    if (getIdentity() && getIdentity()->getAuthType() == QLatin1String("nickserv"))
         registerWithServices();
 
     // get own ip by userhost
@@ -1161,7 +1161,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     bool nicksOnlineChanged = false;
     QStringList actualList = nicksOnline.split(QLatin1Char(' '), QString::SkipEmptyParts);
     QString lcActual = QLatin1Char(' ') + nicksOnline + QLatin1Char(' ');
-    QString lcPrevISON = QLatin1Char(' ') + (m_prevISONList.join(QStringLiteral(" "))) + QLatin1Char(' ');
+    QString lcPrevISON = QLatin1Char(' ') + (m_prevISONList.join(QLatin1Char(' '))) + QLatin1Char(' ');
 
     QStringList::iterator it;
 
@@ -1384,9 +1384,9 @@ void Server::incoming()
         {
             if( lineSplit.count() >= 3 )
             {
-                if( command == QStringLiteral("332") )            // RPL_TOPIC
+                if( command == QLatin1String("332") )            // RPL_TOPIC
                     channelKey = lineSplit[2];
-                if( command == QStringLiteral("372") )            // RPL_MOTD
+                if( command == QLatin1String("372") )            // RPL_MOTD
                     channelKey = QStringLiteral(":server");
             }
         }
@@ -1395,19 +1395,19 @@ void Server::incoming()
             if( lineSplit.count() >= 2 )
             {
                 // query
-                if( ( command == QStringLiteral("privmsg") ||
-                    command == QStringLiteral("notice")  ) &&
+                if( ( command == QLatin1String("privmsg") ||
+                    command == QLatin1String("notice")  ) &&
                     lineSplit[1] == getNickname() )
                 {
                     channelKey = senderNick;
                 }
                 // channel message
-                else if( command == QStringLiteral("privmsg") ||
-                    command == QStringLiteral("notice")  ||
-                    command == QStringLiteral("join")    ||
-                    command == QStringLiteral("kick")    ||
-                    command == QStringLiteral("part")    ||
-                    command == QStringLiteral("topic")   )
+                else if( command == QLatin1String("privmsg") ||
+                    command == QLatin1String("notice")  ||
+                    command == QLatin1String("join")    ||
+                    command == QLatin1String("kick")    ||
+                    command == QLatin1String("part")    ||
+                    command == QLatin1String("topic")   )
                 {
                     channelKey = lineSplit[1];
                 }
@@ -2081,13 +2081,13 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
 
                     // adapt ban mask to the option given
                     if(option==QStringLiteral("host"))
-                        mask=QStringLiteral("*!*@*.")+hostmask.section(QLatin1Char('.'),1);
+                        mask=QLatin1String("*!*@*.")+hostmask.section(QLatin1Char('.'),1);
                     else if(option==QStringLiteral("domain"))
-                        mask=QStringLiteral("*!*@")+hostmask.section(QLatin1Char('@'),1);
+                        mask=QLatin1String("*!*@")+hostmask.section(QLatin1Char('@'),1);
                     else if(option==QStringLiteral("userhost"))
-                        mask=QStringLiteral("*!")+hostmask.section(QLatin1Char('@'),0,0)+QStringLiteral("@*.")+hostmask.section(QLatin1Char('.'),1);
+                        mask=QLatin1String("*!")+hostmask.section(QLatin1Char('@'),0,0)+QLatin1String("@*.")+hostmask.section(QLatin1Char('.'),1);
                     else if(option==QStringLiteral("userdomain"))
-                        mask=QStringLiteral("*!")+hostmask.section(QLatin1Char('@'),0,0)+QLatin1Char('@')+hostmask.section(QLatin1Char('@'),1);
+                        mask=QLatin1String("*!")+hostmask.section(QLatin1Char('@'),0,0)+QLatin1Char('@')+hostmask.section(QLatin1Char('@'),1);
                 }
             }
         }
@@ -2283,7 +2283,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     const int argumentSize = dccArguments.count();
     bool ok = true;
 
-    if (dccArguments.at(argumentSize - 3) == QStringLiteral("0")) //port==0, for passive send, ip can't be 0
+    if (dccArguments.at(argumentSize - 3) == QLatin1Char('0')) //port==0, for passive send, ip can't be 0
     {
         //filename ip port(0) filesize token
         fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
@@ -2602,7 +2602,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     bool ok = true;
     const int argumentSize = dccArguments.count();
 
-    if (dccArguments.at(argumentSize - 3) == QStringLiteral("0")) //-1 index, -1 token, -1 pos
+    if (dccArguments.at(argumentSize - 3) == QLatin1Char('0')) //-1 index, -1 token, -1 pos
     {
         fileName = recoverDccFileName(dccArguments, 3); //port position token
         ownPort = 0;
@@ -2655,7 +2655,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     const int argumentSize = dccArguments.count();
 
     //filename port filepos [token]
-    if (dccArguments.at( argumentSize - 3) == QStringLiteral("0"))
+    if (dccArguments.at( argumentSize - 3) == QLatin1Char('0'))
     {
         //filename port filepos token
         passiv = true;
@@ -3279,7 +3279,7 @@ QStringList Server::getISONList()
         return QStringList();
 }
 
-QString Server::getISONListString() { return getISONList().join(QStringLiteral(" ")); }
+QString Server::getISONListString() { return getISONList().join(QLatin1Char(' ')); }
 
 /**
  * Return true if the given nickname is on the watch list.
@@ -3755,11 +3755,11 @@ const QString& inputLineText
         }
         else if (toExpand == QLatin1Char('n'))
         {
-            out.append(QStringLiteral("\n"));
+            out.append(QLatin1Char('\n'));
         }
         else if (toExpand == QLatin1Char('p'))
         {
-            out.append(QStringLiteral("%"));
+            out.append(QLatin1Char('%'));
         }
         else if (toExpand == QLatin1Char('i'))
         {
@@ -3935,9 +3935,9 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
             //channels.count() and passwords.count() account for the commas
             if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
             {
-                while (!passwords.isEmpty() && passwords.last() == QStringLiteral(".")) passwords.pop_back();
+                while (!passwords.isEmpty() && passwords.last() == QLatin1Char('.')) passwords.pop_back();
 
-                joinCommands << QStringLiteral("JOIN ") + channels.join(QStringLiteral(",")) + QLatin1Char(' ') + passwords.join(QStringLiteral(","));
+                joinCommands << QStringLiteral("JOIN ") + channels.join(QLatin1Char(',')) + QLatin1Char(' ') + passwords.join(QLatin1Char(','));
 
                 channels.clear();
                 passwords.clear();
@@ -3952,13 +3952,13 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
         }
     }
 
-    while (!passwords.isEmpty() && passwords.last() == QStringLiteral(".")) passwords.pop_back();
+    while (!passwords.isEmpty() && passwords.last() == QLatin1Char('.')) passwords.pop_back();
 
     // Even if the given tmpList contained entries they might have been filtered
     // out by the isAChannel() check.
     if (!channels.isEmpty())
     {
-        joinCommands << QStringLiteral("JOIN ") + channels.join(QStringLiteral(",")) + QLatin1Char(' ') + passwords.join(QStringLiteral(","));
+        joinCommands << QStringLiteral("JOIN ") + channels.join(QLatin1Char(',')) + QLatin1Char(' ') + passwords.join(QLatin1Char(','));
     }
 
     return joinCommands;
@@ -3998,7 +3998,7 @@ void Server::sendMultiServerCommand(const QString& command, const QString& param
 
 void Server::executeMultiServerCommand(const QString& command, const QString& parameter)
 {
-    if (command == QStringLiteral("msg"))
+    if (command == QLatin1String("msg"))
         sendToAllChannelsAndQueries(parameter);
     else
         sendToAllChannelsAndQueries(Preferences::self()->commandChar() + command + QLatin1Char(' ') + parameter);

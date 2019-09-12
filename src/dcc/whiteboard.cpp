@@ -235,7 +235,7 @@ namespace Konversation
 
                 txtArgsList.removeFirst();
                 txtArgsList.removeFirst();
-                QString text(txtArgsList.join(QStringLiteral(",")));
+                QString text(txtArgsList.join(QLatin1Char(',')));
 
                 m_paintArea->useText(x1,y1,text);
             }
@@ -317,7 +317,7 @@ namespace Konversation
                 txtArgsList.removeFirst(); // fontstyle
                 txtArgsList.removeFirst(); // textcolor
                 txtArgsList.removeFirst(); // bgcolor
-                QString text(txtArgsList.join(QStringLiteral(",")));
+                QString text(txtArgsList.join(QLatin1Char(',')));
                 // qDebug() << "TXTEX" << text << fontSize << fontName;
                 m_paintArea->useTextExtended(x1,y1,tFont,penColor,brushColor,text);
             }

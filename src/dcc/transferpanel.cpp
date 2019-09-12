@@ -357,7 +357,7 @@ namespace Konversation
             {
                 m_detailPanel->setTransfer(transfer);
             }
-            else if (!transfer || m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
+            else if (!transfer || m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().isEmpty())
             {
                 m_detailPanel->clear();
             }
@@ -426,7 +426,7 @@ namespace Konversation
             {
                 m_detailPanel->setTransfer(transfer);
             }
-            else if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0 || !transfer)
+            else if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().isEmpty() || !transfer)
             {
                 m_detailPanel->clear();
             }

@@ -75,13 +75,13 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
     newItem->setCheckState(0, Qt::Unchecked);
     // Regular expression?
-    if (definition.at(0)==QLatin1String("1")) newItem->setCheckState(0, Qt::Checked);
+    if (definition.at(0)== QLatin1Char('1')) newItem->setCheckState(0, Qt::Checked);
     // direction input/output/both
-    if (definition.at(1)==QLatin1String("i"))
+    if (definition.at(1)== QLatin1Char('i'))
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
     }
-    else if (definition.at(1)==QLatin1String("o"))
+    else if (definition.at(1)== QLatin1Char('o'))
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     }
@@ -200,8 +200,8 @@ void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
     // set combobox to selected item
     int itemIndex=0;
     QString direction=autoreplaceEntry->text(4);
-    if(direction==QLatin1String("i")) itemIndex=DIRECTION_INPUT;
-    else if(direction==QLatin1String("o")) itemIndex=DIRECTION_OUTPUT;
+    if(direction== QLatin1Char('i')) itemIndex=DIRECTION_INPUT;
+    else if(direction== QLatin1Char('o')) itemIndex=DIRECTION_OUTPUT;
     else if(direction==QLatin1String("io")) itemIndex=DIRECTION_BOTH;
     directionCombo->setCurrentIndex(itemIndex);
     // re-enable modified() signal on text changes in edit widgets

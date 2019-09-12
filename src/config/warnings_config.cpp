@@ -109,7 +109,7 @@ void Warnings_Config::saveSettings()
                 // else newly unchecked, always join "1"
                 QString state = grp.readEntry(warningName, QString());
 
-                if (state == QLatin1String("2"))
+                if (state == QLatin1Char('2'))
                     grp.writeEntry(warningName, state);
                 else
                     grp.writeEntry(warningName, "1");
@@ -226,7 +226,7 @@ void Warnings_Config::loadSettings()
         }
         else if (flagName == QLatin1String("Invitation"))
         {
-            item->setCheckState(0, grp.readEntry(flagName, QStringLiteral("0")) == QLatin1String("0") ? Qt::Checked : Qt::Unchecked);
+            item->setCheckState(0, grp.readEntry(flagName, QStringLiteral("0")) == QLatin1Char('0') ? Qt::Checked : Qt::Unchecked);
         }
         else
         {

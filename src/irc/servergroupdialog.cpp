@@ -431,7 +431,7 @@ namespace Konversation
         {
             KMessageBox::error(this, i18n("The network name is required."));
         }
-        else if (m_serverList.count() == 0)
+        else if (m_serverList.isEmpty())
         {
             KMessageBox::error(this, i18n("You need to add at least one server to the network."));
         }

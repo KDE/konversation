@@ -203,7 +203,7 @@ QString ChannelNick::tooltip() const
     //if(modes.empty()) modes << i18n("A normal user");
     if(!modes.empty())
     {
-        tooltip << "<tr><td><b>" << i18n("Mode") << ":</b></td><td>" << modes.join(QStringLiteral(", ")) << "</td></tr>";
+        tooltip << "<tr><td><b>" << i18n("Mode") << ":</b></td><td>" << modes.join(QLatin1String(", ")) << "</td></tr>";
     }
     tooltip << "</table></qt>";
     //qDebug() << strTooltip ;

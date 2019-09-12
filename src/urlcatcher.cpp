@@ -316,7 +316,7 @@ void UrlCatcher::copySelectedUrls()
         if (index.isValid()) urls << index.data().toString();
 
     QClipboard* clipboard = qApp->clipboard();
-    clipboard->setText(urls.join(QStringLiteral("\n")), QClipboard::Clipboard);
+    clipboard->setText(urls.join(QLatin1Char('\n')), QClipboard::Clipboard);
 }
 
 void UrlCatcher::deleteSelectedUrls()

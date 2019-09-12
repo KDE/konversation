@@ -87,11 +87,11 @@ namespace Konversation
         {
             //if we have cbc
             if(m_cbc)
-                cipherText = cipherText.mid(5);
+                cipherText.remove(0, 5);
             //if we don't
             else
             {
-                cipherText = cipherText.mid(5);
+                cipherText.remove(0, 5);
                 pfx = "ERROR_NONECB: ";
                 error = true;
             }
@@ -110,9 +110,9 @@ namespace Konversation
             else
             {
                 if(cipherText.mid(0,4) == "+OK ")
-                    cipherText = cipherText.mid(4);
+                    cipherText.remove(0, 4);
                 else
-                    cipherText = cipherText.mid(5);
+                    cipherText.remove(0, 5);
             }
         }
         //all other cases we fail
@@ -166,7 +166,7 @@ namespace Konversation
 
         //remove leading 0
         if(publicKey.length() > 135 && publicKey.at(0) == '\0')
-            publicKey = publicKey.mid(1);
+            publicKey.remove(0, 1);
 
         return publicKey.toBase64().append('A');
     }
@@ -189,7 +189,7 @@ namespace Konversation
 
         //remove leading 0
         if(publicKey.length() > 135 && publicKey.at(0) == '\0')
-            publicKey = publicKey.mid(1);
+            publicKey.remove(0, 1);
 
         QCA::DHPublicKey remotePub(group, remoteKey);
 
@@ -242,7 +242,7 @@ namespace Konversation
     QByteArray Cipher::decryptTopic(QByteArray cipherText)
     {
         if(cipherText.mid(0,4) == "+OK ")// FiSH style topic
-            cipherText = cipherText.mid(4);
+            cipherText.remove(0, 4);
         else if(cipherText.left(5) == "«m«")
             cipherText = cipherText.mid(5,cipherText.length()-10);
         else
@@ -264,7 +264,7 @@ namespace Konversation
             cipherText = temp;
 
         if(cipherText.mid(0,2) == "@@")
-            cipherText = cipherText.mid(2);
+            cipherText.remove(0, 2);
 
         cipherText = "(e) "+cipherText;
         return cipherText;
@@ -273,7 +273,7 @@ namespace Konversation
     bool Cipher::encrypt(QByteArray& cipherText)
     {
         if (cipherText.left(3) == "+p ") //don't encode if...?
-            cipherText = cipherText.mid(3);
+            cipherText.remove(0, 3);
         else
         {
             if(m_cbc) //encode in ecb or cbc decide how to determine later
@@ -336,7 +336,7 @@ namespace Konversation
         if(direction) //send in base64
             temp2 = temp2.toBase64();
         else //cut off the 8bits of IV
-            temp2 = temp2.remove(0,8);
+            temp2.remove(0,8);
 
         return temp2;
     }

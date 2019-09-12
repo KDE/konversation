@@ -614,7 +614,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 ) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "ignore -ALL " + nicks.join(QStringLiteral(" ")));
+                commandToServer(server, "ignore -ALL " + nicks.join(QLatin1Char(' ')));
             }
 
             break;
@@ -644,7 +644,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 QStringLiteral("UnignoreNick")) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "unignore " + selectedIgnoredNicks.join(QStringLiteral(" ")));
+                commandToServer(server, "unignore " + selectedIgnoredNicks.join(QLatin1Char(' ')));
             }
 
             break;
@@ -692,10 +692,10 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             command = pattern;
             partialList = nicks.mid(index, modesCount);
-            command = command.replace(QLatin1String("%l"), partialList.join(QStringLiteral(" ")));
+            command.replace(QLatin1String("%l"), partialList.join(QLatin1Char(' ')));
             const QString repeatedMode = mode.repeated(partialList.count());
 
-            command = command.replace(QLatin1String("%m"), repeatedMode);
+            command.replace(QLatin1String("%m"), repeatedMode);
 
             server->queue(command);
         }

@@ -540,8 +540,8 @@ namespace Konversation
         if (m_isAnyTypeOfOp)
         {
           QList<QTreeWidgetItem*> items = m_ui.banList->findItems(text, Qt::MatchExactly | Qt::MatchCaseSensitive, 0);
-          m_ui.addBan->setEnabled(items.count() == 0);
-          m_ui.updateBan->setEnabled(items.count() == 0 && m_ui.banList->currentItem());
+          m_ui.addBan->setEnabled(items.isEmpty());
+          m_ui.updateBan->setEnabled(items.isEmpty() && m_ui.banList->currentItem());
         }
       }
       else

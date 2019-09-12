@@ -367,11 +367,11 @@ namespace Konversation
     {
         QString authType = m_authTypeCombo->itemData(index).toString();
 
-        bool isNickServ = (authType == QStringLiteral("nickserv"));
-        bool isSaslPlain = (authType == QStringLiteral("saslplain"));
-        bool isSaslExernal = (authType == QStringLiteral("saslexternal"));
-        bool isServerPw = (authType == QStringLiteral("serverpw"));
-        bool isPemClientCert = (isSaslExernal || (authType == QStringLiteral("pemclientcert")));
+        bool isNickServ = (authType == QLatin1String("nickserv"));
+        bool isSaslPlain = (authType == QLatin1String("saslplain"));
+        bool isSaslExernal = (authType == QLatin1String("saslexternal"));
+        bool isServerPw = (authType == QLatin1String("serverpw"));
+        bool isPemClientCert = (isSaslExernal || (authType == QLatin1String("pemclientcert")));
 
         nickservNicknameLabel->setVisible(isNickServ);
         m_nickservNicknameEdit->setVisible(isNickServ);

@@ -154,7 +154,7 @@ QString ChatWindow::getURI(bool passNetwork)
 
     if (getType() == Channel)
     {
-        channel = getName().replace(QRegExp("^#"), QString());
+        channel = getName().remove(QRegExp("^#"));
         // must protect second #, but might as well protect all of them
         channel.replace(QLatin1String("#"), QLatin1String("%23"));
     }
@@ -715,7 +715,7 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
     {
         isAction = true;
 
-        result = result.mid(4);
+        result.remove(0, 4);
         visualization = QStringLiteral("* %1 %2").arg(m_server->getNickname()).arg(result);
     }
     else

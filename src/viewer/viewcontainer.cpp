@@ -920,7 +920,7 @@ void ViewContainer::updateViewActions(int index)
                 if (m_frontServer)
                 {
                     QString name = m_frontServer->getDisplayName();
-                    name = name.replace('&', QLatin1String("&&"));
+                    name.replace('&', QLatin1String("&&"));
                     channelListAction->setEnabled(true);
                     channelListAction->setChecked(m_frontServer->getChannelListPanel());
                     channelListAction->setText(i18n("Channel &List for %1",name));
@@ -942,7 +942,7 @@ void ViewContainer::updateViewActions(int index)
                 else
                 {
                     QString name = view->getName();
-                    name = name.replace('&', QLatin1String("&&"));
+                    name.replace('&', QLatin1String("&&"));
                     action->setText(i18n("&Open Logfile for %1",name));
                 }
             }

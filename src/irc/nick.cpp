@@ -150,7 +150,7 @@ QString Nick::calculateLabel1() const
 
     if(Preferences::self()->showRealNames() && !nickinfo->getRealName().isEmpty())
     {
-        retString += QStringLiteral(" (") + Konversation::removeIrcMarkup(nickinfo->getRealName()) + QLatin1Char(')');
+        retString += QLatin1String(" (") + Konversation::removeIrcMarkup(nickinfo->getRealName()) + QLatin1Char(')');
     }
 
     return retString;

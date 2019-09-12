@@ -568,7 +568,7 @@ void Channel::completeNick()
                 {
                     if(Preferences::self()->nickCompletionMode() == 1)
                     {
-                        QString nicksFound = found.join(QStringLiteral(" "));
+                        QString nicksFound = found.join(QLatin1Char(' '));
                         appendServerMessage(i18n("Completion"), i18n("Possible completions: %1.", nicksFound));
                     }
                     else
@@ -2517,7 +2517,7 @@ void Channel::processQueuedNicks(bool flush)
             if(index >= 0)
             {
                 userHost = nickname.mid(index + 1);
-                nickname = nickname.left(index);
+                nickname.truncate(index);
             }
         }
 

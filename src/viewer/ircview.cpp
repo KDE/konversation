@@ -937,7 +937,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
     {
         QDateTime serverTime;
 
-        if (messageTags.contains(QStringLiteral("time"))) // If it exists use the supplied server time.
+        if (messageTags.contains(QLatin1String("time"))) // If it exists use the supplied server time.
             serverTime = QDateTime::fromString(messageTags[QStringLiteral("time")], Qt::ISODate).toLocalTime();
 
         QTime time = serverTime.isValid() ? serverTime.time() : QTime::currentTime();
@@ -1414,15 +1414,15 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         }
                         else
                         {
-                            if (data.openHtmlTags.contains(QStringLiteral("font")) &&
-                                data.openHtmlTags.contains(QStringLiteral("span")))
+                            if (data.openHtmlTags.contains(QLatin1String("font")) &&
+                                data.openHtmlTags.contains(QLatin1String("span")))
                             {
                                 colorString += closeToTagString(&data, QStringLiteral("span"));
                                 data.lastBgColor.clear();
                                 colorString += closeToTagString(&data, QStringLiteral("font"));
                                 data.lastFgColor.clear();
                             }
-                            else if (data.openHtmlTags.contains(QStringLiteral("font")))
+                            else if (data.openHtmlTags.contains(QLatin1String("font")))
                             {
                                 colorString += closeToTagString(&data, QStringLiteral("font"));
                                 data.lastFgColor.clear();
@@ -1460,13 +1460,13 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // NOTE: there is no new bgColor is there is no fgColor
                     else if (!fgColor.isEmpty())
                     {
-                        if (data.openHtmlTags.contains(QStringLiteral("font")) &&
-                            data.openHtmlTags.contains(QStringLiteral("span")))
+                        if (data.openHtmlTags.contains(QLatin1String("font")) &&
+                            data.openHtmlTags.contains(QLatin1String("span")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("span"));
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
-                        else if (data.openHtmlTags.contains(QStringLiteral("font")))
+                        else if (data.openHtmlTags.contains(QLatin1String("font")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
@@ -1523,11 +1523,11 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // close current color strings and open reverse tags
                     if (!data.reverse)
                     {
-                        if (data.openHtmlTags.contains(QStringLiteral("span")))
+                        if (data.openHtmlTags.contains(QLatin1String("span")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("span"));
                         }
-                        if (data.openHtmlTags.contains(QStringLiteral("font")))
+                        if (data.openHtmlTags.contains(QLatin1String("font")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
@@ -2090,11 +2090,11 @@ void IRCView::openLink(const QUrl& url)
 {
     QString link(url.toString());
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link = link.replace (' ', QLatin1String("%20"));
+    link.replace (' ', QLatin1String("%20"));
     // HACK Handle pipe as toString doesn't seem to decode that correctly
-    link = link.replace (QLatin1String("%7C"), QLatin1String("|"));
+    link.replace (QLatin1String("%7C"), QLatin1String("|"));
     // HACK Handle ` as toString doesn't seem to decode that correctly
-    link = link.replace (QLatin1String("%60"), QLatin1String("`"));
+    link.replace (QLatin1String("%60"), QLatin1String("`"));
 
     if (!link.isEmpty() && !link.startsWith('#'))
         Application::openUrl(url.toEncoded());
@@ -2117,7 +2117,7 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
 {
     QString link = m_urlToCopy;
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link = link.replace (' ', QLatin1String("%20"));
+    link.replace (' ', QLatin1String("%20"));
 
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())

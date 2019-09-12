@@ -115,7 +115,7 @@ void Application::implementRestart()
 
     // Avoid accumulating multiple --startupdelay arguments across multiple
     // uses of restart().
-    if (m_restartArguments.contains(QStringLiteral("--startupdelay")))
+    if (m_restartArguments.contains(QLatin1String("--startupdelay")))
     {
         int index = m_restartArguments.lastIndexOf(QStringLiteral("--startupdelay"));
 
@@ -585,7 +585,7 @@ void Application::readOptions()
         // if there's a "#" in the end, strip it (used to preserve blanks at the end of the replacement text)
         // there should always be one, but older versions did not do it, so we check first
         if (entry.at(length)==QLatin1Char('#'))
-            entry=entry.left(length);
+            entry.truncate(length);
         QString regex = entry.section(QLatin1Char(','),0,0);
         QString direction = entry.section(QLatin1Char(','),1,1);
         QString pattern = entry.section(QLatin1Char(','),2,2);
@@ -610,13 +610,13 @@ void Application::readOptions()
         {
             int repLen=replace.length()-1;
             if (replace.at(repLen)==QLatin1Char('#'))
-                replace=replace.left(repLen);
+                replace.truncate(repLen);
         }
         if (pattern.length()>0)
         {
             int patLen=pattern.length()-1;
             if (pattern.at(patLen)==QLatin1Char('#'))
-                pattern=pattern.left(patLen);
+                pattern.truncate(patLen);
         }
         index++;
         indexString = QString::number(index);
@@ -704,7 +704,7 @@ void Application::readOptions()
     {
         if(reg.indexIn(*itStr) > -1)
         {
-            if(reg.cap(1) == QStringLiteral("ServerGroup") && !reg.cap(3).isEmpty())
+            if(reg.cap(1) == QLatin1String("ServerGroup") && !reg.cap(3).isEmpty())
                 Preferences::setChannelEncoding(sgKeys.at(reg.cap(2).toInt()), reg.cap(3), encodingEntries[*itStr]);
             else
                 Preferences::setChannelEncoding(reg.cap(1), reg.cap(2), encodingEntries[*itStr]);
@@ -720,7 +720,7 @@ void Application::readOptions()
     {
         if (reg.indexIn(*itStr) > -1)
         {
-            if (reg.cap(1) == QStringLiteral("ServerGroup") && !reg.cap(3).isEmpty())
+            if (reg.cap(1) == QLatin1String("ServerGroup") && !reg.cap(3).isEmpty())
             {
                 ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(reg.cap(2).toInt()));
 
@@ -1050,7 +1050,7 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 {
     QString url(newUrl);
 
-    url = url.replace(QStringLiteral("&amp;"), QStringLiteral("&"));
+    url.replace(QStringLiteral("&amp;"), QStringLiteral("&"));
 
     QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
 
@@ -1137,7 +1137,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
         if (direction==isDirection || direction==QStringLiteral("io"))
         {
             // regular expression pattern?
-            if (regex==QStringLiteral("1"))
+            if (regex== QLatin1Char('1'))
             {
                 // create regex from pattern
                 QRegExp needleReg(pattern);

@@ -82,12 +82,12 @@ bool InviteDialog::shouldBeShown(QDialogButtonBox::StandardButton& buttonCode)
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 
-    if (dontAsk == QStringLiteral("1"))
+    if (dontAsk == QLatin1Char('1'))
     {
     buttonCode = QDialogButtonBox::Ok;
     return false;
     }
-    else if (dontAsk == QStringLiteral("2"))
+    else if (dontAsk == QLatin1Char('2'))
     {
     buttonCode = QDialogButtonBox::Cancel;
     return false;
@@ -112,7 +112,7 @@ void InviteChannelListModel::addInvite(const QString& nickname, const QString& c
     {
         if(!m_channelMap[channel].nicknames.contains(nickname))
         {
-            m_channelMap[channel].nicknames += QStringLiteral(", ") + nickname;
+            m_channelMap[channel].nicknames += QLatin1String(", ") + nickname;
         }
     }
     else
@@ -204,7 +204,7 @@ QString InviteChannelListModel::selectedChannels() const
             channels.append(item.channel);
     }
 
-    return channels.join(QStringLiteral(","));
+    return channels.join(QLatin1Char(','));
 }
 
 bool InviteChannelListModel::setData(const QModelIndex& index, const QVariant& value, int role)

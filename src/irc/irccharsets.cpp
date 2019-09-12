@@ -97,7 +97,7 @@ namespace Konversation
         // Special cases
         // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
         // Japanese networks prefer jis7 over Utf-8.
-        if (QLocale::system().name() == QStringLiteral("ja_JP"))
+        if (QLocale::system().name() == QLatin1String("ja_JP"))
             return QStringLiteral("ISO-2022-JP");
 
         // it's a little hacky..
@@ -112,7 +112,7 @@ namespace Konversation
     {
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.
-        if (shortName == QStringLiteral("jis7"))
+        if (shortName == QLatin1String("jis7"))
             return KCharsets::charsets()->codecForName(QStringLiteral("ISO-2022-JP"));
         else
             return KCharsets::charsets()->codecForName(shortName.toLatin1());
@@ -134,10 +134,10 @@ namespace Konversation
             QString encodingName = KCharsets::charsets()->encodingForName( *it );
             // exclude encodings which are not supported on IRC
             // 10646-UCS-2 & ucs2 are both UTF-16
-            if ( encodingName == QStringLiteral("ISO 10646-UCS-2") ||
-                 encodingName == QStringLiteral("ucs2") ||
-                 encodingName == QStringLiteral("UTF-16") ||
-                 encodingName == QStringLiteral("utf7") )
+            if ( encodingName == QLatin1String("ISO 10646-UCS-2") ||
+                 encodingName == QLatin1String("ucs2") ||
+                 encodingName == QLatin1String("UTF-16") ||
+                 encodingName == QLatin1String("utf7") )
             {
                 it = m_descriptiveNames.erase( it );
             }
@@ -146,7 +146,7 @@ namespace Konversation
                 m_shortNames.append( encodingName );
                 m_simplifiedShortNames.insert( encodingName.remove( reSimplify ).toLower(), m_shortNames.last() );
 
-                if(encodingName == QStringLiteral("jis7"))        // Add iso-2022-jp which is same as jis7 but not in Qt
+                if(encodingName == QLatin1String("jis7"))        // Add iso-2022-jp which is same as jis7 but not in Qt
                 {
                     it = m_descriptiveNames.insert(it, QStringLiteral("Japanese ( ISO 2022-JP )"));
                     m_shortNames.append( QStringLiteral("ISO 2022-JP") );

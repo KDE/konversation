@@ -363,7 +363,7 @@ void Query::nickInfoChanged()
             text += QStringLiteral(" - ");
         text += m_nickInfo->getHostmask();
         if(m_nickInfo->isAway() && !m_nickInfo->getAwayMessage().isEmpty())
-            text += QStringLiteral(" (") + m_nickInfo->getAwayMessage() + QStringLiteral(") ");
+            text += QLatin1String(" (") + m_nickInfo->getAwayMessage() + QLatin1String(") ");
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
         QString strTooltip;
