@@ -138,7 +138,6 @@ set(viewer_SRCS
     viewer/topiclabel.cpp
     viewer/awaylabel.cpp
     viewer/editnotifydialog.cpp
-    viewer/emoticons.cpp
     viewer/images.cpp
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
@@ -224,7 +223,6 @@ target_link_libraries(konversation
     KF5::Bookmarks
     KF5::ConfigWidgets
     KF5::Crash
-    KF5::Emoticons
     KF5::I18n
     KF5::IdleTime
     KF5::NotifyConfig

@@ -20,7 +20,6 @@
 #include "application.h"
 #include "highlight.h"
 #include "sound.h"
-#include "emoticons.h"
 #include "notificationhandler.h"
 
 #include <QDrag>
@@ -1213,8 +1212,6 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         filteredLine = QLatin1String("<font color=\"") + Preferences::self()->highlightOwnLinesColor().name() +
             QLatin1String("\">") + filteredLine + QLatin1String("</font>");
     }
-
-    filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
 
     return filteredLine;
 }
