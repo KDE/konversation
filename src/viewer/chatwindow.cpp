@@ -33,7 +33,7 @@
 ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->setMargin(margin());
+    mainLayout->setContentsMargins(margin(), margin(), margin(), margin());
     mainLayout->setSpacing(spacing());
 
     setName(QStringLiteral("ChatWindowObject"));
