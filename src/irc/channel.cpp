@@ -1037,7 +1037,7 @@ bool Channel::shouldShowEvent(ChannelNickPtr channelNick)
 
             if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 0) // last 10 minutes
                 activityThreshold = 600;
-            if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 1) // last hour
+            else if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 1) // last hour
                 activityThreshold = 3600;
             else if (Preferences::self()->hideUnimportantEventsExcludeActiveThreshold() == 2) // last day
                 activityThreshold = 86400;
