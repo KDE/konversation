@@ -137,7 +137,7 @@ class ChatWindow : public QWidget
 
         void msgHelper(const QString& recipient, const QString& message);
 
-        void setMargin(int margin) { layout()->setMargin(margin); }
+        void setMargin(int margin) { layout()->setContentsMargins(margin, margin, margin, margin); }
         void setSpacing(int spacing) { layout()->setSpacing(spacing); }
         void activateView();
 
