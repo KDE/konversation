@@ -27,7 +27,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit TopicLabel(QWidget *parent = 0, const char *name = 0);
+            explicit TopicLabel(QWidget *parent = nullptr, const char *name = 0);
             ~TopicLabel();
 
             QSize minimumSizeHint() const Q_DECL_OVERRIDE;

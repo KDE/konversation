@@ -28,7 +28,7 @@ class DBus : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
     public:
-        explicit DBus(QObject *parent = 0);
+        explicit DBus(QObject *parent = nullptr);
 
         QString getNickname (const QString &server);
         QString getChannelEncoding(const QString& server, const QString& channel);
@@ -75,7 +75,7 @@ class IdentDBus : public QObject
     Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
         public:
-        explicit IdentDBus(QObject *parent = 0);
+        explicit IdentDBus(QObject *parent = nullptr);
 
     public Q_SLOTS:
         void setrealName(const QString &identity, const QString& name);

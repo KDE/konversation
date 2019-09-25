@@ -29,7 +29,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit NotificationHandler(Application* parent = 0);
+            explicit NotificationHandler(Application* parent = nullptr);
             ~NotificationHandler();
 
         public Q_SLOTS:

@@ -21,7 +21,7 @@ class AwayLabel : public QLabel
     Q_OBJECT
 
     public:
-        explicit AwayLabel(QWidget *parent = 0);
+        explicit AwayLabel(QWidget *parent = nullptr);
         ~AwayLabel();
 
     Q_SIGNALS:

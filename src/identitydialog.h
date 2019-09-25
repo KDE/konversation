@@ -29,7 +29,7 @@ namespace Konversation
     {
         Q_OBJECT
         public:
-            explicit IdentityDialog(QWidget *parent = 0);
+            explicit IdentityDialog(QWidget *parent = nullptr);
             ~IdentityDialog() {}
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(const IdentityPtr &identity);

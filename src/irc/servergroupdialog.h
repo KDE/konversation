@@ -85,7 +85,7 @@ namespace Konversation
     {
         Q_OBJECT
         public:
-            explicit ServerDialog(const QString& title, QWidget *parent = 0);
+            explicit ServerDialog(const QString& title, QWidget *parent = nullptr);
             ~ServerDialog();
 
             void setServerSettings(const ServerSettings& server);
@@ -104,7 +104,7 @@ namespace Konversation
     {
         Q_OBJECT
         public:
-            explicit ChannelDialog(const QString& title, QWidget *parent = 0);
+            explicit ChannelDialog(const QString& title, QWidget *parent = nullptr);
             ~ChannelDialog();
 
             void setChannelSettings(const ChannelSettings& channel);

@@ -223,7 +223,7 @@ class ViewContainer : public QAbstractItemModel
         void closeQueries();
 
         ChannelListPanel* addChannelListPanel(Server* server);
-        void openChannelList(Server* server = 0, const QString& filter = QString(), bool getList = false);
+        void openChannelList(Server* server = nullptr, const QString& filter = QString(), bool getList = false);
 
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();

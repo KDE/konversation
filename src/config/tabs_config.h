@@ -20,7 +20,7 @@ class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
     Q_OBJECT
 
     public:
-        explicit Tabs_Config(QWidget *parent = 0, const char *name = 0);
+        explicit Tabs_Config(QWidget *parent = nullptr, const char *name = 0);
         ~Tabs_Config();
 
     protected Q_SLOTS:

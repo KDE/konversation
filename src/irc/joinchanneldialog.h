@@ -28,7 +28,7 @@ namespace Konversation
     {
         Q_OBJECT
             public:
-            explicit JoinChannelDialog(Server* server, QWidget *parent = 0);
+            explicit JoinChannelDialog(Server* server, QWidget *parent = nullptr);
             ~JoinChannelDialog();
 
             int connectionId() const;

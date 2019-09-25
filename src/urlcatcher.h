@@ -50,7 +50,7 @@ class UrlSortFilterProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
     public:
-        explicit UrlSortFilterProxyModel(QObject* parent = 0);
+        explicit UrlSortFilterProxyModel(QObject* parent = nullptr);
         ~UrlSortFilterProxyModel();
 
         Qt::ItemFlags flags(const QModelIndex& index) const Q_DECL_OVERRIDE;

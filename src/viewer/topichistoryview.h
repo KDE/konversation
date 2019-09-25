@@ -42,7 +42,7 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
     friend class TopicHistoryView;
 
     public:
-        explicit TopicHistorySortfilterProxyModel(QObject* parent = 0);
+        explicit TopicHistorySortfilterProxyModel(QObject* parent = nullptr);
         ~TopicHistorySortfilterProxyModel();
 
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
@@ -78,7 +78,7 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
     Q_OBJECT
 
     public:
-        explicit TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent = 0);
+        explicit TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent = nullptr);
         ~TopicHistoryItemDelegate();
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;

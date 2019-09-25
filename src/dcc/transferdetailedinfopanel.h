@@ -31,7 +31,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                explicit TransferDetailedInfoPanel(QWidget *parent = 0);
+                explicit TransferDetailedInfoPanel(QWidget *parent = nullptr);
                 virtual ~TransferDetailedInfoPanel();
 
                 void setTransfer(Transfer *item);

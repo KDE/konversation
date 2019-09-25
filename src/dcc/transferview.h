@@ -38,7 +38,7 @@ namespace Konversation
             Q_OBJECT
         public:
 
-            explicit TransferView(QWidget *parent = 0);
+            explicit TransferView(QWidget *parent = nullptr);
             virtual ~TransferView();
 
             void addTransfer(Transfer *transfer);
