@@ -36,10 +36,10 @@
 #include <QPointer>
 
 #include <QHostInfo>
+#include <QSslSocket>
 
 #include <QExplicitlySharedDataPointer>
 #include <kprocess.h>
-#include <ktcpsocket.h>
 #include <preferences.h>
 
 class QAbstractItemModel;
@@ -573,11 +573,11 @@ class Server : public QObject
         void toServer(QString&, IRCQueue *);
         /// Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
         void closed();
-        void broken(KTcpSocket::Error error);
+        void broken(QAbstractSocket::SocketError error);
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
-        void sslError(const QList<KSslError>&);
+        void sslError(const QList<QSslError>&);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
 
@@ -738,7 +738,7 @@ class Server : public QObject
 
         QStringList m_autoJoinCommands;
 
-        KTcpSocket* m_socket;
+        QSslSocket *m_socket;
 
         QTimer m_incomingTimer;
         QTimer m_notifyTimer;

@@ -40,6 +40,7 @@
 #include "ircinput.h"
 
 #include <QTextCodec>
+#include <QSslSocket>
 #include <QStringListModel>
 #include <QStringBuilder>
 #include <QInputDialog>
@@ -50,6 +51,7 @@
 #include <KWindowSystem>
 #include <KShell>
 
+#include <KSslErrorUiData>
 #include <kio/sslui.h>
 
 using namespace Konversation;
@@ -466,22 +468,21 @@ void Server::connectToIRCServer()
             m_nickListModel->setStringList(getIdentity()->getNicknameList());
         resetNickSelection();
 
-        m_socket = new KTcpSocket();
+        m_socket = new QSslSocket();
         m_socket->setObjectName(QStringLiteral("serverSocket"));
 
-        connect(m_socket, SIGNAL(error(KTcpSocket::Error)), SLOT(broken(KTcpSocket::Error)) );
-        connect(m_socket, &QIODevice::readyRead, this, &Server::incoming);
-        connect(m_socket, &KTcpSocket::disconnected, this, &Server::closed);
+        connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+                this, &Server::broken);
 
-        connect(m_socket, &KTcpSocket::hostFound, this, &Server::hostFound);
+        connect(m_socket, &QIODevice::readyRead, this, &Server::incoming);
+        connect(m_socket, &QAbstractSocket::disconnected, this, &Server::closed);
+        connect(m_socket, &QAbstractSocket::hostFound, this, &Server::hostFound);
 
         getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port %2)...",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port())));
 
-        KTcpSocket::ProxyPolicy proxyPolicy = KTcpSocket::AutoProxy;
         if(getConnectionSettings().server().bypassProxy()) {
-            proxyPolicy = KTcpSocket::ManualProxy;
             m_socket->setProxy(QNetworkProxy::NoProxy);
         }
 
@@ -490,8 +491,9 @@ void Server::connectToIRCServer()
             || getIdentity()->getAuthType() == QLatin1String("saslexternal")
             || getIdentity()->getAuthType() == QLatin1String("pemclientcert"))
         {
-            connect(m_socket, &KTcpSocket::encrypted, this, &Server::socketConnected);
-            connect(m_socket, SIGNAL(sslErrors(QList<KSslError>)), SLOT(sslError(QList<KSslError>)));
+            connect(m_socket, &QSslSocket::encrypted, this, &Server::socketConnected);
+            connect(m_socket, QOverload<const QList<QSslError> &>::of(&QSslSocket::sslErrors),
+                    this, &Server::sslError);
 
             if (getIdentity()->getAuthType() == QLatin1String("saslexternal")
                 || getIdentity()->getAuthType() == QLatin1String("pemclientcert"))
@@ -500,14 +502,25 @@ void Server::connectToIRCServer()
                 m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
             }
 
-            m_socket->setAdvertisedSslVersion(KTcpSocket::SecureProtocols);
-
-            m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+            m_socket->setProtocol(QSsl::SecureProtocols);
+            // QIODevice::Unbuffered, see m_socket->connectToHost() call below
+            m_socket->connectToHostEncrypted(getConnectionSettings().server().host(),
+                                             getConnectionSettings().server().port(),
+                                             (QIODevice::ReadWrite | QIODevice::Unbuffered));
         }
         else
         {
-            connect(m_socket, &KTcpSocket::connected, this, &Server::socketConnected);
-            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port(), proxyPolicy);
+            connect(m_socket, &QAbstractSocket::connected, this, &Server::socketConnected);
+            // From KTcpSocket::connectToHost():
+            // There are enough layers of buffers between us and the network, and there is a quirk
+            // in QIODevice that can make it try to readData() twice per read() call if buffered and
+            // reaData() does not deliver enough data the first time. Like when the other side is
+            // simply not sending any more data...
+            // This can *apparently* lead to long delays sometimes which stalls applications.
+            // Do not want.
+            m_socket->connectToHost(getConnectionSettings().server().host(),
+                                    getConnectionSettings().server().port(),
+                                    (QIODevice::ReadWrite | QIODevice::Unbuffered));
         }
 
         // set up the connection details
@@ -860,7 +873,7 @@ void Server::sendAuthenticate(const QString& message)
     }
 }
 
-void Server::broken(KTcpSocket::Error error)
+void Server::broken(QAbstractSocket::SocketError error)
 {
     Q_UNUSED(error);
     qDebug() << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
@@ -935,16 +948,17 @@ void Server::broken(KTcpSocket::Error error)
 
 }
 
-void Server::sslError( const QList<KSslError>& errors )
+void Server::sslError(const QList<QSslError> &errors)
 {
     // We have to explicitly grab the socket we got the error from,
     // lest we might end up calling ignoreSslErrors() on a different
     // socket later if m_socket has started pointing at something
     // else.
-    QPointer<KTcpSocket> socket = qobject_cast<KTcpSocket*>(QObject::sender());
+    QPointer<QSslSocket> socket = qobject_cast<QSslSocket *>(QObject::sender());
 
     m_sslErrorLock = true;
-    bool ignoreSslErrors = KIO::SslUi::askIgnoreSslErrors(socket, KIO::SslUi::RecallAndStoreRules);
+    KSslErrorUiData uiData(socket);
+    bool ignoreSslErrors = KIO::SslUi::askIgnoreSslErrors(uiData, KIO::SslUi::RecallAndStoreRules);
     m_sslErrorLock = false;
 
     // The dialog-based user interaction above may take an undefined amount
@@ -1066,7 +1080,7 @@ bool Server::isSocketConnected() const
 {
     if (!m_socket) return false;
 
-    return (m_socket->state() == KTcpSocket::ConnectedState);
+    return (m_socket->state() == QAbstractSocket::ConnectedState);
 }
 
 void Server::updateConnectionState(Konversation::ConnectionState state)
@@ -3974,7 +3988,7 @@ ViewContainer* Server::getViewContainer() const
 bool Server::getUseSSL() const
 {
         if ( m_socket )
-            return ( m_socket->encryptionMode() != KTcpSocket::UnencryptedMode );
+            return ( m_socket->mode() != QSslSocket::UnencryptedMode );
         else
             return false;
 }

@@ -1,7 +1,7 @@
 project(konversation)
 
 cmake_minimum_required (VERSION 2.8.12 FATAL_ERROR)
-set (QT_MIN_VERSION "5.5.0")
+set (QT_MIN_VERSION "5.7.0")
 set(KF5_MIN_VERSION "5.25.0")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
@@ -14,7 +14,7 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMInstallIcons)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Network Widgets)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive

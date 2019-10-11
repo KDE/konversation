@@ -218,6 +218,7 @@ ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})
 add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation
+    Qt5::Network
     Qt5::Widgets
     KF5::Archive
     KF5::Bookmarks
