@@ -25,6 +25,8 @@ namespace Konversation
             ServerSettings(const ServerSettings& settings);
             explicit ServerSettings(const QString& host);
 
+            ServerSettings &operator=(const ServerSettings& settings);
+
             void setHost(const QString& host);
             QString host() const { return m_host; }
 
