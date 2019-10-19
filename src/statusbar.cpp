@@ -39,7 +39,7 @@ namespace Konversation
         // in the status bar. Which KSqueezedTextLabel doesn't.
         m_mainLabel->setSizePolicy(QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred, QSizePolicy::Label ));
         m_mainLabel->setObjectName(QStringLiteral("mainLabel"));
-        setMainLabelText(i18n("Ready."));
+        setMainLabelText(i18n("Ready"));
         m_mainLabel->setMinimumWidth(0);
 
         m_infoLabel = new QLabel(m_window->statusBar());
@@ -74,7 +74,7 @@ namespace Konversation
 
     void StatusBar::resetStatusBar()
     {
-        setMainLabelText(i18n("Ready."));
+        setMainLabelText(i18n("Ready"));
         setInfoLabelShown(false);
         setLagLabelShown(false);
         clearInfoLabel();
@@ -142,7 +142,7 @@ namespace Konversation
     {
         if (lagServer == m_window->getViewContainer()->getFrontServer())
         {
-            setMainLabelText(i18n("Ready."));
+            setMainLabelText(i18n("Ready"));
 
             QString lagString = lagServer->getServerName() + QStringLiteral(" - ");
 
