@@ -367,47 +367,36 @@ void ViewContainer::removeViewTree()
 
 int ViewContainer::rowCount(const QModelIndex& parent) const
 {
-    if (!m_tabWidget) {
-        return 0;
+    int count = 0;
+    if (m_tabWidget) {
+        if (parent.isValid()) {
+            ChatWindow* statusView = static_cast<ChatWindow*>(parent.internalPointer());
+
+            if (statusView) {
+                for (int i = m_tabWidget->indexOf(statusView) + 1; i < m_tabWidget->count(); ++i) {
+                    const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+                    if (view != statusView && view->getServer() && view->getServer()->getStatusView() == statusView) {
+                        ++count;
+                    }
+
+                    if (view->isTopLevelView()) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < m_tabWidget->count(); ++i) {
+                const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+                if (view->isTopLevelView()) {
+                    ++count;
+                }
+            }
+        }
     }
 
-    if (parent.isValid()) {
-        ChatWindow* statusView = static_cast<ChatWindow*>(parent.internalPointer());
-
-        if (!statusView) {
-            return 0;
-        }
-
-        int count = 0;
-
-        for (int i = m_tabWidget->indexOf(statusView) + 1; i < m_tabWidget->count(); ++i) {
-            const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
-
-            if (view != statusView && view->getServer() && view->getServer()->getStatusView() == statusView) {
-                ++count;
-            }
-
-            if (view->isTopLevelView()) {
-                break;
-            }
-        }
-
-        return count;
-    } else {
-        int count = 0;
-
-        for (int i = 0; i < m_tabWidget->count(); ++i) {
-            const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
-
-            if (view->isTopLevelView()) {
-                ++count;
-            }
-        }
-
-        return count;
-    }
-
-    return 0;
+    return count;
 }
 
 int ViewContainer::columnCount(const QModelIndex& parent) const
@@ -626,36 +615,21 @@ bool ViewContainer::canDropMimeData(const QMimeData *data, Qt::DropAction action
 
 bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-    if (action != Qt::MoveAction) {
-        return false;
-    }
-
-    if (!data->hasFormat(QStringLiteral("application/x-konversation-chatwindow"))) {
-        return false;
-    }
-
-    if (row == -1 || column != 0) {
+    if (action != Qt::MoveAction || row == -1 || column != 0 ||
+            !data->hasFormat(QStringLiteral("application/x-konversation-chatwindow"))) {
         return false;
     }
 
     ChatWindow *dragView = dynamic_cast<const ViewMimeData *>(data)->view();
     QModelIndex dragIdx = indexForView(dragView);
 
-    if (dragView->isTopLevelView()) {
-        if (parent.isValid()) {
-            return false;
-        }
-
+    if (dragView->isTopLevelView() && !parent.isValid()) {
         for (int i = row < dragIdx.row() ? 0 : 1; i < qAbs(dragIdx.row() - row); ++i) {
             (row < dragIdx.row()) ? moveViewLeft() : moveViewRight();
         }
 
         return true;
-    } else {
-        if (!parent.isValid()) {
-            return false;
-        }
-
+    } else if(parent.isValid()) {
         int from = m_tabWidget->indexOf(dragView);
         int to = m_tabWidget->indexOf(static_cast<ChatWindow* >(parent.internalPointer())) + row;
 
@@ -663,21 +637,19 @@ bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, i
             ++to;
         }
 
-        if (from == to) {
-            return false;
+        if (from != to) {
+            beginMoveRows(parent, dragIdx.row(), dragIdx.row(), parent, row);
+
+            m_tabWidget->blockSignals(true);
+            m_tabWidget->tabBar()->moveTab(from, to);
+            m_tabWidget->blockSignals(false);
+
+            endMoveRows();
+
+            viewSwitched(m_tabWidget->currentIndex());
+
+            return true;
         }
-
-        beginMoveRows(parent, dragIdx.row(), dragIdx.row(), parent, row);
-
-        m_tabWidget->blockSignals(true);
-        m_tabWidget->tabBar()->moveTab(from, to);
-        m_tabWidget->blockSignals(false);
-
-        endMoveRows();
-
-        viewSwitched(m_tabWidget->currentIndex());
-
-        return true;
     }
 
     return false;
