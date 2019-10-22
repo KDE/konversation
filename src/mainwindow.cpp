@@ -387,19 +387,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     connect(selectAction, SIGNAL(triggered(int)), m_viewContainer, SLOT(changeViewCharset(int)));
     actionCollection()->addAction(QStringLiteral("tab_encoding"), selectAction);
 
-    QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
-    connect(tabSelectionMapper, SIGNAL(mapped(int)), m_viewContainer, SLOT(goToView(int)));
-
     for (uint i = 1; i <= 10; ++i)
     {
 
         action=new QAction(this);
         action->setText(i18n("Go to Tab %1",i));
         actionCollection()->setDefaultShortcut(action,QKeySequence(QString(QStringLiteral("Alt+%1")).arg(i%10)));
-        connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
+        connect(action, &QAction::triggered, [=] { m_viewContainer->goToView(static_cast<int>(i - 1)); });
         actionCollection()->addAction(QString(QStringLiteral("go_to_tab_%1")).arg(i), action);
-
-        tabSelectionMapper->setMapping(action, i-1);
     }
 
     action=new QAction(this);
