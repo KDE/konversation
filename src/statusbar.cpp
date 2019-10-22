@@ -53,7 +53,7 @@ namespace Konversation
 
         m_sslLabel = new SSLLabel(m_window->statusBar());
         m_sslLabel->setObjectName(QStringLiteral("sslLabel"));
-        m_sslLabel->setPixmap(SmallIcon(QStringLiteral("security-high")));
+        m_sslLabel->setPixmap(QIcon::fromTheme(QStringLiteral("security-high")).pixmap(KIconLoader::SizeSmall));
         m_sslLabel->hide();
         m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
