@@ -477,7 +477,7 @@ namespace ShadowEngine
         for( int i = M; i < w - M; i++) {
             for( int j = M; j < h - M; j++ )
             {
-                alphaShadow = (int) decay( img, i, j );
+                alphaShadow = static_cast<int> (decay( img, i, j ));
 
                 result.setPixel( i,j, qRgba( bgr, bgg , bgb, qMin( MAX_OPACITY, alphaShadow ) ) );
             }

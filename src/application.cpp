@@ -443,7 +443,7 @@ void Application::readOptions()
     osd->setShadow(Preferences::self()->oSDDrawShadow());
 
     osd->setOffset(Preferences::self()->oSDOffsetX(), Preferences::self()->oSDOffsetY());
-    osd->setAlignment((OSDWidget::Alignment)Preferences::self()->oSDAlignment());
+    osd->setAlignment(static_cast<OSDWidget::Alignment>(Preferences::self()->oSDAlignment()));
 
     if(Preferences::self()->oSDUseCustomColors())
     {
@@ -1109,7 +1109,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
                 return nickInfo;         //If we found one
         }
     }
-    return (NickInfoPtr)nullptr;
+    return static_cast<NickInfoPtr>(nullptr);
 }
 
 // auto replace on input/output
