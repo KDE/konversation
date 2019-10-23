@@ -1392,7 +1392,7 @@ void Application::handleActivate(const QStringList& arguments)
 
     newInstance(m_commandLineParser);
 
-    KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
+    KStartupInfo::setNewStartupId(mainWindow->windowHandle(), KStartupInfo::startupId());
     mainWindow->show();
     mainWindow->raise();
 }
