@@ -1315,7 +1315,7 @@ void Application::updateProxySettings()
         }
 
         proxy.setHostName(Preferences::self()->proxyAddress());
-        proxy.setPort(Preferences::self()->proxyPort());
+        proxy.setPort(static_cast<quint16>(Preferences::self()->proxyPort()));
         proxy.setUser(Preferences::self()->proxyUsername());
         QString password;
 
