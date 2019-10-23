@@ -253,7 +253,7 @@ namespace Konversation
             QPainter tPaint;
             tPaint.begin(this);
 
-            foreach (const QRect& rect, event->region().rects())
+            foreach (const QRect& rect, event->region())
             {
                 tPaint.drawPixmap(rect, *m_imagePixmap, rect);
 
