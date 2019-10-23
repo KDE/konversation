@@ -80,7 +80,7 @@ class OSDWidget : public QWidget
         static const int MARGIN = 15;
 
         QString     m_appName;
-        uint        m_m;
+        int         m_m;
         QSize       m_size;
         int         m_duration;
         QTimer      *m_timer;
@@ -88,7 +88,7 @@ class OSDWidget : public QWidget
         QStringList textBuffer;
         Alignment   m_alignment;
         int         m_screen;
-        uint        m_y;
+        int         m_y;
         bool        m_drawShadow;
         QString     m_currentText;
 };

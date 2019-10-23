@@ -24,6 +24,7 @@
 #include <QRegExp>
 #include <QTimer>
 #include <QDebug>
+#include <QScreen>
 
 #include <QApplication>
 #include <KLocalizedString>
@@ -135,7 +136,7 @@ QRect OSDWidget::determineMetrics( const int M )
 {
     // determine a sensible maximum size, don't cover the whole desktop or cross the screen
     const QSize margin( ( M + MARGIN ) * 2, ( M + MARGIN ) * 2 ); //margins
-    const QSize max = QApplication::desktop()->screen( m_screen )->size() - margin;
+    const QSize max = QApplication::screens()[m_screen]->size() - margin;
 
     // If we don't do that, the boundingRect() might not be suitable for drawText() (Qt issue N67674)
     m_currentText.replace( QRegExp( " +\n" ), QStringLiteral("\n") );
@@ -160,7 +161,7 @@ QRect OSDWidget::determineMetrics( const int M )
     textRect.adjust( -M, -M, M, M );
 
     const QSize newSize = textRect.size();
-    const QRect screen = QApplication::desktop()->screenGeometry( m_screen );
+    const QRect screen = QApplication::screens()[m_screen]->geometry();
     QPoint newPos( MARGIN, m_y );
 
     switch( m_alignment )
@@ -314,7 +315,7 @@ void OSDWidget::setOffset( int /*x*/, int y )
 
 void OSDWidget::setScreen( int screen )
 {
-    const int n = QApplication::desktop()->numScreens();
+    const int n = QApplication::screens().count();
     m_screen = ( screen >= n ) ? n - 1 : screen;
 }
 
@@ -357,8 +358,8 @@ void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
         releaseMouse();
 
         // compute current Position && offset
-        QDesktopWidget *desktop = QApplication::desktop();
-        int currentScreen = desktop->screenNumber( pos() );
+        QScreen *screen = QApplication::screenAt( pos() );
+        int currentScreen = QApplication::screens().indexOf(screen);
 
         if( currentScreen != -1 )
         {
@@ -377,10 +378,10 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
     {
         // Here we implement a "snap-to-grid" like positioning system for the preview widget
 
-        const QRect screen      = QApplication::desktop()->screenGeometry( m_screen );
-        const uint  hcenter     = screen.width() / 2;
-        const uint  eGlobalPosX = e->globalPos().x() - screen.left();
-        const uint  snapZone    = screen.width() / 24;
+        const QRect screen     = QApplication::screens()[m_screen]->geometry();
+        const int  hcenter     = screen.width() / 2;
+        const int  eGlobalPosX = e->globalPos().x() - screen.left();
+        const int  snapZone    = screen.width() / 24;
 
         QPoint destination = e->globalPos() - m_dragOffset - screen.topLeft();
         int maxY = screen.height() - height() - MARGIN;
@@ -400,8 +401,8 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
             destination.rx() = screen.width() - MARGIN - width();
         }
         else {
-            const uint eGlobalPosY = e->globalPos().y() - screen.top();
-            const uint vcenter     = screen.height() / 2;
+            const int eGlobalPosY = e->globalPos().y() - screen.top();
+            const int vcenter     = screen.height() / 2;
 
             destination.rx() = hcenter - width() / 2;
 

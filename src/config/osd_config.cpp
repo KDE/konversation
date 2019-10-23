@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <kfontrequester.h>
 #include <QDesktopWidget>
+#include <QScreen>
 #include <kconfigdialog.h>
 
 
@@ -35,9 +36,9 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )
     bool enableScreenChooser = false;
     QRect screenRect;
 
-    for(int i = 0; i < QApplication::desktop()->numScreens(); ++i) {
+    for(int i = 0; i < QApplication::screens().count(); ++i) {
         kcfg_OSDScreen->addItem(QString::number(i));
-        screenRect = QApplication::desktop()->screenGeometry(i);
+        screenRect = QApplication::screens()[i]->geometry();
 
         //Check if we're using xinerama or not
         if(screenRect.left() != 0 || screenRect.top() != 0) {
