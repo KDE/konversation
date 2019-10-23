@@ -1019,7 +1019,7 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
         // nicks get sorted later
         nicknameList.append(nick);
     } else {
-        NickList::iterator it = qLowerBound(nicknameList.begin(), nicknameList.end(), nick, nickLessThan);
+        NickList::iterator it = std::lower_bound(nicknameList.begin(), nicknameList.end(), nick, nickLessThan);
         nicknameList.insert(it, nick);
     }
 
