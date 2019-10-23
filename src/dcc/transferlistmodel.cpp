@@ -68,7 +68,7 @@ namespace Konversation
             int height;
             QFontMetrics metrics(option.font);
 
-            int width = metrics.width(index.data(Qt::DisplayRole).toString());
+            int width = metrics.horizontalAdvance(index.data(Qt::DisplayRole).toString());
 
             if (itemType == TransferItemData::SendCategory || itemType == TransferItemData::ReceiveCategory)
             {

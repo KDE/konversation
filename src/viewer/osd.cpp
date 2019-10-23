@@ -87,7 +87,7 @@ void OSDWidget::show() //virtual
     if ( !isEnabled() || m_currentText.isEmpty() )
         return;
 
-    const uint M = fontMetrics().width( 'x' );
+    const int M = fontMetrics().horizontalAdvance( 'x' );
 
     const QRect newGeometry = determineMetrics( M );
 

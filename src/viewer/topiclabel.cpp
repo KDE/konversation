@@ -247,13 +247,13 @@ namespace Konversation
         {
             QString tmp = text;
             int em = fontMetrics().maxWidth();
-            maxPixels -= fontMetrics().width(QStringLiteral("..."));
+            maxPixels -= fontMetrics().horizontalAdvance(QStringLiteral("..."));
             int len, delta;
 
             // On some MacOS system, maxWidth may return 0
             if (em == 0) {
                 foreach (const QChar &c, text) {
-                    em = qMax(em, fontMetrics().width(c));
+                    em = qMax(em, fontMetrics().horizontalAdvance(c));
                 }
             }
 
