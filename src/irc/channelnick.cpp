@@ -100,7 +100,7 @@ bool ChannelNick::setMode(char mode, bool state)
 
 /** Used still for passing modes from inputfilter to Server.  Should be removed.
  */
-bool ChannelNick::setMode(int mode)
+bool ChannelNick::setMode(uint mode)
 {
     bool voice = mode%2;
     mode >>= 1;

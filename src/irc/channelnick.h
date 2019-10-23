@@ -46,7 +46,7 @@ class ChannelNick : public QSharedData
         bool setAdmin(bool state);
         bool setOwner(bool state);
         bool setMode(char mode, bool plus);
-        bool setMode(int mode);
+        bool setMode(uint mode);
         bool setMode(bool admin,bool owner,bool op,bool halfop,bool voice);
         void setTimeStamp(uint stamp);
 
