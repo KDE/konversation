@@ -790,12 +790,12 @@ namespace Konversation
             angle -= M_PI;
             static const qreal radDiff = qreal(2)* M_PI / qreal(360) * 22;
             qreal tRightAngle = angle + radDiff;
-            const int x1Arrow = sin(tRightAngle) * arrowLength + x2;
-            const int y1Arrow = cos(tRightAngle) * arrowLength + y2;
+            const int x1Arrow = static_cast<int>(sin(tRightAngle) * arrowLength + x2);
+            const int y1Arrow = static_cast<int>(cos(tRightAngle) * arrowLength + y2);
 
             qreal tLeftAngle = angle - radDiff;
-            const int x2Arrow = sin(tLeftAngle) * arrowLength + x2;
-            const int y2Arrow = cos(tLeftAngle) * arrowLength + y2;
+            const int x2Arrow = static_cast<int>(sin(tLeftAngle) * arrowLength + x2);
+            const int y2Arrow = static_cast<int>(cos(tLeftAngle) * arrowLength + y2);
 
             painter->drawLine(x1, y1, x2, y2);
             painter->drawLine(x1Arrow, y1Arrow, x2, y2);
