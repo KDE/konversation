@@ -30,7 +30,7 @@
 
 
 class QTreeView;
-
+class QLineEdit;
 class QMenu;
 class KToolBar;
 
@@ -88,6 +88,9 @@ class UrlCatcher : public ChatWindow
         void saveUrlModel();
         void clearUrlModel();
 
+        void updateFilter();
+        void startFilterTimer(const QString &filter);
+
 
     private:
         void setupActions();
@@ -100,6 +103,8 @@ class UrlCatcher : public ChatWindow
         QList<QAction*> m_listActions;
 
         QTreeView* m_urlTree;
+        QLineEdit* m_searchLine;
+        QTimer* m_filterTimer;
 };
 
 #endif

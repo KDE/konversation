@@ -21,6 +21,7 @@
 
 #include <QDialog>
 
+class QTimer;
 
 namespace Konversation
 {
@@ -63,6 +64,9 @@ namespace Konversation
             void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited(bool edited);
 
+            void startHistorySearchTimer(const QString &filter);
+            void updateHistoryFilter();
+
         protected:
             void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
             void hideEvent(QHideEvent* event) Q_DECL_OVERRIDE;
@@ -73,6 +77,8 @@ namespace Konversation
         private:
             Ui::ChannelOptionsUI m_ui;
             Channel *m_channel;
+
+            QTimer* m_historySearchTimer;
     };
 
     class BanListViewItem : public QTreeWidgetItem

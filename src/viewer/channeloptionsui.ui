@@ -74,7 +74,11 @@ the Free Software Foundation; either version 2 of the License, or
               </widget>
              </item>
              <item>
-              <widget class="KFilterProxySearchLine" name="topicHistorySearchLine"/>
+              <widget class="QLineEdit" name="topicHistorySearchLine">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -374,11 +378,6 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KTreeWidgetSearchLine</class>
    <extends>QLineEdit</extends>
    <header>ktreewidgetsearchline.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KFilterProxySearchLine</class>
-   <extends>QWidget</extends>
-   <header>kfilterproxysearchline.h</header>
   </customwidget>
   <customwidget>
    <class>TopicEdit</class>

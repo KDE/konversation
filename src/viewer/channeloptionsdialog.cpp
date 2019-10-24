@@ -68,8 +68,15 @@ namespace Konversation
 
         m_ui.topicHistoryView->setServer(m_channel->getServer());
         m_ui.topicHistoryView->setModel(m_channel->getTopicHistory());
-        m_ui.topicHistorySearchLine->setProxy(qobject_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model()));
-        m_ui.topicHistorySearchLine->lineEdit()->setPlaceholderText(QString());
+
+        m_historySearchTimer = new QTimer(this);
+        m_historySearchTimer->setSingleShot(true);
+
+        connect(m_historySearchTimer, &QTimer::timeout,
+                this, &ChannelOptionsDialog::updateHistoryFilter);
+
+        connect(m_ui.topicHistorySearchLine, &QLineEdit::textChanged,
+                this, &ChannelOptionsDialog::startHistorySearchTimer);
 
         m_editingTopic = false;
 
@@ -550,6 +557,24 @@ namespace Konversation
         m_ui.updateBan->setEnabled(false);
       }
     }
+
+    void ChannelOptionsDialog::startHistorySearchTimer(const QString &filter)
+    {
+        Q_UNUSED(filter)
+        m_historySearchTimer->start(300);
+    }
+
+    void ChannelOptionsDialog::updateHistoryFilter()
+    {
+        QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model());
+
+        if(!proxy)
+            return;
+
+        proxy->setFilterFixedString(m_ui.topicHistorySearchLine->text());
+    }
+
+
     // This is our implementation of BanListViewItem
 
     BanListViewItem::BanListViewItem(QTreeWidget *parent)

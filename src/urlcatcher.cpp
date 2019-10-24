@@ -25,6 +25,7 @@
 
 #include <QClipboard>
 #include <QTreeView>
+#include <QLineEdit>
 
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
@@ -158,7 +159,14 @@ void UrlCatcher::setupActions()
 
 void UrlCatcher::setupUrlTree()
 {
-    KFilterProxySearchLine* searchLine = new KFilterProxySearchLine(this);
+    m_searchLine = new QLineEdit(this);
+    m_searchLine->setClearButtonEnabled(true);
+    m_searchLine->setPlaceholderText(i18n("Search"));
+
+    m_filterTimer = new QTimer(this);
+    m_filterTimer->setSingleShot(true);
+    connect(m_filterTimer, &QTimer::timeout,
+            this, &UrlCatcher::updateFilter);
 
     m_urlTree = new QTreeView(this);
     m_urlTree->setWhatsThis(i18n("List of Uniform Resource Locators mentioned in any of the Konversation windows during this session."));
@@ -193,7 +201,8 @@ void UrlCatcher::setupUrlTree()
     connect(m_urlTree->selectionModel(), &QItemSelectionModel::selectionChanged,
         this, &UrlCatcher::updateItemActionStates);
 
-    searchLine->setProxy(proxyModel);
+    connect(m_searchLine, &QLineEdit::textChanged,
+            this, &UrlCatcher::startFilterTimer);
 
     Preferences::restoreColumnState(m_urlTree, QStringLiteral("UrlCatcher ViewSettings"), 2, Qt::DescendingOrder);
 }
@@ -401,4 +410,20 @@ bool UrlCatcher::event(QEvent* event)
     }
 
     return ChatWindow::event(event);
+}
+
+void UrlCatcher::updateFilter()
+{
+    QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_urlTree->model());
+
+    if(!proxy)
+        return;
+
+    proxy->setFilterFixedString(m_searchLine->text());
+}
+
+void UrlCatcher::startFilterTimer(const QString &filter)
+{
+    Q_UNUSED(filter)
+    m_filterTimer->start(300);
 }
