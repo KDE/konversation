@@ -102,7 +102,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
         bottomWing.lineTo(bottomWing.currentPosition().x() - RADIUS, bottomWing.currentPosition().y());
         bottomWing.moveTo(startPos);
         bottomWing.lineTo(bottomWing.currentPosition().x(), bottomWing.currentPosition().y() + RADIUS);
-        bottomWing.quadTo(startPos, QPoint(bottomWing.currentPosition().x() - RADIUS,
+        bottomWing.quadTo(startPos, QPointF(bottomWing.currentPosition().x() - RADIUS,
             bottomWing.currentPosition().y() - RADIUS));
         painter->fillPath(bottomWing, selColor);
     }
@@ -116,7 +116,7 @@ void ViewTreeDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
         topWing.lineTo(topWing.currentPosition().x() - RADIUS, topWing.currentPosition().y());
         topWing.moveTo(startPos);
         topWing.lineTo(topWing.currentPosition().x(), topWing.currentPosition().y() - RADIUS);
-        topWing.quadTo(startPos, QPoint(topWing.currentPosition().x() - RADIUS,
+        topWing.quadTo(startPos, QPointF(topWing.currentPosition().x() - RADIUS,
             topWing.currentPosition().y() + RADIUS));
         painter->fillPath(topWing, selColor);
     }
@@ -276,7 +276,7 @@ void ViewTree::paintEvent(QPaintEvent* event)
         bottomWing.lineTo(bottomWing.currentPosition().x() - RADIUS, bottomWing.currentPosition().y());
         bottomWing.moveTo(startPos);
         bottomWing.lineTo(bottomWing.currentPosition().x(), bottomWing.currentPosition().y() + RADIUS);
-        bottomWing.quadTo(startPos, QPoint(bottomWing.currentPosition().x() - RADIUS,
+        bottomWing.quadTo(startPos, QPointF(bottomWing.currentPosition().x() - RADIUS,
             bottomWing.currentPosition().y() - RADIUS));
         painter.fillPath(bottomWing, painter.brush());
     }
