@@ -289,7 +289,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::resizeEvent(QResizeEvent *event)
         {
-            Q_UNUSED(event);
+            Q_UNUSED(event)
             // qDebug() << "newsize:" << event->size();
             // qDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
             resizeImage(contentsRect().width(), contentsRect().height());
