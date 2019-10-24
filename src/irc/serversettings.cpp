@@ -23,8 +23,8 @@ namespace Konversation
         setBypassProxy(false);
     }
 
-    ServerSettings::ServerSettings(const ServerSettings& settings) = default;
-    ServerSettings &ServerSettings::operator=(const ServerSettings& settings) = default;
+    ServerSettings::ServerSettings(const ServerSettings& /*settings*/) = default;
+    ServerSettings &ServerSettings::operator=(const ServerSettings& /*settings*/) = default;
 
     ServerSettings::ServerSettings(const QString& host)
     {
