@@ -257,30 +257,6 @@ namespace Konversation
             {
                 tPaint.drawPixmap(rect, *m_imagePixmap, rect);
 
-        // Looks cool but doesn't make sense for ColoredLines
-        // Invert overlapping color
-        //        const int tBytePerLine = rect.width() * sizeof(QRgb);
-        //        const int tHeight = rect.height();
-        //        static const int colorMax = 255;
-        //        QImage tOriginal = m_imagePixmap->toImage();
-        //        QImage tOverlay = m_overlayPixmap->toImage();
-        //
-        //        for (int i = rect.y(); i < tHeight; ++i)
-        //        {
-        //            QRgb* tRgb = (QRgb*)tOriginal.scanLine(i);
-        //            QRgb* tOverlayLine = (QRgb*)tOverlay.scanLine(i);
-        //            for (int j = rect.x()*sizeof(QRgb) ; j < tBytePerLine; j += sizeof(QRgb))
-        //            {
-        //                int tAlpha = qAlpha(*tOverlayLine);
-        //                if (tAlpha > 0)
-        //                {
-        //                    *tOverlayLine = qRgb(colorMax^qRed(*tRgb),colorMax^qGreen(*tRgb),colorMax^ qBlue(*tRgb));
-        //                }
-        //                ++tRgb;
-        //                ++tOverlayLine;
-        //            }
-        //        }
-        //        tPaint.drawImage(rect, tOverlay, rect);
                 tPaint.drawPixmap(rect, *m_overlayPixmap, rect);
             }
 
