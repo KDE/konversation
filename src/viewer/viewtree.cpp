@@ -259,7 +259,7 @@ void ViewTree::paintEvent(QPaintEvent* event)
     int count = model->rowCount(lastRow);
 
     if (count) {
-        lastRow = lastRow.child(count - 1, 0);
+        lastRow = model->index(count - 1, 0, lastRow);
     }
 
     if (lastRow.isValid() && lastRow == currentRow) {
@@ -434,7 +434,7 @@ void ViewTree::wheelEvent(QWheelEvent* event)
             int count = model->rowCount(idx);
 
             if (count) {
-                idx = idx.child(count - 1, 0);
+                idx = model->index(count - 1, 0, idx);
             }
         } else {
             idx = model->index(0, 0);

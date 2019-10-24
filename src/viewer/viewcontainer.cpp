@@ -1927,7 +1927,7 @@ void ViewContainer::moveViewRight()
         int children = rowCount(belowIdx);
 
         if (children) {
-            belowTabIndex = m_tabWidget->indexOf(static_cast<ChatWindow*>(belowIdx.child(children - 1, 0).internalPointer()));
+            belowTabIndex = m_tabWidget->indexOf(static_cast<ChatWindow*>(index(children - 1, 0, belowIdx).internalPointer()));
         }
 
         beginMoveRows(QModelIndex(), idx.row(), idx.row(), QModelIndex(), belowIdx.row() + 1);
