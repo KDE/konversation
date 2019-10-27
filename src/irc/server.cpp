@@ -1358,33 +1358,24 @@ void Server::incoming()
 
     // split buffer to lines
     QList<QByteArray> bufferLines;
-    static QByteArray lineBuffer;
     while (m_socket->bytesAvailable())
     {
-        QByteArray line(m_socket->readLine());
+        m_lineBuffer += m_socket->readLine();
 
-        if(!lineBuffer.isEmpty())
-        {
-            line.prepend(lineBuffer);
-            lineBuffer.clear();
-        }
-
-        if(line.endsWith('\n') || line.endsWith('\r'))
+        if(m_lineBuffer.endsWith('\n') || m_lineBuffer.endsWith('\r'))
         {
             //remove \n blowfish doesn't like it
-            int i = line.size()-1;
-            while (i >= 0 && (line[i]=='\n' || line[i]=='\r')) // since euIRC gets away with sending just \r, bet someone sends \n\r?
+            int i = m_lineBuffer.size()-1;
+            while (i >= 0 && (m_lineBuffer[i]=='\n' || m_lineBuffer[i]=='\r')) // since euIRC gets away with sending just \r, bet someone sends \n\r?
             {
                 i--;
             }
-            line.truncate(i+1);
+            m_lineBuffer.truncate(i+1);
 
-            if (line.size() > 0)
-                bufferLines.append(line);
-        }
-        else
-        {
-            lineBuffer = line;
+            if (m_lineBuffer.size() > 0)
+                bufferLines.append(m_lineBuffer);
+
+            m_lineBuffer.clear();
         }
     }
 

@@ -748,6 +748,7 @@ class Server : public QObject
         int m_currentLag;
 
         QStringList m_inputBuffer;
+        QByteArray m_lineBuffer;
 
         QList<IRCQueue *> m_queues;
         // Stats used in QueueTuner
