@@ -2305,6 +2305,9 @@ void Channel::scheduleAutoWho(int msec)
     // If this is called mid-interval (e.g. due to the ENDOFWHO from a manual WHO)
     // it will reset the interval to avoid cutting it short.
 
+    if (m_server->whoRequestsDisabled())
+        return;
+
     if (m_whoTimer.isActive())
         m_whoTimer.stop();
 

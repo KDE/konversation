@@ -90,6 +90,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_autoJoin = false;
 
     m_capabilities = NoCapabilies;
+    m_whoRequestsDisabled = false;
     initCapablityNames();
 
     m_nickIndices.clear();
@@ -768,6 +769,14 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         else if(m_capabilityNames.contains(nameValue[0]))
         {
             requestCaps.append (nameValue[0]);
+        }
+
+        // HACK: twitch.tv's IRC server doesn't handle WHO so
+        // let's disable all WHO requests for servers that has
+        // twitch.tv capabilities
+        if(nameValue[0].startsWith("twitch.tv"))
+        {
+            m_whoRequestsDisabled = true;
         }
     }
 
@@ -2037,6 +2046,9 @@ void Server::requestWhois(const QString& nickname)
 
 void Server::requestWho(const QString& channel)
 {
+    if(m_whoRequestsDisabled)
+        return;
+
     m_inputFilter.setAutomaticRequest(QStringLiteral("WHO"), channel, true);
     QString command(QStringLiteral("WHO ") + channel);
 
@@ -2053,6 +2065,9 @@ void Server::requestWho(const QString& channel)
 
 void Server::requestUserhost(const QString& nicks)
 {
+    if(m_whoRequestsDisabled)
+        return;
+
     const QStringList nicksList = nicks.split(QLatin1Char(' '), QString::SkipEmptyParts);
     for(QStringList::ConstIterator it=nicksList.constBegin() ; it!=nicksList.constEnd() ; ++it)
         m_inputFilter.setAutomaticRequest(QStringLiteral("USERHOST"), *it, true);
@@ -4194,8 +4209,11 @@ void Server::sendPing()
     //queue :-)
     QStringList ql;
     ql << QStringLiteral("PING LAG") + QTime::currentTime().toString(QStringLiteral("hhmmss"));
-    getInputFilter()->setAutomaticRequest(QStringLiteral("WHO"), getNickname(), true);
-    ql << QStringLiteral("WHO ") + getNickname();
+    if(!m_whoRequestsDisabled)
+    {
+        getInputFilter()->setAutomaticRequest(QStringLiteral("WHO"), getNickname(), true);
+        ql << QStringLiteral("WHO ") + getNickname();
+    }
     queueList(ql, HighPriority);
 
     m_lagTime.start();

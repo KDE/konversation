@@ -404,6 +404,7 @@ class Server : public QObject
 
         void setHasWHOX(bool state) { m_capabilities.setFlag(WHOX, state); }
         CapabilityFlags capabilities() const { return m_capabilities; }
+        bool whoRequestsDisabled() const { return m_whoRequestsDisabled; }
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -875,6 +876,8 @@ class Server : public QObject
 
         CapabilityFlags m_capabilities;
         QHash<QString, CapabilityFlag> m_capabilityNames;
+
+        bool m_whoRequestsDisabled;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)
