@@ -771,10 +771,13 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         }
     }
 
-    QString capsString = requestCaps.join(QLatin1Char(' '));
-    getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1", capsString));
-    queue(QStringLiteral("CAP REQ :") + capsString, HighPriority);
-    m_capRequested++;
+    if(!requestCaps.isEmpty())
+    {
+        QString capsString = requestCaps.join(QLatin1Char(' '));
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Requesting capabilities: %1", capsString));
+        queue(QStringLiteral("CAP REQ :") + capsString, HighPriority);
+        m_capRequested++;
+    }
 }
 
 void Server::capReply()
