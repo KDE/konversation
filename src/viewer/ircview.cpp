@@ -586,13 +586,13 @@ QString IRCView::formatFinalLine(bool rtl, const QString &lineColor, const QStri
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
     if (!rtl == dateRtlDirection())
         line += (rtl ? RLM : LRM);
+    line += "<font color=\"" + lineColor + "\">%1";
     if (!label.isEmpty()) { // Label correctly displayed: [_label.]
         if (rtl) line += LRM; // [.label_] -> [._label]
         line += "<font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font>";
         if (!label.isRightToLeft() == rtl)
             line += LRM + RLM; // [._label] -> [_label.]
     }
-    line += "<font color=\"" + lineColor + "\">%1";
     if (!nickStar.isEmpty()) // Used for [timeStamp] * nick action
         line += nickStar;
     if (rtl) line += LRM; // <[nick_> -> <[_nick]>
