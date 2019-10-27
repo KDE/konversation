@@ -51,7 +51,6 @@
 #include <KWindowSystem>
 #include <KShell>
 
-#include <KSslErrorUiData>
 #include <kio/sslui.h>
 
 using namespace Konversation;
