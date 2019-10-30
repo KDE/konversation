@@ -588,8 +588,13 @@ QString IRCView::formatFinalLine(bool rtl, const QString &lineColor, const QStri
         line += (rtl ? RLM : LRM);
     line += "<font color=\"" + lineColor + "\">%1";
     if (!label.isEmpty()) { // Label correctly displayed: [_label.]
-        if (rtl) line += LRM; // [.label_] -> [._label]
-        line += "<font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font>";
+        if (rtl) {
+          line += LRM; // [.label_] -> [._label]
+          line += " <font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font>";
+        }
+        else {
+          line += "<font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font> ";
+        }
         if (!label.isRightToLeft() == rtl)
             line += LRM + RLM; // [._label] -> [_label.]
     }
