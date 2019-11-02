@@ -51,7 +51,7 @@ int NickListView::s_minimumRowHeight = 0;
 NickListView::NickListView(QWidget* parent, Channel *chan) : QTreeWidget(parent)
 {
     setWhatsThis();
-    channel=chan;
+    m_channel = chan;
 
     // Enable Drag & Drop
     viewport()->setAcceptDrops(true);
@@ -249,7 +249,7 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ev)
     if (selectedItems().count())
     {
         IrcContextMenus::nickMenu(ev->globalPos(), IrcContextMenus::ShowChannelActions,
-            channel->getServer(), channel->getSelectedNickList(), channel->getName());
+            m_channel->getServer(), m_channel->getSelectedNickList(), m_channel->getName());
     }
 }
 
@@ -271,7 +271,7 @@ bool NickListView::canDecodeMime(QDropEvent const *event) const {
 
             if (first.scheme() == QLatin1String("irc") ||
                 first.scheme() == QLatin1String("ircs") ||
-                channel->getNickList().containsNick(first.url()))
+                m_channel->getNickList().containsNick(first.url()))
                 {
                     return false;
                 }
@@ -307,15 +307,13 @@ void NickListView::dragMoveEvent(QDragMoveEvent *event)
 
 bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action)
 {
-    Q_UNUSED(index);
-    Q_UNUSED(action);
+    Q_UNUSED(index)
+    Q_UNUSED(action)
     Nick* nick = dynamic_cast<Nick*>(parent);
     if (nick) {
         const QList<QUrl> uris = KUrlMimeData::urlsFromMimeData(data);
-        channel->getServer()->sendURIs(uris, nick->getChannelNick()->getNickname());
+        m_channel->getServer()->sendURIs(uris, nick->getChannelNick()->getNickname());
         return true;
     }
     return false;
 }
-
-

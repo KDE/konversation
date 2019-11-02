@@ -29,9 +29,9 @@ class NickListView : public QTreeWidget
 {
     Q_OBJECT
 
-        public:
+    public:
         NickListView(QWidget* parent, Channel *chan);
-        ~NickListView();
+        ~NickListView() Q_DECL_OVERRIDE;
 
         /** Call when the icons have been changed.
          */
@@ -80,7 +80,7 @@ class NickListView : public QTreeWidget
         void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
         void dragMoveEvent(QDragMoveEvent *event) Q_DECL_OVERRIDE;
 
-        Channel *channel;
+        Channel *m_channel;
         QTimer *m_resortTimer;
 
     private:
