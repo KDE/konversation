@@ -20,6 +20,14 @@
 #include <QStack>
 #include <QDebug>
 
+#if __has_cpp_attribute(clang::fallthrough)
+#define FALLTHROUGH [[clang::fallthrough]];
+#elif __has_cpp_attribute(fallthrough)
+#define FALLTHROUGH [[fallthrough]];
+#else
+#define FALLTHROUGH
+#endif
+
 namespace Konversation
 {
     namespace DCC
@@ -420,6 +428,7 @@ namespace Konversation
                     tPainter.setBrush(m_backgroundColor);
                     // fallthrough, same as WhiteBoardGlobals::Ellipse just
                     // with extra color
+                    FALLTHROUGH
                 case WhiteBoardGlobals::Ellipse:
                     {
                         if (isLastPosValid())
@@ -443,6 +452,7 @@ namespace Konversation
                     tPainter.setBrush(m_backgroundColor);
                     // fallthrough, same as WhiteBoardGlobals::Rectangle just
                     // with extra color
+                    FALLTHROUGH
                 case WhiteBoardGlobals::Rectangle:
                     {
                         if (isLastPosValid())
