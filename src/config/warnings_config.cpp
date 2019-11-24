@@ -129,7 +129,7 @@ void Warnings_Config::loadSettings()
 {
     // This table is very wide, on purpose, so that the nauseatingly constant context string is
     // out of the way. The problem is this:
-    // The context string in I18N_NOOP2_NOSTRIP must always be first, and now that it has
+    // The context string in I18NC_NOOP must always be first, and now that it has
     // semantic markers it is always very long. So, if you want to understand a string
     // definition, you must repeatedly look at the context string. A macro replacement for it
     // is not possible as such recent and complicated inventions are not supported by the tools
@@ -141,64 +141,64 @@ void Warnings_Config::loadSettings()
         const char *context;
         const char *message;
     } warningDialogDefinitions[] = {
-        { "Invitation",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "Invitation",                                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... a channel invitation is received"
         )},
-        { "SaveLogfileNote",                                                                            I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "SaveLogfileNote",                                                                            I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... saving a log file would save only the visible portion"
         )},
-        { "ClearLogfileQuestion",                                                                       I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "ClearLogfileQuestion",                                                                       I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... a log file is about to be deleted"
         )},
-        { "CloseQueryAfterIgnore",                                                                      I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "CloseQueryAfterIgnore",                                                                      I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... an open query exists for a nickname that has just been marked as ignored"
         )},
-        { "ReconnectWithDifferentServer",                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "ReconnectWithDifferentServer",                                                               I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... switching a connection to a different server in the same network"
         )},
-        { "ReuseExistingConnection",                                                                    I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "ReuseExistingConnection",                                                                    I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... creating a new connection to an already connected network"
         )},
-        { "QuitServerTab",                                                                              I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "QuitServerTab",                                                                              I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... closing a server tab"
         )},
-        { "QuitChannelTab",                                                                             I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "QuitChannelTab",                                                                             I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... closing a channel tab"
         )},
-        { "QuitQueryTab",                                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "QuitQueryTab",                                                                               I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... closing a query tab"
         )},
-        { "QuitDCCChatTab",                                                                             I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "QuitDCCChatTab",                                                                             I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... closing a DCC Chat tab"
         )},
-        { "ChannelListNoServerSelected",                                                                I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "ChannelListNoServerSelected",                                                                I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... a source for the channel list cannot be determined from the current tab"
         )},
-        { "HideMenuBarWarning",                                                                         I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "HideMenuBarWarning",                                                                         I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... you have chosen to hide the menu bar"
         )},
-        { "ChannelListWarning",                                                                         I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "ChannelListWarning",                                                                         I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... a channel listing may cause disconnection due to the download size"
         )},
-        { "LargePaste",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "LargePaste",                                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... pasting large portions of text"
         )},
-        { "systemtrayquitKonversation",                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "systemtrayquitKonversation",                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... quitting Konversation via the tray icon"
         )},
-        { "IgnoreNick",                                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "IgnoreNick",                                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... you have chosen to ignore a nickname"
         )},
-        { "UnignoreNick",                                                                               I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "UnignoreNick",                                                                               I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... you have chosen to stop ignoring a nickname"
         )},
-        { "QuitWithActiveDccTransfers",                                                                 I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "QuitWithActiveDccTransfers",                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... quitting Konversation while DCC file transfers are active"
         )},
-        { "WarnEncodingConflict",                                                                       I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "WarnEncodingConflict",                                                                       I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... some characters in a message are incompatible with the active encoding"
         )},
-        { "HideOnCloseInfo",                                                                            I18N_NOOP2_NOSTRIP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
+        { "HideOnCloseInfo",                                                                            I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... closing the window will minimize to the system tray"
         )}
     };
