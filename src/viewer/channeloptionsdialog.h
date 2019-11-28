@@ -30,7 +30,7 @@ namespace Konversation
         Q_OBJECT
             public:
             explicit ChannelOptionsDialog(Channel *channel);
-            ~ChannelOptionsDialog();
+            ~ChannelOptionsDialog() override;
 
             QString topic();
             QStringList modes();
@@ -64,8 +64,8 @@ namespace Konversation
             void topicBeingEdited(bool edited);
 
         protected:
-            void showEvent(QShowEvent* event);
-            void hideEvent(QHideEvent* event);
+            void showEvent(QShowEvent* event) override;
+            void hideEvent(QHideEvent* event) override;
 
             bool m_editingTopic;
             bool m_isAnyTypeOfOp;
@@ -81,7 +81,7 @@ namespace Konversation
             explicit BanListViewItem( QTreeWidget *parent );
             BanListViewItem(QTreeWidget *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
 
-            bool operator<(const QTreeWidgetItem &item) const;
+            bool operator<(const QTreeWidgetItem &item) const override;
 
         protected:
             QDateTime m_timestamp;

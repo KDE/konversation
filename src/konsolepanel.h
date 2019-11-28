@@ -27,9 +27,9 @@ class KonsolePanel : public ChatWindow
 
     public:
         explicit KonsolePanel(QWidget *p);
-        ~KonsolePanel();
+        ~KonsolePanel() override;
 
-        virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
+        void setName(const QString& newName) override { ChatWindow::setName(newName); }
 
         QWidget* getWidget();
 
@@ -41,7 +41,7 @@ class KonsolePanel : public ChatWindow
         void manageKonsoleProfiles();
 
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() override;
 
     protected Q_SLOTS:
         void konsoleChanged(const QString& data);

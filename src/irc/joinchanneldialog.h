@@ -29,7 +29,7 @@ namespace Konversation
         Q_OBJECT
             public:
             explicit JoinChannelDialog(Server* server, QWidget *parent = 0);
-            ~JoinChannelDialog();
+            ~JoinChannelDialog() override;
 
             int connectionId() const;
             QString channel() const;

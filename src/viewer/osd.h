@@ -27,7 +27,7 @@ class OSDWidget : public QWidget
         enum Alignment { Left, Middle, Center, Right };
 
         explicit OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd" );
-        virtual ~OSDWidget();
+        ~OSDWidget() override;
 
         /** resets the colours to defaults */
         void unsetColors();
@@ -71,10 +71,10 @@ class OSDWidget : public QWidget
         QRect determineMetrics( const int M );
 
         // Reimplemented from QWidget
-        virtual void paintEvent( QPaintEvent* );
-        virtual void mousePressEvent( QMouseEvent* );
-        void resizeEvent( QResizeEvent *e );
-        virtual bool event( QEvent* );
+        void paintEvent( QPaintEvent* ) override;
+        void mousePressEvent( QMouseEvent* ) override;
+        void resizeEvent( QResizeEvent *e ) override;
+        bool event( QEvent* ) override;
 
         /** distance from screen edge */
         static const int MARGIN = 15;
@@ -124,9 +124,9 @@ Q_SIGNALS:
     void positionChanged();
 
 protected:
-    void mousePressEvent( QMouseEvent * );
-    void mouseReleaseEvent( QMouseEvent * );
-    void mouseMoveEvent( QMouseEvent * );
+    void mousePressEvent( QMouseEvent * ) override;
+    void mouseReleaseEvent( QMouseEvent * ) override;
+    void mouseMoveEvent( QMouseEvent * ) override;
 
 private:
     bool   m_dragging;

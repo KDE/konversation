@@ -34,16 +34,16 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 
         public:
         explicit KonviBookmarkHandler(QMenu *menu, MainWindow* mainWindow);
-        ~KonviBookmarkHandler();
+        ~KonviBookmarkHandler() override;
 
         // KBookmarkOwner interface:
-        virtual void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km);
-        virtual QUrl currentUrl() const;
-        virtual QString currentTitle() const;
-        virtual bool enableOption(BookmarkOption option) const;
-        virtual bool supportsTabs() const;
-        virtual QList<KBookmarkOwner::FutureBookmark> currentBookmarkList() const;
-        virtual void openFolderinTabs(const KBookmarkGroup &group);
+        void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km) override;
+        QUrl currentUrl() const override;
+        QString currentTitle() const override;
+        bool enableOption(BookmarkOption option) const override;
+        bool supportsTabs() const override;
+        QList<KBookmarkOwner::FutureBookmark> currentBookmarkList() const override;
+        void openFolderinTabs(const KBookmarkGroup &group) override;
 
     private:
         MainWindow* m_mainWindow;

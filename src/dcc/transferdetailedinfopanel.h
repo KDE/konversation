@@ -32,7 +32,7 @@ namespace Konversation
 
             public:
                 explicit TransferDetailedInfoPanel(QWidget *parent = 0);
-                virtual ~TransferDetailedInfoPanel();
+                ~TransferDetailedInfoPanel() override;
 
                 void setTransfer(Transfer *item);
                 Transfer *transfer() const;

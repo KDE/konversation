@@ -31,7 +31,7 @@ namespace Konversation
 
         public:
             explicit StatusBar(MainWindow* parent);
-            ~StatusBar();
+            ~StatusBar() override;
 
         public Q_SLOTS:
             void updateAppearance();

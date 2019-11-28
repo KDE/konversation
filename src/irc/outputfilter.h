@@ -66,7 +66,7 @@ namespace Konversation
 
         public:
             explicit OutputFilter(Server* server);
-            ~OutputFilter();
+            ~OutputFilter() override;
 
             static const QSet<QString>& supportedCommands() { return m_commands; }
 

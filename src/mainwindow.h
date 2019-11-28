@@ -44,7 +44,7 @@ class MainWindow : public KXmlGuiWindow
 
     public:
         MainWindow();
-        ~MainWindow();
+        ~MainWindow() override;
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
@@ -106,17 +106,17 @@ class MainWindow : public KXmlGuiWindow
 
         void toggleVisibility();
 
-        void showEvent(QShowEvent* e);
-        void hideEvent(QHideEvent* e);
-        void leaveEvent(QEvent* e);
+        void showEvent(QShowEvent* e) override;
+        void hideEvent(QHideEvent* e) override;
+        void leaveEvent(QEvent* e) override;
 
 
     protected:
-        virtual QSize sizeHint() const;
+        QSize sizeHint() const override;
 
         int confirmQuit();
-        bool queryClose();
-        virtual bool event(QEvent* e);
+        bool queryClose() override;
+        bool event(QEvent* e) override;
 
         ViewContainer* m_viewContainer;
         Konversation::StatusBar* m_statusBar;

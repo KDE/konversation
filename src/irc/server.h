@@ -94,7 +94,7 @@ class Server : public QObject
         Q_DECLARE_FLAGS(CapModifiers, CapModifier)
 
         Server(QObject* parent, ConnectionSettings& settings);
-        ~Server();
+        ~Server() override;
 
         void cycle();
         void abortScheduledRecreation() { m_recreationScheduled = false; }

@@ -28,7 +28,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
     public:
         explicit SearchBar(QWidget* parent);
-        ~SearchBar();
+        ~SearchBar() override;
 
         void setHasMatch(bool value);
 
@@ -38,11 +38,11 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         bool fromCursor() const;
 
-        bool eventFilter(QObject* object, QEvent* e);
+        bool eventFilter(QObject* object, QEvent* e) override;
 
     protected:
-        virtual void showEvent(QShowEvent* e);
-        virtual void hideEvent(QHideEvent* e);
+        void showEvent(QShowEvent* e) override;
+        void hideEvent(QHideEvent* e) override;
         bool focusedChild();
 
     private Q_SLOTS:

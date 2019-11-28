@@ -110,7 +110,7 @@ public:
      * Deletes private class.
      * @see exists()
      */
-    ~ConfigDialog();
+    ~ConfigDialog() override;
 
     /**
      * Adds page to the dialog and to KConfigDialogManager.  When an
@@ -275,12 +275,12 @@ protected:
     /**
      * @internal
      */
-    virtual void showEvent(QShowEvent *e);
+    void showEvent(QShowEvent *e) override;
 
     /**
      * @internal
      */
-    virtual void moveEvent(QMoveEvent *e);
+    void moveEvent(QMoveEvent *e) override;
 
 private Q_SLOTS:
     /**

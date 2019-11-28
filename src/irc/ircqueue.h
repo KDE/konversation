@@ -96,7 +96,7 @@ public:
     };
 
     IRCQueue(Server *server, EmptyingRate& rate, int myindex=0);
-    ~IRCQueue();
+    ~IRCQueue() override;
 
     void enqueue(const QString& line);
     void reset();

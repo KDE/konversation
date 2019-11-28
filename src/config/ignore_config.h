@@ -23,14 +23,14 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
 
     public:
         explicit Ignore_Config( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0 );
-        ~Ignore_Config();
+        ~Ignore_Config() override;
         QString flagNames;
 
-        virtual void restorePageToDefaults();
-        virtual void saveSettings();
-        virtual void loadSettings();
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        virtual bool hasChanged();
+        bool hasChanged() override;
 
     private:
         QStringList m_oldIgnoreList;

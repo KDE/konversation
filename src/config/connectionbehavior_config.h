@@ -32,11 +32,11 @@ class ConnectionBehavior_Config : public QWidget, public KonviSettingsPage, priv
     public:
         explicit ConnectionBehavior_Config(QWidget* parent = NULL);
 
-        virtual void restorePageToDefaults();
-        virtual void saveSettings();
-        virtual void loadSettings();
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        virtual bool hasChanged();
+        bool hasChanged() override;
 
     protected Q_SLOTS:
         void setPasswordChanged(bool changed = true);

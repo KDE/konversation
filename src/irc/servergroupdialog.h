@@ -32,7 +32,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ServerGroupDialog(const QString& title, QWidget* parent = 0);
-            ~ServerGroupDialog();
+            ~ServerGroupDialog() override;
 
             void setServerGroupSettings(ServerGroupSettingsPtr settings);
             ServerGroupSettingsPtr serverGroupSettings();
@@ -44,7 +44,7 @@ namespace Konversation
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
         public Q_SLOTS:
-            virtual void accept();
+            void accept() override;
 
         protected Q_SLOTS:
             void addServer();
@@ -86,7 +86,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ServerDialog(const QString& title, QWidget *parent = 0);
-            ~ServerDialog();
+            ~ServerDialog() override;
 
             void setServerSettings(const ServerSettings& server);
             ServerSettings serverSettings();
@@ -105,7 +105,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ChannelDialog(const QString& title, QWidget *parent = 0);
-            ~ChannelDialog();
+            ~ChannelDialog() override;
 
             void setChannelSettings(const ChannelSettings& channel);
             ChannelSettings channelSettings();

@@ -42,9 +42,9 @@ class Query : public ChatWindow
 
     public:
         explicit Query(QWidget* parent, const QString& _name);
-        virtual void setServer(Server* newServer);
+        void setServer(Server* newServer) override;
 
-        ~Query();
+        ~Query() override;
 
         /** This will always be called soon after this object is created.
          *  @param nickInfo A nickinfo that must exist.
@@ -55,14 +55,14 @@ class Query : public ChatWindow
          *  This should be fixed maybe?  I don't know.
          */
         NickInfoPtr getNickInfo();
-        virtual bool closeYourself(bool askForConfirmation=true);
-        virtual bool canBeFrontView();
-        virtual bool searchView();
+        bool closeYourself(bool askForConfirmation=true) override;
+        bool canBeFrontView() override;
+        bool searchView() override;
 
-        virtual void setChannelEncoding(const QString& encoding);
-        virtual QString getChannelEncoding();
-        virtual QString getChannelEncodingDefaultDesc();
-        virtual void emitUpdateInfo();
+        void setChannelEncoding(const QString& encoding) override;
+        QString getChannelEncoding() override;
+        QString getChannelEncodingDefaultDesc() override;
+        void emitUpdateInfo() override;
 
         /** call this when you see a nick quit from the server.
          *  @param reason The quit reason given by that user.
@@ -78,8 +78,8 @@ class Query : public ChatWindow
         void updateQueryChrome(ChatWindow*, const QString&);
 
     public Q_SLOTS:
-        void sendText(const QString& text);
-        virtual void indicateAway(bool show);
+        void sendText(const QString& text) override;
+        void indicateAway(bool show) override;
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 
@@ -94,10 +94,10 @@ class Query : public ChatWindow
         void updateNickInfo(Server* server, NickInfoPtr nickInfo);
 
     protected:
-        void setName(const QString& newName);
-        void showEvent(QShowEvent* event);
+        void setName(const QString& newName) override;
+        void showEvent(QShowEvent* event) override;
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() override;
 
     private:
         bool awayChanged;

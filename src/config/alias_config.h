@@ -23,12 +23,12 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
 
     public:
         explicit Alias_Config(QWidget* parent, const char* name = 0);
-        ~Alias_Config();
+        ~Alias_Config() override;
 
-        virtual void saveSettings();
-        virtual void loadSettings();
-        virtual void restorePageToDefaults();
-        virtual bool hasChanged();
+        void saveSettings() override;
+        void loadSettings() override;
+        void restorePageToDefaults() override;
+        bool hasChanged() override;
 
     Q_SIGNALS:
         void modified();

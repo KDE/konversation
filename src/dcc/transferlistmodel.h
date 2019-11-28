@@ -81,9 +81,9 @@ namespace Konversation
         public:
             explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
 
-            virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
-            virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
-                                const QModelIndex &index) const;
+            QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const override;
+            void paint(QPainter *painter, const QStyleOptionViewItem & option,
+                                const QModelIndex &index) const override;
         private:
             KCategoryDrawer* m_categoryDrawer;
         };
@@ -93,8 +93,8 @@ namespace Konversation
         public:
             explicit TransferProgressBarDelegate(QObject *parent = 0);
 
-            virtual void paint(QPainter *painter, const QStyleOptionViewItem & option,
-                                const QModelIndex &index) const;
+            void paint(QPainter *painter, const QStyleOptionViewItem & option,
+                                const QModelIndex &index) const override;
         };
 
 
@@ -103,7 +103,7 @@ namespace Konversation
         public:
             explicit TransferListProxyModel(QObject *parent = 0);
 
-            bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
+            bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
         };
 
 
@@ -128,21 +128,21 @@ namespace Konversation
 
             void appendHeader(TransferHeaderData data);
 
-            int columnCount(const QModelIndex &parent = QModelIndex()) const;
+            int columnCount(const QModelIndex &parent = QModelIndex()) const override;
             // counts the rows regardless of what type they are
-            int rowCount(const QModelIndex &parent = QModelIndex()) const;
+            int rowCount(const QModelIndex &parent = QModelIndex()) const override;
             // itemCount only counts the transferitems, not the CategoryItems
             int itemCount(TransferItemData::ItemDisplayType displaytype) const;
 
-            QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+            QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
             QVariant headerData (int section, Qt::Orientation orientation,
-                                 int role = Qt::DisplayRole) const;
+                                 int role = Qt::DisplayRole) const override;
 
             bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-            virtual bool removeRows (int row, int count,
-                                     const QModelIndex &parent = QModelIndex());
+            bool removeRows (int row, int count,
+                                     const QModelIndex &parent = QModelIndex()) override;
 
-            Qt::ItemFlags flags (const QModelIndex &index) const;
+            Qt::ItemFlags flags (const QModelIndex &index) const override;
 
             static QString getStatusText(Transfer::Status status, Transfer::Type type);
             static QString getSpeedPrettyText(transferspeed_t speed);

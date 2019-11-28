@@ -35,9 +35,9 @@ class IrcViewMarkerLine: public QObject, public QTextObjectInterface
 
     public:
         IrcViewMarkerLine(QObject *p) : QObject(p), QTextObjectInterface() {}
-        ~IrcViewMarkerLine() {}
-        virtual void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format);
-        virtual QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format);
+        ~IrcViewMarkerLine() override {}
+        void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
+        QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
 };
 
 /// Helper struct which remembers the openHtmlTags, the fore and
@@ -63,7 +63,7 @@ class IRCView : public QTextBrowser
 
     public:
         explicit IRCView(QWidget* parent);
-        ~IRCView();
+        ~IRCView() override;
 
         //! this function is proper given it is not nessary for the ircview to have a server for DCC.
         void setServer(Server* server);
@@ -125,10 +125,10 @@ class IRCView : public QTextBrowser
         void clearLines();
 
     protected:
-        virtual QMimeData* createMimeDataFromSelection() const;
-        virtual void dragEnterEvent(QDragEnterEvent* e);
-        virtual void dragMoveEvent(QDragMoveEvent* e);
-        virtual void dropEvent(QDropEvent* e);
+        QMimeData* createMimeDataFromSelection() const override;
+        void dragEnterEvent(QDragEnterEvent* e) override;
+        void dragMoveEvent(QDragMoveEvent* e) override;
+        void dropEvent(QDropEvent* e) override;
 
     private:
         /// The internal mechanics of inserting a line.
@@ -277,13 +277,13 @@ class IRCView : public QTextBrowser
         inline QString getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
 
     protected:
-        virtual void resizeEvent(QResizeEvent *event);
-        virtual void mouseReleaseEvent(QMouseEvent* ev);
-        virtual void mousePressEvent(QMouseEvent* ev);
-        virtual void mouseMoveEvent(QMouseEvent* ev);
-        virtual void keyPressEvent(QKeyEvent* ev);
-        virtual void contextMenuEvent(QContextMenuEvent* ev);
-        virtual void wheelEvent(QWheelEvent* ev);
+        void resizeEvent(QResizeEvent *event) override;
+        void mouseReleaseEvent(QMouseEvent* ev) override;
+        void mousePressEvent(QMouseEvent* ev) override;
+        void mouseMoveEvent(QMouseEvent* ev) override;
+        void keyPressEvent(QKeyEvent* ev) override;
+        void contextMenuEvent(QContextMenuEvent* ev) override;
+        void wheelEvent(QWheelEvent* ev) override;
 
         QChar::Direction basicDirection(const QString &string);
 

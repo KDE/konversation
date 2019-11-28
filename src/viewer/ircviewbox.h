@@ -24,7 +24,7 @@ class IRCViewBox : public QWidget
     public:
 
         explicit IRCViewBox(QWidget* parent);
-        ~IRCViewBox();
+        ~IRCViewBox() override;
 
         IRCView*   ircView() const;
 

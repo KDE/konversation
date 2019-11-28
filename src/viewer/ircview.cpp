@@ -231,10 +231,10 @@ class IrcViewMimeData : public QMimeData
 {
 public:
     IrcViewMimeData(const QTextDocumentFragment& _fragment): fragment(_fragment) {}
-    virtual QStringList formats() const;
+    QStringList formats() const override;
 
 protected:
-    virtual QVariant retrieveData(const QString &mimeType, QVariant::Type type) const;
+    QVariant retrieveData(const QString &mimeType, QVariant::Type type) const override;
 
 private:
     mutable QTextDocumentFragment fragment;
@@ -316,7 +316,7 @@ struct Burr: public QTextBlockUserData
             m_prev->m_next = this;
     }
 
-    ~Burr()
+    ~Burr() override
     {
         m_owner->blockDeleted(this);
         unlink();

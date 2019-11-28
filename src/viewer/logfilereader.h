@@ -30,13 +30,13 @@ class LogfileReader : public ChatWindow
 
         public:
         LogfileReader(QWidget* parent, const QString& log, const QString& caption);
-        ~LogfileReader();
+        ~LogfileReader() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself() { closeLog(); return true; }
-        virtual bool searchView();
+        bool searchView() override;
 
-        virtual bool eventFilter(QObject* watched, QEvent* e);
+        bool eventFilter(QObject* watched, QEvent* e) override;
 
 
     protected Q_SLOTS:
@@ -53,7 +53,7 @@ class LogfileReader : public ChatWindow
         int spacing();
 
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() override;
 
         KToolBar* toolBar;
         QSpinBox* sizeSpin;

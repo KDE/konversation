@@ -27,13 +27,13 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
 
     public:
         explicit Theme_Config(QWidget* parent, const char* name=NULL);
-        ~Theme_Config();
+        ~Theme_Config() override;
 
-        virtual void restorePageToDefaults();
-        virtual void saveSettings();
-        virtual void loadSettings();
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        virtual bool hasChanged();
+        bool hasChanged() override;
 
     Q_SIGNALS:
         void modified();

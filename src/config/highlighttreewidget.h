@@ -22,7 +22,7 @@ class HighlightTreeWidget : public QTreeWidget
         HighlightTreeWidget(QWidget *parent = nullptr);
 
     protected:
-        virtual void dropEvent(QDropEvent *event);
+        void dropEvent(QDropEvent *event) override;
 
     signals:
         void itemDropped();

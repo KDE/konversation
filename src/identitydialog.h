@@ -30,13 +30,13 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit IdentityDialog(QWidget *parent = 0);
-            ~IdentityDialog() {}
+            ~IdentityDialog() override {}
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
 
         public Q_SLOTS:
-            virtual void accept();
+            void accept() override;
 
         Q_SIGNALS:
             void identitiesChanged();

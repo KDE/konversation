@@ -43,7 +43,7 @@ namespace Konversation
 
         public:
             explicit Sound(QObject *parent = 0, const QString &name = QString());
-            ~Sound();
+            ~Sound() override;
 
         public Q_SLOTS:
             void play(const QUrl &url);

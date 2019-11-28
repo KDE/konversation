@@ -35,7 +35,7 @@ class OutputFilterResolveJob : public QObject
 
     public:
         explicit OutputFilterResolveJob(const Konversation::OutputFilterInput& input);
-        ~OutputFilterResolveJob();
+        ~OutputFilterResolveJob() override;
 
 
     private Q_SLOTS:

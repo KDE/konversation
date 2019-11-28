@@ -25,14 +25,14 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
 
     public:
         explicit Highlight_Config(QWidget *parent = 0, const char *name = 0);
-        ~Highlight_Config();
+        ~Highlight_Config() override;
 
     public:
-        virtual void saveSettings();
-        virtual void loadSettings();
-        virtual void restorePageToDefaults();
+        void saveSettings() override;
+        void loadSettings() override;
+        void restorePageToDefaults() override;
 
-        virtual bool hasChanged();
+        bool hasChanged() override;
 
     Q_SIGNALS:
         void modified();

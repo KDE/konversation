@@ -39,7 +39,7 @@ namespace Konversation
         public:
 
             explicit TransferView(QWidget *parent = 0);
-            virtual ~TransferView();
+            ~TransferView() override;
 
             void addTransfer(Transfer *transfer);
 
@@ -47,7 +47,7 @@ namespace Konversation
             int rowCount() const;
 
             QList<QModelIndex> rowIndexes(int column = 0) const;
-            QList<QModelIndex> selectedIndexes() const;
+            QList<QModelIndex> selectedIndexes() const override;
             QList<QModelIndex> selectedRows(int column = 0) const;
             QModelIndex index(int row, int column) const;
             QModelIndex index(Transfer *transfer) const;
@@ -82,10 +82,10 @@ namespace Konversation
                                        int newStatus, int oldStatus);
 
         protected:
-            virtual void drawRow(QPainter *painter, const QStyleOptionViewItem &option,
-                                 const QModelIndex &index) const;
-            virtual void scrollContentsBy(int dx, int dy);
-            virtual void keyPressEvent(QKeyEvent *event);
+            void drawRow(QPainter *painter, const QStyleOptionViewItem &option,
+                                 const QModelIndex &index) const override;
+            void scrollContentsBy(int dx, int dy) override;
+            void keyPressEvent(QKeyEvent *event) override;
 
         protected Q_SLOTS:
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,

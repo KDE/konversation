@@ -23,13 +23,13 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
 
     public:
         explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0 );
-        ~Warnings_Config();
+        ~Warnings_Config() override;
 
-        virtual void restorePageToDefaults();
-        virtual void saveSettings();
-        virtual void loadSettings();
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        virtual bool hasChanged();
+        bool hasChanged() override;
 
     public Q_SLOTS:
         virtual void languageChange();

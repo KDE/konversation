@@ -37,7 +37,7 @@ namespace Konversation
             };
 
             explicit WhiteBoardColorChooser(QWidget* parent = 0);
-            ~WhiteBoardColorChooser();
+            ~WhiteBoardColorChooser() override;
 
             QColor color(const ColorLayer& layer) const;
             QColor foregroundColor() const;
@@ -55,9 +55,9 @@ namespace Konversation
             void backgroundColorChanged(const QColor& color);
 
         protected:
-            virtual void mouseReleaseEvent(QMouseEvent *e);
-            virtual void paintEvent(QPaintEvent *e);
-            virtual void resizeEvent(QResizeEvent *e);
+            void mouseReleaseEvent(QMouseEvent *e) override;
+            void paintEvent(QPaintEvent *e) override;
+            void resizeEvent(QResizeEvent *e) override;
 
         private:
             inline QRect swapPixmapRect() const;

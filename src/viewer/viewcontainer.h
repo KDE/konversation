@@ -49,7 +49,7 @@ class ViewMimeData : public QMimeData
 {
     public:
         explicit ViewMimeData(ChatWindow *view);
-        ~ViewMimeData();
+        ~ViewMimeData() override;
 
         ChatWindow* view() const;
 
@@ -63,15 +63,15 @@ class TabWidget : public QTabWidget
 
     public:
         explicit TabWidget(QWidget* parent = 0);
-        ~TabWidget();
+        ~TabWidget() override;
 
     Q_SIGNALS:
         void contextMenu(QWidget* widget, const QPoint& pos);
         void tabBarMiddleClicked(int index);
 
     protected:
-        virtual void contextMenuEvent(QContextMenuEvent* event);
-        virtual void mouseReleaseEvent(QMouseEvent* event);
+        void contextMenuEvent(QContextMenuEvent* event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
 };
 
 class ViewContainer : public QAbstractItemModel
@@ -86,7 +86,7 @@ class ViewContainer : public QAbstractItemModel
         };
 
         explicit ViewContainer(MainWindow* window);
-        ~ViewContainer();
+        ~ViewContainer() override;
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }
         MainWindow* getWindow() { return m_window; }
@@ -97,24 +97,24 @@ class ViewContainer : public QAbstractItemModel
 
         void prepareShutdown();
 
-        int rowCount(const QModelIndex & parent = QModelIndex()) const;
-        int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
-        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
         QModelIndex indexForView(ChatWindow* view) const;
-        QModelIndex parent(const QModelIndex& index) const;
+        QModelIndex parent(const QModelIndex& index) const override;
 
-        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-        Qt::DropActions supportedDragActions() const;
-        Qt::DropActions supportedDropActions() const;
-        Qt::ItemFlags flags(const QModelIndex &index) const;
-        QStringList mimeTypes() const;
-        QMimeData* mimeData(const QModelIndexList &indexes) const;
-        bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const;
-        bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
+        Qt::DropActions supportedDragActions() const override;
+        Qt::DropActions supportedDropActions() const override;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList &indexes) const override;
+        bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
+        bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
-        bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+        bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork = true);

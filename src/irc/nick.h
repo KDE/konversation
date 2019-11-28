@@ -27,12 +27,12 @@ class Nick : public QTreeWidgetItem
     public:
         Nick(NickListView *listView, Channel* channel,
             const ChannelNickPtr& channelnick);
-        ~Nick();
+        ~Nick() override;
 
         ChannelNickPtr getChannelNick() const;
 
-        virtual QVariant data(int column, int role) const;
-        virtual bool operator<(const QTreeWidgetItem& other) const;
+        QVariant data(int column, int role) const override;
+        bool operator<(const QTreeWidgetItem& other) const override;
 
         void refresh();
         void repositionMe();

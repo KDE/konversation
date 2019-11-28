@@ -28,7 +28,7 @@ public:
 
     bool passiveSend();
 
-    QSize sizeHint() const;
+    QSize sizeHint() const override;
 
 private:
     KFileWidget* m_fileWidget;

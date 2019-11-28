@@ -38,17 +38,17 @@ class KonviSettingsDialog : public ConfigDialog
 
     public:
         explicit KonviSettingsDialog(QWidget *parent);
-        ~KonviSettingsDialog();
+        ~KonviSettingsDialog() override;
 
     protected Q_SLOTS:
-        virtual void updateSettings();
-        virtual void updateWidgets();
-        virtual void updateWidgetsDefault();
+        void updateSettings() override;
+        void updateWidgets() override;
+        void updateWidgetsDefault() override;
         void modifiedSlot();
 
     protected:
-        virtual bool hasChanged();
-        virtual bool isDefault();
+        bool hasChanged() override;
+        bool isDefault() override;
 
         Warnings_Config* m_confWarningsWdg;
         Theme_Config* m_confThemeWdg;

@@ -22,7 +22,7 @@ class AwayLabel : public QLabel
 
     public:
         explicit AwayLabel(QWidget *parent = 0);
-        ~AwayLabel();
+        ~AwayLabel() override;
 
     Q_SIGNALS:
         void awayMessageChanged(const QString&);

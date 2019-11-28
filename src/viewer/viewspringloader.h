@@ -32,11 +32,11 @@ class ViewSpringLoader : public QObject
 
     public:
         explicit ViewSpringLoader(ViewContainer* viewContainer);
-        ~ViewSpringLoader();
+        ~ViewSpringLoader() override;
 
         void addWidget(QWidget* widget);
 
-        bool eventFilter(QObject* watched, QEvent* event);
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
 
     private Q_SLOTS:

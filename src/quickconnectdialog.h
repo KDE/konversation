@@ -30,7 +30,7 @@ class QuickConnectDialog : public QDialog
 
     public:
         explicit QuickConnectDialog(QWidget* parent=0);
-        ~QuickConnectDialog();
+        ~QuickConnectDialog() override;
 
     Q_SIGNALS:
         void connectClicked(Konversation::ConnectionFlag flag,

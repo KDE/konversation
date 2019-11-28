@@ -72,28 +72,28 @@ class Channel : public ChatWindow
 
     public:
         explicit Channel(QWidget* parent, const QString& name);
-        ~Channel();
+        ~Channel() override;
 //META
 
-        virtual bool canBeFrontView();
-        virtual bool searchView();
+        bool canBeFrontView() override;
+        bool searchView() override;
 
-        virtual void append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString());
-        virtual void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>());
+        void append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString()) override;
+        void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>()) override;
         void nickActive(const QString& nickname);
         #ifdef HAVE_QCA2
         Konversation::Cipher* getCipher();
         #endif
 //General administrative stuff
     public:
-        void setName(const QString& newName);
+        void setName(const QString& newName) override;
         QString getPassword();
 
         const Konversation::ChannelSettings channelSettings();
 
         QString getPassword() const;
 
-        virtual void setServer(Server* newServer);
+        void setServer(Server* newServer) override;
 
         void setEncryptedOutput(bool);
 
@@ -102,11 +102,11 @@ class Channel : public ChatWindow
 //Unsure of future placement and/or continued existence of these members
         int numberOfNicks() const { return nicks; }
         int numberOfOps() const { return ops; }
-        virtual void setChannelEncoding(const QString& encoding);
-        virtual QString getChannelEncoding();
-        virtual QString getChannelEncodingDefaultDesc();
+        void setChannelEncoding(const QString& encoding) override;
+        QString getChannelEncoding() override;
+        QString getChannelEncodingDefaultDesc() override;
 
-        virtual bool log();
+        bool log() override;
 
     protected:
         // use with caution! does not check for duplicates
@@ -126,7 +126,7 @@ class Channel : public ChatWindow
         void autoWho();
         void updateAutoWho();
         void fadeActivity();
-        virtual void serverOnline(bool online);
+        void serverOnline(bool online) override;
         void delayedSortNickList();
 
 
@@ -149,7 +149,7 @@ class Channel : public ChatWindow
 
         void adjustNicks(int value);
         void adjustOps(int value);
-        virtual void emitUpdateInfo();
+        void emitUpdateInfo() override;
 
         void resizeNicknameListViewColumns();
 
@@ -209,14 +209,14 @@ class Channel : public ChatWindow
 
 //Generic GUI
     public:
-        virtual bool eventFilter(QObject* watched, QEvent* e);
+        bool eventFilter(QObject* watched, QEvent* e) override;
 
 //Specific GUI
     public:
         void updateModeWidgets(char mode, bool plus, const QString &parameter);
 
         /// Sounds suspiciously like a destructor..
-        virtual bool closeYourself(bool askForConfirmation=true);
+        bool closeYourself(bool askForConfirmation=true) override;
 
         bool autoJoin();
 
@@ -234,12 +234,12 @@ class Channel : public ChatWindow
         void updateQuickButtons();
         void channelTextEntered();
         void channelPassthroughCommand();
-        void sendText(const QString& line);
+        void sendText(const QString& line) override;
         void showOptionsDialog();
         void showQuickButtons(bool show);
         void showModeButtons(bool show);
 
-        virtual void indicateAway(bool show);
+        void indicateAway(bool show) override;
         void showTopic(bool show);
         void showNicknameBox(bool show);
         void showNicknameList(bool show);
@@ -274,10 +274,10 @@ class Channel : public ChatWindow
 
         void nicknameListViewTextChanged(int textChangedFlags);
     protected:
-        void showEvent(QShowEvent* event);
+        void showEvent(QShowEvent* event) override;
         void syncSplitters();
         /// Called from ChatWindow adjustFocus
-        virtual void childAdjustFocus();
+        void childAdjustFocus() override;
 
         // to take care of redraw problem if hidden
         bool quickButtonsChanged;

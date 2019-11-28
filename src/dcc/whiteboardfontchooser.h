@@ -30,7 +30,7 @@ namespace Konversation
 
             public:
                 explicit WhiteBoardFontChooser(QWidget* parent);
-                ~WhiteBoardFontChooser();
+                ~WhiteBoardFontChooser() override;
 
                 QFont font() const;
                 int textStyle() const;
@@ -39,7 +39,7 @@ namespace Konversation
                 void fontChanged(const QFont& font);
 
             protected:
-                virtual void closeEvent(QCloseEvent* event);
+                void closeEvent(QCloseEvent* event) override;
 
             protected Q_SLOTS:
                 void currentFontChanged(const QFont& font);

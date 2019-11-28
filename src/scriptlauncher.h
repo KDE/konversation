@@ -23,7 +23,7 @@ class ScriptLauncher : public QObject
 
     public:
         explicit ScriptLauncher(QObject* parent);
-        ~ScriptLauncher();
+        ~ScriptLauncher() override;
 
         static QString scriptPath(const QString& script);
 

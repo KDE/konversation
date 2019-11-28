@@ -37,15 +37,15 @@ namespace Konversation
             QStack<Status> status_stack;
         public:
             XMLContentHandler(UPnPRouter* router);
-            virtual ~XMLContentHandler();
+            ~XMLContentHandler() override;
 
 
-            bool startDocument();
-            bool endDocument();
+            bool startDocument() override;
+            bool endDocument() override;
             bool startElement(const QString &, const QString & localName, const QString &,
-                            const QXmlAttributes & atts);
-            bool endElement(const QString & , const QString & localName, const QString &  );
-            bool characters(const QString & ch);
+                            const QXmlAttributes & atts) override;
+            bool endElement(const QString & , const QString & localName, const QString &  ) override;
+            bool characters(const QString & ch) override;
 
             bool interestingDeviceField(const QString & name);
             bool interestingServiceField(const QString & name);

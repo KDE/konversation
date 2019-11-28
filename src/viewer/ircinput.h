@@ -25,7 +25,7 @@ class IRCInput : public KTextEdit
 
     public:
         explicit IRCInput(QWidget* parent);
-        ~IRCInput();
+        ~IRCInput() override;
 
         void setCompletionMode(char mode);
         char getCompletionMode();
@@ -34,12 +34,12 @@ class IRCInput : public KTextEdit
         QString lastCompletion() const { return m_lastCompletion; }
         void doInlineAutoreplace();
 
-        virtual QSize sizeHint() const;
-        virtual QSize minimumSizeHint() const;
+        QSize sizeHint() const override;
+        QSize minimumSizeHint() const override;
 
-        virtual bool event(QEvent* e);
+        bool event(QEvent* e) override;
 
-        virtual void createHighlighter();
+        void createHighlighter() override;
 
     Q_SIGNALS:
         void nickCompletion();
@@ -65,16 +65,16 @@ class IRCInput : public KTextEdit
         void maybeResize();
 
     protected:
-        bool eventFilter(QObject *object,QEvent *event);
+        bool eventFilter(QObject *object,QEvent *event) override;
         void addHistory(const QString& text);
         bool checkPaste(QString& text);
 
-        virtual void insertFromMimeData(const QMimeData *source);
-        virtual void keyPressEvent(QKeyEvent* e);
-        virtual void wheelEvent(QWheelEvent* e);
-        virtual void showEvent(QShowEvent* e);
-        virtual void hideEvent(QHideEvent* e);
-        virtual void resizeEvent(QResizeEvent* e);
+        void insertFromMimeData(const QMimeData *source) override;
+        void keyPressEvent(QKeyEvent* e) override;
+        void wheelEvent(QWheelEvent* e) override;
+        void showEvent(QShowEvent* e) override;
+        void hideEvent(QHideEvent* e) override;
+        void resizeEvent(QResizeEvent* e) override;
 
         QStringList historyList;
         int lineNum;

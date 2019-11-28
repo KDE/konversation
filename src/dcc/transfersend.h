@@ -40,7 +40,7 @@ namespace Konversation
 
             public:
                 explicit TransferSend(QObject *parent);
-                virtual ~TransferSend();
+                ~TransferSend() override;
 
                 // REQUIRED
                 void setFileURL(const QUrl &url);
@@ -59,9 +59,9 @@ namespace Konversation
                 void reject();
 
             public Q_SLOTS:
-                virtual bool queue();
-                virtual void start();
-                virtual void abort();
+                bool queue() override;
+                void start() override;
+                void abort() override;
 
                 // invoked when the receiver accepts the offer (Reverse DCC)
                 void connectToReceiver(const QString &partnerHost, quint16 partnerPort);
@@ -79,7 +79,7 @@ namespace Konversation
                 void slotLocalCopyReady(KJob *job);
 
             protected:
-                void cleanUp();
+                void cleanUp() override;
 
                 void startConnectionTimer(int secs);
                 void stopConnectionTimer();

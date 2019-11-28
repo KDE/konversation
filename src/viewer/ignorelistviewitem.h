@@ -23,7 +23,7 @@ class IgnoreListViewItem : public QTreeWidgetItem
 {
     public:
         IgnoreListViewItem(QTreeWidget* parent, const QString& name, int flags);
-        ~IgnoreListViewItem();
+        ~IgnoreListViewItem() override;
 
         void setFlag(int flag,bool active);
         bool getFlag(int flag) { return m_flags & flag; };

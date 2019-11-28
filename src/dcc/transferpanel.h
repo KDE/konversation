@@ -45,7 +45,7 @@ namespace Konversation
 
             public:
                 explicit TransferPanel(QWidget *parent);
-                ~TransferPanel();
+                ~TransferPanel() override;
 
                 TransferView *getTransferView();
 
@@ -76,7 +76,7 @@ namespace Konversation
 
             protected:
                 /** Called from ChatWindow adjustFocus */
-                virtual void childAdjustFocus();
+                void childAdjustFocus() override;
 
             private:
                 inline void initGUI();

@@ -86,7 +86,7 @@ class Application : public QApplication
         QStandardItemModel* getUrlModel() { return m_urlModel; }
 
         Application(int &argc, char **argv);
-        ~Application();
+        ~Application() override;
 
         static Application* instance();
 
@@ -174,7 +174,7 @@ class Application : public QApplication
         void closeWallet();
 
     protected:
-        bool event(QEvent* event);
+        bool event(QEvent* event) override;
 
     private:
         void implementRestart();

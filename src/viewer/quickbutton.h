@@ -23,7 +23,7 @@ class QuickButton : public QPushButton
 
         public:
         QuickButton(const QString &label,const QString &newDefinition,QWidget* parent);
-        ~QuickButton();
+        ~QuickButton() override;
 
         void setDefinition(const QString &newDefinition);
 

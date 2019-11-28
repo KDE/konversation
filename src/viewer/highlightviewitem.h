@@ -27,7 +27,7 @@ class HighlightViewItem : public QTreeWidgetItem
 {
     public:
         HighlightViewItem(QTreeWidget* parent, Highlight* highlight);
-        ~HighlightViewItem();
+        ~HighlightViewItem() override;
 
         void setID(const int itemID);
         int getID() const;

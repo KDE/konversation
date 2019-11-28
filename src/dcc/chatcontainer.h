@@ -31,23 +31,23 @@ namespace Konversation
 
             public:
                 ChatContainer(QWidget *parent, Chat *chat);
-                ~ChatContainer();
+                ~ChatContainer() override;
 
             // ChatWindow
-                virtual bool closeYourself(bool askForConfirmation=true);
-                virtual bool canBeFrontView();
-                virtual bool searchView();
+                bool closeYourself(bool askForConfirmation=true) override;
+                bool canBeFrontView() override;
+                bool searchView() override;
 
-                virtual void setChannelEncoding(const QString &encoding);
-                virtual QString getChannelEncoding();
-                virtual QString getChannelEncodingDefaultDesc();
-                virtual void emitUpdateInfo();
+                void setChannelEncoding(const QString &encoding) override;
+                QString getChannelEncoding() override;
+                QString getChannelEncodingDefaultDesc() override;
+                void emitUpdateInfo() override;
 
                 QString ownNick() const;
 
             protected:
                 /** Called from ChatWindow adjustFocus */
-                virtual void childAdjustFocus();
+                void childAdjustFocus() override;
 
             public Q_SLOTS:
                 void setPartnerNick(const QString &nick);

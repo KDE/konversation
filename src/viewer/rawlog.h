@@ -26,12 +26,12 @@ class RawLog : public ChatWindow
         enum MessageDirection { Inbound, Outbound };
 
         explicit RawLog(QWidget* parent);
-        ~RawLog();
+        ~RawLog() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
-        virtual bool searchView();
-        virtual bool log();
+        bool searchView() override;
+        bool log() override;
         using ChatWindow::appendRaw;
         virtual void appendRaw(MessageDirection dir, const QByteArray& message);
     public Q_SLOTS:
@@ -39,7 +39,7 @@ class RawLog : public ChatWindow
 
     protected:
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
+        void childAdjustFocus() override;
 };
 
 #endif /* RAWLOG_H */

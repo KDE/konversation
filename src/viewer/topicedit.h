@@ -39,7 +39,7 @@ class TopicEdit : public KTextEdit
 
     public:
         explicit TopicEdit(QWidget* parent = 0);
-        ~TopicEdit();
+        ~TopicEdit() override;
 
         Channel* channel() const;
         void setChannel(Channel* channel);
@@ -47,13 +47,13 @@ class TopicEdit : public KTextEdit
         int maximumLength() const;
         void setMaximumLength(int length);
 
-        QSize minimumSizeHint() const;
+        QSize minimumSizeHint() const override;
 
-        bool eventFilter(QObject* watched, QEvent* event);
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
 
     protected:
-        void moveEvent(QMoveEvent* event);
+        void moveEvent(QMoveEvent* event) override;
 
 
     private Q_SLOTS:

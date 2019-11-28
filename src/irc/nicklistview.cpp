@@ -31,7 +31,7 @@ class NickItemDelegate : public QStyledItemDelegate
     public:
         NickItemDelegate(QObject *parent = 0);
 
-        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
 NickItemDelegate::NickItemDelegate(QObject *parent)

@@ -48,7 +48,7 @@ namespace Konversation
 
             public:
                 explicit TransferRecv(QObject *parent);
-                virtual ~TransferRecv();
+                ~TransferRecv() override;
 
                 // REQUIRED
                 void setPartnerIp(const QString &ip);
@@ -64,19 +64,19 @@ namespace Konversation
                 void setReverse(bool reverse, const QString &reverseToken);
 
             public Q_SLOTS:
-                virtual bool queue();
+                bool queue() override;
 
                 /** The user has accepted the download.
                  *  Check we are saving it somewhere valid, create any directories needed, and
                  *  connect to remote host.
                  */
-                virtual void start();
+                void start() override;
                 /** The user has chosen to abort.
                  *  Either by chosen to abort directly, or by choosing cancel when
                  *  prompted for information on where to save etc.
                  *  Not called when it fails due to another problem.
                  */
-                virtual void abort();
+                void abort() override;
                 void startResume(quint64 position);
 
             protected Q_SLOTS:
@@ -101,7 +101,7 @@ namespace Konversation
                 void sendReverseAck(bool error, quint16 port);
 
             protected:
-                void cleanUp();
+                void cleanUp() override;
 
                                                           // (startPosition == 0) means "don't resume"
                 void prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0);
@@ -152,7 +152,7 @@ namespace Konversation
 
             public:
                 explicit TransferRecvWriteCacheHandler(KIO::TransferJob *transferJob);
-                virtual ~TransferRecvWriteCacheHandler();
+                ~TransferRecvWriteCacheHandler() override;
 
                 void append(char *data, int size);
                 bool write(bool force = false);

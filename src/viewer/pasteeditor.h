@@ -27,7 +27,7 @@ class PasteEditor : public QDialog, private Ui::PasteEditor
     Q_OBJECT
     public:
         explicit PasteEditor(QWidget* parent);
-        ~PasteEditor();
+        ~PasteEditor() override;
 
         void setText(const QString& text);
         QString text() const;

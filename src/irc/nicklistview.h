@@ -31,7 +31,7 @@ class NickListView : public QTreeWidget
 
         public:
         NickListView(QWidget* parent, Channel *chan);
-        ~NickListView();
+        ~NickListView() override;
 
         /** Call when the icons have been changed.
          */
@@ -70,15 +70,15 @@ class NickListView : public QTreeWidget
 
     protected:
         //! Reimplemented for dynamic tooltips
-        virtual bool event(QEvent* ev);
-        virtual void contextMenuEvent(QContextMenuEvent* ev);
+        bool event(QEvent* ev) override;
+        void contextMenuEvent(QContextMenuEvent* ev) override;
 
         // Drag & Drop support
-        virtual QStringList mimeTypes () const;
+        QStringList mimeTypes () const override;
         bool canDecodeMime(QDropEvent const *event) const;
-        virtual bool dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action);
-        virtual void dragEnterEvent(QDragEnterEvent *event);
-        virtual void dragMoveEvent(QDragMoveEvent *event);
+        bool dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action) override;
+        void dragEnterEvent(QDragEnterEvent *event) override;
+        void dragMoveEvent(QDragMoveEvent *event) override;
 
         Channel *channel;
         QTimer *m_resortTimer;
