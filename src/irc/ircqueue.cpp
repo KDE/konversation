@@ -19,6 +19,14 @@
 
 #include "server.h"
 
+IRCMessage::IRCMessage(const QString &str)
+    : s(str) //, codec(QTextCodec::codecForName("utf8"))
+{
+    t.start();
+}
+
+////
+
 int IRCQueue::EmptyingRate::nextInterval(int, int elapsed)
 {
     if (!isValid())
