@@ -19,6 +19,7 @@
 #include <QObject>
 #include <QList>
 #include <QTime>
+#include <QElapsedTimer>
 
 class QTimer;
 class Server;
@@ -34,29 +35,24 @@ class Server;
  */
 struct IRCMessage
 {
-    IRCMessage() : t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
-    {} ///< this constructor required for QValueList, do not use
-
     /**
         Make a new IRCMessage with timestamp of QTime::currentTime().
 
         Note the constructor takes a QString, not a const QString& or a QString *. If you want to modify the
         contained text, put it back with setText.
     */
-    IRCMessage(const QString &i) : s(i), t(QTime::currentTime()) //, codec(QTextCodec::codecForName("utf8"))
-    {}
+    IRCMessage(const QString &str);
 
-    QString text() { return s; }
-    int age() { return t.elapsed(); }
-    QTime time() { return t; }
+    QString text() const { return s; }
+    int age() const { return t.elapsed(); } // in milliseconds
     void setText(const QString &text) { s=text; }
 private:
     QString s;
-    QTime t;
+    QElapsedTimer t;
 
     //FIXME wire this up
     //QTextCodec* codec;
-    //operator const char * () const { return codec->fromUnicode(text()); }
+    //operator QByteArray () const { return codec->fromUnicode(text()); }
 
 };
 
