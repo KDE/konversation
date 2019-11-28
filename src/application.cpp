@@ -50,6 +50,7 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
+#include <kwindowsystem_version.h>
 
 using namespace Konversation;
 
@@ -1392,7 +1393,12 @@ void Application::handleActivate(const QStringList& arguments)
 
     newInstance(m_commandLineParser);
 
+#if KWINDOWSYSTEM_VERSION <= QT_VERSION_CHECK(5, 62, 0)
     KStartupInfo::setNewStartupId(mainWindow, KStartupInfo::startupId());
+#else
+    mainWindow->setAttribute(Qt::WA_NativeWindow, true);
+    KStartupInfo::setNewStartupId(mainWindow->windowHandle(), KStartupInfo::startupId());
+#endif
     mainWindow->show();
     mainWindow->raise();
 }
