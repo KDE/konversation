@@ -53,7 +53,7 @@ namespace Konversation
              * Converts the ambiguous encoding name to a short encoding name
              * Like : iso8859-9 -> iso 8859-9, iso-8859-9 -> iso 8859-9
              * If the ambiguous name is invalid, returns QString:null.
-             * @return a short encoding name or QString::null
+             * @return a short encoding name or QString()
              */
             QString ambiguousNameToShortName( const QString& ambiguousName );
 

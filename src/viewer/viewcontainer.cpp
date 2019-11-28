@@ -2405,7 +2405,7 @@ void ViewContainer::appendToFrontmost(const QString& type, const QString& messag
         // FIXME: this signal should be sent from the status panel instead, so it
         //        can be using the correct highlight color, would be more consistent
         //        anyway!
-        // FIXME newText(serverView,QString::null,true);
+        // FIXME newText(serverView,QString(),true);
     }
     else
         m_frontView->appendServerMessage(type, message, messageTags, parseURL);

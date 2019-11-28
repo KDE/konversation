@@ -1045,7 +1045,7 @@ bool Channel::shouldShowEvent(ChannelNickPtr channelNick)
 
             if (m_server->isWatchedNick(channelNick->getNickname()))
                 return true; // nick is on our watched list, so we probably want to see the event
-            else if (channelNick->timeStamp()+activityThreshold > QDateTime::currentDateTime().toTime_t())
+            else if (channelNick->timeStamp()+activityThreshold > QDateTime::currentDateTime().toSecsSinceEpoch())
                 return true; // the nick has spoken within activity threshold
             else
                 return false;
@@ -2723,7 +2723,7 @@ void Channel::append(const QString& nickname, const QString& message, const QHas
         Nick* nick = getNickByName(nickname);
 
         if(nick) {
-            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toSecsSinceEpoch());
         }
     }
 
@@ -2737,7 +2737,7 @@ void Channel::appendAction(const QString& nickname, const QString& message, cons
         Nick* nick = getNickByName(nickname);
 
         if(nick) {
-            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toSecsSinceEpoch());
         }
     }
 

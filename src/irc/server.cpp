@@ -587,7 +587,7 @@ int Server::getModesCount()
 // set user mode prefixes according to non-standard 005-Reply (see inputfilter.cpp)
 void Server::setPrefixes(const QString &modes, const QString& prefixes)
 {
-    // NOTE: serverModes is QString::null, if server did not supply the
+    // NOTE: serverModes is QString(), if server did not supply the
     // modes which relates to the network's nick-prefixes
     m_serverNickPrefixModes = modes;
     m_serverNickPrefixes = prefixes;
@@ -2956,7 +2956,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     {
         if (plus)
         {
-            addBan(channelName, QString(QStringLiteral("%1 %2 %3")).arg(parameter).arg(updater).arg(QDateTime::currentDateTime().toTime_t()));
+            addBan(channelName, QString(QStringLiteral("%1 %2 %3")).arg(parameter).arg(updater).arg(QDateTime::currentDateTime().toSecsSinceEpoch()));
         } else {
             removeBan(channelName, parameter);
         }
@@ -4146,7 +4146,7 @@ QString Server::awayTime() const
 
     if (m_away)
     {
-        int diff = QDateTime::currentDateTime().toTime_t() - m_awayTime;
+        int diff = QDateTime::currentDateTime().toSecsSinceEpoch() - m_awayTime;
         int num = diff / 3600;
 
         if (num < 10)
@@ -4174,7 +4174,7 @@ QString Server::awayTime() const
 
 void Server::startAwayTimer()
 {
-    m_awayTime = QDateTime::currentDateTime().toTime_t();
+    m_awayTime = QDateTime::currentDateTime().toSecsSinceEpoch();
 }
 
 void Server::enableIdentifyMsg(bool enabled)

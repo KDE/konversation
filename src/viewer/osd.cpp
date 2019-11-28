@@ -218,7 +218,7 @@ void OSDWidget::paintEvent( QPaintEvent *e )
     QBitmap mask( e->rect().size() );
     QPainter maskPainter( &mask );
 
-    p.setRenderHints( QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing );
+    p.setRenderHints( QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform );
     p.setClipRect( e->rect() );
 
     // Masking for transparency

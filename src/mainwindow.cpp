@@ -904,7 +904,7 @@ void MainWindow::notifyAction(int connectionId, const QString& nick)
 void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
 {
     emit nicksNowOnline(notifyServer);
-    // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
+    // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString(), true);
 }
 
 void MainWindow::toggleVisibility()

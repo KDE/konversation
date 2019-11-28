@@ -301,7 +301,7 @@ namespace Konversation
                 case TransferStatus:
                     return transfer->getStatus();
                 case TransferPointer:
-                    return qVariantFromValue<QObject*>(transfer);
+                    return QVariant::fromValue<QObject*>(transfer);
                 case TransferProgress:
                     return transfer->getProgress();
                 case TransferOfferDate:

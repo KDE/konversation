@@ -296,7 +296,7 @@ class IRCView : public QTextBrowser
         /// Format the line by adding needed bidi marks
         QString formatFinalLine(bool rtl, const QString &lineColor, const QString &label, const QString &nickLine, const QString &nickStar, const QString &text);
 
-        /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
+        /// Returns a formated timestamp if timestamps are enabled else it returns QString()
         QString timeStamp(QHash<QString, QString> messageTags, bool rtl);
 
         /// Returns a formated nick string

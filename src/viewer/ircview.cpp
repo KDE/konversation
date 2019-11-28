@@ -2078,8 +2078,8 @@ void IRCView::wheelEvent(QWheelEvent *ev)
 {
     if(ev->modifiers()==Qt::ControlModifier)
     {
-        if(ev->delta() < 0) decreaseFontSize();
-        if(ev->delta() > 0) increaseFontSize();
+        if(ev->angleDelta().y() < 0) decreaseFontSize();
+        if(ev->angleDelta().y() > 0) increaseFontSize();
     }
 
     QTextBrowser::wheelEvent(ev);

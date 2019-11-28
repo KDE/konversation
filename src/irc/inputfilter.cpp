@@ -509,7 +509,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     // pong reply, calculate turnaround time
                     if (replyReason.toLower()==QStringLiteral("ping"))
                     {
-                        int dateArrived=QDateTime::currentDateTime().toTime_t();
+                        int dateArrived=QDateTime::currentDateTime().toSecsSinceEpoch();
                         int dateSent=reply.toInt();
                         int time = dateArrived-dateSent;
                         QString unit = i18np("second", "seconds", time);

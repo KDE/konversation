@@ -55,7 +55,7 @@ QVariant TopicHistorySortfilterProxyModel::data(const QModelIndex& index, int ro
     {
         const QModelIndex& sourceIndex = mapToSource(index);
 
-        return sourceModel()->data(sourceIndex.sibling(sourceIndex.row(), 2)).toDateTime().toTime_t();
+        return sourceModel()->data(sourceIndex.sibling(sourceIndex.row(), 2)).toDateTime().toSecsSinceEpoch();
     }
 
     return KCategorizedSortFilterProxyModel::data(index, role);

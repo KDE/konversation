@@ -836,7 +836,7 @@ namespace Konversation
 
         if (request == QLatin1String("PING"))
         {
-            unsigned int timeT = QDateTime::currentDateTime().toTime_t();
+            unsigned int timeT = QDateTime::currentDateTime().toSecsSinceEpoch();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(timeT);
             result.output = i18n("Sending CTCP-%1 request to %2.", QStringLiteral("PING"), recipient);
         }
