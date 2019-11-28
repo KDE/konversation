@@ -22,6 +22,7 @@
 #include <QDateTime>
 #include <QObject>
 #include <QTimer>
+#include <QElapsedTimer>
 
 #include <QUrl>
 #include <kio/global.h>
@@ -183,7 +184,7 @@ namespace Konversation
                 QDateTime m_timeTransferFinished;
 
                 QTimer m_loggerTimer;
-                QTime m_loggerBaseTime;  // for calculating CPS
+                QElapsedTimer m_loggerBaseTime;  // for calculating CPS
                 QList<int> m_transferLogTime;
                 QList<KIO::fileoffset_t> m_transferLogPosition;
 

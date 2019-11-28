@@ -32,6 +32,7 @@
 #include "cipher.h"
 #endif
 
+#include <QElapsedTimer>
 #include <QTimer>
 #include <QPointer>
 
@@ -842,7 +843,7 @@ class Server : public QObject
         bool m_processingIncoming;
 
         /// Measures the lag between PING and PONG
-        QTime m_lagTime;
+        QElapsedTimer m_lagTime;
         /// Updates the gui when the lag gets too high
         QTimer m_pingResponseTimer;
         /// Wait before sending the next PING

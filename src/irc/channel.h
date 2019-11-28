@@ -24,6 +24,7 @@
 #include "cipher.h"
 #endif
 
+#include <QElapsedTimer>
 #include <QTimer>
 #include <QString>
 
@@ -331,7 +332,7 @@ class Channel : public ChatWindow
         QStringList m_BanList;
 
         QTimer m_whoTimer; ///< For continuous auto /WHO
-        QTime  m_whoTimerStarted;
+        QElapsedTimer m_whoTimerStarted;
 
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
