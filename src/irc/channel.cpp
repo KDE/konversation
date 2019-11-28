@@ -2332,6 +2332,7 @@ void Channel::autoWho()
     }
 
     m_server->requestWho(getName());
+    m_whoTimerStarted.start();
 }
 
 void Channel::updateAutoWho()
