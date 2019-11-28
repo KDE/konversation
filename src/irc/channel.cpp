@@ -2627,7 +2627,7 @@ void Channel::delayedSortNickList()
 void Channel::sortNickList(bool delayed)
 {
     if (!delayed || m_delayedSortTrigger > DELAYED_SORT_TRIGGER) {
-        qSort(nicknameList.begin(), nicknameList.end(), nickLessThan);
+        std::sort(nicknameList.begin(), nicknameList.end(), nickLessThan);
         nicknameListView->resort();
     }
     if (!nicknameListView->isSortingEnabled())
@@ -2850,7 +2850,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
         }
     }
 
-    qSort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
+    std::sort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
 
     foreach (Nick *nick, foundNicks)
     {
