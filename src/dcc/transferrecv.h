@@ -48,7 +48,7 @@ namespace Konversation
 
             public:
                 explicit TransferRecv(QObject *parent);
-                virtual ~TransferRecv();
+                ~TransferRecv() override;
 
                 // REQUIRED
                 void setPartnerIp(const QString &ip);
@@ -152,7 +152,7 @@ namespace Konversation
 
             public:
                 explicit TransferRecvWriteCacheHandler(KIO::TransferJob *transferJob);
-                virtual ~TransferRecvWriteCacheHandler();
+                ~TransferRecvWriteCacheHandler() override;
 
                 void append(char *data, int size);
                 bool write(bool force = false);

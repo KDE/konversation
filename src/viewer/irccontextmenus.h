@@ -70,7 +70,7 @@ class IrcContextMenus : public QObject
         };
         Q_DECLARE_FLAGS(MenuOptions, MenuOption)
 
-        ~IrcContextMenus();
+        ~IrcContextMenus() override;
 
         static IrcContextMenus* self();
 

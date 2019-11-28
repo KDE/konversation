@@ -23,7 +23,7 @@ class ModeButton : public QToolButton
 
         public:
         ModeButton(const QString& label,QWidget* parent,int id);
-        ~ModeButton();
+        ~ModeButton() override;
 
         void setOn(bool state);
 

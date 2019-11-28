@@ -64,7 +64,7 @@ class IRCView : public QTextBrowser
 
     public:
         explicit IRCView(QWidget* parent);
-        ~IRCView();
+        ~IRCView() override;
 
         //! this function is proper given it is not nessary for the ircview to have a server for DCC.
         void setServer(Server* server);

@@ -51,7 +51,7 @@ namespace Konversation
                 };
 
                 explicit Chat(QObject *parent);
-                ~Chat();
+                ~Chat() override;
 
                 quint16 ownPort() const;
                 QString ownNick() const;

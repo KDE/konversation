@@ -37,7 +37,7 @@ namespace Konversation
             QStack<Status> status_stack;
         public:
             XMLContentHandler(UPnPRouter* router);
-            virtual ~XMLContentHandler();
+            ~XMLContentHandler() override;
 
 
             bool startDocument() Q_DECL_OVERRIDE;

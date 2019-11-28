@@ -318,7 +318,7 @@ struct Burr: public QTextBlockUserData
             m_prev->m_next = this;
     }
 
-    ~Burr()
+    ~Burr() override
     {
         m_owner->blockDeleted(this);
         unlink();

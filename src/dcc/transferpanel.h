@@ -45,7 +45,7 @@ namespace Konversation
 
             public:
                 explicit TransferPanel(QWidget *parent);
-                ~TransferPanel();
+                ~TransferPanel() override;
 
                 TransferView *getTransferView();
 

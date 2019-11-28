@@ -28,7 +28,7 @@ class StatusPanel : public ChatWindow
 
     public:
         explicit StatusPanel(QWidget* parent);
-        ~StatusPanel();
+        ~StatusPanel() override;
 
         void cycle() Q_DECL_OVERRIDE;
 

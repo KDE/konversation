@@ -85,7 +85,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
     public:
         explicit ChannelListPanel(QWidget* parent);
-        ~ChannelListPanel();
+        ~ChannelListPanel() override;
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();

@@ -31,7 +31,7 @@ namespace Konversation
 
             public:
                 ChatContainer(QWidget *parent, Chat *chat);
-                ~ChatContainer();
+                ~ChatContainer() override;
 
             // ChatWindow
                 bool closeYourself(bool askForConfirmation=true) Q_DECL_OVERRIDE;

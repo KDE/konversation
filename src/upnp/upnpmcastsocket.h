@@ -36,7 +36,7 @@ namespace Konversation
             Q_OBJECT
         public:
             UPnPMCastSocket();
-            virtual ~UPnPMCastSocket();
+            ~UPnPMCastSocket() override;
 
             /// Get the number of routers discovered
             quint32 getNumDevicesDiscovered() const {return routers.count();}

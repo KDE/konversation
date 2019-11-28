@@ -30,7 +30,7 @@ namespace Konversation
 
             public:
                 explicit WhiteBoardFontChooser(QWidget* parent);
-                ~WhiteBoardFontChooser();
+                ~WhiteBoardFontChooser() override;
 
                 QFont font() const;
                 int textStyle() const;

@@ -29,7 +29,7 @@ namespace Konversation
 
             public:
                 explicit WhiteBoard(QWidget* parent);
-                ~WhiteBoard();
+                ~WhiteBoard() override;
 
                 static QStringList whiteboardCommands();
 

@@ -44,7 +44,7 @@ class Query : public ChatWindow
         explicit Query(QWidget* parent, const QString& _name);
         void setServer(Server* newServer) Q_DECL_OVERRIDE;
 
-        ~Query();
+        ~Query() override;
 
         /** This will always be called soon after this object is created.
          *  @param nickInfo A nickinfo that must exist.

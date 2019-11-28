@@ -49,7 +49,7 @@ class ViewMimeData : public QMimeData
 {
     public:
         explicit ViewMimeData(ChatWindow *view);
-        ~ViewMimeData();
+        ~ViewMimeData() override;
 
         ChatWindow* view() const;
 
@@ -86,7 +86,7 @@ class ViewContainer : public QAbstractItemModel
         };
 
         explicit ViewContainer(MainWindow* window);
-        ~ViewContainer();
+        ~ViewContainer() override;
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }
         MainWindow* getWindow() { return m_window; }

@@ -124,7 +124,7 @@ namespace Konversation
             * @param verbose Print lots of debug info
             */
             UPnPRouter(const QString & server,const QUrl &location,const QString & uuid);
-            virtual ~UPnPRouter();
+            ~UPnPRouter() override;
 
             /// Get the name  of the server
             QString getServer() const {return server;}

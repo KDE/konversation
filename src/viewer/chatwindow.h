@@ -31,7 +31,7 @@ class ChatWindow : public QWidget
 
     public:
         explicit ChatWindow(QWidget* parent);
-        ~ChatWindow();
+        ~ChatWindow() override;
 
         enum WindowType
         {

@@ -110,7 +110,7 @@ public:
      * Deletes private class.
      * @see exists()
      */
-    ~ConfigDialog();
+    ~ConfigDialog() override;
 
     /**
      * Adds page to the dialog and to KConfigDialogManager.  When an

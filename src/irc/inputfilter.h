@@ -29,7 +29,7 @@ class InputFilter : public QObject
 
     public:
         InputFilter();
-        ~InputFilter();
+        ~InputFilter() override;
 
         void setServer(Server* newServer);
         void parseLine(const QString &line);

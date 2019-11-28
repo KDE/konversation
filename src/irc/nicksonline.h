@@ -47,7 +47,7 @@ class NicksOnline : public ChatWindow
         };
 
         explicit NicksOnline(QWidget* parent);
-        ~NicksOnline();
+        ~NicksOnline() override;
 
         // These are here for the benefit of NicksOnlineTooltip.
         QTreeWidget* getNickListView();

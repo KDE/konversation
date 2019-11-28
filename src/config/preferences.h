@@ -47,7 +47,7 @@ class Preferences : public PreferencesBase
     public:
 
         static Preferences *self();
-        ~Preferences();
+        ~Preferences() override;
         enum Pages
         {
             NotifyPage,

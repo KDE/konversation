@@ -28,7 +28,7 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
     public:
         explicit SearchBar(QWidget* parent);
-        ~SearchBar();
+        ~SearchBar() override;
 
         void setHasMatch(bool value);
 

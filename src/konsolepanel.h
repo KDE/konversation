@@ -27,7 +27,7 @@ class KonsolePanel : public ChatWindow
 
     public:
         explicit KonsolePanel(QWidget *p);
-        ~KonsolePanel();
+        ~KonsolePanel() override;
 
         void setName(const QString& newName) Q_DECL_OVERRIDE { ChatWindow::setName(newName); }
 

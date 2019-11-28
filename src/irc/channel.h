@@ -72,7 +72,7 @@ class Channel : public ChatWindow
 
     public:
         explicit Channel(QWidget* parent, const QString& name);
-        ~Channel();
+        ~Channel() override;
 //META
 
         bool canBeFrontView() Q_DECL_OVERRIDE;

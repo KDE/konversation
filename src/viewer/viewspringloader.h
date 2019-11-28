@@ -32,7 +32,7 @@ class ViewSpringLoader : public QObject
 
     public:
         explicit ViewSpringLoader(ViewContainer* viewContainer);
-        ~ViewSpringLoader();
+        ~ViewSpringLoader() override;
 
         void addWidget(QWidget* widget);
 

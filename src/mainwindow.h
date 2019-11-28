@@ -44,7 +44,7 @@ class MainWindow : public KXmlGuiWindow
 
     public:
         MainWindow();
-        ~MainWindow();
+        ~MainWindow() override;
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
