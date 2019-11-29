@@ -192,7 +192,7 @@ void IRCInput::setText(const QString& text, bool preserveContents)
 //take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->metaObject()->className() == QStringLiteral("IRCView") || object->metaObject()->className() == QStringLiteral("Konversation::TopicLabel"))
+    if (object->metaObject()->className() == QLatin1String("IRCView") || object->metaObject()->className() == QStringLiteral("Konversation::TopicLabel"))
     {
         if (event->type() == QEvent::KeyPress)
         {

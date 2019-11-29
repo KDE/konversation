@@ -279,7 +279,7 @@ const QStringList Preferences::notifyListByGroupId(int serverGroupId)
 
 const QString Preferences::notifyStringByGroupId(int serverGroupId)
 {
-    return notifyListByGroupId(serverGroupId).join(QStringLiteral(" "));
+    return notifyListByGroupId(serverGroupId).join(QLatin1Char(' '));
 }
 
 bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
@@ -417,7 +417,7 @@ QStringList Preferences::defaultAliasList()
         // capability to differentiate  between audio and video media. This method
         // needs at the very least to be split up in two, or scripts may in the
         // future determine what aliases they want to add.
-        if (script == QStringLiteral("media"))
+        if (script == QLatin1String("media"))
         {
             aliasList.append(QStringLiteral("audio /exec media audio"));
             aliasList.append(QStringLiteral("video /exec media video"));
@@ -592,7 +592,7 @@ QString Preferences::webBrowserCmd()
 {
   // add %u to command if it's not in there
   QString cmd=self()->mWebBrowserCmd;
-  if (!cmd.contains(QStringLiteral("%u")))
+  if (!cmd.contains(QLatin1String("%u")))
       cmd += QStringLiteral(" %u");
   return cmd;
 }

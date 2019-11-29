@@ -219,17 +219,17 @@ QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois
         {
             niInfo += i18n("Away");
             if (!nickInfo->getAwayMessage().isEmpty())
-                niInfo += QStringLiteral(" (") + nickInfo->getAwayMessage() + QLatin1Char(')');
+                niInfo += QLatin1String(" (") + nickInfo->getAwayMessage() + QLatin1Char(')');
         }
         if (!nickInfo->getHostmask().isEmpty())
             niInfo += QLatin1Char(' ') + nickInfo->getHostmask();
         if (!nickInfo->getRealName().isEmpty())
-            niInfo += QStringLiteral(" (") + nickInfo->getRealName() + QLatin1Char(')');
+            niInfo += QLatin1String(" (") + nickInfo->getRealName() + QLatin1Char(')');
         if (!nickInfo->getNetServer().isEmpty())
         {
             niInfo += i18n( " online via %1", nickInfo->getNetServer() );
             if (!nickInfo->getNetServerInfo().isEmpty())
-                niInfo += QStringLiteral(" (") + nickInfo->getNetServerInfo() + QLatin1Char(')');
+                niInfo += QLatin1String(" (") + nickInfo->getNetServerInfo() + QLatin1Char(')');
         }
         if (!nickInfo->getOnlineSince().isNull())
             niInfo += i18n( " since %1", nickInfo->getPrettyOnlineSince() );
@@ -268,7 +268,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // Update list of servers in the network that are connected.
     QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(QLatin1Char(','), QString::SkipEmptyParts);
     if (!serverList.contains(serverName)) serverList.append(serverName);
-    networkRoot->setText(nlvcAdditionalInfo, serverList.join(QStringLiteral(",")));
+    networkRoot->setText(nlvcAdditionalInfo, serverList.join(QLatin1Char(',')));
     // Get watch list.
     QStringList watchList = servr->getWatchList();
     QStringList::iterator itEnd = watchList.end();
@@ -509,7 +509,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             i--;
         }
         else
-            child->setText(nlvcAdditionalInfo, serverNameList.join(QStringLiteral(",")));
+            child->setText(nlvcAdditionalInfo, serverNameList.join(QLatin1Char(',')));
     }
     // Display info for all currently-connected servers.
     foreach (Server* server, serverList)
@@ -618,7 +618,7 @@ const QString& nickname)
     if (!server) return nullptr;
     QString networkName = server->getDisplayName();
     QList<QTreeWidgetItem*> items = m_nickListView->findItems(networkName, Qt::MatchExactly | Qt::MatchCaseSensitive, nlvcNetwork);
-    if (items.count() == 0) return nullptr;
+    if (items.isEmpty()) return nullptr;
     QTreeWidgetItem* networkRoot = items.at(0);
     if (!networkRoot) return nullptr;
     QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
@@ -662,7 +662,7 @@ void NicksOnline::doCommand(QAction* id)
 
     QString serverName;
     QString nickname;
-    if (m_nickListView->selectedItems().count() == 0) return;
+    if (m_nickListView->selectedItems().isEmpty()) return;
     QTreeWidgetItem* item = m_nickListView->selectedItems().at(0);
     NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 
@@ -780,7 +780,7 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
  */
 void NicksOnline::slotNickListView_SelectionChanged()
 {
-    if (m_nickListView->selectedItems().count() == 0)
+    if (m_nickListView->selectedItems().isEmpty())
       return;
     setupToolbarActions(dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0)));
 }
@@ -854,7 +854,7 @@ void NicksOnline::refreshItem(QTreeWidgetItem* item)
             if (nickInfo)
                 nickAdditionalInfo = getNickAdditionalInfo(nickInfo, needWhois);
             item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
-            if (m_nickListView->selectedItems().count() != 0 && item == m_nickListView->selectedItems().at(0))
+            if (!m_nickListView->selectedItems().isEmpty() && item == m_nickListView->selectedItems().at(0))
                 setupToolbarActions(dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0)));
         }
     }
