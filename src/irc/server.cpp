@@ -700,10 +700,10 @@ void Server::socketConnected()
     if (getIdentity() && getIdentity()->getAuthType() == QLatin1String("serverpw")
         && !getIdentity()->getAuthPassword().isEmpty())
     {
-        ql << QStringLiteral("PASS ") + getIdentity()->getAuthPassword();
+        ql << QStringLiteral("PASS :") + getIdentity()->getAuthPassword();
     }
     else if (!getConnectionSettings().server().password().isEmpty())
-        ql << QStringLiteral("PASS ") + getConnectionSettings().server().password();
+        ql << QStringLiteral("PASS :") + getConnectionSettings().server().password();
 
     ql << QStringLiteral("NICK ") + getNickname();
     ql << QStringLiteral("USER ") + getIdentity()->getIdent() + QStringLiteral(" 8 * :") /* 8 = +i; 4 = +w */ +  getIdentity()->getRealName();
