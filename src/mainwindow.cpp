@@ -424,7 +424,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     actionCollection()->addAction(QStringLiteral("reset_font"), action);
 
     action=new QAction(this);
-    action->setText(i18n("Decrease Font Size"));
+    action->setText(i18n("Shrink Font Size"));
     actionCollection()->setDefaultShortcuts(action, KStandardShortcut::zoomOut());
     action->setEnabled(false);
     action->setIcon(QIcon::fromTheme(QStringLiteral("zoom-out")));
