@@ -69,7 +69,7 @@
   <summary xml:lang="uk">Клієнт IRC</summary>
   <summary xml:lang="x-test">xxIRC clientxx</summary>
   <summary xml:lang="zh-CN">IRC 客户端</summary>
-  <summary xml:lang="zh-TW">IRC 客戶端程式</summary>
+  <summary xml:lang="zh-TW">IRC 用戶端程式</summary>
   <description>
     <p>
       Konversation is an IRC client which gives you speedy access to Freenode network's channels,
@@ -105,7 +105,7 @@
     <p xml:lang="uk">Konversation — клієнтська програма IRC, за допомогою якої ви зможете швидко отримати доступ до каналів мережі Freenode, на яких можна спілкуватися із іншими користувачами та розробниками. Якщо ви скористаєтеся типовими параметрами роботи програми, вам достатньо буде вказати лише назву потрібного вам каналу, щоб розпочати спілкування на ньому.</p>
     <p xml:lang="x-test">xxKonversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.xx</p>
     <p xml:lang="zh-CN">Konversation IRC 客户端让您快速链接 Freenode 网络的频道，以获取大多数发行版的社区支持。默认情况下，您只需要输入发行版频道的名字就可以开始使用了，而不需要额外配置。</p>
-    <p xml:lang="zh-TW">Konversation 是一個讓您可以快速連上 Freenode 網路頻道的 IRC 客戶端，在那裡您可以找到大多數散佈版的支援。</p>
+    <p xml:lang="zh-TW">Konversation 是一個讓您可以快速連上 Freenode 網路頻道的 IRC 用戶端，在那裡您可以找到大多數散佈版的支援。</p>
     <p>Features:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
