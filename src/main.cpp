@@ -105,8 +105,6 @@ int main(int argc, char* argv[])
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
-    cmdLineParser.addHelpOption();
-    cmdLineParser.addVersionOption();
 
     cmdLineParser.addPositionalArgument(QStringLiteral("url"), i18n("irc:// URL or server hostname"));
     cmdLineParser.addOption(QCommandLineOption(QStringLiteral("server"), i18n("Server to connect"), i18n("server")));
