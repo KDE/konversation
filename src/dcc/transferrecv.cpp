@@ -481,7 +481,7 @@ namespace Konversation
             switch (transferJob->error())
             {
                 case 0:                                   // no error
-                    qDebug() << "job->error() returned 0." << endl
+                    qDebug() << "job->error() returned 0.\n"
                         << "Why was I called in spite of no error?";
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:

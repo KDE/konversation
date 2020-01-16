@@ -211,7 +211,7 @@ namespace Konversation
             if (setsockopt(fd,IPPROTO_IP,IP_ADD_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
     #endif
             {
-                qDebug() << "Failed to join multicast group 239.255.255.250" << endl;
+                qDebug() << "Failed to join multicast group 239.255.255.250";
             }
         }
 
@@ -231,7 +231,7 @@ namespace Konversation
             if (setsockopt(fd,IPPROTO_IP,IP_DROP_MEMBERSHIP,(char *)&mreq,sizeof(struct ip_mreq)) < 0)
     #endif
             {
-                qDebug() << "Failed to leave multicast group 239.255.255.250" << endl;
+                qDebug() << "Failed to leave multicast group 239.255.255.250";
             }
         }
     }

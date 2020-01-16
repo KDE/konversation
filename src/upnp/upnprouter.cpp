@@ -131,7 +131,7 @@ namespace Konversation
             if (j->error())
             {
                 error = i18n("Failed to download %1: %2",location.url(),j->errorString());
-                qDebug() << error << endl;
+                qDebug() << error;
                 return;
             }
 
@@ -151,14 +151,14 @@ namespace Konversation
         {
             error.clear();
             // downlaod XML description into a temporary file in /tmp
-            qDebug() << "Downloading XML file " << location << endl;
+            qDebug() << "Downloading XML file " << location;
             KIO::Job* job = KIO::storedGet(location,KIO::NoReload, KIO::Overwrite | KIO::HideProgressInfo);
             connect(job, &KIO::Job::result, this, &UPnPRouter::downloadFinished);
         }
 
         KJob *UPnPRouter::getStatusInfo(const UPnPService &s)
         {
-            qDebug() << "UPnP - Checking service status: " << s.servicetype << endl;
+            qDebug() << "UPnP - Checking service status: " << s.servicetype;
 
             QString action = QStringLiteral("GetStatusInfo");
             QString comm = SOAP::createCommand(action,s.servicetype);
@@ -168,7 +168,7 @@ namespace Konversation
 
         bool UPnPRouter::forward(const QHostAddress & host, quint16 port, QAbstractSocket::SocketType proto)
         {
-            qDebug() << "Forwarding port " << host.toString() << port << " (" << (proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP") << ")" << endl;
+            qDebug() << "Forwarding port " << host.toString() << port << " (" << (proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP") << ")";
 
             if (service.ready)
             {
@@ -252,7 +252,7 @@ namespace Konversation
         bool UPnPRouter::undoForward(quint16 port, QAbstractSocket::SocketType proto)
         {
             qDebug() << "Undoing forward of port " << port
-                    << " (" << (proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP") << ")" << endl;
+                    << " (" << (proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP") << ")";
 
             if (service.ready)
             {
@@ -349,7 +349,7 @@ namespace Konversation
         {
             if (r->error())
             {
-                qDebug() << "UPnPRouter : Error: " << r->errorString() << endl;
+                qDebug() << "UPnPRouter : Error: " << r->errorString();
 
                 if (pending_services.contains(r))
                 {
@@ -375,7 +375,7 @@ namespace Konversation
                 QString reply(soap_data_in[r]);
                 soap_data_in[r].clear();
 
-                qDebug() << "UPnPRouter : OK:" << endl;
+                qDebug() << "UPnPRouter : OK:";
 
                 if (pending_services.contains(r))
                 {
@@ -385,7 +385,7 @@ namespace Konversation
                         service = pending_services[r];
                         service.ready = true;
 
-                        qDebug() << "Found connected service: " << service.servicetype << endl;
+                        qDebug() << "Found connected service: " << service.servicetype;
                     }
 
                     pending_services.remove(r);
