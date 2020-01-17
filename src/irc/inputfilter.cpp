@@ -197,7 +197,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = m_server->getChannelByName( parameterList.value(0) );
 
                     if (!channel) {
-                        qCritical() << "Didn't find the channel " << parameterList.value(0) << endl;
+                        qCritical() << "Didn't find the channel " << parameterList.value(0);
                         return;
                     }
 

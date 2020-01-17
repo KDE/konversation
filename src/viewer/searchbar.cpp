@@ -36,7 +36,7 @@ SearchBar::SearchBar(QWidget* parent)
 
     parent->installEventFilter(this); // HACK See notes in SearchBar::eventFilter
 
-    m_flags = nullptr;
+    m_flags = {};
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);

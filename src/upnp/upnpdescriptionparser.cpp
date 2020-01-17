@@ -75,7 +75,7 @@ namespace Konversation
 
             if (!ret)
             {
-                qDebug() << "Error parsing XML" << endl;
+                qDebug() << "Error parsing XML";
                 return false;
             }
             return true;
@@ -94,7 +94,7 @@ namespace Konversation
 
             if (!ret)
             {
-                qDebug() << "Error parsing XML" << endl;
+                qDebug() << "Error parsing XML";
                 return false;
             }
             return true;

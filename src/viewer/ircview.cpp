@@ -2419,7 +2419,7 @@ QDebug operator<<(QDebug d, const QTextBlock &b)
     dS  << "userState"      << b.userState();
     dN  << "userData "      << (void*)b.userData();
     //dS  << "text"           << b.text();
-    dS  << endl;
+    dS  << '\n';
 
     if (b.userData())
         d << b.userData();

@@ -1215,7 +1215,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            qWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            qWarning() << "Nickname " << channelNick->getNickname() << " not found!";
         }
     }
 }
@@ -1303,7 +1303,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         if(nick == nullptr)
         {
-            qWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            qWarning() << "Nickname " << channelNick->getNickname() << " not found!";
         }
         else
         {
@@ -2651,7 +2651,7 @@ void Channel::repositionNick(Nick *nick)
         nicknameList.removeAt(index);
         fastAddNickname(nick->getChannelNick(), nick);
     } else {
-        qWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!"<< endl;
+        qWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!";
     }
 }
 

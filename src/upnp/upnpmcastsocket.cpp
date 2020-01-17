@@ -44,7 +44,7 @@ namespace Konversation
             for (quint32 i = 0;i < 10;i++)
             {
                 if (!bind(1900 + i,QUdpSocket::ShareAddress))
-                    qDebug() << "Cannot bind to UDP port 1900 : " << errorString() << endl;
+                    qDebug() << "Cannot bind to UDP port 1900 : " << errorString();
                 else
                     break;
             }
@@ -62,7 +62,7 @@ namespace Konversation
 
         void UPnPMCastSocket::discover()
         {
-            qDebug() << "Trying to find UPnP devices on the local network" << endl;
+            qDebug() << "Trying to find UPnP devices on the local network";
 
             // send a HTTP M-SEARCH message to 239.255.255.250:1900
             const char* data = "M-SEARCH * HTTP/1.1\r\n"
@@ -148,7 +148,7 @@ namespace Konversation
             }
             if (!validDevice)
             {
-            //	qDebug() << "Not a valid Internet Gateway Device" << endl;
+            //	qDebug() << "Not a valid Internet Gateway Device";
                 return nullptr;
             }
 
@@ -184,7 +184,7 @@ namespace Konversation
             }
             else
             {
-                qDebug() << "Detected IGD " << server << "UUID" << uuid << endl;
+                qDebug() << "Detected IGD " << server << "UUID" << uuid;
                 // everything OK, make a new UPnPRouter
                 return new UPnPRouter(server,location,uuid);
             }
@@ -192,7 +192,7 @@ namespace Konversation
 
         void UPnPMCastSocket::onError(QAbstractSocket::SocketError )
         {
-            qDebug() << "UPnPMCastSocket Error : " << errorString() << endl;
+            qDebug() << "UPnPMCastSocket Error : " << errorString();
         }
 
         void UPnPMCastSocket::joinUPnPMCastGroup()

@@ -309,9 +309,9 @@ namespace Konversation
         void TransferRecv::prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition)
         {
             qDebug()
-                << "URL: " << m_fileURL << endl
-                << "Overwrite: " << overwrite << endl
-                << "Resume: " << resume << " (Position: " << startPosition << ")";
+                << "URL: " << m_fileURL
+                << "\nOverwrite: " << overwrite
+                << "\nResume: " << resume << " (Position: " << startPosition << ")";
 
             m_resumed = resume;
             m_transferringPosition = startPosition;
@@ -433,7 +433,7 @@ namespace Konversation
 
         void TransferRecv::slotLocalCanResume(KIO::Job *job, KIO::filesize_t size)
         {
-            qDebug() << "[BEGIN]" << endl
+            qDebug() << "[BEGIN]\n"
                 << "size: " << size;
 
             KIO::TransferJob* transferJob = dynamic_cast<KIO::TransferJob*>(job);
@@ -638,9 +638,8 @@ namespace Konversation
 
             if ((quint64)m_transferringPosition != position)
             {
-                qDebug() << "remote responded with an unexpected position"<< endl
-                    << "expected: " << m_transferringPosition << endl
-                    << "remote response: " << position;
+                qDebug() << "remote responded with an unexpected position\n"
+                    << "expected: " << m_transferringPosition << "\nremote response: " << position;
                 failed(i18n("Unexpected response from remote host"));
                 return;
             }
