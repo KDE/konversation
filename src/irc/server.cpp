@@ -735,7 +735,10 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
     {
         nameValue = cap.split(QChar('='));
 
-        if(nameValue[0] == QLatin1String("sasl"))
+        if (nameValue.isEmpty())
+            continue;
+
+        if(nameValue.at(0) == QLatin1String("sasl"))
         {
             QString authCommand;
 
@@ -754,10 +757,11 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
 
             if(!authCommand.isEmpty())
             {
-                QSet<QString> supportedSaslTypes;
+                QStringList supportedSaslTypes;
+                if(nameValue.size() > 1)
+                    supportedSaslTypes = nameValue.at(1).split(QChar(','));
 
-                if(nameValue.count() > 1)
-                    supportedSaslTypes = QSet<QString>::fromList(nameValue[1].split(QChar(',')));
+                supportedSaslTypes.removeDuplicates();
 
                 if(!supportedSaslTypes.isEmpty() && !supportedSaslTypes.contains(authCommand))
                     getStatusView()->appendServerMessage(i18n("Error"), i18n("Server does not support %1 as SASL authentication mechanism, skipping SASL authentication.", authCommand));
@@ -765,15 +769,15 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
                     requestCaps.append (QStringLiteral("sasl"));
             }
         }
-        else if(m_capabilityNames.contains(nameValue[0]))
+        else if(m_capabilityNames.contains(nameValue.at(0)))
         {
-            requestCaps.append (nameValue[0]);
+            requestCaps.append (nameValue.at(0));
         }
 
         // HACK: twitch.tv's IRC server doesn't handle WHO so
         // let's disable all WHO requests for servers that has
         // twitch.tv capabilities
-        if(nameValue[0].startsWith("twitch.tv"))
+        if(nameValue.at(0).startsWith("twitch.tv"))
         {
             m_whoRequestsDisabled = true;
         }
