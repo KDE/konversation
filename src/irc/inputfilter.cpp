@@ -26,7 +26,7 @@
 
 #include <QStringList>
 #include <QDateTime>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QLocale>
 
 
@@ -205,9 +205,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if (sourceNick != m_server->getNickname())
                     {
-                        if (hasArg && ctcpArgument.toLower().contains(QRegExp(QStringLiteral("(^|[^\\d\\w])")
-                            + QRegExp::escape(m_server->loweredNickname())
-                            + QStringLiteral("([^\\d\\w]|$)"))))
+                        const QRegularExpression re(QLatin1String("(^|[^\\d\\w])")
+                                                    + QRegularExpression::escape(m_server->loweredNickname())
+                                                    + QLatin1String("([^\\d\\w]|$)"));
+                        if (hasArg && ctcpArgument.toLower().contains(re))
                         {
                             konv_app->notificationHandler()->nick(channel, sourceNick, ctcpArgument);
                         }
@@ -802,9 +803,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 QStringList capabilities = parameterList.value(2).split(QLatin1Char(' '), QString::SkipEmptyParts);
 
+                const QRegularExpression re(QStringLiteral("[a-z0-9]"), QRegularExpression::CaseInsensitiveOption);
                 foreach(const QString& capability, capabilities)
                 {
-                    int nameStart = capability.indexOf(QRegExp(QStringLiteral("[a-z0-9]"), Qt::CaseInsensitive));
+                    const int nameStart = capability.indexOf(re);
                     QString modifierString = capability.left(nameStart);
                     QString name = capability.mid(nameStart);
 
@@ -968,13 +970,22 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 {
     bool doIgnore = false;
 
+    QRegularExpression ignoreRe;
+    ignoreRe.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     foreach (Ignore* item, Preferences::ignoreList())
     {
-        QRegExp ignoreItem(QRegExp::escape(item->getName()).replace(QStringLiteral("\\*"), QStringLiteral("(.*)")), Qt::CaseInsensitive);
-        if (ignoreItem.exactMatch(sender) && (item->getFlags() & type))
-            doIgnore = true;
-        if (ignoreItem.exactMatch(sender) && (item->getFlags() & Ignore::Exception))
-            return false;
+        ignoreRe.setPattern(QRegularExpression::anchoredPattern(QRegularExpression::escape(
+                                item->getName()).replace(QLatin1String("\\*"), QLatin1String("(.*)"))));
+
+        if (ignoreRe.match(sender).hasMatch()) {
+            if (item->getFlags() & type) {
+                doIgnore = true;
+            }
+
+            if (item->getFlags() & Ignore::Exception) {
+                return false;
+            }
+        }
     }
 
     return doIgnore;
@@ -1030,6 +1041,10 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
     Application* konv_app = Application::instance();
     message = konv_app->doAutoreplace(message, false).first;
 
+    const QRegularExpression regexp(QLatin1String("(^|[^\\d\\w])")
+                                    + QRegularExpression::escape(m_server->loweredNickname())
+                                    + QLatin1String("([^\\d\\w]|$)"),
+                                    QRegularExpression::CaseInsensitiveOption);
     if(isAChannel(parameterList.value(0)))
     {
         if(!isIgnore(prefix, Ignore::Channel))
@@ -1048,10 +1063,6 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
 
                 if(source != m_server->getNickname())
                 {
-                    QRegExp regexp(QStringLiteral("(^|[^\\d\\w])") +
-                            QRegExp::escape(m_server->loweredNickname()) +
-                            QStringLiteral("([^\\d\\w]|$)"));
-                    regexp.setCaseSensitivity(Qt::CaseInsensitive);
                     if(message.contains(regexp))
                     {
                         konv_app->notificationHandler()->nick(channel,
@@ -1089,10 +1100,6 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
 
             if(source != m_server->getNickname() && query)
             {
-                QRegExp regexp(QStringLiteral("(^|[^\\d\\w])") +
-                        QRegExp::escape(m_server->loweredNickname()) +
-                        QStringLiteral("([^\\d\\w]|$)"));
-                regexp.setCaseSensitivity(Qt::CaseInsensitive);
                 if(message.contains(regexp))
                 {
                     konv_app->notificationHandler()->nick(query,
@@ -1865,7 +1872,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 bool bAway = parameterList.value(6).toUpper().startsWith(QLatin1Char('G'));
                 QString realName = trailing;
 
-                if (realName.indexOf (QRegExp(QStringLiteral("\\d\\s"))) == 0)
+                if (realName.indexOf(QRegularExpression(QStringLiteral("\\d\\s"))) == 0)
                     realName = realName.mid (2);
 
                 if (nickInfo)
