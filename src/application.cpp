@@ -32,7 +32,7 @@
 #include "awaymanager.h"
 
 #include <QTextCodec>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QDBusConnection>
 #include <QNetworkProxy>
 #include <QWaitCondition>
@@ -385,7 +385,8 @@ void Application::readOptions()
     }
 
     // Identity list
-    QStringList identityList=KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("Identity [0-9]+")));
+    const QStringList identityList=KSharedConfig::openConfig()->groupList().filter(
+                                            QRegularExpression(QStringLiteral("Identity [0-9]+")));
     if (!identityList.isEmpty())
     {
         Preferences::clearIdentityList();
@@ -458,7 +459,8 @@ void Application::readOptions()
     KConfigGroup cgServerList(KSharedConfig::openConfig()->group("Server List"));
 
     // Read the new server settings
-    QStringList groups = KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("ServerGroup [0-9]+")));
+    QStringList groups = KSharedConfig::openConfig()->groupList().filter(
+                                        QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
     QList<int> sgKeys;
 
@@ -684,14 +686,15 @@ void Application::readOptions()
     //Legacy channel encodings read in Jun. 29, 2009
     KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group("Channel Encodings"));
     QMap<QString,QString> channelEncodingEntries=cgChannelEncodings.entryMap();
-    QRegExp re(QStringLiteral("^(.+) ([^\\s]+)$"));
+    const QRegularExpression re(QStringLiteral("^(.+) ([^\\s]+)$"));
     QList<QString> channelEncodingEntryKeys=channelEncodingEntries.keys();
 
     for(QList<QString>::const_iterator itStr=channelEncodingEntryKeys.constBegin(); itStr != channelEncodingEntryKeys.constEnd(); ++itStr)
     {
-        if(re.indexIn(*itStr) > -1)
+        const QRegularExpressionMatch match = re.match(*itStr);
+        if(match.hasMatch())
         {
-                Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingEntries[*itStr]);
+            Preferences::setChannelEncoding(match.captured(1), match.captured(2), channelEncodingEntries[*itStr]);
         }
     }
     //End legacy channel encodings read in Jun 29, 2009
@@ -700,15 +703,16 @@ void Application::readOptions()
     QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
     QList<QString> encodingEntryKeys=encodingEntries.keys();
 
-    QRegExp reg(QStringLiteral("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$"));
+    const QRegularExpression reg(QStringLiteral("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$"));
     for(QList<QString>::const_iterator itStr=encodingEntryKeys.constBegin(); itStr != encodingEntryKeys.constEnd(); ++itStr)
     {
-        if(reg.indexIn(*itStr) > -1)
+        const QRegularExpressionMatch match = reg.match(*itStr);
+        if(match.hasMatch())
         {
-            if(reg.cap(1) == QLatin1String("ServerGroup") && !reg.cap(3).isEmpty())
-                Preferences::setChannelEncoding(sgKeys.at(reg.cap(2).toInt()), reg.cap(3), encodingEntries[*itStr]);
+            if(match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
+                Preferences::setChannelEncoding(sgKeys.at(match.captured(2).toInt()), match.captured(3), encodingEntries[*itStr]);
             else
-                Preferences::setChannelEncoding(reg.cap(1), reg.cap(2), encodingEntries[*itStr]);
+                Preferences::setChannelEncoding(match.captured(1), match.captured(2), encodingEntries[*itStr]);
         }
     }
 
@@ -719,17 +723,18 @@ void Application::readOptions()
 
     for (QList<QString>::const_iterator itStr=spellCheckingLanguageEntryKeys.constBegin(); itStr != spellCheckingLanguageEntryKeys.constEnd(); ++itStr)
     {
-        if (reg.indexIn(*itStr) > -1)
+        const QRegularExpressionMatch match = reg.match(*itStr);
+        if (match.hasMatch())
         {
-            if (reg.cap(1) == QLatin1String("ServerGroup") && !reg.cap(3).isEmpty())
+            if (match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
             {
-                ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(reg.cap(2).toInt()));
+                ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(match.captured(2).toInt()));
 
                 if (serverGroup)
-                    Preferences::setSpellCheckingLanguage(serverGroup, reg.cap(3), spellCheckingLanguageEntries[*itStr]);
+                    Preferences::setSpellCheckingLanguage(serverGroup, match.captured(3), spellCheckingLanguageEntries[*itStr]);
             }
             else
-                Preferences::setSpellCheckingLanguage(reg.cap(1), reg.cap(2), spellCheckingLanguageEntries[*itStr]);
+                Preferences::setSpellCheckingLanguage(match.captured(1), match.captured(2), spellCheckingLanguageEntries[*itStr]);
         }
     }
 
@@ -748,7 +753,8 @@ void Application::saveOptions(bool updateGUI)
 //    config->setGroup("Sort Nicknames");
 
     // Clean up identity list
-    QStringList identities=KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("Identity [0-9]+")));
+    const QStringList identities=KSharedConfig::openConfig()->groupList().filter(
+                                            QRegularExpression(QStringLiteral("Identity [0-9]+")));
     if (identities.count())
     {
         // remove old identity list from Preferences::file to keep numbering under control
@@ -792,7 +798,8 @@ void Application::saveOptions(bool updateGUI)
     } // endfor
 
     // Remove the old servergroups from the config
-    QStringList groups = KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("ServerGroup [0-9]+")));
+    QStringList groups = KSharedConfig::openConfig()->groupList().filter(
+                                            QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     if (groups.count())
     {
         QStringList::iterator it;
@@ -803,7 +810,7 @@ void Application::saveOptions(bool updateGUI)
     }
 
     // Remove the old servers from the config
-    groups = KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("Server [0-9]+")));
+    groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Server [0-9]+")));
     if (groups.count())
     {
         QStringList::iterator it;
@@ -814,7 +821,7 @@ void Application::saveOptions(bool updateGUI)
     }
 
     // Remove the old channels from the config
-    groups = KSharedConfig::openConfig()->groupList().filter(QRegExp(QStringLiteral("Channel [0-9]+")));
+    groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Channel [0-9]+")));
     if (groups.count())
     {
         QStringList::iterator it;
@@ -1141,20 +1148,19 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
             if (regex== QLatin1Char('1'))
             {
                 // create regex from pattern
-                QRegExp needleReg(pattern);
-                // set pattern case insensitive
-                needleReg.setCaseSensitivity(Qt::CaseSensitive);
+                const QRegularExpression needleReg(pattern);
                 int index = 0;
                 int newIndex = index;
 
                 do {
+                    QRegularExpressionMatch rmatch;
                     // find matches
-                    index = line.indexOf(needleReg, index);
+                    index = line.indexOf(needleReg, index, &rmatch);
 
                     if (index != -1)
                     {
                         // remember captured patterns
-                        QStringList captures = needleReg.capturedTexts();
+                        const QStringList captures = rmatch.capturedTexts();
                         QString replaceWith = replacement;
 
                         replaceWith.replace(QStringLiteral("%%"),QStringLiteral("%\x01")); // escape double %
@@ -1168,7 +1174,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
                         //If somebody has a regex that say has a replacement of url.com/%1/%2 and the
                         //regex can either match one or two patterns, if the 2nd pattern match is left,
                         //the url is invalid (url.com/match/%2). This is expected regex behavior I'd assume.
-                        replaceWith.remove(QRegExp(QStringLiteral("%[0-9]")));
+                        replaceWith.remove(QRegularExpression(QStringLiteral("%[0-9]")));
 
                         replaceWith.replace(QStringLiteral("%\x01"),QStringLiteral("%")); // return escaped % to normal
                         // allow for var expansion in autoreplace
@@ -1197,9 +1203,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
             }
             else
             {
-                QRegExp needleReg(pattern);
-                needleReg.setPatternSyntax(QRegExp::FixedString);
-                int index=line.indexOf(needleReg);
+                int index = line.indexOf(pattern);
                 while (index>=0)
                 {
                     int length,nextLength,patLen,repLen;
@@ -1238,7 +1242,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
                         }
                     }
 
-                    index=line.indexOf(needleReg,nextLength);
+                    index = line.indexOf(pattern, nextLength);
                 }
             }
         }
