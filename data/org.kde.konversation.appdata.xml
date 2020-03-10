@@ -548,7 +548,7 @@
   </description>
   <screenshots>
     <screenshot type="default">
-      <image width="1920" height="1048">https://kde.org/images/screenshots/konversation.png</image>
+      <image width="1920" height="1048">https://cdn.kde.org/screenshots/konversation/konversation.png</image>
     </screenshot>
   </screenshots>
   <url type="homepage">https://konversation.kde.org/</url>
