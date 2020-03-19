@@ -24,6 +24,7 @@
 #include <QItemSelectionModel>
 #include <QStyleHints>
 #include <QToolTip>
+#include <QPainterPath>
 
 // FIXME KF5 Port: Not DPI-aware.
 #define LED_ICON_SIZE 14
