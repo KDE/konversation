@@ -21,7 +21,7 @@
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QPushButton>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QStandardItemModel>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
@@ -183,33 +183,33 @@ namespace Konversation
                 m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
         }
 
-        QStringList newModeList = modes();
-        QStringList currentModeList = m_channel->getModeList();
-        QStringList rmModes;
-        QStringList addModes;
-        QStringList tmp;
-        QString modeString;
-        bool plus;
+        const QStringList newModeList = modes();
+        const QStringList currentModeList = m_channel->getModeList();
+
         QString command(QStringLiteral("MODE %1 %2%3 %4"));
 
-        for(QStringList::ConstIterator it = newModeList.constBegin(); it != newModeList.constEnd(); ++it)
+        for (const QString &mode : newModeList)
         {
-            modeString = (*it).mid(1);
-            plus = ((*it)[0] == '+');
-            tmp = currentModeList.filter(QRegExp('^' + modeString));
+            const QString modeString = mode.mid(1);
+            const bool plus = mode.at(0) == QLatin1Char('+');
+            const QStringList tmp = currentModeList.filter(QRegularExpression(QLatin1Char('^') + modeString));
 
             if(tmp.isEmpty() && plus)
             {
-                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("+")).arg(modeString[0]).arg(modeString.mid(1)));
+                m_channel->getServer()->queue(command.arg(m_channel->getName(), QStringLiteral("+"),
+                                                          modeString.at(0), modeString.mid(1)));
             }
             else if(!tmp.isEmpty() && !plus)
             {
                 //FIXME: Bahamuth requires the key parameter for -k, but ircd breaks on -l with limit number.
                 //Hence two versions of this.
-                if (modeString[0] == 'k')
-                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("-")).arg(modeString[0]).arg(modeString.mid(1)));
-                else
-                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg(QStringLiteral("-")).arg(modeString[0]).arg(QString()));
+                if (modeString.at(0) == QLatin1Char('k')) {
+                    m_channel->getServer()->queue(command.arg(m_channel->getName(), QStringLiteral("-"),
+                                                              modeString.at(0), modeString.mid(1)));
+                } else {
+                    m_channel->getServer()->queue(command.arg(m_channel->getName(), QStringLiteral("-"),
+                                                              modeString.at(0), QString()));
+                }
             }
         }
         hide();
