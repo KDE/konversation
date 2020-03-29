@@ -55,7 +55,7 @@ Identity::~Identity()
 
 void Identity::init()
 {
-    setAuthType(QStringLiteral("nickserv"));
+    setAuthType(QStringLiteral("saslplain"));
     setNickservNickname(QStringLiteral("nickserv"));
     setNickservCommand(QStringLiteral("identify"));
 

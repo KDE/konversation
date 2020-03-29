@@ -88,10 +88,10 @@ namespace Konversation
         m_additionalAuthInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         connect(m_authTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::authTypeChanged);
-        m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
-        m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
         m_authTypeCombo->addItem(i18n("SASL PLAIN"), QStringLiteral("saslplain"));
         m_authTypeCombo->addItem(i18nc("Cert = Certificate", "SASL EXTERNAL (Cert)"), QStringLiteral("saslexternal"));
+        m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
+        m_authTypeCombo->addItem(i18n("Server Password"), QStringLiteral("serverpw"));
         m_authTypeCombo->addItem(i18n("SSL Client Certificate"), QStringLiteral("pemclientcert"));
 
         // add encodings to combo box
@@ -383,7 +383,7 @@ namespace Konversation
         m_authPasswordEdit->setVisible(!isPemClientCert);
         pemClientCertFileLabel->setVisible(isPemClientCert);
         m_pemClientCertFile->setVisible(isPemClientCert);
-        m_additionalAuthInfo->setVisible(isServerPw || isPemClientCert);
+        m_additionalAuthInfo->setVisible(isNickServ || isServerPw || isPemClientCert);
 
         // Clear.
         m_saslAccountEdit->setPlaceholderText(QString());
@@ -398,6 +398,8 @@ namespace Konversation
             autoIdentifyLayout->addRow(nickservNicknameLabel, m_nickservNicknameEdit);
             autoIdentifyLayout->addRow(nickservCommandLabel, m_nickservCommandEdit);
             autoIdentifyLayout->addRow(authPasswordLabel, m_authPasswordEdit);
+            m_additionalAuthInfo->setText(i18n("NickServ may not function with auto join;  SASL is recommended."));
+            autoIdentifyLayout->addRow(nullptr, m_additionalAuthInfo);
         }
         else if (isServerPw)
         {
