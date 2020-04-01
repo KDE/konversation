@@ -123,8 +123,8 @@ namespace Konversation
 
             if (whichColor == ForegroundColor || whichColor == BackgroundColor)
             {
-                QColor col = color(whichColor);
-                if (QColorDialog::getColor(col, this) == QColorDialog::Accepted)
+                QColor col = QColorDialog::getColor(color(whichColor), this);
+                if (col.isValid())
                 {
                     setColor(whichColor, col);
                     update();
