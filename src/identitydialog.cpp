@@ -153,7 +153,7 @@ namespace Konversation
         m_partEdit->setText(m_currentIdentity->getPartReason());
         m_kickEdit->setText(m_currentIdentity->getKickReason());
 
-        if(index == 0)
+        if(m_identityList.count() <= 1)
         {
             m_editBtn->setEnabled(false);
             m_delBtn->setEnabled(false);
@@ -260,7 +260,7 @@ namespace Konversation
     {
         int current = m_identityCBox->currentIndex();
 
-        if(current <= 0)
+        if(m_identityList.count() <= 1)
         {
             return;
         }
