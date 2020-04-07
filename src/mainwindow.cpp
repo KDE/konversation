@@ -236,6 +236,8 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     {
         prevShortcut.append(QKeySequence(QStringLiteral("Alt+Right")));
         nextShortcut.append(QKeySequence(QStringLiteral("Alt+Left")));
+        prevShortcut.append(QKeySequence(QStringLiteral("Ctrl+Tab")));
+        nextShortcut.append(QKeySequence(QStringLiteral("Ctrl+Shift+Tab")));
         nextIcon=QStringLiteral("go-previous-view");
         prevIcon=QStringLiteral("go-next-view");
     }
@@ -243,6 +245,8 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     {
         nextShortcut.append(QKeySequence(QStringLiteral("Alt+Right")));
         prevShortcut.append(QKeySequence(QStringLiteral("Alt+Left")));
+        nextShortcut.append(QKeySequence(QStringLiteral("Ctrl+Tab")));
+        prevShortcut.append(QKeySequence(QStringLiteral("Ctrl+Shift+Tab")));
         nextIcon=QStringLiteral("go-next-view");
         prevIcon=QStringLiteral("go-previous-view");
     }
