@@ -110,7 +110,7 @@ int IRCQueue::currentWait()
 
 int IRCQueue::elapsed()
 {
-    if (m_startedAt.isNull())
+    if (!m_startedAt.isValid())
         return 0;
     else
         return m_startedAt.elapsed(); //FIXME if its been more than a day since this queue was used, this breaks
@@ -180,7 +180,8 @@ void IRCQueue::reset()
     if (m_server)
         m_blocked=!(m_server->isConnected()); //FIXME  (maybe) "we can't do this anymore because blocked can't correspond to whether the server is online, instead must correspond to whether the socket has become writable (readyWrite)"
 
-    m_startedAt=m_globalLastSent=m_lastSent=QTime();
+    m_startedAt.invalidate();
+    m_globalLastSent=m_lastSent=QTime();
     m_pending.clear();
     m_linesSent=m_bytesSent=m_globalBytesSent=m_globalLinesSent=0;
 }

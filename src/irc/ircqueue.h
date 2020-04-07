@@ -132,7 +132,7 @@ private:
     bool m_online;
     Server *m_server;
 
-    QTime m_startedAt;
+    QElapsedTimer m_startedAt;
     QTime m_lastSent, m_globalLastSent;
     int m_linesSent, m_globalLinesSent;
     int m_bytesSent, m_globalBytesSent;
