@@ -710,7 +710,7 @@
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Url">
-      <default code="true">QUrl::fromLocalFile((KUser(KUser::UseRealUserID).homeDir()+"/logs"))</default>
+      <default code="true">QUrl::fromLocalFile((KUser(KUser::UseRealUserID).homeDir()+"/.local/share/konversation/logs"))</default>
     </entry>
     <entry key="DccPath" type="Url">
       <default code="true">QUrl::fromLocalFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation))</default>
