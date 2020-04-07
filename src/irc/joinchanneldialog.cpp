@@ -20,6 +20,9 @@
 #include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
+#include <KMessageBox>
+#include <KStandardGuiItem>
+
 
 namespace Konversation
 {
@@ -46,6 +49,9 @@ namespace Konversation
 
         mOkButton->setEnabled(false);
         connect(m_ui.channelCombo, &KHistoryComboBox::editTextChanged, this, &JoinChannelDialog::slotChannelChanged);
+
+        m_ui.delBtn->setEnabled(false);
+        connect(m_ui.delBtn, &QPushButton::clicked, this, &JoinChannelDialog::deleteChannel);
 
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
@@ -190,9 +196,17 @@ namespace Konversation
 
     void JoinChannelDialog::slotChannelChanged(const QString& text)
     {
+        QStringList history = m_ui.channelCombo->historyItems();
+        if (history.contains(text) && !text.isEmpty())
+        {
+            m_ui.delBtn->setEnabled(true);
+        }
+        else
+        {
+            m_ui.delBtn->setEnabled(false);
+        }
         mOkButton->setEnabled(!text.isEmpty());
     }
-
 
     void JoinChannelDialog::slotChannelHistoryCleared()
     {
@@ -202,5 +216,28 @@ namespace Konversation
         if (server && server->getServerGroup())
           server->getServerGroup()->clearChannelHistory();
     }
+
+    void JoinChannelDialog::deleteChannel()
+    {
+        QString channel = m_ui.channelCombo->currentText();
+        QString warningTxt = i18n("Are you sure you want to remove this channel from your history?");
+
+        if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Remove channel"), KStandardGuiItem::del()) == KMessageBox::Continue)
+        {
+            int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
+            Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+
+            if (server && server->getServerGroup())
+            {
+                Konversation::ChannelSettings channelSettings = server->getServerGroup()->channelByNameFromHistory(channel);
+                server->getServerGroup()->removeChannelFromHistory(channelSettings);
+            }
+
+            m_ui.channelCombo->removeFromHistory(channel);
+            m_ui.channelCombo->clearEditText();
+
+        }
+    }
+
 }
 

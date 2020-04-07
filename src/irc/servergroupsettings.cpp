@@ -138,6 +138,11 @@ namespace Konversation
         m_channelList.removeAll(channel);
     }
 
+    void ServerGroupSettings::removeChannelFromHistory(const ChannelSettings& channel)
+    {
+        m_channelHistory.removeAll(channel);
+    }
+
     IdentityPtr ServerGroupSettings::identity() const
     {
         return Preferences::identityById(m_identityId);

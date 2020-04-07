@@ -100,6 +100,7 @@ namespace Konversation
             void clearChannelHistory();
             void setChannelHistory(const ChannelList& list) { m_channelHistory = list; }
             void appendChannelHistory(const ChannelSettings& channel);
+            void removeChannelFromHistory(const ChannelSettings& channel);
             ChannelList channelHistory() const { return m_channelHistory; }
             ChannelSettings channelByNameFromHistory(const QString& channelName);
 

@@ -42,6 +42,7 @@ namespace Konversation
             void slotSelectedConnectionChanged(int);
             void slotChannelChanged(const QString& text);
             void slotChannelHistoryCleared();
+            void deleteChannel();
 
         private:
             Ui::JoinChannelUI m_ui;
