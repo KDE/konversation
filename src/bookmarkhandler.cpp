@@ -21,7 +21,10 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "connectionmanager.h"
 #include "viewer/viewcontainer.h"
 
+#include <KActionCollection>
+#include <kbookmarks_version.h>
 #include <KBookmarkMenu>
+#include <QMenu>
 #include <QStandardPaths>
 
 
@@ -41,7 +44,12 @@ m_mainWindow(mainWindow)
     manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
     manager->setUpdate( true );
 
+#if KBOOKMARKS_VERSION < QT_VERSION_CHECK(5, 69, 0)
     m_bookmarkMenu = new KBookmarkMenu(manager, this, menu, m_mainWindow->actionCollection());
+#else
+    m_bookmarkMenu = new KBookmarkMenu(manager, this, menu);
+    m_mainWindow->actionCollection()->addActions(menu->actions());
+#endif
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()
