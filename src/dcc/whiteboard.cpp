@@ -16,7 +16,7 @@
 
 #include <QScrollArea>
 
-#include "qdebug.h"
+#include <QDebug>
 
 namespace Konversation
 {

@@ -46,7 +46,7 @@
 #include <KConfig>
 #include <KShell>
 #include <KMacroExpander>
-#include <kwallet.h>
+#include <KWallet>
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>

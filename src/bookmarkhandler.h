@@ -18,8 +18,8 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
-#include <kbookmarkmanager.h>
-#include <kbookmarkowner.h>
+#include <KBookmarkManager>
+#include <KBookmarkOwner>
 
 
 class QString;

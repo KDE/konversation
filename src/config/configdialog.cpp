@@ -24,10 +24,10 @@
  */
 #include "configdialog.h"
 
-#include <kconfigdialogmanager.h>
-#include <kcoreconfigskeleton.h>
-#include <kpagewidgetmodel.h>
-#include <khelpclient.h>
+#include <KConfigDialogManager>
+#include <KCoreConfigSkeleton>
+#include <KPageWidgetModel>
+#include <KHelpClient>
 
 #include <QApplication>
 #include <QDesktopWidget>

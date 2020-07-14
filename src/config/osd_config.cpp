@@ -18,13 +18,13 @@
 #include "osd.h"
 #include "application.h"
 
-#include <kcombobox.h>
-#include <kcolorbutton.h>
+#include <KComboBox>
+#include <KColorButton>
 #include <QCheckBox>
-#include <kfontrequester.h>
+#include <KFontRequester>
 #include <QDesktopWidget>
 #include <QScreen>
-#include <kconfigdialog.h>
+#include <KConfigDialog>
 
 
 OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )

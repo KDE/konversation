@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "preferences.h"
 
 #include <KLineEdit>
-#include <kwallet.h>
+#include <KWallet>
 #include <KLocalizedString>
 
 #include <config-konversation.h>

@@ -40,7 +40,7 @@
 #include <QSslSocket>
 
 #include <QExplicitlySharedDataPointer>
-#include <kprocess.h>
+#include <KProcess>
 #include <preferences.h>
 
 class QAbstractItemModel;

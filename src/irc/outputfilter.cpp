@@ -43,7 +43,7 @@
 
 #include <QTextDocument>
 #include <QTextBlock>
-#include <qdebug.h>
+#include <QDebug>
 #include "ircview.h"
 
 QDebug operator<<(QDebug d, QTextDocument* document);

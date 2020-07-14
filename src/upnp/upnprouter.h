@@ -16,7 +16,7 @@
 #include <QHostAddress>
 
 #include <QUrl>
-#include <kjob.h>
+#include <KJob>
 #include <kio/jobclasses.h>
 
 namespace Konversation
