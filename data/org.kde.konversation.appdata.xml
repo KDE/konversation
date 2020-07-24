@@ -77,8 +77,8 @@
       where you will find support for most distributions. Its defaults are such that it needs no
       configuration other than telling it the name of your distribution channel, to get started.
     </p>
-    <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
-    <p xml:lang="ca-valencia">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, no necessita més configuració que indicar el nom del canal de la distribució per començar.</p>
+    <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, per a començar no necessita més configuració que indicar el nom del canal de la distribució.</p>
+    <p xml:lang="ca-valencia">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, per a començar no necessita més configuració que indicar el nom del canal de la distribució.</p>
     <p xml:lang="de">Konversation ist ein IRC-Programm, mit dem Sie schnell auf Freenode-Kanäle zugreifen können, in denen Sie Unterstützung für die meisten Distributionen erhalten. Die Voreinstellungen sind so gewählt, dass Sie nur den Kanalnamen Ihrer Distribution eingeben müssen.</p>
     <p xml:lang="el">Το Konversation είναι μια εφαρμογή πελάτη IRC, το οποίο παρέχει ταχεία πρόσβαση σε δικτυακά κανάλια Freenode, όπου θα βρείτε υποστήριξη για την πλειοψηφία των διανομών. Οι προκαθορισμένες ρυθμίσεις του καθιστούν περιττή την επιπλέον διαμόρφωση, με εξαίρεση το όνομα του καναλιού της διανομής σας για να ξεκινήσει.</p>
     <p xml:lang="en-GB">Konversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.</p>
@@ -144,8 +144,8 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Standard IRC features</li>
-      <li xml:lang="ca">Funcionalitats estàndard de l'IRC</li>
-      <li xml:lang="ca-valencia">Funcionalitats estàndard de l'IRC</li>
+      <li xml:lang="ca">Característiques estàndard de l'IRC</li>
+      <li xml:lang="ca-valencia">Característiques estàndard de l'IRC</li>
       <li xml:lang="de">Standard-IRC-Funktionen</li>
       <li xml:lang="el">Τυπικές IRC λειτουργίες</li>
       <li xml:lang="en-GB">Standard IRC features</li>
@@ -268,8 +268,8 @@
       <li xml:lang="zh-CN">易用的图形用户界面</li>
       <li xml:lang="zh-TW">易於使用的圖形化使用者介面</li>
       <li>Multiple servers and channels in one single window</li>
-      <li xml:lang="ca">Diversos servidors i canals en una única finestra</li>
-      <li xml:lang="ca-valencia">Diversos servidors i canals en una única finestra</li>
+      <li xml:lang="ca">Múltiples servidors i canals en una única finestra</li>
+      <li xml:lang="ca-valencia">Múltiples servidors i canals en una única finestra</li>
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
       <li xml:lang="el">Πολλοί εξυπηρετητές και κανάλια σε ένα μόνο παράθυρο</li>
       <li xml:lang="en-GB">Multiple servers and channels in one single window</li>
@@ -299,8 +299,8 @@
       <li xml:lang="zh-CN">在同一个窗口中使用多个服务器和频道</li>
       <li xml:lang="zh-TW">單一個視窗內可使用多個伺服器與頻道</li>
       <li>DCC file transfer</li>
-      <li xml:lang="ca">Transferència de fitxers DCC</li>
-      <li xml:lang="ca-valencia">Transferència de fitxers DCC</li>
+      <li xml:lang="ca">Transferència DCC de fitxers</li>
+      <li xml:lang="ca-valencia">Transferència DCC de fitxers</li>
       <li xml:lang="de">DCC-Dateiübertragung</li>
       <li xml:lang="el">Μεταφορά αρχείων DCC</li>
       <li xml:lang="en-GB">DCC file transfer</li>
@@ -330,8 +330,8 @@
       <li xml:lang="zh-CN">DCC 文件传输</li>
       <li xml:lang="zh-TW">DCC 檔案傳輸</li>
       <li>Multiple identities for different servers</li>
-      <li xml:lang="ca">Diverses identitats per servidors diferents</li>
-      <li xml:lang="ca-valencia">Diverses identitats per servidors diferents</li>
+      <li xml:lang="ca">Múltiples identitats per a servidors diferents</li>
+      <li xml:lang="ca-valencia">Múltiples identitats per a servidors diferents</li>
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
       <li xml:lang="el">Πολλές ταυτότητες για διαφορετικούς διακομιστές</li>
       <li xml:lang="en-GB">Multiple identities for different servers</li>
@@ -361,8 +361,8 @@
       <li xml:lang="zh-CN">为不同服务器使用多个身份</li>
       <li xml:lang="zh-TW">同一個伺服器可以有多個不同的身份識別</li>
       <li>Text decorations and colors</li>
-      <li xml:lang="ca">Decoracions del text i colors</li>
-      <li xml:lang="ca-valencia">Decoracions del text i colors</li>
+      <li xml:lang="ca">Decoracions i colors per al text</li>
+      <li xml:lang="ca-valencia">Decoracions i colors per al text</li>
       <li xml:lang="de">Textdekoration und -farben</li>
       <li xml:lang="el">Διακόσμηση κειμένου και χρώματα</li>
       <li xml:lang="en-GB">Text decorations and colours</li>
@@ -485,8 +485,8 @@
       <li xml:lang="zh-CN">支持每个频道单独设定编码</li>
       <li xml:lang="zh-TW">每個頻道各自使用不同的編碼的支援</li>
       <li>Theme support for nick icons</li>
-      <li xml:lang="ca">Permet temes per icones de sobrenom</li>
-      <li xml:lang="ca-valencia">Permet temes per icones de sobrenom</li>
+      <li xml:lang="ca">Permet temes per a les icones de sobrenom</li>
+      <li xml:lang="ca-valencia">Permet temes per a les icones de sobrenom</li>
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
       <li xml:lang="el">Υποστήριξη θεμάτων για εικονίδια ψευδωνύμων</li>
       <li xml:lang="en-GB">Theme support for nick icons</li>
