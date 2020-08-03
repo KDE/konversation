@@ -79,6 +79,7 @@
     </p>
     <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, per a començar no necessita més configuració que indicar el nom del canal de la distribució.</p>
     <p xml:lang="ca-valencia">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, per a començar no necessita més configuració que indicar el nom del canal de la distribució.</p>
+    <p xml:lang="da">Konversation er en IRC-klient som giver dig hurtig adgang til kanaler på Freenode-netværket, hvor du finder support til de fleste distributioner. Dets standardindstillinger er sådan at der ikke kræves anden konfiguration end at angive navnet på distributionskanalen for at komme i gang.</p>
     <p xml:lang="de">Konversation ist ein IRC-Programm, mit dem Sie schnell auf Freenode-Kanäle zugreifen können, in denen Sie Unterstützung für die meisten Distributionen erhalten. Die Voreinstellungen sind so gewählt, dass Sie nur den Kanalnamen Ihrer Distribution eingeben müssen.</p>
     <p xml:lang="el">Το Konversation είναι μια εφαρμογή πελάτη IRC, το οποίο παρέχει ταχεία πρόσβαση σε δικτυακά κανάλια Freenode, όπου θα βρείτε υποστήριξη για την πλειοψηφία των διανομών. Οι προκαθορισμένες ρυθμίσεις του καθιστούν περιττή την επιπλέον διαμόρφωση, με εξαίρεση το όνομα του καναλιού της διανομής σας για να ξεκινήσει.</p>
     <p xml:lang="en-GB">Konversation is an IRC client which gives you speedy access to Freenode network's channels, where you will find support for most distributions. Its defaults are such that it needs no configuration other than telling it the name of your distribution channel, to get started.</p>
@@ -146,6 +147,7 @@
       <li>Standard IRC features</li>
       <li xml:lang="ca">Característiques estàndard de l'IRC</li>
       <li xml:lang="ca-valencia">Característiques estàndard de l'IRC</li>
+      <li xml:lang="da">Standard IRC-funktioner</li>
       <li xml:lang="de">Standard-IRC-Funktionen</li>
       <li xml:lang="el">Τυπικές IRC λειτουργίες</li>
       <li xml:lang="en-GB">Standard IRC features</li>
@@ -177,6 +179,7 @@
       <li>SSL server support</li>
       <li xml:lang="ca">Permet un servidor SSL</li>
       <li xml:lang="ca-valencia">Permet un servidor SSL</li>
+      <li xml:lang="da">Understøttelse af SSL-server</li>
       <li xml:lang="de">Unterstützung für SSL-Server</li>
       <li xml:lang="el">Υποστήριξη διακομιστή SSL</li>
       <li xml:lang="en-GB">SSL server support</li>
@@ -208,6 +211,7 @@
       <li>Bookmarking support</li>
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
+      <li xml:lang="da">Understøttelse af bogmærker</li>
       <li xml:lang="de">Unterstützung für Lesezeichen</li>
       <li xml:lang="el">Υποστήριξη σελιδοδεικτών</li>
       <li xml:lang="en-GB">Bookmarking support</li>
@@ -239,6 +243,7 @@
       <li>Easy to use graphical user interface</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
+      <li xml:lang="da">Brugervenlig grafisk brugerflade</li>
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
       <li xml:lang="el">Ευκολόχρηστο γραφικό περιβάλλον χρήστη</li>
       <li xml:lang="en-GB">Easy to use graphical user interface</li>
@@ -270,6 +275,7 @@
       <li>Multiple servers and channels in one single window</li>
       <li xml:lang="ca">Múltiples servidors i canals en una única finestra</li>
       <li xml:lang="ca-valencia">Múltiples servidors i canals en una única finestra</li>
+      <li xml:lang="da">Flere servere og kanaler i et enkelt vindue</li>
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
       <li xml:lang="el">Πολλοί εξυπηρετητές και κανάλια σε ένα μόνο παράθυρο</li>
       <li xml:lang="en-GB">Multiple servers and channels in one single window</li>
@@ -301,6 +307,7 @@
       <li>DCC file transfer</li>
       <li xml:lang="ca">Transferència DCC de fitxers</li>
       <li xml:lang="ca-valencia">Transferència DCC de fitxers</li>
+      <li xml:lang="da">DCC-filoverførsel</li>
       <li xml:lang="de">DCC-Dateiübertragung</li>
       <li xml:lang="el">Μεταφορά αρχείων DCC</li>
       <li xml:lang="en-GB">DCC file transfer</li>
@@ -332,6 +339,7 @@
       <li>Multiple identities for different servers</li>
       <li xml:lang="ca">Múltiples identitats per a servidors diferents</li>
       <li xml:lang="ca-valencia">Múltiples identitats per a servidors diferents</li>
+      <li xml:lang="da">Flere identiteter til forskellige servere</li>
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
       <li xml:lang="el">Πολλές ταυτότητες για διαφορετικούς διακομιστές</li>
       <li xml:lang="en-GB">Multiple identities for different servers</li>
@@ -363,6 +371,7 @@
       <li>Text decorations and colors</li>
       <li xml:lang="ca">Decoracions i colors per al text</li>
       <li xml:lang="ca-valencia">Decoracions i colors per al text</li>
+      <li xml:lang="da">Tekstdekorationer og farver</li>
       <li xml:lang="de">Textdekoration und -farben</li>
       <li xml:lang="el">Διακόσμηση κειμένου και χρώματα</li>
       <li xml:lang="en-GB">Text decorations and colours</li>
@@ -394,6 +403,7 @@
       <li>OnScreen Display for notifications</li>
       <li xml:lang="ca">Mostra les notificacions en la pantalla</li>
       <li xml:lang="ca-valencia">Mostra les notificacions en la pantalla</li>
+      <li xml:lang="da">On-screen-display til bekendtgørelser</li>
       <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
       <li xml:lang="el">Εμφάνιση ειδοποιήσεων στην οθόνη</li>
       <li xml:lang="en-GB">OnScreen Display for notifications</li>
@@ -425,6 +435,7 @@
       <li>Automatic UTF-8 detection</li>
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
+      <li xml:lang="da">Automatisk UTF-8-detektion</li>
       <li xml:lang="de">Automatische UTF-8-Erkennung</li>
       <li xml:lang="el">Αυτόματος εντοπισμός UTF-8</li>
       <li xml:lang="en-GB">Automatic UTF-8 detection</li>
@@ -456,6 +467,7 @@
       <li>Per channel encoding support</li>
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="ca-valencia">Permet codificació per canal</li>
+      <li xml:lang="da">Understøttelse af forskellige tegnsæt pr. kanal</li>
       <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
       <li xml:lang="el">Υποστήριξη κωδικοποίησης ανά κανάλι</li>
       <li xml:lang="en-GB">Per channel encoding support</li>
@@ -487,6 +499,7 @@
       <li>Theme support for nick icons</li>
       <li xml:lang="ca">Permet temes per a les icones de sobrenom</li>
       <li xml:lang="ca-valencia">Permet temes per a les icones de sobrenom</li>
+      <li xml:lang="da">Temaunderstøttelse for kaldenavn-ikoner</li>
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
       <li xml:lang="el">Υποστήριξη θεμάτων για εικονίδια ψευδωνύμων</li>
       <li xml:lang="en-GB">Theme support for nick icons</li>
@@ -518,6 +531,7 @@
       <li>Highly configurable</li>
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="ca-valencia">Altament configurable</li>
+      <li xml:lang="da">Meget konfigurerbar</li>
       <li xml:lang="de">Sehr anpassbar</li>
       <li xml:lang="el">Πλήρως διαμορφώσιμο</li>
       <li xml:lang="en-GB">Highly configurable</li>
