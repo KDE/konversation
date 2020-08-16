@@ -42,7 +42,7 @@
 #include <KToggleAction>
 
 // For the Web Shortcuts context menu sub-menu.
-#include <KToolInvocation>
+#include <KIO/CommandLauncherJob>
 #include <KUriFilter>
 
 
@@ -337,7 +337,8 @@ void IrcContextMenus::processWebShortcutAction()
 
 void IrcContextMenus::configureWebShortcuts()
 {
-    KToolInvocation::kdeinitExec(QStringLiteral("kcmshell5"), QStringList() << QStringLiteral("webshortcuts"));
+    auto job = new KIO::CommandLauncherJob(QStringLiteral("kcmshell5"), {QStringLiteral("webshortcuts")});
+    job->start();
 }
 
 void IrcContextMenus::setupChannelMenu()
