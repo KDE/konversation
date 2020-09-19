@@ -49,7 +49,6 @@
 #include <KActionMenu>
 #include <KNotifyConfigWidget>
 #include <KGlobalAccel>
-#include <KIconLoader>
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
@@ -742,7 +741,6 @@ void MainWindow::updateTrayIcon()
             // set up system tray
             m_trayIcon = new Konversation::TrayIcon(this);
             connect(this, &MainWindow::endNotification, m_trayIcon, &Konversation::TrayIcon::endNotification);
-            connect(KIconLoader::global(), &KIconLoader::iconChanged, m_trayIcon, &Konversation::TrayIcon::updateAppearance);
             QMenu *trayMenu = qobject_cast<QMenu*>(m_trayIcon->contextMenu());
             trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Preferences))));
             trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::ConfigureNotifications))));
