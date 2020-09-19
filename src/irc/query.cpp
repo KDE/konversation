@@ -25,7 +25,6 @@
 
 #include <QSplitter>
 
-#include <KIconLoader>
 #include <KMessageBox>
 #include <KSqueezedTextLabel>
 
@@ -75,7 +74,8 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     blowfishLabel = new QLabel(inputBox);
     inputBoxLayout->addWidget(blowfishLabel);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon(QStringLiteral("document-encrypt"), KIconLoader::Toolbar));
+    const int toolBarIconSize = blowfishLabel->style()->pixelMetric(QStyle::PixelMetric::PM_ToolBarIconSize);
+    blowfishLabel->setPixmap(QIcon::fromTheme(QStringLiteral("document-encrypt")).pixmap(toolBarIconSize));
     m_inputBar=new IRCInput(inputBox);
     inputBoxLayout->addWidget(m_inputBar);
 

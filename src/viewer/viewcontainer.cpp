@@ -52,8 +52,6 @@
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KWindowSystem>
-#include <KIconLoader>
-
 
 using namespace Konversation;
 
@@ -241,7 +239,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();
 
     QToolButton* closeBtn = new QToolButton(m_tabWidget);
-    closeBtn->setIcon(QIcon::fromTheme("tab-close").pixmap(KIconLoader::SizeSmall));
+    closeBtn->setIcon(QIcon::fromTheme("tab-close"));
     closeBtn->adjustSize();
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
     connect(closeBtn, &QAbstractButton::clicked, this, &ViewContainer::closeCurrentView);

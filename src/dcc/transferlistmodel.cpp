@@ -21,7 +21,6 @@
 #include <KCategorizedSortFilterProxyModel>
 #include <KLocalizedString>
 #include <KCategoryDrawer>
-#include <KIconLoader>
 
 namespace Konversation
 {
@@ -313,15 +312,11 @@ namespace Konversation
                     {
                         case TransferHeaderData::Status:
                         {
-                            QVariant decoration(QVariant::Pixmap);
-                            decoration.setValue<QPixmap>(getStatusIcon(transfer->getStatus()));
-                            return decoration;
+                            return getStatusIcon(transfer->getStatus());
                         }
                         case TransferHeaderData::TypeIcon:
                         {
-                            QVariant decoration(QVariant::Pixmap);
-                            decoration.setValue<QPixmap>(getTypeIcon(transfer->getType()));
-                            return decoration;
+                            return transfer->getType() == Transfer::Send ? QIcon::fromTheme("arrow-up") : QIcon::fromTheme("arrow-down");
                         }
                         default:
                             return QVariant();
@@ -384,19 +379,7 @@ namespace Konversation
             }
         }
 
-        QPixmap TransferListModel::getTypeIcon(Transfer::Type type) const
-        {
-            if (type == Transfer::Send)
-            {
-                return KIconLoader::global()->loadIcon(QStringLiteral("arrow-up"), KIconLoader::Small);
-            }
-            else
-            {
-                return KIconLoader::global()->loadIcon(QStringLiteral("arrow-down"), KIconLoader::Small);
-            }
-        }
-
-        QPixmap TransferListModel::getStatusIcon(Transfer::Status status) const
+        QIcon TransferListModel::getStatusIcon(Transfer::Status status) const
         {
             QString icon;
             switch (status)
@@ -422,7 +405,7 @@ namespace Konversation
                 default:
                 break;
             }
-            return KIconLoader::global()->loadIcon(icon, KIconLoader::Small);
+            return QIcon::fromTheme(icon);
         }
 
         QString TransferListModel::getSpeedPrettyText (transferspeed_t speed)

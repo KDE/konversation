@@ -20,9 +20,6 @@
 #include <QTextDocument>
 #include <QMimeData>
 
-#include <KIconLoader>
-#include <kio/pixmaploader.h>
-
 namespace Konversation
 {
     TopicLabel::TopicLabel(QWidget *parent, const char *name)
@@ -181,7 +178,8 @@ namespace Konversation
 
             drag->setMimeData(mimeData);
 
-            QPixmap pixmap = KIO::pixmapForUrl(url, 0, KIconLoader::Desktop, KIconLoader::SizeMedium);
+            const QString iconName = KIO::iconNameForUrl(url);
+            const QPixmap pixmap = QIcon::fromTheme(iconName).pixmap(32);
             drag->setPixmap(pixmap);
 
             drag->exec();

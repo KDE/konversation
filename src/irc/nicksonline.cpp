@@ -31,7 +31,6 @@
 #include <QToolTip>
 #include <QTreeWidget>
 
-#include <KIconLoader>
 #include <KToolBar>
 
 

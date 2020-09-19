@@ -29,9 +29,7 @@
 #include <QTextDocumentFragment>
 #include <QMimeData>
 
-#include <KIconLoader>
 #include <KStandardShortcut>
-#include <kio/pixmaploader.h>
 #include <KUrlMimeData>
 #include <QLocale>
 
@@ -2042,7 +2040,8 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
 
         drag->setMimeData(mimeData);
 
-        QPixmap pixmap = KIO::pixmapForUrl(url, 0, KIconLoader::Desktop, KIconLoader::SizeMedium);
+        const QString iconName = KIO::iconNameForUrl(url);
+        const QPixmap pixmap = QIcon::fromTheme(iconName).pixmap(32);
         drag->setPixmap(pixmap);
 
         drag->exec();

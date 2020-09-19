@@ -38,7 +38,6 @@
 #include <KLineEdit>
 #include <KPasswordDialog>
 #include <KMessageBox>
-#include <KIconLoader>
 #include <KComboBox>
 
 #define DELAYED_SORT_TRIGGER    10
@@ -236,7 +235,8 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     awayLabel->hide();
     cipherLabel = new QLabel(commandLineBox);
     cipherLabel->hide();
-    cipherLabel->setPixmap(KIconLoader::global()->loadIcon(QStringLiteral("document-encrypt"), KIconLoader::Toolbar));
+    const int toolBarIconSize = cipherLabel->style()->pixelMetric(QStyle::PixelMetric::PM_ToolBarIconSize);
+    cipherLabel->setPixmap(QIcon::fromTheme(QStringLiteral("document-encrypt")).pixmap(toolBarIconSize));
     m_inputBar = new IRCInput(commandLineBox);
 
     commandLineLayout->addWidget(nicknameCombobox);

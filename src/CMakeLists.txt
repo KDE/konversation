@@ -237,7 +237,6 @@ target_link_libraries(konversation
     KF5::CoreAddons
     KF5::Notifications
     KF5::WindowSystem
-    KF5::IconThemes
     KF5::ItemViews
     Phonon::phonon4qt5)
 

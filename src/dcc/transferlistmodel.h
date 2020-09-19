@@ -164,8 +164,7 @@ namespace Konversation
             inline QString getPositionPrettyText(KIO::fileoffset_t position,
                                                  KIO::filesize_t filesize) const;
             inline QString getSenderAddressPrettyText(Transfer *transfer) const;
-            inline QPixmap getStatusIcon(Transfer::Status status) const;
-            inline QPixmap getTypeIcon(Transfer::Type type) const;
+            inline QIcon getStatusIcon(Transfer::Status status) const;
             inline QString getStatusDescription(Transfer::Status status, Transfer::Type type, const QString& errorMessage = QString()) const;
 
             QList<TransferItemData> m_transferList;

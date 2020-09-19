@@ -14,7 +14,6 @@
 #include "ircview.h"
 #include "searchbar.h"
 
-#include <KIconLoader>
 #include <QPixmap>
 #include <QVBoxLayout>
 
