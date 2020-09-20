@@ -45,6 +45,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QWidget* page = mainWidget;
 
     QGridLayout* layout = new QGridLayout(mainWidget);
+    layout->setContentsMargins(0, 0, 0, 0);
     //QT5 layout->setSpacing(spacingHint());
 
     QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);

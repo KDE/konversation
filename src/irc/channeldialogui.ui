@@ -11,6 +11,9 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item row="1" column="1">
     <widget class="KLineEdit" name="m_passwordEdit">
      <property name="text">
