@@ -296,7 +296,6 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
    <class>KLineEdit</class>
