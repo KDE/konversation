@@ -699,7 +699,7 @@ void Channel::setAutoJoin(bool autojoin)
     {
         Konversation::ChannelSettings before;
 
-        QList<Channel *> channelList = m_server->getChannelList();
+        const QList<Channel *> channelList = m_server->getChannelList();
 
         if (channelList.count() > 1)
         {
@@ -708,8 +708,7 @@ void Channel::setAutoJoin(bool autojoin)
             int index = -1;
             int ownIndex = m_server->getViewContainer()->getViewIndex(this);
 
-            foreach (Channel* channel, channelList)
-            {
+            for (Channel* channel : channelList) {
                 index = m_server->getViewContainer()->getViewIndex(channel);
 
                 if (index && index > ownIndex) channelMap.insert(index, channel);
@@ -1913,9 +1912,8 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
     }
     else
     {
-        QStringList removable = m_modeList.filter(QRegExp(QString(QStringLiteral("^%1.*")).arg(mode)));
-        foreach(const QString &mode, removable)
-        {
+        const QStringList removable = m_modeList.filter(QRegExp(QString(QStringLiteral("^%1.*")).arg(mode)));
+        for (const QString &mode : removable) {
             m_modeList.removeOne(mode);
         }
     }
@@ -2855,8 +2853,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     std::sort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
 
-    foreach (Nick *nick, foundNicks)
-    {
+    for (Nick *nick : qAsConst(foundNicks)) {
         found.append(nick->getChannelNick()->getNickname());
     }
 

@@ -291,10 +291,9 @@ void Highlight_Config::saveSettings()
     KSharedConfigPtr config = KSharedConfig::openConfig();
 
     // Write all highlight entries
-    QList<Highlight*> hiList = getHighlightList();
+    const QList<Highlight*> hiList = getHighlightList();
     int i = 0;
-    foreach (Highlight* hl, hiList)
-    {
+    for (Highlight* hl : hiList) {
         KConfigGroup grp = config->group(QStringLiteral("Highlight%1").arg(i));
         grp.writeEntry("Pattern", hl->getPattern());
         grp.writeEntry("RegExp", hl->getRegExp());

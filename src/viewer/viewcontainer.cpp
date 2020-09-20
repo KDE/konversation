@@ -1640,24 +1640,25 @@ void ViewContainer::unclutterTabs()
 
     QWidget* currentView = m_tabWidget->currentWidget();
 
-    QList<ChatWindow *> views;
+    QList<ChatWindow *> topLevelViews;
+    QList<ChatWindow *> nonTopLevelViews;
 
     while (m_tabWidget->count()) {
-        views << qobject_cast<ChatWindow* >(m_tabWidget->widget(0));
+        ChatWindow *view = qobject_cast<ChatWindow* >(m_tabWidget->widget(0));
+        if (view->isTopLevelView()) {
+            topLevelViews << view;
+        } else {
+            nonTopLevelViews << view;
+        }
         m_tabWidget->removeTab(0);
     }
 
-    foreach(ChatWindow *view, views) {
-        if (view->isTopLevelView()) {
-            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
-            views.removeAll(view);
-        }
+    for (ChatWindow *view : qAsConst(topLevelViews)) {
+        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
     }
 
-    foreach(ChatWindow *view, views) {
-        if (!view->isTopLevelView()) {
-            m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
-        }
+    for (ChatWindow *view : qAsConst(nonTopLevelViews)) {
+        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
     }
 
     updateViews();

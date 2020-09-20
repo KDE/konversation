@@ -728,11 +728,10 @@ void Server::requestAvailableCapabilies ()
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
     QStringList requestCaps;
-    QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
+    const QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
     QStringList nameValue;
 
-    foreach(const QString &cap, capsList)
-    {
+    for (const QString &cap : capsList) {
         nameValue = cap.split(QChar('='));
 
         if (nameValue.isEmpty())

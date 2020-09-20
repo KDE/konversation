@@ -66,11 +66,10 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     // get list of theme dirs
-    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/"), QStandardPaths::LocateDirectory);
+    const QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/"), QStandardPaths::LocateDirectory);
     m_dirs.clear();
 
-    foreach(const QString& path, paths)
-    {
+    for (const QString& path : paths) {
         QDir dir(path);
 
         foreach(const QString& themedir, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot))

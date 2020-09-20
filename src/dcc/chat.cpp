@@ -512,8 +512,7 @@ namespace Konversation
                 delete[] buffer;
 
                 const QStringList &lines = line.split('\n', QString::SkipEmptyParts);
-                foreach (const QString &lin, lines)
-                {
+                for (const QString &lin : lines) {
                     emit receivedRawLine(lin);
                 }
                 available = m_dccSocket->bytesAvailable();

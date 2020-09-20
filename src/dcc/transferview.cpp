@@ -119,10 +119,9 @@ namespace Konversation
         void TransferView::addTransfer(Transfer *transfer)
         {
             //save selected rows
-            QModelIndexList selectedIndexes = selectedRows();
+            const QModelIndexList selectedIndexes = selectedRows();
             QList<QVariant> selectedItems;
-            foreach (const QModelIndex &index, selectedIndexes)
-            {
+            for (const QModelIndex &index : selectedIndexes) {
                 selectedItems.append(index.data(TransferListModel::TransferPointer));
             }
 

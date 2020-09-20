@@ -301,8 +301,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
             QAction * action = nullptr;
 
-            foreach(const QString& searchProvider, searchProviders)
-            {
+            for (const QString& searchProvider : searchProviders) {
                 action = new QAction(searchProvider, m_webShortcutsMenu);
                 action->setIcon(QIcon::fromTheme(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
@@ -884,7 +883,7 @@ int IrcContextMenus::extractActionId(QAction* action)
 
 void IrcContextMenus::commandToServer(Server* server, const QString& command, const QString& destination)
 {
-    Konversation::OutputFilterResult result = server->getOutputFilter()->parse(QString(), Preferences::self()->commandChar() + command, destination);
+    const Konversation::OutputFilterResult result = server->getOutputFilter()->parse(QString(), Preferences::self()->commandChar() + command, destination);
 
     server->queue(result.toServer);
 
@@ -892,7 +891,7 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command, co
         server->appendMessageToFrontmost(result.typeString, result.output);
     else if (!result.outputList.isEmpty())
     {
-        foreach(const QString& output, result.outputList)
+        for (const QString& output : result.outputList)
             server->appendMessageToFrontmost(result.typeString, output);
     }
 }

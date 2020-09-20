@@ -288,8 +288,7 @@ namespace Konversation
 
             const QStringList lines = sterilizeUnicode(text.split('\n', QString::SkipEmptyParts));
 
-            foreach (const QString &line, lines)
-            {
+            for (const QString &line : lines) {
                 m_chat->sendText(line);
                 getTextView()->append(m_chat->ownNick(), line);
             }

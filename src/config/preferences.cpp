@@ -394,19 +394,18 @@ QStringList Preferences::defaultAliasList()
     const QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("scripts"), QStandardPaths::LocateDirectory);
     QSet<QString> scripts;
 
-    foreach(const QString &dir, scriptDirs) {
+    for (const QString &dir : scriptDirs) {
 
-        const QStringList &scriptFiles = QDir(dir).entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Executable);
+        const QStringList scriptFiles = QDir(dir).entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Executable);
 
-        foreach(const QString &script, scriptFiles) {
+        for (const QString &script : scriptFiles) {
             scripts << script;
         }
     }
 
     QStringList aliasList;
 
-    foreach(const QString& script, scripts)
-    {
+    for (const QString& script : qAsConst(scripts)) {
         aliasList.append(QStringLiteral("%1 /exec %1").arg(script));
 
         // FIXME: Historically, defaultAliasList() is primarily used to dynamically

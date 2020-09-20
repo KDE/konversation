@@ -408,8 +408,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
     // Get list of pointers to all servers.
     Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
-    foreach (Server* server, serverList)
-    {
+    for (Server* server : serverList) {
         if (server->getDisplayName() == networkName)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
@@ -429,8 +428,7 @@ void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
     Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
-    foreach (Server* server, serverList)
-    {
+    for (Server* server : serverList) {
         if (server->getDisplayName() == networkName)
         {
             server->requestWhois(nickname);
@@ -490,8 +488,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             QString serverName = *it;
             // Locate server in server list.
             bool found = false;
-            foreach (Server* server, serverList)
-            {
+            for (Server* server : serverList) {
                 if ((server->getServerName() == serverName) &&
                     (server->getDisplayName() == networkName)) found = true;
             }
@@ -511,8 +508,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             child->setText(nlvcAdditionalInfo, serverNameList.join(QLatin1Char(',')));
     }
     // Display info for all currently-connected servers.
-    foreach (Server* server, serverList)
-    {
+    for (Server* server : serverList) {
         updateServerOnlineList(server);
     }
     // Refresh buttons.
