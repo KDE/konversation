@@ -1,7 +1,8 @@
+cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
+
 project(konversation)
 
-cmake_minimum_required (VERSION 2.8.12 FATAL_ERROR)
-set (QT_MIN_VERSION "5.7.0")
+set (QT_MIN_VERSION "5.12.0")
 set(KF5_MIN_VERSION "5.69.0")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
