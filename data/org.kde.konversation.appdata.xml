@@ -569,8 +569,30 @@
   </screenshots>
   <url type="homepage">https://konversation.kde.org/</url>
   <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=konversation</url>
+  <url type="help">https://docs.kde.org/?application=konversation</url>
+  <url type="donation">https://www.kde.org/community/donations/?app=konversation&amp;source=appdata</url>
   <project_group>KDE</project_group>
   <provides>
     <binary>konversation</binary>
   </provides>
+  <releases>
+    <!-- Note: KDE website infrastructure uses the appstream file from the master branch
+               to determine the last release, so this entry must always reflect the
+               last actual release -->
+    <release version="1.7.5" date="2018-06-27">
+      <artifacts>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/konversation/1.7.5/src/konversation-1.7.5.tar.xz</location>
+          <checksum type="sha256">60bf7533062b5fc63a37105461b4776437f4e24859e8ddaed1d48c4ba1470940</checksum>
+          <size type="download">3739392</size>
+        </artifact>
+      </artifacts>
+    </release>
+  </releases>
+  <custom>
+    <value key="KDE::irc">#konversation</value>
+    <value key="KDE::mailinglist-devel">konversation-devel@kde.org</value>
+    <value key="KDE::forum">18</value>
+  </custom>
+  <update_contact>konversation-devel@kde.org</update_contact>
 </component>
