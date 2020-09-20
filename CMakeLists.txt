@@ -5,7 +5,7 @@ set (QT_MIN_VERSION "5.7.0")
 set(KF5_MIN_VERSION "5.65.0")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
 include(CheckIncludeFile)
 include(KDEInstallDirs)
@@ -45,7 +45,7 @@ include_directories(${PHONON_INCLUDES})
 
 find_package(Qca-qt5 2.1.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
-                       URL "http://download.kde.org/stable/qca-qt5/"
+                       URL "https://download.kde.org/stable/qca/"
                        TYPE OPTIONAL)
 check_include_file("stropts.h" HAVE_STROPTS_H)
 check_include_file("byteswap.h" HAVE_BYTESWAP_H)
@@ -63,7 +63,6 @@ add_definitions(
   -DQT_NO_URL_CAST_FROM_STRING
   -DQT_NO_CAST_FROM_BYTEARRAY
 # -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 Port: QCA includes cause trouble.
-  -DQT_USE_FAST_OPERATOR_PLUS
 )
 
 add_subdirectory(src)

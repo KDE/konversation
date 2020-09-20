@@ -22,7 +22,7 @@ namespace Konversation
         class WhiteBoardGlobals
         {
             // wboard specs, for more info see
-            // http://www.visualirc.net/tech-wboard.php
+            // https://www.visualirc.net/tech-wboard.php
             public:
                 enum WhiteBoardTool
                 {

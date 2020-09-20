@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
         i18n("(C) 2002-2018 by the Konversation team"),
         i18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
-        QStringLiteral("http://konversation.kde.org/"));
+        QStringLiteral("https://konversation.kde.org/"));
 
     aboutData.addAuthor(i18n("Dario Abatianni"),i18n("Original Author, Project Founder"),QStringLiteral("eisfuchs@tigress.com"));
     aboutData.addAuthor(i18n("Peter Simonsson"),i18n("Maintainer"),QStringLiteral("peter.simonsson@gmail.com"));

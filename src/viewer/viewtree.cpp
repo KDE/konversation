@@ -21,6 +21,7 @@
 #include <QFontDatabase>
 #include <QGuiApplication>
 #include <QPainter>
+#include <QPainterPath>
 #include <QItemSelectionModel>
 #include <QStyleHints>
 #include <QToolTip>
@@ -405,7 +406,7 @@ void ViewTree::wheelEvent(QWheelEvent* event)
     bool thresholdReached = false;
 
     // magic number 120
-    // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+    // See: https://doc.qt.io/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
     if (m_accumulatedWheelDelta >= 120) {
         thresholdReached = true;
         m_accumulatedWheelDelta -= 120;
