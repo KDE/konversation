@@ -184,6 +184,7 @@ void Images::initializeNickIcons()
     QString iconTheme = Preferences::self()->iconTheme();
     QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/"+iconTheme, QStandardPaths::LocateDirectory);
     QStringList icons;
+    bool isDefaultTheme = (iconTheme == QLatin1String("default"));
 
     foreach(const QString& dir, dirs)
     {
@@ -197,7 +198,7 @@ void Images::initializeNickIcons()
 
     if( icons.count() < 7 ) // Sanity
     {
-        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default/*.png"));
+        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default"), QStandardPaths::LocateDirectory);
 
         foreach(const QString& dir, dirs)
         {
@@ -208,6 +209,7 @@ void Images::initializeNickIcons()
                 icons.append(dir + QLatin1Char('/') + file);
             }
         }
+        isDefaultTheme = true;
     }
     if ( icons.count() < 7 || icons.count() > 8) // Sanity
         return;
@@ -223,7 +225,7 @@ void Images::initializeNickIcons()
     nickIconAwayPath = *it;
     ++it;
     QPixmap elementAwayStacked;
-    if (icons.count() == 8 && iconTheme == QLatin1String("default")) {
+    if (icons.count() == 8 && isDefaultTheme) {
         elementAwayStacked = (*it);
         ++it;
     }
@@ -254,7 +256,7 @@ void Images::initializeNickIcons()
     nickIcons[Op][0] = overlayPixmaps( elementNormal, elementOp );
     nickIcons[Op][1] = overlayPixmaps( nickIcons[Op][0], elementAwayStacked.isNull() ? elementAway : elementAwayStacked );
 
-    if (iconTheme == QLatin1String("default")) {
+    if (isDefaultTheme) {
         nickIcons[Owner][0] = elementOwner;
     } else {
         nickIcons[Owner][0] = overlayPixmaps( elementNormal, elementOwner );
@@ -262,7 +264,7 @@ void Images::initializeNickIcons()
 
     nickIcons[Owner][1] = overlayPixmaps( nickIcons[Owner][0], elementAway );
 
-    if (iconTheme == QLatin1String("default")) {
+    if (isDefaultTheme) {
         nickIcons[Admin][0] = elementAdmin;
     } else {
         nickIcons[Admin][0] = overlayPixmaps( elementNormal, elementAdmin );

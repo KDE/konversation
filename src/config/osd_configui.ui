@@ -180,8 +180,8 @@
      <property name="checked" >
       <bool>false</bool>
      </property>
-     <layout class="QGridLayout" >
-      <item row="1" column="0" >
+     <layout class="QFormLayout" >
+      <item row="0" column="0" >
        <widget class="QLabel" name="textLabel2" >
         <property name="text" >
          <string>Te&amp;xt color:</string>
@@ -194,7 +194,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" >
+      <item row="1" column="0" >
        <widget class="QLabel" name="textLabel3" >
         <property name="text" >
          <string>&amp;Background color:</string>
@@ -207,35 +207,19 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1" >
-       <widget class="KColorButton" name="kcfg_OSDBackgroundColor" >
-        <property name="text" >
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" >
+      <item row="0" column="1" >
        <widget class="KColorButton" name="kcfg_OSDTextColor" >
         <property name="text" >
          <string/>
         </property>
        </widget>
       </item>
-      <item rowspan="2" row="1" column="2" >
-       <spacer name="spacer2" >
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
+      <item row="1" column="1" >
+       <widget class="KColorButton" name="kcfg_OSDBackgroundColor" >
+        <property name="text" >
+         <string/>
         </property>
-        <property name="sizeType" >
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>50</width>
-          <height>31</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -248,7 +232,7 @@
      <property name="title" >
       <string>O&amp;ther Settings</string>
      </property>
-     <layout class="QGridLayout" >
+     <layout class="QFormLayout" >
       <item row="0" column="0" >
        <widget class="QLabel" name="textLabel1_2" >
         <property name="text" >
@@ -294,28 +278,11 @@
       <item row="1" column="1" >
        <widget class="KComboBox" name="kcfg_OSDScreen" />
       </item>
-      <item rowspan="2" row="0" column="2" >
-       <spacer name="spacer3" >
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType" >
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>50</width>
-          <height>21</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
  <customwidgets>
   <customwidget>
    <class>KColorButton</class>
