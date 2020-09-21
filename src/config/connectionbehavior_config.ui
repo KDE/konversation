@@ -28,7 +28,7 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout">
+     <layout class="QFormLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="reconnectDelayLabel">
         <property name="text">
@@ -41,22 +41,6 @@ the Free Software Foundation; either version 2 of the License, or
          <cstring>kcfg_ReconnectDelay</cstring>
         </property>
        </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="spacer53">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>278</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="textLabel1">
@@ -94,22 +78,6 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
-      <item row="1" column="2">
-       <spacer name="spacer53_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>280</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </widget>
    </item>
@@ -134,7 +102,7 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="title">
       <string>Encryption</string>
      </property>
-     <layout class="QGridLayout" name="encryptionLayout">
+     <layout class="QFormLayout" name="encryptionLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -160,19 +128,6 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
          </property>
         </item>
        </widget>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
