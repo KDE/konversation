@@ -198,8 +198,7 @@ QString InviteChannelListModel::selectedChannels() const
 {
     QStringList channels;
 
-    foreach(const ChannelItem& item, m_channelMap)
-    {
+    for (const ChannelItem& item : m_channelMap) {
         if(item.checkState == Qt::Checked)
             channels.append(item.channel);
     }

@@ -582,8 +582,7 @@ void Channel::completeNick()
                     uint timeStamp = 0;
                     int listPosition = 0;
 
-                    foreach (Nick* nick, nicknameList)
-                    {
+                    for (Nick* nick : qAsConst(nicknameList)) {
                         if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive) &&
                           (nick->getChannelNick()->timeStamp() > timeStamp))
                         {
@@ -873,8 +872,7 @@ QStringList Channel::getSelectedNickList()
 {
     QStringList selectedNicks;
 
-    foreach (Nick* nick, nicknameList)
-    {
+    for (Nick* nick : qAsConst(nicknameList)) {
         if (nick->isSelected())
             selectedNicks << nick->getChannelNick()->getNickname();
     }
@@ -949,8 +947,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 
     Nick* nick=nullptr;
 
-    foreach (Nick* lookNick, nicknameList)
-    {
+    for (Nick* lookNick : qAsConst(nicknameList)) {
         if(lookNick->getChannelNick()->loweredNickname() == nickname)
         {
             nick = lookNick;
@@ -2246,8 +2243,7 @@ void Channel::autoUserhost()
 
         QString nickString;
 
-        foreach (Nick* nick, getNickList())
-        {
+        for (Nick* nick : qAsConst(nicknameList)) {
             if(nick->getChannelNick()->getHostmask().isEmpty())
             {
                 if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + QLatin1Char(' ');
@@ -2386,7 +2382,7 @@ void Channel::updateAutoWho()
 
 void Channel::fadeActivity()
 {
-    foreach (Nick *nick,  nicknameList) {
+    for (Nick *nick : qAsConst(nicknameList)) {
         nick->getChannelNick()->lessActive();
     }
 }
@@ -2772,8 +2768,7 @@ Konversation::Cipher* Channel::getCipher()
 
 void Channel::updateNickInfos()
 {
-    foreach(Nick* nick, nicknameList)
-    {
+    for (Nick* nick : qAsConst(nicknameList)) {
         if(nick->getChannelNick()->getNickInfo()->isChanged())
         {
             nick->refresh();
@@ -2786,8 +2781,7 @@ void Channel::updateChannelNicks(const QString& channel)
     if(channel != name.toLower())
         return;
 
-    foreach(Nick* nick, nicknameList)
-    {
+    for (Nick* nick : qAsConst(nicknameList)) {
         if(nick->getChannelNick()->isChanged())
         {
             nick->refresh();
@@ -2820,7 +2814,7 @@ NickList::NickList() : QList<Nick*>()
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-                   bool skipNonAlfaNum, bool caseSensitive)
+                   bool skipNonAlfaNum, bool caseSensitive) const
 {
     found.clear();
     QString prefix(QLatin1Char('^'));
@@ -2836,8 +2830,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     QRegExp regexp(prefix + QRegExp::escape(pattern));
     regexp.setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
-    foreach (Nick* nick, *this)
-    {
+    for (Nick* nick : *this) {
         newNick = nick->getChannelNick()->getNickname();
 
         if(!prefix.isEmpty() && newNick.contains(prefixCharacter))
@@ -2889,10 +2882,9 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     return QString();
 }
 
-bool NickList::containsNick(const QString& nickname)
+bool NickList::containsNick(const QString& nickname) const
 {
-    foreach (Nick* nick, *this)
-    {
+    for (Nick* nick : *this) {
         if (nick->getChannelNick()->getNickname()==nickname)
             return true;
     }

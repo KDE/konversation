@@ -211,7 +211,8 @@ void UrlCatcher::updateItemActionStates()
 {
     bool enable = m_urlTree->selectionModel()->hasSelection();
 
-    foreach(QAction* action, m_itemActions) action->setEnabled(enable);
+    for (QAction* action : qAsConst(m_itemActions))
+        action->setEnabled(enable);
 }
 
 void UrlCatcher::updateListActionStates()
@@ -219,7 +220,8 @@ void UrlCatcher::updateListActionStates()
     Application* konvApp = Application::instance();
     bool enable = konvApp->getUrlModel()->rowCount();
 
-    foreach(QAction* action, m_listActions) action->setEnabled(enable);
+    for (QAction* action : qAsConst(m_listActions))
+        action->setEnabled(enable);
 }
 
 void UrlCatcher::openContextMenu(const QPoint& p)
