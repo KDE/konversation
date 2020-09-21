@@ -50,16 +50,16 @@ namespace Konversation
         TransferManager::~TransferManager()
         {
             qDebug();
-            foreach (TransferSend* sendItem, m_sendItems)
-            {
+            const auto currentSendItems = m_sendItems;
+            for (TransferSend* sendItem : currentSendItems) {
                 sendItem->abort();
             }
-            foreach (TransferRecv* recvItem, m_recvItems)
-            {
+            const auto currentRecvItems = m_recvItems;
+            for (TransferRecv* recvItem : currentRecvItems) {
                 recvItem->abort();
             }
-            foreach (Chat* chatItem, m_chatItems)
-            {
+            const auto currentChatItems = m_chatItems;
+            for (Chat* chatItem : currentChatItems) {
                 chatItem->close();
             }
 
@@ -288,8 +288,8 @@ namespace Konversation
             bool nickEmpty = partnerNick.isEmpty();
             bool fileEmpty = fileName.isEmpty();
 
-            foreach ( TransferRecv* it, m_recvItems )
-            {
+            const auto currentRecvItems = m_recvItems;
+            for (TransferRecv* it : currentRecvItems) {
                 if (
                     it->getStatus() == Transfer::Queued &&
                     it->getConnectionId() == connectionId &&

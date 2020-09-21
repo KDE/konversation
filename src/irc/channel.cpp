@@ -2693,8 +2693,8 @@ void Channel::addBan(const QString& ban)
 
 void Channel::removeBan(const QString& ban)
 {
-  foreach(const QString &string, m_BanList)
-  {
+  const QStringList currentBanList = m_BanList;
+  for (const QString &string : currentBanList) {
     if (string.section(QLatin1Char(' '), 0, 0) == ban)
     {
       m_BanList.removeOne(string);
