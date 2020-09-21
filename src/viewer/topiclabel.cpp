@@ -250,7 +250,7 @@ namespace Konversation
 
             // On some MacOS system, maxWidth may return 0
             if (em == 0) {
-                foreach (const QChar &c, text) {
+                for (QChar c : text) {
                     em = qMax(em, fontMetrics().horizontalAdvance(c));
                 }
             }

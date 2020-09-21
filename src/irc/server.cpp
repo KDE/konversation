@@ -2149,7 +2149,7 @@ void Server::requestDccSend()
 
 void Server::sendURIs(const QList<QUrl>& uris, const QString& nick)
 {
-    foreach(const QUrl &uri, uris)
+    for (const QUrl &uri : uris)
          addDccSend(nick, uri);
 }
 
@@ -3916,8 +3916,7 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
 
     if (!channels.isEmpty())
     {
-        foreach (const ChannelSettings& cs, channels)
-        {
+        for (const ChannelSettings& cs : qAsConst(channels)) {
             tmpList << cs;
         }
     }

@@ -561,13 +561,12 @@ namespace Konversation
             selectionModel()->select(m_proxyModel->index(row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
 
-        void TransferView::selectRows(QList<int> rows)
+        void TransferView::selectRows(const QList<int>& rows)
         {
             QItemSelection selection;
             const auto rowIndices = rowIndexes();
             for (const QModelIndex &index : rowIndices) {
-                foreach (int row, rows)
-                {
+                for (int row : rows) {
                     if (row == index.row())
                     {
                         selection.append(QItemSelectionRange(index));

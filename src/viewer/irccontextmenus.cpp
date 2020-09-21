@@ -626,8 +626,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
             QString question;
             QStringList selectedIgnoredNicks;
 
-            foreach(const QString& nick, nicks)
-            {
+            for (const QString& nick : nicks) {
                 if (Preferences::isIgnored(nick))
                     selectedIgnoredNicks << nick;
             }
@@ -655,7 +654,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             if (!server->getServerGroup()) break;
 
-            foreach(const QString& nick, nicks)
+            for(const QString& nick : nicks)
                 Preferences::addNotify(server->getServerGroup()->id(), nick);
 
             break;
@@ -664,7 +663,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             if (!server->getServerGroup()) break;
 
-            foreach(const QString& nick, nicks)
+            for(const QString& nick : nicks)
                 Preferences::removeNotify(server->getServerGroup()->id(), nick);
 
             break;
@@ -716,8 +715,7 @@ void IrcContextMenus::updateSharedNickSettingsActions(Server* server, const QStr
     if (server->getServerGroup())
         serverGroupId = server->getServerGroup()->id();
 
-    foreach(const QString& nick, nicks)
-    {
+    for (const QString& nick : nicks) {
         if (Preferences::isIgnored(nick))
             ++unignoreCounter;
         else
@@ -901,6 +899,6 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command, co
 void IrcContextMenus::commandToServer(Server* server, const QString& command,
     const QStringList& arguments, const QString& destination)
 {
-    foreach(const QString& argument, arguments)
+    for (const QString& argument : arguments)
         commandToServer(server, command.arg(argument), destination);
 }
