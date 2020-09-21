@@ -970,8 +970,8 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 
     QRegularExpression ignoreRe;
     ignoreRe.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-    foreach (Ignore* item, Preferences::ignoreList())
-    {
+    const auto ignoreList = Preferences::ignoreList();
+    for (Ignore* item : ignoreList) {
         ignoreRe.setPattern(QRegularExpression::anchoredPattern(QRegularExpression::escape(
                                 item->getName()).replace(QLatin1String("\\*"), QLatin1String("(.*)"))));
 

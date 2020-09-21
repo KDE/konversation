@@ -94,9 +94,9 @@ bool KonviBookmarkHandler::supportsTabs() const
 QList<KBookmarkOwner::FutureBookmark> KonviBookmarkHandler::currentBookmarkList() const
 {
     QList<KBookmarkOwner::FutureBookmark> list;
-    QPair<QString, QString> uri;
 
-    foreach (uri, m_mainWindow->getViewContainer()->getChannelsURI()) {
+    const auto channelsURI = m_mainWindow->getViewContainer()->getChannelsURI();
+    for (const QPair<QString, QString>& uri : channelsURI) {
         list << KBookmarkOwner::FutureBookmark(uri.first, QUrl(uri.second), QString());
     }
 

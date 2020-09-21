@@ -130,8 +130,8 @@ void Ignore_Config::saveSettings()
 void Ignore_Config::loadSettings()
 {
     ignoreListView->clear();
-    foreach (Ignore* item, Preferences::ignoreList())
-    {
+    const auto ignoreItems = Preferences::ignoreList();
+    for (Ignore* item : ignoreItems) {
         new IgnoreListViewItem(ignoreListView, item->getName(), item->getFlags());
     }
     ignoreListView->sortItems(0, Qt::AscendingOrder);

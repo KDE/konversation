@@ -155,8 +155,8 @@ namespace Konversation
                  selectAllCompleted = false;
 
             QItemSelectionModel *selectionModel = m_transferView->selectionModel();
-            foreach (const QModelIndex &index, m_transferView->rowIndexes())
-            {
+            const auto rowIndices = m_transferView->rowIndexes();
+            for (const QModelIndex &index : rowIndices) {
                 Transfer::Type type = (Transfer::Type)index.data(TransferListModel::TransferType).toInt();
                 Transfer::Status status = (Transfer::Status)index.data(TransferListModel::TransferStatus).toInt();
 
@@ -225,8 +225,8 @@ namespace Konversation
 
         void TransferPanel::acceptDcc()
         {
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
+            const auto selectedRowIndices = m_transferView->selectedRows();
+            for (const QModelIndex &index : selectedRowIndices) {
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Receive &&
                     index.data(TransferListModel::TransferStatus).toInt() == Transfer::Queued)
                 {
@@ -242,8 +242,8 @@ namespace Konversation
 
         void TransferPanel::abortDcc()
         {
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
+            const auto selectedRowIndices = m_transferView->selectedRows();
+            for (const QModelIndex &index : selectedRowIndices) {
                 if (index.data(TransferListModel::TransferStatus).toInt() < Transfer::Done)
                 {
                     Transfer *transfer = qobject_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
@@ -259,8 +259,8 @@ namespace Konversation
         void TransferPanel::resendFile()
         {
             QList<Transfer*> transferList;
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
+            const auto selectedRowIndices = m_transferView->selectedRows();
+            for (const QModelIndex &index : selectedRowIndices) {
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
                     index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
@@ -372,8 +372,8 @@ namespace Konversation
             QModelIndexList indexesToRemove;
             QModelIndexList selectedIndexes = m_transferView->selectedRows();
 
-            foreach (const QModelIndex &index, m_transferView->rowIndexes())
-            {
+            const auto rowIndices = m_transferView->rowIndexes();
+            for (const QModelIndex &index : rowIndices) {
                 if (index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
                     indexesToRemove.append(index);
@@ -444,8 +444,8 @@ namespace Konversation
                 }
             }
 
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
+            const auto selectedRowIndices = m_transferView->selectedRows();
+            for (const QModelIndex &index : selectedRowIndices) {
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send ||
                     index.data(TransferListModel::TransferStatus).toInt() == Transfer::Done)
                 {
@@ -460,8 +460,8 @@ namespace Konversation
 
         void TransferPanel::openLocation()
         {
-            foreach (const QModelIndex &index, m_transferView->selectedRows())
-            {
+            const auto selectedRowIndices = m_transferView->selectedRows();
+            for (const QModelIndex &index : selectedRowIndices) {
                 Transfer *transfer = qobject_cast<Transfer*>(index.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (transfer)
                 {

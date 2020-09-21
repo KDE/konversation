@@ -331,7 +331,8 @@ void UrlCatcher::deleteSelectedUrls()
 {
     QList<QPersistentModelIndex> selectedIndices;
 
-    foreach(const QPersistentModelIndex& index, m_urlTree->selectionModel()->selectedIndexes())
+    const auto nonPersistentSelectedIndices = m_urlTree->selectionModel()->selectedIndexes();
+    for (const QModelIndex& index : nonPersistentSelectedIndices)
         selectedIndices << index;
 
     Application* konvApp = Application::instance();

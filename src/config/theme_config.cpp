@@ -72,8 +72,8 @@ void Theme_Config::loadSettings()
     for (const QString& path : paths) {
         QDir dir(path);
 
-        foreach(const QString& themedir, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot))
-        {
+        const auto themeDirs = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+        for (const QString& themedir : themeDirs) {
             QFileInfo file(path + themedir + "/index.desktop");
 
             if(file.exists())

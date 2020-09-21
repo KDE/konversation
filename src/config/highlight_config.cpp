@@ -90,8 +90,8 @@ void Highlight_Config::restorePageToDefaults()
 void Highlight_Config::loadSettings()
 {
     highlightListView->clear();
-    foreach (Highlight* currentHighlight, Preferences::highlightList())
-    {
+    const auto highlightList = Preferences::highlightList();
+    for (Highlight* currentHighlight : highlightList) {
         HighlightViewItem *item = new HighlightViewItem(highlightListView,currentHighlight);
         item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
     }

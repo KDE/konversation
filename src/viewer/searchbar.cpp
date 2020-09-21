@@ -31,7 +31,8 @@ SearchBar::SearchBar(QWidget* parent)
 {
     setupUi(this);
 
-    foreach(QWidget* widget, findChildren<QWidget*>())
+    const auto allChildWidgets = findChildren<QWidget*>();
+    for (QWidget* widget : allChildWidgets)
         widget->installEventFilter(this);
 
     parent->installEventFilter(this); // HACK See notes in SearchBar::eventFilter

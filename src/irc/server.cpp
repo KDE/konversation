@@ -2295,8 +2295,8 @@ QString Server::recipientNick() const
     // fill nickList with all nicks we know about
     foreach (Channel* lookChannel, m_channelList)
     {
-        foreach (Nick* lookNick, lookChannel->getNickList())
-        {
+        const auto lookChannelNickList = lookChannel->getNickList();
+        for (Nick* lookNick : lookChannelNickList) {
             if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
                 nickList.append(lookNick->getChannelNick()->getNickname());
         }

@@ -118,8 +118,8 @@ void IrcContextMenus::updateQuickButtonMenu()
     QAction * action;
     QString pattern;
 
-    foreach(const QString& button, Preferences::quickButtonList())
-    {
+    const auto buttons = Preferences::quickButtonList();
+    for (const QString& button : buttons) {
         pattern = button.section(',', 1);
 
         if (pattern.contains(QLatin1String("%u")))
@@ -362,7 +362,8 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
     bool connected = server->isConnected();
 
-    foreach(QAction* action, channelMenu->actions())
+    const auto channelMenuActions = channelMenu->actions();
+    for (QAction* action : channelMenuActions)
         action->setEnabled(connected);
 
     QAction* action = channelMenu->exec(pos);
@@ -479,7 +480,8 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
     if (options.testFlag(ShowTitle) && nicks.count() == 1)
         nickMenu->setTitle(KStringHandler::rsqueeze(nicks.first(), 15));
 
-    foreach(QAction* action, nickMenu->actions())
+    const auto nickMenuActions = nickMenu->actions();
+    for (QAction* action : nickMenuActions)
         action->setVisible(true);
 
     self()->m_modesMenu->menuAction()->setVisible(options.testFlag(ShowChannelActions));
