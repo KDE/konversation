@@ -35,14 +35,7 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout">
-      <item row="0" column="1">
-       <widget class="KComboBox" name="kcfg_TimestampFormat">
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
+     <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="textLabel1">
         <property name="text">
@@ -56,30 +49,21 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="3">
+      <item row="0" column="1">
+       <widget class="KComboBox" name="kcfg_TimestampFormat">
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_ShowDate">
         <property name="text">
          <string>Sho&amp;w dates</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="spacer127">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>191</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0" colspan="3">
+      <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="kcfg_ShowDateLine">
         <property name="text">
          <string>Show date marker when date changes</string>
@@ -97,8 +81,8 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QHBoxLayout">
-      <item>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
        <widget class="QLabel" name="textLabel1_2">
         <property name="text">
          <string>&amp;Lines: </string>
@@ -111,7 +95,7 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="1">
        <widget class="QSpinBox" name="kcfg_BacklogLines">
         <property name="value">
          <number>10</number>
@@ -120,22 +104,6 @@ the Free Software Foundation; either version 2 of the License, or
          <number>100</number>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="spacer3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>251</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
@@ -170,7 +138,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <spacer name="spacer9_2">
+         <spacer name="indentAutoUserhostSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -179,8 +147,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -200,7 +168,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <spacer name="spacer9">
+         <spacer name="indentShowRealNamesSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -209,8 +177,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -230,7 +198,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <spacer name="spacer10">
+         <spacer name="indentShowQuickButtonsSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -239,8 +207,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
