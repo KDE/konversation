@@ -154,7 +154,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <spacer name="spacer9_2">
+         <spacer name="indentAutoUserhostSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -163,8 +163,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -184,7 +184,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <spacer name="spacer9">
+         <spacer name="indentShowRealNamesSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -193,8 +193,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
@@ -214,7 +214,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <spacer name="spacer10">
+         <spacer name="indentShowQuickButtonsSpacer">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -223,8 +223,8 @@ the Free Software Foundation; either version 2 of the License, or
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>16</width>
-            <height>20</height>
+            <width>20</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
