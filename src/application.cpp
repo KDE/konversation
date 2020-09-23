@@ -42,7 +42,8 @@
 #include <QDesktopServices>
 #include <QCommandLineParser>
 
-#include <KRun>
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 #include <KConfig>
 #include <KShell>
 #include <KMacroExpander>
@@ -1266,31 +1267,32 @@ void Application::doInlineAutoreplace(KTextEdit* textEdit)
 
 void Application::openUrl(const QString& url)
 {
-    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")) || url.startsWith(QLatin1String("amarok:")))
-    {
-        if (url.startsWith(QLatin1String("irc://")) || url.startsWith(QLatin1String("ircs://")))
+    if (!Preferences::self()->useCustomBrowser()
+        || url.startsWith(QLatin1String("mailto:"))
+        || url.startsWith(QLatin1String("amarok:"))) {
+        if (url.startsWith(QLatin1String("irc://")) || url.startsWith(QLatin1String("ircs://"))) {
             Application::instance()->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
-        else if (url.startsWith(QLatin1String("mailto:")))
-            QDesktopServices::openUrl(QUrl(url));
-        else
-#ifndef Q_OS_WIN
-            new KRun(QUrl(url), Application::instance()->getMainWindow());
-#else
-            QDesktopServices::openUrl(QUrl::fromUserInput(url));
-#endif
-    }
-    else
-    {
-        QHash<QChar,QString> map;
-        map.insert(QLatin1Char('u'), url);
-        const QString cmd = KMacroExpander::expandMacrosShellQuote(Preferences::webBrowserCmd(), map);
-        const QStringList args = KShell::splitArgs(cmd);
-
-        if (!args.isEmpty())
-        {
-            KProcess::startDetached(args);
             return;
         }
+
+#ifdef Q_OS_WIN
+        QDesktopServices::openUrl(QUrl::fromUserInput(url));
+#else
+        auto *job = new KIO::OpenUrlJob(QUrl(url));
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
+        job->start();
+#endif
+        return;
+    }
+
+    // Use custom browser
+    QHash<QChar,QString> map;
+    map.insert(QLatin1Char('u'), url);
+    const QString cmd = KMacroExpander::expandMacrosShellQuote(Preferences::webBrowserCmd(), map);
+    const QStringList args = KShell::splitArgs(cmd);
+
+    if (!args.isEmpty()) {
+        KProcess::startDetached(args);
     }
 }
 

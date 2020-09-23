@@ -22,7 +22,6 @@
 #include <QHeaderView>
 #include <QTextDocument>
 
-#include <KRun>
 #include <QFileDialog>
 #include <QMenu>
 #include <KToolBar>

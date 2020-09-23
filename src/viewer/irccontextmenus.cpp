@@ -34,9 +34,10 @@
 #include <KBookmarkManager>
 #include <QFileDialog>
 #include <KIO/CopyJob>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/JobUiDelegate>
 #include <QMenu>
 #include <KMessageBox>
-#include <KRun>
 #include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
@@ -766,7 +767,11 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         }
         case LinkOpenWith:
         {
-            KRun::displayOpenWithDialog(QList<QUrl>() << QUrl(link), Application::instance()->getMainWindow());
+            // ApplicationLauncherJob ctor without args will invoke the open-with dialog
+            auto *job = new KIO::ApplicationLauncherJob();
+            job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
+            job->setUrls({ QUrl(link) });
+            job->start();
 
             break;
         }

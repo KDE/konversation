@@ -45,7 +45,8 @@
 
 #include <QInputDialog>
 #include <KMessageBox>
-#include <KRun>
+#include <KIO/OpenUrlJob>
+#include <KIO/JobUiDelegate>
 #include <QUrl>
 #include <KXMLGUIFactory>
 #include <KActionCollection>
@@ -2551,20 +2552,23 @@ void ViewContainer::openLogFile()
 
 void ViewContainer::openLogFile(const QString& caption, const QString& file)
 {
-    if (!file.isEmpty())
+    if (file.isEmpty())
     {
-        if(Preferences::self()->useExternalLogViewer())
-        {
-            new KRun(QUrl::fromLocalFile(file), m_window, false);
-        }
-        else
-        {
-            LogfileReader* logReader = new LogfileReader(m_tabWidget, file, caption);
-            addView(logReader, logReader->getName());
-
-            logReader->setServer(nullptr);
-        }
+        return;
     }
+
+    if(Preferences::self()->useExternalLogViewer())
+    {
+        auto *job = new KIO::OpenUrlJob(QUrl::fromLocalFile(file), QStringLiteral("text/plain"));
+        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, m_window));
+        job->start();
+        return;
+    }
+
+    LogfileReader* logReader = new LogfileReader(m_tabWidget, file, caption);
+    addView(logReader, logReader->getName());
+
+    logReader->setServer(nullptr);
 }
 
 void ViewContainer::addKonsolePanel()

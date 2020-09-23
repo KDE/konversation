@@ -19,9 +19,10 @@
 #include "notificationhandler.h"
 #include "preferences.h"
 
-#include <KRun>
-
 #include <config-konversation.h>
+
+#include <KIO/JobUiDelegate>
+#include <KIO/OpenUrlJob>
 
 #include <QFileInfo>
 
@@ -104,7 +105,10 @@ namespace Konversation
         {
             if (getType() == Transfer::Send || getStatus() == Transfer::Done)
             {
-                new KRun(getFileURL(), nullptr);
+                auto *job = new KIO::OpenUrlJob(getFileURL());
+                job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
+                job->setRunExecutables(false);
+                job->start();
             }
         }
 

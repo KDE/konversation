@@ -26,9 +26,9 @@
 
 #include <QSplitter>
 
+#include <KIO/OpenFileManagerWindowJob>
 #include <KMessageBox>
 #include <QMenu>
-#include <KRun>
 #include <KAuthorized>
 #include <KToolBar>
 #include <KSharedConfig>
@@ -509,14 +509,10 @@ namespace Konversation
 
         void TransferPanel::openLocation(Transfer *transfer)
         {
-            QString urlString = transfer->getFileURL().toString(QUrl::PreferLocalFile|QUrl::RemoveFilename|QUrl::StripTrailingSlash);
-            if (!urlString.isEmpty())
-            {
-                QUrl url(QUrl::fromLocalFile(urlString));
-                new KRun(url, nullptr, true);
-            }
+            auto *job = new KIO::OpenFileManagerWindowJob(nullptr);
+            job->setHighlightUrls({ transfer->getFileURL() });
+            job->start();
         }
-
     }
 }
 
