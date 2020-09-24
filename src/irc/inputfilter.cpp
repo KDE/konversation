@@ -285,7 +285,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString(QStringLiteral("Konversation %1 (C) 2002-2018 by the Konversation team"))
+                        reply = QString(QStringLiteral("Konversation %1 Copyright 2002-2020 by the Konversation team"))
                             .arg(QStringLiteral(KONVI_VERSION));
 
                     }

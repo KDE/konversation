@@ -579,6 +579,7 @@
     <!-- Note: KDE website infrastructure uses the appstream file from the master branch
                to determine the last release, so this entry must always reflect the
                last actual release -->
+    <release version="1.7.6" date="2020-09-28"/>
     <release version="1.7.5" date="2018-06-27">
       <artifacts>
         <artifact type="source">
