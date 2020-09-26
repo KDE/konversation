@@ -140,6 +140,7 @@ set(viewer_SRCS
     viewer/editnotifydialog.cpp
     viewer/emoticons.cpp
     viewer/images.cpp
+    viewer/nickiconset.cpp
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
     viewer/irccontextmenus.cpp

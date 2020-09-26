@@ -23,6 +23,7 @@
 #include <QMimeData>
 #include <QToolTip>
 #include <QStyledItemDelegate>
+#include <QBuffer>
 
 #include <KUrlMimeData>
 
@@ -94,7 +95,7 @@ int NickListView::getMinimumRowHeight()
 void NickListView::updateMinimumRowHeight()
 {
     Images* images = Application::instance()->images();
-    s_minimumRowHeight = images->getNickIcon(Images::Normal, false).height() + 2;
+    s_minimumRowHeight = images->getNickIconSize() + 2;
 }
 
 bool NickListView::event(QEvent *event)
@@ -129,6 +130,20 @@ void NickListView::executeDelayedItemsLayout()
     QTreeWidget::executeDelayedItemsLayout();
 }
 
+static
+QString iconImgTag(const QIcon& icon)
+{
+    const QPixmap pixmap = icon.pixmap(16, 16);
+    QByteArray pngBytes;
+    QBuffer buffer(&pngBytes);
+    buffer.open(QIODevice::WriteOnly);
+    pixmap.save(&buffer, "PNG", 100);
+
+    const QString imgTag = QStringLiteral("<img width='16' height='16' src='data:image/png;base64, %1'/>")
+           .arg(QString::fromLatin1(pngBytes.toBase64()));
+    return imgTag;
+}
+
 void NickListView::setWhatsThis()
 {
     Images* images = Application::instance()->images();
@@ -137,24 +152,24 @@ void NickListView::setWhatsThis()
     {
         QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<br /></p>"
             "<table>"
-            "<tr><th><img src=\"%1\"/></th><td>This person has administrator privileges.</td></tr>"
-            "<tr><th><img src=\"%2\"/></th><td>This person is a channel owner.</td></tr>"
-            "<tr><th><img src=\"%3\"/></th><td>This person is a channel operator.</td></tr>"
-            "<tr><th><img src=\"%4\"/></th><td>This person is a channel half-operator.</td></tr>"
-            "<tr><th><img src=\"%5\"/></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
-            "<tr><th><img src=\"%6\"/></th><td>This person does not have any special privileges.</td></tr>"
-            "<tr><th><img src=\"%7\"/></th><td>This, overlaid on any of the above, indicates that this person is currently away.</td></tr>"
+            "<tr><th>%1</th><td>This person has administrator privileges.</td></tr>"
+            "<tr><th>%2</th><td>This person is a channel owner.</td></tr>"
+            "<tr><th>%3</th><td>This person is a channel operator.</td></tr>"
+            "<tr><th>%4</th><td>This person is a channel half-operator.</td></tr>"
+            "<tr><th>%5</th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
+            "<tr><th>%6</th><td>This person does not have any special privileges.</td></tr>"
+            "<tr><th>%7</th><td>This, overlaid on any of the above, indicates that this person is currently away.</td></tr>"
             "</table><p>"
             "The meaning of admin, owner and halfop varies between different IRC servers.</p><p>"
             "Hovering over any nick shows their current status. See the Konversation Handbook for more information."
             "</p></qt>",
-            images->getNickIconPath(Images::Admin),
-            images->getNickIconPath(Images::Owner),
-            images->getNickIconPath(Images::Op),
-            images->getNickIconPath(Images::HalfOp),
-            images->getNickIconPath(Images::Voice),
-            images->getNickIconPath(Images::Normal),
-            images->getNickIconAwayPath()));
+            iconImgTag(images->getNickIcon(Images::Admin)),
+            iconImgTag(images->getNickIcon(Images::Owner)),
+            iconImgTag(images->getNickIcon(Images::Op)),
+            iconImgTag(images->getNickIcon(Images::HalfOp)),
+            iconImgTag(images->getNickIcon(Images::Voice)),
+            iconImgTag(images->getNickIcon(Images::Normal)),
+            iconImgTag(images->getNickIconAwayOverlay())));
     }
 
 }

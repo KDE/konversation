@@ -249,21 +249,6 @@ namespace Konversation
         return ret;
     }
 
-    QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
-    {
-        if (over.isNull() && under.isNull())
-                return QPixmap();
-        else if (under.isNull())
-            return QPixmap(over);
-        else if (over.isNull())
-            return QPixmap(under);
-
-        QPixmap result(under);
-        QPainter painter(&result);
-        painter.drawPixmap(QPoint(0,0), over);
-        return result;
-    }
-
     uint colorForNick(const QString& nickname)
     {
         int nickvalue = 0;

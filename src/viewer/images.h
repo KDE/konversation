@@ -13,10 +13,12 @@
 #ifndef IMAGES_H
 #define IMAGES_H
 
+// Qt
 #include <QIcon>
 #include <QPixmap>
 #include <QObject>
 
+class NickIconSet;
 
 /**
  * Do not create an instance of this class yourself.
@@ -54,9 +56,9 @@ class Images : public QObject
         QIcon getNickLed();
         QIcon getHighlightsLed();
 
-        QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
-        QString getNickIconPath(NickPrivilege privilege) const;
-        QString getNickIconAwayPath() const;
+        QIcon getNickIcon(NickPrivilege privilege,bool isAway=false) const;
+        QIcon getNickIconAwayOverlay() const;
+        int getNickIconSize() const;
         void initializeNickIcons();
 
     protected:
@@ -81,9 +83,7 @@ class Images : public QObject
         QColor m_eventsColor;
         QColor m_nickColor;
         QColor m_highlightsColor;
-                                                  // [privilege][away]
-        QPixmap nickIcons[_NickPrivilege_COUNT][2];
-        QString nickIconPaths[_NickPrivilege_COUNT];
-        QString nickIconAwayPath;
+
+        QScopedPointer<NickIconSet> nickIconSet;
 };
 #endif
