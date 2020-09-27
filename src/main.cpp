@@ -27,6 +27,8 @@
 
 int main(int argc, char* argv[])
 {
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+
     Application app(argc, argv);
 
     // Migrate pre-existing (4.x) configuration
@@ -98,7 +100,6 @@ int main(int argc, char* argv[])
     KCrash::initialize();
 
     app.setWindowIcon(QIcon::fromTheme(QLatin1String("konversation"), app.windowIcon()));
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
 
