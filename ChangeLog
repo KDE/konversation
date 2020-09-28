@@ -1,3 +1,13 @@
+Changes from Konversation 1.7.5 to 1.7.6:
+Konversation v1.7.6 is a small translation update & bugfix release fixing
+the build with Qt >= 5.13 and polishing the configuration dialog a bit.
+
+* Fixed loading of nick icon theme to deal with multiple copies
+* Fixed configuration dialogs to have consistent indentation of
+  subordinate options as well as spacings between labels & fields
+* Fixed building against Qt 5.15.
+* Fixed building against Qt 5.13.
+
 Changes from Konversation 1.7.4 to 1.7.5:
 Konversation v1.7.5 is a small bugfix release fixing the build with Qt
 5.11.

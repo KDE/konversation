@@ -31,6 +31,8 @@
 
 int main(int argc, char* argv[])
 {
+    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+
     Application app(argc, argv);
 
     // Migrate pre-existing (4.x) configuration
@@ -52,7 +54,7 @@ int main(int argc, char* argv[])
         KONVI_VERSION " #" STRHACK(COMMIT),
         i18n("A user-friendly IRC client"),
         KAboutLicense::GPL,
-        i18n("(C) 2002-2018 by the Konversation team"),
+        i18n("Copyright 2002-%1 by the Konversation team", QStringLiteral("2020")),
         i18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n\n"
         "Meet friends on the net, make new acquaintances and lose yourself in talk about your favorite subject."),
         QStringLiteral("https://konversation.kde.org/"));
@@ -102,7 +104,6 @@ int main(int argc, char* argv[])
     KCrash::initialize();
 
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("konversation"), QApplication::windowIcon()));
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
     QCommandLineParser cmdLineParser;
 
