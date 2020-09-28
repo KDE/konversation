@@ -60,17 +60,7 @@ void Nick::refresh()
 
         if (away)
         {
-            // Brush of the first column will be used for all columns
-            setForeground(NicknameColumn,
-                qApp->palette(treeWidget()).brush(QPalette::Disabled, QPalette::Text));
-
             flags = 1;
-        }
-        else
-        {
-            // Brush of the first column will be used for all columns
-            setForeground(NicknameColumn,
-                treeWidget()->palette().brush(QPalette::Normal, QPalette::Text));
         }
 
         Images* images = Application::instance()->images();
@@ -240,9 +230,10 @@ bool Nick::operator<(const QTreeWidgetItem& other) const
 
 QVariant Nick::data(int column, int role) const
 {
-    if (role == Qt::ForegroundRole && column > 0) {
-        // Use brush of the first column for all columns
-        return data(NicknameColumn, role);
+    if (role == Qt::ForegroundRole) {
+        NickInfoPtr nickInfo = getChannelNick()->getNickInfo();
+        const bool isAway = (nickInfo && nickInfo->isAway());
+        return treeWidget()->palette().brush(isAway ? QPalette::Disabled : QPalette::Normal, QPalette::Text);
     }
     return QTreeWidgetItem::data(column, role);
 }
