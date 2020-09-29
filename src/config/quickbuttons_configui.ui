@@ -195,9 +195,6 @@
   <tabstop>actionInput</tabstop>
   <tabstop>kcfg_ShowQuickButtonsInContextMenu</tabstop>
  </tabstops>
- <includes>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

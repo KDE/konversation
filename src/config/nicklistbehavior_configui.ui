@@ -121,9 +121,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_SortByStatus</tabstop>
   <tabstop>sortOrder</tabstop>
  </tabstops>
- <includes>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

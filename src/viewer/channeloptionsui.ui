@@ -391,12 +391,6 @@ the Free Software Foundation; either version 2 of the License, or
    <header>topichistoryview.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">ktextedit.h</include>
-  <include location="local">klineedit.h</include>
-  <include location="local">topicedit.h</include>
-  <include location="local">topichistoryview.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

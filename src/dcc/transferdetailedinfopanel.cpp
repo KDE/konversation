@@ -23,6 +23,7 @@
 #include <QTimer>
 
 #include <KFormat>
+#include <KLineEdit>
 
 namespace Konversation
 {

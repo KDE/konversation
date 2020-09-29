@@ -158,9 +158,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
   <tabstop>kcfg_NotifyDoubleClickAction</tabstop>
   <tabstop>kcfg_NotifyDelay</tabstop>
  </tabstops>
- <includes>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>
