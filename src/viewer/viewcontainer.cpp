@@ -1634,7 +1634,7 @@ void ViewContainer::unclutterTabs()
         return;
     }
 
-    emit beginResetModel();
+    beginResetModel();
 
     m_tabWidget->blockSignals(true);
 
@@ -1668,7 +1668,7 @@ void ViewContainer::unclutterTabs()
 
     m_tabWidget->blockSignals(false);
 
-    emit endResetModel();
+    endResetModel();
 
     viewSwitched(m_tabWidget->currentIndex());
 }
