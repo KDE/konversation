@@ -24,7 +24,7 @@ class HighlightTreeWidget : public QTreeWidget
     protected:
         void dropEvent(QDropEvent *event) override;
 
-    signals:
+    Q_SIGNALS:
         void itemDropped();
 };
 
