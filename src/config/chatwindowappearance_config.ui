@@ -294,7 +294,7 @@ the Free Software Foundation; either version 2 of the License, or
  <customwidgets>
   <customwidget>
    <class>KUrlRequester</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header>kurlrequester.h</header>
    <container>1</container>
   </customwidget>
@@ -321,10 +321,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_ShowBackgroundImage</tabstop>
   <tabstop>kcfg_BackgroundImage</tabstop>
  </tabstops>
- <includes>
-  <include location="local">kurlrequester.h</include>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

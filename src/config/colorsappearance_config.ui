@@ -1306,43 +1306,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_IrcColorCode14</tabstop>
   <tabstop>kcfg_IrcColorCode15</tabstop>
  </tabstops>
- <includes>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

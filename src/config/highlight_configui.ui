@@ -444,11 +444,6 @@
   <tabstop>kcfg_HighlightOwnLines</tabstop>
   <tabstop>kcfg_HighlightOwnLinesColor</tabstop>
  </tabstops>
- <includes>
-  <include location="local">klineedit.h</include>
-  <include location="local">kcolorbutton.h</include>
-  <include location="local">kurlrequester.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

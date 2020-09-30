@@ -137,9 +137,6 @@
   <tabstop>newButton</tabstop>
   <tabstop>removeButton</tabstop>
  </tabstops>
- <includes>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

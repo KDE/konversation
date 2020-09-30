@@ -318,12 +318,6 @@
   <tabstop>kcfg_OSDScreen</tabstop>
   <tabstop>kcfg_OSDUseCustomColors</tabstop>
  </tabstops>
- <includes>
-  <include location="local" >kcombobox.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kcolorbutton.h</include>
-  <include location="local" >kfontrequester.h</include>
- </includes>
  <resources/>
  <connections>
   <connection>

@@ -152,10 +152,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>channelCombo</tabstop>
   <tabstop>passwordEdit</tabstop>
  </tabstops>
- <includes>
-  <include location="local">kcombobox.h</include>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

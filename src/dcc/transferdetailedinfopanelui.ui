@@ -175,7 +175,7 @@
  <customwidgets>
   <customwidget>
    <class>KUrlRequester</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header>kurlrequester.h</header>
   </customwidget>
   <customwidget>
@@ -184,11 +184,6 @@
    <header>ksqueezedtextlabel.h</header>
   </customwidget>
  </customwidgets>
- <includes>
-  <include location="local">kurlrequester.h</include>
-  <include location="local">ksqueezedtextlabel.h</include>
-  <include location="local">klineedit.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
