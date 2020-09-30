@@ -300,7 +300,7 @@ void TopicHistoryView::updateSelectedItemWidgets()
     const QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
 
     if (!selectedIndexes.isEmpty())
-        m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
+        emit m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
 }
 
 void TopicHistoryView::updateGeometries()

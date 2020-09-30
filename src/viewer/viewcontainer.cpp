@@ -1702,8 +1702,8 @@ void ViewContainer::viewSwitched(int newIndex)
     // display this server's lag time
     if (m_frontServer)
     {
-        updateStatusBarSSLLabel(m_frontServer);
-        updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());
+        emit updateStatusBarSSLLabel(m_frontServer);
+        emit updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());
     }
 
     emit clearStatusBarTempText();
