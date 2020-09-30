@@ -1854,7 +1854,7 @@ namespace Konversation
             << ", Qt " << QString::fromLatin1(qVersion())
             << ", KDE Frameworks " << QStringLiteral(KXMLGUI_VERSION_STRING);
             ;
-        if (!qgetenv("KDE_FULL_SESSION").isEmpty() && !qgetenv("KDE_SESSION_VERSION").isEmpty())
+        if (!qEnvironmentVariableIsEmpty("KDE_FULL_SESSION") && !qEnvironmentVariableIsEmpty("KDE_SESSION_VERSION"))
             myOut << ", Plasma " << QString::fromLatin1(qgetenv("KDE_SESSION_VERSION"));
         else
             myOut << ", no Plasma";
