@@ -39,7 +39,7 @@ class NicksOnlineItem : public QTreeWidgetItem
         * @param item              Pointer to the QTreeWidgetItem to compare with.
         * @return                  -1 if this item's value is smaller than i, 0 if they are equal, 1 if it's greater
         */
-        bool operator<(const QTreeWidgetItem &item) const Q_DECL_OVERRIDE;
+        bool operator<(const QTreeWidgetItem &item) const override;
         /**
         * Returns the type of the item.
         * @return                  One of the enum NickListViewColumn

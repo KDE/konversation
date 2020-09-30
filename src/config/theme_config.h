@@ -29,11 +29,11 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
         explicit Theme_Config(QWidget* parent, const char* name=NULL);
         ~Theme_Config() override;
 
-        void restorePageToDefaults() Q_DECL_OVERRIDE;
-        void saveSettings() Q_DECL_OVERRIDE;
-        void loadSettings() Q_DECL_OVERRIDE;
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        bool hasChanged() Q_DECL_OVERRIDE;
+        bool hasChanged() override;
 
     Q_SIGNALS:
         void modified();

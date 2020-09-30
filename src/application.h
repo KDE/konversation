@@ -174,7 +174,7 @@ class Application : public QApplication
         void closeWallet();
 
     protected:
-        bool event(QEvent* event) Q_DECL_OVERRIDE;
+        bool event(QEvent* event) override;
 
     private:
         void implementRestart();

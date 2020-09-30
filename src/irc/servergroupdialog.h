@@ -44,7 +44,7 @@ namespace Konversation
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
         public Q_SLOTS:
-            void accept() Q_DECL_OVERRIDE;
+            void accept() override;
 
         protected Q_SLOTS:
             void addServer();

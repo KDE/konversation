@@ -30,7 +30,7 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
         void dccUPnPChanged(int state);
 
     protected:
-        void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+        void showEvent(QShowEvent *event) override;
 };
 
 #endif

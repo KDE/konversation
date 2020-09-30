@@ -47,7 +47,7 @@ namespace Konversation
             int rowCount() const;
 
             QList<QModelIndex> rowIndexes(int column = 0) const;
-            QList<QModelIndex> selectedIndexes() const Q_DECL_OVERRIDE;
+            QList<QModelIndex> selectedIndexes() const override;
             QList<QModelIndex> selectedRows(int column = 0) const;
             QModelIndex index(int row, int column) const;
             QModelIndex index(Transfer *transfer) const;
@@ -83,9 +83,9 @@ namespace Konversation
 
         protected:
             void drawRow(QPainter *painter, const QStyleOptionViewItem &option,
-                                 const QModelIndex &index) const Q_DECL_OVERRIDE;
-            void scrollContentsBy(int dx, int dy) Q_DECL_OVERRIDE;
-            void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+                                 const QModelIndex &index) const override;
+            void scrollContentsBy(int dx, int dy) override;
+            void keyPressEvent(QKeyEvent *event) override;
 
         protected Q_SLOTS:
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,

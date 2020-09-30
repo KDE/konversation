@@ -30,51 +30,51 @@ class StatusPanel : public ChatWindow
         explicit StatusPanel(QWidget* parent);
         ~StatusPanel() override;
 
-        void cycle() Q_DECL_OVERRIDE;
+        void cycle() override;
 
-        void setName(const QString& newName) Q_DECL_OVERRIDE;
+        void setName(const QString& newName) override;
 
-        bool closeYourself(bool askForConfirmation=true) Q_DECL_OVERRIDE;
-        bool canBeFrontView() Q_DECL_OVERRIDE;
-        bool searchView() Q_DECL_OVERRIDE;
+        bool closeYourself(bool askForConfirmation=true) override;
+        bool canBeFrontView() override;
+        bool searchView() override;
 
-        void setChannelEncoding(const QString& encoding) Q_DECL_OVERRIDE;
-        QString getChannelEncoding() Q_DECL_OVERRIDE;
-        QString getChannelEncodingDefaultDesc() Q_DECL_OVERRIDE;
-        void emitUpdateInfo() Q_DECL_OVERRIDE;
+        void setChannelEncoding(const QString& encoding) override;
+        QString getChannelEncoding() override;
+        QString getChannelEncodingDefaultDesc() override;
+        void emitUpdateInfo() override;
 
-        void setServer(Server* newServer) Q_DECL_OVERRIDE;
+        void setServer(Server* newServer) override;
 
-        void setNotificationsEnabled(bool enable) Q_DECL_OVERRIDE;
+        void setNotificationsEnabled(bool enable) override;
 
     Q_SIGNALS:
         void sendFile();
 
     public Q_SLOTS:
         void setNickname(const QString& newNickname);
-        void indicateAway(bool show) Q_DECL_OVERRIDE;
+        void indicateAway(bool show) override;
         void updateAppearance();
         void updateName();
 
     protected Q_SLOTS:
         void sendFileMenu();
         void statusTextEntered();
-        void sendText(const QString& line) Q_DECL_OVERRIDE;
+        void sendText(const QString& line) override;
         // connected to IRCInput::textPasted() - used for large/multiline pastes
         void textPasted(const QString& text);
         void changeNickname(const QString& newNickname);
         void nicknameComboboxChanged();
         //Used to disable functions when not connected
-        void serverOnline(bool online) Q_DECL_OVERRIDE;
+        void serverOnline(bool online) override;
 
     protected:
         /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() Q_DECL_OVERRIDE;
+        void childAdjustFocus() override;
 
         bool awayChanged;
         bool awayState;
 
-        void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
+        void showEvent(QShowEvent* event) override;
 
         KComboBox* nicknameCombobox;
         AwayLabel* awayLabel;

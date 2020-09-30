@@ -30,8 +30,8 @@ namespace Konversation
             explicit TopicLabel(QWidget *parent = nullptr, const char *name = 0);
             ~TopicLabel();
 
-            QSize minimumSizeHint() const Q_DECL_OVERRIDE;
-            QSize sizeHint() const Q_DECL_OVERRIDE;
+            QSize minimumSizeHint() const override;
+            QSize sizeHint() const override;
             void setServer(Server* server);
             void setChannelName(const QString& channel);
 
@@ -49,12 +49,12 @@ namespace Konversation
             void updateSqueezedText();
             QString rPixelSqueeze(const QString& text, int maxPixels);
             int textWidth(const QString& text);
-            void leaveEvent (QEvent*) Q_DECL_OVERRIDE;
-            void contextMenuEvent(QContextMenuEvent* ev) Q_DECL_OVERRIDE;
-            void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
-            void mouseReleaseEvent(QMouseEvent* ev) Q_DECL_OVERRIDE;
-            void mousePressEvent(QMouseEvent* ev) Q_DECL_OVERRIDE;
-            void mouseMoveEvent(QMouseEvent* ev) Q_DECL_OVERRIDE;
+            void leaveEvent (QEvent*) override;
+            void contextMenuEvent(QContextMenuEvent* ev) override;
+            void resizeEvent(QResizeEvent*) override;
+            void mouseReleaseEvent(QMouseEvent* ev) override;
+            void mousePressEvent(QMouseEvent* ev) override;
+            void mouseMoveEvent(QMouseEvent* ev) override;
 
         protected Q_SLOTS:
             void highlightedSlot(const QString&);

@@ -27,7 +27,7 @@ class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
         void toggleCheckBoxes(int activated);
 
     protected:
-        void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+        void showEvent(QShowEvent *event) override;
 };
 
 #endif

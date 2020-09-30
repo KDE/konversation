@@ -37,13 +37,13 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         ~KonviBookmarkHandler() override;
 
         // KBookmarkOwner interface:
-        void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km) Q_DECL_OVERRIDE;
-        QUrl currentUrl() const Q_DECL_OVERRIDE;
-        QString currentTitle() const Q_DECL_OVERRIDE;
-        bool enableOption(BookmarkOption option) const Q_DECL_OVERRIDE;
-        bool supportsTabs() const Q_DECL_OVERRIDE;
-        QList<KBookmarkOwner::FutureBookmark> currentBookmarkList() const Q_DECL_OVERRIDE;
-        void openFolderinTabs(const KBookmarkGroup &group) Q_DECL_OVERRIDE;
+        void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km) override;
+        QUrl currentUrl() const override;
+        QString currentTitle() const override;
+        bool enableOption(BookmarkOption option) const override;
+        bool supportsTabs() const override;
+        QList<KBookmarkOwner::FutureBookmark> currentBookmarkList() const override;
+        void openFolderinTabs(const KBookmarkGroup &group) override;
 
     private:
         MainWindow* m_mainWindow;

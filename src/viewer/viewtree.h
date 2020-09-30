@@ -27,12 +27,12 @@ class ViewTreeDelegate : public QStyledItemDelegate
 
     public:
         explicit ViewTreeDelegate(QObject *parent = nullptr);
-        ~ViewTreeDelegate() Q_DECL_OVERRIDE;
+        ~ViewTreeDelegate() override;
 
-        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         QSize preferredSizeHint(const QModelIndex& index) const;
 
-        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
     private:
         ViewTree* m_view;
@@ -44,9 +44,9 @@ class ViewTree : public QTreeView
 
     public:
         explicit ViewTree(QWidget *parent);
-        ~ViewTree() Q_DECL_OVERRIDE;
+        ~ViewTree() override;
 
-        void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
+        void setModel(QAbstractItemModel *model) override;
 
         bool dropIndicatorOnItem() const;
 
@@ -61,21 +61,21 @@ class ViewTree : public QTreeView
         void showViewContextMenu(QWidget* widget, const QPoint& point) const;
 
     protected:
-        bool event(QEvent* event) Q_DECL_OVERRIDE;
-        void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
-        void drawRow(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
-        void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
-        void mousePressEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
-        void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
-        void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-        void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
-        void dragMoveEvent(QDragMoveEvent *event) Q_DECL_OVERRIDE;
-        void contextMenuEvent(QContextMenuEvent* event) Q_DECL_OVERRIDE;
-        void wheelEvent(QWheelEvent* event) Q_DECL_OVERRIDE;
-        void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+        bool event(QEvent* event) override;
+        void paintEvent(QPaintEvent* event) override;
+        void drawRow(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void resizeEvent(QResizeEvent* event) override;
+        void mousePressEvent(QMouseEvent* event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
+        void mouseMoveEvent(QMouseEvent *event) override;
+        void dragEnterEvent(QDragEnterEvent *event) override;
+        void dragMoveEvent(QDragMoveEvent *event) override;
+        void contextMenuEvent(QContextMenuEvent* event) override;
+        void wheelEvent(QWheelEvent* event) override;
+        void keyPressEvent(QKeyEvent* event) override;
 
     private Q_SLOTS:
-        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected) Q_DECL_OVERRIDE;
+        void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected) override;
 
     private:
         QPointer<ChatWindow> m_pressedView;

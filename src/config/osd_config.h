@@ -28,13 +28,13 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
 
     public:
         explicit OSD_Config( QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {} );
-        ~OSD_Config() Q_DECL_OVERRIDE;
+        ~OSD_Config() override;
 
-        void restorePageToDefaults() Q_DECL_OVERRIDE;
-        void saveSettings() Q_DECL_OVERRIDE;
-        void loadSettings() Q_DECL_OVERRIDE;
+        void restorePageToDefaults() override;
+        void saveSettings() override;
+        void loadSettings() override;
 
-        bool hasChanged() Q_DECL_OVERRIDE;  // implement the interface, will not be used here, though
+        bool hasChanged() override;  // implement the interface, will not be used here, though
 
     protected Q_SLOTS:
         void slotOSDEnabledChanged(bool on);
@@ -47,8 +47,8 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
         void slotPositionChanged();
 
     protected:
-        void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
-        void hideEvent(QHideEvent* event) Q_DECL_OVERRIDE;
+        void showEvent(QShowEvent* event) override;
+        void hideEvent(QHideEvent* event) override;
 
     private:
         OSDPreviewWidget* m_pOSDPreview;

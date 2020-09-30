@@ -34,9 +34,9 @@ class LogfileReader : public ChatWindow
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself() { closeLog(); return true; }
-        bool searchView() Q_DECL_OVERRIDE;
+        bool searchView() override;
 
-        bool eventFilter(QObject* watched, QEvent* e) Q_DECL_OVERRIDE;
+        bool eventFilter(QObject* watched, QEvent* e) override;
 
 
     protected Q_SLOTS:
@@ -53,7 +53,7 @@ class LogfileReader : public ChatWindow
         int spacing();
 
         /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() Q_DECL_OVERRIDE;
+        void childAdjustFocus() override;
 
         KToolBar* toolBar;
         QSpinBox* sizeSpin;

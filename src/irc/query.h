@@ -42,7 +42,7 @@ class Query : public ChatWindow
 
     public:
         explicit Query(QWidget* parent, const QString& _name);
-        void setServer(Server* newServer) Q_DECL_OVERRIDE;
+        void setServer(Server* newServer) override;
 
         ~Query() override;
 
@@ -55,14 +55,14 @@ class Query : public ChatWindow
          *  This should be fixed maybe?  I don't know.
          */
         NickInfoPtr getNickInfo();
-        bool closeYourself(bool askForConfirmation=true) Q_DECL_OVERRIDE;
-        bool canBeFrontView() Q_DECL_OVERRIDE;
-        bool searchView() Q_DECL_OVERRIDE;
+        bool closeYourself(bool askForConfirmation=true) override;
+        bool canBeFrontView() override;
+        bool searchView() override;
 
-        void setChannelEncoding(const QString& encoding) Q_DECL_OVERRIDE;
-        QString getChannelEncoding() Q_DECL_OVERRIDE;
-        QString getChannelEncodingDefaultDesc() Q_DECL_OVERRIDE;
-        void emitUpdateInfo() Q_DECL_OVERRIDE;
+        void setChannelEncoding(const QString& encoding) override;
+        QString getChannelEncoding() override;
+        QString getChannelEncodingDefaultDesc() override;
+        void emitUpdateInfo() override;
 
         /** call this when you see a nick quit from the server.
          *  @param reason The quit reason given by that user.
@@ -78,8 +78,8 @@ class Query : public ChatWindow
         void updateQueryChrome(ChatWindow*, const QString&);
 
     public Q_SLOTS:
-        void sendText(const QString& text) Q_DECL_OVERRIDE;
-        void indicateAway(bool show) Q_DECL_OVERRIDE;
+        void sendText(const QString& text) override;
+        void indicateAway(bool show) override;
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 
@@ -94,10 +94,10 @@ class Query : public ChatWindow
         void updateNickInfo(Server* server, const NickInfoPtr &nickInfo);
 
     protected:
-        void setName(const QString& newName) Q_DECL_OVERRIDE;
-        void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
+        void setName(const QString& newName) override;
+        void showEvent(QShowEvent* event) override;
         /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() Q_DECL_OVERRIDE;
+        void childAdjustFocus() override;
 
     private:
         bool awayChanged;

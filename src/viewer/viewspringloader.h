@@ -36,7 +36,7 @@ class ViewSpringLoader : public QObject
 
         void addWidget(QWidget* widget);
 
-        bool eventFilter(QObject* watched, QEvent* event) Q_DECL_OVERRIDE;
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
 
     private Q_SLOTS:

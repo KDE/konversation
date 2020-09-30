@@ -41,14 +41,14 @@ class KonviSettingsDialog : public ConfigDialog
         ~KonviSettingsDialog() override;
 
     protected Q_SLOTS:
-        void updateSettings() Q_DECL_OVERRIDE;
-        void updateWidgets() Q_DECL_OVERRIDE;
-        void updateWidgetsDefault() Q_DECL_OVERRIDE;
+        void updateSettings() override;
+        void updateWidgets() override;
+        void updateWidgetsDefault() override;
         void modifiedSlot();
 
     protected:
-        bool hasChanged() Q_DECL_OVERRIDE;
-        bool isDefault() Q_DECL_OVERRIDE;
+        bool hasChanged() override;
+        bool isDefault() override;
 
         Warnings_Config* m_confWarningsWdg;
         Theme_Config* m_confThemeWdg;

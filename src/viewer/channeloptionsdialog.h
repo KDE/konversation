@@ -68,8 +68,8 @@ namespace Konversation
             void updateHistoryFilter();
 
         protected:
-            void showEvent(QShowEvent* event) Q_DECL_OVERRIDE;
-            void hideEvent(QHideEvent* event) Q_DECL_OVERRIDE;
+            void showEvent(QShowEvent* event) override;
+            void hideEvent(QHideEvent* event) override;
 
             bool m_editingTopic;
             bool m_isAnyTypeOfOp;
@@ -87,7 +87,7 @@ namespace Konversation
             explicit BanListViewItem( QTreeWidget *parent );
             BanListViewItem(QTreeWidget *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
 
-            bool operator<(const QTreeWidgetItem &item) const Q_DECL_OVERRIDE;
+            bool operator<(const QTreeWidgetItem &item) const override;
 
         protected:
             QDateTime m_timestamp;

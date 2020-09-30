@@ -70,8 +70,8 @@ class TabWidget : public QTabWidget
         void tabBarMiddleClicked(int index);
 
     protected:
-        void contextMenuEvent(QContextMenuEvent* event) Q_DECL_OVERRIDE;
-        void mouseReleaseEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
+        void contextMenuEvent(QContextMenuEvent* event) override;
+        void mouseReleaseEvent(QMouseEvent* event) override;
 };
 
 class ViewContainer : public QAbstractItemModel
@@ -97,24 +97,24 @@ class ViewContainer : public QAbstractItemModel
 
         void prepareShutdown();
 
-        int rowCount(const QModelIndex & parent = QModelIndex()) const Q_DECL_OVERRIDE;
-        int columnCount(const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+        int rowCount(const QModelIndex & parent = QModelIndex()) const override;
+        int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
-        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const Q_DECL_OVERRIDE;
+        QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
         QModelIndex indexForView(ChatWindow* view) const;
-        QModelIndex parent(const QModelIndex& index) const Q_DECL_OVERRIDE;
+        QModelIndex parent(const QModelIndex& index) const override;
 
-        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-        Qt::DropActions supportedDragActions() const Q_DECL_OVERRIDE;
-        Qt::DropActions supportedDropActions() const Q_DECL_OVERRIDE;
-        Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
-        QStringList mimeTypes() const Q_DECL_OVERRIDE;
-        QMimeData* mimeData(const QModelIndexList &indexes) const Q_DECL_OVERRIDE;
-        bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const Q_DECL_OVERRIDE;
-        bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) Q_DECL_OVERRIDE;
+        Qt::DropActions supportedDragActions() const override;
+        Qt::DropActions supportedDropActions() const override;
+        Qt::ItemFlags flags(const QModelIndex &index) const override;
+        QStringList mimeTypes() const override;
+        QMimeData* mimeData(const QModelIndexList &indexes) const override;
+        bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) const override;
+        bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
 
-        bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) Q_DECL_OVERRIDE;
+        bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork = true);

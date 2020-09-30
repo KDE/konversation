@@ -47,13 +47,13 @@ class TopicEdit : public KTextEdit
         int maximumLength() const;
         void setMaximumLength(int length);
 
-        QSize minimumSizeHint() const Q_DECL_OVERRIDE;
+        QSize minimumSizeHint() const override;
 
-        bool eventFilter(QObject* watched, QEvent* event) Q_DECL_OVERRIDE;
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
 
     protected:
-        void moveEvent(QMoveEvent* event) Q_DECL_OVERRIDE;
+        void moveEvent(QMoveEvent* event) override;
 
 
     private Q_SLOTS:

@@ -25,11 +25,11 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
         explicit NicklistBehavior_Config(QWidget *parent = nullptr, const char *name = 0);
         ~NicklistBehavior_Config();
 
-        void saveSettings() Q_DECL_OVERRIDE;
-        void loadSettings() Q_DECL_OVERRIDE;
-        void restorePageToDefaults() Q_DECL_OVERRIDE;
+        void saveSettings() override;
+        void loadSettings() override;
+        void restorePageToDefaults() override;
 
-        bool hasChanged() Q_DECL_OVERRIDE;
+        bool hasChanged() override;
 
     private:
         void setNickList(const QString &sortingOrder);

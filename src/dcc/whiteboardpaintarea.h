@@ -90,12 +90,12 @@ namespace Konversation
             void colorPicked(const QColor& color);
 
         protected:
-            void paintEvent(QPaintEvent * event) Q_DECL_OVERRIDE;
-            void resizeEvent(QResizeEvent * event) Q_DECL_OVERRIDE;
-            void mousePressEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
-            void mouseReleaseEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
-            void mouseMoveEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
-            void keyPressEvent(QKeyEvent * event) Q_DECL_OVERRIDE;
+            void paintEvent(QPaintEvent * event) override;
+            void resizeEvent(QResizeEvent * event) override;
+            void mousePressEvent(QMouseEvent * event) override;
+            void mouseReleaseEvent(QMouseEvent * event) override;
+            void mouseMoveEvent(QMouseEvent * event) override;
+            void keyPressEvent(QKeyEvent * event) override;
 
         private:
             inline void makeLastPosInvalid();

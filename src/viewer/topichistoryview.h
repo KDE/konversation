@@ -45,13 +45,13 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
         explicit TopicHistorySortfilterProxyModel(QObject* parent = nullptr);
         ~TopicHistorySortfilterProxyModel();
 
-        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-        void setSourceModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+        void setSourceModel(QAbstractItemModel* model) override;
 
 
     protected:
-        bool filterAcceptsColumn ( int source_column, const QModelIndex & source_parent ) const Q_DECL_OVERRIDE;
+        bool filterAcceptsColumn ( int source_column, const QModelIndex & source_parent ) const override;
 
 
     private Q_SLOTS:
@@ -81,16 +81,16 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
         explicit TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent = nullptr);
         ~TopicHistoryItemDelegate();
 
-        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
-        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const Q_DECL_OVERRIDE;
+        void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
-        bool eventFilter(QObject* watched, QEvent* event) Q_DECL_OVERRIDE;
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
 
     protected:
-        QList<QWidget*> createItemWidgets (const QModelIndex& index) const Q_DECL_OVERRIDE;
+        QList<QWidget*> createItemWidgets (const QModelIndex& index) const override;
         void updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option,
-            const QPersistentModelIndex& index) const Q_DECL_OVERRIDE;
+            const QPersistentModelIndex& index) const override;
 
 
     private:
@@ -112,7 +112,7 @@ class TopicHistoryView : public KCategorizedView
         bool textSelectable() const;
         void setTextSelectable(bool selectable);
 
-        void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
+        void setModel(QAbstractItemModel* model) override;
 
 
     Q_SIGNALS:
@@ -120,9 +120,9 @@ class TopicHistoryView : public KCategorizedView
 
 
     protected:
-        void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
-        void contextMenuEvent (QContextMenuEvent* event) Q_DECL_OVERRIDE;
-        void updateGeometries() Q_DECL_OVERRIDE;
+        void resizeEvent(QResizeEvent* event) override;
+        void contextMenuEvent (QContextMenuEvent* event) override;
+        void updateGeometries() override;
 
 
     private Q_SLOTS:

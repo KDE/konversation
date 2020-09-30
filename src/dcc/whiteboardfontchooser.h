@@ -39,7 +39,7 @@ namespace Konversation
                 void fontChanged(const QFont& font);
 
             protected:
-                void closeEvent(QCloseEvent* event) Q_DECL_OVERRIDE;
+                void closeEvent(QCloseEvent* event) override;
 
             protected Q_SLOTS:
                 void currentFontChanged(const QFont& font);

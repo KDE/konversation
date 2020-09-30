@@ -55,9 +55,9 @@ namespace Konversation
             void backgroundColorChanged(const QColor& color);
 
         protected:
-            void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
-            void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
-            void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+            void mouseReleaseEvent(QMouseEvent *e) override;
+            void paintEvent(QPaintEvent *e) override;
+            void resizeEvent(QResizeEvent *e) override;
 
         private:
             inline QRect swapPixmapRect() const;

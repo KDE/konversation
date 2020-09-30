@@ -34,20 +34,20 @@ namespace Konversation
                 ~ChatContainer() override;
 
             // ChatWindow
-                bool closeYourself(bool askForConfirmation=true) Q_DECL_OVERRIDE;
-                bool canBeFrontView() Q_DECL_OVERRIDE;
-                bool searchView() Q_DECL_OVERRIDE;
+                bool closeYourself(bool askForConfirmation=true) override;
+                bool canBeFrontView() override;
+                bool searchView() override;
 
-                void setChannelEncoding(const QString &encoding) Q_DECL_OVERRIDE;
-                QString getChannelEncoding() Q_DECL_OVERRIDE;
-                QString getChannelEncodingDefaultDesc() Q_DECL_OVERRIDE;
-                void emitUpdateInfo() Q_DECL_OVERRIDE;
+                void setChannelEncoding(const QString &encoding) override;
+                QString getChannelEncoding() override;
+                QString getChannelEncodingDefaultDesc() override;
+                void emitUpdateInfo() override;
 
                 QString ownNick() const;
 
             protected:
                 /** Called from ChatWindow adjustFocus */
-                void childAdjustFocus() Q_DECL_OVERRIDE;
+                void childAdjustFocus() override;
 
             public Q_SLOTS:
                 void setPartnerNick(const QString &nick);

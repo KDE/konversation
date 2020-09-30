@@ -25,10 +25,10 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
         explicit Alias_Config(QWidget* parent, const char* name = nullptr);
         ~Alias_Config();
 
-        void saveSettings() Q_DECL_OVERRIDE;
-        void loadSettings() Q_DECL_OVERRIDE;
-        void restorePageToDefaults() Q_DECL_OVERRIDE;
-        bool hasChanged() Q_DECL_OVERRIDE;
+        void saveSettings() override;
+        void loadSettings() override;
+        void restorePageToDefaults() override;
+        bool hasChanged() override;
 
     Q_SIGNALS:
         void modified();

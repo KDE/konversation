@@ -71,10 +71,10 @@ class OSDWidget : public QWidget
         QRect determineMetrics( const int M );
 
         // Reimplemented from QWidget
-        void paintEvent( QPaintEvent* ) Q_DECL_OVERRIDE;
-        void mousePressEvent( QMouseEvent* ) Q_DECL_OVERRIDE;
-        void resizeEvent( QResizeEvent *e ) Q_DECL_OVERRIDE;
-        bool event( QEvent* ) Q_DECL_OVERRIDE;
+        void paintEvent( QPaintEvent* ) override;
+        void mousePressEvent( QMouseEvent* ) override;
+        void resizeEvent( QResizeEvent *e ) override;
+        bool event( QEvent* ) override;
 
         /** distance from screen edge */
         static const int MARGIN = 15;
@@ -124,9 +124,9 @@ Q_SIGNALS:
     void positionChanged();
 
 protected:
-    void mousePressEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
-    void mouseMoveEvent( QMouseEvent * ) Q_DECL_OVERRIDE;
+    void mousePressEvent( QMouseEvent * ) override;
+    void mouseReleaseEvent( QMouseEvent * ) override;
+    void mouseMoveEvent( QMouseEvent * ) override;
 
 private:
     bool   m_dragging;

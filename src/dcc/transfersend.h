@@ -59,9 +59,9 @@ namespace Konversation
                 void reject();
 
             public Q_SLOTS:
-                bool queue() Q_DECL_OVERRIDE;
-                void start() Q_DECL_OVERRIDE;
-                void abort() Q_DECL_OVERRIDE;
+                bool queue() override;
+                void start() override;
+                void abort() override;
 
                 // invoked when the receiver accepts the offer (Reverse DCC)
                 void connectToReceiver(const QString &partnerHost, quint16 partnerPort);
@@ -79,7 +79,7 @@ namespace Konversation
                 void slotLocalCopyReady(KJob *job);
 
             protected:
-                void cleanUp() Q_DECL_OVERRIDE;
+                void cleanUp() override;
 
                 void startConnectionTimer(int secs);
                 void stopConnectionTimer();

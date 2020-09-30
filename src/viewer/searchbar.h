@@ -38,11 +38,11 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         bool fromCursor() const;
 
-        bool eventFilter(QObject* object, QEvent* e) Q_DECL_OVERRIDE;
+        bool eventFilter(QObject* object, QEvent* e) override;
 
     protected:
-        void showEvent(QShowEvent* e) Q_DECL_OVERRIDE;
-        void hideEvent(QHideEvent* e) Q_DECL_OVERRIDE;
+        void showEvent(QShowEvent* e) override;
+        void hideEvent(QHideEvent* e) override;
         bool focusedChild();
 
     private Q_SLOTS:
