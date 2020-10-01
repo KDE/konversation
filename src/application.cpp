@@ -1060,10 +1060,9 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 
     url.replace(QStringLiteral("&amp;"), QStringLiteral("&"));
 
-    QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
+    const QList<QStandardItem*> existing = m_urlModel->findItems(url, Qt::MatchExactly, 1);
 
-    foreach(QStandardItem* item, existing)
-    {
+    for (QStandardItem* item : existing) {
         if (m_urlModel->item(item->row(), 0)->data(Qt::DisplayRole).toString() == origin)
             m_urlModel->removeRow(item->row());
     }
@@ -1088,7 +1087,7 @@ void Application::sendMultiServerCommand(const QString& command, const QString& 
 {
     const QList<Server*> serverList = getConnectionManager()->getServerList();
 
-    foreach (Server* server, serverList)
+    for (Server* server : serverList)
         server->executeMultiServerCommand(command, parameter);
 }
 
@@ -1106,8 +1105,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
     const QList<Server*> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
     QString lserverOrGroup = serverOrGroup.toLower();
-    foreach (Server* lookServer, serverList)
-    {
+    for (Server* lookServer : serverList) {
         if (lserverOrGroup.isEmpty()
             || lookServer->getServerName().toLower()==lserverOrGroup
             || lookServer->getDisplayName().toLower()==lserverOrGroup)

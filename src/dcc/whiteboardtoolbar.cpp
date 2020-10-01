@@ -358,8 +358,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::unCheckOtherButtons(QPushButton* button)
         {
-            foreach(QPushButton* pushButton, m_toggleButtonHash)
-            {
+            for (QPushButton* pushButton : qAsConst(m_toggleButtonHash)) {
                 if (pushButton != button && pushButton->isChecked())
                 {
                     pushButton->setChecked(false);

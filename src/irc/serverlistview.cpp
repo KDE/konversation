@@ -59,12 +59,11 @@ void ServerListView::dragEnterEvent(QDragEnterEvent *e)
 
 bool ServerListView::badDropSelection()
 {
-    QList<QTreeWidgetItem*> items = selectedItems();
+    const QList<QTreeWidgetItem*> items = selectedItems();
     QList<QTreeWidgetItem*> children;
     QTreeWidgetItem* parent;
     int t=0; //top item count
-    foreach (QTreeWidgetItem* item, items)
-    {
+    for (QTreeWidgetItem* item : items) {
         if (indexOfTopLevelItem(item)<0) // is a child
         {
                 children.append(item);

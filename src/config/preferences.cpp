@@ -241,8 +241,7 @@ void Preferences::addIgnore(const QString &newIgnore)
 
 bool Preferences::removeIgnore(const QString &oldIgnore)
 {
-    foreach (Ignore *ignore, self()->mIgnoreList)
-    {
+    for (Ignore *ignore : qAsConst(self()->mIgnoreList)) {
         if (ignore->getName().toLower() == oldIgnore.toLower())
         {
             self()->mIgnoreList.removeOne(ignore);
@@ -256,8 +255,7 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
 
 bool Preferences::isIgnored(const QString &nickname)
 {
-    foreach (Ignore *ignore, self()->mIgnoreList)
-    {
+    for (Ignore *ignore : qAsConst(self()->mIgnoreList)) {
         if (ignore->getName().section(QLatin1Char('!'),0,0).toLower()==nickname.toLower())
         {
             return true;
@@ -394,19 +392,18 @@ QStringList Preferences::defaultAliasList()
     const QStringList scriptDirs = QStandardPaths::locateAll(QStandardPaths::AppDataLocation, QStringLiteral("scripts"), QStandardPaths::LocateDirectory);
     QSet<QString> scripts;
 
-    foreach(const QString &dir, scriptDirs) {
+    for (const QString &dir : scriptDirs) {
 
-        const QStringList &scriptFiles = QDir(dir).entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Executable);
+        const QStringList scriptFiles = QDir(dir).entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Executable);
 
-        foreach(const QString &script, scriptFiles) {
+        for (const QString &script : scriptFiles) {
             scripts << script;
         }
     }
 
     QStringList aliasList;
 
-    foreach(const QString& script, scripts)
-    {
+    for (const QString& script : qAsConst(scripts)) {
         aliasList.append(QStringLiteral("%1 /exec %1").arg(script));
 
         // FIXME: Historically, defaultAliasList() is primarily used to dynamically

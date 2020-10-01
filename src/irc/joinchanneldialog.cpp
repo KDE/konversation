@@ -54,9 +54,8 @@ namespace Konversation
         connect(m_ui.delBtn, &QPushButton::clicked, this, &JoinChannelDialog::deleteChannel);
 
         // Add network names to network combobox and select the one corresponding to argument.
-        QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
-        foreach (Server *server, serverList)
-        {
+        const QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+        for (Server *server : serverList) {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
           connect(server, &Server::nicknameChanged, this, &JoinChannelDialog::slotNicknameChanged);
@@ -122,9 +121,8 @@ namespace Konversation
     {
       Q_UNUSED(nickname);
       // Update all items
-      QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
-      foreach (Server *server, serverList)
-      {
+      const QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+      for (Server *server : serverList) {
         int index = m_ui.networkNameCombo->findData(server->connectionId());
         m_ui.networkNameCombo->setItemText(index, i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()));
       }
@@ -144,9 +142,8 @@ namespace Konversation
         }
       }
       // Add new network names to the combobox
-      QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
-      foreach (Server *server, serverList)
-      {
+      const QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+      for (Server *server : serverList) {
         if (m_ui.networkNameCombo->findData(server->connectionId()) == -1)
         {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
@@ -178,8 +175,7 @@ namespace Konversation
 
           joined = false;
 
-          foreach (Channel* chan, channels)
-          {
+          for (Channel* chan : channels) {
             if(chan->getName() == (*it).name())
               joined = true;
           }

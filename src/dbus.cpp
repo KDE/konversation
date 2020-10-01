@@ -48,7 +48,7 @@ QStringList DBus::listConnections()
     QStringList connections;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
-    foreach (Server* server, serverList)
+    for (Server* server : serverList)
         connections << QString::number(server->connectionId());
 
     return connections;
@@ -61,7 +61,7 @@ QStringList DBus::listServers()
     QStringList hosts;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
-    foreach (Server* server, serverList)
+    for (Server* server : serverList)
         if (server) hosts << server->getServerName();
 
     return hosts;
@@ -74,7 +74,7 @@ QStringList DBus::listConnectedServers()
     QStringList connectedHosts;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
-    foreach (Server* server, serverList)
+    for (Server* server : serverList)
         if (server && server->isConnected()) connectedHosts << server->getServerName();
 
     return connectedHosts;
@@ -94,8 +94,7 @@ QStringList DBus::listJoinedChannels(const QString& serverName)
 
         joinedChannels.reserve(channelList.size());
 
-        foreach(Channel* channel, channelList)
-        {
+        for (Channel* channel : channelList) {
             if (channel->joined())
                 joinedChannels.append(channel->getName());
         }

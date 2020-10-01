@@ -211,7 +211,8 @@ void UrlCatcher::updateItemActionStates()
 {
     bool enable = m_urlTree->selectionModel()->hasSelection();
 
-    foreach(QAction* action, m_itemActions) action->setEnabled(enable);
+    for (QAction* action : qAsConst(m_itemActions))
+        action->setEnabled(enable);
 }
 
 void UrlCatcher::updateListActionStates()
@@ -219,7 +220,8 @@ void UrlCatcher::updateListActionStates()
     Application* konvApp = Application::instance();
     bool enable = konvApp->getUrlModel()->rowCount();
 
-    foreach(QAction* action, m_listActions) action->setEnabled(enable);
+    for (QAction* action : qAsConst(m_listActions))
+        action->setEnabled(enable);
 }
 
 void UrlCatcher::openContextMenu(const QPoint& p)
@@ -237,7 +239,7 @@ void UrlCatcher::openUrl(const QModelIndex& index)
 
 void UrlCatcher::openSelectedUrls()
 {
-    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
+    const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     if (selectedIndexes.count() > 1)
     {
@@ -252,13 +254,13 @@ void UrlCatcher::openSelectedUrls()
         if (ret != KMessageBox::Continue) return;
     }
 
-    foreach(const QModelIndex& index, selectedIndexes)
+    for (const QModelIndex& index : selectedIndexes)
         if (index.isValid()) Application::openUrl(index.data().toString());
 }
 
 void UrlCatcher::saveSelectedUrls()
 {
-    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
+    const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     if (selectedIndexes.count() > 1)
     {
@@ -274,8 +276,7 @@ void UrlCatcher::saveSelectedUrls()
         if (ret != KMessageBox::Continue) return;
     }
 
-    foreach(const QModelIndex& index, selectedIndexes)
-    {
+    for (const QModelIndex& index : selectedIndexes) {
         if (index.isValid())
         {
             QUrl url(index.data().toString());
@@ -291,7 +292,7 @@ void UrlCatcher::saveSelectedUrls()
 
 void UrlCatcher::bookmarkSelectedUrls()
 {
-    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
+    const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
     KBookmarkDialog* dialog = new KBookmarkDialog(manager, this);
@@ -300,7 +301,7 @@ void UrlCatcher::bookmarkSelectedUrls()
     {
         QList<KBookmarkOwner::FutureBookmark> bookmarks;
 
-        foreach(const QModelIndex& index, selectedIndexes)
+        for (const QModelIndex& index : selectedIndexes)
             bookmarks << KBookmarkOwner::FutureBookmark(index.data().toString(), QUrl(index.data().toString()), QString());
 
         dialog->addBookmarks(bookmarks, i18n("New"));
@@ -317,11 +318,11 @@ void UrlCatcher::bookmarkSelectedUrls()
 
 void UrlCatcher::copySelectedUrls()
 {
-    QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
+    const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     QStringList urls;
 
-    foreach(const QModelIndex& index, selectedIndexes)
+    for (const QModelIndex& index : selectedIndexes)
         if (index.isValid()) urls << index.data().toString();
 
     QClipboard* clipboard = qApp->clipboard();
@@ -332,12 +333,13 @@ void UrlCatcher::deleteSelectedUrls()
 {
     QList<QPersistentModelIndex> selectedIndices;
 
-    foreach(const QPersistentModelIndex& index, m_urlTree->selectionModel()->selectedIndexes())
+    const auto nonPersistentSelectedIndices = m_urlTree->selectionModel()->selectedIndexes();
+    for (const QModelIndex& index : nonPersistentSelectedIndices)
         selectedIndices << index;
 
     Application* konvApp = Application::instance();
 
-    foreach(const QPersistentModelIndex& index, selectedIndices)
+    for (const QPersistentModelIndex& index : qAsConst(selectedIndices))
         if (index.isValid()) konvApp->getUrlModel()->removeRow(index.row());
 }
 

@@ -50,16 +50,16 @@ namespace Konversation
         TransferManager::~TransferManager()
         {
             qDebug();
-            foreach (TransferSend* sendItem, m_sendItems)
-            {
+            const auto currentSendItems = m_sendItems;
+            for (TransferSend* sendItem : currentSendItems) {
                 sendItem->abort();
             }
-            foreach (TransferRecv* recvItem, m_recvItems)
-            {
+            const auto currentRecvItems = m_recvItems;
+            for (TransferRecv* recvItem : currentRecvItems) {
                 recvItem->abort();
             }
-            foreach (Chat* chatItem, m_chatItems)
-            {
+            const auto currentChatItems = m_chatItems;
+            for (Chat* chatItem : currentChatItems) {
                 chatItem->close();
             }
 
@@ -129,8 +129,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            foreach (TransferSend* it, m_sendItems )
-            {
+            for (TransferSend* it : qAsConst(m_sendItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -153,8 +152,7 @@ namespace Konversation
             Chat* chat = nullptr;
 
             // find applicable one
-            foreach (Chat* it, m_chatItems)
-            {
+            for (Chat* it : qAsConst(m_chatItems)) {
                 if (it->status() == Chat::WaitingRemote &&
                     it->connectionId() == connectionId &&
                     it->partnerNick() == partnerNick)
@@ -175,8 +173,7 @@ namespace Konversation
             TransferRecv* transfer = nullptr;
 
             // find applicable one
-            foreach (TransferRecv* it, m_recvItems )
-            {
+            for (TransferRecv* it : qAsConst(m_recvItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -204,8 +201,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            foreach ( TransferSend* it, m_sendItems )
-            {
+            for (TransferSend* it : m_sendItems) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -234,8 +230,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            foreach ( TransferSend* it, m_sendItems )
-            {
+            for (TransferSend* it : qAsConst(m_sendItems)) {
                 if (
                     it->getStatus() == Transfer::WaitingRemote &&
                     it->getConnectionId() == connectionId &&
@@ -263,8 +258,7 @@ namespace Konversation
             Chat* chat = nullptr;
 
             // find applicable one
-            foreach (Chat* it, m_chatItems)
-            {
+            for (Chat* it :qAsConst(m_chatItems)) {
                 if (
                     it->status() == Chat::WaitingRemote &&
                     it->connectionId() == connectionId &&
@@ -294,8 +288,8 @@ namespace Konversation
             bool nickEmpty = partnerNick.isEmpty();
             bool fileEmpty = fileName.isEmpty();
 
-            foreach ( TransferRecv* it, m_recvItems )
-            {
+            const auto currentRecvItems = m_recvItems;
+            for (TransferRecv* it : currentRecvItems) {
                 if (
                     it->getStatus() == Transfer::Queued &&
                     it->getConnectionId() == connectionId &&
@@ -317,8 +311,7 @@ namespace Konversation
 
         bool TransferManager::isLocalFileInWritingProcess( const QUrl &url ) const
         {
-            foreach ( TransferRecv* it, m_recvItems )
-            {
+            for (TransferRecv* it : m_recvItems) {
                 if ( ( it->getStatus() == Transfer::Connecting ||
                        it->getStatus() == Transfer::Transferring ) &&
                     it->getFileURL() == url )
@@ -334,16 +327,14 @@ namespace Konversation
             return m_nextReverseTokenNumber++;
         }
 
-        bool TransferManager::hasActiveTransfers()
+        bool TransferManager::hasActiveTransfers() const
         {
-            foreach ( TransferSend* it, m_sendItems )
-            {
+            for (TransferSend* it : m_sendItems) {
                 if (it->getStatus() == Transfer::Transferring)
                     return true;
             }
 
-            foreach ( TransferRecv* it, m_recvItems )
-            {
+            for (TransferRecv* it : m_recvItems) {
                 if (it->getStatus() == Transfer::Transferring)
                     return true;
             }
@@ -351,10 +342,9 @@ namespace Konversation
             return false;
         }
 
-        bool TransferManager::hasActiveChats()
+        bool TransferManager::hasActiveChats() const
         {
-            foreach (Chat* chat, m_chatItems)
-            {
+            for (Chat* chat : m_chatItems) {
                 if (chat->status() == Chat::Chatting)
                     return true;
             }
@@ -374,8 +364,7 @@ namespace Konversation
             // update the default incoming directory for already existed DCCRECV items
             if ( Preferences::self()->dccPath() != m_defaultIncomingFolder )
             {
-                foreach ( TransferRecv* it, m_recvItems )
-                {
+                for (TransferRecv* it : qAsConst(m_recvItems)) {
                     if ( it->getStatus() == Transfer::Queued &&
                          it->getFileURL().adjusted(QUrl::RemoveFilename) == m_defaultIncomingFolder.adjusted(QUrl::RemoveFilename))
                     {

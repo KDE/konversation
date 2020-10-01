@@ -87,8 +87,8 @@ namespace Konversation
 
                 int generateReverseTokenNumber();
 
-                bool hasActiveTransfers();
-                bool hasActiveChats();
+                bool hasActiveTransfers() const;
+                bool hasActiveChats() const;
 
                 UPnP::UPnPRouter *getUPnPRouter();
                 void startupUPnP(void);

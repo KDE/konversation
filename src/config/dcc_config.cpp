@@ -36,8 +36,8 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
 
     QNetworkConfigurationManager manager;
-    foreach (const QNetworkConfiguration& conf, manager.allConfigurations())
-    {
+    const auto configurations = manager.allConfigurations();
+    for (const QNetworkConfiguration& conf : configurations) {
         kcfg_DccIPv4FallbackIface->addItem(conf.name());
     }
 
