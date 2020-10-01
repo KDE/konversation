@@ -281,7 +281,7 @@ namespace Konversation
                 QList<QStandardItem*> items = model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 0);
                 items += model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 1);
 
-                for (QStandardItem* item : qAsConst(items))
+                foreach (QStandardItem* item, items)
                     item->setEnabled(m_isAnyTypeOfOp);
             }
 
@@ -341,7 +341,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::refreshModes()
     {
-        const QStringList modes = m_channel->getModeList();
+        QStringList modes = m_channel->getModeList();
 
         m_ui.topicModeChBox->setChecked(false);
         m_ui.messageModeChBox->setChecked(false);
@@ -361,7 +361,8 @@ namespace Konversation
 
         char mode;
 
-        for (const QString &currentMode : modes) {
+        foreach (const QString &currentMode, modes)
+        {
             mode = currentMode[0].toLatin1();
             switch(mode)
             {

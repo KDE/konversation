@@ -39,7 +39,7 @@ namespace Konversation
                     "<SOAP-ENV:Body>"
                     "<m:%1 xmlns:m=\"%2\">").arg(action).arg(service);
 
-            for (const Arg & a : args)
+            foreach (const Arg & a,args)
                 comm += '<' + a.element + '>' + a.value + "</" + a.element + '>';
 
             comm += QStringLiteral("</m:%1></SOAP-ENV:Body></SOAP-ENV:Envelope>").arg(action);

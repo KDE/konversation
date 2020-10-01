@@ -628,7 +628,8 @@ namespace Konversation
         int TransferListModel::itemCount (TransferItemData::ItemDisplayType displaytype) const
         {
             int count = 0;
-            for (const TransferItemData &item : m_transferList) {
+            foreach (const TransferItemData &item, m_transferList)
+            {
                 if (item.displayType == displaytype)
                 {
                     ++count;

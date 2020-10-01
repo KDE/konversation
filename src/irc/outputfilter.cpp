@@ -1566,13 +1566,14 @@ namespace Konversation
         else
         {
             QString unignore = input.parameter.simplified();
-            const QStringList unignoreList = unignore.split(' ');
+            QStringList unignoreList = unignore.split(' ');
 
             QStringList succeeded;
             QStringList failed;
 
             // Iterate over potential unignores
-            for (const QString &uign : unignoreList) {
+            foreach (const QString &uign, unignoreList)
+            {
                 // If pattern looks incomplete, try to complete it
                 if (!uign.contains('!'))
                 {

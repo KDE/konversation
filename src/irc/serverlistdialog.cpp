@@ -111,8 +111,9 @@ namespace Konversation
 
     void ServerListDialog::slotOk()
     {
-        const QList<QTreeWidgetItem*> selected = m_serverList->selectedItems();
-        for (QTreeWidgetItem* item : selected) {
+        QList<QTreeWidgetItem*> selected = m_serverList->selectedItems();
+        foreach (QTreeWidgetItem* item, selected)
+        {
             if (item->data(0,IsServer).toBool())
             {
                 ConnectionSettings settings;
@@ -239,7 +240,8 @@ namespace Konversation
 
         // Have fun deleting
         QTreeWidgetItem* rootItem = m_serverList->invisibleRootItem();
-        for (QTreeWidgetItem* item : qAsConst(selectedItems)) {
+        foreach (QTreeWidgetItem* item, selectedItems)
+        {
             if (item == m_selectedItemPtr)
                 m_selectedItemPtr = nullptr;
 

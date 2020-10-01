@@ -119,9 +119,10 @@ namespace Konversation
         void TransferView::addTransfer(Transfer *transfer)
         {
             //save selected rows
-            const QModelIndexList selectedIndexes = selectedRows();
+            QModelIndexList selectedIndexes = selectedRows();
             QList<QVariant> selectedItems;
-            for (const QModelIndex &index : selectedIndexes) {
+            foreach (const QModelIndex &index, selectedIndexes)
+            {
                 selectedItems.append(index.data(TransferListModel::TransferPointer));
             }
 
@@ -172,8 +173,8 @@ namespace Konversation
 
             //restore selected
             QList<int> rows;
-            const auto rowIndices = rowIndexes();
-            for (const QModelIndex &index : rowIndices) {
+            foreach (const QModelIndex &index, rowIndexes())
+            {
                 QVariant pointer = index.data(TransferListModel::TransferPointer);
                 if (selectedItems.contains(pointer))
                 {
@@ -291,8 +292,8 @@ namespace Konversation
                 return QModelIndex();
             }
 
-            const auto rowIndices = rowIndexes();
-            for (const QModelIndex &rowIndex : rowIndices) {
+            foreach (const QModelIndex &rowIndex, rowIndexes())
+            {
                 Transfer *rowTransfer = qobject_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (rowTransfer == transfer)
                 {
@@ -542,8 +543,8 @@ namespace Konversation
         void TransferView::selectAllCompleted()
         {
             QItemSelection selection;
-            const auto rowIndices = rowIndexes();
-            for (const QModelIndex &index : rowIndices) {
+            foreach (const QModelIndex &index, rowIndexes())
+            {
                 if (index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
                     selection.append(QItemSelectionRange(index));
@@ -561,12 +562,13 @@ namespace Konversation
             selectionModel()->select(m_proxyModel->index(row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
 
-        void TransferView::selectRows(const QList<int>& rows)
+        void TransferView::selectRows(QList<int> rows)
         {
             QItemSelection selection;
-            const auto rowIndices = rowIndexes();
-            for (const QModelIndex &index : rowIndices) {
-                for (int row : rows) {
+            foreach (const QModelIndex &index, rowIndexes())
+            {
+                foreach (int row, rows)
+                {
                     if (row == index.row())
                     {
                         selection.append(QItemSelectionRange(index));
@@ -580,8 +582,8 @@ namespace Konversation
         void TransferView::update()
         {
             const int columnCount = model()->columnCount()-1;
-            const auto rowIndices = rowIndexes(0);
-            for (const QModelIndex &rowIndex : rowIndices) {
+            foreach (const QModelIndex &rowIndex, rowIndexes(0))
+            {
                 int status = rowIndex.data(TransferListModel::TransferStatus).toInt();
                 if (status == Transfer::Transferring)
                 {

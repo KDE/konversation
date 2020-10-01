@@ -261,8 +261,8 @@ namespace Konversation
             QPainter tPaint;
             tPaint.begin(this);
 
-            const auto region = event->region();
-            for (const QRect& rect : region) {
+            foreach (const QRect& rect, event->region())
+            {
                 tPaint.drawPixmap(rect, *m_imagePixmap, rect);
 
                 tPaint.drawPixmap(rect, *m_overlayPixmap, rect);

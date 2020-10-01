@@ -90,8 +90,8 @@ void Highlight_Config::restorePageToDefaults()
 void Highlight_Config::loadSettings()
 {
     highlightListView->clear();
-    const auto highlightList = Preferences::highlightList();
-    for (Highlight* currentHighlight : highlightList) {
+    foreach (Highlight* currentHighlight, Preferences::highlightList())
+    {
         HighlightViewItem *item = new HighlightViewItem(highlightListView,currentHighlight);
         item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
     }
@@ -291,9 +291,10 @@ void Highlight_Config::saveSettings()
     KSharedConfigPtr config = KSharedConfig::openConfig();
 
     // Write all highlight entries
-    const QList<Highlight*> hiList = getHighlightList();
+    QList<Highlight*> hiList = getHighlightList();
     int i = 0;
-    for (Highlight* hl : hiList) {
+    foreach (Highlight* hl, hiList)
+    {
         KConfigGroup grp = config->group(QStringLiteral("Highlight%1").arg(i));
         grp.writeEntry("Pattern", hl->getPattern());
         grp.writeEntry("RegExp", hl->getRegExp());

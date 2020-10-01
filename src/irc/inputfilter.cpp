@@ -800,10 +800,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 m_server->capReply();
 
-                const QStringList capabilities = parameterList.value(2).split(QLatin1Char(' '), QString::SkipEmptyParts);
+                QStringList capabilities = parameterList.value(2).split(QLatin1Char(' '), QString::SkipEmptyParts);
 
                 const QRegularExpression re(QStringLiteral("[a-z0-9]"), QRegularExpression::CaseInsensitiveOption);
-                for (const QString& capability : capabilities) {
+                foreach(const QString& capability, capabilities)
+                {
                     const int nameStart = capability.indexOf(re);
                     QString modifierString = capability.left(nameStart);
                     QString name = capability.mid(nameStart);
@@ -970,8 +971,8 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 
     QRegularExpression ignoreRe;
     ignoreRe.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-    const auto ignoreList = Preferences::ignoreList();
-    for (Ignore* item : ignoreList) {
+    foreach (Ignore* item, Preferences::ignoreList())
+    {
         ignoreRe.setPattern(QRegularExpression::anchoredPattern(QRegularExpression::escape(
                                 item->getName()).replace(QLatin1String("\\*"), QLatin1String("(.*)"))));
 
@@ -1117,10 +1118,11 @@ QHash<QString, QString> InputFilter::parseMessageTags(const QString &line, int *
 {
     int index = line.indexOf(QLatin1Char(' '));
     *startOfMessage = index + 1;
-    const QStringList tags = line.mid(1, index - 1).split(QLatin1Char(';'));
+    QStringList tags = line.mid(1, index - 1).split(QLatin1Char(';'));
     QHash<QString, QString> tagHash;
 
-    for (const QString &tag : tags) {
+    foreach(const QString &tag, tags)
+    {
         QStringList tagList = tag.split(QLatin1Char('='));
         tagHash.insert(tagList.first(), tagList.last());
     }

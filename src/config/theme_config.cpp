@@ -66,14 +66,15 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     // get list of theme dirs
-    const QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/"), QStandardPaths::LocateDirectory);
+    QStringList paths = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/"), QStandardPaths::LocateDirectory);
     m_dirs.clear();
 
-    for (const QString& path : paths) {
+    foreach(const QString& path, paths)
+    {
         QDir dir(path);
 
-        const auto themeDirs = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-        for (const QString& themedir : themeDirs) {
+        foreach(const QString& themedir, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot))
+        {
             QFileInfo file(path + themedir + "/index.desktop");
 
             if(file.exists())

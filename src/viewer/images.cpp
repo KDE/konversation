@@ -279,7 +279,8 @@ void Images::initializeNickIcons()
     QStringList icons;
     bool isDefaultTheme = (iconTheme == QLatin1String("default"));
 
-    for (const QString& dir : qAsConst(dirs)) {
+    foreach(const QString& dir, dirs)
+    {
         if (iconSet.load(dir)) {
             break;
         }
@@ -289,7 +290,8 @@ void Images::initializeNickIcons()
     if (iconSet.isNull() && !isDefaultTheme) {
         dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default", QStandardPaths::LocateDirectory);
 
-        for (const QString& dir : qAsConst(dirs)) {
+        foreach(const QString& dir, dirs)
+        {
             if (iconSet.load(dir)) {
                 break;
             }

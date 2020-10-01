@@ -186,7 +186,8 @@ Server::~Server()
     {
         Konversation::ChannelList channelList;
 
-        for (Channel* channel : qAsConst(m_channelList)) {
+        foreach (Channel* channel, m_channelList)
+        {
             channelList << channel->channelSettings();
         }
 
@@ -727,10 +728,11 @@ void Server::requestAvailableCapabilies ()
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
     QStringList requestCaps;
-    const QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
+    QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
     QStringList nameValue;
 
-    for (const QString &cap : capsList) {
+    foreach(const QString &cap, capsList)
+    {
         nameValue = cap.split(QChar('='));
 
         if (nameValue.isEmpty())
@@ -2149,7 +2151,7 @@ void Server::requestDccSend()
 
 void Server::sendURIs(const QList<QUrl>& uris, const QString& nick)
 {
-    for (const QUrl &uri : uris)
+    foreach(const QUrl &uri, uris)
          addDccSend(nick, uri);
 }
 
@@ -2292,16 +2294,18 @@ QString Server::recipientNick() const
     QStringList nickList;
 
     // fill nickList with all nicks we know about
-    for (Channel* lookChannel : m_channelList) {
-        const auto lookChannelNickList = lookChannel->getNickList();
-        for (Nick* lookNick : lookChannelNickList) {
+    foreach (Channel* lookChannel, m_channelList)
+    {
+        foreach (Nick* lookNick, lookChannel->getNickList())
+        {
             if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
                 nickList.append(lookNick->getChannelNick()->getNickname());
         }
     }
 
     // add Queries as well, but don't insert duplicates
-    for (Query* lookQuery : m_queryList) {
+    foreach (Query* lookQuery, m_queryList)
+    {
         if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
     }
     QStringListModel model;
@@ -2998,7 +3002,8 @@ Query* Server::getQueryByName(const QString& name)
     QString wanted = name.toLower();
 
     // Traverse through list to find the query with "name"
-    for (Query* lookQuery : qAsConst(m_queryList)) {
+    foreach (Query* lookQuery, m_queryList)
+    {
         if(lookQuery->getName().toLower()==wanted) return lookQuery;
     }
     // No query by that name found? Must be a new query request. Return 0
@@ -3509,7 +3514,8 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
 
 void Server::removeNickFromServer(const QString &nickname,const QString &reason, const QHash<QString, QString> &messageTags)
 {
-    for (Channel* channel : qAsConst(m_channelList)) {
+    foreach (Channel* channel, m_channelList)
+    {
         channel->flushNickQueue();
         // Check if nick is in this channel or not.
         if(channel->getNickByName(nickname))
@@ -3549,7 +3555,8 @@ void Server::renameNick(const QString &nickname, const QString &newNick, const Q
         //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 
         // Rename the nick in every channel they are in
-        for (Channel* channel : qAsConst(m_channelList)) {
+        foreach (Channel* channel, m_channelList)
+        {
             channel->flushNickQueue();
 
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
@@ -3809,7 +3816,8 @@ const QString& inputLineText
 void Server::sendToAllChannels(const QString &text)
 {
     // Send a message to all channels we are in
-    for (Channel* channel : qAsConst(m_channelList)) {
+    foreach (Channel* channel, m_channelList)
+    {
         channel->sendText(text);
     }
 }
@@ -3916,7 +3924,8 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
 
     if (!channels.isEmpty())
     {
-        for (const ChannelSettings& cs : qAsConst(channels)) {
+        foreach (const ChannelSettings& cs, channels)
+        {
             tmpList << cs;
         }
     }
@@ -3924,7 +3933,8 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
         tmpList = getServerGroup()->channelList();
     else
     {
-        for (Channel* channel : qAsConst(m_channelList)) {
+        foreach (Channel* channel, m_channelList)
+        {
             tmpList << channel->channelSettings();
         }
     }
@@ -4038,12 +4048,14 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 void Server::sendToAllChannelsAndQueries(const QString& text)
 {
     // Send a message to all channels we are in
-    for (Channel* channel : qAsConst(m_channelList)) {
+    foreach (Channel* channel, m_channelList)
+    {
         channel->sendText(text);
     }
 
     // Send a message to all queries we are in
-    for (Query* query : qAsConst(m_queryList)) {
+    foreach (Query* query, m_queryList)
+    {
         query->sendText(text);
     }
 }
@@ -4367,7 +4379,8 @@ void Server::sendNickInfoChangedSignals()
 {
     emit nickInfoChanged();
 
-    for (NickInfoPtr nickInfo : qAsConst(m_allNicks)) {
+    foreach(NickInfoPtr nickInfo, m_allNicks)
+    {
         if(nickInfo->isChanged())
         {
             emit nickInfoChanged(this, nickInfo);
@@ -4386,12 +4399,14 @@ void Server::startChannelNickChangedTimer(const QString& channel)
 
 void Server::sendChannelNickChangedSignals()
 {
-    for (const QString& channel : qAsConst(m_changedChannels)) {
+    foreach(const QString& channel, m_changedChannels)
+    {
         if (m_joinedChannels.contains (channel))
         {
             emit channelNickChanged(channel);
 
-            for (ChannelNickPtr nick : qAsConst(*m_joinedChannels[channel])) {
+            foreach(ChannelNickPtr nick, (*m_joinedChannels[channel]))
+            {
                 if(nick->isChanged())
                 {
                     nick->setChanged(false);

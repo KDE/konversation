@@ -54,7 +54,7 @@ namespace Konversation
 
             void selectAllCompleted();
             void selectRow(int row);
-            void selectRows(const QList<int>& rows);
+            void selectRows(QList<int> rows);
 
         Q_SIGNALS:
             void runSelectedTransfers();

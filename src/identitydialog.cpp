@@ -77,8 +77,7 @@ namespace Konversation
         m_delBtn->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
         connect(m_delBtn, &QPushButton::clicked, this, &IdentityDialog::deleteIdentity);
 
-        const auto ids = Preferences::identityList();
-        for (const IdentityPtr &id : ids) {
+        foreach(const IdentityPtr &id, Preferences::identityList()) {
             m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );
         }

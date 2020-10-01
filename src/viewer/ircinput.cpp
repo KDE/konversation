@@ -302,8 +302,8 @@ bool IRCInput::event(QEvent* e)
         QKeyEvent* event = dynamic_cast<QKeyEvent*>(e);
         const int key = event->key() | event->modifiers();
 
-        const auto actions = Application::instance()->getMainWindow()->actionCollection()->actions();
-        for (QAction* action : actions) {
+        foreach(QAction* action, Application::instance()->getMainWindow()->actionCollection()->actions())
+        {
             if (action->shortcuts().contains(QKeySequence(key)))
             {
                 event->ignore();

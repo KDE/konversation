@@ -118,8 +118,8 @@ void IrcContextMenus::updateQuickButtonMenu()
     QAction * action;
     QString pattern;
 
-    const auto buttons = Preferences::quickButtonList();
-    for (const QString& button : buttons) {
+    foreach(const QString& button, Preferences::quickButtonList())
+    {
         pattern = button.section(',', 1);
 
         if (pattern.contains(QLatin1String("%u")))
@@ -177,7 +177,7 @@ void IrcContextMenus::setupTextMenu()
 
     m_textActionsSeparator = m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedBasicNickActions))
+    foreach(QAction* action, m_sharedBasicNickActions)
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
@@ -186,12 +186,12 @@ void IrcContextMenus::setupTextMenu()
 
     m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedNickSettingsActions))
+    foreach(QAction* action, m_sharedNickSettingsActions)
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedDccActions))
+    foreach(QAction* action, m_sharedDccActions)
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
@@ -211,7 +211,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     bool showLinkActions = options.testFlag(ShowLinkActions);
 
-    for (QAction* action : qAsConst(self()->m_linkActions))
+    foreach(QAction* action, self()->m_linkActions)
         action->setVisible(showLinkActions);
 
     self()->m_textCopyAction->setEnabled(!selectedText.isEmpty());
@@ -220,7 +220,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     bool showNickActions = options.testFlag(ShowNickActions);
 
-    for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+    foreach(QAction* action, self()->m_sharedBasicNickActions)
         action->setVisible(showNickActions);
 
     self()->m_quickButtonMenu->menuAction()->setVisible(showNickActions && self()->shouldShowQuickButtonMenu());
@@ -229,21 +229,21 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
     {
         bool connected = server->isConnected();
 
-        for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+        foreach(QAction* action, self()->m_sharedBasicNickActions)
             action->setEnabled(connected);
 
         updateSharedNickSettingsActions(server, QStringList() << nick);
 
-        for (QAction* action : qAsConst(self()->m_sharedDccActions))
+        foreach(QAction* action, self()->m_sharedDccActions)
             action->setEnabled(connected);
     }
     else
     {
-        for (QAction* action : qAsConst(self()->m_sharedNickSettingsActions))
+        foreach(QAction* action, self()->m_sharedNickSettingsActions)
             action->setVisible(false);
     }
 
-    for (QAction* action : qAsConst(self()->m_sharedDccActions))
+    foreach(QAction* action, self()->m_sharedDccActions)
         action->setVisible(showNickActions);
 
     if (options.testFlag(ShowFindAction))
@@ -301,7 +301,8 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
             QAction * action = nullptr;
 
-            for (const QString& searchProvider : searchProviders) {
+            foreach(const QString& searchProvider, searchProviders)
+            {
                 action = new QAction(searchProvider, m_webShortcutsMenu);
                 action->setIcon(QIcon::fromTheme(filterData.iconNameForPreferredSearchProvider(searchProvider)));
                 action->setData(filterData.queryForPreferredSearchProvider(searchProvider));
@@ -362,8 +363,7 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
     bool connected = server->isConnected();
 
-    const auto channelMenuActions = channelMenu->actions();
-    for (QAction* action : channelMenuActions)
+    foreach(QAction* action, channelMenu->actions())
         action->setEnabled(connected);
 
     QAction* action = channelMenu->exec(pos);
@@ -398,7 +398,7 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedBasicNickActions))
+    foreach(QAction* action, m_sharedBasicNickActions)
         m_nickMenu->addAction(action);
 
     m_nickMenu->addSeparator();
@@ -434,12 +434,12 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedNickSettingsActions))
+    foreach(QAction* action, m_sharedNickSettingsActions)
         m_nickMenu->addAction(action);
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedDccActions))
+    foreach(QAction* action, m_sharedDccActions)
         m_nickMenu->addAction(action);
 }
 
@@ -480,8 +480,7 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
     if (options.testFlag(ShowTitle) && nicks.count() == 1)
         nickMenu->setTitle(KStringHandler::rsqueeze(nicks.first(), 15));
 
-    const auto nickMenuActions = nickMenu->actions();
-    for (QAction* action : nickMenuActions)
+    foreach(QAction* action, nickMenu->actions())
         action->setVisible(true);
 
     self()->m_modesMenu->menuAction()->setVisible(options.testFlag(ShowChannelActions));
@@ -490,10 +489,10 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
 
     bool connected = server->isConnected();
 
-    for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+    foreach(QAction* action, self()->m_sharedBasicNickActions)
         action->setEnabled(connected);
 
-    for (QAction* action : qAsConst(self()->m_sharedDccActions))
+    foreach(QAction* action, self()->m_sharedDccActions)
         action->setEnabled(connected);
 
     self()->m_modesMenu->menuAction()->setEnabled(connected);
@@ -626,7 +625,8 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
             QString question;
             QStringList selectedIgnoredNicks;
 
-            for (const QString& nick : nicks) {
+            foreach(const QString& nick, nicks)
+            {
                 if (Preferences::isIgnored(nick))
                     selectedIgnoredNicks << nick;
             }
@@ -654,7 +654,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             if (!server->getServerGroup()) break;
 
-            for(const QString& nick : nicks)
+            foreach(const QString& nick, nicks)
                 Preferences::addNotify(server->getServerGroup()->id(), nick);
 
             break;
@@ -663,7 +663,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         {
             if (!server->getServerGroup()) break;
 
-            for(const QString& nick : nicks)
+            foreach(const QString& nick, nicks)
                 Preferences::removeNotify(server->getServerGroup()->id(), nick);
 
             break;
@@ -715,7 +715,8 @@ void IrcContextMenus::updateSharedNickSettingsActions(Server* server, const QStr
     if (server->getServerGroup())
         serverGroupId = server->getServerGroup()->id();
 
-    for (const QString& nick : nicks) {
+    foreach(const QString& nick, nicks)
+    {
         if (Preferences::isIgnored(nick))
             ++unignoreCounter;
         else
@@ -883,7 +884,7 @@ int IrcContextMenus::extractActionId(QAction* action)
 
 void IrcContextMenus::commandToServer(Server* server, const QString& command, const QString& destination)
 {
-    const Konversation::OutputFilterResult result = server->getOutputFilter()->parse(QString(), Preferences::self()->commandChar() + command, destination);
+    Konversation::OutputFilterResult result = server->getOutputFilter()->parse(QString(), Preferences::self()->commandChar() + command, destination);
 
     server->queue(result.toServer);
 
@@ -891,7 +892,7 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command, co
         server->appendMessageToFrontmost(result.typeString, result.output);
     else if (!result.outputList.isEmpty())
     {
-        for (const QString& output : result.outputList)
+        foreach(const QString& output, result.outputList)
             server->appendMessageToFrontmost(result.typeString, output);
     }
 }
@@ -899,6 +900,6 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command, co
 void IrcContextMenus::commandToServer(Server* server, const QString& command,
     const QStringList& arguments, const QString& destination)
 {
-    for (const QString& argument : arguments)
+    foreach(const QString& argument, arguments)
         commandToServer(server, command.arg(argument), destination);
 }

@@ -59,9 +59,9 @@ class NickList : public QList<Nick*>
         NickList();
 
         QString completeNick(const QString& pattern, bool& complete, QStringList& found,
-                             bool skipNonAlfaNum, bool caseSensitive) const;
+                             bool skipNonAlfaNum, bool caseSensitive);
 
-        bool containsNick(const QString& nickname) const;
+        bool containsNick(const QString& nickname);
 
 };
 

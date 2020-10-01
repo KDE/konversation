@@ -50,7 +50,8 @@ void AwayManager::identitiesChanged()
 
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    for (Server* server : serverList) {
+    foreach (Server* server, serverList)
+    {
         IdentityPtr identity = server->getIdentity();
         int identityId = identity->id();
 
@@ -91,7 +92,8 @@ void AwayManager::implementManagedAway(int identityId)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    for (Server* server : serverList) {
+    foreach (Server* server, serverList)
+    {
         if (server->getIdentity()->id() == identityId && server->isConnected() && !server->isAway())
             server->requestAway();
     }
@@ -109,7 +111,8 @@ void AwayManager::implementManagedUnaway(const QList<int>& identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    for (Server* server : serverList) {
+    foreach (Server* server, serverList)
+    {
         IdentityPtr identity = server->getIdentity();
 
         if (identityList.contains(identity->id()) && identity->getAutomaticUnaway()
@@ -131,7 +134,7 @@ void AwayManager::requestAllAway(const QString& reason)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    for (Server* server : serverList)
+    foreach (Server* server, serverList)
         if (server->isConnected())
             server->requestAway(reason);
 }
@@ -140,7 +143,7 @@ void AwayManager::requestAllUnaway()
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    for (Server* server : serverList)
+    foreach (Server* server, serverList)
         if (server->isConnected() && server->isAway())
             server->requestUnaway();
 }
@@ -173,7 +176,8 @@ void AwayManager::updateGlobalAwayAction(bool away)
         const QList<Server*> serverList = m_connectionManager->getServerList();
         int awayCount = 0;
 
-        for (Server* server : serverList) {
+        foreach (Server* server, serverList)
+        {
             if (server->isAway())
                 awayCount++;
         }
@@ -318,7 +322,8 @@ void AwayManager::identitiesOnAutoAwayChanged()
     // Also clear the list of identity <-> timer mappings.
     m_timerForIdentity.clear();
 
-    for (Server* server : serverList) {
+    foreach (Server* server, serverList)
+    {
         IdentityPtr identity = server->getIdentity();
         int identityId = identity->id();
 
