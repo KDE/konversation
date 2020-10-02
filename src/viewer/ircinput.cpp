@@ -80,7 +80,7 @@ QSize IRCInput::sizeHint() const
 {
     QFontMetrics fm(font());
 
-    int h = document()->size().toSize().height() - fm.descent() + 2 * frameWidth();
+    int h = document()->size().toSize().height();
 
     QStyleOptionFrame opt;
     opt.initFrom(this);
