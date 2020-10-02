@@ -34,6 +34,7 @@
 #include <QToolButton>
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QRandomGenerator>
 
 #include <KLineEdit>
 #include <KPasswordDialog>
@@ -2137,7 +2138,7 @@ void Channel::updateAppearance()
     if (m_delayedSortTimer)
     {
         m_delayedSortTrigger = DELAYED_SORT_TRIGGER + 1;
-        m_delayedSortTimer->start(500 + qrand()%2000);
+        m_delayedSortTimer->start(500 + QRandomGenerator::global()->bounded(2000));
     }
 
     ChatWindow::updateAppearance();
