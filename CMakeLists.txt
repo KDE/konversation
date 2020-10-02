@@ -64,6 +64,7 @@ add_definitions(
   -DQT_NO_CAST_FROM_BYTEARRAY
 # -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 Port: QCA includes cause trouble.
   -DQT_NO_FOREACH
+  -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
 )
 
 add_subdirectory(src)
