@@ -201,7 +201,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            for (TransferSend* it : m_sendItems) {
+            for (TransferSend* it : qAsConst(m_sendItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
