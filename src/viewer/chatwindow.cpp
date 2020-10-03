@@ -128,8 +128,7 @@ QString ChatWindow::getTitle() const
     if (getType() == Channel)
     {
        title = QStringLiteral("%1 (%2)")
-             .arg(getName())
-             .arg(getServer()->getDisplayName());
+             .arg(getName(), getServer()->getDisplayName());
     }
     else
     {
@@ -515,8 +514,7 @@ void ChatWindow::logText(const QString& text)
             }
 
             QDateTime dateTime = QDateTime::currentDateTime();
-            QString logLine(QStringLiteral("[%1] [%2] %3\n").arg(QLocale().toString(dateTime.date(), QLocale::LongFormat)).
-                arg(QLocale().toString(dateTime.time(), QLocale::LongFormat)).arg(text));
+            QString logLine = QStringLiteral("[%1] [%2] %3\n").arg(QLocale().toString(dateTime.date(), QLocale::LongFormat), QLocale().toString(dateTime.time(), QLocale::LongFormat), text);
             logStream << logLine;
 
             // detach stream from file
@@ -716,7 +714,7 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
         isAction = true;
 
         result.remove(0, 4);
-        visualization = QStringLiteral("* %1 %2").arg(m_server->getNickname()).arg(result);
+        visualization = QStringLiteral("* %1 %2").arg(m_server->getNickname(), result);
     }
     else
         visualization = result;

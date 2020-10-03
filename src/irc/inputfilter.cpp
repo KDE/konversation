@@ -295,8 +295,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     {
                         // Do not internationalize the below version string
                         reply = QString(QStringLiteral("Konversation %1 Build %2 Copyright 2002-2020 by the Konversation team"))
-                            .arg(QStringLiteral(KONVI_VERSION))
-                            .arg(QString::number(COMMIT));
+                            .arg(QStringLiteral(KONVI_VERSION), QString::number(COMMIT));
                     }
 
                     if (!reply.isEmpty())
@@ -1298,7 +1297,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(0))
             {
                 // TODO check this one... I amputated  + ' '+trailing
-                QString message=QString(QStringLiteral("%1 %2")).arg(i18n("Your personal modes are:")).arg(parameterList.join(QLatin1Char(' ')).section(QLatin1Char(' '),1));
+                QString message=QString(QStringLiteral("%1 %2")).arg(i18n("Your personal modes are:"), parameterList.join(QLatin1Char(' ')).section(QLatin1Char(' '),1));
                 m_server->appendMessageToFrontmost(QStringLiteral("Info"), message, messageTags);
             }
             break;
@@ -2098,7 +2097,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     if (trailing.toLower().simplified().startsWith(QLatin1String("is an irc operator")))
                         m_server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an IRC Operator.", parameterList.value(1)), messageTags);
                     else
-                        m_server->appendMessageToFrontmost(i18n("Whois"), QString(QStringLiteral("%1 %2")).arg(parameterList.value(1)).arg(trailing), messageTags);
+                        m_server->appendMessageToFrontmost(i18n("Whois"), QString(QStringLiteral("%1 %2")).arg(parameterList.value(1), trailing), messageTags);
                 }
             }
             break;

@@ -465,9 +465,9 @@ namespace Konversation
 
             // remHour can be more than 25, so we can't use QTime here.
             return QStringLiteral("%1:%2:%3")
-                .arg(QString::number(remHour).rightJustified(2, '0', false))
-                .arg(QString::number(remMin).rightJustified(2, '0'))
-                .arg(QString::number(remSec).rightJustified(2, '0'));
+                .arg(QString::number(remHour).rightJustified(2, '0', false),
+                     QString::number(remMin).rightJustified(2, '0'),
+                     QString::number(remSec).rightJustified(2, '0'));
         }
 
         QString TransferListModel::getStatusText(Transfer::Status status, Transfer::Type type)

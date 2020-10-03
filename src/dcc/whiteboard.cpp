@@ -480,8 +480,8 @@ namespace Konversation
             QString fontStyle = QString::number(fontToStyle(font));
 
             emit rawWhiteBoardCommand(txtexLineCommand.arg(x).arg(y).arg(
-                                                           fontname).arg(fontSize).arg(fontStyle).arg(colorToString(textColor)).arg(
-                                                           colorToString(background)).arg(text));
+                                                           fontname, fontSize, fontStyle, colorToString(textColor),
+                                                           colorToString(background), text));
         }
 
         QColor WhiteBoard::parseColor(const QString& colorString, bool* ok)
@@ -548,7 +548,7 @@ namespace Konversation
 
             QString drLineCommand("\x01""DR %2,%3,%4,%5,%6,%7,%8,%9\x01");
             drLineCommand = drLineCommand.arg(tool).arg(
-                                          lineWidth).arg(colorToString(penColor)).arg(colorToString(brushColor)).arg(
+                                          lineWidth).arg(colorToString(penColor), colorToString(brushColor)).arg(
                                           xFrom).arg(yFrom).arg(xTo).arg(yTo);
             // qDebug() << drLineCommand;
             emit rawWhiteBoardCommand(drLineCommand);

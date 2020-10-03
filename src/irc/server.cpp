@@ -2956,7 +2956,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     {
         if (plus)
         {
-            addBan(channelName, QString(QStringLiteral("%1 %2 %3")).arg(parameter).arg(updater).arg(QDateTime::currentDateTime().toSecsSinceEpoch()));
+            addBan(channelName, QString(QStringLiteral("%1 %2 %3")).arg(parameter, updater).arg(QDateTime::currentDateTime().toSecsSinceEpoch()));
         } else {
             removeBan(channelName, parameter);
         }
@@ -3617,7 +3617,7 @@ void Server::appendCommandMessageToChannel(const QString& channel, const QString
     }
     else
     {
-        appendStatusMessage(command, QString(QStringLiteral("%1 %2")).arg(channel).arg(message), messageTags);
+        appendStatusMessage(command, QString(QStringLiteral("%1 %2")).arg(channel, message), messageTags);
     }
 }
 

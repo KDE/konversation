@@ -2325,8 +2325,7 @@ QList<QPair<QString,QString> > ViewContainer::getChannelsURI()
         {
             QString uri = view->getURI();
             QString name = QStringLiteral("%1 (%2)")
-                .arg(view->getName())
-                .arg(view->getServer()->getDisplayName());
+                .arg(view->getName(), view->getServer()->getDisplayName());
             URIList += QPair<QString,QString>(name,uri);
         }
     }

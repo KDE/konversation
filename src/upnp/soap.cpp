@@ -26,7 +26,7 @@ namespace Konversation
                     "<SOAP-ENV:Body>"
                     "<m:%1 xmlns:m=\"%2\"/>"
                     "</SOAP-ENV:Body></SOAP-ENV:Envelope>")
-                .arg(action).arg(service);
+                .arg(action, service);
 
             return comm;
         }
@@ -37,7 +37,7 @@ namespace Konversation
                     "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "
                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
                     "<SOAP-ENV:Body>"
-                    "<m:%1 xmlns:m=\"%2\">").arg(action).arg(service);
+                    "<m:%1 xmlns:m=\"%2\">").arg(action, service);
 
             for (const Arg & a : args)
                 comm += '<' + a.element + '>' + a.value + "</" + a.element + '>';

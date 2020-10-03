@@ -926,7 +926,7 @@ void Channel::modeButtonClicked(int id, bool on)
             args=limit->text();
     }
     // put together the mode command and send it to the server queue
-    m_server->queue(command.arg(getName()).arg((on) ? QStringLiteral("+") : QStringLiteral("-")).arg(mode[id]).arg(args));
+    m_server->queue(command.arg(getName(), (on) ? QStringLiteral("+") : QStringLiteral("-")).arg(mode[id]).arg(args));
 }
 
 void Channel::quickButtonClicked(const QString &buttonText)
