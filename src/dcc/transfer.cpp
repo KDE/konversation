@@ -413,8 +413,7 @@ namespace Konversation
 
         QString Transfer::transferFileName(const QString & fileName)
         {
-            if (fileName.contains(' ') && !(fileName.startsWith('\"') && fileName.endsWith('\"')))
-            {
+            if (fileName.contains(QLatin1Char(' ')) && !(fileName.startsWith('\"') && fileName.endsWith('\"'))) {
                 return '\"'+fileName+'\"';
             }
 

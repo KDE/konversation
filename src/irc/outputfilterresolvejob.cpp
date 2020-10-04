@@ -50,8 +50,7 @@ OutputFilterResolveJob::OutputFilterResolveJob(const Konversation::OutputFilterI
     }
     // If it doesn't contain a dot, we assume it's neither a host nor an IP, but
     // instead a nickname.
-    else if (!m_target.contains('.'))
-    {
+    else if (!m_target.contains(QLatin1Char('.'))) {
         if (m_chatWindow->getServer())
             m_chatWindow->getServer()->resolveUserhost(m_target);
 

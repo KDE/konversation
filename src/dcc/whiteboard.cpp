@@ -76,7 +76,7 @@ namespace Konversation
         void WhiteBoard::receivedWhiteBoardLine(const QString& line)
         {
             // qDebug() << line;
-            if (line.isEmpty() || !line.contains(' '))
+            if (line.isEmpty() || !line.contains(QLatin1Char(' ')))
                 return;
 
             //fontname can have spaces, as well as text

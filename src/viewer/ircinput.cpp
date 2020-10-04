@@ -418,8 +418,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
             pasteText.remove(reBottomSpace);
 
         // does the text contain at least one newline character?
-        if(pasteText.contains('\n'))
-        {
+        if( pasteText.contains(QLatin1Char('\n'))) {
             // make comparisons easier (avoid signed / unsigned warnings)
             const int pos = pasteText.indexOf(QLatin1Char('\n'));
             const int rpos = pasteText.lastIndexOf(QLatin1Char('\n'));

@@ -137,7 +137,7 @@ void IrcContextMenus::processQuickButtonAction(QAction* action, Server* server, 
     ChatWindow* chatWindow = server->getChannelOrQueryByName(context);
     QString line = server->parseWildcards(action->data().toString(), chatWindow, nicks);
 
-    if (line.contains('\n'))
+    if (line.contains(QLatin1Char('\n')))
         chatWindow->sendText(line);
     else
     {

@@ -1087,8 +1087,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     // Replace all > with &gt;
     filteredLine.replace('>', "\x0bgt;");
 
-    if (filteredLine.contains('\x07'))
-    {
+    if (filteredLine.contains(QLatin1Char('\x07'))) {
         if (Preferences::self()->beep())
         {
             qApp->beep();

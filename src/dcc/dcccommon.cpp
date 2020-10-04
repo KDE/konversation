@@ -62,8 +62,7 @@ namespace Konversation
             QHostAddress ip;
 
             //Only IPV6 can contain ':'
-            if (numericalIp.contains(':'))
-            {
+            if (numericalIp.contains(QLatin1Char(':'))) {
                 return numericalIp;
             }
             //ipv4 comes as numericalip

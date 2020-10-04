@@ -599,8 +599,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // TODO: Try to remember channel keys for autojoins and manual joins, so
                 //       we can get %k to work
 
-                if(channelName.contains(' '))
-                {
+                if (channelName.contains(QLatin1Char(' '))) {
                     key = channelName.section(QLatin1Char(' '),1,1);
                     channelName = channelName.section(QLatin1Char(' '),0,0);
                 }

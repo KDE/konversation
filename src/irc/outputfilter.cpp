@@ -1533,7 +1533,7 @@ namespace Konversation
             {
                 for (int index=0;index<parameterList.count();index++)
                 {
-                    if (!parameterList[index].contains('!'))
+                    if (!parameterList[index].contains(QLatin1Char('!')))
                         parameterList[index] += QLatin1String("!*");
 
                     Preferences::removeIgnore(parameterList[index]);
@@ -1574,8 +1574,7 @@ namespace Konversation
             // Iterate over potential unignores
             for (const QString &uign : unignoreList) {
                 // If pattern looks incomplete, try to complete it
-                if (!uign.contains('!'))
-                {
+                if (!uign.contains(QLatin1Char('!'))) {
                     QString fixedPattern = uign;
                     fixedPattern += QLatin1String("!*");
 
@@ -1746,7 +1745,7 @@ namespace Konversation
         if (input.parameter.isEmpty())
             input.parameter = input.destination;
 
-        if (input.parameter.isEmpty() || input.parameter.contains(' '))
+        if (input.parameter.isEmpty() || input.parameter.contains(QLatin1Char(' ')))
             return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for "
                               "nick or channel", Preferences::self()->commandChar()));
 

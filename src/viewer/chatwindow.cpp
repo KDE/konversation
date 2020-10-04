@@ -179,7 +179,7 @@ QString ChatWindow::getURI(bool passNetwork)
         port = ':'+QString::number(getServer()->getPort());
     }
 
-    if (server.contains(':')) // IPv6
+    if (server.contains(QLatin1Char(':'))) // IPv6
         server = '['+server+']';
 
     url = protocol+server+port+'/'+channel;
