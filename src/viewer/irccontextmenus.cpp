@@ -121,11 +121,11 @@ void IrcContextMenus::updateQuickButtonMenu()
 
     const auto buttons = Preferences::quickButtonList();
     for (const QString& button : buttons) {
-        pattern = button.section(',', 1);
+        pattern = button.section(QLatin1Char(','), 1);
 
         if (pattern.contains(QLatin1String("%u")))
         {
-            action = new QAction(button.section(',', 0, 0), m_quickButtonMenu);
+            action = new QAction(button.section(QLatin1Char(','), 0, 0), m_quickButtonMenu);
             action->setData(pattern);
             m_quickButtonMenu->addAction(action);
         }

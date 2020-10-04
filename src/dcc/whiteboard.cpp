@@ -81,8 +81,8 @@ namespace Konversation
 
             //fontname can have spaces, as well as text
             QStringList firstSplit;
-            firstSplit.append(line.section(' ', 0 ,0));
-            firstSplit.append(line.section(' ', 1));
+            firstSplit.append(line.section(QLatin1Char(' '), 0 ,0));
+            firstSplit.append(line.section(QLatin1Char(' '), 1));
 
             if (firstSplit.isEmpty())
                 return;

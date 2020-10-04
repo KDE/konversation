@@ -601,8 +601,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                 if(channelName.contains(' '))
                 {
-                    key=channelName.section(' ',1,1);
-                    channelName=channelName.section(' ',0,0);
+                    key = channelName.section(QLatin1Char(' '),1,1);
+                    channelName = channelName.section(QLatin1Char(' '),0,0);
                 }
             */
 
@@ -1700,7 +1700,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(2))
             {
                 QString current(trailing.section(QLatin1Char(' '),3));
-                //QString max(trailing.section(' ',5,5));
+                //QString max(trailing.section(QLatin1Char(' '),5,5));
                 m_server->appendStatusMessage(i18n("Users"), i18n("Current users on the network: %1", current), messageTags);
             }
             break;
@@ -1710,7 +1710,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(2))
             {
                 QString current(trailing.section(QLatin1Char(' '), 3));
-                //QString max(trailing.section(' ',5,5));
+                //QString max(trailing.section(QLatin1Char(' '),5,5));
                 m_server->appendStatusMessage(i18n("Users"), i18n("Current users on %1: %2.", prefix, current), messageTags);
             }
             break;
@@ -1838,7 +1838,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 if (getAutomaticRequest(QStringLiteral("WHOIS"), parameterList.value(1)) == 0)
                 {
                     // Prints "psn is an identified user"
-                    //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+' '+trailing);
+                    //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(QLatin1Char(' '),1)+' '+trailing);
                     // The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
                     m_server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user.", parameterList.value(1)), messageTags);
                 }

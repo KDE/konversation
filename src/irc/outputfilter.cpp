@@ -273,8 +273,8 @@ namespace Konversation
         // Server command?
         else if (line.startsWith(Preferences::self()->commandChar()))
         {
-            QString command = inputLine.section(' ', 0, 0).mid(1).toLower();
-            input.parameter = inputLine.section(' ', 1);
+            const QString command = inputLine.section(QLatin1Char(' '), 0, 0).mid(1).toLower();
+            input.parameter = inputLine.section(QLatin1Char(' '), 1);
 
             if (command != QLatin1String("topic"))
                 input.parameter = input.parameter.trimmed();
@@ -737,8 +737,8 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QString recipient = parameter.section(' ', 0, 0, QString::SectionSkipEmpty);
-        QString message = parameter.section(' ', 1);
+        const QString recipient = parameter.section(QLatin1Char(' '), 0, 0, QString::SectionSkipEmpty);
+        const QString message = parameter.section(QLatin1Char(' '), 1);
         QString output;
 
         bool recipientIsAChannel = false;
@@ -811,7 +811,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_ping(const OutputFilterInput& input)
     {
-        return handleCtcp(input.parameter.section(' ', 0, 0) + " ping");
+        return handleCtcp(input.parameter.section(QLatin1Char(' '), 0, 0) + " ping");
     }
 
     OutputFilterResult OutputFilter::command_ctcp(const OutputFilterInput& input)
@@ -823,11 +823,11 @@ namespace Konversation
     {
         OutputFilterResult result;
                                                   // who is the recipient?
-        QString recipient = parameter.section(' ', 0, 0);
+        const QString recipient = parameter.section(QLatin1Char(' '), 0, 0);
                                                   // what is the first word of the ctcp?
-        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty).toUpper();
+        const QString request = parameter.section(QLatin1Char(' '), 1, 1, QString::SectionSkipEmpty).toUpper();
                                                   // what is the complete ctcp command?
-        QString message = parameter.section(' ', 2, 0xffffff, QString::SectionSkipEmpty);
+        const QString message = parameter.section(QLatin1Char(' '), 2, 0xffffff, QString::SectionSkipEmpty);
 
         QString out = request;
 
@@ -857,8 +857,8 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AME [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (isParameter(QStringLiteral("local"), input.parameter.section(' ', 0, 0)))
-            m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(' ', 1));
+        if (isParameter(QStringLiteral("local"), input.parameter.section(QLatin1Char(' '), 0, 0)))
+            m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(QLatin1Char(' '), 1));
         else
             emit multiServerCommand(QStringLiteral("me"), input.parameter);
 
@@ -870,8 +870,8 @@ namespace Konversation
         if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1AMSG [-LOCAL] text", Preferences::self()->commandChar()));
 
-        if (isParameter(QStringLiteral("local"), input.parameter.section(' ', 0, 0)))
-            m_server->sendToAllChannelsAndQueries(input.parameter.section(' ', 1));
+        if (isParameter(QStringLiteral("local"), input.parameter.section(QLatin1Char(' '), 0, 0)))
+            m_server->sendToAllChannelsAndQueries(input.parameter.section(QLatin1Char(' '), 1));
         else
             emit multiServerCommand(QStringLiteral("msg"), input.parameter);
 
@@ -1185,8 +1185,8 @@ namespace Konversation
             result = usage(i18n("Usage: %1INVITE <nick> [channel]", Preferences::self()->commandChar()));
         else
         {
-            QString nick = input.parameter.section(' ', 0, 0, QString::SectionSkipEmpty);
-            QString channel = input.parameter.section(' ', 1, 1, QString::SectionSkipEmpty);
+            const QString nick = input.parameter.section(QLatin1Char(' '), 0, 0, QString::SectionSkipEmpty);
+            QString channel = input.parameter.section(QLatin1Char(' '), 1, 1, QString::SectionSkipEmpty);
 
             if (channel.isEmpty())
             {
@@ -1795,7 +1795,7 @@ namespace Konversation
             result = usage(i18n("Usage: %1KILL <nick> [comment]", Preferences::self()->commandChar()));
         else
         {
-            QString victim = input.parameter.section(' ', 0, 0);
+            const QString victim = input.parameter.section(QLatin1Char(' '), 0, 0);
 
             result.toServer = "KILL " + victim + " :" + input.parameter.mid(victim.length() + 1);
         }

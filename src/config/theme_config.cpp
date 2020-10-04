@@ -105,7 +105,7 @@ void Theme_Config::loadSettings()
             themeComment = themeRC.readComment();
 
             // extract folder name
-            themeDir=(*it).section('/',-2,-2);
+            themeDir=(*it).section(QLatin1Char('/'),-2,-2);
             // is this our currently used theme?
             if (themeDir==currentTheme)
             {
@@ -343,7 +343,7 @@ void Theme_Config::updateButtons()
     QString dir = m_dirs[iconThemeIndex->currentRow()];
     QFile themeRC(dir);
     // get name for directory
-    m_currentTheme = dir.section('/',-2,-2);
+    m_currentTheme = dir.section(QLatin1Char('/'),-2,-2);
 
     // allow delete action only for themes that have been installed by the user
     if(!themeRC.open(QIODevice::ReadOnly | QIODevice::WriteOnly))

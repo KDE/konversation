@@ -187,8 +187,8 @@ namespace Konversation
         void ResumeDialog::suggestNewName() // slot
         {
             QString dotSuffix, suggestedName;
-            QString basename = m_urlreqFileURL->url().url().section('/', -1);
-            QUrl baseURL(m_urlreqFileURL->url().url().section('/', 0, -2));
+            QString basename = m_urlreqFileURL->url().url().section(QLatin1Char('/'), -1);
+            QUrl baseURL(m_urlreqFileURL->url().url().section(QLatin1Char('/'), 0, -2));
 
             int index = basename.indexOf( '.' );
             if ( index != -1 )

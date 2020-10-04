@@ -61,7 +61,10 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
     {
         QString definition = it.next();
 
-        QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList() << definition.section(',',0,0) << definition.section(',',1));
+        QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList {
+            definition.section(QLatin1Char(','), 0, 0),
+            definition.section(QLatin1Char(','), 1)
+        });
 
         item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
     }

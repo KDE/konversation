@@ -243,7 +243,7 @@ namespace Konversation
             const QString &cc = Preferences::self()->commandChar();
             if (line.startsWith(cc))
             {
-                QString cmd = line.section(' ', 0, 0).toLower();
+                const QString cmd = line.section(QLatin1Char(' '), 0, 0).toLower();
                 qDebug() << "cmd" << cmd;
                 if (cmd == cc + "clear")
                 {
@@ -251,7 +251,7 @@ namespace Konversation
                 }
                 else if (cmd == cc + "me")
                 {
-                    QString toSend = line.section(' ', 1);
+                    const QString toSend = line.section(QLatin1Char(' '), 1);
                     //qDebug() << "toSend" << toSend;
                     if (toSend.isEmpty())
                     {
@@ -302,8 +302,8 @@ namespace Konversation
                 // cut out the CTCP command
                 const QString ctcp = line.mid(1, line.indexOf(1, 1) - 1);
 
-                const QString ctcpCommand = ctcp.section(' ', 0, 0);
-                QString ctcpArgument(ctcp.section(' ', 1));
+                const QString ctcpCommand = ctcp.section(QLatin1Char(' '), 0, 0);
+                QString ctcpArgument = ctcp.section(QLatin1Char(' '), 1);
                 OutputFilter::replaceAliases(ctcpArgument);
 
                 if (ctcpCommand.toLower() == QLatin1String("action"))
