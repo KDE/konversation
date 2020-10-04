@@ -158,13 +158,13 @@ namespace Konversation
                 line = lines[i];
                 if (line.startsWith(QLatin1String("Location"), Qt::CaseInsensitive))
                 {
-                    location = QUrl(line.mid(line.indexOf(':') + 1).trimmed());
+                    location = QUrl(line.mid(line.indexOf(QLatin1Char(':')) + 1).trimmed());
                     if (!location.isValid())
                         return nullptr;
                 }
                 else if (line.startsWith(QLatin1String("Server"), Qt::CaseInsensitive))
                 {
-                    server = line.mid(line.indexOf(':') + 1).trimmed();
+                    server = line.mid(line.indexOf(QLatin1Char(':')) + 1).trimmed();
                     if (server.length() == 0)
                         return nullptr;
 

@@ -445,13 +445,13 @@ namespace Konversation
 
             for (int i = 0; i < 6; i++) {
                 k++;
-                v = base64.indexOf(text.at(k));
+                v = base64.indexOf(QLatin1Char(text.at(k)));
                 right |= v << (i * 6);
             }
 
             for (int i = 0; i < 6; i++) {
                 k++;
-                v = base64.indexOf(text.at(k));
+                v = base64.indexOf(QLatin1Char(text.at(k)));
                 left |= v << (i * 6);
             }
 

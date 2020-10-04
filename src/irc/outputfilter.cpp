@@ -419,7 +419,7 @@ namespace Konversation
         if (isAChannel(input.destination))
         {
             // get nick to kick
-            QString victim = input.parameter.left(input.parameter.indexOf(' '));
+            const QString victim = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
 
             if (victim.isEmpty())
                 result = usage(i18n("Usage: %1KICK <nick> [reason]", Preferences::self()->commandChar()));
@@ -465,7 +465,7 @@ namespace Konversation
             if (isAChannel(input.parameter))
             {
                 // get channel name
-                QString channel = input.parameter.left(input.parameter.indexOf(' '));
+                const QString channel = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
                 // get part reason (if any)
                 QString reason = input.parameter.mid(channel.length() + 1);
 
@@ -514,7 +514,7 @@ namespace Konversation
             if (isAChannel(input.parameter))
             {
                 // get channel name
-                QString channel = input.parameter.left(input.parameter.indexOf(' '));
+                const QString channel = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
                 // get topic (if any)
                 QString topic = input.parameter.mid(channel.length()+1);
                 // if no topic given, retrieve topic
@@ -653,7 +653,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QString recipient = input.parameter.left(input.parameter.indexOf(' '));
+        const QString recipient = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
         QString message = input.parameter.mid(recipient.length()+1);
 
         if (input.parameter.isEmpty() || message.isEmpty())
@@ -797,7 +797,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QString recipient = input.parameter.left(input.parameter.indexOf(' '));
+        const QString recipient = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
         QString message = input.parameter.mid(recipient.length() + 1);
 
         if (message.startsWith(Preferences::self()->commandChar() + "me"))

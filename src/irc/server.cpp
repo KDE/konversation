@@ -1611,7 +1611,7 @@ int Server::_send_internal(QString outputLine)
         cipherKey = getKeyForRecipient(outputLineSplit.at(1));
     if (!cipherKey.isEmpty())
     {
-        int colon = outputLine.indexOf(':');
+        int colon = outputLine.indexOf(QLatin1Char(':'));
         if (colon > -1)
         {
             colon++;

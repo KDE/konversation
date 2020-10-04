@@ -421,8 +421,8 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         if(pasteText.contains('\n'))
         {
             // make comparisons easier (avoid signed / unsigned warnings)
-            int pos=pasteText.indexOf('\n');
-            int rpos=pasteText.lastIndexOf('\n');
+            const int pos = pasteText.indexOf(QLatin1Char('\n'));
+            const int rpos = pasteText.lastIndexOf(QLatin1Char('\n'));
 
             // emit the signal if there's a line break in the middle of the text
             if(pos>0 && pos!=(pasteText.length()-1))

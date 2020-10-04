@@ -390,7 +390,6 @@ void ChatWindow::setLogfileName(const QString& name)
             {
                 qint64 filePosition;
 
-                QString backlogLine;
                 QTextStream backlog(&logfile);
                 backlog.setCodec(QTextCodec::codecForName("UTF-8"));
                 backlog.setAutoDetectUnicode(true);
@@ -435,7 +434,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     // Loop until end of file reached
                     while(!backlog.atEnd() && filePosition < lastPacketHeadPosition)
                     {
-                        backlogLine = backlog.readLine();
+                        const QString backlogFileLine = backlog.readLine();
 
                         // check for deadlocks
                         if(backlog.pos() == filePosition)
@@ -444,12 +443,12 @@ void ChatWindow::setLogfileName(const QString& name)
                         }
 
                         // if a tab character is present in the line, meaning it is a valid chatline
-                        if (backlogLine.contains('\t'))
-                        {
+                        const int tabIndex = backlogFileLine.indexOf(QLatin1Char('\t'));
+                        if (tabIndex != -1) {
                             // extract first column from log
-                            QString backlogFirst = backlogLine.left(backlogLine.indexOf('\t'));
+                            const QString backlogFirst = backlogFileLine.left(tabIndex);
                             // cut first column from line
-                            backlogLine = backlogLine.mid(backlogLine.indexOf('\t') + 1);
+                            const QString backlogLine = backlogFileLine.mid(tabIndex + 1);
                             // Logfile is in utf8 so we don't need to do encoding stuff here
                             // append backlog with time and first column to text view
                             firstColumnsInPacket << backlogFirst;

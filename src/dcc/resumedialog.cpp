@@ -190,14 +190,14 @@ namespace Konversation
             QString basename = m_urlreqFileURL->url().url().section(QLatin1Char('/'), -1);
             QUrl baseURL(m_urlreqFileURL->url().url().section(QLatin1Char('/'), 0, -2));
 
-            int index = basename.indexOf( '.' );
+            int index = basename.indexOf(QLatin1Char('.'));
             if ( index != -1 )
             {
                 dotSuffix = basename.mid( index );
                 basename.truncate( index );
             }
 
-            int pos = basename.lastIndexOf( '_' );
+            int pos = basename.lastIndexOf(QLatin1Char('_'));
             if(pos != -1 )
             {
                 QString tmp = basename.mid( pos+1 );

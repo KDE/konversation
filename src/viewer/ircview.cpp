@@ -861,7 +861,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     m_tabNotification = Konversation::tnfNone;
 
     //The format in Chatwindow::logText is not configurable, so as long as nobody allows square brackets in a date/time format....
-    int eot = nick.lastIndexOf(' ');
+    const int eot = nick.lastIndexOf(QLatin1Char(' '));
     time = nick.left(eot);
     nick = nick.mid(eot+1);
 
@@ -1060,8 +1060,7 @@ void IRCView::replaceDecoration(QString& line, char decoration, char replacement
     int pos;
     bool decorated = false;
 
-    while((pos=line.indexOf(decoration))!=-1)
-    {
+    while ((pos = line.indexOf(QLatin1Char(decoration))) != -1) {
         line.replace(pos,1,(decorated) ? QStringLiteral("</%1>").arg(replacement) : QStringLiteral("<%1>").arg(replacement));
         decorated = !decorated;
     }
