@@ -297,8 +297,7 @@ namespace Konversation
         void ChatContainer::receivedLine(const QString &_line)
         {
             const QString line(sterilizeUnicode(_line));
-            if (line.startsWith('\x01'))
-            {
+            if (line.startsWith(QLatin1Char('\x01'))) {
                 // cut out the CTCP command
                 const QString ctcp = line.mid(1, line.indexOf(1, 1) - 1);
 

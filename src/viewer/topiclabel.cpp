@@ -75,8 +75,7 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if (link.startsWith('#') && m_server && m_server->isConnected())
-            {
+            if (link.startsWith(QLatin1Char('#')) && m_server && m_server->isConnected()) {
                 QString channel(link);
                 channel.replace(QLatin1String("##"),QLatin1String("#"));
                 m_server->sendJoinCommand(channel);

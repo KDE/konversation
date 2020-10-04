@@ -775,8 +775,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
         // HACK: twitch.tv's IRC server doesn't handle WHO so
         // let's disable all WHO requests for servers that has
         // twitch.tv capabilities
-        if(nameValue.at(0).startsWith("twitch.tv"))
-        {
+        if (nameValue.at(0).startsWith(QLatin1String("twitch.tv"))) {
             m_whoRequestsDisabled = true;
         }
     }

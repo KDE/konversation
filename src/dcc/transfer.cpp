@@ -273,8 +273,7 @@ namespace Konversation
         QString Transfer::sanitizeFileName(const QString &fileName)
         {
             QString fileNameTmp = QFileInfo(fileName).fileName();
-            if (fileNameTmp.startsWith('.'))
-            {
+            if (fileNameTmp.startsWith(QLatin1Char('.'))) {
                 fileNameTmp.replace(0, 1, '_');         // Don't create hidden files
             }
             if (fileNameTmp.isEmpty())
@@ -413,7 +412,7 @@ namespace Konversation
 
         QString Transfer::transferFileName(const QString & fileName)
         {
-            if (fileName.contains(QLatin1Char(' ')) && !(fileName.startsWith('\"') && fileName.endsWith('\"'))) {
+            if (fileName.contains(QLatin1Char(' ')) && !(fileName.startsWith(QLatin1Char('\"')) && fileName.endsWith(QLatin1Char('\"')))) {
                 return '\"'+fileName+'\"';
             }
 

@@ -865,8 +865,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     time = nick.left(eot);
     nick = nick.mid(eot+1);
 
-    if(!nick.isEmpty() && !nick.startsWith('<') && !nick.startsWith('*'))
-    {
+    if (!nick.isEmpty() && !nick.startsWith(QLatin1Char('<')) && !nick.startsWith(QLatin1Char('*'))) {
         nick = '|' + nick + '|';
     }
 
@@ -877,7 +876,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString line;
     QChar::Direction dir;
     QString text(filter(message, backlogColor, nullptr, false, false, false, &dir));
-    bool rtl = nick.startsWith('|') ? text.isRightToLeft() : (dir == QChar::DirR);
+    bool rtl = nick.startsWith(QLatin1Char('|')) ? text.isRightToLeft() : (dir == QChar::DirR);
 
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
     if (!rtl == time.isRightToLeft())
@@ -2136,7 +2135,7 @@ void IRCView::openLink(const QUrl& url)
     // HACK Handle ` as toString doesn't seem to decode that correctly
     link.replace (QLatin1String("%60"), QLatin1String("`"));
 
-    if (!link.isEmpty() && !link.startsWith('#'))
+    if (!link.isEmpty() && !link.startsWith(QLatin1Char('#')))
         Application::openUrl(url.toEncoded());
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
@@ -2144,8 +2143,7 @@ void IRCView::openLink(const QUrl& url)
         m_server->sendJoinCommand(link.mid(1));
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (link.startsWith('#') && m_server && m_server->isConnected())
-    {
+    else if (link.startsWith(QLatin1Char('#')) && m_server && m_server->isConnected()) {
         QString recipient(link);
         recipient.remove('#');
         NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
