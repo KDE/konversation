@@ -217,7 +217,7 @@ namespace Konversation
             {
                 m_locationInfo.m_labelStatus->setText(m_transfer->getStatusDetail().isEmpty() ?
                                        TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) :
-                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + " (" + m_transfer->getStatusDetail() + ')');
+                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + " (" + m_transfer->getStatusDetail() + QLatin1Char(')'));
             }
 
             // Progress:

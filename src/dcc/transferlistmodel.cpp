@@ -131,7 +131,7 @@ namespace Konversation
             progressBarOption.minimum = 0;
             progressBarOption.maximum = 100;
             progressBarOption.progress = index.data().toInt();
-            progressBarOption.text = QString::number(progressBarOption.progress) + '%';
+            progressBarOption.text = QString::number(progressBarOption.progress) + QLatin1Char('%');
             progressBarOption.textVisible = true;
             progressBarOption.state = option.state;
 
@@ -336,7 +336,7 @@ namespace Konversation
                             tooltip = transfer->getPartnerNick();
                             break;
                         case TransferHeaderData::Progress:
-                            tooltip = QString::number(transfer->getProgress()) + '%';
+                            tooltip = QString::number(transfer->getProgress()) + QLatin1Char('%');
                             break;
                         case TransferHeaderData::OfferDate:
                             tooltip = transfer->getTimeOffer().toString(QStringLiteral("hh:mm:ss"));

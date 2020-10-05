@@ -255,7 +255,7 @@ namespace Konversation
                 if (Preferences::self()->dccAddPartner())
                 {
                     m_fileURL = m_fileURL.adjusted(QUrl::StripTrailingSlash);
-                    m_fileURL.setPath(m_fileURL.path() + QDir::separator() + m_partnerNick + '.' + fileNameSanitized);
+                    m_fileURL.setPath(m_fileURL.path() + QDir::separator() + m_partnerNick + QLatin1Char('.') + fileNameSanitized);
                 }
                 else
                 {

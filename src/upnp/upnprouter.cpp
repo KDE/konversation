@@ -163,7 +163,7 @@ namespace Konversation
             QString action = QStringLiteral("GetStatusInfo");
             QString comm = SOAP::createCommand(action,s.servicetype);
 
-            return sendSoapQuery(comm,s.servicetype + '#' + action,s.controlurl);
+            return sendSoapQuery(comm,s.servicetype + QLatin1Char('#') + action,s.controlurl);
         }
 
         bool UPnPRouter::forward(const QHostAddress & host, quint16 port, QAbstractSocket::SocketType proto)
@@ -219,7 +219,7 @@ namespace Konversation
                 forward->host = host;
                 forward->proto = proto;
 
-                if (KJob *req = sendSoapQuery(comm,service.servicetype + '#' + action,service.controlurl))
+                if (KJob *req = sendSoapQuery(comm,service.servicetype + QLatin1Char('#') + action,service.controlurl))
                 {
                     // erase old forwarding if one exists
                     // The UPnP spec states if an IGD receives a forward request that matches an existing request that it must accept it.
@@ -289,7 +289,7 @@ namespace Konversation
                 QString action = QStringLiteral("DeletePortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
 
-                if (KJob *req = sendSoapQuery(comm,service.servicetype + '#' + action,service.controlurl))
+                if (KJob *req = sendSoapQuery(comm,service.servicetype + QLatin1Char('#') + action,service.controlurl))
                 {
                     pending_unforwards[req] = forward;
 

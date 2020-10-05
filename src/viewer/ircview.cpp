@@ -866,7 +866,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     nick = nick.mid(eot+1);
 
     if (!nick.isEmpty() && !nick.startsWith(QLatin1Char('<')) && !nick.startsWith(QLatin1Char('*'))) {
-        nick = '|' + nick + '|';
+        nick = QLatin1Char('|') + nick + QLatin1Char('|');
     }
 
     // Nicks are in "<nick>" format so replace the "<>"

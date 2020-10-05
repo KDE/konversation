@@ -73,7 +73,7 @@ void Warnings_Config::saveSettings()
         const QString warningName = item->data(0, WarningNameRole).toString();
 
         // save state of this item in hasChanged() list
-        warningsChecked += checked ? "1" : "0";
+        warningsChecked += checked ? QLatin1Char('1') : QLatin1Char('0');
 
         if (warningName == QLatin1String("LargePaste"))
         {
@@ -249,7 +249,7 @@ QString Warnings_Config::currentWarningsChecked()
     // get first checklist item
     for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
     {
-        newList += dialogListView->topLevelItem(i)->checkState(0) == Qt::Checked ? "1" : "0";
+        newList += (dialogListView->topLevelItem(i)->checkState(0) == Qt::Checked) ? QLatin1Char('1') : QLatin1Char('0');
     }
     // return list
     return newList;

@@ -426,7 +426,7 @@ namespace Konversation
             QString name = (*serverIt).host();
 
             if ((*serverIt).port() != 6667)
-                name += ':' + QString::number((*serverIt).port());
+                name += QLatin1Char(':') + QString::number((*serverIt).port());
 
             if ((*serverIt).SSLEnabled())
                 name += QLatin1String(" (SSL)");

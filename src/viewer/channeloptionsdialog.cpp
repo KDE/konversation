@@ -180,7 +180,7 @@ namespace Konversation
                     m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + " \x01");
             }
             else
-                m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
+                m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + QLatin1Char(' ') + newTopic);
         }
 
         const QStringList newModeList = modes();
@@ -419,34 +419,34 @@ namespace Konversation
         QString mode;
 
         mode = (m_ui.topicModeChBox->isChecked() ? "+" : "-");
-        mode += 't';
+        mode += QLatin1Char('t');
         modes.append(mode);
         mode = (m_ui.messageModeChBox->isChecked() ? "+" : "-");
-        mode += 'n';
+        mode += QLatin1Char('n');
         modes.append(mode);
         mode = (m_ui.userLimitChBox->isChecked() ? "+" : "-");
-        mode += 'l' + QString::number( m_ui.userLimitEdit->value() );
+        mode += QLatin1Char('l') + QString::number( m_ui.userLimitEdit->value() );
         modes.append(mode);
         mode = (m_ui.inviteModeChBox->isChecked() ? "+" : "-");
-        mode += 'i';
+        mode += QLatin1Char('i');
         modes.append(mode);
         mode = (m_ui.moderatedModeChBox->isChecked() ? "+" : "-");
-        mode += 'm';
+        mode += QLatin1Char('m');
         modes.append(mode);
         mode = (m_ui.secretModeChBox->isChecked() ? "+" : "-");
-        mode += 's';
+        mode += QLatin1Char('s');
         modes.append(mode);
 
         if (m_ui.keyModeChBox->isChecked() && !m_ui.keyModeEdit->text().isEmpty())
         {
-            mode = '+';
-            mode += 'k' + m_ui.keyModeEdit->text();
+            mode = QLatin1Char('+');
+            mode += QLatin1Char('k') + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
         else if (!m_ui.keyModeChBox->isChecked())
         {
-            mode = '-';
-            mode += 'k' + m_ui.keyModeEdit->text();
+            mode = QLatin1Char('-');
+            mode += QLatin1Char('k') + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
 

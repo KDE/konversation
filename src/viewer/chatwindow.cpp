@@ -357,7 +357,7 @@ void ChatWindow::cdIntoLogPath()
     }
 
     // Add the logfile name to the path.
-    logfile.setFileName(logDir.path() + '/' + logName);
+    logfile.setFileName(logDir.path() + QLatin1Char('/') + logName);
 }
 
 void ChatWindow::setLogfileName(const QString& name)

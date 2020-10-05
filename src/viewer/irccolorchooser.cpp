@@ -50,7 +50,7 @@ QString IRCColorChooser::color()
 
     if(m_ui.m_bgColorCBox->currentIndex() > 0)
     {
-        s += ',' + QString::number(m_ui.m_bgColorCBox->currentIndex() - 1).rightJustified(2, '0');;
+        s += QLatin1Char(',') + QString::number(m_ui.m_bgColorCBox->currentIndex() - 1).rightJustified(2, '0');;
     }
 
     return s;

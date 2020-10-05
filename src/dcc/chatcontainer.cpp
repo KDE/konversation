@@ -146,8 +146,8 @@ namespace Konversation
 
         void ChatContainer::setPartnerNick (const QString &nick)
         {
-            ChatWindow::setName('-' + nick + '-');
-            ChatWindow::setLogfileName('-' + nick + '-');
+            ChatWindow::setName(QLatin1Char('-') + nick + QLatin1Char('-'));
+            ChatWindow::setLogfileName(QLatin1Char('-') + nick + QLatin1Char('-'));
             m_chat->setPartnerNick(nick);
         }
 

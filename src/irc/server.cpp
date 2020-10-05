@@ -4284,7 +4284,7 @@ void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
     if (!Konversation::Cipher::isFeatureAvailable(Konversation::Cipher::DH))
     {
         appendMessageToFrontmost(i18n("Error"), i18n("Unable to perform key exchange with %1.", sender)
-            + ' ' + Konversation::Cipher::runtimeError());
+            + QLatin1Char(' ') + Konversation::Cipher::runtimeError());
 
         return;
     }
@@ -4331,7 +4331,7 @@ void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
     if (!Konversation::Cipher::isFeatureAvailable(Konversation::Cipher::DH))
     {
         appendMessageToFrontmost(i18n("Error"), i18n("Unable to complete key exchange with %1.", sender)
-            + ' ' + Konversation::Cipher::runtimeError());
+            + QLatin1Char(' ') + Konversation::Cipher::runtimeError());
 
         return;
     }

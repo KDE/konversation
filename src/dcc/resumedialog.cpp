@@ -205,7 +205,7 @@ namespace Konversation
                 int number = tmp.toInt( &ok );
                 if ( !ok ) // ok there is no number
                 {
-                    suggestedName = basename + '1' + dotSuffix;
+                    suggestedName = basename + QLatin1Char('1') + dotSuffix;
                 }
                 else
                 {
