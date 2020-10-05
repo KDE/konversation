@@ -316,7 +316,7 @@ namespace Konversation
                         }
                         case TransferHeaderData::TypeIcon:
                         {
-                            return transfer->getType() == Transfer::Send ? QIcon::fromTheme("arrow-up") : QIcon::fromTheme("arrow-down");
+                            return QIcon::fromTheme((transfer->getType() == Transfer::Send) ? QStringLiteral("arrow-up") : QStringLiteral("arrow-down"));
                         }
                         default:
                             return QVariant();

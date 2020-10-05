@@ -2038,7 +2038,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         drag->setMimeData(mimeData);
 
         const QString iconName = KIO::iconNameForUrl(url);
-        const QPixmap pixmap = QIcon::fromTheme(iconName, QIcon::fromTheme("application-octet-stream")).pixmap(32);
+        const QPixmap pixmap = QIcon::fromTheme(iconName, QIcon::fromTheme(QStringLiteral("application-octet-stream"))).pixmap(32);
         drag->setPixmap(pixmap);
 
         drag->exec();

@@ -63,12 +63,12 @@ namespace Konversation
             dialogLayout->addWidget(buttonBox);
             QPushButton* button = buttonBox->addButton(QDialogButtonBox::Ok);
             button->setToolTip(i18n("Select nickname and close the window"));
-            button->setIcon(QIcon::fromTheme("dialog-ok"));
+            button->setIcon(QIcon::fromTheme(QStringLiteral("dialog-ok")));
             button->setShortcut(Qt::CTRL | Qt::Key_Return);
             button->setDefault(true);
             button = buttonBox->addButton(QDialogButtonBox::Cancel);
             button->setToolTip(i18n("Close the window without changes"));
-            button->setIcon(QIcon::fromTheme("dialog-cancel"));
+            button->setIcon(QIcon::fromTheme(QStringLiteral("dialog-cancel")));
 
             KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(KSharedConfig::openConfig(), "DCCRecipientDialog"));
 
