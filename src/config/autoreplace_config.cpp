@@ -232,8 +232,8 @@ void Autoreplace_Config::directionChanged(int newDirection)
     // prepare hidden identifier string
     QString id;
     // find the direction strings to set up in the item
-    if(newDirection==DIRECTION_INPUT)       id='i';
-    else if(newDirection==DIRECTION_OUTPUT) id='o';
+    if (newDirection==DIRECTION_INPUT)       id = QStringLiteral("i");
+    else if (newDirection==DIRECTION_OUTPUT) id = QStringLiteral("o");
     else if(newDirection==DIRECTION_BOTH)   id=QStringLiteral("io");
     // rename direction
     item->setText(1,directionCombo->itemText(newDirection));

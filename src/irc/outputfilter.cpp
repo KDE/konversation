@@ -680,7 +680,7 @@ namespace Konversation
         else if (input.parameter.isEmpty())
             return usage(i18n("Usage: %1ME text", Preferences::self()->commandChar()));
 
-        QString command("PRIVMSGACTION \x01\x01");
+        QString command = QStringLiteral("PRIVMSGACTION \x01\x01");
 
         QStringList outputList = splitForEncoding(input.destination, input.parameter,
                                                   m_server->getPreLength(command, input.destination), 2);
@@ -836,7 +836,7 @@ namespace Konversation
         if (request == QLatin1String("PING"))
         {
             unsigned int timeT = QDateTime::currentDateTime().toSecsSinceEpoch();
-            result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(timeT);
+            result.toServer = QStringLiteral("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(timeT);
             result.output = i18n("Sending CTCP-%1 request to %2.", QStringLiteral("PING"), recipient);
         }
         else
@@ -2072,7 +2072,7 @@ namespace Konversation
 
     bool OutputFilter::isParameter(const QString& parameter, const QString& string)
     {
-        QRegExp rx(QString("^[\\-]{1,2}%1$").arg(parameter), Qt::CaseInsensitive);
+        QRegExp rx(QStringLiteral("^[\\-]{1,2}%1$").arg(parameter), Qt::CaseInsensitive);
 
         return rx.exactMatch(string);
     }

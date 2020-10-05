@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
     KAboutData aboutData(QStringLiteral("konversation"),
         i18n("Konversation"),
-        KONVI_VERSION " #" STRHACK(COMMIT),
+        QStringLiteral(KONVI_VERSION " #" STRHACK(COMMIT)),
         i18n("A user-friendly IRC client"),
         KAboutLicense::GPL,
         i18n("Copyright 2002-%1 by the Konversation team", QStringLiteral("2020")),

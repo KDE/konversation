@@ -524,7 +524,7 @@ namespace Konversation
             QString line(action);
             OutputFilter::replaceAliases(line);
 
-            static const QString actionText("\x01""ACTION %2\x01");
+            const QString actionText = QStringLiteral("\x01""ACTION %2\x01");
             sendRawLine(actionText.arg(line));
         }
 

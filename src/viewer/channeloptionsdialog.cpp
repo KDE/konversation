@@ -418,34 +418,36 @@ namespace Konversation
         QStringList modes;
         QString mode;
 
-        mode = (m_ui.topicModeChBox->isChecked() ? "+" : "-");
+        const QString plus = QStringLiteral("+");
+        const QString minus = QStringLiteral("-");
+        mode = (m_ui.topicModeChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('t');
         modes.append(mode);
-        mode = (m_ui.messageModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.messageModeChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('n');
         modes.append(mode);
-        mode = (m_ui.userLimitChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.userLimitChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('l') + QString::number( m_ui.userLimitEdit->value() );
         modes.append(mode);
-        mode = (m_ui.inviteModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.inviteModeChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('i');
         modes.append(mode);
-        mode = (m_ui.moderatedModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.moderatedModeChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('m');
         modes.append(mode);
-        mode = (m_ui.secretModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.secretModeChBox->isChecked() ? plus : minus);
         mode += QLatin1Char('s');
         modes.append(mode);
 
         if (m_ui.keyModeChBox->isChecked() && !m_ui.keyModeEdit->text().isEmpty())
         {
-            mode = QLatin1Char('+');
+            mode = plus;
             mode += QLatin1Char('k') + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
         else if (!m_ui.keyModeChBox->isChecked())
         {
-            mode = QLatin1Char('-');
+            mode = minus;
             mode += QLatin1Char('k') + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
@@ -453,7 +455,7 @@ namespace Konversation
         QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
         for (int i = 0; i < modesModel->rowCount(); ++i)
         {
-            mode = (modesModel->item(i, 0)->checkState() == Qt::Checked ? "+" : "-");
+            mode = (modesModel->item(i, 0)->checkState() == Qt::Checked) ? plus : minus;
             mode += modesModel->item(i, 0)->data().toString() + modesModel->item(i, 1)->text();
             modes.append(mode);
         }

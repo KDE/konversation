@@ -255,7 +255,7 @@ QVariant IrcViewMimeData::retrieveData(const QString &mimeType, QVariant::Type t
         IrcViewMimeData *that = const_cast<IrcViewMimeData *>(this);
 
         //Copy the text, skipping any QChar::ObjectReplacementCharacter
-        QRegExp needle(QString("\\xFFFC\\n?"));
+        QRegExp needle(QStringLiteral("\\xFFFC\\n?"));
 
         that->setText(fragment.toPlainText().remove(needle));
         fragment = QTextDocumentFragment();
@@ -930,7 +930,7 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
     if (m_showDate)
     {
         QString timeColor = Preferences::self()->color(Preferences::Time).name();
-        doRawAppend(QString("<font color=\"%1\">%2</font>").arg(timeColor, QLocale().toString(m_prevTimestamp.date(), QLocale::ShortFormat)), rtl);
+        doRawAppend(QStringLiteral("<font color=\"%1\">%2</font>").arg(timeColor, QLocale().toString(m_prevTimestamp.date(), QLocale::ShortFormat)), rtl);
         appendLine(DateLine);
         m_showDate = false;
     }

@@ -185,7 +185,7 @@ namespace Konversation
 
                 // the protocol
                 a.element = QStringLiteral("NewProtocol");
-                a.value = proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP";
+                a.value = (proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP");
                 args.append(a);
 
                 // the local port
@@ -199,7 +199,7 @@ namespace Konversation
                 args.append(a);
 
                 a.element = QStringLiteral("NewEnabled");
-                a.value = '1';
+                a.value = QStringLiteral("1");
                 args.append(a);
 
                 a.element = QStringLiteral("NewPortMappingDescription");
@@ -207,7 +207,7 @@ namespace Konversation
                 args.append(a);
 
                 a.element = QStringLiteral("NewLeaseDuration");
-                a.value = '0';
+                a.value = QStringLiteral("0");
                 args.append(a);
 
                 QString action = QStringLiteral("AddPortMapping");
@@ -283,7 +283,7 @@ namespace Konversation
 
                 // the protocol
                 a.element = QStringLiteral("NewProtocol");
-                a.value = forward->proto == QAbstractSocket::TcpSocket ? "TCP" : "UDP";
+                a.value = (forward->proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP");
                 args.append(a);
 
                 QString action = QStringLiteral("DeletePortMapping");

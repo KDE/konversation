@@ -287,7 +287,7 @@ void Images::initializeNickIcons()
 
     // fallback to default icon set, if not yet chosen
     if (iconSet.isNull() && !isDefaultTheme) {
-        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/default", QStandardPaths::LocateDirectory);
+        dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default"), QStandardPaths::LocateDirectory);
 
         for (const QString& dir : qAsConst(dirs)) {
             if (iconSet.load(dir)) {

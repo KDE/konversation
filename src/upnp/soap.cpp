@@ -20,7 +20,7 @@ namespace Konversation
 
         QString SOAP::createCommand(const QString & action,const QString & service)
         {
-            QString comm = QString("<?xml version=\"1.0\"?>"
+            QString comm = QStringLiteral("<?xml version=\"1.0\"?>"
                     "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "
                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
                     "<SOAP-ENV:Body>"
@@ -33,7 +33,7 @@ namespace Konversation
 
         QString SOAP::createCommand(const QString & action,const QString & service,const QList<Arg> & args)
         {
-            QString comm = QString("<?xml version=\"1.0\"?>"
+            QString comm = QStringLiteral("<?xml version=\"1.0\"?>"
                     "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" "
                     "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">"
                     "<SOAP-ENV:Body>"

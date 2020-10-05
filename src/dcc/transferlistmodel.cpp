@@ -447,7 +447,7 @@ namespace Konversation
             switch (timeleft)
             {
                 case Transfer::InfiniteValue:
-                    return QString('?');
+                    return QStringLiteral("?");
                 default:
                     return secToHMS(timeleft);
                 case Transfer::NotInTransfer:
