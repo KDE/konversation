@@ -530,9 +530,9 @@ namespace Konversation
                     //Now is not the time to fight with that. FIXME
                     //If anyone out there *can* actually set the topic to a single ^A, now they have to
                     //specify it twice to get one.
-                    if (topic =="\x01\x01")
+                    if (topic == QLatin1String("\x01\x01"))
                         result.toServer += QLatin1Char('\x01');
-                    else if (topic!="\x01")
+                    else if (topic != QLatin1String("\x01"))
                         result.toServer += topic;
                 }
             }
