@@ -1553,8 +1553,16 @@ int Server::getPreLength(const QString& command, const QString& dest)
     return x;
 }
 
-//Commands greater than 1 have localizeable text:         0   1    2       3      4    5    6
-static QStringList outcmds = QString(QStringLiteral("WHO QUIT PRIVMSG NOTICE KICK PART TOPIC")).split(QChar(QLatin1Char(' ')));
+//Commands greater than 1 have localizeable text
+static QStringList outcmds = QStringList {
+    QStringLiteral("WHO"),     // 0
+    QStringLiteral("QUIT"),    // 1
+    QStringLiteral("PRIVMSG"), // 2
+    QStringLiteral("NOTICE"),  // 3
+    QStringLiteral("KICK"),    // 4
+    QStringLiteral("PART"),    // 5
+    QStringLiteral("TOPIC"),   // 6
+};
 
 int Server::_send_internal(QString outputLine)
 {
@@ -2955,7 +2963,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     {
         if (plus)
         {
-            addBan(channelName, QString(QStringLiteral("%1 %2 %3")).arg(parameter, updater).arg(QDateTime::currentDateTime().toSecsSinceEpoch()));
+            addBan(channelName, QStringLiteral("%1 %2 %3").arg(parameter, updater).arg(QDateTime::currentDateTime().toSecsSinceEpoch()));
         } else {
             removeBan(channelName, parameter);
         }
@@ -3616,7 +3624,7 @@ void Server::appendCommandMessageToChannel(const QString& channel, const QString
     }
     else
     {
-        appendStatusMessage(command, QString(QStringLiteral("%1 %2")).arg(channel, message), messageTags);
+        appendStatusMessage(command, QStringLiteral("%1 %2").arg(channel, message), messageTags);
     }
 }
 

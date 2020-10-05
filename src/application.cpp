@@ -561,9 +561,9 @@ void Application::readOptions()
     QStringList buttonList(Preferences::quickButtonList());
     // Read all quick buttons
     int index=0;
-    while (cgQuickButtons.hasKey(QString(QStringLiteral("Button%1")).arg(index)))
+    while (cgQuickButtons.hasKey(QStringLiteral("Button%1").arg(index)))
     {
-        buttonList.append(cgQuickButtons.readEntry(QString(QStringLiteral("Button%1")).arg(index++)));
+        buttonList.append(cgQuickButtons.readEntry(QStringLiteral("Button%1").arg(index++)));
     } // while
     // Put back the changed button list
     Preferences::setQuickButtonList(buttonList);
@@ -648,9 +648,9 @@ void Application::readOptions()
     {
         int i = 0;
 
-        while (KSharedConfig::openConfig()->hasGroup(QString(QStringLiteral("Highlight%1")).arg(i)))
+        while (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Highlight%1").arg(i)))
         {
-            KConfigGroup cgHilight(KSharedConfig::openConfig()->group(QString(QStringLiteral("Highlight%1")).arg(i)));
+            KConfigGroup cgHilight(KSharedConfig::openConfig()->group(QStringLiteral("Highlight%1").arg(i)));
             Preferences::addHighlight(
                 cgHilight.readEntry("Pattern"),
                 cgHilight.readEntry("RegExp", false),
@@ -671,9 +671,9 @@ void Application::readOptions()
         Preferences::clearIgnoreList();
     // Read all ignores
     index=0;
-    while (cgIgnoreList.hasKey(QString(QStringLiteral("Ignore%1")).arg(index)))
+    while (cgIgnoreList.hasKey(QStringLiteral("Ignore%1").arg(index)))
     {
-        Preferences::addIgnore(cgIgnoreList.readEntry(QString(QStringLiteral("Ignore%1")).arg(index++)));
+        Preferences::addIgnore(cgIgnoreList.readEntry(QStringLiteral("Ignore%1").arg(index++)));
     }
 
     // Aliases
@@ -769,7 +769,7 @@ void Application::saveOptions(bool updateGUI)
     for (IdentityList::ConstIterator it = identityList.constBegin(); it != identityList.constEnd(); ++it)
     {
         IdentityPtr identity = (*it);
-        KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(QString(QStringLiteral("Identity %1")).arg(index)));
+        KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(QStringLiteral("Identity %1").arg(index)));
 
         cgIdentity.writeEntry("Name",identity->getName());
         cgIdentity.writeEntry("Ident",identity->getIdent());
@@ -876,7 +876,7 @@ void Application::saveOptions(bool updateGUI)
 
         for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
         {
-            groupName = QString(QStringLiteral("Server %1")).arg(index2);
+            groupName = QStringLiteral("Server %1").arg(index2);
             servers.append(groupName);
             KConfigGroup cgServer(KSharedConfig::openConfig()->group(groupName));
             cgServer.writeEntry("Server", (*it2).host());
@@ -892,7 +892,7 @@ void Application::saveOptions(bool updateGUI)
 
         for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
         {
-            groupName = QString(QStringLiteral("Channel %1")).arg(index3);
+            groupName = QStringLiteral("Channel %1").arg(index3);
             channels.append(groupName);
             KConfigGroup cgChannel(KSharedConfig::openConfig()->group(groupName));
             cgChannel.writeEntry("Name", (*it3).name());
@@ -905,7 +905,7 @@ void Application::saveOptions(bool updateGUI)
 
         for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
         {   // TODO FIXME: is it just me or is this broken?
-            groupName = QString(QStringLiteral("Channel %1")).arg(index3);
+            groupName = QStringLiteral("Channel %1").arg(index3);
             channelHistory.append(groupName);
             KConfigGroup cgChannelHistory(KSharedConfig::openConfig()->group(groupName));
             cgChannelHistory.writeEntry("Name", (*it3).name());
@@ -914,7 +914,7 @@ void Application::saveOptions(bool updateGUI)
             index3++;
         }
 
-        QString sgn = QString(QStringLiteral("ServerGroup %1")).arg(QString::number(index).rightJustified(width,QLatin1Char('0')));
+        QString sgn = QStringLiteral("ServerGroup %1").arg(QString::number(index).rightJustified(width,QLatin1Char('0')));
         KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(sgn));
         cgServerGroup.writeEntry("Name", it.value()->name());
         cgServerGroup.writeEntry("Identity", it.value()->identity()->getName());
@@ -936,7 +936,7 @@ void Application::saveOptions(bool updateGUI)
     KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group("Ignore List"));
     QList<Ignore*> ignoreList=Preferences::ignoreList();
     for (int i = 0; i < ignoreList.size(); ++i) {
-        cgIgnoreList.writeEntry(QString(QStringLiteral("Ignore%1")).arg(i),QString(QStringLiteral("%1,%2")).arg(ignoreList.at(i)->getName()).arg(ignoreList.at(i)->getFlags()));
+        cgIgnoreList.writeEntry(QStringLiteral("Ignore%1").arg(i), QStringLiteral("%1,%2").arg(ignoreList.at(i)->getName()).arg(ignoreList.at(i)->getFlags()));
     }
 
     // Channel Encodings
@@ -1166,7 +1166,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
                         // replace %0-9 in regex groups
                         for (int capture=0;capture<captures.count();capture++)
                         {
-                            QString search = QString(QStringLiteral("%%1")).arg(capture);
+                            QString search = QStringLiteral("%%1").arg(capture);
                             replaceWith.replace(search, captures[capture]);
                         }
                         //Explanation why this is important so we don't forget:

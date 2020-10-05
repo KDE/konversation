@@ -70,7 +70,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("message"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("message"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -106,7 +106,7 @@ namespace Konversation
         KNotification* msg;
         if (message.isEmpty())
         {
-            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -120,7 +120,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -153,7 +153,7 @@ namespace Konversation
         KNotification* msg;
         if (message.isEmpty()) // TODO document how this can happen, seems nonsensical
         {
-            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt;")).arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -167,7 +167,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QString(QStringLiteral("&lt;%1&gt; %2")).arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
 
             if (osd)
             {
@@ -408,12 +408,12 @@ namespace Konversation
         if(fromNick.isEmpty()) // TODO document this one too
         {
             QString eventTitle = i18nc("Notification title; see Event/highlight in konversation.notifyrc", "Highlight triggered in %1", chatWin->getName());
-            KNotification::event(QStringLiteral("highlight"), eventTitle, QString(QStringLiteral("(%1) *** %2")).arg(chatWin->getName(), forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) *** %2").arg(chatWin->getName(), forKNotify), QPixmap(), m_mainWindow);
         }
         else
         {
             QString eventTitle = i18nc("Notification title; see Event/highlight in konversation.notifyrc", "Highlight triggered by %2 in %1", chatWin->getName(), fromNick);
-            KNotification::event(QStringLiteral("highlight"), eventTitle, QString(QStringLiteral("(%1) &lt;%2&gt; %3")).arg(chatWin->getName(), fromNick, forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) &lt;%2&gt; %3").arg(chatWin->getName(), fromNick, forKNotify), QPixmap(), m_mainWindow);
         }
 
         if(Preferences::self()->oSDShowOwnNick() &&
