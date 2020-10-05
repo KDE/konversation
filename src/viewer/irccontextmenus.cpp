@@ -283,7 +283,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
         return;
 
     QString searchText = selectedText;
-    searchText = searchText.replace('\n', ' ').replace('\r', ' ').simplified();
+    searchText = searchText.replace(QLatin1Char('\n'), QLatin1Char(' ')).replace(QLatin1Char('\r'), QLatin1Char(' ')).simplified();
 
     if (searchText.isEmpty())
         return;

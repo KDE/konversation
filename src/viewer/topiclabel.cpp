@@ -211,8 +211,8 @@ namespace Konversation
 
         QString text = m_fullText;
         // text.replace("&", "&amp;"). Not needed as we do it in tagUrls
-        text.replace('<', "\x0blt;"). // tagUrls will replace \x0b with &
-            replace('>', "\x0bgt;");
+        text.replace(QLatin1Char('<'), QLatin1String("\x0blt;")). // tagUrls will replace \x0b with &
+            replace(QLatin1Char('>'), QLatin1String("\x0bgt;"));
 
         text = tagUrls(text, m_channelName);
 
@@ -360,8 +360,8 @@ namespace Konversation
         }
 
         // Change & to &amp; to prevent html entities to do strange things to the text
-        htmlText.replace('&', QLatin1String("&amp;"));
-        htmlText.replace("\x0b", QLatin1String("&"));
+        htmlText.replace(QLatin1Char('&'), QLatin1String("&amp;"));
+        htmlText.replace(QLatin1Char('\x0b'), QLatin1String("&"));
         return htmlText;
     }
 }

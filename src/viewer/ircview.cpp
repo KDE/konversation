@@ -870,8 +870,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     }
 
     // Nicks are in "<nick>" format so replace the "<>"
-    nick.replace('<',QLatin1String("&lt;"));
-    nick.replace('>',QLatin1String("&gt;"));
+    nick.replace(QLatin1Char('<'), QLatin1String("&lt;"));
+    nick.replace(QLatin1Char('>'), QLatin1String("&gt;"));
 
     QString line;
     QChar::Direction dir;
@@ -1082,9 +1082,9 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
 
     // TODO: Use QStyleSheet::escape() here
     // Replace all < with &lt;
-    filteredLine.replace('<', "\x0blt;");
+    filteredLine.replace(QLatin1Char('<'), QLatin1String("\x0blt;"));
     // Replace all > with &gt;
-    filteredLine.replace('>', "\x0bgt;");
+    filteredLine.replace(QLatin1Char('>'), QLatin1String("\x0bgt;"));
 
     if (filteredLine.contains(QLatin1Char('\x07'))) {
         if (Preferences::self()->beep())
@@ -1252,8 +1252,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
     else
     {
         // Change & to &amp; to prevent html entities to do strange things to the text
-        htmlText.replace('&', QLatin1String("&amp;"));
-        htmlText.replace("\x0b", QLatin1String("&"));
+        htmlText.replace(QLatin1Char('&'), QLatin1String("&amp;"));
+        htmlText.replace(QLatin1Char('\x0b'), QLatin1String("&"));
     }
 
     int linkPos = -1;
@@ -1662,8 +1662,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
     if (parseURL)
     {
         // Change & to &amp; to prevent html entities to do strange things to the text
-        htmlText.replace('&', QLatin1String("&amp;"));
-        htmlText.replace("\x0b", QLatin1String("&"));
+        htmlText.replace(QLatin1Char('&'), QLatin1String("&amp;"));
+        htmlText.replace(QLatin1Char('\x0b'), QLatin1String("&"));
     }
 
     if (closeAllTags)
@@ -2129,7 +2129,7 @@ void IRCView::openLink(const QUrl& url)
 {
     QString link(url.toString());
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link.replace (' ', QLatin1String("%20"));
+    link.replace (QLatin1Char(' '), QLatin1String("%20"));
     // HACK Handle pipe as toString doesn't seem to decode that correctly
     link.replace (QLatin1String("%7C"), QLatin1String("|"));
     // HACK Handle ` as toString doesn't seem to decode that correctly
@@ -2155,7 +2155,7 @@ void IRCView::highlightedSlot(const QString& /*_link*/)
 {
     QString link = m_urlToCopy;
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link.replace (' ', QLatin1String("%20"));
+    link.replace(QLatin1Char(' '), QLatin1String("%20"));
 
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())

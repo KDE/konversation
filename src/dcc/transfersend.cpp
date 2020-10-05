@@ -212,10 +212,10 @@ namespace Konversation
             }
 
             //FIXME: if "\\\"" works well on other IRC clients, replace "\"" with "\\\""
-            m_fileName.replace('\"', '_');
+            m_fileName.replace(QLatin1Char('\"'), QLatin1Char('_'));
             if (Preferences::self()->dccSpaceToUnderscore())
             {
-                m_fileName.replace(' ', '_');
+                m_fileName.replace(QLatin1Char(' '), QLatin1Char('_'));
             }
 
             if (!m_fileURL.isLocalFile())

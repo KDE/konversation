@@ -891,7 +891,7 @@ void ViewContainer::updateViewActions(int index)
                 if (m_frontServer)
                 {
                     QString name = m_frontServer->getDisplayName();
-                    name.replace('&', QLatin1String("&&"));
+                    name.replace(QLatin1Char('&'), QLatin1String("&&"));
                     channelListAction->setEnabled(true);
                     channelListAction->setChecked(m_frontServer->getChannelListPanel());
                     channelListAction->setText(i18n("Channel &List for %1",name));
@@ -913,7 +913,7 @@ void ViewContainer::updateViewActions(int index)
                 else
                 {
                     QString name = view->getName();
-                    name.replace('&', QLatin1String("&&"));
+                    name.replace(QLatin1Char('&'), QLatin1String("&&"));
                     action->setText(i18n("&Open Logfile for %1",name));
                 }
             }
@@ -1467,7 +1467,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         beginInsertRows(idx, placement - statusViewIndex - 1, placement - statusViewIndex - 1);
     }
 
-    m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', QLatin1String("&&")));
+    m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace(QLatin1Char('&'), QLatin1String("&&")));
 
     endInsertRows();
 
@@ -1655,11 +1655,11 @@ void ViewContainer::unclutterTabs()
     }
 
     for (ChatWindow *view : qAsConst(topLevelViews)) {
-        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
+        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace(QLatin1Char('&'), QLatin1String("&&")));
     }
 
     for (ChatWindow *view : qAsConst(nonTopLevelViews)) {
-        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace('&', QLatin1String("&&")));
+        m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace(QLatin1Char('&'), QLatin1String("&&")));
     }
 
     updateViews();

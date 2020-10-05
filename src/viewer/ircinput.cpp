@@ -404,7 +404,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         Konversation::sterilizeUnicode(pasteText);
 
         // replace \r with \n to make xterm pastes happy
-        pasteText.replace('\r','\n');
+        pasteText.replace(QLatin1Char('\r'), QLatin1Char('\n'));
         // remove blank lines
         while(pasteText.contains(QLatin1String("\n\n")))
             pasteText.replace(QLatin1String("\n\n"),QLatin1String("\n"));

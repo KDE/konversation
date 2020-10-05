@@ -237,7 +237,7 @@ namespace Konversation
 
     QString ChannelOptionsDialog::topic()
     {
-        return m_ui.topicEdit->toPlainText().replace('\n', ' ');
+        return m_ui.topicEdit->toPlainText().replace(QLatin1Char('\n'), QLatin1Char(' '));
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(const QItemSelection& selection)
