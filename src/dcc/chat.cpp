@@ -511,7 +511,7 @@ namespace Konversation
                 line = codec->toUnicode(buffer);
                 delete[] buffer;
 
-                const QStringList &lines = line.split('\n', QString::SkipEmptyParts);
+                const QStringList &lines = line.split(QLatin1Char('\n'), QString::SkipEmptyParts);
                 for (const QString &lin : lines) {
                     emit receivedRawLine(lin);
                 }

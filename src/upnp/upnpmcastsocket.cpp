@@ -171,7 +171,7 @@ namespace Konversation
                 }
                 else if (line.contains(QLatin1String("USN"), Qt::CaseInsensitive) && line.contains(QLatin1String("uuid"), Qt::CaseInsensitive))
                 {
-                    uuid = line.split(':').at(2);
+                    uuid = line.split(QLatin1Char(':')).at(2);
 
                     if (uuid.length() == 0)
                         return nullptr;

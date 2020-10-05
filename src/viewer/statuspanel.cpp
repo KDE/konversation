@@ -107,7 +107,7 @@ void StatusPanel::sendText(const QString& sendLine)
     OutputFilter::replaceAliases(outputAll, this);
 
     // Send all strings, one after another
-    QStringList outList=outputAll.split('\n');
+    const QStringList outList = outputAll.split(QLatin1Char('\n'));
     for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
@@ -137,7 +137,7 @@ void StatusPanel::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline=text.split('\n');
+        const QStringList multiline = text.split(QLatin1Char('\n'));
         for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];

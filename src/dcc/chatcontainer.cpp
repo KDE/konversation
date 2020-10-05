@@ -286,7 +286,7 @@ namespace Konversation
                 return;
             }
 
-            const QStringList lines = sterilizeUnicode(text.split('\n', QString::SkipEmptyParts));
+            const QStringList lines = sterilizeUnicode(text.split(QLatin1Char('\n'), QString::SkipEmptyParts));
 
             for (const QString &line : lines) {
                 m_chat->sendText(line);

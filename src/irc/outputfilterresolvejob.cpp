@@ -37,7 +37,7 @@ OutputFilterResolveJob::OutputFilterResolveJob(const Konversation::OutputFilterI
         return;
     }
 
-    QStringList splitString = input.parameter.split(' ');
+    const QStringList splitString = input.parameter.split(QLatin1Char(' '));
     m_target = splitString[0];
 
     QHostAddress address(m_target);

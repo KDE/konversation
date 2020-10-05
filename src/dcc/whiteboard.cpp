@@ -94,7 +94,7 @@ namespace Konversation
             if (ctcpCommand == QLatin1String("DR") && firstSplit.size() == 2)
             {
                 // DR tooltype,width,pencolor,brushcolor,x1,y1,x2,y2
-                const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
+                const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::SkipEmptyParts);
                 if (drArgsList.size() != 8)
                 {
                     qDebug() << "wrong size:" << drArgsList.size();
@@ -209,7 +209,7 @@ namespace Konversation
             }
             else if (ctcpCommand == QLatin1String("TXT") && firstSplit.size() == 2)
             {
-                QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
+                QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::KeepEmptyParts);
                 if (txtArgsList.size() < 3)
                 {
                     qDebug() << "txt wrong size:" << txtArgsList.size();
@@ -241,7 +241,7 @@ namespace Konversation
             }
             else if (ctcpCommand == QLatin1String("TXTEX") && firstSplit.size() == 2)
             {
-                QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
+                QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::KeepEmptyParts);
                 if (txtArgsList.size() < 8)
                 {
                     qDebug() << "txtex wrong size:" << txtArgsList.size();
@@ -368,7 +368,7 @@ namespace Konversation
             else if (ctcpCommand == QLatin1String("BLT") && firstSplit.size() == 2)
             {
                 // BLT x1src,y1src,x2src,y2src,xdest,ydest
-                const QStringList drArgsList = firstSplit.at(1).split(',', QString::SkipEmptyParts);
+                const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::SkipEmptyParts);
                 if (drArgsList.size() != 6)
                 {
                     qDebug() << "blt wrong size:" << drArgsList.size();

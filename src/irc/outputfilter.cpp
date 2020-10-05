@@ -947,7 +947,7 @@ namespace Konversation
         }
         else
         {
-            QStringList parameterList = input.parameter.replace(QLatin1String("\\ "), QLatin1String("%20")).split(' ');
+            const QStringList parameterList = input.parameter.replace(QLatin1String("\\ "), QLatin1String("%20")).split(QLatin1Char(' '));
 
             QString dccType = parameterList[0].toLower();
 
@@ -1218,7 +1218,7 @@ namespace Konversation
                 Preferences::self()->commandChar()));
         else
         {
-            QStringList parameterList = input.parameter.split(' ');
+            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
             if (parameterList.length() >= 2 && isParameter(QStringLiteral("showpath"), parameterList[0]) && !parameterList[1].isEmpty())
             {
@@ -1264,7 +1264,7 @@ namespace Konversation
 
         if (!input.parameter.isEmpty() && serverGroupId != -1)
         {
-            QStringList list = input.parameter.split(' ', QString::SkipEmptyParts);
+            QStringList list = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
 
             for (int index = 0; index < list.count(); ++index)
@@ -1322,7 +1322,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QStringList parameterList = input.parameter.split(' ');
+        QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
         if (input.parameter.isEmpty() || parameterList.count() == 1)
         {
@@ -1363,7 +1363,7 @@ namespace Konversation
 
         if (!input.parameter.isEmpty())
         {
-            QStringList parameterList = input.parameter.split(' ');
+            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
             QString channel;
             QString option;
             // check for option
@@ -1461,7 +1461,7 @@ namespace Konversation
 
         if (!input.parameter.isEmpty())
         {
-            QStringList parameterList = input.parameter.split(' ');
+            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
             QString channel;
 
             // if the user specified a channel
@@ -1515,7 +1515,7 @@ namespace Konversation
         // did the user give parameters at all?
         if (!input.parameter.isEmpty())
         {
-            QStringList parameterList = input.parameter.split(' ');
+            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
             // if nothing else said, only ignore channels and queries
             int value = Ignore::Channel | Ignore::Query;
@@ -1566,7 +1566,7 @@ namespace Konversation
         else
         {
             QString unignore = input.parameter.simplified();
-            const QStringList unignoreList = unignore.split(' ');
+            const QStringList unignoreList = unignore.split(QLatin1Char(' '));
 
             QStringList succeeded;
             QStringList failed;
@@ -1628,7 +1628,7 @@ namespace Konversation
             emit reconnectServer(QString());
         else
         {
-            QStringList parameterList = input.parameter.split(' ');
+            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
             if (parameterList.count() == 3)
                 emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);
@@ -1676,7 +1676,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_setkey(const OutputFilterInput& input)
     {
         #ifdef HAVE_QCA2
-        QStringList parms = input.parameter.split(' ', QString::SkipEmptyParts);
+        QStringList parms = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
         if (parms.count() == 1 && !input.destination.isEmpty())
             parms.prepend(input.destination);
@@ -1715,7 +1715,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_keyx(const OutputFilterInput& input)
     {
         #ifdef HAVE_QCA2
-        QStringList parms = input.parameter.split(' ', QString::SkipEmptyParts);
+        QStringList parms = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
         if (parms.isEmpty() && !input.destination.isEmpty())
             parms.prepend(input.destination);
@@ -1950,7 +1950,7 @@ namespace Konversation
         // TODO: Make sure this works with +l <limit> and +k <password> also!
         QString token;
         QString tmpToken;
-        QStringList nickList = parameter.split(' ');
+        QStringList nickList = parameter.split(QLatin1Char(' '));
 
         if(nickList.count())
         {
@@ -2031,7 +2031,7 @@ namespace Konversation
 
     QString OutputFilter::addNickToEmptyNickList(const QString& nick, const QString& parameter)
     {
-        QStringList nickList = parameter.split(' ');
+        const QStringList nickList = parameter.split(QLatin1Char(' '));
         QString newNickList;
 
         if (nickList.isEmpty())
