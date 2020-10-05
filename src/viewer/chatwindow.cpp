@@ -153,7 +153,7 @@ QString ChatWindow::getURI(bool passNetwork)
 
     if (getType() == Channel)
     {
-        channel = getName().remove(QRegExp("^#"));
+        channel = getName().remove(QRegExp(QStringLiteral("^#")));
         // must protect second #, but might as well protect all of them
         channel.replace(QLatin1String("#"), QLatin1String("%23"));
     }

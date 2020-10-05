@@ -139,9 +139,9 @@ QRect OSDWidget::determineMetrics( const int M )
     const QSize max = QApplication::screens()[m_screen]->size() - margin;
 
     // If we don't do that, the boundingRect() might not be suitable for drawText() (Qt issue N67674)
-    m_currentText.replace( QRegExp( " +\n" ), QStringLiteral("\n") );
+    m_currentText.replace(QRegExp(QStringLiteral(" +\n")), QStringLiteral("\n"));
     // remove consecutive line breaks
-    m_currentText.replace( QRegExp( "\n+" ), QStringLiteral("\n") );
+    m_currentText.replace(QRegExp(QStringLiteral("\n+")), QStringLiteral("\n"));
 
     QFont titleFont = font();
     titleFont.setBold(true);

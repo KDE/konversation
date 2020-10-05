@@ -1190,7 +1190,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
                 {
                     m_autoTextToSend.replace(QStringLiteral("%%1").arg(capture), captures[capture]);
                 }
-                m_autoTextToSend.remove(QRegExp("%[0-9]"));
+                m_autoTextToSend.remove(QRegExp(QStringLiteral("%[0-9]")));
             }
         }
 
@@ -1959,7 +1959,7 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
 
 QString IRCView::getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* fgValueOK, bool* bgValueOK)
 {
-    QRegExp ircColorRegExp("(\003([0-9][0-9]|[0-9]|)(,([0-9][0-9]|[0-9]|)|,|)|\017)");
+    QRegExp ircColorRegExp(QStringLiteral("(\003([0-9][0-9]|[0-9]|)(,([0-9][0-9]|[0-9]|)|,|)|\017)"));
     if (ircColorRegExp.indexIn(text,start) == -1)
         return QString();
 

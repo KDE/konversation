@@ -409,11 +409,11 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         while(pasteText.contains(QLatin1String("\n\n")))
             pasteText.replace(QLatin1String("\n\n"),QLatin1String("\n"));
 
-        QRegExp reTopSpace("^ *\n");
+        QRegExp reTopSpace(QStringLiteral("^ *\n"));
         while(pasteText.contains(reTopSpace))
             pasteText.remove(reTopSpace);
 
-        QRegExp reBottomSpace("\n *$");
+        QRegExp reBottomSpace(QStringLiteral("\n *$"));
         while(pasteText.contains(reBottomSpace))
             pasteText.remove(reBottomSpace);
 
