@@ -432,7 +432,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
 
             // Remove the \n from end of the line if there's only one \n
             if(!signal)
-                pasteText.remove('\n');
+                pasteText.remove(QLatin1Char('\n'));
         }
         else
         {

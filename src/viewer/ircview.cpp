@@ -961,7 +961,7 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
     SelectionPin selpin(this); // HACK stop selection at end from growing
     QString line(newLine);
 
-    line.remove('\n');
+    line.remove(QLatin1Char('\n'));
 
     QTextBrowser::append(line);
 
@@ -1092,7 +1092,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
             qApp->beep();
         }
         //remove char after beep
-        filteredLine.remove('\x07');
+        filteredLine.remove(QLatin1Char('\x07'));
     }
 
     filteredLine = ircTextToHtml(filteredLine,  parseURL, defaultColor, whoSent, true, direction);
@@ -2145,7 +2145,7 @@ void IRCView::openLink(const QUrl& url)
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1Char('#')) && m_server && m_server->isConnected()) {
         QString recipient(link);
-        recipient.remove('#');
+        recipient.remove(QLatin1Char('#'));
         NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
         m_server->addQuery(nickInfo, true /*we initiated*/);
     }

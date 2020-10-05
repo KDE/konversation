@@ -88,7 +88,7 @@ void PasteEditor::addQuotationIndicators()
 void PasteEditor::removeNewlines()
 {
     QString text(m_textEditor->toPlainText());
-    text.remove('\r');
+    text.remove(QLatin1Char('\r'));
     text.remove(QRegExp("^\n+|\n+$"));
 
     int i = 0;

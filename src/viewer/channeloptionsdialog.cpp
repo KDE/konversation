@@ -299,19 +299,19 @@ namespace Konversation
     {
         QString modeString = m_channel->getServer()->allowedChannelModes();
         // These modes are handled in a special way: ntimslkbeI
-        modeString.remove('t');
-        modeString.remove('n');
-        modeString.remove('l');
-        modeString.remove('i');
-        modeString.remove('m');
-        modeString.remove('s');
-        modeString.remove('k');
-        modeString.remove('b');
-        modeString.remove('e');
-        modeString.remove('I');
-        modeString.remove('O');
-        modeString.remove('o');
-        modeString.remove('v');
+        modeString.remove(QLatin1Char('t'));
+        modeString.remove(QLatin1Char('n'));
+        modeString.remove(QLatin1Char('l'));
+        modeString.remove(QLatin1Char('i'));
+        modeString.remove(QLatin1Char('m'));
+        modeString.remove(QLatin1Char('s'));
+        modeString.remove(QLatin1Char('k'));
+        modeString.remove(QLatin1Char('b'));
+        modeString.remove(QLatin1Char('e'));
+        modeString.remove(QLatin1Char('I'));
+        modeString.remove(QLatin1Char('O'));
+        modeString.remove(QLatin1Char('o'));
+        modeString.remove(QLatin1Char('v'));
 
         QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
 
