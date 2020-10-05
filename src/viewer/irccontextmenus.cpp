@@ -519,7 +519,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         channel = context;
 
     QString pattern;
-    QString mode;
+    QChar mode;
 
     switch (actionId)
     {
@@ -538,32 +538,32 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
         case GiveOp:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c +%m %l");
-            mode = 'o';
+            mode = QLatin1Char('o');
             break;
         case TakeOp:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c -%m %l");
-            mode = 'o';
+            mode = QLatin1Char('o');
             break;
         case GiveHalfOp:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c +%m %l");
-            mode = 'h';
+            mode = QLatin1Char('h');
             break;
         case TakeHalfOp:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c -%m %l");
-            mode = 'h';
+            mode = QLatin1Char('h');
             break;
         case GiveVoice:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c +%m %l");
-            mode = 'v';
+            mode = QLatin1Char('v');
             break;
         case TakeVoice:
             if (channel.isEmpty()) break;
             pattern = QStringLiteral("MODE %c -%m %l");
-            mode = 'v';
+            mode = QLatin1Char('v');
             break;
         case Kick:
             commandToServer(server, QStringLiteral("kick %1"), nicks, channel);
@@ -695,7 +695,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
             command = pattern;
             partialList = nicks.mid(index, modesCount);
             command.replace(QLatin1String("%l"), partialList.join(QLatin1Char(' ')));
-            const QString repeatedMode = mode.repeated(partialList.count());
+            const QString repeatedMode = QString(partialList.count(), mode);
 
             command.replace(QLatin1String("%m"), repeatedMode);
 

@@ -129,8 +129,8 @@ void Autoreplace_Config::saveSettings()
         QStringList definition = newList[index];
         grp.writeEntry(regexString + indexString,definition.at(0)); //regex status
         grp.writeEntry(directString + indexString,definition.at(1)); //direction
-        grp.writeEntry(patternString + indexString,QString(definition.at(2)+'#')); //pattern
-        grp.writeEntry(replaceString + indexString,QString(definition.at(3)+'#')); //replace
+        grp.writeEntry(patternString + indexString, QString(definition.at(2) + QLatin1Char('#'))); //pattern
+        grp.writeEntry(replaceString + indexString, QString(definition.at(3) + QLatin1Char('#'))); //replace
 
     } // for
   }
@@ -161,7 +161,7 @@ QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
   // go through all items and save them into the configuration
   while(item)
   {
-    regex = (item->checkState(0) == Qt::Checked) ? '1' : '0';
+    regex = (item->checkState(0) == Qt::Checked) ? QLatin1Char('1') : QLatin1Char('0');
     // remember entry in internal list (col 4 is hidden for input/output)
     newList.append(QStringList() << regex << item->text(4) << item->text(2) << item->text(3));
     // get next item in the listview

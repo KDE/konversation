@@ -90,7 +90,7 @@ QStringList Alias_Config::currentAliasList()
     QTreeWidgetItem* item=aliasListView->topLevelItem(0);
     while(item)
         {
-        newList.append(item->text(0)+' '+item->text(1));
+        newList.append(item->text(0) + QLatin1Char(' ') + item->text(1));
         item=aliasListView->itemBelow(item);
         }
     return newList;

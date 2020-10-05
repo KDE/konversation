@@ -727,11 +727,11 @@ void Server::requestAvailableCapabilies ()
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
     QStringList requestCaps;
-    const QStringList capsList = availableCaps.split (QChar(' '), QString::SkipEmptyParts);
+    const QStringList capsList = availableCaps.split(QLatin1Char(' '), QString::SkipEmptyParts);
     QStringList nameValue;
 
     for (const QString &cap : capsList) {
-        nameValue = cap.split(QChar('='));
+        nameValue = cap.split(QLatin1Char('='));
 
         if (nameValue.isEmpty())
             continue;
@@ -757,7 +757,7 @@ void Server::capInitiateNegotiation(const QString &availableCaps)
             {
                 QStringList supportedSaslTypes;
                 if(nameValue.size() > 1)
-                    supportedSaslTypes = nameValue.at(1).split(QChar(','));
+                    supportedSaslTypes = nameValue.at(1).split(QLatin1Char(','));
 
                 supportedSaslTypes.removeDuplicates();
 

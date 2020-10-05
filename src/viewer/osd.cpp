@@ -88,7 +88,7 @@ void OSDWidget::show() //virtual
     if ( !isEnabled() || m_currentText.isEmpty() )
         return;
 
-    const int M = fontMetrics().horizontalAdvance( 'x' );
+    const int M = fontMetrics().horizontalAdvance(QLatin1Char('x'));
 
     const QRect newGeometry = determineMetrics( M );
 

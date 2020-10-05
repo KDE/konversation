@@ -392,7 +392,7 @@ namespace Konversation
                 {
                     bool found = false;
                     QString modeString;
-                    modeString = mode;
+                    modeString = QLatin1Char(mode);
 
                     for (int i = 0; !found && i < modesModel->rowCount(); ++i)
                     {

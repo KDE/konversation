@@ -176,13 +176,13 @@ QString ChatWindow::getURI(bool passNetwork)
     if (!passNetwork)
     {
         server = getServer()->getServerName();
-        port = ':'+QString::number(getServer()->getPort());
+        port = QLatin1Char(':') + QString::number(getServer()->getPort());
     }
 
     if (server.contains(QLatin1Char(':'))) // IPv6
-        server = '['+server+']';
+        server = QLatin1Char('[') + server + QLatin1Char(']');
 
-    url = protocol+server+port+'/'+channel;
+    url = protocol + server + port + QLatin1Char('/') + channel;
 
     return url;
 }

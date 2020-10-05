@@ -448,7 +448,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
             if(!toPlainText().isEmpty())
             {
               // prepend text to the paste
-              pasteText=toPlainText()+'\n'+pasteText;
+              pasteText = toPlainText() + QLatin1Char('\n') + pasteText;
             }
             // ask the user on long pastes
             if(checkPaste(pasteText))
@@ -474,7 +474,7 @@ bool IRCInput::checkPaste(QString& text)
     int doPaste=KMessageBox::Yes;
 
     //text is now preconditioned when you get here
-    int lines=text.count('\n');
+    const int lines = text.count(QLatin1Char('\n'));
 
     if(text.length()>256 || lines)
     {

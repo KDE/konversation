@@ -1615,8 +1615,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     if (dirChar == ' ' &&
                         !lastChar.isNull() && lastChar == ' ')
                     {
-                        htmlText[pos] = '\xA0';
-                        lastChar = '\xA0';
+                        htmlText[pos] = QLatin1Char('\xA0');
+                        lastChar = QLatin1Char('\xA0');
                     }
                     else
                     {

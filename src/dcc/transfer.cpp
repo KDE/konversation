@@ -274,7 +274,7 @@ namespace Konversation
         {
             QString fileNameTmp = QFileInfo(fileName).fileName();
             if (fileNameTmp.startsWith(QLatin1Char('.'))) {
-                fileNameTmp.replace(0, 1, '_');         // Don't create hidden files
+                fileNameTmp.replace(0, 1, QLatin1Char('_'));         // Don't create hidden files
             }
             if (fileNameTmp.isEmpty())
             {
@@ -413,7 +413,7 @@ namespace Konversation
         QString Transfer::transferFileName(const QString & fileName)
         {
             if (fileName.contains(QLatin1Char(' ')) && !(fileName.startsWith(QLatin1Char('\"')) && fileName.endsWith(QLatin1Char('\"')))) {
-                return '\"'+fileName+'\"';
+                return QLatin1Char('\"') + fileName + QLatin1Char('\"');
             }
 
             return fileName;

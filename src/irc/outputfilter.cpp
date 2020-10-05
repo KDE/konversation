@@ -600,7 +600,7 @@ namespace Konversation
         if (input.parameter.isNull())
             result = error(i18n("%1NAMES with no target may disconnect you from the server. Specify "
                                 "'*' if you really want this.", Preferences::self()->commandChar()));
-        else if (input.parameter != QChar('*'))
+        else if (input.parameter != QLatin1Char('*'))
             result.toServer.append(input.parameter);
 
         return result;

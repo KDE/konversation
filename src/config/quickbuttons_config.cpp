@@ -123,7 +123,7 @@ QStringList QuickButtons_Config::currentButtonList()
   {
       item = buttonListView->topLevelItem(index);
 
-      newList.append(item->text(0)+','+item->text(1));
+      newList.append(item->text(0) + QLatin1Char(',') + item->text(1));
   }
 
   return newList;
