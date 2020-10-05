@@ -95,8 +95,7 @@ void PasteEditor::removeNewlines()
 
     while (i < text.length())
     {
-        if (text[i] == '\n')
-        {
+        if (text[i] == QLatin1Char('\n')) {
             if (text[i - 1].category() == QChar::Separator_Space)
             {
                 text.remove(i, 1);

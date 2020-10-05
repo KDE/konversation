@@ -50,12 +50,12 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
     QChar mode=sortingOrder[index];
     QTreeWidgetItem *item = nullptr;
     // find appropriate description
-    if(mode=='-') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
-    if(mode=='v') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Voice (+v)"));
-    if(mode=='h') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Halfops (+h)"));
-    if(mode=='o') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Operators (+o)"));
-    if(mode=='p') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Admins (+p)"));
-    if(mode=='q') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Owners (+q)"));
+    if (mode == QLatin1Char('-')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
+    if (mode == QLatin1Char('v')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Voice (+v)"));
+    if (mode == QLatin1Char('h')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Halfops (+h)"));
+    if (mode == QLatin1Char('o')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Operators (+o)"));
+    if (mode == QLatin1Char('p')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Admins (+p)"));
+    if (mode == QLatin1Char('q')) item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Owners (+q)"));
     item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
   }
 }

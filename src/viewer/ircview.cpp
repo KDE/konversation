@@ -1075,8 +1075,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     //  if the line starts with a space turn it into a non-breaking space.
     //    (which magically turns back into a space on copy)
 
-    if (filteredLine[0] == ' ')
-    {
+    if (filteredLine[0] == QLatin1Char(' ')) {
         filteredLine[0] = '\xA0';
     }
 
@@ -1612,9 +1611,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // we replace the current one with \xA0 (a forced space) and get
                     // "test<html> <html>\xA0<html> <html>\xA0test", which QTextEdit correctly shows as 4 spaces.
                     //NOTE: replacing all spaces with forced spaces will break text wrapping
-                    if (dirChar == ' ' &&
-                        !lastChar.isNull() && lastChar == ' ')
-                    {
+                    if (dirChar == QLatin1Char(' ') &&
+                        !lastChar.isNull() && lastChar == QLatin1Char(' ')) {
                         htmlText[pos] = QLatin1Char('\xA0');
                         lastChar = QLatin1Char('\xA0');
                     }

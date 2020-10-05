@@ -524,7 +524,7 @@ void IRCInput::insertCompletion(const QString& nick)
 
     QString line = toPlainText();
 
-    while(pos && line[pos-1] != ' ') pos--;
+    while(pos && line[pos-1] != QLatin1Char(' ')) pos--;
 
     line.remove(pos, oldPos - pos);
 
