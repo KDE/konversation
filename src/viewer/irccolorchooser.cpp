@@ -46,7 +46,7 @@ IRCColorChooser::IRCColorChooser(QWidget* parent)
 QString IRCColorChooser::color()
 {
     QString s;
-    s = "%C" + QString::number(m_ui.m_fgColorCBox->currentIndex()).rightJustified(2, '0');;
+    s = QLatin1String("%C") + QString::number(m_ui.m_fgColorCBox->currentIndex()).rightJustified(2, '0');
 
     if(m_ui.m_bgColorCBox->currentIndex() > 0)
     {

@@ -74,7 +74,7 @@ void Theme_Config::loadSettings()
 
         const auto themeDirs = dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
         for (const QString& themedir : themeDirs) {
-            QFileInfo file(path + themedir + "/index.desktop");
+            QFileInfo file(path + themedir + QLatin1String("/index.desktop"));
 
             if(file.exists())
             {
@@ -120,7 +120,7 @@ void Theme_Config::loadSettings()
 
             // if there was a comment to the theme, add it to the listview entry string
             if(!themeComment.isEmpty())
-                themeName = themeName+" ("+themeComment+')';
+                themeName = themeName + QLatin1String(" (") + themeComment + QLatin1Char(')');
 
             // insert entry into the listview
             iconThemeIndex->addItem(themeName);
@@ -186,7 +186,7 @@ void Theme_Config::installTheme()
     if(themeURL.isEmpty())
         return;
 
-    QString themesDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + "konversation/themes/");
+    QString themesDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/konversation/themes/"));
     QString tmpThemeFile;
 
     QTemporaryFile tmpFile; // file automatically deleted when object is destroyed
@@ -264,8 +264,7 @@ void Theme_Config::installTheme()
 
         for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
         {
-            if(themeDir->entry(*it+"/index.desktop") == nullptr)
-            {
+            if (themeDir->entry(*it + QLatin1String("/index.desktop")) == nullptr) {
                 KMessageBox::error(nullptr,
                     i18n("Theme archive is invalid."),
                     i18n("Cannot Install Theme"),
@@ -319,15 +318,15 @@ void Theme_Config::updatePreview(int id)
     QString dir;
     dir = m_dirs[id];
     dir.remove(QStringLiteral("/index.desktop"));
-    QPixmap normal(dir+"/irc_normal.png");
+    QPixmap normal(dir + QLatin1String("/irc_normal.png"));
 
     previewLabel1->setPixmap(normal);
-    previewLabel2->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_away.png")));
-    previewLabel3->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
-    previewLabel4->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
-    previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
-    previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
-    previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
+    previewLabel2->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_away.png"))));
+    previewLabel3->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_voice.png"))));
+    previewLabel4->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_halfop.png"))));
+    previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_op.png"))));
+    previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_admin.png"))));
+    previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_owner.png"))));
 }
 
 void Theme_Config::updateButtons()

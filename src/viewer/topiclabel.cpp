@@ -226,8 +226,8 @@ namespace Konversation
             setWordWrap(true);
         }
 
-        setToolTip("<qt>" + m_fullText.toHtmlEscaped() + "</qt>");
-        QLabel::setText("<qt>" + text + "</qt>");
+        setToolTip(QLatin1String("<qt>") + m_fullText.toHtmlEscaped() + QLatin1String("</qt>"));
+        QLabel::setText(QLatin1String("<qt>") + text + QLatin1String("</qt>"));
     }
 
     void TopicLabel::resizeEvent(QResizeEvent* ev)
@@ -274,7 +274,7 @@ namespace Konversation
     {
         QTextDocument document(this);
         document.setDefaultFont(font());
-        document.setHtml("<qt>" + text + "</qt>");
+        document.setHtml(QLatin1String("<qt>") + text + QLatin1String("</qt>"));
 
         return document.size().toSize().width();
     }

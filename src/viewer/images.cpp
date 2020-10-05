@@ -275,7 +275,7 @@ void Images::initializeNickIcons()
     NickIconSet iconSet;
 
     QString iconTheme = Preferences::self()->iconTheme();
-    QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, "konversation/themes/"+iconTheme, QStandardPaths::LocateDirectory);
+    QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("konversation/themes/") + iconTheme, QStandardPaths::LocateDirectory);
     QStringList icons;
     bool isDefaultTheme = (iconTheme == QLatin1String("default"));
 

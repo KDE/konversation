@@ -535,7 +535,7 @@ void Channel::completeNick()
         QString regexpStr(QStringLiteral("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|"));
 
         if(!Preferences::self()->prefixCharacter().isEmpty())
-            regexpStr += "\\" + Preferences::self()->prefixCharacter();
+            regexpStr += QLatin1Char('\\') + Preferences::self()->prefixCharacter();
 
         regexpStr += QLatin1Char(']');
         QRegExp tmp(regexpStr);

@@ -245,12 +245,10 @@ namespace Konversation
             {
                 const QString cmd = line.section(QLatin1Char(' '), 0, 0).toLower();
                 qDebug() << "cmd" << cmd;
-                if (cmd == cc + "clear")
-                {
+                if (cmd == cc + QLatin1String("clear")) {
                     textView->clear();
                 }
-                else if (cmd == cc + "me")
-                {
+                else if (cmd == cc + QLatin1String("me")) {
                     const QString toSend = line.section(QLatin1Char(' '), 1);
                     //qDebug() << "toSend" << toSend;
                     if (toSend.isEmpty())
@@ -263,8 +261,7 @@ namespace Konversation
                         appendAction(m_chat->ownNick(), toSend);
                     }
                 }
-                else if (cmd == cc + "close")
-                {
+                else if (cmd == cc + QLatin1String("close")) {
                     closeYourself(false);
                 }
                 else

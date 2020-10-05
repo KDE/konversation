@@ -177,10 +177,10 @@ namespace Konversation
             if (newTopic.isEmpty())
             {
                 if (!oldTopic.isEmpty())
-                    m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + " \x01");
+                    m_channel->sendText(Preferences::self()->commandChar() + QLatin1String("TOPIC ") + m_channel->getName() + QLatin1String(" \x01"));
             }
             else
-                m_channel->sendText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + QLatin1Char(' ') + newTopic);
+                m_channel->sendText(Preferences::self()->commandChar() + QLatin1String("TOPIC ") + m_channel->getName() + QLatin1Char(' ') + newTopic);
         }
 
         const QStringList newModeList = modes();

@@ -252,8 +252,8 @@ namespace Konversation
         // someone didn't notice leading spaces
         {
             QString testNickServ(inputLine.trimmed());
-            if(testNickServ.startsWith(Preferences::self()->commandChar() + "nickserv", Qt::CaseInsensitive)
-              || testNickServ.startsWith(Preferences::self()->commandChar() + "ns", Qt::CaseInsensitive))
+            if(testNickServ.startsWith(Preferences::self()->commandChar() + QLatin1String("nickserv"), Qt::CaseInsensitive)
+              || testNickServ.startsWith(Preferences::self()->commandChar() + QLatin1String("ns"), Qt::CaseInsensitive))
             {
                     inputLine = testNickServ;
             }
@@ -281,7 +281,7 @@ namespace Konversation
 
             if (supportedCommands().contains(command))
             {
-                QString methodSignature("command_" + command);
+                QString methodSignature(QLatin1String("command_") + command);
 
                 QMetaObject::invokeMethod(this,
                     methodSignature.toLatin1().constData(),
@@ -310,13 +310,13 @@ namespace Konversation
                 result.outputList = outputList;
                 for (QStringList::ConstIterator it = outputList.constBegin(); it != outputList.constEnd(); ++it)
                 {
-                    result.toServerList += "PRIVMSG " + destination + " :" + *it;
+                    result.toServerList += QLatin1String("PRIVMSG ") + destination + QLatin1String(" :") + *it;
                 }
             }
             else
             {
                 result.output = inputLine;
-                result.toServer = "PRIVMSG " + destination + " :" + inputLine;
+                result.toServer = QLatin1String("PRIVMSG ") + destination + QLatin1String(" :") + inputLine;
             }
 
             result.type = Message;
@@ -397,12 +397,12 @@ namespace Konversation
         {
             // Note that this relies on the channels-flush-nicklists-on-disconnect behavior.
             if (!channel->numberOfNicks())
-                result.toServer = "JOIN " + input.parameter;
+                result.toServer = QLatin1String("JOIN ") + input.parameter;
 
             if (channel->joined()) emit showView(channel);
         }
         else
-            result.toServer = "JOIN " + input.parameter;
+            result.toServer = QLatin1String("JOIN ") + input.parameter;
 
         return result;
     }
@@ -432,7 +432,7 @@ namespace Konversation
                 if (reason.isEmpty())
                     reason = m_server->getIdentity()->getKickReason();
 
-                result.toServer = "KICK " + input.destination + QLatin1Char(' ') + victim + " :" + reason;
+                result.toServer = QLatin1String("KICK ") + input.destination + QLatin1Char(' ') + victim + QLatin1String(" :") + reason;
             }
         }
         else
@@ -451,7 +451,7 @@ namespace Konversation
         {
             // But only if we actually are in a channel
             if (isAChannel(input.destination))
-                result.toServer = "PART " + input.destination + " :" +
+                result.toServer = QLatin1String("PART ") + input.destination + QLatin1String(" :") +
                                   m_server->getIdentity()->getPartReason();
             else if (m_server->getQueryByName(input.destination))
                 m_server->closeQuery(input.destination);
@@ -473,13 +473,13 @@ namespace Konversation
                 if (reason.isEmpty())
                     reason = m_server->getIdentity()->getPartReason();
 
-                result.toServer = "PART " + channel + " :" + reason;
+                result.toServer = QLatin1String("PART ") + channel + QLatin1String(" :") + reason;
             }
             // part this channel with a given reason
             else
             {
                 if (isAChannel(input.destination))
-                    result.toServer = "PART " + input.destination + " :" + input.parameter;
+                    result.toServer = QLatin1String("PART ") + input.destination + QLatin1String(" :") + input.parameter;
                 else
                     result = error(i18n("%1PART without channel name only works from within a channel.",
                                         Preferences::self()->commandChar()));
@@ -503,7 +503,7 @@ namespace Konversation
         {
             // But only if we actually are in a channel
             if (isAChannel(input.destination))
-                result.toServer = "TOPIC " + input.destination;
+                result.toServer = QLatin1String("TOPIC ") + input.destination;
             else
                 result = error(i18n("%1TOPIC without parameters only works from within a channel.",
                                     Preferences::self()->commandChar()));
@@ -524,7 +524,7 @@ namespace Konversation
                 // otherwise set topic there
                 else
                 {
-                    result.toServer = "TOPIC " + channel + " :";
+                    result.toServer = QLatin1String("TOPIC ") + channel + QLatin1String(" :");
                     //If we get passed a ^A as a topic its a sign we should clear the topic.
                     //Used to be a \n, but those get smashed by QStringList::split and readded later
                     //Now is not the time to fight with that. FIXME
@@ -540,7 +540,7 @@ namespace Konversation
             else
             {
                 if (isAChannel(input.destination))
-                    result.toServer = "TOPIC " + input.destination + " :" + input.parameter;
+                    result.toServer = QLatin1String("TOPIC ") + input.destination + QLatin1String(" :") + input.parameter;
                 else
                     result = error(i18n("%1TOPIC without channel name only works from within a channel.",
                                         Preferences::self()->commandChar()));
@@ -662,7 +662,7 @@ namespace Konversation
         else
         {
             result.typeString = i18n("Notice");
-            result.toServer = "NOTICE " + recipient + " :" + message;
+            result.toServer = QLatin1String("NOTICE ") + recipient + QLatin1String(" :") + message;
             result.output=i18nc("%1 is the message, %2 the recipient nickname",
                                 "Sending notice \"%1\" to %2.", message, recipient);
             result.type = Program;
@@ -700,16 +700,15 @@ namespace Konversation
             for (int i = 0; i < outputList.count(); ++i)
             {
                 if (i == 0)
-                    result.toServerList += "PRIVMSG " + input.destination + " :" + '\x01' +
-                                           "ACTION " + outputList.at(i) + QLatin1Char('\x01');
+                    result.toServerList += QLatin1String("PRIVMSG ") + input.destination + QLatin1String(" :\x01""ACTION ") + outputList.at(i) + QLatin1Char('\x01');
                 else
-                    result.toServerList += "PRIVMSG " + input.destination + " :" + outputList.at(i);
+                    result.toServerList += QLatin1String("PRIVMSG ") + input.destination + QLatin1String(" :") + outputList.at(i);
             }
         }
         else
         {
             result.output = input.parameter;
-            result.toServer = "PRIVMSG " + input.destination + " :" + '\x01' + "ACTION " +
+            result.toServer = QLatin1String("PRIVMSG ") + input.destination + QLatin1String(" :\x01""ACTION ") +
                               input.parameter + QLatin1Char('\x01');
         }
 
@@ -761,11 +760,11 @@ namespace Konversation
         {
             output = message;
 
-            if (message.startsWith(Preferences::self()->commandChar() + "me"))
-                result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " +
+            if (message.startsWith(Preferences::self()->commandChar() + QLatin1String("me")))
+                result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""ACTION ") +
                                    message.mid(4) + QLatin1Char('\x01');
             else
-                result.toServer = "PRIVMSG " + recipient + " :" + message;
+                result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :") + message;
         }
 
         // If this is a /query, always open a query window.
@@ -800,18 +799,18 @@ namespace Konversation
         const QString recipient = input.parameter.left(input.parameter.indexOf(QLatin1Char(' ')));
         QString message = input.parameter.mid(recipient.length() + 1);
 
-        if (message.startsWith(Preferences::self()->commandChar() + "me"))
-            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " +
+        if (message.startsWith(Preferences::self()->commandChar() + QLatin1String("me")))
+            result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""ACTION ") +
                               message.mid(4) + QLatin1Char('\x01');
         else
-            result.toServer = "PRIVMSG " + recipient + " :" + message;
+            result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :") + message;
 
         return result;
     }
 
     OutputFilterResult OutputFilter::command_ping(const OutputFilterInput& input)
     {
-        return handleCtcp(input.parameter.section(QLatin1Char(' '), 0, 0) + " ping");
+        return handleCtcp(input.parameter.section(QLatin1Char(' '), 0, 0) + QLatin1String(" ping"));
     }
 
     OutputFilterResult OutputFilter::command_ctcp(const OutputFilterInput& input)
@@ -842,7 +841,7 @@ namespace Konversation
         }
         else
         {
-            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + out + QLatin1Char('\x01');
+            result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01") + out + QLatin1Char('\x01');
             result.output = i18n("Sending CTCP-%1 request to %2.", out, recipient);
         }
 
@@ -858,7 +857,7 @@ namespace Konversation
             return usage(i18n("Usage: %1AME [-LOCAL] text", Preferences::self()->commandChar()));
 
         if (isParameter(QStringLiteral("local"), input.parameter.section(QLatin1Char(' '), 0, 0)))
-            m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(QLatin1Char(' '), 1));
+            m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + QLatin1String("me ") + input.parameter.section(QLatin1Char(' '), 1));
         else
             emit multiServerCommand(QStringLiteral("me"), input.parameter);
 
@@ -885,7 +884,7 @@ namespace Konversation
 
         OutputFilterResult result;
 
-        result.toServer = "PRIVMSG @" + input.destination + " :" + input.parameter;
+        result.toServer = QLatin1String("PRIVMSG @") + input.destination + QLatin1String(" :") + input.parameter;
 
         return result;
     }
@@ -896,7 +895,7 @@ namespace Konversation
 
         if (!input.parameter.isEmpty())
         {
-            result.toServer = "NOTICE @" + input.destination + " :" + input.parameter;
+            result.toServer = QLatin1String("NOTICE @") + input.destination + QLatin1String(" :") + input.parameter;
             result.typeString = i18n("Notice");
             result.type = Program;
             result.output = i18n("Sending notice \"%1\" to %2.", input.parameter, input.destination);
@@ -927,7 +926,7 @@ namespace Konversation
             result = usage(i18n("Usage: %1SAY text", Preferences::self()->commandChar()));
         else
         {
-            result.toServer = "PRIVMSG " + input.destination + " :" + input.parameter;
+            result.toServer = QLatin1String("PRIVMSG ") + input.destination + QLatin1String(" :") + input.parameter;
             result.output = input.parameter;
         }
 
@@ -1051,7 +1050,7 @@ namespace Konversation
                                                  const QString &address, quint16 port, quint64 size)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC SEND ")
             + fileName
             + QLatin1Char(' ') + address + QLatin1Char(' ') + QString::number(port) + QLatin1Char(' ')
             + QString::number(size) + QLatin1Char('\x01');
@@ -1065,9 +1064,9 @@ namespace Konversation
                                                         quint64 size, const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC SEND ")
             + fileName
-            + QLatin1Char(' ') + address + " 0 " + QString::number(size) + QLatin1Char(' ')
+            + QLatin1Char(' ') + address + QLatin1String(" 0 ") + QString::number(size) + QLatin1Char(' ')
             + token + QLatin1Char('\x01');
 
         return result;
@@ -1079,7 +1078,7 @@ namespace Konversation
                                                          quint16 port, quint64 startAt)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + QLatin1Char(' ') +
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC ACCEPT ") + fileName + QLatin1Char(' ') +
                           QString::number(port) + QLatin1Char(' ') + QString::number(startAt) + QLatin1Char('\x01');
 
         return result;
@@ -1092,7 +1091,7 @@ namespace Konversation
                                                                 const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + QLatin1Char(' ') +
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC ACCEPT ") + fileName + QLatin1Char(' ') +
                           QString::number(port) + QLatin1Char(' ') + QString::number(startAt) + QLatin1Char(' ') +
                           token + QLatin1Char('\x01');
 
@@ -1104,7 +1103,7 @@ namespace Konversation
                                                    quint16 port, KIO::filesize_t startAt)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + QLatin1Char(' ') +
+        result.toServer = QLatin1String("PRIVMSG ") + sender + QLatin1String(" :\x01""DCC RESUME ") + fileName + QLatin1Char(' ') +
                           QString::number(port) + QLatin1Char(' ') + QString::number(startAt) + QLatin1Char('\x01');
 
         return result;
@@ -1117,7 +1116,7 @@ namespace Konversation
                                                           const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + QLatin1Char(' ')
+        result.toServer = QLatin1String("PRIVMSG ") + sender + QLatin1String(" :\x01""DCC RESUME ") + fileName + QLatin1Char(' ')
                           + QString::number(port) + QLatin1Char(' ') + QString::number(startAt) + QLatin1Char(' ')
                           + token + QLatin1Char('\x01');
 
@@ -1132,7 +1131,7 @@ namespace Konversation
                                                               const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC SEND ")
             + fileName
             + QLatin1Char(' ') + address + QLatin1Char(' ') + QString::number(port)
             + QLatin1Char(' ') + QString::number(size) + QLatin1Char(' ') + token + QLatin1Char('\x01');
@@ -1144,7 +1143,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::rejectDccSend(const QString& partnerNick, const QString & fileName)
     {
         OutputFilterResult result;
-        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT SEND "
+        result.toServer = QLatin1String("NOTICE ") + partnerNick + QLatin1String(" :\x01""DCC REJECT SEND ")
                           + fileName + QLatin1Char('\x01');
 
         return result;
@@ -1153,7 +1152,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::rejectDccChat(const QString & partnerNick, const QString& extension)
     {
         OutputFilterResult result;
-        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT " + extension.toUpper() + QLatin1Char('\x01');
+        result.toServer = QLatin1String("NOTICE ") + partnerNick + QLatin1String(" :\x01""DCC REJECT CHAT ") + extension.toUpper() + QLatin1Char('\x01');
 
         return result;
     }
@@ -1161,7 +1160,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + partnerNick + " :" + '\x01' + "DCC CHAT " +
+        result.toServer = QLatin1String("PRIVMSG ") + partnerNick + QLatin1String(" :\x01""DCC CHAT ") +
                           extension.toUpper() + QLatin1Char(' ') + numericalOwnIp + QLatin1Char(' ') +
                           QString::number(ownPort) + QLatin1Char('\x01');
         return result;
@@ -1170,15 +1169,16 @@ namespace Konversation
     OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT " +
-                          extension.toUpper() + QLatin1Char(' ') + address + " 0 " + token + QLatin1Char('\x01');
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC CHAT ") +
+                          extension.toUpper() + QLatin1Char(' ') + address + QLatin1String(" 0 ") +
+                          token + QLatin1Char('\x01');
         return result;
     }
 
     OutputFilterResult OutputFilter::acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT " +
+        result.toServer = QLatin1String("PRIVMSG ") + recipient + QLatin1String(" :\x01""DCC CHAT ") +
                           extension.toUpper() + QLatin1Char(' ') + numericalOwnIp + QLatin1Char(' ') + QString::number(ownPort) + QLatin1Char(' ') + token + QLatin1Char('\x01');
         return result;
     }
@@ -1206,7 +1206,7 @@ namespace Konversation
             if (!channel.isEmpty())
             {
                 if (isAChannel(channel))
-                    result.toServer = "INVITE " + nick + QLatin1Char(' ') + channel;
+                    result.toServer = QLatin1String("INVITE ") + nick + QLatin1Char(' ') + channel;
                 else
                     result = error(i18n("%1 is not a channel.", channel));
             }
@@ -1339,13 +1339,13 @@ namespace Konversation
             dialog->setUsername(nick);
             dialog->setWindowTitle(i18n("IRC Operator Password"));
             if (dialog->exec()) {
-                result.toServer = "OPER " + dialog->username() + QLatin1Char(' ') + dialog->password();
+                result.toServer = QLatin1String("OPER ") + dialog->username() + QLatin1Char(' ') + dialog->password();
             }
 
             delete dialog;
         }
         else
-            result.toServer = "OPER " + input.parameter;
+            result.toServer = QLatin1String("OPER ") + input.parameter;
 
         return result;
     }
@@ -1423,7 +1423,7 @@ namespace Konversation
                         if (reason.isEmpty())
                             reason = m_server->getIdentity()->getKickReason();
 
-                        result.toServer = "KICK " + channel + QLatin1Char(' ') + victim + " :" + reason;
+                        result.toServer = QLatin1String("KICK ") + channel + QLatin1Char(' ') + victim + QLatin1String(" :") + reason;
 
                         emit banUsers(QStringList(victim), channel, option);
                     }
@@ -1454,7 +1454,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::execBan(const QString& mask, const QString& channel)
     {
         OutputFilterResult result;
-        result.toServer = "MODE " + channel + " +b " + mask;
+        result.toServer = QLatin1String("MODE ") + channel + QLatin1String(" +b ") + mask;
         return result;
     }
 
@@ -1507,7 +1507,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::execUnban(const QString& mask, const QString& channel)
     {
         OutputFilterResult result;
-        result.toServer = "MODE " + channel + " -b " + mask;
+        result.toServer = QLatin1String("MODE ") + channel + QLatin1String(" -b ") + mask;
         return result;
     }
 
@@ -1602,7 +1602,7 @@ namespace Konversation
                     }
 
                     if (!success)
-                        failed.append(uign + "[!*]");
+                        failed.append(uign + QLatin1String("[!*]"));
                 }
                 // Try to remove seemingly complete pattern
                 else if (Preferences::removeIgnore(uign))
@@ -1802,7 +1802,7 @@ namespace Konversation
         {
             const QString victim = input.parameter.section(QLatin1Char(' '), 0, 0);
 
-            result.toServer = "KILL " + victim + " :" + input.parameter.mid(victim.length() + 1);
+            result.toServer = QLatin1String("KILL ") + victim + QLatin1String(" :") + input.parameter.mid(victim.length() + 1);
         }
 
         return result;
@@ -1944,7 +1944,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        result.toServer = "MODE " + input.myNick + QLatin1Char(' ') + input.parameter;
+        result.toServer = QLatin1String("MODE ") + input.myNick + QLatin1Char(' ') + input.parameter;
 
         return result;
     }
@@ -1963,14 +1963,14 @@ namespace Konversation
             // Check if the user specified a channel
             if(isAChannel(nickList[0]))
             {
-                token = "MODE " + nickList[0];
+                token = QLatin1String("MODE ") + nickList[0];
                 // remove the first element
                 nickList.removeFirst();
             }
             // Add default destination if it is a channel
             else if(isAChannel(destination))
             {
-                token = "MODE " + destination;
+                token = QLatin1String("MODE ") + destination;
             }
 
             // Only continue if there was no error

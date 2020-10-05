@@ -371,7 +371,7 @@ void ChatWindow::setLogfileName(const QString& name)
         // status panels get special treatment here, since they have no server at the beginning
         if (getType() == Status || getType() == DccChat)
         {
-            logName = name + ".log";
+            logName = name + QLatin1String(".log");
         }
         else if (m_server)
         {
@@ -708,7 +708,7 @@ void ChatWindow::msgHelper(const QString& recipient, const QString& message)
     QString result = message;
     QString visualization;
 
-    if (result.startsWith(Preferences::self()->commandChar() + "me"))
+    if (result.startsWith(Preferences::self()->commandChar() + QLatin1String("me")))
     {
         isAction = true;
 

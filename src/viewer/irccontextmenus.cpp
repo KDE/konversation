@@ -374,13 +374,13 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
     switch (extractActionId(action))
     {
         case Join:
-            commandToServer(server, "join " + channel);
+            commandToServer(server, QLatin1String("join ") + channel);
             break;
         case Topic:
             server->requestTopic(channel);
             break;
         case Names:
-            commandToServer(server, "names " + channel);
+            commandToServer(server, QLatin1String("names ") + channel);
             break;
         case TextCopy:
             qApp->clipboard()->setText(channel, QClipboard::Clipboard);
@@ -617,7 +617,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 ) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "ignore -ALL " + nicks.join(QLatin1Char(' ')));
+                commandToServer(server, QLatin1String("ignore -ALL ") + nicks.join(QLatin1Char(' ')));
             }
 
             break;
@@ -646,7 +646,7 @@ void IrcContextMenus::processNickAction(int actionId, Server* server, const QStr
                 QStringLiteral("UnignoreNick")) ==
                 KMessageBox::Continue)
             {
-                commandToServer(server, "unignore " + selectedIgnoredNicks.join(QLatin1Char(' ')));
+                commandToServer(server, QLatin1String("unignore ") + selectedIgnoredNicks.join(QLatin1Char(' ')));
             }
 
             break;

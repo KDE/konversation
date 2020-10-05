@@ -427,7 +427,7 @@ namespace Konversation
         QString TransferListModel::getPositionPrettyText(KIO::fileoffset_t position,
                                                          KIO::filesize_t filesize) const
         {
-            return KIO::convertSize(position) + " / " + KIO::convertSize(filesize);
+            return KIO::convertSize(position) + QLatin1String(" / ") + KIO::convertSize(filesize);
         }
 
         QString TransferListModel::getSenderAddressPrettyText(Transfer *transfer) const

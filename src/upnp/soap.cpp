@@ -40,7 +40,7 @@ namespace Konversation
                     "<m:%1 xmlns:m=\"%2\">").arg(action, service);
 
             for (const Arg & a : args)
-                comm += QLatin1Char('<') + a.element + QLatin1Char('>') + a.value + "</" + a.element + QLatin1Char('>');
+                comm += QLatin1Char('<') + a.element + QLatin1Char('>') + a.value + QLatin1String("</") + a.element + QLatin1Char('>');
 
             comm += QStringLiteral("</m:%1></SOAP-ENV:Body></SOAP-ENV:Envelope>").arg(action);
             return comm;

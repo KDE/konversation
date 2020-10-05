@@ -4275,7 +4275,7 @@ void Server::initKeyExchange(const QString &receiver)
     }
     else
     {
-        queue("NOTICE "+receiver+" :DH1080_INIT "+pubKey);
+        queue(QLatin1String("NOTICE ") + receiver + QLatin1String(" :DH1080_INIT ") + QLatin1String(pubKey));
     }
 }
 
@@ -4314,7 +4314,7 @@ void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
         setKeyForRecipient(sender, cipher->key());
         query->setEncryptedOutput(true);
         appendMessageToFrontmost(i18n("Notice"), i18n("Your key is set and your messages will now be encrypted, sending DH1080_FINISH to %1.", sender));
-        queue("NOTICE "+sender+" :DH1080_FINISH "+pubKey);
+        queue(QLatin1String("NOTICE ") + sender + QLatin1String(" :DH1080_FINISH ") + QLatin1String(pubKey));
     }
 }
 

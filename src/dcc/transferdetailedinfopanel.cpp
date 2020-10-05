@@ -210,14 +210,14 @@ namespace Konversation
             if (m_transfer->getStatus() == Transfer::Transferring)
             {
                 m_locationInfo.m_labelStatus->setText(TransferListModel::getStatusText(m_transfer->getStatus(),
-                                       m_transfer->getType()) + " ( " +
-                                       TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()) + " )");
+                                       m_transfer->getType()) + QLatin1String(" ( ") +
+                                       TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()) + QLatin1String(" )"));
             }
             else
             {
                 m_locationInfo.m_labelStatus->setText(m_transfer->getStatusDetail().isEmpty() ?
                                        TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) :
-                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + " (" + m_transfer->getStatusDetail() + QLatin1Char(')'));
+                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + QLatin1String(" (") + m_transfer->getStatusDetail() + QLatin1Char(')'));
             }
 
             // Progress:

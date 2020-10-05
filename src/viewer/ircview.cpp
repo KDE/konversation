@@ -567,7 +567,7 @@ void IRCView::updateAppearance()
 
         if (url.isValid())
         {
-            viewport()->setStyleSheet("QWidget { background-image: url("+url.path()+"); background-attachment:fixed; }");
+            viewport()->setStyleSheet(QLatin1String("QWidget { background-image: url(") + url.path() + QLatin1String("); background-attachment:fixed; }"));
 
             return;
         }
@@ -615,14 +615,14 @@ QString IRCView::formatFinalLine(bool rtl, const QString &lineColor, const QStri
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
     if (!rtl == dateRtlDirection())
         line += (rtl ? RLM : LRM);
-    line += "<font color=\"" + lineColor + "\">%1";
+    line += QLatin1String("<font color=\"") + lineColor + QLatin1String("\">%1");
     if (!label.isEmpty()) { // Label correctly displayed: [_label.]
         if (rtl) {
           line += LRM; // [.label_] -> [._label]
-          line += " <font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font>";
+          line += QLatin1String(" <font color=\"") + lineColor + QLatin1String("\"><b>[</b>%4<b>]</b></font>");
         }
         else {
-          line += "<font color=\"" + lineColor + "\"><b>[</b>%4<b>]</b></font> ";
+          line += QLatin1String("<font color=\"") + lineColor + QLatin1String("\"><b>[</b>%4<b>]</b></font> ");
         }
         if (!label.isRightToLeft() == rtl)
             line += LRM + RLM; // [._label] -> [_label.]
@@ -688,7 +688,7 @@ void IRCView::appendRaw(const QString& message, bool self)
 
     QString line;
     if (dateRtlDirection()) line += LRM;
-    line += (timeStamp(QHash<QString, QString>(), false) + " <font color=\"" + color.name() + "\">" + message + "</font>");
+    line += (timeStamp(QHash<QString, QString>(), false) + QLatin1String(" <font color=\"") + color.name() + QLatin1String("\">") + message + QLatin1String("</font>"));
 
     doAppend(line, false, self);
 }
@@ -701,7 +701,7 @@ void IRCView::appendLog(const QString & message)
     // Log view is plain log files.
     // Direction will be depending on the logfile line direction.
 
-    QString line("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
+    QString line(QLatin1String("<font color=\"") + channelColor.name() + QLatin1String("\">") + message + QLatin1String("</font>"));
 
     doRawAppend(line, message.isRightToLeft());
 }
@@ -794,7 +794,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
     if(Preferences::self()->fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
     {
         if(type == i18n("MOTD"))
-            fixed=" face=\"" + QFontDatabase::systemFont(QFontDatabase::FixedFont).family() + "\"";
+            fixed = QLatin1String(" face=\"") + QFontDatabase::systemFont(QFontDatabase::FixedFont).family() + QLatin1Char('\"');
     }
 
     QString line;
@@ -806,7 +806,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
     if (!rtl == dateRtlDirection())
         line += (rtl ? RLM : LRM);
-    line += "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b>";
+    line += QLatin1String("<font color=\"") + serverColor + QLatin1Char('\"') + fixed + QLatin1String(">%1 <b>[</b>%2<b>]</b>");
     if (!rtl == type.isRightToLeft())
         line += (rtl ? RLM : LRM); // [50 [ARABIC_TEXT users -> [ARABIC_TEXT] 50 users
     line += QLatin1String(" %3</font>");
@@ -844,7 +844,7 @@ void IRCView::appendCommandMessage(const QString& type, const QString& message, 
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
     if (!rtl == dateRtlDirection())
         line += (rtl ? RLM : LRM);
-    line += "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
+    line += QLatin1String("<font color=\"") + commandColor + QLatin1String("\">%1 %2 %3</font>");
     line = line.arg(timeStamp(messageTags, rtl), prefix, text);
 
     emit textToLog(QStringLiteral("%1\t%2").arg(type, message));
@@ -882,13 +882,13 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     if (!rtl == time.isRightToLeft())
         line += (rtl ? RLM : LRM);
 
-    line += "<font color=\"" + backlogColor + "\">";
+    line += QLatin1String("<font color=\"") + backlogColor + QLatin1String("\">");
     // Prepend and append timestamp's correct bidi mark if the time and text
     // directions are different.
     if (rtl == time.isRightToLeft())
         line += QLatin1String("%1");
     else
-        line += (time.isRightToLeft() ? RLM+"%1"+RLM : LRM+"%1"+LRM);
+        line += (time.isRightToLeft() ? RLM + QLatin1String("%1") + RLM : LRM + QLatin1String("%1") + LRM);
 
     // Partially copied from IRCView::formatFinalLine
     if (rtl)
@@ -995,8 +995,8 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
         }
         else
         {
-            timeString = QString("<font color=\"" +
-                timeColor + "\">[%1%2 %3%4]</font> ")
+            timeString = QString(QLatin1String("<font color=\"") +
+                timeColor + QLatin1String("\">[%1%2 %3%4]</font> "))
                     .arg((dateRtl==rtl) ? QString() : (dateRtl ? RLM : LRM),
                         QLocale().toString(dateTime.date(), QLocale::ShortFormat),
                         dateTime.time().toString(timeFormat),
@@ -1040,7 +1040,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
     nickLine = QLatin1String("<font color=\"") + nickColor + QLatin1String("\">") + nickLine + QLatin1String("</font>");
 
     if (Preferences::self()->useClickableNicks())
-        nickLine = "<a class=\"nick\" href=\"#" + nick + "\">" + nickLine + "</a>";
+        nickLine = QLatin1String("<a class=\"nick\" href=\"#") + nick + QLatin1String("\">") + nickLine + QLatin1String("</a>");
 
     if (privMsg)
         nickLine.prepend(QLatin1String("-&gt; "));
@@ -1114,9 +1114,9 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         QString highlightColor;
 
         if (Preferences::self()->highlightNick() &&
-            line.toLower().contains(QRegExp("(^|[^\\d\\w])" +
+            line.toLower().contains(QRegExp(QLatin1String("(^|[^\\d\\w])") +
             QRegExp::escape(ownNick.toLower()) +
-            "([^\\d\\w]|$)")))
+            QLatin1String("([^\\d\\w]|$)"))))
         {
             // highlight current nickname
             highlightColor = Preferences::self()->highlightNickColor().name();
@@ -1308,7 +1308,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 QString strippedChannel = removeIrcMarkup(oldChannel);
                 QString colorCodes = extractColorCodes(oldChannel);
 
-                QString link("%1<a href=\"#%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+                QString link(QLatin1String("%1<a href=\"#%2\" style=\"color:") + linkColor + QLatin1String("\">%3</a>%4%5"));
 
                 link = link.arg(closeTags(&data), fixedChannel, strippedChannel, openTags(&data, 0), colorCodes);
                 htmlText.replace(pos, oldChannel.length(), link);
@@ -1328,7 +1328,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 QString colorCodes = extractColorCodes(oldUrl);
                 colorCodes = removeDuplicateCodes(colorCodes, &data, allowColors);
 
-                QString link("%1<a href=\"%2\" style=\"color:" + linkColor + "\">%3</a>%4%5");
+                QString link(QLatin1String("%1<a href=\"%2\" style=\"color:") + linkColor + QLatin1String("\">%3</a>%4%5"));
 
                 link = link.arg(closeTagsString, fixedUrl, strippedUrl, openTags(&data, 0), colorCodes);
                 htmlText.replace(pos, oldUrl.length(), link);
