@@ -15,6 +15,8 @@
 #include "ircinput.h"
 #include "application.h"
 #include "pasteeditor.h"
+#include "ircview.h"
+#include "topiclabel.h"
 
 #include <QClipboard>
 #include <QKeyEvent>
@@ -192,8 +194,7 @@ void IRCInput::setText(const QString& text, bool preserveContents)
 //take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->metaObject()->className() == QLatin1String("IRCView") || object->metaObject()->className() == QStringLiteral("Konversation::TopicLabel"))
-    {
+    if (qobject_cast<IRCView*>(object) || qobject_cast<Konversation::TopicLabel*>(object)) {
         if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent* ke = dynamic_cast<QKeyEvent*>(event);
