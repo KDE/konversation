@@ -35,7 +35,7 @@ namespace ShadowEngine
     QImage makeShadow( const QPixmap &textPixmap, const QColor &bgColor );
 }
 
-OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
+OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const QString &name)
     : QWidget( parent )
     , m_appName( appName )
     , m_duration( 5000 )
@@ -324,11 +324,10 @@ void OSDWidget::setScreen( int screen )
 // Class OSDPreviewWidget
 /////////////////////////////////////////////////////////////////////////////////////////
 
-OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, const char *name )
-        : OSDWidget( appName, parent, name )
+OSDPreviewWidget::OSDPreviewWidget(const QString &appName, QWidget *parent)
+        : OSDWidget(appName, parent, QStringLiteral("osdpreview"))
         , m_dragging( false )
 {
-    setObjectName( QStringLiteral("osdpreview") );
     m_currentText = i18n( "OSD Preview - drag to reposition" );
     m_duration = 0;
     //m_alignment = static_cast<Alignment>( AmarokConfig::osdAlignment() );

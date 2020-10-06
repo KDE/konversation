@@ -26,7 +26,8 @@ class OSDWidget : public QWidget
     public:
         enum Alignment { Left, Middle, Center, Right };
 
-        explicit OSDWidget(const QString &appName, QWidget *parent = nullptr, const char *name = "osd" );
+        explicit OSDWidget(const QString &appName, QWidget *parent = nullptr,
+                           const QString &name = QStringLiteral("osd"));
         virtual ~OSDWidget();
 
         /** resets the colours to defaults */
@@ -99,7 +100,7 @@ class OSDPreviewWidget : public OSDWidget
     Q_OBJECT
 
 public:
-    explicit OSDPreviewWidget( const QString &appName, QWidget *parent = nullptr, const char *name = "osdpreview" );
+    explicit OSDPreviewWidget(const QString &appName, QWidget *parent = nullptr);
 
     int screen() const     { return m_screen; }
     int alignment() const { return m_alignment; }
