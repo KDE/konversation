@@ -22,10 +22,9 @@
 
 namespace Konversation
 {
-    TopicLabel::TopicLabel(QWidget *parent, const char *name)
+    TopicLabel::TopicLabel(QWidget *parent)
         : QLabel(parent)
     {
-        setObjectName(name);
         setWordWrap(true);
         setFocusPolicy(Qt::ClickFocus);
         setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
