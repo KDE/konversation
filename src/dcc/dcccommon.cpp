@@ -123,7 +123,7 @@ namespace Konversation
                 {
                     struct sockaddr_in sock;
                     memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
-                    fallbackIp = inet_ntoa(sock.sin_addr);
+                    fallbackIp = QString::fromLatin1(inet_ntoa(sock.sin_addr));
                 }
                 qDebug() << "Falling back to IPv4 address " << fallbackIp;
 #else
