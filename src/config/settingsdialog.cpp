@@ -161,7 +161,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   konviAddSubPage(notificationGroup, w, i18n("Tabs"), QStringLiteral("tab-new"));
 
   //Notification/Highlighting
-  m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
+  m_confHighlightWdg = new Highlight_Config(this, QStringLiteral("Highlight"));
   konviAddSubPage(notificationGroup, m_confHighlightWdg, i18n("Highlight"), QStringLiteral("flag-red"));
   connect(m_confHighlightWdg, &Highlight_Config::modified, this, &KonviSettingsDialog::modifiedSlot);
   m_pages.append(m_confHighlightWdg);

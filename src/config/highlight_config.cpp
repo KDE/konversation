@@ -21,7 +21,7 @@
 #include <QStandardPaths>
 
 
-Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
+Highlight_Config::Highlight_Config(QWidget* parent, const QString& name)
 : QWidget(parent)
 {
     setObjectName(name);

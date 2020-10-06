@@ -24,7 +24,7 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
     Q_OBJECT
 
     public:
-        explicit Highlight_Config(QWidget *parent = nullptr, const char *name = 0);
+        explicit Highlight_Config(QWidget *parent = nullptr, const QString& name = QString());
         ~Highlight_Config();
 
     public:
