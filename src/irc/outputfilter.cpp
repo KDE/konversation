@@ -1641,7 +1641,7 @@ namespace Konversation
             else if (parameterList.count() == 2)
             {
                 if (parameterList[0].contains(QRegExp(QStringLiteral(":[0-9]+$"))))
-                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], nullptr, parameterList[1]);
+                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], QString(), parameterList[1]);
                 else
                     emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
             }

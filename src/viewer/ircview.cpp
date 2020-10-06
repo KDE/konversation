@@ -799,7 +799,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, serverColor, nullptr , true, parseURL, false, &dir));
+    QString text(filter(message, serverColor, QString(), true, parseURL, false, &dir));
     // Server text may be translated strings. It's not user input: treat with first strong.
     bool rtl = text.isRightToLeft();
 
@@ -837,7 +837,7 @@ void IRCView::appendCommandMessage(const QString& type, const QString& message, 
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, commandColor, nullptr, true, parseURL, self, &dir));
+    QString text(filter(message, commandColor, QString(), true, parseURL, self, &dir));
     // Commands are translated and contain LTR IP addresses. Treat with first strong.
     bool rtl = text.isRightToLeft();
 
@@ -875,7 +875,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     QString line;
     QChar::Direction dir;
-    QString text(filter(message, backlogColor, nullptr, false, false, false, &dir));
+    QString text(filter(message, backlogColor, QString(), false, false, false, &dir));
     bool rtl = nick.startsWith(QLatin1Char('|')) ? text.isRightToLeft() : (dir == QChar::DirR);
 
     // It's right-aligned under LTR locale, or left-aligned under RTL locale
