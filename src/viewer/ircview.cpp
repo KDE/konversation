@@ -2134,7 +2134,7 @@ void IRCView::openLink(const QUrl& url)
     link.replace (QLatin1String("%60"), QLatin1String("`"));
 
     if (!link.isEmpty() && !link.startsWith(QLatin1Char('#')))
-        Application::openUrl(url.toEncoded());
+        Application::openUrl(QString::fromUtf8(url.toEncoded()));
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
     {

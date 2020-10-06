@@ -372,7 +372,7 @@ namespace Konversation
             }
             else
             {
-                QString reply(soap_data_in[r]);
+                const QString reply = QString::fromUtf8(soap_data_in[r]);
                 soap_data_in[r].clear();
 
                 qDebug() << "UPnPRouter : OK:";

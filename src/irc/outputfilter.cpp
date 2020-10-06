@@ -1656,7 +1656,7 @@ namespace Konversation
     {
         if (input.parameter.isEmpty())
             return info(i18n("Current encoding is: %1",
-                             QString(m_server->getIdentity()->getCodec()->name())));
+                             QString::fromUtf8(m_server->getIdentity()->getCodec()->name())));
 
         OutputFilterResult result;
 
