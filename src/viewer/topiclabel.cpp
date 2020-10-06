@@ -264,7 +264,7 @@ namespace Konversation
                 tw = textWidth(tmp);
             }
 
-            return tmp.append("...");
+            return tmp.append(QLatin1String("..."));
         }
 
         return text;
