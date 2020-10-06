@@ -210,7 +210,7 @@ namespace Konversation
 
         QString newLine;
         if(codec)
-            newLine = codec->fromUnicode(oldLine.constData(),oldLine.length(),&state);
+            newLine = codec->toUnicode(codec->fromUnicode(oldLine.constData(),oldLine.length(),&state));
 
         if(!newLine.isEmpty() && state.invalidChars)
         {
