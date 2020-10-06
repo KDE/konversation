@@ -742,8 +742,8 @@ void MainWindow::updateTrayIcon()
             m_trayIcon = new Konversation::TrayIcon(this);
             connect(this, &MainWindow::endNotification, m_trayIcon, &Konversation::TrayIcon::endNotification);
             QMenu *trayMenu = qobject_cast<QMenu*>(m_trayIcon->contextMenu());
-            trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Preferences))));
-            trayMenu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::ConfigureNotifications))));
+            trayMenu->addAction(actionCollection()->action(QString::fromLatin1(KStandardAction::name(KStandardAction::Preferences))));
+            trayMenu->addAction(actionCollection()->action(QString::fromLatin1(KStandardAction::name(KStandardAction::ConfigureNotifications))));
             trayMenu->addAction(actionCollection()->action(QStringLiteral("toggle_away")));
         }
 
