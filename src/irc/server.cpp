@@ -1603,7 +1603,7 @@ int Server::_send_internal(QString outputLine)
         encoded = codec->fromUnicode(outputLine);
 
     #ifdef HAVE_QCA2
-    QString cipherKey;
+    QByteArray cipherKey;
     if (outputLineSplit.count() > 2 && outboundCommand > 1)
         cipherKey = getKeyForRecipient(outputLineSplit.at(1));
     if (!cipherKey.isEmpty())
@@ -1643,9 +1643,9 @@ int Server::_send_internal(QString outputLine)
                 {
                     QString target = outputLineSplit.at(1);
 
-                    if(getChannelByName(target) && getChannelByName(target)->getCipher()->setKey(cipherKey.toLocal8Bit()))
+                    if(getChannelByName(target) && getChannelByName(target)->getCipher()->setKey(cipherKey))
                         getChannelByName(target)->getCipher()->encrypt(payload);
-                    else if(getQueryByName(target) && getQueryByName(target)->getCipher()->setKey(cipherKey.toLocal8Bit()))
+                    else if(getQueryByName(target) && getQueryByName(target)->getCipher()->setKey(cipherKey))
                         getQueryByName(target)->getCipher()->encrypt(payload);
 
                     encoded = outputLineSplit.at(0).toLatin1();
