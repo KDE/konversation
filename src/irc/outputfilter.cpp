@@ -1700,7 +1700,7 @@ namespace Konversation
         if (!Cipher::isFeatureAvailable(Cipher::Blowfish))
             return error(i18n("Unable to set an encryption key for %1.", parms[0]) + ' ' + Cipher::runtimeError());
 
-        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(" ").toLocal8Bit());
+        m_server->setKeyForRecipient(parms[0], QStringList(parms.mid(1)).join(" ").toUtf8());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
             m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
@@ -1778,7 +1778,7 @@ namespace Konversation
         if (input.parameter.isEmpty())
             input.parameter = input.destination;
 
-        QString key(m_server->getKeyForRecipient(input.parameter));
+        const QString key = QString::fromUtf8(m_server->getKeyForRecipient(input.parameter));
 
         QWidget* mw = Application::instance()->getMainWindow();
 
