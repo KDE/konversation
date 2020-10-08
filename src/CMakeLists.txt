@@ -249,6 +249,7 @@ target_link_libraries(konversation
     KF5::Notifications
     KF5::WindowSystem
     KF5::ItemViews
+    KF5::NewStuff
     Phonon::phonon4qt5)
 
 if (Qca-qt5_FOUND)

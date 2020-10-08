@@ -23,9 +23,16 @@
    <item row="2" column="0" colspan="3">
     <layout class="QHBoxLayout">
      <item>
+      <widget class="KNS3::Button" name="getButton">
+       <property name="text">
+        <string>G&amp;et New Themes...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="installButton">
        <property name="text">
-        <string>I&amp;nstall Theme...</string>
+        <string>I&amp;nstall from File...</string>
        </property>
       </widget>
      </item>
@@ -208,6 +215,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KNS3::Button</class>
+   <extends>QPushButton</extends>
+   <header>KNS3/Button</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

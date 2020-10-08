@@ -43,6 +43,7 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
         void updateButtons();
         void installTheme();
         void removeTheme();
+        void gotNewSchemes();
         void postRemoveTheme(KJob* delete_job);
 
     private:

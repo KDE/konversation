@@ -21,3 +21,4 @@ install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.20-customfonts.pl
                 DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.konversation.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(FILES konversation_nicklist_theme.knsrc  DESTINATION ${KDE_INSTALL_KNSRCDIR})

@@ -27,6 +27,7 @@
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
 #include <KSharedConfig>
+#include <KNSCore/DownloadManager>
 
 #include <QStringList>
 #include <QUrl>
@@ -48,9 +49,12 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     // load the current settings
     loadSettings();
 
+    getButton->setConfigFile(QStringLiteral("konversation_nicklist_theme.knsrc"));
+
     connect(iconThemeIndex, &QListWidget::currentRowChanged, this, &Theme_Config::updatePreview);
     connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::updateButtons);
     connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::modified);
+    connect(getButton, &KNS3::Button::dialogFinished, this, &Theme_Config::gotNewSchemes);
     connect(installButton, &QPushButton::clicked, this, &Theme_Config::installTheme);
     connect(removeButton, &QPushButton::clicked, this, &Theme_Config::removeTheme);
 }
@@ -170,6 +174,11 @@ void Theme_Config::restorePageToDefaults()
 {
     if (m_defaultThemeIndex != -1)
         iconThemeIndex->setCurrentRow(m_defaultThemeIndex);
+}
+
+void Theme_Config::gotNewSchemes()
+{
+    loadSettings();
 }
 
 void Theme_Config::installTheme()
@@ -293,11 +302,45 @@ void Theme_Config::removeTheme()
         QStringLiteral("warningRemoveTheme")
         );
 
-    if(remove == KMessageBox::Continue)
-    {
-        KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(dir.remove(QStringLiteral("index.desktop"))));
-        connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
+    if (remove != KMessageBox::Continue) {
+        return;
     }
+
+    dir.chop(QLatin1Literal("index.desktop").size());
+
+    // Check if theme was installed by KNS, if so uninstall via KNS, otherwise manually
+    auto *manager = new KNSCore::DownloadManager(QStringLiteral("konversation_nicklist_theme.knsrc"), this);
+    connect(manager, &KNSCore::DownloadManager::searchResult,
+            this, [=](const KNSCore::EntryInternal::List &entries) {
+        bool isUninstalledByKNS = false;
+
+        for (auto &entry : entries) {
+            for (const auto &file : entry.installedFiles()) {
+                // file strings are of pattern "[...]/konversation/themes/simpleminded/*"
+                if (file.startsWith(dir)) {
+                    // uninstall via KNS and be done
+                    manager->uninstallEntry(entry);
+                    isUninstalledByKNS = true;
+                    break;
+                }
+            }
+            if (isUninstalledByKNS) {
+                break;
+            }
+        }
+
+        if (isUninstalledByKNS) {
+            loadSettings();
+        } else {
+            // manually installed, so delete manually
+            KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(dir));
+            connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
+        }
+
+        manager->deleteLater();
+    });
+
+    manager->checkForInstalled();
 }
 
 void Theme_Config::postRemoveTheme(KJob* /* delete_job */)

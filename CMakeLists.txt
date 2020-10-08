@@ -35,6 +35,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WidgetsAddons
     GlobalAccel
     DBusAddons
+    NewStuff
     Notifications
     WindowSystem
     ItemViews
