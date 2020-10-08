@@ -400,7 +400,7 @@ namespace Konversation
             QList<QUrl>::ConstIterator it;
             for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
             {
-                KIO::StatJob* statJob = KIO::stat(*it, KIO::StatJob::SourceSide, 0);
+                KIO::StatJob* statJob = KIO::statDetails(*it, KIO::StatJob::SourceSide, KIO::StatNoDetails);
                 statJob->exec();
                 if (statJob->error())
                 {
