@@ -35,10 +35,6 @@
 #include <QTemporaryFile>
 #include <QMimeDatabase>
 
-#ifndef Q_OS_WIN
-#include <unistd.h> // unlink()
-#endif
-
 using namespace Konversation;
 
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
@@ -299,8 +295,6 @@ void Theme_Config::removeTheme()
 
     if(remove == KMessageBox::Continue)
     {
-        QByteArray encoded = QFile::encodeName(dir);
-        unlink(encoded.data());
         KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(dir.remove(QStringLiteral("index.desktop"))));
         connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
     }
