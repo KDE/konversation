@@ -303,7 +303,7 @@ void Theme_Config::removeTheme()
     {
         QByteArray encoded = QFile::encodeName(dir);
         unlink(encoded.data());
-        KIO::DeleteJob* job = KIO::del(QUrl(dir.remove("index.desktop")));
+        KIO::DeleteJob* job = KIO::del(QUrl::fromLocalFile(dir.remove("index.desktop")));
         connect(job, &KIO::DeleteJob::result, this, &Theme_Config::postRemoveTheme);
     }
 }
