@@ -589,7 +589,7 @@ namespace Konversation
     {
         setText(0, label1);
         setText(1, label2);
-        m_timestamp.setTime_t(timestamp);
+        m_timestamp.setMSecsSinceEpoch(static_cast<qint64>(timestamp) * 1000);
         setText(2, QLocale().toString(m_timestamp, QLocale::ShortFormat));
         setData(2, Qt::UserRole, m_timestamp);
         parent->addTopLevelItem(this);

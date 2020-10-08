@@ -1369,7 +1369,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(3))
             {
                 QDateTime when;
-                when.setTime_t(parameterList.value(2).toUInt());
+                when.setMSecsSinceEpoch(static_cast<qint64>(parameterList.value(2).toInt()) * 1000);
                 m_server->appendCommandMessageToChannel(parameterList.value(1), i18n("Created"),
                     i18n("This channel was created on %1.",
                         QLocale().toString(when, QLocale::ShortFormat)),
@@ -1485,7 +1485,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             {
                 // Inform user who set the topic and when
                 QDateTime when;
-                when.setTime_t(parameterList.value(3).toUInt());
+                when.setMSecsSinceEpoch(static_cast<qint64>(parameterList.value(3).toInt()) * 1000);
 
                 // See FIXME in RPL_TOPIC
                 if (getAutomaticRequest(QStringLiteral("TOPIC"), parameterList.value(1)) == 0)
@@ -2118,7 +2118,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 uint signonTimestamp = parameterList.value(3).toUInt(&ok);
 
                 if (ok && parameterList.count() == 5)
-                    signonTime.setTime_t(signonTimestamp);
+                    signonTime.setMSecsSinceEpoch(static_cast<qint64>(signonTimestamp) * 1000);
 
                 if (!signonTime.isNull())
                 {
@@ -2337,7 +2337,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 {
                     QDateTime when;
                     if (plHas(5))
-                        when.setTime_t(parameterList.value(4).toUInt());
+                        when.setMSecsSinceEpoch(static_cast<qint64>(parameterList.value(4).toInt()) * 1000);
                     else
                         when = QDateTime::currentDateTime(); //use todays date instead of Jan 1 1970
 
