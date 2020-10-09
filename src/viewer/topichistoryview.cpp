@@ -134,8 +134,6 @@ TopicHistoryItemDelegate::~TopicHistoryItemDelegate()
 
 bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
 {
-    Q_UNUSED(watched);
-
     // NOTE: QTextEdit needs to have been shown at least once (and while its
     // parents are shown, too) before it starts to calculate the document sizes
     // we need in sizeHint().
@@ -146,7 +144,7 @@ bool TopicHistoryItemDelegate::eventFilter(QObject* watched, QEvent* event)
         m_hiddenLabel->hide();
     }
 
-    return false;
+    return KWidgetItemDelegate::eventFilter(watched, event);
 }
 
 QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& index) const

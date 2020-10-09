@@ -294,13 +294,11 @@ QSize TopicEdit::minimumSizeHint() const
 
 bool TopicEdit::eventFilter(QObject* watched, QEvent* event)
 {
-    Q_UNUSED(watched);
-
     if ((event->type() == QEvent::Resize || event->type() == QEvent::Move)
         && m_warning && m_warning->isVisible())
         updateWarningGeometry();
 
-    return false;
+    return KTextEdit::eventFilter(watched, event);
 }
 
 void TopicEdit::moveEvent(QMoveEvent* event)

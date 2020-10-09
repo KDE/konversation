@@ -78,7 +78,7 @@ LogfileReader::~LogfileReader()
 {
 }
 
-bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
+bool LogfileReader::eventFilter(QObject* watched, QEvent* e)
 {
     if (e->type() == QEvent::KeyPress)
     {
@@ -94,7 +94,7 @@ bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
             return false;
     }
 
-    return false;
+    return ChatWindow::eventFilter(watched, e);
 }
 
 void LogfileReader::storeBufferSize(int kb)
