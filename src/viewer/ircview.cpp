@@ -980,7 +980,7 @@ QString IRCView::timeStamp(QHash<QString, QString> messageTags, bool rtl)
     {
         QDateTime serverTime;
 
-        if (messageTags.contains(QLatin1String("time"))) // If it exists use the supplied server time.
+        if (messageTags.contains(QStringLiteral("time"))) // If it exists use the supplied server time.
             serverTime = QDateTime::fromString(messageTags[QStringLiteral("time")], Qt::ISODate).toLocalTime();
 
         QDateTime dateTime = serverTime.isValid() ? serverTime : QDateTime::currentDateTime();
@@ -1453,15 +1453,15 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                         }
                         else
                         {
-                            if (data.openHtmlTags.contains(QLatin1String("font")) &&
-                                data.openHtmlTags.contains(QLatin1String("span")))
+                            if (data.openHtmlTags.contains(QStringLiteral("font")) &&
+                                data.openHtmlTags.contains(QStringLiteral("span")))
                             {
                                 colorString += closeToTagString(&data, QStringLiteral("span"));
                                 data.lastBgColor.clear();
                                 colorString += closeToTagString(&data, QStringLiteral("font"));
                                 data.lastFgColor.clear();
                             }
-                            else if (data.openHtmlTags.contains(QLatin1String("font")))
+                            else if (data.openHtmlTags.contains(QStringLiteral("font")))
                             {
                                 colorString += closeToTagString(&data, QStringLiteral("font"));
                                 data.lastFgColor.clear();
@@ -1499,13 +1499,13 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // NOTE: there is no new bgColor is there is no fgColor
                     else if (!fgColor.isEmpty())
                     {
-                        if (data.openHtmlTags.contains(QLatin1String("font")) &&
-                            data.openHtmlTags.contains(QLatin1String("span")))
+                        if (data.openHtmlTags.contains(QStringLiteral("font")) &&
+                            data.openHtmlTags.contains(QStringLiteral("span")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("span"));
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
-                        else if (data.openHtmlTags.contains(QLatin1String("font")))
+                        else if (data.openHtmlTags.contains(QStringLiteral("font")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
@@ -1562,11 +1562,11 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                     // close current color strings and open reverse tags
                     if (!data.reverse)
                     {
-                        if (data.openHtmlTags.contains(QLatin1String("span")))
+                        if (data.openHtmlTags.contains(QStringLiteral("span")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("span"));
                         }
-                        if (data.openHtmlTags.contains(QLatin1String("font")))
+                        if (data.openHtmlTags.contains(QStringLiteral("font")))
                         {
                             colorString += closeToTagString(&data, QStringLiteral("font"));
                         }
