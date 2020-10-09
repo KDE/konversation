@@ -29,11 +29,11 @@ namespace Konversation
     //
     // ServerListItem
     //
-    ServerListItem::ServerListItem( QTreeWidget * tree, QStringList & strings) : QTreeWidgetItem (tree,strings)
+    ServerListItem::ServerListItem( QTreeWidget * tree, const QStringList & strings) : QTreeWidgetItem (tree,strings)
     {
     }
 
-    ServerListItem::ServerListItem( QTreeWidgetItem * parent, QStringList & strings) : QTreeWidgetItem (parent,strings)
+    ServerListItem::ServerListItem( QTreeWidgetItem * parent, const QStringList & strings) : QTreeWidgetItem (parent,strings)
     {
     }
 
