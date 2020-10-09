@@ -16,6 +16,7 @@
 #include "application.h"
 #include "nickinfo.h"
 #include "viewcontainer.h"
+#include "konversation_log.h"
 
 ServerISON::ServerISON(Server* server) : m_server(server)
 {
@@ -91,7 +92,7 @@ void ServerISON::recalculateAddressees()
 // When user changes preferences and has nick watching turned on, rebuild notify list.
 void ServerISON::slotServerGroupsChanged()
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     m_ISONList_invalid = true;
 }
 

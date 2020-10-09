@@ -12,9 +12,10 @@
 */
 
 #include "cipher.h"
-#include "preferences.h"
 
-#include <QDebug>
+#include "preferences.h"
+#include "konversation_log.h"
+
 #include <KLocalizedString>
 
 
@@ -127,7 +128,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                qDebug() << "Decryption from CBC Failed";
+                qCDebug(KONVERSATION_LOG) << "Decryption from CBC Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -139,7 +140,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                qDebug() << "Decryption from ECB Failed";
+                qCDebug(KONVERSATION_LOG) << "Decryption from ECB Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -282,7 +283,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    qDebug() << "CBC Encoding Failed";
+                    qCDebug(KONVERSATION_LOG) << "CBC Encoding Failed";
                     return false;
                 }
 
@@ -294,7 +295,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    qDebug() << "ECB Encoding Failed";
+                    qCDebug(KONVERSATION_LOG) << "ECB Encoding Failed";
                     return false;
                 }
 

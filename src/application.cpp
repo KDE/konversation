@@ -14,6 +14,7 @@
 */
 
 #include "application.h"
+
 #include "connectionmanager.h"
 #include "scriptlauncher.h"
 #include "transfermanager.h"
@@ -30,17 +31,7 @@
 #include "images.h"
 #include "notificationhandler.h"
 #include "awaymanager.h"
-
-#include <QTextCodec>
-#include <QRegularExpression>
-#include <QDBusConnection>
-#include <QNetworkProxy>
-#include <QWaitCondition>
-#include <QStandardItemModel>
-#include <QFileInfo>
-#include <QTextCursor>
-#include <QDesktopServices>
-#include <QCommandLineParser>
+#include "konversation_log.h"
 
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
@@ -52,6 +43,17 @@
 #include <KSharedConfig>
 #include <KStartupInfo>
 #include <kwindowsystem_version.h>
+
+#include <QTextCodec>
+#include <QRegularExpression>
+#include <QDBusConnection>
+#include <QNetworkProxy>
+#include <QWaitCondition>
+#include <QStandardItemModel>
+#include <QFileInfo>
+#include <QTextCursor>
+#include <QDesktopServices>
+#include <QCommandLineParser>
 
 using namespace Konversation;
 
@@ -78,7 +80,7 @@ Application::Application(int &argc, char **argv)
 
 Application::~Application()
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
     if (!m_images)
         return; // Nothing to do, newInstance() has never been called.
@@ -1331,7 +1333,7 @@ void Application::updateProxySettings()
 
             if(ret != 0)
             {
-                qCritical() << "Failed to read the proxy password from the wallet, error code:" << ret;
+                qCCritical(KONVERSATION_LOG) << "Failed to read the proxy password from the wallet, error code:" << ret;
             }
         }
 
@@ -1364,7 +1366,7 @@ KWallet::Wallet* Application::wallet()
         {
             if(!m_wallet->createFolder(QStringLiteral("Konversation")))
             {
-                qCritical() << "Failed to create folder Konversation in the network wallet.";
+                qCCritical(KONVERSATION_LOG) << "Failed to create folder Konversation in the network wallet.";
                 closeWallet();
                 return nullptr;
             }
@@ -1372,7 +1374,7 @@ KWallet::Wallet* Application::wallet()
 
         if(!m_wallet->setFolder(QStringLiteral("Konversation")))
         {
-            qCritical() << "Failed to set active folder to Konversation in the network wallet.";
+            qCCritical(KONVERSATION_LOG) << "Failed to set active folder to Konversation in the network wallet.";
             closeWallet();
             return nullptr;
         }

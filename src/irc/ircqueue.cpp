@@ -14,10 +14,11 @@
 
 #include "ircqueue.h"
 
+#include "server.h"
+#include "konversation_log.h"
+
 #include <QTimer>
 #include <QString>
-
-#include "server.h"
 
 IRCMessage::IRCMessage(const QString &str)
     : s(str) //, codec(QTextCodec::codecForName("utf8"))
@@ -79,7 +80,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
 
 IRCQueue::~IRCQueue()
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 }
 
 QString IRCQueue::pop()

@@ -17,8 +17,10 @@
 */
 
 #include "channelnick.h"
+
 #include "channel.h"
 #include "server.h"
+#include "konversation_log.h"
 
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const QString& channel)
@@ -93,7 +95,7 @@ bool ChannelNick::setMode(char mode, bool state)
         case 'v':
             return setVoice(state);
         default:
-            qDebug() << "Mode '" << mode << "' not recognised in setModeForChannelNick";
+            qCDebug(KONVERSATION_LOG) << "Mode '" << mode << "' not recognised in setModeForChannelNick";
             return false;
     }
 }
@@ -206,7 +208,7 @@ QString ChannelNick::tooltip() const
         tooltip << "<tr><td><b>" << i18n("Mode") << ":</b></td><td>" << modes.join(QLatin1String(", ")) << "</td></tr>";
     }
     tooltip << "</table></qt>";
-    //qDebug() << strTooltip ;
+    //qCDebug(KONVERSATION_LOG) << strTooltip ;
     //if(!dirty) return QString();
     return strTooltip;
 }

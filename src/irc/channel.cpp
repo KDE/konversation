@@ -12,6 +12,7 @@
 */
 
 #include "channel.h"
+
 #include "channeloptionsdialog.h"
 #include "application.h"
 #include "server.h"
@@ -27,6 +28,12 @@
 #include "topichistorymodel.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
+#include "konversation_log.h"
+
+#include <KLineEdit>
+#include <KPasswordDialog>
+#include <KMessageBox>
+#include <KComboBox>
 
 #include <QRegExp>
 #include <QSplitter>
@@ -35,11 +42,6 @@
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QRandomGenerator>
-
-#include <KLineEdit>
-#include <KPasswordDialog>
-#include <KMessageBox>
-#include <KComboBox>
 
 #define DELAYED_SORT_TRIGGER    10
 
@@ -392,15 +394,15 @@ void Channel::setEncryptedOutput(bool e)
 
 Channel::~Channel()
 {
-    qDebug() << "(" << getName() << ")";
+    qCDebug(KONVERSATION_LOG) << "(" << getName() << ")";
 
     // Purge nickname list
     purgeNicks();
-    qDebug() << "Nicks purged.";
+    qCDebug(KONVERSATION_LOG) << "Nicks purged.";
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
-    qDebug() << "Channel removed.";
+    qCDebug(KONVERSATION_LOG) << "Channel removed.";
 
     if (m_recreationScheduled)
     {
@@ -1212,7 +1214,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            qWarning() << "Nickname " << channelNick->getNickname() << " not found!";
+            qCWarning(KONVERSATION_LOG) << "Nickname " << channelNick->getNickname() << " not found!";
         }
     }
 }
@@ -1300,7 +1302,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         if(nick == nullptr)
         {
-            qWarning() << "Nickname " << channelNick->getNickname() << " not found!";
+            qCWarning(KONVERSATION_LOG) << "Nickname " << channelNick->getNickname() << " not found!";
         }
         else
         {
@@ -2646,7 +2648,7 @@ void Channel::repositionNick(Nick *nick)
         nicknameList.removeAt(index);
         fastAddNickname(nick->getChannelNick(), nick);
     } else {
-        qWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!";
+        qCWarning(KONVERSATION_LOG) << "Nickname " << nick->getChannelNick()->getNickname() << " not found!";
     }
 }
 

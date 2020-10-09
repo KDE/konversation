@@ -10,6 +10,7 @@
 */
 
 #include "connectionmanager.h"
+
 #include "connectionsettings.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
@@ -17,12 +18,12 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "statuspanel.h"
+#include "konversation_log.h"
 
-#include <QRegExp>
-
-#include <QDebug>
 #include <KLocalizedString>
 #include <KMessageBox>
+
+#include <QRegExp>
 
 
 ConnectionManager::ConnectionManager(QObject* parent)
@@ -109,7 +110,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
 
         decodeIrcUrl(it->url(), settings);
 
-        qDebug() << settings.name() << " - "
+        qCDebug(KONVERSATION_LOG) << settings.name() << " - "
                  << settings.server().host() << settings.server().port()
                  << settings.server().password() << " - "
                  << (settings.serverGroup()?settings.serverGroup()->name():QString());

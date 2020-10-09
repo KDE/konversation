@@ -32,6 +32,7 @@
 #include "connectionmanager.h"
 #include "server.h"
 #include "upnprouter.h"
+#include "konversation_log.h"
 
 #include <QFile>
 #include <QTimer>
@@ -54,7 +55,7 @@ namespace Konversation
         TransferSend::TransferSend(QObject *parent)
             : Transfer(Transfer::Send, parent)
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             m_serverSocket = nullptr;
             m_sendSocket = nullptr;
@@ -75,7 +76,7 @@ namespace Konversation
 
         void TransferSend::cleanUp()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             stopConnectionTimer();
             disconnect(m_connectionTimer, nullptr, nullptr, nullptr);
@@ -153,7 +154,7 @@ namespace Konversation
 
         bool TransferSend::queue()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             if (getStatus() != Configuring)
             {
@@ -184,7 +185,7 @@ namespace Konversation
             }
 
             m_fastSend = Preferences::self()->dccFastSend();
-            qDebug() << "Fast DCC send: " << m_fastSend;
+            qCDebug(KONVERSATION_LOG) << "Fast DCC send: " << m_fastSend;
 
             //Check the file exists
             KIO::StatJob* statJob = KIO::statDetails(m_fileURL, KIO::StatJob::SourceSide, KIO::StatNoDetails);
@@ -243,7 +244,7 @@ namespace Konversation
             bool remoteFile = job != nullptr;
             int error = job ? job->error() : 0;
 
-            qDebug() << "m_tmpFile: " << fn << "error: " << error << "remote file: " << remoteFile;
+            qCDebug(KONVERSATION_LOG) << "m_tmpFile: " << fn << "error: " << error << "remote file: " << remoteFile;
 
             if (error)
             {
@@ -264,7 +265,7 @@ namespace Konversation
             {
                 m_fileSize = m_file.size();
 
-                qDebug() << "filesize 0, new filesize: " << m_fileSize;
+                qCDebug(KONVERSATION_LOG) << "filesize 0, new filesize: " << m_fileSize;
 
                 if (m_fileSize == 0)
                 {
@@ -282,14 +283,14 @@ namespace Konversation
 
         void TransferSend::reject()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             failed(i18n("DCC SEND request was rejected"));
         }
 
         void TransferSend::abort()                     // public slot
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             cleanUp();
             setStatus(Aborted);
@@ -298,7 +299,7 @@ namespace Konversation
 
         void TransferSend::start()                     // public slot
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             if (getStatus() != Queued)
             {
@@ -310,7 +311,7 @@ namespace Konversation
             Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(m_connectionId);
             if (!server)
             {
-                qDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
+                qCDebug(KONVERSATION_LOG) << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
                 failed(i18n("Could not send a DCC SEND request to the partner via the IRC server."));
                 return;
             }
@@ -318,7 +319,7 @@ namespace Konversation
             if (!m_reverse)
             {
                 // Normal DCC SEND
-                qDebug() << "normal DCC SEND";
+                qCDebug(KONVERSATION_LOG) << "normal DCC SEND";
 
                 // Set up server socket
                 QString failedReason;
@@ -342,7 +343,7 @@ namespace Konversation
                 // Get own port number
                 m_ownPort = m_serverSocket->serverPort();
 
-                qDebug() << "Own Address=" << m_ownIp << ":" << m_ownPort;
+                qCDebug(KONVERSATION_LOG) << "Own Address=" << m_ownIp << ":" << m_ownPort;
 
                 if (Preferences::self()->dccUPnP())
                 {
@@ -365,13 +366,13 @@ namespace Konversation
             else
             {
                 // Passive DCC SEND
-                qDebug() << "Passive DCC SEND";
+                qCDebug(KONVERSATION_LOG) << "Passive DCC SEND";
 
                 int tokenNumber = Application::instance()->getDccTransferManager()->generateReverseTokenNumber();
                 // TODO: should we append a letter "T" to this token?
                 m_reverseToken = QString::number(tokenNumber);
 
-                qDebug() << "Passive DCC key(token): " << m_reverseToken;
+                qCDebug(KONVERSATION_LOG) << "Passive DCC key(token): " << m_reverseToken;
 
                 startConnectionTimer(Preferences::self()->dccSendTimeout());
 
@@ -386,7 +387,7 @@ namespace Konversation
             Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(m_connectionId);
             if (!server)
             {
-                qDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
+                qCDebug(KONVERSATION_LOG) << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
                 failed(i18n("Could not send a DCC SEND request to the partner via the IRC server."));
                 return;
             }
@@ -410,7 +411,7 @@ namespace Konversation
 
         void TransferSend::connectToReceiver(const QString &partnerHost, quint16 partnerPort)
         {
-            qDebug() << "host:" << partnerHost << "port:" << partnerPort;
+            qCDebug(KONVERSATION_LOG) << "host:" << partnerHost << "port:" << partnerPort;
             // Reverse DCC
 
             startConnectionTimer(Preferences::self()->dccSendTimeout());
@@ -434,7 +435,7 @@ namespace Konversation
                                                           // public
         bool TransferSend::setResume(quint64 position)
         {
-            qDebug() << "Position=" << position;
+            qCDebug(KONVERSATION_LOG) << "Position=" << position;
 
             if (getStatus() > WaitingRemote)
             {
@@ -455,7 +456,7 @@ namespace Konversation
         {
             // Normal DCC
 
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             stopConnectionTimer();
 
@@ -522,7 +523,7 @@ namespace Konversation
                 if ((KIO::fileoffset_t)m_fileSize <= m_transferringPosition)
                 {
                     Q_ASSERT((KIO::fileoffset_t)m_fileSize == m_transferringPosition);
-                    qDebug() << "Done.";
+                    qCDebug(KONVERSATION_LOG) << "Done.";
                 }
             }
 
@@ -541,7 +542,7 @@ namespace Konversation
 
         void TransferSend::writeData()                 // slot
         {
-            //qDebug();
+            //qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             qint64 actual = m_file.read(m_buffer, m_bufferSize);
             if (actual > 0)
@@ -552,7 +553,7 @@ namespace Konversation
 
         void TransferSend::getAck()                    // slot
         {
-            //qDebug();
+            //qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             if (m_transferringPosition < (KIO::fileoffset_t)m_fileSize)
             {
                 //don't write data directly, in case we get spammed with ACK we try so send too fast
@@ -565,10 +566,10 @@ namespace Konversation
                 m_sendSocket->read((char*)&pos, 4);
                 pos = ntohl(pos);
 
-                //qDebug() << pos  << "/" << m_fileSize;
+                //qCDebug(KONVERSATION_LOG) << pos  << "/" << m_fileSize;
                 if (pos == m_fileSize)
                 {
-                    qDebug() << "Received final ACK.";
+                    qCDebug(KONVERSATION_LOG) << "Received final ACK.";
                     cleanUp();
                     setStatus(Done);
                     emit done(this);
@@ -580,13 +581,13 @@ namespace Konversation
         void TransferSend::slotGotSocketError(QAbstractSocket::SocketError errorCode)
         {
             stopConnectionTimer();
-            qDebug() << "code =  " << errorCode << " string = " << m_sendSocket->errorString();
+            qCDebug(KONVERSATION_LOG) << "code =  " << errorCode << " string = " << m_sendSocket->errorString();
             failed(i18n("Socket error: %1", m_sendSocket->errorString()));
         }
 
         void TransferSend::startConnectionTimer(int secs)
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             //start also restarts, no need for us to double check it
             m_connectionTimer->start(secs * 1000);
         }
@@ -595,14 +596,14 @@ namespace Konversation
         {
             if (m_connectionTimer->isActive())
             {
-                qDebug() << "stop";
+                qCDebug(KONVERSATION_LOG) << "stop";
                 m_connectionTimer->stop();
             }
         }
 
         void TransferSend::slotConnectionTimeout()         // slot
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             failed(i18n("Timed out"));
         }
                                                           // protected, static

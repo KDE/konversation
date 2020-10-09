@@ -20,13 +20,14 @@
 #include <ircview.h>
 #include <notificationhandler.h>
 #include "whiteboard.h"
-
-#include <QSplitter>
+#include "konversation_log.h"
 
 #include <KLocalizedString>
 #include <KActionCollection>
 #include <KMessageBox>
 #include <KStandardGuiItem>
+
+#include <QSplitter>
 
 namespace Konversation
 {
@@ -199,7 +200,7 @@ namespace Konversation
 
         void ChatContainer::emitUpdateInfo()
         {
-            //qDebug();
+            //qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             QString info;
             if (m_chat && m_chat->partnerNick() == m_chat->ownNick())
                 info = i18n("Talking to yourself");
@@ -244,13 +245,13 @@ namespace Konversation
             if (line.startsWith(cc))
             {
                 const QString cmd = line.section(QLatin1Char(' '), 0, 0).toLower();
-                qDebug() << "cmd" << cmd;
+                qCDebug(KONVERSATION_LOG) << "cmd" << cmd;
                 if (cmd == cc + QLatin1String("clear")) {
                     textView->clear();
                 }
                 else if (cmd == cc + QLatin1String("me")) {
                     const QString toSend = line.section(QLatin1Char(' '), 1);
-                    //qDebug() << "toSend" << toSend;
+                    //qCDebug(KONVERSATION_LOG) << "toSend" << toSend;
                     if (toSend.isEmpty())
                     {
                         getTextView()->appendServerMessage(i18n("Usage"), i18n("Usage: %1ME text", Preferences::self()->commandChar()));

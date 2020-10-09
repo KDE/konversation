@@ -12,6 +12,7 @@
 */
 
 #include "inputfilter.h"
+
 #include "server.h"
 #include "replycodes.h"
 #include "application.h"
@@ -22,6 +23,7 @@
 #include "statuspanel.h"
 #include "common.h"
 #include "notificationhandler.h"
+#include "konversation_log.h"
 #include <config-konversation.h>
 
 #include <QStringList>
@@ -140,7 +142,7 @@ bool _plHas(int count, int x)
     _plHad=(count >= x);
     _plWanted = x;
     if (!_plHad)
-        qDebug() << "plhad" << count << "wanted" << x;
+        qCDebug(KONVERSATION_LOG) << "plhad" << count << "wanted" << x;
     return _plHad;
 }
 
@@ -197,7 +199,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = m_server->getChannelByName( parameterList.value(0) );
 
                     if (!channel) {
-                        qCritical() << "Didn't find the channel " << parameterList.value(0);
+                        qCCritical(KONVERSATION_LOG) << "Didn't find the channel " << parameterList.value(0);
                         return;
                     }
 
@@ -520,7 +522,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     }
                     else if (replyReason.toLower() == QLatin1String("dcc"))
                     {
-                        qDebug() << reply;
+                        qCDebug(KONVERSATION_LOG) << reply;
                         QStringList dccList = reply.split(QLatin1Char(' '));
 
                         //all dcc notices we receive are rejects
@@ -707,7 +709,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         }
         else
         {
-            qDebug() << "Received away message for unknown nick," << sourceNick;
+            qCDebug(KONVERSATION_LOG) << "Received away message for unknown nick," << sourceNick;
         }
     }
     else if (command == QLatin1String("account") && plHas(1))
@@ -726,7 +728,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else
     {
-        qDebug() << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
+        qCDebug(KONVERSATION_LOG) << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
         m_server->appendMessageToFrontmost(command, parameterList.join(QLatin1Char(' ')), messageTags);
     }
 }
@@ -763,7 +765,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if (command == QLatin1String("error :closing link:"))
         {
-            qDebug() << "link closed";
+            qCDebug(KONVERSATION_LOG) << "link closed";
         }
         else if (command == QLatin1String("pong"))
         {
@@ -859,7 +861,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
-            qDebug() << "unknown server command" << command;
+            qCDebug(KONVERSATION_LOG) << "unknown server command" << command;
             m_server->appendMessageToFrontmost(command, parameterList.join(QLatin1Char(' ')), messageTags);
         }
     }
@@ -869,7 +871,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
     } // end of numeric elseif
     else
     {
-        qDebug() << "unknown message format" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
+        qCDebug(KONVERSATION_LOG) << "unknown message format" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
     }
 } // end of server
 
@@ -937,7 +939,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
             // Let the channel update its modes
             if (parameter.isEmpty())               // XXX Check this to ensure the braces are in the correct place
             {
-                qDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
+                qCDebug(KONVERSATION_LOG)   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
                     << parameterList.join(QLatin1String(", ")) << "'";
             }
             m_server->updateChannelMode(sourceNick, parameterList.value(0), mode, plus, parameter, messageTags);
@@ -998,7 +1000,7 @@ void InputFilter::setAutomaticRequest(const QString& command, const QString& nam
     m_automaticRequest[command][name.toLower()] += (yes) ? 1 : -1;
     if(m_automaticRequest[command][name.toLower()]<0)
     {
-        qDebug()   << "( " << command << ", " << name
+        qCDebug(KONVERSATION_LOG)   << "( " << command << ", " << name
             << " ) was negative! Resetting!";
         m_automaticRequest[command][name.toLower()]=0;
     }
@@ -1285,7 +1287,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                      }
                     else
                     {
-                        //qDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
+                        //qCDebug(KONVERSATION_LOG) << "Ignored server-capability: " << property << " with value '" << value << "'";
                     }
                 }                                 // endfor
             }
@@ -1414,7 +1416,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 }
                 else
                 {
-                    qDebug() << "Hmm seems something is broken... can't get to the names!";
+                    qCDebug(KONVERSATION_LOG) << "Hmm seems something is broken... can't get to the names!";
                 }
 
                 // send list to channel
@@ -1929,14 +1931,14 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     else
                     {
                         // whoRequestList seems to be broken.
-                        qDebug() << "RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
+                        qCDebug(KONVERSATION_LOG) << "RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
                             << parameterList.value(1) << " expected: " << m_whoRequestList.front();
                         m_whoRequestList.clear();
                     }
                 }
                 else
                 {
-                    qDebug() << "RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
+                    qCDebug(KONVERSATION_LOG) << "RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
                         << parameterList.value(1);
                 }
 
@@ -2529,12 +2531,12 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
         {
             // All yet unknown messages go into the frontmost window without the
             // preceding nickname
-            qDebug() << "unknown numeric" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
+            qCDebug(KONVERSATION_LOG) << "unknown numeric" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
             m_server->appendMessageToFrontmost(QString::number(command), parameterList.join(QLatin1Char(' ')), messageTags);
         }
     } // end of numeric switch
     if (!_plHad)
-        qDebug() << "numeric format error" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
+        qCDebug(KONVERSATION_LOG) << "numeric format error" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
 }
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

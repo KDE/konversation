@@ -12,11 +12,15 @@
 */
 
 #include "channeloptionsdialog.h"
+
 #include "application.h"
 #include "channel.h"
 #include "topichistorymodel.h"
+#include "konversation_log.h"
 
 #include <KColorScheme>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 #include <QCheckBox>
 #include <QHeaderView>
@@ -26,8 +30,6 @@
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 #include <QTreeWidget>
-#include <KSharedConfig>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QLocale>
@@ -630,7 +632,7 @@ QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
     case 'L':
         return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</p></qt>");
     default:
-        qWarning() << "called for unknown mode" << mode;
+        qCWarning(KONVERSATION_LOG) << "called for unknown mode" << mode;
         return QString();
     }
 }

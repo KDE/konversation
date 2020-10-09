@@ -19,7 +19,6 @@
 #include <QPainter>
 
 #include <QStandardPaths>
-#include <QDebug>
 
 
 using namespace Konversation;

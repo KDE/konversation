@@ -19,8 +19,8 @@
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
+#include "konversation_log.h"
 
-#include <QDebug>
 #include <KLocalizedString>
 
 #include <QDBusConnection>
@@ -36,7 +36,7 @@ DBus::DBus(QObject *parent) : QObject(parent)
 
 void DBus::raw(const QString& server,const QString& command)
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     // send raw IRC protocol data
     emit dbusRaw(sterilizeUnicode(server), sterilizeUnicode(command));
 }
@@ -131,7 +131,7 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
     // TODO: this just masks a greater problem - Server::addQuery will return a query for '' --argonel
     // TODO: other DCOP calls need argument checking too --argonel
     if (server.isEmpty() || target.isEmpty() || command.isEmpty())
-        qDebug() <<  "DBus::say() requires 3 arguments.";
+        qCDebug(KONVERSATION_LOG) <<  "DBus::say() requires 3 arguments.";
     else
     {
         command.replace(QLatin1Char('\n'),QStringLiteral("\\n"));
@@ -147,19 +147,19 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
 
 void DBus::info(const QString& string)
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     emit dbusInfo(sterilizeUnicode(string));
 }
 
 void DBus::debug(const QString& string)
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     emit dbusInfo(i18n("Debug: %1", sterilizeUnicode(string)));
 }
 
 void DBus::error(const QString& string)
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     emit dbusInfo(i18n("Error: %1", sterilizeUnicode(string)));
 }
 

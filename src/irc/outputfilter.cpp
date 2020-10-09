@@ -14,6 +14,8 @@
 */
 
 #include "outputfilter.h"
+
+#include "ircview.h"
 #include "application.h"
 #include "mainwindow.h"
 #include "channel.h"
@@ -25,10 +27,14 @@
 #include "query.h"
 #include "viewcontainer.h"
 #include "outputfilterresolvejob.h"
-#include <kxmlgui_version.h>
+#include "konversation_log.h"
 #ifdef HAVE_QCA2
 #include "cipher.h"
 #endif
+
+#include <KPasswordDialog>
+#include <KMessageBox>
+#include <kxmlgui_version.h>
 
 #include <QStringList>
 #include <QFile>
@@ -37,14 +43,9 @@
 #include <QTextCodec>
 #include <QByteArray>
 #include <QTextStream>
-
-#include <KPasswordDialog>
-#include <KMessageBox>
-
 #include <QTextDocument>
 #include <QTextBlock>
 #include <QDebug>
-#include "ircview.h"
 
 QDebug operator<<(QDebug d, QTextDocument* document);
 
@@ -938,7 +939,7 @@ namespace Konversation
         OutputFilterInput input(_input);
         OutputFilterResult result;
 
-        qDebug() << input.parameter;
+        qCDebug(KONVERSATION_LOG) << input.parameter;
         // No parameter, just open DCC panel
         if (input.parameter.isEmpty())
         {
@@ -1874,7 +1875,7 @@ namespace Konversation
             if (input.context)
                 input.context->cycle();
             else
-                qDebug() << "Parameter-less /cycle without an input context can't work.";
+                qCDebug(KONVERSATION_LOG) << "Parameter-less /cycle without an input context can't work.";
         }
         else
         {
@@ -1889,7 +1890,7 @@ namespace Konversation
                 if (m_server)
                     m_server->cycle();
                 else
-                    qDebug() << "Told to cycle the server, but current context doesn't have one.";
+                    qCDebug(KONVERSATION_LOG) << "Told to cycle the server, but current context doesn't have one.";
             }
             else if (m_server)
             {
@@ -1916,7 +1917,7 @@ namespace Konversation
             if (input.context)
                 input.context->clear();
             else
-                qDebug() << "Parameter-less /clear without an input context can't work.";
+                qCDebug(KONVERSATION_LOG) << "Parameter-less /clear without an input context can't work.";
         }
         else if (m_server)
         {

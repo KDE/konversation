@@ -18,6 +18,7 @@
 #include "connectionmanager.h"
 #include "notificationhandler.h"
 #include "preferences.h"
+#include "konversation_log.h"
 
 #include <config-konversation.h>
 
@@ -33,7 +34,7 @@ namespace Konversation
         Transfer::Transfer(Type dccType, QObject *parent)
             : QObject(parent)
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
             m_type = dccType;
 
@@ -60,7 +61,7 @@ namespace Konversation
 
         Transfer::~Transfer()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
         }
 
         void Transfer::setConnectionId(int id)
@@ -81,7 +82,7 @@ namespace Konversation
 
         bool Transfer::queue()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             if (getStatus() != Configuring)
             {
                 return false;
@@ -139,7 +140,7 @@ namespace Konversation
 
         void Transfer::cleanUp()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             delete[] m_buffer;
             m_buffer = nullptr;
             m_loggerTimer.stop();
@@ -158,7 +159,7 @@ namespace Konversation
             Server *server = konv_app->getConnectionManager()->getServerByConnectionId(m_connectionId);
             if (server)
             {
-                qDebug() << "notification:" << errorMessage;
+                qCDebug(KONVERSATION_LOG) << "notification:" << errorMessage;
                 konv_app->notificationHandler()->dccError(server->getStatusView(), errorMessage);
             }
             setStatus(Failed, errorMessage);
@@ -182,7 +183,7 @@ namespace Konversation
                 Server *server = konv_app->getConnectionManager()->getServerByConnectionId(m_connectionId);
                 if (server)
                 {
-                    qDebug() << "notification:" << m_fileName;
+                    qCDebug(KONVERSATION_LOG) << "notification:" << m_fileName;
                     konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName, this);
                 }
             }

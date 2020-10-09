@@ -13,26 +13,25 @@
 */
 
 #include "theme_config.h"
+
 #include "preferences_base.h"
 #include "images.h"
 #include "nickiconset.h"
 #include "common.h"
 #include "application.h"
 
-#include <QStringList>
-
-#include <QUrl>
 #include <KMessageBox>
-#include <QFileDialog>
 #include <KTar>
 #include <KZip>
 #include <KDesktopFile>
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
-
 #include <KSharedConfig>
+
+#include <QStringList>
+#include <QUrl>
+#include <QFileDialog>
 #include <QStandardPaths>
-#include <QDebug>
 #include <QTemporaryFile>
 #include <QMimeDatabase>
 

@@ -15,6 +15,9 @@
 
 #include "osd.h"
 #include "common.h"
+#include "konversation_log.h"
+
+#include <KLocalizedString>
 
 #include <QDesktopWidget>
 #include <QMouseEvent>
@@ -23,11 +26,8 @@
 #include <QBitmap>
 #include <QRegExp>
 #include <QTimer>
-#include <QDebug>
 #include <QScreen>
-
 #include <QApplication>
-#include <KLocalizedString>
 
 
 namespace ShadowEngine
@@ -106,7 +106,7 @@ void OSDWidget::show() //virtual
         }
     }
     else
-        qWarning() << "Attempted to make an invalid sized OSD";
+        qCWarning(KONVERSATION_LOG) << "Attempted to make an invalid sized OSD";
 
     update();
 }

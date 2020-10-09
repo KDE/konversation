@@ -14,6 +14,7 @@
 */
 
 #include "chat.h"
+
 #include "dcccommon.h"
 #include "application.h"
 #include "irccharsets.h"
@@ -21,6 +22,7 @@
 #include "upnprouter.h"
 #include "transfermanager.h"
 #include "connectionmanager.h"
+#include "konversation_log.h"
 
 #include <QHostAddress>
 #include <QTextCodec>
@@ -45,7 +47,7 @@ namespace Konversation
               m_chatStatus(Configuring),
               m_chatExtension(Unknown)
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             // set default values
             m_reverse = Preferences::self()->dccPassiveSend();
 
@@ -97,7 +99,7 @@ namespace Konversation
             Server *server = serverByConnectionId();
             if (!server)
             {
-                qDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
+                qCDebug(KONVERSATION_LOG) << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
                 failed(i18nc("%1=dcc extension like Chat or Whiteboard",
                              "Could not send a DCC %1 request to the partner via the IRC server.",
                              localizedExtensionString()));
@@ -108,17 +110,17 @@ namespace Konversation
             {
                 m_ownIp = DccCommon::getOwnIp(server);
             }
-            qDebug() << "ownip: " << m_ownIp;
+            qCDebug(KONVERSATION_LOG) << "ownip: " << m_ownIp;
 
             if (m_selfOpened)
             {
                 //we started the dcc chat
                 if (m_reverse)
                 {
-                    qDebug() << "passive dcc chat";
+                    qCDebug(KONVERSATION_LOG) << "passive dcc chat";
                     int token = Application::instance()->getDccTransferManager()->generateReverseTokenNumber();
                     m_token = QString::number(token);
-                    qDebug() << "token:" << m_token;
+                    qCDebug(KONVERSATION_LOG) << "token:" << m_token;
                     server->dccPassiveChatRequest(m_partnerNick, extensionString(), DccCommon::textIpToNumericalIp(m_ownIp), m_token);
                     setStatus(WaitingRemote, i18n("Awaiting acceptance by remote user..."));
                 }
@@ -167,7 +169,7 @@ namespace Konversation
 
                 if (m_reverse)
                 {
-                    qDebug() << "partner1: passive:1";
+                    qCDebug(KONVERSATION_LOG) << "partner1: passive:1";
                     listenForPartner();
                     if (Preferences::self()->dccUPnP())
                     {
@@ -269,7 +271,7 @@ namespace Konversation
 
         void Chat::setStatus(Chat::Status status, const QString &detailMessage)
         {
-            qDebug() << "old: " << m_chatStatus << " != " << status << " :new";
+            qCDebug(KONVERSATION_LOG) << "old: " << m_chatStatus << " != " << status << " :new";
             if (m_chatStatus != status)
             {
                 m_chatDetailedStatus = detailMessage;
@@ -341,7 +343,7 @@ namespace Konversation
 
         void Chat::listenForPartner()
         {
-            qDebug() << "[BEGIN]";
+            qCDebug(KONVERSATION_LOG) << "[BEGIN]";
 
             // Set up server socket
             QString failedReason;
@@ -364,13 +366,13 @@ namespace Konversation
 
             // Get our own port number
             m_ownPort = m_dccServer->serverPort();
-            qDebug() << "using port: " << m_ownPort ;
+            qCDebug(KONVERSATION_LOG) << "using port: " << m_ownPort ;
 
             setStatus(Chat::WaitingRemote, i18nc("%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port",
                                                  "Offering DCC %1 connection to %2 on port %3...",
                                                  localizedExtensionString(), m_partnerNick, QString::number(m_ownPort)));
 
-            qDebug() << "[END]";
+            qCDebug(KONVERSATION_LOG) << "[END]";
         }
 
         Chat::Status Chat::status() const
@@ -396,7 +398,7 @@ namespace Konversation
                 m_chatExtension = Whiteboard;
                 return;
             }
-            qDebug() << "unknown chat extension:" << extension;
+            qCDebug(KONVERSATION_LOG) << "unknown chat extension:" << extension;
             m_chatExtension = Unknown;
             return;
         }
@@ -457,9 +459,9 @@ namespace Konversation
 
         void Chat::connectToPartner()
         {
-            //qDebug() << "num: " << m_partnerIp;
+            //qCDebug(KONVERSATION_LOG) << "num: " << m_partnerIp;
             //m_partnerIp = DccCommon::numericalIpToTextIp(m_partnerIp);
-            qDebug() << "partnerIP: " << m_partnerIp << " partnerport: " << m_partnerPort  << " nick: " << m_partnerNick;
+            qCDebug(KONVERSATION_LOG) << "partnerIP: " << m_partnerIp << " partnerport: " << m_partnerPort  << " nick: " << m_partnerNick;
 
             setStatus(Chat::Connecting, i18nc("%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port",
                                               "Establishing DCC %1 connection to %2 (%3:%4)...", localizedExtensionString(),

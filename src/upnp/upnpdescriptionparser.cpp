@@ -11,12 +11,12 @@
 */
 
 #include "upnpdescriptionparser.h"
+
 #include "upnprouter.h"
+#include "konversation_log.h"
 
 #include <QXmlAttributes>
 #include <QStack>
-
-#include <QDebug>
 
 
 namespace Konversation
@@ -75,7 +75,7 @@ namespace Konversation
 
             if (!ret)
             {
-                qDebug() << "Error parsing XML";
+                qCDebug(KONVERSATION_LOG) << "Error parsing XML";
                 return false;
             }
             return true;
@@ -94,7 +94,7 @@ namespace Konversation
 
             if (!ret)
             {
-                qDebug() << "Error parsing XML";
+                qCDebug(KONVERSATION_LOG) << "Error parsing XML";
                 return false;
             }
             return true;

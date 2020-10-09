@@ -10,6 +10,7 @@
 */
 
 #include "viewcontainer.h"
+
 #include "connectionmanager.h"
 #include "queuetuner.h"
 #include "application.h"
@@ -37,13 +38,8 @@
 #include "irccontextmenus.h"
 #include "viewtree.h"
 #include "viewspringloader.h"
+#include "konversation_log.h"
 
-#include <QModelIndex>
-#include <QSplitter>
-#include <QTabBar>
-#include <QWidget>
-
-#include <QInputDialog>
 #include <KMessageBox>
 #include <KIO/OpenUrlJob>
 #include <KIO/JobUiDelegate>
@@ -53,6 +49,12 @@
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KWindowSystem>
+
+#include <QModelIndex>
+#include <QSplitter>
+#include <QTabBar>
+#include <QWidget>
+#include <QInputDialog>
 
 using namespace Konversation;
 
@@ -2613,7 +2615,7 @@ void ViewContainer::toggleDccPanel()
 
 void ViewContainer::addDccPanel()
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     if (!m_dccPanelOpen)
     {
         addView(m_dccPanel, i18n("DCC Status"));

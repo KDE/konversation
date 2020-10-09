@@ -11,6 +11,11 @@
 
 #include "whiteboardtoolbar.h"
 
+#include "whiteboardfontchooser.h"
+#include "konversation_log.h"
+
+#include <KLocalizedString>
+
 #include <QHBoxLayout>
 #include <QLayout>
 #include <QDir>
@@ -19,12 +24,7 @@
 #include <QPushButton>
 #include <QUrl>
 #include <QIcon>
-#include <QDebug>
 #include <QFileDialog>
-
-#include <KLocalizedString>
-
-#include "whiteboardfontchooser.h"
 
 namespace Konversation
 {
@@ -151,7 +151,7 @@ namespace Konversation
             }
             else
             {
-                qDebug() << "unhandled tool:" << tool;
+                qCDebug(KONVERSATION_LOG) << "unhandled tool:" << tool;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Konversation
             }
             else
             {
-                qDebug() << "unhandled tool:" << tool;
+                qCDebug(KONVERSATION_LOG) << "unhandled tool:" << tool;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::connectToggleButtons()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             connect(m_pencilPushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::pencilToggled);
             connect(m_linePushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::lineToggled);
             connect(m_rectanglePushButton, &QPushButton::toggled, this, &WhiteBoardToolBar::rectangleToggled);
@@ -213,7 +213,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::disconnectToggleButtons()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             disconnect(m_pencilPushButton, nullptr, nullptr, nullptr);
             disconnect(m_linePushButton, nullptr, nullptr, nullptr);
             disconnect(m_rectanglePushButton, nullptr, nullptr, nullptr);
@@ -243,7 +243,7 @@ namespace Konversation
             if (ret == QDialog::Accepted && fileDialog)
             {
                 QStringList saveList = fileDialog->selectedFiles();
-                qDebug() << saveList;
+                qCDebug(KONVERSATION_LOG) << saveList;
                 if (saveList.count() > 0)
                 emit save(saveList.at(0));
             }
@@ -342,7 +342,7 @@ namespace Konversation
         void WhiteBoardToolBar::handleToggleButton(QPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
         {
             disconnectToggleButtons();
-            qDebug() << "tool:" << tool << "checked:" << checked;
+            qCDebug(KONVERSATION_LOG) << "tool:" << tool << "checked:" << checked;
             if (checked)
             {
                 unCheckOtherButtons(button);
@@ -386,19 +386,19 @@ namespace Konversation
 
         void WhiteBoardToolBar::formSelectionChanged()
         {
-            // qDebug();
+            // qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             QList<QListWidgetItem *> selectList = m_formOptionListWidget->selectedItems();
             const int selectedRow = m_formOptionListWidget->row(selectList.first());
             if (selectedRow == 0)
             {
                 if (m_rectanglePushButton->isChecked())
                 {
-                    qDebug() << "emit rectangle";
+                    qCDebug(KONVERSATION_LOG) << "emit rectangle";
                     emit toolChanged(WhiteBoardGlobals::Rectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
-                    qDebug() << "emit ellipse";
+                    qCDebug(KONVERSATION_LOG) << "emit ellipse";
                     emit toolChanged(WhiteBoardGlobals::Ellipse);
                 }
             }
@@ -406,12 +406,12 @@ namespace Konversation
             {
                 if (m_rectanglePushButton->isChecked())
                 {
-                    qDebug() << "emit filledrectangle";
+                    qCDebug(KONVERSATION_LOG) << "emit filledrectangle";
                     emit toolChanged(WhiteBoardGlobals::FilledRectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
-                    qDebug() << "emit filledellipse";
+                    qCDebug(KONVERSATION_LOG) << "emit filledellipse";
                     emit toolChanged(WhiteBoardGlobals::FilledEllipse);
                 }
             }
@@ -446,8 +446,8 @@ namespace Konversation
             const int drawHeight = 20 - 2;
             const int widthLayoutOffset = 2;
             const QSize sizeHint(width, 20);
-            // qDebug() << "wanted width" << width;
-            // qDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
+            // qCDebug(KONVERSATION_LOG) << "wanted width" << width;
+            // qCDebug(KONVERSATION_LOG) << "actual width" << m_formOptionListWidget->contentsRect().width();
             switch (form)
             {
                 case Rectangle:

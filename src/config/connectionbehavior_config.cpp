@@ -19,14 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "connectionbehavior_config.h"
+
 #include "application.h"
 #include "preferences.h"
+#include "konversation_log.h"
+#include <config-konversation.h>
 
 #include <KLineEdit>
 #include <KWallet>
 #include <KLocalizedString>
 
-#include <config-konversation.h>
 
 ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
     : QWidget(parent), m_passwordChanged(false)
@@ -57,7 +59,7 @@ void ConnectionBehavior_Config::saveSettings()
 
             if(ret != 0)
             {
-                qCritical() << "Failed to write the proxy password to the wallet, error code:" << ret;
+                qCCritical(KONVERSATION_LOG) << "Failed to write the proxy password to the wallet, error code:" << ret;
             }
         }
     }
@@ -77,7 +79,7 @@ void ConnectionBehavior_Config::loadSettings()
 
             if(ret != 0)
             {
-                qCritical() << "Failed to read the proxy password from the wallet, error code:" << ret;
+                qCCritical(KONVERSATION_LOG) << "Failed to read the proxy password from the wallet, error code:" << ret;
             }
         }
     }

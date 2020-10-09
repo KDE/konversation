@@ -15,12 +15,18 @@
 */
 
 #include "ircview.h"
+
 #include "channel.h"
 #include "dcc/chatcontainer.h"
 #include "application.h"
 #include "highlight.h"
 #include "sound.h"
 #include "notificationhandler.h"
+#include "konversation_log.h"
+
+#include <KStandardShortcut>
+#include <KUrlMimeData>
+#include <QLocale>
 
 #include <QDrag>
 #include <QScrollBar>
@@ -28,10 +34,6 @@
 #include <QPainter>
 #include <QTextDocumentFragment>
 #include <QMimeData>
-
-#include <KStandardShortcut>
-#include <KUrlMimeData>
-#include <QLocale>
 
 using namespace Konversation;
 
@@ -1893,7 +1895,7 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
                 }
                 break;
             default:
-//                 qDebug() << "unsupported duplicate code:" << QString::number(codes.at(pos).toLatin1(), 16);
+//                 qCDebug(KONVERSATION_LOG) << "unsupported duplicate code:" << QString::number(codes.at(pos).toLatin1(), 16);
                 ret += codes.at(pos);
                 ++pos;
         }

@@ -11,6 +11,7 @@
 */
 
 #include "chatwindow.h"
+
 #include "channel.h"
 #include "query.h"
 #include "ircview.h"
@@ -19,14 +20,15 @@
 #include "application.h"
 #include "logfilereader.h"
 #include "viewcontainer.h"
+#include "konversation_log.h"
+
+#include <KUser>
 
 #include <QDateTime>
 #include <QDir>
 #include <QTextCodec>
 #include <QKeyEvent>
 #include <QScrollBar>
-
-#include <KUser>
 #include <QLocale>
 
 
@@ -206,7 +208,7 @@ void ChatWindow::setServer(Server* newServer)
 {
     if (!newServer)
     {
-        qDebug() << "ChatWindow::setServer(0)!";
+        qCDebug(KONVERSATION_LOG) << "ChatWindow::setServer(0)!";
     }
     else
     {
@@ -217,7 +219,7 @@ void ChatWindow::setServer(Server* newServer)
         if(getType() != ChannelList)
         {
             if(textView) textView->setServer(newServer);
-            else qDebug() << "textView==0!";
+            else qCDebug(KONVERSATION_LOG) << "textView==0!";
         }
 
         serverOnline(m_server->isConnected());
@@ -522,7 +524,7 @@ void ChatWindow::logText(const QString& text)
             // close file
             logfile.close();
         }
-        else qWarning() << "open(QIODevice::Append) for " << logfile.fileName() << " failed!";
+        else qCWarning(KONVERSATION_LOG) << "open(QIODevice::Append) for " << logfile.fileName() << " failed!";
     }
 }
 

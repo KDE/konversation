@@ -11,10 +11,11 @@
 
 #include "whiteboardcolorchooser.h"
 
+#include "konversation_log.h"
+
 #include <QPaintEvent>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QDebug>
 #include <QColorDialog>
 #include <qdrawutil.h>
 
@@ -93,26 +94,26 @@ namespace Konversation
 
         void WhiteBoardColorChooser::mouseReleaseEvent(QMouseEvent *e)
         {
-            // qDebug() << "epos:"<< e->pos();
-            // qDebug() << "foregroundrect" << foregroundRect();
-            // qDebug() << "backgroundrect" << backgroundRect();
-            // qDebug() << "swap" << swapPixmapRect();
+            // qCDebug(KONVERSATION_LOG) << "epos:"<< e->pos();
+            // qCDebug(KONVERSATION_LOG) << "foregroundrect" << foregroundRect();
+            // qCDebug(KONVERSATION_LOG) << "backgroundrect" << backgroundRect();
+            // qCDebug(KONVERSATION_LOG) << "swap" << swapPixmapRect();
 
             ColorLayer whichColor = None;
 
             if (foregroundRect().contains(e->pos()))
             {
                 whichColor = ForegroundColor;
-                qDebug() << "> in foreground";
+                qCDebug(KONVERSATION_LOG) << "> in foreground";
             }
             else if (backgroundRect().contains(e->pos()))
             {
                 whichColor = BackgroundColor;
-                qDebug() << "> in background";
+                qCDebug(KONVERSATION_LOG) << "> in background";
             }
             else if (swapPixmapRect().contains(e->pos()))
             {
-                qDebug() << "> in swap";
+                qCDebug(KONVERSATION_LOG) << "> in swap";
                 QColor oldFore = m_foregroundColor;
                 m_foregroundColor = m_backgroundColor;
                 m_backgroundColor = oldFore;

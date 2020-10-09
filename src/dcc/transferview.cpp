@@ -15,15 +15,17 @@
 
 #include "transferview.h"
 
-#include <QMenu>
+#include "dcccommon.h"
+#include "preferences.h"
+#include "konversation_log.h"
+
 #include <KCategoryDrawer>
 #include <KLocalizedString>
 
+#include <QMenu>
 #include <QHeaderView>
 #include <QKeyEvent>
 
-#include <preferences.h>
-#include "dcccommon.h"
 
 namespace Konversation
 {
@@ -161,7 +163,7 @@ namespace Konversation
                 if (m_activeTransfers > 0 && !m_updateTimer->isActive())
                 {
                     m_updateTimer->start();
-                    qDebug() << "timer start";
+                    qCDebug(KONVERSATION_LOG) << "timer start";
                 }
             }
 
@@ -421,7 +423,7 @@ namespace Konversation
                     return i;
                 }
             }
-            qDebug() << "unknown headerType: " << headerType;
+            qCDebug(KONVERSATION_LOG) << "unknown headerType: " << headerType;
             return -1;
         }
 
@@ -500,7 +502,7 @@ namespace Konversation
             }
             else
             {
-                qDebug() << "transferview fallback, did we crash last time?\n"
+                qCDebug(KONVERSATION_LOG) << "transferview fallback, did we crash last time?\n"
                          << " columnOrder.count():"<< columnOrder.count()
                          << " columnWidths.count():"<< columnWidths.count()
                          << " columnVisible.count():"<< columnVisible.count()
@@ -609,7 +611,7 @@ namespace Konversation
                     m_itemCategoryToRemove &= ~Transfer::Send;
                     m_categorieFlags &= ~TransferView::SendCategory;
                     int removed = removeItems(TransferItemData::SendCategory);
-                    //qDebug() << "Sendremoved:" << removed;
+                    //qCDebug(KONVERSATION_LOG) << "Sendremoved:" << removed;
                     if (removed > 0 && (m_categorieFlags & SpacerRow))
                     {
                         removeItems(TransferItemData::SpaceRow);
@@ -624,7 +626,7 @@ namespace Konversation
                     m_itemCategoryToRemove &= ~Transfer::Receive;
                     m_categorieFlags &= ~TransferView::ReceiveCategory;
                     int removed = removeItems(TransferItemData::ReceiveCategory);
-                    //qDebug() << "Receiveremoved:" << removed;
+                    //qCDebug(KONVERSATION_LOG) << "Receiveremoved:" << removed;
                     if (removed > 0 && (m_categorieFlags & SpacerRow))
                     {
                         removeItems(TransferItemData::SpaceRow);

@@ -1,4 +1,5 @@
 include(ECMAddAppIcon)
+include(ECMQtDeclareLoggingCategory)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
@@ -211,6 +212,14 @@ ki18n_wrap_ui(konversation_SRCS
 
 kconfig_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
 
+ecm_qt_declare_logging_category(konversation_SRCS
+    HEADER konversation_log.h
+    IDENTIFIER KONVERSATION_LOG
+    CATEGORY_NAME konversation
+    DESCRIPTION "Konversation"
+    EXPORT KONVERSATION
+)
+
 # Sets the icon on Windows and OSX
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/*apps-konversation.png")
 ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})
@@ -250,3 +259,9 @@ endif()
 
 set_target_properties(konversation PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/MacOSXBundleInfo.plist.in)
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
+
+ecm_qt_install_logging_categories(
+    EXPORT KONVERSATION
+    FILE konversation.categories
+    DESTINATION "${KDE_INSTALL_LOGGINGCATEGORIESDIR}"
+)

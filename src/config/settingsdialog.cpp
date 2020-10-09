@@ -11,6 +11,7 @@
 */
 
 #include "settingsdialog.h"
+
 #include "preferences.h"
 #include "ui_chatwindowappearance_config.h"
 #include "connectionbehavior_config.h"
@@ -32,6 +33,7 @@
 #include "ignore_config.h"
 #include "ui_watchednicknames_configui.h"
 #include "ui_tabnotifications_config.h"
+#include "konversation_log.h"
 
 #include <config-konversation.h>
 
@@ -189,13 +191,13 @@ void KonviSettingsDialog::modifiedSlot()
 {
   // this is for the non KConfigXT parts to tell us, if the user actually changed
   // something or went back to the old settings
-// qDebug();
+// qCDebug(KONVERSATION_LOG) << __FUNCTION__;
   m_modified = false;
   for (KonviSettingsPage *page : qAsConst(m_pages)) {
     if (page->hasChanged())
     {
       m_modified = true;
-//      qDebug() << "modified!";
+//      qCDebug(KONVERSATION_LOG) << "modified!";
       break;
     }
   }

@@ -11,8 +11,10 @@
 */
 
 #include "dcccommon.h"
+
 #include "preferences.h"
 #include "server.h"
+#include "konversation_log.h"
 
 #include <config-konversation.h>
 
@@ -52,7 +54,7 @@ namespace Konversation
                 return ip.toString();
 
             default:
-                qDebug() << "unsupported protocol: " << ipString;
+                qCDebug(KONVERSATION_LOG) << "unsupported protocol: " << ipString;
                 return QString();
             }
         }
@@ -100,7 +102,7 @@ namespace Konversation
                 ownIp = server->getOwnIpByNetworkInterface();
             }
 
-            qDebug() << ownIp;
+            qCDebug(KONVERSATION_LOG) << ownIp;
             return ownIp;
         }
 
@@ -125,9 +127,9 @@ namespace Konversation
                     memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
                     fallbackIp = QString::fromLatin1(inet_ntoa(sock.sin_addr));
                 }
-                qDebug() << "Falling back to IPv4 address " << fallbackIp;
+                qCDebug(KONVERSATION_LOG) << "Falling back to IPv4 address " << fallbackIp;
 #else
-                qDebug() << "TODO: implement ipv6 fallback";
+                qCDebug(KONVERSATION_LOG) << "TODO: implement ipv6 fallback";
 #endif
             }
             return fallbackIp;

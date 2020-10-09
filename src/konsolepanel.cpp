@@ -10,19 +10,20 @@
 */
 
 #include "konsolepanel.h"
+
 #include "common.h"
 #include "viewcontainer.h"
+#include "konversation_log.h"
+
+#include <KLocalizedString>
+#include <KService>
+#include <kde_terminal_interface.h>
 
 #include <QSplitter>
 #include <QToolButton>
 #include <QLabel>
 #include <QHBoxLayout>
-
-#include <QDebug>
 #include <QIcon>
-#include <KLocalizedString>
-#include <KService>
-#include <kde_terminal_interface.h>
 
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
@@ -83,7 +84,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
 
 KonsolePanel::~KonsolePanel()
 {
-    qDebug();
+    qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     if ( k_part )
     {
         // make sure to prevent partDestroyed() signals from being sent

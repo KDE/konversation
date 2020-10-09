@@ -11,9 +11,8 @@
   Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
-#include <QDir>
-
 #include "transfermanager.h"
+
 #include "transferrecv.h"
 #include "transfersend.h"
 #include "application.h"
@@ -22,6 +21,9 @@
 #include "upnprouter.h"
 #include "transfer.h"
 #include "chat.h"
+#include "konversation_log.h"
+
+#include <QDir>
 
 using namespace Konversation::UPnP;
 
@@ -49,7 +51,7 @@ namespace Konversation
 
         TransferManager::~TransferManager()
         {
-            qDebug();
+            qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             const auto currentSendItems = m_sendItems;
             for (TransferSend* sendItem : currentSendItems) {
                 sendItem->abort();
@@ -136,7 +138,7 @@ namespace Konversation
                     it->getFileName() == fileName )
                 {
                     transfer = it;
-                    qDebug() << "Filename match: " << fileName;
+                    qCDebug(KONVERSATION_LOG) << "Filename match: " << fileName;
                     break;
                 }
             }
@@ -181,7 +183,7 @@ namespace Konversation
                     it->isResumed() )
                 {
                     transfer = it;
-                    qDebug() << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
+                    qCDebug(KONVERSATION_LOG) << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
                     // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
                     if ( transfer->getOwnPort() == ownPort )
                     {
@@ -209,7 +211,7 @@ namespace Konversation
                     !it->isResumed() )
                 {
                     transfer = it;
-                    qDebug() << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
+                    qCDebug(KONVERSATION_LOG) << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
                     // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
                     if ( transfer->getOwnPort() == ownPort )
                     {
@@ -226,7 +228,7 @@ namespace Konversation
 
         TransferSend* TransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, quint16 partnerPort, quint64 fileSize, const QString& token )
         {
-            qDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token;
+            qCDebug(KONVERSATION_LOG) << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token;
             TransferSend* transfer = nullptr;
 
             // find applicable one
@@ -254,7 +256,7 @@ namespace Konversation
 
         Chat* TransferManager::startReverseChat(int connectionId, const QString& partnerNick, const QString& partnerHost, quint16 partnerPort, const QString& token)
         {
-            qDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", token: " << token;
+            qCDebug(KONVERSATION_LOG) << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", token: " << token;
             Chat* chat = nullptr;
 
             // find applicable one
@@ -283,7 +285,7 @@ namespace Konversation
 
         void TransferManager::acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName)
         {
-            qDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName;
+            qCDebug(KONVERSATION_LOG) << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName;
 
             bool nickEmpty = partnerNick.isEmpty();
             bool fileEmpty = fileName.isEmpty();
@@ -353,7 +355,7 @@ namespace Konversation
 
         void TransferManager::slotTransferStatusChanged( Transfer* item, int newStatus, int oldStatus )
         {
-            qDebug() << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")";
+            qCDebug(KONVERSATION_LOG) << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")";
 
             if ( newStatus == Transfer::Queued )
                 emit newDccTransferQueued( item );
@@ -401,7 +403,7 @@ namespace Konversation
 
         void TransferManager::upnpRouterDiscovered(UPnPRouter *router)
         {
-            qDebug() << "Router discovered!";
+            qCDebug(KONVERSATION_LOG) << "Router discovered!";
 
             // Assuming only 1 router for now
             m_upnpRouter = router;
