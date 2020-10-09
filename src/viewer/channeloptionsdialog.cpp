@@ -316,7 +316,7 @@ namespace Konversation
         QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
 
         modesModel->clear();
-        modesModel->setHorizontalHeaderLabels(QStringList() << i18n("Mode") << i18n("Parameter"));
+        modesModel->setHorizontalHeaderLabels(QStringList { i18n("Mode"), i18n("Parameter") });
 
         for(int i = 0; i < modeString.length(); i++)
         {

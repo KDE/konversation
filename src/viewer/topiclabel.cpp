@@ -172,7 +172,7 @@ namespace Konversation
 
             QUrl url(m_dragUrl);
 
-            mimeData->setUrls(QList<QUrl>() << url);
+            mimeData->setUrls(QList<QUrl> { url });
 
             drag->setMimeData(mimeData);
 

@@ -163,7 +163,7 @@ QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
   {
     regex = (item->checkState(0) == Qt::Checked) ? QLatin1Char('1') : QLatin1Char('0');
     // remember entry in internal list (col 4 is hidden for input/output)
-    newList.append(QStringList() << regex << item->text(4) << item->text(2) << item->text(3));
+    newList.append(QStringList { regex, item->text(4), item->text(2), item->text(3) });
     // get next item in the listview
     item=patternListView->itemBelow(item);
   } // while

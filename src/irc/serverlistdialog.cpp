@@ -404,9 +404,9 @@ namespace Konversation
         }
 
         // Insert the server group into the list
-        QTreeWidgetItem* networkItem = new ServerListItem(m_serverList, QStringList() << serverGroup->name()
-                                                                        << serverGroup->identity()->getName()
-                                                                        << channels);
+        QTreeWidgetItem* networkItem = new ServerListItem(m_serverList, QStringList { serverGroup->name(),
+                                                                        serverGroup->identity()->getName(),
+                                                                        channels });
         networkItem->setData(0,ServerGroupId,serverGroup->id());
         networkItem->setData(0,SortIndex,serverGroup->sortIndex());
         networkItem->setData(0,IsServer,false);
@@ -432,7 +432,7 @@ namespace Konversation
                 name += QLatin1String(" (SSL)");
 
             // Insert the server into the list, as child of the server group list item
-            QTreeWidgetItem* serverItem = new ServerListItem(networkItem, QStringList() << name);
+            QTreeWidgetItem* serverItem = new ServerListItem(networkItem, QStringList { name });
             serverItem->setData(0,ServerGroupId,serverGroup->id());
             serverItem->setData(0,SortIndex,i);
             serverItem->setData(0,IsServer,true);

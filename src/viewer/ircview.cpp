@@ -243,7 +243,7 @@ private:
 QStringList IrcViewMimeData::formats() const
 {
     if (!fragment.isEmpty())
-        return QStringList() << QStringLiteral("text/plain");
+        return QStringList{ QStringLiteral("text/plain") };
     else
         return QMimeData::formats();
 }
@@ -2031,7 +2031,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
 
         QUrl url(m_dragUrl);
 
-        mimeData->setUrls(QList<QUrl>() << url);
+        mimeData->setUrls(QList<QUrl> { url });
 
         drag->setMimeData(mimeData);
 
@@ -2264,7 +2264,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
         default:
             if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowNickActions))
             {
-                IrcContextMenus::processNickAction(contextMenuActionId, m_server, QStringList() << m_chatWin->getName(),
+                IrcContextMenus::processNickAction(contextMenuActionId, m_server, QStringList { m_chatWin->getName() },
                     m_contextMenuOptions.testFlag(IrcContextMenus::ShowChannelActions) ? m_chatWin->getName() : QString());
             }
             break;

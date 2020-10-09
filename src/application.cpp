@@ -595,7 +595,7 @@ void Application::readOptions()
         QString pattern = entry.section(QLatin1Char(','),2,2);
         QString replace = entry.section(QLatin1Char(','),3);
         // add entry to internal list
-        autoreplaceList.append(QStringList() << regex << direction << pattern << replace);
+        autoreplaceList.append(QStringList { regex, direction, pattern, replace });
     } // while
     //end legacy code for old autoreplace format
     index=0; //new code for autoreplace config
@@ -624,7 +624,7 @@ void Application::readOptions()
         }
         index++;
         indexString = QString::number(index);
-        autoreplaceList.append(QStringList() << regex << direction << pattern << replace);
+        autoreplaceList.append(QStringList { regex, direction, pattern, replace });
     }
     // Put back the changed autoreplace list
     Preferences::setAutoreplaceList(autoreplaceList);
@@ -1037,10 +1037,11 @@ void Application::stashQueueRates()
 {
     for (int i=0; i <= countOfQueues(); i++)
     {
-        QList<int> r;
-        r.append(staticrates[i].m_rate);
-        r.append(staticrates[i].m_interval / 1000);
-        r.append(int(staticrates[i].m_type));
+        const QList<int> r {
+            staticrates[i].m_rate,
+            staticrates[i].m_interval / 1000,
+            static_cast<int>(staticrates[i].m_type),
+        };
         Preferences::self()->setQueueRate(i, r);
     }
 }

@@ -18,7 +18,7 @@
 
 
 IgnoreListViewItem::IgnoreListViewItem(QTreeWidget* parent,const QString& name,int newFlags):
-QTreeWidgetItem(parent, QStringList() << name)
+QTreeWidgetItem(parent, QStringList { name })
 {
     setFlags(newFlags);
 }

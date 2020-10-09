@@ -233,7 +233,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
         for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
             action->setEnabled(connected);
 
-        updateSharedNickSettingsActions(server, QStringList() << nick);
+        updateSharedNickSettingsActions(server, QStringList { nick });
 
         for (QAction* action : qAsConst(self()->m_sharedDccActions))
             action->setEnabled(connected);
@@ -264,7 +264,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
         processLinkAction(actionId, link);
 
     if (self()->m_quickButtonMenu->actions().contains(action))
-        processQuickButtonAction(action, server, nick, QStringList() << nick);
+        processQuickButtonAction(action, server, nick, QStringList { nick });
 
     textMenu->removeAction(toggleMenuBarAction);
     textMenu->removeAction(actionCollection->action(QString::fromLatin1(KStandardAction::name(KStandardAction::Find))));

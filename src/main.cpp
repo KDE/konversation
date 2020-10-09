@@ -37,14 +37,14 @@ int main(int argc, char* argv[])
 
     // Migrate pre-existing (4.x) configuration
 
-    QStringList configFiles;
-
-    configFiles.append(QStringLiteral("konversationrc"));
-    configFiles.append(QStringLiteral("konversation.notifyrc"));
+    const QStringList configFiles = {
+        QStringLiteral("konversationrc"),
+        QStringLiteral("konversation.notifyrc"),
+    };
 
     Kdelibs4ConfigMigrator migrate(QStringLiteral("konversation"));
     migrate.setConfigFiles(configFiles);
-    migrate.setUiFiles(QStringList() << QStringLiteral("konversationui.rc"));
+    migrate.setUiFiles(QStringList { QStringLiteral("konversationui.rc") });
     migrate.migrate();
 
     KLocalizedString::setApplicationDomain("konversation");

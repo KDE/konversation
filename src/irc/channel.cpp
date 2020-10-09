@@ -2067,7 +2067,7 @@ void Channel::syncSplitters()
 
     if (vertSizes.isEmpty())
     {
-        vertSizes << m_topicButton->height() << (height() - m_topicButton->height());
+        vertSizes = { m_topicButton->height(), (height() - m_topicButton->height()) };
         Preferences::self()->setTopicSplitterSizes(vertSizes);
     }
 
@@ -2076,7 +2076,7 @@ void Channel::syncSplitters()
         // An approximation of a common NICKLEN plus the width of the icon,
         // tested with 8pt and 10pt DejaVu Sans and Droid Sans.
         int listWidth = fontMetrics().averageCharWidth() * 17 + 20;
-        horizSizes << (width() - listWidth) << listWidth;
+        horizSizes = { (width() - listWidth), listWidth };
         Preferences::self()->setChannelSplitterSizes(horizSizes);
     }
 

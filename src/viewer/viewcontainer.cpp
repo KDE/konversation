@@ -560,7 +560,7 @@ Qt::ItemFlags ViewContainer::flags(const QModelIndex &index) const
 
 QStringList ViewContainer::mimeTypes() const
 {
-    return QStringList() << QStringLiteral("application/x-konversation-chatwindow");
+    return QStringList { QStringLiteral("application/x-konversation-chatwindow") };
 }
 
 QMimeData* ViewContainer::mimeData(const QModelIndexList &indexes) const
@@ -1257,7 +1257,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     }
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole);
+    emit dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole });
 }
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
@@ -1306,7 +1306,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << Qt::DecorationRole << ColorRole << DisabledRole);
+    emit dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole, DisabledRole });
 
     m_activeViewOrderList.removeAll(view);
 }
@@ -2103,7 +2103,7 @@ void ViewContainer::renameKonsole()
         m_tabWidget->setTabText(popup, label);
 
         const QModelIndex& idx = indexForView(view);
-        emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
+        emit dataChanged(idx, idx, QVector<int>{ Qt::DisplayRole });
 
         if (popup == m_tabWidget->currentIndex())
         {
@@ -2251,7 +2251,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     }
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
+    emit dataChanged(idx, idx, QVector<int>{ HighlightRole });
 
     const QAction* action = menu->exec(pos);
 
@@ -2265,7 +2265,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     emit contextMenuClosed();
 
-    emit dataChanged(idx, idx, QVector<int>() << HighlightRole);
+    emit dataChanged(idx, idx, QVector<int> { HighlightRole });
 
     if (action != actionCollection()->action(QStringLiteral("close_tab"))) {
         updateViewEncoding(view);
@@ -2892,7 +2892,7 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
         m_tabWidget->setTabText(tabIndex, newName);
 
         const QModelIndex& idx = indexForView(view);
-        emit dataChanged(idx, idx, QVector<int>() << Qt::DisplayRole);
+        emit dataChanged(idx, idx, QVector<int> { Qt::DisplayRole });
     }
 
     if (!newName.isEmpty() && view==m_frontView)
