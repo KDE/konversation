@@ -29,6 +29,8 @@
 
 class NickItemDelegate : public QStyledItemDelegate
 {
+    Q_OBJECT
+
     public:
         NickItemDelegate(QObject *parent = nullptr);
 
@@ -332,3 +334,5 @@ bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeD
     }
     return false;
 }
+
+#include "nicklistview.moc"

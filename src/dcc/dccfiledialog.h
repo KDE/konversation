@@ -20,6 +20,7 @@ class KFileWidget;
 
 class DccFileDialog : public QDialog
 {
+    Q_OBJECT
 
 public:
     DccFileDialog(QWidget* parent);

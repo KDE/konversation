@@ -47,6 +47,8 @@ namespace Konversation
 
 class ViewMimeData : public QMimeData
 {
+    Q_OBJECT
+
     public:
         explicit ViewMimeData(ChatWindow *view);
         ~ViewMimeData() override;

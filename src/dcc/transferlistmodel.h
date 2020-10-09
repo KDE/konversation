@@ -78,6 +78,8 @@ namespace Konversation
 
         class TransferSizeDelegate : public QStyledItemDelegate
         {
+            Q_OBJECT
+
         public:
             explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = nullptr);
 
@@ -90,6 +92,8 @@ namespace Konversation
 
         class TransferProgressBarDelegate : public QStyledItemDelegate
         {
+            Q_OBJECT
+
         public:
             explicit TransferProgressBarDelegate(QObject *parent = nullptr);
 
@@ -100,6 +104,8 @@ namespace Konversation
 
         class TransferListProxyModel : public QSortFilterProxyModel
         {
+            Q_OBJECT
+
         public:
             explicit TransferListProxyModel(QObject *parent = nullptr);
 

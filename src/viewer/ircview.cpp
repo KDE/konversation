@@ -229,6 +229,8 @@ bool IRCView::searchNext(bool reversed)
 
 class IrcViewMimeData : public QMimeData
 {
+    Q_OBJECT
+
 public:
     IrcViewMimeData(const QTextDocumentFragment& _fragment): fragment(_fragment) {}
     QStringList formats() const override;
@@ -2429,3 +2431,5 @@ QDebug operator<<(QDebug d, const QTextBlock &b)
     d << _S(fragCount);
     return d;
 }
+
+#include "ircview.moc"
