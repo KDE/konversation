@@ -222,7 +222,7 @@ namespace Konversation
             // TODO: network transparency. However, using NetAccess from a modal dialog
             // could be a problem, no? (given that it uses a modal widget itself....)
             if ( baseURL.isLocalFile() )
-                exists = QFileInfo(baseURL.adjusted(QUrl::StripTrailingSlash).toLocalFile() + QDir::separator() + suggestedName).exists();
+                exists = QFileInfo::exists(baseURL.adjusted(QUrl::StripTrailingSlash).toLocalFile() + QDir::separator() + suggestedName);
 
             m_urlreqFileURL->setUrl(QUrl::fromLocalFile(baseURL.adjusted(QUrl::StripTrailingSlash).toLocalFile() + QDir::separator() + suggestedName));
 
