@@ -70,6 +70,7 @@ class Server : public QObject
     Q_OBJECT
     friend class IRCQueue;
     friend class QueueTuner;
+    friend class ViewContainer;
 
     public:
         enum QueuePriority

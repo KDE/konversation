@@ -41,6 +41,7 @@ namespace Konversation
 class MainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
+    friend class ViewContainer;
 
     public:
         MainWindow();

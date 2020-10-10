@@ -144,7 +144,7 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
     m_dccPanel = new DCC::TransferPanel(m_tabWidget);
     m_dccPanel->hide();
     m_dccPanelOpen = false;
-    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
+    connect(m_dccPanel, &DCC::TransferPanel::updateTabNotification, this, &ViewContainer::setViewNotification);
 
     // Pre-construct context menus for better responsiveness when then
     // user opens them the first time. This is optional; the IrcContext-
@@ -248,7 +248,7 @@ void ViewContainer::setupTabWidget()
     connect(closeBtn, &QAbstractButton::clicked, this, &ViewContainer::closeCurrentView);
 
     connect(m_tabWidget, &QTabWidget::currentChanged, this, &ViewContainer::viewSwitched);
-    connect(m_tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeView(int)));
+    connect(m_tabWidget->tabBar(), &QTabBar::tabCloseRequested, this, QOverload<int>::of(&ViewContainer::closeView));
     connect(m_tabWidget, &TabWidget::contextMenu, this, &ViewContainer::showViewContextMenu);
     connect(m_tabWidget, &TabWidget::tabBarMiddleClicked, this, &ViewContainer::closeViewMiddleClick);
 
@@ -291,10 +291,10 @@ void ViewContainer::setupViewTree()
 
     connect(m_viewTree, &ViewTree::sizeChanged, this, &ViewContainer::saveSplitterSizes);
     connect(m_viewTree, &ViewTree::showView, this, &ViewContainer::showView);
-    connect(m_viewTree, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
+    connect(m_viewTree, &ViewTree::closeView, this, QOverload<ChatWindow*>::of(&ViewContainer::closeView));
     connect(m_viewTree, &ViewTree::showViewContextMenu, this, &ViewContainer::showViewContextMenu);
     connect(m_viewTree, &QObject::destroyed, this, &ViewContainer::onViewTreeDestroyed);
-    connect(this, SIGNAL(contextMenuClosed()), m_viewTree->viewport(), SLOT(update()));
+    connect(this, &ViewContainer::contextMenuClosed, m_viewTree->viewport(), QOverload<>::of(&QWidget::update));
     connect(Application::instance(), &Application::appearanceChanged, m_viewTree, &ViewTree::updateAppearance);
     connect(this, &ViewContainer::viewChanged, m_viewTree, &ViewTree::selectView);
 
@@ -2577,8 +2577,8 @@ void ViewContainer::addKonsolePanel()
     KonsolePanel* panel=new KonsolePanel(m_tabWidget);
     panel->setName(i18n("Konsole"));
     addView(panel, i18n("Konsole"));
-    connect(panel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
-    connect(panel, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
+    connect(panel, &KonsolePanel::updateTabNotification, this, &ViewContainer::setViewNotification);
+    connect(panel, &KonsolePanel::closeView, this, QOverload<ChatWindow*>::of(&ViewContainer::closeView));
 }
 
 void ViewContainer::addUrlCatcher()
@@ -2667,8 +2667,8 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
     }
 
     DCC::ChatContainer *chatcontainer = new DCC::ChatContainer(m_tabWidget,chat);
-    connect(chatcontainer, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)),
-            this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
+    connect(chatcontainer, &DCC::ChatContainer::updateTabNotification,
+            this, &ViewContainer::setViewNotification);
 
     addView(chatcontainer, chatcontainer->getName());
 }
@@ -2691,10 +2691,9 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
     // ... then put it into the tab widget, otherwise we'd have a race with server member
     addView(statusView, label);
 
-    connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)),
-        this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
-    connect(statusView, SIGNAL(sendFile()), server, SLOT(requestDccSend()));
-    connect(server, SIGNAL(awayState(bool)), statusView, SLOT(indicateAway(bool)) );
+    connect(statusView, &StatusPanel::updateTabNotification, this, &ViewContainer::setViewNotification);
+    connect(statusView, &StatusPanel::sendFile, server, QOverload<>::of(&Server::requestDccSend));
+    connect(server, &Server::awayState, statusView, &StatusPanel::indicateAway);
 
     // Make sure that m_frontServer gets set on adding the first status panel, too,
     // since there won't be a viewSwitched happening.
@@ -2712,8 +2711,7 @@ RawLog* ViewContainer::addRawLog(Server* server)
 
     addView(rawLog, i18n("Raw Log"));
 
-    connect(rawLog, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)),
-        this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
+    connect(rawLog, &RawLog::updateTabNotification, this, &ViewContainer::setViewNotification);
 
     return rawLog;
 }
@@ -2815,10 +2813,10 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
     channel->setName(name); //still have to do this for now
     addView(channel, name);
 
-    connect(this, SIGNAL(updateChannelAppearance()), channel, SLOT(updateAppearance()));
-    connect(channel, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
-    connect(server, SIGNAL(awayState(bool)), channel, SLOT(indicateAway(bool)) );
-    connect(channel, SIGNAL(joined(Channel*)), this, SLOT(channelJoined(Channel*)));
+    connect(this, &ViewContainer::updateChannelAppearance, channel, &Channel::updateAppearance);
+    connect(channel, &Channel::updateTabNotification, this, &ViewContainer::setViewNotification);
+    connect(server, &Server::awayState, channel, &Channel::indicateAway);
+    connect(channel, QOverload<Channel*>::of(&Channel::joined), this, &ViewContainer::channelJoined);
 
     return channel;
 }
@@ -2872,9 +2870,9 @@ Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool
 
     ++m_queryViewCount;
 
-    connect(query, SIGNAL(updateTabNotification(ChatWindow*,Konversation::TabNotifyType)), this, SLOT(setViewNotification(ChatWindow*,Konversation::TabNotifyType)));
+    connect(query, &Query::updateTabNotification, this, &ViewContainer::setViewNotification);
     connect(query, &Query::updateQueryChrome, this, &ViewContainer::updateQueryChrome);
-    connect(server, SIGNAL(awayState(bool)), query, SLOT(indicateAway(bool)));
+    connect(server, &Server::awayState, query, &Query::indicateAway);
 
     return query;
 }
@@ -3011,8 +3009,8 @@ void ViewContainer::openNicksOnlinePanel()
     {
         m_nicksOnlinePanel=new NicksOnline(m_window);
         addView(m_nicksOnlinePanel, i18n("Watched Nicks"));
-        connect(m_nicksOnlinePanel, SIGNAL(doubleClicked(int,QString)), m_window, SLOT(notifyAction(int,QString)));
-        connect(m_nicksOnlinePanel, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
+        connect(m_nicksOnlinePanel, &NicksOnline::doubleClicked, m_window, &MainWindow::notifyAction);
+        connect(m_nicksOnlinePanel, &NicksOnline::showView, this, &ViewContainer::showView);
         connect(m_window, &MainWindow::nicksNowOnline, m_nicksOnlinePanel, &NicksOnline::updateServerOnlineList);
         (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(true);
     }
