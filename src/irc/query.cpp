@@ -86,11 +86,11 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(m_inputBar, &IRCInput::submit, this, &Query::queryTextEntered);
     connect(m_inputBar, &IRCInput::envelopeCommand, this, &Query::queryPassthroughCommand);
     connect(m_inputBar, &IRCInput::textPasted, this, &Query::textPasted);
-    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
-    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
+    connect(getTextView(), &IRCView::textPasted, m_inputBar, &IRCInput::paste);
+    connect(getTextView(), &IRCView::gotFocus, m_inputBar, QOverload<>::of(&IRCInput::setFocus));
 
     connect(textView,&IRCView::sendFile,this,&Query::sendFileMenu );
-    connect(textView,SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
+    connect(textView, &IRCView::autoText, this, &Query::sendText);
 
     updateAppearance();
 
@@ -116,8 +116,8 @@ void Query::setServer(Server* newServer)
     {
         connect(newServer, &Server::connectionStateChanged,
                 this, &Query::connectionStateChanged);
-        connect(newServer, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
-                this, SLOT(updateNickInfo(Server*,NickInfoPtr)));
+        connect(newServer, QOverload<Server*,NickInfoPtr>::of(&Server::nickInfoChanged),
+                this, &Query::updateNickInfo);
     }
 
     ChatWindow::setServer(newServer);
