@@ -82,8 +82,8 @@ namespace Konversation
             connect(m_inputBar, &IRCInput::submit, this, &ChatContainer::textEntered);
             connect(m_inputBar, &IRCInput::textPasted, this, &ChatContainer::textPasted);
 
-            connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
-            connect(getTextView(), SIGNAL(gotFocus()), m_inputBar, SLOT(setFocus()));
+            connect(getTextView(), &IRCView::textPasted, m_inputBar, &IRCInput::paste);
+            connect(getTextView(), &IRCView::gotFocus, m_inputBar, QOverload<>::of(&IRCInput::setFocus));
             connect(getTextView(), &IRCView::autoText, this, &ChatContainer::textPasted);
 
             updateAppearance();
