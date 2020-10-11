@@ -589,7 +589,8 @@ namespace Konversation
             {
                 if (port != m_ownPort) return; // Somebody elses forward succeeded
 
-                disconnect (this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
+                auto* router = qobject_cast<UPnP::UPnPRouter*>(this->sender());
+                disconnect(router, &UPnP::UPnPRouter::forwardComplete, this, &TransferRecv::sendReverseAck);
 
                 if (error)
                 {

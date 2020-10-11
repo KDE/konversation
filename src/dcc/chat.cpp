@@ -299,7 +299,8 @@ namespace Konversation
                     return;
                 }
 
-                disconnect(this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
+                auto* router = qobject_cast<UPnPRouter*>(this->sender());
+                disconnect(router, &UPnPRouter::forwardComplete, this, &Chat::sendRequest);
 
                 if (error)
                 {
@@ -330,7 +331,8 @@ namespace Konversation
                     return;
                 }
 
-                disconnect(this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
+                auto* router = qobject_cast<UPnPRouter*>(this->sender());
+                disconnect(router, &UPnPRouter::forwardComplete, this, &Chat::sendReverseAck);
 
                 if (error)
                 {
