@@ -62,19 +62,20 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     getTextView()->installEventFilter(m_inputBar);
     m_inputBar->installEventFilter(this);
 
-    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
+    connect(getTextView(), &IRCView::gotFocus, m_inputBar, QOverload<>::of(&IRCInput::setFocus));
 
     connect(getTextView(),&IRCView::sendFile,this,&StatusPanel::sendFileMenu );
-    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
+    connect(getTextView(), &IRCView::autoText, this, &StatusPanel::sendText);
 
     connect(m_inputBar, &IRCInput::submit, this, &StatusPanel::statusTextEntered);
     connect(m_inputBar, &IRCInput::textPasted, this, &StatusPanel::textPasted);
-    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
+    connect(getTextView(), &IRCView::textPasted, m_inputBar, &IRCInput::paste);
 
     connect(nicknameCombobox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &StatusPanel::nicknameComboboxChanged);
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editable.  if we design it so it isn't, remove these lines.
     if(nicknameCombobox->lineEdit())
-        connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));
+        connect(nicknameCombobox->lineEdit(), &QLineEdit::editingFinished,
+                this, &StatusPanel::nicknameComboboxChanged);
 
     updateAppearance();
 }
