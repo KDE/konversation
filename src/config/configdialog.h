@@ -294,9 +294,6 @@ private:
 
     ConfigDialogPrivate *const d;
 
-    Q_PRIVATE_SLOT(d, void _k_updateButtons())
-    Q_PRIVATE_SLOT(d, void _k_settingsChangedSlot())
-
     Q_DISABLE_COPY(ConfigDialog)
 };
 

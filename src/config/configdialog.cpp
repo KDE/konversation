@@ -66,10 +66,12 @@ public:
                                       | QDialogButtonBox::Help);
         connect(buttonBox->button(QDialogButtonBox::Ok), &QAbstractButton::clicked, q, &ConfigDialog::updateSettings);
         connect(buttonBox->button(QDialogButtonBox::Apply), &QAbstractButton::clicked, q, &ConfigDialog::updateSettings);
-        connect(buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), q, SLOT(_k_updateButtons()));
+        connect(buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+                q, [this]() { _k_updateButtons(); });
         connect(buttonBox->button(QDialogButtonBox::Cancel), &QAbstractButton::clicked, q, &ConfigDialog::updateWidgets);
         connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QAbstractButton::clicked, q, &ConfigDialog::updateWidgetsDefault);
-        connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), q, SLOT(_k_updateButtons()));
+        connect(buttonBox->button(QDialogButtonBox::RestoreDefaults), &QPushButton::clicked,
+                q, [this]() { _k_updateButtons(); });
         connect(buttonBox->button(QDialogButtonBox::Help), &QAbstractButton::clicked, q, &ConfigDialog::showHelp);
 
         connect(q, &KPageDialog::pageRemoved, q, &ConfigDialog::onPageRemoved);
@@ -240,8 +242,10 @@ KPageWidgetItem *ConfigDialog::ConfigDialogPrivate::addPageInternal(KPageWidgetI
 
 void ConfigDialog::ConfigDialogPrivate::setupManagerConnections(KConfigDialogManager *manager)
 {
-    ConfigDialog::connect(manager, SIGNAL(settingsChanged()), q, SLOT(_k_settingsChangedSlot()));
-    ConfigDialog::connect(manager, SIGNAL(widgetModified()), q, SLOT(_k_updateButtons()));
+    ConfigDialog::connect(manager, QOverload<>::of(&KConfigDialogManager::settingsChanged),
+                          q, [this]() { _k_settingsChangedSlot(); });
+    ConfigDialog::connect(manager, &KConfigDialogManager::widgetModified,
+                          q, [this]() { _k_updateButtons(); });
 
     QDialogButtonBox *buttonBox = q->buttonBox();
     ConfigDialog::connect(buttonBox->button(QDialogButtonBox::Ok), &QPushButton::clicked, manager, &KConfigDialogManager::updateSettings);
