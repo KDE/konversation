@@ -161,7 +161,7 @@ void Application::newInstance(QCommandLineParser *args)
         connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
 
         m_networkConfigurationManager = new QNetworkConfigurationManager();
-        connect(m_networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), m_connectionManager, SLOT(onOnlineStateChanged(bool)));
+        connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
 
         m_scriptLauncher = new ScriptLauncher(this);
 
@@ -247,7 +247,7 @@ void Application::newInstance(QCommandLineParser *args)
 
         if (openServerList) mainWindow->openServerList();
 
-        connect(this, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
+        connect(this, &Application::serverGroupsChanged, this, &Application::saveOptions);
 
         // prepare dbus interface
         dbusObject = new Konversation::DBus(this);
@@ -267,8 +267,9 @@ void Application::newInstance(QCommandLineParser *args)
                 this,&Application::dbusInfo );
             connect(dbusObject,&DBus::dbusInsertMarkerLine,
                 mainWindow.data(),&MainWindow::insertMarkerLine);
-            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
-                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
+            connect(dbusObject, &DBus::connectTo,
+                m_connectionManager,
+                QOverload<Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool>::of(&ConnectionManager::connectTo));
         }
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
@@ -1082,8 +1083,8 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
 void Application::openQuickConnectDialog()
 {
     quickConnectDialog = new QuickConnectDialog(mainWindow);
-    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
-        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
+    connect(quickConnectDialog, &QuickConnectDialog::connectClicked,
+        m_connectionManager, QOverload<Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool>::of(&ConnectionManager::connectTo));
     quickConnectDialog->show();
 }
 

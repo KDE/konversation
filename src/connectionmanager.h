@@ -24,6 +24,7 @@ class ConnectionSettings;
 class ConnectionManager : public QObject
 {
     Q_OBJECT
+    friend class Application;
 
     public:
         explicit ConnectionManager(QObject* parent = nullptr);
