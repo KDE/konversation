@@ -135,7 +135,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(topicLine, &TopicLabel::clearStatusBarTempText, this, &ChatWindow::clearStatusBarTempText);
 
     m_topicHistory = new TopicHistoryModel(this);
-    connect(m_topicHistory, SIGNAL(currentTopicChanged(QString)), topicLine, SLOT(setText(QString)));
+    connect(m_topicHistory, &TopicHistoryModel::currentTopicChanged, topicLine, &TopicLabel::setText);
 
     topicLayout->addWidget(m_topicButton, 0, 0);
     topicLayout->addWidget(topicLine, 0, 1, -1, 1);
@@ -186,7 +186,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     modeBoxLayout->addWidget(limit);
     limit->setToolTip(i18n("Maximum users allowed in channel"));
     limit->setWhatsThis(i18n("<qt><p>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</p></qt>"));
-    connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
+    connect(limit, QOverload<>::of(&QLineEdit::returnPressed), this, &Channel::channelLimitChanged);
     connect(limit,&QLineEdit::editingFinished, this, &Channel::channelLimitChanged );
 
     topicLayout->addWidget(modeBox, 0, 2);
@@ -286,13 +286,13 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(m_inputBar,&IRCInput::endCompletion,this,&Channel::endCompleteNick );
     connect(m_inputBar,&IRCInput::textPasted,this,&Channel::textPasted );
 
-    connect(getTextView(), SIGNAL(textPasted(bool)), m_inputBar, SLOT(paste(bool)));
-    connect(getTextView(),SIGNAL (gotFocus()),m_inputBar,SLOT (setFocus()) );
-    connect(getTextView(),&IRCView::sendFile,this,&Channel::sendFileMenu );
-    connect(getTextView(),SIGNAL (autoText(QString)),this,SLOT (sendText(QString)) );
+    connect(getTextView(), &IRCView::textPasted, m_inputBar, &IRCInput::paste);
+    connect(getTextView(), &IRCView::gotFocus, m_inputBar, QOverload<>::of(&IRCInput::setFocus));
+    connect(getTextView(), &IRCView::sendFile, this, &Channel::sendFileMenu );
+    connect(getTextView(), &IRCView::autoText, this, &Channel::sendText);
 
     connect(nicknameListView,&QTreeWidget::itemDoubleClicked,this,&Channel::doubleClickCommand );
-    connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
+    connect(nicknameCombobox, QOverload<int>::of(&KComboBox::activated), this, &Channel::nicknameComboboxChanged);
 
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), &QLineEdit::returnPressed,this,&Channel::nicknameComboboxChanged);
@@ -328,8 +328,8 @@ void Channel::setServer(Server* server)
     {
         connect(server, &Server::connectionStateChanged,
                 this, &Channel::connectionStateChanged);
-        connect(server, SIGNAL(nickInfoChanged()),
-                this, SLOT(updateNickInfos()));
+        connect(server, QOverload<>::of(&Server::nickInfoChanged),
+                this, &Channel::updateNickInfos);
         connect(server, &Server::channelNickChanged,
                 this, &Channel::updateChannelNicks);
     }
@@ -1946,7 +1946,7 @@ void Channel::updateQuickButtons()
         layout->addWidget (quickButton, row, col);
         row += col;
 
-        connect(quickButton, SIGNAL(clicked(QString)), this, SLOT(quickButtonClicked(QString)));
+        connect(quickButton, QOverload<const QString&>::of(&QuickButton::clicked), this, &Channel::quickButtonClicked);
 
         // Get the button definition
         QString buttonText=newButtonList[index];
