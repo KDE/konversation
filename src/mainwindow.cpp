@@ -68,13 +68,14 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
     // Set up view container
     connect(Application::instance(), &Application::appearanceChanged, m_viewContainer, &ViewContainer::updateAppearance);
-    connect(Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
-            m_viewContainer, SLOT(updateViews(Konversation::ServerGroupSettingsPtr)));
-    connect(m_viewContainer, SIGNAL(autoJoinToggled(Konversation::ServerGroupSettingsPtr)),
-            Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
-    connect(m_viewContainer, SIGNAL(autoConnectOnStartupToggled(Konversation::ServerGroupSettingsPtr)),
-            Application::instance(), SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
-    connect(m_viewContainer, SIGNAL(setWindowCaption(QString)), this, SLOT(setCaption(QString)));
+    connect(Application::instance(), &Application::serverGroupsChanged,
+            m_viewContainer, &ViewContainer::updateViews);
+    connect(m_viewContainer, &ViewContainer::autoJoinToggled,
+            Application::instance(), &Application::serverGroupsChanged);
+    connect(m_viewContainer, &ViewContainer::autoConnectOnStartupToggled,
+            Application::instance(), &Application::serverGroupsChanged);
+    connect(m_viewContainer, &ViewContainer::setWindowCaption,
+            this, QOverload<const QString&>::of(&MainWindow::setCaption));
     connect(Application::instance()->getConnectionManager(),
             &ConnectionManager::connectionChangedState,
             m_viewContainer, &ViewContainer::connectionStateChanged);
@@ -188,7 +189,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("Ctrl+O")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Open the known history for this channel in a new tab"));
-    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
+    connect(action, &QAction::triggered, m_viewContainer, QOverload<>::of(&ViewContainer::openLogFile));
     actionCollection()->addAction(QStringLiteral("open_logfile"), action);
 
     action=new QAction(this);
@@ -205,7 +206,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     actionCollection()->setDefaultShortcut(action,QKeySequence(QStringLiteral("F5")));
     action->setEnabled(false);
     action->setStatusTip(i18n("Show a list of all the known channels on this server"));
-    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
+    connect(action, &QAction::triggered, m_viewContainer, [this]() { m_viewContainer->openChannelList(); });
     actionCollection()->addAction(QStringLiteral("open_channel_list"), action);
 
     action=new KToggleAction(this);
@@ -387,7 +388,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
     selectAction->setIcon(QIcon::fromTheme(QStringLiteral("character-set")));
-    connect(selectAction, SIGNAL(triggered(int)), m_viewContainer, SLOT(changeViewCharset(int)));
+    connect(selectAction, QOverload<int>::of(&KSelectAction::triggered), m_viewContainer, &ViewContainer::changeViewCharset);
     actionCollection()->addAction(QStringLiteral("tab_encoding"), selectAction);
 
     for (uint i = 1; i <= 10; ++i)
@@ -540,7 +541,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     action->setChecked(Preferences::self()->useOSD());
     action->setText(i18n("Enable On Screen Display"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("video-display")));
-    connect(action, SIGNAL(triggered(bool)), Preferences::self(), SLOT(slotSetUseOSD(bool)));
+    connect(action, QOverload<bool>::of(&KToggleAction::triggered), Preferences::self(), &Preferences::slotSetUseOSD);
     actionCollection()->addAction(QStringLiteral("toggle_osd"), action);
 
     // Bookmarks
@@ -838,14 +839,14 @@ void MainWindow::openServerList()
         m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
         Application* konvApp = Application::instance();
 
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)),
-                konvApp, SIGNAL(serverGroupsChanged(Konversation::ServerGroupSettingsPtr)));
+        connect(m_serverListDialog, &Konversation::ServerListDialog::serverGroupsChanged,
+                konvApp, &Application::serverGroupsChanged);
         connect(konvApp, &Application::serverGroupsChanged,
                 m_serverListDialog, &Konversation::ServerListDialog::updateServerList);
-        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag,int)),
-                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,int)));
-        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag,ConnectionSettings)),
-                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,ConnectionSettings)));
+        connect(m_serverListDialog, QOverload<Konversation::ConnectionFlag,int>::of(&Konversation::ServerListDialog::connectTo),
+                konvApp->getConnectionManager(), QOverload<Konversation::ConnectionFlag,int>::of(&ConnectionManager::connectTo));
+        connect(m_serverListDialog, QOverload<Konversation::ConnectionFlag, ConnectionSettings>::of(&Konversation::ServerListDialog::connectTo),
+                konvApp->getConnectionManager(), QOverload<Konversation::ConnectionFlag, ConnectionSettings>::of(&ConnectionManager::connectTo));
         connect(konvApp->getConnectionManager(), &ConnectionManager::closeServerList, m_serverListDialog, &QDialog::reject);
     }
 
