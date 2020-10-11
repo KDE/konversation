@@ -62,6 +62,7 @@ namespace KWallet
 class Application : public QApplication
 {
     Q_OBJECT
+    friend class ConnectionManager;
 
     public:
         /** This function in general shouldn't be called, because in the future there

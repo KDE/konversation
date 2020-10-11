@@ -169,8 +169,8 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
     connect(server, &Server::awayInsertRememberLine,
         mainWindow, &MainWindow::triggerRememberLines);
 
-    connect(server, SIGNAL(multiServerCommand(QString,QString)),
-        konvApp, SLOT(sendMultiServerCommand(QString,QString)));
+    connect(server, &Server::multiServerCommand,
+        konvApp, &Application::sendMultiServerCommand);
 }
 
 void ConnectionManager::enlistConnection(int connectionId, Server* server)
