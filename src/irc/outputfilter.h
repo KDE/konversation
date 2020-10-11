@@ -94,7 +94,7 @@ namespace Konversation
             static bool replaceAliases(QString& line, ChatWindow* context = 0);
 
         Q_SIGNALS:
-            void openDccSend(const QString &recipient, QUrl url);
+            void openDccSend(const QString &recipient, const QUrl& url);
             void requestDccSend();                // Choose Recipient and File from requester
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);

@@ -82,6 +82,7 @@ class ChannelListModel : public QAbstractListModel
 class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 {
     Q_OBJECT
+    friend class Server;
 
     public:
         explicit ChannelListPanel(QWidget* parent);

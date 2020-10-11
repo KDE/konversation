@@ -21,6 +21,7 @@
 class RawLog : public ChatWindow
 {
     Q_OBJECT
+    friend class Server;
 
     public:
         enum MessageDirection { Inbound, Outbound };

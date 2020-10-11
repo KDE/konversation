@@ -25,6 +25,7 @@ class KComboBox;
 class StatusPanel : public ChatWindow
 {
     Q_OBJECT
+    friend class Server;
 
     public:
         explicit StatusPanel(QWidget* parent);

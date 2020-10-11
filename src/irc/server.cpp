@@ -273,8 +273,9 @@ void Server::doPreShellCommand()
         // FIXME add i18n, and in preShellCommandExited and preShellCommandError
         getStatusView()->appendServerMessage(i18n("Info"), i18nc("The command mentioned is executed in a shell prior to connecting.", "Running pre-connect shell command..."));
 
-        connect(&m_preShellCommand, SIGNAL(finished(int,QProcess::ExitStatus)), SLOT(preShellCommandExited(int,QProcess::ExitStatus)));
-        connect(&m_preShellCommand, SIGNAL(error(QProcess::ProcessError)), SLOT(preShellCommandError(QProcess::ProcessError)));
+        connect(&m_preShellCommand, QOverload<int,QProcess::ExitStatus>::of(&KProcess::finished),
+                this, &Server::preShellCommandExited);
+        connect(&m_preShellCommand, &KProcess::errorOccurred, this, &Server::preShellCommandError);
 
         m_preShellCommand.setProgram(command);
         m_preShellCommand.start();
@@ -301,14 +302,17 @@ void Server::connectSignals()
     connect(&m_pingSendTimer, &QTimer::timeout, this, &Server::sendPing);
 
     // OutputFilter
-    connect(getOutputFilter(), SIGNAL(requestDccSend()), this,SLOT(requestDccSend()), Qt::QueuedConnection);
-    connect(getOutputFilter(), SIGNAL(requestDccSend(QString)), this, SLOT(requestDccSend(QString)), Qt::QueuedConnection);
+    connect(getOutputFilter(), QOverload<>::of(&OutputFilter::requestDccSend),
+            this, QOverload<>::of(&Server::requestDccSend), Qt::QueuedConnection);
+    connect(getOutputFilter(),QOverload<const QString&>::of(&OutputFilter::requestDccSend),
+            this, QOverload<const QString&>::of(&Server::requestDccSend), Qt::QueuedConnection);
     connect(getOutputFilter(), &OutputFilter::multiServerCommand,
         this, &Server::sendMultiServerCommand);
     connect(getOutputFilter(), &OutputFilter::reconnectServer, this, &Server::reconnectServer);
     connect(getOutputFilter(), &OutputFilter::disconnectServer, this, &Server::disconnectServer);
     connect(getOutputFilter(), &OutputFilter::quitServer, this, &Server::quitServer);
-    connect(getOutputFilter(), SIGNAL(openDccSend(QString,QUrl)), this, SLOT(addDccSend(QString,QUrl)), Qt::QueuedConnection);
+    connect(getOutputFilter(), &OutputFilter::openDccSend,
+            this, [this](const QString& recipient, const QUrl& url) { addDccSend(recipient, url); }, Qt::QueuedConnection);
     connect(getOutputFilter(), &OutputFilter::openDccChat, this, &Server::openDccChat, Qt::QueuedConnection);
     connect(getOutputFilter(), &OutputFilter::openDccWBoard, this, &Server::openDccWBoard, Qt::QueuedConnection);
     connect(getOutputFilter(), &OutputFilter::acceptDccGet,
@@ -323,16 +327,16 @@ void Server::connectSignals()
     connect(getOutputFilter(), &OutputFilter::encodingChanged, this, &Server::updateEncoding);
 
     Application* konvApp = Application::instance();
-    connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)),
-         konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,QString,QString,QString,QString,QString,bool)));
+    connect(getOutputFilter(), QOverload<Konversation::ConnectionFlag, const QString& , const QString&, const QString&, const QString&, const QString&, bool>::of(&OutputFilter::connectTo),
+         konvApp->getConnectionManager(), QOverload<Konversation::ConnectionFlag, const QString& , const QString&, const QString&, const QString&, const QString&, bool>::of(&ConnectionManager::connectTo));
     connect(konvApp->getDccTransferManager(), &DCC::TransferManager::newDccTransferQueued,
             this, &Server::slotNewDccTransferItemQueued);
 
    // ViewContainer
     connect(this, &Server::showView, getViewContainer(), &ViewContainer::showView);
     connect(this, &Server::addDccPanel, getViewContainer(), &ViewContainer::addDccPanel);
-    connect(this, SIGNAL(addDccChat(Konversation::DCC::Chat*)),
-            getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)), Qt::QueuedConnection);
+    connect(this, QOverload<Konversation::DCC::Chat*>::of(&Server::addDccChat),
+            getViewContainer(), &ViewContainer::addDccChat, Qt::QueuedConnection);
     connect(this, &Server::serverLag, getViewContainer(), &ViewContainer::updateStatusBarLagLabel);
     connect(this, &Server::tooLongLag, getViewContainer(), &ViewContainer::setStatusBarLagLabelTooLongLag);
     connect(this, &Server::resetLag, getViewContainer(), &ViewContainer::resetStatusBarLagLabel);
@@ -343,8 +347,8 @@ void Server::connectSignals()
     connect(getOutputFilter(), &OutputFilter::addDccPanel, getViewContainer(), &ViewContainer::addDccPanel);
 
     // Inputfilter - queued connections should be used for slots that have blocking UI
-    connect(&m_inputFilter, SIGNAL(addDccChat(QString,QStringList)),
-            this, SLOT(addDccChat(QString,QStringList)), Qt::QueuedConnection);
+    connect(&m_inputFilter, &InputFilter::addDccChat,
+            this, QOverload<const QString&, const QStringList&>::of(&Server::addDccChat), Qt::QueuedConnection);
     connect(&m_inputFilter, &InputFilter::rejectDccChat,
             this, &Server::rejectDccChat);
     connect(&m_inputFilter, &InputFilter::startReverseDccChat,
@@ -376,7 +380,7 @@ void Server::connectSignals()
         this, &Server::addToChannelList);
 
     // Status View
-    connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
+    connect(this, &Server::serverOnline, getStatusView(), &StatusPanel::serverOnline);
 
         // Scripts
     connect(getOutputFilter(), &OutputFilter::launchScript,
@@ -1997,8 +2001,8 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 
         query->indicateAway(m_away);
 
-        connect(query, SIGNAL(sendFile(QString)),this, SLOT(requestDccSend(QString)));
-        connect(this, SIGNAL(serverOnline(bool)), query, SLOT(serverOnline(bool)));
+        connect(query, &Query::sendFile, this, QOverload<>::of(&Server::requestDccSend));
+        connect(this, &Server::serverOnline, query, &Query::serverOnline);
 
         // Append query to internal list
         m_queryList.append(query);
@@ -2881,7 +2885,7 @@ Channel* Server::joinChannel(const QString& name, const QString& hostmask, const
         m_channelList.append(channel);
         m_loweredChannelNameHash.insert(channel->getName().toLower(), channel);
 
-        connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
+        connect(channel, &Channel::sendFile, this, QOverload<>::of(&Server::requestDccSend));
         connect(this, &Server::nicknameChanged, channel, &Channel::setNickname);
     }
 
@@ -3837,8 +3841,8 @@ void Server::invitation(const QString& nick,const QString& channel)
         }
 
         m_inviteDialog = new InviteDialog (getViewContainer()->getWindow());
-        connect(m_inviteDialog, SIGNAL(joinChannelsRequested(QString)),
-                this, SLOT(sendJoinCommand(QString)));
+        connect(m_inviteDialog, &InviteDialog::joinChannelsRequested,
+                this, [this](const QString& channels) { sendJoinCommand(channels); });
     }
 
     m_inviteDialog->show();
@@ -3871,7 +3875,7 @@ void Server::addRawLog(bool show)
 {
     if (!m_rawLog) m_rawLog = getViewContainer()->addRawLog(this);
 
-    connect(this, SIGNAL(serverOnline(bool)), m_rawLog, SLOT(serverOnline(bool)));
+    connect(this, &Server::serverOnline, m_rawLog, &RawLog::serverOnline);
 
     // bring raw log to front since the main window does not do this for us
     if (show) emit showView(m_rawLog);
@@ -3895,8 +3899,8 @@ ChannelListPanel* Server::addChannelListPanel()
 
         connect(&m_inputFilter, &InputFilter::endOfChannelList, m_channelListPanel.data(), &ChannelListPanel::endOfChannelList);
         connect(m_channelListPanel.data(), &ChannelListPanel::refreshChannelList, this, &Server::requestChannelList);
-        connect(m_channelListPanel, SIGNAL(joinChannel(QString)), this, SLOT(sendJoinCommand(QString)));
-        connect(this, SIGNAL(serverOnline(bool)), m_channelListPanel, SLOT(serverOnline(bool)));
+        connect(m_channelListPanel, &ChannelListPanel::joinChannel, this, [this](const QString& name) { sendJoinCommand(name); });
+        connect(this, &Server::serverOnline, m_channelListPanel, &ChannelListPanel::serverOnline);
     }
 
     return m_channelListPanel;

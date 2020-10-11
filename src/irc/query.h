@@ -39,6 +39,7 @@ class KSqueezedTextLabel;
 class Query : public ChatWindow
 {
     Q_OBJECT
+    friend class Server;
 
     public:
         explicit Query(QWidget* parent, const QString& _name);
