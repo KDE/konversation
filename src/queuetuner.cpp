@@ -90,7 +90,7 @@ void QueueTuner::setServer(Server* newServer)
 
     if (m_server)
     {
-        connect(m_server, SIGNAL(destroyed(QObject*)), SLOT(serverDestroyed(QObject*)));
+        connect(m_server, &QObject::destroyed, this, &QueueTuner::serverDestroyed);
 
         getRates();
     }

@@ -388,8 +388,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     {
         networkRoot->setExpanded(true);
         // Connect server NickInfo updates.
-        connect (servr, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
-            this, SLOT(slotNickInfoChanged(Server*,NickInfoPtr)));
+        connect (servr, QOverload<Server*, NickInfoPtr>::of(&Server::nickInfoChanged),
+            this, &NicksOnline::slotNickInfoChanged);
     }
 }
 

@@ -71,8 +71,8 @@ namespace Konversation
         slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
         connect(mOkButton, &QPushButton::clicked, this, &JoinChannelDialog::slotOk);
-        connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
-                this, SLOT(slotConnectionListChanged()));
+        connect(Application::instance()->getConnectionManager(), &ConnectionManager::connectionListChanged,
+                this, &JoinChannelDialog::slotConnectionListChanged);
     }
 
     JoinChannelDialog::~JoinChannelDialog()

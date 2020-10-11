@@ -18,7 +18,7 @@ QuickButton::QuickButton(const QString &label,const QString &newDefinition,QWidg
 QPushButton(label,parent)
 {
     setDefinition(newDefinition);
-    connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
+    connect(this, &QAbstractButton::clicked, this, &QuickButton::wasClicked);
 }
 
 QuickButton::~QuickButton()

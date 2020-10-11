@@ -92,7 +92,7 @@ namespace Konversation
         connect(this, &ChannelOptionsDialog::finished, m_ui.topicEdit, &TopicEdit::clear);
 
         connect(m_channel, &Channel::modesChanged, this, &ChannelOptionsDialog::refreshModes);
-        connect(m_channel->getServer(), SIGNAL(channelNickChanged(QString)), this, SLOT(refreshEnableModes()));
+        connect(m_channel->getServer(), &Server::channelNickChanged, this, [this]() { refreshEnableModes(); });
 
         connect(m_channel, &Channel::banAdded, this, &ChannelOptionsDialog::addBan);
         connect(m_channel, &Channel::banRemoved, this, &ChannelOptionsDialog::removeBan);

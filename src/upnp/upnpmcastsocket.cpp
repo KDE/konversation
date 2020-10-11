@@ -38,8 +38,11 @@ namespace Konversation
         UPnPMCastSocket::UPnPMCastSocket() : QUdpSocket ()
         {
             QObject::connect(this, &UPnPMCastSocket::readyRead, this, &UPnPMCastSocket::onReadyRead);
-            QObject::connect(this, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(onError(QAbstractSocket::SocketError)));
-
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QObject::connect(this, &UPnPMCastSocket::errorOccurred, this, &UPnPMCastSocket::onError);
+#else
+            QObject::connect(this, QOverload<QAbstractSocket::SocketError>::of(&UPnPMCastSocket::error), this, &UPnPMCastSocket::onError);
+#endif
             for (quint32 i = 0;i < 10;i++)
             {
                 if (!bind(1900 + i,QUdpSocket::ShareAddress))

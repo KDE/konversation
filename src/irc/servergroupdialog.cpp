@@ -68,7 +68,7 @@ namespace Konversation
         m_mainWidget->m_downServerBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
 
         connect(m_mainWidget->m_addServerButton, &QPushButton::clicked, this, &ServerGroupDialog::addServer);
-        connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
+        connect(m_mainWidget->m_changeServerButton, &QPushButton::clicked, this, QOverload<>::of(&ServerGroupDialog::editServer));
         connect(m_mainWidget->m_removeServerButton, &QToolButton::clicked, this, &ServerGroupDialog::deleteServer);
         connect(m_mainWidget->m_serverLBox, &QListWidget::itemSelectionChanged, this, &ServerGroupDialog::updateServerArrows);
         connect(m_mainWidget->m_upServerBtn, &QToolButton::clicked, this, &ServerGroupDialog::moveServerUp);

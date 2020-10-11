@@ -41,7 +41,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
 
     kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
 
-    connect(m_ProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(setPasswordChanged()));
+    connect(m_ProxyPassword, &KLineEdit::textChanged, this, [this]() { setPasswordChanged(); });
 }
 
 void ConnectionBehavior_Config::restorePageToDefaults()

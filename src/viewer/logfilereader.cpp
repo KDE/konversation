@@ -71,7 +71,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
 
     updateAppearance();
 
-    connect(getTextView(), SIGNAL(gotFocus()), getTextView(), SLOT(setFocus()));
+    connect(getTextView(), &IRCView::gotFocus, getTextView(), QOverload<>::of(&IRCView::setFocus));
 }
 
 LogfileReader::~LogfileReader()

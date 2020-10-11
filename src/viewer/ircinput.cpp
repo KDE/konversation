@@ -130,7 +130,7 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     //TODO FIXME when we get to require 4.2 the above is possible with
     //KTextEditSpellInterface and is actually quite easy to do.
 
-    disconnect(SIGNAL(checkSpellingChanged(bool)));
+    disconnect(this, &IRCInput::checkSpellingChanged, nullptr, nullptr);
     m_disableSpellCheckTimer->setSingleShot(true);
     m_disableSpellCheckTimer->start(5000);
 }

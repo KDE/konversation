@@ -22,8 +22,8 @@ ServerISON::ServerISON(Server* server) : m_server(server)
 {
     m_ISONList_invalid = true;
 
-    connect( m_server, SIGNAL(nickInfoChanged(Server*,NickInfoPtr)),
-        this, SLOT(nickInfoChanged(Server*,NickInfoPtr)));
+    connect( m_server, QOverload<Server*, NickInfoPtr>::of(&Server::nickInfoChanged),
+        this, &ServerISON::nickInfoChanged);
     connect( m_server,
         &Server::channelMembersChanged,
         this,
