@@ -214,7 +214,7 @@ class IRCView : public QTextBrowser
 
     protected Q_SLOTS:
         void highlightedSlot(const QString& link);
-        void anchorClicked(const QUrl& url);
+        void handleAnchorClicked(const QUrl& url);
 
     protected:
         void openLink(const QUrl &url);

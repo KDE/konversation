@@ -119,8 +119,8 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
     document()->documentLayout()->registerHandler(IRCView::DateLine, &markerFormatObject);
 
 
-    connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
-    connect( this, SIGNAL(highlighted(QString)), this, SLOT(highlightedSlot(QString)) );
+    connect(this, &IRCView::anchorClicked, this, &IRCView::handleAnchorClicked);
+    connect(this, QOverload<const QString&>::of(&IRCView::highlighted), this, &IRCView::highlightedSlot);
     setOpenLinks(false);
     setUndoRedoEnabled(0);
     document()->setDefaultStyleSheet(QStringLiteral("a.nick:link {text-decoration: none}"));
@@ -2122,7 +2122,7 @@ void IRCView::keyPressEvent(QKeyEvent* ev)
     QTextBrowser::keyPressEvent(ev);
 }
 
-void IRCView::anchorClicked(const QUrl& url)
+void IRCView::handleAnchorClicked(const QUrl& url)
 {
     openLink(url);
 }
