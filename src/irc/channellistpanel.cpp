@@ -161,12 +161,12 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
     m_toolBar->setObjectName(QStringLiteral("channellistpanel_toolbar"));
-    m_saveList = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("save list", "Save &List..."), this, SLOT(saveList()));
+    m_saveList = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("save list", "Save &List..."), this, &ChannelListPanel::saveList);
     m_saveList->setWhatsThis(i18n("Click here to save the channel list."));
-    m_refreshList = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("refresh list", "&Refresh List"), this, SLOT(refreshList()));
+    m_refreshList = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("refresh list", "&Refresh List"), this, &ChannelListPanel::refreshList);
     m_refreshList->setWhatsThis(i18n("Click here to refresh the channel list."));
     m_toolBar->addSeparator();
-    m_joinChannel = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18nc("join channel", "&Join Channel"), this, SLOT(joinChannelClicked()));
+    m_joinChannel = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18nc("join channel", "&Join Channel"), this, &ChannelListPanel::joinChannelClicked);
     m_joinChannel->setWhatsThis(i18n("Click here to join the channel. A new tab is created for the channel."));
     //UI Setup
     setupUi(this);

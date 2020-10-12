@@ -104,14 +104,14 @@ void UrlCatcher::setupActions()
 
     QAction* action;
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("window-new")), i18nc("open url", "&Open"), this, SLOT(openSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("window-new")), i18nc("open url", "&Open"), this, &UrlCatcher::openSelectedUrls);
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Open URLs in external browser."));
     action->setWhatsThis(i18n("<p>Select one or several <b>URLs</b> below, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>"));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("&Save..."), this, SLOT(saveSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18n("&Save..."), this, &UrlCatcher::saveSelectedUrls);
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Save selected URLs to the disk."));
@@ -125,14 +125,14 @@ void UrlCatcher::setupActions()
     m_toolBar->addSeparator();
     m_contextMenu->addSeparator();
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18nc("copy url","&Copy"), this, SLOT(copySelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-copy")), i18nc("copy url","&Copy"), this, &UrlCatcher::copySelectedUrls);
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setStatusTip(i18n("Copy URLs to the clipboard."));
     action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to copy them to the clipboard."));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("delete url","&Delete"), this, SLOT(deleteSelectedUrls()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("delete url","&Delete"), this, &UrlCatcher::deleteSelectedUrls);
     m_itemActions.append(action);
     m_contextMenu->addAction(action);
     action->setWhatsThis(i18n("Select one or several <b>URLs</b> above, then click this button to delete them from the list."));
@@ -142,13 +142,13 @@ void UrlCatcher::setupActions()
     m_toolBar->addSeparator();
     m_contextMenu->addSeparator();
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("save url list", "&Save List..."), this, SLOT(saveUrlModel()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save")), i18nc("save url list", "&Save List..."), this, &UrlCatcher::saveUrlModel);
     m_listActions.append(action);
     action->setStatusTip(i18n("Save list."));
     action->setWhatsThis(i18n("Click to save the entire list to a file."));
     action->setEnabled(false);
 
-    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18nc("clear url list","&Clear List"), this, SLOT(clearUrlModel()));
+    action = m_toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-clear-list")), i18nc("clear url list","&Clear List"), this, &UrlCatcher::clearUrlModel);
     m_listActions.append(action);
     action->setStatusTip(i18n("Clear list."));
     action->setWhatsThis(i18n("Click to erase the entire list."));

@@ -43,9 +43,9 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
 
     toolBar = new KToolBar(this, true, true);
     toolBar->setObjectName(QStringLiteral("logfile_toolbar"));
-    toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18n("Save As..."), this, SLOT(saveLog()));
-    toolBar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Reload"), this, SLOT(updateView()));
-    toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Clear Logfile"), this, SLOT(clearLog()));
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("document-save-as")), i18n("Save As..."), this, &LogfileReader::saveLog);
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Reload"), this, &LogfileReader::updateView);
+    toolBar->addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Clear Logfile"), this, &LogfileReader::clearLog);
 
     toolBar->addWidget(new QLabel(i18n("Show last:"),toolBar));
     sizeSpin = new QSpinBox(toolBar);

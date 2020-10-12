@@ -104,17 +104,17 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
 
     // Actions
-    KStandardAction::quit(this,SLOT(quitProgram()),actionCollection());
+    KStandardAction::quit(this, &MainWindow::quitProgram, actionCollection());
 
-    m_showMenuBarAction = KStandardAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
+    m_showMenuBarAction = KStandardAction::showMenubar(this, &MainWindow::toggleMenubar, actionCollection());
 
     setStandardToolBarMenuEnabled(true);
-    KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
+    KStandardAction::configureToolbars(this, &MainWindow::configureToolbars, actionCollection());
 
-    KStandardAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
-    KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
+    KStandardAction::keyBindings(this, &MainWindow::openKeyBindings, actionCollection());
+    KStandardAction::preferences(this, &MainWindow::openPrefsDialog, actionCollection());
 
-    KStandardAction::configureNotifications(this, SLOT(openNotifications()), actionCollection());
+    KStandardAction::configureNotifications(this, &MainWindow::openNotifications, actionCollection());
 
     QAction* action;
 
@@ -469,11 +469,11 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     connect(action, &QAction::triggered, m_viewContainer, &ViewContainer::showJoinChannelDialog);
     actionCollection()->addAction(QStringLiteral("join_channel"), action);
 
-    action = KStandardAction::find(m_viewContainer, SLOT(findText()), actionCollection());
+    action = KStandardAction::find(m_viewContainer, &ViewContainer::findText, actionCollection());
     action->setEnabled(false);
-    action = KStandardAction::findNext(m_viewContainer, SLOT(findNextText()), actionCollection());
+    action = KStandardAction::findNext(m_viewContainer, &ViewContainer::findNextText, actionCollection());
     action->setEnabled(false);
-    action = KStandardAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
+    action = KStandardAction::findPrev(m_viewContainer, &ViewContainer::findPrevText, actionCollection());
     action->setEnabled(false);
 
     action=new QAction(this);

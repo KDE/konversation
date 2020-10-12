@@ -94,7 +94,7 @@ namespace Konversation
             m_popup->addSeparator();                           // -----
             m_open = m_popup->addAction(QIcon::fromTheme(QStringLiteral("system-run")), i18n("&Open File"), this, &TransferPanel::runDcc);
             m_open->setStatusTip(i18n("Run the file"));
-            m_openLocation = m_popup->addAction(QIcon::fromTheme(QStringLiteral("document-open-folder")), i18n("Open Location"), this, SLOT(openLocation()));
+            m_openLocation = m_popup->addAction(QIcon::fromTheme(QStringLiteral("document-open-folder")), i18n("Open Location"), this, QOverload<>::of(&TransferPanel::openLocation));
             m_openLocation->setStatusTip(i18n("Open the file location"));
 
             m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
