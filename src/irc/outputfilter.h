@@ -71,7 +71,7 @@ namespace Konversation
             static const QSet<QString>& supportedCommands() { return m_commands; }
 
             QStringList splitForEncoding(const QString& destination, const QString& inputLine, int max, int segments = -1);
-            OutputFilterResult parse(const QString& myNick, const QString& line, const QString& destination, ChatWindow* inputContext = 0);
+            OutputFilterResult parse(const QString& myNick, const QString& line, const QString& destination, ChatWindow* inputContext = nullptr);
 
             // dcc send
             OutputFilterResult sendRequest(const QString &recipient, const QString &fileName, const QString &address, quint16 port,quint64 size);
@@ -91,7 +91,7 @@ namespace Konversation
             OutputFilterResult passiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
             OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
 
-            static bool replaceAliases(QString& line, ChatWindow* context = 0);
+            static bool replaceAliases(QString& line, ChatWindow* context = nullptr);
 
         Q_SIGNALS:
             void openDccSend(const QString &recipient, const QUrl& url);

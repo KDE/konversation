@@ -212,7 +212,7 @@ class Server : public QObject
         Channel* getChannelByName(const QString& name);
         Query* getQueryByName(const QString& name);
         ChatWindow* getChannelOrQueryByName(const QString& name);
-        QString parseWildcards(const QString& toParse, ChatWindow* context = 0, const QStringList &nicks = QStringList());
+        QString parseWildcards(const QString& toParse, ChatWindow* context = nullptr, const QStringList &nicks = QStringList());
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& inputLineText);
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& inputLineText);
 
@@ -803,7 +803,7 @@ class Server : public QObject
         inline QString cleanDccFileName(const QString& filename) const;
 
         /// Checks if the port is in a valid range
-        inline quint16 stringToPort(const QString &port, bool *ok = 0);
+        inline quint16 stringToPort(const QString &port, bool *ok = nullptr);
 
         /// Creates a list of known users and returns the one chosen by the user
         inline QString recipientNick() const;

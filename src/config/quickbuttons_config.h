@@ -22,7 +22,7 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
   Q_OBJECT
 
   public:
-    explicit QuickButtons_Config(QWidget* parent, const char* name=NULL);
+    explicit QuickButtons_Config(QWidget* parent, const char* name=nullptr);
     ~QuickButtons_Config() override;
 
     void saveSettings() override;

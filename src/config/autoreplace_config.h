@@ -22,7 +22,7 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
   Q_OBJECT
 
   public:
-    explicit Autoreplace_Config(QWidget* parent, const char* name=NULL);
+    explicit Autoreplace_Config(QWidget* parent, const char* name = nullptr);
     ~Autoreplace_Config() override;
 
     void saveSettings() override;

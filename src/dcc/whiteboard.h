@@ -63,7 +63,7 @@ namespace Konversation
                 void rawWhiteBoardCommand(const QString& command);
 
             private:
-                inline QColor parseColor(const QString& colorString, bool* ok = 0);
+                inline QColor parseColor(const QString& colorString, bool* ok = nullptr);
                 inline QString colorToString(const QColor& color);
                 inline int fontToStyle(const QFont& font);
 

@@ -219,7 +219,7 @@ class IRCView : public QTextBrowser
     protected:
         void openLink(const QUrl &url);
 
-        QString filter(const QString& line, const QString& defaultColor, const QString& who=QString(), bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = 0);
+        QString filter(const QString& line, const QString& defaultColor, const QString& who=QString(), bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = nullptr);
 
         void replaceDecoration(QString& line, char decoration, char replacement);
 
@@ -227,7 +227,7 @@ class IRCView : public QTextBrowser
 
         /// Returns a string where all irc-richtext chars are replaced with proper
         /// html tags and all urls are parsed if parseURL is true
-        inline QString ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags = true, QChar::Direction* direction = 0);
+        inline QString ircTextToHtml(const QString& text, bool parseURL, const QString& defaultColor, const QString& whoSent, bool closeAllTags = true, QChar::Direction* direction = nullptr);
 
         /// Returns a string that closes all open html tags to <parm>tag</parm>
         /// The closed tag is removed from opentagList in data

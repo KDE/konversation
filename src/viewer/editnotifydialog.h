@@ -33,7 +33,7 @@ class EditNotifyDialog : public QDialog
     Q_OBJECT
 
     public:
-        explicit EditNotifyDialog(QWidget* parent=0, int serverGroupId=0,
+        explicit EditNotifyDialog(QWidget* parent = nullptr, int serverGroupId = 0,
             const QString& nickname=QString());
         ~EditNotifyDialog() override;
 

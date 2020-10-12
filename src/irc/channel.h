@@ -111,7 +111,7 @@ class Channel : public ChatWindow
 
     protected:
         // use with caution! does not check for duplicates
-        void fastAddNickname(ChannelNickPtr channelnick, Nick *nick=0);
+        void fastAddNickname(ChannelNickPtr channelnick, Nick *nick = nullptr);
         void setActive(bool active);
         void repositionNick(Nick *nick);
         bool shouldShowEvent(ChannelNickPtr channelNick);

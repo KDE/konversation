@@ -34,12 +34,12 @@ namespace Konversation
                 static QString numericalIpToTextIp( const QString& numericalIp );
 
                 // returns the self IP following the setting.
-                static QString getOwnIp( Server* server = 0 );
+                static QString getOwnIp( Server* server = nullptr );
 
                 static QString ipv6FallbackAddress(const QString& address);
 
                 // creates an instance of QTcpServer following the DCC settings
-                static QTcpServer* createServerSocketAndListen( QObject* parent = nullptr, QString* failedReason = 0, int minPort = 0, int maxPort = 0 );
+                static QTcpServer* createServerSocketAndListen( QObject* parent = nullptr, QString* failedReason = nullptr, int minPort = 0, int maxPort = 0 );
 
             private:
                 DccCommon();
