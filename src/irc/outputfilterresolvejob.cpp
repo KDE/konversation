@@ -59,7 +59,7 @@ OutputFilterResolveJob::OutputFilterResolveJob(const Konversation::OutputFilterI
         return;
     }
 
-    QHostInfo::lookupHost(m_target, this, SLOT(resolved(QHostInfo)));
+    QHostInfo::lookupHost(m_target, this, &OutputFilterResolveJob::resolved);
 }
 
 OutputFilterResolveJob::~OutputFilterResolveJob()

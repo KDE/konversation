@@ -1042,7 +1042,7 @@ void Server::connectionEstablished(const QString& ownHost)
     // Some servers don't include the userhost in RPL_WELCOME, so we
     // need to use RPL_USERHOST to get ahold of our IP later on
     if (!ownHost.isEmpty())
-        QHostInfo::lookupHost(ownHost, this, SLOT(gotOwnResolvedHostByWelcome(QHostInfo)));
+        QHostInfo::lookupHost(ownHost, this, &Server::gotOwnResolvedHostByWelcome);
 
     updateConnectionState(Konversation::SSConnected);
 
@@ -3594,7 +3594,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     {
         QString myhost = hostmask.section(QLatin1Char('@'), 1);
         // Use async lookup else you will be blocking GUI badly
-        QHostInfo::lookupHost(myhost, this, SLOT(gotOwnResolvedHostByUserhost(QHostInfo)));
+        QHostInfo::lookupHost(myhost, this, &Server::gotOwnResolvedHostByUserhost);
     }
     NickInfoPtr nickInfo = getNickInfo(nick);
     if (nickInfo)
