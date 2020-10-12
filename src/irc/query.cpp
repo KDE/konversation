@@ -243,8 +243,7 @@ void Query::sendText(const QString& sendLine)
             else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
             else appendQuery(m_server->getNickname(), result.output);
         }
-        else if (result.outputList.count())
-        {
+        else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
                 QStringListIterator it(result.outputList);

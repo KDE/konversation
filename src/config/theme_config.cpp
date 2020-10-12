@@ -79,8 +79,7 @@ void Theme_Config::loadSettings()
     }
 
     // if we have any themes
-    if (m_dirs.count() > 0)
-    {
+    if (!m_dirs.isEmpty()) {
         m_dirs.sort();
 
         QString themeName, themeComment, themeDir;

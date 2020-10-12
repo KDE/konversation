@@ -628,8 +628,7 @@ void NicksOnline::doCommand(QAction* id)
     {
         int serverGroupId = -1;
 
-        if (m_nickListView->selectedItems().count())
-        {
+        if (!m_nickListView->selectedItems().isEmpty()) {
             NicksOnlineItem *networkRoot = dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0));
             if (networkRoot)
             {
@@ -673,8 +672,7 @@ void NicksOnline::doCommand(QAction* id)
 
     if ( id == m_joinChannel )
     {
-        if (m_nickListView->selectedItems().count() > 0)
-        {
+        if (!m_nickListView->selectedItems().isEmpty()) {
             // only join real channels
             if (dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0))->type() == NicksOnlineItem::ChannelItem)
             {
@@ -783,7 +781,7 @@ void NicksOnline::slotCustomContextMenuRequested(const QPoint& point)
     // set up actions
     setupPopupMenuActions(dynamic_cast<NicksOnlineItem*>(item));
     // show the popup menu
-    if (m_popupMenu->actions().count() > 0)
+    if (!m_popupMenu->actions().isEmpty())
       m_popupMenu->popup(QCursor::pos());
 }
 

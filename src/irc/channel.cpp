@@ -711,8 +711,7 @@ void Channel::setAutoJoin(bool autojoin)
                 if (index && index > ownIndex) channelMap.insert(index, channel);
             }
 
-            if (channelMap.count())
-            {
+            if (!channelMap.isEmpty()) {
                 QMap<int, Channel*>::Iterator it2;
                 Channel* channel;
 
@@ -832,8 +831,7 @@ void Channel::sendText(const QString& sendLine)
             else if(result.type == Konversation::PrivateMessage) msgHelper(result.typeString, result.output);
             else append(m_server->getNickname(), result.output);
         }
-        else if (result.outputList.count())
-        {
+        else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
                 QStringListIterator it(result.outputList);

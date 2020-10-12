@@ -1287,7 +1287,7 @@ namespace Konversation
 
         if (list.isEmpty())
         {
-            if (removed.count())
+            if (!removed.isEmpty())
                 result.output = i18nc("%1 = Comma-separated list of nicknames",
                                       "The notify list has been emptied (removed %1).",
                                       removed.join(QLatin1String(", ")));
@@ -1296,15 +1296,15 @@ namespace Konversation
         }
         else
         {
-            if (added.count() && !removed.count())
+            if (!added.isEmpty() && removed.isEmpty())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2).",
                                       list, added.join(QLatin1String(", ")));
-            else if (removed.count() && !added.count())
+            else if (!removed.isEmpty() && added.isEmpty())
                 result.output = i18nc("%1 and %2 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (removed %2).",
                                       list, removed.join(QLatin1String(", ")));
-            else if (added.count() && removed.count())
+            else if (!added.isEmpty() && !removed.isEmpty())
                 result.output = i18nc("%1, %2 and %3 = Comma-separated lists of nicknames",
                                       "Current notify list: %1 (added %2, removed %3).",
                                       list, added.join(QLatin1String(", ")), removed.join(QLatin1String(", ")));
@@ -1382,8 +1382,7 @@ namespace Konversation
             }
 
             // look for channel / ban mask
-            if (parameterList.count())
-            {
+            if (!parameterList.isEmpty()) {
                 // user specified channel
                 if (isAChannel(parameterList[0]))
                 {
@@ -1486,8 +1485,7 @@ namespace Konversation
                 showUsage = false;
             }
             // if all went good, signal server to unban this mask
-            if (!channel.isEmpty() && parameterList.count())
-            {
+            if (!channel.isEmpty() && !parameterList.isEmpty()) {
                 emit unbanUsers(parameterList[0], channel);
                 // syntax was correct, so reset flag
                 showUsage = false;
@@ -1954,8 +1952,7 @@ namespace Konversation
         QString tmpToken;
         QStringList nickList = parameter.split(QLatin1Char(' '));
 
-        if(nickList.count())
-        {
+        if (!nickList.isEmpty()) {
             // Check if the user specified a channel
             if(isAChannel(nickList[0]))
             {

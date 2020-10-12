@@ -82,8 +82,7 @@ void QuickButtons_Config::saveSettings()
   QStringList newList=currentButtonList();
 
   // check if there are any quick buttons in the list view
-  if(newList.count())
-  {
+  if (!newList.isEmpty()) {
     // go through all buttons and save them into the configuration
     for(int index=0;index<newList.count();index++)
     {

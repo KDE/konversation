@@ -3720,7 +3720,7 @@ QString Server::parseWildcards(const QString& toParse, ChatWindow* context, cons
         Channel* channel = qobject_cast<Channel*>(context);
 
         return parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(),
-            nicks.count() ? nicks : channel->getSelectedNickList(), inputLineText);
+            !nicks.isEmpty() ? nicks : channel->getSelectedNickList(), inputLineText);
     }
     else if (context->getType() == ChatWindow::Query)
         return parseWildcards(toParse, getNickname(), context->getName(), QString(), context->getName(), inputLineText);

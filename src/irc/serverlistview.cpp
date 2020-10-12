@@ -69,7 +69,7 @@ bool ServerListView::badDropSelection()
         }
         else    t++;
 
-        if (t > 0 && children.count() > 0) //make sure we don't have a top and a child selected
+        if (t > 0 && !children.isEmpty()) //make sure we don't have a top and a child selected
             return true;
     }
     return false;

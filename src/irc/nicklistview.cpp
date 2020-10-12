@@ -255,8 +255,7 @@ int NickListView::findLowerBound(const QTreeWidgetItem& item) const
 
 void NickListView::contextMenuEvent(QContextMenuEvent* ev)
 {
-    if (selectedItems().count())
-    {
+    if (!selectedItems().isEmpty()) {
         IrcContextMenus::nickMenu(ev->globalPos(), IrcContextMenus::ShowChannelActions,
             m_channel->getServer(), m_channel->getSelectedNickList(), m_channel->getName());
     }

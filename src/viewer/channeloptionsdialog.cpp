@@ -483,7 +483,7 @@ namespace Konversation
     void ChannelOptionsDialog::removeBan(const QString& ban)
     {
         QList<QTreeWidgetItem *> items = m_ui.banList->findItems(ban, Qt::MatchCaseSensitive | Qt::MatchExactly, 0);
-        if (items.count() > 0)
+        if (!items.isEmpty())
           delete items.at(0);
     }
 

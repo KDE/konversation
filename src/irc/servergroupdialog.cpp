@@ -227,8 +227,8 @@ namespace Konversation
     {
         QList<QListWidgetItem*> serverBoxSelection = m_mainWidget->m_serverLBox->selectedItems();
 
-        if (m_mainWidget->m_serverLBox->count() && serverBoxSelection.count())
-        {
+        const bool hasServerSelected = !serverBoxSelection.isEmpty();
+        if (m_mainWidget->m_serverLBox->count() && hasServerSelected) {
             QListWidgetItem* selectedServer = serverBoxSelection.first();
             int selectedServerRow = m_mainWidget->m_serverLBox->row(selectedServer);
 
@@ -241,8 +241,8 @@ namespace Konversation
             m_mainWidget->m_downServerBtn->setEnabled(false);
         }
 
-        m_mainWidget->m_removeServerButton->setEnabled(serverBoxSelection.count());
-        m_mainWidget->m_changeServerButton->setEnabled(serverBoxSelection.count());
+        m_mainWidget->m_removeServerButton->setEnabled(hasServerSelected);
+        m_mainWidget->m_changeServerButton->setEnabled(hasServerSelected);
     }
 
     void ServerGroupDialog::moveServerUp()
@@ -334,8 +334,8 @@ namespace Konversation
     {
         QList<QListWidgetItem*> channelBoxSelection = m_mainWidget->m_channelLBox->selectedItems();
 
-        if (m_mainWidget->m_channelLBox->count() && channelBoxSelection.count())
-        {
+        const bool hasChannelSelected = !channelBoxSelection.isEmpty();
+        if (m_mainWidget->m_channelLBox->count() && hasChannelSelected) {
             QListWidgetItem* selectedChannel = channelBoxSelection.first();
             int selectedChannelRow = m_mainWidget->m_channelLBox->row(selectedChannel);
 
@@ -348,8 +348,8 @@ namespace Konversation
             m_mainWidget->m_downChannelBtn->setEnabled(false);
         }
 
-        m_mainWidget->m_removeChannelButton->setEnabled(channelBoxSelection.count());
-        m_mainWidget->m_changeChannelButton->setEnabled(channelBoxSelection.count());
+        m_mainWidget->m_removeChannelButton->setEnabled(hasChannelSelected);
+        m_mainWidget->m_changeChannelButton->setEnabled(hasChannelSelected);
     }
 
     void ServerGroupDialog::moveChannelUp()

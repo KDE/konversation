@@ -1996,44 +1996,38 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 // Display message only if this was not an automatic request.
                 if (getAutomaticRequest(QStringLiteral("WHOIS"), parameterList.value(1)) == 0)
                 {
-                    if (userChannels.count())
-                    {
+                    if (!userChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is a user on channels: %2",
                                 parameterList.value(1),
                                 userChannels.join(QLatin1Char(' '))), messageTags
                             );
                     }
-                    if (voiceChannels.count())
-                    {
+                    if (!voiceChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 has voice on channels: %2",
                                 parameterList.value(1), voiceChannels.join(QLatin1Char(' '))), messageTags
                             );
                     }
-                    if (halfopChannels.count())
-                    {
+                    if (!halfopChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is a halfop on channels: %2",
                                 parameterList.value(1), halfopChannels.join(QLatin1Char(' '))), messageTags
                             );
                     }
-                    if (opChannels.count())
-                    {
+                    if (!opChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is an operator on channels: %2",
                                 parameterList.value(1), opChannels.join(QLatin1Char(' '))), messageTags
                             );
                     }
-                    if (ownerChannels.count())
-                    {
+                    if (!ownerChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is owner of channels: %2",
                                 parameterList.value(1), ownerChannels.join(QLatin1Char(' '))), messageTags
                             );
                     }
-                    if (adminChannels.count())
-                    {
+                    if (!adminChannels.isEmpty()) {
                         m_server->appendMessageToFrontmost(i18n("Whois"),
                             i18n("%1 is admin on channels: %2",
                                 parameterList.value(1), adminChannels.join(QLatin1Char(' '))), messageTags

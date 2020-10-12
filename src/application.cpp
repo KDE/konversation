@@ -754,8 +754,7 @@ void Application::saveOptions(bool updateGUI)
     // Clean up identity list
     const QStringList identities=KSharedConfig::openConfig()->groupList().filter(
                                             QRegularExpression(QStringLiteral("Identity [0-9]+")));
-    if (identities.count())
-    {
+    if (!identities.isEmpty()) {
         // remove old identity list from Preferences::file to keep numbering under control
         for (int index=0; index < identities.count(); index++)
             KSharedConfig::openConfig()->deleteGroup(identities[index]);
@@ -799,8 +798,7 @@ void Application::saveOptions(bool updateGUI)
     // Remove the old servergroups from the config
     QStringList groups = KSharedConfig::openConfig()->groupList().filter(
                                             QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
-    if (groups.count())
-    {
+    if (!groups.isEmpty()) {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
@@ -810,8 +808,7 @@ void Application::saveOptions(bool updateGUI)
 
     // Remove the old servers from the config
     groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Server [0-9]+")));
-    if (groups.count())
-    {
+    if (!groups.isEmpty()) {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
@@ -821,8 +818,7 @@ void Application::saveOptions(bool updateGUI)
 
     // Remove the old channels from the config
     groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Channel [0-9]+")));
-    if (groups.count())
-    {
+    if (!groups.isEmpty()) {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {

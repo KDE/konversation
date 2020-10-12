@@ -485,7 +485,7 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
 
     const QModelIndexList& idxList = selected.indexes();
 
-    if (idxList.count()) {
+    if (!idxList.isEmpty()) {
         const QModelIndex& idx = idxList.at(0);
 
         ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());

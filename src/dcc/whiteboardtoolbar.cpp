@@ -239,7 +239,7 @@ namespace Konversation
             {
                 QStringList saveList = fileDialog->selectedFiles();
                 qCDebug(KONVERSATION_LOG) << saveList;
-                if (saveList.count() > 0)
+                if (!saveList.isEmpty())
                 emit save(saveList.at(0));
             }
             delete fileDialog;

@@ -110,8 +110,7 @@ void Autoreplace_Config::saveSettings()
   QList<QStringList> newList=currentAutoreplaceList();
 
   // check if there are any patterns in the list view
-  if(newList.count())
-  {
+  if (!newList.isEmpty()) {
     // go through all patterns and save them into the configuration
     QString regexString(QStringLiteral("Regex"));
     QString directString(QStringLiteral("Direction"));
