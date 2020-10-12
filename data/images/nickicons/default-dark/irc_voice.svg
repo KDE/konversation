@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 16 16">
+  <defs
+     id="defs10">
+    <style type="text/css" id="current-color-scheme">
+      .ColorScheme-NeutralText {
+        color:#f67400;
+      }
+      </style>
+  </defs>
+  <path
+     id="rect878"
+     style="fill:currentColor;fill-opacity:1;stroke:none"
+     class="ColorScheme-NeutralText"
+     d="M 13 9 L 11 11 L 10 11 L 10 13 L 11 13 L 13 15 L 13 9 z M 14 10 L 14 14 L 15 14 L 15 10 L 14 10 z " />
+</svg>

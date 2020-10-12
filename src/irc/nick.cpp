@@ -64,7 +64,7 @@ void Nick::refresh()
         }
 
         Images* images = Application::instance()->images();
-        QPixmap icon;
+        QIcon icon;
 
         if ( getChannelNick()->isOwner() )
         {

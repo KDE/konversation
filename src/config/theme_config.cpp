@@ -15,6 +15,7 @@
 #include "theme_config.h"
 #include "preferences_base.h"
 #include "images.h"
+#include "nickiconset.h"
 #include "common.h"
 #include "application.h"
 
@@ -312,15 +313,17 @@ void Theme_Config::updatePreview(int id)
     QString dir;
     dir = m_dirs[id];
     dir.remove(QStringLiteral("/index.desktop"));
-    QPixmap normal(dir + QLatin1String("/irc_normal.png"));
+    NickIconSet nickIconSet;
+    nickIconSet.load(dir);
 
-    previewLabel1->setPixmap(normal);
-    previewLabel2->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_away.png"))));
-    previewLabel3->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_voice.png"))));
-    previewLabel4->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_halfop.png"))));
-    previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_op.png"))));
-    previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_admin.png"))));
-    previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir + QLatin1String("/irc_owner.png"))));
+    // TODO: use QIcon::paint-based display, to catch icon changing on environment changes like color palette
+    previewLabel1->setPixmap(nickIconSet.nickIcon(Images::Normal).pixmap(16));
+    previewLabel2->setPixmap(nickIconSet.nickIcon(Images::Normal, NickIconSet::UserAway).pixmap(16));
+    previewLabel3->setPixmap(nickIconSet.nickIcon(Images::Voice).pixmap(16));
+    previewLabel4->setPixmap(nickIconSet.nickIcon(Images::HalfOp).pixmap(16));
+    previewLabel5->setPixmap(nickIconSet.nickIcon(Images::Op).pixmap(16));
+    previewLabel6->setPixmap(nickIconSet.nickIcon(Images::Admin).pixmap(16));
+    previewLabel7->setPixmap(nickIconSet.nickIcon(Images::Owner).pixmap(16));
 }
 
 void Theme_Config::updateButtons()

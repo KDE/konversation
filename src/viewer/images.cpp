@@ -13,6 +13,7 @@
 #include "images.h"
 #include "common.h"
 #include "application.h"
+#include "nickiconset.h"
 
 #include <QIconEngine>
 #include <QPainter>
@@ -128,99 +129,8 @@ QIconEngine* LedIconEngine::clone() const
 }
 
 
-class NickIconSet
-{
-public:
-    enum ElementIndex
-    {
-        Normal,
-        Voice,
-        HalfOp,
-        Op,
-        Owner,
-        Admin,
-        Away,
-        AwayStacked,
-        _ElementIndex_COUNT
-    };
-
-    bool load(const QString &baseDir);
-
-    bool isNull() const { return m_element[Normal].isNull(); }
-    const QString & path(Images::NickPrivilege privilege) const { return m_nickIconPaths[privilege]; }
-    const QPixmap & element(NickIconSet::ElementIndex index) const { return m_element[index]; }
-
-    const QString & nickIconAwayOverlayPath() const { return m_nickIconAwayOverlayPath; }
-
-private:
-    void clear();
-
-private:
-    QPixmap m_element[_ElementIndex_COUNT];
-    QString m_nickIconPaths[Images::_NickPrivilege_COUNT];
-    QString m_nickIconAwayOverlayPath;
-};
-
-void NickIconSet::clear()
-{
-    for (int i = 0; i < _ElementIndex_COUNT; ++i) {
-        m_element[i] = QPixmap();
-    }
-    for (int i = 0; i < Images::_NickPrivilege_COUNT; ++i) {
-        m_nickIconPaths[i].clear();
-    }
-
-    m_nickIconAwayOverlayPath.clear();
-}
-
-bool NickIconSet::load(const QString &baseDir)
-{
-    static const struct LoadData
-    {
-        QLatin1String elementName;
-        int pathIndex; //Image::NickPrivilege: ,  -1: none, -2: nickIconAwayOverlayPath
-        bool required;
-    }
-    loadData[_ElementIndex_COUNT] = {
-        {QLatin1String("irc_normal"),       Images::Normal, true},
-        {QLatin1String("irc_voice"),        Images::Voice,  true},
-        {QLatin1String("irc_halfop"),       Images::HalfOp, true},
-        {QLatin1String("irc_op"),           Images::Op,     true},
-        {QLatin1String("irc_owner"),        Images::Owner,  true},
-        {QLatin1String("irc_admin"),        Images::Admin,  true},
-        {QLatin1String("irc_away"),         -2,             true},
-        {QLatin1String("irc_away_stacked"), -1,             false},
-    };
-
-    for (int i = 0; i < _ElementIndex_COUNT; ++i) {
-        const LoadData& d = loadData[i];
-        const QString path = baseDir + QLatin1Char('/') + d.elementName + QLatin1String(".png");
-        // try to load file
-        if (!QFile::exists(path)) {
-            if (d.required) {
-                clear();
-                return false;
-            }
-            continue;
-        }
-        m_element[i] = QPixmap(path);
-        if (m_element[i].isNull()) {
-            clear();
-            return false;
-        }
-        // note path of file
-        if (d.pathIndex == -2) {
-            m_nickIconAwayOverlayPath = path;
-        } else if (d.pathIndex != -1) {
-            m_nickIconPaths[d.pathIndex] = path;
-        }
-    }
-
-    return true;
-}
-
-
 Images::Images()
+    : nickIconSet(new NickIconSet)
 {
     initializeLeds();
     initializeNickIcons();
@@ -230,19 +140,19 @@ Images::~Images()
 {
 }
 
-QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
+int Images::getNickIconSize() const
 {
-    return nickIcons[privilege][isAway?1:0];
+    return nickIconSet->defaultIconSize();
 }
 
-QString Images::getNickIconPath(NickPrivilege privilege) const
+QIcon Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {
-    return nickIconPaths[privilege];
+    return nickIconSet->nickIcon(privilege, isAway ? NickIconSet::UserAway : NickIconSet::UserPresent);
 }
 
-QString Images::getNickIconAwayPath() const
+QIcon Images::getNickIconAwayOverlay() const
 {
-    return nickIconAwayPath;
+    return nickIconSet->nickIconAwayOverlay();
 }
 
 void Images::initializeLeds()
@@ -272,67 +182,26 @@ void Images::initializeLeds()
 
 void Images::initializeNickIcons()
 {
-    NickIconSet iconSet;
-
     QString iconTheme = Preferences::self()->iconTheme();
     QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("konversation/themes/") + iconTheme, QStandardPaths::LocateDirectory);
-    QStringList icons;
-    bool isDefaultTheme = (iconTheme == QLatin1String("default"));
+    const bool isDefaultTheme = (iconTheme == QLatin1String("default"));
 
     for (const QString& dir : qAsConst(dirs)) {
-        if (iconSet.load(dir)) {
+        if (nickIconSet->load(dir)) {
             break;
         }
     }
 
-    // fallback to default icon set, if not yet chosen
-    if (iconSet.isNull() && !isDefaultTheme) {
+    // fallback to default if theme could not be loaded
+    if (nickIconSet->isNull() && !isDefaultTheme) {
         dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default"), QStandardPaths::LocateDirectory);
 
         for (const QString& dir : qAsConst(dirs)) {
-            if (iconSet.load(dir)) {
+            if (nickIconSet->load(dir)) {
                 break;
             }
         }
-        isDefaultTheme = true;
     }
-
-    if (iconSet.isNull()) {
-        return;
-    }
-
-    for (int i = 0; i < Images::_NickPrivilege_COUNT; ++i) {
-        nickIconPaths[i] = iconSet.path((NickPrivilege)i);
-    }
-    nickIconAwayPath = iconSet.nickIconAwayOverlayPath();
-
-    nickIcons[Normal][0] = iconSet.element(NickIconSet::Normal);
-    nickIcons[Normal][1] = overlayPixmaps( nickIcons[Normal][0], iconSet.element(NickIconSet::Away) );
-
-    nickIcons[Voice][0] = overlayPixmaps( iconSet.element(NickIconSet::Normal), iconSet.element(NickIconSet::Voice) );
-    nickIcons[Voice][1] = overlayPixmaps( nickIcons[Voice][0], iconSet.element(NickIconSet::AwayStacked).isNull() ? iconSet.element(NickIconSet::Away) : iconSet.element(NickIconSet::AwayStacked) );
-
-    nickIcons[HalfOp][0] = overlayPixmaps( iconSet.element(NickIconSet::Normal), iconSet.element(NickIconSet::HalfOp) );
-    nickIcons[HalfOp][1] = overlayPixmaps( nickIcons[HalfOp][0], iconSet.element(NickIconSet::AwayStacked).isNull() ? iconSet.element(NickIconSet::Away) : iconSet.element(NickIconSet::AwayStacked) );
-
-    nickIcons[Op][0] = overlayPixmaps( iconSet.element(NickIconSet::Normal), iconSet.element(NickIconSet::Op) );
-    nickIcons[Op][1] = overlayPixmaps( nickIcons[Op][0], iconSet.element(NickIconSet::AwayStacked).isNull() ? iconSet.element(NickIconSet::Away) : iconSet.element(NickIconSet::AwayStacked) );
-
-    if (isDefaultTheme) {
-        nickIcons[Owner][0] = iconSet.element(NickIconSet::Owner);
-    } else {
-        nickIcons[Owner][0] = overlayPixmaps( iconSet.element(NickIconSet::Normal), iconSet.element(NickIconSet::Owner) );
-    }
-
-    nickIcons[Owner][1] = overlayPixmaps( nickIcons[Owner][0], iconSet.element(NickIconSet::Away) );
-
-    if (isDefaultTheme) {
-        nickIcons[Admin][0] = iconSet.element(NickIconSet::Admin);
-    } else {
-        nickIcons[Admin][0] = overlayPixmaps( iconSet.element(NickIconSet::Normal), iconSet.element(NickIconSet::Admin) );
-    }
-
-    nickIcons[Admin][1] = overlayPixmaps( nickIcons[Admin][0], iconSet.element(NickIconSet::Away) );
 }
 
 QIcon Images::getLed(const QColor& col,bool state)

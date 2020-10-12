@@ -84,7 +84,6 @@ namespace Konversation
     bool isUrl(const QString& text);
     QString extractColorCodes(const QString& text);
 
-    QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
     bool isUtf8(const QByteArray& text);
     uint colorForNick(const QString& nickname);
 

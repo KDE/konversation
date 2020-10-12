@@ -588,7 +588,7 @@ namespace Konversation
             {
                 if (port != m_ownPort) return; // Somebody elses forward succeeded
 
-                disconnect (this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendRequest(bool,quint16)));
+                disconnect (this->sender(), SIGNAL(forwardComplete(bool,quint16)), this, SLOT(sendReverseAck(bool,quint16)));
 
                 if (error)
                 {

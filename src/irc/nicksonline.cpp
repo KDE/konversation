@@ -339,12 +339,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (channelNick->isOp()) nickPrivilege = Images::Op;
                 if (channelNick->isOwner()) nickPrivilege = Images::Owner;
                 if (channelNick->isAdmin()) nickPrivilege = Images::Admin;
-                if (server->getJoinedChannelMembers(channelName) != nullptr)
-                    channelItem->setIcon(nlvcChannel,
-                        QIcon(Application::instance()->images()->getNickIcon(nickPrivilege, false)));
-                else
-                    channelItem->setIcon(nlvcChannel,
-                        QIcon(Application::instance()->images()->getNickIcon(nickPrivilege, true)));
+                const bool isAway = (server->getJoinedChannelMembers(channelName) == nullptr);
+                channelItem->setIcon(nlvcChannel,
+                                     Application::instance()->images()->getNickIcon(nickPrivilege, isAway));
             }
             // Remove channel if nick no longer in it.
             for (int i = 0; i < nickRoot->childCount(); ++i)
