@@ -1,16 +1,11 @@
 /*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  The Original Code is mozilla.org code.
-  See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540
+    The Original Code is mozilla.org code.
+    See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540
 
-  Copyright (C) 1998 Netscape Communications Corporation
-  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+    SPDX-FileCopyrightText: 1998 Netscape Communications Corporation
+    SPDX-FileCopyrightText: 2005 Ismail Donmez <ismail@kde.org>
 */
 
 #define kLeft1BitMask  0x80

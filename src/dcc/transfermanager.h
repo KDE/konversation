@@ -1,20 +1,9 @@
 /*
-  DccTransferManager controls DccTransfer instances.
-  All DccTransferRecv/DccTransferSend instances are created and deleted by this class.
-  Each DccTransfer instance is deleted immediately after its transfer done.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
-
-/*
-  Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
-  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+    SPDX-FileCopyrightText: 2007 Shintaro Matsuoka <shin@shoegazed.org>
+    SPDX-FileCopyrightText: 2009 Michael Kreitzer <mrgrim@gr1m.org>
+    SPDX-FileCopyrightText: 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERMANAGER_H
@@ -39,6 +28,11 @@ namespace Konversation
         class TransferSend;
         class Chat;
 
+        /**
+         * DccTransferManager controls DccTransfer instances.
+         * All DccTransferRecv/DccTransferSend instances are created and deleted by this class.
+         * Each DccTransfer instance is deleted immediately after its transfer done.
+         */
         class TransferManager : public QObject
         {
             Q_OBJECT

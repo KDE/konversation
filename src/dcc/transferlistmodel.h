@@ -1,16 +1,7 @@
 /*
-  This class represents a DCC transferlist model.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
-
-/*
-  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
+    SPDX-FileCopyrightText: 2009, 2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERLISTMODEL_H
@@ -112,6 +103,9 @@ namespace Konversation
         };
 
 
+        /**
+         * This class represents a DCC transferlist model.
+         */
         class TransferListModel : public QAbstractListModel
         {
             Q_OBJECT

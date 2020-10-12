@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
-# Copyright (C) 2004 by İsmail Dönmez
-# Licensed under GPL v2 or later at your option
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# SPDX-FileCopyrightText: 2004 İsmail Dönmez <ismail@kde.org>
 
 $SERVER = shift;
 $TARGET = shift;

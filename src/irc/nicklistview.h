@@ -1,15 +1,7 @@
 /*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  Channel Nick List, including context menu
-  begin:     Fre Jun 7 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+    SPDX-FileCopyrightText: 2002 Dario Abatianni <eisfuchs@tigress.com>
 */
 
 #ifndef NICKLISTVIEW_H
@@ -25,6 +17,9 @@
 class QTimer;
 
 
+/**
+ *  Channel Nick List, including context menu
+ */
 class NickListView : public QTreeWidget
 {
     Q_OBJECT

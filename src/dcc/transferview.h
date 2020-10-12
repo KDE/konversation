@@ -1,16 +1,7 @@
 /*
-  This class represents a DCC transferview for transfermodel.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
-
-/*
-  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
+    SPDX-FileCopyrightText: 2009, 2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERVIEW_H
@@ -33,6 +24,9 @@ namespace Konversation
         class Transfer;
         class TransferListProxyModel;
 
+        /**
+         * This class represents a DCC transferview for transfermodel.
+         */
         class TransferView : public QTreeView
         {
             Q_OBJECT

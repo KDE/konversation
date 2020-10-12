@@ -1,8 +1,8 @@
 #!/bin/bash
-
 #
-# Licensed under GPL v2 or later at your option
-# Copyright 2005 by John Tapsell <john.tapsell@kdemail.net>
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# SPDX-FileCopyrightText: 2005 John Tapsell <john.tapsell@kdemail.net>
 
 SERVER=$1;
 TARGET=$2;

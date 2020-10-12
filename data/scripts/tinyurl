@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
 # Creates a TinyURL from a long URL
-# Licensed under GPL v2 or later at your option
-# Copyright 2007 Terence Simpson
+#
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# SPDX-FileCopyrightText: 2007 Terence Simpson
 
 SERVER=$1
 TARGET=$2

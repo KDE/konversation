@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 # Uptime script for Konversation
-# made by Magnus Romnes (gromnes@online.no)
+# SPDX-FileCopyrightText: Magnus Romnes <gromnes@online.no>
 # The script might be uncompatible with other unix variants than linux.
 # only tested on Debian GNU/Linux Sid
 # use the code for whatever you wish :-)

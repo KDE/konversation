@@ -1,15 +1,7 @@
 /*
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  channelnick.h - There is an instance of this for each nick in each channel.  So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
-  begin:     Wed Aug 04 2004
-  copyright: (C) 2002,2003,2004 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+    SPDX-FileCopyrightText: 2002, 2003, 2004 Dario Abatianni <eisfuchs@tigress.com>
 */
 
 #ifndef CHANNEL_NICK_H
@@ -20,6 +12,11 @@
 #include <QExplicitlySharedDataPointer>
 
 
+/**
+ * An instance of ChannelNick is made for each nick in each channel.
+ * So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
+ * It contains a pointer to the NickInfo, and the mode of that person in the channel.
+ */
 class ChannelNick : public QSharedData
 {
     public:

@@ -1,14 +1,9 @@
 /*
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-*/
+    SPDX-License-Identifier: GPL-2.0-or-later
 
-/*
-  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004, 2016 Peter Simonsson <peter.simonsson@gmail.com>
-  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
+    SPDX-FileCopyrightText: 2002 Dario Abatianni <eisfuchs@tigress.com>
+    SPDX-FileCopyrightText: 2004, 2016 Peter Simonsson <peter.simonsson@gmail.com>
+    SPDX-FileCopyrightText: 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "inputfilter.h"
@@ -296,7 +291,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QStringLiteral("Konversation %1 Build %2 Copyright 2002-2020 by the Konversation team")
+                        reply = QStringLiteral("Konversation %1 Build %2 SPDX-FileCopyrightText: 2002-2020 the Konversation team ")
                             .arg(QStringLiteral(KONVI_VERSION), QString::number(COMMIT));
                     }
 

@@ -1,22 +1,13 @@
+/*
+    SPDX-License-Identifier: GPL-2.0-or-later
+
+    SPDX-FileCopyrightText: 2005 İsmail Dönmez <ismail@kde.org.tr>
+    Based on the code by :
+    SPDX-FileCopyrightText: 2002 Carsten Pfeiffer <pfeiffer@kde.org>
+*/
+
 #ifndef KONVIBOOKMARKHANDLER_H
 #define KONVIBOOKMARKHANDLER_H
-
-/*
-  Copyright (c) 2005 by İsmail Dönmez <ismail@kde.org.tr>
-
-  *************************************************************************
-  *                                                                       *
-  * This program is free software; you can redistribute it and/or modify  *
-  * it under the terms of the GNU General Public License as published by  *
-  * the Free Software Foundation; either version 2 of the License, or     *
-  * (at your option) any later version.                                   *
-  *                                                                       *
-  *************************************************************************
-
-Based on the code by :
-Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
-
-*/
 
 #include <KBookmarkManager>
 #include <KBookmarkOwner>
