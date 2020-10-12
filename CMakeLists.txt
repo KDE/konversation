@@ -41,7 +41,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 )
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
-include_directories(${PHONON_INCLUDES})
 
 find_package(Qca-qt5 2.1.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
