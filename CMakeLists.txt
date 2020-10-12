@@ -73,11 +73,6 @@ add_subdirectory(data)
 add_subdirectory(doc)
 
 ki18n_install(po)
-
-get_filename_component(_doc_translations_path doc-translations ABSOLUTE)
-
-if (EXISTS ${_doc_translations_path}/CMakeLists.txt)
-    add_subdirectory(doc-translations)
-endif()
+kdoctools_install(po)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
