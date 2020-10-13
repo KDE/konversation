@@ -29,13 +29,14 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
     public Q_SLOTS:
         virtual void languageChange();
 
-    protected:
-        QString currentWarningsChecked() const; // for hasChanged()
-
-        QString m_oldWarningsChecked;     // for hasChanged()
-
     Q_SIGNALS:
         void modified();
+
+    private:
+        QString currentWarningsChecked() const; // for hasChanged()
+
+    private:
+        QString m_oldWarningsChecked;     // for hasChanged()
 };
 
 #endif // WARNINGS_CONFIG_H

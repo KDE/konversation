@@ -26,24 +26,26 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
 
         bool hasChanged() override;
 
-    private:
-        QStringList m_oldIgnoreList;
-
-        QStringList currentIgnoreList() const;  // in hasChanged() format
-        QList<Ignore*> getIgnoreList() const; // in prefs format
-        void updateEnabledness();
-
     public Q_SLOTS:
         virtual void languageChange();
 
-    protected Q_SLOTS:
+    Q_SIGNALS:
+        void modified();
+
+    private Q_SLOTS:
         void newIgnore();
         void removeIgnore();
         void flagCheckboxChanged();
         void select(QTreeWidgetItem* item);
         void removeAllIgnore();
-    Q_SIGNALS:
-        void modified();
+
+    private:
+        QStringList currentIgnoreList() const;  // in hasChanged() format
+        QList<Ignore*> getIgnoreList() const; // in prefs format
+        void updateEnabledness();
+
+    private:
+        QStringList m_oldIgnoreList;
 };
 
 #endif // IGNORE_CONFIG_H

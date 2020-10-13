@@ -33,7 +33,7 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
     Q_SIGNALS:
         void modified();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void updatePreview(int id);
         void updateButtons();
         void installTheme();

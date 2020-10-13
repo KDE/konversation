@@ -32,7 +32,7 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
     Q_SIGNALS:
         void modified();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void highlightSelected(QTreeWidgetItem* item);
         void patternChanged(const QString& newPattern);
         void notifyModeChanged(bool);
@@ -44,11 +44,12 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void removeHighlight();
         void playSound();
 
-    protected:
+    private:
         QList<Highlight*> getHighlightList() const; // prefs format
         QStringList currentHighlightList() const;     // hasChanged() format
         void updateButtons();
 
+    private:
         bool newItemSelected;
         QStringList m_oldHighlightList;
 };

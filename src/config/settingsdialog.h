@@ -45,6 +45,7 @@ class KonviSettingsDialog : public ConfigDialog
         bool hasChanged() override;
         bool isDefault() override;
 
+    private:
         Warnings_Config* m_confWarningsWdg;
         Theme_Config* m_confThemeWdg;
         NicklistBehavior_Config* m_confNicklistBehaviorWdg;

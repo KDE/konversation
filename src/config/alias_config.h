@@ -28,19 +28,19 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
     Q_SIGNALS:
         void modified();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void entrySelected(QTreeWidgetItem* aliasEntry);
         void nameChanged(const QString& newName);
         void actionChanged(const QString& newAction);
         void addEntry();
         void removeEntry();
 
-    protected:
+    private:
         void setAliasListView(const QStringList& aliasList);
         QStringList currentAliasList() const;
 
+    private:
         bool m_newItemSelected;
-
         QStringList m_oldAliasList;
 };
 

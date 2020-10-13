@@ -29,7 +29,7 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
   Q_SIGNALS:
     void modified();
 
-  protected Q_SLOTS:
+  private Q_SLOTS:
     void entrySelected(QTreeWidgetItem* autoreplaceEntry);
     void directionChanged(int newDirection);
     void patternChanged(const QString& newPattern);
@@ -37,12 +37,12 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
     void addEntry();
     void removeEntry();
 
-  protected:
+  private:
     void setAutoreplaceListView(const QList<QStringList> &autoreplaceList);
     QList<QStringList> currentAutoreplaceList() const;
 
+  private:
     bool m_newItemSelected;
-
     QList<QStringList> m_oldAutoreplaceList;
 };
 

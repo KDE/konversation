@@ -36,9 +36,10 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
     void addEntry();
     void removeEntry();
 
-  protected:
+  private:
     void setButtonsListView(const QStringList &buttonList);
 
+  private:
     bool m_newItemSelected;
 
     QStringList m_oldButtonList;

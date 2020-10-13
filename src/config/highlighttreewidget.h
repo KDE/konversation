@@ -16,11 +16,11 @@ class HighlightTreeWidget : public QTreeWidget
     public:
         HighlightTreeWidget(QWidget *parent = nullptr);
 
-    protected:
-        void dropEvent(QDropEvent *event) override;
-
     Q_SIGNALS:
         void itemDropped();
+
+    protected:
+        void dropEvent(QDropEvent *event) override;
 };
 
 #endif // HIGHLIGHTTREEWIDGET_H

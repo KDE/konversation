@@ -31,7 +31,11 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
 
         bool hasChanged() override;  // implement the interface, will not be used here, though
 
-    protected Q_SLOTS:
+    protected:
+        void showEvent(QShowEvent* event) override;
+        void hideEvent(QHideEvent* event) override;
+
+    private Q_SLOTS:
         void slotOSDEnabledChanged(bool on);
         void slotCustomColorsChanged(bool on);
         void slotTextColorChanged(const QColor& color);
@@ -40,10 +44,6 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
         void slotDrawShadowChanged(bool on);
         void slotUpdateFont(const QFont& font);
         void slotPositionChanged();
-
-    protected:
-        void showEvent(QShowEvent* event) override;
-        void hideEvent(QHideEvent* event) override;
 
     private:
         OSDPreviewWidget* m_pOSDPreview;

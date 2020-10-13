@@ -63,19 +63,6 @@ class ConfigDialog : public KPageDialog
 {
     Q_OBJECT
 
-Q_SIGNALS:
-    /**
-     * A widget in the dialog was modified.
-     */
-    void widgetModified();
-
-    /**
-     * One or more of the settings have been permanently changed such as if
-     * the user clicked on the Apply or Ok button.
-     * @param dialogName the name of the dialog.
-     */
-    void settingsChanged(const QString &dialogName);
-
 public:
     /**
      * @param parent - The parent of this object.  Even though the class
@@ -181,6 +168,19 @@ public:
      * @return True if the dialog 'name' exists and was shown.
      */
     static bool showDialog(const QString &name);
+
+Q_SIGNALS:
+    /**
+     * A widget in the dialog was modified.
+     */
+    void widgetModified();
+
+    /**
+     * One or more of the settings have been permanently changed such as if
+     * the user clicked on the Apply or Ok button.
+     * @param dialogName the name of the dialog.
+     */
+    void settingsChanged(const QString &dialogName);
 
 protected Q_SLOTS:
     /**

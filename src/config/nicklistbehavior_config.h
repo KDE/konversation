@@ -26,14 +26,15 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
 
         bool hasChanged() override;
 
+    Q_SIGNALS:
+        void modified();
+
     private:
         void setNickList(const QString &sortingOrder);
         QString currentSortingOrder() const;
 
+    private:
         QString m_oldSortingOrder;
-
-    Q_SIGNALS:
-        void modified();
 };
 
 #endif

@@ -18,11 +18,11 @@ class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
         explicit Tabs_Config(QWidget *parent = nullptr, const char *name = nullptr);
         ~Tabs_Config();
 
-    protected Q_SLOTS:
-        void toggleCheckBoxes(int activated);
-
     protected:
         void showEvent(QShowEvent *event) override;
+
+    private Q_SLOTS:
+        void toggleCheckBoxes(int activated);
 };
 
 #endif

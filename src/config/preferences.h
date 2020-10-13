@@ -135,7 +135,7 @@ class Preferences : public PreferencesBase
         void notifyListStarted(int serverGroupId);
         void updateTrayIcon();
 
-    protected:
+    private:
         IdentityPtr mIdentity;
         Konversation::ServerGroupHash mServerGroupHash;
         QList<Ignore*> mIgnoreList;
