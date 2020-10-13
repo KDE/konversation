@@ -42,11 +42,11 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
 
     protected:
         void setAliasListView(const QStringList& aliasList);
+        QStringList currentAliasList() const;
 
         bool m_newItemSelected;
 
         QStringList m_oldAliasList;
-        QStringList currentAliasList();
 };
 
 #endif

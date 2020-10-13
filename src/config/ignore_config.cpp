@@ -76,7 +76,7 @@ void Ignore_Config::removeIgnore()
     emit modified();
 }
 
-QList<Ignore*> Ignore_Config::getIgnoreList()
+QList<Ignore*> Ignore_Config::getIgnoreList() const
 {
     QList<Ignore*> newList;
 
@@ -92,7 +92,7 @@ QList<Ignore*> Ignore_Config::getIgnoreList()
 }
 
 // returns the currently visible ignore list as QStringList to make comparing easy
-QStringList Ignore_Config::currentIgnoreList()
+QStringList Ignore_Config::currentIgnoreList() const
 {
     QStringList newList;
 

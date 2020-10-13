@@ -48,9 +48,10 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void addHighlight();
         void removeHighlight();
         void playSound();
-        QList<Highlight*> getHighlightList(); // prefs format
-        QStringList currentHighlightList();     // hasChanged() format
+
     protected:
+        QList<Highlight*> getHighlightList() const; // prefs format
+        QStringList currentHighlightList() const;     // hasChanged() format
         void updateButtons();
 
         bool newItemSelected;

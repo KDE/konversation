@@ -60,7 +60,7 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
   }
 }
 
-QString NicklistBehavior_Config::currentSortingOrder()
+QString NicklistBehavior_Config::currentSortingOrder() const
 {
   // get the uppermost entry of the sorting list
   QTreeWidgetItem* item=sortOrder->topLevelItem(0);

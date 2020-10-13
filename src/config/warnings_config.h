@@ -35,7 +35,7 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
         virtual void languageChange();
 
     protected:
-        QString currentWarningsChecked(); // for hasChanged()
+        QString currentWarningsChecked() const; // for hasChanged()
 
         QString m_oldWarningsChecked;     // for hasChanged()
 

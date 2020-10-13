@@ -83,7 +83,7 @@ void Alias_Config::setAliasListView(const QStringList& aliasList)
     m_oldAliasList=aliasList;
 }
 
-QStringList Alias_Config::currentAliasList()
+QStringList Alias_Config::currentAliasList() const
 {
     QStringList newList;
 

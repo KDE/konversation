@@ -241,7 +241,7 @@ void Warnings_Config::loadSettings()
 }
 
 // get a list of checked/unchecked items for hasChanged()
-QString Warnings_Config::currentWarningsChecked()
+QString Warnings_Config::currentWarningsChecked() const
 {
     // prepare list
     QString newList;

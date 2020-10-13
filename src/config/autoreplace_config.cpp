@@ -151,7 +151,7 @@ void Autoreplace_Config::restorePageToDefaults()
   setAutoreplaceListView(Preferences::defaultAutoreplaceList());
 }
 
-QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
+QList<QStringList> Autoreplace_Config::currentAutoreplaceList() const
 {
   // get first item of the autoreplace listview
   QTreeWidgetItem* item=patternListView->topLevelItem(0);

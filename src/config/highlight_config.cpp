@@ -250,7 +250,7 @@ void Highlight_Config::removeHighlight()
     updateButtons();
 }
 
-QList<Highlight*> Highlight_Config::getHighlightList()
+QList<Highlight*> Highlight_Config::getHighlightList() const
 {
     QList<Highlight*> newList;
 
@@ -265,7 +265,7 @@ QList<Highlight*> Highlight_Config::getHighlightList()
     return newList;
 }
 
-QStringList Highlight_Config::currentHighlightList()
+QStringList Highlight_Config::currentHighlightList() const
 {
     QStringList newList;
 

@@ -33,7 +33,7 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
 
     private:
         void setNickList(const QString &sortingOrder);
-        QString currentSortingOrder();
+        QString currentSortingOrder() const;
 
         QString m_oldSortingOrder;
 

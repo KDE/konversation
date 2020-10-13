@@ -44,11 +44,11 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
 
   protected:
     void setAutoreplaceListView(const QList<QStringList> &autoreplaceList);
+    QList<QStringList> currentAutoreplaceList() const;
 
     bool m_newItemSelected;
 
     QList<QStringList> m_oldAutoreplaceList;
-    QList<QStringList> currentAutoreplaceList();
 };
 
 #endif

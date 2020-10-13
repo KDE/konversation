@@ -34,8 +34,8 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
     private:
         QStringList m_oldIgnoreList;
 
-        QStringList currentIgnoreList();  // in hasChanged() format
-        QList<Ignore*> getIgnoreList(); // in prefs format
+        QStringList currentIgnoreList() const;  // in hasChanged() format
+        QList<Ignore*> getIgnoreList() const; // in prefs format
         void updateEnabledness();
 
     public Q_SLOTS:
