@@ -24,7 +24,6 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
     public:
         explicit Ignore_Config( QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {} );
         ~Ignore_Config();
-        QString flagNames;
 
         void restorePageToDefaults() override;
         void saveSettings() override;
