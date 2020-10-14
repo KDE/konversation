@@ -42,7 +42,7 @@ namespace Konversation
             quint32 getNumDevicesDiscovered() const {return routers.count();}
 
             /// Find a router using it's server name
-            UPnPRouter* findDevice(const QString & name) {return routers.find(name).value();}
+            UPnPRouter* findDevice(const QString & name) const {return routers.find(name).value();}
 
             /// Set verbose mode
             void setVerbose(bool v) {verbose = v;}
