@@ -90,6 +90,19 @@ class IRCView : public QTextBrowser
         void setStatusBarTempText(const QString&); //! these two look like mixins to me
         void clearStatusBarTempText();//! these two look like mixins to me
 
+    protected:
+        QMimeData* createMimeDataFromSelection() const override;
+        void dragEnterEvent(QDragEnterEvent* e) override;
+        void dragMoveEvent(QDragMoveEvent* e) override;
+        void dropEvent(QDropEvent* e) override;
+
+        void resizeEvent(QResizeEvent *event) override;
+        void mouseReleaseEvent(QMouseEvent* ev) override;
+        void mousePressEvent(QMouseEvent* ev) override;
+        void mouseMoveEvent(QMouseEvent* ev) override;
+        void keyPressEvent(QKeyEvent* ev) override;
+        void contextMenuEvent(QContextMenuEvent* ev) override;
+        void wheelEvent(QWheelEvent* ev) override;
 
     //// Marker lines
     public:
@@ -119,12 +132,6 @@ class IRCView : public QTextBrowser
         /// Remove all of the marker lines, and the remember line.
         /// Does not effect m_rememberLineDirtyBit.
         void clearLines();
-
-    protected:
-        QMimeData* createMimeDataFromSelection() const override;
-        void dragEnterEvent(QDragEnterEvent* e) override;
-        void dragMoveEvent(QDragMoveEvent* e) override;
-        void dropEvent(QDropEvent* e) override;
 
     private:
         /// The internal mechanics of inserting a line.
@@ -178,21 +185,18 @@ class IRCView : public QTextBrowser
 
         void appendQuery(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel = false);
         void appendQueryAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
-    protected:
-        //! FIXME why is this protected, and all alone down there?
-        void appendAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
 
-        /// Appends a new line without any scrollback or notification checks
-        void doRawAppend(const QString& newLine, bool rtl);
-
-    public Q_SLOTS:
         void appendChannelAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
 
         void appendServerMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
         void appendCommandMessage(const QString& command, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL=true, bool self=false);
         void appendBacklogMessage(const QString& firstColumn, const QString& message);
 
-    protected:
+    private:
+        void appendAction(const QString& nick, const QString& message, const QHash<QString, QString> &messageTags);
+
+        /// Appends a new line without any scrollback or notification checks
+        void doRawAppend(const QString& newLine, bool rtl);
         void doAppend(const QString& line, bool rtl, bool self=false);
 
     public Q_SLOTS:
@@ -207,18 +211,16 @@ class IRCView : public QTextBrowser
         void decreaseFontSize();
         void resetFontSize();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void highlightedSlot(const QString& link);
         void handleAnchorClicked(const QUrl& url);
 
-    protected:
+    private:
         void openLink(const QUrl &url);
 
         QString filter(const QString& line, const QString& defaultColor, const QString& who=QString(), bool doHighlight=true, bool parseURL=true, bool self=false, QChar::Direction* direction = nullptr);
 
         void replaceDecoration(QString& line, char decoration, char replacement);
-
-    private:
 
         /// Returns a string where all irc-richtext chars are replaced with proper
         /// html tags and all urls are parsed if parseURL is true
@@ -274,15 +276,6 @@ class IRCView : public QTextBrowser
         /// if the values are valid
         inline QString getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
 
-    protected:
-        void resizeEvent(QResizeEvent *event) override;
-        void mouseReleaseEvent(QMouseEvent* ev) override;
-        void mousePressEvent(QMouseEvent* ev) override;
-        void mouseMoveEvent(QMouseEvent* ev) override;
-        void keyPressEvent(QKeyEvent* ev) override;
-        void contextMenuEvent(QContextMenuEvent* ev) override;
-        void wheelEvent(QWheelEvent* ev) override;
-
         QChar::Direction basicDirection(const QString &string);
 
         /// Returns true if the timestamp string is RTL, otherwise false
@@ -299,6 +292,7 @@ class IRCView : public QTextBrowser
         QString createNickLine(const QString& nick, const QString& defaultColor,
             bool encapsulateNick = true, bool privMsg = false);
 
+    private:
         //// Search
         QTextDocument::FindFlags m_searchFlags;
         bool m_forward;

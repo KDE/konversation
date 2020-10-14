@@ -27,12 +27,12 @@ namespace Konversation
             void setFont(const QFont &font);
             uint chr() const;
 
-        protected Q_SLOTS:
-            void charSelected();
-            void slotAccepted();
-
         Q_SIGNALS:
             void insertChar(uint);
+
+        private Q_SLOTS:
+            void charSelected();
+            void slotAccepted();
 
         private:
             KCharSelect* m_charTable;

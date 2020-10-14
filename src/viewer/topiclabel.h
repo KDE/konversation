@@ -41,9 +41,6 @@ namespace Konversation
             void clearStatusBarTempText();
 
         protected:
-            void updateSqueezedText();
-            QString rPixelSqueeze(const QString& text, int maxPixels) const;
-            int textWidth(const QString& text) const;
             void leaveEvent (QEvent*) override;
             void contextMenuEvent(QContextMenuEvent* ev) override;
             void resizeEvent(QResizeEvent*) override;
@@ -51,14 +48,19 @@ namespace Konversation
             void mousePressEvent(QMouseEvent* ev) override;
             void mouseMoveEvent(QMouseEvent* ev) override;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void highlightedSlot(const QString&);
 
         private:
+            QString rPixelSqueeze(const QString& text, int maxPixels) const;
+            int textWidth(const QString& text) const;
+
+            void updateSqueezedText();
             void resetLinkHighlightState();
 
             inline QString tagUrls(const QString& text, const QString& sender);
 
+        private:
             Server* m_server;
             QString m_channelName;
 

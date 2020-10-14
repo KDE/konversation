@@ -32,13 +32,13 @@ namespace ShadowEngine
 
 OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const QString &name)
     : QWidget( parent )
-    , m_appName( appName )
     , m_duration( 5000 )
-    , m_timer( new QTimer( this ) )
-    , m_timerMin( new QTimer( this ) )
     , m_alignment( Middle )
     , m_screen( 0 )
     , m_y( MARGIN )
+    , m_appName( appName )
+    , m_timer( new QTimer( this ) )
+    , m_timerMin( new QTimer( this ) )
     , m_drawShadow( true )
 {
     Qt::WindowFlags flags;

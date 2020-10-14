@@ -33,14 +33,15 @@ class EditNotifyDialog : public QDialog
         Q_SIGNALS:
         void notifyChanged(int serverGroupId,
             const QString& nickname);
-    protected Q_SLOTS:
-        void slotOk();
 
-    protected:
-        KComboBox* m_networkNameCombo;
-        KLineEdit* m_nicknameInput;
+    private Q_SLOTS:
+        void slotOk();
 
     private:
         void delayedDestruct();
+
+    private:
+        KComboBox* m_networkNameCombo;
+        KLineEdit* m_nicknameInput;
 };
 #endif

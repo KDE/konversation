@@ -25,7 +25,8 @@ class IgnoreListViewItem : public QTreeWidgetItem
         int getFlags() const { return m_flags; };
 
         void setFlags(int flags);
-    protected:
+
+    private:
         int m_flags;
 };
 

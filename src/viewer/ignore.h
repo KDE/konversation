@@ -34,7 +34,7 @@ class Ignore
         QString getName() const;
         int getFlags() const;
 
-    protected:
+    private:
         QString name;
         int flags;
 };

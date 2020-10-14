@@ -51,18 +51,8 @@ class IRCInput : public KTextEdit
         virtual void setOverwriteMode(bool) { }
         virtual void updateAppearance();
 
-    protected Q_SLOTS:
-        void getHistory(bool up);
-        void insertCompletion(const QString& nick);
-        void disableSpellChecking();
-        void setSpellChecking(bool set);
-
-        void maybeResize();
-
     protected:
         bool eventFilter(QObject *object,QEvent *event) override;
-        void addHistory(const QString& text);
-        bool checkPaste(QString& text);
 
         void insertFromMimeData(const QMimeData *source) override;
         void keyPressEvent(QKeyEvent* e) override;
@@ -71,6 +61,19 @@ class IRCInput : public KTextEdit
         void hideEvent(QHideEvent* e) override;
         void resizeEvent(QResizeEvent* e) override;
 
+    private:
+        void addHistory(const QString& text);
+        bool checkPaste(QString& text);
+
+    private Q_SLOTS:
+        void getHistory(bool up);
+        void insertCompletion(const QString& nick);
+        void disableSpellChecking();
+        void setSpellChecking(bool set);
+
+        void maybeResize();
+
+    private:
         QStringList historyList;
         int lineNum;
         int oldPos;

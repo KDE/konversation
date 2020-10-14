@@ -35,6 +35,12 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         bool eventFilter(QObject* object, QEvent* e) override;
 
+    Q_SIGNALS:
+        void signalSearchChanged(const QString& pattern);
+        void signalSearchNext();
+        void signalSearchPrevious();
+        void hidden();
+
     protected:
         void showEvent(QShowEvent* e) override;
         void hideEvent(QHideEvent* e) override;
@@ -47,12 +53,6 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
         void toggleMatchCase(bool value);
         void toggleWholeWords(bool value);
-
-    Q_SIGNALS:
-        void signalSearchChanged(const QString& pattern);
-        void signalSearchNext();
-        void signalSearchPrevious();
-        void hidden();
 
     private:
         bool focusedChild() const;

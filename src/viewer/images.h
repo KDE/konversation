@@ -56,9 +56,10 @@ class Images : public QObject
         int getNickIconSize() const;
         void initializeNickIcons();
 
-    protected:
+    private:
         void initializeLeds();
 
+    private:
         QIcon m_serverLedOn;
         QIcon m_serverLedOff;
         QIcon m_systemLedOn;

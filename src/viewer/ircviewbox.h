@@ -23,18 +23,16 @@ class IRCViewBox : public QWidget
 
         IRCView*   ircView() const;
 
-    public Q_SLOTS:
-
+    private Q_SLOTS:
         void slotSearch();
         void slotSearchNext();
         void slotSearchPrevious();
         void slotSearchChanged(const QString& pattern);
 
-    protected:
+    private:
         void searchNext(bool reversed = false);
 
     private:
-
         IRCView*   m_ircView;
         SearchBar* m_searchBar;
         bool       m_matchedOnce;

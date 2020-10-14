@@ -44,7 +44,7 @@ class HighlightViewItem : public QTreeWidgetItem
         void setNotify(bool doNotify);
         bool getNotify() const;
 
-    protected:
+    private:
         int m_itemID;
 
         QString m_pattern;

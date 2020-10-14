@@ -53,24 +53,26 @@ class StatusPanel : public ChatWindow
         void updateName();
 
     protected Q_SLOTS:
-        void sendFileMenu();
-        void statusTextEntered();
         void sendText(const QString& line) override;
-        // connected to IRCInput::textPasted() - used for large/multiline pastes
-        void textPasted(const QString& text);
-        void changeNickname(const QString& newNickname);
-        void nicknameComboboxChanged();
         //Used to disable functions when not connected
         void serverOnline(bool online) override;
 
     protected:
         /** Called from ChatWindow adjustFocus */
         void childAdjustFocus() override;
+        void showEvent(QShowEvent* event) override;
 
+    private Q_SLOTS:
+        void sendFileMenu();
+        void statusTextEntered();
+        // connected to IRCInput::textPasted() - used for large/multiline pastes
+        void textPasted(const QString& text);
+        void changeNickname(const QString& newNickname);
+        void nicknameComboboxChanged();
+
+    private:
         bool awayChanged;
         bool awayState;
-
-        void showEvent(QShowEvent* event) override;
 
         KComboBox* nicknameCombobox;
         AwayLabel* awayLabel;

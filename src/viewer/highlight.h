@@ -46,7 +46,7 @@ class Highlight
         void setNotify(bool notify);
         bool getNotify() const;
 
-    protected:
+    private:
         static unsigned int s_id;
 
         int m_itemID;

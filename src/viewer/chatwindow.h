@@ -196,6 +196,7 @@ class ChatWindow : public QWidget
         int spacing();
         int margin();
 
+    protected:
         bool firstLog;
         QString name;
         QString logName;

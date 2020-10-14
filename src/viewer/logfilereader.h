@@ -32,8 +32,11 @@ class LogfileReader : public ChatWindow
 
         bool eventFilter(QObject* watched, QEvent* e) override;
 
+    protected:
+        /** Called from ChatWindow adjustFocus */
+        void childAdjustFocus() override;
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void updateView();
         void storeBufferSize(int kb);
         void clearLog();
@@ -41,14 +44,11 @@ class LogfileReader : public ChatWindow
         void closeLog();
         void copyResult(KJob* job);
 
-
-    protected:
+    private:
         int margin();
         int spacing();
 
-        /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() override;
-
+    private:
         KToolBar* toolBar;
         QSpinBox* sizeSpin;
         QString fileName;

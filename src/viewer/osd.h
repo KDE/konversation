@@ -58,35 +58,38 @@ class OSDWidget : public QWidget
         void setText( const QString &text ) { m_currentText = text; }
         void setTranslucent( bool enabled ) { setWindowOpacity( enabled ? OSD_WINDOW_OPACITY : 1.0 ); }
 
-    protected Q_SLOTS:
-        void minReached();
-
     protected:
-
-        /** determine new size and position */
-        QRect determineMetrics( const int M );
-
         // Reimplemented from QWidget
         void paintEvent( QPaintEvent* ) override;
         void mousePressEvent( QMouseEvent* ) override;
         void resizeEvent( QResizeEvent *e ) override;
         bool event( QEvent* ) override;
 
+    private Q_SLOTS:
+        void minReached();
+
+    private:
+        /** determine new size and position */
+        QRect determineMetrics( const int M );
+
+    protected: // accessed by OSDPreviewWidget
         /** distance from screen edge */
         static const int MARGIN = 15;
 
-        QString     m_appName;
-        int         m_m;
-        QSize       m_size;
         int         m_duration;
-        QTimer      *m_timer;
-        QTimer      *m_timerMin;
-        QStringList textBuffer;
         Alignment   m_alignment;
         int         m_screen;
         int         m_y;
-        bool        m_drawShadow;
         QString     m_currentText;
+
+    private:
+        QString     m_appName;
+        int         m_m;
+        QSize       m_size;
+        QTimer      *m_timer;
+        QTimer      *m_timerMin;
+        QStringList textBuffer;
+        bool        m_drawShadow;
 };
 
 

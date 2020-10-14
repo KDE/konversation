@@ -24,10 +24,10 @@ class QuickButton : public QPushButton
         void clicked(int);
         void clicked(const QString &definition);
 
-    public Q_SLOTS:
+    private Q_SLOTS:
         void wasClicked();
 
-    protected:
+    private:
         QString definition;
 };
 #endif

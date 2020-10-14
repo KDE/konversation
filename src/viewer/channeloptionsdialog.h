@@ -54,21 +54,21 @@ namespace Konversation
 
             void changeOptions();
 
-        protected Q_SLOTS:
+        protected:
+            void showEvent(QShowEvent* event) override;
+            void hideEvent(QHideEvent* event) override;
+
+        private Q_SLOTS:
             void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited(bool edited);
 
             void startHistorySearchTimer(const QString &filter);
             void updateHistoryFilter();
 
-        protected:
-            void showEvent(QShowEvent* event) override;
-            void hideEvent(QHideEvent* event) override;
-
+        private:
             bool m_editingTopic;
             bool m_isAnyTypeOfOp;
 
-        private:
             Ui::ChannelOptionsUI m_ui;
             Channel *m_channel;
 
@@ -83,7 +83,7 @@ namespace Konversation
 
             bool operator<(const QTreeWidgetItem &item) const override;
 
-        protected:
+        private:
             QDateTime m_timestamp;
     };
 }

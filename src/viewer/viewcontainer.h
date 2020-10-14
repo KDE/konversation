@@ -267,6 +267,8 @@ class ViewContainer : public QAbstractItemModel
         void setFrontServer(Server *);
 
         void initializeSplitterSizes();
+
+    private:
         bool m_saveSplitterSizesLock;
 
         MainWindow* m_window;

@@ -74,52 +74,33 @@ class IrcContextMenus : public QObject
             const QString& author);
 
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void processWebShortcutAction();
         void configureWebShortcuts();
         void updateQuickButtonMenu();
 
 
-    protected:
+    private:
         explicit IrcContextMenus();
         friend class IrcContextMenusPrivate;
 
         void setupQuickButtonMenu();
-        QMenu* m_quickButtonMenu;
         bool shouldShowQuickButtonMenu();
         static void processQuickButtonAction(QAction* action, Server* server, const QString& context,
             const QStringList &nicks = QStringList());
 
         void setupTextMenu();
-        QMenu* m_textMenu;
-        QAction* m_textCopyAction;
-        QAction* m_textActionsSeparator;
-        QList<QAction*> m_linkActions;
         void updateWebShortcutsMenu(const QString& selectedText);
-        QMenu* m_webShortcutsMenu;
 
         void setupChannelMenu();
-        QMenu* m_channelMenu;
 
         void setupNickMenu();
-        QMenu* m_nickMenu;
         void createSharedBasicNickActions();
-        QList<QAction*> m_sharedBasicNickActions;
-        QMenu* m_modesMenu;
-        QMenu* m_kickBanMenu;
         void createSharedNickSettingsActions();
         static void updateSharedNickSettingsActions(Server* server, const QStringList& nicks);
-        QList<QAction*> m_sharedNickSettingsActions;
-        QAction* m_ignoreAction;
-        QAction* m_unignoreAction;
-        QAction* m_addNotifyAction;
-        QAction* m_removeNotifyAction;
         void createSharedDccActions();
-        QList<QAction*> m_sharedDccActions;
 
         void setupTopicHistoryMenu();
-        QMenu* m_topicHistoryMenu;
-        QAction* m_queryTopicAuthorAction;
 
         inline QAction* createAction(ActionId id, const QString& text);
         inline QAction* createAction(ActionId id, const QIcon& icon);
@@ -134,6 +115,27 @@ class IrcContextMenus : public QObject
             const QString& destination = QString());
         static inline void commandToServer(Server* server, const QString& command,
             const QStringList& arguments, const QString& destination = QString());
+
+    private:
+        QMenu* m_quickButtonMenu;
+        QMenu* m_textMenu;
+        QAction* m_textCopyAction;
+        QAction* m_textActionsSeparator;
+        QList<QAction*> m_linkActions;
+        QMenu* m_webShortcutsMenu;
+        QMenu* m_channelMenu;
+        QMenu* m_nickMenu;
+        QList<QAction*> m_sharedBasicNickActions;
+        QMenu* m_modesMenu;
+        QMenu* m_kickBanMenu;
+        QList<QAction*> m_sharedNickSettingsActions;
+        QAction* m_ignoreAction;
+        QAction* m_unignoreAction;
+        QAction* m_addNotifyAction;
+        QAction* m_removeNotifyAction;
+        QList<QAction*> m_sharedDccActions;
+        QMenu* m_topicHistoryMenu;
+        QAction* m_queryTopicAuthorAction;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(IrcContextMenus::MenuOptions)

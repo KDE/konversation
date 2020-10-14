@@ -53,6 +53,7 @@ class TopicEdit : public KTextEdit
         void hideWarning();
         void updateWarningGeometry();
 
+    private:
         int m_maximumLength;
         int m_maxCursorPos;
 

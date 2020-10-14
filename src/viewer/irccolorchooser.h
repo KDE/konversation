@@ -20,17 +20,17 @@ class KComboBox;
 class IRCColorChooser : public QDialog
 {
     Q_OBJECT
-        public:
+    public:
         explicit IRCColorChooser(QWidget* parent);
         QString color() const;
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void updatePreview();
 
-    protected:
+    private:
         void initColors(KComboBox* combo);
 
-    protected:
+    private:
         Ui::IRCColorChooserUI m_ui;
 };
 #endif

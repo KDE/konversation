@@ -23,7 +23,7 @@ class AwayLabel : public QLabel
         void awayMessageChanged(const QString&);
         void unaway();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void changeAwayMessage();
 };
 
