@@ -86,31 +86,6 @@ namespace Konversation
         {
             Q_OBJECT
 
-        private:
-            struct Forwarding
-            {
-                quint16 port;
-                QHostAddress host;
-                QAbstractSocket::SocketType proto;
-            };
-
-            QString server;
-            QUrl location;
-            QString uuid;
-            UPnPDeviceDescription desc;
-
-            UPnPService service;
-            QList<Forwarding*> forwards;
-
-            QHash<KJob*, UPnPService> pending_services;
-            QHash<KJob*, Forwarding*> pending_forwards;
-            QHash<KJob*, Forwarding*> pending_unforwards;
-
-            QHash<KJob*, QByteArray>  soap_data_in;
-            QHash<KJob*, QByteArray>  soap_data_out;
-
-            QString error;
-
         public:
             /**
             * Construct a router.
@@ -166,13 +141,6 @@ namespace Konversation
             /// Get the current error (null string if there is none)
             QString getError() const {return error;}
 
-        private Q_SLOTS:
-            void onRequestFinished(KJob *reply);
-            void downloadFinished(KJob* j);
-
-            void sendSoapData(KIO::Job *job, QByteArray &data);
-            void recvSoapData(KIO::Job *job, const QByteArray &data);
-
         Q_SIGNALS:
             /**
             * Signal which indicates that the XML was downloaded successfully or not.
@@ -184,10 +152,41 @@ namespace Konversation
             void forwardComplete(bool error, quint16 port);
             void unforwardComplete(bool error, quint16 port);
 
-        private:
+        private Q_SLOTS:
+            void onRequestFinished(KJob *reply);
+            void downloadFinished(KJob* j);
 
+            void sendSoapData(KIO::Job *job, QByteArray &data);
+            void recvSoapData(KIO::Job *job, const QByteArray &data);
+
+        private:
             KJob *sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
             KJob *getStatusInfo(const UPnPService &s);
+
+        private:
+            struct Forwarding
+            {
+                quint16 port;
+                QHostAddress host;
+                QAbstractSocket::SocketType proto;
+            };
+
+            QString server;
+            QUrl location;
+            QString uuid;
+            UPnPDeviceDescription desc;
+
+            UPnPService service;
+            QList<Forwarding*> forwards;
+
+            QHash<KJob*, UPnPService> pending_services;
+            QHash<KJob*, Forwarding*> pending_forwards;
+            QHash<KJob*, Forwarding*> pending_unforwards;
+
+            QHash<KJob*, QByteArray>  soap_data_in;
+            QHash<KJob*, QByteArray>  soap_data_out;
+
+            QString error;
         };
     }
 }

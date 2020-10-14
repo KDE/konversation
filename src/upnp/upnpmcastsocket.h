@@ -49,10 +49,8 @@ namespace Konversation
             */
             void discover();
 
-        private Q_SLOTS:
-            void onReadyRead();
-            void onError(QAbstractSocket::SocketError err);
-            void onXmlFileDownloaded(UPnPRouter* r,bool success);
+        public:
+            UPnPRouter* parseResponse(const QByteArray & arr);
 
         Q_SIGNALS:
             /**
@@ -61,8 +59,10 @@ namespace Konversation
             */
             void discovered(Konversation::UPnP::UPnPRouter* router);
 
-        public:
-            UPnPRouter* parseResponse(const QByteArray & arr);
+        private Q_SLOTS:
+            void onReadyRead();
+            void onError(QAbstractSocket::SocketError err);
+            void onXmlFileDownloaded(UPnPRouter* r,bool success);
 
         private:
             void joinUPnPMCastGroup();
