@@ -75,10 +75,10 @@ class NickListView : public QTreeWidget
         void dragEnterEvent(QDragEnterEvent *event) override;
         void dragMoveEvent(QDragMoveEvent *event) override;
 
+    private:
         Channel *m_channel;
         QTimer *m_resortTimer;
 
-    private:
         static int s_minimumRowHeight;
         static void updateMinimumRowHeight();
 };

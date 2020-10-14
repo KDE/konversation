@@ -51,7 +51,7 @@ class NicksOnlineItem : public QTreeWidgetItem
         /// Returns true if the nick is currently offline.
         bool isOffline () const { return data(0, Qt::UserRole).toBool(); }
 
-    protected:
+    private:
         int m_type;
         int m_connectionId;
 };

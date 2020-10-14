@@ -21,10 +21,8 @@ class OutputFilterResolveJob : public QObject
         explicit OutputFilterResolveJob(const Konversation::OutputFilterInput& input);
         ~OutputFilterResolveJob() override;
 
-
     private Q_SLOTS:
         void resolved(const QHostInfo &hostInfo);
-
 
     private:
         QString m_target;

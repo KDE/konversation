@@ -92,10 +92,6 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         bool isInsertSupported() const override { return true; }
         QString getTextInLine() const override { return m_filterLine->text(); }
 
-    Q_SIGNALS:
-        void refreshChannelList();
-        void joinChannel(const QString& channelName);
-
     public Q_SLOTS:
         void refreshList();
         void addToChannelList(const QString& channel,int users,const QString& topic);
@@ -105,7 +101,19 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void appendInputText(const QString&, bool fromCursor) override;
         void setFilter(const QString& filter);
 
+    Q_SIGNALS:
+        void refreshChannelList();
+        void joinChannel(const QString& channelName);
+
     protected Q_SLOTS:
+        //Used to disable functions when not connected
+        void serverOnline(bool online) override;
+
+    protected:
+        /** Called from ChatWindow adjustFocus */
+        void childAdjustFocus()override {}
+
+    private Q_SLOTS:
         void saveList();
 
         void filterChanged();
@@ -118,16 +126,11 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void joinChannelClicked();
         void contextMenu(const QPoint& pos);
         void openURL();
-        //Used to disable functions when not connected
-        void serverOnline(bool online) override;
 
-    protected:
-
-        /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus()override {}
-
+    private:
         void countUsers(const QModelIndex& index, int pos);
 
+    private:
         int m_numChannels;
         int m_numUsers;
         int m_visibleChannels;

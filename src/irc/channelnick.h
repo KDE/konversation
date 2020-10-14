@@ -58,7 +58,10 @@ class ChannelNick : public QSharedData
         void setChanged(bool changed) { m_isChanged = changed; }
         bool isChanged () const { return m_isChanged; }
 
-    protected:
+    Q_SIGNALS:
+        void channelNickChanged();
+
+    private:
         void markAsChanged();
 
     private:
@@ -73,9 +76,6 @@ class ChannelNick : public QSharedData
         QString m_channel;
 
         bool m_isChanged;
-
-    Q_SIGNALS:
-        void channelNickChanged();
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a QExplicitlySharedDataPointer,

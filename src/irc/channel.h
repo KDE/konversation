@@ -80,6 +80,7 @@ class Channel : public ChatWindow
         #ifdef HAVE_QCA2
         Konversation::Cipher* getCipher() const;
         #endif
+
 //General administrative stuff
     public:
         void setName(const QString& newName) override;
@@ -102,7 +103,7 @@ class Channel : public ChatWindow
 
         bool log() const override;
 
-    protected:
+    private:
         // use with caution! does not check for duplicates
         void fastAddNickname(ChannelNickPtr channelnick, Nick *nick = nullptr);
         void setActive(bool active);
@@ -116,13 +117,14 @@ class Channel : public ChatWindow
         void rejoin();
 
     protected Q_SLOTS:
+        void serverOnline(bool online) override;
+
+    private Q_SLOTS:
         void autoUserhost();
         void autoWho();
         void updateAutoWho();
         void fadeActivity();
-        void serverOnline(bool online) override;
         void delayedSortNickList();
-
 
 //Nicklist
     public:
@@ -147,12 +149,13 @@ class Channel : public ChatWindow
 
         void resizeNicknameListViewColumns();
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void purgeNicks();
         void processQueuedNicks(bool flush = false);
 
         void updateNickInfos();
         void updateChannelNicks(const QString& channel);
+
 //Topic
     public:
         QString getTopic() const;
@@ -240,7 +243,12 @@ class Channel : public ChatWindow
 
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 
-    protected Q_SLOTS:
+    protected:
+        void showEvent(QShowEvent* event) override;
+        /// Called from ChatWindow adjustFocus
+        void childAdjustFocus() override;
+
+    private Q_SLOTS:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
         void endCompleteNick();
         void quickButtonClicked(const QString& definition);
@@ -265,12 +273,11 @@ class Channel : public ChatWindow
         void sortNickList(bool delayed=false);
 
         void nicknameListViewTextChanged(int textChangedFlags);
-    protected:
-        void showEvent(QShowEvent* event) override;
-        void syncSplitters();
-        /// Called from ChatWindow adjustFocus
-        void childAdjustFocus() override;
 
+    private:
+        void syncSplitters();
+
+    private:
         // to take care of redraw problem if hidden
         bool quickButtonsChanged;
         bool quickButtonsState;

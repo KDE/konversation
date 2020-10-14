@@ -54,7 +54,7 @@ namespace Konversation
             void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings connectionSettings);
             void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             virtual void slotOk();
             void slotAdd();
             void slotEdit();
@@ -70,15 +70,15 @@ namespace Konversation
 
             void setShowAtStartup(bool show);
 
-        protected:
+        private:
             QTreeWidgetItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
-            int m_lastSortColumn;
-            Qt::SortOrder m_lastSortOrder;
+            int selectedChildrenCount(QTreeWidgetItem* item);
 
         private:
-            int selectedChildrenCount(QTreeWidgetItem* item);
+            int m_lastSortColumn;
+            Qt::SortOrder m_lastSortOrder;
 
             bool m_selectedItem;
             int m_selectedServerGroupId;

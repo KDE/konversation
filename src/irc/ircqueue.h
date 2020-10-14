@@ -111,13 +111,14 @@ public Q_SLOTS:
     void sendNow(); ///< dumps a line to the socket
     void serverOnline(bool on); ///< server tells us that the socket is ready
 
-protected:
+private:
     QString pop(); ///< pops front, sets statistics
     void adjustTimer(); ///< sets the next timer interval
     bool doSend(); ///< pops front and tells the server to send it. returns true if we sent something
-    EmptyingRate& m_rate;
 
 private:
+    EmptyingRate& m_rate;
+
     QList<IRCMessage> m_pending;
     QTimer *m_timer;
     bool m_blocked;

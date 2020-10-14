@@ -53,6 +53,12 @@ class ServerISON : public QObject
         void slotChannelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
 
     private:
+        /**
+         * Rebuilds list of nicks to watch whenever a preferences change occurs (whenever m_ISONLIst_invalid is true).
+         */
+        void recalculateAddressees();
+
+    private:
         /// A pointer to the server we are a member of.
         Server* m_server;
         /// List from above merged with Watch List from preferences.
@@ -63,10 +69,5 @@ class ServerISON : public QObject
         QStringList m_ISONList;
         /// If this is true, then we need to call recalculateAddressee before returning m_ISONList
         bool m_ISONList_invalid;
-        /**
-         * Rebuilds list of nicks to watch whenever a preferences change occurs (whenever m_ISONLIst_invalid is true).
-         */
-        void recalculateAddressees();
-
 };
 #endif

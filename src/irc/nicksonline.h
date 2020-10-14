@@ -50,6 +50,13 @@ class NicksOnline : public ChatWindow
 
         bool canBeFrontView() const override { return true; }
 
+    public Q_SLOTS:
+        /**
+         * Refresh the nicklistview for a single server.
+         * @param server            The server to be refreshed.
+         */
+        void updateServerOnlineList(Server* server);
+
     Q_SIGNALS:
         /**
          * Emitted whenever user double-clicks a nick in the Watched Nicks tab.
@@ -58,15 +65,13 @@ class NicksOnline : public ChatWindow
 
         void showView(ChatWindow* view);
 
-    public Q_SLOTS:
+    protected:
+        /** Called from ChatWindow adjustFocus */
+        void childAdjustFocus() override;
+        //! Reimplemented for dynamic tooltips
+        bool eventFilter(QObject*obj, QEvent *ev) override;
 
-        /**
-         * Refresh the nicklistview for a single server.
-         * @param server            The server to be refreshed.
-         */
-        void updateServerOnlineList(Server* server);
-
-    protected Q_SLOTS:
+    private Q_SLOTS:
         /**
          * When a user double-clicks a nickname in the nicklistview, let server know so that
          * it can perform the user's chosen default action for that.
@@ -97,11 +102,6 @@ class NicksOnline : public ChatWindow
          */
         void slotAddNickname(int serverGroupId, const QString& nickname);
 
-    protected:
-        /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() override;
-    //! Reimplemented for dynamic tooltips
-    bool eventFilter(QObject*obj, QEvent *ev) override;
     private:
         /**
         * Returns the named child of parent item in a NicksOnlineItem
@@ -201,6 +201,7 @@ class NicksOnline : public ChatWindow
          */
         void updateNotifyList();
 
+    private:
         // The main display of networks, nicks, and channels.
         QTreeWidget* m_nickListView;
         // Context menu when right-clicking a nick.
@@ -217,7 +218,6 @@ class NicksOnline : public ChatWindow
         /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
            lack information.*/
         bool m_whoisRequested;
-
 
     QAction* m_addNickname;
     QAction* m_removeNickname;

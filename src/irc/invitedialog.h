@@ -54,14 +54,14 @@ class InviteDialog : public QDialog, protected Ui::InviteDialog
 
         static bool shouldBeShown(QDialogButtonBox::StandardButton& buttonCode);
 
-    protected Q_SLOTS:
+    Q_SIGNALS:
+        void joinChannelsRequested(const QString& channels);
+
+    private Q_SLOTS:
         void slotOk();
 
     private:
         InviteChannelListModel* m_channelModel;
-
-    Q_SIGNALS:
-        void joinChannelsRequested(const QString& channels);
 };
 
 #endif //KONVERSATION_INVITEDIALOG_H

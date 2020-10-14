@@ -18,6 +18,12 @@ class Channel;
 class Nick : public QTreeWidgetItem
 {
     public:
+        enum Columns {
+            NicknameColumn = 0,
+            HostmaskColumn = 1
+        };
+
+    public:
         Nick(NickListView *listView, Channel* channel,
             const ChannelNickPtr& channelnick);
         ~Nick() override;
@@ -30,22 +36,16 @@ class Nick : public QTreeWidgetItem
         void refresh();
         void repositionMe();
 
-    protected:
+    private:
         QString calculateLabel1() const;
         QString calculateLabel2() const;
 
         int getSortingValue() const;
 
-    protected:
+    private:
         ChannelNickPtr m_channelnickptr;
         Channel* m_channel;
 
         int m_flags;
-
-    public:
-        enum Columns {
-            NicknameColumn = 0,
-            HostmaskColumn = 1
-        };
 };
 #endif

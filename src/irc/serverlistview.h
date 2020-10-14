@@ -23,17 +23,18 @@ class ServerListView : public QTreeWidget
         explicit ServerListView(QWidget *parent);
         ~ServerListView() override;
 
-    private:
-        bool badDropSelection();
     Q_SIGNALS:
         void moved();
         void aboutToMove();
-        
-    protected:        
+
+    protected:
         void dragMoveEvent(QDragMoveEvent *e) override;
         void dragLeaveEvent(QDragLeaveEvent *) override;
         void dragEnterEvent(QDragEnterEvent *) override;
         void dropEvent(QDropEvent *event) override;
+
+    private:
+        bool badDropSelection();
 };
 
 #endif

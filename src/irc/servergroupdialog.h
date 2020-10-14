@@ -40,7 +40,7 @@ namespace Konversation
         public Q_SLOTS:
             void accept() override;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void addServer();
             void editServer();
             void editServer(const ServerSettings &server);
@@ -85,7 +85,7 @@ namespace Konversation
             void setServerSettings(const ServerSettings& server);
             ServerSettings serverSettings() const;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
 
@@ -105,7 +105,7 @@ namespace Konversation
             void setChannelSettings(const ChannelSettings& channel);
             ChannelSettings channelSettings() const;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
 

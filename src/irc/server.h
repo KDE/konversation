@@ -560,7 +560,7 @@ class Server : public QObject
         void capDenied(const QString& name);
         void sendAuthenticate(const QString& message);
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
         void preShellCommandError(QProcess::ProcessError eror);
@@ -627,15 +627,11 @@ class Server : public QObject
 
         void requestOpenChannelListPanel(const QString& filter);
 
-    private Q_SLOTS:
         /** Called in the server constructor if the preferences are set to run a command on a new server instance.
          *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
         void doPreShellCommand();
 
-    protected:
-        // constants
-        static const int BUFFER_LEN=513;
-
+    private:
         /// Initialize the timers
         void initTimers();
 
@@ -716,6 +712,42 @@ class Server : public QObject
         QStringList getAutoJoinCommands() const { return m_autoJoinCommands; }
         void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
 
+        void rebuildTargetPrefixMatcher();          ///< updates the regexp when prefixes change
+
+        void updateConnectionState(Konversation::ConnectionState state);
+        bool isSocketConnected() const;
+
+        void purgeData();
+
+        /// Recovers the filename from the dccArguments list from pos 0 to size-offset-1
+        /// joining with a space and cleans the filename using cleanDccFileName.
+        /// The filename only needs to be recovered if it contains a space, in case
+        /// it does not, the cleaned string at pos 0 is returned.
+        /// "offset" states how many fixed arguments the dcc command has, where the
+        /// filename is variable. For example "filename ip port filesize", offset is 3.
+        inline QString recoverDccFileName(const QStringList& dccArguments, int offset) const;
+
+        /// Cleans the filename from extra '"'. We just remove '"' if it is the first
+        /// and last char, if the filename really contains a '"' it comes as two chars,
+        /// escaped "\"", and is not affected.
+        /// Some clients return the filename with multiple '"' around the filename
+        /// but all we want is the plain filename.
+        inline QString cleanDccFileName(const QString& filename) const;
+
+        /// Checks if the port is in a valid range
+        inline quint16 stringToPort(const QString &port, bool *ok = nullptr);
+
+        /// Creates a list of known users and returns the one chosen by the user
+        inline QString recipientNick() const;
+
+        void collectStats(int bytes, int encodedBytes);
+
+        void initCapablityNames();
+
+    private:
+        // constants
+        static const int BUFFER_LEN=513;
+
         unsigned int m_completeQueryPosition;
         QList<int> m_nickIndices;
         QStringList m_referenceNicklist;
@@ -726,7 +758,6 @@ class Server : public QObject
         QString m_serverNickPrefixModes;            ///< if supplied: mode flags related to nickname prefixes
 
         QRegularExpression m_targetMatcher;         ///< a character set composed of m_serverNickPrefixes and m_channelPrefixes
-        void rebuildTargetPrefixMatcher();          ///< updates the regexp when prefixes change
 
         QString m_banAddressListModes;              // "TYPE A" modes from RPL_ISUPPORT CHANMODES=A,B,C,D
 
@@ -775,38 +806,8 @@ class Server : public QObject
         int m_awayTime;
 
         Konversation::ConnectionState m_connectionState;
-        void updateConnectionState(Konversation::ConnectionState state);
-        bool isSocketConnected() const;
 
         KProcess m_preShellCommand;
-
-    private:
-        void purgeData();
-
-        /// Recovers the filename from the dccArguments list from pos 0 to size-offset-1
-        /// joining with a space and cleans the filename using cleanDccFileName.
-        /// The filename only needs to be recovered if it contains a space, in case
-        /// it does not, the cleaned string at pos 0 is returned.
-        /// "offset" states how many fixed arguments the dcc command has, where the
-        /// filename is variable. For example "filename ip port filesize", offset is 3.
-        inline QString recoverDccFileName(const QStringList& dccArguments, int offset) const;
-
-        /// Cleans the filename from extra '"'. We just remove '"' if it is the first
-        /// and last char, if the filename really contains a '"' it comes as two chars,
-        /// escaped "\"", and is not affected.
-        /// Some clients return the filename with multiple '"' around the filename
-        /// but all we want is the plain filename.
-        inline QString cleanDccFileName(const QString& filename) const;
-
-        /// Checks if the port is in a valid range
-        inline quint16 stringToPort(const QString &port, bool *ok = nullptr);
-
-        /// Creates a list of known users and returns the one chosen by the user
-        inline QString recipientNick() const;
-
-        void collectStats(int bytes, int encodedBytes);
-
-        void initCapablityNames();
 
         /// Helper object to construct ISON (notify) list.
         ServerISON* m_serverISON;

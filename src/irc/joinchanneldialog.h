@@ -30,7 +30,7 @@ namespace Konversation
             QString channel() const;
             QString password() const;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             virtual void slotOk();
             void slotNicknameChanged(const QString& nickname);
             void slotConnectionListChanged();

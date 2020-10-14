@@ -79,7 +79,13 @@ class Query : public ChatWindow
         void setEncryptedOutput(bool);
         void connectionStateChanged(Server*, Konversation::ConnectionState);
 
-    protected Q_SLOTS:
+    protected:
+        void setName(const QString& newName) override;
+        void showEvent(QShowEvent* event) override;
+        /** Called from ChatWindow adjustFocus */
+        void childAdjustFocus() override;
+
+    private Q_SLOTS:
         void queryTextEntered();
         void queryPassthroughCommand();
         void sendFileMenu();
@@ -88,12 +94,6 @@ class Query : public ChatWindow
         void textPasted(const QString& text);
         void nickInfoChanged();
         void updateNickInfo(Server* server, const NickInfoPtr &nickInfo);
-
-    protected:
-        void setName(const QString& newName) override;
-        void showEvent(QShowEvent* event) override;
-        /** Called from ChatWindow adjustFocus */
-        void childAdjustFocus() override;
 
     private:
         bool awayChanged;

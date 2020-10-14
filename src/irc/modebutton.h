@@ -23,10 +23,10 @@ class ModeButton : public QToolButton
     Q_SIGNALS:
         void modeClicked(int id,bool on);
 
-    public Q_SLOTS:
+    private Q_SLOTS:
         void wasClicked();
 
-    protected:
+    private:
         int id;
         bool on;
 };

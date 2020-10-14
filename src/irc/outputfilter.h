@@ -196,7 +196,6 @@ namespace Konversation
 
         private:
             static void fillCommandList();
-            static QSet<QString> m_commands;
 
             OutputFilterResult handleMsg(const QString& parameter, bool commandIsQuery);
             OutputFilterResult handleCtcp(const QString& parameter);
@@ -210,6 +209,9 @@ namespace Konversation
             OutputFilterResult error(const QString& check);
             QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
             bool checkForEncodingConflict(QString *line, const QString& target);
+
+        private:
+            static QSet<QString> m_commands;
 
             Server* m_server;
     };
