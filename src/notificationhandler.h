@@ -48,7 +48,7 @@ namespace Konversation
             void connectionFailure(ChatWindow* chatWin, const QString& server);
             void channelJoin(ChatWindow* chatWin, const QString& channel);
 
-        protected:
+        private:
             void startTrayNotification(ChatWindow* chatWin);
 
         private:

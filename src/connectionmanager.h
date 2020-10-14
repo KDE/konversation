@@ -95,6 +95,7 @@ class ConnectionManager : public QObject
         bool reuseExistingConnection(ConnectionSettings& settings, bool interactive);
         bool validateIdentity(IdentityPtr identity, bool interactive = true);
 
+    private:
         QMap<int, Server*> m_connectionList;
         QSet<uint> m_activeIdentities;
         bool m_overrideAutoReconnect;

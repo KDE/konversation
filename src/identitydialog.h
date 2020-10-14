@@ -36,10 +36,10 @@ namespace Konversation
         Q_SIGNALS:
             void identitiesChanged();
 
-        protected:
+        private:
             bool checkCurrentIdentity();
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void updateIdentity(int index);
             void refreshCurrentIdentity();
 

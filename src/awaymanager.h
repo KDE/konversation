@@ -159,6 +159,7 @@ class AwayManager : public QObject
           */
         static int minutesToMilliseconds(int minutes);
 
+    private:
         /**
           * A list of identity IDs and their corresponding auto-away times (in
           * milliseconds).

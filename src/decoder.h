@@ -66,8 +66,6 @@ public:
     void setAutoDetectLanguage( AutoDetectLanguage _language ) { m_autoDetectLanguage = _language; }
     AutoDetectLanguage autoDetectLanguage() const { return m_autoDetectLanguage; }
 
-
-
 private:
     QByteArray automaticDetectionForArabic( const unsigned char* str, int size );
     QByteArray automaticDetectionForBaltic( const unsigned char* str, int size );
@@ -79,6 +77,7 @@ private:
     QByteArray automaticDetectionForTurkish( const unsigned char* str, int size );
     QByteArray automaticDetectionForWesternEuropean( const unsigned char* str, int size );
 
+private:
     // codec used for decoding. default is Latin1.
     QTextCodec *m_codec;
     QTextDecoder *m_decoder; // only used for utf16

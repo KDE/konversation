@@ -22,7 +22,6 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
     public:
         QueueTuner(QWidget* parent, ViewContainer *container);
         ~QueueTuner();
-        void contextMenuEvent (QContextMenuEvent*) override;
 
     public Q_SLOTS:
         void setServer(Server* newServer);
@@ -45,6 +44,9 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
 
     Q_SIGNALS:
         void hidden();
+
+    protected:
+        void contextMenuEvent (QContextMenuEvent*) override;
 
     private:
         Server* m_server;

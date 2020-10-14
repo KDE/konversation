@@ -39,7 +39,6 @@ class UrlSortFilterProxyModel : public QSortFilterProxyModel
 
         Qt::ItemFlags flags(const QModelIndex& index) const override;
 
-
     protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 };
@@ -75,11 +74,11 @@ class UrlCatcher : public ChatWindow
         void updateFilter();
         void startFilterTimer(const QString &filter);
 
-
     private:
         void setupActions();
         void setupUrlTree();
 
+    private:
         KToolBar* m_toolBar;
         QMenu* m_contextMenu;
 

@@ -38,7 +38,7 @@ class KonsolePanel : public ChatWindow
         /** Called from ChatWindow adjustFocus */
         void childAdjustFocus() override;
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void konsoleChanged(const QString& data);
 
     private:

@@ -98,7 +98,10 @@ class Identity : public QSharedData
 
         int id() const { return m_id; }
 
-    protected:
+    private:
+        void init();
+
+    private:
         QString name;
 
         QString realName;
@@ -134,10 +137,9 @@ class Identity : public QSharedData
         QString awayMessage;
         QString awayNickname;
 
-    private:
         int m_id;
+
         static int s_availableId;
-        void init();
 };
 
 typedef QExplicitlySharedDataPointer<Identity> IdentityPtr;

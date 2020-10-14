@@ -48,6 +48,7 @@ class MainWindow : public KXmlGuiWindow
         /** Some errors need to be shown, even when konversation is minimized.
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
+        QSize sizeHint() const override;
 
     Q_SIGNALS:
         void showQuickConnectDialog();
@@ -73,7 +74,15 @@ class MainWindow : public KXmlGuiWindow
 
         void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
 
-    protected Q_SLOTS:
+    protected:
+        void showEvent(QShowEvent* e) override;
+        void hideEvent(QHideEvent* e) override;
+        void leaveEvent(QEvent* e) override;
+
+        bool queryClose() override;
+        bool event(QEvent* e) override;
+
+    private Q_SLOTS:
         /** This is connected to the preferences settingsChanged signal and acts to compress
         *  multiple successively settingsChanged() signals into a single output
         *  appearanceChanged() signal.
@@ -102,18 +111,10 @@ class MainWindow : public KXmlGuiWindow
 
         void toggleVisibility();
 
-        void showEvent(QShowEvent* e) override;
-        void hideEvent(QHideEvent* e) override;
-        void leaveEvent(QEvent* e) override;
-
-
-    protected:
-        QSize sizeHint() const override;
-
+    private:
         int confirmQuit();
-        bool queryClose() override;
-        bool event(QEvent* e) override;
 
+    private:
         ViewContainer* m_viewContainer;
         Konversation::StatusBar* m_statusBar;
         Konversation::TrayIcon* m_trayIcon;

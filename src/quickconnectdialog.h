@@ -37,13 +37,14 @@ class QuickConnectDialog : public QDialog
                             bool useSSL
             );
 
-    protected Q_SLOTS:
+    private Q_SLOTS:
         void slotOk();
-    void slotServerNameChanged( const QString& );
+        void slotServerNameChanged(const QString&);
 
     private:
         void delayedDestruct();
-    protected:
+
+    private:
         KLineEdit*      hostNameInput;
         KLineEdit*      portInput;
         KLineEdit*  passwordInput;

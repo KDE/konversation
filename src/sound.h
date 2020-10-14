@@ -36,10 +36,10 @@ namespace Konversation
         public Q_SLOTS:
             void play(const QUrl &url);
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void tryPlayNext(Phonon::State newState, Phonon::State oldState);
 
-        protected:
+        private:
             void playSound(const QUrl &url);
 
         private:

@@ -156,7 +156,10 @@ class Application : public QApplication
 
         void handleActivate(const QStringList& arguments);
 
-    protected Q_SLOTS:
+    protected:
+        bool event(QEvent* event) override;
+
+    private Q_SLOTS:
         void openQuickConnectDialog();
 
         void dbusMultiServerRaw(const QString &command);
@@ -169,12 +172,10 @@ class Application : public QApplication
 
         void closeWallet();
 
-    protected:
-        bool event(QEvent* event) override;
-
     private:
         void implementRestart();
 
+    private:
         ConnectionManager* m_connectionManager;
         AwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;

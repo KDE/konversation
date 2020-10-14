@@ -16,10 +16,10 @@ class SSLLabel : public QLabel
     public:
         explicit SSLLabel(QWidget* parent);
 
+    Q_SIGNALS:
+        void clicked();
+
     protected:
         void mouseReleaseEvent(QMouseEvent *e) override;
-
-        Q_SIGNALS:
-        void clicked();
 };
 #endif

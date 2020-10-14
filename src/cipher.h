@@ -43,6 +43,7 @@ namespace Konversation
             QByteArray b64ToByte(const QByteArray &text);
             QByteArray byteToB64(const QByteArray &text);
 
+        private:
             QCA::Initializer init;
             QByteArray m_key;
             QCA::DHPrivateKey m_tempKey;

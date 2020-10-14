@@ -10,8 +10,6 @@
 #ifndef SCRIPTLAUNCHER_H
 #define SCRIPTLAUNCHER_H
 
-
-
 class ScriptLauncher : public QObject
 {
     Q_OBJECT
@@ -22,11 +20,12 @@ class ScriptLauncher : public QObject
 
         static QString scriptPath(const QString& script);
 
+    public Q_SLOTS:
+        void launchScript(int connectionId, const QString& target, const QString& parameter);
+
     Q_SIGNALS:
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
-
-    public Q_SLOTS:
-        void launchScript(int connectionId, const QString& target, const QString& parameter);
 };
+
 #endif
