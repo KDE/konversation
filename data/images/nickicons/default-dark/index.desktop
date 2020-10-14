@@ -1,6 +1,13 @@
 [Desktop Entry]
 Type=Theme
 Name=Default Theme (Dark variant)
+Name[ca]=Tema predeterminat (variant fosca)
+Name[ca@valencia]=Tema predeterminat (variant fosca)
+Name[nl]=Standaardthema (donkere variant)
+Name[pt]=Tema Predefinido (variante Escura)
+Name[sv]=Standardtema (mörk variant)
+Name[uk]=Типова тема (темний варіант)
+Name[x-test]=xxDefault Theme (Dark variant)xx
 Comment="Breeze" by Uri Herrera
 Comment[ar]="نسيم" لِـ Uri Herrera
 Comment[ca]=«Brisa» per en Uri Herrera
