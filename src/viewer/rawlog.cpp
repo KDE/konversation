@@ -51,9 +51,9 @@ bool RawLog::closeYourself()
     return true;
 }
 
-bool RawLog::searchView() { return true; }
+bool RawLog::searchView() const { return true; }
 
-bool RawLog::log() { return false; }
+bool RawLog::log() const { return false; }
 
 // The QByteArray implementation of this uses the unintelligent q_strchr for its "exclude" list.
 // Additionally, we need to escape certain values for the IrcView, so rather than letting it loop

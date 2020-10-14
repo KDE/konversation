@@ -53,7 +53,7 @@ class NicksOnline : public ChatWindow
         QTreeWidget* getNickListView() const;
         NickInfoPtr getNickInfo(const QTreeWidgetItem* item) const;
 
-        bool canBeFrontView()   override { return true; }
+        bool canBeFrontView() const override { return true; }
 
     Q_SIGNALS:
         /**

@@ -157,7 +157,7 @@ namespace Konversation
             return m_chat->ownNick();
         }
 
-        bool ChatContainer::canBeFrontView()
+        bool ChatContainer::canBeFrontView() const
         {
             return true;
         }
@@ -212,17 +212,17 @@ namespace Konversation
             emit updateInfo(info);
         }
 
-        QString ChatContainer::getChannelEncoding()
+        QString ChatContainer::getChannelEncoding() const
         {
             return m_chat->getEncoding();
         }
 
-        QString ChatContainer::getChannelEncodingDefaultDesc()
+        QString ChatContainer::getChannelEncodingDefaultDesc() const
         {
             return i18nc("%1=Encoding","Default ( %1 )", Konversation::IRCCharsets::self()->encodingForLocale());
         }
 
-        bool ChatContainer::searchView()
+        bool ChatContainer::searchView() const
         {
             return true;
         }

@@ -31,8 +31,8 @@ class RawLog : public ChatWindow
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
-        bool searchView() override;
-        bool log() override;
+        bool searchView() const override;
+        bool log() const override;
         using ChatWindow::appendRaw;
         virtual void appendRaw(MessageDirection dir, const QByteArray& message);
     public Q_SLOTS:

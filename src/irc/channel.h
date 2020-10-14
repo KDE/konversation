@@ -76,8 +76,8 @@ class Channel : public ChatWindow
         ~Channel() override;
 //META
 
-        bool canBeFrontView() override;
-        bool searchView() override;
+        bool canBeFrontView() const override;
+        bool searchView() const override;
 
         void append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString()) override;
         void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>()) override;
@@ -102,10 +102,10 @@ class Channel : public ChatWindow
         int numberOfNicks() const { return nicks; }
         int numberOfOps() const { return ops; }
         void setChannelEncoding(const QString& encoding) override;
-        QString getChannelEncoding() override;
-        QString getChannelEncodingDefaultDesc() override;
+        QString getChannelEncoding() const override;
+        QString getChannelEncodingDefaultDesc() const override;
 
-        bool log() override;
+        bool log() const override;
 
     protected:
         // use with caution! does not check for duplicates

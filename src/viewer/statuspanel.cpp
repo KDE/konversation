@@ -213,8 +213,8 @@ void StatusPanel::showEvent(QShowEvent*)
     }
 }
 
-bool StatusPanel::canBeFrontView()        { return true; }
-bool StatusPanel::searchView()       { return true; }
+bool StatusPanel::canBeFrontView() const  { return true; }
+bool StatusPanel::searchView() const      { return true; }
 
 void StatusPanel::setNotificationsEnabled(bool enable)
 {
@@ -298,7 +298,7 @@ void StatusPanel::setChannelEncoding(const QString& encoding)
         Preferences::setChannelEncoding(m_server->getDisplayName(), QStringLiteral(":server"), encoding);
 }
 
-QString StatusPanel::getChannelEncoding()         // virtual
+QString StatusPanel::getChannelEncoding() const        // virtual
 {
     if(m_server->getServerGroup())
         return Preferences::channelEncoding(m_server->getServerGroup()->id(), QStringLiteral(":server"));
@@ -306,7 +306,7 @@ QString StatusPanel::getChannelEncoding()         // virtual
 }
 
                                                   // virtual
-QString StatusPanel::getChannelEncodingDefaultDesc()
+QString StatusPanel::getChannelEncodingDefaultDesc() const
 {
     return i18n("Identity Default ( %1 )", getServer()->getIdentity()->getCodecName());
 }

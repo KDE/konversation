@@ -57,12 +57,12 @@ class Query : public ChatWindow
          */
         NickInfoPtr getNickInfo() const;
         bool closeYourself(bool askForConfirmation=true) override;
-        bool canBeFrontView() override;
-        bool searchView() override;
+        bool canBeFrontView() const override;
+        bool searchView() const override;
 
         void setChannelEncoding(const QString& encoding) override;
-        QString getChannelEncoding() override;
-        QString getChannelEncodingDefaultDesc() override;
+        QString getChannelEncoding() const override;
+        QString getChannelEncodingDefaultDesc() const override;
         void emitUpdateInfo() override;
 
         /** call this when you see a nick quit from the server.

@@ -560,13 +560,13 @@ IRCView* ChatWindow::getTextView() const
   return textView;
 }
 
-bool ChatWindow::log()
+bool ChatWindow::log() const
 {
   return Preferences::self()->log();
 }
 
 // reimplement this in all panels that have user input
-QString ChatWindow::getTextInLine()
+QString ChatWindow::getTextInLine() const
 {
     if (m_inputBar)
         return m_inputBar->toPlainText();
@@ -574,12 +574,12 @@ QString ChatWindow::getTextInLine()
         return QString();
 }
 
-bool ChatWindow::canBeFrontView()
+bool ChatWindow::canBeFrontView() const
 {
   return false;
 }
 
-bool ChatWindow::searchView()
+bool ChatWindow::searchView() const
 {
   return false;
 }

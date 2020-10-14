@@ -196,4 +196,4 @@ int LogfileReader::spacing()
     return style()->layoutSpacing(QSizePolicy::DefaultType, QSizePolicy::DefaultType, Qt::Horizontal);
 }
 
-bool LogfileReader::searchView() { return true; }
+bool LogfileReader::searchView() const { return true; }

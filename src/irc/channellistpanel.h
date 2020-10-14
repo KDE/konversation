@@ -92,8 +92,8 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         virtual bool closeYourself();
         void emitUpdateInfo() override;
 
-        bool isInsertSupported() override { return true; }
-        QString getTextInLine() override { return m_filterLine->text(); }
+        bool isInsertSupported() const override { return true; }
+        QString getTextInLine() const override { return m_filterLine->text(); }
 
     Q_SIGNALS:
         void refreshChannelList();

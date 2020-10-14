@@ -425,7 +425,7 @@ void Channel::rejoin()
         m_server->sendJoinCommand(getName(), getPassword());
 }
 
-bool Channel::log()
+bool Channel::log() const
 {
     return ChatWindow::log() && !Preferences::self()->privateOnly();
 }
@@ -2390,12 +2390,12 @@ void Channel::fadeActivity()
     }
 }
 
-bool Channel::canBeFrontView()
+bool Channel::canBeFrontView() const
 {
     return true;
 }
 
-bool Channel::searchView()
+bool Channel::searchView() const
 {
     return true;
 }
@@ -2570,14 +2570,14 @@ void Channel::setChannelEncoding(const QString& encoding) // virtual
         Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
 }
 
-QString Channel::getChannelEncoding() // virtual
+QString Channel::getChannelEncoding() const // virtual
 {
     if(m_server->getServerGroup())
         return Preferences::channelEncoding(m_server->getServerGroup()->id(), getName());
     return Preferences::channelEncoding(m_server->getDisplayName(), getName());
 }
 
-QString Channel::getChannelEncodingDefaultDesc()  // virtual
+QString Channel::getChannelEncodingDefaultDesc() const  // virtual
 {
     return i18n("Identity Default ( %1 )", getServer()->getIdentity()->getCodecName());
 }

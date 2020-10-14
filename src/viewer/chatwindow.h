@@ -73,7 +73,7 @@ class ChatWindow : public QWidget
         IRCView* getTextView() const;
         void setInputBar(IRCInput* newInputBar) { m_inputBar = newInputBar; }
         IRCInput* getInputBar() const { return m_inputBar; }
-        virtual bool log();
+        virtual bool log() const;
 
         QString getName() const;
         QString getTitle() const;
@@ -97,14 +97,14 @@ class ChatWindow : public QWidget
 
         void clear();
 
-        virtual QString getTextInLine();
+        virtual QString getTextInLine() const;
         /** Reimplement this to return true in all classes that /can/ become front view.
          */
-        virtual bool canBeFrontView();
+        virtual bool canBeFrontView() const;
 
         /** Reimplement this to return true in all classes that you can search in - i.e. use "Edit->Find Text" in.
          */
-        virtual bool searchView();
+        virtual bool searchView() const;
 
         bool notificationsEnabled() const { return m_notificationsEnabled; }
 
@@ -113,8 +113,8 @@ class ChatWindow : public QWidget
         QString logFileName() const { return logfile.fileName(); }
 
         virtual void setChannelEncoding(const QString& /* encoding */) {}
-        virtual QString getChannelEncoding() { return QString(); }
-        virtual QString getChannelEncodingDefaultDesc() { return QString(); }
+        virtual QString getChannelEncoding() const { return QString(); }
+        virtual QString getChannelEncodingDefaultDesc() const { return QString(); }
         bool isChannelEncodingSupported() const;
 
         /** Force updateInfo(info) to be emitted.
@@ -125,12 +125,12 @@ class ChatWindow : public QWidget
         /** child classes have to override this and return true if they want the
          *  "insert character" item on the menu to be enabled.
          */
-        virtual bool isInsertSupported() { return m_inputBar != nullptr; }
+        virtual bool isInsertSupported() const { return m_inputBar != nullptr; }
 
         /** child classes have to override this and return true if they want the
          *  "irc color" item on the menu to be enabled.
          */
-        virtual bool areIRCColorsSupported() {return false; }
+        virtual bool areIRCColorsSupported() const {return false; }
 
         Konversation::TabNotifyType currentTabNotification() const { return m_currentTabNotify; }
         QColor highlightColor();

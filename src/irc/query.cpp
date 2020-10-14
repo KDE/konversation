@@ -388,8 +388,8 @@ NickInfoPtr Query::getNickInfo() const
     return m_nickInfo;
 }
 
-bool Query::canBeFrontView()        { return true; }
-bool Query::searchView()       { return true; }
+bool Query::canBeFrontView() const  { return true; }
+bool Query::searchView() const      { return true; }
                                                   // virtual
 void Query::setChannelEncoding(const QString& encoding)
 {
@@ -399,14 +399,14 @@ void Query::setChannelEncoding(const QString& encoding)
         Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
 }
 
-QString Query::getChannelEncoding()               // virtual
+QString Query::getChannelEncoding() const              // virtual
 {
     if(m_server->getServerGroup())
         return Preferences::channelEncoding(m_server->getServerGroup()->id(), getName());
     return Preferences::channelEncoding(m_server->getDisplayName(), getName());
 }
 
-QString Query::getChannelEncodingDefaultDesc()    // virtual
+QString Query::getChannelEncodingDefaultDesc() const   // virtual
 {
     return i18n("Identity Default ( %1 )",getServer()->getIdentity()->getCodecName());
 }

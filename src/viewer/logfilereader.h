@@ -34,7 +34,7 @@ class LogfileReader : public ChatWindow
 
         using ChatWindow::closeYourself;
         virtual bool closeYourself() { closeLog(); return true; }
-        bool searchView() override;
+        bool searchView() const override;
 
         bool eventFilter(QObject* watched, QEvent* e) override;
 
