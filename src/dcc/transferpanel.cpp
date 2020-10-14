@@ -502,7 +502,7 @@ namespace Konversation
         {
         }
 
-        TransferView *TransferPanel::getTransferView()
+        TransferView *TransferPanel::getTransferView() const
         {
             return m_transferView;
         }

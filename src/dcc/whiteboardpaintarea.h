@@ -99,7 +99,7 @@ namespace Konversation
 
         private:
             inline void makeLastPosInvalid();
-            inline bool isLastPosValid();
+            inline bool isLastPosValid() const;
             inline void checkImageSize(int x1, int y1, int x2, int y2, int penWidth = 1);
             inline void resizeImage(int width, int height);
 

@@ -84,7 +84,7 @@ namespace Konversation
                 void startConnectionTimer(int secs);
                 void stopConnectionTimer();
 
-                QString getQFileErrorString(int code);
+                QString getQFileErrorString(int code) const;
 
                 QFile m_file;
 

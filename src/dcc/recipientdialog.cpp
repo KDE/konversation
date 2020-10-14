@@ -82,7 +82,7 @@ namespace Konversation
             KWindowConfig::saveWindowSize(windowHandle(), config);
         }
 
-        QString RecipientDialog::getSelectedNickname()
+        QString RecipientDialog::getSelectedNickname() const
         {
             return selectedNickname;
         }

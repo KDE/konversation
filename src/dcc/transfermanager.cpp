@@ -409,7 +409,7 @@ namespace Konversation
             m_upnpRouter = router;
         }
 
-        UPnPRouter* TransferManager::getUPnPRouter()
+        UPnPRouter* TransferManager::getUPnPRouter() const
         {
             return m_upnpRouter;
         }

@@ -608,7 +608,7 @@ namespace Konversation
             failed(i18n("Timed out"));
         }
                                                           // protected, static
-        QString TransferSend::getQFileErrorString(int code)
+        QString TransferSend::getQFileErrorString(int code) const
         {
             QString errorString;
 

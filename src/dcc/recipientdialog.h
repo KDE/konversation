@@ -47,7 +47,7 @@ namespace Konversation
                 void slotCancel();
 
             protected:
-                QString getSelectedNickname();
+                QString getSelectedNickname() const;
                 static QString selectedNickname;
 
                 KLineEdit* nicknameInput;

@@ -47,7 +47,7 @@ namespace Konversation
                 explicit TransferPanel(QWidget *parent);
                 ~TransferPanel() override;
 
-                TransferView *getTransferView();
+                TransferView *getTransferView() const;
 
                 void openLocation(Transfer *transfer);
                 void openFileInfoDialog(Transfer *transfer);

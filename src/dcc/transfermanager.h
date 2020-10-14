@@ -90,7 +90,7 @@ namespace Konversation
                 bool hasActiveTransfers() const;
                 bool hasActiveChats() const;
 
-                UPnP::UPnPRouter *getUPnPRouter();
+                UPnP::UPnPRouter *getUPnPRouter() const;
                 void startupUPnP(void);
                 void shutdownUPnP(void);
 

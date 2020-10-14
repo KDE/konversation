@@ -57,7 +57,7 @@ QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filt
     return m_fileWidget->selectedUrls();
 }
 
-bool DccFileDialog::passiveSend()
+bool DccFileDialog::passiveSend() const
 {
     return m_checkBox->isChecked();
 }

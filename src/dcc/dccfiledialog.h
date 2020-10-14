@@ -27,7 +27,7 @@ public:
 
     QList<QUrl> getOpenUrls(const QUrl &startDir = QUrl(), const QString& filter = QString(), const QString& caption = QString());
 
-    bool passiveSend();
+    bool passiveSend() const;
 
     QSize sizeHint() const override;
 

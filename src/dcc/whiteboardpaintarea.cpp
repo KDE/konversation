@@ -584,7 +584,7 @@ namespace Konversation
             m_lastPos.setY(InvalidLastPos);
         }
 
-        bool WhiteBoardPaintArea::isLastPosValid()
+        bool WhiteBoardPaintArea::isLastPosValid() const
         {
             if (m_lastPos.x() > InvalidLastPos && m_lastPos.y() > InvalidLastPos)
             {
