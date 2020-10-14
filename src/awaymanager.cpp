@@ -28,7 +28,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
     m_connectionManager = Application::instance()->getConnectionManager();
 
     connect(KIdleTime::instance(), &KIdleTime::resumingFromIdle, this, &AwayManager::resumeFromIdle);
-    connect(KIdleTime::instance(), QOverload<int>::of(&KIdleTime::timeoutReached), this, &AwayManager::idleTimeoutReached);
+    connect(KIdleTime::instance(), QOverload<int, int>::of(&KIdleTime::timeoutReached), this, &AwayManager::idleTimeoutReached);
 
     // Catch the first "resume event" (= user input) so we correctly catch the first
     // resume event in case the user is already idle on startup).
