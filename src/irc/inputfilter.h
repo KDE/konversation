@@ -38,12 +38,12 @@ class InputFilter : public QObject
 
         // use this when the client does automatics, like userhost for finding hostmasks
         void setAutomaticRequest(const QString& command, const QString& name, bool yes);
-        int getAutomaticRequest(const QString& command, const QString& name);
+        int getAutomaticRequest(const QString& command, const QString& name) const;
         void addWhoRequest(const QString& name);  // called from Server::send()
                                                   // to avoid duplicate requests
-        bool isWhoRequestUnderProcess(const QString& name);
+        bool isWhoRequestUnderProcess(const QString& name) const;
         void setLagMeasuring(bool yes);
-        bool getLagMeasuring();
+        bool getLagMeasuring() const;
 
     Q_SIGNALS:
         void welcome(const QString& ownHost);
@@ -85,8 +85,8 @@ class InputFilter : public QObject
 
         QHash<QString, QString> parseMessageTags(const QString &line, int *startOfMessage);
 
-        bool isAChannel(const QString &check);
-        bool isIgnore(const QString &pattern, Ignore::Type type);
+        bool isAChannel(const QString &check) const;
+        bool isIgnore(const QString &pattern, Ignore::Type type) const;
 
         Server* m_server;
                                                   // automaticRequest[command][channel or nick]=count

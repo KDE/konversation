@@ -383,7 +383,7 @@ void Query::nickInfoChanged()
     emitUpdateInfo();
 }
 
-NickInfoPtr Query::getNickInfo()
+NickInfoPtr Query::getNickInfo() const
 {
     return m_nickInfo;
 }
@@ -475,7 +475,7 @@ void Query::quitNick(const QString& reason, const QHash<QString, QString> &messa
 }
 
 #ifdef HAVE_QCA2
-Konversation::Cipher* Query::getCipher()
+Konversation::Cipher* Query::getCipher() const
 {
     if(!m_cipher)
         m_cipher = new Konversation::Cipher();

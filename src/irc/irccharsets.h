@@ -44,10 +44,10 @@ namespace Konversation
              */
             QStringList availableEncodingDescriptiveNames() const;
 
-            int availableEncodingsCount();
+            int availableEncodingsCount() const;
 
-            QString shortNameToDescriptiveName( const QString& shortName );
-            QString descriptiveNameToShortName( const QString& descriptiveName );
+            QString shortNameToDescriptiveName(const QString& shortName) const;
+            QString descriptiveNameToShortName(const QString& descriptiveName) const;
 
             /**
              * Converts the ambiguous encoding name to a short encoding name
@@ -55,28 +55,28 @@ namespace Konversation
              * If the ambiguous name is invalid, returns QString:null.
              * @return a short encoding name or QString()
              */
-            QString ambiguousNameToShortName( const QString& ambiguousName );
+            QString ambiguousNameToShortName(const QString& ambiguousName) const;
 
             /**
              * Returns the encoding index in the short names list or the descriptions list.
              * If the encoding name is invalid, returns -1.
              * @return an index number of the encoding
              */
-            int shortNameToIndex( const QString& shortName );
+            int shortNameToIndex(const QString& shortName) const;
 
             /**
              * Checks if the encoding name is in the short encoding names.
              * @see availableEncodingShortNames()
              */
-            bool isValidEncoding( const QString& shortName );
+            bool isValidEncoding(const QString& shortName) const;
 
             /**
              * Returns the short name of the most suitable encoding for this locale.
              * @return a short encoding name
              */
-            QString encodingForLocale();
+            QString encodingForLocale() const;
 
-            QTextCodec* codecForName( const QString& shortName );
+            QTextCodec* codecForName(const QString& shortName) const;
 
         private:
             /**

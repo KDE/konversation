@@ -55,7 +55,7 @@ class Query : public ChatWindow
          *  The problem is when you open a query to someone, then the go offline.
          *  This should be fixed maybe?  I don't know.
          */
-        NickInfoPtr getNickInfo();
+        NickInfoPtr getNickInfo() const;
         bool closeYourself(bool askForConfirmation=true) override;
         bool canBeFrontView() override;
         bool searchView() override;
@@ -71,7 +71,7 @@ class Query : public ChatWindow
         void quitNick(const QString& reason, const QHash<QString, QString> &messageTags);
 
         #ifdef HAVE_QCA2
-        Konversation::Cipher* getCipher();
+        Konversation::Cipher* getCipher() const;
         #endif
 
     Q_SIGNALS:
@@ -117,7 +117,7 @@ class Query : public ChatWindow
 
         #ifdef HAVE_QCA2
         //FIXME: We might want to put this into the attendee object (i.e. NickInfo).
-        Konversation::Cipher *m_cipher;
+        mutable Konversation::Cipher *m_cipher;
         #endif
 };
 #endif

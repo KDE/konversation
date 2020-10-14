@@ -141,7 +141,7 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
     return ChatWindow::eventFilter( obj, event );
 }
 
-QTreeWidget* NicksOnline::getNickListView()
+QTreeWidget* NicksOnline::getNickListView() const
 {
     return m_nickListView;
 }
@@ -153,7 +153,8 @@ QTreeWidget* NicksOnline::getNickListView()
  * @param type              The type of entry to be found
  * @return                  Pointer to the child QListViewItem or 0 if not found.
  */
-QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type)
+QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const QString& name,
+                                            NicksOnlineItem::NickListViewColumn type) const
 {
     if (!parent) return nullptr;
     for (int i = 0; i < parent->childCount(); ++i)
@@ -170,7 +171,7 @@ QTreeWidgetItem* NicksOnline::findItemChild(const QTreeWidgetItem* parent, const
  * @param type              The type of entry to be found
  * @return                  Pointer to the child QListViewItem or 0 if not found.
  */
-QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type)
+QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type) const
 {
     if (!parent) return nullptr;
     for (int i = 0; i < parent->childCount(); ++i)
@@ -186,7 +187,7 @@ QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksO
  * @param name              The name of the network.
  * @return                  Pointer to the QListViewItem or 0 if not found.
  */
-QTreeWidgetItem* NicksOnline::findNetworkRoot(int serverGroupId)
+QTreeWidgetItem* NicksOnline::findNetworkRoot(int serverGroupId) const
 {
     for (int i = 0; i < m_nickListView->invisibleRootItem()->childCount(); ++i)
     {
@@ -207,7 +208,7 @@ QTreeWidgetItem* NicksOnline::findNetworkRoot(int serverGroupId)
  * @return needWhois        True if a WHOIS needs to be performed on the nick
  *                          to get additional information.
  */
-QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois)
+QString NicksOnline::getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois) const
 {
     Q_UNUSED(needWhois)
 
@@ -400,7 +401,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
  * @param nickname           Nick name.
  * @return                   NickInfo if nick is online in any server, otherwise 0.
  */
-NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickname)
+NickInfoPtr NicksOnline::getOnlineNickInfo(const QString& networkName, const QString& nickname) const
 {
     // Get list of pointers to all servers.
     Application* konvApp = Application::instance();
@@ -557,7 +558,7 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
  * @return serverName       Name of the server for the nick at the item, or Null if not a nick.
  * @return nickname         The nickname at the item.
  */
-bool NicksOnline::getItemServerAndNick(const QTreeWidgetItem* item, QString& serverName, QString& nickname)
+bool NicksOnline::getItemServerAndNick(const QTreeWidgetItem* item, QString& serverName, QString& nickname) const
 {
     if (!item) return false;
     // convert into NicksOnlineItem
@@ -576,7 +577,7 @@ bool NicksOnline::getItemServerAndNick(const QTreeWidgetItem* item, QString& ser
     return true;
 }
 
-NickInfoPtr NicksOnline::getNickInfo(const QTreeWidgetItem* item)
+NickInfoPtr NicksOnline::getNickInfo(const QTreeWidgetItem* item) const
 {
     QString serverName;
     QString nickname;
@@ -604,7 +605,7 @@ NickInfoPtr NicksOnline::getNickInfo(const QTreeWidgetItem* item)
  * @see getItemServerAndNick
  */
 QTreeWidgetItem* NicksOnline::getServerAndNickItem(const QString& serverName,
-const QString& nickname)
+                                                   const QString& nickname) const
 {
     Server* server = Application::instance()->getConnectionManager()->getServerByName(serverName);
     if (!server) return nullptr;

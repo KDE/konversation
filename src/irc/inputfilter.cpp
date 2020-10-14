@@ -955,7 +955,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
 // # & + and ! are *often*, but not necessarily, Channel identifiers. + and ! are non-RFC,
 // so if a server doesn't offer 005 and supports + and ! channels, I think thats broken behaviour
 // on their part - not ours. --Argonel
-bool InputFilter::isAChannel(const QString &check)
+bool InputFilter::isAChannel(const QString &check) const
 {
     if (check.isEmpty())
         return false;
@@ -964,7 +964,7 @@ bool InputFilter::isAChannel(const QString &check)
     return m_server? m_server->isAChannel(check) : bool(QStringLiteral("#&").contains(check.at(0)));
 }
 
-bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
+bool InputFilter::isIgnore(const QString &sender, Ignore::Type type) const
 {
     bool doIgnore = false;
 
@@ -1006,18 +1006,18 @@ void InputFilter::setAutomaticRequest(const QString& command, const QString& nam
     }
 }
 
-int InputFilter::getAutomaticRequest(const QString& command, const QString& name)
+int InputFilter::getAutomaticRequest(const QString& command, const QString& name) const
 {
     return m_automaticRequest[command][name.toLower()];
 }
 
 void InputFilter::addWhoRequest(const QString& name) { m_whoRequestList << name.toLower(); }
 
-bool InputFilter::isWhoRequestUnderProcess(const QString& name) { return (m_whoRequestList.contains(name.toLower())>0); }
+bool InputFilter::isWhoRequestUnderProcess(const QString& name) const { return (m_whoRequestList.contains(name.toLower())>0); }
 
 void InputFilter::setLagMeasuring(bool state) { m_lagMeasuring=state; }
 
-bool InputFilter::getLagMeasuring()           { return m_lagMeasuring; }
+bool InputFilter::getLagMeasuring() const     { return m_lagMeasuring; }
 
 void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList, const QHash<QString, QString> &messageTags)
 {

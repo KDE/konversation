@@ -83,23 +83,21 @@ class Channel : public ChatWindow
         void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>()) override;
         void nickActive(const QString& nickname);
         #ifdef HAVE_QCA2
-        Konversation::Cipher* getCipher();
+        Konversation::Cipher* getCipher() const;
         #endif
 //General administrative stuff
     public:
         void setName(const QString& newName) override;
-        QString getPassword();
-
-        const Konversation::ChannelSettings channelSettings();
-
         QString getPassword() const;
+
+        Konversation::ChannelSettings channelSettings() const;
 
         void setServer(Server* newServer) override;
 
         void setEncryptedOutput(bool);
 
         bool joined() const { return m_joined; }
-        bool rejoinable();
+        bool rejoinable() const;
 //Unsure of future placement and/or continued existence of these members
         int numberOfNicks() const { return nicks; }
         int numberOfOps() const { return ops; }
@@ -114,7 +112,7 @@ class Channel : public ChatWindow
         void fastAddNickname(ChannelNickPtr channelnick, Nick *nick = nullptr);
         void setActive(bool active);
         void repositionNick(Nick *nick);
-        bool shouldShowEvent(ChannelNickPtr channelNick);
+        bool shouldShowEvent(ChannelNickPtr channelNick) const;
 
     public Q_SLOTS:
         void setNickname(const QString& newNickname);
@@ -162,8 +160,8 @@ class Channel : public ChatWindow
         void updateChannelNicks(const QString& channel);
 //Topic
     public:
-        QString getTopic();
-        TopicHistoryModel* getTopicHistory() { return m_topicHistory; }
+        QString getTopic() const;
+        TopicHistoryModel* getTopicHistory() const { return m_topicHistory; }
 
         void setTopic(const QString& text, const QHash<QString, QString> &messageTags);
         void setTopic(const QString& nickname, const QString& text, const QHash<QString, QString> &messageTags);
@@ -221,11 +219,9 @@ class Channel : public ChatWindow
 
         bool autoJoin();
 
-        QStringList getSelectedNickList();
+        QStringList getSelectedNickList() const;
 
         NickListView* getNickListView() const { return nicknameListView; }
-
-        Konversation::ChannelSettings channelSettings() const;
 
     Q_SIGNALS:
         void sendFile();
@@ -353,7 +349,7 @@ class Channel : public ChatWindow
 
         Konversation::ChannelOptionsDialog *m_optionsDialog;
         #ifdef HAVE_QCA2
-        Konversation::Cipher *m_cipher;
+        mutable Konversation::Cipher *m_cipher;
         #endif
 };
 #endif

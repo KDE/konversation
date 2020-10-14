@@ -87,7 +87,7 @@ QDateTime NickInfo::getOnlineSince() const
     return m_onlineSince;
 }
 
-uint NickInfo::getNickColor()
+uint NickInfo::getNickColor() const
 {
     // do we already have a color?
     if (!m_nickColor) m_nickColor = Konversation::colorForNick(m_nickname) + 1;
@@ -205,7 +205,7 @@ QString NickInfo::tooltip() const
 }
 
 
-QString NickInfo::getBestAddresseeName()
+QString NickInfo::getBestAddresseeName() const
 {
     if(!getRealName().isEmpty())
     {
@@ -248,7 +248,7 @@ void NickInfo::setPrintedOnline(bool printed)
     m_printedOnline=printed;
 }
 
-bool NickInfo::getPrintedOnline()
+bool NickInfo::getPrintedOnline() const
 {
     return m_printedOnline;
 }

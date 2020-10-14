@@ -37,10 +37,10 @@ class ChannelListProxyModel : public QSortFilterProxyModel
     public:
         explicit ChannelListProxyModel(QObject *parent = nullptr);
 
-        int filterMinimumUsers() { return m_minUsers; }
-        int filterMaximumUsers() { return m_maxUsers; }
-        bool filterTopic() { return m_filterTopic; }
-        bool filterChannel() { return m_filterChannel; }
+        int filterMinimumUsers() const { return m_minUsers; }
+        int filterMaximumUsers() const { return m_maxUsers; }
+        bool filterTopic() const { return m_filterTopic; }
+        bool filterChannel() const { return m_filterChannel; }
 
     public Q_SLOTS:
         void setFilterMinimumUsers(int users);

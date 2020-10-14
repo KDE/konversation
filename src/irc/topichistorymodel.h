@@ -58,7 +58,7 @@ class TopicHistoryModel : public QAbstractListModel
         explicit TopicHistoryModel(QObject* parent = nullptr);
         ~TopicHistoryModel();
 
-        QString currentTopic();
+        QString currentTopic() const;
 
         void appendTopic(const QString& text, const QString& author = QString(), const QDateTime &timestamp = QDateTime::currentDateTime());
         void setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp = QDateTime::currentDateTime());

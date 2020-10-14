@@ -411,7 +411,7 @@ Channel::~Channel()
     }
 }
 
-bool Channel::rejoinable()
+bool Channel::rejoinable() const
 {
     if (getServer() && getServer()->isConnected())
         return !m_joined;
@@ -747,7 +747,7 @@ void Channel::setAutoJoin(bool autojoin)
 
 
 
-QString Channel::getPassword()
+QString Channel::getPassword() const
 {
     QString password;
 
@@ -768,7 +768,7 @@ QString Channel::getPassword()
     return password;
 }
 
-const Konversation::ChannelSettings Channel::channelSettings()
+Konversation::ChannelSettings Channel::channelSettings() const
 {
     Konversation::ChannelSettings channel;
 
@@ -871,7 +871,7 @@ void Channel::setNickname(const QString& newNickname)
     nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(newNickname));
 }
 
-QStringList Channel::getSelectedNickList()
+QStringList Channel::getSelectedNickList() const
 {
     QStringList selectedNicks;
 
@@ -1025,7 +1025,7 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
 }
 
 /* Determines whether Nick/Part/Join event should be shown or skipped based on user settings. */
-bool Channel::shouldShowEvent(ChannelNickPtr channelNick)
+bool Channel::shouldShowEvent(ChannelNickPtr channelNick) const
 {
     if (Preferences::self()->hideUnimportantEvents())
     {
@@ -1363,7 +1363,7 @@ void Channel::emitUpdateInfo()
     emit updateInfo(info);
 }
 
-QString Channel::getTopic()
+QString Channel::getTopic() const
 {
     return m_topicHistory->currentTopic();
 }
@@ -2761,7 +2761,7 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
 }
 
 #ifdef HAVE_QCA2
-Konversation::Cipher* Channel::getCipher()
+Konversation::Cipher* Channel::getCipher() const
 {
     if(!m_cipher)
         m_cipher = new Konversation::Cipher();

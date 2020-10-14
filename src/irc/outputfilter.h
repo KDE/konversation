@@ -208,8 +208,8 @@ namespace Konversation
             OutputFilterResult handleBan(const OutputFilterInput& input, bool kick);
 
             OutputFilterResult changeMode(const QString& parameter, const QString& destination, char mode, char giveTake);
-            bool isAChannel(const QString& check);
-            bool isParameter(const QString& parameter, const QString& string);
+            bool isAChannel(const QString& check) const;
+            bool isParameter(const QString& parameter, const QString& string) const;
             OutputFilterResult usage(const QString& check);
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);

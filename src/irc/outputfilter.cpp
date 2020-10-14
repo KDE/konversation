@@ -2062,7 +2062,7 @@ namespace Konversation
     // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC,
     // so if a server doesn't offer 005 and supports + and ! channels, I think thats broken
     // behaviour on their part - not ours.
-    bool OutputFilter::isAChannel(const QString &check)
+    bool OutputFilter::isAChannel(const QString &check) const
     {
         if (check.isEmpty())
             return false;
@@ -2071,7 +2071,7 @@ namespace Konversation
         return m_server? m_server->isAChannel(check) : bool(QStringLiteral("#&").contains(check.at(0)));
     }
 
-    bool OutputFilter::isParameter(const QString& parameter, const QString& string)
+    bool OutputFilter::isParameter(const QString& parameter, const QString& string) const
     {
         QRegExp rx(QStringLiteral("^[\\-]{1,2}%1$").arg(parameter), Qt::CaseInsensitive);
 

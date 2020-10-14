@@ -95,21 +95,21 @@ QString IRCQueue::pop()
     return msg.text();
 }
 
-int IRCQueue::nextSize()
+int IRCQueue::nextSize() const
 {
     if (m_pending.isEmpty())
         return 0;
     return m_pending.first().text().length();
 }
 
-int IRCQueue::currentWait()
+int IRCQueue::currentWait() const
 {
     if (m_pending.isEmpty())
         return 0;
     return m_pending.first().age();
 }
 
-int IRCQueue::elapsed()
+int IRCQueue::elapsed() const
 {
     if (!m_startedAt.isValid())
         return 0;

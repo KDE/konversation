@@ -115,26 +115,27 @@ class Server : public QObject
         void cycle();
         void abortScheduledRecreation() { m_recreationScheduled = false; }
 
-        int connectionId() { return m_connectionId; }
+        int connectionId() const { return m_connectionId; }
 
         ConnectionSettings& getConnectionSettings() { return m_connectionSettings; }
+        const ConnectionSettings& getConnectionSettings() const { return m_connectionSettings; }
         void setConnectionSettings(ConnectionSettings& settings) { m_connectionSettings = settings; }
 
-        QString getDisplayName() { return m_connectionSettings.name(); }
-        QString getServerName() { return m_connectionSettings.server().host(); }
+        QString getDisplayName() const { return m_connectionSettings.name(); }
+        QString getServerName() const { return m_connectionSettings.server().host(); }
 
-        Konversation::ServerGroupSettingsPtr getServerGroup() { return m_connectionSettings.serverGroup(); }
-        IdentityPtr getIdentity() { return m_connectionSettings.identity(); }
+        Konversation::ServerGroupSettingsPtr getServerGroup() const { return m_connectionSettings.serverGroup(); }
+        IdentityPtr getIdentity() const { return m_connectionSettings.identity(); }
 
-        Konversation::ConnectionState getConnectionState() { return m_connectionState; }
+        Konversation::ConnectionState getConnectionState() const { return m_connectionState; }
 
-        bool isConnected() { return (m_connectionState == Konversation::SSConnected); }
-        bool isConnecting() { return (m_connectionState == Konversation::SSConnecting); }
-        bool isScheduledToConnect() { return (m_connectionState == Konversation::SSScheduledToConnect); }
+        bool isConnected() const { return (m_connectionState == Konversation::SSConnected); }
+        bool isConnecting() const { return (m_connectionState == Konversation::SSConnecting); }
+        bool isScheduledToConnect() const { return (m_connectionState == Konversation::SSScheduledToConnect); }
 
         bool getUseSSL() const;
         QString getSSLInfo() const;
-        int getPort();
+        int getPort() const;
         int getLag() const;
 
         void updateAutoJoin(Konversation::ChannelList channels = Konversation::ChannelList());
@@ -165,11 +166,11 @@ class Server : public QObject
         QString getChannelTypes() const;
 
         void setModesCount(int count);
-        int getModesCount();
+        int getModesCount() const;
 
         // extended user modes support
         void setChanModes(const QString&);                 //grab modes types from RPL_ISUPPORT CHANMODES
-        QString banAddressListModes() { return m_banAddressListModes; }     // aka "TYPE A" modes https://tools.ietf.org/html/draft-brocklesby-irc-isupport-03#section-3.3
+        QString banAddressListModes() const { return m_banAddressListModes; }     // aka "TYPE A" modes https://tools.ietf.org/html/draft-brocklesby-irc-isupport-03#section-3.3
 
         void setPrefixes(const QString &modes, const QString& prefixes);
         QString getServerNickPrefixes() const;
@@ -186,7 +187,7 @@ class Server : public QObject
         QString getNextNickname();
 
         InputFilter* getInputFilter() { return &m_inputFilter; }
-        Konversation::OutputFilter* getOutputFilter() { return m_outputFilter; }
+        Konversation::OutputFilter* getOutputFilter() const { return m_outputFilter; }
 
         Channel* joinChannel(const QString& name, const QString& hostmask, const QHash<QString, QString> &messageTags);
         void removeChannel(Channel* channel);
@@ -196,7 +197,7 @@ class Server : public QObject
         void appendStatusMessage(const QString& type,const QString& message, const QHash<QString, QString> &messageTags);
         void appendMessageToFrontmost(const QString& type,const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), bool parseURL = true);
 
-        int getPreLength(const QString& command, const QString& dest);
+        int getPreLength(const QString& command, const QString& dest) const;
 
         void dbusRaw(const QString& command);
         void dbusSay(const QString& target,const QString& command);
@@ -209,9 +210,9 @@ class Server : public QObject
         void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter, const QHash<QString, QString> &messageTags);
         void updateChannelModeWidgets(const QString& channel, char mode, const QString& parameter);
 
-        Channel* getChannelByName(const QString& name);
-        Query* getQueryByName(const QString& name);
-        ChatWindow* getChannelOrQueryByName(const QString& name);
+        Channel* getChannelByName(const QString& name) const;
+        Query* getQueryByName(const QString& name) const;
+        ChatWindow* getChannelOrQueryByName(const QString& name) const;
         QString parseWildcards(const QString& toParse, ChatWindow* context = nullptr, const QStringList &nicks = QStringList());
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& inputLineText);
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& inputLineText);
@@ -226,10 +227,10 @@ class Server : public QObject
         StatusPanel* getStatusView() const { return m_statusView; }
         virtual bool closeYourself(bool askForConfirmation=true);
 
-        QString getOwnIpByNetworkInterface();
-        QString getOwnIpByServerMessage();
+        QString getOwnIpByNetworkInterface() const;
+        QString getOwnIpByServerMessage() const;
 
-        bool isAway() { return m_away; }
+        bool isAway() const { return m_away; }
         void setAway(bool away, const QHash<QString, QString> &messageTags);
         QString awayTime() const;
 
@@ -243,7 +244,7 @@ class Server : public QObject
          * notify list, and has not initiated a query with you, may well be online,
          * but server doesn't know if it is or not, in which case False is returned.
          */
-        bool isNickOnline(const QString &nickname);
+        bool isNickOnline(const QString &nickname) const;
         /** Given a nickname, returns NickInfo object.
          *  @param nickname    The desired nickname.  Case insensitive.
          *  @return            Pointer to the nickinfo for this nickname if one exists.
@@ -256,7 +257,7 @@ class Server : public QObject
          *  - The nick initiated a query with the user.
          *  A NickInfo is destroyed when it is offline.
          */
-        NickInfoPtr getNickInfo(const QString& nickname);
+        NickInfoPtr getNickInfo(const QString& nickname) const;
         /** Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
          *  Guaranteed to return a nickinfo.
          *  @param nickname    The desired nickname.  Case sensitive.
@@ -272,7 +273,7 @@ class Server : public QObject
          *
          * @return A QMap of NickInfoPtrs indexed by lowercase nickname.
          */
-        const NickInfoMap* getAllNicks();
+        const NickInfoMap* getAllNicks() const;
         /** Returns the list of members for a channel in the joinedChannels list.
          *  A joinedChannel is one that you are in, as opposed to a channel that you aren't in,
          *  but one of your watched nicks is in.
@@ -305,7 +306,7 @@ class Server : public QObject
          *  @param nickname    The desired nickname.  Case insensitive.
          *  @return            A list of joined channels the nick is in.  Empty if none.
          */
-        QStringList getNickJoinedChannels(const QString& nickname);
+        QStringList getNickJoinedChannels(const QString& nickname) const;
         /** Returns a list of all the channels (joined or unjoined) that a nick is in.
          *  @param nickname    The desired nickname.  Case insensitive.
          *  @return            A list of channels the nick is in.  Empty if none.
@@ -313,12 +314,12 @@ class Server : public QObject
          *  A nick will not appear in the Unjoined channels list unless a WHOIS
          *  has been performed on it.
          */
-        QStringList getNickChannels(const QString& nickname);
+        QStringList getNickChannels(const QString& nickname) const;
         /** Returns a list of all the channels we're in that nickname is also in.
          *  @param nickname    The desired nickname.  Case insensitive.
          *  @return            A list of channels the nick is in that we're also in.  Empty if none.
          */
-        QStringList getSharedChannels(const QString& nickname);
+        QStringList getSharedChannels(const QString& nickname) const;
         /** Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a
          *  given channel and nickname.
          *  @param channelName The desired channel name.  Case insensitive.
@@ -327,7 +328,7 @@ class Server : public QObject
          *                     to the NickInfo and the mode of the nick in the channel.
          *                     0 if not found.
          */
-        ChannelNickPtr getChannelNick(const QString& channelName, const QString& nickname);
+        ChannelNickPtr getChannelNick(const QString& channelName, const QString& nickname) const;
         /** Updates a nickname in a channel.  If not on the joined or unjoined lists, and nick
          *  is in the watch list, adds the channel and nick to the unjoinedChannels list.
          *  If mode != 99, sets the mode for the nick in the channel.
@@ -347,17 +348,17 @@ class Server : public QObject
         /**
          * Returns a lower case list of all the nicks on the user watch list.
          */
-        QStringList getWatchList();
+        QStringList getWatchList() const;
         /**
          * Return true if the given nickname is on the watch list.
          */
-        bool isWatchedNick(const QString& nickname);
+        bool isWatchedNick(const QString& nickname) const;
         /**
          * Returns a list of all the nicks on the watch list that are not in joined
          * channels.  ISON command is sent for these nicks.
          */
-        QStringList getISONList();
-        QString getISONListString();
+        QStringList getISONList() const;
+        QString getISONListString() const;
 
         ViewContainer* getViewContainer() const;
 

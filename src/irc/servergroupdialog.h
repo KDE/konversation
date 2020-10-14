@@ -37,7 +37,7 @@ namespace Konversation
             void setServerGroupSettings(ServerGroupSettingsPtr settings);
             ServerGroupSettingsPtr serverGroupSettings();
 
-            ServerSettings editedServer();
+            ServerSettings editedServer() const;
 
             int execAndEditServer(const ServerSettings &server);
 
@@ -89,11 +89,12 @@ namespace Konversation
             ~ServerDialog();
 
             void setServerSettings(const ServerSettings& server);
-            ServerSettings serverSettings();
+            ServerSettings serverSettings() const;
 
         protected Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
+
         private:
             Ui::ServerDialogUI* m_mainWidget;
             QPushButton *m_okButton;
@@ -108,7 +109,7 @@ namespace Konversation
             ~ChannelDialog();
 
             void setChannelSettings(const ChannelSettings& channel);
-            ChannelSettings channelSettings();
+            ChannelSettings channelSettings() const;
 
         protected Q_SLOTS:
             void slotOk();

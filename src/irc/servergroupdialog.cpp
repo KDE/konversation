@@ -151,7 +151,7 @@ namespace Konversation
         return settings;
     }
 
-    ServerSettings ServerGroupDialog::editedServer()
+    ServerSettings ServerGroupDialog::editedServer() const
     {
         if (m_editedServer && m_editedServerIndex < m_serverList.count())
         {
@@ -480,7 +480,7 @@ namespace Konversation
         m_mainWidget->m_proxyChBox->setChecked(!server.bypassProxy());
     }
 
-    ServerSettings ServerDialog::serverSettings()
+    ServerSettings ServerDialog::serverSettings() const
     {
         ServerSettings server;
         server.setHost(m_mainWidget->m_serverEdit->text());
@@ -542,7 +542,7 @@ namespace Konversation
         m_mainWidget->m_passwordEdit->setText(channel.password());
     }
 
-    ChannelSettings ChannelDialog::channelSettings()
+    ChannelSettings ChannelDialog::channelSettings() const
     {
         ChannelSettings channel;
         channel.setName(m_mainWidget->m_channelEdit->text());

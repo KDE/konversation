@@ -51,7 +51,7 @@ class NickInfo : public QSharedData
         QString getNetServer() const;
         QString getNetServerInfo() const;
         QDateTime getOnlineSince() const;
-        uint getNickColor();
+        uint getNickColor() const;
         /** Whether this user is identified with nickserv.
          *  Found only by doing /whois nick
          */
@@ -101,10 +101,10 @@ class NickInfo : public QSharedData
          *
          *  @return A string to show the user for the name of this contact
          */
-        QString getBestAddresseeName();
+        QString getBestAddresseeName() const;
 
         void setPrintedOnline(bool printed);
-        bool getPrintedOnline();
+        bool getPrintedOnline() const;
 
         QString account() const { return m_account; }
         void setAccount(const QString &name);
@@ -136,7 +136,7 @@ class NickInfo : public QSharedData
         bool m_printedOnline;
         /* The color index for lookup on Preferences::NickColor(index).name()
            Internally stored as index-1 to allow checking for 0 */
-        uint m_nickColor;
+        mutable uint m_nickColor;
 
         QString m_account;
 

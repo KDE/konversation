@@ -50,8 +50,8 @@ class NicksOnline : public ChatWindow
         ~NicksOnline() override;
 
         // These are here for the benefit of NicksOnlineTooltip.
-        QTreeWidget* getNickListView();
-        NickInfoPtr getNickInfo(const QTreeWidgetItem* item);
+        QTreeWidget* getNickListView() const;
+        NickInfoPtr getNickInfo(const QTreeWidgetItem* item) const;
 
         bool canBeFrontView()   override { return true; }
 
@@ -115,20 +115,21 @@ class NicksOnline : public ChatWindow
         * @param type              The type of entry to be found
         * @return                  Pointer to the child QListViewItem or 0 if not found.
         */
-        QTreeWidgetItem* findItemChild(const QTreeWidgetItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type);
+        QTreeWidgetItem* findItemChild(const QTreeWidgetItem* parent, const QString& name,
+                                       NicksOnlineItem::NickListViewColumn type) const;
         /**
         * Returns the first occurrence of a child item of a given type in a NicksOnlineItem
         * @param parent            Pointer to a NicksOnlineItem.
         * @param type              The type of entry to be found
         * @return                  Pointer to the child QListViewItem or 0 if not found.
         */
-        QTreeWidgetItem* findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type);
+        QTreeWidgetItem* findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type) const;
         /**
          * Returns a pointer to the network QListViewItem with the given name.
          * @param name              The name of the network, assumed to be in column 0 of the item.
          * @return                  Pointer to the QListViewItem or 0 if not found.
          */
-        QTreeWidgetItem* findNetworkRoot(int serverGroupId);
+        QTreeWidgetItem* findNetworkRoot(int serverGroupId) const;
         /**
          * Refresh the nicklistview for all servers.
          */
@@ -146,14 +147,14 @@ class NicksOnline : public ChatWindow
          * @return needWhois        True if a WHOIS needs to be performed on the nick
          *                          to get additional information.
          */
-        QString getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois);
+        QString getNickAdditionalInfo(NickInfoPtr nickInfo, bool& needWhois) const;
         /**
          * Returns the server name and nickname of the specified nicklistview item.
          * @param item              The nicklistview item.
          * @return serverName       Name of the server for the nick at the item, or Null if not a nick.
          * @return nickname         The nickname at the item.
          */
-        bool getItemServerAndNick(const QTreeWidgetItem* item, QString& serverName, QString& nickname);
+        bool getItemServerAndNick(const QTreeWidgetItem* item, QString& serverName, QString& nickname) const;
         /**
          * Given a server name and nickname, returns the item in the Nick List View displaying
          * the nick.
@@ -163,7 +164,7 @@ class NicksOnline : public ChatWindow
          *
          * @see getItemServerAndNick
          */
-        QTreeWidgetItem* getServerAndNickItem(const QString& serverName, const QString& nickname);
+        QTreeWidgetItem* getServerAndNickItem(const QString& serverName, const QString& nickname) const;
         /**
          * Perform an command.
          * @param id                The command id.  @ref CommandIDs.
@@ -192,7 +193,7 @@ class NicksOnline : public ChatWindow
          * @param nickname           Nick name.
          * @return                   NickInfo if nick is online in any server, otherwise 0.
          */
-        NickInfoPtr getOnlineNickInfo(QString& networkName, QString& nickname);
+        NickInfoPtr getOnlineNickInfo(const QString& networkName, const QString& nickname) const;
         /**
          * Requests a WHOIS for a specified server network and nickname.
          * The request is sent to the first server found in the network.

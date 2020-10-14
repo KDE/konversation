@@ -46,22 +46,22 @@ namespace Konversation
         return m_descriptiveNames;
     }
 
-    int IRCCharsets::availableEncodingsCount()
+    int IRCCharsets::availableEncodingsCount() const
     {
         return m_shortNames.count();
     }
 
-    QString IRCCharsets::shortNameToDescriptiveName( const QString& shortName )
+    QString IRCCharsets::shortNameToDescriptiveName(const QString& shortName) const
     {
         return m_descriptiveNames[ shortNameToIndex( shortName ) ];
     }
 
-    QString descriptiveNameToShortName( const QString& descriptiveName )
+    QString IRCCharsets::descriptiveNameToShortName(const QString& descriptiveName) const
     {
         return KCharsets::charsets()->encodingForName( descriptiveName );
     }
 
-    QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
+    QString IRCCharsets::ambiguousNameToShortName(const QString& ambiguousName) const
     {
         // simplify ambiguousName
         QString simplifiedAmbiguousName( ambiguousName.toLower() );
@@ -75,10 +75,10 @@ namespace Konversation
         return QString();
     }
 
-    int IRCCharsets::shortNameToIndex( const QString& shortName )
+    int IRCCharsets::shortNameToIndex(const QString& shortName) const
     {
         int index = 0;
-        for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
+        for ( QStringList::const_iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
         {
             if ( (*it) == shortName )
                 return index;
@@ -87,12 +87,12 @@ namespace Konversation
         return -1;
     }
 
-    bool IRCCharsets::isValidEncoding( const QString& shortName )
+    bool IRCCharsets::isValidEncoding(const QString& shortName) const
     {
         return ( m_shortNames.contains( shortName ) > 0 );
     }
 
-    QString IRCCharsets::encodingForLocale()
+    QString IRCCharsets::encodingForLocale() const
     {
         // Special cases
         // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
@@ -101,14 +101,14 @@ namespace Konversation
             return QStringLiteral("ISO-2022-JP");
 
         // it's a little hacky..
-        for (QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it)
+        for (QStringList::const_iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it)
             if (QTextCodec::codecForName( (*it).toLatin1() ) == QTextCodec::codecForLocale())
                 return *it;
 
         return QStringLiteral("UTF-8");
     }
 
-    QTextCodec* IRCCharsets::codecForName( const QString& shortName )
+    QTextCodec* IRCCharsets::codecForName(const QString& shortName) const
     {
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.

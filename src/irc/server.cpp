@@ -394,7 +394,7 @@ void Server::connectSignals()
         this, &Server::notifyListStarted, Qt::QueuedConnection);
 }
 
-int Server::getPort()
+int Server::getPort() const
 {
     return getConnectionSettings().server().port();
 }
@@ -582,7 +582,7 @@ void Server::setModesCount(int count)
     m_modesCount = count;
 }
 
-int Server::getModesCount()
+int Server::getModesCount() const
 {
     return m_modesCount;
 }
@@ -1541,7 +1541,7 @@ void Server::incoming()
     This is necessary because the irc server will clip messages so that the
     client receives a maximum of 512 bytes at once.
 */
-int Server::getPreLength(const QString& command, const QString& dest)
+int Server::getPreLength(const QString& command, const QString& dest) const
 {
     NickInfoPtr info = getNickInfo(getNickname());
     int hostMaskLength = 0;
@@ -1818,7 +1818,7 @@ void Server::ctcpReply(const QString &receiver,const QString &text)
 }
 
 // Given a nickname, returns NickInfo object.   0 if not found.
-NickInfoPtr Server::getNickInfo(const QString& nickname)
+NickInfoPtr Server::getNickInfo(const QString& nickname) const
 {
     QString lcNickname(nickname.toLower());
     if (m_allNicks.contains(lcNickname))
@@ -1844,7 +1844,7 @@ NickInfoPtr Server::obtainNickInfo(const QString& nickname)
     return nickInfo;
 }
 
-const NickInfoMap* Server::getAllNicks() { return &m_allNicks; }
+const NickInfoMap* Server::getAllNicks() const { return &m_allNicks; }
 
 // Returns the list of members for a channel in the joinedChannels list.
 // 0 if channel is not in the joinedChannels list.
@@ -1884,7 +1884,7 @@ const ChannelNickMap *Server::getChannelMembers(const QString& channelName) cons
 
 // Returns pointer to the ChannelNick (mode and pointer to NickInfo) for a given channel and nickname.
 // 0 if not found.
-ChannelNickPtr Server::getChannelNick(const QString& channelName, const QString& nickname)
+ChannelNickPtr Server::getChannelNick(const QString& channelName, const QString& nickname) const
 {
     QString lcNickname = nickname.toLower();
     const ChannelNickMap *channelNickMap = getChannelMembers(channelName);
@@ -1926,7 +1926,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
 }
 
 // Returns a list of all the joined channels that a nick is in.
-QStringList Server::getNickJoinedChannels(const QString& nickname)
+QStringList Server::getNickJoinedChannels(const QString& nickname) const
 {
     QString lcNickname = nickname.toLower();
     QStringList channellist;
@@ -1939,7 +1939,7 @@ QStringList Server::getNickJoinedChannels(const QString& nickname)
 }
 
 // Returns a list of all the channels (joined or unjoined) that a nick is in.
-QStringList Server::getNickChannels(const QString& nickname)
+QStringList Server::getNickChannels(const QString& nickname) const
 {
     QString lcNickname = nickname.toLower();
     QStringList channellist;
@@ -1955,7 +1955,7 @@ QStringList Server::getNickChannels(const QString& nickname)
     return channellist;
 }
 
-QStringList Server::getSharedChannels(const QString& nickname)
+QStringList Server::getSharedChannels(const QString& nickname) const
 {
     QString lcNickname = nickname.toLower();
     QStringList channellist;
@@ -1967,18 +1967,18 @@ QStringList Server::getSharedChannels(const QString& nickname)
     return channellist;
 }
 
-bool Server::isNickOnline(const QString &nickname)
+bool Server::isNickOnline(const QString &nickname) const
 {
     NickInfoPtr nickInfo = getNickInfo(nickname);
     return (nickInfo != nullptr);
 }
 
-QString Server::getOwnIpByNetworkInterface()
+QString Server::getOwnIpByNetworkInterface() const
 {
     return m_socket->localAddress().toString();
 }
 
-QString Server::getOwnIpByServerMessage()
+QString Server::getOwnIpByServerMessage() const
 {
     if(!m_ownIpByWelcome.isEmpty())
         return m_ownIpByWelcome;
@@ -2981,7 +2981,7 @@ void Server::updateChannelModeWidgets(const QString &channelName, char mode, con
     if(channel) channel->updateModeWidgets(mode,true,parameter);
 }
 
-Channel* Server::getChannelByName(const QString& name)
+Channel* Server::getChannelByName(const QString& name) const
 {
     if (name.isEmpty()) {
         return nullptr;
@@ -3004,7 +3004,7 @@ Channel* Server::getChannelByName(const QString& name)
     return nullptr;
 }
 
-Query* Server::getQueryByName(const QString& name)
+Query* Server::getQueryByName(const QString& name) const
 {
     // Convert wanted query name to lowercase
     QString wanted = name.toLower();
@@ -3017,7 +3017,7 @@ Query* Server::getQueryByName(const QString& name)
     return nullptr;
 }
 
-ChatWindow* Server::getChannelOrQueryByName(const QString& name)
+ChatWindow* Server::getChannelOrQueryByName(const QString& name) const
 {
     ChatWindow* window = getChannelByName(name);
 
@@ -3299,7 +3299,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
     if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
 }
 
-QStringList Server::getWatchList()
+QStringList Server::getWatchList() const
 {
     // no nickinfo ISON for the time being
     if (getServerGroup())
@@ -3313,7 +3313,7 @@ QStringList Server::getWatchList()
         return QStringList();
 }
 
-QStringList Server::getISONList()
+QStringList Server::getISONList() const
 {
     // no nickinfo ISON for the time being
     if (getServerGroup())
@@ -3327,12 +3327,12 @@ QStringList Server::getISONList()
         return QStringList();
 }
 
-QString Server::getISONListString() { return getISONList().join(QLatin1Char(' ')); }
+QString Server::getISONListString() const { return getISONList().join(QLatin1Char(' ')); }
 
 /**
  * Return true if the given nickname is on the watch list.
  */
-bool Server::isWatchedNick(const QString& nickname)
+bool Server::isWatchedNick(const QString& nickname) const
 {
     // no nickinfo ISON for the time being
     if (getServerGroup())

@@ -84,7 +84,7 @@ public:
         int m_rate;
         int m_interval;
         RateType m_type;
-        bool isValid()  { return m_rate > 0; }
+        bool isValid() const { return m_rate > 0; }
         bool operator==(const EmptyingRate& o) const
         {
             return (m_rate == o.m_rate && m_interval == o.m_interval && m_type == o.m_type)? true : false;
@@ -98,21 +98,21 @@ public:
     void reset();
     EmptyingRate& getRate();// { return &m_rate; }
 
-    bool isValid() { return m_rate.isValid(); }
-    bool isEmpty() { return m_pending.isEmpty(); }
+    bool isValid() const { return m_rate.isValid(); }
+    bool isEmpty() const { return m_pending.isEmpty(); }
 
     //WTF? why are there two of these.
     //These are decoupled for a reason, what is it?
-    int currentWait(); ///< Time in ms that the front has been waiting
-    int elapsed(); ///< How long has the queue been running since it was last started?
+    int currentWait() const; ///< Time in ms that the front has been waiting
+    int elapsed() const; ///< How long has the queue been running since it was last started?
 
-    int nextSize(); ///< Current size of front
-    int pendingMessages() { return m_pending.count(); }
+    int nextSize() const; ///< Current size of front
+    int pendingMessages() const { return m_pending.count(); }
     int linesSent() const; ///< count of lines sent by this queue
     int bytesSent() const; ///< count of bytes sent by this queue
 
     ///Time in milliseconds that the previous message waited
-    int lastWait() { return m_lastWait; }
+    int lastWait() const { return m_lastWait; }
 
 public Q_SLOTS:
     void sent(int bytes, int encodedBytes, IRCQueue *); ///< feedback statistics

@@ -46,7 +46,7 @@ QString TopicHistoryModel::authorPlaceholder()
 }
 
 
-QString TopicHistoryModel::currentTopic()
+QString TopicHistoryModel::currentTopic() const
 {
     if (m_topicList.isEmpty())
         return QString();
