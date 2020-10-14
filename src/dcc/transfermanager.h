@@ -85,8 +85,8 @@ namespace Konversation
                 bool hasActiveChats() const;
 
                 UPnP::UPnPRouter *getUPnPRouter() const;
-                void startupUPnP(void);
-                void shutdownUPnP(void);
+                void startupUPnP();
+                void shutdownUPnP();
 
             private:
                 /*

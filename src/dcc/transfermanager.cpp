@@ -78,7 +78,7 @@ namespace Konversation
             shutdownUPnP();
         }
 
-        void TransferManager::startupUPnP(void)
+        void TransferManager::startupUPnP()
         {
             m_upnpSocket = new UPnPMCastSocket();
 
@@ -87,7 +87,7 @@ namespace Konversation
             m_upnpSocket->discover();
         }
 
-        void TransferManager::shutdownUPnP(void)
+        void TransferManager::shutdownUPnP()
         {
             // This deletes the router too.
             delete m_upnpSocket;
