@@ -39,12 +39,12 @@ class AwayManager : public QObject
         /**
           * Marks all identities which have auto-away enabled as away.
           */
-        virtual void setManagedIdentitiesAway();
+        void setManagedIdentitiesAway();
 
         /**
           * Marks all identities which have auto-away and automatic un-away enabled as "not away".
           */
-        virtual void setManagedIdentitiesUnaway();
+        void setManagedIdentitiesUnaway();
 
         /**
           * Simulates user activity. This means the implementation should ensure
@@ -95,7 +95,7 @@ class AwayManager : public QObject
           * This first drops all active idle timers. Then it triggers recalculation
           * of all idle timers for all identities which have auto-away enabled.
           */
-        virtual void identitiesOnAutoAwayChanged();
+        void identitiesOnAutoAwayChanged();
 
         /**
           * An identity which has auto-away enabled went offline.
@@ -103,7 +103,7 @@ class AwayManager : public QObject
           *
           * @param identityId the ID of the identity which just went offline
           */
-        virtual void identityOnAutoAwayWentOnline(int identityId);
+        void identityOnAutoAwayWentOnline(int identityId);
 
         /**
           * An identity which has auto-away enabled went offline.
@@ -111,7 +111,7 @@ class AwayManager : public QObject
           *
           * @param identityId the ID of the identity which just went offline
           */
-        virtual void identityOnAutoAwayWentOffline(int identityId);
+        void identityOnAutoAwayWentOffline(int identityId);
 
         /**
           * Creates a new idle timer for the given identity with the given
