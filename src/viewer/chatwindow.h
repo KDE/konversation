@@ -106,7 +106,7 @@ class ChatWindow : public QWidget
          */
         virtual bool searchView();
 
-        virtual bool notificationsEnabled() { return m_notificationsEnabled; }
+        bool notificationsEnabled() const { return m_notificationsEnabled; }
 
         bool eventFilter(QObject* watched, QEvent* e) override;
 
