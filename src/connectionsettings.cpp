@@ -18,7 +18,7 @@ ConnectionSettings::ConnectionSettings()
     m_reconnectCount = 0;
 }
 
-bool ConnectionSettings::isValid()
+bool ConnectionSettings::isValid() const
 {
     if (m_server.host().isEmpty()) return false;
 

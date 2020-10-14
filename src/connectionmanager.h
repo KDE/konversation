@@ -40,8 +40,8 @@ class ConnectionManager : public QObject
             MatchByIdThenName
         };
 
-        Server* getServerByConnectionId(int connectionId);
-        Server* getServerByName(const QString& name, NameMatchFlags flags = MatchByName);
+        Server* getServerByConnectionId(int connectionId) const;
+        Server* getServerByName(const QString& name, NameMatchFlags flags = MatchByName) const;
 
 
     public Q_SLOTS:

@@ -1124,7 +1124,7 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
 }
 
 // auto replace on input/output
-QPair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos)
+QPair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos) const
 {
     // get autoreplace list
     QList<QStringList> autoreplaceList=Preferences::autoreplaceList();
@@ -1254,7 +1254,7 @@ QPair<QString, int> Application::doAutoreplace(const QString& text, bool output,
     return QPair<QString, int>(line, cursorPos);
 }
 
-void Application::doInlineAutoreplace(KTextEdit* textEdit)
+void Application::doInlineAutoreplace(KTextEdit* textEdit) const
 {
     QTextCursor cursor(textEdit->document());
 
@@ -1300,7 +1300,7 @@ void Application::openUrl(const QString& url)
     }
 }
 
-Konversation::Sound* Application::sound()
+Konversation::Sound* Application::sound() const
 {
     if (!m_sound)
         m_sound = new Konversation::Sound;

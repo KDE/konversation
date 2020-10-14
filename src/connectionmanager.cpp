@@ -644,7 +644,7 @@ QList<Server*> ConnectionManager::getServerList() const
     return serverList;
 }
 
-Server* ConnectionManager::getServerByConnectionId(int connectionId)
+Server* ConnectionManager::getServerByConnectionId(int connectionId) const
 {
     if (m_connectionList.contains(connectionId))
         return m_connectionList[connectionId];
@@ -652,7 +652,7 @@ Server* ConnectionManager::getServerByConnectionId(int connectionId)
         return nullptr;
 }
 
-Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags flags)
+Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags flags) const
 {
     if (flags == MatchByIdThenName)
     {

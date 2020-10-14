@@ -73,18 +73,18 @@ class Application : public QApplication
          *  Note to any MDI developer - get this to return any of the windows, or some
          *  'main' one.
          */
-        MainWindow* getMainWindow() { return mainWindow; }
+        MainWindow* getMainWindow() const { return mainWindow; }
 
-        ConnectionManager* getConnectionManager() { return m_connectionManager; }
-        AwayManager* getAwayManager() { return m_awayManager; }
-        ScriptLauncher* getScriptLauncher() { return m_scriptLauncher; }
-        Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
+        ConnectionManager* getConnectionManager() const { return m_connectionManager; }
+        AwayManager* getAwayManager() const { return m_awayManager; }
+        ScriptLauncher* getScriptLauncher() const { return m_scriptLauncher; }
+        Konversation::DCC::TransferManager* getDccTransferManager() const { return m_dccTransferManager; }
 
         // HACK
         void showQueueTuner(bool);
 
         // URL-Catcher
-        QStandardItemModel* getUrlModel() { return m_urlModel; }
+        QStandardItemModel* getUrlModel() const { return m_urlModel; }
 
         Application(int &argc, char **argv);
         ~Application() override;
@@ -113,19 +113,19 @@ class Application : public QApplication
 
         OSDWidget* osd;
 
-        Konversation::Sound* sound();
+        Konversation::Sound* sound() const;
 
         IRCQueue::EmptyingRate staticrates[Server::_QueueListSize];
 
-        Images* images() { return m_images; }
+        Images* images() const { return m_images; }
 
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
         // auto replacement for input or output lines
-        QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1);
+        QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1) const;
 
         // inline auto replacement for input lines
-        void doInlineAutoreplace(KTextEdit* textEdit);
+        void doInlineAutoreplace(KTextEdit* textEdit) const;
 
         void newInstance(QCommandLineParser *args);
 
@@ -188,7 +188,7 @@ class Application : public QApplication
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;
         QPointer<MainWindow> mainWindow;
-        Konversation::Sound* m_sound;
+        mutable Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
         Images* m_images;
         bool m_restartScheduled;

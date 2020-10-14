@@ -31,7 +31,7 @@ class KonsolePanel : public ChatWindow
 
         void setName(const QString& newName) override { ChatWindow::setName(newName); }
 
-        QWidget* getWidget();
+        QWidget* getWidget() const;
 
     Q_SIGNALS:
         void closeView(ChatWindow* view);

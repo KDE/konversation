@@ -23,7 +23,7 @@ class ConnectionSettings
     public:
         explicit ConnectionSettings();
 
-        bool isValid();
+        bool isValid() const;
 
         QString name() const;
 

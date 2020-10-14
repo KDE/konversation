@@ -93,7 +93,7 @@ KonsolePanel::~KonsolePanel()
     }
 }
 
-QWidget* KonsolePanel::getWidget()
+QWidget* KonsolePanel::getWidget() const
 {
     if (k_part)
         return k_part->widget();
