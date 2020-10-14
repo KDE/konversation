@@ -204,9 +204,9 @@ namespace Konversation
             OutputFilterResult changeMode(const QString& parameter, const QString& destination, char mode, char giveTake);
             bool isAChannel(const QString& check) const;
             bool isParameter(const QString& parameter, const QString& string) const;
-            OutputFilterResult usage(const QString& check);
-            OutputFilterResult info(const QString& check);
-            OutputFilterResult error(const QString& check);
+            static OutputFilterResult usage(const QString& check);
+            static OutputFilterResult info(const QString& check);
+            static OutputFilterResult error(const QString& check);
             QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
             bool checkForEncodingConflict(QString *line, const QString& target);
 

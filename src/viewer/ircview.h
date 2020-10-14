@@ -153,7 +153,7 @@ class IRCView : public QTextBrowser
         void voidLineBlock(const QTextBlock &rem);
 
         /// Shortcut to get an object format of the desired type
-        QTextCharFormat getFormat(ObjectFormats);
+        static QTextCharFormat getFormat(ObjectFormats);
 
         BlockStates objectFormatToBlockState(ObjectFormats format);
 
@@ -274,7 +274,7 @@ class IRCView : public QTextBrowser
         /// Parses the colors in <parm>text</parm> starting from <parm>start</parm>
         /// and returns them in the given fg and bg string, as well as information
         /// if the values are valid
-        inline QString getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
+        static QString getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* invalidFgVal, bool* invalidBgValue);
 
         QChar::Direction basicDirection(const QString &string);
 

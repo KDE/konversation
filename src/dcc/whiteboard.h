@@ -58,9 +58,9 @@ namespace Konversation
                 void rawWhiteBoardCommand(const QString& command);
 
             private:
-                inline QColor parseColor(const QString& colorString, bool* ok = nullptr);
-                inline QString colorToString(const QColor& color);
-                inline int fontToStyle(const QFont& font);
+                static QColor parseColor(const QString& colorString, bool* ok = nullptr);
+                static QString colorToString(const QColor& color);
+                static int fontToStyle(const QFont& font);
 
                 inline void emitDRCommand(WhiteBoardGlobals::WhiteBoardTool tool, int lineWidth,
                                          const QColor& penColor, const QColor& brushColor,
