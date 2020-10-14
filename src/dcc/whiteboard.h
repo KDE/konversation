@@ -71,6 +71,7 @@ namespace Konversation
                 inline void emitDo(const QString& doString);
                 inline void emitDont(const QString& doNotString);
 
+            private:
                 WhiteBoardToolBar* m_toolbar;
                 WhiteBoardPaintArea* m_paintArea;
         };

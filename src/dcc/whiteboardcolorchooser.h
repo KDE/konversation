@@ -62,6 +62,7 @@ namespace Konversation
 
             inline void drawSwapPixmap();
 
+        private:
             QColor m_foregroundColor;
             QColor m_backgroundColor;
 

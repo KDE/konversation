@@ -36,7 +36,7 @@ namespace Konversation
             protected:
                 void closeEvent(QCloseEvent* event) override;
 
-            protected Q_SLOTS:
+            private Q_SLOTS:
                 void currentFontChanged(const QFont& font);
                 void pointSizeChanged(const QString& size);
 

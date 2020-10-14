@@ -166,6 +166,7 @@ namespace Konversation
             inline QIcon getStatusIcon(Transfer::Status status) const;
             inline QString getStatusDescription(Transfer::Status status, Transfer::Type type, const QString& errorMessage = QString()) const;
 
+        private:
             QList<TransferItemData> m_transferList;
             QList<TransferHeaderData> m_headerList;
         };

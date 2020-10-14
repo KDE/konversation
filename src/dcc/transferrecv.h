@@ -73,7 +73,10 @@ namespace Konversation
                 void abort() override;
                 void startResume(quint64 position);
 
-            protected Q_SLOTS:
+            protected:
+                void cleanUp() override;
+
+            private Q_SLOTS:
                 // Local KIO
                 void slotLocalCanResume(KIO::Job *job, KIO::filesize_t size);
                 void slotLocalGotResult(KJob *job);
@@ -94,9 +97,7 @@ namespace Konversation
 
                 void sendReverseAck(bool error, quint16 port);
 
-            protected:
-                void cleanUp() override;
-
+            private:
                                                           // (startPosition == 0) means "don't resume"
                 void prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0);
                 void askAndPrepareLocalKio(const QString &message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0);
@@ -122,7 +123,7 @@ namespace Konversation
                 void startConnectionTimer(int secs);
                 void stopConnectionTimer();
 
-            protected:
+            private:
                 QUrl m_saveToTmpFileURL;
                 ///Current filesize of the file saved on the disk.
                 KIO::filesize_t m_saveToFileSize;
@@ -158,12 +159,12 @@ namespace Konversation
                                                           // ->  DccTransferRecv::slotWriteError()
                 void gotError(const QString &errorString);
 
-            protected Q_SLOTS:
+            private Q_SLOTS:
                                                           // <-  m_transferJob->dataReq()
                 void slotKIODataReq(KIO::Job *job, QByteArray &data);
                 void slotKIOResult(KJob *job);          // <-  m_transferJob->result()
 
-            protected:
+            private:
                 KIO::TransferJob *m_transferJob;
                 bool m_writeAsyncMode;
                 bool m_writeReady;

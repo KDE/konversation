@@ -107,7 +107,7 @@ namespace Konversation
 
                 void connected();
 
-            protected Q_SLOTS:
+            private Q_SLOTS:
                 void connectionEstablished();
                 void connectionFailed(QAbstractSocket::SocketError errorCode);
                 void heardPartner();
@@ -118,16 +118,16 @@ namespace Konversation
                 void sendRequest(bool error, quint16 port);
                 void sendReverseAck(bool error, quint16 port);
 
-            protected:
+            private:
                 void setStatus(Status status, const QString &detailMessage = QString());
 
                 void listenForPartner();
 
-            private:
                 inline Server *serverByConnectionId();
                 inline void failed(const QString &description);
                 inline void failedUPnP(const QString &description);
 
+            private:
                 QString m_ownNick;
                 quint16 m_ownPort;
                 QString m_ownIp;

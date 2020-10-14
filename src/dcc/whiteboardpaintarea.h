@@ -111,6 +111,7 @@ namespace Konversation
 
             inline void drawRect(QPainter* painter, int xFrom, int yFrom, int xTo, int yTo);
 
+        private:
             QPixmap* m_imagePixmap;
             QPixmap* m_overlayPixmap;
 

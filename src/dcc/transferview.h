@@ -81,7 +81,7 @@ namespace Konversation
             void scrollContentsBy(int dx, int dy) override;
             void keyPressEvent(QKeyEvent *event) override;
 
-        protected Q_SLOTS:
+        private Q_SLOTS:
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,
                                                int start, int end);
             void rowsRemovedFromModel(int start, int end);
@@ -106,6 +106,7 @@ namespace Konversation
 
             inline void addItem(Transfer *transfer, TransferItemData::ItemDisplayType type);
 
+        private:
             KCategoryDrawer *m_categoryDrawer;
 
             TransferListModel *m_dccModel;

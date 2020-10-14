@@ -43,7 +43,11 @@ namespace Konversation
                 void openLocation(Transfer *transfer);
                 void openFileInfoDialog(Transfer *transfer);
 
-            protected Q_SLOTS:
+            protected:
+                /** Called from ChatWindow adjustFocus */
+                void childAdjustFocus() override;
+
+            private Q_SLOTS:
                 void slotNewTransferAdded(Konversation::DCC::Transfer *transfer);
                 void slotTransferStatusChanged();
 
@@ -65,13 +69,10 @@ namespace Konversation
 
                 void setDetailPanelItem (const QItemSelection &newindex, const QItemSelection &oldindex);
 
-            protected:
-                /** Called from ChatWindow adjustFocus */
-                void childAdjustFocus() override;
-
             private:
                 inline void initGUI();
 
+            private:
                 TransferView *m_transferView;
                 QMenu *m_popup;
                 KToolBar *m_toolBar;

@@ -70,7 +70,7 @@ namespace Konversation
                 void save(const QString& filename);
                 void clear();
 
-            protected Q_SLOTS:
+            private Q_SLOTS:
                 void clearClicked();
                 void saveClicked();
 
@@ -108,6 +108,7 @@ namespace Konversation
 
                 inline void fillFormOptionList(FormOption form);
 
+            private:
                 QHash<Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool, QPushButton*> m_toggleButtonHash;
                 QPixmap m_lineWidthPixmap;
 

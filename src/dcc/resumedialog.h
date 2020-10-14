@@ -40,16 +40,17 @@ namespace Konversation
 
                 static ReceiveAction ask(TransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 
-            protected Q_SLOTS:
+            private Q_SLOTS:
                 void suggestNewName();
                 void setDefaultName();
                 void updateDialogButtons();
 
                 void buttonClicked(QAbstractButton*);
 
-            protected:
+            private:
                 ResumeDialog(Konversation::DCC::TransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<QDialogButtonBox::StandardButton> enabledButtonCodes, QDialogButtonBox::StandardButton defaultButtonCode);
 
+            private:
                 // UI
                 KUrlRequester* m_urlreqFileURL;
                 QCheckBox* m_overwriteDefaultPathCheckBox;

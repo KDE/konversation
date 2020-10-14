@@ -60,7 +60,10 @@ namespace Konversation
                 // invoked when the receiver accepts the offer (Reverse DCC)
                 void connectToReceiver(const QString &partnerHost, quint16 partnerPort);
 
-            protected Q_SLOTS:
+            protected:
+                void cleanUp() override;
+
+            private Q_SLOTS:
                 void acceptClient();
                 // it must be invoked when m_sendSocket is ready
                 void startSending();
@@ -72,14 +75,13 @@ namespace Konversation
                 void sendRequest(bool error, quint16 port);
                 void slotLocalCopyReady(KJob *job);
 
-            protected:
-                void cleanUp() override;
-
+            private:
                 void startConnectionTimer(int secs);
                 void stopConnectionTimer();
 
                 QString getQFileErrorString(int code) const;
 
+            private:
                 QFile m_file;
 
                 /* A temporary file that contains a local copy of a file.

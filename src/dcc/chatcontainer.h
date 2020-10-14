@@ -40,21 +40,20 @@ namespace Konversation
 
                 QString ownNick() const;
 
-            protected:
-                /** Called from ChatWindow adjustFocus */
-                void childAdjustFocus() override;
-
             public Q_SLOTS:
                 void setPartnerNick(const QString &nick);
 
-            public Q_SLOTS:
                 void textEntered();
                 void textPasted(const QString &text);
 
                 void receivedLine(const QString &line);
                 void chatStatusChanged(Konversation::DCC::Chat *chat, Konversation::DCC::Chat::Status newstatus, Konversation::DCC::Chat::Status oldstatus);
 
-            protected Q_SLOTS:
+            protected:
+                /** Called from ChatWindow adjustFocus */
+                void childAdjustFocus() override;
+
+            private Q_SLOTS:
                 void upnpError(const QString &errorMessage);
 
             private:
