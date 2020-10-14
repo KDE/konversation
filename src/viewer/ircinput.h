@@ -28,9 +28,9 @@ class IRCInput : public KTextEdit
         ~IRCInput() override;
 
         void setCompletionMode(char mode);
-        char getCompletionMode();
+        char getCompletionMode() const;
         void setOldCursorPosition(int pos);
-        int getOldCursorPosition();
+        int getOldCursorPosition() const;
         QString lastCompletion() const { return m_lastCompletion; }
         void doInlineAutoreplace();
 

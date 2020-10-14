@@ -237,7 +237,7 @@ namespace Konversation
         m_ui.topicHistoryView->setTextSelectable(edited);
     }
 
-    QString ChannelOptionsDialog::topic()
+    QString ChannelOptionsDialog::topic() const
     {
         return m_ui.topicEdit->toPlainText().replace(QLatin1Char('\n'), QLatin1Char(' '));
     }
@@ -415,7 +415,7 @@ namespace Konversation
         refreshEnableModes(true);
     }
 
-    QStringList ChannelOptionsDialog::modes()
+    QStringList ChannelOptionsDialog::modes() const
     {
         QStringList modes;
         QString mode;

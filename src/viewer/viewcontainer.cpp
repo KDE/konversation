@@ -2276,7 +2276,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     updateViewActions(m_tabWidget->currentIndex());
 }
 
-QString ViewContainer::currentViewTitle()
+QString ViewContainer::currentViewTitle() const
 {
     if (m_frontServer)
     {
@@ -2305,17 +2305,17 @@ QString ViewContainer::currentViewURL(bool passNetwork)
     return url;
 }
 
-int ViewContainer::getViewIndex(QWidget* widget)
+int ViewContainer::getViewIndex(QWidget* widget) const
 {
     return m_tabWidget->indexOf(widget);
 }
 
-ChatWindow* ViewContainer::getViewAt(int index)
+ChatWindow* ViewContainer::getViewAt(int index) const
 {
     return qobject_cast<ChatWindow*>(m_tabWidget->widget(index));
 }
 
-QList<QPair<QString,QString> > ViewContainer::getChannelsURI()
+QList<QPair<QString,QString> > ViewContainer::getChannelsURI() const
 {
     QList<QPair<QString,QString> > URIList;
 
@@ -2653,7 +2653,7 @@ void ViewContainer::deleteDccPanel()
     }
 }
 
-ChatWindow* ViewContainer::getDccPanel()
+ChatWindow* ViewContainer::getDccPanel() const
 {
     return m_dccPanel;
 }

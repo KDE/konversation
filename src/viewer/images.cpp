@@ -203,7 +203,7 @@ void Images::initializeNickIcons()
     }
 }
 
-QIcon Images::getLed(const QColor& col,bool state)
+QIcon Images::getLed(const QColor& col,bool state) const
 {
     Q_UNUSED(col)
     Q_UNUSED(state)
@@ -211,7 +211,7 @@ QIcon Images::getLed(const QColor& col,bool state)
     return QIcon(new LedIconEngine(col, state));
 }
 
-QIcon Images::getServerLed(bool state)
+QIcon Images::getServerLed(bool state) const
 {
     if (state)
         return m_serverLedOn;
@@ -219,7 +219,7 @@ QIcon Images::getServerLed(bool state)
         return m_serverLedOff;
 }
 
-QIcon Images::getSystemLed(bool state)
+QIcon Images::getSystemLed(bool state) const
 {
     if (Preferences::self()->tabNotificationsSystemColor()!=m_systemColor)
     {
@@ -237,7 +237,7 @@ QIcon Images::getSystemLed(bool state)
     }
 }
 
-QIcon Images::getMsgsLed(bool state)
+QIcon Images::getMsgsLed(bool state) const
 {
     if (Preferences::self()->tabNotificationsMsgsColor()!=m_msgsColor)
     {
@@ -255,7 +255,7 @@ QIcon Images::getMsgsLed(bool state)
     }
 }
 
-QIcon Images::getPrivateLed(bool state)
+QIcon Images::getPrivateLed(bool state) const
 {
     if (Preferences::self()->tabNotificationsPrivateColor()!=m_privateColor)
     {
@@ -273,7 +273,7 @@ QIcon Images::getPrivateLed(bool state)
     }
 }
 
-QIcon Images::getEventsLed()
+QIcon Images::getEventsLed() const
 {
     if (Preferences::self()->tabNotificationsEventsColor()!=m_eventsColor)
         return getLed(Preferences::self()->tabNotificationsEventsColor(),true);
@@ -281,7 +281,7 @@ QIcon Images::getEventsLed()
         return m_eventsLedOn;
 }
 
-QIcon Images::getNickLed()
+QIcon Images::getNickLed() const
 {
     if (Preferences::self()->tabNotificationsNickColor()!=m_nickColor)
         return getLed(Preferences::self()->tabNotificationsNickColor(),true);
@@ -289,7 +289,7 @@ QIcon Images::getNickLed()
         return m_nickLedOn;
 }
 
-QIcon Images::getHighlightsLed()
+QIcon Images::getHighlightsLed() const
 {
     if (Preferences::self()->tabNotificationsHighlightsColor()!=m_highlightsColor)
         return getLed(Preferences::self()->tabNotificationsHighlightsColor(),true);

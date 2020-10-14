@@ -33,8 +33,8 @@ namespace Konversation
             explicit ChannelOptionsDialog(Channel *channel);
             ~ChannelOptionsDialog() override;
 
-            QString topic();
-            QStringList modes();
+            QString topic() const;
+            QStringList modes() const;
 
             /**
              * Return the whatsThis string for a mode-change button.

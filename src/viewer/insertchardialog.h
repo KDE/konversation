@@ -30,7 +30,7 @@ namespace Konversation
             ~InsertCharDialog();
 
             void setFont(const QFont &font);
-            uint chr();
+            uint chr() const;
 
         protected Q_SLOTS:
             void charSelected();

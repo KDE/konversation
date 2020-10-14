@@ -72,7 +72,7 @@ class ChatWindow : public QWidget
         void setTextView(IRCView* newView);
         IRCView* getTextView() const;
         void setInputBar(IRCInput* newInputBar) { m_inputBar = newInputBar; }
-        IRCInput* getInputBar() { return m_inputBar; }
+        IRCInput* getInputBar() const { return m_inputBar; }
         virtual bool log();
 
         QString getName() const;
@@ -110,7 +110,7 @@ class ChatWindow : public QWidget
 
         bool eventFilter(QObject* watched, QEvent* e) override;
 
-        QString logFileName() { return logfile.fileName(); }
+        QString logFileName() const { return logfile.fileName(); }
 
         virtual void setChannelEncoding(const QString& /* encoding */) {}
         virtual QString getChannelEncoding() { return QString(); }

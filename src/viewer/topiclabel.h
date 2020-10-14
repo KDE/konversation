@@ -47,8 +47,8 @@ namespace Konversation
 
         protected:
             void updateSqueezedText();
-            QString rPixelSqueeze(const QString& text, int maxPixels);
-            int textWidth(const QString& text);
+            QString rPixelSqueeze(const QString& text, int maxPixels) const;
+            int textWidth(const QString& text) const;
             void leaveEvent (QEvent*) override;
             void contextMenuEvent(QContextMenuEvent* ev) override;
             void resizeEvent(QResizeEvent*) override;

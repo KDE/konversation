@@ -90,12 +90,12 @@ class ViewContainer : public QAbstractItemModel
         explicit ViewContainer(MainWindow* window);
         ~ViewContainer() override;
 
-        QSplitter* getWidget() { return m_viewTreeSplitter; }
-        MainWindow* getWindow() { return m_window; }
-        KActionCollection* actionCollection() { return m_window->actionCollection(); }
+        QSplitter* getWidget() const { return m_viewTreeSplitter; }
+        MainWindow* getWindow() const { return m_window; }
+        KActionCollection* actionCollection() const { return m_window->actionCollection(); }
 
-        QPointer<ChatWindow> getFrontView() { return m_frontView; }
-        Server* getFrontServer() { return m_frontServer; }
+        QPointer<ChatWindow> getFrontView() const { return m_frontView; }
+        Server* getFrontServer() const { return m_frontServer; }
 
         void prepareShutdown();
 
@@ -118,7 +118,7 @@ class ViewContainer : public QAbstractItemModel
 
         bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-        QString currentViewTitle();
+        QString currentViewTitle() const;
         QString currentViewURL(bool passNetwork = true);
 
         void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
@@ -126,10 +126,10 @@ class ViewContainer : public QAbstractItemModel
 
         void showQueueTuner(bool);
 
-        int getViewIndex(QWidget* widget);
-        ChatWindow* getViewAt(int index);
+        int getViewIndex(QWidget* widget) const;
+        ChatWindow* getViewAt(int index) const;
 
-        QList<QPair<QString,QString> > getChannelsURI();
+        QList<QPair<QString,QString> > getChannelsURI() const;
 
     public Q_SLOTS:
         void updateAppearance();
@@ -203,7 +203,7 @@ class ViewContainer : public QAbstractItemModel
         void addDccPanel();
         void closeDccPanel();
         void deleteDccPanel();
-        ChatWindow* getDccPanel();
+        ChatWindow* getDccPanel() const;
 
         void addDccChat(Konversation::DCC::Chat* myNick);
 

@@ -121,7 +121,7 @@ void SearchBar::showEvent(QShowEvent *e)
     m_searchEdit->selectAll();
 }
 
-bool SearchBar::focusedChild()
+bool SearchBar::focusedChild() const
 {
     QList<QWidget *> l = findChildren<QWidget *>();
 

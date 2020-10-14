@@ -560,8 +560,8 @@ void IRCInput::doInlineAutoreplace()
 // Accessor methods
 
 void IRCInput::setCompletionMode(char mode) { completionMode=mode; }
-char IRCInput::getCompletionMode() { return completionMode; }
+char IRCInput::getCompletionMode() const { return completionMode; }
 void IRCInput::setOldCursorPosition(int pos) { oldPos=pos; }
-int IRCInput::getOldCursorPosition() { return oldPos; }
+int IRCInput::getOldCursorPosition() const { return oldPos; }
 
 

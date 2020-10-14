@@ -46,15 +46,15 @@ class Images : public QObject
         Images();
         ~Images() override;
 
-        QIcon getLed(const QColor& col, bool state = true);
+        QIcon getLed(const QColor& col, bool state = true) const;
 
-        QIcon getServerLed(bool state);
-        QIcon getSystemLed(bool state);
-        QIcon getMsgsLed(bool state);
-        QIcon getPrivateLed(bool state);
-        QIcon getEventsLed();
-        QIcon getNickLed();
-        QIcon getHighlightsLed();
+        QIcon getServerLed(bool state) const;
+        QIcon getSystemLed(bool state) const;
+        QIcon getMsgsLed(bool state) const;
+        QIcon getPrivateLed(bool state) const;
+        QIcon getEventsLed() const;
+        QIcon getNickLed() const;
+        QIcon getHighlightsLed() const;
 
         QIcon getNickIcon(NickPrivilege privilege,bool isAway=false) const;
         QIcon getNickIconAwayOverlay() const;

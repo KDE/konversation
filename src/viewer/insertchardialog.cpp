@@ -57,7 +57,7 @@ namespace Konversation
         m_charTable->setFont(font.family());
     }
 
-    uint InsertCharDialog::chr()
+    uint InsertCharDialog::chr() const
     {
         return m_charTable->currentCodePoint();
     }

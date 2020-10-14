@@ -26,10 +26,10 @@ class IgnoreListViewItem : public QTreeWidgetItem
         ~IgnoreListViewItem() override;
 
         void setFlag(int flag,bool active);
-        bool getFlag(int flag) { return m_flags & flag; };
-        QString getName() { return text(0); };
+        bool getFlag(int flag) const { return m_flags & flag; };
+        QString getName() const { return text(0); };
         void setName(const QString &name) { setText(0, name); };
-        int getFlags() { return m_flags; };
+        int getFlags() const { return m_flags; };
 
         void setFlags(int flags);
     protected:

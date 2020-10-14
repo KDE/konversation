@@ -235,7 +235,7 @@ namespace Konversation
         updateSqueezedText();
     }
 
-    QString TopicLabel::rPixelSqueeze(const QString& text, int maxPixels)
+    QString TopicLabel::rPixelSqueeze(const QString& text, int maxPixels) const
     {
         int tw = textWidth(text);
 
@@ -269,9 +269,9 @@ namespace Konversation
         return text;
     }
 
-    int TopicLabel::textWidth(const QString& text)
+    int TopicLabel::textWidth(const QString& text) const
     {
-        QTextDocument document(this);
+        QTextDocument document;
         document.setDefaultFont(font());
         document.setHtml(QLatin1String("<qt>") + text + QLatin1String("</qt>"));
 

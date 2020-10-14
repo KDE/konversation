@@ -43,7 +43,6 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
     protected:
         void showEvent(QShowEvent* e) override;
         void hideEvent(QHideEvent* e) override;
-        bool focusedChild();
 
     private Q_SLOTS:
         void slotTextChanged();
@@ -59,6 +58,9 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         void signalSearchNext();
         void signalSearchPrevious();
         void hidden();
+
+    private:
+        bool focusedChild() const;
 
     private:
         QTimer* m_timer;
