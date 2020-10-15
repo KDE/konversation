@@ -222,14 +222,10 @@ void Server::purgeData()
     // Delete all the NickInfos and ChannelNick structures.
     m_allNicks.clear();
 
-    ChannelMembershipMap::ConstIterator it;
-
-    for ( it = m_joinedChannels.constBegin(); it != m_joinedChannels.constEnd(); ++it )
-        delete it.value();
+    qDeleteAll(m_joinedChannels);
     m_joinedChannels.clear();
 
-    for ( it = m_unjoinedChannels.constBegin(); it != m_unjoinedChannels.constEnd(); ++it )
-        delete it.value();
+    qDeleteAll(m_unjoinedChannels);
     m_unjoinedChannels.clear();
 
     m_queryNicks.clear();
