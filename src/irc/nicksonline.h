@@ -199,7 +199,7 @@ class NicksOnline : public ChatWindow
          * @param groupName          Server group name.
          * @param nickname           Nick name.
          */
-        void requestWhois(QString& networkName, QString& nickname);
+        void requestWhois(const QString& networkName, const QString& nickname);
         /**
          * Updates the notify list based on the current state of the tree
          */

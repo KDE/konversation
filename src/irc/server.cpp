@@ -1682,7 +1682,7 @@ int Server::_send_internal(QString outputLine)
     return sout;
 }
 
-void Server::toServer(QString&s, IRCQueue* q)
+void Server::toServer(const QString& s, IRCQueue* q)
 {
 
     int sizesent = _send_internal(s);

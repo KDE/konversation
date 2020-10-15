@@ -421,7 +421,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
  * @param groupName          Server group name.
  * @param nickname           Nick name.
  */
-void NicksOnline::requestWhois(QString& networkName, QString& nickname)
+void NicksOnline::requestWhois(const QString& networkName, const QString& nickname)
 {
     Application* konvApp = Application::instance();
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();

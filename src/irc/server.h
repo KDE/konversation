@@ -573,7 +573,7 @@ class Server : public QObject
         void incoming();
         void processIncomingData();
         /// Sends the QString to the socket. No longer has any internal concept of queueing
-        void toServer(QString&, IRCQueue *);
+        void toServer(const QString&, IRCQueue *);
         /// Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
         void closed();
         void broken(QAbstractSocket::SocketError error);
