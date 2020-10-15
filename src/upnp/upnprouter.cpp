@@ -94,10 +94,7 @@ namespace Konversation
 
         UPnPRouter::~UPnPRouter()
         {
-            QListIterator<Forwarding*> itr(forwards);
-            while (itr.hasNext())
-            {
-                Forwarding *check = itr.next();
+            for (Forwarding *check : qAsConst(forwards)) {
                 undoForward(check->port, check->proto);
             }
 
@@ -252,11 +249,7 @@ namespace Konversation
             {
                 Forwarding *forward = nullptr;
 
-                QListIterator<Forwarding*> itr(forwards);
-                while (itr.hasNext())
-                {
-                    Forwarding *check = itr.next();
-
+                for (Forwarding *check : qAsConst(forwards)) {
                     if (check->port == port && check->proto == proto)
                         forward = check;
                 }
