@@ -26,6 +26,8 @@
 #include <QDesktopServices>
 #include <QScrollArea>
 
+#include <algorithm>
+
 class ConfigDialog::ConfigDialogPrivate
 {
 public:
@@ -298,23 +300,15 @@ void ConfigDialog::ConfigDialogPrivate::_k_updateButtons()
     }
     only_once = true;
 
-    QMap<QWidget *, KConfigDialogManager *>::iterator it;
-
-    bool has_changed = manager->hasChanged() || q->hasChanged();
-    for (it = managerForPage.begin();
-            it != managerForPage.end() && !has_changed;
-            ++it) {
-        has_changed |= (*it)->hasChanged();
-    }
+    const bool has_changed = manager->hasChanged() || q->hasChanged() ||
+            std::any_of(managerForPage.cbegin(), managerForPage.cend(),
+                        [](KConfigDialogManager* manager) { return manager->hasChanged(); });
 
     setApplyButtonEnabled(has_changed);
 
-    bool is_default = manager->isDefault() && q->isDefault();
-    for (it = managerForPage.begin();
-            it != managerForPage.end() && is_default;
-            ++it) {
-        is_default &= (*it)->isDefault();
-    }
+    const bool is_default = manager->isDefault() && q->isDefault() &&
+            std::all_of(managerForPage.cbegin(), managerForPage.cend(),
+                        [](KConfigDialogManager* manager) { return manager->isDefault(); });
 
     setRestoreDefaultsButtonEnabled(!is_default);
 
@@ -332,29 +326,21 @@ void ConfigDialog::ConfigDialogPrivate::_k_settingsChangedSlot()
 void ConfigDialog::showEvent(QShowEvent *e)
 {
     if (!d->shown) {
-        QMap<QWidget *, KConfigDialogManager *>::iterator it;
-
         updateWidgets();
         d->manager->updateWidgets();
         for (KConfigDialogManager* manager : qAsConst(d->managerForPage)) {
             manager->updateWidgets();
         }
 
-        bool has_changed = d->manager->hasChanged() || hasChanged();
-        for (it = d->managerForPage.begin();
-                it != d->managerForPage.end() && !has_changed;
-                ++it) {
-            has_changed |= (*it)->hasChanged();
-        }
+        const bool has_changed = d->manager->hasChanged() || hasChanged() ||
+            std::any_of(d->managerForPage.cbegin(), d->managerForPage.cend(),
+                        [](KConfigDialogManager* manager) { return manager->hasChanged(); });
 
         d->setApplyButtonEnabled(has_changed);
 
-        bool is_default = d->manager->isDefault() && isDefault();
-        for (it = d->managerForPage.begin();
-                it != d->managerForPage.end() && is_default;
-                ++it) {
-            is_default &= (*it)->isDefault();
-        }
+        const bool is_default = d->manager->isDefault() && isDefault() &&
+            std::all_of(d->managerForPage.cbegin(), d->managerForPage.cend(),
+                        [](KConfigDialogManager* manager) { return manager->isDefault(); });
 
         d->setRestoreDefaultsButtonEnabled(!is_default);
 
