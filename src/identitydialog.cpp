@@ -22,6 +22,8 @@
 #include <KStandardGuiItem>
 #include <QVBoxLayout>
 
+#include <algorithm>
+
 namespace Konversation
 {
 
@@ -261,12 +263,12 @@ namespace Konversation
             return;
         }
 
-        ServerGroupHash serverGroups = Preferences::serverGroupHash();
-        QHashIterator<int, ServerGroupSettingsPtr> it(serverGroups);
-        bool found = false;
-
-        while (it.hasNext() && !found)
-            if (it.next().value()->identityId() == m_currentIdentity->id()) found = true;
+        const ServerGroupHash serverGroups = Preferences::serverGroupHash();
+        const int identityId = m_currentIdentity->id();
+        const bool found = std::any_of(serverGroups.begin(), serverGroups.end(),
+                                       [identityId](const ServerGroupSettingsPtr& serverGroup) {
+                                            return (serverGroup->identityId() == identityId);
+                                       });
 
         QString warningTxt;
 
