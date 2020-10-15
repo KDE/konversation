@@ -336,8 +336,8 @@ void ConfigDialog::showEvent(QShowEvent *e)
 
         updateWidgets();
         d->manager->updateWidgets();
-        for (it = d->managerForPage.begin(); it != d->managerForPage.end(); ++it) {
-            (*it)->updateWidgets();
+        for (KConfigDialogManager* manager : qAsConst(d->managerForPage)) {
+            manager->updateWidgets();
         }
 
         bool has_changed = d->manager->hasChanged() || hasChanged();

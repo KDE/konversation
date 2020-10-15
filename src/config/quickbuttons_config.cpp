@@ -50,12 +50,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 {
     buttonListView->clear();
 
-    QStringListIterator it(buttonList);
-
-    while (it.hasNext())
-    {
-        QString definition = it.next();
-
+    for (const QString& definition : buttonList) {
         QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList {
             definition.section(QLatin1Char(','), 0, 0),
             definition.section(QLatin1Char(','), 1)

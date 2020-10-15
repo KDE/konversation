@@ -91,15 +91,14 @@ void Theme_Config::loadSettings()
         // initialize index counter
         int i = 0;
         // iterate through all found theme directories
-        for(QStringList::ConstIterator it = m_dirs.constBegin(); it != m_dirs.constEnd(); ++it)
-        {
-            KDesktopFile themeRC(*it);
+        for (const QString& dir : qAsConst(m_dirs)) {
+            KDesktopFile themeRC(dir);
             // get the name and comment from the theme
             themeName = themeRC.readName();
             themeComment = themeRC.readComment();
 
             // extract folder name
-            themeDir=(*it).section(QLatin1Char('/'),-2,-2);
+            themeDir = dir.section(QLatin1Char('/'),-2,-2);
             // is this our currently used theme?
             if (themeDir==currentTheme)
             {
@@ -259,11 +258,10 @@ void Theme_Config::installTheme()
         qApp->processEvents();
 
         const KArchiveDirectory* themeDir = themeArchive->directory();
-        QStringList allEntries = themeDir->entries();
+        const QStringList allEntries = themeDir->entries();
 
-        for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
-        {
-            if (themeDir->entry(*it + QLatin1String("/index.desktop")) == nullptr) {
+        for (const QString& entry : allEntries) {
+            if (themeDir->entry(entry + QLatin1String("/index.desktop")) == nullptr) {
                 KMessageBox::error(nullptr,
                     i18n("Theme archive is invalid."),
                     i18n("Cannot Install Theme"),

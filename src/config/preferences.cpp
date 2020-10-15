@@ -161,14 +161,12 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 const QList<Konversation::ServerGroupSettingsPtr> Preferences::serverGroupsByServer(const QString& server)
 {
     QList<Konversation::ServerGroupSettingsPtr> serverGroups;
-    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(self()->mServerGroupHash);
-    while(it.hasNext())
-    {
-        it.next();
-        for (int i=0; i != it.value()->serverList().count(); i++)
-        {
-            if(it.value()->serverByIndex(i).host().toLower() == server)
-                serverGroups.append(it.value());
+    const Konversation::ServerGroupHash& serverGroupHash = self()->mServerGroupHash;
+    for (const auto& serverGroupSettings : serverGroupHash) {
+        const auto serverList = serverGroupSettings->serverList();
+        for (const auto& serverSertting : serverList) {
+            if (serverSertting.host().toLower() == server)
+                serverGroups.append(serverGroupSettings);
         }
     }
     return serverGroups;
@@ -191,10 +189,9 @@ QList<int> Preferences::serverGroupIdsByName(const QString& serverGroup)
 
 bool Preferences::isServerGroup(const QString& server)
 {
-    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(self()->mServerGroupHash);
-    while(it.hasNext())
-    {
-        if(it.next().value()->name().toLower() == server.toLower())
+    const Konversation::ServerGroupHash& serverGroupHash = self()->mServerGroupHash;
+    for (const auto& serverGroupSettings : serverGroupHash) {
+        if (serverGroupSettings->name().toLower() == server.toLower())
             return true;
     }
     return false;
@@ -300,13 +297,10 @@ bool Preferences::removeNotify(int serverGroupId, const QString& pattern)
     if (self()->mNotifyList.contains(serverGroupId))
     {
         QString lowered = pattern.toLower();
-        QStringList& oldList = self()->mNotifyList[serverGroupId];
+        const QStringList& oldList = self()->mNotifyList[serverGroupId];
         QStringList newList;
 
-        for (int i = 0; i < oldList.size(); ++i)
-        {
-            const QString& nick = oldList[i];
-
+        for (const QString& nick : oldList) {
             if (nick.toLower() != lowered)
                 newList << nick;
         }
@@ -353,17 +347,11 @@ void Preferences::setIdentityList(const IdentityList& list)
 
 const IdentityPtr Preferences::identityByName(const QString& name)
 {
-    QList<IdentityPtr> identities = identityList();
-    QList<IdentityPtr>::iterator it = identities.begin();
-
-    while(it != identities.end())
-    {
-        if((*it)->getName() == name)
-        {
-            return (*it);
+    const QList<IdentityPtr> identities = identityList();
+    for (const auto& identity : identities) {
+        if (identity->getName() == name) {
+            return identity;
         }
-
-        ++it;
     }
 
     // no self()->matching identity found, return default identity
@@ -372,16 +360,14 @@ const IdentityPtr Preferences::identityByName(const QString& name)
 
 const IdentityPtr Preferences::identityById(int id)
 {
-    QList<IdentityPtr> identList = identityList();
-    for(QList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
-    {
-        if((*it)->id() == id)
-        {
-            return (*it);
+    const QList<IdentityPtr> identities = identityList();
+    for (const auto& identity : identities) {
+        if (identity->id() == id) {
+            return identity;
         }
     }
 
-    return identList.first();
+    return identities.first();
 }
 
 QStringList Preferences::defaultAliasList()
@@ -475,13 +461,11 @@ const QString Preferences::channelEncoding(const QString& server,const QString& 
     //check all matching server's encodings
     //TODO when we rewrite dbus, allow for multiple encodings to be returned
     //for true 'duplicity compatibility'
-    QList<int> serverIds = serverGroupIdsByName(server);
-    QString codec;
+    const QList<int> serverIds = serverGroupIdsByName(server);
     if(serverIds.count() > 1)
     {
-        for (int i=0; i < serverIds.count(); i++)
-        {
-            codec = channelEncoding(serverIds.at(i),channel);
+        for (int serverId : serverIds) {
+            const QString codec = channelEncoding(serverId, channel);
             if(!codec.isEmpty())
                 return codec;
         }
@@ -502,11 +486,11 @@ const QString Preferences::channelEncoding(int serverGroupId,const QString& chan
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
     //set channel encoding for ALL matching servergroups
-    QList<int> serverIds = serverGroupIdsByName(server);
+    const QList<int> serverIds = serverGroupIdsByName(server);
     if(serverIds.count() > 1)
     {
-        for(int i=0; i < serverIds.count(); i++)
-            setChannelEncoding(serverIds.at(i),channel,encoding);
+        for (int serverId : serverIds)
+            setChannelEncoding(serverId, channel, encoding);
     }
     else
         setChannelEncoding(serverIds.first(),channel,encoding);

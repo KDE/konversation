@@ -61,10 +61,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
   // clear listView
   patternListView->clear();
   // go through the list
-  for (int index=0;index<autoreplaceList.count();index++)
-  {
-    // get autoreplace definition
-    QStringList definition=autoreplaceList[index];
+  for (const QStringList &definition : autoreplaceList) {
     // cut definition apart in name and action, and create a new listview item
     QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);

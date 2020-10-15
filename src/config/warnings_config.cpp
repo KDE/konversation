@@ -197,18 +197,16 @@ void Warnings_Config::loadSettings()
           "... closing the window will minimize to the system tray"
         )}
     };
-    static const int definitionsCount = sizeof(warningDialogDefinitions) / sizeof(warningDialogDefinitions[0]);
 
     dialogListView->clear();
 
     KSharedConfigPtr config = KSharedConfig::openConfig();
     KConfigGroup grp =  config->group("Notification Messages");
 
-    for (int i = 0; i < definitionsCount; ++i)
-    {
-        const QLatin1String flagName(warningDialogDefinitions[i].flagName);
-        const char * const message(warningDialogDefinitions[i].message);
-        const char * const ctx(warningDialogDefinitions[i].context);
+    for (const auto& warningDialogDefinition : warningDialogDefinitions) {
+        const QLatin1String flagName(warningDialogDefinition.flagName);
+        const char * const message(warningDialogDefinition.message);
+        const char * const ctx(warningDialogDefinition.context);
 
         QTreeWidgetItem *item = new QTreeWidgetItem(dialogListView);
         item->setText(0, i18nc(ctx, message));

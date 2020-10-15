@@ -39,16 +39,13 @@ Highlight_Config::Highlight_Config(QWidget* parent, const QString& name)
     {
         QDir dir;
         dir.setFilter( QDir::Files | QDir::Readable );
-        QStringList::ConstIterator it = soundDirs.constBegin();
-        while ( it != soundDirs.constEnd() )
-        {
-            dir.setPath(*it);
+        for (const QString& soundDir : qAsConst(soundDirs)) {
+            dir.setPath(soundDir);
             if ( dir.isReadable() && dir.count() > 2 )
             {
-                soundURL->setStartDir(QUrl::fromLocalFile(*it));
+                soundURL->setStartDir(QUrl::fromLocalFile(soundDir));
                 break;
             }
-            ++it;
         }
     }
     // End copy

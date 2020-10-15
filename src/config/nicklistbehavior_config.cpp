@@ -39,10 +39,7 @@ void NicklistBehavior_Config::loadSettings()
 void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
 {
   sortOrder->clear();
-  for(int index = 0; index < sortingOrder.length() ; ++index)
-  {
-    // get next mode char
-    QChar mode=sortingOrder[index];
+  for (QChar mode : sortingOrder) {
     QTreeWidgetItem *item = nullptr;
     // find appropriate description
     if (mode == QLatin1Char('-')) item = new QTreeWidgetItem(sortOrder, QStringList { mode, i18n("Normal Users") });
