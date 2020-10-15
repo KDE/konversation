@@ -389,14 +389,12 @@ namespace Konversation
 
             //Now we create the directories
 
-            QList<QUrl>::ConstIterator it;
-            for (it=dirList.constBegin(); it != dirList.constEnd(); ++it)
-            {
-                KIO::StatJob* statJob = KIO::statDetails(*it, KIO::StatJob::SourceSide, KIO::StatNoDetails);
+            for (const QUrl& dir : qAsConst(dirList)) {
+                KIO::StatJob* statJob = KIO::statDetails(dir, KIO::StatJob::SourceSide, KIO::StatNoDetails);
                 statJob->exec();
                 if (statJob->error())
                 {
-                    KIO::MkdirJob* job = KIO::mkdir(*it, -1);
+                    KIO::MkdirJob* job = KIO::mkdir(dir, -1);
                     if (!job->exec())
                     {
                         return false;
