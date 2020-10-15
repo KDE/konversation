@@ -18,6 +18,7 @@
 #include <KMessageBox>
 #include <KStandardGuiItem>
 
+#include <algorithm>
 
 namespace Konversation
 {
@@ -157,7 +158,6 @@ namespace Konversation
       {
         const ChannelList history = server->getServerGroup()->channelHistory();
         const QList<Channel *> &channels = server->getChannelList();
-        bool joined = false;
         // Append an empty string as first item
         QStringList channelHistory;
         channelHistory << QString();
@@ -167,12 +167,9 @@ namespace Konversation
           if (channelName.isEmpty())
             continue;
 
-          joined = false;
-
-          for (Channel* chan : channels) {
-            if (chan->getName() == channelName)
-              joined = true;
-          }
+          const bool joined = std::any_of(channels.begin(), channels.end(), [&](Channel* chan) {
+            return (chan->getName() == channelName);
+          });
 
           if(!joined)
             channelHistory << channel.name();
