@@ -668,45 +668,39 @@ void Application::readOptions()
 
     //Legacy channel encodings read in Jun. 29, 2009
     KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group("Channel Encodings"));
-    QMap<QString,QString> channelEncodingEntries=cgChannelEncodings.entryMap();
+    const QMap<QString,QString> channelEncodingEntries = cgChannelEncodings.entryMap();
     const QRegularExpression re(QStringLiteral("^(.+) ([^\\s]+)$"));
-    QList<QString> channelEncodingEntryKeys=channelEncodingEntries.keys();
 
-    for(QList<QString>::const_iterator itStr=channelEncodingEntryKeys.constBegin(); itStr != channelEncodingEntryKeys.constEnd(); ++itStr)
-    {
-        const QRegularExpressionMatch match = re.match(*itStr);
+    for (auto it = channelEncodingEntries.begin(), end = channelEncodingEntries.end(); it != end; ++it) {
+        const QRegularExpressionMatch match = re.match(it.key());
         if(match.hasMatch())
         {
-            Preferences::setChannelEncoding(match.captured(1), match.captured(2), channelEncodingEntries[*itStr]);
+            Preferences::setChannelEncoding(match.captured(1), match.captured(2), it.value());
         }
     }
     //End legacy channel encodings read in Jun 29, 2009
 
     KConfigGroup cgEncodings(KSharedConfig::openConfig()->group("Encodings"));
-    QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
-    QList<QString> encodingEntryKeys=encodingEntries.keys();
+    const QMap<QString,QString> encodingEntries = cgEncodings.entryMap();
 
     const QRegularExpression reg(QStringLiteral("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$"));
-    for(QList<QString>::const_iterator itStr=encodingEntryKeys.constBegin(); itStr != encodingEntryKeys.constEnd(); ++itStr)
-    {
-        const QRegularExpressionMatch match = reg.match(*itStr);
+    for (auto it = encodingEntries.begin(), end = encodingEntries.end(); it != end; ++it) {
+        const QRegularExpressionMatch match = reg.match(it.key());
         if(match.hasMatch())
         {
             if(match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
-                Preferences::setChannelEncoding(sgKeys.at(match.captured(2).toInt()), match.captured(3), encodingEntries[*itStr]);
+                Preferences::setChannelEncoding(sgKeys.at(match.captured(2).toInt()), match.captured(3), it.value());
             else
-                Preferences::setChannelEncoding(match.captured(1), match.captured(2), encodingEntries[*itStr]);
+                Preferences::setChannelEncoding(match.captured(1), match.captured(2), it.value());
         }
     }
 
     // Spell Checking Languages
     KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group("Spell Checking Languages"));
-    QMap<QString, QString> spellCheckingLanguageEntries=cgSpellCheckingLanguages.entryMap();
-    QList<QString> spellCheckingLanguageEntryKeys=spellCheckingLanguageEntries.keys();
+    const QMap<QString, QString> spellCheckingLanguageEntries = cgSpellCheckingLanguages.entryMap();
 
-    for (QList<QString>::const_iterator itStr=spellCheckingLanguageEntryKeys.constBegin(); itStr != spellCheckingLanguageEntryKeys.constEnd(); ++itStr)
-    {
-        const QRegularExpressionMatch match = reg.match(*itStr);
+    for (auto it = spellCheckingLanguageEntries.begin(), end = spellCheckingLanguageEntries.end(); it != end; ++it) {
+        const QRegularExpressionMatch match = reg.match(it.key());
         if (match.hasMatch())
         {
             if (match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
@@ -714,10 +708,10 @@ void Application::readOptions()
                 ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(match.captured(2).toInt()));
 
                 if (serverGroup)
-                    Preferences::setSpellCheckingLanguage(serverGroup, match.captured(3), spellCheckingLanguageEntries[*itStr]);
+                    Preferences::setSpellCheckingLanguage(serverGroup, match.captured(3), it.value());
             }
             else
-                Preferences::setSpellCheckingLanguage(match.captured(1), match.captured(2), spellCheckingLanguageEntries[*itStr]);
+                Preferences::setSpellCheckingLanguage(match.captured(1), match.captured(2), it.value());
         }
     }
 
