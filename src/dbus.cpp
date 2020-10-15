@@ -217,11 +217,14 @@ IdentDBus::IdentDBus(QObject *parent)
 QStringList IdentDBus::listIdentities()
 {
     QStringList identities;
-    IdentityList ids = Preferences::identityList();
-    for(IdentityList::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it)
-    {
-        identities.append((*it)->getName());
+
+    const IdentityList ids = Preferences::identityList();
+    identities.reserve(ids.size());
+
+    for (const auto& id : ids) {
+        identities.append(id->getName());
     }
+
     sterilizeUnicode(identities);
     return identities;
 }
@@ -230,13 +233,11 @@ void IdentDBus::setrealName(const QString &_id_name, const QString& name)
 {
     QString id_name(sterilizeUnicode(_id_name));
 
-    IdentityList ids = Preferences::identityList();
+    const IdentityList ids = Preferences::identityList();
 
-    for(IdentityList::iterator it = ids.begin(); it != ids.end(); ++it)
-    {
-        if ((*it)->getName() == id_name)
-        {
-            (*it)->setRealName(sterilizeUnicode(name));
+    for (const auto& id : ids) {
+        if (id->getName() == id_name) {
+            id->setRealName(sterilizeUnicode(name));
             return;
         }
     }
@@ -247,13 +248,11 @@ QString IdentDBus::getrealName(const QString &_id_name)
 {
     QString id_name(sterilizeUnicode(_id_name));
 
-    IdentityList ids = Preferences::identityList();
+    const IdentityList ids = Preferences::identityList();
 
-    for(IdentityList::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it)
-    {
-        if ((*it)->getName() == id_name)
-        {
-            return sterilizeUnicode((*it)->getRealName());
+    for (const auto& id : ids) {
+        if (id->getName() == id_name) {
+            return sterilizeUnicode(id->getRealName());
         }
     }
 

@@ -184,11 +184,10 @@ void Application::newInstance(QCommandLineParser *args)
         QStringList aliasList(Preferences::self()->aliasList());
         const QStringList scripts(Preferences::defaultAliasList());
         bool changed = false;
-        for ( QStringList::ConstIterator it = scripts.constBegin(); it != scripts.constEnd(); ++it )
-        {
-            if(!aliasList.contains(*it)) {
+        for (const QString& script : scripts) {
+            if (!aliasList.contains(script)) {
                 changed = true;
-                aliasList.append(*it);
+                aliasList.append(script);
             }
         }
         if(changed)
@@ -213,19 +212,15 @@ void Application::newInstance(QCommandLineParser *args)
         bool openServerList = Preferences::self()->showServerList();
 
         // handle autoconnect on startup
-        Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
+        const Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
         if (!args->isSet(QStringLiteral("noautoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
         {
             QList<ServerGroupSettingsPtr> serversToAutoconnect;
-            QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
-            while(it.hasNext())
-            {
-                it.next();
-                if (it.value()->autoConnectEnabled())
-                {
+            for (const auto& server : serverGroups) {
+                if (server->autoConnectEnabled()) {
                     openServerList = false;
-                    serversToAutoconnect << it.value();
+                    serversToAutoconnect << server;
                 }
             }
 
@@ -234,9 +229,8 @@ void Application::newInstance(QCommandLineParser *args)
                 return left->sortIndex() < right->sortIndex();
             });
 
-            for (QList<ServerGroupSettingsPtr>::iterator it = serversToAutoconnect.begin(); it != serversToAutoconnect.end(); ++it)
-            {
-                m_connectionManager->connectTo(Konversation::CreateNewConnection, (*it)->id());
+            for (const auto& server : qAsConst(serversToAutoconnect)) {
+                m_connectionManager->connectTo(Konversation::CreateNewConnection, server->id());
             }
         }
 
@@ -390,10 +384,9 @@ void Application::readOptions()
     {
         Preferences::clearIdentityList();
 
-        for(int index=0;index<identityList.count();index++)
-        {
+        for (const QString& identityGroup : identityList) {
             IdentityPtr newIdentity(new Identity());
-            KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(identityList[index]));
+            KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(identityGroup));
 
             newIdentity->setName(cgIdentity.readEntry("Name"));
 
@@ -458,7 +451,7 @@ void Application::readOptions()
     KConfigGroup cgServerList(KSharedConfig::openConfig()->group("Server List"));
 
     // Read the new server settings
-    QStringList groups = KSharedConfig::openConfig()->groupList().filter(
+    const QStringList groups = KSharedConfig::openConfig()->groupList().filter(
                                         QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
     QList<int> sgKeys;
@@ -466,17 +459,13 @@ void Application::readOptions()
     if(!groups.isEmpty())
     {
         Konversation::ServerGroupHash serverGroups;
-        QStringList::iterator it;
-        QStringList tmp1;
-        QStringList::iterator it2;
         int index = 0;
         Konversation::ChannelList channelHistory;
         Konversation::ServerSettings server;
         Konversation::ChannelSettings channel;
 
-        for (it = groups.begin(); it != groups.end(); ++it)
-        {
-            KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(*it));
+        for (const QString& groupName : groups) {
+            KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(groupName));
             Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
             serverGroup->setName(cgServerGroup.readEntry("Name"));
             serverGroup->setSortIndex(groups.at(index).section(QLatin1Char(' '), -1).toInt());
@@ -488,10 +477,9 @@ void Application::readOptions()
 
             notifyList.insert((*serverGroup).id(), cgServerGroup.readEntry("NotifyList", QString()).split(QLatin1Char(' '), QString::SkipEmptyParts));
 
-            tmp1 = cgServerGroup.readEntry("ServerList", QStringList());
-            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
-            {
-                KConfigGroup cgServer(KSharedConfig::openConfig()->group(*it2));
+            const QStringList serverNames = cgServerGroup.readEntry("ServerList", QStringList());
+            for (const QString& serverName : serverNames) {
+                KConfigGroup cgServer(KSharedConfig::openConfig()->group(serverName));
                 server.setHost(cgServer.readEntry("Server"));
                 server.setPort(cgServer.readEntry<int>("Port", 0));
                 server.setPassword(cgServer.readEntry("Password"));
@@ -500,12 +488,11 @@ void Application::readOptions()
                 serverGroup->addServer(server);
             }
 
-            //config->setGroup((*it));
-            tmp1 = cgServerGroup.readEntry("AutoJoinChannels", QStringList());
+            //config->setGroup(groupName);
+            const QStringList autoJoinChannels = cgServerGroup.readEntry("AutoJoinChannels", QStringList());
 
-            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
-            {
-                KConfigGroup cgJoin(KSharedConfig::openConfig()->group(*it2));
+            for (const QString& channelName : autoJoinChannels) {
+                KConfigGroup cgJoin(KSharedConfig::openConfig()->group(channelName));
 
                 if (!cgJoin.readEntry("Name").isEmpty())
                 {
@@ -515,13 +502,12 @@ void Application::readOptions()
                 }
             }
 
-            //config->setGroup((*it));
-            tmp1 = cgServerGroup.readEntry("ChannelHistory", QStringList());
+            //config->setGroup(groupName);
+            const QStringList channelHistoryList = cgServerGroup.readEntry("ChannelHistory", QStringList());
             channelHistory.clear();
 
-            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
-            {
-                KConfigGroup cgChanHistory(KSharedConfig::openConfig()->group(*it2));
+            for (const QString& channelName : channelHistoryList) {
+                KConfigGroup cgChanHistory(KSharedConfig::openConfig()->group(channelName));
 
                 if (!cgChanHistory.readEntry("Name").isEmpty())
                 {
@@ -752,18 +738,15 @@ void Application::saveOptions(bool updateGUI)
     // Clean up identity list
     const QStringList identities=KSharedConfig::openConfig()->groupList().filter(
                                             QRegularExpression(QStringLiteral("Identity [0-9]+")));
-    if (!identities.isEmpty()) {
-        // remove old identity list from Preferences::file to keep numbering under control
-        for (int index=0; index < identities.count(); index++)
-            KSharedConfig::openConfig()->deleteGroup(identities[index]);
+    // remove old identity list from Preferences::file to keep numbering under control
+    for (const QString& identityGroup : identities) {
+        KSharedConfig::openConfig()->deleteGroup(identityGroup);
     }
 
-    IdentityList identityList = Preferences::identityList();
+    const IdentityList identityList = Preferences::identityList();
     int index = 0;
 
-    for (IdentityList::ConstIterator it = identityList.constBegin(); it != identityList.constEnd(); ++it)
-    {
-        IdentityPtr identity = (*it);
+    for (const auto& identity : identityList) {
         KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(QStringLiteral("Identity %1").arg(index)));
 
         cgIdentity.writeEntry("Name",identity->getName());
@@ -794,51 +777,38 @@ void Application::saveOptions(bool updateGUI)
     } // endfor
 
     // Remove the old servergroups from the config
-    QStringList groups = KSharedConfig::openConfig()->groupList().filter(
-                                            QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
-    if (!groups.isEmpty()) {
-        QStringList::iterator it;
-        for(it = groups.begin(); it != groups.end(); ++it)
-        {
-            KSharedConfig::openConfig()->deleteGroup((*it));
-        }
+    const QStringList serverGroupGroups =
+        KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
+
+    for (const QString& serverGroupGroup : serverGroupGroups) {
+        KSharedConfig::openConfig()->deleteGroup(serverGroupGroup);
     }
 
     // Remove the old servers from the config
-    groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Server [0-9]+")));
-    if (!groups.isEmpty()) {
-        QStringList::iterator it;
-        for(it = groups.begin(); it != groups.end(); ++it)
-        {
-            KSharedConfig::openConfig()->deleteGroup((*it));
-        }
+    const QStringList serverGroups =
+        KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Server [0-9]+")));
+
+    for (const QString& serverGroup : serverGroups) {
+        KSharedConfig::openConfig()->deleteGroup(serverGroup);
     }
 
     // Remove the old channels from the config
-    groups = KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Channel [0-9]+")));
-    if (!groups.isEmpty()) {
-        QStringList::iterator it;
-        for(it = groups.begin(); it != groups.end(); ++it)
-        {
-            KSharedConfig::openConfig()->deleteGroup((*it));
-        }
+    const QStringList channelGroups =
+        KSharedConfig::openConfig()->groupList().filter(QRegularExpression(QStringLiteral("Channel [0-9]+")));
+
+    for (const QString& channelGroup : channelGroups) {
+        KSharedConfig::openConfig()->deleteGroup(channelGroup);
     }
 
     // Add the new servergroups to the config
-    Konversation::ServerGroupHash serverGroupHash = Preferences::serverGroupHash();
-    QHashIterator<int, Konversation::ServerGroupSettingsPtr> hashIt(serverGroupHash);
+    const Konversation::ServerGroupHash serverGroupHash = Preferences::serverGroupHash();
 
     QMap<int, Konversation::ServerGroupSettingsPtr> sortedServerGroupMap;
 
     // Make the indices in the group headers reflect the server list dialog sorting.
-    while (hashIt.hasNext())
-    {
-        hashIt.next();
-
-        sortedServerGroupMap.insert(hashIt.value()->sortIndex(), hashIt.value());
+    for (const auto& serverGroup : serverGroupHash) {
+        sortedServerGroupMap.insert(serverGroup->sortIndex(), serverGroup);
     }
-
-    QMapIterator<int, Konversation::ServerGroupSettingsPtr> it(sortedServerGroupMap);
 
     index = 0;
     int index2 = 0;
@@ -847,77 +817,68 @@ void Application::saveOptions(bool updateGUI)
     QList<int> keys = serverGroupHash.keys();
     for(int i=0; i<keys.count(); i++)
         if(width < keys.at(i)) width = keys.at(i);
-    width = QString(width).length();
-    QString groupName;
+    width = QString(width).length(); // TODO: broken, always yield 1
     QStringList servers;
-    Konversation::ServerList::iterator it2;
-    Konversation::ServerList serverlist;
-    Konversation::ChannelList channelList;
-    Konversation::ChannelList::iterator it3;
     QStringList channels;
     QStringList channelHistory;
     QList<int> sgKeys;
 
-    while(it.hasNext())
-    {
-        it.next();
-        serverlist = (it.value())->serverList();
+    for (const auto& serverGroup : qAsConst(sortedServerGroupMap)) {
+        const Konversation::ServerList serverList = serverGroup->serverList();
         servers.clear();
 
-        sgKeys.append(it.value()->id());
+        sgKeys.append(serverGroup->id());
 
-        for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
-        {
-            groupName = QStringLiteral("Server %1").arg(index2);
+        for (const auto& server : serverList) {
+            const QString groupName = QStringLiteral("Server %1").arg(index2);
             servers.append(groupName);
             KConfigGroup cgServer(KSharedConfig::openConfig()->group(groupName));
-            cgServer.writeEntry("Server", (*it2).host());
-            cgServer.writeEntry("Port", (*it2).port());
-            cgServer.writeEntry("Password", (*it2).password());
-            cgServer.writeEntry("SSLEnabled", (*it2).SSLEnabled());
-            cgServer.writeEntry("BypassProxy", (*it2).bypassProxy());
+            cgServer.writeEntry("Server", server.host());
+            cgServer.writeEntry("Port", server.port());
+            cgServer.writeEntry("Password", server.password());
+            cgServer.writeEntry("SSLEnabled", server.SSLEnabled());
+            cgServer.writeEntry("BypassProxy", server.bypassProxy());
             index2++;
         }
 
-        channelList = it.value()->channelList();
+        const Konversation::ChannelList channelList = serverGroup->channelList();
         channels.clear();
 
-        for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
-        {
-            groupName = QStringLiteral("Channel %1").arg(index3);
+        for (const auto& channel : channelList) {
+            const QString groupName = QStringLiteral("Channel %1").arg(index3);
             channels.append(groupName);
             KConfigGroup cgChannel(KSharedConfig::openConfig()->group(groupName));
-            cgChannel.writeEntry("Name", (*it3).name());
-            cgChannel.writeEntry("Password", (*it3).password());
+            cgChannel.writeEntry("Name", channel.name());
+            cgChannel.writeEntry("Password", channel.password());
             index3++;
         }
 
-        channelList = it.value()->channelHistory();
+        const Konversation::ChannelList channelHistoryList = serverGroup->channelHistory();
         channelHistory.clear();
 
-        for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
-        {   // TODO FIXME: is it just me or is this broken?
-            groupName = QStringLiteral("Channel %1").arg(index3);
+        for (const auto& channel : channelHistoryList) {
+            // TODO FIXME: is it just me or is this broken?
+            const QString groupName = QStringLiteral("Channel %1").arg(index3);
             channelHistory.append(groupName);
             KConfigGroup cgChannelHistory(KSharedConfig::openConfig()->group(groupName));
-            cgChannelHistory.writeEntry("Name", (*it3).name());
-            cgChannelHistory.writeEntry("Password", (*it3).password());
-            cgChannelHistory.writeEntry("EnableNotifications", (*it3).enableNotifications());
+            cgChannelHistory.writeEntry("Name", channel.name());
+            cgChannelHistory.writeEntry("Password", channel.password());
+            cgChannelHistory.writeEntry("EnableNotifications", channel.enableNotifications());
             index3++;
         }
 
         QString sgn = QStringLiteral("ServerGroup %1").arg(QString::number(index).rightJustified(width,QLatin1Char('0')));
         KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(sgn));
-        cgServerGroup.writeEntry("Name", it.value()->name());
-        cgServerGroup.writeEntry("Identity", it.value()->identity()->getName());
+        cgServerGroup.writeEntry("Name", serverGroup->name());
+        cgServerGroup.writeEntry("Identity", serverGroup->identity()->getName());
         cgServerGroup.writeEntry("ServerList", servers);
         cgServerGroup.writeEntry("AutoJoinChannels", channels);
-        cgServerGroup.writeEntry("ConnectCommands", it.value()->connectCommands());
-        cgServerGroup.writeEntry("AutoConnect", it.value()->autoConnectEnabled());
+        cgServerGroup.writeEntry("ConnectCommands", serverGroup->connectCommands());
+        cgServerGroup.writeEntry("AutoConnect", serverGroup->autoConnectEnabled());
         cgServerGroup.writeEntry("ChannelHistory", channelHistory);
-        cgServerGroup.writeEntry("EnableNotifications", it.value()->enableNotifications());
-        cgServerGroup.writeEntry("Expanded", it.value()->expanded());
-        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupId(it.value()->id()));
+        cgServerGroup.writeEntry("EnableNotifications", serverGroup->enableNotifications());
+        cgServerGroup.writeEntry("Expanded", serverGroup->expanded());
+        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupId(serverGroup->id()));
         index++;
     }
 
@@ -936,24 +897,20 @@ void Application::saveOptions(bool updateGUI)
     KSharedConfig::openConfig()->deleteGroup("Channel Encodings"); // legacy Jun 29, 2009
     KSharedConfig::openConfig()->deleteGroup("Encodings");
     KConfigGroup cgEncoding(KSharedConfig::openConfig()->group("Encodings"));
-    QList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
+    const QList<int> encServers = Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
-    QList<int>::iterator encServer;
-    for ( encServer = encServers.begin(); encServer != encServers.end(); ++encServer )
-    {
-        Konversation::ServerGroupSettingsPtr sgsp = Preferences::serverGroupById(*encServer);
+    for (int encServer : encServers) {
+        Konversation::ServerGroupSettingsPtr sgsp = Preferences::serverGroupById(encServer);
 
         if ( sgsp )  // sgsp == 0 when the entry is of QuickConnect or something?
         {
-            QStringList encChannels=Preferences::channelEncodingsChannelList(*encServer);
+            const QStringList encChannels = Preferences::channelEncodingsChannelList(encServer);
             //ditto //encChannels.sort();
-            QStringList::iterator encChannel;
-            for ( encChannel = encChannels.begin(); encChannel != encChannels.end(); ++encChannel )
-            {
-                QString enc = Preferences::channelEncoding(*encServer, *encChannel);
-                QString key = QLatin1Char(' ') + (*encChannel);
-                if(sgKeys.contains(*encServer))
-                    key.prepend(QStringLiteral("ServerGroup ")+QString::number(sgKeys.indexOf(*encServer)));
+            for (const QString& encChannel : encChannels) {
+                QString enc = Preferences::channelEncoding(encServer, encChannel);
+                QString key = QLatin1Char(' ') + encChannel;
+                if (sgKeys.contains(encServer))
+                    key.prepend(QStringLiteral("ServerGroup ") + QString::number(sgKeys.indexOf(encServer)));
                 else
                     key.prepend(sgsp->name());
                 cgEncoding.writeEntry(key, enc);
@@ -1116,15 +1073,12 @@ NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serv
 QPair<QString, int> Application::doAutoreplace(const QString& text, bool output, int cursorPos) const
 {
     // get autoreplace list
-    QList<QStringList> autoreplaceList=Preferences::autoreplaceList();
+    const QList<QStringList> autoreplaceList = Preferences::autoreplaceList();
     // working copy
     QString line=text;
 
     // loop through the list of replacement patterns
-    for (int index=0;index<autoreplaceList.count();index++)
-    {
-        // get autoreplace definition
-        QStringList definition=autoreplaceList[index];
+    for (const QStringList& definition : autoreplaceList) {
         // split definition in parts
         QString regex=definition.at(0);
         QString direction=definition.at(1);

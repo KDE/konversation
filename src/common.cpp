@@ -62,7 +62,7 @@ namespace Konversation
     {
         if (!Preferences::self()->disableExpansion())
         {
-            QList<QPair<int, int> > urlRanges = getUrlRanges(text);
+            const QList<QPair<int, int>> urlRanges = getUrlRanges(text);
 
             if (urlRanges.isEmpty())
                 return replaceFormattingCodes(text);
@@ -70,16 +70,10 @@ namespace Konversation
             {
                 QString line;
 
-                QPair<int, int> pair;
                 int startPos = 0;
                 int length = 0;
 
-                QListIterator<QPair<int, int> > i(urlRanges);
-
-                while (i.hasNext())
-                {
-                    pair = i.next();
-
+                for (QPair<int, int> pair : urlRanges) {
                     length = pair.first - startPos;
 
                     line += replaceFormattingCodes(text.mid(startPos, length));
@@ -248,9 +242,8 @@ namespace Konversation
     {
         int nickvalue = 0;
 
-        for (int index = 0; index < nickname.length(); index++)
-        {
-            nickvalue += nickname[index].unicode();
+        for (QChar c : nickname) {
+            nickvalue += c.unicode();
         }
 
         return (nickvalue % 8);
@@ -310,8 +303,8 @@ namespace Konversation
     /// @retval list
     QStringList& sterilizeUnicode(QStringList& list)
     {
-        for (int i = 0; i < list.count(); ++i)
-            sterilizeUnicode(list[i]);
+        for (QString& s : list)
+            sterilizeUnicode(s);
 
         return list;
     }

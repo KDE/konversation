@@ -96,14 +96,10 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
     QMap<QString,Konversation::ChannelList> serverChannels;
     QMap<QString,ConnectionSettings> serverConnections;
 
-    QList<QUrl>::ConstIterator it = list.constBegin();
-    QList<QUrl>::ConstIterator end = list.constEnd();
-
-    for (; it != end; ++it)
-    {
+    for (const QUrl& url : list) {
         ConnectionSettings settings;
 
-        decodeIrcUrl(it->url(), settings);
+        decodeIrcUrl(url.url(), settings);
 
         qCDebug(KONVERSATION_LOG) << settings.name() << " - "
                  << settings.server().host() << settings.server().port()
@@ -282,18 +278,16 @@ void ConnectionManager::handleReconnect(Server* server)
 
 void ConnectionManager::quitServers()
 {
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        it.value()->quitServer();
+    for (Server* server : qAsConst(m_connectionList)) {
+        server->quitServer();
+    }
 }
 
 void ConnectionManager::reconnectServers()
 {
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        it.value()->reconnectServer();
+    for (Server* server : qAsConst(m_connectionList)) {
+        server->reconnectServer();
+    }
 }
 
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
@@ -487,14 +481,11 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
     Application* konvApp = Application::instance();
     MainWindow* mainWindow = konvApp->getMainWindow();
 
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-    {
-        if (it.value()->getServerGroup() && settings.serverGroup()
-            && it.value()->getServerGroup() == settings.serverGroup())
+    for (Server* server : qAsConst(m_connectionList)) {
+        if (server->getServerGroup() && settings.serverGroup()
+            && server->getServerGroup() == settings.serverGroup())
         {
-            dupe = it.value();
+            dupe = server;
             dupeType = SameServerGroup;
 
             break;
@@ -503,11 +494,9 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
     if (!dupe)
     {
-        for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        {
-            if (it.value()->getConnectionSettings().server() == settings.server())
-            {
-                dupe = it.value();
+        for (Server* server : qAsConst(m_connectionList)) {
+            if (server->getConnectionSettings().server() == settings.server()) {
+                dupe = server;
                 dupeType = SameServer;
 
                 break;
@@ -564,14 +553,10 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
         }
         else
         {
-            if (!settings.oneShotChannelList().isEmpty())
-            {
-                Konversation::ChannelList::ConstIterator it = settings.oneShotChannelList().constBegin();
-                Konversation::ChannelList::ConstIterator itend = settings.oneShotChannelList().constEnd();
-
-                for ( ; it != itend; ++it )
-                {
-                    dupe->sendJoinCommand((*it).name(), (*it).password());
+            const auto oneShotChannelList = settings.oneShotChannelList();
+            if (!oneShotChannelList.isEmpty()) {
+                for (const auto& channel : oneShotChannelList) {
+                    dupe->sendJoinCommand(channel.name(), channel.password());
                 }
                 settings.clearOneShotChannelList();
             }
@@ -631,10 +616,10 @@ QList<Server*> ConnectionManager::getServerList() const
 {
     QList<Server*> serverList;
 
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        serverList.append(it.value());
+    serverList.reserve(m_connectionList.size());
+    for (Server* server : qAsConst(m_connectionList)) {
+        serverList.append(server);
+    }
 
     return serverList;
 }
@@ -662,12 +647,10 @@ Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags f
         }
     }
 
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-    {
-        if (it.value()->getDisplayName() == name || it.value()->getServerName() == name)
-            return it.value();
+    for (Server* server : qAsConst(m_connectionList)) {
+        if (server->getDisplayName() == name || server->getServerName() == name) {
+            return server;
+        }
     }
 
     return nullptr;
@@ -677,20 +660,18 @@ void ConnectionManager::involuntaryQuitServers()
 {
     m_overrideAutoReconnect = true;
 
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        it.value()->involuntaryQuit();
+    for (Server* server : qAsConst(m_connectionList)) {
+        server->involuntaryQuit();
+    }
 }
 
 void ConnectionManager::reconnectInvoluntary()
 {
     m_overrideAutoReconnect = false;
 
-    QMap<int, Server*>::ConstIterator it;
-
-    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        it.value()->reconnectInvoluntary();
+    for (Server* server : qAsConst(m_connectionList)) {
+        server->reconnectInvoluntary();
+    }
 }
 
 void ConnectionManager::onOnlineStateChanged(bool isOnline)
