@@ -1122,20 +1122,17 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         }
         else
         {
-            QList<Highlight*> highlightList = Preferences::highlightList();
-            QListIterator<Highlight*> it(highlightList);
-            Highlight* highlight;
+            const QList<Highlight*> highlightList = Preferences::highlightList();
+            Highlight* matchedHighlight = nullptr;
             QStringList highlightChatWindowList;
-            bool patternFound = false;
 
             QStringList captures;
-            while (it.hasNext())
-            {
-                highlight = it.next();
+            for (Highlight* highlight : highlightList) {
                 highlightChatWindowList = highlight->getChatWindowList();
                 if (highlightChatWindowList.isEmpty() ||
                     highlightChatWindowList.contains(m_chatWin->getName(), Qt::CaseInsensitive))
                 {
+                    bool patternFound = false;
                     if (highlight->getRegExp())
                     {
                         QRegExp needleReg(highlight->getPattern());
@@ -1160,28 +1157,27 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
 
                     if (patternFound)
                     {
+                        matchedHighlight = highlight;
                         break;
                     }
                 }
             }
 
-            if (patternFound)
-            {
-                highlightColor = highlight->getColor().name();
+            if (matchedHighlight) {
+                highlightColor = matchedHighlight->getColor().name();
                 m_highlightColor = highlightColor;
 
-                if (highlight->getNotify())
-                {
+                if (matchedHighlight->getNotify()) {
                     m_tabNotification = Konversation::tnfHighlight;
 
                     if (Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
                     {
-                        konvApp->sound()->play(highlight->getSoundURL());
+                        konvApp->sound()->play(matchedHighlight->getSoundURL());
                     }
 
                     konvApp->notificationHandler()->highlight(m_chatWin, whoSent, line);
                 }
-                m_autoTextToSend = highlight->getAutoText();
+                m_autoTextToSend = matchedHighlight->getAutoText();
 
                 // replace %0 - %9 in regex groups
                 for (int capture = 0; capture < captures.count(); capture++)

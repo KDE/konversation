@@ -104,10 +104,7 @@ void StatusPanel::sendText(const QString& sendLine)
 
     // Send all strings, one after another
     const QStringList outList = outputAll.split(QLatin1Char('\n'));
-    for(int index=0;index<outList.count();index++)
-    {
-        QString output(outList[index]);
-
+    for (const QString& output : outList) {
         // encoding stuff is done in Server()
         Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString(), this);
 
@@ -134,9 +131,7 @@ void StatusPanel::textPasted(const QString& text)
     if(m_server)
     {
         const QStringList multiline = text.split(QLatin1Char('\n'));
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
+        for (QString line : multiline) {
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;

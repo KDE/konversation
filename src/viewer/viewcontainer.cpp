@@ -1784,12 +1784,10 @@ void ViewContainer::showNextActiveView()
         ChatWindow* prev = m_activeViewOrderList.first();
         ChatWindow* view = prev;
 
-        QList<ChatWindow*>::ConstIterator it;
-
-        for (it = m_activeViewOrderList.constBegin(); it != m_activeViewOrderList.constEnd(); ++it)
-        {
-            if ((*it)->currentTabNotification() < prev->currentTabNotification())
-                view = (*it);
+        for (ChatWindow* activeView : qAsConst(m_activeViewOrderList)) {
+            if (activeView->currentTabNotification() < prev->currentTabNotification()) {
+                view = activeView;
+            }
         }
 
         m_tabWidget->setCurrentIndex(m_tabWidget->indexOf(view));

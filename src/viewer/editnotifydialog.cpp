@@ -64,10 +64,8 @@ const QString& nickname):
 
     // Add network names to network combobox and select the one corresponding to argument.
     m_networkNameCombo->addItem(i18n("All Networks"), -1);
-    QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
-    for (int i = 0; i < serverList.count(); ++i)
-    {
-      Server *server = serverList.at(i);
+    const QList<Server*> serverList = Application::instance()->getConnectionManager()->getServerList();
+    for (Server *server : serverList) {
       if (server->getServerGroup())
         m_networkNameCombo->addItem(server->getServerGroup()->name(), server->getServerGroup()->id());
     }

@@ -86,10 +86,8 @@ void Highlight::setChatWindows(const QString& chatWindows)
     // split string list of chat windows and trim all entries
     m_chatWindowList = m_chatWindows.split(QRegExp(QStringLiteral("[,;]")), QString::SkipEmptyParts);
 
-    QMutableStringListIterator it(m_chatWindowList);
-    while (it.hasNext())
-    {
-        it.setValue(it.next().trimmed());
+    for (QString& chatWindow : m_chatWindowList) {
+        chatWindow = chatWindow.trimmed();
     }
 }
 

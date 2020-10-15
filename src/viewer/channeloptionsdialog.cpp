@@ -315,17 +315,16 @@ namespace Konversation
         modesModel->clear();
         modesModel->setHorizontalHeaderLabels(QStringList { i18n("Mode"), i18n("Parameter") });
 
-        for(int i = 0; i < modeString.length(); i++)
-        {
+        for (const QChar mode : qAsConst(modeString)) {
+            const QString modeAsString(mode);
+
             QList<QStandardItem *> newRow;
             QStandardItem *item = nullptr;
-
-            if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(modeString[i]))
-                item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", modeString[i], getChannelModesHash().value(modeString[i])));
+            if (!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(mode))
+                item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", mode, getChannelModesHash().value(mode)));
             else
-                item = new QStandardItem(QString(modeString[i]));
-
-            item->setData(QString(modeString[i]));
+                item = new QStandardItem(modeAsString);
+            item->setData(modeAsString);
             item->setCheckable(true);
             item->setEditable(false);
             newRow.append(item);
