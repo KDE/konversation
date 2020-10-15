@@ -262,13 +262,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(QLatin1Char(',')));
     // Get watch list.
-    QStringList watchList = servr->getWatchList();
-    QStringList::iterator itEnd = watchList.end();
-    QString nickname;
+    const QStringList watchList = servr->getWatchList();
 
-    for (QStringList::iterator it = watchList.begin(); it != itEnd; ++it)
-    {
-        nickname = (*it);
+    for (const QString& nickname : watchList) {
         NickInfoPtr nickInfo = getOnlineNickInfo(networkName, nickname);
 
         if (nickInfo && nickInfo->getPrintedOnline())
@@ -301,17 +297,13 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 }
             }
 
-            QStringList channelList = server->getNickChannels(nickname);
-            QStringList::iterator itEnd2 = channelList.end();
+            const QStringList channelList = server->getNickChannels(nickname);
 
-            for (QStringList::iterator it2 = channelList.begin(); it2 != itEnd2; ++it2)
-            {
+            for (const QString& channelName : channelList) {
                 // Known channels where nickname is online and mode in each channel.
                 // FIXME: If user connects to multiple servers in same network, the
                 // channel info will differ between the servers, resulting in inaccurate
                 // mode and led info displayed.
-
-                QString channelName = (*it2);
 
                 ChannelNickPtr channelNick = server->getChannelNick(channelName, nickname);
                 QString nickMode;

@@ -150,14 +150,10 @@ namespace Konversation
 
     void ServerGroupSettings::appendChannelHistory(const ChannelSettings& channel)
     {
-        ChannelList::iterator endIt = m_channelHistory.end();
-
-        for(ChannelList::iterator it = m_channelHistory.begin(); it != endIt; ++it)
-        {
-            if(channel.name() == (*it).name())
-            {
-                (*it).setPassword(channel.password());
-                (*it).setNotificationsEnabled(channel.enableNotifications());
+        for (auto& historyChannel : m_channelHistory) {
+            if (channel.name() == historyChannel.name()) {
+                historyChannel.setPassword(channel.password());
+                historyChannel.setNotificationsEnabled(channel.enableNotifications());
                 return;
             }
         }
@@ -167,13 +163,9 @@ namespace Konversation
 
     ChannelSettings ServerGroupSettings::channelByNameFromHistory(const QString& channelName)
     {
-        ChannelList::iterator endIt = m_channelHistory.end();
-
-        for(ChannelList::iterator it = m_channelHistory.begin(); it != endIt; ++it)
-        {
-            if(channelName == (*it).name())
-            {
-                return (*it);
+        for (const auto& channel : qAsConst(m_channelHistory)) {
+            if (channelName == channel.name()) {
+                return channel;
             }
         }
 

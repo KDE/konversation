@@ -226,10 +226,8 @@ void Query::sendText(const QString& sendLine)
     OutputFilter::replaceAliases(outputAll, this);
 
     // Send all strings, one after another
-    QStringList outList = outputAll.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-    for(int index=0;index<outList.count();index++)
-    {
-        QString output(outList[index]);
+    const QStringList outList = outputAll.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+    for (const QString& output : outList) {
 
         // encoding stuff is done in Server()
         Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName(), this);
@@ -246,10 +244,9 @@ void Query::sendText(const QString& sendLine)
         else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
-                QStringListIterator it(result.outputList);
-
-                while (it.hasNext())
-                    appendQuery(m_server->getNickname(), it.next());
+                for (const QString& out : qAsConst(result.outputList)) {
+                    appendQuery(m_server->getNickname(), out);
+                }
             }
             else if (result.type == Konversation::Action)
             {
@@ -275,10 +272,8 @@ void Query::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
+        const QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        for (QString line : multiline) {
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;

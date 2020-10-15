@@ -52,10 +52,11 @@ namespace Konversation
 
         connect(m_mainWidget->m_editIdentityButton, &QPushButton::clicked, this, &ServerGroupDialog::editIdentity);
 
-        IdentityList identities = Preferences::identityList();
+        const IdentityList identities = Preferences::identityList();
 
-        for (IdentityList::ConstIterator it = identities.constBegin(); it != identities.constEnd(); ++it)
-            m_mainWidget->m_identityCBox->addItem((*it)->getName());
+        for (const auto& identity : identities) {
+            m_mainWidget->m_identityCBox->addItem(identity->getName());
+        }
 
         m_mainWidget->m_removeServerButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
         m_mainWidget->m_upServerBtn->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
@@ -110,20 +111,16 @@ namespace Konversation
         m_mainWidget->m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
         m_serverList = settings->serverList();
         m_channelHistory = settings->channelHistory();
-        ServerList::iterator it;
         m_mainWidget->m_serverLBox->clear();
 
-        for(it = m_serverList.begin(); it != m_serverList.end(); ++it)
-        {
-            m_mainWidget->m_serverLBox->addItem((*it).host());
+        for (const auto& server : qAsConst(m_serverList)) {
+            m_mainWidget->m_serverLBox->addItem(server.host());
         }
 
         m_channelList = settings->channelList();
-        ChannelList::iterator it2;
 
-        for(it2 = m_channelList.begin(); it2 != m_channelList.end(); ++it2)
-        {
-            m_mainWidget->m_channelLBox->addItem((*it2).name());
+        for (const auto& channel : qAsConst(m_channelList)) {
+            m_mainWidget->m_channelLBox->addItem(channel.name());
         }
     }
 
@@ -391,12 +388,11 @@ namespace Konversation
 
         if(dlg->exec() == QDialog::Accepted)
         {
-            IdentityList identities = Preferences::identityList();
+            const IdentityList identities = Preferences::identityList();
             m_mainWidget->m_identityCBox->clear();
 
-            for(IdentityList::ConstIterator it = identities.constBegin(); it != identities.constEnd(); ++it)
-            {
-                m_mainWidget->m_identityCBox->addItem((*it)->getName());
+            for (const auto& identity : identities) {
+                m_mainWidget->m_identityCBox->addItem(identity->getName());
             }
 
             const int i = m_mainWidget->m_identityCBox->findText(dlg->currentIdentity()->getName());

@@ -906,9 +906,8 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     QString parameterModes = QStringLiteral("aAoOvhkbleIq");
     QString message = i18n("%1 sets mode: %2", sourceNick, modestring);
 
-    for (int index=0;index<modestring.length();index++)
-    {
-        unsigned char mode(modestring[index].toLatin1());
+    for (const QChar m : modestring) {
+        const unsigned char mode = m.toLatin1();
         QString parameter;
 
         // Check if this is a mode or a +/- qualifier
@@ -1171,15 +1170,12 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     messageTags
                     );
 
-                QString allowed = m_server->allowedChannelModes();
+                const QString allowed = m_server->allowedChannelModes();
                 QString newModes = parameterList.value(4);
-                if(!allowed.isEmpty()) //attempt to merge the two
-                {
-                    for(int i=0; i < allowed.length(); i++)
-                    {
-                        if(!newModes.contains(allowed.at(i)))
-                            newModes.append(allowed.at(i));
-                    }
+                // attempt to merge the two
+                for (const QChar a : allowed) {
+                    if (!newModes.contains(a))
+                        newModes.append(a);
                 }
                 m_server->setAllowedChannelModes(newModes);
             }
@@ -1252,15 +1248,12 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                         if(!value.isEmpty())
                         {
                             m_server->setChanModes(value);
-                            QString allowed = m_server->allowedChannelModes();
+                            const QString allowed = m_server->allowedChannelModes();
                             QString newModes = value.remove(QLatin1Char(','));
-                            if(!allowed.isEmpty()) //attempt to merge the two
-                            {
-                                for(int i=0; i < allowed.length(); i++)
-                                {
-                                    if(!newModes.contains(allowed.at(i)))
-                                        newModes.append(allowed.at(i));
-                                }
+                            // attempt to merge the two
+                            for (const QChar a : allowed) {
+                                if (!newModes.contains(a))
+                                    newModes.append(a);
                             }
                             m_server->setAllowedChannelModes(newModes);
                         }
@@ -1308,36 +1301,31 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 QString message = i18n("Channel modes: ") + modeString;
                 int parameterCount=3;
                 QHash<QChar,QString> channelModesHash = Konversation::getChannelModesHash();
-                for (int index=0;index<modeString.length();index++)
-                {
+                for (const QChar mode : modeString) {
                     QString parameter;
-                    char mode(modeString[index].toLatin1());
-                    if(mode!='+')
-                    {
+
+                    if (mode != QLatin1Char('+')) {
                         if(!modesAre.isEmpty())
                             modesAre+=QStringLiteral(", ");
 
-                        if(mode=='k')
-                        {
+                        if (mode == QLatin1Char('k')) {
                             parameter=parameterList.value(parameterCount++);
                             message += QLatin1Char(' ') + parameter;
                             modesAre+=i18n("password protected");
                         }
-                        else if(mode=='l')
-                        {
+                        else if (mode == QLatin1Char('l')) {
                             parameter=parameterList.value(parameterCount++);
                             message += QLatin1Char(' ') + parameter;
                             modesAre+=i18np("limited to %1 user", "limited to %1 users", parameter.toInt());
                         }
-                        else if(channelModesHash.contains(QLatin1Char(mode)))
-                        {
-                            modesAre+=channelModesHash.value(QLatin1Char(mode));
+                        else if (channelModesHash.contains(mode)) {
+                            modesAre += channelModesHash.value(mode);
                         }
                         else
                         {
-                            modesAre+=QLatin1Char(mode);
+                            modesAre += mode;
                         }
-                        m_server->updateChannelModeWidgets(parameterList.value(1), mode, parameter);
+                        m_server->updateChannelModeWidgets(parameterList.value(1), mode.toLatin1(), parameter);
                     }
                 } // endfor
                 if (!modesAre.isEmpty() && Preferences::self()->useLiteralModes())
@@ -1952,9 +1940,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 channelList.sort();
 
                 // split up the list in channels where they are operator / user / voice
-                for (int index=0; index < channelList.count(); index++)
-                {
-                    QString lookChannel=channelList[index];
+                for (const QString& lookChannel : qAsConst(channelList)) {
                     if (lookChannel.startsWith(QLatin1Char('*')) || lookChannel.startsWith(QLatin1Char('&')))
                     {
                         adminChannels.append(lookChannel.mid(1));
@@ -2198,13 +2184,12 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(2))
             {
                 // iterate over all nick/masks in reply
-                QStringList uhosts=trailing.split(QLatin1Char(' '), QString::SkipEmptyParts);
+                const QStringList uhosts = trailing.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
-                for (int index=0;index<uhosts.count();index++)
-                {
+                for (const QString& uhost : uhosts) {
                     // extract nickname and hostmask from reply
-                    QString nick(uhosts[index].section(QLatin1Char('='),0,0));
-                    QString mask(uhosts[index].section(QLatin1Char('='),1));
+                    QString nick(uhost.section(QLatin1Char('='),0,0));
+                    QString mask(uhost.section(QLatin1Char('='),1));
 
                     // get away and IRC operator flags
                     bool away=(mask[0]==QLatin1Char('-'));

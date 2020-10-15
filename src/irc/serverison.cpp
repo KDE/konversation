@@ -50,13 +50,11 @@ void ServerISON::recalculateAddressees()
     {
         QMap<QString,QString> ISONMap;
 
-        QStringList prefsWatchList =
+        const QStringList prefsWatchList =
             Preferences::notifyListByGroupId(m_server->getServerGroup()->id());
-        QStringList::iterator itEnd = prefsWatchList.end();
 
-        for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)
-        {
-            ISONMap.insert((*it).toLower(), (*it));
+        for (const QString& prefsWatch : prefsWatchList) {
+            ISONMap.insert(prefsWatch.toLower(), prefsWatch);
         }
 
         // Build final watch list.
@@ -64,13 +62,10 @@ void ServerISON::recalculateAddressees()
         // Eliminate nicks that are online in a joined channel, since there is no point
         // in doing an ISON on such nicks.
         m_ISONList.clear();
-        itEnd = m_watchList.end();
 
-        for(QStringList::iterator it = m_watchList.begin(); it != itEnd; ++it)
-        {
-            if (m_server->getNickJoinedChannels(*it).isEmpty())
-            {
-                m_ISONList.append(*it);
+        for (const QString& nickName : qAsConst(m_watchList)) {
+            if (m_server->getNickJoinedChannels(nickName).isEmpty()) {
+                m_ISONList.append(nickName);
             }
         }
     }

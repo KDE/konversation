@@ -386,16 +386,13 @@ namespace Konversation
         // Produce a list of this server group's channels
         QString channels;
 
-        Konversation::ChannelList channelList = serverGroup->channelList();
-        Konversation::ChannelList::iterator channelIt;
-        Konversation::ChannelList::iterator begin = channelList.begin();
+        const Konversation::ChannelList channelList = serverGroup->channelList();
 
-        for(channelIt = begin; channelIt != channelList.end(); ++channelIt)
-        {
-            if (channelIt != begin)
+        for (const auto& channel : channelList) {
+            if (!channels.isEmpty())
                 channels += QLatin1String(", ");
 
-            channels += (*channelIt).name();
+            channels += channel.name();
         }
 
         // Insert the server group into the list
@@ -411,19 +408,17 @@ namespace Konversation
             networkItem->setExpanded(true);
 
         // Produce a list of this server group's servers and iterate over it
-        Konversation::ServerList serverList = serverGroup->serverList();
-        Konversation::ServerList::const_iterator serverIt;
+        const Konversation::ServerList serverList = serverGroup->serverList();
 
         int i = 0;
-        for (serverIt = serverList.constBegin(); serverIt != serverList.constEnd(); ++serverIt)
-        {
+        for (const auto& server : serverList) {
             // Produce a string representation of the server object
-            QString name = (*serverIt).host();
+            QString name = server.host();
 
-            if ((*serverIt).port() != 6667)
-                name += QLatin1Char(':') + QString::number((*serverIt).port());
+            if (server.port() != 6667)
+                name += QLatin1Char(':') + QString::number(server.port());
 
-            if ((*serverIt).SSLEnabled())
+            if (server.SSLEnabled())
                 name += QLatin1String(" (SSL)");
 
             // Insert the server into the list, as child of the server group list item
@@ -434,7 +429,7 @@ namespace Konversation
             serverItem->setData(0,ServerId,i);
             serverItem->setFirstColumnSpanned(true);
             // Initialize a pointer to the new location of the last edited server
-            if (m_selectedItem && m_selectedServer==(*serverIt))
+            if (m_selectedItem && m_selectedServer == server)
                 m_selectedItemPtr = serverItem;
 
             ++i;

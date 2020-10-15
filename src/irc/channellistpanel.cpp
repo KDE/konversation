@@ -458,14 +458,9 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     // open URL submenu
     QMenu* showURLmenu = new QMenu(i18n("Open URL"), menu);
 
-    QList<QPair<int, int> > urlRanges = Konversation::getUrlRanges(filteredLine);
-    QPair<int, int> urlRange;
-    QListIterator<QPair<int, int> > i(urlRanges);
+    const QList<QPair<int, int>> urlRanges = Konversation::getUrlRanges(filteredLine);
 
-    while (i.hasNext())
-    {
-        urlRange = i.next();
-
+    for (QPair<int, int> urlRange : urlRanges) {
         QString url = filteredLine.mid(urlRange.first, urlRange.second);
 
         QAction* action = new QAction(showURLmenu);

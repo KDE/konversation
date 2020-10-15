@@ -1015,9 +1015,8 @@ void Server::sslError(const QList<QSslError> &errors)
 
         QString errorReason;
 
-        for (int i = 0; i < errors.size(); ++i)
-        {
-            errorReason += errors.at(i).errorString() + QLatin1Char(' ');
+        for (const QSslError& error : errors) {
+            errorReason += error.errorString() + QLatin1Char(' ');
         }
 
         QString error = i18n("Could not connect to %1 (port %2) using SSL encryption. Either the server does not support SSL (did you use the correct port?) or you rejected the certificate. %3",
@@ -1173,10 +1172,9 @@ void Server::notifyAction(const QString& nick)
     out = parseWildcards(out, getNickname(), QString(), QString(), nick, QString());
 
     // Send all strings, one after another
-    QStringList outList = out.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-    for (int index=0; index<outList.count(); ++index)
-    {
-        Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),outList[index],QString());
+    const QStringList outList = out.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+    for (const QString& out : outList) {
+        Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(), out, QString());
         queue(result.toServer);
     }                                             // endfor
 }
@@ -1184,27 +1182,22 @@ void Server::notifyAction(const QString& nick)
 void Server::notifyResponse(const QString& nicksOnline)
 {
     bool nicksOnlineChanged = false;
-    QStringList actualList = nicksOnline.split(QLatin1Char(' '), QString::SkipEmptyParts);
+    const QStringList actualList = nicksOnline.split(QLatin1Char(' '), QString::SkipEmptyParts);
     QString lcActual = QLatin1Char(' ') + nicksOnline + QLatin1Char(' ');
     QString lcPrevISON = QLatin1Char(' ') + (m_prevISONList.join(QLatin1Char(' '))) + QLatin1Char(' ');
 
-    QStringList::iterator it;
-
     //Are any nicks gone offline
-    for (it = m_prevISONList.begin(); it != m_prevISONList.end(); ++it)
-    {
-        if (!lcActual.contains(QLatin1Char(' ') + (*it) + QLatin1Char(' '), Qt::CaseInsensitive))
-        {
-            setNickOffline(*it);
+    for (const QString& nick : qAsConst(m_prevISONList)) {
+        if (!lcActual.contains(QLatin1Char(' ') + nick + QLatin1Char(' '), Qt::CaseInsensitive)) {
+            setNickOffline(nick);
             nicksOnlineChanged = true;
         }
     }
 
     //Are any nicks gone online
-    for (it = actualList.begin(); it != actualList.end(); ++it)
-    {
-        if (!lcPrevISON.contains(QLatin1Char(' ') + (*it) + QLatin1Char(' '), Qt::CaseInsensitive)) {
-            setWatchedNickOnline(*it);
+    for (const QString& nick : actualList) {
+        if (!lcPrevISON.contains(QLatin1Char(' ') + nick + QLatin1Char(' '), Qt::CaseInsensitive)) {
+            setWatchedNickOnline(nick);
             nicksOnlineChanged = true;
         }
     }
@@ -1261,12 +1254,9 @@ void Server::autoCommandsAndChannels()
         if (!getNickname().isEmpty())
             connectCommands.replace(QStringLiteral("%nick"), getNickname());
 
-        QStringList connectCommandsList = connectCommands.split(QLatin1Char(';'), QString::SkipEmptyParts);
-        QStringList::iterator iter;
+        const QStringList connectCommandsList = connectCommands.split(QLatin1Char(';'), QString::SkipEmptyParts);
 
-        for (iter = connectCommandsList.begin(); iter != connectCommandsList.end(); ++iter)
-        {
-            QString output(*iter);
+        for (QString output : connectCommandsList) {
             output = output.simplified();
             OutputFilter::replaceAliases(output);
             Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString());
@@ -1276,16 +1266,16 @@ void Server::autoCommandsAndChannels()
 
     if (getAutoJoin())
     {
-        for ( QStringList::Iterator it = m_autoJoinCommands.begin(); it != m_autoJoinCommands.end(); ++it )
-            queue((*it));
+        for (const QString& command : qAsConst(m_autoJoinCommands)) {
+            queue(command);
+        }
     }
 
     if (!m_connectionSettings.oneShotChannelList().isEmpty())
     {
-        QStringList oneShotJoin = generateJoinCommand(m_connectionSettings.oneShotChannelList());
-        for ( QStringList::Iterator it = oneShotJoin.begin(); it != oneShotJoin.end(); ++it )
-        {
-            queue((*it));
+        const QStringList oneShotJoin = generateJoinCommand(m_connectionSettings.oneShotChannelList());
+        for (const QString& join : oneShotJoin) {
+            queue(join);
         }
         m_connectionSettings.clearOneShotChannelList();
     }
@@ -1717,9 +1707,7 @@ bool Server::queueList(const QStringList& buffer, QueuePriority priority)
 
     IRCQueue& out=*(m_queues[priority]);
 
-    for(int i=0;i<buffer.count();i++)
-    {
-        QString line(buffer.at(i));
+    for (const QString& line : buffer) {
         if (!line.isEmpty())
             out.enqueue(line);
     }
@@ -2083,8 +2071,8 @@ void Server::requestUserhost(const QString& nicks)
         return;
 
     const QStringList nicksList = nicks.split(QLatin1Char(' '), QString::SkipEmptyParts);
-    for(QStringList::ConstIterator it=nicksList.constBegin() ; it!=nicksList.constEnd() ; ++it)
-        m_inputFilter.setAutomaticRequest(QStringLiteral("USERHOST"), *it, true);
+    for (const QString& nick : nicksList)
+        m_inputFilter.setAutomaticRequest(QStringLiteral("USERHOST"), nick, true);
     queue(QStringLiteral("USERHOST ")+nicks, LowPriority);
 }
 
@@ -2107,10 +2095,8 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
 
     Channel* targetChannel=getChannelByName(channel);
 
-    for(int index=0;index<users.count();index++)
-    {
+    for (QString mask : users) {
         // first, set the ban mask to the specified nick
-        QString mask=users[index];
         // did we specify an option?
         if(!option.isEmpty())
         {
@@ -2174,15 +2160,13 @@ void Server::requestDccSend(const QString &a_recipient)
     {
         QPointer<DccFileDialog> dlg = new DccFileDialog (getViewContainer()->getWindow());
         //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
-        QList<QUrl> fileURLs = dlg->getOpenUrls(
+        const QList<QUrl> fileURLs = dlg->getOpenUrls(
             QUrl(),
             QString(),
             i18n("Select File(s) to Send to %1", recipient)
         );
-        QList<QUrl>::const_iterator it;
-        for ( it = fileURLs.constBegin() ; it != fileURLs.constEnd() ; ++it )
-        {
-            addDccSend( recipient, *it, dlg->passiveSend());
+        for (const QUrl& fileUrl : fileURLs) {
+            addDccSend(recipient, fileUrl, dlg->passiveSend());
         }
         delete dlg;
     }
@@ -3198,12 +3182,9 @@ bool Server::setNickOffline(const QString& nickname)
         // Delete from query list, if present.
         if (m_queryNicks.contains(lcNickname)) m_queryNicks.remove(lcNickname);
         // Delete the nickname from all channels (joined or unjoined).
-        QStringList nickChannels = getNickChannels(lcNickname);
-        QStringList::iterator itEnd = nickChannels.end();
+        const QStringList nickChannels = getNickChannels(lcNickname);
 
-        for(QStringList::iterator it = nickChannels.begin(); it != itEnd; ++it)
-        {
-            QString channel = (*it);
+        for (const QString& channel : nickChannels) {
             removeChannelNick(channel, lcNickname);
         }
 
@@ -3404,12 +3385,10 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
         m_allNicks.remove(lcNickname);
         m_allNicks.insert(lcNewname, nickInfo);
         // Rename key in the joined and unjoined lists.
-        QStringList nickChannels = getNickChannels(lcNickname);
-        QStringList::iterator itEnd = nickChannels.end();
+        const QStringList nickChannels = getNickChannels(lcNickname);
 
-        for(QStringList::iterator it = nickChannels.begin(); it != itEnd; ++it)
-        {
-            const ChannelNickMap *channel = getChannelMembers(*it);
+        for (const QString& channelName : nickChannels) {
+            const ChannelNickMap *channel = getChannelMembers(channelName);
             Q_ASSERT(channel);
             ChannelNickPtr member = (*channel)[lcNickname];
             Q_ASSERT(member);
@@ -3956,18 +3935,14 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
     QStringList joinCommands;
     uint length = 0;
 
-    Konversation::ChannelList::const_iterator it;
-
-    for (it = tmpList.constBegin(); it != tmpList.constEnd(); ++it)
-    {
-        QString channel = (*it).name();
+    for (const auto& channel : tmpList) {
+        const QString channelName = channel.name();
 
         // Only add the channel to the JOIN command if it has a valid channel name.
-        if (isAChannel(channel))
-        {
-            QString password = ((*it).password().isEmpty() ? QStringLiteral(".") : (*it).password());
+        if (isAChannel(channelName)) {
+            const QString password = channel.password().isEmpty() ? QStringLiteral(".") : channel.password();
 
-            uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
+            uint currentLength = getIdentity()->getCodec()->fromUnicode(channelName).length();
             currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
 
             //channels.count() and passwords.count() account for the commas
@@ -3985,7 +3960,7 @@ QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList
 
             length += currentLength;
 
-            channels << channel;
+            channels << channelName;
             passwords << password;
         }
     }

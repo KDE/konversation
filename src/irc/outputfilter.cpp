@@ -80,12 +80,11 @@ namespace Konversation
     // replace all aliases in the string and return true if anything got replaced at all
     bool OutputFilter::replaceAliases(QString& line, ChatWindow* context)
     {
-        QStringList aliasList = Preferences::self()->aliasList();
+        const QStringList aliasList = Preferences::self()->aliasList();
 
-        for(int index = 0; index<aliasList.count(); index++)
-        {
+        for(const QString& alias : aliasList) {
             // cut alias pattern from definition
-            QString aliasPattern(aliasList[index].section(QLatin1Char(' '), 0, 0));
+            QString aliasPattern(alias.section(QLatin1Char(' '), 0, 0));
 
             // cut first word from command line, so we do not wrongly find an alias
             // that starts with the same letters, like /m would override /me
@@ -94,12 +93,12 @@ namespace Konversation
             // pattern found?
             if (lineStart == Preferences::self()->commandChar() + aliasPattern)
             {
-                QString aliasReplace = aliasList[index].section(QLatin1Char(' '),1);
+                QString aliasReplace = alias.section(QLatin1Char(' '),1);
 
                 if (context)
                     aliasReplace = context->getServer()->parseWildcards(aliasReplace, context);
 
-                if (!aliasList[index].contains(QLatin1String("%p")))
+                if (!alias.contains(QLatin1String("%p")))
                     aliasReplace.append(QLatin1Char(' ') + line.section(QLatin1Char(' '), 1));
 
                 // protect "%%"
@@ -297,16 +296,15 @@ namespace Konversation
         {
             BYPASS_COMMAND_PARSING:
 
-            QStringList outputList = splitForEncoding(destination, inputLine,
-                                                      m_server->getPreLength(QStringLiteral("PRIVMSG"), destination));
+            const QStringList outputList = splitForEncoding(destination, inputLine,
+                                                            m_server->getPreLength(QStringLiteral("PRIVMSG"), destination));
 
             if (outputList.count() > 1)
             {
                 result.output.clear();
                 result.outputList = outputList;
-                for (QStringList::ConstIterator it = outputList.constBegin(); it != outputList.constEnd(); ++it)
-                {
-                    result.toServerList += QLatin1String("PRIVMSG ") + destination + QLatin1String(" :") + *it;
+                for (const QString& out : outputList) {
+                    result.toServerList += QLatin1String("PRIVMSG ") + destination + QLatin1String(" :") + out;
                 }
             }
             else
@@ -1266,20 +1264,18 @@ namespace Konversation
 
         if (!input.parameter.isEmpty() && serverGroupId != -1)
         {
-            QStringList list = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
+            const QStringList list = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
 
-
-            for (int index = 0; index < list.count(); ++index)
-            {
+            for (const QString& parameter : list) {
                 // Try to remove current pattern.
-                if (!Preferences::removeNotify(serverGroupId, list[index]))
+                if (!Preferences::removeNotify(serverGroupId, parameter))
                 {
                     // If remove failed, try to add it instead.
-                    if (Preferences::addNotify(serverGroupId, list[index]))
-                        added << list[index];
+                    if (Preferences::addNotify(serverGroupId, parameter))
+                        added << parameter;
                 }
                 else
-                    removed << list[index];
+                    removed << parameter;
             }
         }
 
@@ -1531,13 +1527,12 @@ namespace Konversation
             // were there enough parameters?
             if (parameterList.count() >= 1)
             {
-                for (int index=0;index<parameterList.count();index++)
-                {
-                    if (!parameterList[index].contains(QLatin1Char('!')))
-                        parameterList[index] += QLatin1String("!*");
+                for (QString parameter : qAsConst(parameterList)) {
+                    if (!parameter.contains(QLatin1Char('!')))
+                        parameter += QLatin1String("!*");
 
-                    Preferences::removeIgnore(parameterList[index]);
-                    Preferences::addIgnore(parameterList[index] + QLatin1Char(',') + QString::number(value));
+                    Preferences::removeIgnore(parameter);
+                    Preferences::addIgnore(parameter + QLatin1Char(',') + QString::number(value));
                 }
 
                 result.output = i18n("Added %1 to your ignore list.", parameterList.join(QLatin1String(", ")));

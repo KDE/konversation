@@ -465,10 +465,8 @@ void Channel::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-        for(int index=0;index<multiline.count();index++)
-        {
-            QString line=multiline[index];
+        const QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+        for (QString line : multiline) {
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
@@ -712,13 +710,7 @@ void Channel::setAutoJoin(bool autojoin)
             }
 
             if (!channelMap.isEmpty()) {
-                QMap<int, Channel*>::Iterator it2;
-                Channel* channel;
-
-                for (it2 = channelMap.begin(); it2 != channelMap.end(); ++it2)
-                {
-                    channel = it2.value();
-
+                for (Channel* channel : qAsConst(channelMap)) {
                     if (channel->autoJoin())
                     {
                         before = channel->channelSettings();
@@ -745,9 +737,8 @@ QString Channel::getPassword() const
 {
     QString password;
 
-    for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
-    {
-        if ((*it)[0] == QLatin1Char('k')) password = (*it).mid(1);
+    for (const QString& mode : m_modeList) {
+        if (mode[0] == QLatin1Char('k')) password = mode.mid(1);
     }
 
     if (password.isEmpty() && m_server->getServerGroup())
@@ -814,11 +805,8 @@ void Channel::sendText(const QString& sendLine)
     OutputFilter::replaceAliases(outputAll, this);
 
     // Send all strings, one after another
-    QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
-    for(int index=0;index<outList.count();index++)
-    {
-        QString output(outList[index]);
-
+    const QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
+    for (const QString& output : outList){
         // encoding stuff is done in Server()
         Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName(), this);
 
@@ -834,10 +822,9 @@ void Channel::sendText(const QString& sendLine)
         else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
-                QStringListIterator it(result.outputList);
-
-                while (it.hasNext())
-                    append(m_server->getNickname(), it.next());
+                for (const QString& out : qAsConst(result.outputList)) {
+                    append(m_server->getNickname(), out);
+                }
             }
             else if (result.type == Konversation::Action)
             {
@@ -1841,9 +1828,9 @@ void Channel::clearModeList()
     QString k;
 
     // Keep channel password in the backing store, for rejoins.
-    for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
-    {
-        if ((*it)[0] == QLatin1Char('k')) k = (*it);
+    for (const QString& mode : qAsConst(m_modeList)) {
+        if (mode[0] == QLatin1Char('k'))
+            k = mode;
     }
 
     m_modeList.clear();

@@ -155,28 +155,27 @@ namespace Konversation
       Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
       if (server && server->getServerGroup())
       {
-        ChannelList history = server->getServerGroup()->channelHistory();
-        ChannelList::iterator endIt = history.end();
+        const ChannelList history = server->getServerGroup()->channelHistory();
         const QList<Channel *> &channels = server->getChannelList();
         bool joined = false;
         // Append an empty string as first item
         QStringList channelHistory;
         channelHistory << QString();
-        for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
-        {
+        for (const auto& channel : history) {
+          const QString channelName = channel.name();
           // Don't add empty items to the combobox
-          if ((*it).name().isEmpty())
+          if (channelName.isEmpty())
             continue;
 
           joined = false;
 
           for (Channel* chan : channels) {
-            if(chan->getName() == (*it).name())
+            if (chan->getName() == channelName)
               joined = true;
           }
 
           if(!joined)
-            channelHistory << (*it).name();
+            channelHistory << channel.name();
         }
         // Sort channel history for easier access
         channelHistory.sort();
