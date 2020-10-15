@@ -14,10 +14,10 @@
 #define KTUPNPROUTER_H
 
 #include <QHostAddress>
-
 #include <QUrl>
+
 #include <KJob>
-#include <kio/jobclasses.h>
+#include <KIO/Job>
 
 namespace Konversation
 {

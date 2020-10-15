@@ -19,13 +19,13 @@
 #include "identity.h"
 #include "common.h"
 
+#include <KIO/Global>
+
 #include <QObject>
 #include <QString>
 #include <QSet>
 #include <QPointer>
-
 #include <QUrl>
-#include <kio/global.h>
 
 class Server;
 class ChatWindow;

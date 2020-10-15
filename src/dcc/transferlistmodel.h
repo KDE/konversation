@@ -16,14 +16,13 @@
 #ifndef TRANSFERLISTMODEL_H
 #define TRANSFERLISTMODEL_H
 
+#include <KIO/Global>
+
 #include <QString>
 #include <QTreeWidget>
 #include <QStyledItemDelegate>
 #include <QItemDelegate>
 #include <QSortFilterProxyModel>
-
-#include <kio/global.h>
-
 
 #include "transfer.h"
 

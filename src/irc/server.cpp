@@ -44,7 +44,7 @@
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <KShell>
-#include <kio/sslui.h>
+#include <KIO/SslUi>
 
 #include <QTextCodec>
 #include <QSslSocket>

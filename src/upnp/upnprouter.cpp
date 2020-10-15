@@ -17,8 +17,7 @@
 #include "konversation_log.h"
 
 #include <KLocalizedString>
-#include <KIO/Job>
-#include <kio/jobclasses.h>
+#include <KIO/StoredTransferJob>
 
 #include <QCoreApplication>
 #include <QNetworkReply>

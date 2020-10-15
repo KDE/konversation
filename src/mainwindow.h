@@ -20,9 +20,9 @@
 #include "preferences.h"
 #include "ssllabel.h"
 
-#include <QStringList>
+#include <KXmlGuiWindow>
 
-#include <kxmlguiwindow.h>
+#include <QStringList>
 
 
 class KToggleAction;

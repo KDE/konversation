@@ -19,13 +19,13 @@
 #ifndef TRANSFER_H
 #define TRANSFER_H
 
+#include <KIO/Global>
+
 #include <QDateTime>
 #include <QObject>
 #include <QTimer>
 #include <QElapsedTimer>
-
 #include <QUrl>
-#include <kio/global.h>
 
 namespace Konversation
 {
