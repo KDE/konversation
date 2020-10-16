@@ -6,6 +6,7 @@
 
 #include "highlight.h"
 
+#include <QRegularExpression>
 
 unsigned int Highlight::s_id = 0;                 // static
 
@@ -85,9 +86,9 @@ void Highlight::setChatWindows(const QString& chatWindows)
 
     // split string list of chat windows and trim all entries
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    m_chatWindowList = m_chatWindows.split(QRegExp(QStringLiteral("[,;]")), QString::SkipEmptyParts);
+    m_chatWindowList = m_chatWindows.split(QRegularExpression(QStringLiteral("[,;]")), QString::SkipEmptyParts);
 #else
-    m_chatWindowList = m_chatWindows.split(QRegExp(QStringLiteral("[,;]")), Qt::SkipEmptyParts);
+    m_chatWindowList = m_chatWindows.split(QRegularExpression(QStringLiteral("[,;]")), Qt::SkipEmptyParts);
 #endif
 
     for (QString& chatWindow : m_chatWindowList) {

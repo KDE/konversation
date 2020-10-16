@@ -13,6 +13,7 @@
 #include <QClipboard>
 #include <QKeyEvent>
 #include <QMimeData>
+#include <QRegularExpression>
 
 #include <KMessageBox>
 #include <KCompletionBox>
@@ -400,11 +401,11 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         while(pasteText.contains(QLatin1String("\n\n")))
             pasteText.replace(QLatin1String("\n\n"),QLatin1String("\n"));
 
-        QRegExp reTopSpace(QStringLiteral("^ *\n"));
+        const QRegularExpression reTopSpace(QStringLiteral("^ *\n"));
         while(pasteText.contains(reTopSpace))
             pasteText.remove(reTopSpace);
 
-        QRegExp reBottomSpace(QStringLiteral("\n *$"));
+        const QRegularExpression reBottomSpace(QStringLiteral("\n *$"));
         while(pasteText.contains(reBottomSpace))
             pasteText.remove(reBottomSpace);
 

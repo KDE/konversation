@@ -80,7 +80,7 @@ void PasteEditor::removeNewlines()
 {
     QString text(m_textEditor->toPlainText());
     text.remove(QLatin1Char('\r'));
-    text.remove(QRegExp(QStringLiteral("^\n+|\n+$")));
+    text.remove(QRegularExpression(QStringLiteral("^\n+|\n+$")));
 
     int i = 0;
 

@@ -260,7 +260,7 @@ QVariant IrcViewMimeData::retrieveData(const QString &mimeType, QVariant::Type t
         IrcViewMimeData *that = const_cast<IrcViewMimeData *>(this);
 
         //Copy the text, skipping any QChar::ObjectReplacementCharacter
-        QRegExp needle(QStringLiteral("\\xFFFC\\n?"));
+        const QRegularExpression needle(QStringLiteral("\\x{FFFC}\\n?"));
 
         that->setText(fragment.toPlainText().remove(needle));
         fragment = QTextDocumentFragment();
@@ -1124,9 +1124,9 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
         QString highlightColor;
 
         if (Preferences::self()->highlightNick() &&
-            line.toLower().contains(QRegExp(QLatin1String("(^|[^\\d\\w])") +
-            QRegExp::escape(ownNick.toLower()) +
-            QLatin1String("([^\\d\\w]|$)"))))
+            line.toLower().contains(QRegularExpression(QLatin1String("(^|[^\\d\\w])")
+                                                       + QRegularExpression::escape(ownNick.toLower())
+                                                       + QLatin1String("([^\\d\\w]|$)"))))
         {
             // highlight current nickname
             highlightColor = Preferences::self()->highlightNickColor().name();
@@ -1147,15 +1147,15 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
                     bool patternFound = false;
                     if (highlight->getRegExp())
                     {
-                        QRegExp needleReg(highlight->getPattern());
-                        needleReg.setCaseSensitivity(Qt::CaseInsensitive);
-                                                      // highlight regexp in text
-                        patternFound = ((line.contains(needleReg)) ||
-                                                      // highlight regexp in nickname
-                            (whoSent.contains(needleReg)));
+                        const QRegularExpression needleReg(highlight->getPattern(),
+                                                           QRegularExpression::CaseInsensitiveOption);
+                        QRegularExpressionMatch rmatch;
+
+                        patternFound = line.contains(needleReg, &rmatch)        // highlight regexp in text
+                                       || whoSent.contains(needleReg, &rmatch); // highlight regexp in nickname
 
                         // remember captured patterns for later
-                        captures = needleReg.capturedTexts();
+                        captures = rmatch.capturedTexts();
 
                     }
                     else
@@ -1196,7 +1196,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
                 {
                     m_autoTextToSend.replace(QStringLiteral("%%1").arg(capture), captures[capture]);
                 }
-                m_autoTextToSend.remove(QRegExp(QStringLiteral("%[0-9]")));
+                m_autoTextToSend.remove(QRegularExpression(QStringLiteral("%[0-9]")));
             }
         }
 
@@ -1965,13 +1965,16 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
 
 QString IRCView::getColors(const QString& text, int start, QString& _fgColor, QString& _bgColor, bool* fgValueOK, bool* bgValueOK)
 {
-    QRegExp ircColorRegExp(QStringLiteral("(\003([0-9][0-9]|[0-9]|)(,([0-9][0-9]|[0-9]|)|,|)|\017)"));
-    if (ircColorRegExp.indexIn(text,start) == -1)
-        return QString();
+    static const QRegularExpression ircColorRegExp(QStringLiteral("(\003([0-9]{2}|[0-9]|)(,([0-9]{2}|[0-9]|)|,|)|\017)"));
 
-    QString ret(ircColorRegExp.cap(0));
+    const QRegularExpressionMatch match = ircColorRegExp.match(text, start);
+    if (!match.hasMatch()) {
+        return QString{};
+    }
 
-    QString fgColor(ircColorRegExp.cap(2)), bgColor(ircColorRegExp.cap(4));
+    const QString ret(match.captured(0));
+
+    const QString fgColor(match.captured(2));
     if (!fgColor.isEmpty())
     {
         int foregroundColor = fgColor.toInt();
@@ -1993,6 +1996,7 @@ QString IRCView::getColors(const QString& text, int start, QString& _fgColor, QS
             *fgValueOK = true;
     }
 
+    const QString bgColor(match.captured(4));
     if (!bgColor.isEmpty())
     {
         int backgroundColor = bgColor.toInt();

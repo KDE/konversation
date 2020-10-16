@@ -18,7 +18,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QBitmap>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTimer>
 #include <QScreen>
 #include <QApplication>
@@ -133,9 +133,9 @@ QRect OSDWidget::determineMetrics( const int M )
     const QSize max = QApplication::screens()[m_screen]->size() - margin;
 
     // If we don't do that, the boundingRect() might not be suitable for drawText() (Qt issue N67674)
-    m_currentText.replace(QRegExp(QStringLiteral(" +\n")), QStringLiteral("\n"));
+    m_currentText.replace(QRegularExpression(QStringLiteral(" +\n")), QStringLiteral("\n"));
     // remove consecutive line breaks
-    m_currentText.replace(QRegExp(QStringLiteral("\n+")), QStringLiteral("\n"));
+    m_currentText.replace(QRegularExpression(QStringLiteral("\n{2,}")), QStringLiteral("\n"));
 
     QFont titleFont = font();
     titleFont.setBold(true);
