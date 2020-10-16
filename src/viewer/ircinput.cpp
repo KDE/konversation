@@ -80,8 +80,6 @@ void IRCInput::createHighlighter()
 
 QSize IRCInput::sizeHint() const
 {
-    QFontMetrics fm(font());
-
     int h = document()->size().toSize().height();
 
     QStyleOptionFrame opt;
