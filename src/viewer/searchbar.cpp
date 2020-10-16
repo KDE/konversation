@@ -18,6 +18,7 @@
 #include <KStandardAction>
 #include <QMenu>
 
+#include <algorithm>
 
 SearchBar::SearchBar(QWidget* parent)
 : QWidget(parent),
@@ -118,12 +119,11 @@ void SearchBar::showEvent(QShowEvent *e)
 
 bool SearchBar::focusedChild() const
 {
-    QList<QWidget *> l = findChildren<QWidget *>();
+    const QList<QWidget*> l = findChildren<QWidget*>();
 
-    for (int i=0; i < l.size(); i++)
-        if (l.at(i)->hasFocus())
-            return true;
-    return false;
+    return std::any_of(l.begin(), l.end(), [](QWidget* w) {
+        return w->hasFocus();
+    });
 }
 
 void SearchBar::hideEvent(QHideEvent* e)
