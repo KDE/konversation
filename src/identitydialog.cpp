@@ -75,6 +75,7 @@ namespace Konversation
         connect(m_delBtn, &QPushButton::clicked, this, &IdentityDialog::deleteIdentity);
 
         const auto ids = Preferences::identityList();
+        m_identityList.reserve(ids.size());
         for (const IdentityPtr &id : ids) {
             m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );

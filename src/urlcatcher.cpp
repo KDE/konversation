@@ -285,6 +285,7 @@ void UrlCatcher::bookmarkSelectedUrls()
     {
         QList<KBookmarkOwner::FutureBookmark> bookmarks;
 
+        bookmarks.reserve(selectedIndexes.size());
         for (const QModelIndex& index : selectedIndexes)
             bookmarks << KBookmarkOwner::FutureBookmark(index.data().toString(), QUrl(index.data().toString()), QString());
 
@@ -318,6 +319,7 @@ void UrlCatcher::deleteSelectedUrls()
     QList<QPersistentModelIndex> selectedIndices;
 
     const auto nonPersistentSelectedIndices = m_urlTree->selectionModel()->selectedIndexes();
+    selectedIndices.reserve(nonPersistentSelectedIndices.size());
     for (const QModelIndex& index : nonPersistentSelectedIndices)
         selectedIndices << index;
 

@@ -106,10 +106,11 @@ QStringList QuickButtons_Config::currentButtonList()
 {
   QStringList newList;
 
+  const int buttonCount = buttonListView->topLevelItemCount();
+  newList.reserve(buttonCount);
   QTreeWidgetItem* item = nullptr;
 
-  for (int index = 0; index < buttonListView->topLevelItemCount(); index++)
-  {
+  for (int index = 0; index < buttonCount; ++index) {
       item = buttonListView->topLevelItem(index);
 
       newList.append(item->text(0) + QLatin1Char(',') + item->text(1));

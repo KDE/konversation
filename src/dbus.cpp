@@ -40,6 +40,7 @@ QStringList DBus::listConnections()
     QStringList connections;
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
+    connections.reserve(serverList.size());
     for (Server* server : serverList)
         connections << QString::number(server->connectionId());
 

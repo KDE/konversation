@@ -114,6 +114,7 @@ namespace Konversation
             //save selected rows
             const QModelIndexList selectedIndexes = selectedRows();
             QList<QVariant> selectedItems;
+            selectedItems.reserve(selectedIndexes.size());
             for (const QModelIndex &index : selectedIndexes) {
                 selectedItems.append(index.data(TransferListModel::TransferPointer));
             }
@@ -433,11 +434,14 @@ namespace Konversation
 
         void TransferView::saveColumns()
         {
+            const int columnCount = header()->count();
             QList<int> columnWidths;
+            columnWidths.reserve(columnCount);
             QList<int> columnOrder;
+            columnOrder.reserve(columnCount);
             QList<int> columnVisible;
-            for (int i = 0; i < header()->count(); ++i)
-            {
+            columnVisible.reserve(columnCount);
+            for (int i = 0; i < columnCount; ++i) {
                 int index = header()->logicalIndex(i);
 
                 columnWidths.append(columnWidth(index));

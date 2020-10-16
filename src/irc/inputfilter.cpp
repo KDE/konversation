@@ -1393,6 +1393,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 }
                 else if (parameterList.count() > 3)
                 {
+                    nickList.reserve(parameterList.size() - 3);
                     for(int i = 3; i < parameterList.count(); i++) {
                         nickList.append(parameterList.value(i));
                     }

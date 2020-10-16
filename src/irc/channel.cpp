@@ -2829,6 +2829,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     std::sort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
 
+    found.reserve(found.size() + foundNicks.size());
     for (Nick *nick : qAsConst(foundNicks)) {
         found.append(nick->getChannelNick()->getNickname());
     }

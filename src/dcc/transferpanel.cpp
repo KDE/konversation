@@ -325,6 +325,7 @@ namespace Konversation
 
             m_transferView->clearSelection();
             QList<int> toSelectList;
+            toSelectList.reserve(indexes.size());
             //select everything that got not removed
             for (const QModelIndex &index : qAsConst(indexes)) {
                 int offset = 0;
@@ -390,6 +391,7 @@ namespace Konversation
 
             m_transferView->clearSelection();
             QList<int> toSelectList;
+            toSelectList.reserve(selectedIndexes.size());
             //select everything that got not removed
             for (const QModelIndex &index : qAsConst(selectedIndexes)) {
                 int offset = 0;

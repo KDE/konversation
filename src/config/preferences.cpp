@@ -581,7 +581,9 @@ void Preferences::saveColumnState(QTreeView *treeView, const QString &name)
     KConfigGroup group(KSharedConfig::openConfig(), name);
 
     QList<int> columnWidths;
-    for (int i = 0; i < treeView->header()->count(); ++i)
+    const int columnCount = treeView->header()->count();
+    columnWidths.reserve(columnCount);
+    for (int i = 0; i < columnCount; ++i)
         columnWidths.append(treeView->columnWidth(i));
     // save column widths
     group.writeEntry("ColumnWidths", columnWidths);

@@ -181,6 +181,7 @@ Server::~Server()
     {
         Konversation::ChannelList channelList;
 
+        channelList.reserve(m_channelList.size());
         for (Channel* channel : qAsConst(m_channelList)) {
             channelList << channel->channelSettings();
         }
@@ -3898,6 +3899,7 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
 
     if (!channels.isEmpty())
     {
+        tmpList.reserve(channels.size());
         for (const ChannelSettings& cs : qAsConst(channels)) {
             tmpList << cs;
         }
@@ -3906,6 +3908,7 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
         tmpList = getServerGroup()->channelList();
     else
     {
+        tmpList.reserve(m_channelList.size());
         for (Channel* channel : qAsConst(m_channelList)) {
             tmpList << channel->channelSettings();
         }

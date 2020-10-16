@@ -455,6 +455,7 @@ void Application::readOptions()
                                         QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
     QList<int> sgKeys;
+    sgKeys.reserve(groups.size());
 
     if(!groups.isEmpty())
     {
@@ -820,6 +821,7 @@ void Application::saveOptions(bool updateGUI)
     for (const auto& serverGroup : qAsConst(sortedServerGroupMap)) {
         const Konversation::ServerList serverList = serverGroup->serverList();
         servers.clear();
+        servers.reserve(serverList.size());
 
         sgKeys.append(serverGroup->id());
 
@@ -837,6 +839,7 @@ void Application::saveOptions(bool updateGUI)
 
         const Konversation::ChannelList channelList = serverGroup->channelList();
         channels.clear();
+        channels.reserve(channelList.size());
 
         for (const auto& channel : channelList) {
             const QString groupName = QStringLiteral("Channel %1").arg(index3);
@@ -849,6 +852,7 @@ void Application::saveOptions(bool updateGUI)
 
         const Konversation::ChannelList channelHistoryList = serverGroup->channelHistory();
         channelHistory.clear();
+        channelHistory.reserve(channelHistoryList.size());
 
         for (const auto& channel : channelHistoryList) {
             // TODO FIXME: is it just me or is this broken?

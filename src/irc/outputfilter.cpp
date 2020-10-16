@@ -303,6 +303,7 @@ namespace Konversation
             {
                 result.output.clear();
                 result.outputList = outputList;
+                result.toServerList.reserve(outputList.size());
                 for (const QString& out : outputList) {
                     result.toServerList += QLatin1String("PRIVMSG ") + destination + QLatin1String(" :") + out;
                 }

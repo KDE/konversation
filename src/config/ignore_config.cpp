@@ -76,8 +76,9 @@ QList<Ignore*> Ignore_Config::getIgnoreList() const
     QList<Ignore*> newList;
 
     QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
-    for (int i = 0; i < root->childCount(); ++i)
-    {
+    const int childCount = root->childCount();
+    newList.reserve(childCount);
+    for (int i = 0; i < childCount; ++i) {
         IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
         Ignore* newItem=new Ignore(item->text(0),item->getFlags());
         newList.append(newItem);
@@ -92,8 +93,9 @@ QStringList Ignore_Config::currentIgnoreList() const
     QStringList newList;
 
     QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
-    for (int i = 0; i < root->childCount(); ++i)
-    {
+    const int childCount = root->childCount();
+    newList.reserve(childCount);
+    for (int i = 0; i < childCount; ++i) {
         IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
         newList.append(item->text(0)+QLatin1Char(' ')+QString(item->getFlags()));
     }
