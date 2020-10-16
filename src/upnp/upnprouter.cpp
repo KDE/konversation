@@ -22,7 +22,7 @@
 #include <QCoreApplication>
 #include <QNetworkReply>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 
 namespace Konversation
