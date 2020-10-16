@@ -25,20 +25,18 @@ namespace Konversation
 {
     void initChanModesHash()
     {
-        QHash<QChar,QString> myHash;
-
-        myHash.insert(QLatin1Char('t'), i18n("topic protection"));
-        myHash.insert(QLatin1Char('n'), i18n("no messages from outside"));
-        myHash.insert(QLatin1Char('s'), i18n("secret"));
-        myHash.insert(QLatin1Char('i'), i18n("invite only"));
-        myHash.insert(QLatin1Char('p'), i18n("private"));
-        myHash.insert(QLatin1Char('m'), i18n("moderated"));
-        myHash.insert(QLatin1Char('k'), i18n("password protected"));
-        myHash.insert(QLatin1Char('a'), i18n("anonymous"));
-        myHash.insert(QLatin1Char('c'), i18n("no colors allowed"));
-        myHash.insert(QLatin1Char('l'), i18n("user limit"));
-
-        m_modesHash = myHash;
+        m_modesHash = {
+            { QLatin1Char('t'), i18n("topic protection") },
+            { QLatin1Char('n'), i18n("no messages from outside") },
+            { QLatin1Char('s'), i18n("secret") },
+            { QLatin1Char('i'), i18n("invite only") },
+            { QLatin1Char('p'), i18n("private") },
+            { QLatin1Char('m'), i18n("moderated") },
+            { QLatin1Char('k'), i18n("password protected") },
+            { QLatin1Char('a'), i18n("anonymous") },
+            { QLatin1Char('c'), i18n("no colors allowed") },
+            { QLatin1Char('l'), i18n("user limit") },
+        };
     }
 
     QHash<QChar,QString> getChannelModesHash()

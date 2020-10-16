@@ -4399,15 +4399,17 @@ void Server::reconnectInvoluntary()
 
 void Server::initCapablityNames()
 {
-    m_capabilityNames.insert(QStringLiteral("away-notify"), AwayNotify);
-    m_capabilityNames.insert(QStringLiteral("extended-join"), ExtendedJoin);
-    m_capabilityNames.insert(QStringLiteral("server-time"), ServerTime);
-    m_capabilityNames.insert(QStringLiteral("znc.in/server-time-iso"), ServerTime);
-    m_capabilityNames.insert(QStringLiteral("userhost-in-names"), UserHostInNames);
-    m_capabilityNames.insert(QStringLiteral("sasl"), SASL);
-    m_capabilityNames.insert(QStringLiteral("multi-prefix"), MultiPrefix);
-    m_capabilityNames.insert(QStringLiteral("account-notify"), AccountNotify);
-    m_capabilityNames.insert(QStringLiteral("znc.in/self-message"), SelfMessage);
+    m_capabilityNames = {
+        { QStringLiteral("away-notify"),            AwayNotify },
+        { QStringLiteral("extended-join"),          ExtendedJoin },
+        { QStringLiteral("server-time"),            ServerTime },
+        { QStringLiteral("znc.in/server-time-iso"), ServerTime },
+        { QStringLiteral("userhost-in-names"),      UserHostInNames },
+        { QStringLiteral("sasl"),                   SASL },
+        { QStringLiteral("multi-prefix"),           MultiPrefix },
+        { QStringLiteral("account-notify"),         AccountNotify },
+        { QStringLiteral("znc.in/self-message"),    SelfMessage },
+    };
 }
 
 

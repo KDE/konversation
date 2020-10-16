@@ -164,42 +164,21 @@ namespace Konversation
             if (service.ready)
             {
                 // add all the arguments for the command
-                QList<SOAP::Arg> args;
-                SOAP::Arg a;
-                a.element = QStringLiteral("NewRemoteHost");
-                args.append(a);
-
-                // the external port
-                a.element = QStringLiteral("NewExternalPort");
-                a.value = QString::number(port);
-                args.append(a);
-
-                // the protocol
-                a.element = QStringLiteral("NewProtocol");
-                a.value = (proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP");
-                args.append(a);
-
-                // the local port
-                a.element = QStringLiteral("NewInternalPort");
-                a.value = QString::number(port);
-                args.append(a);
-
-                // the local IP address
-                a.element = QStringLiteral("NewInternalClient");
-                a.value = host.toString();
-                args.append(a);
-
-                a.element = QStringLiteral("NewEnabled");
-                a.value = QStringLiteral("1");
-                args.append(a);
-
-                a.element = QStringLiteral("NewPortMappingDescription");
-                a.value = QStringLiteral("Konversation UPNP");
-                args.append(a);
-
-                a.element = QStringLiteral("NewLeaseDuration");
-                a.value = QStringLiteral("0");
-                args.append(a);
+                const QList<SOAP::Arg> args = {
+                    { QStringLiteral("NewRemoteHost"),             QString() },
+                    // the external port
+                    { QStringLiteral("NewExternalPort"),           QString::number(port) },
+                    // the protocol
+                    { QStringLiteral("NewProtocol"),
+                      (proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP") },
+                    // the local port
+                    { QStringLiteral("NewInternalPort"),           QString::number(port) },
+                    // the local IP address
+                    { QStringLiteral("NewInternalClient"),         host.toString() },
+                    { QStringLiteral("NewEnabled"),                QStringLiteral("1") },
+                    { QStringLiteral("NewPortMappingDescription"), QStringLiteral("Konversation UPNP") },
+                    { QStringLiteral("NewLeaseDuration"),          QStringLiteral("0") },
+                };
 
                 QString action = QStringLiteral("AddPortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
@@ -258,20 +237,14 @@ namespace Konversation
                     return false; // Either forward not found or forward is still pending
 
                 // add all the arguments for the command
-                QList<SOAP::Arg> args;
-                SOAP::Arg a;
-                a.element = QStringLiteral("NewRemoteHost");
-                args.append(a);
-
-                // the external port
-                a.element = QStringLiteral("NewExternalPort");
-                a.value = QString::number(forward->port);
-                args.append(a);
-
-                // the protocol
-                a.element = QStringLiteral("NewProtocol");
-                a.value = (forward->proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP");
-                args.append(a);
+                const QList<SOAP::Arg> args = {
+                    { QStringLiteral("NewRemoteHost"),   QString() },
+                    // the external port
+                    { QStringLiteral("NewExternalPort"), QString::number(forward->port) },
+                    // the protocol
+                    { QStringLiteral("NewProtocol"),
+                      (forward->proto == QAbstractSocket::TcpSocket) ? QStringLiteral("TCP") : QStringLiteral("UDP") },
+                };
 
                 QString action = QStringLiteral("DeletePortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);

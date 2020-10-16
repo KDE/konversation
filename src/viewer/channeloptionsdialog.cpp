@@ -318,7 +318,6 @@ namespace Konversation
         for (const QChar mode : qAsConst(modeString)) {
             const QString modeAsString(mode);
 
-            QList<QStandardItem *> newRow;
             QStandardItem *item = nullptr;
             if (!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(mode))
                 item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)", mode, getChannelModesHash().value(mode)));
@@ -327,10 +326,11 @@ namespace Konversation
             item->setData(modeAsString);
             item->setCheckable(true);
             item->setEditable(false);
-            newRow.append(item);
-            item = new QStandardItem();
-            item->setEditable(true);
-            newRow.append(item);
+
+            auto* secondItem = new QStandardItem();
+            secondItem->setEditable(true);
+
+            const QList<QStandardItem *> newRow { item, secondItem };
             modesModel->invisibleRootItem()->appendRow(newRow);
         }
     }

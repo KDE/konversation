@@ -826,8 +826,7 @@ namespace Konversation
                 tPen.setStyle(Qt::CustomDashLine);
 
                 static const qreal dashLength = 4;
-                QVector<qreal> dashes;
-                dashes << dashLength << dashLength;
+                const QVector<qreal> dashes = { dashLength, dashLength };
                 tPen.setDashPattern(dashes);
 
                 tPaint.setPen(tPen);
