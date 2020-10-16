@@ -84,7 +84,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, int serverG
     {
         settings.setServerGroup(serverGroup);
 
-        if (serverGroup->serverList().size() > 0)
+        if (!serverGroup->serverList().isEmpty())
             settings.setServer(serverGroup->serverList()[0]);
     }
 
@@ -319,7 +319,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
         addressSegments = mangledUrlSegments[0].split(QLatin1Char(','), QString::KeepEmptyParts);
 
-        if (addressSegments.filter(QStringLiteral("isserver")).size() > 0)
+        if (!addressSegments.filter(QStringLiteral("isserver")).isEmpty())
             checkIfServerGroup = false;
 
         decodeAddress(addressSegments[0], settings, checkIfServerGroup);
@@ -454,7 +454,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
 
         settings.setServerGroup(serverGroup);
 
-        if (serverGroup->serverList().size() > 0)
+        if (!serverGroup->serverList().isEmpty())
             settings.setServer(serverGroup->serverList()[0]);
     }
     else

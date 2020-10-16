@@ -50,7 +50,7 @@ namespace Konversation
 
     void OutputFilter::fillCommandList()
     {
-        if (m_commands.size() > 0)
+        if (!m_commands.isEmpty())
             return;
 
         QString methodSignature;

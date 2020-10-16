@@ -103,8 +103,7 @@ namespace Konversation
 
             // We need to give time for the QNetworkManager to process the undo forward commands. Continue
             // Processing the event loop from here until there are no more forwards.
-            while(forwards.size() > 0)
-            {
+            while (!forwards.isEmpty()) {
                 QCoreApplication::processEvents(QEventLoop::WaitForMoreEvents);
             }
         }
@@ -262,7 +261,7 @@ namespace Konversation
                         forward = check;
                 }
 
-                if (forward == nullptr || pending_forwards.keys(forward).size() > 0)
+                if (forward == nullptr || !pending_forwards.keys(forward).isEmpty())
                     return false; // Either forward not found or forward is still pending
 
                 // add all the arguments for the command

@@ -1372,7 +1372,7 @@ void Server::incoming()
             }
             m_lineBuffer.truncate(i+1);
 
-            if (m_lineBuffer.size() > 0)
+            if (!m_lineBuffer.isEmpty())
                 bufferLines.append(m_lineBuffer);
 
             m_lineBuffer.clear();
