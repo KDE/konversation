@@ -608,14 +608,12 @@ void Application::readOptions()
         QString regex = cgAutoreplace.readEntry(regexString + indexString, QStringLiteral("0"));
         QString direction = cgAutoreplace.readEntry(directString + indexString, QStringLiteral("o"));
         QString replace = cgAutoreplace.readEntry(replaceString + indexString, QString());
-        if (replace.length()>0)
-        {
+        if (!replace.isEmpty()) {
             int repLen=replace.length()-1;
             if (replace.at(repLen)==QLatin1Char('#'))
                 replace.truncate(repLen);
         }
-        if (pattern.length()>0)
-        {
+        if (!pattern.isEmpty()) {
             int patLen=pattern.length()-1;
             if (pattern.at(patLen)==QLatin1Char('#'))
                 pattern.truncate(patLen);

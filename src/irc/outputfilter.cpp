@@ -1967,8 +1967,7 @@ namespace Konversation
             }
 
             // Only continue if there was no error
-            if(token.length())
-            {
+            if (!token.isEmpty()) {
                 QString modeToken;
                 QString nickToken;
 

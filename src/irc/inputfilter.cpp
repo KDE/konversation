@@ -1220,7 +1220,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                         {
                             m_server->setPrefixes(QString(), value);
                             // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
-                            if (value.length() || property.length())
+                            if (!value.isEmpty() || !property.isEmpty())
                                 m_server->appendStatusMessage(QString(), QStringLiteral("XXX Server sent bad PREFIX in RPL_ISUPPORT, please report."), messageTags);
                         }
                         else

@@ -562,7 +562,7 @@ QStringList ViewContainer::mimeTypes() const
 
 QMimeData* ViewContainer::mimeData(const QModelIndexList &indexes) const
 {
-    if (!indexes.length()) {
+    if (indexes.isEmpty()) {
         return new ViewMimeData(nullptr);
     }
 

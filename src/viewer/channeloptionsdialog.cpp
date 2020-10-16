@@ -540,8 +540,7 @@ namespace Konversation
     /// Enables/disables addBan and updateBan buttons depending on the value of @p text
     void ChannelOptionsDialog::hostmaskChanged(const QString& text)
     {
-      if (text.trimmed().length() != 0)
-      {
+      if (!text.trimmed().isEmpty()) {
         if (m_isAnyTypeOfOp)
         {
           QList<QTreeWidgetItem*> items = m_ui.banList->findItems(text, Qt::MatchExactly | Qt::MatchCaseSensitive, 0);

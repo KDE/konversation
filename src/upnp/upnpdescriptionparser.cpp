@@ -216,8 +216,7 @@ namespace Konversation
 
         bool XMLContentHandler::characters(const QString & ch)
         {
-            if (ch.length() > 0)
-            {
+            if (!ch.isEmpty()) {
                 tmp += ch;
             }
             return true;

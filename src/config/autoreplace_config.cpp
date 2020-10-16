@@ -247,8 +247,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
   if(item)
   {
     // rename pattern
-    if (newPattern.length()>0)
-    {
+    if (!newPattern.isEmpty()) {
         item->setText(2,newPattern);
     }
     else

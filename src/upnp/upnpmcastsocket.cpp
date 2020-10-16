@@ -162,7 +162,7 @@ namespace Konversation
                 else if (line.startsWith(QLatin1String("Server"), Qt::CaseInsensitive))
                 {
                     server = line.mid(line.indexOf(QLatin1Char(':')) + 1).trimmed();
-                    if (server.length() == 0)
+                    if (server.isEmpty())
                         return nullptr;
 
                 }
@@ -170,7 +170,7 @@ namespace Konversation
                 {
                     uuid = line.split(QLatin1Char(':')).at(2);
 
-                    if (uuid.length() == 0)
+                    if (uuid.isEmpty())
                         return nullptr;
                 }
             }
