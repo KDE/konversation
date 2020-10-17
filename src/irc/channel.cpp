@@ -2676,16 +2676,16 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
 
 void Channel::addBan(const QString& ban)
 {
-    for ( QStringList::iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
-    {
+    QStringList::iterator it = m_BanList.begin();
+    while (it != m_BanList.end()) {
         if ((*it).section(QLatin1Char(' '), 0, 0) == ban.section(QLatin1Char(' '), 0, 0))
         {
             // Ban is already in list.
             it = m_BanList.erase(it);
 
             emit banRemoved(ban.section(QLatin1Char(' '), 0, 0));
-            if (it == m_BanList.end())
-                break;
+        } else {
+            ++it;
         }
     }
 
