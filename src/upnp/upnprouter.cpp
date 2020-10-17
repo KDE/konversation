@@ -193,15 +193,16 @@ namespace Konversation
                 {
                     // erase old forwarding if one exists
                     // The UPnP spec states if an IGD receives a forward request that matches an existing request that it must accept it.
-                    QListIterator<Forwarding*> itr(forwards);
-                    while (itr.hasNext())
-                    {
-                        Forwarding *check = itr.next();
+                    auto it = forwards.begin();
+                    while (it != forwards.end()) {
+                        Forwarding *check = *it;
 
                         if (check->port == forward->port && check->host == forward->host && check->proto == forward->proto)
                         {
-                            forwards.removeAll(check);
+                            it = forwards.erase(it);
                             delete check;
+                        } else {
+                            ++it;
                         }
                     }
 
