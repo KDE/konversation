@@ -773,7 +773,6 @@ class Server : public QObject
         QTimer m_incomingTimer;
         QTimer m_notifyTimer;
         QStringList m_notifyCache;                  // List of users found with ISON
-        int m_checkTime;                            // Time elapsed while waiting for server 303 response
         int m_currentLag;
 
         QStringList m_inputBuffer;
