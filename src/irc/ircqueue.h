@@ -122,7 +122,6 @@ private:
     QList<IRCMessage> m_pending;
     QTimer *m_timer;
     bool m_blocked;
-    bool m_online;
     Server *m_server;
 
     QElapsedTimer m_startedAt;
