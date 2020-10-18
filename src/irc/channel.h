@@ -345,7 +345,6 @@ class Channel : public ChatWindow
         QStringList m_modeList;
         ChannelNickPtr m_ownChannelNick;
 
-        bool pendingNicks; ///< are there still nicks to be added by /names reply?
         int nicks; ///< How many nicks on the channel
         int ops; ///< How many ops on the channel
 
