@@ -17,7 +17,7 @@
 #include <QTextCodec>
 
 
-#define MARGIN 4
+constexpr int MARGIN = 4;
 
 
 TopicEdit::TopicEdit(QWidget* parent) : KTextEdit(parent)

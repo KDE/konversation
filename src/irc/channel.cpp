@@ -38,7 +38,7 @@
 #include <QInputDialog>
 #include <QRandomGenerator>
 
-#define DELAYED_SORT_TRIGGER    10
+constexpr int DELAYED_SORT_TRIGGER = 10;
 
 using namespace Konversation;
 

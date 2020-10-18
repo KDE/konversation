@@ -10,9 +10,9 @@
 
 #include <KSharedConfig>
 
-#define DIRECTION_OUTPUT 0
-#define DIRECTION_INPUT  1
-#define DIRECTION_BOTH   2
+constexpr int DIRECTION_OUTPUT = 0;
+constexpr int DIRECTION_INPUT  = 1;
+constexpr int DIRECTION_BOTH   = 2;
 
 
 Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)

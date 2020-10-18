@@ -23,9 +23,9 @@
 #include <QPainterPath>
 
 // FIXME KF5 Port: Not DPI-aware.
-#define LED_ICON_SIZE 14
-#define MARGIN 2
-#define RADIUS 4
+constexpr int LED_ICON_SIZE = 14;
+constexpr int MARGIN = 2;
+constexpr int RADIUS = 4;
 
 ViewTreeDelegate::ViewTreeDelegate(QObject* parent) : QStyledItemDelegate(parent)
 {

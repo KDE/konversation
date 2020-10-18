@@ -19,7 +19,7 @@
 #include <KCompletionBox>
 #include <KActionCollection>
 
-#define MAXHISTORY 100
+constexpr int MAXHISTORY = 100;
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {

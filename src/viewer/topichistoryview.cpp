@@ -12,7 +12,7 @@
 #include <KCategoryDrawer>
 
 
-#define MARGIN 2
+constexpr int MARGIN = 2;
 
 
 TopicHistorySortfilterProxyModel::TopicHistorySortfilterProxyModel(QObject* parent) : KCategorizedSortFilterProxyModel(parent)
