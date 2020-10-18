@@ -307,7 +307,8 @@ void Theme_Config::removeTheme()
         bool isUninstalledByKNS = false;
 
         for (auto &entry : entries) {
-            for (const auto &file : entry.installedFiles()) {
+            const QStringList installedFiles = entry.installedFiles();
+            for (const QString &file : installedFiles) {
                 // file strings are of pattern "[...]/konversation/themes/simpleminded/*"
                 if (file.startsWith(dir)) {
                     // uninstall via KNS and be done
