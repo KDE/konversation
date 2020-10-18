@@ -53,6 +53,8 @@ namespace Konversation
 
         private:
             MainWindow* m_mainWindow;
+
+            Q_DISABLE_COPY(NotificationHandler)
     };
 
 }

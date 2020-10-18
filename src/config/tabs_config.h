@@ -23,6 +23,9 @@ class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
 
     private Q_SLOTS:
         void toggleCheckBoxes(int activated);
+
+    private:
+        Q_DISABLE_COPY(Tabs_Config)
 };
 
 #endif

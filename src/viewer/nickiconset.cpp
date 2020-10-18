@@ -32,6 +32,8 @@ public: // QIconEngine API
 private:
     QIcon m_baseIcon;
     QIcon m_overlayIcon;
+
+    Q_DISABLE_COPY(OverlayIconEngine)
 };
 
 OverlayIconEngine::OverlayIconEngine(const QIcon &icon, const QIcon &overlayIcon)
@@ -43,7 +45,7 @@ OverlayIconEngine::OverlayIconEngine(const QIcon &icon, const QIcon &overlayIcon
 
 QIconEngine *OverlayIconEngine::clone() const
 {
-    return new OverlayIconEngine(*this);
+    return new OverlayIconEngine(m_baseIcon, m_overlayIcon);
 }
 
 QSize OverlayIconEngine::actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state)
@@ -98,6 +100,7 @@ public:
         _ElementIndex_COUNT
     };
 
+    AbstractIconElementSet() = default;
     virtual ~AbstractIconElementSet() = default;
     virtual bool load(const QString &baseDir) = 0;
     virtual void generateIcon(QIcon* icons, ElementIndex index, bool isOverlay) const = 0;
@@ -111,6 +114,9 @@ protected:
         bool required;
     }
     m_loadData[_ElementIndex_COUNT];
+
+private:
+    Q_DISABLE_COPY(AbstractIconElementSet)
 };
 
 const AbstractIconElementSet::LoadData AbstractIconElementSet::m_loadData[_ElementIndex_COUNT] = {
@@ -129,6 +135,8 @@ const AbstractIconElementSet::LoadData AbstractIconElementSet::m_loadData[_Eleme
 class SvgIconElementSet : public AbstractIconElementSet
 {
 public:
+    SvgIconElementSet() = default;
+
     bool load(const QString &baseDir) override;
 
     void generateIcon(QIcon* icons, ElementIndex index, bool isOverlay) const override;
@@ -137,6 +145,8 @@ public:
 
 private:
     QIcon m_element[_ElementIndex_COUNT];
+
+    Q_DISABLE_COPY(SvgIconElementSet)
 };
 
 bool SvgIconElementSet::load(const QString &baseDir)
@@ -175,6 +185,8 @@ void SvgIconElementSet::generateIcon(QIcon* icons, ElementIndex index, bool isOv
 class PixmapIconElementSet : public AbstractIconElementSet
 {
 public:
+    PixmapIconElementSet() = default;
+
     bool load(const QString &baseDir) override;
 
     void generateIcon(QIcon* icons, ElementIndex index, bool isOverlay) const override;
@@ -187,6 +199,8 @@ private:
 private:
     QPixmap m_element[_ElementIndex_COUNT];
     QIcon m_awayIcon;
+
+    Q_DISABLE_COPY(PixmapIconElementSet)
 };
 
 bool PixmapIconElementSet::load(const QString &baseDir)

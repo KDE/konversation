@@ -114,5 +114,8 @@ class Query : public ChatWindow
         //FIXME: We might want to put this into the attendee object (i.e. NickInfo).
         mutable Konversation::Cipher *m_cipher;
         #endif
+
+        Q_DISABLE_COPY(Query)
 };
+
 #endif

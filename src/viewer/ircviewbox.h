@@ -36,5 +36,8 @@ class IRCViewBox : public QWidget
         IRCView*   m_ircView;
         SearchBar* m_searchBar;
         bool       m_matchedOnce;
+
+        Q_DISABLE_COPY(IRCViewBox)
 };
+
 #endif                                            /* IRCVIEWBOX_H */

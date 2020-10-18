@@ -36,6 +36,8 @@ namespace Konversation
         private:
             bool m_notificationEnabled;
             bool m_away;
+
+            Q_DISABLE_COPY(TrayIcon)
     };
 }
 

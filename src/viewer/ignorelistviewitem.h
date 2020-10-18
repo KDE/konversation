@@ -28,6 +28,8 @@ class IgnoreListViewItem : public QTreeWidgetItem
 
     private:
         int m_flags;
+
+        Q_DISABLE_COPY(IgnoreListViewItem)
 };
 
 #endif

@@ -46,6 +46,8 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
         QString m_oldTheme;
         QString m_currentTheme;
         int m_defaultThemeIndex;
+
+        Q_DISABLE_COPY(Theme_Config)
 };
 
 #endif

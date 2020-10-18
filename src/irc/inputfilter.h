@@ -92,5 +92,8 @@ class InputFilter : public QObject
 
         /// Used when handling MOTD
         bool m_connecting;
+
+        Q_DISABLE_COPY(InputFilter)
 };
+
 #endif

@@ -46,6 +46,8 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
 
     private:
         QStringList m_oldIgnoreList;
+
+        Q_DISABLE_COPY(Ignore_Config)
 };
 
 #endif // IGNORE_CONFIG_H

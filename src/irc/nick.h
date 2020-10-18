@@ -47,5 +47,7 @@ class Nick : public QTreeWidgetItem
         Channel* m_channel;
 
         int m_flags;
+
+        Q_DISABLE_COPY(Nick)
 };
 #endif

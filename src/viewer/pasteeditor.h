@@ -33,6 +33,8 @@ class PasteEditor : public QDialog, private Ui::PasteEditor
     private:
         bool m_autoReplaceActionWasEnabled;
         QAction* m_autoReplaceAction;
+
+        Q_DISABLE_COPY(PasteEditor)
 };
 
 #endif //KONVERSATION_PASTEEDITOR_H

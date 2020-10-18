@@ -44,6 +44,9 @@ namespace Konversation
             * @return true upon success
             */
             bool parse(const QByteArray & data,UPnPRouter* router);
+
+        private:
+            Q_DISABLE_COPY(UPnPDescriptionParser)
         };
     }
 }

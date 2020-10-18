@@ -48,6 +48,8 @@ namespace Konversation
             private:
                 QFont m_font;
                 int m_textStyle;
+
+                Q_DISABLE_COPY(WhiteBoardFontChooser)
         };
     }
 }

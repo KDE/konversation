@@ -30,6 +30,9 @@ namespace Konversation
             UPnPRouter* router;
             UPnPService curr_service;
             QStack<Status> status_stack;
+
+            Q_DISABLE_COPY(XMLContentHandler)
+
         public:
             XMLContentHandler(UPnPRouter* router);
             ~XMLContentHandler() override;

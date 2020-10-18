@@ -57,7 +57,9 @@ namespace Konversation
             KEditListWidget* m_nicknameLBox;
 
             KMessageWidget* m_additionalAuthInfo;
-    };
 
+            Q_DISABLE_COPY(IdentityDialog)
+    };
 }
+
 #endif

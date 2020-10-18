@@ -67,6 +67,8 @@ namespace Konversation
             QColor m_backgroundColor;
 
             QPixmap m_swapPixmap;
+
+            Q_DISABLE_COPY(WhiteBoardColorChooser)
         };
     }
 }

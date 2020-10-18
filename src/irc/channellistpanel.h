@@ -74,6 +74,8 @@ class ChannelListModel : public QAbstractListModel
 
     private:
         QList<ChannelItem> m_channelList;
+
+        Q_DISABLE_COPY(ChannelListModel)
 };
 
 class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
@@ -150,6 +152,8 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         QAction *m_saveList;
         QAction *m_refreshList;
         QAction *m_joinChannel;
+
+        Q_DISABLE_COPY(ChannelListPanel)
 };
 
 #endif

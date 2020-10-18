@@ -35,6 +35,8 @@ class LedIconEngine : public QIconEngine
     private:
         const QColor m_color;
         const bool m_state;
+
+        Q_DISABLE_COPY(LedIconEngine)
 };
 
 void LedIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)

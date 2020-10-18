@@ -62,6 +62,8 @@ class KonviSettingsDialog : public ConfigDialog
 
         // remember page index
         QList<KonviSettingsPage*> m_pages;
+
+        Q_DISABLE_COPY(KonviSettingsDialog)
 };
 
 #endif //KONVISETTINGSDIALOG_H

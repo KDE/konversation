@@ -29,6 +29,8 @@ namespace Konversation
             {
                 SortIndex = Qt::UserRole + 2
             };
+    private:
+            Q_DISABLE_COPY(ServerListItem)
     };
 
     class ServerListDialog : public QDialog, private Ui::ServerListDialogUI
@@ -85,6 +87,7 @@ namespace Konversation
             ServerSettings m_selectedServer;
             QTreeWidgetItem* m_selectedItemPtr;
 
+            Q_DISABLE_COPY(ServerListDialog)
     };
 }
 #endif

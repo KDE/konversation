@@ -43,6 +43,8 @@ namespace Konversation
                 static QString selectedNickname;
 
                 KLineEdit* nicknameInput;
+
+                Q_DISABLE_COPY(RecipientDialog)
         };
     }
 }

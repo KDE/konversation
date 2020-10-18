@@ -182,6 +182,8 @@ namespace Konversation
                 transferspeed_t m_averageSpeed;
                 transferspeed_t m_currentSpeed;
                 int m_timeLeft;
+
+                Q_DISABLE_COPY(Transfer)
         };
     }
 }

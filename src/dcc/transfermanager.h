@@ -114,6 +114,8 @@ namespace Konversation
 
                 int m_nextReverseTokenNumber;
                 QUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
+
+                Q_DISABLE_COPY(TransferManager)
         };
     }
 }

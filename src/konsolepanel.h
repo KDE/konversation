@@ -46,5 +46,8 @@ class KonsolePanel : public ChatWindow
         QToolButton* m_profileButton;
         QLabel* m_konsoleLabel;
         KParts::ReadOnlyPart *k_part;
+
+        Q_DISABLE_COPY(KonsolePanel)
 };
+
 #endif                                            /* KONSOLE_PANEL_H */

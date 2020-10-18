@@ -53,5 +53,7 @@ class HighlightViewItem : public QTreeWidgetItem
         QString m_autoText;
         QString m_chatWindows;
         bool m_notify;
+
+        Q_DISABLE_COPY(HighlightViewItem)
 };
 #endif

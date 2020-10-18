@@ -116,6 +116,8 @@ namespace Konversation
             int m_activeTransfers;
 
             int m_itemCategoryToRemove;
+
+            Q_DISABLE_COPY(TransferView)
         };
 
     }

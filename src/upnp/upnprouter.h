@@ -187,6 +187,8 @@ namespace Konversation
             QHash<KJob*, QByteArray>  soap_data_out;
 
             QString error;
+
+            Q_DISABLE_COPY(UPnPRouter)
         };
     }
 }

@@ -52,6 +52,8 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
     private:
         bool newItemSelected;
         QStringList m_oldHighlightList;
+
+        Q_DISABLE_COPY(Highlight_Config)
 };
 
 #endif

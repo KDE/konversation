@@ -54,6 +54,8 @@ class NicksOnlineItem : public QTreeWidgetItem
     private:
         int m_type;
         int m_connectionId;
+
+        Q_DISABLE_COPY(NicksOnlineItem)
 };
 
 #endif

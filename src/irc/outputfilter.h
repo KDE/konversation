@@ -214,6 +214,8 @@ namespace Konversation
             static QSet<QString> m_commands;
 
             Server* m_server;
+
+            Q_DISABLE_COPY(OutputFilter)
     };
 }
 

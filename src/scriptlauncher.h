@@ -26,6 +26,9 @@ class ScriptLauncher : public QObject
     Q_SIGNALS:
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
+
+    private:
+        Q_DISABLE_COPY(ScriptLauncher)
 };
 
 #endif

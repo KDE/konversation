@@ -76,6 +76,8 @@ class ChannelNick : public QSharedData
         QString m_channel;
 
         bool m_isChanged;
+
+        Q_DISABLE_COPY(ChannelNick)
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a QExplicitlySharedDataPointer,

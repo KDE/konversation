@@ -78,5 +78,8 @@ class StatusPanel : public ChatWindow
         AwayLabel* awayLabel;
         QCheckBox* logCheckBox;
         QString oldNick;
+
+        Q_DISABLE_COPY(StatusPanel)
 };
+
 #endif

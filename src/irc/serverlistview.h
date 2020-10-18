@@ -35,6 +35,9 @@ class ServerListView : public QTreeWidget
 
     private:
         bool badDropSelection();
+
+    private:
+        Q_DISABLE_COPY(ServerListView)
 };
 
 #endif

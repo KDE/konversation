@@ -353,5 +353,8 @@ class Channel : public ChatWindow
         #ifdef HAVE_QCA2
         mutable Konversation::Cipher *m_cipher;
         #endif
+
+        Q_DISABLE_COPY(Channel)
 };
+
 #endif

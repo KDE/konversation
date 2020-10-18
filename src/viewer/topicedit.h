@@ -61,6 +61,8 @@ class TopicEdit : public KTextEdit
         QWidget* m_warningUndercarriage;
 
         Channel* m_channel;
+
+        Q_DISABLE_COPY(TopicEdit)
 };
 
 #endif

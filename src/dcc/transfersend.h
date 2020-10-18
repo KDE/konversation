@@ -97,6 +97,8 @@ namespace Konversation
                 bool m_fastSend;
 
                 QTimer *m_connectionTimer;
+
+                Q_DISABLE_COPY(TransferSend)
         };
     }
 }

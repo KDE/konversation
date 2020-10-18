@@ -72,6 +72,8 @@ namespace Konversation
             QHash<QString,UPnPRouter*> routers;
             QSet<UPnPRouter*> pending_routers; // routers which we are downloading the XML file from
             bool verbose;
+
+            Q_DISABLE_COPY(UPnPMCastSocket)
         };
     }
 }

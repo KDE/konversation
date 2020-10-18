@@ -34,6 +34,9 @@ class IrcViewMarkerLine: public QObject, public QTextObjectInterface
         ~IrcViewMarkerLine() {}
         void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
         QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
+
+    private:
+        Q_DISABLE_COPY(IrcViewMarkerLine)
 };
 
 /// Helper struct which remembers the openHtmlTags, the fore and
@@ -339,5 +342,8 @@ class IRCView : public QTextBrowser
 
         QDateTime m_prevTimestamp;
         bool m_showDate;
+
+        Q_DISABLE_COPY(IRCView)
 };
+
 #endif

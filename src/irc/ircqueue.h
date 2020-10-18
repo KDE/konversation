@@ -131,6 +131,8 @@ private:
     int m_bytesSent, m_globalBytesSent;
     int m_lastWait;
     int m_myIndex;
+
+    Q_DISABLE_COPY(IRCQueue)
 };
 
 #endif

@@ -60,6 +60,8 @@ namespace Konversation
 
             QString m_oldMainLabelText;
             QString m_tempMainLabelText;
+
+            Q_DISABLE_COPY(StatusBar)
     };
 
 }

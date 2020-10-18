@@ -51,5 +51,7 @@ class QuickConnectDialog : public QDialog
         KLineEdit*      nickInput;
         QCheckBox*      sslCheckBox;
         QPushButton*    mOkButton;
+
+        Q_DISABLE_COPY(QuickConnectDialog)
 };
 #endif

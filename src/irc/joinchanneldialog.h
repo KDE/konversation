@@ -42,7 +42,10 @@ namespace Konversation
         private:
             Ui::JoinChannelUI m_ui;
             QPushButton *mOkButton;
+
+            Q_DISABLE_COPY(JoinChannelDialog)
     };
 
 }
+
 #endif

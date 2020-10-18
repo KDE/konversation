@@ -29,5 +29,8 @@ class QuickButton : public QPushButton
 
     private:
         QString definition;
+
+        Q_DISABLE_COPY(QuickButton)
 };
+
 #endif

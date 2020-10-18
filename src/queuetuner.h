@@ -52,7 +52,8 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
         Server* m_server;
         QTimer m_timer;
         bool &m_vis;
-};
 
+        Q_DISABLE_COPY(QueueTuner)
+};
 
 #endif

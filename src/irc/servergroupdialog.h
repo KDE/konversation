@@ -73,6 +73,8 @@ namespace Konversation
             ServerList m_serverList;
             ChannelList m_channelList;
             ChannelList m_channelHistory;
+
+            Q_DISABLE_COPY(ServerGroupDialog)
     };
 
     class ServerDialog : public QDialog
@@ -92,6 +94,8 @@ namespace Konversation
         private:
             Ui::ServerDialogUI* m_mainWidget;
             QPushButton *m_okButton;
+
+            Q_DISABLE_COPY(ServerDialog)
     };
 
     class ChannelSettings;
@@ -112,6 +116,9 @@ namespace Konversation
         private:
             Ui::ChannelDialogUI* m_mainWidget;
             QPushButton *m_okButton;
+
+            Q_DISABLE_COPY(ChannelDialog)
     };
 }
+
 #endif

@@ -37,6 +37,8 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
 
     private:
         QString m_oldWarningsChecked;     // for hasChanged()
+
+        Q_DISABLE_COPY(Warnings_Config)
 };
 
 #endif // WARNINGS_CONFIG_H

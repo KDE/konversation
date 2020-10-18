@@ -40,5 +40,8 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         MainWindow* m_mainWindow;
         KBookmarkMenu *m_bookmarkMenu;
         QString m_file;
+
+        Q_DISABLE_COPY(KonviBookmarkHandler)
 };
+
 #endif                                            // KONVIBOOKMARKHANDLER_H

@@ -225,5 +225,7 @@ class NicksOnline : public ChatWindow
     QAction* m_openQuery;
     QAction* m_joinChannel;
 
+        Q_DISABLE_COPY(NicksOnline)
 };
+
 #endif

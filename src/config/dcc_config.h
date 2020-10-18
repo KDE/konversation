@@ -26,6 +26,9 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
         void languageChange();
         void dccMethodChanged(int index);
         void dccUPnPChanged(int state);
+
+    private:
+        Q_DISABLE_COPY(DCC_Config)
 };
 
 #endif

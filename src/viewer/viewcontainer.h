@@ -52,6 +52,8 @@ class ViewMimeData : public QMimeData
 
     private:
         ChatWindow *m_view;
+
+        Q_DISABLE_COPY(ViewMimeData)
 };
 
 class TabWidget : public QTabWidget
@@ -69,6 +71,9 @@ class TabWidget : public QTabWidget
     protected:
         void contextMenuEvent(QContextMenuEvent* event) override;
         void mouseReleaseEvent(QMouseEvent* event) override;
+
+    private:
+        Q_DISABLE_COPY(TabWidget)
 };
 
 class ViewContainer : public QAbstractItemModel
@@ -303,6 +308,8 @@ class ViewContainer : public QAbstractItemModel
         QList<ChatWindow*> m_activeViewOrderList;
 
         ViewSpringLoader* m_viewSpringLoader;
+
+        Q_DISABLE_COPY(ViewContainer)
 };
 
 #endif

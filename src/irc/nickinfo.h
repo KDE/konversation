@@ -133,6 +133,8 @@ class NickInfo : public QSharedData
         QString m_account;
 
         bool m_changed;
+
+        Q_DISABLE_COPY(NickInfo)
 };
 
 /** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a QExplicitlySharedDataPointer, the NickInfo

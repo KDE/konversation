@@ -40,6 +40,9 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
 
     private Q_SLOTS:
         void sourceDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
+
+    private:
+        Q_DISABLE_COPY(TopicHistorySortfilterProxyModel)
 };
 
 
@@ -54,6 +57,9 @@ class TopicHistoryLabel : public KTextEdit
 
     public Q_SLOTS:
         void setTextSelectable(bool selectable);
+
+    private:
+        Q_DISABLE_COPY(TopicHistoryLabel)
 };
 
 
@@ -80,6 +86,8 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
     private:
         TopicHistoryLabel* m_hiddenLabel;
         bool m_shownBefore;
+
+        Q_DISABLE_COPY(TopicHistoryItemDelegate)
 };
 
 
@@ -117,6 +125,8 @@ class TopicHistoryView : public KCategorizedView
         Server* m_server;
         TopicHistorySortfilterProxyModel* m_proxyModel;
         bool m_textSelectable;
+
+        Q_DISABLE_COPY(TopicHistoryView)
 };
 
 #endif

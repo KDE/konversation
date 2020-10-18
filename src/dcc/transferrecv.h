@@ -139,6 +139,8 @@ namespace Konversation
 
                 ///We need the original name for resume communication, as sender depends on it
                 QString m_saveFileName;
+
+                Q_DISABLE_COPY(TransferRecv)
         };
 
         class TransferRecvWriteCacheHandler : public QObject
@@ -171,6 +173,8 @@ namespace Konversation
 
                 QList<QByteArray> m_cacheList;
                 QDataStream *m_cacheStream;
+
+                Q_DISABLE_COPY(TransferRecvWriteCacheHandler)
         };
     }
 }

@@ -64,6 +64,8 @@ namespace Konversation
 
                 Chat *m_chat;
                 WhiteBoard *m_whiteBoard;
+
+                Q_DISABLE_COPY(ChatContainer)
         };
     }
 }

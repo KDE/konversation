@@ -44,6 +44,8 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
 
     QStringList m_oldButtonList;
     QStringList currentButtonList();
+
+    Q_DISABLE_COPY(QuickButtons_Config)
 };
 
 #endif

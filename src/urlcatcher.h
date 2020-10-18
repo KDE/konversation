@@ -26,6 +26,9 @@ class UrlDateItem : public QStandardItem
         ~UrlDateItem() override;
 
         QVariant data(int role) const override;
+
+  private:
+        Q_DISABLE_COPY(UrlDateItem)
 };
 
 
@@ -41,6 +44,9 @@ class UrlSortFilterProxyModel : public QSortFilterProxyModel
 
     protected:
         bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
+
+    private:
+        Q_DISABLE_COPY(UrlSortFilterProxyModel)
 };
 
 
@@ -88,6 +94,8 @@ class UrlCatcher : public ChatWindow
         QTreeView* m_urlTree;
         QLineEdit* m_searchLine;
         QTimer* m_filterTimer;
+
+        Q_DISABLE_COPY(UrlCatcher)
 };
 
 #endif

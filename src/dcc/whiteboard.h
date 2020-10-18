@@ -74,6 +74,8 @@ namespace Konversation
             private:
                 WhiteBoardToolBar* m_toolbar;
                 WhiteBoardPaintArea* m_paintArea;
+
+                Q_DISABLE_COPY(WhiteBoard)
         };
     }
 }

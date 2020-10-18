@@ -35,6 +35,8 @@ class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, privat
 
     private:
         QString m_oldSortingOrder;
+
+        Q_DISABLE_COPY(NicklistBehavior_Config)
 };
 
 #endif

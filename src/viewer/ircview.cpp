@@ -35,6 +35,9 @@ using namespace Konversation;
 class ScrollBarPin
 {
         QPointer<QScrollBar> m_bar;
+
+        Q_DISABLE_COPY(ScrollBarPin)
+
     public:
         ScrollBarPin(QScrollBar *scrollBar) : m_bar(scrollBar)
         {
@@ -55,6 +58,9 @@ class SelectionPin
 {
     int pos, anc;
     QPointer<IRCView> d;
+
+    Q_DISABLE_COPY(SelectionPin)
+
     public:
         SelectionPin(IRCView *doc) : pos(0), anc(0), d(doc)
         {
@@ -333,6 +339,8 @@ struct Burr: public QTextBlockUserData
     int m_format;
     Burr* m_prev, *m_next;
     IRCView* m_owner;
+
+    Q_DISABLE_COPY(Burr)
 };
 
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)

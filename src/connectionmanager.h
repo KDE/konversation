@@ -101,6 +101,8 @@ class ConnectionManager : public QObject
         bool m_overrideAutoReconnect;
 
         enum ConnectionDupe { SameServer, SameServerGroup };
+
+        Q_DISABLE_COPY(ConnectionManager)
 };
 
 #endif

@@ -93,6 +93,8 @@ private:
     AutoDetectLanguage m_autoDetectLanguage;
 
     JapaneseCode *kc;
+
+    Q_DISABLE_COPY(Decoder)
 };
 
 #endif

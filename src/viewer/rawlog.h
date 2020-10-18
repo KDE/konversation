@@ -35,6 +35,9 @@ class RawLog : public ChatWindow
     protected:
         /** Called from ChatWindow adjustFocus */
         void childAdjustFocus() override;
+
+    private:
+        Q_DISABLE_COPY(RawLog)
 };
 
 #endif /* RAWLOG_H */

@@ -73,6 +73,8 @@ namespace Konversation
             Channel *m_channel;
 
             QTimer* m_historySearchTimer;
+
+            Q_DISABLE_COPY(ChannelOptionsDialog)
     };
 
     class BanListViewItem : public QTreeWidgetItem
@@ -85,6 +87,8 @@ namespace Konversation
 
         private:
             QDateTime m_timestamp;
+
+            Q_DISABLE_COPY(BanListViewItem)
     };
 }
 #endif

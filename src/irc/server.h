@@ -878,6 +878,8 @@ class Server : public QObject
         QHash<QString, CapabilityFlag> m_capabilityNames;
 
         bool m_whoRequestsDisabled;
+
+        Q_DISABLE_COPY(Server)
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Server::CapModifiers)

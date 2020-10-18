@@ -223,5 +223,8 @@ class ChatWindow : public QWidget
         Konversation::TabNotifyType m_currentTabNotify;
 
         bool m_recreationScheduled;
+
+        Q_DISABLE_COPY(ChatWindow)
 };
+
 #endif

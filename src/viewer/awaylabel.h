@@ -25,6 +25,9 @@ class AwayLabel : public QLabel
 
     private Q_SLOTS:
         void changeAwayMessage();
+
+    private:
+        Q_DISABLE_COPY(AwayLabel)
 };
 
 #endif

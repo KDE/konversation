@@ -85,5 +85,7 @@ class IRCInput : public KTextEdit
 
         QTimer* m_disableSpellCheckTimer;
 
+        Q_DISABLE_COPY(IRCInput)
 };
+
 #endif

@@ -74,7 +74,9 @@ namespace Konversation
             QString m_dragUrl;
             bool m_mousePressedOnUrl;
             QPoint m_mousePressPosition;
-    };
 
+            Q_DISABLE_COPY(TopicLabel)
+    };
 }
+
 #endif

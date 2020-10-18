@@ -36,6 +36,8 @@ class ViewSpringLoader : public QObject
         QTimer m_hoverTimer;
 
         ViewContainer* m_viewContainer;
+
+        Q_DISABLE_COPY(ViewSpringLoader)
 };
 
 #endif

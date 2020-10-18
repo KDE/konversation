@@ -68,6 +68,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         bool m_fromCursor;
 
         QShortcut* m_closeShortcut;
+
+        Q_DISABLE_COPY(SearchBar)
 };
 
 #endif                                            /* SEARCHBAR_H */

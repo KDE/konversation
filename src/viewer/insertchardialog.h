@@ -36,6 +36,8 @@ namespace Konversation
 
         private:
             KCharSelect* m_charTable;
+
+            Q_DISABLE_COPY(InsertCharDialog)
     };
 
 }

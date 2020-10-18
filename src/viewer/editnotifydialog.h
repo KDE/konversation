@@ -43,5 +43,8 @@ class EditNotifyDialog : public QDialog
     private:
         KComboBox* m_networkNameCombo;
         KLineEdit* m_nicknameInput;
+
+        Q_DISABLE_COPY(EditNotifyDialog)
 };
+
 #endif

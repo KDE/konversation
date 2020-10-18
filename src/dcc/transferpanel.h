@@ -89,6 +89,8 @@ namespace Konversation
                 QAction *m_selectAll;
                 QAction *m_selectAllCompleted;
                 QAction *m_resend;
+
+                Q_DISABLE_COPY(TransferPanel)
         };
     }
 }

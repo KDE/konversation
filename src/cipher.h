@@ -52,6 +52,9 @@ namespace Konversation
             bool m_cbc;
 
             static QString m_runtimeError;
+
+            Q_DISABLE_COPY(Cipher)
     };
 }
+
 #endif

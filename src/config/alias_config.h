@@ -42,6 +42,8 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
     private:
         bool m_newItemSelected;
         QStringList m_oldAliasList;
+
+        Q_DISABLE_COPY(Alias_Config)
 };
 
 #endif

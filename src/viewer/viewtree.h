@@ -31,6 +31,8 @@ class ViewTreeDelegate : public QStyledItemDelegate
 
     private:
         ViewTree* m_view;
+
+        Q_DISABLE_COPY(ViewTreeDelegate)
 };
 
 class ViewTree : public QTreeView
@@ -79,6 +81,8 @@ class ViewTree : public QTreeView
 
         int m_accumulatedWheelDelta;
         bool m_lastWheelDeltaDirection;
+
+        Q_DISABLE_COPY(ViewTree)
 };
 
 #endif

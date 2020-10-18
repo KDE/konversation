@@ -60,6 +60,8 @@ namespace Konversation
                 TransferRecv* m_item;
                 int m_enabledActions;
                 ReceiveAction m_selectedAction;
+
+                Q_DISABLE_COPY(ResumeDialog)
         };
     }
 }

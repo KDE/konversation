@@ -172,6 +172,8 @@ class AwayManager : public QObject
         QHash<int, int> m_timerForIdentity;
 
         ConnectionManager* m_connectionManager;
+
+        Q_DISABLE_COPY(AwayManager)
 };
 
 #endif

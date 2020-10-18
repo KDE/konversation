@@ -48,6 +48,8 @@ namespace Konversation
 
             QQueue<QUrl> m_playQueue;
             bool m_played;
+
+            Q_DISABLE_COPY(Sound)
     };
 }
 #endif

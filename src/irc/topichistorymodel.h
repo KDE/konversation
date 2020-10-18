@@ -70,6 +70,8 @@ class TopicHistoryModel : public QAbstractListModel
 #ifdef HAVE_QCA2
         Konversation::Cipher* m_cipher;
 #endif
+
+        Q_DISABLE_COPY(TopicHistoryModel)
 };
 
 #endif

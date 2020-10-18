@@ -47,6 +47,9 @@ class NickListView : public QTreeWidget
             private:
                 NickListView *w;
                 bool enabled;
+
+                Q_DISABLE_COPY(NoSorting)
+
             public:
                 NoSorting(NickListView *w) : w(w), enabled(w->isSortingEnabled())
                 {
@@ -81,5 +84,8 @@ class NickListView : public QTreeWidget
 
         static int s_minimumRowHeight;
         static void updateMinimumRowHeight();
+
+        Q_DISABLE_COPY(NickListView)
 };
+
 #endif

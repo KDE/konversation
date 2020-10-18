@@ -46,6 +46,8 @@ namespace Konversation
 
                 Transfer *m_transfer;
                 QTimer *m_autoViewUpdateTimer;
+
+                Q_DISABLE_COPY(TransferDetailedInfoPanel)
         };
     }
 }

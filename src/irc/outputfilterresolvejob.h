@@ -28,6 +28,8 @@ class OutputFilterResolveJob : public QObject
         QString m_target;
         bool m_reverse;
         QPointer<ChatWindow> m_chatWindow;
+
+        Q_DISABLE_COPY(OutputFilterResolveJob)
 };
 
 #endif

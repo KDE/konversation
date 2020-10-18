@@ -152,6 +152,8 @@ namespace Konversation
                 QString m_chatDetailedStatus;
 
                 Extension m_chatExtension;
+
+                Q_DISABLE_COPY(Chat)
         };
     }
 }

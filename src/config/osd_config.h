@@ -47,6 +47,8 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
 
     private:
         OSDPreviewWidget* m_pOSDPreview;
+
+        Q_DISABLE_COPY(OSD_Config)
 };
 
 #endif // OSD_CONFIG_H

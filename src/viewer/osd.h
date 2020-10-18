@@ -90,6 +90,8 @@ class OSDWidget : public QWidget
         QTimer      *m_timerMin;
         QStringList textBuffer;
         bool        m_drawShadow;
+
+        Q_DISABLE_COPY(OSDWidget)
 };
 
 
@@ -130,6 +132,8 @@ protected:
 private:
     bool   m_dragging;
     QPoint m_dragOffset;
+
+    Q_DISABLE_COPY(OSDPreviewWidget)
 };
 
 #endif /* OSD_H*/

@@ -127,6 +127,8 @@ namespace Konversation
 
             QFont m_font;
             QString m_writtenText;
+
+            Q_DISABLE_COPY(WhiteBoardPaintArea)
         };
     }
 }

@@ -136,6 +136,8 @@ class IrcContextMenus : public QObject
         QList<QAction*> m_sharedDccActions;
         QMenu* m_topicHistoryMenu;
         QAction* m_queryTopicAuthorAction;
+
+        Q_DISABLE_COPY(IrcContextMenus)
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(IrcContextMenus::MenuOptions)

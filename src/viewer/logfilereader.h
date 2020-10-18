@@ -52,5 +52,8 @@ class LogfileReader : public ChatWindow
         KToolBar* toolBar;
         QSpinBox* sizeSpin;
         QString fileName;
+
+        Q_DISABLE_COPY(LogfileReader)
 };
+
 #endif

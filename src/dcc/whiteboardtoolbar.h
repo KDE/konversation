@@ -120,6 +120,8 @@ namespace Konversation
 
                 Konversation::DCC::WhiteBoardToolBar::TextType m_textType;
                 WhiteBoardFontChooser* m_fontDialog;
+
+                Q_DISABLE_COPY(WhiteBoardToolBar)
         };
     }
 }

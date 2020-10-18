@@ -29,5 +29,8 @@ class ModeButton : public QToolButton
     private:
         int id;
         bool on;
+
+        Q_DISABLE_COPY(ModeButton)
 };
+
 #endif

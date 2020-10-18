@@ -44,6 +44,8 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
   private:
     bool m_newItemSelected;
     QList<QStringList> m_oldAutoreplaceList;
+
+    Q_DISABLE_COPY(Autoreplace_Config)
 };
 
 #endif

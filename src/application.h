@@ -197,6 +197,8 @@ class Application : public QApplication
 
         QCommandLineParser *m_commandLineParser;
         QStringList m_restartArguments;
+
+        Q_DISABLE_COPY(Application)
 };
 
 #endif
