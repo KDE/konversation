@@ -48,8 +48,6 @@ set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
                        TYPE OPTIONAL)
 check_include_file("stropts.h" HAVE_STROPTS_H)
-check_include_file("byteswap.h" HAVE_BYTESWAP_H)
-check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 
 set(HAVE_QCA2 ${Qca-qt5_FOUND})
 
