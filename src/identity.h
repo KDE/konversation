@@ -29,6 +29,8 @@ class Identity : public QSharedData
         Identity(const Identity& original);
         ~Identity();
 
+        Identity& operator=(const Identity& original) = delete;
+
         /// This function copies all of @param original but the id
         void copy(const Identity& original);
 
