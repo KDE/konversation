@@ -298,7 +298,6 @@ class IRCView : public QTextBrowser
     private:
         //// Search
         QTextDocument::FindFlags m_searchFlags;
-        bool m_forward;
         QString m_pattern;
 
         //used in ::filter
