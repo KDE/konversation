@@ -76,7 +76,6 @@ class StatusPanel : public ChatWindow
 
         KComboBox* nicknameCombobox;
         AwayLabel* awayLabel;
-        QCheckBox* logCheckBox;
         QString oldNick;
 
         Q_DISABLE_COPY(StatusPanel)
