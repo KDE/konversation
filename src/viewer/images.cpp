@@ -26,6 +26,7 @@ class LedIconEngine : public QIconEngine
             : QIconEngine(), m_color(color), m_state(state)
         {
         }
+        ~LedIconEngine() override = default;
 
         // QIconEngine
         void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;

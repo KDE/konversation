@@ -24,6 +24,7 @@ namespace Konversation
         public:
             ServerListItem(QTreeWidget* tree, const QStringList & strings);
             ServerListItem(QTreeWidgetItem* parent, const QStringList & strings);
+            ~ServerListItem() override = default;
             bool operator<(const QTreeWidgetItem &other) const override;
             enum DataRole
             {

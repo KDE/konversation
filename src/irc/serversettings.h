@@ -19,6 +19,7 @@ namespace Konversation
             ServerSettings();
             ServerSettings(const ServerSettings& settings);
             explicit ServerSettings(const QString& host);
+            ~ServerSettings() = default;
 
             ServerSettings &operator=(const ServerSettings& settings);
 

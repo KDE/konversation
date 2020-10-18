@@ -82,6 +82,7 @@ namespace Konversation
         public:
             explicit BanListViewItem( QTreeWidget *parent );
             BanListViewItem(QTreeWidget *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+            ~BanListViewItem() override = default;
 
             bool operator<(const QTreeWidgetItem &item) const override;
 

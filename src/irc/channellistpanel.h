@@ -63,6 +63,7 @@ class ChannelListModel : public QAbstractListModel
 
     public:
         explicit ChannelListModel(QObject* parent);
+        ~ChannelListModel() override = default;
 
         void append(const ChannelItem& item);
 

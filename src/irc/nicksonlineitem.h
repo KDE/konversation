@@ -28,6 +28,7 @@ class NicksOnlineItem : public QTreeWidgetItem
                         QTreeWidgetItem* parent,
                         const QString& name,
                         const QString& col2 = QString());
+        ~NicksOnlineItem() override = default;
 
         /**
         * Reimplemented to make sure, "Offline" items always get sorted to the bottom of the list

@@ -18,6 +18,7 @@ class OverlayIconEngine : public QIconEngine
 {
 public:
     OverlayIconEngine(const QIcon &icon, const QIcon &overlayIccon);
+    ~OverlayIconEngine() override = default;
 
 public: // QIconEngine API
     void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
@@ -136,6 +137,7 @@ class SvgIconElementSet : public AbstractIconElementSet
 {
 public:
     SvgIconElementSet() = default;
+    ~SvgIconElementSet() override = default;
 
     bool load(const QString &baseDir) override;
 
@@ -186,6 +188,7 @@ class PixmapIconElementSet : public AbstractIconElementSet
 {
 public:
     PixmapIconElementSet() = default;
+    ~PixmapIconElementSet() override = default;
 
     bool load(const QString &baseDir) override;
 

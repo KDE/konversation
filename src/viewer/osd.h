@@ -101,6 +101,7 @@ class OSDPreviewWidget : public OSDWidget
 
 public:
     explicit OSDPreviewWidget(const QString &appName, QWidget *parent = nullptr);
+    ~OSDPreviewWidget() override = default;
 
     int screen() const     { return m_screen; }
     int alignment() const { return m_alignment; }

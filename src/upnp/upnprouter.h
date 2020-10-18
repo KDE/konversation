@@ -33,6 +33,7 @@ namespace Konversation
 
             UPnPService();
             UPnPService(const UPnPService & s);
+            ~UPnPService() = default;
 
             /**
             * Set a property of the service.
