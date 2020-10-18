@@ -80,7 +80,6 @@ class NickListView : public QTreeWidget
 
     private:
         Channel *m_channel;
-        QTimer *m_resortTimer;
 
         static int s_minimumRowHeight;
         static void updateMinimumRowHeight();
