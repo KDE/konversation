@@ -39,9 +39,6 @@ namespace Konversation
             /// Find a router using it's server name
             UPnPRouter* findDevice(const QString & name) const {return routers.find(name).value();}
 
-            /// Set verbose mode
-            void setVerbose(bool v) {verbose = v;}
-
         public Q_SLOTS:
             /**
             * Try to discover a UPnP device on the network.
@@ -71,7 +68,6 @@ namespace Konversation
         private:
             QHash<QString,UPnPRouter*> routers;
             QSet<UPnPRouter*> pending_routers; // routers which we are downloading the XML file from
-            bool verbose;
 
             Q_DISABLE_COPY(UPnPMCastSocket)
         };
