@@ -64,7 +64,7 @@ void TopicHistoryModel::appendTopic(const QString& text, const QString& author, 
 
     endInsertRows();
 
-    currentTopicChanged(text);
+    emit currentTopicChanged(text);
 }
 
 void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp)
