@@ -26,7 +26,7 @@ namespace Konversation
         {
         public:
             UPnPDescriptionParser();
-            virtual ~UPnPDescriptionParser();
+            ~UPnPDescriptionParser();
 
             /**
             * Parse the xml description.
