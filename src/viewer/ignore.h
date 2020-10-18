@@ -27,7 +27,10 @@ class Ignore
         };
 
         Ignore(const QString &name,int flags);
+        Ignore(const Ignore& other) = default;
         ~Ignore();
+
+        Ignore& operator=(const Ignore& other) = default;
 
         void setName(const QString &newName);
         void setFlags(int newFlags);
