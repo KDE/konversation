@@ -907,7 +907,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     QString message = i18n("%1 sets mode: %2", sourceNick, modestring);
 
     for (const QChar m : modestring) {
-        const unsigned char mode = m.toLatin1();
+        const char mode = m.toLatin1();
         QString parameter;
 
         // Check if this is a mode or a +/- qualifier
