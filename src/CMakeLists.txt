@@ -225,6 +225,11 @@ ecm_qt_declare_logging_category(konversation_SRCS
     EXPORT KONVERSATION
 )
 
+ecm_setup_version(${KONVERSATION_VERSION}
+    VARIABLE_PREFIX KONVI
+    VERSION_HEADER version.h
+)
+
 # Sets the icon on Windows and OSX
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/*apps-konversation.png")
 ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})

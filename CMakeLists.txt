@@ -1,6 +1,16 @@
 cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
 
-project(konversation)
+# Release Service version, managed by release script
+set (RELEASE_SERVICE_VERSION_MAJOR "20")
+set (RELEASE_SERVICE_VERSION_MINOR "11")
+set (RELEASE_SERVICE_VERSION_MICRO "70")
+set (RELEASE_SERVICE_COMPACT_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}${RELEASE_SERVICE_VERSION_MINOR}${RELEASE_SERVICE_VERSION_MICRO}")
+
+# Bump KONVERSATION_BASE_VERSION once new features are added
+set(KONVERSATION_BASE_VERSION "1.8")
+set(KONVERSATION_VERSION "${KONVERSATION_BASE_VERSION}.${RELEASE_SERVICE_COMPACT_VERSION}")
+
+project(konversation VERSION ${KONVERSATION_VERSION})
 
 set (QT_MIN_VERSION "5.12.0")
 set(KF5_MIN_VERSION "5.71.0")
@@ -13,6 +23,7 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(ECMInstallIcons)
+include(ECMSetupVersion)
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Network Widgets)
