@@ -45,7 +45,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const QString& name)
             dir.setPath(*it);
             if ( dir.isReadable() && dir.count() > 2 )
             {
-                soundURL->setStartDir(QUrl(*it));
+                soundURL->setStartDir(QUrl::fromLocalFile(*it));
                 break;
             }
             ++it;
