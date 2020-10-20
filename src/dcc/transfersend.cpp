@@ -8,7 +8,7 @@
     SPDX-FileCopyrightText: 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
-#include <qglobal.h>
+#include <QtGlobal>
 
 #ifdef Q_OS_WIN
 // Prevent windows system header files from defining min/max as macros.
