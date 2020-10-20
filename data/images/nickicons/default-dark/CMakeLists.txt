@@ -9,5 +9,5 @@ install(
         irc_owner.svg
         irc_voice.svg
         index.desktop
-    DESTINATION ${DATA_INSTALL_DIR}/konversation/themes/default-dark
+    DESTINATION ${KDE_INSTALL_DATADIR}/konversation/themes/default-dark
 )

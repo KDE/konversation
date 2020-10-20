@@ -260,7 +260,7 @@ if (WIN32)
 endif()
 
 set_target_properties(konversation PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/MacOSXBundleInfo.plist.in)
-install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS konversation ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 ecm_qt_install_logging_categories(
     EXPORT KONVERSATION

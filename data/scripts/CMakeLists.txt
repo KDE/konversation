@@ -9,8 +9,8 @@ install(PROGRAMS
     sysinfo
     tinyurl
     uptime
-    DESTINATION ${DATA_INSTALL_DIR}/konversation/scripts)
+    DESTINATION ${KDE_INSTALL_DATADIR}/konversation/scripts)
 
 install(FILES
     fortunes.dat
-    DESTINATION ${DATA_INSTALL_DIR}/konversation/scripts)
+    DESTINATION ${KDE_INSTALL_DATADIR}/konversation/scripts)

@@ -6,10 +6,10 @@ add_subdirectory(scripting_support)
 
 ########### install files ###############
 
-install(PROGRAMS   org.kde.konversation.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES   konversationui.rc DESTINATION ${KXMLGUI_INSTALL_DIR}/konversation)
-install(FILES   konversation.notifyrc DESTINATION ${KNOTIFYRC_INSTALL_DIR})
-install(FILES   updaters/konversation.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
+install(PROGRAMS   org.kde.konversation.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES   konversationui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/konversation)
+install(FILES   konversation.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})
+install(FILES   updaters/konversation.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.19-sortorder.pl
                 updaters/konversation-0.19-appearance.pl
@@ -19,6 +19,6 @@ install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.19-notifylists.pl
                 updaters/konversation-0.20-quickbuttons.pl
                 updaters/konversation-0.20-customfonts.pl
-                DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/org.kde.konversation.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+                DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
+install(FILES org.kde.konversation.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES konversation_nicklist_theme.knsrc  DESTINATION ${KDE_INSTALL_KNSRCDIR})
