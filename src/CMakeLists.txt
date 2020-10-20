@@ -213,6 +213,10 @@ ki18n_wrap_ui(konversation_SRCS
 
 kconfig_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
 
+qt5_add_resources(konversation_SRCS
+    konversation.qrc
+)
+
 ecm_qt_declare_logging_category(konversation_SRCS
     HEADER konversation_log.h
     IDENTIFIER KONVERSATION_LOG

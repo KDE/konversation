@@ -1,0 +1,6 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/kxmlgui5/konversation">
+        <file alias="konversationui.rc">../data/konversationui.rc</file>
+    </qresource>
+</RCC>

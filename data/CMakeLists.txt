@@ -7,7 +7,6 @@ add_subdirectory(scripting_support)
 ########### install files ###############
 
 install(PROGRAMS   org.kde.konversation.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES   konversationui.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/konversation)
 install(FILES   konversation.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})
 install(FILES   updaters/konversation.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 install(PROGRAMS updaters/konversation-0.19-colors.pl
