@@ -1,3 +1,16 @@
+Changes from Konversation 1.7.6 to 1.7.7:
+Konversation v1.7.7 is a small translation update & bugfix release improving the
+icons in the nick list with SVG options for HiDPI support and a new variant of
+the default nick icon theme to work with dark UI colors.
+
+* Fixed outdated color of existing nick items in the list after system color change
+* Fixed accidental large potential nick sorting timeout
+* Fixed tweak input box size to stop the text jumping around when selected
+* Fixed unneeded and potentially encoding switching re-encoding of key
+* Fixed disconnect for wrong slot for Chat::/TransferRecv::sendReverseAck
+* Support SVG nick icon themes, switch default to SVG
+* Add dark variant of default nick icon theme
+
 Changes from Konversation 1.7.5 to 1.7.6:
 Konversation v1.7.6 is a small translation update & bugfix release fixing
 the build with Qt >= 5.13 and polishing the configuration dialog a bit.

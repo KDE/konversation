@@ -15,7 +15,6 @@
 
 #include "application.h"
 #include "version.h"
-#include "commit.h"
 
 #include <QMutex>
 #include <QWaitCondition>
@@ -25,9 +24,6 @@
 #include <KCrash>
 #include <Kdelibs4ConfigMigrator>
 #include <KDBusAddons/KDBusService>
-
-#define HACKSTR(x) #x
-#define STRHACK(x) HACKSTR(x)
 
 int main(int argc, char* argv[])
 {
@@ -51,7 +47,7 @@ int main(int argc, char* argv[])
 
     KAboutData aboutData("konversation",
         i18n("Konversation"),
-        KONVI_VERSION " #" STRHACK(COMMIT),
+        KONVI_VERSION,
         i18n("A user-friendly IRC client"),
         KAboutLicense::GPL,
         i18n("Copyright 2002-%1 by the Konversation team", QStringLiteral("2020")),
