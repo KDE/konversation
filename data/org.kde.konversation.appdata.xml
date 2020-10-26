@@ -620,6 +620,15 @@
     <!-- Note: KDE website infrastructure uses the appstream file from the master branch
                to determine the last release, so this entry must always reflect the
                last actual release -->
+    <release version="1.7.7" date="2020-10-26">
+      <artifacts>
+        <artifact type="source">
+          <location>https://download.kde.org/stable/konversation/1.7.7/src/konversation-1.7.7.tar.xz</location>
+          <checksum type="sha256">47ec161c1385981a8b99d28c419e88b24823dc01b68fb1623894818974c218a7</checksum>
+          <size type="download">3357584</size>
+        </artifact>
+      </artifacts>
+    </release>
     <release version="1.7.6" date="2020-09-28">
       <artifacts>
         <artifact type="source">
