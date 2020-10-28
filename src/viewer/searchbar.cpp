@@ -96,7 +96,7 @@ bool SearchBar::eventFilter(QObject* object, QEvent* e)
     if (focusEvent)
     {
         Application* konvApp = Application::instance();
-        QAction * action = static_cast<QAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("focus_input_box")));
+        QAction * action = konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("focus_input_box"));
 
         if (action->shortcut().matches(QKeySequence(Qt::Key_Escape)))
         {
