@@ -13,7 +13,6 @@
 class AwayLabel;
 class IRCInput;
 
-class QCheckBox;
 
 class KComboBox;
 

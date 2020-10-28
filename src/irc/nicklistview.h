@@ -14,7 +14,6 @@
 #include <QTreeWidget>
 
 
-class QTimer;
 
 
 /**

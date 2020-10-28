@@ -13,7 +13,6 @@
 #include <QStringList>
 
 class QString;
-class QPixmap;
 
 namespace Konversation
 {

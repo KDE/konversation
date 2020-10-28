@@ -11,7 +11,6 @@
 
 
 class KCharSelect;
-class QChar;
 
 namespace Konversation
 {
