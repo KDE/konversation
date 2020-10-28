@@ -878,7 +878,7 @@ void Channel::channelLimitChanged()
 
 void Channel::modeButtonClicked(int id, bool on)
 {
-    char mode[]={'t','n','s','i','p','m','k','l'};
+    const char mode[] = {'t','n','s','i','p','m','k','l'};
     QString command(QStringLiteral("MODE %1 %2%3 %4"));
     QString args = getPassword();
 
