@@ -8,25 +8,35 @@ shift
 
 PERCENTAGE=$1
 
+# special handling for qdbus variants
+_qdbus=qdbus-qt5
+if ! [ "$(which $_qdbus 2> /dev/null)" ]; then
+    _qdbus=qdbus
+    if ! [ "$(which $_qdbus 2> /dev/null)" ]; then
+        echo "Error: The qdbus (or qdbus-qt5) utility is missing."
+        exit 1
+    fi
+fi
+
 if [ ! $TARGET ]
 then
-  qdbus org.kde.konversation /irc error "Can't write into status view."
+  $_qdbus org.kde.konversation /irc error "Can't write into status view."
 else
   if [ ! $PERCENTAGE ]
   then
-    qdbus org.kde.konversation /irc error "USAGE: $0 <percentage>"
+    $_qdbus org.kde.konversation /irc error "USAGE: $0 <percentage>"
   else
     PERCENTAGE=`echo $PERCENTAGE | sed 's/^0\+//'`
     LEFT=$(($PERCENTAGE/5))
     RIGHT=$((20-$LEFT))
 
     if [[ $PERCENTAGE -lt 0 ]]; then
-      qdbus org.kde.konversation /irc error "Percentage has to be bigger than 0"
+      $_qdbus org.kde.konversation /irc error "Percentage has to be bigger than 0"
       exit
     fi
     
     if [[ $PERCENTAGE -gt 100 ]]; then
-      qdbus org.kde.konversation /irc error "Percentage has to be smaller than 100"
+      $_qdbus org.kde.konversation /irc error "Percentage has to be smaller than 100"
       exit
     fi
 
@@ -64,6 +74,6 @@ else
 	OUTPUT="$OUTPUT *ding*"
     fi
 
-    qdbus org.kde.konversation /irc say $SERVER "$TARGET" "Beer load $OUTPUT"
+    $_qdbus org.kde.konversation /irc say $SERVER "$TARGET" "Beer load $OUTPUT"
   fi
 fi
