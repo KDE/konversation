@@ -2725,7 +2725,7 @@ formatting them appropriately.</para>
 <para>This script uses Tinyurl's api to turn the given link into a tinyurl that is then sent to the current channel tab.</para>
 <para>Example: To give someone a short link to https://konversation.kde.org</para>
 <para><userinput><command>/exec </command> <replaceable>tinyurl https://konversation.kde.org</replaceable></userinput></para>
-<para>Sample output: <replaceable>http://tinyurl.com/y4rk8wa3</replaceable></para>
+<para>Sample output: <replaceable>https://tinyurl.com/y4rk8wa3</replaceable></para>
 </listitem>
 </varlistentry>
 
