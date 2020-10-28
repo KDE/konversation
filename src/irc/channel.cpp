@@ -24,11 +24,11 @@
 #include "viewcontainer.h"
 #include "konversation_log.h"
 
-#include <KLineEdit>
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <KComboBox>
 
+#include <QLineEdit>
 #include <QRegExp>
 #include <QSplitter>
 #include <QToolButton>
@@ -223,8 +223,8 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     nicknameCombobox = new KComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->setSizeAdjustPolicy(KComboBox::AdjustToContents);
-    KLineEdit* nicknameComboboxLineEdit = qobject_cast<KLineEdit*>(nicknameCombobox->lineEdit());
-    if (nicknameComboboxLineEdit) nicknameComboboxLineEdit->setClearButtonEnabled(false);
+    QLineEdit* nicknameComboboxLineEdit = nicknameCombobox->lineEdit();
+    nicknameComboboxLineEdit->setClearButtonEnabled(false);
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can edit the alternative nicknames from the <em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"));
 
     awayLabel = new AwayLabel(commandLineBox);
