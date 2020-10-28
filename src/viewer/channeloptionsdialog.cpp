@@ -9,7 +9,6 @@
 #include "channeloptionsdialog.h"
 
 #include "application.h"
-#include "channel.h"
 #include "topichistorymodel.h"
 #include "konversation_log.h"
 

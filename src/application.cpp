@@ -16,7 +16,6 @@
 #include "viewcontainer.h"
 #include "urlcatcher.h"
 #include "highlight.h"
-#include "server.h"
 #include "sound.h"
 #include "quickconnectdialog.h"
 #include "dbus.h"

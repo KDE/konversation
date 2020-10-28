@@ -17,7 +17,6 @@
 #include "query.h"
 #include "mainwindow.h"
 #include "viewcontainer.h"
-#include "nicksonlineitem.h"
 
 #include <QInputDialog>
 #include <QToolTip>

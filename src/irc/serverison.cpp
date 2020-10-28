@@ -7,7 +7,6 @@
 #include "serverison.h"
 #include "server.h"
 #include "application.h"
-#include "nickinfo.h"
 #include "viewcontainer.h"
 #include "konversation_log.h"
 

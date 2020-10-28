@@ -21,7 +21,6 @@
 #include "konversation_log.h"
 #include <config-konversation.h>
 
-#include <QStringList>
 #include <QDateTime>
 #include <QRegularExpression>
 #include <QLocale>

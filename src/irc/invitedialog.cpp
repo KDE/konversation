@@ -12,7 +12,6 @@
 
 #include <QStringList>
 #include <KSharedConfig>
-#include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
 

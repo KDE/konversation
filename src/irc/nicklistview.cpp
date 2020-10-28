@@ -7,7 +7,6 @@
 #include "nicklistview.h"
 #include "nick.h"
 #include "application.h"
-#include "images.h"
 #include "irccontextmenus.h"
 
 #include <QHeaderView>

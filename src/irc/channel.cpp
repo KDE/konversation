@@ -10,7 +10,6 @@
 
 #include "channeloptionsdialog.h"
 #include "application.h"
-#include "server.h"
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
@@ -32,7 +31,6 @@
 
 #include <QRegExp>
 #include <QSplitter>
-#include <QTimer>
 #include <QToolButton>
 #include <QHeaderView>
 #include <QInputDialog>

@@ -13,7 +13,6 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QResizeEvent>
-#include <QPen>
 #include <QStack>
 
 namespace Konversation

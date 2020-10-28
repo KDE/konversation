@@ -25,7 +25,6 @@
 #include "upnprouter.h"
 #include "konversation_log.h"
 
-#include <QFile>
 #include <QTimer>
 #include <QTcpSocket>
 #include <QTcpServer>
