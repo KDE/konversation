@@ -115,6 +115,7 @@ int main(int argc, char* argv[])
     aboutData.setupCommandLine(&cmdLineParser);
 
     cmdLineParser.process(app);
+    aboutData.processCommandLine(&cmdLineParser);
 
     if (cmdLineParser.isSet(QStringLiteral("startupdelay")))
     {
@@ -141,7 +142,6 @@ int main(int argc, char* argv[])
 
     KDBusService dbusService(startOptions);
 
-    aboutData.processCommandLine(&cmdLineParser);
     app.newInstance(&cmdLineParser);
     app.setCommandLineParser(&cmdLineParser);
 
