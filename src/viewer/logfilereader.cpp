@@ -178,14 +178,4 @@ void LogfileReader::childAdjustFocus()
   getTextView()->setFocus();
 }
 
-int LogfileReader::margin()
-{
-    return style()->pixelMetric(QStyle::PM_LayoutLeftMargin);
-}
-
-int LogfileReader::spacing()
-{
-    return style()->layoutSpacing(QSizePolicy::DefaultType, QSizePolicy::DefaultType, Qt::Horizontal);
-}
-
 bool LogfileReader::searchView() const { return true; }

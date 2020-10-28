@@ -45,10 +45,6 @@ class LogfileReader : public ChatWindow
         void copyResult(KJob* job);
 
     private:
-        int margin();
-        int spacing();
-
-    private:
         KToolBar* toolBar;
         QSpinBox* sizeSpin;
         QString fileName;
