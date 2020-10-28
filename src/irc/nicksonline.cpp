@@ -258,7 +258,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // watch list.
     networkRoot->setText(nlvcServerName, serverName);
     // Update list of servers in the network that are connected.
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(QLatin1Char(','), QString::SkipEmptyParts);
+#else
+    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(QLatin1Char(','), Qt::SkipEmptyParts);
+#endif
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(QLatin1Char(',')));
     // Get watch list.
@@ -462,7 +466,11 @@ void NicksOnline::refreshAllServerOnlineLists()
     {
         QTreeWidgetItem *child = m_nickListView->invisibleRootItem()->child(i);
         QString networkName = child->text(nlvcNetwork);
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         QStringList serverNameList = child->text(nlvcAdditionalInfo).split(QLatin1Char(','), QString::SkipEmptyParts);
+#else
+        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(QLatin1Char(','), Qt::SkipEmptyParts);
+#endif
         QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
         while (it != itEnd)

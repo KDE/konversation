@@ -465,7 +465,11 @@ void Channel::textPasted(const QString& text)
 {
     if(m_server)
     {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         const QStringList multiline = text.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+#else
+        const QStringList multiline = text.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+#endif
         for (QString line : multiline) {
             QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
@@ -805,7 +809,11 @@ void Channel::sendText(const QString& sendLine)
     OutputFilter::replaceAliases(outputAll, this);
 
     // Send all strings, one after another
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     const QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
+#else
+    const QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), Qt::SkipEmptyParts);
+#endif
     for (const QString& output : outList){
         // encoding stuff is done in Server()
         Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName(), this);

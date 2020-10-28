@@ -84,7 +84,11 @@ void Highlight::setChatWindows(const QString& chatWindows)
     m_chatWindows = chatWindows;
 
     // split string list of chat windows and trim all entries
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     m_chatWindowList = m_chatWindows.split(QRegExp(QStringLiteral("[,;]")), QString::SkipEmptyParts);
+#else
+    m_chatWindowList = m_chatWindows.split(QRegExp(QStringLiteral("[,;]")), Qt::SkipEmptyParts);
+#endif
 
     for (QString& chatWindow : m_chatWindowList) {
         chatWindow = chatWindow.trimmed();

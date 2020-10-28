@@ -20,7 +20,11 @@ ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
     qputenv("KONVERSATION_LANG", QLocale().name().toLatin1());
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value(QStringLiteral("PYTHONPATH")).split(QLatin1Char(':'), QString::SkipEmptyParts));
+#else
+    QStringList pythonPath(QProcessEnvironment::systemEnvironment().value(QStringLiteral("PYTHONPATH")).split(QLatin1Char(':'), Qt::SkipEmptyParts));
+#endif
     pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/scripting_support/python"),
         QStandardPaths::LocateDirectory);
     qputenv("PYTHONPATH", pythonPath.join(QLatin1Char(':')).toLocal8Bit());

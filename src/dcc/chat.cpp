@@ -514,7 +514,11 @@ namespace Konversation
                 line = codec->toUnicode(buffer);
                 delete[] buffer;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
                 const QStringList &lines = line.split(QLatin1Char('\n'), QString::SkipEmptyParts);
+#else
+                const QStringList &lines = line.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+#endif
                 for (const QString &lin : lines) {
                     emit receivedRawLine(lin);
                 }

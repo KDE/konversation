@@ -1265,7 +1265,11 @@ namespace Konversation
 
         if (!input.parameter.isEmpty() && serverGroupId != -1)
         {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
             const QStringList list = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+            const QStringList list = input.parameter.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
 
             for (const QString& parameter : list) {
                 // Try to remove current pattern.
@@ -1672,7 +1676,11 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_setkey(const OutputFilterInput& input)
     {
         #ifdef HAVE_QCA2
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         QStringList parms = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+        QStringList parms = input.parameter.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
 
         if (parms.count() == 1 && !input.destination.isEmpty())
             parms.prepend(input.destination);
@@ -1711,7 +1719,11 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_keyx(const OutputFilterInput& input)
     {
         #ifdef HAVE_QCA2
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
         QStringList parms = input.parameter.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+        QStringList parms = input.parameter.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
 
         if (parms.isEmpty() && !input.destination.isEmpty())
             parms.prepend(input.destination);
