@@ -8,7 +8,7 @@
   <!ENTITY i18n-Nickname "<acronym>Nickname</acronym>">
   <!ENTITY led "<acronym>LED</acronym>">
   <!ENTITY osd "<acronym>OSD</acronym>">
-  <!ENTITY konviwebsite "http://konversation.kde.org">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"> <!-- ONLY If you are writing non-English
                                      original documentation, change
@@ -187,7 +187,7 @@ regular expression pattern.</para></listitem>
 <para>The &konversation; website is
 <ulink url="&konviwebsite;">&konviwebsite;</ulink>.
 Further information like a FAQ and tips and tricks you find in the
-<ulink url="http://userbase.kde.org/Konversation">&konversation; UserBase page</ulink>.
+<ulink url="https://userbase.kde.org/Konversation">&konversation; UserBase page</ulink>.
 </para>
 
 <para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://chat.freenode.net/konversation">irc.freenode.net channel #konversation</ulink>.
@@ -716,7 +716,7 @@ correctly.</para>
 <para>
 <calloutlist>
 <callout arearefs="pt-addserver-1"><para>The name or IP number of the server.  irchelp.org maintains a
-<ulink url="http://www.irchelp.org/irchelp/networks/">list</ulink> of servers.</para></callout>
+<ulink url="https://www.irchelp.org/networks/">list</ulink> of servers.</para></callout>
 <callout arearefs="pt-addserver-2"><para>Enter the port number required to connect to the server.  For most servers, this should be <userinput>6667</userinput>.</para></callout>
 <callout arearefs="pt-addserver-3"><para>If the server requires a password
 in order to connect, enter it here, otherwise leave blank.</para></callout>
@@ -1135,7 +1135,7 @@ join a channel.
 <title>Frequently-used &irc; commands</title>
 
 <para>The following is a short list of frequently-used &irc; commands.  See <ulink url="http://www.faqs.org/rfcs/rfc2812.html">RFC 2812</ulink> for a complete list of all commands, or
-visit <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.  For a list of commands
+visit <ulink url="https://www.irchelp.org/">irchelp.org</ulink>.  For a list of commands
 treated specially by &konversation;, see <link linkend="konvi-cmds">&konversation; commands</link>.
 </para>
 
@@ -2437,7 +2437,7 @@ a channel tab.</para>
 <command>-userhost</command>|<command>-userdomain</command>] <replaceable>[channel]</replaceable> <replaceable>user</replaceable>|<replaceable>mask</replaceable></userinput></term>
 <listitem><para>Attempts to ban the <userinput><replaceable>user</replaceable></userinput> or <userinput><replaceable>mask</replaceable></userinput> from <userinput><replaceable>channel</replaceable></userinput>.  When entered in a channel tab,
 <userinput><replaceable>channel</replaceable></userinput> may be omitted.  For more information
-on hosts, domains, and masks, see the documents at <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.
+on hosts, domains, and masks, see the documents at <ulink url="https://www.irchelp.org/">irchelp.org</ulink>.
 To get the current ban list for a channel, enter
 <userinput><command>/mode </command><replaceable>channel</replaceable> <command>b</command></userinput>.
 </para></listitem>
@@ -2628,7 +2628,7 @@ privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable><
   <para>This script is used to open your browser to search for the given string or bug number on <ulink url="https://bugs.kde.org/">&kde;'s Bugzilla</ulink>.</para>
 <para>Example: To open your browser to search for bug 123456</para>
 <para><userinput><command>/exec </command> <replaceable>bug 123456</replaceable></userinput></para>
-<para>Sample action: The default browser in your &systemsettings; should open to <replaceable>http://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
+<para>Sample action: The default browser in your &systemsettings; should open to <replaceable>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable></para>
 </listitem>
 </varlistentry>
 
@@ -2723,9 +2723,9 @@ formatting them appropriately.</para>
 </term>
 <listitem>
 <para>This script uses Tinyurl's api to turn the given link into a tinyurl that is then sent to the current channel tab.</para>
-<para>Example: To give someone a short link to http://konversation.kde.org</para>
-<para><userinput><command>/exec </command> <replaceable>tinyurl http://konversation.kde.org</replaceable></userinput></para>
-<para>Sample output: <replaceable>http://tinyurl.com/n3pdum</replaceable></para>
+<para>Example: To give someone a short link to https://konversation.kde.org</para>
+<para><userinput><command>/exec </command> <replaceable>tinyurl https://konversation.kde.org</replaceable></userinput></para>
+<para>Sample output: <replaceable>http://tinyurl.com/y4rk8wa3</replaceable></para>
 </listitem>
 </varlistentry>
 
