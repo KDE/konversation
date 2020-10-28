@@ -2666,18 +2666,6 @@ kernel bug report</replaceable></para>
 <para>Sample output: <replaceable>Beer load [          |          ] 50%</replaceable></para>
 </listitem>
 </varlistentry>
-<!--FIXME Error: No email folders were found that had a name containing 'foo'
-<varlistentry>
-<term><userinput><command>/exec </command> <replaceable>mail</replaceable> [<replaceable>KMail Email Folder</replaceable>]</userinput>
-</term>
-<listitem>
-<para>This script is used to show the current unread mail and total mail count in KMail.</para>
-<para>Example: To output the current unread mail count in your inbox folder.</para>
-<para><userinput><command>/exec </command> <replaceable>mail inbox</replaceable></userinput></para>
-<para>Sample output: <replaceable>Email folder inbox has 30 unread messages, out of 800</replaceable></para>
-</listitem>
-</varlistentry>
--->
 <varlistentry>
 <term><userinput><command>/exec </command> <replaceable>media</replaceable> [<replaceable>audio|video|{player}</replaceable>]</userinput>
 </term>

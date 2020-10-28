@@ -38,10 +38,6 @@ media		Plays the currently played media.
 		Supports amaroK,JuK,Noatun,Kaffeine
 		Usage: /media
 
-mail		Print the number of unread emails in your inbox folder in
-		kmail.  Kmail or kontact must be running.
-		Usage: /mail [folder-substring]
-
 google		Use Google services
 		Usage: /google (--search) <query> # Search <query> in Google
 		       /google --spell <word> # Spellcheck <word> using Google
