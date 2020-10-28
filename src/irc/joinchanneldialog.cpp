@@ -12,7 +12,6 @@
 #include "servergroupsettings.h"
 
 #include <QPushButton>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <KMessageBox>

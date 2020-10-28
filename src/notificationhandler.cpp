@@ -14,8 +14,6 @@
 #include "server.h"
 #include "transfer.h"
 
-#include <QTextDocument>
-#include <QWindow>
 
 #include <KLocalizedString>
 #include <KNotification>

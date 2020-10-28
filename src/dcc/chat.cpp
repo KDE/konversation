@@ -21,7 +21,6 @@
 
 #include <QHostAddress>
 #include <QTextCodec>
-#include <QTextStream>
 #include <QTcpSocket>
 #include <QTcpServer>
 

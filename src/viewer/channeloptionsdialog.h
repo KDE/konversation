@@ -11,7 +11,6 @@
 #include "channel.h"
 
 #include <QStringList>
-#include <QAbstractListModel>
 
 #include <QDialog>
 

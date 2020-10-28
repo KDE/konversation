@@ -39,7 +39,6 @@
 #include <QByteArray>
 #include <QTextStream>
 #include <QTextDocument>
-#include <QTextBlock>
 #include <QDebug>
 
 QDebug operator<<(QDebug d, QTextDocument* document);

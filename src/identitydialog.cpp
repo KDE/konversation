@@ -16,7 +16,6 @@
 #include <KMessageBox>
 #include <KMessageWidget>
 #include <KUser>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <KStandardGuiItem>

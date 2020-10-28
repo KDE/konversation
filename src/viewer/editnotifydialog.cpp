@@ -13,7 +13,6 @@
 
 #include <KLineEdit>
 #include <KComboBox>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>

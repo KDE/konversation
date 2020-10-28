@@ -17,11 +17,9 @@
 #include <KConfigGroup>
 
 #include <QCheckBox>
-#include <QHeaderView>
 #include <QPushButton>
 #include <QRegularExpression>
 #include <QStandardItemModel>
-#include <QKeyEvent>
 #include <QItemSelectionModel>
 #include <QTreeWidget>
 #include <QDialogButtonBox>

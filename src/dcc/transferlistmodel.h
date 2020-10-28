@@ -12,7 +12,6 @@
 #include <QString>
 #include <QTreeWidget>
 #include <QStyledItemDelegate>
-#include <QItemDelegate>
 #include <QSortFilterProxyModel>
 
 #include "transfer.h"

@@ -12,7 +12,6 @@
 #include <QFileInfo>
 #include <QIconEngine>
 #include <QPainter>
-#include <QDebug>
 
 class OverlayIconEngine : public QIconEngine
 {

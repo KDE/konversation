@@ -23,8 +23,6 @@
 #include "awaymanager.h"
 #include "transfermanager.h"
 
-#include <QSignalMapper>
-#include <QSplitter>
 #include <QMenuBar>
 
 #include <KActionCollection>
@@ -36,12 +34,12 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
+#include <QSplitter>
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
-#include <KActionMenu>
 #include <KNotifyConfigWidget>
 #include <KGlobalAccel>
 

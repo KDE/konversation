@@ -11,7 +11,6 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
-#include <QUrl>
 #include <QNetworkConfigurationManager>
 
 #include "preferences.h"

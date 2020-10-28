@@ -16,7 +16,6 @@
 
 
 
-#include <KLocalizedString>
 
 class QSplitter;
 class QMenu;

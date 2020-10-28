@@ -32,7 +32,6 @@
 
 #include <config-konversation.h>
 
-#include <KConfigDialog>
 #include <QIcon>
 #include <KLocalizedString>
 

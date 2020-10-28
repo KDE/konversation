@@ -10,7 +10,6 @@
 
 // Qt
 #include <QIcon>
-#include <QPixmap>
 #include <QObject>
 
 class NickIconSet;

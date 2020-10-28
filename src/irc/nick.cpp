@@ -10,7 +10,6 @@
 #include "preferences.h"
 #include "nicklistview.h"
 
-#include <QHeaderView>
 
 Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& channelnick)
     : QTreeWidgetItem (listView)

@@ -9,7 +9,6 @@
 #include <KCharSelect>
 #include <KGuiItem>
 #include <KLocalizedString>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>

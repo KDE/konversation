@@ -38,11 +38,9 @@
 #include <KStartupInfo>
 #include <kwindowsystem_version.h>
 
-#include <QTextCodec>
 #include <QRegularExpression>
 #include <QDBusConnection>
 #include <QNetworkProxy>
-#include <QWaitCondition>
 #include <QStandardItemModel>
 #include <QFileInfo>
 #include <QTextCursor>

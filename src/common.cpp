@@ -12,9 +12,6 @@
 
 #include <QString>
 #include <QRegExp>
-#include <QPixmap>
-#include <QBitmap>
-#include <QPainter>
 
 #include <KLocalizedString>
 

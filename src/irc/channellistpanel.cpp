@@ -13,7 +13,6 @@
 #include "application.h"
 
 #include <QHeaderView>
-#include <QTextDocument>
 
 #include <QFileDialog>
 #include <QMenu>

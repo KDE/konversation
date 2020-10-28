@@ -15,7 +15,6 @@
 #include <KIO/StoredTransferJob>
 
 #include <QCoreApplication>
-#include <QNetworkReply>
 
 #include <cstdlib>
 

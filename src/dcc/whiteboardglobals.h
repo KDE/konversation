@@ -8,7 +8,6 @@
 #define WHITEBOARDGLOBALS_H
 
 #include <QHash>
-#include <QLatin1String>
 
 namespace Konversation
 {

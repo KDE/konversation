@@ -18,7 +18,6 @@
 #include "mainwindow.h"
 #include "viewcontainer.h"
 
-#include <QInputDialog>
 #include <QToolTip>
 #include <QTreeWidget>
 

@@ -14,7 +14,6 @@
 
 #include <KLocalizedString>
 
-#include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPixmap>

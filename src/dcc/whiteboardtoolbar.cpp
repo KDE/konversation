@@ -11,13 +11,9 @@
 
 #include <KLocalizedString>
 
-#include <QHBoxLayout>
-#include <QLayout>
 #include <QDir>
-#include <QImageWriter>
 #include <QPainter>
 #include <QPushButton>
-#include <QUrl>
 #include <QIcon>
 #include <QFileDialog>
 

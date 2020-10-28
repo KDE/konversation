@@ -9,7 +9,6 @@
 #include "cipher.h"
 #endif
 
-#include <KCategorizedSortFilterProxyModel>
 #include <QLocale>
 
 

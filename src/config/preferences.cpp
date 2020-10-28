@@ -12,7 +12,6 @@
 #include "ignore.h"
 #include "highlight.h"
 
-#include <QFileInfo>
 #include <QHashIterator>
 #include <QHeaderView>
 #include <QTreeView>

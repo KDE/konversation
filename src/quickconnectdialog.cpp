@@ -10,7 +10,6 @@
 #include <QCheckBox>
 
 #include <KLineEdit>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <KGuiItem>

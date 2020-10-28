@@ -9,7 +9,6 @@
 #include "ircview.h"
 #include "searchbar.h"
 
-#include <QPixmap>
 #include <QVBoxLayout>
 
 IRCViewBox::IRCViewBox(QWidget* parent)

@@ -44,7 +44,6 @@
 #include <QTextCodec>
 #include <QSslSocket>
 #include <QStringListModel>
-#include <QStringBuilder>
 #include <QInputDialog>
 #include <QNetworkProxy>
 

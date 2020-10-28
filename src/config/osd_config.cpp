@@ -16,10 +16,8 @@
 #include <KComboBox>
 #include <KColorButton>
 #include <QCheckBox>
-#include <KFontRequester>
-#include <QDesktopWidget>
 #include <QScreen>
-#include <KConfigDialog>
+#include <KFontRequester>
 
 
 OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )

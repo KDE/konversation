@@ -18,7 +18,6 @@
 #include "konversation_log.h"
 
 #include <KLocalizedString>
-#include <KActionCollection>
 #include <KMessageBox>
 #include <KStandardGuiItem>
 

@@ -11,7 +11,6 @@
 #include <QClipboard>
 #include <QDrag>
 #include <QResizeEvent>
-#include <QTextCursor>
 #include <QTextDocument>
 #include <QMimeData>
 

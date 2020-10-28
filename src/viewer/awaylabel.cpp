@@ -11,7 +11,6 @@
 
 #include <QInputDialog>
 #include <KLocalizedString>
-#include <KMessageBox>
 
 AwayLabel::AwayLabel(QWidget *parent)
     : QLabel(i18n("(away)"), parent)

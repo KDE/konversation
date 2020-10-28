@@ -19,7 +19,6 @@
 #include <QCheckBox>
 
 #include <KMessageBox>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
