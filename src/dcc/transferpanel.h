@@ -41,7 +41,6 @@ namespace Konversation
                 TransferView *getTransferView() const;
 
                 void openLocation(Transfer *transfer);
-                void openFileInfoDialog(Transfer *transfer);
 
             protected:
                 /** Called from ChatWindow adjustFocus */
