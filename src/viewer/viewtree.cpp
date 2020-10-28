@@ -27,9 +27,10 @@ constexpr int LED_ICON_SIZE = 14;
 constexpr int MARGIN = 2;
 constexpr int RADIUS = 4;
 
-ViewTreeDelegate::ViewTreeDelegate(QObject* parent) : QStyledItemDelegate(parent)
+ViewTreeDelegate::ViewTreeDelegate(ViewTree* parent)
+    : QStyledItemDelegate(parent)
+    , m_view(parent)
 {
-    m_view = qobject_cast<ViewTree*>(parent);
 }
 
 ViewTreeDelegate::~ViewTreeDelegate()

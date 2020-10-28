@@ -21,7 +21,7 @@ class ViewTreeDelegate : public QStyledItemDelegate
     Q_OBJECT
 
     public:
-        explicit ViewTreeDelegate(QObject *parent = nullptr);
+        explicit ViewTreeDelegate(ViewTree *parent = nullptr);
         ~ViewTreeDelegate() override;
 
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
