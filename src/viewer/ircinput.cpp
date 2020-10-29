@@ -28,7 +28,8 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     //nor in compensating for it if my guess is incorrect. so, cache it.
     m_qtBoxPadding = document()->size().toSize().height() - fontMetrics().lineSpacing();
 
-    connect(qApp, SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
+    connect(Application::instance(), &Application::appearanceChanged,
+            this, &IRCInput::updateAppearance);
     m_multiRow = Preferences::self()->useMultiRowInputBox();
 
     // add one empty line to the history (will be overwritten with newest entry)
