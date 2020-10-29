@@ -152,7 +152,7 @@ class ChatWindow : public QWidget
         void showView(ChatWindow* myself);
 
     public Q_SLOTS:
-        void updateAppearance();
+        virtual void updateAppearance();
 
         void logText(const QString& text);
 

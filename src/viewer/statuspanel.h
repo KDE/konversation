@@ -48,7 +48,7 @@ class StatusPanel : public ChatWindow
     public Q_SLOTS:
         void setNickname(const QString& newNickname);
         void indicateAway(bool show) override;
-        void updateAppearance();
+        void updateAppearance() override;
         void updateName();
 
     protected Q_SLOTS:

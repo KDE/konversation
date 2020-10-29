@@ -225,7 +225,7 @@ class Channel : public ChatWindow
         void sendFile();
 
     public Q_SLOTS:
-        void updateAppearance();
+        void updateAppearance() override;
         void updateQuickButtons();
         void channelTextEntered();
         void channelPassthroughCommand();
