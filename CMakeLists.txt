@@ -30,7 +30,6 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     NotifyConfig
     KIO
     Parts
-    Solid
     Wallet
     WidgetsAddons
     GlobalAccel
