@@ -52,10 +52,10 @@ class ViewTree : public QTreeView
         void selectView(const QModelIndex &index);
 
     Q_SIGNALS:
-        void sizeChanged() const;
-        void showView(ChatWindow* view) const;
-        void closeView(ChatWindow* view) const;
-        void showViewContextMenu(QWidget* widget, const QPoint& point) const;
+        void sizeChanged();
+        void showView(ChatWindow* view);
+        void closeView(ChatWindow* view);
+        void showViewContextMenu(QWidget* widget, const QPoint& point);
 
     protected:
         bool event(QEvent* event) override;
