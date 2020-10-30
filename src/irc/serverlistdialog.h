@@ -58,7 +58,7 @@ namespace Konversation
             void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
 
         private Q_SLOTS:
-            virtual void slotOk();
+            void slotOk();
             void slotAdd();
             void slotEdit();
             void slotDelete();

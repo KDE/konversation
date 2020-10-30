@@ -31,7 +31,7 @@ namespace Konversation
             QString password() const;
 
         private Q_SLOTS:
-            virtual void slotOk();
+            void slotOk();
             void slotNicknameChanged(const QString& nickname);
             void slotConnectionListChanged();
             void slotSelectedConnectionChanged(int);
