@@ -21,7 +21,6 @@ class QuickButton : public QPushButton
         void setDefinition(const QString &newDefinition);
 
         Q_SIGNALS:
-        void clicked(int);
         void clicked(const QString &definition);
 
     private Q_SLOTS:
