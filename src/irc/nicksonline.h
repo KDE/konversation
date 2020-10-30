@@ -63,8 +63,6 @@ class NicksOnline : public ChatWindow
          */
         void doubleClicked(int connectionId,const QString& nick);
 
-        void showView(ChatWindow* view);
-
     protected:
         /** Called from ChatWindow adjustFocus */
         void childAdjustFocus() override;

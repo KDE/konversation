@@ -3003,7 +3003,6 @@ void ViewContainer::openNicksOnlinePanel()
         m_nicksOnlinePanel=new NicksOnline(m_window);
         addView(m_nicksOnlinePanel, i18n("Watched Nicks"));
         connect(m_nicksOnlinePanel, &NicksOnline::doubleClicked, m_window, &MainWindow::notifyAction);
-        connect(m_nicksOnlinePanel, &NicksOnline::showView, this, &ViewContainer::showView);
         connect(m_window, &MainWindow::nicksNowOnline, m_nicksOnlinePanel, &NicksOnline::updateServerOnlineList);
         (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(true);
     }
