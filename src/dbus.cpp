@@ -88,7 +88,7 @@ QStringList DBus::listJoinedChannels(const QString& serverName)
         joinedChannels.reserve(channelList.size());
 
         for (Channel* channel : channelList) {
-            if (channel->joined())
+            if (channel->isJoined())
                 joinedChannels.append(channel->getName());
         }
     }

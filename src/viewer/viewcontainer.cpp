@@ -525,7 +525,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
 
         if (view->getType() == ChatWindow::Channel) {
-            return !qobject_cast<const Channel*>(view)->joined();
+            return !qobject_cast<const Channel*>(view)->isJoined();
         } else if (view->getType() == ChatWindow::Query) {
             return !view->getServer()->isConnected();
         }
@@ -1291,7 +1291,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     {
         Channel *channel = qobject_cast<Channel*>(view);
 
-        if (!channel->joined())
+        if (!channel->isJoined())
             textColor = m_tabWidget->palette().color(QPalette::Disabled, QPalette::Text);
     }
     else if (view->getType() == ChatWindow::Query)
@@ -2809,7 +2809,7 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
     connect(this, &ViewContainer::updateChannelAppearance, channel, &Channel::updateAppearance);
     connect(channel, &Channel::updateTabNotification, this, &ViewContainer::setViewNotification);
     connect(server, &Server::awayState, channel, &Channel::indicateAway);
-    connect(channel, QOverload<Channel*>::of(&Channel::joined), this, &ViewContainer::channelJoined);
+    connect(channel, &Channel::joined, this, &ViewContainer::channelJoined);
 
     return channel;
 }

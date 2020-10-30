@@ -92,7 +92,7 @@ class Channel : public ChatWindow
 
         void setEncryptedOutput(bool);
 
-        bool joined() const { return m_joined; }
+        bool isJoined() const { return m_joined; }
         bool rejoinable() const;
 //Unsure of future placement and/or continued existence of these members
         int numberOfNicks() const { return nicks; }

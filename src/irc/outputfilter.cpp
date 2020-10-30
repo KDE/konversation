@@ -393,7 +393,8 @@ namespace Konversation
             if (!channel->numberOfNicks())
                 result.toServer = QLatin1String("JOIN ") + input.parameter;
 
-            if (channel->joined()) emit showView(channel);
+            if (channel->isJoined())
+                emit showView(channel);
         }
         else
             result.toServer = QLatin1String("JOIN ") + input.parameter;
