@@ -58,7 +58,7 @@ Application::Application(int &argc, char **argv)
     m_awayManager = nullptr;
     m_scriptLauncher = nullptr;
     quickConnectDialog = nullptr;
-    osd = nullptr;
+    m_osd = nullptr;
     m_wallet = nullptr;
     m_images = nullptr;
     m_sound = nullptr;
@@ -90,8 +90,8 @@ Application::~Application()
     //delete dbusObject;
     //delete prefsDCOP;
     //delete identDBus;
-    delete osd;
-    osd = nullptr;
+    delete m_osd;
+    m_osd = nullptr;
     closeWallet();
 
     delete m_networkConfigurationManager;
@@ -167,7 +167,7 @@ void Application::newInstance(QCommandLineParser *args)
         m_sound = nullptr;
 
         // initialize OSD display here, so we can read the Preferences::properly
-        osd = new OSDWidget( QStringLiteral("Konversation") );
+        m_osd = new OSDWidget(QStringLiteral("Konversation"));
 
         Preferences::self();
         readOptions();
@@ -195,7 +195,7 @@ void Application::newInstance(QCommandLineParser *args)
 
         connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
         connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
-        connect(mainWindow.data(), &MainWindow::endNotification, osd, &OSDWidget::hide);
+        connect(mainWindow.data(), &MainWindow::endNotification, m_osd, &OSDWidget::hide);
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings
@@ -424,24 +424,24 @@ void Application::readOptions()
 
     }
 
-    osd->setEnabled(Preferences::self()->useOSD());
+    m_osd->setEnabled(Preferences::self()->useOSD());
 
     //How to load the font from the text?
-    osd->setFont(Preferences::self()->oSDFont());
+    m_osd->setFont(Preferences::self()->oSDFont());
 
-    osd->setDuration(Preferences::self()->oSDDuration());
-    osd->setScreen(Preferences::self()->oSDScreen());
-    osd->setShadow(Preferences::self()->oSDDrawShadow());
+    m_osd->setDuration(Preferences::self()->oSDDuration());
+    m_osd->setScreen(Preferences::self()->oSDScreen());
+    m_osd->setShadow(Preferences::self()->oSDDrawShadow());
 
-    osd->setOffset(Preferences::self()->oSDOffsetX(), Preferences::self()->oSDOffsetY());
-    osd->setAlignment(static_cast<OSDWidget::Alignment>(Preferences::self()->oSDAlignment()));
+    m_osd->setOffset(Preferences::self()->oSDOffsetX(), Preferences::self()->oSDOffsetY());
+    m_osd->setAlignment(static_cast<OSDWidget::Alignment>(Preferences::self()->oSDAlignment()));
 
     if(Preferences::self()->oSDUseCustomColors())
     {
-        osd->setTextColor(Preferences::self()->oSDTextColor());
-        QPalette p = osd->palette();
-        p.setColor(osd->backgroundRole(), Preferences::self()->oSDBackgroundColor());
-        osd->setPalette(p);
+        m_osd->setTextColor(Preferences::self()->oSDTextColor());
+        QPalette p = m_osd->palette();
+        p.setColor(m_osd->backgroundRole(), Preferences::self()->oSDBackgroundColor());
+        m_osd->setPalette(p);
     }
 
     // Check if there is old server list config //TODO FIXME why are we doing this here?
@@ -1252,6 +1252,11 @@ Konversation::Sound* Application::sound() const
         m_sound = new Konversation::Sound;
 
     return m_sound;
+}
+ 
+OSDWidget* Application::osd() const
+{
+    return m_osd;
 }
 
 void Application::updateProxySettings()

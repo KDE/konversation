@@ -105,9 +105,9 @@ class Application : public QApplication
          */
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
 
-        OSDWidget* osd;
-
         Konversation::Sound* sound() const;
+
+        OSDWidget* osd() const;
 
         IRCQueue::EmptyingRate staticrates[Server::_QueueListSize];
 
@@ -183,6 +183,7 @@ class Application : public QApplication
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;
         QPointer<MainWindow> mainWindow;
+        OSDWidget* m_osd;
         mutable Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
         Images* m_images;

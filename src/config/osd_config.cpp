@@ -81,31 +81,31 @@ void OSD_Config::restorePageToDefaults()
 void OSD_Config::saveSettings()
 {
     //Update the current OSD.
-    Application *konvApp=Application::instance();
+    OSDWidget *osd = Application::instance()->osd();
 
-    konvApp->osd->setEnabled(kcfg_UseOSD->isChecked());
+    osd->setEnabled(kcfg_UseOSD->isChecked());
     if (kcfg_UseOSD->isChecked())
     {
-        konvApp->osd->setFont(Preferences::self()->oSDFont());
+        osd->setFont(Preferences::self()->oSDFont());
         if(kcfg_OSDUseCustomColors->isChecked())
         {
-            konvApp->osd->setTextColor(kcfg_OSDTextColor->color());
-            QPalette p = konvApp->osd->palette();
-            p.setColor(konvApp->osd->backgroundRole(), kcfg_OSDBackgroundColor->color());
-            konvApp->osd->setPalette(p);
+            osd->setTextColor(kcfg_OSDTextColor->color());
+            QPalette p = osd->palette();
+            p.setColor(osd->backgroundRole(), kcfg_OSDBackgroundColor->color());
+            osd->setPalette(p);
         }
         else
         {
-            konvApp->osd->unsetColors();
+            osd->unsetColors();
         }
 
-        konvApp->osd->setDuration(kcfg_OSDDuration->value());
-        konvApp->osd->setScreen(kcfg_OSDScreen->currentIndex());
-        konvApp->osd->setShadow(kcfg_OSDDrawShadow->isChecked());
+        osd->setDuration(kcfg_OSDDuration->value());
+        osd->setScreen(kcfg_OSDScreen->currentIndex());
+        osd->setShadow(kcfg_OSDDrawShadow->isChecked());
 
         //x is ignored anyway, but leave incase we use in future
-        konvApp->osd->setOffset(kcfg_OSDOffsetX->value(), kcfg_OSDOffsetY->value());
-        konvApp->osd->setAlignment((OSDWidget::Alignment)kcfg_OSDAlignment->value());
+        osd->setOffset(kcfg_OSDOffsetX->value(), kcfg_OSDOffsetY->value());
+        osd->setAlignment((OSDWidget::Alignment)kcfg_OSDAlignment->value());
     }
 
 }

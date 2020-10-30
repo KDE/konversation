@@ -54,7 +54,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QLatin1Char('>'));
+                konvApp->osd()->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QLatin1Char('>'));
             }
         }
         else
@@ -68,7 +68,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QStringLiteral("> ") + cleanedMessage);
+                konvApp->osd()->show(QLatin1Char('(') + chatWin->getName() + QStringLiteral(") <") + fromNick + QStringLiteral("> ") + cleanedMessage);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[HighLight] (%1) <%2>", chatWin->getName(), fromNick));
+                konvApp->osd()->show(i18n("[HighLight] (%1) <%2>", chatWin->getName(), fromNick));
             }
         }
         else
@@ -118,7 +118,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3", chatWin->getName(), fromNick, cleanedMessage));
+                konvApp->osd()->show(i18n("[HighLight] (%1) <%2> %3", chatWin->getName(), fromNick, cleanedMessage));
             }
         }
 
@@ -151,7 +151,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[Query] <%1>", fromNick));
+                konvApp->osd()->show(i18n("[Query] <%1>", fromNick));
             }
         }
         else
@@ -165,7 +165,7 @@ namespace Konversation
             {
                 Application* konvApp = Application::instance();
 
-                konvApp->osd->show(i18n("[Query] <%1> %2", fromNick, cleanedMessage));
+                konvApp->osd()->show(i18n("[Query] <%1> %2", fromNick, cleanedMessage));
             }
         }
 
@@ -203,7 +203,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             Application* konvApp = Application::instance();
-            konvApp->osd->show(i18n("%1 joined %2",nick, chatWin->getName()));
+            konvApp->osd()->show(i18n("%1 joined %2",nick, chatWin->getName()));
         }
     }
 
@@ -222,7 +222,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             Application* konvApp = Application::instance();
-            konvApp->osd->show(i18n("%1 parted %2",nick, chatWin->getName()));
+            konvApp->osd()->show(i18n("%1 parted %2",nick, chatWin->getName()));
         }
     }
 
@@ -415,10 +415,10 @@ namespace Konversation
             // if there was no nick associated, this must be a command message, so don't try displaying
             // an empty nick in <>
             if(fromNick.isEmpty())
-                konvApp->osd->show(i18n("[HighLight] (%1) *** %2",chatWin->getName(),cleanedMessage));
+                konvApp->osd()->show(i18n("[HighLight] (%1) *** %2",chatWin->getName(),cleanedMessage));
             // normal highlight message
             else
-                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
+                konvApp->osd()->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
         }
     }
 
