@@ -981,7 +981,7 @@
     <entry name="queueRate$(QueueIndex)" type="IntList" key="EmptyingRate $(QueueIndex)">
         <!-- kconfig_compiler really should do this for me... -->
         <code>
-  const QList&lt; QList&lt;int&gt; &gt; defaultRate = {
+  const QList&lt;int&gt; defaultRate[3] = {
     { 15, 60, 0 },
     { 40, 60, 0 },
     {  1,  1, 0 },
