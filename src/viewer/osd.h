@@ -12,7 +12,7 @@
 #include <QString>
 #include <QWidget> //baseclass
 
-constexpr float OSD_WINDOW_OPACITY = 0.8;
+constexpr qreal OSD_WINDOW_OPACITY = 0.8;
 
 class OSDWidget : public QWidget
 {
