@@ -15,7 +15,7 @@
 #include <KAboutData>
 #include <KCrash>
 #include <Kdelibs4ConfigMigrator>
-#include <KDBusAddons/KDBusService>
+#include <KDBusService>
 
 
 int main(int argc, char* argv[])
