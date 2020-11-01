@@ -465,7 +465,11 @@ void Server::connectToIRCServer()
         m_socket = new QSslSocket();
         m_socket->setObjectName(QStringLiteral("serverSocket"));
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        connect(m_socket, &QAbstractSocket::errorOccurred,
+#else
         connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
+#endif
                 this, &Server::broken);
 
         connect(m_socket, &QIODevice::readyRead, this, &Server::incoming);
