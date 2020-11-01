@@ -57,28 +57,6 @@ namespace Konversation
         UPnPDescriptionParser::~UPnPDescriptionParser()
         {}
 
-        bool UPnPDescriptionParser::parse(const QString & file,UPnPRouter* router)
-        {
-            bool ret = true;
-            QFile fptr(file);
-            if (!fptr.open(QIODevice::ReadOnly))
-                return false;
-
-            QXmlInputSource input(&fptr);
-            XMLContentHandler chandler(router);
-            QXmlSimpleReader reader;
-
-            reader.setContentHandler(&chandler);
-            ret = reader.parse(&input,false);
-
-            if (!ret)
-            {
-                qCDebug(KONVERSATION_LOG) << "Error parsing XML";
-                return false;
-            }
-            return true;
-        }
-
         bool UPnPDescriptionParser::parse(const QByteArray & data,UPnPRouter* router)
         {
             bool ret = true;

@@ -30,15 +30,6 @@ namespace Konversation
 
             /**
             * Parse the xml description.
-            * @param file File it is located in
-            * @param router The router off the xml description
-            * @return true upon success
-            */
-            bool parse(const QString & file,UPnPRouter* router);
-
-
-            /**
-            * Parse the xml description.
             * @param data QByteArray with the data
             * @param router The router off the xml description
             * @return true upon success
