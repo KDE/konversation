@@ -36,7 +36,6 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
-#include <kwindowsystem_version.h>
 
 #include <QRegularExpression>
 #include <QDBusConnection>
