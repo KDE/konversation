@@ -121,7 +121,7 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
 
 
     connect(this, &IRCView::anchorClicked, this, &IRCView::handleAnchorClicked);
-    connect(this, QOverload<const QString&>::of(&IRCView::highlighted), this, &IRCView::highlightedSlot);
+    connect(this, QOverload<const QUrl&>::of(&IRCView::highlighted), this, &IRCView::highlightedSlot);
     setOpenLinks(false);
     setUndoRedoEnabled(0);
     document()->setDefaultStyleSheet(QStringLiteral("a.nick:link {text-decoration: none}"));
@@ -2152,7 +2152,7 @@ void IRCView::openLink(const QUrl& url)
     }
 }
 
-void IRCView::highlightedSlot(const QString& /*_link*/)
+void IRCView::highlightedSlot(const QUrl& /*_link*/)
 {
     QString link = m_urlToCopy;
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link

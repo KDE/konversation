@@ -215,7 +215,7 @@ class IRCView : public QTextBrowser
         void resetFontSize();
 
     private Q_SLOTS:
-        void highlightedSlot(const QString& link);
+        void highlightedSlot(const QUrl& link);
         void handleAnchorClicked(const QUrl& url);
 
     private:
