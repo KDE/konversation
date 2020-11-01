@@ -1013,7 +1013,7 @@ int InputFilter::getAutomaticRequest(const QString& command, const QString& name
 
 void InputFilter::addWhoRequest(const QString& name) { m_whoRequestList << name.toLower(); }
 
-bool InputFilter::isWhoRequestUnderProcess(const QString& name) const { return (m_whoRequestList.contains(name.toLower())>0); }
+bool InputFilter::isWhoRequestUnderProcess(const QString& name) const { return m_whoRequestList.contains(name.toLower()); }
 
 void InputFilter::setLagMeasuring(bool state) { m_lagMeasuring=state; }
 

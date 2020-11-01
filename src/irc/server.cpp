@@ -3873,7 +3873,7 @@ bool Server::isAChannel(const QString &channel) const
     QRegularExpressionMatch x = m_targetMatcher.match(channel);
     int index = x.capturedStart(2);
 
-    return (index >= 0 && getChannelTypes().contains(channel.at(index)) > 0);
+    return (index >= 0 && getChannelTypes().contains(channel.at(index)));
 }
 
 void Server::addRawLog(bool show)

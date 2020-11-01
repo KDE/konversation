@@ -84,7 +84,7 @@ namespace Konversation
 
     bool IRCCharsets::isValidEncoding(const QString& shortName) const
     {
-        return ( m_shortNames.contains( shortName ) > 0 );
+        return m_shortNames.contains(shortName);
     }
 
     QString IRCCharsets::encodingForLocale() const
