@@ -38,7 +38,7 @@ namespace Konversation
 
             private Q_SLOTS:
                 void currentFontChanged(const QFont& font);
-                void pointSizeChanged(const QString& size);
+                void pointSizeChanged(int fontPointListIndex);
 
                 void boldToggled(bool checked);
                 void italicToggled(bool checked);

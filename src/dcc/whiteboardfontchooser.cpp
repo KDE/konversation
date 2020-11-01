@@ -22,7 +22,7 @@ namespace Konversation
 
             m_font = m_fontComboBox->currentFont();
             m_fontPointComboBox->setValidator(new QIntValidator(2,300,m_fontPointComboBox));
-            pointSizeChanged(m_fontPointComboBox->currentText());
+            pointSizeChanged(m_fontPointComboBox->currentIndex());
 
             m_boldPushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-bold")));
             m_italicPushButton->setIcon(QIcon::fromTheme(QStringLiteral("format-text-italic")));
@@ -35,7 +35,7 @@ namespace Konversation
             connect(m_underlinePushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::underlineToggled);
 
             connect(m_fontComboBox, &QFontComboBox::currentFontChanged, this, &WhiteBoardFontChooser::currentFontChanged);
-            connect(m_fontPointComboBox, QOverload<const QString &>::of(&KComboBox::currentIndexChanged),
+            connect(m_fontPointComboBox, QOverload<int>::of(&KComboBox::currentIndexChanged),
                     this, &WhiteBoardFontChooser::pointSizeChanged);
         }
 
@@ -66,8 +66,10 @@ namespace Konversation
             emit fontChanged(m_font);
         }
 
-        void WhiteBoardFontChooser::pointSizeChanged(const QString& size)
+        void WhiteBoardFontChooser::pointSizeChanged(int fontPointListIndex)
         {
+            const QString size = m_fontPointComboBox->itemText(fontPointListIndex);
+
             bool ok;
             int pointSize = size.toInt(&ok);
             if (!ok)
