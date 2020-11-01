@@ -538,7 +538,11 @@ namespace Konversation
         {
             if (m_dccSocket && m_textStream.device())
             {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+                m_textStream << text << Qt::endl;
+#else
                 m_textStream << text << endl;
+#endif
             }
         }
 
