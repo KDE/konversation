@@ -61,7 +61,7 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WindowFlags fl )
     connect(kcfg_OSDUseCustomColors, &QGroupBox::toggled, this, &OSD_Config::slotCustomColorsChanged);
     connect(kcfg_OSDTextColor, &KColorButton::changed, this, &OSD_Config::slotTextColorChanged);
     connect(kcfg_OSDBackgroundColor, &KColorButton::changed, this, &OSD_Config::slotBackgroundColorChanged);
-    connect(kcfg_OSDScreen, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &OSD_Config::slotScreenChanged);
+    connect(kcfg_OSDScreen, QOverload<int>::of(&KComboBox::activated), this, &OSD_Config::slotScreenChanged);
     connect(kcfg_OSDDrawShadow, &QCheckBox::toggled, this, &OSD_Config::slotDrawShadowChanged);
 }
 

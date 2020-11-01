@@ -29,17 +29,17 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
     connect(container, &ViewContainer::frontServerChanging, this, &QueueTuner::setServer);
     connect(&m_timer, &QTimer::timeout, this, &QueueTuner::timerFired);
 
-    connect(m_slowRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::slowRateChanged);
-    connect(m_slowType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::slowTypeChanged);
-    connect(m_slowInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::slowIntervalChanged);
+    connect(m_slowRate, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::slowRateChanged);
+    connect(m_slowType, QOverload<int>::of(&KComboBox::activated), this, &QueueTuner::slowTypeChanged);
+    connect(m_slowInterval, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::slowIntervalChanged);
 
-    connect(m_normalRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::normalRateChanged);
-    connect(m_normalType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::normalTypeChanged);
-    connect(m_normalInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::normalIntervalChanged);
+    connect(m_normalRate, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::normalRateChanged);
+    connect(m_normalType, QOverload<int>::of(&KComboBox::activated), this, &QueueTuner::normalTypeChanged);
+    connect(m_normalInterval, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::normalIntervalChanged);
 
-    connect(m_fastRate, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::fastRateChanged);
-    connect(m_fastType, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &QueueTuner::fastTypeChanged);
-    connect(m_fastInterval, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &QueueTuner::fastIntervalChanged);
+    connect(m_fastRate, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::fastRateChanged);
+    connect(m_fastType, QOverload<int>::of(&KComboBox::activated), this, &QueueTuner::fastTypeChanged);
+    connect(m_fastInterval, QOverload<int>::of(&QSpinBox::valueChanged), this, &QueueTuner::fastIntervalChanged);
 
     m_timer.setObjectName(QStringLiteral("qTuner"));
 }

@@ -85,7 +85,8 @@ namespace Konversation
         m_additionalAuthInfo->setCloseButtonVisible(false);
         m_additionalAuthInfo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        connect(m_authTypeCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::authTypeChanged);
+        connect(m_authTypeCombo, QOverload<int>::of(&KComboBox::currentIndexChanged),
+                this, &IdentityDialog::authTypeChanged);
         m_authTypeCombo->addItem(i18n("SASL PLAIN"), QStringLiteral("saslplain"));
         m_authTypeCombo->addItem(i18nc("Cert = Certificate", "SASL EXTERNAL (Cert)"), QStringLiteral("saslexternal"));
         m_authTypeCombo->addItem(i18n("Standard NickServ"), QStringLiteral("nickserv"));
@@ -108,7 +109,8 @@ namespace Konversation
         buttonBox->button(QDialogButtonBox::Cancel)->setToolTip(i18n("Discards all changes made"));
 
         AwayManager* awayManager = Application::instance()->getAwayManager();
-        connect(m_identityCBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &IdentityDialog::updateIdentity);
+        connect(m_identityCBox, QOverload<int>::of(&KComboBox::currentIndexChanged),
+                this, &IdentityDialog::updateIdentity);
         connect(this, &IdentityDialog::identitiesChanged, awayManager, &AwayManager::identitiesChanged);
     }
 

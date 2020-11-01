@@ -654,7 +654,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_recvSocket, &QTcpSocket::errorOccurred, this, &TransferRecv::connectionFailed);
 #else
-            connect(m_recvSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
+            connect(m_recvSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
 #endif
 
             qCDebug(KONVERSATION_LOG) << "Attempting to connect to " << m_partnerIp << ":" << m_partnerPort;
@@ -702,7 +702,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_recvSocket, &QTcpSocket::errorOccurred, this, &TransferRecv::connectionFailed);
 #else
-            connect(m_recvSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
+            connect(m_recvSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferRecv::connectionFailed);
 #endif
 
             // we don't need ServerSocket anymore

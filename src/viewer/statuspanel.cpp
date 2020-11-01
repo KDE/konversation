@@ -66,7 +66,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_inputBar, &IRCInput::textPasted, this, &StatusPanel::textPasted);
     connect(getTextView(), &IRCView::textPasted, m_inputBar, &IRCInput::paste);
 
-    connect(nicknameCombobox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &StatusPanel::nicknameComboboxChanged);
+    connect(nicknameCombobox, QOverload<int>::of(&KComboBox::activated),
+            this, &StatusPanel::nicknameComboboxChanged);
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editable.  if we design it so it isn't, remove these lines.
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), &QLineEdit::editingFinished,

@@ -416,7 +416,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_sendSocket, &QTcpSocket::errorOccurred, this, &TransferSend::slotGotSocketError);
 #else
-            connect(m_sendSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
+            connect(m_sendSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
 #endif
 
             setStatus(Connecting);
@@ -460,7 +460,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_sendSocket, &QTcpSocket::errorOccurred, this, &TransferSend::slotGotSocketError);
 #else
-            connect(m_sendSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
+            connect(m_sendSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
 #endif
 
             // we don't need ServerSocket anymore

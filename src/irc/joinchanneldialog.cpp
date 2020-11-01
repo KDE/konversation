@@ -56,7 +56,8 @@ namespace Konversation
           connect(server, &Server::nicknameChanged, this, &JoinChannelDialog::slotNicknameChanged);
         }
         // Update channel history when selected connection changes
-        connect(m_ui.networkNameCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::currentIndexChanged), this, &JoinChannelDialog::slotSelectedConnectionChanged);
+        connect(m_ui.networkNameCombo, QOverload<int>::of(&KComboBox::currentIndexChanged),
+                this, &JoinChannelDialog::slotSelectedConnectionChanged);
         // Clear channel history when the history combo box is cleared
         connect(m_ui.channelCombo, &KHistoryComboBox::cleared, this, &JoinChannelDialog::slotChannelHistoryCleared);
         // Preselect the current network

@@ -50,7 +50,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log, const QString&
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
     toolBar->addWidget(sizeSpin);
-    connect(sizeSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &LogfileReader::storeBufferSize);
+    connect(sizeSpin, QOverload<int>::of(&QSpinBox::valueChanged), this, &LogfileReader::storeBufferSize);
 
     IRCViewBox* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());

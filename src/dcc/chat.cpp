@@ -470,7 +470,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_dccSocket, &QTcpSocket::errorOccurred, this, &Chat::connectionFailed);
 #else
-            connect(m_dccSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Chat::connectionFailed);
+            connect(m_dccSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &Chat::connectionFailed);
 #endif
             connect(m_dccSocket, &QTcpSocket::readyRead, this, &Chat::readData);
             connect(m_dccSocket, &QTcpSocket::disconnected, this, &Chat::socketClosed);
@@ -564,7 +564,7 @@ namespace Konversation
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_dccSocket, &QTcpSocket::errorOccurred, this, &Chat::connectionFailed);
 #else
-            connect(m_dccSocket, static_cast<void (QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &Chat::connectionFailed);
+            connect(m_dccSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &Chat::connectionFailed);
 #endif
             // the listen socket isn't needed anymore
             disconnect(m_dccServer, nullptr, nullptr, nullptr);

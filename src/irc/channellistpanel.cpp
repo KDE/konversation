@@ -181,8 +181,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_regexBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
     connect(m_topicBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
     connect(m_channelBox, &QCheckBox::stateChanged, this, &ChannelListPanel::filterChanged);
-    connect(m_minUser, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
-    connect(m_maxUser, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
+    connect(m_minUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
+    connect(m_maxUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
 
     connect(m_filterLine, &KLineEdit::returnPressed, this, &ChannelListPanel::applyFilterClicked);
     connect(m_filterLine, &KLineEdit::textChanged, this, &ChannelListPanel::filterChanged);

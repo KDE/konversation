@@ -35,7 +35,8 @@ namespace Konversation
             connect(m_underlinePushButton, &QToolButton::toggled, this, &WhiteBoardFontChooser::underlineToggled);
 
             connect(m_fontComboBox, &QFontComboBox::currentFontChanged, this, &WhiteBoardFontChooser::currentFontChanged);
-            connect(m_fontPointComboBox, static_cast<void (KComboBox::*)(const QString &)>(&KComboBox::currentIndexChanged), this, &WhiteBoardFontChooser::pointSizeChanged);
+            connect(m_fontPointComboBox, QOverload<const QString &>::of(&KComboBox::currentIndexChanged),
+                    this, &WhiteBoardFontChooser::pointSizeChanged);
         }
 
         WhiteBoardFontChooser::~WhiteBoardFontChooser()
