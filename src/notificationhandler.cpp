@@ -73,7 +73,7 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
 
         if (!Preferences::self()->trayNotifyOnlyOwnNick())
         {
@@ -123,7 +123,7 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
 
         startTrayNotification(chatWin);
     }
@@ -170,7 +170,7 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, static_cast<void(KNotification::*)()>(&KNotification::activated), chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
 
         startTrayNotification(chatWin);
     }
