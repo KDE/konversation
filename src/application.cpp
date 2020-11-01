@@ -152,8 +152,13 @@ void Application::newInstance(QCommandLineParser *args)
         connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
         connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
 
+// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         m_networkConfigurationManager = new QNetworkConfigurationManager();
         connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
+QT_WARNING_POP
 
         m_scriptLauncher = new ScriptLauncher(this);
 

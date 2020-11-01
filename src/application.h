@@ -193,7 +193,12 @@ class Application : public QApplication
 
         KWallet::Wallet* m_wallet;
 
+// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
         QNetworkConfigurationManager* m_networkConfigurationManager;
+QT_WARNING_POP
 
         QCommandLineParser *m_commandLineParser;
         QStringList m_restartArguments;
