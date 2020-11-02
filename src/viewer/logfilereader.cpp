@@ -74,7 +74,7 @@ bool LogfileReader::eventFilter(QObject* watched, QEvent* e)
 {
     if (e->type() == QEvent::KeyPress)
     {
-        QKeyEvent* ke = dynamic_cast<QKeyEvent*>(e);
+        auto* ke = static_cast<QKeyEvent*>(e);
 
         if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
         {

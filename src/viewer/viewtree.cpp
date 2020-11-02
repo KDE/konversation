@@ -216,7 +216,7 @@ bool ViewTree::event(QEvent* event)
     if (event->type() == QEvent::ToolTip) {
         event->accept();
 
-        const QHelpEvent* helpEvent = dynamic_cast<QHelpEvent*>(event);
+        const auto* helpEvent = static_cast<QHelpEvent*>(event);
 
         const QModelIndex& idx = indexAt(helpEvent->pos());
 

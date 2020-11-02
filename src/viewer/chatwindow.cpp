@@ -603,7 +603,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 {
     if(e->type() == QEvent::KeyPress)
     {
-        QKeyEvent* ke = dynamic_cast<QKeyEvent*>(e);
+        auto* ke = static_cast<QKeyEvent*>(e);
 
         bool scrollMod = (Preferences::self()->useMultiRowInputBox() ? false : (ke->modifiers() == Qt::ShiftModifier));
 

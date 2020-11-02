@@ -187,7 +187,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
     if (qobject_cast<IRCView*>(object) || qobject_cast<Konversation::TopicLabel*>(object)) {
         if (event->type() == QEvent::KeyPress)
         {
-            QKeyEvent* ke = dynamic_cast<QKeyEvent*>(event);
+            auto* ke = static_cast<QKeyEvent*>(event);
 
             // Allow tab to be handled naturally by the widget.
             // Once it runs out of links it goes to the next control.
@@ -290,7 +290,7 @@ bool IRCInput::event(QEvent* e)
     if (e->type() == QEvent::ShortcutOverride)
     {
         // Make sure KTextEdit doesn't eat actionCollection shortcuts
-        QKeyEvent* event = dynamic_cast<QKeyEvent*>(e);
+        auto* event = static_cast<QKeyEvent*>(e);
         const int key = event->key() | event->modifiers();
 
         const auto actions = Application::instance()->getMainWindow()->actionCollection()->actions();

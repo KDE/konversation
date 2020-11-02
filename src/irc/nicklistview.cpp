@@ -95,7 +95,7 @@ bool NickListView::event(QEvent *event)
 {
     if(( event->type() == QEvent::ToolTip ) )
     {
-        QHelpEvent* helpEvent = dynamic_cast<QHelpEvent*>( event );
+        auto* helpEvent = static_cast<QHelpEvent*>(event);
 
         QTreeWidgetItem *item = itemAt(viewport()->mapFromParent(helpEvent->pos()));
         if( item )
@@ -175,7 +175,7 @@ void NickListView::refresh()
 
     while (*it)
     {
-        dynamic_cast<Nick*>(*it)->refresh();
+        static_cast<Nick*>(*it)->refresh();
         ++it;
     }
 

@@ -589,7 +589,7 @@ bool ViewContainer::canDropMimeData(const QMimeData *data, Qt::DropAction action
         return false;
     }
 
-    ChatWindow *dragView = dynamic_cast<const ViewMimeData *>(data)->view();
+    ChatWindow *dragView = static_cast<const ViewMimeData *>(data)->view();
 
     if (!dragView->isTopLevelView()
         && (!parent.isValid()
@@ -616,7 +616,7 @@ bool ViewContainer::dropMimeData(const QMimeData *data, Qt::DropAction action, i
         return false;
     }
 
-    ChatWindow *dragView = dynamic_cast<const ViewMimeData *>(data)->view();
+    ChatWindow *dragView = static_cast<const ViewMimeData *>(data)->view();
     QModelIndex dragIdx = indexForView(dragView);
 
     if (dragView->isTopLevelView() && !parent.isValid()) {
@@ -2581,7 +2581,7 @@ void ViewContainer::addUrlCatcher()
         m_urlCatcherPanel=new UrlCatcher(m_tabWidget);
         addView(m_urlCatcherPanel, i18n("URL Catcher"));
 
-        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher"))))->setChecked(true);
+        static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher")))->setChecked(true);
     }
     else
         closeUrlCatcher();
@@ -2594,7 +2594,7 @@ void ViewContainer::closeUrlCatcher()
         delete m_urlCatcherPanel;
         m_urlCatcherPanel = nullptr;
 
-        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher"))))->setChecked(false);
+        static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_url_catcher")))->setChecked(false);
     }
 }
 
@@ -2613,7 +2613,7 @@ void ViewContainer::addDccPanel()
     {
         addView(m_dccPanel, i18n("DCC Status"));
         m_dccPanelOpen=true;
-        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window"))))->setChecked(true);
+        static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window")))->setChecked(true);
     }
 }
 
@@ -2632,7 +2632,7 @@ void ViewContainer::closeDccPanel()
             cleanupAfterClose(m_dccPanel);
         }
         m_dccPanelOpen=false;
-        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window"))))->setChecked(false);
+        static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_dccstatus_window")))->setChecked(false);
     }
 }
 
@@ -3004,7 +3004,7 @@ void ViewContainer::openNicksOnlinePanel()
         addView(m_nicksOnlinePanel, i18n("Watched Nicks"));
         connect(m_nicksOnlinePanel, &NicksOnline::doubleClicked, m_window, &MainWindow::notifyAction);
         connect(m_window, &MainWindow::nicksNowOnline, m_nicksOnlinePanel, &NicksOnline::updateServerOnlineList);
-        (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(true);
+        static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window")))->setChecked(true);
     }
     else
     {
@@ -3017,7 +3017,7 @@ void ViewContainer::closeNicksOnlinePanel()
 {
     delete m_nicksOnlinePanel;
     m_nicksOnlinePanel = nullptr;
-    (dynamic_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window"))))->setChecked(false);
+    static_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_nicksonline_window")))->setChecked(false);
 }
 
 /*!
