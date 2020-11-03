@@ -426,7 +426,7 @@ namespace Konversation
             qCDebug(KONVERSATION_LOG) << "[BEGIN]\n"
                 << "size: " << size;
 
-            KIO::TransferJob* transferJob = dynamic_cast<KIO::TransferJob*>(job);
+            auto* transferJob = qobject_cast<KIO::TransferJob*>(job);
             if (!transferJob)
             {
                 qCDebug(KONVERSATION_LOG) << "not a TransferJob? returning";
