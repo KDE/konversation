@@ -298,7 +298,7 @@ void Theme_Config::removeTheme()
         return;
     }
 
-    dir.chop(QLatin1Literal("index.desktop").size());
+    dir.chop(QLatin1String("index.desktop").size());
 
     // Check if theme was installed by KNS, if so uninstall via KNS, otherwise manually
     auto *manager = new KNSCore::DownloadManager(QStringLiteral("konversation_nicklist_theme.knsrc"), this);
