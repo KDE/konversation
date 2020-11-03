@@ -251,7 +251,7 @@ namespace Konversation
 
         void TransferDetailedInfoPanel::slotTransferStatusChanged(Transfer *transfer, int newStatus, int oldStatus)
         {
-            Q_UNUSED(transfer);
+            Q_UNUSED(transfer)
 
             updateView();
             if (newStatus == Transfer::Transferring)

@@ -915,7 +915,7 @@ namespace Konversation
 
         void TransferRecvWriteCacheHandler::slotKIODataReq(KIO::Job *job, QByteArray &data)
         {
-            Q_UNUSED(job);
+            Q_UNUSED(job)
 
             // We are in writeAsyncMode if there is more data to be read in from dcc
             if (m_writeAsyncMode)

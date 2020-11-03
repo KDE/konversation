@@ -185,14 +185,14 @@ QVariant TopicHistoryModel::headerData(int section, Qt::Orientation orientation,
 
 int TopicHistoryModel::columnCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 
     return 3;
 }
 
 int TopicHistoryModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 
     return m_topicList.count();
 }

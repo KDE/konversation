@@ -14,7 +14,8 @@ SSLLabel::SSLLabel(QWidget* parent)
 
 void SSLLabel::mouseReleaseEvent(QMouseEvent *e)
 {
-    Q_UNUSED(e);
+    Q_UNUSED(e)
+
     emit clicked();
 }
 

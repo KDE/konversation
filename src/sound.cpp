@@ -47,7 +47,7 @@ namespace Konversation
 
     void Sound::tryPlayNext(Phonon::State newState, Phonon::State oldState)
     {
-        Q_UNUSED(oldState);
+        Q_UNUSED(oldState)
 
         if(newState == Phonon::PausedState && !m_playQueue.isEmpty())
         {

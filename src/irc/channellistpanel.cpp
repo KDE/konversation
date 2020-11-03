@@ -314,7 +314,8 @@ void ChannelListPanel::updateFilter()
 
 void ChannelListPanel::currentChanged(const QModelIndex &current,const QModelIndex &previous)
 {
-    Q_UNUSED(previous);
+    Q_UNUSED(previous)
+
     m_joinChannel->setEnabled(m_online && current.isValid());
 }
 
@@ -499,7 +500,8 @@ bool ChannelListPanel::closeYourself()
 
 void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
 {
-    Q_UNUSED(fromCursor);
+    Q_UNUSED(fromCursor)
+
     m_filterLine->setText(m_filterLine->text() + text);
 }
 

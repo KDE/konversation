@@ -345,7 +345,7 @@ struct Burr: public QTextBlockUserData
 
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
-    Q_UNUSED(format);
+    Q_UNUSED(format)
 
     QTextBlock block=doc->findBlock(posInDocument);
     QPen pen;
@@ -382,7 +382,8 @@ void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocu
 
 QSizeF IrcViewMarkerLine::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
-    Q_UNUSED(posInDocument); Q_UNUSED(format);
+    Q_UNUSED(posInDocument)
+    Q_UNUSED(format)
 
     QTextFrameFormat f=doc->rootFrame()->frameFormat();
     qreal width = doc->pageSize().width()-(f.leftMargin()+f.rightMargin());
@@ -1917,7 +1918,8 @@ void IRCView::defaultRemoveDuplicateHandling(TextHtmlData* data, const QString& 
 
 void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QStringList& fixedUrls,  QString& richtext, const QString& strippedText)
 {
-    Q_UNUSED(fixedUrls);
+    Q_UNUSED(fixedUrls)
+
     QRegExp ircRichtextRegExp(colorRegExp);
     int start = 0, j;
     int i = 0;

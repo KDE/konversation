@@ -1708,7 +1708,7 @@ namespace Konversation
 
         return info(i18n("The key for %1 has been set.", parms[0]));
         #else
-        Q_UNUSED(input);
+        Q_UNUSED(input)
         return error(i18n("Setting an encryption key requires Konversation to have been built "
                           "with support for the Qt Cryptographic Architecture (QCA) library. "
                           "Contact your distributor about a Konversation package with QCA "
@@ -1737,7 +1737,7 @@ namespace Konversation
 
         return info(i18n("Beginning DH1080 key exchange with %1.", parms[0]));
         #else
-        Q_UNUSED(input);
+        Q_UNUSED(input)
         return error(i18n("Setting an encryption key requires Konversation to have been built "
                           "with support for the Qt Cryptographic Architecture (QCA) library. "
                           "Contact your distributor about a Konversation package with QCA "

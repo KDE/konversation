@@ -57,15 +57,15 @@ void TopicHistorySortfilterProxyModel::setSourceModel(QAbstractItemModel* model)
 
 bool TopicHistorySortfilterProxyModel::filterAcceptsColumn(int source_column, const QModelIndex& source_parent) const
 {
-    Q_UNUSED(source_parent);
+    Q_UNUSED(source_parent)
 
     return (source_column == 0);
 }
 
 void TopicHistorySortfilterProxyModel::sourceDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight)
 {
-    Q_UNUSED(topLeft);
-    Q_UNUSED(bottomRight);
+    Q_UNUSED(topLeft)
+    Q_UNUSED(bottomRight)
 
     emit layoutAboutToBeChanged();
     emit layoutChanged();
@@ -168,7 +168,7 @@ void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, 
 
 void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    Q_UNUSED(index);
+    Q_UNUSED(index)
 
     if (!static_cast<TopicHistoryView*>(itemView())->textSelectable()) {
         QStyleOptionViewItem* hack = const_cast<QStyleOptionViewItem*>(&option);
@@ -181,7 +181,7 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 
 QSize TopicHistoryItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    Q_UNUSED(option);
+    Q_UNUSED(option)
 
     m_hiddenLabel->setPlainText(index.model()->data(index).toString());
     m_hiddenLabel->setFixedWidth(itemView()->viewport()->width()

@@ -407,7 +407,8 @@ void Server::setAutoJoin(bool on)
 
 void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    Q_UNUSED(exitCode);
+    Q_UNUSED(exitCode)
+
     if (exitStatus == QProcess::NormalExit)
         getStatusView()->appendServerMessage(i18n("Info"), i18n("Pre-shell command executed successfully!"));
     else
@@ -422,7 +423,7 @@ void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus
 
 void Server::preShellCommandError(QProcess::ProcessError error)
 {
-    Q_UNUSED(error);
+    Q_UNUSED(error)
 
     QString errorText = i18nc("An error message from KDE or Qt is appended.", "There was a problem while executing the command: ") % m_preShellCommand.errorString();
     getStatusView()->appendServerMessage(i18n("Warning"), errorText);
@@ -890,7 +891,8 @@ void Server::sendAuthenticate(const QString& message)
 
 void Server::broken(QAbstractSocket::SocketError error)
 {
-    Q_UNUSED(error);
+    Q_UNUSED(error)
+
     qCDebug(KONVERSATION_LOG) << "Connection broken with state" << m_connectionState << "and error:" << m_socket->errorString();
 
     m_socket->blockSignals(true);

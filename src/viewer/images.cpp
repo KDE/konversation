@@ -42,8 +42,9 @@ class LedIconEngine : public QIconEngine
 
 void LedIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
 {
-    Q_UNUSED(mode);
-    Q_UNUSED(state);
+    Q_UNUSED(mode)
+    Q_UNUSED(state)
+
     QColor color;
     QBrush brush;
     QPen pen;

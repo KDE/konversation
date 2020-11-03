@@ -157,7 +157,8 @@ namespace Konversation
 
         void WhiteBoardColorChooser::resizeEvent(QResizeEvent *e)
         {
-            Q_UNUSED(e);
+            Q_UNUSED(e)
+
             const int minWidthHeight = qMin(width(),height());
             const int swapImageSize = minWidthHeight/3;
             m_swapPixmap = QPixmap(swapImageSize, swapImageSize);

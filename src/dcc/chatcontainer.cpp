@@ -97,8 +97,8 @@ namespace Konversation
 
         void ChatContainer::chatStatusChanged(Chat *chat, Konversation::DCC::Chat::Status newstatus, Konversation::DCC::Chat::Status oldstatus)
         {
-            Q_UNUSED(oldstatus);
-            Q_UNUSED(chat);
+            Q_UNUSED(oldstatus)
+            Q_UNUSED(chat)
 
             Q_ASSERT(newstatus != oldstatus);
             Q_ASSERT(m_chat == chat);

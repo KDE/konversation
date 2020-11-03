@@ -115,7 +115,8 @@ namespace Konversation
 
     void JoinChannelDialog::slotNicknameChanged(const QString& nickname)
     {
-      Q_UNUSED(nickname);
+      Q_UNUSED(nickname)
+
       // Update all items
       const QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
       for (Server *server : serverList) {

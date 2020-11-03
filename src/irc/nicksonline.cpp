@@ -518,7 +518,7 @@ void NicksOnline::timerFired()
  */
 void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
 {
-    Q_UNUSED(column);
+    Q_UNUSED(column)
 
     NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 

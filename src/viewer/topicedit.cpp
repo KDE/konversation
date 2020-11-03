@@ -66,7 +66,7 @@ void TopicEdit::setMaximumLength(int length)
 
 void TopicEdit::contentsChanged(int position, int charsRemoved, int charsAdded)
 {
-    Q_UNUSED(position);
+    Q_UNUSED(position)
 
     // If there are no undo steps, the change probably occurred via setText() rather
     // than user interaction.
