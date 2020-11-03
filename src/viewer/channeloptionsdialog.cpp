@@ -307,7 +307,7 @@ namespace Konversation
         modeString.remove(QLatin1Char('o'));
         modeString.remove(QLatin1Char('v'));
 
-        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+        auto* modesModel = static_cast<QStandardItemModel *>(m_ui.otherModesList->model());
 
         modesModel->clear();
         modesModel->setHorizontalHeaderLabels(QStringList { i18n("Mode"), i18n("Parameter") });
@@ -346,7 +346,7 @@ namespace Konversation
         m_ui.keyModeChBox->setChecked(false);
         m_ui.keyModeEdit->setText(QString());
 
-        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+        auto* modesModel = static_cast<QStandardItemModel *>(m_ui.otherModesList->model());
         for (int i = 0; i < modesModel->rowCount(); ++i)
         {
             modesModel->item(i, 0)->setCheckState(Qt::Unchecked);
@@ -445,7 +445,7 @@ namespace Konversation
             modes.append(mode);
         }
 
-        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+        auto* modesModel = static_cast<QStandardItemModel *>(m_ui.otherModesList->model());
         for (int i = 0; i < modesModel->rowCount(); ++i)
         {
             mode = (modesModel->item(i, 0)->checkState() == Qt::Checked) ? plus : minus;

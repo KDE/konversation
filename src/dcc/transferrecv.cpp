@@ -465,7 +465,7 @@ namespace Konversation
         {
             qCDebug(KONVERSATION_LOG) << "[BEGIN]";
 
-            KIO::TransferJob* transferJob = qobject_cast<KIO::TransferJob*>(job);
+            auto* transferJob = static_cast<KIO::TransferJob*>(job);
             disconnect(transferJob, nullptr, nullptr, nullptr);
 
             switch (transferJob->error())
@@ -501,7 +501,7 @@ namespace Konversation
         {
             qCDebug(KONVERSATION_LOG) << __FUNCTION__;
 
-            KIO::TransferJob* transferJob = qobject_cast<KIO::TransferJob*>(job);
+            auto* transferJob = static_cast<KIO::TransferJob*>(job);
 
             disconnect(transferJob, nullptr, nullptr, nullptr);           // WriteCacheHandler will control the job after this
 

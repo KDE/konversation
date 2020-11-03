@@ -125,7 +125,7 @@ namespace Konversation
                 return;
             }
 
-            KIO::StoredTransferJob* st = qobject_cast<KIO::StoredTransferJob*>(j);
+            auto* st = static_cast<KIO::StoredTransferJob*>(j);
             // load in the file (target is always local)
             UPnPDescriptionParser desc_parse;
             bool ret = desc_parse.parse(st->data(),this);

@@ -460,7 +460,7 @@ void ViewTree::keyPressEvent(QKeyEvent* event)
                     view->appendInputText(event->text(), true);
                 else if (view->getType() == ChatWindow::Konsole)
                 {
-                    KonsolePanel* panel = qobject_cast<KonsolePanel*>(view);
+                    auto* panel = static_cast<KonsolePanel*>(view);
                     QCoreApplication::sendEvent(panel->getWidget(), event);
                 }
 

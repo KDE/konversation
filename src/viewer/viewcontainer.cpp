@@ -370,7 +370,7 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
 
             if (statusView) {
                 for (int i = m_tabWidget->indexOf(statusView) + 1; i < m_tabWidget->count(); ++i) {
-                    const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+                    const auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
                     if (view != statusView && view->getServer() && view->getServer()->getStatusView() == statusView) {
                         ++count;
@@ -383,7 +383,7 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
             }
         } else {
             for (int i = 0; i < m_tabWidget->count(); ++i) {
-                const ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+                const auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
                 if (view->isTopLevelView()) {
                     ++count;
@@ -422,7 +422,7 @@ QModelIndex ViewContainer::index(int row, int column, const QModelIndex& parent)
         int count = -1;
 
         for (int i = 0; i < m_tabWidget->count(); ++i) {
-            if (qobject_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++count;
             }
 
@@ -457,7 +457,7 @@ QModelIndex ViewContainer::indexForView(ChatWindow* view) const
         int count = -1;
 
         for (int i = 0; i <= index; ++i) {
-            if (qobject_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++count;
             }
         }
@@ -525,7 +525,7 @@ QVariant ViewContainer::data(const QModelIndex& index, int role) const
         const ChatWindow* view = static_cast<ChatWindow*>(index.internalPointer());
 
         if (view->getType() == ChatWindow::Channel) {
-            return !qobject_cast<const Channel*>(view)->isJoined();
+            return !static_cast<const Channel*>(view)->isJoined();
         } else if (view->getType() == ChatWindow::Query) {
             return !view->getServer()->isConnected();
         }
@@ -776,7 +776,7 @@ void ViewContainer::updateViewActions(int index)
         }
 
         KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
-        Channel* channel = qobject_cast<Channel*>(view);
+        auto* channel = static_cast<Channel*>(view);
         if (autoJoinAction && viewType == ChatWindow::Channel && channel->getServer()->getServerGroup())
         {
             autoJoinAction->setEnabled(true);
@@ -1078,7 +1078,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
 {
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
-        ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+        auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
         bool announce = false;
 
         if (serverGroup)
@@ -1099,7 +1099,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
                         emit setWindowCaption(label);
                     }
 
-                    qobject_cast<StatusPanel*>(view)->updateName();
+                    static_cast<StatusPanel*>(view)->updateName();
                 }
             }
 
@@ -1289,7 +1289,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
     if (view->getType() == ChatWindow::Channel)
     {
-        Channel *channel = qobject_cast<Channel*>(view);
+        auto* channel = static_cast<Channel*>(view);
 
         if (!channel->isJoined())
             textColor = m_tabWidget->palette().color(QPalette::Disabled, QPalette::Text);
@@ -1447,7 +1447,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         int diff = 0;
 
         for (int i = 0; i < placement; ++i) {
-            if (!qobject_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
+            if (!static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 ++diff;
             }
         }
@@ -1511,13 +1511,13 @@ int ViewContainer::insertIndex(ChatWindow* view)
         case ChatWindow::Channel:
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
 
                 if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
                 {
                     for (int index = sindex + 1; index < m_tabWidget->count(); index++)
                     {
-                        tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(index));
+                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
                         wtype = tmp_ChatWindow->getType();
 
                         if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
@@ -1536,7 +1536,7 @@ int ViewContainer::insertIndex(ChatWindow* view)
         case ChatWindow::RawLog:
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
 
                 if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
                 {
@@ -1550,13 +1550,13 @@ int ViewContainer::insertIndex(ChatWindow* view)
         case ChatWindow::Query:
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
 
                 if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
                 {
                     for (int index = sindex + 1; index < m_tabWidget->count(); index++)
                     {
-                        tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(index));
+                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(index));
                         wtype = tmp_ChatWindow->getType();
 
                         if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query)
@@ -1575,7 +1575,7 @@ int ViewContainer::insertIndex(ChatWindow* view)
         case ChatWindow::DccChat:
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = qobject_cast<ChatWindow*>(m_tabWidget->widget(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow*>(m_tabWidget->widget(sindex));
                 wtype = tmp_ChatWindow->getType();
 
                 if (wtype != ChatWindow::Status && wtype != ChatWindow::Channel
@@ -1593,7 +1593,7 @@ int ViewContainer::insertIndex(ChatWindow* view)
             {
                 for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
                 {
-                    tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+                    tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
 
                     if (tmp_ChatWindow->getType() != ChatWindow::Channel
                         && tmp_ChatWindow->getType() != ChatWindow::Status
@@ -1611,7 +1611,7 @@ int ViewContainer::insertIndex(ChatWindow* view)
         case ChatWindow::ChannelList:
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = qobject_cast<ChatWindow *>(m_tabWidget->widget(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->widget(sindex));
 
                 if (tmp_ChatWindow->getServer() == view->getServer())
                     placement = sindex + 1;
@@ -1642,7 +1642,7 @@ void ViewContainer::unclutterTabs()
     QList<ChatWindow *> nonTopLevelViews;
 
     while (m_tabWidget->count()) {
-        ChatWindow *view = qobject_cast<ChatWindow* >(m_tabWidget->widget(0));
+        auto* view = static_cast<ChatWindow* >(m_tabWidget->widget(0));
         if (view->isTopLevelView()) {
             topLevelViews << view;
         } else {
@@ -1808,7 +1808,7 @@ bool ViewContainer::canMoveViewLeft() const
 
     int index = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
 
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(index));
+    auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
 
     if (view->isTopLevelView() && index > 0) {
         return true;
@@ -1832,13 +1832,13 @@ bool ViewContainer::canMoveViewRight() const
 
     int index = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
 
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(index));
+    auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
 
     if (view->isTopLevelView()) {
         int lastTopLevelView = -1;
 
         for (int i = m_tabWidget->count() - 1; i >= index; --i) {
-            if (qobject_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
+            if (static_cast<ChatWindow*>(m_tabWidget->widget(i))->isTopLevelView()) {
                 lastTopLevelView = i;
                 break;
             }
@@ -1861,7 +1861,7 @@ void ViewContainer::moveViewLeft()
     }
 
     int tabIndex = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+    auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
     const QModelIndex idx = indexForView(view);
 
     if (view->isTopLevelView()) {
@@ -1874,7 +1874,7 @@ void ViewContainer::moveViewLeft()
 
         if (view->getType() == ChatWindow::Status) {
             for (int i = m_tabWidget->count() - 1; i > tabIndex; --i) {
-                ChatWindow* tab = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+                auto* tab = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
                 if (!tab->isTopLevelView() && tab->getServer()
                     && tab->getServer()->getStatusView()
@@ -1913,7 +1913,7 @@ void ViewContainer::moveViewRight()
     }
 
     int tabIndex = (m_popupViewIndex != -1) ? m_popupViewIndex : m_tabWidget->currentIndex();
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+    auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
     const QModelIndex idx = indexForView(view);
 
     if (view->isTopLevelView()) {
@@ -1932,7 +1932,7 @@ void ViewContainer::moveViewRight()
         m_tabWidget->tabBar()->moveTab(tabIndex, belowTabIndex);
 
         if (view->getType() == ChatWindow::Status) {
-            ChatWindow* tab = qobject_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+            auto* tab = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
 
             while (!tab->isTopLevelView() && tab->getServer()
                 && tab->getServer()->getStatusView()
@@ -1940,7 +1940,7 @@ void ViewContainer::moveViewRight()
 
                 m_tabWidget->tabBar()->moveTab(tabIndex, belowTabIndex);
 
-                tab = qobject_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
+                tab = static_cast<ChatWindow*>(m_tabWidget->widget(tabIndex));
             }
         }
 
@@ -2019,7 +2019,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
             if (view->getType() == ChatWindow::Status) {
                 for (int i = m_tabWidget->count() - 1; i > tabIndex; --i) {
-                    const ChatWindow* tab = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+                    const auto* tab = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
                     if (!tab->isTopLevelView() && tab->getServer()
                         && tab->getServer()->getStatusView()
@@ -2180,7 +2180,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         return;
     }
 
-    ChatWindow* view = qobject_cast<ChatWindow*>(tab);
+    auto* view = static_cast<ChatWindow*>(tab);
 
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
@@ -2207,7 +2207,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         QAction* action = actionCollection()->action(QStringLiteral("tab_encoding"));
         menu->insertAction(action, autoJoinAction);
 
-        Channel *channel = qobject_cast<Channel*>(view);
+        auto* channel = static_cast<Channel*>(view);
         if (channel->rejoinable() && rejoinAction)
         {
             menu->insertAction(closeAction, rejoinAction);
@@ -2314,7 +2314,7 @@ QList<QPair<QString,QString> > ViewContainer::getChannelsURI() const
 
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
-        ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+        auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
         if (view->getType() == ChatWindow::Channel)
         {
@@ -2336,7 +2336,7 @@ void ViewContainer::clearView()
 void ViewContainer::clearAllViews()
 {
     for (int i = 0; i < m_tabWidget->count(); i++)
-        qobject_cast<ChatWindow*>(m_tabWidget->widget(i))->clear();
+        static_cast<ChatWindow*>(m_tabWidget->widget(i))->clear();
 }
 
 void ViewContainer::findText()
@@ -2488,7 +2488,7 @@ void ViewContainer::insertRememberLines(Server* server)
 {
     for (int i = 0; i <  m_tabWidget->count(); ++i)
     {
-        ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+        auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
         if (view->getServer() == server && view->getTextView() != nullptr)
             view->getTextView()->insertRememberLine();
@@ -2515,7 +2515,7 @@ void ViewContainer::insertMarkerLine()
 
         for (int i = 0; i <= total; ++i)
         {
-            view = qobject_cast<ChatWindow*>(m_tabWidget->widget(i));
+            view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
             if (view->getTextView() != nullptr) view->getTextView()->insertMarkerLine();
         }
@@ -2780,7 +2780,7 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
             && m_frontView->getType() == ChatWindow::Channel)
         {
             ChatWindow* view = m_frontView;
-            Channel* channel = qobject_cast<Channel*>(view);
+            auto* channel = static_cast<Channel*>(view);
 
             action = actionCollection()->action(QStringLiteral("rejoin_channel"));
             if (action) action->setEnabled(state == Konversation::SSConnected && channel->rejoinable());
@@ -2831,7 +2831,7 @@ void ViewContainer::openChannelSettings()
 {
     if (m_frontView->getType() == ChatWindow::Channel)
     {
-        Channel* channel = qobject_cast<Channel*>(m_tabWidget->currentWidget());
+        auto* channel = static_cast<Channel*>(m_tabWidget->currentWidget());
         channel->showOptionsDialog();
     }
 }

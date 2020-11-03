@@ -150,8 +150,8 @@ void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, 
 {
     if (widgets.isEmpty()) return;
 
-    TopicHistoryView* historyView = qobject_cast<TopicHistoryView*>(itemView());
-    TopicHistoryLabel* label = qobject_cast<TopicHistoryLabel*>(widgets[0]);
+    auto* historyView = static_cast<TopicHistoryView*>(itemView());
+    auto* label = static_cast<TopicHistoryLabel*>(widgets[0]);
 
     QPalette::ColorRole colorRole = !historyView->textSelectable() &&
         historyView->selectionModel()->isRowSelected(index.row(), index.parent())
@@ -170,8 +170,7 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
 {
     Q_UNUSED(index);
 
-    if (!qobject_cast<TopicHistoryView*>(itemView())->textSelectable())
-    {
+    if (!static_cast<TopicHistoryView*>(itemView())->textSelectable()) {
         QStyleOptionViewItem* hack = const_cast<QStyleOptionViewItem*>(&option);
 
         hack->rect.setHeight(hack->rect.height() - (2 * MARGIN) - 1);
@@ -186,7 +185,7 @@ QSize TopicHistoryItemDelegate::sizeHint(const QStyleOptionViewItem& option, con
 
     m_hiddenLabel->setPlainText(index.model()->data(index).toString());
     m_hiddenLabel->setFixedWidth(itemView()->viewport()->width()
-        - (2 * qobject_cast<TopicHistoryView*>(itemView())->categorySpacing())
+        - (2 * static_cast<TopicHistoryView*>(itemView())->categorySpacing())
         - (2 * MARGIN));
     int documentHeight = m_hiddenLabel->document()->size().toSize().height();
 

@@ -3723,7 +3723,7 @@ QString Server::parseWildcards(const QString& toParse, ChatWindow* context, cons
         return parseWildcards(toParse, getNickname(), QString(), QString(), QString(), QString());
     else if (context->getType() == ChatWindow::Channel)
     {
-        Channel* channel = qobject_cast<Channel*>(context);
+        auto* channel = static_cast<Channel*>(context);
 
         return parseWildcards(toParse, getNickname(), context->getName(), channel->getPassword(),
             !nicks.isEmpty() ? nicks : channel->getSelectedNickList(), inputLineText);
