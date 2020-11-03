@@ -2537,10 +2537,8 @@ void ViewContainer::openLogFile()
 {
     if (m_frontView)
     {
-        ChatWindow* view = static_cast<ChatWindow*>(m_frontView);
-
-        if (!view->logFileName().isEmpty())
-            openLogFile(view->getName(), view->logFileName());
+        if (!m_frontView->logFileName().isEmpty())
+            openLogFile(m_frontView->getName(), m_frontView->logFileName());
     }
 }
 
