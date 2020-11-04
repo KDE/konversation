@@ -131,11 +131,6 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
     return ChatWindow::eventFilter( obj, event );
 }
 
-QTreeWidget* NicksOnline::getNickListView() const
-{
-    return m_nickListView;
-}
-
 /**
  * Returns the named child of parent item in a NicksOnlineItem
  * @param parent            Pointer to a NicksOnlineItem.

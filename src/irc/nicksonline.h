@@ -45,7 +45,6 @@ class NicksOnline : public ChatWindow
         ~NicksOnline() override;
 
         // These are here for the benefit of NicksOnlineTooltip.
-        QTreeWidget* getNickListView() const;
         NickInfoPtr getNickInfo(const QTreeWidgetItem* item) const;
 
         bool canBeFrontView() const override { return true; }
