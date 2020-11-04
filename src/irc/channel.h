@@ -219,8 +219,6 @@ class Channel : public ChatWindow
 
         QStringList getSelectedNickList() const;
 
-        NickListView* getNickListView() const { return nicknameListView; }
-
     Q_SIGNALS:
         void sendFile();
 
