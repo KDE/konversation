@@ -1233,6 +1233,7 @@ void Application::openUrl(const QString& url)
         QDesktopServices::openUrl(QUrl::fromUserInput(url));
 #else
         auto *job = new KIO::OpenUrlJob(QUrl(url));
+        job->setFollowRedirections(false);
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
         job->start();
 #endif
