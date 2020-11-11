@@ -1087,7 +1087,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
     //    (which magically turns back into a space on copy)
 
     if (filteredLine[0] == QLatin1Char(' ')) {
-        filteredLine[0] = '\xA0';
+        filteredLine[0] = QLatin1Char('\xA0');
     }
 
     // TODO: Use QStyleSheet::escape() here
