@@ -93,7 +93,7 @@ void PasteEditor::removeNewlines()
                 continue;
             }
             else
-                text[i] = ' ';
+                text[i] = QLatin1Char(' ');
         }
 
         ++i;
