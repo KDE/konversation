@@ -551,6 +551,9 @@ IRCView::BlockStates IRCView::objectFormatToBlockState(ObjectFormats format)
     case DateLine:
         state = BlockIsDateMarker;
         break;
+    default:
+        state = None;
+        break;
     }
 
     return state;
