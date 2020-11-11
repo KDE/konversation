@@ -113,7 +113,8 @@ namespace Konversation
                 const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toLatin1();
                 const char* address = addressBa.constData();
                 int sock = socket(AF_INET, SOCK_DGRAM, 0);
-                strncpy(ifr.ifr_name, address, IF_NAMESIZE);
+                strncpy(ifr.ifr_name, address, IF_NAMESIZE - 1);
+                ifr.ifr_name[IF_NAMESIZE - 1] = '\0';
                 ifr.ifr_addr.sa_family = AF_INET;
 
                 if (ioctl( sock, SIOCGIFADDR, &ifr ) >= 0)
