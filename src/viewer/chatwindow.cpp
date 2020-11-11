@@ -752,5 +752,6 @@ void ChatWindow::activateView()
             widget->raise();
         }
     }
+    emit showView(this);
 }
 
