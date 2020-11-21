@@ -129,7 +129,7 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
        </item>
        <item>
-        <widget class="KComboBox" name="kcfg_DccIPv4FallbackIface">
+        <widget class="QComboBox" name="kcfg_DccIPv4FallbackIface">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -221,7 +221,7 @@ the Free Software Foundation; either version 2 of the License, or
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="KComboBox" name="kcfg_DccMethodToGetOwnIp"/>
+       <widget class="QComboBox" name="kcfg_DccMethodToGetOwnIp"/>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="ownIP">
@@ -389,11 +389,6 @@ the Free Software Foundation; either version 2 of the License, or
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

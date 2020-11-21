@@ -34,7 +34,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 
   connect(patternListView, &QTreeWidget::currentItemChanged, this, &Autoreplace_Config::entrySelected);
 
-  connect(directionCombo, QOverload<int>::of(&KComboBox::activated), this, &Autoreplace_Config::directionChanged);
+  connect(directionCombo, QOverload<int>::of(&QComboBox::activated), this, &Autoreplace_Config::directionChanged);
 
   connect(patternInput, &KLineEdit::textChanged, this, &Autoreplace_Config::patternChanged);
   connect(replacementInput, &KLineEdit::textChanged, this, &Autoreplace_Config::replacementChanged);

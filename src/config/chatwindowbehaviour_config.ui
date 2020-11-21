@@ -140,7 +140,7 @@
          </widget>
         </item>
         <item>
-         <widget class="KComboBox" name="kcfg_HideUnimportantEventsExcludeActiveThreshold">
+         <widget class="QComboBox" name="kcfg_HideUnimportantEventsExcludeActiveThreshold">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -350,11 +350,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
   <customwidget>
    <class>KPluralHandlingSpinBox</class>
    <extends>QSpinBox</extends>

@@ -13,7 +13,7 @@ Tabs_Config::Tabs_Config(QWidget *parent, const char *name)
     setObjectName(QString::fromLatin1(name));
     setupUi(this);
 
-    connect(kcfg_TabPlacement, QOverload<int>::of(&KComboBox::activated), this, &Tabs_Config::toggleCheckBoxes);
+    connect(kcfg_TabPlacement, QOverload<int>::of(&QComboBox::activated), this, &Tabs_Config::toggleCheckBoxes);
 }
 
 Tabs_Config::~Tabs_Config()

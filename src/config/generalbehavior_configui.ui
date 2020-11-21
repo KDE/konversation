@@ -99,7 +99,7 @@ the Free Software Foundation; either version 2 of the License, or
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="KComboBox" name="kcfg_NickCompletionMode">
+       <widget class="QComboBox" name="kcfg_NickCompletionMode">
         <item>
          <property name="text">
           <string>Inline Cycle</string>
@@ -290,11 +290,6 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

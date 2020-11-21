@@ -276,7 +276,7 @@
        </widget>
       </item>
       <item row="1" column="1" >
-       <widget class="KComboBox" name="kcfg_OSDScreen" />
+       <widget class="QComboBox" name="kcfg_OSDScreen" />
       </item>
      </layout>
     </widget>
@@ -288,11 +288,6 @@
    <class>KColorButton</class>
    <extends>QPushButton</extends>
    <header>kcolorbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>KFontRequester</class>

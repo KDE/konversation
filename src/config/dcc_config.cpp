@@ -24,7 +24,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     kcfg_DccPath->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
 
     languageChange();
-    connect(kcfg_DccMethodToGetOwnIp, QOverload<int>::of(&KComboBox::activated), this, &DCC_Config::dccMethodChanged);
+    connect(kcfg_DccMethodToGetOwnIp, QOverload<int>::of(&QComboBox::activated), this, &DCC_Config::dccMethodChanged);
     connect(kcfg_DccUPnP, &QCheckBox::stateChanged, this, &DCC_Config::dccUPnPChanged);
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
