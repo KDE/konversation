@@ -519,6 +519,7 @@ namespace Konversation
 
     ChannelDialog::~ChannelDialog()
     {
+        delete m_mainWidget;
     }
 
     void ChannelDialog::slotServerNameChanged( const QString &text )
