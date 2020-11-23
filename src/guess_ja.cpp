@@ -14,7 +14,6 @@
  * But it fails detection. It's not useful.
  */
 #include "guess_ja.h"
-#include "decoder.h"
 
 /* DFA tables */
 const dfa_table guess_eucj_st[] = {
