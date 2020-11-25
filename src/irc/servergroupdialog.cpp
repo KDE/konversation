@@ -435,7 +435,7 @@ namespace Konversation
         QVBoxLayout *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
-        
+
         QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -453,6 +453,7 @@ namespace Konversation
 
     ServerDialog::~ServerDialog()
     {
+        delete m_mainWidget;
     }
 
     void ServerDialog::slotServerNameChanged( const QString &text )
@@ -518,6 +519,7 @@ namespace Konversation
 
     ChannelDialog::~ChannelDialog()
     {
+        delete m_mainWidget;
     }
 
     void ChannelDialog::slotServerNameChanged( const QString &text )
