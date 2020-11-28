@@ -133,7 +133,7 @@ namespace Konversation
             * Undo forwarding
             * @param port The port
             * @param waitjob When this is set the jobs needs to be added to the waitjob,
-            * so we can wait for their completeion at exit
+            * so we can wait for their completion at exit
             */
             bool undoForward(quint16 port, QAbstractSocket::SocketType proto);
 

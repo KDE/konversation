@@ -140,7 +140,7 @@ namespace Konversation
         void UPnPRouter::downloadXMLFile()
         {
             error.clear();
-            // downlaod XML description into a temporary file in /tmp
+            // download XML description into a temporary file in /tmp
             qCDebug(KONVERSATION_LOG) << "Downloading XML file " << location;
             KIO::Job* job = KIO::storedGet(location,KIO::NoReload, KIO::Overwrite | KIO::HideProgressInfo);
             connect(job, &KIO::Job::result, this, &UPnPRouter::downloadFinished);
@@ -319,15 +319,19 @@ namespace Konversation
                 {
                     emit forwardComplete(true, pending_forwards[r]->port);
 
-                    forwards.removeAll(pending_forwards[r]);
+                    Forwarding * forward = pending_forwards[r];
+                    forwards.removeAll(forward);
                     pending_forwards.remove(r);
+                    delete forward;
                 }
                 else if (pending_unforwards.contains(r))
                 {
                     emit unforwardComplete(true, pending_unforwards[r]->port);
 
-                    forwards.removeAll(pending_unforwards[r]);
+                    Forwarding * forward = pending_unforwards[r];
+                    forwards.removeAll(forward);
                     pending_unforwards.remove(r);
+                    delete forward;
                 }
             }
             else
@@ -360,8 +364,10 @@ namespace Konversation
                 {
                     emit unforwardComplete(false, pending_unforwards[r]->port);
 
-                    forwards.removeAll(pending_unforwards[r]);
+                    Forwarding * forward = pending_unforwards[r];
+                    forwards.removeAll(forward);
                     pending_unforwards.remove(r);
+                    delete forward;
                 }
             }
 
