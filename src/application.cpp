@@ -136,8 +136,8 @@ void Application::implementRestart()
 void Application::newInstance(QCommandLineParser *args)
 {
     QString url;
-    if (args->positionalArguments().count() > 1)
-        url = args->positionalArguments().at(1);
+    if (!args->positionalArguments().isEmpty())
+        url = args->positionalArguments().at(0);
 
     if (!mainWindow)
     {
@@ -1348,7 +1348,7 @@ void Application::closeWallet()
 
 void Application::handleActivate(const QStringList& arguments)
 {
-    m_commandLineParser->parse(QStringList(applicationFilePath()) << arguments);
+    m_commandLineParser->parse(arguments.isEmpty()? QStringList(applicationFilePath()) : arguments);
 
     if(m_commandLineParser->isSet(QStringLiteral("restart")))
     {
