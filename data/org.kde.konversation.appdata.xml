@@ -617,6 +617,7 @@
     <binary>konversation</binary>
   </provides>
   <releases>
+    <release version="1.8.20120" date="2020-12-10"/>
     <!-- Note: KDE website infrastructure uses the appstream file from the master branch
                to determine the last release, so this entry must always reflect the
                last actual release -->
@@ -635,15 +636,6 @@
           <location>https://download.kde.org/stable/konversation/1.7.6/src/konversation-1.7.6.tar.xz</location>
           <checksum type="sha256">fdd24f2c8c73eb271afea457466e1e7050b70c4d96f9d6640f2bbf6390cea093</checksum>
           <size type="download">3354800</size>
-        </artifact>
-      </artifacts>
-    </release>
-    <release version="1.7.5" date="2018-06-27">
-      <artifacts>
-        <artifact type="source">
-          <location>https://download.kde.org/stable/konversation/1.7.5/src/konversation-1.7.5.tar.xz</location>
-          <checksum type="sha256">60bf7533062b5fc63a37105461b4776437f4e24859e8ddaed1d48c4ba1470940</checksum>
-          <size type="download">3739392</size>
         </artifact>
       </artifacts>
     </release>
