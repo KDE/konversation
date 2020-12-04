@@ -117,7 +117,6 @@ Name[x-test]=xxKonversationxx
 Name[zh_CN]=Konversation
 Name[zh_TW]=Konversation
 Categories=Qt;KDE;Network;IRCClient;
-X-KDE-ServiceTypes=DBUS/InstantMessenger
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.konversation
 StartupNotify=true
