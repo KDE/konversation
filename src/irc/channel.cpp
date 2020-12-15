@@ -29,7 +29,7 @@
 #include <KComboBox>
 
 #include <QLineEdit>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QSplitter>
 #include <QToolButton>
 #include <QHeaderView>
@@ -529,14 +529,13 @@ void Channel::completeNick()
         // remember old cursor position locally
         oldPos = pos;
         // step back to []{}-_^`\| or start of line
-        QString regexpStr(QStringLiteral("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|"));
+        const QString prefixChar = !Preferences::self()->prefixCharacter().isEmpty() ?
+                                   QLatin1Char('\\') + Preferences::self()->prefixCharacter() : QString{};
 
-        if(!Preferences::self()->prefixCharacter().isEmpty())
-            regexpStr += QLatin1Char('\\') + Preferences::self()->prefixCharacter();
+        const QString regexpStr(QStringLiteral("[^A-Z0-9a-z\\_\\[\\]\\{\\}\\-\\^\\`\\\\\\|%1]").arg(prefixChar));
 
-        regexpStr += QLatin1Char(']');
-        QRegExp tmp(regexpStr);
-        pos = tmp.lastIndexIn(line, pos - 1);
+        const QRegularExpression re(regexpStr);
+        pos = line.lastIndexOf(re, pos - 1);
         if (pos < 0)
             pos = 0;
         else
@@ -808,9 +807,9 @@ void Channel::sendText(const QString& sendLine)
 
     // Send all strings, one after another
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
+    const QStringList outList = outputAll.split(QRegularExpression(QStringLiteral("[\r\n]+")), QString::SkipEmptyParts);
 #else
-    const QStringList outList = outputAll.split(QRegExp(QStringLiteral("[\r\n]+")), Qt::SkipEmptyParts);
+    const QStringList outList = outputAll.split(QRegularExpression(QStringLiteral("[\r\n]+")), Qt::SkipEmptyParts);
 #endif
     for (const QString& output : outList){
         // encoding stuff is done in Server()
@@ -1898,7 +1897,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
     }
     else
     {
-        const QStringList removable = m_modeList.filter(QRegExp(QStringLiteral("^%1.*").arg(mode)));
+        const QStringList removable = m_modeList.filter(QRegularExpression(QStringLiteral("^%1.*").arg(mode)));
         for (const QString &mode : removable) {
             m_modeList.removeOne(mode);
         }
@@ -2811,13 +2810,14 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     QString prefixCharacter = Preferences::self()->prefixCharacter();
     NickList foundNicks;
 
-    if((pattern.contains(QRegExp(QStringLiteral("^(\\d|\\w)")))) && skipNonAlfaNum)
+    if(pattern.contains(QRegularExpression(QStringLiteral("^(\\d|\\w)"))) && skipNonAlfaNum)
     {
         prefix = QStringLiteral("^([^\\d\\w]|[\\_]){0,}");
     }
 
-    QRegExp regexp(prefix + QRegExp::escape(pattern));
-    regexp.setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
+    const QRegularExpression regexp(
+        prefix + QRegularExpression::escape(pattern),
+        caseSensitive ? QRegularExpression::CaseInsensitiveOption : QRegularExpression::NoPatternOption);
 
     for (Nick* nick : *this) {
         newNick = nick->getChannelNick()->getNickname();

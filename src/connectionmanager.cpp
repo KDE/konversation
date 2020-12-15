@@ -18,7 +18,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include <QRegExp>
+#include <QRegularExpression>
 
 
 ConnectionManager::ConnectionManager(QObject* parent)
@@ -296,7 +296,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
     QString mangledUrl = url;
 
-    mangledUrl.remove(QRegExp(QStringLiteral("^ircs?:/+")));
+    mangledUrl.remove(QRegularExpression(QStringLiteral("^ircs?:/+")));
 
     if (mangledUrl.isEmpty()) return;
 
@@ -339,8 +339,8 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
     if (!channel.isEmpty())
     {
         // Add default prefix to channel if necessary.
-        if (!channel.contains(QRegExp(QStringLiteral("^[#+&]{1}"))))
-            channel = QLatin1Char('#') + channel;
+        if (!channel.contains(QRegularExpression(QStringLiteral("^[#+&]"))))
+            channel.prepend(QLatin1Char('#'));
 
         // Qt already encoded |, we've forced # as well
         channel = QUrl::fromPercentEncoding(channel.toUtf8());
@@ -359,23 +359,23 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
     if (!parameterString.isEmpty())
     {
-        QRegExp parameterCatcher;
+        QRegularExpression parameterCatcher;
+        QRegularExpressionMatch rmatch;
 
         parameterCatcher.setPattern(QStringLiteral("pass=([^&]+)"));
-
-        if (parameterCatcher.indexIn(parameterString) != -1)
+        if (parameterString.contains(parameterCatcher, &rmatch))
         {
             Konversation::ServerSettings server = settings.server();
 
-            server.setPassword(parameterCatcher.cap(1));
+            server.setPassword(rmatch.captured(1));
 
             settings.setServer(server);
         }
 
         parameterCatcher.setPattern(QStringLiteral("key=([^&]+)"));
 
-        if (parameterCatcher.indexIn(parameterString) != -1)
-            channelSettings.setPassword(parameterCatcher.cap(1));
+        if (parameterString.contains(parameterCatcher, &rmatch))
+            channelSettings.setPassword(rmatch.captured(1));
     }
 
     // Assigning channel.
