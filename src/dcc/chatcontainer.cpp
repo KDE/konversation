@@ -318,10 +318,10 @@ namespace Konversation
             {
                 getTextView()->append(m_chat->partnerNick(), line);
 
-                QRegExp regexp(QStringLiteral("(^|[^\\d\\w])") +
-                        QRegExp::escape(m_chat->ownNick()) +
-                        QStringLiteral("([^\\d\\w]|$)"));
-                regexp.setCaseSensitivity(Qt::CaseInsensitive);
+                const QRegularExpression regexp(QLatin1String("(^|[^\\d\\w])")
+                                                + QRegularExpression::escape(m_chat->ownNick())
+                                                + QLatin1String("([^\\d\\w]|$)"),
+                                                QRegularExpression::CaseInsensitiveOption);
 
                 if(line.contains(regexp))
                 {

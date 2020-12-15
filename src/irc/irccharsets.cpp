@@ -7,6 +7,7 @@
 #include "irccharsets.h"
 
 #include <QLocale>
+#include <QRegularExpression>
 #include <QTextCodec>
 
 #include <KCharsets>
@@ -61,7 +62,7 @@ namespace Konversation
     {
         // simplify ambiguousName
         QString simplifiedAmbiguousName( ambiguousName.toLower() );
-        simplifiedAmbiguousName.remove( QRegExp( QStringLiteral("[^a-z0-9]") ));
+        simplifiedAmbiguousName.remove( QRegularExpression( QStringLiteral("[^a-z0-9]") ));
 
         // search m_simplifiedShortNames
         if(m_simplifiedShortNames.contains(simplifiedAmbiguousName))
@@ -122,7 +123,7 @@ namespace Konversation
         m_simplifiedShortNames[QStringLiteral("latin1")] = QStringLiteral("ISO 8859-1");
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
-        QRegExp reSimplify( QStringLiteral("[^a-zA-Z0-9]") );
+        const QRegularExpression reSimplify( QStringLiteral("[^a-zA-Z0-9]") );
         m_descriptiveNames = KCharsets::charsets()->descriptiveEncodingNames();
         QStringList::Iterator it = m_descriptiveNames.begin();
         while ( it != m_descriptiveNames.end() )

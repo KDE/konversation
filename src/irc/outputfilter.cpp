@@ -34,7 +34,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QMetaMethod>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTextCodec>
 #include <QByteArray>
 #include <QTextStream>
@@ -1628,13 +1628,13 @@ namespace Konversation
             emit reconnectServer(QString());
         else
         {
-            QStringList parameterList = input.parameter.split(QLatin1Char(' '));
+            const QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
             if (parameterList.count() == 3)
                 emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);
             else if (parameterList.count() == 2)
             {
-                if (parameterList[0].contains(QRegExp(QStringLiteral(":[0-9]+$"))))
+                if (parameterList[0].contains(QRegularExpression(QStringLiteral(":[0-9]+$"))))
                     emit connectTo(Konversation::CreateNewConnection, parameterList[0], QString(), parameterList[1]);
                 else
                     emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
@@ -2072,9 +2072,10 @@ namespace Konversation
 
     bool OutputFilter::isParameter(const QString& parameter, const QString& string) const
     {
-        QRegExp rx(QStringLiteral("^[\\-]{1,2}%1$").arg(parameter), Qt::CaseInsensitive);
+        const QString pattern = QRegularExpression::anchoredPattern(QStringLiteral("^[\\-]{1,2}%1$").arg(parameter));
+        const QRegularExpression rx(pattern, QRegularExpression::CaseInsensitiveOption);
 
-        return rx.exactMatch(string);
+        return rx.match(string).hasMatch();
     }
 }
 

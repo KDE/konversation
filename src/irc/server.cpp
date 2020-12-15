@@ -4114,7 +4114,8 @@ void Server::setAway(bool away, const QHash<QString, QString> &messageTags)
         if (identity && identity->getRunAwayCommands())
         {
             QString message = identity->getAwayCommand();
-            sendToAllChannels(message.replace(QRegExp(QStringLiteral("%s"), Qt::CaseInsensitive), m_awayReason));
+            const QRegularExpression re(QStringLiteral("%s"), QRegularExpression::CaseInsensitiveOption);
+            sendToAllChannels(message.replace(re, m_awayReason));
         }
 
         if (identity && identity->getInsertRememberLineOnAway())
@@ -4139,7 +4140,8 @@ void Server::setAway(bool away, const QHash<QString, QString> &messageTags)
             if (identity && identity->getRunAwayCommands())
             {
                 QString message = identity->getReturnCommand();
-                sendToAllChannels(message.replace(QRegExp(QStringLiteral("%t"), Qt::CaseInsensitive), awayTime()));
+                const QRegularExpression re(QStringLiteral("%t"), QRegularExpression::CaseInsensitiveOption);
+                sendToAllChannels(message.replace(re, awayTime()));
             }
         }
         else
