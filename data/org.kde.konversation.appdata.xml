@@ -103,6 +103,7 @@
     <p xml:lang="pl">Konversation jest klientem IRC, który szybko daje ci dostęp do kanałów sieci Freenode, gdzie mozesz znaleźć wsparcie dla większości dystrybucji. Dzięki jego ustawieniom domyślnym wystarczy, że podasz nazwę swojego kanału dystrybucji, aby zacząć go używać.</p>
     <p xml:lang="pt">O Konversation é um cliente de IRC que lhe dá um acesso rápido aos canais da rede Freenode, onde poderá obter suporte para a maioria das distribuições. Tem um conjunto de definições por omissão suficientemente úteis que praticamente não necessita de mais configurações do que definir o nome do canal da sua distribuição para começar.</p>
     <p xml:lang="pt-BR">O Konversation é um cliente IRC que fornece a você acesso rápido aos canais da rede Freenode, onde você irá encontrar suporte para a maioria das distribuições. Seus padrões são tais que ele não precisa de nenhuma configuração além de dizer o nome do canal de sua distribuição para poder começar.</p>
+    <p xml:lang="ru">Konversation — это клиент IRC, обеспечивающий быстрый доступ к каналам сети Freenode, на которых можно получить поддержку по большинству дистрибутивов. Параметры уже настроены: чтобы начать использовать программу, потребуется только предоставить имя канала вашего дистрибутива.</p>
     <p xml:lang="sk">Konversation je IRC klient, ktorý vám umožní rýchly prístup ku kanálom siete Freenode, kde nájdete podporu pre väčšinu distribúcií. Predvolene nepotrebuje žiadne nastavenie okrem názvu kanálu distribúcie na to, aby ste začali.</p>
     <p xml:lang="sl">Konversation je odjemalec za IRC, ki ponuja hiter dostop do kanalov omrežja Freenode, na katerih boste našli pomoč za večino distribucij. Nastavljen je tako, da za začetek ne potrebuje dodatnih nastavitev, ampak le ime kanala vaše distribucije.</p>
     <p xml:lang="sr">Конверзација је ИРЦ клијент који вам омогућава брз приступ каналима Фринодове мреже, где можете наћи подршку за већину дистрибуција. Подразумеване поставке су такве да не треба ништа да подешавате, већ само да унесете име канала дистрибуције, да бисте почели.</p>
@@ -176,6 +177,7 @@
       <li xml:lang="pl">Standardowe możliwości IRC</li>
       <li xml:lang="pt">Funcionalidades normais do IRC</li>
       <li xml:lang="pt-BR">Recursos padrão do IRC</li>
+      <li xml:lang="ru">Стандартные возможности IRC</li>
       <li xml:lang="sk">Štandardné funkcie IRC</li>
       <li xml:lang="sl">Običajne zmožnosti za IRC</li>
       <li xml:lang="sr">стандардне ИРЦ могућности</li>
@@ -211,6 +213,7 @@
       <li xml:lang="pl">Obsługa serwera SSL</li>
       <li xml:lang="pt">Suporte para o servidor em SSL</li>
       <li xml:lang="pt-BR">Suporte a servidor SSL</li>
+      <li xml:lang="ru">Поддержка серверов SSL</li>
       <li xml:lang="sk">Podpora SSL servera</li>
       <li xml:lang="sl">Podpora strežnikom SSL</li>
       <li xml:lang="sr">подршка за ССЛ сервере</li>
@@ -245,6 +248,7 @@
       <li xml:lang="pl">Obsługa zakładek</li>
       <li xml:lang="pt">Suporte para favoritos</li>
       <li xml:lang="pt-BR">Suporte a favoritos</li>
+      <li xml:lang="ru">Поддержка закладок</li>
       <li xml:lang="sk">Podpora záložiek</li>
       <li xml:lang="sl">Podpora zaznamkom</li>
       <li xml:lang="sr">подршка за обележиваче</li>
@@ -279,6 +283,7 @@
       <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
       <li xml:lang="pt">Interface de utilizador simples de usar</li>
       <li xml:lang="pt-BR">Interface gráfica fácil de usar</li>
+      <li xml:lang="ru">Простой в использовании графический интерфейс пользователя</li>
       <li xml:lang="sk">Ľahko použiteľné používateľské rozhranie</li>
       <li xml:lang="sl">Enostaven grafični uporabniški vmesnik</li>
       <li xml:lang="sr">предусретљиво графичко корисничко сучеље</li>
@@ -313,6 +318,7 @@
       <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
       <li xml:lang="pt">Vários canais e servidores numa única janela</li>
       <li xml:lang="pt-BR">Múltiplos servidores e canais em uma única janela</li>
+      <li xml:lang="ru">Показ нескольких серверов и каналов в одном окне</li>
       <li xml:lang="sk">Viac serverov a kanálov v jednom okne</li>
       <li xml:lang="sl">Več strežnikov in kanalov v samo enem oknu</li>
       <li xml:lang="sr">више сервера и канала у једном прозору</li>
@@ -347,6 +353,7 @@
       <li xml:lang="pl">Przesyłanie plików przez DCC</li>
       <li xml:lang="pt">Transferência de ficheiros por DCC</li>
       <li xml:lang="pt-BR">Transferência de arquivos DCC</li>
+      <li xml:lang="ru">Передача файлов DCC</li>
       <li xml:lang="sk">Prenos súborov DCC</li>
       <li xml:lang="sl">Prenos datotek preko DCC</li>
       <li xml:lang="sr">ДЦЦ пренос фајлова</li>
@@ -381,6 +388,7 @@
       <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
       <li xml:lang="pt">Várias identidades para diferentes servidores</li>
       <li xml:lang="pt-BR">Múltiplas identidades para servidores diferentes</li>
+      <li xml:lang="ru">Несколько профилей для разных серверов</li>
       <li xml:lang="sk">Viac identít pre rôzne servery</li>
       <li xml:lang="sl">Več istovetnosti za različne strežnike</li>
       <li xml:lang="sr">вишеструки идентитети за различите сервере</li>
@@ -416,6 +424,7 @@
       <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
       <li xml:lang="pt">Decorações e cores do texto</li>
       <li xml:lang="pt-BR">Decorações de textos e cores</li>
+      <li xml:lang="ru">Оформление текста и цвета</li>
       <li xml:lang="sk">Dekorácie a farby textu</li>
       <li xml:lang="sl">Okraski in barve besedila</li>
       <li xml:lang="sr">декорације и бојење текста</li>
@@ -450,6 +459,7 @@
       <li xml:lang="pl">Powiadomienia ekranowe</li>
       <li xml:lang="pt">Visualização no ecrã para as notificações</li>
       <li xml:lang="pt-BR">Exibição na tela para notificações</li>
+      <li xml:lang="ru">Индикатор уведомлений</li>
       <li xml:lang="sk">OnScreen Display pre upozornenia</li>
       <li xml:lang="sl">Prikaz na zaslonu za obvestila</li>
       <li xml:lang="sr">екрански приказ за обавештења</li>
@@ -485,6 +495,7 @@
       <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
       <li xml:lang="pt">Detecção automática do UTF-8</li>
       <li xml:lang="pt-BR">Detecção automática de UTF-8</li>
+      <li xml:lang="ru">Автоматическое определение UTF-8</li>
       <li xml:lang="sk">Automatická detekcia UTF-8</li>
       <li xml:lang="sl">Samodejna zaznava UTF-8</li>
       <li xml:lang="sr">аутоматско откривање УТФ‑8</li>
@@ -520,6 +531,7 @@
       <li xml:lang="pl">Kodowanie zależne od kanału</li>
       <li xml:lang="pt">Suporte de codificações diferentes por canal</li>
       <li xml:lang="pt-BR">Suporte a codificação por canal</li>
+      <li xml:lang="ru">Поддержка различных кодировок для каналов</li>
       <li xml:lang="sk">Podpora kódovania pre každý kanál</li>
       <li xml:lang="sl">Podpora različnim kodiranjem na različnih kanalih</li>
       <li xml:lang="sr">подршка за кодирање по каналу</li>
@@ -554,6 +566,7 @@
       <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
       <li xml:lang="pt">Suporte de temas para os ícones das alcunhas</li>
       <li xml:lang="pt-BR">Suporte a temas para os ícones dos apelidos</li>
+      <li xml:lang="ru">Поддержка тем значков пользователей</li>
       <li xml:lang="sk">Podpora tém pre ikony prezývok</li>
       <li xml:lang="sl">Podpora ikonam v vzdevkih</li>
       <li xml:lang="sr">тематска подршка за иконице надимака</li>
@@ -589,6 +602,7 @@
       <li xml:lang="pl">Wysoce ustawialny</li>
       <li xml:lang="pt">Extremamente configurável</li>
       <li xml:lang="pt-BR">Altamente configurável</li>
+      <li xml:lang="ru">Широкие возможности настройки</li>
       <li xml:lang="sk">Vysoko konfigurovateľné</li>
       <li xml:lang="sl">Veliko nastavitvenih možnosti</li>
       <li xml:lang="sr">висока подесивост</li>
