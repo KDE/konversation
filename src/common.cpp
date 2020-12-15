@@ -145,7 +145,7 @@ namespace Konversation
     {
         TextUrlData data;
         QString htmlText(text);
-        urlPattern.setCaseSensitivity(Qt::CaseInsensitive);
+        urlPattern.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
 
         int pos = 0;
         int urlLen = 0;
@@ -153,9 +153,10 @@ namespace Konversation
         QString protocol;
         QString href;
 
-        while ((pos = urlPattern.indexIn(htmlText, pos)) >= 0)
+        QRegularExpressionMatch rmatch;
+        while ((pos = htmlText.indexOf(urlPattern, pos, &rmatch)) >= 0)
         {
-            urlLen = urlPattern.matchedLength();
+            urlLen = rmatch.capturedLength(0);
             href = htmlText.mid(pos, urlLen);
 
             data.urlRanges << QPair<int, int>(pos, href.length());
@@ -164,9 +165,9 @@ namespace Konversation
             if (doUrlFixup)
             {
                 protocol.clear();
-                if (urlPattern.cap(2).isEmpty())
+                if (rmatch.captured(2).isEmpty())
                 {
-                    QString urlPatternCap1(urlPattern.cap(1));
+                    QString urlPatternCap1(rmatch.captured(1));
                     if (urlPatternCap1.contains(QLatin1Char('@')))
                         protocol = QStringLiteral("mailto:");
                     else if (urlPatternCap1.startsWith(QLatin1String("ftp."), Qt::CaseInsensitive))
@@ -191,15 +192,16 @@ namespace Konversation
         int chanLen = 0;
         QString channel;
 
-        while ((pos = chanExp.indexIn(ircText, pos)) >= 0)
+        QRegularExpressionMatch rmatch;
+        while ((pos = ircText.indexOf(chanExp, pos, &rmatch)) >= 0)
         {
-            channel = chanExp.cap(2);
+            channel = rmatch.captured(2);
             chanLen = channel.length();
 
             // we want the pos where #channel starts
             // indexIn gives us the first match and the first match may be
             // "#test", " #test" or " \"test", so the first Index is off by some chars
-            pos = chanExp.pos(2);
+            pos = rmatch.capturedStart(2);
 
             data.channelRanges << QPair<int, int>(pos, chanLen);
             pos += chanLen;
@@ -215,7 +217,10 @@ namespace Konversation
 
     bool isUrl(const QString& text)
     {
-        return urlPattern.exactMatch(text);
+        QRegularExpression re(urlPattern);
+        re.setPattern(QRegularExpression::anchoredPattern(urlPattern.pattern()));
+
+        return re.match(text).hasMatch();
     }
 
     QString extractColorCodes(const QString& _text)
