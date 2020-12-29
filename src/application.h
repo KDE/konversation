@@ -31,6 +31,7 @@ class Images;
 class ServerGroupSettings;
 class QStandardItemModel;
 class QCommandLineParser;
+class TaskbarUpdater;
 
 class KTextEdit;
 
@@ -134,6 +135,8 @@ class Application : public QApplication
         void setCommandLineParser(QCommandLineParser *parser) { m_commandLineParser = parser; }
         QCommandLineParser *commandLineParser() const { return m_commandLineParser; }
 
+        TaskbarUpdater *taskbarUpdater() const { return m_taskbarUpdater; }
+
     Q_SIGNALS:
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged(); // FIXME TODO: Rather than relying on this catch-all, consumers should be rewritten to catch appropriate QEvents.
@@ -202,6 +205,8 @@ QT_WARNING_POP
 
         QCommandLineParser *m_commandLineParser;
         QStringList m_restartArguments;
+
+        TaskbarUpdater *m_taskbarUpdater;
 
         Q_DISABLE_COPY(Application)
 };

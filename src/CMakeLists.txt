@@ -26,6 +26,7 @@ set(core_SRCS
     connectionsettings.cpp
     identity.cpp
     identitydialog.cpp
+    taskbarupdater.cpp
 
     #=== GUI
     urlcatcher.cpp
@@ -117,6 +118,7 @@ ki18n_wrap_ui(config_SRCS
     config/theme_configui.ui
     config/warnings_configui.ui
     config/watchednicknames_configui.ui
+    config/generalnotifications_config.ui
 )
 
     #=== Viewer

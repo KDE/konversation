@@ -29,6 +29,7 @@
 #include "ui_watchednicknames_configui.h"
 #include "ui_tabnotifications_config.h"
 #include "konversation_log.h"
+#include "ui_generalnotifications_config.h"
 
 #include <config-konversation.h>
 
@@ -149,6 +150,12 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //DCC
   m_confDCCWdg = new DCC_Config(this, "DCC");
   konviAddSubPage(behaviorGroup, m_confDCCWdg, i18nc("@title:tab", "DCC"), QStringLiteral("arrow-right-double"));
+
+  //Notifications/General
+  Ui::GeneralNotifications_Config confGeneralNotifications;
+  w = new QWidget();
+  confGeneralNotifications.setupUi(w);
+  konviAddSubPage(notificationGroup, w, i18n("General Notifications"), QStringLiteral("preferences-desktop-notification"));
 
   //Notifications/Tab Bar
   Ui::TabNotifications_Config confTabNotifications;

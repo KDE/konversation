@@ -34,6 +34,7 @@
 #include "viewtree.h"
 #include "viewspringloader.h"
 #include "konversation_log.h"
+#include "taskbarupdater.h"
 
 #include <KMessageBox>
 #include <KIO/OpenUrlJob>
@@ -1398,6 +1399,15 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, &ChatWindow::clearStatusBarTempText, this, &ViewContainer::clearStatusBarTempText);
     connect(view, &ChatWindow::closing, this, &ViewContainer::cleanupAfterClose);
     connect(view, &ChatWindow::showView, this, &ViewContainer::showView);
+
+    connect(view, &ChatWindow::unreadIncreased,
+            Application::instance()->taskbarUpdater(),
+            &TaskbarUpdater::increaseUnread);
+    connect(view, &ChatWindow::unreadReset,
+            Application::instance()->taskbarUpdater(),
+            &TaskbarUpdater::decreaseUnread);
+    connect(Application::instance()->getMainWindow(), &MainWindow::endNotification,
+            view, &ChatWindow::resetUnread);
 
     switch (view->getType())
     {

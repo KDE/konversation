@@ -151,6 +151,9 @@ class ChatWindow : public QWidget
         void closing(ChatWindow* myself);
         void showView(ChatWindow* myself);
 
+        void unreadIncreased();
+        void unreadReset(uint oldCount);
+
     public Q_SLOTS:
         virtual void updateAppearance();
 
@@ -171,6 +174,8 @@ class ChatWindow : public QWidget
         virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
         void activateTabNotification(Konversation::TabNotifyType type);
         void resetTabNotification();
+
+        void resetUnread();
 
     protected Q_SLOTS:
         ///Used to disable functions when not connected
@@ -195,6 +200,8 @@ class ChatWindow : public QWidget
 
         int spacing();
         int margin();
+
+        void increaseUnread();
 
     protected:
         bool firstLog;
@@ -223,6 +230,8 @@ class ChatWindow : public QWidget
         Konversation::TabNotifyType m_currentTabNotify;
 
         bool m_recreationScheduled;
+
+        uint m_unread;
 
         Q_DISABLE_COPY(ChatWindow)
 };

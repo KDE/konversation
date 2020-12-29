@@ -43,6 +43,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QWidget(parent)
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
+    m_unread = 0;
 }
 
 ChatWindow::~ChatWindow()
@@ -283,12 +284,22 @@ void ChatWindow::append(const QString& nickname, const QString& message, const Q
 {
     if(!textView) return;
     textView->append(nickname, message, messageTags, label);
+
+    if(!isVisible() || !Application::instance()->activeWindow())
+    {
+        increaseUnread();
+    }
 }
 
 void ChatWindow::appendQuery(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags, bool inChannel)
 {
     if(!textView) return ;
     textView->appendQuery(nickname, message, messageTags, inChannel);
+
+    if(!isVisible() || !Application::instance()->activeWindow())
+    {
+        increaseUnread();
+    }
 }
 
 void ChatWindow::appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags)
@@ -299,6 +310,11 @@ void ChatWindow::appendAction(const QString& nickname, const QString& message, c
         textView->appendQueryAction(nickname, message, messageTags);
     else
         textView->appendChannelAction(nickname, message, messageTags);
+
+    if(!isVisible() || !Application::instance()->activeWindow())
+    {
+        increaseUnread();
+    }
 }
 
 void ChatWindow::appendServerMessage(const QString& type, const QString& message, const QHash<QString, QString> &messageTags, bool parseURL)
@@ -689,6 +705,7 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 void ChatWindow::resetTabNotification()
 {
     m_currentTabNotify = Konversation::tnfNone;
+    resetUnread();
 }
 
 void ChatWindow::msgHelper(const QString& recipient, const QString& message)
@@ -757,5 +774,20 @@ void ChatWindow::activateView()
         }
     }
     emit showView(this);
+}
+
+void ChatWindow::increaseUnread()
+{
+    m_unread++;
+    emit unreadIncreased();
+}
+
+void ChatWindow::resetUnread()
+{
+    if (!isVisible())
+        return;
+
+    emit unreadReset(m_unread);
+    m_unread = 0;
 }
 

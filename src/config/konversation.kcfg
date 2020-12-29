@@ -1024,4 +1024,9 @@
         <label></label>
     </entry>
   </group>
+  <group name="TaskbarNotifications">
+    <entry key="ShowUnreadOnTaskbar" type="Bool">
+      <default>false</default>
+    </entry>
+  </group>
 </kcfg>

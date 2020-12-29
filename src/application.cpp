@@ -26,6 +26,7 @@
 #include "notificationhandler.h"
 #include "awaymanager.h"
 #include "konversation_log.h"
+#include "taskbarupdater.h"
 
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
@@ -175,6 +176,8 @@ QT_WARNING_POP
 
         Preferences::self();
         readOptions();
+
+        m_taskbarUpdater = new TaskbarUpdater(this);
 
         // Images object providing LEDs, NickIcons
         m_images = new Images();
