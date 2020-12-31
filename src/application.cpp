@@ -818,10 +818,9 @@ void Application::saveOptions(bool updateGUI)
     int index2 = 0;
     int index3 = 0;
     int width = 0;
-    QList<int> keys = serverGroupHash.keys();
-    for(int i=0; i<keys.count(); i++)
-        if(width < keys.at(i)) width = keys.at(i);
-    width = QString(width).length(); // TODO: broken, always yield 1
+    for(auto it = serverGroupHash.cbegin(), end = serverGroupHash.cend(); it != end; ++it)
+        if(width < it.key()) width = it.key();
+    width = QString::number(width).length();
     QStringList servers;
     QStringList channels;
     QStringList channelHistory;
