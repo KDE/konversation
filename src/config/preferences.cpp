@@ -60,7 +60,8 @@ Preferences::Preferences()
     serverGroup->setName(QStringLiteral("freenode"));
     Konversation::ServerSettings server;
     server.setHost(QStringLiteral("chat.freenode.net"));
-    server.setPort(8001);
+    server.setPort(6697);
+    server.setSSLEnabled(true);
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
