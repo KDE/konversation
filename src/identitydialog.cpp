@@ -20,6 +20,7 @@
 #include <QPushButton>
 #include <KStandardGuiItem>
 #include <QVBoxLayout>
+#include <QRegularExpressionValidator>
 
 #include <algorithm>
 
@@ -98,6 +99,12 @@ namespace Konversation
 
         // set the suffix for the inactivity time spinbox
         m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes"));
+
+        // Don't allow spaces in username or nicks
+        const QRegularExpression noSpaceRx(QStringLiteral("\\S+"));
+        auto *validator = new QRegularExpressionValidator(noSpaceRx, this);
+        m_loginEdit->setValidator(validator);
+        m_nicknameLBox->lineEdit()->setValidator(validator);
 
         // set values for the widgets
         updateIdentity(0);
@@ -347,6 +354,20 @@ namespace Konversation
             tabWidget->setCurrentIndex(0);
             m_nicknameLBox->lineEdit()->setFocus();
             return false;
+        } else {
+            for(const QString &nick : m_nicknameLBox->items())
+            {
+                if(nick.contains(QLatin1Char(' ')))
+                {
+                    KMessageBox::error(this, i18n("Nicks must not contain spaces."));
+                    bool block = m_identityCBox->blockSignals(true);
+                    m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
+                    m_identityCBox->blockSignals(block);
+                    tabWidget->setCurrentIndex(0);
+                    m_nicknameLBox->lineEdit()->setFocus();
+                    return false;
+                }
+            }
         }
 
         if(m_realNameEdit->text().isEmpty())
@@ -357,6 +378,17 @@ namespace Konversation
             m_identityCBox->blockSignals(block);
             tabWidget->setCurrentIndex(0);
             m_realNameEdit->setFocus();
+            return false;
+        }
+
+        if(!m_loginEdit->hasAcceptableInput())
+        {
+            KMessageBox::error(this, i18n("Ident must not contain spaces."));
+            bool block = m_identityCBox->blockSignals(true);
+            m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
+            m_identityCBox->blockSignals(block);
+            tabWidget->setCurrentIndex(2);
+            m_loginEdit->setFocus();
             return false;
         }
 
