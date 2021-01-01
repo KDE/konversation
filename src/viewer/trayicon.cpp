@@ -20,7 +20,7 @@ namespace Konversation
 
         updateAppearance();
 
-        setToolTip(QStringLiteral("konversation"), i18n("Konversation"), i18n("Konversation - IRC Client"));
+        setToolTip(QStringLiteral("konversation"), i18n("Konversation"), i18n("IRC Client"));
     }
 
     TrayIcon::~TrayIcon()
