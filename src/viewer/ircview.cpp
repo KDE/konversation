@@ -1051,7 +1051,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
     nickLine = QLatin1String("<font color=\"") + nickColor + QLatin1String("\">") + nickLine + QLatin1String("</font>");
 
     if (Preferences::self()->useClickableNicks())
-        nickLine = QLatin1String("<a class=\"nick\" href=\"#") + nick + QLatin1String("\">") + nickLine + QLatin1String("</a>");
+        nickLine = QLatin1String("<a class=\"nick\" href=\"#%1\">%2</a>").arg(QString::fromLatin1(QUrl::toPercentEncoding(nick)), nickLine);
 
     if (privMsg)
         nickLine.prepend(QLatin1String("-&gt; "));
@@ -2137,40 +2137,36 @@ void IRCView::handleAnchorClicked(const QUrl& url)
 
 void IRCView::openLink(const QUrl& url)
 {
-    QString link(url.toString());
-    // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link.replace (QLatin1Char(' '), QLatin1String("%20"));
-    // HACK Handle pipe as toString doesn't seem to decode that correctly
-    link.replace (QLatin1String("%7C"), QLatin1String("|"));
-    // HACK Handle ` as toString doesn't seem to decode that correctly
-    link.replace (QLatin1String("%60"), QLatin1String("`"));
-    // HACK Handle \ as toString doesn't decode it
-    link.replace(QLatin1String("%5C"), QLatin1String("\\"));
-
-    if (!link.isEmpty() && !link.startsWith(QLatin1Char('#')))
-        Application::openUrl(QString::fromUtf8(url.toEncoded()));
-    //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
-    else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
+    if (!url.scheme().isEmpty())
     {
-        m_server->sendJoinCommand(link.mid(1));
+        Application::openUrl(QString::fromUtf8(url.toEncoded()));
     }
-    //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (link.startsWith(QLatin1Char('#')) && m_server && m_server->isConnected()) {
-        QString recipient(link);
-        recipient.remove(QLatin1Char('#'));
-        NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
-        m_server->addQuery(nickInfo, true /*we initiated*/);
+    else if (!url.hasQuery() && url.path().isEmpty() && url.hasFragment())
+    {
+        //FIXME: Don't do channel or user links in DCC Chats to begin with since they don't have a server.
+        if (!m_server || !m_server->isConnected())
+            return;
+
+        QString fragment = url.fragment(QUrl::FullyDecoded);
+
+        if (m_server->isAChannel(fragment))
+        {
+            m_server->sendJoinCommand(fragment);
+        }
+        else
+        {
+            NickInfoPtr nickInfo = m_server->obtainNickInfo(fragment);
+            m_server->addQuery(nickInfo, true /*we initiated*/);
+        }
     }
 }
 
 void IRCView::highlightedSlot(const QUrl& /*_link*/)
 {
-    QString link = m_urlToCopy;
-    // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link.replace(QLatin1Char(' '), QLatin1String("%20"));
+    QUrl link(QUrl::fromEncoded(m_urlToCopy.toUtf8()));
 
     //we just saw this a second ago.  no need to reemit.
-    if (link == m_lastStatusText && !link.isEmpty())
+    if (link.toString() == m_lastStatusText && !link.isEmpty())
         return;
 
     if (link.isEmpty())
@@ -2183,17 +2179,17 @@ void IRCView::highlightedSlot(const QUrl& /*_link*/)
     }
     else
     {
-        m_lastStatusText = link;
+        m_lastStatusText = link.toString();
     }
 
-    if (!link.startsWith(QLatin1Char('#')))
+    if (link.isEmpty() || !link.scheme().isEmpty())
     {
         m_isOnNick = false;
         m_isOnChannel = false;
 
         if (!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
-            emit setStatusBarTempText(link);
+            emit setStatusBarTempText(m_lastStatusText);
         }
 
         if (link.isEmpty() && m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
@@ -2201,22 +2197,27 @@ void IRCView::highlightedSlot(const QUrl& /*_link*/)
         else if (!link.isEmpty() && !m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
             setContextMenuOptions(IrcContextMenus::ShowLinkActions, true);
     }
-    else if (link.startsWith(QLatin1Char('#')) && !link.startsWith(QLatin1String("##")))
+    else if (!link.hasQuery() && link.path().isEmpty() && link.hasFragment())
     {
-        m_currentNick = link.mid(1);
+        if (!m_server || !m_server->isConnected())
+            return;
 
-        m_isOnNick = true;
+        QString decoded = link.fragment(QUrl::FullyDecoded);
 
-        emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
-    }
-    else
-    {
-        // link.startsWith("##")
-        m_currentChannel = link.mid(1);
+        if (!m_server->isAChannel(decoded))
+        {
+            m_currentNick = decoded;
+            m_isOnNick = true;
 
-        m_isOnChannel = true;
+            emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
+        }
+        else
+        {
+            m_currentChannel = decoded;
+            m_isOnChannel = true;
 
-        emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
+            emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
+        }
     }
 }
 

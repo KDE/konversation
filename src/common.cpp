@@ -209,6 +209,7 @@ namespace Konversation
             if (doChannelFixup)
             {
                 channel = removeIrcMarkup(channel);
+                channel = QString::fromLatin1(QUrl::toPercentEncoding(channel));
                 data.fixedChannels.append(channel);
             }
         }
