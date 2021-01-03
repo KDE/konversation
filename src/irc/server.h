@@ -101,6 +101,7 @@ class Server : public QObject
             MultiPrefix = 0x40,
             AccountNotify = 0x80,
             SelfMessage = 0x100,
+            ChgHost = 0x200,
         };
         Q_DECLARE_FLAGS(CapabilityFlags, CapabilityFlag)
 

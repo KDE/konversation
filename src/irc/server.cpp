@@ -4450,6 +4450,7 @@ void Server::initCapablityNames()
         { QStringLiteral("multi-prefix"),           MultiPrefix },
         { QStringLiteral("account-notify"),         AccountNotify },
         { QStringLiteral("znc.in/self-message"),    SelfMessage },
+        { QStringLiteral("chghost"),                ChgHost },
     };
 }
 

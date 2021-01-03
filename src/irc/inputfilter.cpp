@@ -723,6 +723,17 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             nickInfo->setAccount(account);
         }
     }
+    else if (command == QLatin1String("chghost") && plHas(2))
+    {
+        NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
+
+        if (nickInfo)
+        {
+            const QString user = parameterList.value(0);
+            const QString host = parameterList.value(1);
+            nickInfo->setHostmask(QStringLiteral("%1@%2").arg(user, host));
+        }
+    }
     else
     {
         qCDebug(KONVERSATION_LOG) << "unknown client command" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
