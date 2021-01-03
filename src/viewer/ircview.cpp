@@ -2144,6 +2144,8 @@ void IRCView::openLink(const QUrl& url)
     link.replace (QLatin1String("%7C"), QLatin1String("|"));
     // HACK Handle ` as toString doesn't seem to decode that correctly
     link.replace (QLatin1String("%60"), QLatin1String("`"));
+    // HACK Handle \ as toString doesn't decode it
+    link.replace(QLatin1String("%5C"), QLatin1String("\\"));
 
     if (!link.isEmpty() && !link.startsWith(QLatin1Char('#')))
         Application::openUrl(QString::fromUtf8(url.toEncoded()));
