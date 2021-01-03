@@ -551,7 +551,7 @@ void Server::showSSLDialog()
 
 void Server::rebuildTargetPrefixMatcher()
 {
-    m_targetMatcher.setPattern(QLatin1String("^([") + getServerNickPrefixes() + QLatin1String("]*)([") + getChannelTypes() + QLatin1String("])(.+)"));
+    m_targetMatcher.setPattern(QLatin1String("^([") + getServerNickPrefixes() + QLatin1String("]*)([") + getChannelTypes() + QLatin1String("])(.*)"));
 }
 
 // set available channel types according to 005 RPL_ISUPPORT
