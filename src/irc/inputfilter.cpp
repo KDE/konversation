@@ -862,6 +862,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     m_server->capInitiateNegotiation (trailing);
                 }
             }
+            else if (command == QLatin1String("new"))
+            {
+                m_server->capInitiateNegotiation(trailing);
+            }
+            else if (command == QLatin1String("del"))
+            {
+                m_server->capDel(trailing);
+            }
         }
         else if (command == QLatin1String("authenticate") && plHas(1))
         {

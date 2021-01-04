@@ -836,6 +836,21 @@ void Server::capDenied(const QString& name)
         getStatusView()->appendServerMessage(i18n("Error"), i18n("SASL capability denied or not supported by server."));
 }
 
+void Server::capDel(const QString &unavailableCaps)
+{
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    const QStringList capsList = unavailableCaps.split(QLatin1Char(' '), QString::SkipEmptyParts);
+#else
+    const QStringList capsList = unavailableCaps.split(QLatin1Char(' '), Qt::SkipEmptyParts);
+#endif
+
+    for (const QString &capString : qAsConst(capsList))
+    {
+        if (m_capabilityNames.contains(capString))
+            m_capabilities &= ~(m_capabilityNames.value(capString));
+    }
+}
+
 void Server::registerWithServices()
 {
     if (!getIdentity())
@@ -4451,6 +4466,7 @@ void Server::initCapablityNames()
         { QStringLiteral("account-notify"),         AccountNotify },
         { QStringLiteral("znc.in/self-message"),    SelfMessage },
         { QStringLiteral("chghost"),                ChgHost },
+        { QStringLiteral("cap-notify"),             CapNofify },
     };
 }
 

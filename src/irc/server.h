@@ -102,6 +102,7 @@ class Server : public QObject
             AccountNotify = 0x80,
             SelfMessage = 0x100,
             ChgHost = 0x200,
+            CapNofify = 0x400,
         };
         Q_DECLARE_FLAGS(CapabilityFlags, CapabilityFlag)
 
@@ -560,6 +561,7 @@ class Server : public QObject
         void capAcknowledged(const QString& name, CapModifiers modifiers);
         void capDenied(const QString& name);
         void sendAuthenticate(const QString& message);
+        void capDel(const QString &unavailableCaps);
 
     private Q_SLOTS:
         void hostFound();
