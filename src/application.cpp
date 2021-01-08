@@ -461,7 +461,6 @@ void Application::readOptions()
     if(!groups.isEmpty())
     {
         Konversation::ServerGroupHash serverGroups;
-        int index = 0;
         Konversation::ChannelList channelHistory;
         Konversation::ServerSettings server;
         Konversation::ChannelSettings channel;
@@ -470,7 +469,7 @@ void Application::readOptions()
             KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(groupName));
             Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
             serverGroup->setName(cgServerGroup.readEntry("Name"));
-            serverGroup->setSortIndex(groups.at(index).section(QLatin1Char(' '), -1).toInt());
+            serverGroup->setSortIndex(groupName.section(QLatin1Char(' '), -1).toInt());
             serverGroup->setIdentityId(Preferences::identityByName(cgServerGroup.readEntry("Identity"))->id());
             serverGroup->setConnectCommands(cgServerGroup.readEntry("ConnectCommands"));
             serverGroup->setAutoConnectEnabled(cgServerGroup.readEntry("AutoConnect", false));
@@ -528,8 +527,6 @@ void Application::readOptions()
 
             serverGroups.insert(serverGroup->id(), serverGroup);
             sgKeys.append(serverGroup->id());
-
-            index++;
         }
 
         Preferences::setServerGroupHash(serverGroups);
