@@ -814,10 +814,6 @@ void Application::saveOptions(bool updateGUI)
     index = 0;
     int index2 = 0;
     int index3 = 0;
-    int width = 0;
-    for(auto it = serverGroupHash.cbegin(), end = serverGroupHash.cend(); it != end; ++it)
-        if(width < it.key()) width = it.key();
-    width = QString::number(width).length();
     QStringList servers;
     QStringList channels;
     QStringList channelHistory;
@@ -870,7 +866,7 @@ void Application::saveOptions(bool updateGUI)
             index3++;
         }
 
-        QString sgn = QStringLiteral("ServerGroup %1").arg(QString::number(index).rightJustified(width,QLatin1Char('0')));
+        QString sgn = QStringLiteral("ServerGroup %1").arg(index);
         KConfigGroup cgServerGroup(KSharedConfig::openConfig()->group(sgn));
         cgServerGroup.writeEntry("Name", serverGroup->name());
         cgServerGroup.writeEntry("Identity", serverGroup->identity()->getName());
