@@ -817,14 +817,14 @@ void Application::saveOptions(bool updateGUI)
     QStringList servers;
     QStringList channels;
     QStringList channelHistory;
-    QList<int> sgKeys;
+    QHash<int, int> sgKeys;
 
     for (const auto& serverGroup : qAsConst(sortedServerGroupMap)) {
         const Konversation::ServerList serverList = serverGroup->serverList();
         servers.clear();
         servers.reserve(serverList.size());
 
-        sgKeys.append(serverGroup->id());
+        sgKeys.insert(serverGroup->id(), index);
 
         for (const auto& server : serverList) {
             const QString groupName = QStringLiteral("Server %1").arg(index2);
@@ -909,7 +909,7 @@ void Application::saveOptions(bool updateGUI)
                 QString enc = Preferences::channelEncoding(encServer, encChannel);
                 QString key = QLatin1Char(' ') + encChannel;
                 if (sgKeys.contains(encServer))
-                    key.prepend(QStringLiteral("ServerGroup ") + QString::number(sgKeys.indexOf(encServer)));
+                    key.prepend(QStringLiteral("ServerGroup ") + QString::number(sgKeys.value(encServer)));
                 else
                     key.prepend(sgsp->name());
                 cgEncoding.writeEntry(key, enc);
@@ -933,10 +933,8 @@ void Application::saveOptions(bool updateGUI)
         {
             i2.next();
 
-            int serverGroupIndex = sgKeys.indexOf(i.key()->id());
-
-            if (serverGroupIndex != -1)
-                cgSpellCheckingLanguages.writeEntry(QStringLiteral("ServerGroup ") + QString::number(serverGroupIndex) + QLatin1Char(' ') + i2.key(), i2.value());
+            if (sgKeys.contains(i.key()->id()))
+                cgSpellCheckingLanguages.writeEntry(QStringLiteral("ServerGroup ") + QString::number(sgKeys.value(i.key()->id())) + QLatin1Char(' ') + i2.key(), i2.value());
         }
     }
 
