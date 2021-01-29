@@ -3,3 +3,4 @@ ProvidersUrl=https://autoconfig.kde.org/ocs/providers.xml
 Categories=Konversation Nicklist Themes
 TargetDir=konversation/themes
 Uncompress=always
+RemoveDeadEntries=true
