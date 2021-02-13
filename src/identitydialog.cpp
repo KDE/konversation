@@ -21,6 +21,7 @@
 #include <KStandardGuiItem>
 #include <QVBoxLayout>
 #include <QRegularExpressionValidator>
+#include <QListView>
 
 #include <algorithm>
 
@@ -111,6 +112,37 @@ namespace Konversation
         connect(m_identityCBox, QOverload<int>::of(&KComboBox::currentIndexChanged),
                 this, &IdentityDialog::updateIdentity);
         connect(this, &IdentityDialog::identitiesChanged, awayManager, &AwayManager::identitiesChanged);
+
+        // Workaround to make sure the taborder is correct for the nickname editor
+        QWidget::setTabOrder(m_identityCBox, newBtn);
+        QWidget::setTabOrder(newBtn, copyBtn);
+        QWidget::setTabOrder(copyBtn, m_editBtn);
+        QWidget::setTabOrder(m_editBtn, m_delBtn);
+        QWidget::setTabOrder(m_delBtn, tabWidget);
+        QWidget::setTabOrder(tabWidget, m_realNameEdit);
+        QWidget::setTabOrder(m_realNameEdit, m_nicknameLBox->lineEdit());
+        QWidget::setTabOrder(m_nicknameLBox->lineEdit(), m_nicknameLBox->listView());
+        QWidget::setTabOrder(m_nicknameLBox->listView(), m_authTypeCombo);
+        QWidget::setTabOrder(m_authTypeCombo, m_nickservNicknameEdit);
+        QWidget::setTabOrder(m_nickservNicknameEdit, m_nickservCommandEdit);
+        QWidget::setTabOrder(m_nickservCommandEdit, m_saslAccountEdit);
+        QWidget::setTabOrder(m_saslAccountEdit, m_authPasswordEdit);
+        QWidget::setTabOrder(m_authPasswordEdit, m_pemClientCertFile);
+        QWidget::setTabOrder(m_pemClientCertFile, m_insertRememberLineOnAwayChBox);
+        QWidget::setTabOrder(m_insertRememberLineOnAwayChBox, m_awayMessageEdit);
+        QWidget::setTabOrder(m_awayMessageEdit, m_awayNickEdit);
+        QWidget::setTabOrder(m_awayNickEdit, automaticAwayGroup);
+        QWidget::setTabOrder(automaticAwayGroup, m_awayInactivitySpin);
+        QWidget::setTabOrder(m_awayInactivitySpin, m_automaticUnawayChBox);
+        QWidget::setTabOrder(m_automaticUnawayChBox, awayCommandsGroup);
+        QWidget::setTabOrder(awayCommandsGroup, m_awayEdit);
+        QWidget::setTabOrder(m_awayEdit, m_unAwayEdit);
+        QWidget::setTabOrder(m_unAwayEdit, m_sCommandEdit);
+        QWidget::setTabOrder(m_sCommandEdit, m_codecCBox);
+        QWidget::setTabOrder(m_codecCBox, m_loginEdit);
+        QWidget::setTabOrder(m_loginEdit, m_quitEdit);
+        QWidget::setTabOrder(m_quitEdit, m_partEdit);
+        QWidget::setTabOrder(m_partEdit, m_kickEdit);
     }
 
     void IdentityDialog::updateIdentity(int index)
