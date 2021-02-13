@@ -47,14 +47,6 @@ namespace Konversation
         mainLayout->addWidget(w);
         mainLayout->addWidget(buttonBox);
 
-
-        QGroupBox* nickGroupBox = new QGroupBox(i18n("Nickname"));
-        verticalLayout->insertWidget(1, nickGroupBox);
-        QVBoxLayout* nickGroupBoxLayout = new QVBoxLayout(nickGroupBox);
-        nickGroupBoxLayout->setContentsMargins(0, 0, 0, 0);
-        m_nicknameLBox = new KEditListWidget(nickGroupBox);
-        nickGroupBoxLayout->addWidget(m_nicknameLBox);
-
         m_nicknameLBox->setWhatsThis(i18n("This is your list of nicknames. A nickname is the name that other users will "
                                           "know you by. You may use any name you desire. The first character must be a letter.\n\n"
                                           "Since nicknames must be unique across an entire IRC network, your desired name may be "
