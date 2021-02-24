@@ -631,12 +631,10 @@
     <binary>konversation</binary>
   </provides>
   <releases>
+    <release version="1.8.20123" date="2021-03-04"/>
     <release version="1.8.20122" date="2021-02-04"/>
     <release version="1.8.20121" date="2021-01-07"/>
     <release version="1.8.20120" date="2020-12-10"/>
-    <!-- Note: KDE website infrastructure uses the appstream file from the master branch
-               to determine the last release, so this entry must always reflect the
-               last actual release -->
   </releases>
   <custom>
     <value key="KDE::irc">#konversation</value>
