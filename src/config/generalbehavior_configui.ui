@@ -13,11 +13,20 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>508</width>
-    <height>477</height>
+    <height>494</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -73,6 +82,13 @@ the Free Software Foundation; either version 2 of the License, or
        <widget class="QCheckBox" name="kcfg_HideToTrayOnStartup">
         <property name="text">
          <string>Hide window on startup</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_AlwaysQuitOnClose">
+        <property name="text">
+         <string>Closing main window quits application</string>
         </property>
        </widget>
       </item>

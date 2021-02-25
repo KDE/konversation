@@ -640,7 +640,7 @@ bool MainWindow::queryClose()
 
     if (!konvApp->isSavingSession())
     {
-        if (sender() == m_trayIcon)
+        if (sender() == m_trayIcon || Preferences::self()->alwaysQuitOnClose())
             m_closeApp = true;
 
         if (Preferences::self()->showTrayIcon() && !m_closeApp)
@@ -658,7 +658,7 @@ bool MainWindow::queryClose()
             return false;
         }
 
-        if (!Preferences::self()->showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
+        if ((!Preferences::self()->showTrayIcon() || Preferences::self()->alwaysQuitOnClose()) && confirmQuit() == KMessageBox::Cancel)
             return false;
     }
 

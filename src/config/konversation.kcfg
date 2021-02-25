@@ -273,6 +273,10 @@
       <default>false</default>
       <label>Start with hidden main window</label>
     </entry>
+    <entry key="AlwaysQuitOnClose" type="Bool">
+      <default>false</default>
+      <label>Closing main window quits application</label>
+    </entry>
     <entry key="ShowBackgroundImage" type="Bool">
       <default>false</default>
       <label></label>
