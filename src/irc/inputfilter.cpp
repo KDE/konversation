@@ -712,15 +712,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     else if (command == QLatin1String("account") && plHas(1))
     {
         NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
-        QString account = parameterList.first();
-
-        if (account == QLatin1String("*"))
-        {
-            nickInfo->setAccount(QString());
-        }
-        else
-        {
-            nickInfo->setAccount(account);
+        if (nickInfo) {
+            const QString account = parameterList.at(0);
+            nickInfo->setAccount(account == QLatin1Char('*') ? QString() : account);
         }
     }
     else if (command == QLatin1String("chghost") && plHas(2))
