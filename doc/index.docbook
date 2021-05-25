@@ -190,7 +190,7 @@ Further information like a FAQ and tips and tricks you find in the
 <ulink url="https://userbase.kde.org/Konversation">&konversation; UserBase page</ulink>.
 </para>
 
-<para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://chat.freenode.net/konversation">irc.freenode.net channel #konversation</ulink>.
+<para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://irc.libera.chat/konversation">irc.libera.chat channel #konversation</ulink>.
 </para>
 
 </chapter>
@@ -238,7 +238,7 @@ to a chat room) or just engage in private conversations.</para>
 only connect to one of the servers in the network to be connected to the entire
 &irc; network.  Once connected, &konversation; will automatically join the
 <guilabel>Channels</guilabel> shown.  When &konversation; is started for the first time, the
-<userinput><replaceable>Freenode</replaceable></userinput> network
+<userinput><replaceable>Libera</replaceable></userinput> network
 and <userinput><replaceable>#kde</replaceable></userinput> channel are already entered for you.  Click on a network to select it.</para></callout>
 <callout arearefs="pt-first-serverlist-2"><para>Click here to define a new <guilabel>Network</guilabel>, including the server
 to connect to, and the <guilabel>Channels</guilabel> to automatically join once connected.  See <link  linkend="serverlist">Defining new networks, servers, and auto join channels</link> for more information.</para></callout>
@@ -553,7 +553,7 @@ lists your existing defined &irc; <guilabel>Network</guilabel>s, listed by group
 An &irc; network is a collection of cooperating servers.  When you connect
 to any server in a network, you have access to all the channels of the network.
 Examples of &irc; networks are
-<userinput><replaceable>Freenode</replaceable></userinput> and
+<userinput><replaceable>Libera</replaceable></userinput> and
 <userinput><replaceable>Undernet</replaceable></userinput>.
 </para>
 
@@ -650,7 +650,7 @@ button to add a new Identity or edit an existing one.  The
 <guilabel>Identity</guilabel> will identify you and determine
 your &i18n-nickname; when you connect to the network.</para></callout>
 <callout arearefs="pt-addnetwork-3"><para>Optional.  This command will be sent to the server after connecting.  Example: <userinput>/msg NickServ IDENTIFY
-<replaceable>konvirocks</replaceable></userinput>.  This example is for the freenode network, which requires users to register their &i18n-nickname;
+<replaceable>konvirocks</replaceable></userinput>.  This example is for the Libera network, which requires users to register their &i18n-nickname;
 with a password and login when connecting.  <userinput><replaceable>konvirocks</replaceable></userinput>
 is the password for the &i18n-nickname; given in <guilabel>Identity</guilabel>.
 You may enter more than one command by separating them with semicolons.</para></callout>

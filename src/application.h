@@ -100,7 +100,7 @@ class Application : public QApplication
 
         /** Tries to find a nickinfo for a given ircnick on a given ircserver.
          *  @param ircnick The case-insensitive ircnick of the person you want to find.  e.g. "johnflux"
-         *  @param serverOrGroup The case-insensitive server name (e.g. "irc.kde.org") or server group name (e.g. "freenode"), or null to search all servers
+         *  @param serverOrGroup The case-insensitive server name (e.g. "irc.kde.org") or server group name (e.g. "libera"), or null to search all servers
          *  @return A nickinfo for this user and server if one is found.
          */
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
