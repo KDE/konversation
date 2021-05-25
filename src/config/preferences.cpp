@@ -57,9 +57,9 @@ Preferences::Preferences()
     mIdentity->setNicknameList(nickList);
 
     Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
-    serverGroup->setName(QStringLiteral("libera"));
+    serverGroup->setName(QStringLiteral("freenode"));
     Konversation::ServerSettings server;
-    server.setHost(QStringLiteral("irc.libera.chat"));
+    server.setHost(QStringLiteral("chat.freenode.net"));
     server.setPort(6697);
     server.setSSLEnabled(true);
     serverGroup->addServer(server);
