@@ -465,7 +465,7 @@ namespace Konversation
     {
         m_mainWidget->m_serverEdit->setText(server.host());
         m_mainWidget->m_portSBox->setValue(server.port());
-        m_mainWidget->m_passwordEdit->setText(server.password());
+        m_mainWidget->m_passwordEdit->setPassword(server.password());
         m_mainWidget->m_sslChBox->setChecked(server.SSLEnabled());
         m_mainWidget->m_proxyChBox->setChecked(!server.bypassProxy());
     }
@@ -475,7 +475,7 @@ namespace Konversation
         ServerSettings server;
         server.setHost(m_mainWidget->m_serverEdit->text());
         server.setPort(m_mainWidget->m_portSBox->value());
-        server.setPassword(m_mainWidget->m_passwordEdit->text());
+        server.setPassword(m_mainWidget->m_passwordEdit->password());
         server.setSSLEnabled(m_mainWidget->m_sslChBox->isChecked());
         server.setBypassProxy(!m_mainWidget->m_proxyChBox->isChecked());
 
@@ -530,14 +530,14 @@ namespace Konversation
     void ChannelDialog::setChannelSettings(const ChannelSettings& channel)
     {
         m_mainWidget->m_channelEdit->setText(channel.name());
-        m_mainWidget->m_passwordEdit->setText(channel.password());
+        m_mainWidget->m_passwordEdit->setPassword(channel.password());
     }
 
     ChannelSettings ChannelDialog::channelSettings() const
     {
         ChannelSettings channel;
         channel.setName(m_mainWidget->m_channelEdit->text());
-        channel.setPassword(m_mainWidget->m_passwordEdit->text());
+        channel.setPassword(m_mainWidget->m_passwordEdit->password());
 
         return channel;
     }

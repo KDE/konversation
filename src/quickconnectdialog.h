@@ -11,7 +11,7 @@
 
 #include <QDialog>
 
-
+class KPasswordLineEdit;
 class QCheckBox;
 class KLineEdit;
 class QPushButton;
@@ -47,7 +47,7 @@ class QuickConnectDialog : public QDialog
     private:
         KLineEdit*      hostNameInput;
         KLineEdit*      portInput;
-        KLineEdit*  passwordInput;
+        KPasswordLineEdit* passwordInput;
         KLineEdit*      nickInput;
         QCheckBox*      sslCheckBox;
         QPushButton*    mOkButton;

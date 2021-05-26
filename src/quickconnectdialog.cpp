@@ -7,9 +7,10 @@
 #include "quickconnectdialog.h"
 #include "application.h"
 
-#include <QCheckBox>
-
 #include <KLineEdit>
+#include <KPasswordLineEdit>
+
+#include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <KGuiItem>
@@ -66,8 +67,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
     passwordLabel->setWhatsThis(passwordWT);
-    passwordInput = new KLineEdit(page);
-    passwordInput->setPasswordMode(true);
+    passwordInput = new KPasswordLineEdit(page);
     passwordInput->setWhatsThis(passwordWT);
     passwordLabel->setBuddy(passwordInput);
     passwordLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -115,7 +115,7 @@ void QuickConnectDialog::slotOk()
         emit connectClicked(Konversation::PromptToReuseConnection,
                             hostNameInput->text().trimmed(),
                             portInput->text(),
-                            passwordInput->text(),
+                            passwordInput->password(),
                             nickInput->text(),
                             QString(),
                             sslCheckBox->isChecked());

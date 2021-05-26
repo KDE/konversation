@@ -98,7 +98,7 @@ namespace Konversation
 
     QString JoinChannelDialog::password() const
     {
-        return m_ui.passwordEdit->text();
+        return m_ui.passwordEdit->password();
     }
 
     void JoinChannelDialog::slotOk()

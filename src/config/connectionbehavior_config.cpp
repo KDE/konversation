@@ -27,7 +27,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
 
     kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
 
-    connect(m_ProxyPassword, &KLineEdit::textChanged, this, [this]() { setPasswordChanged(); });
+    connect(m_ProxyPassword, &KPasswordLineEdit::passwordChanged, this, [this]() { setPasswordChanged(); });
 }
 
 void ConnectionBehavior_Config::restorePageToDefaults()
@@ -41,7 +41,7 @@ void ConnectionBehavior_Config::saveSettings()
     {
         if(Application::instance()->wallet())
         {
-            int ret = Application::instance()->wallet()->writePassword(QStringLiteral("ProxyPassword"), m_ProxyPassword->text());
+            int ret = Application::instance()->wallet()->writePassword(QStringLiteral("ProxyPassword"), m_ProxyPassword->password());
 
             if(ret != 0)
             {
@@ -70,7 +70,7 @@ void ConnectionBehavior_Config::loadSettings()
         }
     }
 
-    m_ProxyPassword->setText(password);
+    m_ProxyPassword->setPassword(password);
     setPasswordChanged(false);
 }
 
