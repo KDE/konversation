@@ -122,19 +122,16 @@ the Free Software Foundation; either version 2 of the License, or
     <widget class="KComboBox" name="networkNameCombo"/>
    </item>
    <item row="2" column="2" colspan="2">
-    <widget class="KLineEdit" name="passwordEdit">
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
-     </property>
+    <widget class="KPasswordLineEdit" name="passwordEdit">
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>klineedit.h</header>
+   <class>KPasswordLineEdit</class>
+   <extends>QWidget</extends>
+   <header>kpasswordlineedit.h</header>
   </customwidget>
   <customwidget>
    <class>KComboBox</class>

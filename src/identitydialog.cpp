@@ -161,7 +161,7 @@ namespace Konversation
         m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
 
         m_authTypeCombo->setCurrentIndex(m_authTypeCombo->findData(m_currentIdentity->getAuthType()));
-        m_authPasswordEdit->setText(m_currentIdentity->getAuthPassword());
+        m_authPasswordEdit->setPassword(m_currentIdentity->getAuthPassword());
         m_nickservNicknameEdit->setText(m_currentIdentity->getNickservNickname());
         m_nickservCommandEdit->setText(m_currentIdentity->getNickservCommand());
         m_saslAccountEdit->setText(m_currentIdentity->getSaslAccount());
@@ -208,7 +208,7 @@ namespace Konversation
         m_currentIdentity->setNicknameList(nicks);
 
         m_currentIdentity->setAuthType(m_authTypeCombo->itemData(m_authTypeCombo->currentIndex()).toString());
-        m_currentIdentity->setAuthPassword(m_authPasswordEdit->text());
+        m_currentIdentity->setAuthPassword(m_authPasswordEdit->password());
         m_currentIdentity->setNickservNickname(m_nickservNicknameEdit->text());
         m_currentIdentity->setNickservCommand(m_nickservCommandEdit->text());
         m_currentIdentity->setSaslAccount(m_saslAccountEdit->text());
