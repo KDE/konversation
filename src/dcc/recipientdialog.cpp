@@ -31,13 +31,13 @@ namespace Konversation
             setModal( true );
             setWindowTitle( i18n("Select Recipient") );
             // Add the layout to the widget
-            QVBoxLayout* dialogLayout = new QVBoxLayout(this);
+            auto* dialogLayout = new QVBoxLayout(this);
             // Add the nickname list widget
-            QSortFilterProxyModel *sortModel = new QSortFilterProxyModel(this);
+            auto *sortModel = new QSortFilterProxyModel(this);
             sortModel->setSortCaseSensitivity(Preferences::self()->sortCaseInsensitive() ? Qt::CaseInsensitive : Qt::CaseSensitive);
             sortModel->setSourceModel(model);
             sortModel->sort(0, Qt::AscendingOrder);
-            QListView* nicknameList = new QListView(this);
+            auto* nicknameList = new QListView(this);
             nicknameList->setUniformItemSizes(true);
             nicknameList->setModel(sortModel);
 
@@ -49,7 +49,7 @@ namespace Konversation
             connect(nicknameList, &QListView::clicked, this, &RecipientDialog::newNicknameSelected);
             connect(nicknameList, &QListView::doubleClicked, this, &RecipientDialog::newNicknameSelectedQuit);
 
-            QDialogButtonBox* buttonBox = new QDialogButtonBox(this);
+            auto* buttonBox = new QDialogButtonBox(this);
             dialogLayout->addWidget(buttonBox);
             QPushButton* button = buttonBox->addButton(QDialogButtonBox::Ok);
             button->setToolTip(i18n("Select nickname and close the window"));

@@ -443,10 +443,10 @@ void ChannelListPanel::contextMenu(const QPoint& p)
         item = item.sibling(item.row(),2);
 
     QString filteredLine = item.data().toString();
-    QMenu* menu = new QMenu(this);
+    auto* menu = new QMenu(this);
 
     // Join Channel Action
-    QAction *joinAction = new QAction(menu);
+    auto *joinAction = new QAction(menu);
     joinAction->setText(i18n("Join Channel"));
     joinAction->setIcon(QIcon::fromTheme(QStringLiteral("irc-join-channel")));
     menu->addAction(joinAction);
@@ -456,14 +456,14 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     menu->addSeparator();
 
     // open URL submenu
-    QMenu* showURLmenu = new QMenu(i18n("Open URL"), menu);
+    auto* showURLmenu = new QMenu(i18n("Open URL"), menu);
 
     const QList<QPair<int, int>> urlRanges = Konversation::getUrlRanges(filteredLine);
 
     for (QPair<int, int> urlRange : urlRanges) {
         QString url = filteredLine.mid(urlRange.first, urlRange.second);
 
-        QAction* action = new QAction(showURLmenu);
+        auto* action = new QAction(showURLmenu);
         action->setText(url);
         action->setData(url);
 
@@ -483,7 +483,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
 
 void ChannelListPanel::openURL()
 {
-    const QAction* action = qobject_cast<const QAction*>(sender());
+    const auto* action = qobject_cast<const QAction*>(sender());
 
     if (action)
     {

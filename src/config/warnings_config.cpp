@@ -208,7 +208,7 @@ void Warnings_Config::loadSettings()
         const char * const message(warningDialogDefinition.message);
         const char * const ctx(warningDialogDefinition.context);
 
-        QTreeWidgetItem *item = new QTreeWidgetItem(dialogListView);
+        auto *item = new QTreeWidgetItem(dialogListView);
         item->setText(0, i18nc(ctx, message));
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setData(0, WarningNameRole, flagName);

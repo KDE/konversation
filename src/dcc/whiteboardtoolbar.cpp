@@ -458,11 +458,11 @@ namespace Konversation
                         tPaint.drawRect(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                     }
-                    QListWidgetItem *tRectangle = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    auto *tRectangle = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
                     tRectangle->setData(Qt::DecorationRole, QVariant(m_rectanglePixmap));
                     tRectangle->setSizeHint(sizeHint);
 
-                    QListWidgetItem *tFilledRectangle = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    auto *tFilledRectangle = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
                     tFilledRectangle->setData(Qt::DecorationRole, QVariant(m_filledRectanglePixmap));
                     tFilledRectangle->setSizeHint(sizeHint);
 
@@ -486,11 +486,11 @@ namespace Konversation
                         tPaint.drawEllipse(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                     }
-                    QListWidgetItem *tEllipse = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    auto *tEllipse = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
                     tEllipse->setData(Qt::DecorationRole, QVariant(m_ellipsePixmap));
                     tEllipse->setSizeHint(sizeHint);
 
-                    QListWidgetItem *tFilledEllipse = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    auto *tFilledEllipse = new QListWidgetItem(QString(), m_formOptionListWidget, QListWidgetItem::UserType +1);
                     tFilledEllipse->setData(Qt::DecorationRole, QVariant(m_filledEllipsePixmap));
                     tFilledEllipse->setSizeHint(sizeHint);
 

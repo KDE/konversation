@@ -45,14 +45,14 @@ namespace Konversation
             // setup layout
             if (m_chat->extension() == Chat::Whiteboard)
             {
-                QSplitter* chatSplitter = new QSplitter(Qt::Vertical);
+                auto* chatSplitter = new QSplitter(Qt::Vertical);
 
                 m_whiteBoard = new WhiteBoard(chatSplitter);
                 connect(m_whiteBoard, &WhiteBoard::rawWhiteBoardCommand, m_chat, &Chat::sendRawLine);
                 connect(m_chat, &Chat::connected, m_whiteBoard, &WhiteBoard::connected);
                 //chatSplitter->setStretchFactor(chatSplitter->indexOf(paintLabel), 1);
 
-                IRCViewBox *ircViewBox = new IRCViewBox(chatSplitter);
+                auto *ircViewBox = new IRCViewBox(chatSplitter);
                 //chatSplitter->setStretchFactor(chatSplitter->indexOf(ircViewBox), 1);
                 setTextView(ircViewBox->ircView());
 
@@ -60,7 +60,7 @@ namespace Konversation
             }
             else //(m_chat->extension() == Chat::SimpleChat || m_chat->extension() == Chat::Unknown)
             {
-                IRCViewBox *ircViewBox = new IRCViewBox(m_headerSplitter);
+                auto *ircViewBox = new IRCViewBox(m_headerSplitter);
                 m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
                 setTextView(ircViewBox->ircView());
             }

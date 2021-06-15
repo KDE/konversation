@@ -374,7 +374,7 @@ void ViewTree::contextMenuEvent(QContextMenuEvent* event)
     const QModelIndex& idx = indexAt(event->pos());
 
     if (idx.isValid()) {
-        QWidget* widget = static_cast<QWidget*>(idx.internalPointer());
+        auto* widget = static_cast<QWidget*>(idx.internalPointer());
 
         if (widget) {
             event->accept();
@@ -451,7 +451,7 @@ void ViewTree::keyPressEvent(QKeyEvent* event)
         const QModelIndex& idx = currentIndex();
 
         if (idx.isValid()) {
-            ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());
+            auto* view = static_cast<ChatWindow*>(idx.internalPointer());
 
             if (view) {
                 if (view->getInputBar())
@@ -489,7 +489,7 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
     if (!idxList.isEmpty()) {
         const QModelIndex& idx = idxList.at(0);
 
-        ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());
+        auto* view = static_cast<ChatWindow*>(idx.internalPointer());
 
         if (view) {
             emit showView(view);

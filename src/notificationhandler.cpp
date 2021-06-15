@@ -284,7 +284,7 @@ namespace Konversation
         }
         else
         {
-            KNotification *notification = new KNotification(QStringLiteral("dcctransfer_done"));
+            auto *notification = new KNotification(QStringLiteral("dcctransfer_done"));
             notification->setWidget(m_mainWindow);
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
             //notification->setPixmap( QPixmap() );
@@ -302,7 +302,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("mode"));
+        auto *ev=new KNotification(QStringLiteral("mode"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 changed modes in %2: %3", nick, subject, change));
         ev->sendEvent();
@@ -318,7 +318,7 @@ namespace Konversation
 
         startTrayNotification(chatWin);
 
-        KNotification *ev=new KNotification(QStringLiteral("query"));
+        auto *ev=new KNotification(QStringLiteral("query"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 has started a conversation (query) with you.",fromNick));
         ev->sendEvent();
@@ -332,7 +332,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("notify"));
+        auto *ev=new KNotification(QStringLiteral("notify"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 is online (%2).", nick, chatWin->getServer()->getServerName()));
         ev->sendEvent();
@@ -347,7 +347,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("notify"));
+        auto *ev=new KNotification(QStringLiteral("notify"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 went offline (%2).", nick, chatWin->getServer()->getServerName()));
         ev->sendEvent();
@@ -362,7 +362,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("kick"));
+        auto *ev=new KNotification(QStringLiteral("kick"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("You are kicked by %1 from %2", nick, channel));
         ev->sendEvent();
@@ -377,7 +377,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("dccChat"));
+        auto *ev=new KNotification(QStringLiteral("dccChat"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 started a DCC chat with you", nick));
         ev->sendEvent();
@@ -427,7 +427,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        KNotification *ev=new KNotification(QStringLiteral("connectionFailure"));
+        auto *ev=new KNotification(QStringLiteral("connectionFailure"));
         ev->setWidget(m_mainWindow);
         ev->setText(i18n("Failed to connect to %1", server));
         ev->sendEvent();

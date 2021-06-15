@@ -189,7 +189,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
 
-    KToggleAction* toggleMenuBarAction = qobject_cast<KToggleAction*>(actionCollection->action(QStringLiteral("options_show_menubar")));
+    auto* toggleMenuBarAction = qobject_cast<KToggleAction*>(actionCollection->action(QStringLiteral("options_show_menubar")));
 
     if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
         textMenu->insertAction(textMenu->actions().first(), toggleMenuBarAction);
@@ -308,7 +308,7 @@ void IrcContextMenus::updateWebShortcutsMenu(const QString& selectedText)
 
 void IrcContextMenus::processWebShortcutAction()
 {
-    QAction * action = qobject_cast<QAction*>(sender());
+    auto * action = qobject_cast<QAction*>(sender());
 
     if (action)
     {
@@ -741,7 +741,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         case LinkBookmark:
         {
             KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
-            KBookmarkDialog* dialog = new KBookmarkDialog(manager, Application::instance()->getMainWindow());
+            auto* dialog = new KBookmarkDialog(manager, Application::instance()->getMainWindow());
 
             dialog->addBookmark(link, QUrl(link), QString());
 
@@ -809,7 +809,7 @@ void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const 
 
 QAction* IrcContextMenus::createAction(ActionId id, const QString& text)
 {
-    QAction* action = new QAction(text, this);
+    auto* action = new QAction(text, this);
 
     action->setData(id);
 
@@ -818,7 +818,7 @@ QAction* IrcContextMenus::createAction(ActionId id, const QString& text)
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon)
 {
-    QAction* action = new QAction(this);
+    auto* action = new QAction(this);
 
     action->setData(id);
     action->setIcon(icon);
@@ -828,7 +828,7 @@ QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon)
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon, const QString& text)
 {
-    QAction* action = new QAction(icon, text, this);
+    auto* action = new QAction(icon, text, this);
 
     action->setData(id);
 

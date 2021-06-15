@@ -22,7 +22,7 @@ namespace Konversation
 {
     namespace DCC
     {
-        typedef qreal transferspeed_t;
+        using transferspeed_t = qreal;
 
         class Transfer : public QObject
         {

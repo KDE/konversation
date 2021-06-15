@@ -179,7 +179,7 @@ QString ChannelNick::tooltip() const
 
     tooltip << "<qt>";
 
-    tooltip << "<table cellspacing=\"5\" cellpadding=\"0\">";
+    tooltip << R"(<table cellspacing="5" cellpadding="0">)";
 
     m_nickInfo->tooltipTableData(tooltip);
 

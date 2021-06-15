@@ -287,7 +287,7 @@ namespace Konversation
 
             const auto rowIndices = rowIndexes();
             for (const QModelIndex &rowIndex : rowIndices) {
-                Transfer *rowTransfer = qobject_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
+                auto *rowTransfer = qobject_cast<Transfer*>(rowIndex.data(TransferListModel::TransferPointer).value<QObject*>());
                 if (rowTransfer == transfer)
                 {
                     return rowIndex;
@@ -303,7 +303,7 @@ namespace Konversation
 
             for (int i = 0; i < m_dccModel->columnCount(); ++i)
             {
-                QAction *tAction = new QAction(m_dccModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString(), &menu);
+                auto *tAction = new QAction(m_dccModel->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString(), &menu);
                 tAction->setCheckable(true);
 
                 int headerType = m_dccModel->headerData(i, Qt::Horizontal, TransferListModel::HeaderType).toInt();

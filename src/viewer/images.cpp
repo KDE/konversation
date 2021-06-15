@@ -121,7 +121,7 @@ QPixmap LedIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State 
 
 QIconEngine* LedIconEngine::clone() const
 {
-    LedIconEngine* newEngine = new LedIconEngine(m_color, m_state);
+    auto* newEngine = new LedIconEngine(m_color, m_state);
 
     return newEngine;
 }

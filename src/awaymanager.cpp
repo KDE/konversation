@@ -157,7 +157,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
         simulateUserActivity();
 
     Application* konvApp = Application::instance();
-    KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
+    auto* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
     Konversation::TrayIcon* trayIcon = konvApp->getMainWindow()->systemTrayIcon();
 
     if (!awayAction)

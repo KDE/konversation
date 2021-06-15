@@ -63,7 +63,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
   // go through the list
   for (const QStringList &definition : autoreplaceList) {
     // cut definition apart in name and action, and create a new listview item
-    QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
+    auto* newItem=new QTreeWidgetItem(patternListView);
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
     newItem->setCheckState(0, Qt::Unchecked);
     // Regular expression?
@@ -276,7 +276,7 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 void Autoreplace_Config::addEntry()
 {
   // add new item at the bottom of list view
-  QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
+  auto* newItem=new QTreeWidgetItem(patternListView);
 
   if (newItem)
   {

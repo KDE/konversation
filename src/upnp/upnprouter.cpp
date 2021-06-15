@@ -182,7 +182,7 @@ namespace Konversation
                 QString action = QStringLiteral("AddPortMapping");
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
 
-                Forwarding *forward = new Forwarding;
+                auto *forward = new Forwarding;
 
                 forward->port = port;
                 forward->host = host;

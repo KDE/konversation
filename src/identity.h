@@ -144,7 +144,7 @@ class Identity : public QSharedData
         static int s_availableId;
 };
 
-typedef QExplicitlySharedDataPointer<Identity> IdentityPtr;
-typedef QList<IdentityPtr> IdentityList;
+using IdentityPtr = QExplicitlySharedDataPointer<Identity>;
+using IdentityList = QList<IdentityPtr>;
 
 #endif

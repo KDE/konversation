@@ -144,7 +144,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
     Application* konvApp = Application::instance();
     MainWindow* mainWindow = konvApp->getMainWindow();
 
-    Server* server = new Server(this, settings);
+    auto* server = new Server(this, settings);
 
     enlistConnection(server->connectionId(), server);
 

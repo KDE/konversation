@@ -162,7 +162,7 @@ namespace Konversation
             setSelection(0, 0);
 
             QPointer<QDrag> drag = new QDrag(this);
-            QMimeData* mimeData = new QMimeData;
+            auto* mimeData = new QMimeData;
 
             QUrl url(m_dragUrl);
 

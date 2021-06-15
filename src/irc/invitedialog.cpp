@@ -20,8 +20,8 @@ InviteDialog::InviteDialog(QWidget* parent)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(i18n("Channel Invites"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    auto *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
@@ -29,7 +29,7 @@ InviteDialog::InviteDialog(QWidget* parent)
     connect(buttonBox, &QDialogButtonBox::accepted, this, &InviteDialog::slotOk);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &InviteDialog::reject);
 
-    QWidget* mainWidget = new QWidget(this);
+    auto* mainWidget = new QWidget(this);
     mainLayout->addWidget(mainWidget);
     mainLayout->addWidget(buttonBox);
     setupUi(mainWidget);

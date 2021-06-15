@@ -18,7 +18,7 @@
 DccFileDialog::DccFileDialog(QWidget* parent)
     : QDialog(parent)
 {
-    QGridLayout* mainLayout = new QGridLayout(this);
+    auto* mainLayout = new QGridLayout(this);
 
     m_fileWidget = new KFileWidget(QUrl(), this);
     mainLayout->addWidget(m_fileWidget, 0, 0);

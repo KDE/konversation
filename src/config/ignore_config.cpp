@@ -79,8 +79,8 @@ QList<Ignore*> Ignore_Config::getIgnoreList() const
     const int childCount = root->childCount();
     newList.reserve(childCount);
     for (int i = 0; i < childCount; ++i) {
-        IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
-        Ignore* newItem=new Ignore(item->text(0),item->getFlags());
+        auto* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
+        auto* newItem=new Ignore(item->text(0),item->getFlags());
         newList.append(newItem);
     }
 
@@ -96,7 +96,7 @@ QStringList Ignore_Config::currentIgnoreList() const
     const int childCount = root->childCount();
     newList.reserve(childCount);
     for (int i = 0; i < childCount; ++i) {
-        IgnoreListViewItem* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
+        auto* item = dynamic_cast<IgnoreListViewItem *>(root->child(i));
         newList.append(item->text(0)+QLatin1Char(' ')+QString(item->getFlags()));
     }
 
@@ -139,7 +139,7 @@ void Ignore_Config::loadSettings()
 
 void Ignore_Config::updateEnabledness()
 {
-    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
+    auto* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
 
     chkChannel->setEnabled(selectedItem != nullptr);
     chkQuery->setEnabled(selectedItem != nullptr);
@@ -157,7 +157,7 @@ void Ignore_Config::updateEnabledness()
 void Ignore_Config::select(QTreeWidgetItem* item)
 {
     updateEnabledness();
-    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(item);
+    auto* selectedItem=dynamic_cast<IgnoreListViewItem*>(item);
 
     if(selectedItem)
     {
@@ -187,7 +187,7 @@ void Ignore_Config::flagCheckboxChanged()
     if(chkInvite->isChecked()) flags |= Ignore::Invite;
 
 //    if(chkExceptions->isChecked()) flags |= Ignore::Exceptions;
-    IgnoreListViewItem* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
+    auto* selectedItem=dynamic_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
     if(selectedItem) {
         selectedItem->setFlags(flags);
 	selectedItem->setName(txtPattern->text());

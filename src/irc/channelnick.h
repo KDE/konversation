@@ -83,17 +83,17 @@ class ChannelNick : public QSharedData
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a QExplicitlySharedDataPointer,
  *  the ChannelNick object is automatically destroyed when all references are destroyed.
  */
-typedef QExplicitlySharedDataPointer<ChannelNick> ChannelNickPtr;
+using ChannelNickPtr = QExplicitlySharedDataPointer<ChannelNick>;
 
 /** A ChannelNickMap is a list of ChannelNick pointers, indexed and sorted by
  *  lowercase nickname.
  */
-typedef QMap<QString,ChannelNickPtr> ChannelNickMap;
+using ChannelNickMap = QMap<QString, ChannelNickPtr>;
 
-typedef QList<ChannelNickPtr> ChannelNickList;
+using ChannelNickList = QList<ChannelNickPtr>;
 
 /** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and
  *  sorted by lowercase channel name.
  */
-typedef QMap<QString,ChannelNickMap *> ChannelMembershipMap;
+using ChannelMembershipMap = QMap<QString, ChannelNickMap *>;
 #endif                                            /* CHANNEL_NICK_H */

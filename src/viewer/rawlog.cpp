@@ -17,7 +17,7 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setName(i18n("Raw Log"));
     setType(ChatWindow::RawLog);
     m_isTopLevelView = false;
-    IRCViewBox* ircBox = new IRCViewBox(this);
+    auto* ircBox = new IRCViewBox(this);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
 
     updateAppearance();

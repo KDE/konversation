@@ -19,11 +19,11 @@ namespace Konversation
         WhiteBoard::WhiteBoard(QWidget* parent)
             : QWidget(parent)
         {
-            QHBoxLayout *layout = new QHBoxLayout;
+            auto *layout = new QHBoxLayout;
             m_toolbar = new WhiteBoardToolBar(this);
             layout->addWidget(m_toolbar);
 
-            QScrollArea* area = new QScrollArea(this);
+            auto* area = new QScrollArea(this);
             m_paintArea = new WhiteBoardPaintArea(area);
             area->setWidgetResizable(true);
             area->setWidget(m_paintArea);

@@ -1019,7 +1019,7 @@ void Application::storeUrl(const QString& origin, const QString& newUrl, const Q
     m_urlModel->setData(m_urlModel->index(0, 0), origin, Qt::DisplayRole);
     m_urlModel->setData(m_urlModel->index(0, 1), url, Qt::DisplayRole);
 
-    UrlDateItem* dateItem = new UrlDateItem(dateTime);
+    auto* dateItem = new UrlDateItem(dateTime);
     m_urlModel->setItem(0, 2, dateItem);
 }
 

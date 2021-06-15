@@ -190,7 +190,7 @@ QString NickInfo::tooltip() const
     QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
     tooltip << "<qt>";
 
-    tooltip << "<table cellspacing=\"5\" cellpadding=\"0\">";
+    tooltip << R"(<table cellspacing="5" cellpadding="0">)";
     tooltipTableData(tooltip);
     tooltip << "</table></qt>";
     return strTooltip;

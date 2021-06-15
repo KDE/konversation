@@ -186,7 +186,7 @@ void TopicEdit::showWarning()
         m_warning->setCloseButtonVisible(false);
         m_warning->setWordWrap(true);
 
-        QAction* trimExcessAction = new QAction(i18n("Delete excess text"), m_warning);
+        auto* trimExcessAction = new QAction(i18n("Delete excess text"), m_warning);
         connect(trimExcessAction, &QAction::triggered, this, &TopicEdit::trimExcessText);
 
         m_warning->addAction(trimExcessAction);

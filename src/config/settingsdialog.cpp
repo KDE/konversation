@@ -43,15 +43,15 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   m_modified = false;
 
-  KPageWidgetItem* interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
+  auto* interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
   interfaceGroup->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-theme")));
   KPageDialog::addPage(interfaceGroup);
 
-  KPageWidgetItem* behaviorGroup = new KPageWidgetItem(new QWidget(this), i18n("Behavior"));
+  auto* behaviorGroup = new KPageWidgetItem(new QWidget(this), i18n("Behavior"));
   behaviorGroup->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
   KPageDialog::addPage(behaviorGroup);
 
-  KPageWidgetItem* notificationGroup = new KPageWidgetItem(new QWidget(this), i18n("Notifications"));
+  auto* notificationGroup = new KPageWidgetItem(new QWidget(this), i18n("Notifications"));
   notificationGroup->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-notification")));
   KPageDialog::addPage(notificationGroup);
 
@@ -101,7 +101,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   konviAddSubPage(behaviorGroup, w, i18n("General Behavior"), QStringLiteral("configure"));
 
   //Behavior/Connection
-  ConnectionBehavior_Config* confConnectionBehavior = new ConnectionBehavior_Config(this);
+  auto* confConnectionBehavior = new ConnectionBehavior_Config(this);
   confConnectionBehavior->setObjectName(QStringLiteral("ConnectionBehavior"));
   konviAddSubPage(behaviorGroup, confConnectionBehavior, i18n("Connection"), QStringLiteral("network-connect"));
   m_pages.append(confConnectionBehavior);

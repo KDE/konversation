@@ -51,7 +51,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
     buttonListView->clear();
 
     for (const QString& definition : buttonList) {
-        QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList {
+        auto *item = new QTreeWidgetItem(buttonListView, QStringList {
             definition.section(QLatin1Char(','), 0, 0),
             definition.section(QLatin1Char(','), 1)
         });
@@ -190,7 +190,7 @@ void QuickButtons_Config::actionChanged(const QString& newAction)
 void QuickButtons_Config::addEntry()
 {
   // add new item at the bottom of list view
-  QTreeWidgetItem* newItem = new QTreeWidgetItem(buttonListView, buttonListView->topLevelItemCount());
+  auto* newItem = new QTreeWidgetItem(buttonListView, buttonListView->topLevelItemCount());
 
   if (newItem)
   {

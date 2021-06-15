@@ -140,10 +140,10 @@ class NickInfo : public QSharedData
 /** A NickInfoPtr is a pointer to a NickInfo object.  Since it is a QExplicitlySharedDataPointer, the NickInfo
  * object is automatically destroyed when all references are destroyed.
  */
-typedef QExplicitlySharedDataPointer<NickInfo> NickInfoPtr;
+using NickInfoPtr = QExplicitlySharedDataPointer<NickInfo>;
 /** A NickInfoMap is a list of NickInfo objects, indexed and sorted by lowercase nickname.
  */
-typedef QMap<QString,NickInfoPtr> NickInfoMap;
+using NickInfoMap = QMap<QString, NickInfoPtr>;
 
-typedef QList<NickInfoPtr> NickInfoList;
+using NickInfoList = QList<NickInfoPtr>;
 #endif

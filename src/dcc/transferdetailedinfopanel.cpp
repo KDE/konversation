@@ -27,7 +27,7 @@ namespace Konversation
         TransferDetailedInfoPanel::TransferDetailedInfoPanel(QWidget * parent)
             : QTabWidget(parent)
         {
-            QWidget *tab = new QWidget(this);
+            auto *tab = new QWidget(this);
             m_locationInfo.setupUi(tab);
             addTab(tab, i18n("Status") );
             tab = new QWidget(this);

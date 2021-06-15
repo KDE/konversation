@@ -123,7 +123,7 @@ IRCView::IRCView(QWidget* parent) : QTextBrowser(parent), m_rememberLine(nullptr
     connect(this, &IRCView::anchorClicked, this, &IRCView::handleAnchorClicked);
     connect(this, QOverload<const QUrl&>::of(&IRCView::highlighted), this, &IRCView::highlightedSlot);
     setOpenLinks(false);
-    setUndoRedoEnabled(0);
+    setUndoRedoEnabled(false);
     document()->setDefaultStyleSheet(QStringLiteral("a.nick:link {text-decoration: none}"));
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     setFocusPolicy(Qt::ClickFocus);
@@ -257,7 +257,7 @@ QVariant IrcViewMimeData::retrieveData(const QString &mimeType, QVariant::Type t
 {
     if (!fragment.isEmpty())
     {
-        IrcViewMimeData *that = const_cast<IrcViewMimeData *>(this);
+        auto *that = const_cast<IrcViewMimeData *>(this);
 
         //Copy the text, skipping any QChar::ObjectReplacementCharacter
         const QRegularExpression needle(QStringLiteral("\\x{FFFC}\\n?"));
@@ -1051,7 +1051,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
     nickLine = QLatin1String("<font color=\"") + nickColor + QLatin1String("\">") + nickLine + QLatin1String("</font>");
 
     if (Preferences::self()->useClickableNicks())
-        nickLine = QLatin1String("<a class=\"nick\" href=\"#%1\">%2</a>").arg(QString::fromLatin1(QUrl::toPercentEncoding(nick)), nickLine);
+        nickLine = QLatin1String(R"(<a class="nick" href="#%1">%2</a>)").arg(QString::fromLatin1(QUrl::toPercentEncoding(nick)), nickLine);
 
     if (privMsg)
         nickLine.prepend(QLatin1String("-&gt; "));
@@ -1314,7 +1314,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 QString strippedChannel = removeIrcMarkup(oldChannel);
                 QString colorCodes = extractColorCodes(oldChannel);
 
-                QString link(QLatin1String("%1<a href=\"#%2\" style=\"color:") + linkColor + QLatin1String("\">%3</a>%4%5"));
+                QString link(QLatin1String(R"(%1<a href="#%2" style="color:)") + linkColor + QLatin1String("\">%3</a>%4%5"));
 
                 link = link.arg(closeTags(&data), fixedChannel, strippedChannel, openTags(&data, 0), colorCodes);
                 htmlText.replace(pos, oldChannel.length(), link);
@@ -1334,7 +1334,7 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 QString colorCodes = extractColorCodes(oldUrl);
                 colorCodes = removeDuplicateCodes(colorCodes, &data, allowColors);
 
-                QString link(QLatin1String("%1<a href=\"%2\" style=\"color:") + linkColor + QLatin1String("\">%3</a>%4%5"));
+                QString link(QLatin1String(R"(%1<a href="%2" style="color:)") + linkColor + QLatin1String("\">%3</a>%4%5"));
 
                 link = link.arg(closeTagsString, fixedUrl, strippedUrl, openTags(&data, 0), colorCodes);
                 htmlText.replace(pos, oldUrl.length(), link);
@@ -2039,7 +2039,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
 
 
         QPointer<QDrag> drag = new QDrag(this);
-        QMimeData* mimeData = new QMimeData;
+        auto* mimeData = new QMimeData;
 
         QUrl url(m_dragUrl);
 

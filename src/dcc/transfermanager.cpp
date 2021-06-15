@@ -97,7 +97,7 @@ namespace Konversation
 
         TransferRecv* TransferManager::newDownload()
         {
-            TransferRecv* transfer = new TransferRecv(this);
+            auto* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
             connect(transfer, &TransferRecv::removed, this, &TransferManager::removeRecvItem);
             initTransfer( transfer );
@@ -106,7 +106,7 @@ namespace Konversation
 
         TransferSend* TransferManager::newUpload()
         {
-            TransferSend* transfer = new TransferSend(this);
+            auto* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
             connect(transfer, &TransferSend::removed, this, &TransferManager::removeSendItem);
             initTransfer( transfer );
@@ -378,14 +378,14 @@ namespace Konversation
 
         void TransferManager::removeSendItem( Transfer* item )
         {
-            TransferSend* transfer = qobject_cast< TransferSend* > ( item );
+            auto* transfer = qobject_cast< TransferSend* > ( item );
             m_sendItems.removeOne( transfer );
             item->deleteLater();
         }
 
         void TransferManager::removeRecvItem( Transfer* item )
         {
-            TransferRecv* transfer = qobject_cast< TransferRecv* > ( item );
+            auto* transfer = qobject_cast< TransferRecv* > ( item );
             m_recvItems.removeOne( transfer );
             item->deleteLater();
         }

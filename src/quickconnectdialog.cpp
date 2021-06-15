@@ -20,9 +20,9 @@
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 :QDialog(parent)
 {
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-    QWidget *mainWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    auto *mainWidget = new QWidget(this);
+    auto *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
     mainLayout->addWidget(mainWidget);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -36,11 +36,11 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     setModal( true );
     QWidget* page = mainWidget;
 
-    QGridLayout* layout = new QGridLayout(mainWidget);
+    auto* layout = new QGridLayout(mainWidget);
     layout->setContentsMargins(0, 0, 0, 0);
     //QT5 layout->setSpacing(spacingHint());
 
-    QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
+    auto* hostNameLabel = new QLabel(i18n("&Server host:"), page);
     QString hostNameWT = i18n("Enter the host of the network here.");
     hostNameLabel->setWhatsThis(hostNameWT);
     hostNameInput = new KLineEdit(page);
@@ -48,7 +48,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     hostNameLabel->setBuddy(hostNameInput);
     hostNameLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-    QLabel* portLabel = new QLabel(i18n("&Port:"), page);
+    auto* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
     portLabel->setWhatsThis(portWT);
     portInput = new KLineEdit(QStringLiteral("6667"), page );
@@ -56,7 +56,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     portLabel->setBuddy(portInput);
     portLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-    QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
+    auto* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
     nickLabel->setWhatsThis(nickWT);
     nickInput = new KLineEdit(Preferences::identityById(0)->getNickname(0), page);
@@ -64,7 +64,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     nickLabel->setBuddy(nickInput);
     nickLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-    QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
+    auto* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
     passwordLabel->setWhatsThis(passwordWT);
     passwordInput = new KPasswordLineEdit(page);

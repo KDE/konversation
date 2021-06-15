@@ -66,7 +66,7 @@ void Alias_Config::setAliasListView(const QStringList& aliasList)
     for(int index=aliasList.count(); index!=0; index--)
     {
         QString item=aliasList[index-1];
-        QTreeWidgetItem *treeWidgetItem = new QTreeWidgetItem(aliasListView, QStringList {
+        auto *treeWidgetItem = new QTreeWidgetItem(aliasListView, QStringList {
             item.section(QLatin1Char(' '), 0, 0),
             item.section(QLatin1Char(' '), 1)
         });
@@ -154,7 +154,7 @@ void Alias_Config::actionChanged(const QString& newAction)
 void Alias_Config::addEntry()
 {
     // add new item at the bottom of list view
-    QTreeWidgetItem* newItem = new QTreeWidgetItem(aliasListView, aliasListView->topLevelItemCount());
+    auto* newItem = new QTreeWidgetItem(aliasListView, aliasListView->topLevelItemCount());
 
     if (newItem)
     {

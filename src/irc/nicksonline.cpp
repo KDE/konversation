@@ -515,7 +515,7 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
 {
     Q_UNUSED(column)
 
-    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
+    auto* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 
     if (!nickitem || nickitem->isOffline())
         return;
@@ -633,7 +633,7 @@ void NicksOnline::doCommand(QAction* id)
                 serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
             }
         }
-        EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
+        auto *end = new EditNotifyDialog(this, serverGroupId);
         connect(end, &EditNotifyDialog::notifyChanged, this, &NicksOnline::slotAddNickname);
         end->show();
         return;
@@ -643,7 +643,7 @@ void NicksOnline::doCommand(QAction* id)
     QString nickname;
     if (m_nickListView->selectedItems().isEmpty()) return;
     QTreeWidgetItem* item = m_nickListView->selectedItems().at(0);
-    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
+    auto* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 
     if(!nickitem)
         return;

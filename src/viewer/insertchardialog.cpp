@@ -20,8 +20,8 @@ namespace Konversation
     InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent)
         : QDialog(parent)
     {
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Close);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Close);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);

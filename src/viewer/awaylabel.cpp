@@ -16,7 +16,7 @@ AwayLabel::AwayLabel(QWidget *parent)
     : QLabel(i18n("(away)"), parent)
 {
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
-    QAction *action = new QAction(i18n("&Unaway"),this);
+    auto *action = new QAction(i18n("&Unaway"),this);
     connect(action, &QAction::triggered, this, &AwayLabel::unaway);
     this->addAction(action);
     action = new QAction(i18n("&Change away message..."),this);

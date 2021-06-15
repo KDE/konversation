@@ -49,7 +49,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar. The full name and hostmask is shown.</p><p>See the <i>Konversation Handbook</i> for an explanation of what the hostmask is.</p></qt>");
     queryHostmask->setWhatsThis(whatsthis);
 
-    IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter);
+    auto* ircViewBox = new IRCViewBox(m_headerSplitter);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
     setTextView(ircViewBox->ircView());               // Server will be set later in setServer();
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowNickActions, true);
@@ -57,8 +57,8 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
     connect(textView,&IRCView::urlsDropped,this,&Query::urlsDropped);
 
     // This box holds the input line
-    QWidget* inputBox=new QWidget(this);
-    QHBoxLayout* inputBoxLayout = new QHBoxLayout(inputBox);
+    auto* inputBox=new QWidget(this);
+    auto* inputBoxLayout = new QHBoxLayout(inputBox);
     inputBox->setObjectName(QStringLiteral("input_log_box"));
     inputBoxLayout->setSpacing(spacing());
     inputBoxLayout->setContentsMargins(0, 0, 0, 0);
@@ -368,7 +368,7 @@ void Query::nickInfoChanged()
 
         tooltip << "<qt>";
 
-        tooltip << "<table cellspacing=\"5\" cellpadding=\"0\">";
+        tooltip << R"(<table cellspacing="5" cellpadding="0">)";
 
         m_nickInfo->tooltipTableData(tooltip);
 

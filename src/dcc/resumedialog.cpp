@@ -75,10 +75,10 @@ namespace Konversation
             setWindowTitle(caption);
             setModal(true);
 
-            QVBoxLayout *mainLayout = new QVBoxLayout;
+            auto *mainLayout = new QVBoxLayout;
             setLayout(mainLayout);
 
-            QLabel* labelMessage = new QLabel(this);
+            auto* labelMessage = new QLabel(this);
             labelMessage->setText(message);
 
             m_urlreqFileURL = new KUrlRequester(m_item->getFileURL(), this);
@@ -90,11 +90,11 @@ namespace Konversation
 
             if (m_enabledActions & RA_Rename)
             {
-                QFrame* filePathToolsFrame = new QFrame(this);
-                QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
+                auto* filePathToolsFrame = new QFrame(this);
+                auto* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
 
-                QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);
-                QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"),filePathToolsFrame);
+                auto* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);
+                auto* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"),filePathToolsFrame);
                 filePathToolsLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
                 filePathToolsLayout->addWidget(btnDefaultName);
                 filePathToolsLayout->addWidget(btnSuggestNewName);
@@ -105,8 +105,8 @@ namespace Konversation
             }
             if (m_enabledActions & RA_OverwriteDefaultPath)
             {
-                QFrame* settingsFrame = new QFrame(this);
-                QVBoxLayout* settingsLayout = new QVBoxLayout(settingsFrame);
+                auto* settingsFrame = new QFrame(this);
+                auto* settingsLayout = new QVBoxLayout(settingsFrame);
 
                 m_overwriteDefaultPathCheckBox = new QCheckBox(i18n("Use as new default download folder"), settingsFrame);
                 settingsLayout->addWidget(m_overwriteDefaultPathCheckBox);

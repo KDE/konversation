@@ -71,7 +71,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     for (int i=0; i <= Application::instance()->countOfQueues(); i++)
     {
         //QList<int> r=Preferences::queueRate(i);
-        IRCQueue *q=new IRCQueue(this, Application::instance()->staticrates[i]); //FIXME these are supposed to be in the rc
+        auto *q=new IRCQueue(this, Application::instance()->staticrates[i]); //FIXME these are supposed to be in the rc
         m_queues.append(q);
     }
 
@@ -973,7 +973,7 @@ void Server::broken(QAbstractSocket::SocketError error)
     // child of the statusview will be the nick change dialog.
     if (getStatusView())
     {
-        QInputDialog* nickChangeDialog = getStatusView()->findChild<QInputDialog*>();
+        auto* nickChangeDialog = getStatusView()->findChild<QInputDialog*>();
 
         if (nickChangeDialog) nickChangeDialog->reject();
     }

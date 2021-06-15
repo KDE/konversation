@@ -219,7 +219,7 @@ void ViewContainer::setupTabWidget()
     m_popupViewIndex = -1;
 
     m_vbox = new QWidget(m_viewTreeSplitter);
-    QVBoxLayout* vboxLayout = new QVBoxLayout(m_vbox);
+    auto* vboxLayout = new QVBoxLayout(m_vbox);
     vboxLayout->setContentsMargins(0, 0, 0, 0);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
     m_vbox->setObjectName(QStringLiteral("main_window_right_side"));
@@ -236,7 +236,7 @@ void ViewContainer::setupTabWidget()
 
     m_vbox->hide();
 
-    QToolButton* closeBtn = new QToolButton(m_tabWidget);
+    auto* closeBtn = new QToolButton(m_tabWidget);
     closeBtn->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
     closeBtn->adjustSize();
     m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
@@ -366,7 +366,7 @@ int ViewContainer::rowCount(const QModelIndex& parent) const
     int count = 0;
     if (m_tabWidget) {
         if (parent.isValid()) {
-            ChatWindow* statusView = static_cast<ChatWindow*>(parent.internalPointer());
+            auto* statusView = static_cast<ChatWindow*>(parent.internalPointer());
 
             if (statusView) {
                 for (int i = m_tabWidget->indexOf(statusView) + 1; i < m_tabWidget->count(); ++i) {
@@ -677,7 +677,7 @@ void ViewContainer::updateAppearance()
     updateViews();
     updateTabWidgetAppearance();
 
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
+    auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
     Q_ASSERT(action);
     action->setChecked(Preferences::self()->showNickList());
 
@@ -766,7 +766,7 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(false);
         }
 
-        KToggleAction* notifyAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
+        auto* notifyAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
         if (notifyAction)
         {
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
@@ -775,7 +775,7 @@ void ViewContainer::updateViewActions(int index)
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
-        KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
+        auto* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
         auto* channel = static_cast<Channel*>(view);
         if (autoJoinAction && viewType == ChatWindow::Channel && channel->getServer()->getServerGroup())
         {
@@ -788,7 +788,7 @@ void ViewContainer::updateViewActions(int index)
             autoJoinAction->setChecked(false);
         }
 
-        KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
+        auto* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
         if (autoConnectAction && server && (viewType == ChatWindow::Status || server == m_frontServer) && server->getServerGroup())
         {
             autoConnectAction->setEnabled(true);
@@ -882,7 +882,7 @@ void ViewContainer::updateViewActions(int index)
             action = actionCollection()->action(QStringLiteral("edit_find_prev"));
             if (action) action->setEnabled(view->searchView());
 
-            KToggleAction* channelListAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
+            auto* channelListAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
             if (channelListAction)
             {
                 if (m_frontServer)
@@ -1026,7 +1026,7 @@ void ViewContainer::updateFrontView()
 {
     if (!m_tabWidget) return;
 
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->currentWidget());
+    auto* view = qobject_cast<ChatWindow*>(m_tabWidget->currentWidget());
 
     if (!view) return;
 
@@ -1323,14 +1323,14 @@ void ViewContainer::toggleViewNotifications()
         {
             view->setNotificationsEnabled(true);
             updateViews();
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
+            auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
             if (action) action->setChecked(view->notificationsEnabled());
         }
         else
         {
             view->setNotificationsEnabled(false);
             unsetViewNotification(view);
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
+            auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_notifications")));
             if (action) action->setChecked(view->notificationsEnabled());
         }
     }
@@ -1674,7 +1674,7 @@ void ViewContainer::unclutterTabs()
 
 void ViewContainer::viewSwitched(int newIndex)
 {
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
+    auto* view = qobject_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
     if (!view) return;
 
     m_lastFocusedView = m_currentView;
@@ -1964,7 +1964,7 @@ void ViewContainer::moveViewRight()
 
 void ViewContainer::closeView(int view)
 {
-    ChatWindow* viewToClose = qobject_cast<ChatWindow*>(m_tabWidget->widget(view));
+    auto* viewToClose = qobject_cast<ChatWindow*>(m_tabWidget->widget(view));
 
     closeView(viewToClose);
 }
@@ -2089,7 +2089,7 @@ void ViewContainer::renameKonsole()
 
     if (ok)
     {
-        KonsolePanel* view = qobject_cast<KonsolePanel*>(m_tabWidget->widget(popup));
+        auto* view = qobject_cast<KonsolePanel*>(m_tabWidget->widget(popup));
 
         if (!view) return;
 
@@ -2143,7 +2143,7 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
-        KSelectAction* codecAction = qobject_cast<KSelectAction*>(actionCollection()->action(QStringLiteral("tab_encoding")));
+        auto* codecAction = qobject_cast<KSelectAction*>(actionCollection()->action(QStringLiteral("tab_encoding")));
 
         if (codecAction)
         {
@@ -2185,16 +2185,16 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    QMenu* menu = qobject_cast<QMenu*>(m_window->guiFactory()->container(QStringLiteral("tabContextMenu"), m_window));
+    auto* menu = qobject_cast<QMenu*>(m_window->guiFactory()->container(QStringLiteral("tabContextMenu"), m_window));
 
     if (!menu) return;
 
-    KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
-    KToggleAction* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
+    auto* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autojoin")));
+    auto* autoConnectAction = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("tab_autoconnect")));
     QAction* rejoinAction = actionCollection()->action(QStringLiteral("rejoin_channel"));
     QAction* closeAction = actionCollection()->action(QStringLiteral("close_tab"));
 
-    QAction* renameAct = new QAction(this);
+    auto* renameAct = new QAction(this);
     renameAct->setText(i18n("&Rename Tab..."));
     connect(renameAct, &QAction::triggered, this, &ViewContainer::renameKonsole);
 
@@ -2427,7 +2427,7 @@ void ViewContainer::insertCharacter()
 
 void ViewContainer::insertChar(uint chr)
 {
-    ChatWindow* view = qobject_cast<ChatWindow*>(m_tabWidget->currentWidget());
+    auto* view = qobject_cast<ChatWindow*>(m_tabWidget->currentWidget());
 
     if (view) view->appendInputText(QString::fromUcs4(&chr, 1), true/*fromCursor*/);
 }
@@ -2557,7 +2557,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
         return;
     }
 
-    LogfileReader* logReader = new LogfileReader(m_tabWidget, file, caption);
+    auto* logReader = new LogfileReader(m_tabWidget, file, caption);
     addView(logReader, logReader->getName());
 
     logReader->setServer(nullptr);
@@ -2565,7 +2565,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
 
 void ViewContainer::addKonsolePanel()
 {
-    KonsolePanel* panel=new KonsolePanel(m_tabWidget);
+    auto* panel=new KonsolePanel(m_tabWidget);
     panel->setName(i18n("Konsole"));
     addView(panel, i18n("Konsole"));
     connect(panel, &KonsolePanel::updateTabNotification, this, &ViewContainer::setViewNotification);
@@ -2657,7 +2657,7 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
         konv_app->notificationHandler()->dccChat(m_frontView, chat->partnerNick());
     }
 
-    DCC::ChatContainer *chatcontainer = new DCC::ChatContainer(m_tabWidget,chat);
+    auto *chatcontainer = new DCC::ChatContainer(m_tabWidget,chat);
     connect(chatcontainer, &DCC::ChatContainer::updateTabNotification,
             this, &ViewContainer::setViewNotification);
 
@@ -2666,7 +2666,7 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
 {
-    StatusPanel* statusView = new StatusPanel(m_tabWidget);
+    auto* statusView = new StatusPanel(m_tabWidget);
 
     // Get group name for tab if available
     QString label = server->getDisplayName();
@@ -2695,7 +2695,7 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
 
 RawLog* ViewContainer::addRawLog(Server* server)
 {
-    RawLog* rawLog = new RawLog(m_tabWidget);
+    auto* rawLog = new RawLog(m_tabWidget);
     rawLog->setServer(server);
 
     if (server->getServerGroup()) rawLog->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
@@ -2799,7 +2799,7 @@ void ViewContainer::channelJoined(Channel* channel)
 
 Channel* ViewContainer::addChannel(Server* server, const QString& name)
 {
-    Channel* channel=new Channel(m_tabWidget, name);
+    auto* channel=new Channel(m_tabWidget, name);
     channel->setServer(server);
     channel->setName(name); //still have to do this for now
     addView(channel, name);
@@ -2836,7 +2836,7 @@ void ViewContainer::openChannelSettings()
 
 void ViewContainer::toggleChannelNicklists()
 {
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
+    auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("hide_nicknamelist")));
 
     if (action)
     {
@@ -2850,7 +2850,7 @@ void ViewContainer::toggleChannelNicklists()
 Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
 {
     QString name = nickInfo->getNickname();
-    Query* query=new Query(m_tabWidget, name);
+    auto* query=new Query(m_tabWidget, name);
     query->setServer(server);
     query->setNickInfo(nickInfo); //still have to do this
     addView(query, name, weinitiated);
@@ -2916,11 +2916,11 @@ void ViewContainer::closeQueries()
 
 ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)
 {
-    ChannelListPanel* channelListPanel=new ChannelListPanel(m_tabWidget);
+    auto* channelListPanel=new ChannelListPanel(m_tabWidget);
     channelListPanel->setServer(server);
     addView(channelListPanel, i18n("Channel List"));
 
-    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
+    auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
     if ((server == m_frontServer) && action) action->setChecked(true);
 
     return channelListPanel;
@@ -2952,7 +2952,7 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
 
         if (server == m_frontServer)
         {
-            KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
+            auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
             if (action) action->setChecked(false);
         }
 
@@ -2979,7 +2979,7 @@ void ViewContainer::openChannelList(Server* server, const QString& filter, bool 
         {
             if (server == m_frontServer)
             {
-                KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
+                auto* action = qobject_cast<KToggleAction*>(actionCollection()->action(QStringLiteral("open_channel_list")));
                 if (action) action->setChecked(false);
             }
 

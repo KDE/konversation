@@ -166,7 +166,7 @@ void UrlCatcher::setupUrlTree()
 
     Application* konvApp = Application::instance();
     QStandardItemModel* urlModel = konvApp->getUrlModel();
-    QStandardItem* item = new QStandardItem(i18n("From"));
+    auto* item = new QStandardItem(i18n("From"));
     urlModel->setHorizontalHeaderItem(0, item);
     item = new QStandardItem(i18n("URL"));
     urlModel->setHorizontalHeaderItem(1, item);
@@ -175,7 +175,7 @@ void UrlCatcher::setupUrlTree()
     connect(urlModel, &QStandardItemModel::rowsInserted, this, &UrlCatcher::updateListActionStates);
     connect(urlModel, &QStandardItemModel::rowsRemoved, this, &UrlCatcher::updateListActionStates);
 
-    UrlSortFilterProxyModel* proxyModel = new UrlSortFilterProxyModel(this);
+    auto* proxyModel = new UrlSortFilterProxyModel(this);
     proxyModel->setSourceModel(urlModel);
     proxyModel->setDynamicSortFilter(true);
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -279,7 +279,7 @@ void UrlCatcher::bookmarkSelectedUrls()
     const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
-    KBookmarkDialog* dialog = new KBookmarkDialog(manager, this);
+    auto* dialog = new KBookmarkDialog(manager, this);
 
     if (selectedIndexes.count() > 1)
     {
@@ -402,7 +402,7 @@ bool UrlCatcher::event(QEvent* event)
 
 void UrlCatcher::updateFilter()
 {
-    QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_urlTree->model());
+    auto* proxy = qobject_cast<QSortFilterProxyModel*>(m_urlTree->model());
 
     if(!proxy)
         return;

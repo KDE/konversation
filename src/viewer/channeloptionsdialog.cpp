@@ -32,9 +32,9 @@ namespace Konversation
         : QDialog(channel)
     {
         setWindowTitle(  i18n("Channel Settings for %1", channel->getName() ) );
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-        QWidget *mainWidget = new QWidget(this);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *mainWidget = new QWidget(this);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -54,7 +54,7 @@ namespace Konversation
         m_ui.updateBan->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
         m_ui.removeBan->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
 
-        QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
+        auto *modesModel = new QStandardItemModel(m_ui.otherModesList);
         m_ui.otherModesList->setModel(modesModel);
         m_ui.otherModesList->hide();
 
@@ -268,7 +268,7 @@ namespace Konversation
             m_ui.keyModeChBox->setEnabled(m_isAnyTypeOfOp);
             m_ui.keyModeEdit->setEnabled(m_isAnyTypeOfOp);
 
-            QStandardItemModel* model = qobject_cast<QStandardItemModel*>(m_ui.otherModesList->model());
+            auto* model = qobject_cast<QStandardItemModel*>(m_ui.otherModesList->model());
 
             if (model)
             {
@@ -469,7 +469,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::addBan(const QString& newban)
     {
-        BanListViewItem *item = new BanListViewItem(m_ui.banList, newban.section(QLatin1Char(' '), 0, 0), newban.section(QLatin1Char(' '), 1, 1).section(QLatin1Char('!'), 0, 0), newban.section(QLatin1Char(' '), 2 ,2).toUInt());
+        auto *item = new BanListViewItem(m_ui.banList, newban.section(QLatin1Char(' '), 0, 0), newban.section(QLatin1Char(' '), 1, 1).section(QLatin1Char('!'), 0, 0), newban.section(QLatin1Char(' '), 2 ,2).toUInt());
         // set item as current item
         m_ui.banList->setCurrentItem(item);
         // update button states
@@ -559,7 +559,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::updateHistoryFilter()
     {
-        QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model());
+        auto* proxy = qobject_cast<QSortFilterProxyModel*>(m_ui.topicHistoryView->model());
 
         if(!proxy)
             return;

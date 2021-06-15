@@ -30,9 +30,9 @@ namespace Konversation
         : QDialog(parent)
     {
         setWindowTitle(title);
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-        QWidget *mainWidget = new QWidget(this);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *mainWidget = new QWidget(this);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -431,12 +431,12 @@ namespace Konversation
     : QDialog(parent)
     {
         setWindowTitle(title);
-        QWidget *mainWidget = new QWidget(this);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *mainWidget = new QWidget(this);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
 
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::rejected, this, &ServerDialog::reject);
@@ -498,11 +498,11 @@ namespace Konversation
     : QDialog(parent)
     {
         setWindowTitle(title);
-        QWidget *mainWidget = new QWidget(this);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *mainWidget = new QWidget(this);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
         m_okButton = buttonBox->button(QDialogButtonBox::Ok);
         m_okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
         connect(buttonBox, &QDialogButtonBox::rejected, this, &ChannelDialog::reject);

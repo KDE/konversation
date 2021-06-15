@@ -45,10 +45,10 @@ namespace Konversation
     };
 
     class ServerGroupSettings;
-    typedef QExplicitlySharedDataPointer<ServerGroupSettings> ServerGroupSettingsPtr;
-    typedef QHash<int,ServerGroupSettingsPtr> ServerGroupHash;
-    typedef QList<ServerSettings> ServerList;
-    typedef QList<ChannelSettings> ChannelList;
+    using ServerGroupSettingsPtr = QExplicitlySharedDataPointer<ServerGroupSettings>;
+    using ServerGroupHash = QHash<int, ServerGroupSettingsPtr>;
+    using ServerList = QList<ServerSettings>;
+    using ChannelList = QList<ChannelSettings>;
 
     class ServerGroupSettings : public QSharedData
     {

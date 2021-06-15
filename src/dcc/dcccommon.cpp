@@ -133,7 +133,7 @@ namespace Konversation
 
         QTcpServer* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason, int minPort, int maxPort )
         {
-            QTcpServer* socket = new QTcpServer( parent );
+            auto* socket = new QTcpServer( parent );
 
             if ( minPort > 0 && maxPort >= minPort )  // ports are configured manually
             {

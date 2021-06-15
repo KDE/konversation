@@ -106,10 +106,10 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_vertSplitter = new QSplitter(Qt::Vertical, this);
 
 
-    QWidget* topicWidget = new QWidget(m_vertSplitter);
+    auto* topicWidget = new QWidget(m_vertSplitter);
     m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(topicWidget), 0);
 
-    QGridLayout* topicLayout = new QGridLayout(topicWidget);
+    auto* topicLayout = new QGridLayout(topicWidget);
     topicLayout->setContentsMargins(0, 0, 0, 0);
     topicLayout->setSpacing(0);
 
@@ -135,7 +135,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
 
     // The box holding the channel modes
     modeBox = new QFrame(topicWidget);
-    QHBoxLayout* modeBoxLayout = new QHBoxLayout(modeBox);
+    auto* modeBoxLayout = new QHBoxLayout(modeBox);
     modeBoxLayout->setContentsMargins(0, 0, 0, 0);
     modeBox->hide();
     modeBox->setSizePolicy(hfixed);
@@ -194,7 +194,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(m_horizSplitter), 1);
 
     // Server will be set later in setServer()
-    IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter);
+    auto* ircViewBox = new IRCViewBox(m_horizSplitter);
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(ircViewBox), 1);
     setTextView(ircViewBox->ircView());
     ircViewBox->ircView()->setContextMenuOptions(IrcContextMenus::ShowChannelActions, true);
@@ -202,7 +202,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new QFrame(m_horizSplitter);
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(nickListButtons), 0);
-    QVBoxLayout* nickListButtonsLayout = new QVBoxLayout(nickListButtons);
+    auto* nickListButtonsLayout = new QVBoxLayout(nickListButtons);
     nickListButtonsLayout->setSpacing(0);
     nickListButtonsLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -215,7 +215,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QFrame(this);
-    QHBoxLayout* commandLineLayout = new QHBoxLayout(commandLineBox);
+    auto* commandLineLayout = new QHBoxLayout(commandLineBox);
     commandLineBox->setLayout(commandLineLayout);
     commandLineLayout->setContentsMargins(0, 0, 0, 0);
     commandLineLayout->setSpacing(spacing());
@@ -1842,29 +1842,29 @@ void Channel::clearModeList()
 
     if (!k.isEmpty()) m_modeList << k;
 
-    modeT->setOn(0);
-    modeT->setDown(0);
+    modeT->setOn(false);
+    modeT->setDown(false);
 
-    modeN->setOn(0);
-    modeN->setDown(0);
+    modeN->setOn(false);
+    modeN->setDown(false);
 
-    modeS->setOn(0);
-    modeS->setDown(0);
+    modeS->setOn(false);
+    modeS->setDown(false);
 
-    modeI->setOn(0);
-    modeI->setDown(0);
+    modeI->setOn(false);
+    modeI->setDown(false);
 
-    modeP->setOn(0);
-    modeP->setDown(0);
+    modeP->setOn(false);
+    modeP->setDown(false);
 
-    modeM->setOn(0);
-    modeM->setDown(0);
+    modeM->setOn(false);
+    modeM->setDown(false);
 
-    modeK->setOn(0);
-    modeK->setDown(0);
+    modeK->setOn(false);
+    modeK->setDown(false);
 
-    modeL->setOn(0);
-    modeL->setDown(0);
+    modeL->setOn(false);
+    modeL->setDown(false);
 
     limit->clear();
 
@@ -1914,7 +1914,7 @@ void Channel::updateQuickButtons()
     m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);
     nickListButtons->layout()->addWidget(m_buttonsGrid);
     m_buttonsGrid->hide();
-    QGridLayout* layout = new QGridLayout (m_buttonsGrid);
+    auto* layout = new QGridLayout (m_buttonsGrid);
     layout->setContentsMargins(0, 0, 0, 0);
 
     int col = 0;
@@ -1926,7 +1926,7 @@ void Channel::updateQuickButtons()
     for(int index=0;index<newButtonList.count();index++)
     {
         // generate empty buttons first, text will be added later
-        QuickButton* quickButton = new QuickButton(QString(), QString(), m_buttonsGrid);
+        auto* quickButton = new QuickButton(QString(), QString(), m_buttonsGrid);
         col = index % 2;
         layout->addWidget (quickButton, row, col);
         row += col;

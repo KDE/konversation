@@ -84,7 +84,7 @@ void Highlight_Config::loadSettings()
     highlightListView->clear();
     const auto highlightList = Preferences::highlightList();
     for (Highlight* currentHighlight : highlightList) {
-        HighlightViewItem *item = new HighlightViewItem(highlightListView,currentHighlight);
+        auto *item = new HighlightViewItem(highlightListView,currentHighlight);
         item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
     }
 
@@ -107,7 +107,7 @@ void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
     if (item)
     {
         // make a highlight item out of the generic qlistviewitem
-        HighlightViewItem* highlightItem = dynamic_cast<HighlightViewItem*>(item);
+        auto* highlightItem = dynamic_cast<HighlightViewItem*>(item);
 
         // tell all now emitted signals that we just clicked on a new item, so they should
         // not emit the modified() signal.
@@ -146,7 +146,7 @@ void Highlight_Config::updateButtons()
 
 void Highlight_Config::patternChanged(const QString& newPattern)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -157,7 +157,7 @@ void Highlight_Config::patternChanged(const QString& newPattern)
 
 void Highlight_Config::notifyModeChanged(bool enabled)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -168,7 +168,7 @@ void Highlight_Config::notifyModeChanged(bool enabled)
 
 void Highlight_Config::colorChanged(const QColor& newColor)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -179,7 +179,7 @@ void Highlight_Config::colorChanged(const QColor& newColor)
 
 void Highlight_Config::soundURLChanged(const QString& newURL)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -190,7 +190,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
 
 void Highlight_Config::autoTextChanged(const QString& newText)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -201,7 +201,7 @@ void Highlight_Config::autoTextChanged(const QString& newText)
 
 void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
@@ -212,9 +212,9 @@ void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
 
 void Highlight_Config::addHighlight()
 {
-    Highlight* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), QUrl(), QString(), QString(), true);
+    auto* newHighlight = new Highlight(i18n("New"), false, QColor("#ff0000"), QUrl(), QString(), QString(), true);
 
-    HighlightViewItem* item = new HighlightViewItem(highlightListView, newHighlight);
+    auto* item = new HighlightViewItem(highlightListView, newHighlight);
     item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
     highlightListView->setCurrentItem(item);
     patternInput->setFocus();
@@ -224,7 +224,7 @@ void Highlight_Config::addHighlight()
 
 void Highlight_Config::removeHighlight()
 {
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (item)
     {
@@ -246,7 +246,7 @@ QList<Highlight*> Highlight_Config::getHighlightList() const
 {
     QList<Highlight*> newList;
 
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
         newList.append(new Highlight(item->getPattern(), item->getRegExp(), item->getColor(),
@@ -261,7 +261,7 @@ QStringList Highlight_Config::currentHighlightList() const
 {
     QStringList newList;
 
-    HighlightViewItem* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
+    auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
         newList.append(item->getPattern() + QString(item->getRegExp()) + item->getColor().name() +

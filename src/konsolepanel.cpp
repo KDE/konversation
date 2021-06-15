@@ -30,8 +30,8 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
-    QWidget* headerWidget = new QWidget(m_headerSplitter);
-    QHBoxLayout* headerWidgetLayout = new QHBoxLayout(headerWidget);
+    auto* headerWidget = new QWidget(m_headerSplitter);
+    auto* headerWidgetLayout = new QHBoxLayout(headerWidget);
     headerWidgetLayout->setContentsMargins(0, 0, 0, 0);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(headerWidget), 0);
 

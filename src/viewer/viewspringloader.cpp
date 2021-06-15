@@ -83,20 +83,20 @@ void ViewSpringLoader::springLoad()
 
 ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
 {
-    QTabBar* tabBar = qobject_cast<QTabBar*>(widget);
+    auto* tabBar = qobject_cast<QTabBar*>(widget);
 
     if (tabBar)
        return m_viewContainer->getViewAt(tabBar->tabAt(pos));
     else
     {
-        ViewTree* viewTree = qobject_cast<ViewTree*>(widget->parent());
+        auto* viewTree = qobject_cast<ViewTree*>(widget->parent());
 
         if (viewTree)
         {
             const QModelIndex& idx = viewTree->indexAt(QPoint(0, pos.y()));
 
             if (idx.isValid()) {
-                ChatWindow* view = static_cast<ChatWindow*>(idx.internalPointer());
+                auto* view = static_cast<ChatWindow*>(idx.internalPointer());
 
                 return view;
             }

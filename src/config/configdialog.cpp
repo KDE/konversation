@@ -197,11 +197,11 @@ KPageWidgetItem *ConfigDialog::ConfigDialogPrivate::addPageInternal(KPageWidgetI
                                                                     const QString &pixmapName,
                                                                     const QString &header)
 {
-    QWidget *frame = new QWidget(q);
-    QVBoxLayout *boxLayout = new QVBoxLayout(frame);
+    auto *frame = new QWidget(q);
+    auto *boxLayout = new QVBoxLayout(frame);
     boxLayout->setContentsMargins(0, 0, 0, 0);
 
-    QScrollArea *scroll = new QScrollArea(q);
+    auto *scroll = new QScrollArea(q);
     scroll->setFrameShape(QFrame::NoFrame);
     scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -210,7 +210,7 @@ KPageWidgetItem *ConfigDialog::ConfigDialogPrivate::addPageInternal(KPageWidgetI
     scroll->setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
 
     boxLayout->addWidget(scroll);
-    KPageWidgetItem *item = new KPageWidgetItem(frame, itemName);
+    auto *item = new KPageWidgetItem(frame, itemName);
     item->setHeader(header);
     if (!pixmapName.isEmpty()) {
         item->setIcon(QIcon::fromTheme(pixmapName));

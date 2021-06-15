@@ -137,7 +137,7 @@ QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& i
 
     QList<QWidget*> widgets;
 
-    TopicHistoryLabel* label = new TopicHistoryLabel();
+    auto* label = new TopicHistoryLabel();
     connect(qobject_cast<TopicHistoryView*>(itemView()), &TopicHistoryView::textSelectableChanged,
         label, &TopicHistoryLabel::setTextSelectable);
     widgets << label;
@@ -171,7 +171,7 @@ void TopicHistoryItemDelegate::paint(QPainter* painter, const QStyleOptionViewIt
     Q_UNUSED(index)
 
     if (!static_cast<TopicHistoryView*>(itemView())->textSelectable()) {
-        QStyleOptionViewItem* hack = const_cast<QStyleOptionViewItem*>(&option);
+        auto* hack = const_cast<QStyleOptionViewItem*>(&option);
 
         hack->rect.setHeight(hack->rect.height() - (2 * MARGIN) - 1);
 

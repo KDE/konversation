@@ -376,7 +376,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
     QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     encodingDescs.prepend(i18n("Default"));
-    KSelectAction* selectAction = new KSelectAction(this);
+    auto* selectAction = new KSelectAction(this);
     selectAction->setEditable(false);
     selectAction->setItems(encodingDescs);
     selectAction->setEnabled(false);
@@ -450,7 +450,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     connect(action, &QAction::triggered, m_viewContainer, &ViewContainer::clearAllViews);
     actionCollection()->addAction(QStringLiteral("clear_tabs"), action);
 
-    KToggleAction* awayAction = new KToggleAction(this);
+    auto* awayAction = new KToggleAction(this);
     awayAction->setText(i18n("Global Away"));
     actionCollection()->setDefaultShortcut(awayAction,QKeySequence(QStringLiteral("Ctrl+Shift+A")));
     awayAction->setEnabled(false);
@@ -520,7 +520,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     connect(action, &QAction::triggered, m_viewContainer, &ViewContainer::closeQueries);
     actionCollection()->addAction(QStringLiteral("close_queries"), action);
 
-    KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
+    auto* toggleChannelNickListsAction = new KToggleAction(this);
     if (Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
     toggleChannelNickListsAction->setText(i18n("Show Nicklist"));
@@ -545,7 +545,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     // Bookmarks
     action=new QAction(this);
     action->setText(i18n("Bookmarks"));
-    QMenu *menu = new QMenu(this);
+    auto *menu = new QMenu(this);
     action->setMenu(menu);
     new KonviBookmarkHandler(menu, this);
     actionCollection()->addAction(QStringLiteral("bookmarks") , action);

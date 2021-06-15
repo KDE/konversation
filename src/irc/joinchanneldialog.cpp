@@ -26,9 +26,9 @@ namespace Konversation
         : QDialog(parent)
     {
         setWindowTitle(i18n("Join Channel"));
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-        QWidget *mainWidget = new QWidget(this);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *mainWidget = new QWidget(this);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         mainLayout->addWidget(mainWidget);
         mOkButton = buttonBox->button(QDialogButtonBox::Ok);

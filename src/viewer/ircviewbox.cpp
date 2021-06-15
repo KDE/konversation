@@ -14,7 +14,7 @@
 IRCViewBox::IRCViewBox(QWidget* parent)
 : QWidget(parent)
 {
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    auto* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     m_ircView = new IRCView(this);
     mainLayout->addWidget(m_ircView);

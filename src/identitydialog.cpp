@@ -32,8 +32,8 @@ namespace Konversation
         : QDialog(parent)
     {
         setWindowTitle( i18n("Identities") );
-        QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-        QVBoxLayout *mainLayout = new QVBoxLayout;
+        auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+        auto *mainLayout = new QVBoxLayout;
         setLayout(mainLayout);
         QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
         okButton->setDefault(true);
@@ -43,7 +43,7 @@ namespace Konversation
         okButton->setDefault(true);
 
         // Initialize the dialog widget
-        QWidget* w = new QWidget(this);
+        auto* w = new QWidget(this);
         setupUi(w);
         mainLayout->addWidget(w);
         mainLayout->addWidget(buttonBox);

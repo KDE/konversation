@@ -26,9 +26,9 @@ const QString& nickname):
 {
     setWindowTitle( i18n("Edit Watched Nickname") );
     setModal( true );
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-    QWidget *mainWidget = new QWidget(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
+    auto *mainWidget = new QWidget(this);
+    auto *mainLayout = new QVBoxLayout;
     setLayout(mainLayout);
     mainLayout->addWidget(mainWidget);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -41,9 +41,9 @@ const QString& nickname):
     buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
     QWidget* page = mainWidget;
 
-    QGridLayout* layout = new QGridLayout(page);
+    auto* layout = new QGridLayout(page);
 
-    QLabel* networkNameLabel=new QLabel(i18n("&Network name:"), page);
+    auto* networkNameLabel=new QLabel(i18n("&Network name:"), page);
     QString networkNameWT = i18n(
         "Pick the server network you will connect to here.");
     networkNameLabel->setWhatsThis(networkNameWT);
@@ -52,7 +52,7 @@ const QString& nickname):
     m_networkNameCombo->setWhatsThis(networkNameWT);
     networkNameLabel->setBuddy(m_networkNameCombo);
 
-    QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"), page);
+    auto* nicknameLabel=new QLabel(i18n("N&ickname:"), page);
     QString nicknameWT = i18n(
         "<qt>The nickname to watch for when connected to a server in the network.</qt>");
     nicknameLabel->setWhatsThis(nicknameWT);
