@@ -53,7 +53,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 
-find_package(Qca-qt5 2.1.0)
+find_package(Qca-qt5 2.2.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
                        TYPE OPTIONAL)
@@ -71,7 +71,7 @@ add_definitions(
   -DQT_NO_CAST_FROM_BYTEARRAY
   -DQT_NO_CAST_TO_ASCII
   -DQT_NO_CAST_FROM_ASCII
-# -DQT_NO_SIGNALS_SLOTS_KEYWORDS FIXME KF5 Port: QCA includes cause trouble.
+  -DQT_NO_SIGNALS_SLOTS_KEYWORDS 
   -DQT_NO_FOREACH
   -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
 )
