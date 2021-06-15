@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required (VERSION 3.16 FATAL_ERROR)
 
 # Release Service version, managed by release script
 set (RELEASE_SERVICE_VERSION_MAJOR "21")
