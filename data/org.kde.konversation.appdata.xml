@@ -78,9 +78,9 @@
   <summary xml:lang="zh-TW">IRC 用戶端程式</summary>
   <description>
     <p>
-      Konversation is an IRC client which gives you speedy access to Freenode network's channels,
-      where you will find support for most distributions. Its defaults are such that it needs no
-      configuration other than telling it the name of your distribution channel, to get started.
+      Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE.
+      It provides easy access to standard IRC networks such as Libera,
+      where the KDE IRC channels can be found.
     </p>
     <p xml:lang="ar">«محادثك» هو عميل آي‌آرسي يعطيك وصول سريع إلى قنوات شبكة «فرينود»، حيث ستجد الدّعم لمختلف التّوزيعات. الافتراضيّات فيه مضبوطة بحيث لا تحتاج لأن تفعل شيئا عدا كتابة اسم قناة التّوزيعة، ومن ثمّ تبدأ الدّردشة.</p>
     <p xml:lang="ca">El Konversation és un client d'IRC que dóna accés ràpid als canals de la xarxa Freenode, a on trobareu ajuda per a la majoria de les distribucions. De manera predeterminada, per a començar no necessita més configuració que indicar el nom del canal de la distribució.</p>
