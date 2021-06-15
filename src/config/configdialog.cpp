@@ -12,19 +12,16 @@
 
 #include <KConfigDialogManager>
 #include <KCoreConfigSkeleton>
-#include <KPageWidgetModel>
 #include <KHelpClient>
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QDialogButtonBox>
 #include <QIcon>
-#include <QLayout>
 #include <QPushButton>
 #include <QMap>
-#include <QCoreApplication>
-#include <QDesktopServices>
 #include <QScrollArea>
+#include <QVBoxLayout>
 
 #include <algorithm>
 
