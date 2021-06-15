@@ -14,7 +14,6 @@
 #include <QDialog>
 
 
-class KEditListWidget;
 class KMessageWidget;
 
 namespace Konversation
