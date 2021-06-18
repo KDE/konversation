@@ -203,7 +203,7 @@ namespace Konversation
             else
                 info = getName();
 
-            emit updateInfo(info);
+            Q_EMIT updateInfo(info);
         }
 
         QString ChatContainer::getChannelEncoding() const

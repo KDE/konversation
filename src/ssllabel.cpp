@@ -16,7 +16,7 @@ void SSLLabel::mouseReleaseEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
 
-    emit clicked();
+    Q_EMIT clicked();
 }
 
 

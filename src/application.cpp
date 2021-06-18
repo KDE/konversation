@@ -203,7 +203,7 @@ QT_WARNING_POP
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings
-        emit appearanceChanged();
+        Q_EMIT appearanceChanged();
 
         if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
             mainWindow->hide();
@@ -326,7 +326,7 @@ bool Application::event(QEvent* event)
 {
     if (event->type() == QEvent::ApplicationPaletteChange
         || event->type() == QEvent::ApplicationFontChange) {
-        emit appearanceChanged();
+        Q_EMIT appearanceChanged();
     }
 
     return QApplication::event(event);
@@ -957,7 +957,7 @@ void Application::saveOptions(bool updateGUI)
     KSharedConfig::openConfig()->sync();
 
     if(updateGUI)
-        emit appearanceChanged();
+        Q_EMIT appearanceChanged();
 }
 
 void Application::fetchQueueRates()

@@ -143,7 +143,7 @@ namespace Konversation
 
         void Transfer::removedFromView()
         {
-            emit removed(this);
+            Q_EMIT removed(this);
         }
 
         // just for convenience
@@ -158,7 +158,7 @@ namespace Konversation
                 konv_app->notificationHandler()->dccError(server->getStatusView(), errorMessage);
             }
             setStatus(Failed, errorMessage);
-            emit done(this);
+            Q_EMIT done(this);
         }
 
         void Transfer::setStatus(Status status, const QString &statusDetail)
@@ -169,7 +169,7 @@ namespace Konversation
             m_statusDetail = statusDetail;
             if (changed)
             {
-                emit statusChanged(this, m_status, oldStatus);
+                Q_EMIT statusChanged(this, m_status, oldStatus);
             }
 
             if (m_status == Done)

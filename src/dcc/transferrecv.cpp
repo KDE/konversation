@@ -279,7 +279,7 @@ namespace Konversation
 
             cleanUp();
             setStatus(Aborted);
-            emit done(this);
+            Q_EMIT done(this);
         }
 
         void TransferRecv::start()                     // public slot
@@ -799,7 +799,7 @@ namespace Konversation
             qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             cleanUp();
             setStatus(Done);
-            emit done(this);
+            Q_EMIT done(this);
         }
 
                                                           // <- WriteCacheHandler::gotError()
@@ -938,7 +938,7 @@ namespace Konversation
                     // finally, no data left to write or read.
                     qCDebug(KONVERSATION_LOG) << "flushing done.";
                     m_transferJob = nullptr;
-                    emit done();                          // -> TransferRecv::slotLocalWriteDone()
+                    Q_EMIT done();                          // -> TransferRecv::slotLocalWriteDone()
                 }
             }
         }
@@ -954,7 +954,7 @@ namespace Konversation
             {
                 QString errorString = job->errorString();
                 closeNow();
-                emit gotError(errorString);             // -> TransferRecv::slotLocalGotWriteError()
+                Q_EMIT gotError(errorString);             // -> TransferRecv::slotLocalGotWriteError()
             }
         }
 

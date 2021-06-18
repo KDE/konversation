@@ -75,7 +75,7 @@ void Highlight_Config::restorePageToDefaults()
     if (highlightListView->topLevelItemCount() != 0)
     {
         highlightListView->clear();
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -151,7 +151,7 @@ void Highlight_Config::patternChanged(const QString& newPattern)
     if (!newItemSelected && item)
     {
         item->setPattern(newPattern);
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -162,7 +162,7 @@ void Highlight_Config::notifyModeChanged(bool enabled)
     if (!newItemSelected && item)
     {
         item->setNotify(enabled);
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -173,7 +173,7 @@ void Highlight_Config::colorChanged(const QColor& newColor)
     if (!newItemSelected && item)
     {
         item->setColor(newColor);
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -184,7 +184,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
     if (!newItemSelected && item)
     {
         item->setSoundURL(QUrl(newURL));
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -195,7 +195,7 @@ void Highlight_Config::autoTextChanged(const QString& newText)
     if (!newItemSelected && item)
     {
         item->setAutoText(newText);
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -206,7 +206,7 @@ void Highlight_Config::chatWindowsChanged(const QString& newChatWindows)
     if (!newItemSelected && item)
     {
         item->setChatWindows(newChatWindows);
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -219,7 +219,7 @@ void Highlight_Config::addHighlight()
     highlightListView->setCurrentItem(item);
     patternInput->setFocus();
     patternInput->selectAll();
-    emit modified();
+    Q_EMIT modified();
 }
 
 void Highlight_Config::removeHighlight()
@@ -237,7 +237,7 @@ void Highlight_Config::removeHighlight()
             highlightListView->setCurrentItem(item);
         }
 
-        emit modified();
+        Q_EMIT modified();
     }
     updateButtons();
 }

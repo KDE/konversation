@@ -67,8 +67,8 @@ void TopicHistorySortfilterProxyModel::sourceDataChanged(const QModelIndex& topL
     Q_UNUSED(topLeft)
     Q_UNUSED(bottomRight)
 
-    emit layoutAboutToBeChanged();
-    emit layoutChanged();
+    Q_EMIT layoutAboutToBeChanged();
+    Q_EMIT layoutChanged();
 }
 
 TopicHistoryLabel::TopicHistoryLabel(QWidget* parent) : KTextEdit(parent)
@@ -238,7 +238,7 @@ void TopicHistoryView::setTextSelectable(bool selectable)
 
         updateSelectedItemWidgets();
 
-        emit textSelectableChanged(selectable);
+        Q_EMIT textSelectableChanged(selectable);
     }
 }
 
@@ -281,7 +281,7 @@ void TopicHistoryView::updateSelectedItemWidgets()
     const QModelIndexList selectedIndexes = selectionModel()->selectedIndexes();
 
     if (!selectedIndexes.isEmpty())
-        emit m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
+        Q_EMIT m_proxyModel->dataChanged(selectedIndexes.first(), selectedIndexes.first());
 }
 
 void TopicHistoryView::updateGeometries()

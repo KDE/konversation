@@ -162,7 +162,7 @@ Server::~Server()
     m_serverISON = nullptr;
 
     // clear nicks online
-    emit nicksNowOnline(this,QStringList(),true);
+    Q_EMIT nicksNowOnline(this,QStringList(),true);
 
     // Make sure no signals get sent to a soon to be dying Server Window
     if (m_socket)
@@ -200,7 +200,7 @@ Server::~Server()
     //Delete the queues
     qDeleteAll(m_queues);
 
-    emit destroyed(m_connectionId);
+    Q_EMIT destroyed(m_connectionId);
 
     if (m_recreationScheduled)
     {
@@ -689,7 +689,7 @@ void Server::hostFound()
 
 void Server::socketConnected()
 {
-    emit sslConnected(this);
+    Q_EMIT sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
     requestAvailableCapabilies();
@@ -922,8 +922,8 @@ void Server::broken(QAbstractSocket::SocketError error)
 
     purgeData();
 
-    emit resetLag(this);
-    emit nicksNowOnline(this, QStringList(), true);
+    Q_EMIT resetLag(this);
+    Q_EMIT nicksNowOnline(this, QStringList(), true);
     m_prevISONList.clear();
 
     updateAutoJoin();
@@ -1047,7 +1047,7 @@ void Server::sslError(const QList<QSslError> &errors)
 
         getStatusView()->appendServerMessage(i18n("SSL Connection Error"), error);
 
-        emit sslInitFailure();
+        Q_EMIT sslInitFailure();
     }
 }
 
@@ -1121,11 +1121,11 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
         m_connectionState = state;
 
         if (m_connectionState == Konversation::SSConnected)
-            emit serverOnline(true);
+            Q_EMIT serverOnline(true);
         else if (m_connectionState != Konversation::SSConnecting)
-            emit serverOnline(false);
+            Q_EMIT serverOnline(false);
 
-       emit connectionStateChanged(this, state);
+       Q_EMIT connectionStateChanged(this, state);
     }
 }
 
@@ -1232,7 +1232,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     }
 
     // Note: The list emitted in this signal *does* include nicks in joined channels.
-    emit nicksNowOnline(this, actualList, nicksOnlineChanged);
+    Q_EMIT nicksNowOnline(this, actualList, nicksOnlineChanged);
 
     m_prevISONList = actualList;
 
@@ -1373,7 +1373,7 @@ void Server::processIncomingData()
 void Server::incoming()
 {
     //if (getConnectionSettings().server().SSLEnabled())
-    //    emit sslConnected(this);
+    //    Q_EMIT sslConnected(this);
 
 
     //if (len <= 0 && getConnectionSettings().server().SSLEnabled())
@@ -1712,7 +1712,7 @@ void Server::toServer(const QString& s, IRCQueue* q)
 {
 
     int sizesent = _send_internal(s);
-    emit sentStat(s.length(), sizesent, q); //tell the queues what we sent
+    Q_EMIT sentStat(s.length(), sizesent, q); //tell the queues what we sent
     collectStats(s.length(), sizesent);
 }
 
@@ -2038,7 +2038,7 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
     }
     else if (weinitiated)
     {
-        emit showView(query);
+        Q_EMIT showView(query);
     }
 
     // try to get hostmask if there's none yet
@@ -2254,7 +2254,7 @@ void Server::addDccSend(const QString &recipient, const QUrl &fileURL, bool pass
     if (fileSize != 0)
         newDcc->setFileSize(fileSize);
 
-    emit addDccPanel();
+    Q_EMIT addDccPanel();
 
     if (newDcc->queue())
         newDcc->start();
@@ -2403,7 +2403,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     qCDebug(KONVERSATION_LOG) << "token: " << token;
 
     //emit after data was set
-    emit addDccPanel();
+    Q_EMIT addDccPanel();
 
     if ( newDcc->queue() )
     {
@@ -2469,7 +2469,7 @@ void Server::addDccChat(const QString& sourceNick, const QStringList& dccArgumen
     newChat->setSelfOpened(false);
     newChat->setExtension(extension);
 
-    emit addDccChat(newChat);
+    Q_EMIT addDccChat(newChat);
     newChat->start();
 }
 
@@ -2491,7 +2491,7 @@ void Server::openDccChat(const QString& nickname)
         newChat->setPartnerNick(recipient);
         newChat->setOwnNick(getNickname());
         newChat->setSelfOpened(true);
-        emit addDccChat(newChat);
+        Q_EMIT addDccChat(newChat);
         newChat->start();
     }
 }
@@ -2516,7 +2516,7 @@ void Server::openDccWBoard(const QString& nickname)
         // Set extension before emiting addDccChat
         newChat->setExtension(DCC::Chat::Whiteboard);
         newChat->setSelfOpened(true);
-        emit addDccChat(newChat);
+        Q_EMIT addDccChat(newChat);
         newChat->start();
     }
 }
@@ -3112,9 +3112,9 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     }
     channelNick = (*channel)[lcNickname];
     Q_ASSERT(channelNick);                        //Since we just added it if it didn't exist, it should be guaranteed to exist now
-    if (doWatchedNickChangedSignal) emit watchedNickChanged(this, nickname, true);
-    if (doChannelJoinedSignal) emit channelJoinedOrUnjoined(this, channelName, true);
-    if (doChannelMembersChangedSignal) emit channelMembersChanged(this, channelName, true, false, nickname);
+    if (doWatchedNickChangedSignal) Q_EMIT watchedNickChanged(this, nickname, true);
+    if (doChannelJoinedSignal) Q_EMIT channelJoinedOrUnjoined(this, channelName, true);
+    if (doChannelMembersChangedSignal) Q_EMIT channelMembersChanged(this, channelName, true, false, nickname);
     return channelNick;
 }
 
@@ -3169,9 +3169,9 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
     }
     channelNick = (*channel)[lcNickname];
     // Set the mode for the nick in this channel.
-    if (doWatchedNickChangedSignal) emit watchedNickChanged(this, nickname, true);
-    if (doChannelUnjoinedSignal) emit channelJoinedOrUnjoined(this, channelName, false);
-    if (doChannelMembersChangedSignal) emit channelMembersChanged(this, channelName, false, false, nickname);
+    if (doWatchedNickChangedSignal) Q_EMIT watchedNickChanged(this, nickname, true);
+    if (doChannelUnjoinedSignal) Q_EMIT channelJoinedOrUnjoined(this, channelName, false);
+    if (doChannelMembersChangedSignal) Q_EMIT channelMembersChanged(this, channelName, false, false, nickname);
     return channelNick;
 }
 
@@ -3192,7 +3192,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
         m_allNicks.insert(lcNickname, nickInfo);
     }
 
-    emit watchedNickChanged(this, nickname, true);
+    Q_EMIT watchedNickChanged(this, nickname, true);
 
     appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 is online (%2).", nickname, getServerName()), QHash<QString, QString>(), getStatusView());
 
@@ -3206,7 +3206,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr &n
 {
     Q_UNUSED(nickInfo)
 
-    emit watchedNickChanged(this, nickname, false);
+    Q_EMIT watchedNickChanged(this, nickname, false);
 
     appendMessageToFrontmost(i18nc("Message type", "Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), QHash<QString, QString>(), getStatusView());
 
@@ -3316,7 +3316,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
             }
         }
     }
-    if (doSignal) emit channelMembersChanged(this, channelName, joined, true, nickname);
+    if (doSignal) Q_EMIT channelMembersChanged(this, channelName, joined, true, nickname);
 }
 
 QStringList Server::getWatchList() const
@@ -3412,7 +3412,7 @@ void Server::removeJoinedChannel(const QString& channelName)
             delete channel;                       // recover memory!
         }
     }
-    if (doSignal) emit channelJoinedOrUnjoined(this, channelName, false);
+    if (doSignal) Q_EMIT channelJoinedOrUnjoined(this, channelName, false);
 }
 
 // Renames a nickname in all NickInfo lists.
@@ -3669,7 +3669,7 @@ void Server::setNickname(const QString &newNickname)
         m_nickListModel->insertRows(m_nickListModel->rowCount(), 1);
         m_nickListModel->setData(m_nickListModel->index(m_nickListModel->rowCount() -1 , 0), newNickname, Qt::DisplayRole);
     }
-    emit nicknameChanged(newNickname);
+    Q_EMIT nicknameChanged(newNickname);
 }
 
 void Server::setChannelTopic(const QString &channel, const QString &newTopic, const QHash<QString, QString> &messageTags)
@@ -3900,7 +3900,7 @@ void Server::addRawLog(bool show)
     connect(this, &Server::serverOnline, m_rawLog, &RawLog::serverOnline);
 
     // bring raw log to front since the main window does not do this for us
-    if (show) emit showView(m_rawLog);
+    if (show) Q_EMIT showView(m_rawLog);
 }
 
 void Server::closeRawLog()
@@ -4056,7 +4056,7 @@ QString Server::getSSLInfo() const
 
 void Server::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
-    emit multiServerCommand(command, parameter);
+    Q_EMIT multiServerCommand(command, parameter);
 }
 
 void Server::executeMultiServerCommand(const QString& command, const QString& parameter)
@@ -4113,7 +4113,7 @@ void Server::setAway(bool away, const QHash<QString, QString> &messageTags)
 
         m_away = true;
 
-        emit awayState(true);
+        Q_EMIT awayState(true);
 
         if (identity && !identity->getAwayNickname().isEmpty() && identity->getAwayNickname() != getNickname())
         {
@@ -4134,13 +4134,13 @@ void Server::setAway(bool away, const QHash<QString, QString> &messageTags)
         }
 
         if (identity && identity->getInsertRememberLineOnAway())
-            emit awayInsertRememberLine(this);
+            Q_EMIT awayInsertRememberLine(this);
     }
     else
     {
         m_awayReason.clear();
 
-        emit awayState(false);
+        Q_EMIT awayState(false);
 
         if (!identity->getAwayNickname().isEmpty() && !m_nonAwayNick.isEmpty())
         {
@@ -4262,7 +4262,7 @@ void Server::pongReceived()
     m_inputFilter.setLagMeasuring(false);
     m_pingResponseTimer.stop();
 
-    emit serverLag(this, m_currentLag);
+    Q_EMIT serverLag(this, m_currentLag);
 
     // Send another PING in 60 seconds
     m_pingSendTimer.start(60000 /*60 sec*/);
@@ -4273,7 +4273,7 @@ void Server::updateLongPongLag()
     if (isSocketConnected())
     {
         m_currentLag = m_lagTime.elapsed();
-        emit tooLongLag(this, m_currentLag);
+        Q_EMIT tooLongLag(this, m_currentLag);
         // qCDebug(KONVERSATION_LOG) << "Current lag: " << currentLag;
 
         if (m_currentLag > (Preferences::self()->maximumLagTime() * 1000))
@@ -4399,12 +4399,12 @@ void Server::startNickInfoChangedTimer()
 
 void Server::sendNickInfoChangedSignals()
 {
-    emit nickInfoChanged();
+    Q_EMIT nickInfoChanged();
 
     for (NickInfoPtr nickInfo : qAsConst(m_allNicks)) {
         if(nickInfo->isChanged())
         {
-            emit nickInfoChanged(this, nickInfo);
+            Q_EMIT nickInfoChanged(this, nickInfo);
             nickInfo->setChanged(false);
         }
     }
@@ -4423,7 +4423,7 @@ void Server::sendChannelNickChangedSignals()
     for (const QString& channel : qAsConst(m_changedChannels)) {
         if (m_joinedChannels.contains (channel))
         {
-            emit channelNickChanged(channel);
+            Q_EMIT channelNickChanged(channel);
 
             for (ChannelNickPtr nick : qAsConst(*m_joinedChannels[channel])) {
                 if(nick->isChanged())

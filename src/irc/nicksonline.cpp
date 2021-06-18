@@ -522,7 +522,7 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
     // Only emit signal when the user double clicked a nickname rather than
     // a server name or channel name.
     if (nickitem->type() == NicksOnlineItem::NicknameItem)
-        emit doubleClicked(nickitem->connectionId(), nickitem->text(nlvcNick));
+        Q_EMIT doubleClicked(nickitem->connectionId(), nickitem->text(nlvcNick));
     if (nickitem->type() == NicksOnlineItem::ChannelItem)
     {
       auto* nickRoot = static_cast<NicksOnlineItem*>(nickitem->parent());
@@ -530,7 +530,7 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
       ChatWindow* channel = server->getChannelByName(nickitem->text(nlvcChannel));
 
       if (channel)
-        emit showView(channel);
+        Q_EMIT showView(channel);
       else
       {
         // Get the server object corresponding to the connection id.
@@ -683,7 +683,7 @@ void NicksOnline::doCommand(QAction* id)
     {
             NickInfoPtr nickInfo = server->obtainNickInfo(nickname);
             class Query* query = server->addQuery(nickInfo, true /*we initiated*/);
-            emit showView(query);
+            Q_EMIT showView(query);
     }
     else
             refreshItem(item);

@@ -360,7 +360,7 @@ void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
             m_screen = currentScreen;
             m_y      = QWidget::y();
 
-            emit positionChanged();
+            Q_EMIT positionChanged();
         }
     }
 }

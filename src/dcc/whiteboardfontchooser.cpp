@@ -63,7 +63,7 @@ namespace Konversation
         void WhiteBoardFontChooser::currentFontChanged(const QFont& font)
         {
             m_font.setFamily(font.family());
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
 
         void WhiteBoardFontChooser::pointSizeChanged(int fontPointListIndex)
@@ -77,7 +77,7 @@ namespace Konversation
                 return;
             }
             m_font.setPointSize(pointSize);
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
 
         void WhiteBoardFontChooser::boldToggled(bool checked)
@@ -91,7 +91,7 @@ namespace Konversation
                 m_textStyle &= ~WhiteBoardGlobals::Bold;
             }
             m_font.setBold(checked);
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
 
         void WhiteBoardFontChooser::italicToggled(bool checked)
@@ -105,7 +105,7 @@ namespace Konversation
                 m_textStyle &= ~WhiteBoardGlobals::Italic;
             }
             m_font.setItalic(checked);
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
 
         void WhiteBoardFontChooser::underlineToggled(bool checked)
@@ -119,7 +119,7 @@ namespace Konversation
                 m_textStyle &= ~WhiteBoardGlobals::Underline;
             }
             m_font.setUnderline(checked);
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
 
         void WhiteBoardFontChooser::strikeoutToggled(bool checked)
@@ -133,7 +133,7 @@ namespace Konversation
                 m_textStyle &= ~WhiteBoardGlobals::Strikeout;
             }
             m_font.setStrikeOut(checked);
-            emit fontChanged(m_font);
+            Q_EMIT fontChanged(m_font);
         }
     }
 }

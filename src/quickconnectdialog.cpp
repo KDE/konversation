@@ -112,7 +112,7 @@ void QuickConnectDialog::slotOk()
         !nickInput->text().isEmpty())
     {
 
-        emit connectClicked(Konversation::PromptToReuseConnection,
+        Q_EMIT connectClicked(Konversation::PromptToReuseConnection,
                             hostNameInput->text().trimmed(),
                             portInput->text(),
                             passwordInput->password(),

@@ -105,7 +105,7 @@ void KonsolePanel::partDestroyed()
 {
     k_part = nullptr;
 
-    emit closeView(this);
+    Q_EMIT closeView(this);
 }
 
 void KonsolePanel::manageKonsoleProfiles()

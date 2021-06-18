@@ -327,7 +327,7 @@ void Query::showEvent(QShowEvent*)
 
 void Query::sendFileMenu()
 {
-    emit sendFile(getName());
+    Q_EMIT sendFile(getName());
 }
 
 void Query::childAdjustFocus()
@@ -376,7 +376,7 @@ void Query::nickInfoChanged()
         queryHostmask->setToolTip(strTooltip);
     }
 
-    emit updateQueryChrome(this,getName());
+    Q_EMIT updateQueryChrome(this,getName());
     emitUpdateInfo();
 }
 
@@ -448,7 +448,7 @@ void Query::emitUpdateInfo()
     else
         info = getName();
 
-    emit updateInfo(info);
+    Q_EMIT updateInfo(info);
 }
 
 // show quit message of nick if we see it

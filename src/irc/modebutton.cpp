@@ -28,7 +28,7 @@ void ModeButton::setOn(bool state)
 
 void ModeButton::wasClicked()
 {
-    emit modeClicked(id, !on);
+    Q_EMIT modeClicked(id, !on);
     // Keep button in old state, since we don't know if mode change will
     // eventually work. If we aren't channel operator, it won't.
     setOn(on);

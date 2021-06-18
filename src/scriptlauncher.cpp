@@ -61,9 +61,9 @@ void ScriptLauncher::launchScript(int connectionId, const QString& target, const
     if (proc.startDetached() == 0)
     {
         if (!fileInfo.exists())
-           emit scriptNotFound(script);
+           Q_EMIT scriptNotFound(script);
         else
-           emit scriptExecutionError(script);
+           Q_EMIT scriptExecutionError(script);
     }
 }
 

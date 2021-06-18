@@ -116,10 +116,10 @@ namespace Konversation
 
                 settings.setServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt()));
 
-                emit connectTo(Konversation::PromptToReuseConnection, settings);
+                Q_EMIT connectTo(Konversation::PromptToReuseConnection, settings);
             }
             else
-                emit connectTo(Konversation::PromptToReuseConnection, item->data(0,ServerGroupId).toInt());
+                Q_EMIT connectTo(Konversation::PromptToReuseConnection, item->data(0,ServerGroupId).toInt());
         }
     }
 
@@ -131,7 +131,7 @@ namespace Konversation
         {
             addServerGroup(dlg->serverGroupSettings());
 
-            emit serverGroupsChanged(dlg->serverGroupSettings());
+            Q_EMIT serverGroupsChanged(dlg->serverGroupSettings());
         }
         delete dlg;
     }
@@ -162,7 +162,7 @@ namespace Konversation
 
                         *serverGroup = *dlg->serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup); // will call updateServerList
+                        Q_EMIT serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
                 else
@@ -177,7 +177,7 @@ namespace Konversation
 
                         *serverGroup = *dlg->serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup); // will call updateServerList
+                        Q_EMIT serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
                 delete dlg;
@@ -251,7 +251,7 @@ namespace Konversation
             delete item;
         }
 
-        emit serverGroupsChanged();
+        Q_EMIT serverGroupsChanged();
    }
 
     void ServerListDialog::slotSetGroupExpanded(QTreeWidgetItem* item)
@@ -309,7 +309,7 @@ namespace Konversation
         {
             Preferences::setServerGroupHash(newServerGroupHash);
 
-            emit serverGroupsChanged();
+            Q_EMIT serverGroupsChanged();
         }
         m_serverList->setSortingEnabled(true);
         m_serverList->sortItems(m_lastSortColumn, m_lastSortOrder);

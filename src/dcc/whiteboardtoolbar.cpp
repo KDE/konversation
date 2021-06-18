@@ -220,7 +220,7 @@ namespace Konversation
         void WhiteBoardToolBar::clearClicked()
         {
             //TODO ask for confirm
-            emit clear();
+            Q_EMIT clear();
         }
 
         void WhiteBoardToolBar::saveClicked()
@@ -236,7 +236,7 @@ namespace Konversation
                 QStringList saveList = fileDialog->selectedFiles();
                 qCDebug(KONVERSATION_LOG) << saveList;
                 if (!saveList.isEmpty())
-                emit save(saveList.at(0));
+                Q_EMIT save(saveList.at(0));
             }
             delete fileDialog;
         }
@@ -337,7 +337,7 @@ namespace Konversation
             if (checked)
             {
                 unCheckOtherButtons(button);
-                emit toolChanged(tool);
+                Q_EMIT toolChanged(tool);
             }
             else
             {
@@ -385,12 +385,12 @@ namespace Konversation
                 if (m_rectanglePushButton->isChecked())
                 {
                     qCDebug(KONVERSATION_LOG) << "emit rectangle";
-                    emit toolChanged(WhiteBoardGlobals::Rectangle);
+                    Q_EMIT toolChanged(WhiteBoardGlobals::Rectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
                     qCDebug(KONVERSATION_LOG) << "emit ellipse";
-                    emit toolChanged(WhiteBoardGlobals::Ellipse);
+                    Q_EMIT toolChanged(WhiteBoardGlobals::Ellipse);
                 }
             }
             else if (selectedRow == 1)
@@ -398,12 +398,12 @@ namespace Konversation
                 if (m_rectanglePushButton->isChecked())
                 {
                     qCDebug(KONVERSATION_LOG) << "emit filledrectangle";
-                    emit toolChanged(WhiteBoardGlobals::FilledRectangle);
+                    Q_EMIT toolChanged(WhiteBoardGlobals::FilledRectangle);
                 }
                 else if (m_ellipsePushButton->isChecked())
                 {
                     qCDebug(KONVERSATION_LOG) << "emit filledellipse";
-                    emit toolChanged(WhiteBoardGlobals::FilledEllipse);
+                    Q_EMIT toolChanged(WhiteBoardGlobals::FilledEllipse);
                 }
             }
         }

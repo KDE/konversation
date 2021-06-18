@@ -309,7 +309,7 @@ void ConfigDialog::ConfigDialogPrivate::_k_updateButtons()
 
     setRestoreDefaultsButtonEnabled(!is_default);
 
-    emit q->widgetModified();
+    Q_EMIT q->widgetModified();
     only_once = false;
 }
 
@@ -317,7 +317,7 @@ void ConfigDialog::ConfigDialogPrivate::_k_settingsChangedSlot()
 {
     // Update the buttons
     _k_updateButtons();
-    emit q->settingsChanged(q->objectName());
+    Q_EMIT q->settingsChanged(q->objectName());
 }
 
 void ConfigDialog::showEvent(QShowEvent *e)

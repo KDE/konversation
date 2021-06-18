@@ -56,19 +56,19 @@ void Ignore_Config::newIgnore()
     txtPattern->selectAll();
 
     updateEnabledness();
-    emit modified();
+    Q_EMIT modified();
 }
 void Ignore_Config::removeAllIgnore()
 {
     ignoreListView->clear();
     updateEnabledness();
-    emit modified();
+    Q_EMIT modified();
 }
 void Ignore_Config::removeIgnore()
 {
     delete ignoreListView->currentItem();
     updateEnabledness();
-    emit modified();
+    Q_EMIT modified();
 }
 
 QList<Ignore*> Ignore_Config::getIgnoreList() const
@@ -114,7 +114,7 @@ void Ignore_Config::restorePageToDefaults()
     if(ignoreListView->topLevelItemCount() > 0) {
       ignoreListView->clear();
       updateEnabledness();
-      emit modified();
+      Q_EMIT modified();
     }
 }
 void Ignore_Config::saveSettings()
@@ -192,7 +192,7 @@ void Ignore_Config::flagCheckboxChanged()
         selectedItem->setFlags(flags);
 	selectedItem->setName(txtPattern->text());
     }
-    emit modified();
+    Q_EMIT modified();
 }
 
 /*

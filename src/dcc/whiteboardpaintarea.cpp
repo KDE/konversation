@@ -287,7 +287,7 @@ namespace Konversation
                     setCursor(Qt::WaitCursor);
                     floodfill(event->pos().x(), event->pos().y(), m_foregroundColor);
                     setCursor(oldCur);
-                    emit usedFloodFill(event->pos().x(), event->pos().y(), m_foregroundColor);
+                    Q_EMIT usedFloodFill(event->pos().x(), event->pos().y(), m_foregroundColor);
                     update();
                 }
                 else if (m_tool == WhiteBoardGlobals::TextExtended || m_tool == WhiteBoardGlobals::Text)
@@ -325,7 +325,7 @@ namespace Konversation
                 switch (m_tool)
                 {
                 case WhiteBoardGlobals::Line:
-                    emit drawedLine(m_penWidth, m_foregroundColor, m_backgroundColor,
+                    Q_EMIT drawedLine(m_penWidth, m_foregroundColor, m_backgroundColor,
                                     m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
 
@@ -337,23 +337,23 @@ namespace Konversation
                     break;
 
                 case WhiteBoardGlobals::Rectangle:
-                    emit drawedRectangle(m_penWidth, m_foregroundColor,
+                    Q_EMIT drawedRectangle(m_penWidth, m_foregroundColor,
                                          m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
                 case WhiteBoardGlobals::FilledRectangle:
-                    emit drawedFilledRectangle(m_penWidth, m_foregroundColor, m_backgroundColor,
+                    Q_EMIT drawedFilledRectangle(m_penWidth, m_foregroundColor, m_backgroundColor,
                                                m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
                 case WhiteBoardGlobals::Ellipse:
-                    emit drawedEllipse(m_penWidth, m_foregroundColor,
+                    Q_EMIT drawedEllipse(m_penWidth, m_foregroundColor,
                                        m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
                 case WhiteBoardGlobals::FilledEllipse:
-                    emit drawedFilledEllipse(m_penWidth, m_foregroundColor, m_backgroundColor,
+                    Q_EMIT drawedFilledEllipse(m_penWidth, m_foregroundColor, m_backgroundColor,
                                              m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
                 case WhiteBoardGlobals::Arrow:
-                    emit drawedArrow(m_penWidth, m_foregroundColor,
+                    Q_EMIT drawedArrow(m_penWidth, m_foregroundColor,
                                      m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
                 case WhiteBoardGlobals::Text:
@@ -398,13 +398,13 @@ namespace Konversation
                         if (isLastPosValid())
                         {
                             tPainter.drawLine(m_lastPos, event->pos());
-                            emit drawedPencil(m_penWidth, m_foregroundColor, m_backgroundColor,
+                            Q_EMIT drawedPencil(m_penWidth, m_foregroundColor, m_backgroundColor,
                                               m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                         }
                         else
                         {
                             tPainter.drawPoint(event->pos());
-                            emit drawedLine(m_penWidth, m_foregroundColor, m_backgroundColor,
+                            Q_EMIT drawedLine(m_penWidth, m_foregroundColor, m_backgroundColor,
                                             event->pos().x(), event->pos().y(), event->pos().x(), event->pos().y());
                         }
                     }
@@ -476,13 +476,13 @@ namespace Konversation
                         if (isLastPosValid())
                         {
                             tPainter.drawLine(m_lastPos, event->pos());
-                            emit usedEraser(m_penWidth, m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
+                            Q_EMIT usedEraser(m_penWidth, m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                         }
                         else
                         {
                             qCDebug(KONVERSATION_LOG) << "draw eraser point";
                             tPainter.drawPoint(event->pos());
-                            emit usedEraser(m_penWidth, event->pos().x(), event->pos().y(), event->pos().x(), event->pos().y());
+                            Q_EMIT usedEraser(m_penWidth, event->pos().x(), event->pos().y(), event->pos().x(), event->pos().y());
                         }
                     }
                     m_lastPos = event->pos();
@@ -516,7 +516,7 @@ namespace Konversation
                         QImage image = m_imagePixmap->toImage();
                         QColor fgColor(image.pixel(event->pos().x(), event->pos().y()));
                         m_foregroundColor = fgColor;
-                        emit colorPicked(fgColor);
+                        Q_EMIT colorPicked(fgColor);
                     }
                     break;
                 case WhiteBoardGlobals::Stamp:
@@ -843,11 +843,11 @@ namespace Konversation
             text(m_imagePixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, false, m_tool);
             if (m_tool == WhiteBoardGlobals::TextExtended)
             {
-                emit usedTextExtended(m_lastPos.x(), m_lastPos.y(), m_font, m_foregroundColor, m_backgroundColor, m_writtenText);
+                Q_EMIT usedTextExtended(m_lastPos.x(), m_lastPos.y(), m_font, m_foregroundColor, m_backgroundColor, m_writtenText);
             }
             else if (m_tool == WhiteBoardGlobals::Text)
             {
-                emit usedText(m_lastPos.x(), m_lastPos.y(), m_writtenText);
+                Q_EMIT usedText(m_lastPos.x(), m_lastPos.y(), m_writtenText);
             }
             m_writtenText.clear();
         }

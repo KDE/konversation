@@ -32,7 +32,7 @@ void AwayLabel::changeAwayMessage()
 {
     QString awayMessage = QInputDialog::getText(this, i18n("Change away message"),i18n("Enter new away message:"));
     if (!awayMessage.isEmpty())
-        emit awayMessageChanged(awayMessage);
+        Q_EMIT awayMessageChanged(awayMessage);
 }
 
 

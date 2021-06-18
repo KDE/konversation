@@ -58,7 +58,7 @@ namespace Konversation
 
     void InsertCharDialog::charSelected()
     {
-        emit insertChar(m_charTable->currentCodePoint());
+        Q_EMIT insertChar(m_charTable->currentCodePoint());
     }
     void InsertCharDialog::slotAccepted()
     {

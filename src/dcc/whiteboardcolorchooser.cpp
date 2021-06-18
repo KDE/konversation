@@ -63,11 +63,11 @@ namespace Konversation
             {
             case ForegroundColor:
                 setForegroundColor(color);
-                emit foregroundColorChanged(color);
+                Q_EMIT foregroundColorChanged(color);
                 break;
             case BackgroundColor:
                 setBackgroundColor(color);
-                emit backgroundColorChanged(color);
+                Q_EMIT backgroundColorChanged(color);
                 break;
             default:
                 Q_ASSERT(false);
@@ -112,7 +112,7 @@ namespace Konversation
                 QColor oldFore = m_foregroundColor;
                 m_foregroundColor = m_backgroundColor;
                 m_backgroundColor = oldFore;
-                emit colorsSwapped(m_foregroundColor, m_backgroundColor);
+                Q_EMIT colorsSwapped(m_foregroundColor, m_backgroundColor);
                 update();
                 return;
             }

@@ -394,7 +394,7 @@ namespace Konversation
                 result.toServer = QLatin1String("JOIN ") + input.parameter;
 
             if (channel->isJoined())
-                emit showView(channel);
+                Q_EMIT showView(channel);
         }
         else
             result.toServer = QLatin1String("JOIN ") + input.parameter;
@@ -625,21 +625,21 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_reconnect(const OutputFilterInput& input)
     {
-        emit reconnectServer(input.parameter);
+        Q_EMIT reconnectServer(input.parameter);
 
         return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_disconnect(const OutputFilterInput& input)
     {
-        emit disconnectServer(input.parameter);
+        Q_EMIT disconnectServer(input.parameter);
 
         return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_quit(const OutputFilterInput& input)
     {
-        emit disconnectServer(input.parameter);
+        Q_EMIT disconnectServer(input.parameter);
 
         return OutputFilterResult();
     }
@@ -773,7 +773,7 @@ namespace Konversation
             ::Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
 
             // Force focus if the user did not specify any message.
-            if (output.isEmpty() && Preferences::self()->focusNewQueries()) emit showView(query);
+            if (output.isEmpty() && Preferences::self()->focusNewQueries()) Q_EMIT showView(query);
         }
 
         // Result should be completely empty;
@@ -854,7 +854,7 @@ namespace Konversation
         if (isParameter(QStringLiteral("local"), input.parameter.section(QLatin1Char(' '), 0, 0)))
             m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + QLatin1String("me ") + input.parameter.section(QLatin1Char(' '), 1));
         else
-            emit multiServerCommand(QStringLiteral("me"), input.parameter);
+            Q_EMIT multiServerCommand(QStringLiteral("me"), input.parameter);
 
         return OutputFilterResult();
     }
@@ -867,7 +867,7 @@ namespace Konversation
         if (isParameter(QStringLiteral("local"), input.parameter.section(QLatin1Char(' '), 0, 0)))
             m_server->sendToAllChannelsAndQueries(input.parameter.section(QLatin1Char(' '), 1));
         else
-            emit multiServerCommand(QStringLiteral("msg"), input.parameter);
+            Q_EMIT multiServerCommand(QStringLiteral("msg"), input.parameter);
 
         return OutputFilterResult();
     }
@@ -937,7 +937,7 @@ namespace Konversation
         // No parameter, just open DCC panel
         if (input.parameter.isEmpty())
         {
-            emit addDccPanel();
+            Q_EMIT addDccPanel();
         }
         else
         {
@@ -948,17 +948,17 @@ namespace Konversation
             //TODO close should not just refer to the gui-panel, let it close connections
             if (dccType == QLatin1String("close"))
             {
-                emit closeDccPanel();
+                Q_EMIT closeDccPanel();
             }
             else if (dccType == QLatin1String("send"))
             {
                 if (parameterList.count() == 1) // DCC SEND
                 {
-                    emit requestDccSend();
+                    Q_EMIT requestDccSend();
                 }
                 else if (parameterList.count() == 2) // DCC SEND <nickname>
                 {
-                    emit requestDccSend(parameterList[1]);
+                    Q_EMIT requestDccSend(parameterList[1]);
                 }
                 else if (parameterList.count() > 2) // DCC SEND <nickname> <file> [file] ...
                 {
@@ -970,7 +970,7 @@ namespace Konversation
                     //end up asking for creditionals twice, so settle for only checking locally
                     if (!fileURL.isLocalFile() || QFile::exists(fileURL.path()))
                     {
-                        emit openDccSend(parameterList[1],fileURL);
+                        Q_EMIT openDccSend(parameterList[1],fileURL);
                     }
                     else
                     {
@@ -987,13 +987,13 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit acceptDccGet(QString(),QString());
+                        Q_EMIT acceptDccGet(QString(),QString());
                         break;
                     case 2:
-                        emit acceptDccGet(parameterList.at(1),QString());
+                        Q_EMIT acceptDccGet(parameterList.at(1),QString());
                         break;
                     case 3:
-                        emit acceptDccGet(parameterList.at(1),parameterList.at(2));
+                        Q_EMIT acceptDccGet(parameterList.at(1),parameterList.at(2));
                         break;
                     default:
                         result = usage(i18n("Usage: %1DCC [GET [nickname [filename]]]",
@@ -1006,10 +1006,10 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit openDccChat(QString());
+                        Q_EMIT openDccChat(QString());
                         break;
                     case 2:
-                        emit openDccChat(parameterList[1]);
+                        Q_EMIT openDccChat(parameterList[1]);
                         break;
                     default:
                         result = usage(i18n("Usage: %1DCC [CHAT [nickname]]",
@@ -1022,10 +1022,10 @@ namespace Konversation
                 switch (parameterList.count())
                 {
                     case 1:
-                        emit openDccWBoard(QString());
+                        Q_EMIT openDccWBoard(QString());
                         break;
                     case 2:
-                        emit openDccWBoard(parameterList[1]);
+                        Q_EMIT openDccWBoard(parameterList[1]);
                         break;
                     default:
                         result = usage(i18n("Usage: %1DCC [WHITEBOARD [nickname]]",
@@ -1229,7 +1229,7 @@ namespace Konversation
                     ScriptLauncher::scriptPath(parameterList[1])));
             }
             else if (!parameterList[0].contains(QLatin1String("../")))
-                emit launchScript(m_server->connectionId(), input.destination, input.parameter);
+                Q_EMIT launchScript(m_server->connectionId(), input.destination, input.parameter);
             else
                 result = error(i18n("The script name may not contain \"../\"."));
         }
@@ -1242,9 +1242,9 @@ namespace Konversation
         OutputFilterResult result;
 
         if (input.parameter.isEmpty() || input.parameter == QLatin1String("open"))
-            emit openRawLog(true);
+            Q_EMIT openRawLog(true);
         else if (input.parameter == QLatin1String("close"))
-            emit closeRawLog();
+            Q_EMIT closeRawLog();
         else
             result = usage(i18n("Usage: %1RAW [OPEN | CLOSE]", Preferences::self()->commandChar()));
 
@@ -1421,10 +1421,10 @@ namespace Konversation
 
                         result.toServer = QLatin1String("KICK ") + channel + QLatin1Char(' ') + victim + QLatin1String(" :") + reason;
 
-                        emit banUsers(QStringList(victim), channel, option);
+                        Q_EMIT banUsers(QStringList(victim), channel, option);
                     }
                     else
-                        emit banUsers(parameterList, channel, option);
+                        Q_EMIT banUsers(parameterList, channel, option);
 
                     // syntax was correct, so reset flag
                     showUsage = false;
@@ -1487,7 +1487,7 @@ namespace Konversation
             }
             // if all went good, signal server to unban this mask
             if (!channel.isEmpty() && !parameterList.isEmpty()) {
-                emit unbanUsers(parameterList[0], channel);
+                Q_EMIT unbanUsers(parameterList[0], channel);
                 // syntax was correct, so reset flag
                 showUsage = false;
             }
@@ -1625,22 +1625,22 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_server(const OutputFilterInput& input)
     {
         if (input.parameter.isEmpty() && !m_server->isConnected() && !m_server->isConnecting())
-            emit reconnectServer(QString());
+            Q_EMIT reconnectServer(QString());
         else
         {
             const QStringList parameterList = input.parameter.split(QLatin1Char(' '));
 
             if (parameterList.count() == 3)
-                emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);
+                Q_EMIT connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1], parameterList[2]);
             else if (parameterList.count() == 2)
             {
                 if (parameterList[0].contains(QRegularExpression(QStringLiteral(":[0-9]+$"))))
-                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], QString(), parameterList[1]);
+                    Q_EMIT connectTo(Konversation::CreateNewConnection, parameterList[0], QString(), parameterList[1]);
                 else
-                    emit connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
+                    Q_EMIT connectTo(Konversation::CreateNewConnection, parameterList[0], parameterList[1]);
             }
             else
-                emit connectTo(Konversation::CreateNewConnection, parameterList[0]);
+                Q_EMIT connectTo(Konversation::CreateNewConnection, parameterList[0]);
         }
 
         return OutputFilterResult();
@@ -1659,7 +1659,7 @@ namespace Konversation
         if (!shortName.isEmpty())
         {
             m_server->getIdentity()->setCodecName(shortName);
-            emit encodingChanged();
+            Q_EMIT encodingChanged();
             result = info (i18n("Switched to %1 encoding.", shortName));
         }
         else
@@ -1822,14 +1822,14 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_list(const OutputFilterInput& input)
     {
-        emit openChannelList(input.parameter);
+        Q_EMIT openChannelList(input.parameter);
 
         return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::command_konsole(const OutputFilterInput& /* input */)
     {
-        emit openKonsolePanel();
+        Q_EMIT openKonsolePanel();
 
         return OutputFilterResult();
     }

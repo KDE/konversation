@@ -92,10 +92,10 @@ void EditNotifyDialog::slotOk()
     {
       // add nickname to every server
       for (int i = 1; i < m_networkNameCombo->count(); ++i)
-        emit notifyChanged(m_networkNameCombo->itemData(i).toInt(), m_nicknameInput->text());
+        Q_EMIT notifyChanged(m_networkNameCombo->itemData(i).toInt(), m_nicknameInput->text());
     }
     else
-      emit notifyChanged(id, m_nicknameInput->text());
+      Q_EMIT notifyChanged(id, m_nicknameInput->text());
     delayedDestruct();
 }
 

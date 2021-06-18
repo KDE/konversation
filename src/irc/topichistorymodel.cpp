@@ -63,7 +63,7 @@ void TopicHistoryModel::appendTopic(const QString& text, const QString& author, 
 
     endInsertRows();
 
-    emit currentTopicChanged(text);
+    Q_EMIT currentTopicChanged(text);
 }
 
 void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp)
@@ -86,31 +86,31 @@ void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, const QDa
     else
     {
         m_topicList[row] = currentTopic;
-        emit dataChanged(index(row, 1), index(row, 2));
+        Q_EMIT dataChanged(index(row, 1), index(row, 2));
     }
 }
 
 #ifdef HAVE_QCA2
 void TopicHistoryModel::setCipher(Konversation::Cipher* cipher)
 {
-    emit layoutAboutToBeChanged();
+    Q_EMIT layoutAboutToBeChanged();
     beginResetModel();
 
     m_cipher = cipher;
 
     endResetModel();
-    emit layoutChanged();
+    Q_EMIT layoutChanged();
 }
 
 void TopicHistoryModel::clearCipher()
 {
-    emit layoutAboutToBeChanged();
+    Q_EMIT layoutAboutToBeChanged();
     beginResetModel();
 
     m_cipher = nullptr;
 
     endResetModel();
-    emit layoutChanged();
+    Q_EMIT layoutChanged();
 }
 #endif
 

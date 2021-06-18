@@ -420,7 +420,7 @@ namespace Konversation
             qCDebug(KONVERSATION_LOG) << __FUNCTION__;
             m_paintArea->clear();
             const QString cls = QStringLiteral("\x01""CLS\x01");
-            emit rawWhiteBoardCommand(cls);
+            Q_EMIT rawWhiteBoardCommand(cls);
         }
 
         void WhiteBoard::drawedPencil(int lineWidth, const QColor& penColor, const QColor& brushColor,
@@ -477,7 +477,7 @@ namespace Konversation
             //TXT x,y,text
             const QString txtLineCommand = QStringLiteral("\x01""TXT %1,%2,%3\x01");
 
-            emit rawWhiteBoardCommand(txtLineCommand.arg(x).arg(y).arg(text));
+            Q_EMIT rawWhiteBoardCommand(txtLineCommand.arg(x).arg(y).arg(text));
         }
 
         void WhiteBoard::usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text)
@@ -489,7 +489,7 @@ namespace Konversation
             QString fontSize = QString::number(font.pointSize());
             QString fontStyle = QString::number(fontToStyle(font));
 
-            emit rawWhiteBoardCommand(txtexLineCommand.arg(x).arg(y).arg(
+            Q_EMIT rawWhiteBoardCommand(txtexLineCommand.arg(x).arg(y).arg(
                                                            fontname, fontSize, fontStyle, colorToString(textColor),
                                                            colorToString(background), text));
         }
@@ -561,31 +561,31 @@ namespace Konversation
                                           lineWidth).arg(colorToString(penColor), colorToString(brushColor)).arg(
                                           xFrom).arg(yFrom).arg(xTo).arg(yTo);
             // qCDebug(KONVERSATION_LOG) << drLineCommand;
-            emit rawWhiteBoardCommand(drLineCommand);
+            Q_EMIT rawWhiteBoardCommand(drLineCommand);
         }
 
         void WhiteBoard::emitCan(const QString& canString)
         {
             const QString can = QStringLiteral("\x01""CAN %1\x01");
-            emit rawWhiteBoardCommand(can.arg(canString));
+            Q_EMIT rawWhiteBoardCommand(can.arg(canString));
         }
 
         void WhiteBoard::emitCant(const QString& cantString)
         {
             const QString cant = QStringLiteral("\x01""CANT %1\x01");
-            emit rawWhiteBoardCommand(cant.arg(cantString));
+            Q_EMIT rawWhiteBoardCommand(cant.arg(cantString));
         }
 
         void WhiteBoard::emitDo(const QString& doString)
         {
             const QString doCommand = QStringLiteral("\x01""DO %1\x01");
-            emit rawWhiteBoardCommand(doCommand.arg(doString));
+            Q_EMIT rawWhiteBoardCommand(doCommand.arg(doString));
         }
 
         void WhiteBoard::emitDont(const QString& doNotString)
         {
             const QString doNot = QStringLiteral("\x01""DONT %1\x01"); //krazy:exclude=spelling
-            emit rawWhiteBoardCommand(doNot.arg(doNotString));
+            Q_EMIT rawWhiteBoardCommand(doNot.arg(doNotString));
         }
 
     }

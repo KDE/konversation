@@ -49,7 +49,7 @@ void Warnings_Config::restorePageToDefaults()
     }
     if(changed)
     {
-        emit modified();
+        Q_EMIT modified();
     }
 }
 

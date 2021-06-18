@@ -182,7 +182,7 @@ void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
     // remember to enable the editing widgets
     enabled=true;
 
-    // tell the editing widgets not to emit modified() on signals now
+    // tell the editing widgets not to Q_EMIT modified() on signals now
     m_newItemSelected=true;
     // update editing widget contents
     patternInput->setText(autoreplaceEntry->text(2));
@@ -208,7 +208,7 @@ void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
   replacementInput->setEnabled(enabled);
 
   // make checkboxes work
-  emit modified();
+  Q_EMIT modified();
 }
 
 // what to do when the user changes the direction of an entry
@@ -230,7 +230,7 @@ void Autoreplace_Config::directionChanged(int newDirection)
     item->setText(1,directionCombo->itemText(newDirection));
     item->setText(4,id);
     // tell the config system that something has changed
-    if(!m_newItemSelected) emit modified();
+    if(!m_newItemSelected) Q_EMIT modified();
   }
 }
 
@@ -252,7 +252,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
         item->setText(2,i18nc("Fallback content for the \"Find:\" field of an auto-replace rule that gets set when the user leaves the field empty and e.g. switches to another rule in the list. It's identical to the default content of the field after adding a new auto-replace rule.", "New"));
     }
     // tell the config system that something has changed
-    if(!m_newItemSelected) emit modified();
+    if(!m_newItemSelected) Q_EMIT modified();
   }
 }
 
@@ -268,7 +268,7 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
     // rename item
     item->setText(3,newReplacement);
     // tell the config system that something has changed
-    if(!m_newItemSelected) emit modified();
+    if(!m_newItemSelected) Q_EMIT modified();
   }
 }
 
@@ -296,7 +296,7 @@ void Autoreplace_Config::addEntry()
     // select all text to make overwriting easier
     patternInput->selectAll();
     // tell the config system that something has changed
-    emit modified();
+    Q_EMIT modified();
   }
 }
 
@@ -329,7 +329,7 @@ void Autoreplace_Config::removeEntry()
       entrySelected(nullptr);
     }
     // tell the config system that somethig has changed
-    emit modified();
+    Q_EMIT modified();
   }
 }
 

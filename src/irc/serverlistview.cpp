@@ -40,12 +40,12 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 void ServerListView::dragLeaveEvent(QDragLeaveEvent *e)
 {
     QAbstractItemView::dragLeaveEvent(e);
-    emit moved();
+    Q_EMIT moved();
 }
 
 void ServerListView::dragEnterEvent(QDragEnterEvent *e)
 {
-    emit aboutToMove();
+    Q_EMIT aboutToMove();
     QAbstractItemView::dragEnterEvent(e);
 }
 
@@ -114,7 +114,7 @@ void ServerListView::dropEvent(QDropEvent *event)
         }
     }
     setCurrentItem(sourceItem);
-    emit moved();
+    Q_EMIT moved();
 }
 
 

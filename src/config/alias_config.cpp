@@ -130,7 +130,7 @@ void Alias_Config::nameChanged(const QString& newName)
         // rename item
         item->setText(0,newName);
         // tell the config system that something has changed
-        if (!m_newItemSelected) emit modified();
+        if (!m_newItemSelected) Q_EMIT modified();
     }
 }
 
@@ -146,7 +146,7 @@ void Alias_Config::actionChanged(const QString& newAction)
         // rename item
         item->setText(1,newAction);
         // tell the config system that something has changed
-        if(!m_newItemSelected) emit modified();
+        if(!m_newItemSelected) Q_EMIT modified();
     }
 }
 
@@ -168,7 +168,7 @@ void Alias_Config::addEntry()
         // select all text to make overwriting easier
         aliasInput->selectAll();
         // tell the config system that something has changed
-        emit modified();
+        Q_EMIT modified();
     }
 }
 
@@ -201,7 +201,7 @@ void Alias_Config::removeEntry()
             entrySelected(nullptr);
         }
         // tell the config system that somethig has changed
-        emit modified();
+        Q_EMIT modified();
     }
 }
 

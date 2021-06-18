@@ -86,7 +86,7 @@ void TabWidget::contextMenuEvent(QContextMenuEvent* event)
 
     if (tabIndex != -1)
     {
-        emit contextMenu(widget(tabIndex), pos);
+        Q_EMIT contextMenu(widget(tabIndex), pos);
     }
 }
 
@@ -100,7 +100,7 @@ void TabWidget::mouseReleaseEvent(QMouseEvent* event)
 
         if(tabIndex != -1)
         {
-            emit tabBarMiddleClicked(tabIndex);
+            Q_EMIT tabBarMiddleClicked(tabIndex);
         }
     }
 
@@ -172,7 +172,7 @@ void ViewContainer::setFrontServer(Server* newserver)
 {
     if (m_frontServer == QPointer<Server>(newserver))
         return;
-    emit frontServerChanging(newserver);
+    Q_EMIT frontServerChanging(newserver);
     m_frontServer = newserver;
 }
 
@@ -1048,9 +1048,9 @@ void ViewContainer::updateFrontView()
         QString viewName = Konversation::removeIrcMarkup(view->getName());
 
         if(viewName != QLatin1String("ChatWindowObject"))
-            emit setStatusBarInfoLabel(viewName);
+            Q_EMIT setStatusBarInfoLabel(viewName);
         else
-            emit clearStatusBarInfoLabel();
+            Q_EMIT clearStatusBarInfoLabel();
     }
 
     switch (view->getType())
@@ -1060,11 +1060,11 @@ void ViewContainer::updateFrontView()
         case ChatWindow::Status:
         case ChatWindow::ChannelList:
         case ChatWindow::RawLog:
-            emit setStatusBarLagLabelShown(true);
+            Q_EMIT setStatusBarLagLabelShown(true);
             break;
 
         default:
-            emit setStatusBarLagLabelShown(false);
+            Q_EMIT setStatusBarLagLabelShown(false);
             break;
     }
 
@@ -1095,8 +1095,8 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
 
                     if (view == m_frontView)
                     {
-                        emit setStatusBarInfoLabel(label);
-                        emit setWindowCaption(label);
+                        Q_EMIT setStatusBarInfoLabel(label);
+                        Q_EMIT setWindowCaption(label);
                     }
 
                     static_cast<StatusPanel*>(view)->updateName();
@@ -1141,7 +1141,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
 
         if (announce) {
             const QModelIndex& idx = indexForView(view);
-            emit dataChanged(idx, idx);
+            Q_EMIT dataChanged(idx, idx);
         }
     }
 }
@@ -1254,7 +1254,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     }
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole });
+    Q_EMIT dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole });
 }
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
@@ -1303,7 +1303,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     m_tabWidget->tabBar()->setTabTextColor(tabIndex, textColor);
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole, DisabledRole });
+    Q_EMIT dataChanged(idx, idx, QVector<int> { Qt::DecorationRole, ColorRole, DisabledRole });
 
     m_activeViewOrderList.removeAll(view);
 }
@@ -1353,7 +1353,7 @@ void ViewContainer::toggleAutoJoin()
 
         channel->setAutoJoin(!autoJoin);
 
-        emit autoJoinToggled(channel->getServer()->getServerGroup());
+        Q_EMIT autoJoinToggled(channel->getServer()->getServerGroup());
     }
 
     m_popupViewIndex = -1;
@@ -1378,7 +1378,7 @@ void ViewContainer::toggleConnectOnStartup()
             bool autoConnect = settings->autoConnectEnabled();
             settings->setAutoConnectEnabled(!autoConnect);
 
-            emit autoConnectOnStartupToggled(settings);
+            Q_EMIT autoConnectOnStartupToggled(settings);
         }
     }
 
@@ -1681,7 +1681,7 @@ void ViewContainer::viewSwitched(int newIndex)
     m_currentView = view;
 
     const QModelIndex &idx = indexForView(view);
-    emit viewChanged(idx);
+    Q_EMIT viewChanged(idx);
 
     if (m_frontView)
     {
@@ -1701,11 +1701,11 @@ void ViewContainer::viewSwitched(int newIndex)
     // display this server's lag time
     if (m_frontServer)
     {
-        emit updateStatusBarSSLLabel(m_frontServer);
-        emit updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());
+        Q_EMIT updateStatusBarSSLLabel(m_frontServer);
+        Q_EMIT updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());
     }
 
-    emit clearStatusBarTempText();
+    Q_EMIT clearStatusBarTempText();
 
     updateFrontView();
 
@@ -1722,9 +1722,9 @@ void ViewContainer::viewSwitched(int newIndex)
     QString tabName = Konversation::removeIrcMarkup(view->getName());
 
     if (tabName != QLatin1String("ChatWindowObject"))
-        emit setWindowCaption(tabName);
+        Q_EMIT setWindowCaption(tabName);
     else
-        emit setWindowCaption(QString());
+        Q_EMIT setWindowCaption(QString());
 }
 
 void ViewContainer::showView(ChatWindow* view)
@@ -2042,8 +2042,8 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
         {
             m_saveSplitterSizesLock = true;
             m_vbox->hide();
-            emit resetStatusBar();
-            emit setWindowCaption(QString());
+            Q_EMIT resetStatusBar();
+            Q_EMIT setWindowCaption(QString());
             updateViewActions(-1);
         }
     }
@@ -2098,12 +2098,12 @@ void ViewContainer::renameKonsole()
         m_tabWidget->setTabText(popup, label);
 
         const QModelIndex& idx = indexForView(view);
-        emit dataChanged(idx, idx, QVector<int>{ Qt::DisplayRole });
+        Q_EMIT dataChanged(idx, idx, QVector<int>{ Qt::DisplayRole });
 
         if (popup == m_tabWidget->currentIndex())
         {
-            emit setStatusBarInfoLabel(label);
-            emit setWindowCaption(label);
+            Q_EMIT setStatusBarInfoLabel(label);
+            Q_EMIT setWindowCaption(label);
         }
     }
 }
@@ -2246,7 +2246,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     }
 
     const QModelIndex& idx = indexForView(view);
-    emit dataChanged(idx, idx, QVector<int>{ HighlightRole });
+    Q_EMIT dataChanged(idx, idx, QVector<int>{ HighlightRole });
 
     const QAction* action = menu->exec(pos);
 
@@ -2258,9 +2258,9 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     menu->removeAction(renameAct);
     m_window->unplugActionList(QStringLiteral("server_actions"));
 
-    emit contextMenuClosed();
+    Q_EMIT contextMenuClosed();
 
-    emit dataChanged(idx, idx, QVector<int> { HighlightRole });
+    Q_EMIT dataChanged(idx, idx, QVector<int> { HighlightRole });
 
     if (action != actionCollection()->action(QStringLiteral("close_tab"))) {
         updateViewEncoding(view);
@@ -2843,7 +2843,7 @@ void ViewContainer::toggleChannelNicklists()
         Preferences::self()->setShowNickList(action->isChecked());
         Preferences::self()->save();
 
-        emit updateChannelAppearance();
+        Q_EMIT updateChannelAppearance();
     }
 }
 
@@ -2883,11 +2883,11 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
         m_tabWidget->setTabText(tabIndex, newName);
 
         const QModelIndex& idx = indexForView(view);
-        emit dataChanged(idx, idx, QVector<int> { Qt::DisplayRole });
+        Q_EMIT dataChanged(idx, idx, QVector<int> { Qt::DisplayRole });
     }
 
     if (!newName.isEmpty() && view==m_frontView)
-        emit setWindowCaption(newName);
+        Q_EMIT setWindowCaption(newName);
 }
 
 void ViewContainer::closeQueries()

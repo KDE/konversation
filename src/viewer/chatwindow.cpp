@@ -62,7 +62,7 @@ ChatWindow::~ChatWindow()
         }
     }
 
-    emit closing(this);
+    Q_EMIT closing(this);
     m_server=nullptr;
 }
 
@@ -111,7 +111,7 @@ void ChatWindow::updateAppearance()
 void ChatWindow::setName(const QString& newName)
 {
     name=newName;
-    emit nameChanged(this,newName);
+    Q_EMIT nameChanged(this,newName);
 }
 
 QString ChatWindow::getName() const
@@ -247,7 +247,7 @@ Server* ChatWindow::getServer() const
 
 void ChatWindow::serverOnline(bool /* state */)
 {
-    //emit online(this,state);
+    //Q_EMIT online(this,state);
 }
 
 void ChatWindow::setTextView(IRCView* newView)
@@ -665,7 +665,7 @@ void ChatWindow::adjustFocus()
 void ChatWindow::emitUpdateInfo()
 {
     QString info = getName();
-    emit updateInfo(info);
+    Q_EMIT updateInfo(info);
 }
 
 QColor ChatWindow::highlightColor()
@@ -683,7 +683,7 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 
     m_currentTabNotify = type;
 
-    emit updateTabNotification(this,type);
+    Q_EMIT updateTabNotification(this,type);
 }
 
 void ChatWindow::resetTabNotification()
@@ -756,6 +756,6 @@ void ChatWindow::activateView()
             widget->raise();
         }
     }
-    emit showView(this);
+    Q_EMIT showView(this);
 }
 

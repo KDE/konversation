@@ -132,7 +132,7 @@ void SearchBar::hideEvent(QHideEvent* e)
     QWidget::hideEvent(e);
 
     if (focusedChild())
-        emit hidden();
+        Q_EMIT hidden();
 }
 
 void SearchBar::slotTextChanged()
@@ -151,7 +151,7 @@ void SearchBar::slotFind()
         return;
     }
 
-    emit signalSearchChanged(m_searchEdit->text());
+    Q_EMIT signalSearchChanged(m_searchEdit->text());
 }
 
 void SearchBar::slotFindNext()
@@ -164,7 +164,7 @@ void SearchBar::slotFindNext()
         return;
     }
 
-    emit signalSearchNext();
+    Q_EMIT signalSearchNext();
 }
 
 void SearchBar::slotFindPrevious()
@@ -177,7 +177,7 @@ void SearchBar::slotFindPrevious()
         return;
     }
 
-    emit signalSearchPrevious();
+    Q_EMIT signalSearchPrevious();
 }
 
 void SearchBar::setHasMatch(bool value)

@@ -767,7 +767,7 @@ Konversation::ChannelSettings Channel::channelSettings() const
 
 void Channel::sendFileMenu()
 {
-    emit sendFile();
+    Q_EMIT sendFile();
 }
 
 void Channel::channelTextEntered()
@@ -1083,7 +1083,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick, const QHash<QString, QStr
     if(channelNick->getNickname() == m_server->getNickname())
     {
         m_joined = true;
-        emit joined(this);
+        Q_EMIT joined(this);
         if (displayCommandMessage)
             appendCommandMessage(i18nc("Message type", "Join"), i18nc("%1 = our hostmask, %2 = channel",
                                  "You (%1) have joined the channel %2.", channelNick->getHostmask(), getName()), messageTags, false, true);
@@ -1345,7 +1345,7 @@ void Channel::emitUpdateInfo()
     info += i18np("%1 nick", "%1 nicks", numberOfNicks());
     info += i18np(" (%1 op)", " (%1 ops)", numberOfOps());
 
-    emit updateInfo(info);
+    Q_EMIT updateInfo(info);
 }
 
 QString Channel::getTopic() const
@@ -1868,7 +1868,7 @@ void Channel::clearModeList()
 
     limit->clear();
 
-    emit modesChanged();
+    Q_EMIT modesChanged();
 }
 
 void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
@@ -1902,7 +1902,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
             m_modeList.removeOne(mode);
         }
     }
-    emit modesChanged();
+    Q_EMIT modesChanged();
 }
 
 void Channel::updateQuickButtons()
@@ -2668,7 +2668,7 @@ void Channel::addBan(const QString& ban)
             // Ban is already in list.
             it = m_BanList.erase(it);
 
-            emit banRemoved(ban.section(QLatin1Char(' '), 0, 0));
+            Q_EMIT banRemoved(ban.section(QLatin1Char(' '), 0, 0));
         } else {
             ++it;
         }
@@ -2676,7 +2676,7 @@ void Channel::addBan(const QString& ban)
 
     m_BanList.prepend(ban);
 
-    emit banAdded(ban);
+    Q_EMIT banAdded(ban);
 }
 
 void Channel::removeBan(const QString& ban)
@@ -2687,7 +2687,7 @@ void Channel::removeBan(const QString& ban)
     {
       m_BanList.removeOne(string);
 
-      emit banRemoved(ban);
+      Q_EMIT banRemoved(ban);
     }
   }
 }
@@ -2696,7 +2696,7 @@ void Channel::clearBanList()
 {
   m_BanList.clear();
 
-  emit banListCleared();
+  Q_EMIT banListCleared();
 }
 
 void Channel::append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags, const QString& label)

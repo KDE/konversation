@@ -129,7 +129,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 {
     if (!settings.isValid()) return;
 
-    emit closeServerList();
+    Q_EMIT closeServerList();
 
     if (flag != Konversation::CreateNewConnection
         && reuseExistingConnection(settings, (flag == Konversation::PromptToReuseConnection)))
@@ -168,19 +168,19 @@ void ConnectionManager::enlistConnection(int connectionId, Server* server)
 {
     m_connectionList.insert(connectionId, server);
 
-    emit connectionListChanged();
+    Q_EMIT connectionListChanged();
 }
 
 void ConnectionManager::delistConnection(int connectionId)
 {
     m_connectionList.remove(connectionId);
 
-    emit connectionListChanged();
+    Q_EMIT connectionListChanged();
 }
 
 void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState state)
 {
-    emit connectionChangedState(server, state);
+    Q_EMIT connectionChangedState(server, state);
 
     int identityId = server->getIdentity()->id();
 
@@ -192,7 +192,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         {
             m_activeIdentities.insert(identityId);
 
-            emit identityOnline(identityId);
+            Q_EMIT identityOnline(identityId);
         }
     }
     else if (state != Konversation::SSConnecting)
@@ -201,7 +201,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         {
             m_activeIdentities.remove(identityId);
 
-            emit identityOffline(identityId);
+            Q_EMIT identityOffline(identityId);
         }
     }
 
@@ -210,7 +210,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         // The asynchronous invocation of handleReconnect() makes sure that
         // connectionChangedState() is emitted and delivered before it runs
         // (and causes the next connection state change to occur).
-        emit requestReconnect(server);
+        Q_EMIT requestReconnect(server);
     }
     else if (state == Konversation::SSInvoluntarilyDisconnected && m_overrideAutoReconnect)
     {

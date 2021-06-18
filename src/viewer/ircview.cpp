@@ -191,17 +191,17 @@ void IRCView::setChatWin(ChatWindow* chatWin)
 
 void IRCView::findText()
 {
-    emit doSearch();
+    Q_EMIT doSearch();
 }
 
 void IRCView::findNextText()
 {
-    emit doSearchNext();
+    Q_EMIT doSearchNext();
 }
 
 void IRCView::findPreviousText()
 {
-    emit doSearchPrevious();
+    Q_EMIT doSearchPrevious();
 }
 
 bool IRCView::search(const QString& pattern, QTextDocument::FindFlags flags, bool fromCursor)
@@ -293,7 +293,7 @@ void IRCView::dragMoveEvent(QDragMoveEvent* e)
 void IRCView::dropEvent(QDropEvent* e)
 {
     if (e->mimeData() && e->mimeData()->hasUrls())
-        emit urlsDropped(KUrlMimeData::urlsFromMimeData(e->mimeData(), KUrlMimeData::PreferLocalUrls));
+        Q_EMIT urlsDropped(KUrlMimeData::urlsFromMimeData(e->mimeData(), KUrlMimeData::PreferLocalUrls));
 }
 
 // Marker lines
@@ -680,7 +680,7 @@ void IRCView::append(const QString& nick, const QString& message, const QHash<QS
         line = line.arg(label);
     }
 
-    emit textToLog(QStringLiteral("<%1>\t%2").arg(nick, message));
+    Q_EMIT textToLog(QStringLiteral("<%1>\t%2").arg(nick, message));
 
     doAppend(line, rtl);
 }
@@ -736,9 +736,9 @@ void IRCView::appendQuery(const QString& nick, const QString& message, const QHa
     line = line.arg(timeStamp(messageTags, rtl), nick, text);
 
     if (inChannel) {
-        emit textToLog(QStringLiteral("<-> %1>\t%2").arg(nick, message));
+        Q_EMIT textToLog(QStringLiteral("<-> %1>\t%2").arg(nick, message));
     } else {
-        emit textToLog(QStringLiteral("<%1>\t%2").arg(nick, message));
+        Q_EMIT textToLog(QStringLiteral("<%1>\t%2").arg(nick, message));
     }
 
     doAppend(line, rtl);
@@ -774,7 +774,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
         line = formatFinalLine(rtl, actionColor, QString(), nickLine, QStringLiteral(" * "), QString());
         line = line.arg(timeStamp(messageTags, rtl), nick);
 
-        emit textToLog(QStringLiteral("\t * %1").arg(nick));
+        Q_EMIT textToLog(QStringLiteral("\t * %1").arg(nick));
 
         doAppend(line, rtl);
     }
@@ -789,7 +789,7 @@ void IRCView::appendAction(const QString& nick, const QString& message, const QH
         line = formatFinalLine(rtl, actionColor, QString(), nickLine, QStringLiteral(" * "), text);
         line = line.arg(timeStamp(messageTags, rtl), nick, text);
 
-        emit textToLog(QStringLiteral("\t * %1 %2").arg(nick, message));
+        Q_EMIT textToLog(QStringLiteral("\t * %1 %2").arg(nick, message));
 
         doAppend(line, rtl);
     }
@@ -823,7 +823,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, c
     line += QLatin1String(" %3</font>");
     line = line.arg(timeStamp(messageTags, rtl), type, text);
 
-    emit textToLog(QStringLiteral("%1\t%2").arg(type, message));
+    Q_EMIT textToLog(QStringLiteral("%1\t%2").arg(type, message));
 
     doAppend(line, rtl);
 }
@@ -858,7 +858,7 @@ void IRCView::appendCommandMessage(const QString& type, const QString& message, 
     line += QLatin1String("<font color=\"") + commandColor + QLatin1String("\">%1 %2 %3</font>");
     line = line.arg(timeStamp(messageTags, rtl), prefix, text);
 
-    emit textToLog(QStringLiteral("%1\t%2").arg(type, message));
+    Q_EMIT textToLog(QStringLiteral("%1\t%2").arg(type, message));
 
     doAppend(line, rtl, self);
 }
@@ -956,7 +956,7 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
         // avoid recursion due to signalling
         m_autoTextToSend.clear();
         // send signal only now
-        emit autoText(sendText);
+        Q_EMIT autoText(sendText);
     }
     else
     {
@@ -964,7 +964,7 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
     }
 
     if (!m_lastStatusText.isEmpty())
-        emit clearStatusBarTempText();
+        Q_EMIT clearStatusBarTempText();
 }
 
 void IRCView::doRawAppend(const QString& newLine, bool rtl)
@@ -2108,7 +2108,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
         }
         else
         {
-            emit textPasted(true);
+            Q_EMIT textPasted(true);
             return;
         }
     }
@@ -2122,7 +2122,7 @@ void IRCView::keyPressEvent(QKeyEvent* ev)
 
     if (KStandardShortcut::paste().contains(key))
     {
-        emit textPasted(false);
+        Q_EMIT textPasted(false);
         ev->accept();
         return;
     }
@@ -2173,7 +2173,7 @@ void IRCView::highlightedSlot(const QUrl& /*_link*/)
     {
         if (!m_lastStatusText.isEmpty())
         {
-            emit clearStatusBarTempText();
+            Q_EMIT clearStatusBarTempText();
             m_lastStatusText.clear();
         }
     }
@@ -2189,7 +2189,7 @@ void IRCView::highlightedSlot(const QUrl& /*_link*/)
 
         if (!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
-            emit setStatusBarTempText(m_lastStatusText);
+            Q_EMIT setStatusBarTempText(m_lastStatusText);
         }
 
         if (link.isEmpty() && m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
@@ -2209,14 +2209,14 @@ void IRCView::highlightedSlot(const QUrl& /*_link*/)
             m_currentNick = decoded;
             m_isOnNick = true;
 
-            emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
+            Q_EMIT setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
         }
         else
         {
             m_currentChannel = decoded;
             m_isOnChannel = true;
 
-            emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
+            Q_EMIT setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
         }
     }
 }

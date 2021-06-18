@@ -208,7 +208,7 @@ namespace Konversation
                 const TransferItemData &item = m_transferList.at(i);
                 if (transfer == item.transfer)
                 {
-                    emit dataChanged(createIndex(i, 0), createIndex(i, columnCount() - 1));
+                    Q_EMIT dataChanged(createIndex(i, 0), createIndex(i, columnCount() - 1));
                     return;
                 }
             }
@@ -613,7 +613,7 @@ namespace Konversation
             blockSignals(blockSignal);
             endRemoveRows();
 
-            emit rowsPermanentlyRemoved (row, row + count - 1);
+            Q_EMIT rowsPermanentlyRemoved (row, row + count - 1);
 
             return true;
         }

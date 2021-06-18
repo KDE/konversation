@@ -215,7 +215,7 @@ void ChannelListPanel::refreshList()
     m_refreshList->setEnabled(false);
     m_tempTimer->start(3000);
 
-    emit refreshChannelList();
+    Q_EMIT refreshChannelList();
 }
 
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
@@ -420,7 +420,7 @@ void ChannelListPanel::joinChannelClicked()
     {
         if(item.column() != 0)
             item = item.sibling(item.row(),0);
-        emit joinChannel(item.data().toString());
+        Q_EMIT joinChannel(item.data().toString());
     }
 }
 
@@ -517,7 +517,7 @@ void ChannelListPanel::emitUpdateInfo()
 {
     QString info;
     info = i18n("Channel List for %1", m_server->getDisplayName());
-    emit updateInfo(info);
+    Q_EMIT updateInfo(info);
 }
 
 void ChannelListPanel::setFilter(const QString& filter)

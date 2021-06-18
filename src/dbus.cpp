@@ -30,7 +30,7 @@ void DBus::raw(const QString& server,const QString& command)
 {
     qCDebug(KONVERSATION_LOG) << __FUNCTION__;
     // send raw IRC protocol data
-    emit dbusRaw(sterilizeUnicode(server), sterilizeUnicode(command));
+    Q_EMIT dbusRaw(sterilizeUnicode(server), sterilizeUnicode(command));
 }
 
 QStringList DBus::listConnections()
@@ -108,12 +108,12 @@ void DBus::setBack()
 
 void DBus::sayToAll(const QString &message)
 {
-    emit dbusMultiServerRaw(QStringLiteral("msg ") + sterilizeUnicode(message));
+    Q_EMIT dbusMultiServerRaw(QStringLiteral("msg ") + sterilizeUnicode(message));
 }
 
 void DBus::actionToAll(const QString &message)
 {
-    emit dbusMultiServerRaw(QStringLiteral("me ") + sterilizeUnicode(message));
+    Q_EMIT dbusMultiServerRaw(QStringLiteral("me ") + sterilizeUnicode(message));
 }
 
 void DBus::say(const QString& _server,const QString& _target,const QString& _command)
@@ -134,36 +134,36 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
         server.remove(QLatin1Char('\n'));
         server.remove(QLatin1Char('\r'));
         // Act as if the user typed it
-        emit dbusSay(server,target,command);
+        Q_EMIT dbusSay(server,target,command);
     }
 }
 
 void DBus::info(const QString& string)
 {
     qCDebug(KONVERSATION_LOG) << __FUNCTION__;
-    emit dbusInfo(sterilizeUnicode(string));
+    Q_EMIT dbusInfo(sterilizeUnicode(string));
 }
 
 void DBus::debug(const QString& string)
 {
     qCDebug(KONVERSATION_LOG) << __FUNCTION__;
-    emit dbusInfo(i18n("Debug: %1", sterilizeUnicode(string)));
+    Q_EMIT dbusInfo(i18n("Debug: %1", sterilizeUnicode(string)));
 }
 
 void DBus::error(const QString& string)
 {
     qCDebug(KONVERSATION_LOG) << __FUNCTION__;
-    emit dbusInfo(i18n("Error: %1", sterilizeUnicode(string)));
+    Q_EMIT dbusInfo(i18n("Error: %1", sterilizeUnicode(string)));
 }
 
 void DBus::insertMarkerLine()
 {
-    emit dbusInsertMarkerLine();
+    Q_EMIT dbusInsertMarkerLine();
 }
 
 void DBus::connectToServer(const QString& address, int port, const QString& channel, const QString& password)
 {
-    emit connectTo(Konversation::SilentlyReuseConnection, sterilizeUnicode(address), QString::number(port), sterilizeUnicode(password), QString(), sterilizeUnicode(channel));
+    Q_EMIT connectTo(Konversation::SilentlyReuseConnection, sterilizeUnicode(address), QString::number(port), sterilizeUnicode(password), QString(), sterilizeUnicode(channel));
 }
 
 QString DBus::getNickname(const QString& server_Name)

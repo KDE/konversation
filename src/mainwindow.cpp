@@ -669,7 +669,7 @@ bool MainWindow::queryClose()
 
 void MainWindow::hideEvent(QHideEvent *e)
 {
-    emit triggerRememberLine();
+    Q_EMIT triggerRememberLine();
 
     m_statusBar->clearMainLabelTempText();
 
@@ -678,7 +678,7 @@ void MainWindow::hideEvent(QHideEvent *e)
 
 void MainWindow::showEvent(QShowEvent *e)
 {
-    emit cancelRememberLine();
+    Q_EMIT cancelRememberLine();
 
     KXmlGuiWindow::showEvent(e);
 }
@@ -698,15 +698,15 @@ bool MainWindow::event(QEvent* e)
     }
     else if (e->type() == QEvent::WindowActivate)
     {
-        emit endNotification();
-        emit cancelRememberLine();
+        Q_EMIT endNotification();
+        Q_EMIT cancelRememberLine();
     }
     else if(e->type() == QEvent::WindowDeactivate)
     {
         m_statusBar->clearMainLabelTempText();
 
         if (qApp->activeModalWidget() == nullptr)
-            emit triggerRememberLine();
+            Q_EMIT triggerRememberLine();
     }
 
     return KXmlGuiWindow::event(e);
@@ -853,7 +853,7 @@ void MainWindow::openServerList()
 
 void MainWindow::openQuickConnectDialog()
 {
-    emit showQuickConnectDialog();
+    Q_EMIT showQuickConnectDialog();
 }
 
 
@@ -904,7 +904,7 @@ void MainWindow::notifyAction(int connectionId, const QString& nick)
 // TODO: Let an own class handle notify things
 void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
 {
-    emit nicksNowOnline(notifyServer);
+    Q_EMIT nicksNowOnline(notifyServer);
     // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString(), true);
 }
 

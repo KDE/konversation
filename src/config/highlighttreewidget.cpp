@@ -18,5 +18,5 @@ void HighlightTreeWidget::dropEvent(QDropEvent *event)
     QTreeWidget::dropEvent(event);
 
     if (event->isAccepted())
-        emit itemDropped();
+        Q_EMIT itemDropped();
 }

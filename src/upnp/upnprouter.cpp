@@ -134,7 +134,7 @@ namespace Konversation
                 error = i18n("Error parsing router description.");
             }
 
-            emit xmlFileDownloaded(this,ret);
+            Q_EMIT xmlFileDownloaded(this,ret);
         }
 
         void UPnPRouter::downloadXMLFile()
@@ -317,7 +317,7 @@ namespace Konversation
                 }
                 else if (pending_forwards.contains(r))
                 {
-                    emit forwardComplete(true, pending_forwards[r]->port);
+                    Q_EMIT forwardComplete(true, pending_forwards[r]->port);
 
                     Forwarding * forward = pending_forwards[r];
                     forwards.removeAll(forward);
@@ -326,7 +326,7 @@ namespace Konversation
                 }
                 else if (pending_unforwards.contains(r))
                 {
-                    emit unforwardComplete(true, pending_unforwards[r]->port);
+                    Q_EMIT unforwardComplete(true, pending_unforwards[r]->port);
 
                     Forwarding * forward = pending_unforwards[r];
                     forwards.removeAll(forward);
@@ -356,13 +356,13 @@ namespace Konversation
                 }
                 else if (pending_forwards.contains(r))
                 {
-                    emit forwardComplete(false, pending_forwards[r]->port);
+                    Q_EMIT forwardComplete(false, pending_forwards[r]->port);
 
                     pending_forwards.remove(r);
                 }
                 else if (pending_unforwards.contains(r))
                 {
-                    emit unforwardComplete(false, pending_unforwards[r]->port);
+                    Q_EMIT unforwardComplete(false, pending_unforwards[r]->port);
 
                     Forwarding * forward = pending_unforwards[r];
                     forwards.removeAll(forward);

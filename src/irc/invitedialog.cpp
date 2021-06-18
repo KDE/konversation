@@ -54,7 +54,7 @@ void InviteDialog::slotOk()
     QString channels = m_channelModel->selectedChannels();
 
     if(!channels.isEmpty())
-        emit joinChannelsRequested(channels);
+        Q_EMIT joinChannelsRequested(channels);
     KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
     KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
     cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
@@ -200,7 +200,7 @@ bool InviteChannelListModel::setData(const QModelIndex& index, const QVariant& v
 
     QString channel = m_channelMap.values().at(index.row()).channel;
     m_channelMap[channel].checkState = (value.toBool() ? Qt::Checked : Qt::Unchecked);
-    emit dataChanged(index, index);
+    Q_EMIT dataChanged(index, index);
 
     return true;
 }

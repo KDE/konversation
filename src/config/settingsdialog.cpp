@@ -209,7 +209,7 @@ void KonviSettingsDialog::updateSettings()
     page->saveSettings();
   }
   m_modified = false;
-  emit settingsChanged(QStringLiteral("settings"));
+  Q_EMIT settingsChanged(QStringLiteral("settings"));
 }
 
 void KonviSettingsDialog::updateWidgets()

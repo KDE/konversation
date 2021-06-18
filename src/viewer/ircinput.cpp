@@ -214,7 +214,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
     switch(e->key())
     {
         case Qt::Key_Tab:
-            emit nickCompletion();
+            Q_EMIT nickCompletion();
             return;
             break;
 
@@ -244,12 +244,12 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 // Ctrl+Enter is a special case in which commands should be send as normal messages
                 if ( e->modifiers() & Qt::ControlModifier )
                 {
-                    emit envelopeCommand();
+                    Q_EMIT envelopeCommand();
                 }
                 else
                 {
                     setText(Application::instance()->doAutoreplace(toPlainText(), true).first);
-                    emit submit();
+                    Q_EMIT submit();
                 }
             }
             else
@@ -269,7 +269,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 if(getCompletionMode()!='\0')
                 {
                     setCompletionMode('\0');
-                    emit endCompletion();
+                    Q_EMIT endCompletion();
                 }
 
                 completionBox->hide();
@@ -388,7 +388,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
     {
         //End completion on paste
         setCompletionMode('\0');
-        emit endCompletion();
+        Q_EMIT endCompletion();
 
         bool signal=false;
 
@@ -449,7 +449,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
 
               Konversation::sterilizeUnicode(pasteText);
               // signal pasted text
-              emit textPasted(pasteText);
+              Q_EMIT textPasted(pasteText);
               // remember old line, in case the user does not paste eventually
               addHistory(pasteText);
               // delete input text

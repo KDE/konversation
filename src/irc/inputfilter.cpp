@@ -332,7 +332,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         {
                             // incoming file
                             konv_app->notificationHandler()->dccIncoming(m_server->getStatusView(), sourceNick);
-                            emit addDccGet(sourceNick,dccArgumentList);
+                            Q_EMIT addDccGet(sourceNick,dccArgumentList);
                         }
                         else if (dccArgumentList.count() >= 5)
                         {
@@ -340,12 +340,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             {
                                 // incoming file (Reverse DCC)
                                 konv_app->notificationHandler()->dccIncoming(m_server->getStatusView(), sourceNick);
-                                emit addDccGet(sourceNick,dccArgumentList);
+                                Q_EMIT addDccGet(sourceNick,dccArgumentList);
                             }
                             else
                             {
                                 // the receiver accepted the offer for Reverse DCC
-                                emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
+                                Q_EMIT startReverseDccSendTransfer(sourceNick,dccArgumentList);
                             }
                         }
                         else
@@ -362,7 +362,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         // resume request was accepted
                         if (dccArgumentList.count() >= 3)
                         {
-                            emit resumeDccGetTransfer(sourceNick,dccArgumentList);
+                            Q_EMIT resumeDccGetTransfer(sourceNick,dccArgumentList);
                         }
                         else
                         {
@@ -378,7 +378,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     {
                         if (dccArgumentList.count() >= 3)
                         {
-                            emit resumeDccSendTransfer(sourceNick,dccArgumentList);
+                            Q_EMIT resumeDccSendTransfer(sourceNick,dccArgumentList);
                         }
                         else
                         {
@@ -394,19 +394,19 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         if (dccArgumentList.count() == 3)
                         {
                             // incoming chat
-                            emit addDccChat(sourceNick,dccArgumentList);
+                            Q_EMIT addDccChat(sourceNick,dccArgumentList);
                         }
                         else if (dccArgumentList.count() == 4)
                         {
                             if (dccArgumentList[dccArgumentList.size() - 2] == QLatin1Char('0'))
                             {
                                 // incoming chat (Reverse DCC)
-                                emit addDccChat(sourceNick,dccArgumentList);
+                                Q_EMIT addDccChat(sourceNick,dccArgumentList);
                             }
                             else
                             {
                                 // the receiver accepted the offer for Reverse DCC chat
-                                emit startReverseDccChat(sourceNick,dccArgumentList);
+                                Q_EMIT startReverseDccChat(sourceNick,dccArgumentList);
                             }
                         }
                         else
@@ -529,11 +529,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             if (dccList.count() >= 2 && dccList.first().toLower() == QLatin1String("send"))
                             {
                                 dccList.removeFirst();
-                                emit rejectDccSendTransfer(sourceNick,dccList);
+                                Q_EMIT rejectDccSendTransfer(sourceNick,dccList);
                             }
                             else if (dccList.first().toLower() == QLatin1String("chat"))
                             {
-                                emit rejectDccChat(sourceNick);
+                                Q_EMIT rejectDccChat(sourceNick);
                             }
                         }
                     }
@@ -684,7 +684,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             m_server->appendMessageToFrontmost(i18n("Invite"),
                 i18n("%1 invited you to channel %2.", sourceNick, channel), messageTags
                 );
-            emit invitation(sourceNick, channel);
+            Q_EMIT invitation(sourceNick, channel);
         }
     }
     else if (command == QLatin1String("away"))
@@ -1175,7 +1175,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     }
 
                     // Send the welcome signal, so the server class knows we are connected properly
-                    emit welcome(host);
+                    Q_EMIT welcome(host);
                     m_connecting = true;
                 }
                 m_server->appendStatusMessage(i18n("Welcome"), trailing, messageTags);
@@ -1458,7 +1458,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     m_server->appendMessageToFrontmost(i18n("Names"), i18n("End of NAMES list."), messageTags);
                 }
 
-                emit endOfNames(parameterList.value(1));
+                Q_EMIT endOfNames(parameterList.value(1));
             }
             break;
         }
@@ -1521,7 +1521,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                         false);
                     setAutomaticRequest(QStringLiteral("TOPIC"),parameterList.value(1), false);
                 }
-                emit topicAuthor(parameterList.value(1), parameterList.value(2), when);
+                Q_EMIT topicAuthor(parameterList.value(1), parameterList.value(2), when);
             }
             break;
         }
@@ -1734,7 +1734,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(2))
             {
                 // Tell server to start the next notify timer round
-                emit notifyResponse(trailing);
+                Q_EMIT notifyResponse(trailing);
             }
             break;
         }
@@ -1955,7 +1955,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                         << parameterList.value(1);
                 }
 
-                emit endOfWho(parameterList.value(1));
+                Q_EMIT endOfWho(parameterList.value(1));
             }
             break;
         }
@@ -2241,7 +2241,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                     }
 
                     // inform server of this user's data
-                    emit userhost(nick,mask,away,ircOp);
+                    Q_EMIT userhost(nick,mask,away,ircOp);
 
                     // display message only if this was no automatic request
                     if (getAutomaticRequest(QStringLiteral("USERHOST"),nick)==0)
@@ -2286,7 +2286,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 }
                 else                              // send them to /LIST window
                 {
-                    emit addToChannelList(parameterList.value(1), parameterList.value(2).toInt(), trailing);
+                    Q_EMIT addToChannelList(parameterList.value(1), parameterList.value(2).toInt(), trailing);
                 }
             }
             break;
@@ -2302,7 +2302,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 }
                 else
                 {
-                    emit endOfChannelList();
+                    Q_EMIT endOfChannelList();
                     setAutomaticRequest(QStringLiteral("LIST"),QString(),false);
                 }
             }

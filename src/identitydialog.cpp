@@ -243,7 +243,7 @@ namespace Konversation
         refreshCurrentIdentity();
         Preferences::setIdentityList(m_identityList);
         Application::instance()->saveOptions(true);
-        emit identitiesChanged();
+        Q_EMIT identitiesChanged();
         QDialog::accept();
     }
 

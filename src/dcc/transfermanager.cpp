@@ -303,7 +303,7 @@ namespace Konversation
         {
             connect(transfer, &TransferSend::statusChanged, this, &TransferManager::slotTransferStatusChanged);
 
-            emit newTransferAdded( transfer );
+            Q_EMIT newTransferAdded( transfer );
         }
 
         bool TransferManager::isLocalFileInWritingProcess( const QUrl &url ) const
@@ -353,7 +353,7 @@ namespace Konversation
             qCDebug(KONVERSATION_LOG) << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")";
 
             if ( newStatus == Transfer::Queued )
-                emit newDccTransferQueued( item );
+                Q_EMIT newDccTransferQueued( item );
         }
 
         void TransferManager::slotSettingsChanged()
@@ -368,7 +368,7 @@ namespace Konversation
                         QUrl url = QUrl::fromLocalFile(Preferences::self()->dccPath().adjusted(QUrl::StripTrailingSlash).toString() + QDir::separator() + it->getFileURL().fileName());
                         it->setFileURL(url);
 
-                        emit fileURLChanged( it );
+                        Q_EMIT fileURLChanged( it );
                     }
                 }
 

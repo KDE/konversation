@@ -87,7 +87,7 @@ namespace Konversation
                 if (!routers.contains(r->getUUID()))
                 {
                     routers.insert(r->getUUID(),r);
-                    emit discovered(r);
+                    Q_EMIT discovered(r);
                 }
                 else
                 {

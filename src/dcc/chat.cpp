@@ -60,7 +60,7 @@ namespace Konversation
                 return; //already closed
             }
 
-            emit aboutToClose();
+            Q_EMIT aboutToClose();
 
             m_textStream.setDevice(nullptr);
 
@@ -199,7 +199,7 @@ namespace Konversation
 
         void Chat::removedFromView()
         {
-            emit removed(this);
+            Q_EMIT removed(this);
         }
 
         void Chat::setConnectionId(int connectionId)
@@ -269,7 +269,7 @@ namespace Konversation
             if (m_chatStatus != status)
             {
                 m_chatDetailedStatus = detailMessage;
-                emit statusChanged(this, status, m_chatStatus);
+                Q_EMIT statusChanged(this, status, m_chatStatus);
                 m_chatStatus = status;
             }
         }
@@ -484,7 +484,7 @@ namespace Konversation
             setStatus(Chat::Chatting, i18nc("%1=extension like Chat or Whiteboard, %2 = partnerNick",
                                             "Established DCC %1 connection to %2.",
                                             localizedExtensionString(), m_partnerNick));
-            emit connected();
+            Q_EMIT connected();
         }
 
         void Chat::connectionFailed(QAbstractSocket::SocketError/* error*/)
@@ -519,7 +519,7 @@ namespace Konversation
                 const QStringList &lines = line.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
 #endif
                 for (const QString &lin : lines) {
-                    emit receivedRawLine(lin);
+                    Q_EMIT receivedRawLine(lin);
                 }
                 available = m_dccSocket->bytesAvailable();
             }
@@ -624,7 +624,7 @@ namespace Konversation
 
         void Chat::failedUPnP(const QString &description)
         {
-            emit upnpError(description);
+            Q_EMIT upnpError(description);
         }
     }
 }

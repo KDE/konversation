@@ -284,7 +284,7 @@ namespace Konversation
 
             cleanUp();
             setStatus(Aborted);
-            emit done(this);
+            Q_EMIT done(this);
         }
 
         void TransferSend::start()                     // public slot
@@ -563,7 +563,7 @@ namespace Konversation
                     qCDebug(KONVERSATION_LOG) << "Received final ACK.";
                     cleanUp();
                     setStatus(Done);
-                    emit done(this);
+                    Q_EMIT done(this);
                     break;                                // for safe
                 }
             }

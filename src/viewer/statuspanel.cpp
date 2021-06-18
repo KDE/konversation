@@ -173,7 +173,7 @@ void StatusPanel::updateName()
 
 void StatusPanel::sendFileMenu()
 {
-    emit sendFile();
+    Q_EMIT sendFile();
 }
 
 void StatusPanel::indicateAway(bool show)
@@ -278,7 +278,7 @@ void StatusPanel::changeNickname(const QString& newNickname)
 
 void StatusPanel::emitUpdateInfo()
 {
-    emit updateInfo(getServer()->getDisplayName());
+    Q_EMIT updateInfo(getServer()->getDisplayName());
 }
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)

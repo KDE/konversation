@@ -295,7 +295,7 @@ void ViewTree::resizeEvent(QResizeEvent* event)
 
     QTreeView::resizeEvent(event);
 
-    emit sizeChanged();
+    Q_EMIT sizeChanged();
 }
 
 void ViewTree::mousePressEvent(QMouseEvent* event)
@@ -327,7 +327,7 @@ void ViewTree::mouseReleaseEvent(QMouseEvent* event)
 
             if (idx.isValid()) {
                 if (m_pressedView != nullptr && m_pressedView == static_cast<ChatWindow*>(idx.internalPointer())) {
-                    emit closeView(m_pressedView.data());
+                    Q_EMIT closeView(m_pressedView.data());
                 }
             }
         }
@@ -379,7 +379,7 @@ void ViewTree::contextMenuEvent(QContextMenuEvent* event)
         if (widget) {
             event->accept();
 
-            emit showViewContextMenu(widget, event->globalPos());
+            Q_EMIT showViewContextMenu(widget, event->globalPos());
         }
     }
 
@@ -492,7 +492,7 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
         auto* view = static_cast<ChatWindow*>(idx.internalPointer());
 
         if (view) {
-            emit showView(view);
+            Q_EMIT showView(view);
         }
     }
 

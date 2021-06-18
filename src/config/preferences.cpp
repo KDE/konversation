@@ -284,7 +284,7 @@ bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
         list.append(newPattern);
 
         if (list.size() == 1)
-            emit self()->notifyListStarted(serverGroupId);
+            Q_EMIT self()->notifyListStarted(serverGroupId);
 
         return true;
     }
@@ -414,13 +414,13 @@ const QList<Ignore*> Preferences::ignoreList() { return self()->mIgnoreList; }
 void Preferences::setShowTrayIcon(bool state)
 {
     self()->PreferencesBase::setShowTrayIcon(state);
-    emit self()->updateTrayIcon();
+    Q_EMIT self()->updateTrayIcon();
 }
 
 void Preferences::setTrayNotify(bool state)
 {
     self()->PreferencesBase::setTrayNotify(state);
-    emit self()->updateTrayIcon();
+    Q_EMIT self()->updateTrayIcon();
 }
 
 

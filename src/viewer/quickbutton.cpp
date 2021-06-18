@@ -20,7 +20,7 @@ QuickButton::~QuickButton()
 
 void QuickButton::wasClicked()
 {
-    emit clicked(definition);
+    Q_EMIT clicked(definition);
 }
 
 void QuickButton::setDefinition(const QString &newDefinition)
