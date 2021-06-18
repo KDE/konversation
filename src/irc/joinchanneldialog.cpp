@@ -11,6 +11,8 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
+#include <KAuthorized>
+
 #include <QPushButton>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
@@ -43,6 +45,9 @@ namespace Konversation
         m_ui.channelCombo->setFocus();
 
         mOkButton->setEnabled(false);
+
+        m_ui.passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+
         connect(m_ui.channelCombo, &KHistoryComboBox::editTextChanged, this, &JoinChannelDialog::slotChannelChanged);
 
         m_ui.delBtn->setEnabled(false);

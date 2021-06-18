@@ -12,6 +12,7 @@
 
 #include <QInputDialog>
 
+#include <KAuthorized>
 #include <KEditListWidget>
 #include <KMessageBox>
 #include <KMessageWidget>
@@ -98,6 +99,8 @@ namespace Konversation
         auto *validator = new QRegularExpressionValidator(noSpaceRx, this);
         m_loginEdit->setValidator(validator);
         m_nicknameLBox->lineEdit()->setValidator(validator);
+
+        m_authPasswordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
 
         // set values for the widgets
         updateIdentity(0);
