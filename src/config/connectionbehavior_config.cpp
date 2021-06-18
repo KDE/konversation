@@ -12,6 +12,7 @@
 #include <config-konversation.h>
 
 #include <KLineEdit>
+#include <KAuthorized>
 #include <KWallet>
 #include <KLocalizedString>
 
@@ -26,7 +27,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
 #endif
 
     kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
-
+    m_ProxyPassword->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
     connect(m_ProxyPassword, &KPasswordLineEdit::passwordChanged, this, [this]() { setPasswordChanged(); });
 }
 

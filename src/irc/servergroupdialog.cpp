@@ -15,6 +15,8 @@
 #include "ui_serverdialogui.h"
 #include "ui_channeldialogui.h"
 
+#include <KAuthorized>
+
 #include <QPushButton>
 #include <QCheckBox>
 
@@ -444,6 +446,8 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerDialogUI();
         m_mainWidget->setupUi(mainWidget);
+        m_mainWidget->m_passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+
         m_mainWidget->m_serverEdit->setFocus();
 
         connect(m_okButton, &QPushButton::clicked, this, &ServerDialog::slotOk);
@@ -510,6 +514,7 @@ namespace Konversation
 
         m_mainWidget = new Ui::ChannelDialogUI();
         m_mainWidget->setupUi(mainWidget);
+        m_mainWidget->m_passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
 
         m_mainWidget->m_channelEdit->setFocus();
         connect(m_okButton, &QPushButton::clicked, this, &ChannelDialog::slotOk);

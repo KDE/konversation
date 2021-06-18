@@ -24,6 +24,8 @@
 #include "viewcontainer.h"
 #include "konversation_log.h"
 
+#include <kwidgetsaddons_version.h>
+#include <KAuthorized>
 #include <KPasswordDialog>
 #include <KMessageBox>
 #include <KComboBox>
@@ -887,6 +889,9 @@ void Channel::modeButtonClicked(int id, bool on)
         {
             QPointer<KPasswordDialog> dlg = new KPasswordDialog(this);
             dlg->setPrompt(i18n("Channel Password"));
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 84, 0)
+            dlg->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+#endif
             if (dlg->exec() && !dlg->password().isEmpty())
             {
                 args = dlg->password();
