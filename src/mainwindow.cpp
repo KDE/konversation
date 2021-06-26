@@ -818,16 +818,21 @@ void MainWindow::openKeyBindings()
     actionCollection()->action(QStringLiteral("open_logfile"))->setText(i18n("&Open Logfile"));
 
     // Open shortcut configuration dialog.
-    KShortcutsDialog::configure(actionCollection());
+    auto *dlg = new KShortcutsDialog(KShortcutsEditor::AllActions, KShortcutsEditor::LetterShortcutsAllowed, this);
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->addCollection(actionCollection());
+    connect(dlg, &QDialog::finished, this, [this, openChannelListString, openLogFileString]() {
+        // Reset action names.
+        actionCollection()->action(QStringLiteral("tab_notifications"))->setText(i18n("Enable Notifications"));
+        actionCollection()->action(QStringLiteral("toggle_away"))->setText(i18n("Set &Away Globally"));
+        actionCollection()->action(QStringLiteral("irc_colors"))->setText(i18n("&IRC Color..."));
+        actionCollection()->action(QStringLiteral("insert_character"))->setText(i18n("Special &Character..."));
+        actionCollection()->action(QStringLiteral("insert_marker_line"))->setText(i18n("&Marker Line"));
+        actionCollection()->action(QStringLiteral("open_channel_list"))->setText(openChannelListString);
+        actionCollection()->action(QStringLiteral("open_logfile"))->setText(openLogFileString);
+    });
 
-    // Reset action names.
-    actionCollection()->action(QStringLiteral("tab_notifications"))->setText(i18n("Enable Notifications"));
-    actionCollection()->action(QStringLiteral("toggle_away"))->setText(i18n("Set &Away Globally"));
-    actionCollection()->action(QStringLiteral("irc_colors"))->setText(i18n("&IRC Color..."));
-    actionCollection()->action(QStringLiteral("insert_character"))->setText(i18n("Special &Character..."));
-    actionCollection()->action(QStringLiteral("insert_marker_line"))->setText(i18n("&Marker Line"));
-    actionCollection()->action(QStringLiteral("open_channel_list"))->setText(openChannelListString);
-    actionCollection()->action(QStringLiteral("open_logfile"))->setText(openLogFileString);
+    dlg->configure(true /* save settings */);
 }
 
 void MainWindow::openServerList()
