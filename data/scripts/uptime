@@ -38,6 +38,8 @@ if($seconds >= 3600)
 if($seconds > 60)
 {
 	$minutes = int($seconds/60);
+} else {
+	$minutes = 0
 }
 if( $days && $hours ) {
 	exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, "Uptime: $days days, $hours hours and $minutes minutes";
