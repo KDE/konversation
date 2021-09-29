@@ -50,9 +50,13 @@ IrcContextMenusPrivate::~IrcContextMenusPrivate()
 {
 }
 
-
-IrcContextMenus::IrcContextMenus()
+IrcContextMenus::IrcContextMenus() : QObject()
 {
+}
+
+void IrcContextMenus::setupUi(QWidget* parent)
+{
+    m_parent = parent;
     createSharedBasicNickActions();
     createSharedNickSettingsActions();
     createSharedDccActions();
@@ -66,17 +70,31 @@ IrcContextMenus::IrcContextMenus()
     updateQuickButtonMenu();
 }
 
-IrcContextMenus::~IrcContextMenus()
+void IrcContextMenus::teardown()
 {
-    delete m_channelMenu;
-    delete m_textMenu;
-    delete m_nickMenu;
-    delete m_quickButtonMenu;
-    delete m_topicHistoryMenu;
-    delete m_modesMenu;
-    delete m_kickBanMenu;
-    delete m_webShortcutsMenu;
+    disconnect(this, nullptr, nullptr, nullptr);
+    m_parent = nullptr;
+    m_quickButtonMenu = nullptr;
+    m_textMenu = nullptr;
+    m_textCopyAction = nullptr;
+    m_textActionsSeparator = nullptr;
+    m_linkActions.clear();
+    m_webShortcutsMenu = nullptr;
+    m_channelMenu = nullptr;
+    m_nickMenu = nullptr;
+    m_sharedBasicNickActions.clear();
+    m_modesMenu = nullptr;
+    m_kickBanMenu = nullptr;
+    m_sharedNickSettingsActions.clear();
+    m_ignoreAction = nullptr;
+    m_unignoreAction = nullptr;
+    m_addNotifyAction = nullptr;
+    m_removeNotifyAction = nullptr;
+    m_sharedDccActions.clear();
+    m_topicHistoryMenu = nullptr;
+    m_queryTopicAuthorAction = nullptr;
 }
+
 
 IrcContextMenus* IrcContextMenus::self()
 {
@@ -132,7 +150,7 @@ void IrcContextMenus::processQuickButtonAction(QAction* action, Server* server, 
 
 void IrcContextMenus::setupTextMenu()
 {
-    m_textMenu = new QMenu();
+    m_textMenu = new QMenu(m_parent);
 
     m_textMenu->addSeparator();
 
@@ -155,7 +173,7 @@ void IrcContextMenus::setupTextMenu()
     action->setData(TextSelectAll);
     m_textMenu->addAction(action);
 
-    m_webShortcutsMenu = new QMenu();
+    m_webShortcutsMenu = new QMenu(m_parent);
     m_webShortcutsMenu->menuAction()->setIcon(QIcon::fromTheme(QStringLiteral("preferences-web-browser-shortcuts")));
     m_webShortcutsMenu->menuAction()->setVisible(false);
     m_textMenu->addMenu(m_webShortcutsMenu);
@@ -327,7 +345,7 @@ void IrcContextMenus::configureWebShortcuts()
 
 void IrcContextMenus::setupChannelMenu()
 {
-    m_channelMenu = new QMenu();
+    m_channelMenu = new QMenu(m_parent);
 
     QAction* defaultAction = createAction(m_channelMenu, Join, QIcon::fromTheme(QStringLiteral("irc-join-channel")), i18n("&Join Channel..."));
     m_channelMenu->setDefaultAction(defaultAction);
@@ -376,7 +394,7 @@ void IrcContextMenus::channelMenu(const QPoint& pos, Server* server, const QStri
 
 void IrcContextMenus::setupNickMenu()
 {
-    m_nickMenu = new QMenu();
+    m_nickMenu = new QMenu(m_parent);
 
     QAction* defaultAction = createAction(m_nickMenu, OpenQuery, i18n("Open Query"));
     m_nickMenu->setDefaultAction(defaultAction);
@@ -388,7 +406,7 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    m_modesMenu = new QMenu();
+    m_modesMenu = new QMenu(m_parent);
     m_nickMenu->addMenu(m_modesMenu);
     m_modesMenu->setTitle(i18n("Modes"));
     createAction(m_modesMenu, GiveOp, QIcon::fromTheme(QStringLiteral("irc-operator")), i18n("Give Op"));
@@ -398,7 +416,7 @@ void IrcContextMenus::setupNickMenu()
     createAction(m_modesMenu, GiveVoice, QIcon::fromTheme(QStringLiteral("irc-voice")), i18n("Give Voice"));
     createAction(m_modesMenu, TakeVoice, QIcon::fromTheme(QStringLiteral("irc-unvoice")), i18n("Take Voice"));
 
-    m_kickBanMenu = new QMenu();
+    m_kickBanMenu = new QMenu(m_parent);
     m_nickMenu->addMenu(m_kickBanMenu);
     m_kickBanMenu->setTitle(i18n("Kick / Ban"));
     createAction(m_kickBanMenu, Kick, i18n("Kick"));
@@ -778,7 +796,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
 
 void IrcContextMenus::setupTopicHistoryMenu()
 {
-    m_topicHistoryMenu = new QMenu();
+    m_topicHistoryMenu = new QMenu(m_parent);
 
     m_topicHistoryMenu->addAction(m_textCopyAction);
 
@@ -809,7 +827,7 @@ void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const 
 
 QAction* IrcContextMenus::createAction(ActionId id, const QString& text)
 {
-    auto* action = new QAction(text, this);
+    auto* action = new QAction(text, m_parent);
 
     action->setData(id);
 
@@ -818,7 +836,7 @@ QAction* IrcContextMenus::createAction(ActionId id, const QString& text)
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon)
 {
-    auto* action = new QAction(this);
+    auto* action = new QAction(m_parent);
 
     action->setData(id);
     action->setIcon(icon);
@@ -828,7 +846,7 @@ QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon)
 
 QAction* IrcContextMenus::createAction(ActionId id, const QIcon& icon, const QString& text)
 {
-    auto* action = new QAction(icon, text, this);
+    auto* action = new QAction(icon, text, m_parent);
 
     action->setData(id);
 

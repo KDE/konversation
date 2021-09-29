@@ -22,6 +22,7 @@
 #include "connectionmanager.h"
 #include "awaymanager.h"
 #include "transfermanager.h"
+#include "irccontextmenus.h"
 
 #include <QMenuBar>
 
@@ -46,6 +47,8 @@
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
+    IrcContextMenus::self()->setupUi(this);
+
     m_hasDirtySettings = false;
     m_closeApp = false;
     m_serverListDialog = nullptr;
@@ -568,6 +571,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
 MainWindow::~MainWindow()
 {
+    IrcContextMenus::self()->teardown();
 }
 
 QSize MainWindow::sizeHint() const

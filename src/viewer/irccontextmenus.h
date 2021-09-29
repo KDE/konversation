@@ -54,9 +54,12 @@ class IrcContextMenus : public QObject
         };
         Q_DECLARE_FLAGS(MenuOptions, MenuOption)
 
-        ~IrcContextMenus() override;
+        ~IrcContextMenus() override = default;
 
         static IrcContextMenus* self();
+        
+        void setupUi(QWidget* parent);
+        void teardown();
 
         static int textMenu(const QPoint& pos, MenuOptions options, Server* server,
             const QString& selectedText, const QString& link, const QString& nick = QString());
@@ -117,6 +120,7 @@ class IrcContextMenus : public QObject
             const QStringList& arguments, const QString& destination = QString());
 
     private:
+        QWidget* m_parent;
         QMenu* m_quickButtonMenu;
         QMenu* m_textMenu;
         QAction* m_textCopyAction;
