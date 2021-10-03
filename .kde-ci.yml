@@ -25,3 +25,5 @@ Dependencies:
     'frameworks/knotifications': '@stable'
     'frameworks/kwindowsystem': '@stable'
     'frameworks/kitemviews': '@stable'
+    'kdesupport/qca' : '@latest'
+    'kdesupport/phonon': '@latest'
