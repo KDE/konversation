@@ -571,7 +571,6 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
 MainWindow::~MainWindow()
 {
-    IrcContextMenus::self()->teardown();
 }
 
 QSize MainWindow::sizeHint() const

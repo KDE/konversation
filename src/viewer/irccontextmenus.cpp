@@ -70,32 +70,6 @@ void IrcContextMenus::setupUi(QWidget* parent)
     updateQuickButtonMenu();
 }
 
-void IrcContextMenus::teardown()
-{
-    disconnect(this, nullptr, nullptr, nullptr);
-    m_parent = nullptr;
-    m_quickButtonMenu = nullptr;
-    m_textMenu = nullptr;
-    m_textCopyAction = nullptr;
-    m_textActionsSeparator = nullptr;
-    m_linkActions.clear();
-    m_webShortcutsMenu = nullptr;
-    m_channelMenu = nullptr;
-    m_nickMenu = nullptr;
-    m_sharedBasicNickActions.clear();
-    m_modesMenu = nullptr;
-    m_kickBanMenu = nullptr;
-    m_sharedNickSettingsActions.clear();
-    m_ignoreAction = nullptr;
-    m_unignoreAction = nullptr;
-    m_addNotifyAction = nullptr;
-    m_removeNotifyAction = nullptr;
-    m_sharedDccActions.clear();
-    m_topicHistoryMenu = nullptr;
-    m_queryTopicAuthorAction = nullptr;
-}
-
-
 IrcContextMenus* IrcContextMenus::self()
 {
     return &s_ircContextMenusPrivate->instance;

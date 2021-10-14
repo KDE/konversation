@@ -57,9 +57,8 @@ class IrcContextMenus : public QObject
         ~IrcContextMenus() override = default;
 
         static IrcContextMenus* self();
-        
+
         void setupUi(QWidget* parent);
-        void teardown();
 
         static int textMenu(const QPoint& pos, MenuOptions options, Server* server,
             const QString& selectedText, const QString& link, const QString& nick = QString());
