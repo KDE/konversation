@@ -56,6 +56,11 @@ IrcContextMenus::IrcContextMenus() : QObject()
 
 void IrcContextMenus::setupUi(QWidget* parent)
 {
+    self()->doSetupUi(parent);
+}
+
+void IrcContextMenus::doSetupUi(QWidget* parent)
+{
     m_parent = parent;
     createSharedBasicNickActions();
     createSharedNickSettingsActions();

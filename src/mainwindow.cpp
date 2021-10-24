@@ -47,7 +47,7 @@
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
-    IrcContextMenus::self()->setupUi(this);
+    IrcContextMenus::setupUi(this);
 
     m_hasDirtySettings = false;
     m_closeApp = false;

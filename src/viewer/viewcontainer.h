@@ -252,7 +252,6 @@ class ViewContainer : public QAbstractItemModel
         void frontServerChanging(Server*);
 
     private Q_SLOTS:
-        void setupIrcContextMenus();
         void viewSwitched(int newIndex);
         void onViewTreeDestroyed(QObject *object);
 
