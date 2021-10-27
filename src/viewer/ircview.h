@@ -31,7 +31,7 @@ class IrcViewMarkerLine: public QObject, public QTextObjectInterface
 
     public:
         IrcViewMarkerLine(QObject *p) : QObject(p), QTextObjectInterface() {}
-        ~IrcViewMarkerLine() {}
+        ~IrcViewMarkerLine() override {}
         void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
         QSizeF intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format) override;
 

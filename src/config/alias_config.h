@@ -18,7 +18,7 @@ class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias
 
     public:
         explicit Alias_Config(QWidget* parent, const char* name = nullptr);
-        ~Alias_Config();
+        ~Alias_Config() override;
 
         void saveSettings() override;
         void loadSettings() override;

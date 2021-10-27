@@ -23,7 +23,7 @@ class OSDWidget : public QWidget
 
         explicit OSDWidget(const QString &appName, QWidget *parent = nullptr,
                            const QString &name = QStringLiteral("osd"));
-        virtual ~OSDWidget();
+        ~OSDWidget() override;
 
         /** resets the colours to defaults */
         void unsetColors();

@@ -33,7 +33,7 @@ namespace Konversation
         public:
 
             explicit TransferView(QWidget *parent = nullptr);
-            virtual ~TransferView();
+            ~TransferView() override;
 
             void addTransfer(Transfer *transfer);
 

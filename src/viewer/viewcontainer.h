@@ -62,7 +62,7 @@ class TabWidget : public QTabWidget
 
     public:
         explicit TabWidget(QWidget* parent = nullptr);
-        ~TabWidget();
+        ~TabWidget() override;
 
     Q_SIGNALS:
         void contextMenu(QWidget* widget, const QPoint& pos);

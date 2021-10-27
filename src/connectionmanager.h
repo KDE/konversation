@@ -23,7 +23,7 @@ class ConnectionManager : public QObject
 
     public:
         explicit ConnectionManager(QObject* parent = nullptr);
-        ~ConnectionManager();
+        ~ConnectionManager() override;
 
         uint connectionCount() const { return m_connectionList.count(); }
 

@@ -27,7 +27,7 @@ namespace Konversation
 
             public:
                 explicit TransferDetailedInfoPanel(QWidget *parent = nullptr);
-                virtual ~TransferDetailedInfoPanel();
+                ~TransferDetailedInfoPanel() override;
 
                 void setTransfer(Transfer *item);
                 Transfer *transfer() const;

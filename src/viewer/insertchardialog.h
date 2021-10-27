@@ -21,7 +21,7 @@ namespace Konversation
 
         public:
             explicit InsertCharDialog(const QString& font = QString(), QWidget *parent = nullptr);
-            ~InsertCharDialog();
+            ~InsertCharDialog() override;
 
             void setFont(const QFont &font);
             uint chr() const;

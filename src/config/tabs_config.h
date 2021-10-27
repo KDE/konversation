@@ -16,7 +16,7 @@ class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
 
     public:
         explicit Tabs_Config(QWidget *parent = nullptr, const char *name = nullptr);
-        ~Tabs_Config();
+        ~Tabs_Config() override;
 
     protected:
         void showEvent(QShowEvent *event) override;

@@ -32,7 +32,7 @@ namespace Konversation
             };
 
             explicit WhiteBoardColorChooser(QWidget* parent = nullptr);
-            ~WhiteBoardColorChooser();
+            ~WhiteBoardColorChooser() override;
 
             QColor color(const ColorLayer& layer) const;
             QColor foregroundColor() const;

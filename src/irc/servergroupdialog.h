@@ -26,7 +26,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ServerGroupDialog(const QString& title, QWidget* parent = nullptr);
-            ~ServerGroupDialog();
+            ~ServerGroupDialog() override;
 
             void setServerGroupSettings(ServerGroupSettingsPtr settings);
             ServerGroupSettingsPtr serverGroupSettings();
@@ -82,7 +82,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ServerDialog(const QString& title, QWidget *parent = nullptr);
-            ~ServerDialog();
+            ~ServerDialog() override;
 
             void setServerSettings(const ServerSettings& server);
             ServerSettings serverSettings() const;
@@ -104,7 +104,7 @@ namespace Konversation
         Q_OBJECT
         public:
             explicit ChannelDialog(const QString& title, QWidget *parent = nullptr);
-            ~ChannelDialog();
+            ~ChannelDialog() override;
 
             void setChannelSettings(const ChannelSettings& channel);
             ChannelSettings channelSettings() const;

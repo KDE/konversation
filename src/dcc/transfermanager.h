@@ -39,7 +39,7 @@ namespace Konversation
 
             public:
                 explicit TransferManager(QObject* parent = nullptr);
-                ~TransferManager();
+                ~TransferManager() override;
 
             Q_SIGNALS:
                 /*

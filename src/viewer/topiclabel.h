@@ -23,7 +23,7 @@ namespace Konversation
 
         public:
             explicit TopicLabel(QWidget *parent = nullptr);
-            ~TopicLabel();
+            ~TopicLabel() override;
 
             QSize minimumSizeHint() const override;
             QSize sizeHint() const override;

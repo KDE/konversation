@@ -18,7 +18,7 @@ class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Wa
 
     public:
         explicit Warnings_Config( QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {} );
-        ~Warnings_Config();
+        ~Warnings_Config() override;
 
         void restorePageToDefaults() override;
         void saveSettings() override;

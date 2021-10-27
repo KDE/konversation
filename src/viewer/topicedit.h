@@ -23,7 +23,7 @@ class TopicEdit : public KTextEdit
 
     public:
         explicit TopicEdit(QWidget* parent = nullptr);
-        ~TopicEdit();
+        ~TopicEdit() override;
 
         Channel* channel() const;
         void setChannel(Channel* channel);

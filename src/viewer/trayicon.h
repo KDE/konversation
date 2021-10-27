@@ -20,7 +20,7 @@ namespace Konversation
 
         public:
             explicit TrayIcon(QWidget* parent = nullptr);
-            ~TrayIcon();
+            ~TrayIcon() override;
 
             bool notificationEnabled() { return m_notificationEnabled; }
 

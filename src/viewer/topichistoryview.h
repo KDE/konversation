@@ -27,7 +27,7 @@ class TopicHistorySortfilterProxyModel : public KCategorizedSortFilterProxyModel
 
     public:
         explicit TopicHistorySortfilterProxyModel(QObject* parent = nullptr);
-        ~TopicHistorySortfilterProxyModel();
+        ~TopicHistorySortfilterProxyModel() override;
 
         QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
@@ -52,7 +52,7 @@ class TopicHistoryLabel : public KTextEdit
 
     public:
         explicit TopicHistoryLabel(QWidget* parent = nullptr);
-        ~TopicHistoryLabel();
+        ~TopicHistoryLabel() override;
 
 
     public Q_SLOTS:
@@ -69,7 +69,7 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
 
     public:
         explicit TopicHistoryItemDelegate(QAbstractItemView* itemView, QObject* parent = nullptr);
-        ~TopicHistoryItemDelegate();
+        ~TopicHistoryItemDelegate() override;
 
         void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
         QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
@@ -97,7 +97,7 @@ class TopicHistoryView : public KCategorizedView
 
     public:
         explicit TopicHistoryView(QWidget* parent = nullptr);
-        ~TopicHistoryView();
+        ~TopicHistoryView() override;
 
         void setServer(Server* server) { m_server = server; }
 

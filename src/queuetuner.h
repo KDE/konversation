@@ -21,7 +21,7 @@ class QueueTuner: public QWidget, private Ui::QueueTunerBase
 
     public:
         QueueTuner(QWidget* parent, ViewContainer *container);
-        ~QueueTuner();
+        ~QueueTuner() override;
 
     public Q_SLOTS:
         void setServer(Server* newServer);
