@@ -17,6 +17,7 @@
   <name xml:lang="fi">Konversation</name>
   <name xml:lang="fr">Konversation</name>
   <name xml:lang="gl">Konversation</name>
+  <name xml:lang="hu">Konversation</name>
   <name xml:lang="ia">Konversation</name>
   <name xml:lang="id">Konversation</name>
   <name xml:lang="it">Konversation</name>
@@ -54,6 +55,7 @@
   <summary xml:lang="fr">Client IRC</summary>
   <summary xml:lang="gl">Cliente de IRC</summary>
   <summary xml:lang="he">לקוח IRC</summary>
+  <summary xml:lang="hu">IRC kliens</summary>
   <summary xml:lang="ia">Cliente IRC</summary>
   <summary xml:lang="id">Klien IRC</summary>
   <summary xml:lang="it">Client IRC</summary>
@@ -89,6 +91,7 @@
     <p xml:lang="en-GB">Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE. It provides easy access to standard IRC networks such as Libera, where the KDE IRC channels can be found.</p>
     <p xml:lang="es">Konversation es un cliente IRC (Internet Relay Chat) fácil de usar desarrollado por KDE. Proporciona un fácil acceso a las redes estándar IRC como Libera, donde se pueden encontrar los canales IRC de KDE.</p>
     <p xml:lang="fr">Konversation est un client IRC (Internet Relay Chat) convivial de KDE. Il fournit un accès facile aux réseaux IRC standards tels que Libera, où les canaux IRC de KDE se trouvent.</p>
+    <p xml:lang="hu">A Konversation a KDE felhasználóbarát Internet Relay Chat (IRC) kliense. Könnyű hozzáférést biztosít a szabványos IRC hálózatokhoz, mint például a Libera, ahol a KDE IRC csatornák találhatók.</p>
     <p xml:lang="it">Konversation è un client per Internet Relay Chat (IRC) facile da usare sviluppato da KDE. Fornisce un acceso rapido alle reti IRC standard come Libera, dove si possono trovare i canali IRC di KDE.</p>
     <p xml:lang="ko">Konversaion은 KDE의 IRC 클라이언트입니다. KDE IRC 채널이 있는 Libera와 같은 IRC 네트워크에 쉽게 연결할 수 있습니다.</p>
     <p xml:lang="nl">Konversation is een gebruikersvriendelijke Internet Relay Chat (IRC)-client door KDE. Het biedt gemakkelijk toegang tot standaard IRC-netwerken zoals Libera, waar de KDE IRC-kanalen zijn te vinden.</p>
@@ -116,6 +119,7 @@
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
     <p xml:lang="he">תכונות:</p>
+    <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
     <p xml:lang="it">Funzionalità:</p>
@@ -153,6 +157,7 @@
       <li xml:lang="fr">Fonctionnalités standards IRC</li>
       <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
       <li xml:lang="he">תכונות IRC רגילות</li>
+      <li xml:lang="hu">Standard IRC szolgáltatások</li>
       <li xml:lang="ia">Characteristicas de RC Standard</li>
       <li xml:lang="id">Fitur IRC standar</li>
       <li xml:lang="it">Funzionalità di base di IRC</li>
@@ -188,6 +193,7 @@
       <li xml:lang="fr">Prise en charge de serveurs SSL</li>
       <li xml:lang="gl">Compatibilidade con servidores SSL.</li>
       <li xml:lang="he">תמיכה בשרתים מאובטחים ב־SSL</li>
+      <li xml:lang="hu">SSL kiszolgálótámogatás</li>
       <li xml:lang="ia">Supporto de servitor SSL</li>
       <li xml:lang="id">Dukungan server SSL</li>
       <li xml:lang="it">Supporto per i server SSL</li>
@@ -223,6 +229,7 @@
       <li xml:lang="fr">Prise en charge des signets</li>
       <li xml:lang="gl">Funcionalidade de marcar</li>
       <li xml:lang="he">תמיכה בסימניות</li>
+      <li xml:lang="hu">Könyvjelzők</li>
       <li xml:lang="id">Dukungan pemarkahan</li>
       <li xml:lang="it">Supporto per i segnalibri</li>
       <li xml:lang="ko">책갈피 지원</li>
@@ -257,6 +264,7 @@
       <li xml:lang="fr">Interface graphique simple d'utilisation</li>
       <li xml:lang="gl">Interface de usuario fácil de usar.</li>
       <li xml:lang="he">ממשק משתמש גרפי קל לשימוש</li>
+      <li xml:lang="hu">Egyszerűen használható felhasználói felület</li>
       <li xml:lang="id">Mudah untuk menggunakan antarmuka pengguna grafikal</li>
       <li xml:lang="it">Interfaccia grafica semplice da usare</li>
       <li xml:lang="ko">사용하기 쉬운 그래픽 사용자 인터페이스</li>
@@ -291,6 +299,7 @@
       <li xml:lang="fr">Multiples serveurs et canaux dans une unique fenêtre</li>
       <li xml:lang="gl">Varios servidores e canles nunha mesma xanela.</li>
       <li xml:lang="he">מספר שרתים וערוצים בחלון אחד</li>
+      <li xml:lang="hu">Több kiszolgáló és csatorna megjelenítése egy ablakon belül</li>
       <li xml:lang="id">Multipel channel dan server di satu window tunggal</li>
       <li xml:lang="it">Diversi server e canali in un'unica finestra</li>
       <li xml:lang="ko">하나의 창에서 여러 서버와 채널 관리</li>
@@ -325,6 +334,7 @@
       <li xml:lang="fr">Transfert de fichier DCC</li>
       <li xml:lang="gl">Transferencia de ficheiros por DCC.</li>
       <li xml:lang="he">העברת קבצים באמצעות DCC</li>
+      <li xml:lang="hu">DCC fájlátvitel</li>
       <li xml:lang="id">Transfer file DCC</li>
       <li xml:lang="it">Trasferimento file tramite DCC</li>
       <li xml:lang="ko">DCC 파일 전송</li>
@@ -359,6 +369,7 @@
       <li xml:lang="fr">Multiples identités pour différents serveurs</li>
       <li xml:lang="gl">Varias identidades para distintos servidores.</li>
       <li xml:lang="he">זהויות שונות לשרתים שונים</li>
+      <li xml:lang="hu">Különböző identitások különböző kiszolgálókhoz</li>
       <li xml:lang="id">Multipel identitas untuk server yang berbeda</li>
       <li xml:lang="it">Identità multiple per i vari server</li>
       <li xml:lang="ko">개별 서버별 다중 프로필</li>
@@ -393,6 +404,7 @@
       <li xml:lang="fr">Décorations du texte et couleurs</li>
       <li xml:lang="gl">Decoracións e cores de texto.</li>
       <li xml:lang="he">עיצוב וצבעי טקסט</li>
+      <li xml:lang="hu">Szövegdíszítés és színek</li>
       <li xml:lang="ia">Decorationes de texto e colores</li>
       <li xml:lang="id">Dekorasi teks dan warna</li>
       <li xml:lang="it">Decorazioni e colori per il testo</li>
@@ -428,6 +440,7 @@
       <li xml:lang="fr">Affichage à l'écran des notifications</li>
       <li xml:lang="gl">Notificacións visualizadas na pantalla.</li>
       <li xml:lang="he">התראות על המסך</li>
+      <li xml:lang="hu">Értesítések megjelenítése a képernyőn</li>
       <li xml:lang="id">Notifikasi didisplaikan di layar (OSD)</li>
       <li xml:lang="it">Notifiche a schermo (OnScreen Display)</li>
       <li xml:lang="ko">화면 디스플레이 알림</li>
@@ -462,6 +475,7 @@
       <li xml:lang="fr">Détection automatique de l'UTF-8</li>
       <li xml:lang="gl">Detección automática de UTF-8.</li>
       <li xml:lang="he">זיהוי UTF-8 אוטומטי</li>
+      <li xml:lang="hu">UTF-8 automatikus felismerése</li>
       <li xml:lang="ia">Detection automatic de UTF-8</li>
       <li xml:lang="id">Deteksi UTF-8 otomatis</li>
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
@@ -497,6 +511,7 @@
       <li xml:lang="fr">Prise en charge de l'encodage par canal</li>
       <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
       <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
+      <li xml:lang="hu">Csatornánkénti kódolási beállítások</li>
       <li xml:lang="ia">Supporto de codifica per canal</li>
       <li xml:lang="id">Dukungan pengenkodean per channel</li>
       <li xml:lang="it">Supporto di codifiche per canale</li>
@@ -532,6 +547,7 @@
       <li xml:lang="fr">Prise en charge de thèmes pour les images de pseudonyme</li>
       <li xml:lang="gl">Funcionalidade de temas para iconas de alcumes.</li>
       <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
+      <li xml:lang="hu">Tématámogatás a becenevek ikonjaihoz</li>
       <li xml:lang="id">Dukungan tema untuk ikon nick</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
       <li xml:lang="ko">별명 아이콘 테마 지원</li>
@@ -566,6 +582,7 @@
       <li xml:lang="fr">Hautement configurable</li>
       <li xml:lang="gl">Altamente configurábel.</li>
       <li xml:lang="he">הרבה אפשרויות הגדרה</li>
+      <li xml:lang="hu">Számos beállítási lehetőség</li>
       <li xml:lang="ia">Altamente configurabile</li>
       <li xml:lang="id">Sangat dapat dikonfigurasi</li>
       <li xml:lang="it">Altamente configurabile</li>
