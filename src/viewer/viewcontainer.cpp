@@ -33,6 +33,7 @@
 #include "viewtree.h"
 #include "viewspringloader.h"
 #include "konversation_log.h"
+#include "konversation_state.h"
 
 #include <KMessageBox>
 #include <KIO/OpenUrlJob>
@@ -43,6 +44,7 @@
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KWindowSystem>
+#include <KSharedConfig>
 
 #include <QModelIndex>
 #include <QSplitter>
@@ -119,6 +121,11 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_insertCharDialog(nullptr)
 , m_queryViewCount(0)
 {
+    // move existing entries to their new location
+    KConfigGroup appearanceStateConfig = KSharedConfig::openStateConfig()->group("Appearance");
+    KConfigGroup appearanceGrp = KSharedConfig::openConfig()->group("Appearance");
+    appearanceGrp.moveValuesTo({"TreeSplitterSizes", "TopicSplitterSizes", "ChannelSplitterSizes"}, appearanceStateConfig);
+
     m_viewSpringLoader = new ViewSpringLoader(this);
 
     images = Application::instance()->images();
@@ -181,7 +188,7 @@ void ViewContainer::initializeSplitterSizes()
 {
     if (m_viewTree && !m_viewTree->isHidden())
     {
-        QList<int> sizes = Preferences::self()->treeSplitterSizes();
+        QList<int> sizes = KonversationState::self()->treeSplitterSizes();
 
         if (sizes.isEmpty())
             sizes << 145 << (m_window->width() - 145); // FIXME: Make DPI-aware.
@@ -195,7 +202,7 @@ void ViewContainer::saveSplitterSizes()
 {
     if (!m_saveSplitterSizesLock)
     {
-        Preferences::self()->setTreeSplitterSizes(m_viewTreeSplitter->sizes());
+        KonversationState::self()->setTreeSplitterSizes(m_viewTreeSplitter->sizes());
         m_saveSplitterSizesLock = false;
     }
 }

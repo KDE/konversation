@@ -47,6 +47,7 @@
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
+    setStateConfigGroup(QStringLiteral("MainWindow"));
     IrcContextMenus::setupUi(this);
 
     m_hasDirtySettings = false;

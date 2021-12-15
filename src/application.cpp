@@ -27,6 +27,7 @@
 #include "awaymanager.h"
 #include "konversation_log.h"
 #include "config-konversation.h"
+#include "konversation_state.h"
 
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
@@ -84,6 +85,7 @@ Application::~Application()
 
     stashQueueRates();
     Preferences::self()->save(); // FIXME i can't figure out why this isn't in saveOptions --argonel
+    KonversationState::self()->save();
     saveOptions(false);
 
     // Delete m_dccTransferManager here as its destructor depends on the main loop being in tact which it

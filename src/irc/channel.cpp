@@ -23,6 +23,7 @@
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 #include "konversation_log.h"
+#include "konversation_state.h"
 
 #include <kwidgetsaddons_version.h>
 #include <KAuthorized>
@@ -2054,13 +2055,13 @@ void Channel::showEvent(QShowEvent*)
 
 void Channel::syncSplitters()
 {
-    QList<int> vertSizes = Preferences::self()->topicSplitterSizes();
-    QList<int> horizSizes = Preferences::self()->channelSplitterSizes();
+    QList<int> vertSizes = KonversationState::self()->topicSplitterSizes();
+    QList<int> horizSizes = KonversationState::self()->channelSplitterSizes();
 
     if (vertSizes.isEmpty())
     {
         vertSizes = { m_topicButton->height(), (height() - m_topicButton->height()) };
-        Preferences::self()->setTopicSplitterSizes(vertSizes);
+        KonversationState::self()->setTopicSplitterSizes(vertSizes);
     }
 
     if (horizSizes.isEmpty())
@@ -2069,7 +2070,7 @@ void Channel::syncSplitters()
         // tested with 8pt and 10pt DejaVu Sans and Droid Sans.
         int listWidth = fontMetrics().averageCharWidth() * 17 + 20;
         horizSizes = { (width() - listWidth), listWidth };
-        Preferences::self()->setChannelSplitterSizes(horizSizes);
+        KonversationState::self()->setChannelSplitterSizes(horizSizes);
     }
 
     m_vertSplitter->setSizes(vertSizes);
@@ -2648,16 +2649,16 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
     {
         if (!topicSplitterHidden && !channelSplitterHidden)
         {
-            Preferences::self()->setChannelSplitterSizes(m_horizSplitter->sizes());
-            Preferences::self()->setTopicSplitterSizes(m_vertSplitter->sizes());
+            KonversationState::self()->setChannelSplitterSizes(m_horizSplitter->sizes());
+            KonversationState::self()->setTopicSplitterSizes(m_vertSplitter->sizes());
         }
         if (!topicSplitterHidden && channelSplitterHidden)
         {
-            Preferences::self()->setTopicSplitterSizes(m_vertSplitter->sizes());
+            KonversationState::self()->setTopicSplitterSizes(m_vertSplitter->sizes());
         }
         if (!channelSplitterHidden && topicSplitterHidden)
         {
-            Preferences::self()->setChannelSplitterSizes(m_horizSplitter->sizes());
+            KonversationState::self()->setChannelSplitterSizes(m_horizSplitter->sizes());
         }
     }
 

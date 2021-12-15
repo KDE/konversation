@@ -20,16 +20,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="TreeSplitterSizes" type="IntList">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="TopicSplitterSizes" type="IntList">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="TextFont" type="Font">
       <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
       <label></label>
@@ -136,11 +126,6 @@
     </entry>
     <entry key="Margin" type="Int">
       <default>QApplication::style()->pixelMetric(QStyle::PM_LayoutLeftMargin)</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="ChannelSplitterSizes" type="IntList">
-      <default></default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
