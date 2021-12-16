@@ -2097,7 +2097,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
     {
         m_mousePressedOnUrl = false;
     }
-    else if (ev->button() == Qt::MidButton)
+    else if (ev->button() == Qt::MiddleButton)
     {
         if (m_contextMenuOptions.testFlag(IrcContextMenus::ShowLinkActions))
         {
