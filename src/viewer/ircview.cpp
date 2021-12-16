@@ -1425,7 +1425,8 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
-            case '\x13': //strikethru
+            case '\x13': //historic strikethru
+            case '\x1e': //modern strikethru
                 offset = defaultHtmlReplace(htmlText, &data, pos, QStringLiteral("s"));
                 pos += offset -1;
                 linkOffset += offset -1;
@@ -1800,7 +1801,8 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
                 defaultRemoveDuplicateHandling(data, QStringLiteral("u"));
                 ++pos;
                 break;
-            case '\x13': //strikethru
+            case '\x13': //historic strikethru
+            case '\x1e': //modern strikethru
                 defaultRemoveDuplicateHandling(data, QStringLiteral("s"));
                 ++pos;
                 break;
