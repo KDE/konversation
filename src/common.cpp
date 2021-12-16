@@ -102,6 +102,7 @@ namespace Konversation
         // line.replace(QRegExp("%?"),"\x15");
         line.replace(QStringLiteral("%R"),QStringLiteral("\x16"));       // replace %R with reverse char
         line.replace(QStringLiteral("%U"),QStringLiteral("\x1f"));       // replace %U with underline char
+        line.replace(QStringLiteral("%M"),QStringLiteral("\x11"));       // replace %M with monospace char
         line.replace(QStringLiteral("%\x01"),QStringLiteral("%"));       // restore double %% as single %
 
         return line;
@@ -125,6 +126,7 @@ namespace Konversation
         line.replace(QLatin1Char('\x1f'), QStringLiteral("%U"));       // replace underline char with %U
         // underline char send by mirc
         line.replace(QLatin1Char('\x15'), QStringLiteral("%U"));       // replace underline char with %U
+        line.replace(QLatin1Char('\x11'), QStringLiteral("%M"));       // replace monospace char with %M
 
         return line;
     }

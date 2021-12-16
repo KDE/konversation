@@ -3339,6 +3339,12 @@ dialog page <menuchoice><guimenu>Behavior</guimenu> <guimenuitem>Auto Replace</g
 <imageobject><imagedata fileref="struck-out-text.png" format="PNG" /></imageobject>
 </inlinemediaobject>
 </para>
+<para>Example: <userinput>This is my %Mmonospace%M text.</userinput></para>
+<para>Output:
+<inlinemediaobject>
+<imageobject><imagedata fileref="monospace-text.png" format="PNG" /></imageobject>
+</inlinemediaobject>
+</para>
 </answer>
 </qandaentry>
 

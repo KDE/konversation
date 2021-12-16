@@ -1431,6 +1431,11 @@ QString IRCView::ircTextToHtml(const QString& text, bool parseURL, const QString
                 pos += offset -1;
                 linkOffset += offset -1;
                 break;
+            case '\x11': //monospace
+                offset = defaultHtmlReplace(htmlText, &data, pos, QStringLiteral("tt"));
+                pos += offset -1;
+                linkOffset += offset -1;
+                break;
             case '\x03': //color
                 {
                     QString fgColor, bgColor;
@@ -1804,6 +1809,10 @@ QString IRCView::removeDuplicateCodes(const QString& codes, TextHtmlData* data, 
             case '\x13': //historic strikethru
             case '\x1e': //modern strikethru
                 defaultRemoveDuplicateHandling(data, QStringLiteral("s"));
+                ++pos;
+                break;
+            case '\x11': //monospace
+                defaultRemoveDuplicateHandling(data, QStringLiteral("tt"));
                 ++pos;
                 break;
             case '\x0f': //reset to default
