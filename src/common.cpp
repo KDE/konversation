@@ -7,7 +7,6 @@
 */
 
 #include "common.h"
-#include "application.h"
 #include "config/preferences.h"
 
 #include <QString>
