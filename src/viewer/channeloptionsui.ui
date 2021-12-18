@@ -161,6 +161,9 @@ the Free Software Foundation; either version 2 of the License, or
          <property name="minimum">
           <number>0</number>
          </property>
+         <property name="maximum">
+          <number>99999</number>
+         </property>
         </widget>
        </item>
        <item row="5" column="3">
