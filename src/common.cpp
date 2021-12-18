@@ -7,7 +7,8 @@
 */
 
 #include "common.h"
-#include "config/preferences.h"
+// use <> include to allow test build to find the mock version
+#include <config/preferences.h>
 
 #include <QString>
 #include <QRegExp>

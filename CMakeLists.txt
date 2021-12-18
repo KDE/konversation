@@ -92,6 +92,10 @@ add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)
 
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
+
 ki18n_install(po)
 kdoctools_install(po)
 
