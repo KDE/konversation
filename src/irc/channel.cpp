@@ -2822,7 +2822,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     const QRegularExpression regexp(
         prefix + QRegularExpression::escape(pattern),
-        caseSensitive ? QRegularExpression::CaseInsensitiveOption : QRegularExpression::NoPatternOption);
+        caseSensitive ? QRegularExpression::NoPatternOption : QRegularExpression::CaseInsensitiveOption);
 
     for (Nick* nick : *this) {
         newNick = nick->getChannelNick()->getNickname();
