@@ -84,12 +84,10 @@ void TestCommon::testMatchLength()
     QFETCH(QString, ircText);
     QFETCH(int, expectedLength);
 
-    QRegExp ircRichtextRegExp(Konversation::colorRegExp);
-
     int length = 0;
-    if (ircRichtextRegExp.exactMatch(ircText.at(0))) {
-        ircRichtextRegExp.indexIn(ircText, 0);
-        length = ircRichtextRegExp.matchedLength();
+    QRegularExpressionMatch match = Konversation::colorRegExp.match(ircText, 0, QRegularExpression::NormalMatch, QRegularExpression::AnchoredMatchOption);
+    if (match.hasMatch()) {
+        length = match.capturedLength();
     }
     QCOMPARE(length, expectedLength);
 }

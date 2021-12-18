@@ -1925,7 +1925,6 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
 {
     Q_UNUSED(fixedUrls)
 
-    QRegExp ircRichtextRegExp(colorRegExp);
     int start = 0, j;
     int i = 0;
     QString url;
@@ -1952,14 +1951,18 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
                     break;
                 }
             }
-            else if (ircRichtextRegExp.exactMatch(richtext.at(i)))
-            {
-                ircRichtextRegExp.indexIn(richtext, i);
-                i += ircRichtextRegExp.matchedLength() - 1;
-            }
             else
             {
-                j = 0;
+                QRegularExpressionMatch match = colorRegExp.match(richtext, i, QRegularExpression::NormalMatch, QRegularExpression::AnchoredMatchOption);
+                if (match.hasMatch())
+                {
+                    // forward to the last matched position
+                    i += match.capturedLength() - 1;
+                }
+                else
+                {
+                    j = 0;
+                }
             }
         }
     }

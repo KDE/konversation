@@ -11,7 +11,6 @@
 #include <config/preferences.h>
 
 #include <QString>
-#include <QRegExp>
 
 #include <KLocalizedString>
 
@@ -232,12 +231,14 @@ namespace Konversation
         QString text(_text);
         int pos = 0;
         QString ret;
-        QString match;
-        while ((pos = colorRegExp.indexIn(text, pos)) >= 0)
-        {
-            match = colorRegExp.cap(0);
-            ret += match;
-            text.remove(pos, match.length());
+        while (pos < text.size()) {
+            QRegularExpressionMatch match = colorRegExp.match(text, pos);
+            if (!match.hasMatch()) {
+                break;
+            }
+            ret += match.captured();
+            pos = match.capturedStart();
+            text.remove(pos, match.capturedLength());
         }
         return ret;
     }
