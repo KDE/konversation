@@ -27,6 +27,11 @@ include(ECMSetupVersion)
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Network Widgets)
+find_package(Qt5X11Extras ${QT_MIN_VERSION} CONFIG)
+set_package_properties(Qt5X11Extras PROPERTIES
+    PURPOSE "Needed for startup activation handling on X11"
+    TYPE OPTIONAL
+)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive
@@ -60,6 +65,11 @@ set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
 check_include_file("stropts.h" HAVE_STROPTS_H)
 
 set(HAVE_QCA2 ${Qca-qt5_FOUND})
+if(TARGET Qt5::X11Extras)
+    set(HAVE_X11 TRUE)
+else()
+    set(HAVE_X11 FALSE)
+endif()
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

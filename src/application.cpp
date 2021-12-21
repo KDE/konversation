@@ -26,6 +26,7 @@
 #include "notificationhandler.h"
 #include "awaymanager.h"
 #include "konversation_log.h"
+#include "config-konversation.h"
 
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
@@ -36,6 +37,8 @@
 #include <KTextEdit>
 #include <KSharedConfig>
 #include <KStartupInfo>
+#include <KWindowSystem>
+#include <kwindowsystem_version.h>
 
 #include <QRegularExpression>
 #include <QDBusConnection>
@@ -45,6 +48,9 @@
 #include <QTextCursor>
 #include <QDesktopServices>
 #include <QCommandLineParser>
+#if HAVE_X11
+#include <QX11Info>
+#endif
 
 using namespace Konversation;
 
@@ -1347,9 +1353,19 @@ void Application::handleActivate(const QStringList& arguments)
 
     newInstance(m_commandLineParser);
 
-    KStartupInfo::setNewStartupId(mainWindow->windowHandle(), KStartupInfo::startupId());
     mainWindow->show();
+#if HAVE_X11
+    if (KWindowSystem::isPlatformX11()) {
+        KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
+    } else
+#endif
+#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 83, 0)
+    if (KWindowSystem::isPlatformWayland()) {
+        KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
+    }
+#endif
     mainWindow->raise();
+    KWindowSystem::activateWindow(mainWindow->winId());
 }
 
 

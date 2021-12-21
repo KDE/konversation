@@ -258,6 +258,10 @@ target_link_libraries(konversation
     KF5::NewStuff
     Phonon::phonon4qt5)
 
+if(TARGET Qt5::X11Extras)
+    target_link_libraries(konversation Qt5::X11Extras)
+endif()
+
 if (Qca-qt5_FOUND)
     target_link_libraries(konversation qca-qt5)
 endif ()
