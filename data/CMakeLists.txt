@@ -3,6 +3,11 @@ add_subdirectory(images)
 add_subdirectory(scripts)
 add_subdirectory(scripting_support)
 
+ecm_generate_dbus_service_file(
+    NAME org.kde.konversation
+    EXECUTABLE ${KDE_INSTALL_FULL_BINDIR}/konversation
+    DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
+)
 
 ########### install files ###############
 
