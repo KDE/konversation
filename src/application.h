@@ -154,6 +154,7 @@ class Application : public QApplication
         void storeUrl(const QString& origin, const QString& newUrl, const QDateTime& dateTime);
 
         void handleActivate(const QStringList& arguments);
+        void handleOpen(const QList<QUrl>& urls);
 
     protected:
         bool event(QEvent* event) override;

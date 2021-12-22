@@ -145,6 +145,9 @@ int main(int argc, char* argv[])
     QObject::connect(&dbusService, &KDBusService::activateRequested,
                      &app, &Application::handleActivate,
                      Qt::DirectConnection);
+    QObject::connect(&dbusService, &KDBusService::openRequested,
+                     &app, &Application::handleOpen,
+                     Qt::DirectConnection);
 
     return QApplication::exec();
 }
