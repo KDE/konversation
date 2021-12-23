@@ -174,6 +174,7 @@ class Application : public QApplication
 
     private:
         void implementRestart();
+        void activateForStartLikeCall();
 
     private:
         ConnectionManager* m_connectionManager;
