@@ -76,18 +76,6 @@ endif()
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-add_definitions(
-  -DQT_USE_QSTRINGBUILDER
-  -DQT_STRICT_ITERATORS
-  -DQT_NO_URL_CAST_FROM_STRING
-  -DQT_NO_CAST_FROM_BYTEARRAY
-  -DQT_NO_CAST_TO_ASCII
-  -DQT_NO_CAST_FROM_ASCII
-  -DQT_NO_KEYWORDS
-  -DQT_NO_FOREACH
-  -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
-)
-
 add_subdirectory(src)
 add_subdirectory(data)
 add_subdirectory(doc)
