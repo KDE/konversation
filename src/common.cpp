@@ -98,7 +98,7 @@ namespace Konversation
         line.replace(QStringLiteral("%G"),QStringLiteral("\x07"));       // replace %G with ASCII BEL 0x07
         line.replace(QStringLiteral("%I"),QStringLiteral("\x1d"));       // replace %I with italics char
         line.replace(QStringLiteral("%O"),QStringLiteral("\x0f"));       // replace %O with reset to default char
-        line.replace(QStringLiteral("%S"),QStringLiteral("\x13"));       // replace %S with strikethru char
+        line.replace(QStringLiteral("%S"),QStringLiteral("\x1e"));       // replace %S with strikethru char
         // line.replace(QRegExp("%?"),"\x15");
         line.replace(QStringLiteral("%R"),QStringLiteral("\x16"));       // replace %R with reverse char
         line.replace(QStringLiteral("%U"),QStringLiteral("\x1f"));       // replace %U with underline char
@@ -116,7 +116,10 @@ namespace Konversation
         line.replace(QLatin1Char('\x07'), QStringLiteral("%G"));       // replace ASCII BEL 0x07 with %G
         line.replace(QLatin1Char('\x1d'), QStringLiteral("%I"));       // replace italics char with %I
         line.replace(QLatin1Char('\x0f'), QStringLiteral("%O"));       // replace reset to default char with %O
+        // historic code
         line.replace(QLatin1Char('\x13'), QStringLiteral("%S"));       // replace strikethru char with %S
+        // modern
+        line.replace(QLatin1Char('\x1e'), QStringLiteral("%S"));       // replace strikethru char with %S
         line.replace(QLatin1Char('\x16'), QStringLiteral("%R"));       // replace reverse char with %R
         // underline char send by kvirc
         line.replace(QLatin1Char('\x1f'), QStringLiteral("%U"));       // replace underline char with %U
