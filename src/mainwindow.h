@@ -126,7 +126,7 @@ class MainWindow : public KXmlGuiWindow
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;
-        bool m_closeApp;
+        bool m_closeOnQuitAction;
 
         Q_DISABLE_COPY(MainWindow)
 };

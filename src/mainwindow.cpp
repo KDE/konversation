@@ -50,7 +50,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     IrcContextMenus::setupUi(this);
 
     m_hasDirtySettings = false;
-    m_closeApp = false;
+    m_closeOnQuitAction = false;
     m_serverListDialog = nullptr;
     m_trayIcon = nullptr;
     m_settingsDialog = nullptr;
@@ -633,8 +633,10 @@ void MainWindow::quitProgram()
         confirmQuit() == KMessageBox::Cancel) return;
 
     // will call queryClose()
-    m_closeApp = true;
+    m_closeOnQuitAction = true;
     close();
+    // reset flag in case close was cancelled and close()/queryClose() could be called from elsewhere
+    m_closeOnQuitAction = false;
 }
 
 bool MainWindow::queryClose()
@@ -643,10 +645,9 @@ bool MainWindow::queryClose()
 
     if (!konvApp->isSavingSession())
     {
-        if (sender() == m_trayIcon)
-            m_closeApp = true;
+        const bool isClosingWindowToSystray = !m_closeOnQuitAction && (sender() != m_trayIcon);
 
-        if (Preferences::self()->showTrayIcon() && !m_closeApp)
+        if (Preferences::self()->showTrayIcon() && isClosingWindowToSystray)
         {
             bool doit = KMessageBox::warningContinueCancel(this,
                         i18n("<p>Closing the main window will keep Konversation running in the system tray. "
