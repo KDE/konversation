@@ -27,8 +27,30 @@ namespace Konversation
     {
     }
 
-    void TrayIcon::restore()
+    void TrayIcon::hideWindow()
     {
+        QWidget *window = associatedWidget();
+        if (window->isHidden())
+            return;
+        // hiding via the KStatusNotifierItem also stores any window system info, like "Show on all desktops"
+        // TODO: KStatusNotifierItem only hides if not minimized, needs new API in KStatusNotifierItem
+        // unminimizing instead as work-around needs to wait until the state is reached, not simple to do
+        // For now just doing a plain hide and losing any such info, as after all
+        // hiding a minimized window might not be done by many users
+        if (window->isMinimized())
+        {
+            window->hide();
+            return;
+        }
+
+        // activating when the window is visible hides it
+        activate(QPoint());
+    }
+
+    void TrayIcon::restoreWindow()
+    {
+        if (associatedWidget()->isVisible())
+            return;
         activate(QPoint());
     }
 

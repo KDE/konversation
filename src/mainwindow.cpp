@@ -621,7 +621,7 @@ void MainWindow::activateAndRaiseWindow()
     if (isMinimized())
         KWindowSystem::unminimizeWindow(winId());
     else if (Preferences::self()->showTrayIcon() && !isVisible())
-        m_trayIcon->restore();
+        m_trayIcon->restoreWindow();
 
     KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
     KWindowSystem::activateWindow(winId());
@@ -658,7 +658,7 @@ bool MainWindow::queryClose()
                         KStandardGuiItem::cancel(),
                         QStringLiteral("HideOnCloseInfo")) == KMessageBox::Continue;
             if (doit)
-                hide();
+                m_trayIcon->hideWindow();
 
             return false;
         }
@@ -679,6 +679,8 @@ bool MainWindow::restore()
     // so we can pass it in.
     KConfigGroup config(KConfigGui::sessionConfig(), QStringLiteral("1"));
     const bool show = !config.readEntry("docked", false);
+
+    // TODO: also save & restore any TrayIcon state, needs API in KStatusNotifierItem
 
     return KXmlGuiWindow::restore(1, show);
 }
@@ -940,7 +942,7 @@ void MainWindow::toggleVisibility()
     if (isActiveWindow())
     {
         if (Preferences::self()->showTrayIcon())
-            hide();
+            m_trayIcon->hideWindow();
         else
             KWindowSystem::minimizeWindow(winId());
     }

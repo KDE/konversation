@@ -14,6 +14,7 @@
 #include "scriptlauncher.h"
 #include "transfermanager.h"
 #include "viewcontainer.h"
+#include "trayicon.h"
 #include "urlcatcher.h"
 #include "highlight.h"
 #include "sound.h"
@@ -208,7 +209,7 @@ QT_WARNING_POP
     if (restoreMode == WindowRestore)
         mainWindow->restore();
     else if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
-        mainWindow->hide();
+        mainWindow->systemTrayIcon()->hideWindow();
     else
         mainWindow->show();
 
