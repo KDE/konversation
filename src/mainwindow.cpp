@@ -805,14 +805,6 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
     Preferences::self()->setShowMenuBar(m_showMenuBarAction->isChecked());
 }
 
-void MainWindow::focusAndShowErrorMessage(const QString &errorMsg)
-{
-    show();
-    KWindowSystem::demandAttention(winId());
-    KWindowSystem::activateWindow(winId());
-    KMessageBox::error(this, errorMsg);
-}
-
 void MainWindow::openPrefsDialog()
 {
     //An instance of your dialog could be already created and could be cached,
