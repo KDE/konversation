@@ -121,3 +121,4 @@ X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.konversation
 StartupNotify=true
 StartupWMClass=konversation
+X-GNOME-SingleWindow=true
