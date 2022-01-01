@@ -122,6 +122,7 @@ class Application : public QApplication
         void doInlineAutoreplace(KTextEdit* textEdit) const;
 
         void newInstance(QCommandLineParser *args);
+        void restoreInstance();
 
         static void openUrl(const QString& url);
 
@@ -175,6 +176,10 @@ class Application : public QApplication
     private:
         void implementRestart();
         void activateForStartLikeCall();
+
+        enum AutoConnectMode { NoAutoConnect, AutoConnect };
+        enum WindowRestoreMode { NoWindowRestore, WindowRestore };
+        void createMainWindow(AutoConnectMode autoConnectMode, WindowRestoreMode restoreMode);
 
     private:
         ConnectionManager* m_connectionManager;

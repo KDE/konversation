@@ -229,11 +229,11 @@ void ViewContainer::setupTabWidget()
 
     m_vbox->hide();
 
-    auto* closeBtn = new QToolButton(m_tabWidget);
-    closeBtn->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
-    closeBtn->adjustSize();
-    m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
-    connect(closeBtn, &QAbstractButton::clicked, this, &ViewContainer::closeCurrentView);
+    m_tabCloseButton = new QToolButton(m_tabWidget);
+    m_tabCloseButton->setIcon(QIcon::fromTheme(QStringLiteral("tab-close")));
+    m_tabCloseButton->adjustSize();
+    m_tabWidget->setCornerWidget(m_tabCloseButton, Qt::BottomRightCorner);
+    connect(m_tabCloseButton, &QAbstractButton::clicked, this, &ViewContainer::closeCurrentView);
 
     connect(m_tabWidget, &QTabWidget::currentChanged, this, &ViewContainer::viewSwitched);
     connect(m_tabWidget->tabBar(), &QTabBar::tabCloseRequested, this, QOverload<int>::of(&ViewContainer::closeView));
@@ -702,10 +702,24 @@ void ViewContainer::updateTabWidgetAppearance()
     m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
         QTabWidget::North : QTabWidget::South);
 
-    if (Preferences::self()->showTabBarCloseButton() && !noTabBar)
-        m_tabWidget->cornerWidget()->show();
-    else
-        m_tabWidget->cornerWidget()->hide();
+    // the corner widget has to be unset if not wanted,
+    // just hiding it will have the tabbar still reserving the space
+    const bool showTabBarCloseButton = Preferences::self()->showTabBarCloseButton() && !noTabBar;
+    const bool isTabBarCloseButtonVisible = (m_tabWidget->cornerWidget() != nullptr);
+
+    if (showTabBarCloseButton != isTabBarCloseButtonVisible)
+    {
+        if (showTabBarCloseButton)
+        {
+            m_tabWidget->setCornerWidget(m_tabCloseButton, Qt::BottomRightCorner);
+            m_tabCloseButton->show();
+        }
+        else
+        {
+            m_tabWidget->setCornerWidget(nullptr, Qt::BottomRightCorner);
+            m_tabCloseButton->hide();
+        }
+    }
 
     m_tabWidget->tabBar()->setTabsClosable(Preferences::self()->closeButtons());
 }

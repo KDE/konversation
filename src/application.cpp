@@ -141,6 +141,136 @@ void Application::implementRestart()
     KProcess::startDetached(QCoreApplication::applicationFilePath(), m_restartArguments);
 }
 
+void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestoreMode restoreMode)
+{
+    connect(this, &Application::aboutToQuit, this, &Application::prepareShutdown);
+
+    m_connectionManager = new ConnectionManager(this);
+
+    m_awayManager = new AwayManager(this);
+
+    connect(m_connectionManager, &ConnectionManager::identityOnline, m_awayManager, &AwayManager::identityOnline);
+    connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
+    connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
+
+// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
+QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
+    m_networkConfigurationManager = new QNetworkConfigurationManager();
+    connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
+QT_WARNING_POP
+
+    m_scriptLauncher = new ScriptLauncher(this);
+
+    // an instance of DccTransferManager needs to be created before GUI class instances' creation.
+    m_dccTransferManager = new DCC::TransferManager(this);
+
+    // make sure all vars are initialized properly
+    quickConnectDialog = nullptr;
+
+    // Sound object used to play sound is created when needed.
+    m_sound = nullptr;
+
+    // initialize OSD display here, so we can read the Preferences::properly
+    m_osd = new OSDWidget(QStringLiteral("Konversation"));
+
+    Preferences::self();
+    readOptions();
+
+    // Images object providing LEDs, NickIcons
+    m_images = new Images();
+
+    m_urlModel = new QStandardItemModel(0, 3, this);
+
+    // Auto-alias scripts.  This adds any missing aliases
+    QStringList aliasList(Preferences::self()->aliasList());
+    const QStringList scripts(Preferences::defaultAliasList());
+    bool changed = false;
+    for (const QString& script : scripts) {
+        if (!aliasList.contains(script)) {
+            changed = true;
+            aliasList.append(script);
+        }
+    }
+    if(changed)
+        Preferences::self()->setAliasList(aliasList);
+
+    // open main window
+    mainWindow = new MainWindow();
+
+    connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
+    connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
+    connect(mainWindow.data(), &MainWindow::endNotification, m_osd, &OSDWidget::hide);
+    // take care of user style changes, setting back colors and stuff
+
+    // apply GUI settings
+    Q_EMIT appearanceChanged();
+
+    if (restoreMode == WindowRestore)
+        mainWindow->restore();
+    else if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
+        mainWindow->hide();
+    else
+        mainWindow->show();
+
+    bool openServerList = Preferences::self()->showServerList();
+
+    // handle autoconnect on startup
+    const Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
+
+    if (autoConnectMode == AutoConnect)
+    {
+        QList<ServerGroupSettingsPtr> serversToAutoconnect;
+        for (const auto& server : serverGroups) {
+            if (server->autoConnectEnabled()) {
+                openServerList = false;
+                serversToAutoconnect << server;
+            }
+        }
+
+        std::sort(serversToAutoconnect.begin(), serversToAutoconnect.end(), [] (const ServerGroupSettingsPtr &left, const ServerGroupSettingsPtr &right)
+        {
+            return left->sortIndex() < right->sortIndex();
+        });
+
+        for (const auto& server : qAsConst(serversToAutoconnect)) {
+            m_connectionManager->connectTo(Konversation::CreateNewConnection, server->id());
+        }
+    }
+
+    if (openServerList) mainWindow->openServerList();
+
+    connect(this, &Application::serverGroupsChanged, this, &Application::saveOptions);
+
+    // prepare dbus interface
+    dbusObject = new Konversation::DBus(this);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/irc"), dbusObject, QDBusConnection::ExportNonScriptableSlots);
+    identDBus = new Konversation::IdentDBus(this);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/identity"), identDBus, QDBusConnection::ExportNonScriptableSlots);
+
+    if (dbusObject)
+    {
+        connect(dbusObject,&DBus::dbusMultiServerRaw,
+            this,&Application::dbusMultiServerRaw );
+        connect(dbusObject,&DBus::dbusRaw,
+            this,&Application::dbusRaw );
+        connect(dbusObject,&DBus::dbusSay,
+            this,&Application::dbusSay );
+        connect(dbusObject,&DBus::dbusInfo,
+            this,&Application::dbusInfo );
+        connect(dbusObject,&DBus::dbusInsertMarkerLine,
+            mainWindow.data(),&MainWindow::insertMarkerLine);
+        connect(dbusObject, &DBus::connectTo,
+            m_connectionManager,
+            QOverload<Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool>::of(&ConnectionManager::connectTo));
+    }
+
+    m_notificationHandler = new Konversation::NotificationHandler(this);
+
+    connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
+}
+
 void Application::newInstance(QCommandLineParser *args)
 {
     QString url;
@@ -149,130 +279,8 @@ void Application::newInstance(QCommandLineParser *args)
 
     if (!mainWindow)
     {
-        connect(this, &Application::aboutToQuit, this, &Application::prepareShutdown);
-
-        m_connectionManager = new ConnectionManager(this);
-
-        m_awayManager = new AwayManager(this);
-
-        connect(m_connectionManager, &ConnectionManager::identityOnline, m_awayManager, &AwayManager::identityOnline);
-        connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
-        connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
-
-// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        m_networkConfigurationManager = new QNetworkConfigurationManager();
-        connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
-QT_WARNING_POP
-
-        m_scriptLauncher = new ScriptLauncher(this);
-
-        // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        m_dccTransferManager = new DCC::TransferManager(this);
-
-        // make sure all vars are initialized properly
-        quickConnectDialog = nullptr;
-
-        // Sound object used to play sound is created when needed.
-        m_sound = nullptr;
-
-        // initialize OSD display here, so we can read the Preferences::properly
-        m_osd = new OSDWidget(QStringLiteral("Konversation"));
-
-        Preferences::self();
-        readOptions();
-
-        // Images object providing LEDs, NickIcons
-        m_images = new Images();
-
-        m_urlModel = new QStandardItemModel(0, 3, this);
-
-        // Auto-alias scripts.  This adds any missing aliases
-        QStringList aliasList(Preferences::self()->aliasList());
-        const QStringList scripts(Preferences::defaultAliasList());
-        bool changed = false;
-        for (const QString& script : scripts) {
-            if (!aliasList.contains(script)) {
-                changed = true;
-                aliasList.append(script);
-            }
-        }
-        if(changed)
-            Preferences::self()->setAliasList(aliasList);
-
-        // open main window
-        mainWindow = new MainWindow();
-
-        connect(mainWindow.data(), &MainWindow::showQuickConnectDialog, this, &Application::openQuickConnectDialog);
-        connect(Preferences::self(), &Preferences::updateTrayIcon, mainWindow.data(), &MainWindow::updateTrayIcon);
-        connect(mainWindow.data(), &MainWindow::endNotification, m_osd, &OSDWidget::hide);
-        // take care of user style changes, setting back colors and stuff
-
-        // apply GUI settings
-        Q_EMIT appearanceChanged();
-
-        if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
-            mainWindow->hide();
-        else
-            mainWindow->show();
-
-        bool openServerList = Preferences::self()->showServerList();
-
-        // handle autoconnect on startup
-        const Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
-
-        if (!args->isSet(QStringLiteral("noautoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server")))
-        {
-            QList<ServerGroupSettingsPtr> serversToAutoconnect;
-            for (const auto& server : serverGroups) {
-                if (server->autoConnectEnabled()) {
-                    openServerList = false;
-                    serversToAutoconnect << server;
-                }
-            }
-
-            std::sort(serversToAutoconnect.begin(), serversToAutoconnect.end(), [] (const ServerGroupSettingsPtr &left, const ServerGroupSettingsPtr &right)
-            {
-                return left->sortIndex() < right->sortIndex();
-            });
-
-            for (const auto& server : qAsConst(serversToAutoconnect)) {
-                m_connectionManager->connectTo(Konversation::CreateNewConnection, server->id());
-            }
-        }
-
-        if (openServerList) mainWindow->openServerList();
-
-        connect(this, &Application::serverGroupsChanged, this, &Application::saveOptions);
-
-        // prepare dbus interface
-        dbusObject = new Konversation::DBus(this);
-        QDBusConnection::sessionBus().registerObject(QStringLiteral("/irc"), dbusObject, QDBusConnection::ExportNonScriptableSlots);
-        identDBus = new Konversation::IdentDBus(this);
-        QDBusConnection::sessionBus().registerObject(QStringLiteral("/identity"), identDBus, QDBusConnection::ExportNonScriptableSlots);
-
-        if (dbusObject)
-        {
-            connect(dbusObject,&DBus::dbusMultiServerRaw,
-                this,&Application::dbusMultiServerRaw );
-            connect(dbusObject,&DBus::dbusRaw,
-                this,&Application::dbusRaw );
-            connect(dbusObject,&DBus::dbusSay,
-                this,&Application::dbusSay );
-            connect(dbusObject,&DBus::dbusInfo,
-                this,&Application::dbusInfo );
-            connect(dbusObject,&DBus::dbusInsertMarkerLine,
-                mainWindow.data(),&MainWindow::insertMarkerLine);
-            connect(dbusObject, &DBus::connectTo,
-                m_connectionManager,
-                QOverload<Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool>::of(&ConnectionManager::connectTo));
-        }
-
-        m_notificationHandler = new Konversation::NotificationHandler(this);
-
-        connect(this, &Application::appearanceChanged, this, &Application::updateProxySettings);
+        const AutoConnectMode autoConnectMode = (!args->isSet(QStringLiteral("noautoconnect")) && url.isEmpty() && !args->isSet(QStringLiteral("server"))) ? AutoConnect : NoAutoConnect;
+        createMainWindow(autoConnectMode, NoWindowRestore);
     }
     else if (args->isSet(QStringLiteral("restart")))
     {
@@ -295,6 +303,11 @@ QT_WARNING_POP
     }
 
     return;
+}
+
+void Application::restoreInstance()
+{
+    createMainWindow(AutoConnect, WindowRestore);
 }
 
 Application* Application::instance()

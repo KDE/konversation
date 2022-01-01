@@ -16,6 +16,7 @@
 #include <QTabWidget>
 
 class QSplitter;
+class QToolButton;
 
 class KActionCollection;
 
@@ -279,6 +280,7 @@ class ViewContainer : public QAbstractItemModel
 
         QSplitter* m_viewTreeSplitter;
         TabWidget* m_tabWidget;
+        QToolButton* m_tabCloseButton;
         ViewTree* m_viewTree;
         QWidget* m_vbox;
         QueueTuner* m_queueTuner;
