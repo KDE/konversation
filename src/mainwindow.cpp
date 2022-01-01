@@ -35,6 +35,7 @@
 #include <KStandardAction>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KConfigGui>
 
 #include <QSplitter>
 #include <QIcon>
@@ -669,6 +670,23 @@ bool MainWindow::queryClose()
     konvApp->prepareShutdown();
 
     return true;
+}
+
+bool MainWindow::restore()
+{
+    // Default restore behavior shows the window based on the flag passed to it
+    // We need to read the respective session data before calling the method,
+    // so we can pass it in.
+    KConfigGroup config(KConfigGui::sessionConfig(), QStringLiteral("1"));
+    const bool show = !config.readEntry("docked", false);
+
+    return KXmlGuiWindow::restore(1, show);
+}
+
+void MainWindow::saveProperties(KConfigGroup &config)
+{
+    KXmlGuiWindow::saveProperties(config);
+    config.writeEntry("docked", isHidden());
 }
 
 void MainWindow::hideEvent(QHideEvent *e)

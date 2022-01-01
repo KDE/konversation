@@ -139,7 +139,10 @@ int main(int argc, char* argv[])
 
     KDBusService dbusService(startOptions);
 
-    app.newInstance(&cmdLineParser);
+    if (app.isSessionRestored() && KMainWindow::canBeRestored(1))
+        app.restoreInstance();
+    else
+        app.newInstance(&cmdLineParser);
     app.setCommandLineParser(&cmdLineParser);
 
     QObject::connect(&dbusService, &KDBusService::activateRequested,

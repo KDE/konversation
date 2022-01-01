@@ -44,6 +44,7 @@ class MainWindow : public KXmlGuiWindow
 
         ViewContainer* getViewContainer() const { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
+        bool restore();
 
         /** Some errors need to be shown, even when konversation is minimized.
          */
@@ -81,6 +82,8 @@ class MainWindow : public KXmlGuiWindow
 
         bool queryClose() override;
         bool event(QEvent* e) override;
+
+        void saveProperties(KConfigGroup &config) override;
 
     private Q_SLOTS:
         /** This is connected to the preferences settingsChanged signal and acts to compress
