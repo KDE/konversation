@@ -150,6 +150,7 @@ class ChatWindow : public QWidget
 
         void closing(ChatWindow* myself);
         void showView(ChatWindow* myself);
+        void windowActivationRequested();
 
     public Q_SLOTS:
         virtual void updateAppearance();

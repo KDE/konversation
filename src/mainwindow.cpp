@@ -41,6 +41,7 @@
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
+#include <KWindowInfo>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
@@ -616,17 +617,6 @@ int MainWindow::confirmQuit()
     return result;
 }
 
-void MainWindow::activateAndRaiseWindow()
-{
-    if (isMinimized())
-        KWindowSystem::unminimizeWindow(winId());
-    else if (Preferences::self()->showTrayIcon() && !isVisible())
-        m_trayIcon->restoreWindow();
-
-    KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
-    KWindowSystem::activateWindow(winId());
-}
-
 void MainWindow::quitProgram()
 {
     if (Preferences::self()->showTrayIcon() &&
@@ -940,8 +930,31 @@ void MainWindow::toggleVisibility()
     }
     else
     {
-        activateAndRaiseWindow();
+        activateRaiseAndMoveToDesktop(MoveToDesktop);
     }
 }
 
+void MainWindow::activateAndRaiseWindow()
+{
+    activateRaiseAndMoveToDesktop(NoMoveToDesktop);
+}
 
+void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
+{
+    if (isMinimized())
+        KWindowSystem::unminimizeWindow(winId());
+    else if (Preferences::self()->showTrayIcon() && !isVisible())
+        m_trayIcon->restoreWindow();
+
+    if (!isActiveWindow())
+    {
+        raise();
+        if (moveToDesktop == MoveToDesktop)
+        {
+            KWindowInfo info(winId(), NET::WMDesktop);
+            if (!info.onAllDesktops())
+                KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
+        }
+        KWindowSystem::activateWindow(winId());
+    }
+}

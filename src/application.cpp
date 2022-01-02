@@ -1378,8 +1378,7 @@ void Application::handleActivate(const QStringList& arguments)
         KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
     }
 #endif
-    mainWindow->raise();
-    KWindowSystem::activateWindow(mainWindow->winId());
+    mainWindow->activateAndRaiseWindow();
 }
 
 

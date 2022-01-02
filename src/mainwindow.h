@@ -114,6 +114,9 @@ class MainWindow : public KXmlGuiWindow
     private:
         int confirmQuit();
 
+        enum MoveToDesktopMode { NoMoveToDesktop, MoveToDesktop };
+        void activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop);
+
     private:
         ViewContainer* m_viewContainer;
         Konversation::StatusBar* m_statusBar;
