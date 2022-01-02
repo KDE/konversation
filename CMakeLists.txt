@@ -29,11 +29,6 @@ include(ECMGenerateDBusServiceFile)
 include(FeatureSummary)
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Network Widgets)
-find_package(Qt5X11Extras ${QT_MIN_VERSION} CONFIG)
-set_package_properties(Qt5X11Extras PROPERTIES
-    PURPOSE "Needed for startup activation handling on X11"
-    TYPE OPTIONAL
-)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive
@@ -57,6 +52,16 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     WindowSystem
     ItemViews
 )
+
+if (KF5_VERSION VERSION_LESS 5.91.0)
+    find_package(Qt5X11Extras ${QT_MIN_VERSION} CONFIG)
+    set_package_properties(Qt5X11Extras PROPERTIES
+        PURPOSE "Needed for startup activation handling on X11"
+        TYPE OPTIONAL
+    )
+elseif(KF5_MIN_VERSION VERSION_GREATER 5.90)
+    message(AUTHOR_WARNING "Please remove usage of Qt5X11Extras and HAVE_X11, no longer needed.")
+endif()
 
 find_package(Phonon4Qt5 4.6.60 REQUIRED)
 

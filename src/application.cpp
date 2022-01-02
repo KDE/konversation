@@ -27,8 +27,12 @@
 #include "notificationhandler.h"
 #include "awaymanager.h"
 #include "konversation_log.h"
-#include "config-konversation.h"
 #include "konversation_state.h"
+
+#include <kwindowsystem_version.h>
+#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 91, 0)
+#include "config-konversation.h"
+#endif
 
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
@@ -40,7 +44,6 @@
 #include <KSharedConfig>
 #include <KStartupInfo>
 #include <KWindowSystem>
-#include <kwindowsystem_version.h>
 
 #include <QRegularExpression>
 #include <QDBusConnection>
@@ -1386,6 +1389,9 @@ void Application::handleOpen(const QList<QUrl>& urls)
 void Application::activateForStartLikeCall()
 {
     mainWindow->show();
+#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 91, 0)
+    KWindowSystem::updateStartupId(mainWindow->windowHandle());
+#else
 #if HAVE_X11
     if (KWindowSystem::isPlatformX11()) {
         KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
@@ -1395,6 +1401,7 @@ void Application::activateForStartLikeCall()
     if (KWindowSystem::isPlatformWayland()) {
         KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
     }
+#endif
 #endif
     mainWindow->activateAndRaiseWindow();
 }
