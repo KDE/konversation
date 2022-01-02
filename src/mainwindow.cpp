@@ -46,6 +46,7 @@
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
 #include <KGlobalAccel>
+#include <KStartupInfo>
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
@@ -671,6 +672,10 @@ bool MainWindow::restore()
     const bool show = !config.readEntry("docked", false);
 
     // TODO: also save & restore any TrayIcon state, needs API in KStatusNotifierItem
+
+    // in case no window is shown & registered, the window manager needs to be told directly the start is done
+    if (!show)
+        KStartupInfo::appStarted();
 
     return KXmlGuiWindow::restore(1, show);
 }

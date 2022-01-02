@@ -209,7 +209,10 @@ QT_WARNING_POP
     if (restoreMode == WindowRestore)
         mainWindow->restore();
     else if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
+    {
         mainWindow->systemTrayIcon()->hideWindow();
+        KStartupInfo::appStarted();
+    }
     else
         mainWindow->show();
 
