@@ -24,7 +24,8 @@ namespace Konversation
 
             bool notificationEnabled() { return m_notificationEnabled; }
 
-            void restore();
+            void restoreWindow();
+            void hideWindow();
 
         public Q_SLOTS:
             void startNotification();

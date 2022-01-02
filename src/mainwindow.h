@@ -46,9 +46,6 @@ class MainWindow : public KXmlGuiWindow
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
         bool restore();
 
-        /** Some errors need to be shown, even when konversation is minimized.
-         */
-        void focusAndShowErrorMessage(const QString &errorMsg);
         QSize sizeHint() const override;
 
     Q_SIGNALS:
@@ -116,6 +113,9 @@ class MainWindow : public KXmlGuiWindow
 
     private:
         int confirmQuit();
+
+        enum MoveToDesktopMode { NoMoveToDesktop, MoveToDesktop };
+        void activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop);
 
     private:
         ViewContainer* m_viewContainer;

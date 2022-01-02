@@ -14,6 +14,7 @@
 #include "scriptlauncher.h"
 #include "transfermanager.h"
 #include "viewcontainer.h"
+#include "trayicon.h"
 #include "urlcatcher.h"
 #include "highlight.h"
 #include "sound.h"
@@ -210,7 +211,10 @@ QT_WARNING_POP
     if (restoreMode == WindowRestore)
         mainWindow->restore();
     else if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
-        mainWindow->hide();
+    {
+        mainWindow->systemTrayIcon()->hideWindow();
+        KStartupInfo::appStarted();
+    }
     else
         mainWindow->show();
 
@@ -1392,8 +1396,7 @@ void Application::activateForStartLikeCall()
         KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
     }
 #endif
-    mainWindow->raise();
-    KWindowSystem::activateWindow(mainWindow->winId());
+    mainWindow->activateAndRaiseWindow();
 }
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

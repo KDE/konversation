@@ -43,7 +43,6 @@
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
-#include <KWindowSystem>
 #include <KSharedConfig>
 
 #include <QModelIndex>
@@ -1405,6 +1404,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, &ChatWindow::clearStatusBarTempText, this, &ViewContainer::clearStatusBarTempText);
     connect(view, &ChatWindow::closing, this, &ViewContainer::cleanupAfterClose);
     connect(view, &ChatWindow::showView, this, &ViewContainer::showView);
+    connect(view, &ChatWindow::windowActivationRequested, m_window, &MainWindow::activateAndRaiseWindow);
 
     switch (view->getType())
     {
@@ -1774,17 +1774,7 @@ void ViewContainer::showPreviousView()
 
 void ViewContainer::showNextActiveView()
 {
-    if (m_window->isHidden())
-        m_window->show();
-
-    if (m_window->isMinimized())
-        KWindowSystem::unminimizeWindow(m_window->winId());
-
-    if (!m_window->isActiveWindow())
-    {
-        m_window->raise();
-        KWindowSystem::activateWindow(m_window->winId());
-    }
+    m_window->activateAndRaiseWindow();
 
     if (!m_activeViewOrderList.isEmpty())
     {

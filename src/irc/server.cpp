@@ -37,7 +37,6 @@
 #include "konversation_log.h"
 
 #include <KLocalizedString>
-#include <KWindowSystem>
 #include <KShell>
 #include <KIO/SslUi>
 
@@ -1823,9 +1822,7 @@ void Server::dbusSay(const QString& target,const QString& command)
             else
             {
                 query->adjustFocus();
-                getViewContainer()->getWindow()->show();
-                KWindowSystem::demandAttention(getViewContainer()->getWindow()->winId());
-                KWindowSystem::activateWindow(getViewContainer()->getWindow()->winId());
+                getViewContainer()->getWindow()->activateAndRaiseWindow();
             }
         }
     }

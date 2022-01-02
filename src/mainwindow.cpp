@@ -41,10 +41,12 @@
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
+#include <KWindowInfo>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
 #include <KGlobalAccel>
+#include <KStartupInfo>
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
@@ -617,17 +619,6 @@ int MainWindow::confirmQuit()
     return result;
 }
 
-void MainWindow::activateAndRaiseWindow()
-{
-    if (isMinimized())
-        KWindowSystem::unminimizeWindow(winId());
-    else if (Preferences::self()->showTrayIcon() && !isVisible())
-        m_trayIcon->restore();
-
-    KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
-    KWindowSystem::activateWindow(winId());
-}
-
 void MainWindow::quitProgram()
 {
     if (Preferences::self()->showTrayIcon() &&
@@ -659,7 +650,7 @@ bool MainWindow::queryClose()
                         KStandardGuiItem::cancel(),
                         QStringLiteral("HideOnCloseInfo")) == KMessageBox::Continue;
             if (doit)
-                hide();
+                m_trayIcon->hideWindow();
 
             return false;
         }
@@ -680,6 +671,12 @@ bool MainWindow::restore()
     // so we can pass it in.
     KConfigGroup config(KConfigGui::sessionConfig(), QStringLiteral("1"));
     const bool show = !config.readEntry("docked", false);
+
+    // TODO: also save & restore any TrayIcon state, needs API in KStatusNotifierItem
+
+    // in case no window is shown & registered, the window manager needs to be told directly the start is done
+    if (!show)
+        KStartupInfo::appStarted();
 
     return KXmlGuiWindow::restore(1, show);
 }
@@ -802,14 +799,6 @@ void MainWindow::toggleMenubar(bool dontShowWarning)
     }
 
     Preferences::self()->setShowMenuBar(m_showMenuBarAction->isChecked());
-}
-
-void MainWindow::focusAndShowErrorMessage(const QString &errorMsg)
-{
-    show();
-    KWindowSystem::demandAttention(winId());
-    KWindowSystem::activateWindow(winId());
-    KMessageBox::error(this, errorMsg);
 }
 
 void MainWindow::openPrefsDialog()
@@ -941,14 +930,37 @@ void MainWindow::toggleVisibility()
     if (isActiveWindow())
     {
         if (Preferences::self()->showTrayIcon())
-            hide();
+            m_trayIcon->hideWindow();
         else
             KWindowSystem::minimizeWindow(winId());
     }
     else
     {
-        activateAndRaiseWindow();
+        activateRaiseAndMoveToDesktop(MoveToDesktop);
     }
 }
 
+void MainWindow::activateAndRaiseWindow()
+{
+    activateRaiseAndMoveToDesktop(NoMoveToDesktop);
+}
 
+void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
+{
+    if (isMinimized())
+        KWindowSystem::unminimizeWindow(winId());
+    else if (Preferences::self()->showTrayIcon() && !isVisible())
+        m_trayIcon->restoreWindow();
+
+    if (!isActiveWindow())
+    {
+        raise();
+        if (moveToDesktop == MoveToDesktop)
+        {
+            KWindowInfo info(winId(), NET::WMDesktop);
+            if (!info.onAllDesktops())
+                KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
+        }
+        KWindowSystem::activateWindow(winId());
+    }
+}
