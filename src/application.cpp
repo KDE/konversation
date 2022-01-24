@@ -1399,7 +1399,11 @@ void Application::activateForStartLikeCall()
 #endif
 #if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 83, 0)
     if (KWindowSystem::isPlatformWayland()) {
-        KWindowSystem::setCurrentXdgActivationToken(qEnvironmentVariable("XDG_ACTIVATION_TOKEN"));
+        const QString token = qEnvironmentVariable("XDG_ACTIVATION_TOKEN");
+        if (!token.isEmpty()) {
+            KWindowSystem::setCurrentXdgActivationToken(token);
+            qunsetenv("XDG_ACTIVATION_TOKEN");
+        }
     }
 #endif
 #endif
