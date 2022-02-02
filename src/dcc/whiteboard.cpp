@@ -88,11 +88,7 @@ namespace Konversation
             if (ctcpCommand == QLatin1String("DR") && firstSplit.size() == 2)
             {
                 // DR tooltype,width,pencolor,brushcolor,x1,y1,x2,y2
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::SkipEmptyParts);
-#else
                 const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), Qt::SkipEmptyParts);
-#endif
                 if (drArgsList.size() != 8)
                 {
                     qCDebug(KONVERSATION_LOG) << "wrong size:" << drArgsList.size();
@@ -207,11 +203,7 @@ namespace Konversation
             }
             else if (ctcpCommand == QLatin1String("TXT") && firstSplit.size() == 2)
             {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::KeepEmptyParts);
-#else
                 QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), Qt::KeepEmptyParts);
-#endif
                 if (txtArgsList.size() < 3)
                 {
                     qCDebug(KONVERSATION_LOG) << "txt wrong size:" << txtArgsList.size();
@@ -243,11 +235,7 @@ namespace Konversation
             }
             else if (ctcpCommand == QLatin1String("TXTEX") && firstSplit.size() == 2)
             {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::KeepEmptyParts);
-#else
                 QStringList txtArgsList = firstSplit.at(1).split(QLatin1Char(','), Qt::KeepEmptyParts);
-#endif
                 if (txtArgsList.size() < 8)
                 {
                     qCDebug(KONVERSATION_LOG) << "txtex wrong size:" << txtArgsList.size();
@@ -374,11 +362,7 @@ namespace Konversation
             else if (ctcpCommand == QLatin1String("BLT") && firstSplit.size() == 2)
             {
                 // BLT x1src,y1src,x2src,y2src,xdest,ydest
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), QString::SkipEmptyParts);
-#else
                 const QStringList drArgsList = firstSplit.at(1).split(QLatin1Char(','), Qt::SkipEmptyParts);
-#endif
                 if (drArgsList.size() != 6)
                 {
                     qCDebug(KONVERSATION_LOG) << "blt wrong size:" << drArgsList.size();

@@ -465,11 +465,7 @@ void Server::connectToIRCServer()
         m_socket = new QSslSocket();
         m_socket->setObjectName(QStringLiteral("serverSocket"));
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         connect(m_socket, &QAbstractSocket::errorOccurred,
-#else
-        connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error),
-#endif
                 this, &Server::broken);
 
         connect(m_socket, &QIODevice::readyRead, this, &Server::incoming);
@@ -726,11 +722,7 @@ void Server::requestAvailableCapabilies ()
 void Server::capInitiateNegotiation(const QString &availableCaps)
 {
     QStringList requestCaps;
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList capsList = availableCaps.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
     const QStringList capsList = availableCaps.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
     QStringList nameValue;
 
     for (const QString &cap : capsList) {
@@ -837,11 +829,7 @@ void Server::capDenied(const QString& name)
 
 void Server::capDel(const QString &unavailableCaps)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList capsList = unavailableCaps.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
     const QStringList capsList = unavailableCaps.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
     for (const QString &capString : qAsConst(capsList))
     {
@@ -1192,11 +1180,7 @@ void Server::notifyAction(const QString& nick)
     out = parseWildcards(out, getNickname(), QString(), QString(), nick, QString());
 
     // Send all strings, one after another
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList outList = out.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-#else
     const QStringList outList = out.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
-#endif
     for (const QString& out : outList) {
         Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(), out, QString());
         queue(result.toServer);
@@ -1206,11 +1190,7 @@ void Server::notifyAction(const QString& nick)
 void Server::notifyResponse(const QString& nicksOnline)
 {
     bool nicksOnlineChanged = false;
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList actualList = nicksOnline.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
     const QStringList actualList = nicksOnline.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
     QString lcActual = QLatin1Char(' ') + nicksOnline + QLatin1Char(' ');
     QString lcPrevISON = QLatin1Char(' ') + (m_prevISONList.join(QLatin1Char(' '))) + QLatin1Char(' ');
 
@@ -1282,11 +1262,7 @@ void Server::autoCommandsAndChannels()
         if (!getNickname().isEmpty())
             connectCommands.replace(QStringLiteral("%nick"), getNickname());
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        const QStringList connectCommandsList = connectCommands.split(QLatin1Char(';'), QString::SkipEmptyParts);
-#else
         const QStringList connectCommandsList = connectCommands.split(QLatin1Char(';'), Qt::SkipEmptyParts);
-#endif
 
         for (QString output : connectCommandsList) {
             output = output.simplified();
@@ -1413,11 +1389,7 @@ void Server::incoming()
 
         bufferLines.removeFirst();
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        QStringList lineSplit = codec->toUnicode(first).split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
         QStringList lineSplit = codec->toUnicode(first).split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
         if (lineSplit.count() >= 1)
         {
@@ -1591,11 +1563,7 @@ static QStringList outcmds = QStringList {
 
 int Server::_send_internal(QString outputLine)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    QStringList outputLineSplit = outputLine.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
     QStringList outputLineSplit = outputLine.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
     int outboundCommand = -1;
     if (!outputLineSplit.isEmpty()) {
@@ -2107,11 +2075,7 @@ void Server::requestUserhost(const QString& nicks)
     if(m_whoRequestsDisabled)
         return;
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    const QStringList nicksList = nicks.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
     const QStringList nicksList = nicks.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
     for (const QString& nick : nicksList)
         m_inputFilter.setAutomaticRequest(QStringLiteral("USERHOST"), nick, true);
     queue(QStringLiteral("USERHOST ")+nicks, LowPriority);
@@ -3755,11 +3719,7 @@ const QString& channelKey,
 const QString& nick,
 const QString& inputLineText)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(QLatin1Char(' '), QString::SkipEmptyParts), inputLineText);
-#else
     return parseWildcards(toParse, sender, channelName, channelKey, nick.split(QLatin1Char(' '), Qt::SkipEmptyParts), inputLineText);
-#endif
 }
 
 QString Server::parseWildcards(const QString& toParse,

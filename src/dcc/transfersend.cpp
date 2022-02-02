@@ -413,11 +413,7 @@ namespace Konversation
             m_sendSocket = new QTcpSocket(this);
 
             connect(m_sendSocket, &QTcpSocket::connected, this, &TransferSend::startSending);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_sendSocket, &QTcpSocket::errorOccurred, this, &TransferSend::slotGotSocketError);
-#else
-            connect(m_sendSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
-#endif
 
             setStatus(Connecting);
 
@@ -457,11 +453,7 @@ namespace Konversation
                 failed(i18n("Could not accept the connection (socket error)."));
                 return;
             }
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
             connect(m_sendSocket, &QTcpSocket::errorOccurred, this, &TransferSend::slotGotSocketError);
-#else
-            connect(m_sendSocket, QOverload<QAbstractSocket::SocketError>::of(&QTcpSocket::error), this, &TransferSend::slotGotSocketError);
-#endif
 
             // we don't need ServerSocket anymore
             m_serverSocket->close();

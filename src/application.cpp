@@ -504,11 +504,7 @@ void Application::readOptions()
             serverGroup->setNotificationsEnabled(cgServerGroup.readEntry("EnableNotifications", true));
             serverGroup->setExpanded(cgServerGroup.readEntry("Expanded", false));
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-            notifyList.insert((*serverGroup).id(), cgServerGroup.readEntry("NotifyList", QString()).split(QLatin1Char(' '), QString::SkipEmptyParts));
-#else
             notifyList.insert((*serverGroup).id(), cgServerGroup.readEntry("NotifyList", QString()).split(QLatin1Char(' '), Qt::SkipEmptyParts));
-#endif
 
             const QStringList serverNames = cgServerGroup.readEntry("ServerList", QStringList());
             for (const QString& serverName : serverNames) {
@@ -648,11 +644,7 @@ void Application::readOptions()
     if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
     {
         QString highlight=cgDefault.readEntry("Highlight");
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        QStringList hiList = highlight.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
         QStringList hiList = highlight.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
         for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
         {

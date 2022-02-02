@@ -2379,18 +2379,10 @@ QDebug operator<<(QDebug d, QTextFrame* feed)
     if (feed)
     {
         d  << "\nDumping frame...";
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         dN << Qt::hex << (void*)feed << Qt::dec;
-#else
-        dN << hex << (void*)feed << dec;
-#endif
         QTextFrame::iterator it = feed->begin();
         if (it.currentFrame() == feed)
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
             dS << "loop!" << Qt::endl;
-#else
-            dS << "loop!" << endl;
-#endif
         dS << "position" << feed->firstPosition() << feed->lastPosition();
         dN << "parentFrame=" << (void*)feed->parentFrame();
         dS;
@@ -2403,11 +2395,7 @@ QDebug operator<<(QDebug d, QTextFrame* feed)
                 //d<<"dumping blocks:";
                 QTextBlock b = it.currentBlock();
                 //d << "block" << b.position() << b.length();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
                 d << Qt::endl << b;
-#else
-                d << endl << b;
-#endif
             }
             else if (frame != feed)
             {
@@ -2438,17 +2426,9 @@ QDebug operator<<(QDebug d, const QTextBlock &b)
     d   << "blockNumber"    << b.blockNumber();
     d   << "position"       << b.position();
     d   << "length"         << b.length();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     dN  << "firstChar 0x"   << Qt::hex << b.document()->characterAt(b.position()).unicode() << Qt::dec;
-#else
-    dN  << "firstChar 0x"   << hex << b.document()->characterAt(b.position()).unicode() << dec;
-#endif
     if (b.length() == 2)
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         dN << " second 0x"   << Qt::hex << b.document()->characterAt(b.position()+1).unicode() << Qt::dec;
-#else
-        dN << " second 0x"   << hex << b.document()->characterAt(b.position()+1).unicode() << dec;
-#endif
     dS  << "userState"      << b.userState();
     dN  << "userData "      << (void*)b.userData();
     //dS  << "text"           << b.text();

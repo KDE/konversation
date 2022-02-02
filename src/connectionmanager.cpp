@@ -303,11 +303,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
     // Parsing address and channel.
     QStringList mangledUrlSegments;
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    mangledUrlSegments = mangledUrl.split(QLatin1Char('/'), QString::KeepEmptyParts);
-#else
     mangledUrlSegments = mangledUrl.split(QLatin1Char('/'), Qt::KeepEmptyParts);
-#endif
 
     // Check for ",isserver".
     if (mangledUrlSegments[0].contains(QLatin1Char(',')))
@@ -315,11 +311,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
         QStringList addressSegments;
         bool checkIfServerGroup = true;
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-        addressSegments = mangledUrlSegments[0].split(QLatin1Char(','), QString::KeepEmptyParts);
-#else
         addressSegments = mangledUrlSegments[0].split(QLatin1Char(','), Qt::KeepEmptyParts);
-#endif
 
         if (!addressSegments.filter(QStringLiteral("isserver")).isEmpty())
             checkIfServerGroup = false;

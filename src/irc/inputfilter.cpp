@@ -320,11 +320,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             dccArgumentList.append(fileName);
                         }
                     }
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                    dccArgumentList += dccArguments.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
                     dccArgumentList += dccArguments.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
                     if (dccType==QStringLiteral("send"))
                     {
@@ -802,11 +798,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 m_server->capReply();
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                const QStringList capabilities = parameterList.value(2).split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
                 const QStringList capabilities = parameterList.value(2).split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
                 const QRegularExpression re(QStringLiteral("[a-z0-9]"), QRegularExpression::CaseInsensitiveOption);
                 for (const QString& capability : capabilities) {
@@ -1408,11 +1400,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
 
                 if (!trailing.isEmpty())
                 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                    nickList = trailing.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
                     nickList = trailing.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
                 }
                 else if (parameterList.count() > 3)
                 {
@@ -1960,11 +1948,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;
 
                 // get a list of all channels the user is in
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                QStringList channelList=trailing.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
                 QStringList channelList=trailing.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
                 channelList.sort();
 
                 // split up the list in channels where they are operator / user / voice
@@ -2212,11 +2196,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
             if (plHas(2))
             {
                 // iterate over all nick/masks in reply
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-                const QStringList uhosts = trailing.split(QLatin1Char(' '), QString::SkipEmptyParts);
-#else
                 const QStringList uhosts = trailing.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-#endif
 
                 for (const QString& uhost : uhosts) {
                     // extract nickname and hostmask from reply
