@@ -15,7 +15,6 @@
 #include <QMimeData>
 #include <QRegularExpression>
 
-#include <kcompletion_version.h>
 #include <KMessageBox>
 #include <KCompletionBox>
 #include <KActionCollection>
@@ -41,11 +40,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     // reset completion mode
     setCompletionMode('\0');
     completionBox = new KCompletionBox(this);
-#if KCOMPLETION_VERSION >= QT_VERSION_CHECK(5, 81, 0)
     connect(completionBox, &KCompletionBox::textActivated, this, &IRCInput::insertCompletion);
-#else
-    connect(completionBox, &KCompletionBox::activated, this, &IRCInput::insertCompletion);
-#endif
 
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));

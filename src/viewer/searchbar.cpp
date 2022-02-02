@@ -13,7 +13,6 @@
 #include <QTimer>
 #include <QShortcut>
 
-#include <kcompletion_version.h>
 #include <KActionCollection>
 #include <KColorScheme>
 #include <KStandardAction>
@@ -54,11 +53,7 @@ SearchBar::SearchBar(QWidget* parent)
 
     connect(m_timer, &QTimer::timeout, this, &SearchBar::slotFind);
     connect(m_searchEdit, &KLineEdit::textChanged, this, &SearchBar::slotTextChanged);
-#if KCOMPLETION_VERSION >= QT_VERSION_CHECK(5, 81, 0)
     connect(m_searchEdit, &KLineEdit::returnKeyPressed, this, &SearchBar::slotFindNext);
-#else
-    connect(m_searchEdit, &KLineEdit::returnPressed, this, &SearchBar::slotFindNext);
-#endif
     connect(m_findNextButton, &QToolButton::clicked, this, &SearchBar::slotFindNext);
     connect(m_findPreviousButton, &QToolButton::clicked, this, &SearchBar::slotFindPrevious);
     connect(m_closeButton, &QToolButton::clicked, this, &SearchBar::hide);

@@ -26,7 +26,6 @@
 
 #include <QMenuBar>
 
-#include <kwidgetsaddons_version.h>
 #include <KActionCollection>
 #include <QAction>
 #include <KToggleAction>
@@ -389,11 +388,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
     selectAction->setIcon(QIcon::fromTheme(QStringLiteral("character-set")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 78, 0)
     connect(selectAction, &KSelectAction::indexTriggered, m_viewContainer, &ViewContainer::changeViewCharset);
-#else
-    connect(selectAction, QOverload<int>::of(&KSelectAction::triggered), m_viewContainer, &ViewContainer::changeViewCharset);
-#endif
     actionCollection()->addAction(QStringLiteral("tab_encoding"), selectAction);
 
     for (uint i = 1; i <= 10; ++i)

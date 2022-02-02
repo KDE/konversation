@@ -1389,7 +1389,6 @@ void Application::activateForStartLikeCall()
         KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
     } else
 #endif
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 83, 0)
     if (KWindowSystem::isPlatformWayland()) {
         const QString token = qEnvironmentVariable("XDG_ACTIVATION_TOKEN");
         if (!token.isEmpty()) {
@@ -1397,7 +1396,6 @@ void Application::activateForStartLikeCall()
             qunsetenv("XDG_ACTIVATION_TOKEN");
         }
     }
-#endif
 #endif
     mainWindow->activateAndRaiseWindow();
 }

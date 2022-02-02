@@ -12,8 +12,6 @@
 #include "common.h"
 #include "application.h"
 
-#include <kcompletion_version.h>
-
 #include <QHeaderView>
 #include <QFileDialog>
 #include <QMenu>
@@ -185,11 +183,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_minUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
     connect(m_maxUser, QOverload<int>::of(&QSpinBox::valueChanged), this, &ChannelListPanel::filterChanged);
 
-#if KCOMPLETION_VERSION >= QT_VERSION_CHECK(5, 81, 0)
     connect(m_filterLine, &KLineEdit::returnKeyPressed, this, &ChannelListPanel::applyFilterClicked);
-#else
-    connect(m_filterLine, &KLineEdit::returnPressed, this, &ChannelListPanel::applyFilterClicked);
-#endif
     connect(m_filterLine, &KLineEdit::textChanged, this, &ChannelListPanel::filterChanged);
 
     connect(m_filterTimer, &QTimer::timeout, this, &ChannelListPanel::updateFilter);

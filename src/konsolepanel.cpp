@@ -10,7 +10,6 @@
 #include "viewcontainer.h"
 #include "konversation_log.h"
 
-#include <kcoreaddons_version.h>
 #include <KLocalizedString>
 #include <KService>
 #include <kde_terminal_interface.h>
@@ -52,11 +51,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
     KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("konsolepart"));
     if( service )
     {
-#if KCOREADDONS_VERSION >= QT_VERSION_CHECK(5, 86, 0)
         fact = KPluginFactory::loadFactory(KPluginMetaData(service->library())).plugin;
-#else
-        fact = KPluginLoader(service->library()).factory();
-#endif
     }
 
     if (!fact) return;
