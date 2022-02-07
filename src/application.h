@@ -40,6 +40,7 @@ namespace Konversation
     class IdentDBus;
     class Sound;
     class NotificationHandler;
+    class LauncherEntryHandler;
 
     namespace DCC
     {
@@ -114,6 +115,7 @@ class Application : public QApplication
         Images* images() const { return m_images; }
 
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
+        Konversation::LauncherEntryHandler* launcherEntryHandler() const { return m_launcherEntryHandler; }
 
         // auto replacement for input or output lines
         QPair<QString, int> doAutoreplace(const QString& text, bool output, int cursorPos = -1) const;
@@ -197,6 +199,7 @@ class Application : public QApplication
         bool m_restartScheduled;
 
         Konversation::NotificationHandler* m_notificationHandler;
+        Konversation::LauncherEntryHandler* m_launcherEntryHandler;
 
         KWallet::Wallet* m_wallet;
 

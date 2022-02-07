@@ -40,6 +40,17 @@ Preferences *Preferences::self()
 
 Preferences::Preferences()
 {
+    // kconfigcompiler 5.91 cannot generate code with signals for ItemAccessors=true
+    // manually add the item for now
+    setCurrentGroup(QStringLiteral("LauncherEntry"));
+
+    auto notifyFunction = static_cast<KConfigCompilerSignallingItem::NotifyFunction>(&Preferences::itemChanged);
+
+    auto* innerItemShowLauncherEntryCount = new KConfigSkeleton::ItemBool(currentGroup(), QStringLiteral("ShowLauncherEntryCount"), mShowLauncherEntryCount, true);
+    mShowLauncherEntryCountItem = new KConfigCompilerSignallingItem(innerItemShowLauncherEntryCount, this, notifyFunction, signalShowLauncherEntryCountChanged);
+    addItem(mShowLauncherEntryCountItem);
+    // end manual item addition
+
     // create default identity
     mIdentity=new Identity();
     mIdentity->setName(i18n("Default Identity"));
@@ -587,3 +598,40 @@ void Preferences::slotSetUseOSD(bool use)
 }
 
 
+void Preferences::setShowLauncherEntryCount(bool value)
+{
+    if ((value != mShowLauncherEntryCount) && !isShowLauncherEntryCountImmutable()) {
+        mShowLauncherEntryCount = value;
+        mSettingsChanged |= signalShowLauncherEntryCountChanged;
+    }
+}
+
+bool Preferences::showLauncherEntryCount() const
+{
+    return mShowLauncherEntryCount;
+}
+
+bool Preferences::isShowLauncherEntryCountImmutable() const
+{
+    return isImmutable(QStringLiteral("ShowLauncherEntryCount"));
+}
+
+bool Preferences::usrSave()
+{
+    if (!PreferencesBase::usrSave()) {
+        return false;
+    }
+
+    if (mSettingsChanged & signalShowLauncherEntryCountChanged) {
+        Q_EMIT showLauncherEntryCountChanged(mShowLauncherEntryCount);
+    }
+
+    mSettingsChanged = 0;
+
+    return true;
+}
+
+void Preferences::itemChanged(quint64 flags)
+{
+    mSettingsChanged |= flags;
+}

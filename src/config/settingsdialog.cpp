@@ -23,6 +23,7 @@
 #include "ui_generalbehavior_configui.h"
 #include "dcc_config.h"
 #include "osd_config.h"
+#include "launcherentry_config.h"
 #include "theme_config.h"
 #include "alias_config.h"
 #include "ignore_config.h"
@@ -173,6 +174,12 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   konviAddSubPage(notificationGroup, m_confOSDWdg, i18n("On Screen Display"), QStringLiteral("video-display"));
   //no modified connection needed - it's all kcfg widgets
   m_pages.append(m_confOSDWdg);
+
+  //Notification/Launcher Entry
+  m_confLauncherEntryWdg = new LauncherEntry_Config(this, "Launcher Entry");
+  konviAddSubPage(notificationGroup, m_confLauncherEntryWdg, i18n("Launcher Entry"), QStringLiteral("application-menu"));
+  //no modified connection needed - it's all kcfg widgets
+  m_pages.append(m_confLauncherEntryWdg);
 
   //Notification/Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );

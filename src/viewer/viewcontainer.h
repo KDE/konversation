@@ -140,6 +140,7 @@ class ViewContainer : public QAbstractItemModel
         void updateViews(const Konversation::ServerGroupSettingsPtr &serverGroup = Konversation::ServerGroupSettingsPtr());
         void setViewNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
         void unsetViewNotification(ChatWindow* view);
+        void setUnseenEventsNotification();
         void toggleViewNotifications();
         void toggleAutoJoin();
         void toggleConnectOnStartup();
@@ -187,6 +188,8 @@ class ViewContainer : public QAbstractItemModel
         void cancelRememberLine();
         void insertMarkerLine();
         void insertRememberLines(Server* server);
+
+        void resetFrontViewUnseenEventsCount();
 
         void openLogFile();
         void openLogFile(const QString& caption, const QString& file);

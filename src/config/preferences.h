@@ -131,8 +131,28 @@ class Preferences : public PreferencesBase
     Q_SIGNALS:
         void notifyListStarted(int serverGroupId);
         void updateTrayIcon();
+        void showLauncherEntryCountChanged(bool showLauncherEntryCount);
+
+    public:
+        void setShowLauncherEntryCount(bool value);
+        bool showLauncherEntryCount() const;
+        bool isShowLauncherEntryCountImmutable() const;
+
+        enum {
+            signalShowLauncherEntryCountChanged = 0x1
+        };
 
     private:
+        void itemChanged(quint64 flags);
+
+    protected:
+        bool usrSave() override;
+
+    private:
+        uint mSettingsChanged = 0;
+        KConfigCompilerSignallingItem *mShowLauncherEntryCountItem;
+        bool mShowLauncherEntryCount;
+
         IdentityPtr mIdentity;
         Konversation::ServerGroupHash mServerGroupHash;
         QList<Ignore*> mIgnoreList;

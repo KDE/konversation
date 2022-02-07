@@ -673,8 +673,70 @@ QColor ChatWindow::highlightColor()
     return getTextView()->highlightColor();
 }
 
+void ChatWindow::resetUnseenEventsCount()
+{
+    const int unseenEventsCountBefore = unseenEventsCount();
+
+    m_unseenNickEventCount = 0;
+    m_unseenHighlightEventCount = 0;
+    m_unseenPrivateEventCount = 0;
+    m_unseenNormalEventCount = 0;
+    m_unseenSystemEventCount = 0;
+    m_unseenControlEventCount = 0;
+
+    if (unseenEventsCountBefore > 0) {
+        Q_EMIT unseenEventsCountChanged(this, 0);
+    }
+}
+
+int ChatWindow::unseenEventsCount() const
+{
+    int count = 0;
+    if (Preferences::self()->launcherEntryCountUseNick())
+        count += m_unseenNickEventCount;
+    if (Preferences::self()->launcherEntryCountUseHighlights())
+        count += m_unseenHighlightEventCount;
+    if (Preferences::self()->launcherEntryCountUsePrivate())
+        count += m_unseenPrivateEventCount;
+    if (Preferences::self()->launcherEntryCountUseMsgs())
+        count += m_unseenNormalEventCount;
+    if (Preferences::self()->launcherEntryCountUseSystem())
+        count += m_unseenSystemEventCount;
+    if (Preferences::self()->launcherEntryCountUseChannelEvents())
+        count += m_unseenControlEventCount;
+    return count;
+}
+
 void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 {
+    MainWindow* mainWindow = Application::instance()->getMainWindow();
+    ViewContainer* viewContainer = mainWindow->getViewContainer();
+    if ((viewContainer->getFrontView() != this) || !mainWindow->isActiveWindow()) {
+        bool hasCountChanged = false;
+        if (type == Konversation::tnfNick) {
+            ++m_unseenNickEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUseNick();
+        } else if (type == Konversation::tnfHighlight) {
+            ++m_unseenHighlightEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUseHighlights();
+        } else if (type == Konversation::tnfPrivate) {
+            ++m_unseenPrivateEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUsePrivate();
+        } else if (type == Konversation::tnfNormal) {
+            ++m_unseenNormalEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUseMsgs();
+        } else if (type == Konversation::tnfSystem) {
+            ++m_unseenSystemEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUseSystem();
+        } else if (type == Konversation::tnfControl) {
+            ++m_unseenControlEventCount;
+            hasCountChanged = Preferences::self()->launcherEntryCountUseChannelEvents();
+        }
+        if (hasCountChanged) {
+            Q_EMIT unseenEventsCountChanged(this, unseenEventsCount());
+        }
+    }
+
     if (!notificationsEnabled())
         return;
 
@@ -688,6 +750,7 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 
 void ChatWindow::resetTabNotification()
 {
+    resetUnseenEventsCount();
     m_currentTabNotify = Konversation::tnfNone;
 }
 

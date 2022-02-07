@@ -18,6 +18,7 @@
 #include "serverlistdialog.h"
 #include "identitydialog.h"
 #include "notificationhandler.h"
+#include "launcherentryhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
@@ -68,6 +69,8 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 
     // Set up view container
     connect(Application::instance(), &Application::appearanceChanged, m_viewContainer, &ViewContainer::updateAppearance);
+    connect(Application::instance(), &Application::appearanceChanged, m_viewContainer, &ViewContainer::setUnseenEventsNotification);
+
     connect(Application::instance(), &Application::serverGroupsChanged,
             m_viewContainer, &ViewContainer::updateViews);
     connect(m_viewContainer, &ViewContainer::autoJoinToggled,
@@ -83,6 +86,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     connect(this, &MainWindow::triggerRememberLines, m_viewContainer, &ViewContainer::insertRememberLines);
     connect(this, &MainWindow::cancelRememberLine, m_viewContainer, &ViewContainer::cancelRememberLine);
     connect(this, &MainWindow::insertMarkerLine, m_viewContainer, &ViewContainer::insertMarkerLine);
+    connect(this, &MainWindow::resetFrontViewUnseenEventsCount, m_viewContainer, &ViewContainer::resetFrontViewUnseenEventsCount);
 
     // Set up status bar
     m_statusBar = new Konversation::StatusBar(this);
@@ -713,6 +717,7 @@ bool MainWindow::event(QEvent* e)
     }
     else if (e->type() == QEvent::WindowActivate)
     {
+        Q_EMIT resetFrontViewUnseenEventsCount();
         Q_EMIT endNotification();
         Q_EMIT cancelRememberLine();
     }

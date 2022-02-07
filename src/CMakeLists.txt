@@ -20,6 +20,7 @@ set(core_SRCS
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp
+    launcherentryhandler.cpp
     awaymanager.cpp
     connectionmanager.cpp
     connectionsettings.cpp
@@ -87,6 +88,7 @@ set(config_SRCS
     config/dcc_config.cpp
     config/highlight_config.cpp
     config/ignore_config.cpp
+    config/launcherentry_config.cpp
     config/nicklistbehavior_config.cpp
     config/osd_config.cpp
     config/tabs_config.cpp
@@ -109,6 +111,7 @@ ki18n_wrap_ui(config_SRCS
     config/generalbehavior_configui.ui
     config/highlight_configui.ui
     config/ignore_configui.ui
+    config/launcherentry_config.ui
     config/log_config.ui
     config/nicklistbehavior_configui.ui
     config/osd_configui.ui

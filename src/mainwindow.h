@@ -51,6 +51,7 @@ class MainWindow : public KXmlGuiWindow
     Q_SIGNALS:
         void showQuickConnectDialog();
         void nicksNowOnline(Server*);
+        void resetFrontViewUnseenEventsCount();
         void endNotification();
         void serverStateChanged(Server* server, Konversation::ConnectionState state);
         void triggerRememberLine();

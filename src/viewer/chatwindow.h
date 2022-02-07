@@ -128,8 +128,8 @@ class ChatWindow : public QWidget
         virtual bool areIRCColorsSupported() const {return false; }
 
         Konversation::TabNotifyType currentTabNotification() const { return m_currentTabNotify; }
+        int unseenEventsCount() const;
         QColor highlightColor();
-
         void msgHelper(const QString& recipient, const QString& message);
 
         void setMargin(int margin) { layout()->setContentsMargins(margin, margin, margin, margin); }
@@ -144,6 +144,7 @@ class ChatWindow : public QWidget
          */
         void updateInfo(const QString &info);
         void updateTabNotification(ChatWindow* chatWin, const Konversation::TabNotifyType& type);
+        void unseenEventsCountChanged(ChatWindow* chatWin, int unseenEventsCount);
 
         void setStatusBarTempText(const QString&);
         void clearStatusBarTempText();
@@ -172,6 +173,7 @@ class ChatWindow : public QWidget
         virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
         void activateTabNotification(Konversation::TabNotifyType type);
         void resetTabNotification();
+        void resetUnseenEventsCount();
 
     protected Q_SLOTS:
         ///Used to disable functions when not connected
@@ -203,6 +205,13 @@ class ChatWindow : public QWidget
         QString logName;
 
         QFont font;
+
+        int m_unseenNickEventCount = 0;
+        int m_unseenHighlightEventCount = 0;
+        int m_unseenPrivateEventCount = 0;
+        int m_unseenNormalEventCount = 0;
+        int m_unseenSystemEventCount = 0;
+        int m_unseenControlEventCount = 0;
 
         IRCView* textView;
         /** A pointer to the server this chatwindow is part of.

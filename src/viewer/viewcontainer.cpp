@@ -10,6 +10,7 @@
 #include "queuetuner.h"
 #include "application.h"
 #include "notificationhandler.h"
+#include "launcherentryhandler.h"
 #include "images.h"
 #include "irccharsets.h"
 #include "ircview.h"
@@ -1152,6 +1153,37 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr &serv
     }
 }
 
+void ViewContainer::setUnseenEventsNotification()
+{
+    if (!Application::instance()->launcherEntryHandler()) {
+        return;
+    }
+
+    const bool isCountEventsMode = (Preferences::self()->launcherEntryCountMode() == Preferences::CountEvents);
+
+    int unseenEventsSummaryCount = 0;
+    const int viewCount = m_tabWidget->count();
+    for (int i = 0; i < viewCount; ++i)
+    {
+        auto* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+        // Only summarize those views currently listened to
+        if (!qobject_cast<Channel*>(view) &&
+            !qobject_cast<Query*>(view) &&
+            !qobject_cast<DCC::ChatContainer*>(view))
+            continue;
+
+        if (isCountEventsMode) {
+            unseenEventsSummaryCount += view->unseenEventsCount();
+        } else {
+            if (view->unseenEventsCount() != 0) {
+                ++unseenEventsSummaryCount;
+            }
+        }
+    }
+
+    Application::instance()->launcherEntryHandler()->updateNumber(unseenEventsSummaryCount);
+}
+
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
     if (!view || view == m_tabWidget->currentWidget())
@@ -2060,6 +2092,8 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     if (!m_tabWidget->count() && m_viewTree) {
         setViewTreeShown(false);
     }
+
+    setUnseenEventsNotification();
 }
 
 void ViewContainer::closeViewMiddleClick(int view)
@@ -2530,6 +2564,12 @@ void ViewContainer::insertMarkerLine()
     }
 }
 
+void ViewContainer::resetFrontViewUnseenEventsCount()
+{
+    if (m_frontView)
+        m_frontView->resetUnseenEventsCount();
+}
+
 void ViewContainer::openLogFile()
 {
     if (m_frontView)
@@ -2657,6 +2697,8 @@ void ViewContainer::addDccChat(DCC::Chat* chat)
     auto *chatcontainer = new DCC::ChatContainer(m_tabWidget,chat);
     connect(chatcontainer, &DCC::ChatContainer::updateTabNotification,
             this, &ViewContainer::setViewNotification);
+    connect(chatcontainer, &DCC::ChatContainer::unseenEventsCountChanged,
+            this, &ViewContainer::setUnseenEventsNotification);
 
     addView(chatcontainer, chatcontainer->getName());
 }
@@ -2803,6 +2845,7 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
 
     connect(this, &ViewContainer::updateChannelAppearance, channel, &Channel::updateAppearance);
     connect(channel, &Channel::updateTabNotification, this, &ViewContainer::setViewNotification);
+    connect(channel, &Channel::unseenEventsCountChanged, this, &ViewContainer::setUnseenEventsNotification);
     connect(server, &Server::awayState, channel, &Channel::indicateAway);
     connect(channel, &Channel::joined, this, &ViewContainer::channelJoined);
 
@@ -2859,6 +2902,7 @@ Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool
     ++m_queryViewCount;
 
     connect(query, &Query::updateTabNotification, this, &ViewContainer::setViewNotification);
+    connect(query, &Query::unseenEventsCountChanged, this, &ViewContainer::setUnseenEventsNotification);
     connect(query, &Query::updateQueryChrome, this, &ViewContainer::updateQueryChrome);
     connect(server, &Server::awayState, query, &Query::indicateAway);
 

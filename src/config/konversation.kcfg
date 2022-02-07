@@ -14,6 +14,13 @@
   <include>QApplication</include>
   <kcfgfile name="konversationrc" />
 
+  <!--
+  See comment for ShowLauncherEntryCount
+  <signal name="showLauncherEntryCountChanged">
+    <argument type="Bool">ShowLauncherEntryCount</argument>
+  </signal>
+  -->
+
   <group name="Appearance">
     <entry key="ShowMenuBar" type="Bool">
       <default>true</default>
@@ -410,6 +417,60 @@
     </entry>
     <entry key="SortCaseInsensitive" type="Bool">
       <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+  </group>
+  <group name="LauncherEntry">
+   <!--
+    kconfigcompiler 5.91 cannot generate code with signals for ItemAccessors=true
+    So Preferences currently manually adds the entry for now.
+    <entry key="ShowLauncherEntryCount" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+      <emit signal="showLauncherEntryCountChanged"/>
+    </entry>
+    -->
+    <entry name="LauncherEntryCountMode" type="Enum">
+      <label></label>
+      <choices>
+        <choice name="CountEvents">
+          <label>All events</label>
+        </choice>
+        <choice name="CountChannelAndQueries">
+          <label>Channels and queries with events</label>
+        </choice>
+        <default>CountEvents</default>
+      </choices>
+    </entry>
+    <entry key="LauncherEntryCountUseNick" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="LauncherEntryCountUseHighlights" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="LauncherEntryCountUsePrivate" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="LauncherEntryCountUseMsgs" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="LauncherEntryCountUseSystem" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="LauncherEntryCountUseChannelEvents" type="Bool">
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

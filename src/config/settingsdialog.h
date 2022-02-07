@@ -24,6 +24,7 @@ class Autoreplace_Config;
 class DCC_Config;
 class Highlight_Config;
 class OSD_Config;
+class LauncherEntry_Config;
 class Ignore_Config;
 
 
@@ -56,6 +57,7 @@ class KonviSettingsDialog : public ConfigDialog
         DCC_Config* m_confDCCWdg;
         Highlight_Config* m_confHighlightWdg;
         OSD_Config* m_confOSDWdg;
+        LauncherEntry_Config* m_confLauncherEntryWdg;
         Ignore_Config* m_confIgnoreWdg;
 
         bool m_modified;
