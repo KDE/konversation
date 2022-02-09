@@ -429,31 +429,6 @@ void Preferences::setAutoUserhost(bool state)
     self()->PreferencesBase::setAutoUserhost(state);
 }
 
-bool Preferences::dialogFlag(const QString& flagName)
-{
-    KConfigGroup config(KSharedConfig::openConfig()->group("Notification self()->Messages"));
-
-    if (!config.readEntry(flagName).isEmpty())
-        return false;
-    else
-        return true;
-}
-
-void Preferences::setDialogFlag(const QString& flagName,bool state)
-{
-    KConfigGroup config(KSharedConfig::openConfig()->group("Notification self()->Messages"));
-
-    if (state)
-        config.deleteEntry(flagName);
-    else
-    {
-        if (config.readEntry(flagName).isEmpty())
-            config.writeEntry(flagName,"no");
-    }
-
-    config.sync();
-}
-
 
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)

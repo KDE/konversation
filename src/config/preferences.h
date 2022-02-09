@@ -101,9 +101,6 @@ class Preferences : public PreferencesBase
         static const IdentityPtr identityById(int id);
         static const QString defaultNicknameSortingOrder();
 
-        static bool dialogFlag(const QString& flagName);
-        static void setDialogFlag(const QString& flagName,bool state);
-
         static const QString channelEncoding(const QString& server,const QString& channel);
         static const QString channelEncoding(int serverGroupId,const QString& channel);
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
