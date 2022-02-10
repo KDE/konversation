@@ -8,8 +8,6 @@
 #include "application.h"
 #include "version.h"
 
-#include <QMutex>
-#include <QWaitCondition>
 #include <QCommandLineParser>
 
 #include <KAboutData>
@@ -17,6 +15,8 @@
 #include <Kdelibs4ConfigMigrator>
 #include <KDBusService>
 
+#include <chrono>
+#include <thread>
 
 int main(int argc, char* argv[])
 {
@@ -121,10 +121,7 @@ int main(int argc, char* argv[])
 
         if (ok)
         {
-            QMutex dummy;
-            dummy.lock();
-            QWaitCondition waitCondition;
-            waitCondition.wait(&dummy, delay);
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
         }
     }
 
