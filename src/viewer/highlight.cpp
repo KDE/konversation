@@ -72,7 +72,12 @@ QString Highlight::getAutoText() const
 
 void Highlight::setSoundURL(const QUrl &url)
 {
-    m_soundURL = url;
+    if (url.isLocalFile()) {
+        m_soundURL = url;
+    } else {
+        // A highlight entry in an old config doesn't have a "file://" prefix
+        m_soundURL = QUrl::fromLocalFile(url.toString());
+    }
 }
 
 QUrl Highlight::getSoundURL() const

@@ -1,7 +1,6 @@
 include(ECMAddAppIcon)
 include(ECMQtDeclareLoggingCategory)
 
-include_directories(SYSTEM ${PHONON_INCLUDES})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
@@ -236,6 +235,7 @@ ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})
 add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation
+    Qt::Multimedia
     Qt5::Network
     Qt5::Widgets
     KF5::Archive
@@ -257,7 +257,7 @@ target_link_libraries(konversation
     KF5::WindowSystem
     KF5::ItemViews
     KF5::NewStuff
-    Phonon::phonon4qt5)
+)
 
 if(TARGET Qt5::X11Extras)
     target_link_libraries(konversation Qt5::X11Extras)

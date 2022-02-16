@@ -28,7 +28,7 @@ include(ECMSetupVersion)
 include(ECMGenerateDBusServiceFile)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Network Widgets)
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive
@@ -62,8 +62,6 @@ if (KF5_VERSION VERSION_LESS 5.91.0)
 elseif(KF5_MIN_VERSION VERSION_GREATER 5.90)
     message(AUTHOR_WARNING "Please remove usage of Qt5X11Extras and HAVE_X11, no longer needed.")
 endif()
-
-find_package(Phonon4Qt5 4.6.60 REQUIRED)
 
 find_package(Qca-qt5 2.2.0)
 set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"

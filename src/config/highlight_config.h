@@ -37,7 +37,7 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void patternChanged(const QString& newPattern);
         void notifyModeChanged(bool);
         void colorChanged(const QColor& newColor);
-        void soundURLChanged(const QString& newURL);
+        void soundURLChanged();
         void autoTextChanged(const QString& newText);
         void chatWindowsChanged(const QString& newChatWindows);
         void addHighlight();

@@ -177,13 +177,13 @@ void Highlight_Config::colorChanged(const QColor& newColor)
     }
 }
 
-void Highlight_Config::soundURLChanged(const QString& newURL)
+void Highlight_Config::soundURLChanged()
 {
     auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if (!newItemSelected && item)
     {
-        item->setSoundURL(QUrl(newURL));
+        item->setSoundURL(soundURL->url());
         Q_EMIT modified();
     }
 }

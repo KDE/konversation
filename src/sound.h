@@ -7,17 +7,10 @@
 #ifndef KONVERSATIONKONVERSATIONSOUND_H
 #define KONVERSATIONKONVERSATIONSOUND_H
 
+#include <QMediaPlayer>
 #include <QObject>
 #include <QQueue>
-
-#include <Phonon/MediaObject>
-
-class QUrl;
-
-namespace Phonon
-{
-    class AudioOutput;
-}
+#include <QUrl>
 
 namespace Konversation
 {
@@ -37,16 +30,16 @@ namespace Konversation
             void play(const QUrl &url);
 
         private Q_SLOTS:
-            void tryPlayNext(Phonon::State newState, Phonon::State oldState);
+            void tryPlayNext(QMediaPlayer::State newState);
 
         private:
             void playSound(const QUrl &url);
 
         private:
-            Phonon::MediaObject* m_mediaObject;
-            Phonon::AudioOutput* m_audioOutput;
+            QMediaPlayer *const m_mediaObject;
 
             QQueue<QUrl> m_playQueue;
+            QUrl m_currentUrl;
             bool m_played;
 
             Q_DISABLE_COPY(Sound)

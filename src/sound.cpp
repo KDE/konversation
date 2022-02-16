@@ -6,24 +6,17 @@
 
 #include "sound.h"
 
-#include <QUrl>
-
-#include <Phonon/AudioOutput>
-
-
 namespace Konversation
 {
     Sound::Sound(QObject* parent, const QString& name)
         : QObject(parent)
+        , m_mediaObject(new QMediaPlayer(this, QMediaPlayer::LowLatency))
+        , m_played(false)
     {
         setObjectName(name);
-        m_mediaObject = new Phonon::MediaObject(this);
-        m_audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory, this);
-        Phonon::createPath(m_mediaObject, m_audioOutput);
 
-        connect(m_mediaObject, &Phonon::MediaObject::stateChanged, this, &Sound::tryPlayNext);
-
-        m_played = false;
+        m_mediaObject->setAudioRole(QAudio::NotificationRole);
+        connect(m_mediaObject, &QMediaPlayer::stateChanged, this, &Sound::tryPlayNext);
     }
 
     Sound::~Sound()
@@ -31,10 +24,8 @@ namespace Konversation
 
     void Sound::play(const QUrl &url)
     {
-        if(m_played && ((m_mediaObject->state() != Phonon::PausedState && m_mediaObject->state() != Phonon::StoppedState) || !m_playQueue.isEmpty()))
-        {
-            if(m_mediaObject->currentSource().url() != url)
-            {
+        if (m_played && (m_mediaObject->state() == QMediaPlayer::PlayingState || !m_playQueue.isEmpty())) {
+            if (m_currentUrl != url) {
                 m_playQueue.enqueue(url);
             }
 
@@ -45,19 +36,17 @@ namespace Konversation
         playSound(url);
     }
 
-    void Sound::tryPlayNext(Phonon::State newState, Phonon::State oldState)
+    void Sound::tryPlayNext(QMediaPlayer::State newState)
     {
-        Q_UNUSED(oldState)
-
-        if(newState == Phonon::PausedState && !m_playQueue.isEmpty())
-        {
+        if (newState == QMediaPlayer::StoppedState && !m_playQueue.isEmpty()) {
             playSound(m_playQueue.dequeue());
         }
     }
 
     void Sound::playSound(const QUrl &url)
     {
-        m_mediaObject->setCurrentSource(Phonon::MediaSource(url));
+        m_currentUrl = url;
+        m_mediaObject->setMedia(url);
         m_mediaObject->play();
     }
 }
