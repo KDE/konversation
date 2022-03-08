@@ -253,7 +253,6 @@ target_link_libraries(konversation
     KF5::Parts
     KF5::Wallet
     KF5::WidgetsAddons
-    KF5::GlobalAccel
     KF5::DBusAddons
     KF5::CoreAddons
     KF5::Notifications
@@ -264,6 +263,10 @@ target_link_libraries(konversation
 
 if(TARGET Qt5::X11Extras)
     target_link_libraries(konversation Qt5::X11Extras)
+endif()
+
+if(TARGET KF5::GlobalAccel)
+    target_link_libraries(konversation KF5::GlobalAccel)
 endif()
 
 if (Qca-qt5_FOUND)

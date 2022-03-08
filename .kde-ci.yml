@@ -19,10 +19,13 @@ Dependencies:
     'frameworks/kparts': '@stable'
     'frameworks/kwallet': '@stable'
     'frameworks/kwidgetsaddons': '@stable'
-    'frameworks/kglobalaccel': '@stable'
     'frameworks/kdbusaddons': '@stable'
     'frameworks/knewstuff': '@stable'
     'frameworks/knotifications': '@stable'
     'frameworks/kwindowsystem': '@stable'
     'frameworks/kitemviews': '@stable'
     'libraries/phonon': '@stable'
+
+- 'on': ['Linux', 'FreeBSD']
+  'require':
+    'frameworks/kglobalaccel': '@stable'

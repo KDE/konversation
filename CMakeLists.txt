@@ -45,13 +45,17 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Parts
     Wallet
     WidgetsAddons
-    GlobalAccel
     DBusAddons
     NewStuff
     Notifications
     WindowSystem
     ItemViews
 )
+
+if(NOT WIN32)
+    find_package(KF5 REQUIRED GlobalAccel)
+endif()
+set(HAVE_KGLOBALACCEL ${KF5GlobalAccel_FOUND})
 
 if (KF5_VERSION VERSION_LESS 5.91.0)
     find_package(Qt5X11Extras ${QT_MIN_VERSION} CONFIG)

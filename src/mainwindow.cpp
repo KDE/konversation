@@ -45,8 +45,13 @@
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
-#include <KGlobalAccel>
 #include <KStartupInfo>
+
+#include "config-konversation.h"
+
+#if HAVE_KGLOBALACCEL
+#include <KGlobalAccel>
+#endif
 
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
@@ -292,7 +297,10 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     action->setEnabled(false);
     connect(action, &QAction::triggered, m_viewContainer, &ViewContainer::showNextActiveView);
     actionCollection()->addAction(QStringLiteral("next_active_tab"), action);
+
+#if HAVE_KGLOBALACCEL
     KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
+#endif
 
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
@@ -538,7 +546,10 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     action->setText(i18n("Show/Hide Konversation"));
     connect(action, &QAction::triggered, this, &MainWindow::toggleVisibility);
     actionCollection()->addAction(QStringLiteral("toggle_mainwindow_visibility"), action);
+
+#if HAVE_KGLOBALACCEL
     KGlobalAccel::setGlobalShortcut(action, QList<QKeySequence>());
+#endif
 
     action=new KToggleAction(this);
     action->setEnabled(true);
