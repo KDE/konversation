@@ -709,6 +709,9 @@ int ChatWindow::unseenEventsCount() const
 
 void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 {
+    if (!notificationsEnabled())
+        return;
+
     MainWindow* mainWindow = Application::instance()->getMainWindow();
     ViewContainer* viewContainer = mainWindow->getViewContainer();
     if ((viewContainer->getFrontView() != this) || !mainWindow->isActiveWindow()) {
@@ -736,9 +739,6 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
             Q_EMIT unseenEventsCountChanged(this, unseenEventsCount());
         }
     }
-
-    if (!notificationsEnabled())
-        return;
 
     if(type > m_currentTabNotify)
         return;
