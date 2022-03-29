@@ -13,7 +13,7 @@ set(KONVERSATION_VERSION "${KONVERSATION_BASE_VERSION}.${RELEASE_SERVICE_COMPACT
 project(konversation VERSION ${KONVERSATION_VERSION})
 
 set(QT_MIN_VERSION "5.15.0")
-set(KF5_MIN_VERSION "5.88.0")
+set(KF5_MIN_VERSION "5.90.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.85")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
@@ -28,7 +28,7 @@ include(ECMSetupVersion)
 include(ECMGenerateDBusServiceFile)
 include(FeatureSummary)
 
-find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
+find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     Archive
@@ -67,13 +67,13 @@ elseif(KF5_MIN_VERSION VERSION_GREATER 5.90)
     message(AUTHOR_WARNING "Please remove usage of Qt5X11Extras and HAVE_X11, no longer needed.")
 endif()
 
-find_package(Qca-qt5 2.2.0)
-set_package_properties(Qca-qt5 PROPERTIES DESCRIPTION "Support for encryption"
+find_package(Qca-qt${QT_MAJOR_VERSION} 2.2.0)
+set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
                        TYPE OPTIONAL)
 check_include_file("stropts.h" HAVE_STROPTS_H)
 
-set(HAVE_QCA2 ${Qca-qt5_FOUND})
+set(HAVE_QCA2 ${Qca-qt${QT_MAJOR_VERSION}_FOUND})
 if(TARGET Qt5::X11Extras)
     set(HAVE_X11 TRUE)
 else()

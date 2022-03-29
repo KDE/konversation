@@ -12,7 +12,7 @@ ecm_generate_dbus_service_file(
 ########### install files ###############
 
 install(PROGRAMS   org.kde.konversation.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES   konversation.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR})
+install(FILES   konversation.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 install(FILES   updaters/konversation.upd DESTINATION ${KDE_INSTALL_DATADIR}/kconf_update)
 install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.19-sortorder.pl

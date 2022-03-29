@@ -74,7 +74,7 @@ namespace Konversation
 
                     startPos = pair.first + pair.second;
 
-                    line += text.midRef(pair.first, pair.second);
+                    line += QStringView(text).mid(pair.first, pair.second);
                 }
 
                 if (startPos <= text.length() - 1)

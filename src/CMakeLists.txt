@@ -194,10 +194,10 @@ ki18n_wrap_ui(dcc_SRCS
      dcc/whiteboardfontchooserui.ui
 )
 
-if (Qca-qt5_FOUND)
+if (Qca-qt${QT_MAJOR_VERSION}_FOUND)
     set(cipher_SRCS
         cipher.cpp)
-endif (Qca-qt5_FOUND)
+endif ()
 
 set(upnp_SRCS
     upnp/soap.cpp
@@ -239,8 +239,8 @@ add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation
     Qt::Multimedia
-    Qt5::Network
-    Qt5::Widgets
+    Qt::Network
+    Qt::Widgets
     KF5::Archive
     KF5::Bookmarks
     KF5::ConfigWidgets
@@ -269,8 +269,8 @@ if(TARGET KF5::GlobalAccel)
     target_link_libraries(konversation KF5::GlobalAccel)
 endif()
 
-if (Qca-qt5_FOUND)
-    target_link_libraries(konversation qca-qt5)
+if (Qca-qt${QT_MAJOR_VERSION}_FOUND)
+    target_link_libraries(konversation qca-qt${QT_MAJOR_VERSION})
 endif ()
 if (WIN32)
   target_link_libraries(konversation ws2_32) # for symbols from winsock2.h: ntohl, etc.
