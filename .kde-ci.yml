@@ -15,7 +15,7 @@ Dependencies:
     'frameworks/ki18n': '@stable'
     'frameworks/kidletime': '@stable'
     'frameworks/knotifyconfig': '@stable'
-    'frameworks/kkio': '@stable'
+    'frameworks/kio': '@stable'
     'frameworks/kparts': '@stable'
     'frameworks/kwallet': '@stable'
     'frameworks/kwidgetsaddons': '@stable'
