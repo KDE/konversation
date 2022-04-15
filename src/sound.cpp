@@ -46,7 +46,11 @@ namespace Konversation
     void Sound::playSound(const QUrl &url)
     {
         m_currentUrl = url;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         m_mediaObject->setMedia(url);
+#else
+        m_mediaObject->setSource(url);
+#endif
         m_mediaObject->play();
     }
 }
