@@ -22,12 +22,11 @@
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QString>
-
+#include <QStringList>
 
 class QLabel;
 class QTimer;
 class QTreeWidgetItem;
-class QStringList;
 class QSplitter;
 class QToolButton;
 
