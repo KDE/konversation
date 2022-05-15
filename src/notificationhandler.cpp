@@ -17,6 +17,7 @@
 
 #include <KLocalizedString>
 #include <KNotification>
+#include <KWindowSystem>
 
 
 namespace Konversation
@@ -73,7 +74,10 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+            KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
+            chatWin->activateView();
+        });
 
         if (!Preferences::self()->trayNotifyOnlyOwnNick())
         {
@@ -123,7 +127,10 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+            KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
+            chatWin->activateView();
+        });
 
         startTrayNotification(chatWin);
     }
@@ -170,7 +177,10 @@ namespace Konversation
         }
 
         msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, &ChatWindow::activateView);
+        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+            KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
+            chatWin->activateView();
+        });
 
         startTrayNotification(chatWin);
     }
