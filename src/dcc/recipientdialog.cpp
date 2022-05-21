@@ -60,7 +60,7 @@ namespace Konversation
             button->setToolTip(i18n("Close the window without changes"));
             button->setIcon(QIcon::fromTheme(QStringLiteral("dialog-cancel")));
 
-            KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(KSharedConfig::openConfig(), "DCCRecipientDialog"));
+            KWindowConfig::restoreWindowSize(windowHandle(), KConfigGroup(KSharedConfig::openStateConfig(), "DCCRecipientDialog"));
 
             connect(buttonBox, &QDialogButtonBox::accepted, this, &RecipientDialog::slotOk);
             connect(buttonBox, &QDialogButtonBox::rejected, this, &RecipientDialog::slotCancel);
@@ -68,7 +68,7 @@ namespace Konversation
 
         RecipientDialog::~RecipientDialog()
         {
-            KConfigGroup config(KSharedConfig::openConfig(), "DCCRecipientDialog");
+            KConfigGroup config(KSharedConfig::openStateConfig(), "DCCRecipientDialog");
             KWindowConfig::saveWindowSize(windowHandle(), config);
         }
 
