@@ -85,7 +85,7 @@
       where the KDE IRC channels can be found.
     </p>
     <p xml:lang="ca">El Konversation és un client fàcil d'emprar de l'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es poden trobar els canals IRC de KDE.</p>
-    <p xml:lang="ca-valencia">Konversation és un client fàcil d'emprar de l'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es poden trobar els canals IRC de KDE.</p>
+    <p xml:lang="ca-valencia">Konversation és un client fàcil d'emprar d'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les rets IRC estàndards, com Libera, a on es poden trobar els canals IRC de KDE.</p>
     <p xml:lang="de">Konversation ist ein benutzerfreundliches Internet-Relay-Chat (IRC)-Programm von KDE. Es bietet einen einfachen Zugang zu Standard-IRC-Netzwerken wie Libera, wo die KDE-IRC-Kanäle zu finden sind.</p>
     <p xml:lang="el">Το Konversation είναι μια φιλική στον χρήστη εφαρμογή-πελάτης για την προώθηση συνομιλίας στο Διαδίκτυο (Internet Relay Chat, IRC) από το KDE. Παρέχει εύκολη πρόσβαση σε τυπικά IRC δίκτυα όπως το Libera, όπου μπορείτε να βρείτε τους διαύλους IRC του KDE.</p>
     <p xml:lang="en-GB">Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE. It provides easy access to standard IRC networks such as Libera, where the KDE IRC channels can be found.</p>
@@ -259,7 +259,7 @@
       <li>Easy to use graphical user interface</li>
       <li xml:lang="ar">واجهة مستخدم سهلة الاستخدام</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
-      <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
+      <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilisar</li>
       <li xml:lang="da">Brugervenlig grafisk brugerflade</li>
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
       <li xml:lang="el">Ευκολόχρηστο γραφικό περιβάλλον χρήστη</li>
