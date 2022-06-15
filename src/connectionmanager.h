@@ -12,7 +12,9 @@
 
 #include <QObject>
 #include <QSet>
-
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QNetworkInformation>
+#endif
 
 class ConnectionSettings;
 
@@ -80,8 +82,11 @@ class ConnectionManager : public QObject
         void handleConnectionStateChange(Server* server, Konversation::ConnectionState state);
 
         void handleReconnect(Server* server);
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         void onOnlineStateChanged(bool isOnline);
+#else
+        void onOnlineStateChanged(QNetworkInformation::Reachability reachability);
+#endif
 
     private:
         void enlistConnection(int connectionId, Server* server);

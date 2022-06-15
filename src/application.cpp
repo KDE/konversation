@@ -57,6 +57,9 @@
 #if HAVE_X11
 #include <QX11Info>
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QNetworkInformation>
+#endif
 
 using namespace Konversation;
 
@@ -79,7 +82,6 @@ Application::Application(int &argc, char **argv)
     m_urlModel = nullptr;
     dbusObject = nullptr;
     identDBus = nullptr;
-    m_networkConfigurationManager = nullptr;
 }
 
 Application::~Application()
@@ -106,9 +108,9 @@ Application::~Application()
     delete m_osd;
     m_osd = nullptr;
     closeWallet();
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     delete m_networkConfigurationManager;
-
+#endif
     if (m_restartScheduled) implementRestart();
 }
 
@@ -159,6 +161,7 @@ void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestor
     connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
     connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 // Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
@@ -166,6 +169,10 @@ QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
     m_networkConfigurationManager = new QNetworkConfigurationManager();
     connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
 QT_WARNING_POP
+#else
+    QNetworkInformation::load(QNetworkInformation::Feature::Reachability);
+    connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
+#endif
 
     m_scriptLauncher = new ScriptLauncher(this);
 

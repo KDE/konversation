@@ -674,12 +674,16 @@ void ConnectionManager::reconnectInvoluntary()
     }
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void ConnectionManager::onOnlineStateChanged(bool isOnline)
 {
     if (isOnline) {
-
+#else
+void ConnectionManager::onOnlineStateChanged(QNetworkInformation::Reachability reachability)
+{
+    if (reachability == QNetworkInformation::Reachability::Online) {
+#endif
         reconnectInvoluntary();
-
     } else {
 
         involuntaryQuitServers();

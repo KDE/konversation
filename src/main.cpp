@@ -12,7 +12,9 @@
 
 #include <KAboutData>
 #include <KCrash>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
+#endif
 #include <KDBusService>
 
 #include <chrono>
@@ -30,11 +32,12 @@ int main(int argc, char* argv[])
         QStringLiteral("konversationrc"),
         QStringLiteral("konversation.notifyrc"),
     };
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("konversation"));
     migrate.setConfigFiles(configFiles);
     migrate.setUiFiles(QStringList { QStringLiteral("konversationui.rc") });
     migrate.migrate();
+#endif
 
     KLocalizedString::setApplicationDomain("konversation");
 

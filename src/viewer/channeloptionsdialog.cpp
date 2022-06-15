@@ -366,7 +366,11 @@ namespace Konversation
                     break;
                 case 'l':
                     m_ui.userLimitChBox->setChecked(true);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                     m_ui.userLimitEdit->setValue(currentMode.midRef(1).toInt());
+#else
+                    m_ui.userLimitEdit->setValue(QStringView(currentMode).mid(1).toInt());
+#endif
                     break;
                 case 'i':
                     m_ui.inviteModeChBox->setChecked(true);

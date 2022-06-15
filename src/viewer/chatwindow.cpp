@@ -392,7 +392,9 @@ void ChatWindow::setLogfileName(const QString& name)
                 qint64 filePosition;
 
                 QTextStream backlog(&logfile);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 backlog.setCodec(QTextCodec::codecForName("UTF-8"));
+#endif
                 backlog.setAutoDetectUnicode(true);
 
                 QStringList firstColumns;
@@ -503,7 +505,9 @@ void ChatWindow::logText(const QString& text)
             // wrap the file into a stream
             QTextStream logStream(&logfile);
             // write log in utf8 to help i18n
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             logStream.setCodec(QTextCodec::codecForName("UTF-8"));
+#endif
             logStream.setAutoDetectUnicode(true);
 
             if(firstLog)
