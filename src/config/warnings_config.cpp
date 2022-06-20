@@ -15,11 +15,9 @@
 #include <ki18n_version.h>
 #include <KSharedConfig>
 #include <KConfigGroup>
-#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
 #include <KLazyLocalizedString>
 #undef I18NC_NOOP
 #define I18NC_NOOP kli18nc
-#endif
 
 static const int WarningNameRole = Qt::UserRole + 100;
 
@@ -139,12 +137,7 @@ void Warnings_Config::loadSettings()
     static const struct DefinitionItem
     {
         const char *flagName;
-#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
         const KLazyLocalizedString message;
-#else
-        const char *context;
-        const char *message;
-#endif
     } warningDialogDefinitions[] = {
         { "Invitation",                                                                                 I18NC_NOOP("@item:inlistbox Checkbox item, determines whether warning dialog is shown; concludes sentence \"Show a warning dialog when...\"",
           "... a channel invitation is received"
@@ -215,19 +208,10 @@ void Warnings_Config::loadSettings()
 
     for (const auto& warningDialogDefinition : warningDialogDefinitions) {
         const QLatin1String flagName(warningDialogDefinition.flagName);
-#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
         const QString message = warningDialogDefinition.message.toString();
-#else
-        const char * const message(warningDialogDefinition.message);
-        const char * const ctx(warningDialogDefinition.context);
-#endif
 
         auto *item = new QTreeWidgetItem(dialogListView);
-#if KI18N_VERSION >= QT_VERSION_CHECK(5, 89, 0)
         item->setText(0, message);
-#else
-        item->setText(0, i18nc(ctx, message));
-#endif
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
         item->setData(0, WarningNameRole, flagName);
 

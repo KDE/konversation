@@ -22,17 +22,18 @@
 
 int main(int argc, char* argv[])
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-
+#endif
     Application app(argc, argv);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // Migrate pre-existing (4.x) configuration
 
     const QStringList configFiles = {
         QStringLiteral("konversationrc"),
         QStringLiteral("konversation.notifyrc"),
     };
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("konversation"));
     migrate.setConfigFiles(configFiles);
     migrate.setUiFiles(QStringList { QStringLiteral("konversationui.rc") });
