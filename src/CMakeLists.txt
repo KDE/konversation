@@ -8,31 +8,53 @@ set(core_SRCS
     #====================================
     #=== Application
     config/preferences.cpp
+    config/preferences.h
+
     application.cpp
+    application.h
     dbus.cpp
+    dbus.h
     mainwindow.cpp
+    mainwindow.h
     main.cpp
     common.cpp
+    common.h
     sound.cpp
+    sound.h
     ssllabel.cpp
+    ssllabel.h
     statusbar.cpp
+    statusbar.h
     bookmarkhandler.cpp
+    bookmarkhandler.h
     scriptlauncher.cpp
+    scriptlauncher.h
     konsolepanel.cpp
+    konsolepanel.h
     notificationhandler.cpp
+    notificationhandler.h
     launcherentryhandler.cpp
+    launcherentryhandler.h
     awaymanager.cpp
+    awaymanager.h
     connectionmanager.cpp
+    connectionmanager.h
     connectionsettings.cpp
+    connectionsettings.h
     identity.cpp
+    identity.h
     identitydialog.cpp
+    identitydialog.h
 
     konversation.qrc
 
     #=== GUI
     urlcatcher.cpp
+    urlcatcher.h
     queuetuner.cpp
+    queuetuner.h
     quickconnectdialog.cpp
+    quickconnectdialog.h
 )
 
 set (irc_SRCS
@@ -81,22 +103,39 @@ ki18n_wrap_ui(irc_SRCS
 
     #=== Configuration dialog pages
 set(config_SRCS
-    config/configdialog.cpp
-    config/settingsdialog.cpp
     config/alias_config.cpp
+    config/alias_config.h
     config/autoreplace_config.cpp
-    config/dcc_config.cpp
-    config/highlight_config.cpp
-    config/ignore_config.cpp
-    config/launcherentry_config.cpp
-    config/nicklistbehavior_config.cpp
-    config/osd_config.cpp
-    config/tabs_config.cpp
-    config/theme_config.cpp
-    config/quickbuttons_config.cpp
-    config/warnings_config.cpp
+    config/autoreplace_config.h
+    config/configdialog.cpp
+    config/configdialog.h
     config/connectionbehavior_config.cpp
+    config/connectionbehavior_config.h
+    config/dcc_config.cpp
+    config/dcc_config.h
+    config/highlight_config.cpp
+    config/highlight_config.h
     config/highlighttreewidget.cpp
+    config/highlighttreewidget.h
+    config/ignore_config.cpp
+    config/ignore_config.h
+    config/launcherentry_config.cpp
+    config/launcherentry_config.h
+    config/nicklistbehavior_config.cpp
+    config/nicklistbehavior_config.h
+    config/osd_config.cpp
+    config/osd_config.h
+    config/quickbuttons_config.cpp
+    config/quickbuttons_config.h
+    config/settingsdialog.cpp
+    config/settingsdialog.h
+    config/settingspage.h
+    config/tabs_config.cpp
+    config/tabs_config.h
+    config/theme_config.cpp
+    config/theme_config.h
+    config/warnings_config.cpp
+    config/warnings_config.h
 )
 
 ki18n_wrap_ui(config_SRCS
@@ -125,36 +164,66 @@ ki18n_wrap_ui(config_SRCS
 
     #=== Viewer
 set(viewer_SRCS
-    viewer/ircinput.cpp
-    viewer/ircview.cpp
-    viewer/chatwindow.cpp
-    viewer/rawlog.cpp
-    viewer/statuspanel.cpp
-    viewer/ircviewbox.cpp
-    viewer/viewcontainer.cpp
-    viewer/pasteeditor.cpp
-    viewer/highlight.cpp
-    viewer/highlightviewitem.cpp
-    viewer/ignore.cpp
-    viewer/ignorelistviewitem.cpp
-    viewer/irccolorchooser.cpp
-    viewer/logfilereader.cpp
-    viewer/insertchardialog.cpp
-    viewer/osd.cpp
-    viewer/topiclabel.cpp
     viewer/awaylabel.cpp
-    viewer/editnotifydialog.cpp
-    viewer/images.cpp
-    viewer/nickiconset.cpp
-    viewer/quickbutton.cpp
-    viewer/searchbar.cpp
-    viewer/irccontextmenus.cpp
-    viewer/trayicon.cpp
-    viewer/viewspringloader.cpp
+    viewer/awaylabel.h
     viewer/channeloptionsdialog.cpp
+    viewer/channeloptionsdialog.h
+    viewer/chatwindow.cpp
+    viewer/chatwindow.h
+    viewer/editnotifydialog.cpp
+    viewer/editnotifydialog.h
+    viewer/highlight.cpp
+    viewer/highlight.h
+    viewer/highlightviewitem.cpp
+    viewer/highlightviewitem.h
+    viewer/ignore.cpp
+    viewer/ignore.h
+    viewer/ignorelistviewitem.cpp
+    viewer/ignorelistviewitem.h
+    viewer/images.cpp
+    viewer/images.h
+    viewer/insertchardialog.cpp
+    viewer/insertchardialog.h
+    viewer/irccolorchooser.cpp
+    viewer/irccolorchooser.h
+    viewer/irccontextmenus.cpp
+    viewer/irccontextmenus.h
+    viewer/ircinput.cpp
+    viewer/ircinput.h
+    viewer/ircviewbox.cpp
+    viewer/ircviewbox.h
+    viewer/ircview.cpp
+    viewer/ircview.h
+    viewer/logfilereader.cpp
+    viewer/logfilereader.h
+    viewer/nickiconset.cpp
+    viewer/nickiconset.h
+    viewer/osd.cpp
+    viewer/osd.h
+    viewer/pasteeditor.cpp
+    viewer/pasteeditor.h
+    viewer/quickbutton.cpp
+    viewer/quickbutton.h
+    viewer/rawlog.cpp
+    viewer/rawlog.h
+    viewer/searchbar.cpp
+    viewer/searchbar.h
+    viewer/statuspanel.cpp
+    viewer/statuspanel.h
     viewer/topicedit.cpp
+    viewer/topicedit.h
     viewer/topichistoryview.cpp
+    viewer/topichistoryview.h
+    viewer/topiclabel.cpp
+    viewer/topiclabel.h
+    viewer/trayicon.cpp
+    viewer/trayicon.h
+    viewer/viewcontainer.cpp
+    viewer/viewcontainer.h
+    viewer/viewspringloader.cpp
+    viewer/viewspringloader.h
     viewer/viewtree.cpp
+    viewer/viewtree.h
 )
 
 ki18n_wrap_ui(viewer_SRCS
@@ -165,26 +234,46 @@ ki18n_wrap_ui(viewer_SRCS
 
      #=== DCC
 set(dcc_SRCS
-     dcc/chat.cpp
-     dcc/chatcontainer.cpp
-     dcc/dcccommon.cpp
-     dcc/dccfiledialog.cpp
-     dcc/recipientdialog.cpp
-     dcc/resumedialog.cpp
-     dcc/transfer.cpp
-     dcc/transferdetailedinfopanel.cpp
-     dcc/transfermanager.cpp
-     dcc/transferpanel.cpp
-     dcc/transferrecv.cpp
-     dcc/transfersend.cpp
-     dcc/transferlistmodel.cpp
-     dcc/transferview.cpp
-     dcc/whiteboard.cpp
-     dcc/whiteboardcolorchooser.cpp
-     dcc/whiteboardfontchooser.cpp
-     dcc/whiteboardglobals.cpp
-     dcc/whiteboardpaintarea.cpp
-     dcc/whiteboardtoolbar.cpp
+    dcc/chatcontainer.cpp
+    dcc/chatcontainer.h
+    dcc/chat.cpp
+    dcc/chat.h
+    dcc/dcccommon.cpp
+    dcc/dcccommon.h
+    dcc/dccfiledialog.cpp
+    dcc/dccfiledialog.h
+    dcc/recipientdialog.cpp
+    dcc/recipientdialog.h
+    dcc/resumedialog.cpp
+    dcc/resumedialog.h
+    dcc/transfer.cpp
+    dcc/transferdetailedinfopanel.cpp
+    dcc/transferdetailedinfopanel.h
+    dcc/transfer.h
+    dcc/transferlistmodel.cpp
+    dcc/transferlistmodel.h
+    dcc/transfermanager.cpp
+    dcc/transfermanager.h
+    dcc/transferpanel.cpp
+    dcc/transferpanel.h
+    dcc/transferrecv.cpp
+    dcc/transferrecv.h
+    dcc/transfersend.cpp
+    dcc/transfersend.h
+    dcc/transferview.cpp
+    dcc/transferview.h
+    dcc/whiteboardcolorchooser.cpp
+    dcc/whiteboardcolorchooser.h
+    dcc/whiteboard.cpp
+    dcc/whiteboardfontchooser.cpp
+    dcc/whiteboardfontchooser.h
+    dcc/whiteboardglobals.cpp
+    dcc/whiteboardglobals.h
+    dcc/whiteboard.h
+    dcc/whiteboardpaintarea.cpp
+    dcc/whiteboardpaintarea.h
+    dcc/whiteboardtoolbar.cpp
+    dcc/whiteboardtoolbar.h
 )
 
 ki18n_wrap_ui(dcc_SRCS
@@ -201,9 +290,13 @@ endif ()
 
 set(upnp_SRCS
     upnp/soap.cpp
+    upnp/soap.h
     upnp/upnpdescriptionparser.cpp
+    upnp/upnpdescriptionparser.h
     upnp/upnpmcastsocket.cpp
+    upnp/upnpmcastsocket.h
     upnp/upnprouter.cpp
+    upnp/upnprouter.h
 )
 
 set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${cipher_SRCS} ${upnp_SRCS} ${dcc_SRCS})
