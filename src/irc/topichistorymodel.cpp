@@ -5,7 +5,7 @@
 */
 
 #include "topichistorymodel.h"
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 #include "cipher.h"
 #endif
 
@@ -14,7 +14,7 @@
 
 TopicHistoryModel::TopicHistoryModel(QObject* parent) : QAbstractListModel(parent)
 {
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
     m_cipher = nullptr;
 #endif
 }
@@ -90,7 +90,7 @@ void TopicHistoryModel::setCurrentTopicMetadata(const QString& author, const QDa
     }
 }
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 void TopicHistoryModel::setCipher(Konversation::Cipher* cipher)
 {
     Q_EMIT layoutAboutToBeChanged();
@@ -126,7 +126,7 @@ QVariant TopicHistoryModel::data(const QModelIndex& index, int role) const
         switch (index.column())
         {
             case 0:
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
                 if (m_cipher)
                 {
                      QByteArray cipherText = m_cipher->decryptTopic(topic.text.toUtf8());

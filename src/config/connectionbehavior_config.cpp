@@ -22,7 +22,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
 {
     setupUi(this);
 
-#ifndef HAVE_QCA2
+#if !HAVE_QCA2
     kcfg_EncryptionType->setDisabled(true);
 #endif
 

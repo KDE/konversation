@@ -23,7 +23,7 @@
 #include "viewcontainer.h"
 #include "outputfilterresolvejob.h"
 #include "konversation_log.h"
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 #include "cipher.h"
 #endif
 
@@ -1671,7 +1671,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_setkey(const OutputFilterInput& input)
     {
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         QStringList parms = input.parameter.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         if (parms.count() == 1 && !input.destination.isEmpty())
@@ -1710,7 +1710,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_keyx(const OutputFilterInput& input)
     {
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         QStringList parms = input.parameter.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
         if (parms.isEmpty() && !input.destination.isEmpty())

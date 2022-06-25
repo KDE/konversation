@@ -12,7 +12,7 @@
 #include "channel.h"
 
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 namespace Konversation
 {
     class Cipher;
@@ -47,7 +47,7 @@ class TopicHistoryModel : public QAbstractListModel
         void appendTopic(const QString& text, const QString& author = QString(), const QDateTime &timestamp = QDateTime::currentDateTime());
         void setCurrentTopicMetadata(const QString& author, const QDateTime &timestamp = QDateTime::currentDateTime());
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
         void setCipher(Konversation::Cipher* cipher);
         void clearCipher();
 #endif
@@ -67,7 +67,7 @@ class TopicHistoryModel : public QAbstractListModel
 
     private:
         QList<Topic> m_topicList;
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
         Konversation::Cipher* m_cipher;
 #endif
 

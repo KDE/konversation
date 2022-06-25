@@ -13,7 +13,7 @@
 
 #include <config-konversation.h>
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 #include "cipher.h"
 #endif
 
@@ -65,7 +65,7 @@ class Query : public ChatWindow
          */
         void quitNick(const QString& reason, const QHash<QString, QString> &messageTags);
 
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         Konversation::Cipher* getCipher() const;
         #endif
 
@@ -110,7 +110,7 @@ class Query : public ChatWindow
 
         bool m_initialShow;
 
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         //FIXME: We might want to put this into the attendee object (i.e. NickInfo).
         mutable Konversation::Cipher *m_cipher;
         #endif

@@ -89,7 +89,7 @@ Query::Query(QWidget* parent, const QString& _name) : ChatWindow(parent)
 
     updateAppearance();
 
-    #ifdef HAVE_QCA2
+    #if HAVE_QCA2
     m_cipher = nullptr;
     #endif
 }
@@ -463,7 +463,7 @@ void Query::quitNick(const QString& reason, const QHash<QString, QString> &messa
     }
 }
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 Konversation::Cipher* Query::getCipher() const
 {
     if(!m_cipher)

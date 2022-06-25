@@ -1449,7 +1449,7 @@ void Server::incoming()
         if (m_rawLog)
             m_rawLog->appendRaw(RawLog::Inbound, first);
 
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         QByteArray cKey = getKeyForRecipient(channelKey);
         if(!cKey.isEmpty())
         {
@@ -1609,7 +1609,7 @@ int Server::_send_internal(QString outputLine)
     if(codec)
         encoded = codec->fromUnicode(outputLine);
 
-    #ifdef HAVE_QCA2
+    #if HAVE_QCA2
     QByteArray cipherKey;
     if (outputLineSplit.count() > 2 && outboundCommand > 1)
         cipherKey = getKeyForRecipient(outputLineSplit.at(1));
@@ -3552,7 +3552,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick, const Q
     }
 
     // We had an encrypt conversation with the user that changed his nick, lets copy the key to the new nick and remove the old nick
-    #ifdef HAVE_QCA2
+    #if HAVE_QCA2
     QByteArray userKey = getKeyForRecipient(nickname);
 
     if (!userKey.isEmpty())
@@ -4244,7 +4244,7 @@ void Server::updateEncoding()
         getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
 }
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 void Server::initKeyExchange(const QString &receiver)
 {
     Query* query;

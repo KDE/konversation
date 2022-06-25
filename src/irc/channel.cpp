@@ -306,7 +306,7 @@ Channel::Channel(QWidget* parent, const QString& _name) : ChatWindow(parent)
 
     updateAppearance();
 
-    #ifdef HAVE_QCA2
+    #if HAVE_QCA2
     m_cipher = nullptr;
     #endif
 
@@ -363,7 +363,7 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
     if (e)
     {
         cipherLabel->show();
@@ -2740,7 +2740,7 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
     }
 }
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 Konversation::Cipher* Channel::getCipher() const
 {
     if(!m_cipher)

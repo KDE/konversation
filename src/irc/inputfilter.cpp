@@ -546,7 +546,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 else
                 {
 
-                    #ifdef HAVE_QCA2
+                    #if HAVE_QCA2
                     //Key exchange
                     if (trailing.startsWith(QLatin1String("DH1080_INIT ")))
                     {
@@ -563,7 +563,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     #endif
                         m_server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick,
                             m_server->identifyMsg() ? trailing.mid(1) : trailing), messageTags);
-                    #ifdef HAVE_QCA2
+                    #if HAVE_QCA2
                     }
                     #endif
                 }

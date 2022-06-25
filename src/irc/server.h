@@ -23,7 +23,7 @@
 #include "invitedialog.h"
 #include <config-konversation.h>
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 #include "cipher.h"
 #endif
 
@@ -537,7 +537,7 @@ class Server : public QObject
         /// Called when we received a PONG from the server
         void pongReceived();
 
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         void initKeyExchange(const QString &receiver);
         void parseInitKeyX(const QString &sender, const QString &pubKey);
         void parseFinishKeyX(const QString &sender, const QString &pubKey);

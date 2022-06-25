@@ -15,7 +15,7 @@
 #include "chatwindow.h"
 #include "channelnick.h"
 
-#ifdef HAVE_QCA2
+#if HAVE_QCA2
 #include "cipher.h"
 #endif
 
@@ -76,7 +76,7 @@ class Channel : public ChatWindow
         void append(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>(), const QString& label = QString()) override;
         void appendAction(const QString& nickname, const QString& message, const QHash<QString, QString> &messageTags = QHash<QString, QString>()) override;
         void nickActive(const QString& nickname);
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         Konversation::Cipher* getCipher() const;
         #endif
 
@@ -346,7 +346,7 @@ class Channel : public ChatWindow
         int ops; ///< How many ops on the channel
 
         Konversation::ChannelOptionsDialog *m_optionsDialog;
-        #ifdef HAVE_QCA2
+        #if HAVE_QCA2
         mutable Konversation::Cipher *m_cipher;
         #endif
 

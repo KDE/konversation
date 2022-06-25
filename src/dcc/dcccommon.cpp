@@ -20,7 +20,7 @@
 #   include <sys/socket.h>
 #   include <net/if.h>
 #   include <sys/ioctl.h>
-#   ifdef HAVE_STROPTS_H
+#   if HAVE_STROPTS_H
 #       include <stropts.h>
 #   endif
 #   include <arpa/inet.h>
