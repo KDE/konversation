@@ -2374,7 +2374,7 @@ void ViewContainer::findText()
 {
     if (!m_searchView)
     {
-        KMessageBox::sorry(m_window,
+        KMessageBox::error(m_window,
             i18n("You can only search in text fields."),
             i18n("Find Text Information"));
     }
