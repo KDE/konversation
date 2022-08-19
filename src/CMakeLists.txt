@@ -351,7 +351,7 @@ target_link_libraries(konversation
     KF5::Notifications
     KF5::WindowSystem
     KF5::ItemViews
-    KF5::NewStuff
+    KF5::NewStuffWidgets
 )
 
 if(TARGET Qt5::X11Extras)

@@ -87,7 +87,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 ecm_set_disabled_deprecation_versions(
     QT 5.15.2
     KF 5.97
-    KNEWSTUFF 5.90 # KNS3::Button
 )
 
 add_subdirectory(src)

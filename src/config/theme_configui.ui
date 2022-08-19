@@ -23,7 +23,7 @@
    <item row="2" column="0" colspan="3">
     <layout class="QHBoxLayout">
      <item>
-      <widget class="KNS3::Button" name="getButton">
+      <widget class="KNSWidgets::Button" name="getButton">
        <property name="text">
         <string>G&amp;et New Themes...</string>
        </property>
@@ -217,9 +217,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KNS3::Button</class>
+   <class>KNSWidgets::Button</class>
    <extends>QPushButton</extends>
-   <header>KNS3/Button</header>
+   <header>KNSWidgets/Button</header>
   </customwidget>
  </customwidgets>
  <resources/>

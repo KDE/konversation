@@ -49,7 +49,7 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     connect(iconThemeIndex, &QListWidget::currentRowChanged, this, &Theme_Config::updatePreview);
     connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::updateButtons);
     connect(iconThemeIndex, &QListWidget::itemSelectionChanged, this, &Theme_Config::modified);
-    connect(getButton, &KNS3::Button::dialogFinished, this, &Theme_Config::gotNewSchemes);
+    connect(getButton, &KNSWidgets::Button::dialogFinished, this, &Theme_Config::gotNewSchemes);
     connect(installButton, &QPushButton::clicked, this, &Theme_Config::installTheme);
     connect(removeButton, &QPushButton::clicked, this, &Theme_Config::removeTheme);
 }
