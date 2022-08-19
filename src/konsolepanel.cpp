@@ -12,6 +12,7 @@
 
 #include <KLocalizedString>
 #include <KService>
+#include <KPluginFactory>
 #include <kde_terminal_interface.h>
 
 #include <QSplitter>
