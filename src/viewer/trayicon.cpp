@@ -8,8 +8,6 @@
 #include "application.h"
 #include "config/preferences.h"
 
-#include <knotifications_version.h>
-
 namespace Konversation
 {
 
@@ -31,14 +29,7 @@ namespace Konversation
 
     void TrayIcon::hideWindow()
     {
-#if KNOTIFICATIONS_VERSION >= QT_VERSION_CHECK(5, 91, 0)
         hideAssociatedWidget();
-#else
-        QWidget *window = associatedWidget();
-        if (window->isHidden())
-            return;
-        window->hide();
-#endif
     }
 
     void TrayIcon::restoreWindow()

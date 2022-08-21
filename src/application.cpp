@@ -30,11 +30,6 @@
 #include "konversation_log.h"
 #include "konversation_state.h"
 
-#include <kwindowsystem_version.h>
-#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 91, 0)
-#include "config-konversation.h"
-#endif
-
 #include <KIO/JobUiDelegate>
 #include <KIO/OpenUrlJob>
 #include <KConfig>
@@ -1391,22 +1386,7 @@ void Application::handleOpen(const QList<QUrl>& urls)
 void Application::activateForStartLikeCall()
 {
     mainWindow->show();
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 91, 0)
     KWindowSystem::updateStartupId(mainWindow->windowHandle());
-#else
-#if HAVE_X11
-    if (KWindowSystem::isPlatformX11()) {
-        KStartupInfo::setNewStartupId(mainWindow->windowHandle(), QX11Info::nextStartupId());
-    } else
-#endif
-    if (KWindowSystem::isPlatformWayland()) {
-        const QString token = qEnvironmentVariable("XDG_ACTIVATION_TOKEN");
-        if (!token.isEmpty()) {
-            KWindowSystem::setCurrentXdgActivationToken(token);
-            qunsetenv("XDG_ACTIVATION_TOKEN");
-        }
-    }
-#endif
     mainWindow->activateAndRaiseWindow();
 }
 
