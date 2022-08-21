@@ -30,7 +30,12 @@
 #include "konversation_log.h"
 #include "konversation_state.h"
 
+#include <kio_version.h>
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+#include <KIO/JobUiDelegateFactory>
+#else
 #include <KIO/JobUiDelegate>
+#endif
 #include <KIO/OpenUrlJob>
 #include <KConfig>
 #include <KShell>
@@ -1249,7 +1254,11 @@ void Application::openUrl(const QString& url)
 #else
         auto *job = new KIO::OpenUrlJob(QUrl(url));
         job->setFollowRedirections(false);
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
+#else
         job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
+#endif
         job->start();
 #endif
         return;
