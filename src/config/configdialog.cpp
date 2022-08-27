@@ -15,7 +15,7 @@
 #include <KHelpClient>
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QPushButton>
@@ -343,14 +343,14 @@ void ConfigDialog::showEvent(QShowEvent *e)
 
         d->shown = true;
     }
-    const QSize & availableSize = QApplication::desktop()->availableGeometry(this).size();
+    const QSize & availableSize = screen()->availableGeometry().size();
     this->setMaximumSize(availableSize);
     KPageDialog::showEvent(e);
 }
 
 void ConfigDialog::moveEvent(QMoveEvent *e)
 {
-    const QSize & availableSize = QApplication::desktop()->availableGeometry(this).size();
+    const QSize & availableSize = screen()->availableGeometry().size();
     this->setMaximumSize(availableSize);
     KPageDialog::moveEvent(e);
 }
