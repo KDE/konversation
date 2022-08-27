@@ -10,6 +10,7 @@
 #include <QHash>
 #include <QStringList>
 
+class QTextCodec;
 
 namespace Konversation
 {
