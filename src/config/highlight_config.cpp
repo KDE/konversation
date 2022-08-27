@@ -264,7 +264,7 @@ QStringList Highlight_Config::currentHighlightList() const
     auto* item = dynamic_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
     while (item)
     {
-        newList.append(item->getPattern() + QString(item->getRegExp()) + item->getColor().name() +
+        newList.append(item->getPattern() + QLatin1Char(item->getRegExp() ? '1' : '0') + item->getColor().name() +
             item->getSoundURL().url() + item->getAutoText() + item->getChatWindows() + QString::number(item->getNotify()));
         item = dynamic_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
     }
