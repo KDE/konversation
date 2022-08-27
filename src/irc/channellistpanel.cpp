@@ -99,8 +99,13 @@ bool ChannelListProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &s
     QModelIndex index1 = sourceModel()->index(sourceRow, 1, sourceParent);
     QModelIndex index2 = sourceModel()->index(sourceRow, 2, sourceParent);
 
-    return (((m_filterChannel && sourceModel()->data(index0).toString().contains(filterRegExp()))
-        || (m_filterTopic && sourceModel()->data(index2).toString().contains(filterRegExp()))
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    const QRegExp filter = filterRegExp();
+#else
+    const QRegularExpression filter = filterRegularExpression();
+#endif
+    return (((m_filterChannel && sourceModel()->data(index0).toString().contains(filter))
+        || (m_filterTopic && sourceModel()->data(index2).toString().contains(filter))
         || (!m_filterChannel && !m_filterTopic))
         && usersInRange(sourceModel()->data(index1).toInt()));
 }
@@ -272,11 +277,19 @@ void ChannelListPanel::updateFilter()
 
     bool change = false;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (m_proxyModel->filterRegExp().pattern() != text || regexChanged)
+#else
+    if (m_proxyModel->filterRegularExpression().pattern() != text || regexChanged)
+#endif
     {
         change = true;
         if(m_regexState)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             m_proxyModel->setFilterRegExp(text);
+#else
+            m_proxyModel->setFilterRegularExpression(text);
+#endif
         else
             m_proxyModel->setFilterWildcard(text);
     }
