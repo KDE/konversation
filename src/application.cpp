@@ -54,9 +54,6 @@
 #include <QTextCursor>
 #include <QDesktopServices>
 #include <QCommandLineParser>
-#if HAVE_X11
-#include <QX11Info>
-#endif
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QNetworkInformation>
 #endif

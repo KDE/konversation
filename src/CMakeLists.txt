@@ -354,10 +354,6 @@ target_link_libraries(konversation
     KF5::NewStuffWidgets
 )
 
-if(TARGET Qt5::X11Extras)
-    target_link_libraries(konversation Qt5::X11Extras)
-endif()
-
 if(TARGET KF5::GlobalAccel)
     target_link_libraries(konversation KF5::GlobalAccel)
 endif()

@@ -58,16 +58,6 @@ if(NOT WIN32)
 endif()
 set(HAVE_KGLOBALACCEL ${KF5GlobalAccel_FOUND})
 
-if (KF5_VERSION VERSION_LESS 5.91.0)
-    find_package(Qt5X11Extras ${QT_MIN_VERSION} CONFIG)
-    set_package_properties(Qt5X11Extras PROPERTIES
-        PURPOSE "Needed for startup activation handling on X11"
-        TYPE OPTIONAL
-    )
-elseif(KF5_MIN_VERSION VERSION_GREATER 5.90)
-    message(AUTHOR_WARNING "Please remove usage of Qt5X11Extras and HAVE_X11, no longer needed.")
-endif()
-
 find_package(Qca-qt${QT_MAJOR_VERSION} 2.2.0)
 set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
@@ -75,11 +65,6 @@ set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support
 check_include_file("stropts.h" HAVE_STROPTS_H)
 
 set(HAVE_QCA2 ${Qca-qt${QT_MAJOR_VERSION}_FOUND})
-if(TARGET Qt5::X11Extras)
-    set(HAVE_X11 TRUE)
-else()
-    set(HAVE_X11 FALSE)
-endif()
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
