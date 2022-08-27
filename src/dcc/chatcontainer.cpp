@@ -291,7 +291,7 @@ namespace Konversation
             const QString line(sterilizeUnicode(_line));
             if (line.startsWith(QLatin1Char('\x01'))) {
                 // cut out the CTCP command
-                const QString ctcp = line.mid(1, line.indexOf(1, 1) - 1);
+                const QString ctcp = line.mid(1, line.indexOf(QLatin1Char('\x01'), 1) - 1);
 
                 const QString ctcpCommand = ctcp.section(QLatin1Char(' '), 0, 0);
                 QString ctcpArgument = ctcp.section(QLatin1Char(' '), 1);
