@@ -11,6 +11,7 @@
 
 #include <QAbstractSocket>
 
+class QTextCodec;
 class QTcpSocket;
 class QTcpServer;
 class Server;
@@ -141,7 +142,7 @@ namespace Konversation
 
                 int m_connectionId;
 
-                QTextStream m_textStream;
+                QTextCodec *m_codec;
 
                 QTcpSocket *m_dccSocket;
                 QTcpServer *m_dccServer;

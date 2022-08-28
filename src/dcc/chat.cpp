@@ -36,6 +36,7 @@ namespace Konversation
         Chat::Chat(QObject *parent)
             : QObject(parent),
               m_selfOpened(true),
+              m_codec(QTextCodec::codecForLocale()),
               m_dccSocket(nullptr),
               m_dccServer(nullptr),
               m_chatStatus(Configuring),
@@ -61,8 +62,6 @@ namespace Konversation
             }
 
             Q_EMIT aboutToClose();
-
-            m_textStream.setDevice(nullptr);
 
             if (m_dccServer)
             {
@@ -250,13 +249,15 @@ namespace Konversation
 
         bool Chat::setEncoding(const QString &encoding)
         {
+            // TODO: m_encoding is empty by default, so this condition will never be true.
+            // Logic like this since code was added, needs investigation by someone (tm)
             if (m_encoding != encoding && !m_encoding.isEmpty())
             {
                 m_encoding = encoding;
                 QTextCodec *codec = QTextCodec::codecForName(m_encoding.toLatin1());
                 if (codec)
                 {
-                    m_textStream.setCodec(codec);
+                    m_codec = codec;
                     return true;
                 }
             }
@@ -476,7 +477,6 @@ namespace Konversation
 
         void Chat::connectionEstablished()
         {
-            m_textStream.setDevice(m_dccSocket);
             setStatus(Chat::Chatting, i18nc("%1=extension like Chat or Whiteboard, %2 = partnerNick",
                                             "Established DCC %1 connection to %2.",
                                             localizedExtensionString(), m_partnerNick));
@@ -493,7 +493,6 @@ namespace Konversation
         {
             char *buffer = nullptr;
             QString line;
-            QTextCodec *codec = m_textStream.codec();
             qint64 available = m_dccSocket->bytesAvailable();
             if (available < 0)
             {
@@ -506,7 +505,7 @@ namespace Konversation
                 buffer = new char[available + 1];
                 qint64 actual = m_dccSocket->readLine(buffer, available);
                 buffer[actual] = 0;
-                line = codec->toUnicode(buffer);
+                line = m_codec->toUnicode(buffer);
                 delete[] buffer;
 
                 const QStringList &lines = line.split(QLatin1Char('\n'), Qt::SkipEmptyParts);
@@ -528,9 +527,9 @@ namespace Konversation
 
         void Chat::sendRawLine(const QString &text)
         {
-            if (m_dccSocket && m_textStream.device())
+            if (m_dccSocket)
             {
-                m_textStream << text << Qt::endl;
+                m_dccSocket->write(m_codec->fromUnicode(text + QLatin1Char('\n')));
             }
         }
 
@@ -568,7 +567,6 @@ namespace Konversation
                 }
             }
 
-            m_textStream.setDevice(m_dccSocket);
             setStatus(Chat::Chatting, i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick",
                                             "Established DCC %1 connection to %2.",
                                             localizedExtensionString(), m_partnerNick));
