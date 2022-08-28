@@ -1,7 +1,9 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer upnp)
 
-set(core_SRCS
+add_executable(konversation)
+
+target_sources(konversation PRIVATE
     #====================================
     #=== Application
     config/preferences.cpp
@@ -54,7 +56,7 @@ set(core_SRCS
     quickconnectdialog.h
 )
 
-set (irc_SRCS
+target_sources(konversation PRIVATE
     #== IRC
     irc/server.cpp
 
@@ -88,7 +90,7 @@ set (irc_SRCS
     irc/serversettings.cpp
 )
 
-ki18n_wrap_ui(irc_SRCS
+ki18n_wrap_ui(konversation
     irc/channellistpanelui.ui
     irc/channeldialogui.ui
     irc/joinchannelui.ui
@@ -99,7 +101,7 @@ ki18n_wrap_ui(irc_SRCS
 )
 
     #=== Configuration dialog pages
-set(config_SRCS
+target_sources(konversation PRIVATE
     config/alias_config.cpp
     config/alias_config.h
     config/autoreplace_config.cpp
@@ -135,7 +137,7 @@ set(config_SRCS
     config/warnings_config.h
 )
 
-ki18n_wrap_ui(config_SRCS
+ki18n_wrap_ui(konversation
     config/alias_configui.ui
     config/autoreplace_configui.ui
     config/chatwindowappearance_config.ui
@@ -160,7 +162,7 @@ ki18n_wrap_ui(config_SRCS
 )
 
     #=== Viewer
-set(viewer_SRCS
+target_sources(konversation PRIVATE
     viewer/awaylabel.cpp
     viewer/awaylabel.h
     viewer/channeloptionsdialog.cpp
@@ -223,14 +225,14 @@ set(viewer_SRCS
     viewer/viewtree.h
 )
 
-ki18n_wrap_ui(viewer_SRCS
+ki18n_wrap_ui(konversation
     viewer/channeloptionsui.ui
     viewer/irccolorchooserui.ui
     viewer/pasteeditor.ui
 )
 
      #=== DCC
-set(dcc_SRCS
+target_sources(konversation PRIVATE
     dcc/chatcontainer.cpp
     dcc/chatcontainer.h
     dcc/chat.cpp
@@ -273,7 +275,7 @@ set(dcc_SRCS
     dcc/whiteboardtoolbar.h
 )
 
-ki18n_wrap_ui(dcc_SRCS
+ki18n_wrap_ui(konversation
      dcc/transferdetailedinfopanelui.ui
      dcc/transferdetailedtimeinfopanelui.ui
      dcc/whiteboardtoolbarui.ui
@@ -281,11 +283,11 @@ ki18n_wrap_ui(dcc_SRCS
 )
 
 if (Qca-qt${QT_MAJOR_VERSION}_FOUND)
-    set(cipher_SRCS
+    target_sources(konversation PRIVATE
         cipher.cpp)
 endif ()
 
-set(upnp_SRCS
+target_sources(konversation PRIVATE
     upnp/soap.cpp
     upnp/soap.h
     upnp/upnpdescriptionparser.cpp
@@ -296,19 +298,16 @@ set(upnp_SRCS
     upnp/upnprouter.h
 )
 
-set (completed_SRCS ${core_SRCS} ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${cipher_SRCS} ${upnp_SRCS} ${dcc_SRCS})
-set (konversation_SRCS ${completed_SRCS})
-
-ki18n_wrap_ui(konversation_SRCS
+ki18n_wrap_ui(konversation
     identitydialog.ui
     queuetunerbase.ui
     viewer/searchbarbase.ui
 )
 
-kconfig_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
-kconfig_add_kcfg_files(konversation_SRCS config/konversation_state.kcfgc)
+kconfig_add_kcfg_files(konversation config/preferences_base.kcfgc)
+kconfig_add_kcfg_files(konversation config/konversation_state.kcfgc)
 
-ecm_qt_declare_logging_category(konversation_SRCS
+ecm_qt_declare_logging_category(konversation
     HEADER konversation_log.h
     IDENTIFIER KONVERSATION_LOG
     CATEGORY_NAME konversation
@@ -323,9 +322,7 @@ ecm_setup_version(${KONVERSATION_VERSION}
 
 # Sets the icon on Windows and OSX
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/*apps-konversation.png")
-ecm_add_app_icon(konversation_SRCS ICONS ${ICONS_SRCS})
-
-add_executable(konversation ${konversation_SRCS})
+ecm_add_app_icon(konversation ICONS ${ICONS_SRCS})
 
 target_link_libraries(konversation
     Qt::Multimedia
