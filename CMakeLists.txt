@@ -19,14 +19,17 @@ set(KDE_COMPILERSETTINGS_LEVEL "5.85")
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 
-include(CheckIncludeFile)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
+
 include(ECMInstallIcons)
 include(ECMSetupVersion)
 include(ECMGenerateDBusServiceFile)
 include(ECMDeprecationSettings)
+include(ECMAddAppIcon)
+include(ECMQtDeclareLoggingCategory)
+include(CheckIncludeFile)
 include(FeatureSummary)
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
