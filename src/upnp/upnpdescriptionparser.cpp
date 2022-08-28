@@ -12,7 +12,6 @@
 
 #include <QXmlStreamReader>
 #include <QStack>
-#include <QStringRef>
 
 
 namespace Konversation
@@ -43,14 +42,14 @@ namespace Konversation
         private:
             bool startDocument();
             bool endDocument();
-            bool startElement(const QStringRef& namespaceUri, const QStringRef& localName,
-                              const QStringRef& qName, const QXmlStreamAttributes& atts);
-            bool endElement(const QStringRef& namespaceUri, const QStringRef& localName,
-                            const QStringRef& qName);
-            bool characters(const QStringRef& chars);
+            bool startElement(QStringView namespaceUri, QStringView localName,
+                              QStringView qName, const QXmlStreamAttributes& atts);
+            bool endElement(QStringView namespaceUri, QStringView localName,
+                            QStringView qName);
+            bool characters(QStringView chars);
 
-            static bool interestingDeviceField(const QStringRef& name);
-            static bool interestingServiceField(const QStringRef& name);
+            static bool interestingDeviceField(QStringView name);
+            static bool interestingServiceField(QStringView name);
         };
 
 
@@ -144,21 +143,21 @@ namespace Konversation
             return true;
         }
 
-        bool XMLContentHandler::interestingDeviceField(const QStringRef& name)
+        bool XMLContentHandler::interestingDeviceField(QStringView name)
         {
             return name == QLatin1String("friendlyName") || name == QLatin1String("manufacturer") || name == QLatin1String("modelDescription") ||
                     name == QLatin1String("modelName") || name == QLatin1String("modelNumber");
         }
 
 
-        bool XMLContentHandler::interestingServiceField(const QStringRef& name)
+        bool XMLContentHandler::interestingServiceField(QStringView name)
         {
             return name == QLatin1String("serviceType") || name == QLatin1String("serviceId") || name == QLatin1String("SCPDURL") ||
                     name == QLatin1String("controlURL") || name == QLatin1String("eventSubURL");
         }
 
-        bool XMLContentHandler::startElement(const QStringRef& namespaceUri, const QStringRef& localName,
-                                             const QStringRef& qName, const QXmlStreamAttributes& atts)
+        bool XMLContentHandler::startElement(QStringView namespaceUri, QStringView localName,
+                                             QStringView qName, const QXmlStreamAttributes& atts)
         {
             Q_UNUSED(namespaceUri)
             Q_UNUSED(qName)
@@ -209,8 +208,8 @@ namespace Konversation
             return true;
         }
 
-        bool XMLContentHandler::endElement(const QStringRef& namespaceUri, const QStringRef& localName,
-                                           const QStringRef& qName)
+        bool XMLContentHandler::endElement(QStringView namespaceUri, QStringView localName,
+                                           QStringView qName)
         {
             Q_UNUSED(namespaceUri)
             Q_UNUSED(qName)
@@ -223,12 +222,12 @@ namespace Konversation
                 if (status_stack.top() == DEVICE)
                 {
                     // if we are in a device
-                    router->getDescription().setProperty(localName.toString(), tmp);
+                    router->getDescription().setProperty(localName, tmp);
                 }
                 else if (status_stack.top() == SERVICE)
                 {
                     // set a property of a service
-                    curr_service.setProperty(localName.toString(), tmp);
+                    curr_service.setProperty(localName, tmp);
                 }
                 break;
             case SERVICE:
@@ -249,7 +248,7 @@ namespace Konversation
         }
 
 
-        bool XMLContentHandler::characters(const QStringRef& ch)
+        bool XMLContentHandler::characters(QStringView ch)
         {
             tmp.append(ch);
 
