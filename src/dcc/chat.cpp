@@ -146,8 +146,8 @@ namespace Konversation
                     int ret = KMessageBox::questionYesNo(nullptr,
                                                          i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard", "%1 (on %2) offers to DCC %3 with you", m_partnerNick, server->getServerName(), localizedExtensionString()),
                                                          i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick", "DCC %1 offer from %2", localizedExtensionString(), m_partnerNick),
-                                                         KGuiItem(i18n("Accept")),
-                                                         KGuiItem(i18n("Reject"))
+                                                         KGuiItem(i18n("Accept"), QStringLiteral("dialog-ok")),
+                                                         KGuiItem(i18n("Reject"), QStringLiteral("dialog-cancel"))
                                                          );
 
                     if (ret == KMessageBox::No)
