@@ -234,7 +234,7 @@ bool StatusPanel::closeYourself(bool confirm)
             this,
             i18n("Do you want to disconnect from '%1'?\n\nAll associated tabs will be closed as well.",m_server->getServerName()),
             i18n("Disconnect From Server"),
-            KGuiItem(i18n("Disconnect")),
+            KGuiItem(i18n("Disconnect"), QStringLiteral("network-disconnect")),
             KStandardGuiItem::cancel(),
             QStringLiteral("QuitServerTab"));
     }

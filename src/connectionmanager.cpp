@@ -590,7 +590,7 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
                     mainWindow,
                     i18n("<qt>Your identity \"%1\" is not set up correctly:<br/>%2</qt>", identity->getName(), errors),
                     i18n("Identity Settings"),
-                    KGuiItem(i18n("Edit Identity...")),
+                    KGuiItem(i18n("Edit Identity..."), QStringLiteral("document-edit")),
                     KStandardGuiItem::cancel());
 
             if (result == KMessageBox::Continue)

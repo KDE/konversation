@@ -481,8 +481,8 @@ bool IRCInput::checkPaste(QString& text)
             "the chat. This can cause connection resets or flood kills. "
             "Do you really want to continue?</qt>", bytesString, linesString),
             i18n("Large Paste Warning"),
-            KGuiItem(i18n("Paste")),
-            KGuiItem(i18n("&Edit...")),
+            KGuiItem(i18n("Paste"), QStringLiteral("edit-paste")),
+            KGuiItem(i18n("&Edit..."), QStringLiteral("document-edit")),
             KStandardGuiItem::cancel(),
             QStringLiteral("LargePaste"),
             KMessageBox::Dangerous);

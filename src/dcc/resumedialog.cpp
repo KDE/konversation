@@ -157,7 +157,7 @@ namespace Konversation
         {
             if(m_item->getFileURL() == m_urlreqFileURL->url())
             {
-                m_buttonBox->button(QDialogButtonBox::Ok)->setText(KStandardGuiItem::overwrite().text());
+                KGuiItem::assign(m_buttonBox->button(QDialogButtonBox::Ok), KStandardGuiItem::overwrite());
                 m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Overwrite);
 
                 if(m_buttonBox->standardButtons() & QDialogButtonBox::Retry)
@@ -168,6 +168,7 @@ namespace Konversation
             else
             {
                 m_buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("R&ename"));
+                m_buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon::fromTheme(QStringLiteral("edit-rename")));
                 m_buttonBox->button(QDialogButtonBox::Ok)->setEnabled(m_enabledActions & RA_Rename);
 
                 if(m_buttonBox->standardButtons() & QDialogButtonBox::Retry)
