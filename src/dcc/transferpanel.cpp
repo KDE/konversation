@@ -426,9 +426,10 @@ namespace Konversation
                                                      i18np("You have selected %1 file to execute, are you sure you want to continue?",
                                                            "You have selected %1 files to execute, are you sure you want to continue?",
                                                            selectedRows),
-                                                     i18np("Execute %1 file",
-                                                           "Execute %1 files",
-                                                           selectedRows)
+                                                     {},
+                                                     KGuiItem(i18ncp("@action:button", "Execute %1 File", "Execute %1 Files", selectedRows),
+                                                              QStringLiteral("system-run")),
+                                                     KStandardGuiItem::cancel()
                                                      );
 
                 if (ret == KMessageBox::No)
