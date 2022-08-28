@@ -353,6 +353,9 @@ target_link_libraries(konversation
     KF5::ItemViews
     KF5::NewStuffWidgets
 )
+if (QT_MAJOR_VERSION STREQUAL "6")
+    target_link_libraries(konversation Qt6::Core5Compat)  # QTextCodec
+endif()
 
 if(TARGET KF5::GlobalAccel)
     target_link_libraries(konversation KF5::GlobalAccel)
