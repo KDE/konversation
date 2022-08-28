@@ -40,7 +40,7 @@ namespace Konversation
             * @param name Name of the property (matches to variable names)
             * @param value Value of the property
             */
-            void setProperty(const QString & name,const QString & value);
+            void setProperty(QStringView name,const QString & value);
 
             /**
             * Set all strings to empty.
@@ -74,7 +74,7 @@ namespace Konversation
             * @param name Name of the property (matches to variable names)
             * @param value Value of the property
             */
-            void setProperty(const QString & name,const QString & value);
+            void setProperty(QStringView name, const QString & value);
         };
 
         /**

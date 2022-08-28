@@ -39,7 +39,7 @@ namespace Konversation
             ready = false;
         }
 
-        void UPnPService::setProperty(const QString & name,const QString & value)
+        void UPnPService::setProperty(QStringView name, const QString & value)
         {
             if (name == QLatin1String("serviceType"))
                 servicetype = value;
@@ -70,7 +70,7 @@ namespace Konversation
 
         ///////////////////////////////////////
 
-        void UPnPDeviceDescription::setProperty(const QString & name,const QString & value)
+        void UPnPDeviceDescription::setProperty(QStringView name, const QString & value)
         {
             if (name == QLatin1String("friendlyName"))
                 friendlyName = value;
