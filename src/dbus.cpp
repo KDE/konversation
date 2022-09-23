@@ -204,7 +204,7 @@ void DBus::changeAwayStatus(bool away)
         // to be restarted completely (which means the user will only
         // get marked as "auto-away" if the configured idle-timeout has
         // expired).
-        konvApp->getAwayManager()->simulateUserActivity();
+        konvApp->getAwayManager()->resetUserActivity();
     }
 }
 

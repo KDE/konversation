@@ -42,13 +42,10 @@ class AwayManager : public QObject
         void setManagedIdentitiesUnaway();
 
         /**
-          * Simulates user activity. This means the implementation should ensure
-          * the idle indicators should be reset as if the user did some input
-          * himself.
           * This tells KIdleTime that the user was active. Then the idle-time
           * calculation is restarted.
           */
-        void simulateUserActivity();
+        void resetUserActivity();
 
         void setGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);

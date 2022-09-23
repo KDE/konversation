@@ -151,10 +151,9 @@ void AwayManager::setGlobalAway(bool away)
 void AwayManager::updateGlobalAwayAction(bool away)
 {
     // Regardless of any implementation: If the given parameter indicates
-    // that the user is not away we should simulate user activity to
-    // ensure that the away-status of the user is really reset.
+    // that the user is not away we should ensure that the away-status of the user is really reset.
     if (!away)
-        simulateUserActivity();
+        resumeFromIdle();
 
     Application* konvApp = Application::instance();
     auto* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action(QStringLiteral("toggle_away")));
@@ -270,10 +269,9 @@ void AwayManager::implementMarkIdentityAway(int identityId)
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
-void AwayManager::simulateUserActivity()
+void AwayManager::resetUserActivity()
 {
-    // Tell KIdleTime that it should reset the user's idle status.
-    KIdleTime::instance()->simulateUserActivity();
+   resumeFromIdle();
 }
 
 void AwayManager::resumeFromIdle()
