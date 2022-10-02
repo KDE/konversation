@@ -1,6 +1,5 @@
 CMakeLists.txt.user
 *.kdev4
-po
 /*build*/
 /.clang-format
 /compile_commands.json
