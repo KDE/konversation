@@ -1,0 +1,6051 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>sobrenom</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>sobrenoms</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>El manual del &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>29 de novembre de 2016</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>El &konversation; és un client d'&irc; fàcil d'emprar construït sobre les &Qt; i els &kf5-full;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>xat</keyword>
+<keyword
+>comunicacions</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Introducció</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>El &konversation; és un client d'&irc; fàcil d'emprar construït sobre les &Qt; i els &kf5-full;. Ofereix les següents característiques: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Implementació de SSL.</para
+></listitem>
+<listitem
+><para
+>Interfície d'usuari fàcil d'emprar amb pestanyes.</para
+></listitem>
+<listitem
+><para
+>Botons ràpids configurables per a les ordres d'ús freqüent.</para
+></listitem>
+<listitem
+><para
+>Reconnexió i tornar a entrar automàticament.</para
+></listitem>
+<listitem
+><para
+>Enviament i recepció DCC.</para
+></listitem>
+<listitem
+><para
+>Llista dels &i18n-Nickname; vigilats.</para
+></listitem>
+<listitem
+><para
+>Notificacions visuals i auditives per a una àmplia varietat d'esdeveniments, com missatges que contenen el vostre &i18n-nickname; o els &i18n-Nickname; a la vostra llista de vigilància quan es connectin o desconnectin. </para
+></listitem>
+<listitem
+><para
+>Ressaltat personalitzable dels missatges per &i18n-nickname; o patró d'expressió regular.</para
+></listitem>
+<listitem
+><para
+>Compleció del &i18n-nickname;.</para
+></listitem>
+<listitem
+><para
+>Captura i desa tots els &URL; que apareixen en els missatges.</para
+></listitem>
+<listitem
+><para
+>Visualització en pantalla dels missatges, fins i tot quan està minimitzat.</para
+></listitem>
+<listitem
+><para
+>Llista dels &i18n-Nickname; ignorats.</para
+></listitem>
+<listitem
+><para
+>Registre automàtic i gestió del registre.</para
+></listitem>
+<listitem
+><para
+>Marcat de les línies en els registres.</para
+></listitem>
+<listitem
+><para
+>Creació de scripts.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>El lloc web del &konversation; és <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Informació addicional com una PMF, consells i trucs la trobareu al <ulink url="https://userbase.kde.org/Konversation"
+>wiki del &konversation;</ulink
+>. </para>
+
+<para
+>Podeu contactar amb els desenvolupadors del &konversation; a través d'&irc; a <ulink url="irc://irc.libera.chat/konversation"
+>irc.libera.chat al canal #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>ÚS del &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Si no heu utilitzat &irc; abans...</title>
+
+<para
+>En poques paraules, &irc; és un protocol de xat, definit pels estàndards oficials d'internet, i és capaç de robar moltes hores de la vostra vida. Per a utilitzar &irc;, haureu de connectar a un servidor, i després unir-vos a un canal (equivalent a una sala de xat) o simplement participar en converses privades.</para>
+
+<para
+>Per a connectar amb un servidor i canal, obriu el &konversation;. Apareixerà la pantalla <guilabel
+>Llista de servidors</guilabel
+>.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Llista de servidors</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Llista de servidors</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>La llista de <guilabel
+>Xarxes</guilabel
+> &irc; configurades està aquí. Una xarxa &irc; és una col·lecció de servidors que cooperen. Només necessiteu connectar-vos a un dels servidors de la xarxa per a estar connectat amb la xarxa &irc; sencera. Un cop connectat, el &konversation; s'unirà automàticament als <guilabel
+>Canals</guilabel
+> mostrats. Quan s'inicia el &konversation; per primera vegada, la xarxa <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> i el canal <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> ja estan inclosos. Feu clic sobre una xarxa per a seleccionar-la.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Feu clic aquí per a definir una <guilabel
+>Xarxa</guilabel
+> nova, això inclou el servidor on connectar i els <guilabel
+>Canals</guilabel
+> als quals unir-se automàticament un cop connectat. Vegeu <link linkend="serverlist"
+>Definir noves xarxes, servidors i entrada automàtica als canals</link
+> per a obtenir més informació.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Feu clic aquí per a connectar-vos a la xarxa d'&irc; i al canal seleccionat.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>Quan feu clic al botó <guibutton
+>Connecta</guibutton
+>, la primera vegada s'obrirà el &konversation;, és possible que aparegui el següent missatge, dient-vos que la vostra <guilabel
+>identitat</guilabel
+> predeterminada no està configurada correctament.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Verificar les «Identitats»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Verificar les «Identitats»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>La primera vegada que obriu el &konversation;, aquest obtindrà informació sobre l'usuari actual des del sistema operatiu i omplirà la Identitat amb els valors predeterminats. Si la informació d'usuari del sistema operatiu no està completa, per exemple, no hi ha definit un nom complet, possiblement apareixerà el missatge anterior. Per a corregir aquest problema, feu clic a <guibutton
+>Edita identitat...</guibutton
+> i vegeu <link linkend="identity"
+>Establir la vostra identitat</link
+>.</para>
+</note>
+
+<para
+>Es mostrarà la pantalla <interface
+>principal</interface
+> mostrant els missatges enviats pel servidor al client. (Si el &konversation; no es connecta amb el servidor, vegeu <link linkend="faq"
+>Preguntes i respostes</link
+>). Quan els missatges del servidor hagin acabat de passar, el &konversation; s'unirà al canal o canals seleccionats. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Canal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Canal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Això es coneix com la <interface
+>línia d'entrada</interface
+>. Per a enviar un missatge a tots els membres del canal, escriviu el missatge aquí i premeu &Intro;. El vostre missatge, així com la resta de missatges, apareixen a la secció superior del canal. Cada missatge és precedit pel temps i el &i18n-nickname; de l'usuari.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Podeu unir-vos a servidors i canals addicionals. Cada pantalla de servidor, canal, llista de canals i altres es posen en una pestanya independent. Per a mostrar una llista dels canals disponibles, vegeu <link linkend="list-channels"
+>Llistar els canals disponibles</link
+>. Per a unir-vos a un canal, escriviu:<userinput
+><command
+>/join</command
+> <replaceable
+>#nom_canal</replaceable
+></userinput
+> a la línia d'entrada. (El coixinet <userinput
+>#</userinput
+> és requerit). També podeu escriure <userinput
+><command
+>/j</command
+></userinput
+> com abreujament de <userinput
+><command
+>/join</command
+></userinput
+>. Per a deixar un canal, només cal escriure <userinput
+><command
+>/part</command
+></userinput
+>. Per a alternar la pantalla a un servidor o canal diferent, feu clic sobre la pestanya corresponent. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Això s'anomena <interface
+>plafó de sobrenoms</interface
+>. Llista els &i18n-Nickname; de tots els usuaris que s'han unit al canal, inclòs el vostre.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Això és el bàsic, per a obtenir informació més detallada, seguiu llegint...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Establir la vostra identitat</title>
+
+<para
+>Abans de començar a utilitzar el &konversation; amb regularitat, haureu d'establir com se us identificarà a la xarxa.</para>
+
+<para
+>Feu clic a <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Identitats</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Identitats</guilabel
+>. També podeu mostrar la pantalla <guilabel
+>Identitats</guilabel
+> fent clic al botó <guibutton
+>Edita</guibutton
+> a la pantalla <guilabel
+>Edita la xarxa</guilabel
+> o <guilabel
+>Xarxa nova</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Identitats (pestanya «General»)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Identitats (pestanya «General»)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Feu clic aquí per a seleccionar la <guilabel
+>Identitat</guilabel
+> a editar.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Utilitzeu aquests botons: <guibutton
+>Afegeix</guibutton
+>, <guibutton
+>Duplica</guibutton
+>, <guibutton
+>Renomena</guibutton
+> o <guibutton
+>Elimina</guibutton
+> una <guilabel
+>Identitat</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Introduïu aquí el nom real. &irc; no us mantindrà ocult dels vostres amics o enemics. Cal tenir-ho present si intenteu portar-vos maliciosament. Un «nom real» fals pot ser una bona forma d'amagar el vostre gènere davant els pesats, però el vostre PC podria ser traçat, per això mai serà anònim de veritat.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Utilitzeu aquests botons: <guibutton
+>Afegeix</guibutton
+> o <guibutton
+>Elimina</guibutton
+> un &i18n-nickname;.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Aquesta és la llista de &i18n-Nickname;. Un &i18n-nickname; és el nom que els altres usuaris coneixeran. Podeu utilitzar qualsevol nom que desitgeu. El primer caràcter ha de ser una lletra. Els altres caràcters poden ser lletres, números o els caràcters especials <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>Atès que els &i18n-Nickname; han de ser únics a la xarxa d'&irc;, el nom desitjat podria ser rebutjat pel servidor perquè algú ja l'està utilitzant. Introduïu el &i18n-Nickname; alternatiu. Si la vostra primera opció és rebutjada pel servidor, el &konversation; provarà amb els &i18n-Nickname; alternatius. </para>
+
+<para
+>D'acord amb RFC 2812, la longitud màxima per al &i18n-nickname; és de 9 caràcters, però això és en realitat determinat pel servidor. Per a determinar el màxim que accepta un servidor, connecteu amb el servidor. A la pestanya <interface
+>Missatges del servidor:</interface
+>, cerqueu un missatge <computeroutput
+>[Support]</computeroutput
+>. Per exemple:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>El paràmetre <computeroutput
+>NICKLEN</computeroutput
+> especifica la longitud màxima del &i18n-nickname;. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Utilitzeu aquests botons per a canviar l'ordre dels &i18n-Nickname;. El &i18n-nickname; de la part superior és el que es tractarà en primer lloc, després el següent, i així successivament.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Si heu registrat el vostre &i18n-nickname; a la xarxa d'&irc;, introduïu el servei i contrasenya per a autenticar-lo. Quan el &konversation; connecta, enviarà automàticament <userinput
+><command
+>/msg</command
+> <replaceable
+>servei</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>contrasenya</replaceable
+></userinput
+> al servidor. Si no sabeu què és això, deixeu aquests quadres en blanc.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Feu clic a la pestanya <guilabel
+>Absent</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identitats (pestanya «Absent»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identitats (pestanya «Absent»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Introduïu un &i18n-nickname; que indiqui que esteu absent. Cada vegada que realitzeu una orde <userinput
+><command
+>/away </command
+><replaceable
+>msg</replaceable
+></userinput
+> en qualsevol canal al qual heu entrat amb aquesta <guilabel
+>Identitat</guilabel
+>, el &konversation; canviarà automàticament el vostre &i18n-nickname; per al <guilabel
+>Sobrenom d'absència</guilabel
+>. Els altres usuaris seran capaços de dir-vos que esteu absent de l'ordinador. Cada vegada que realitzeu una ordre <userinput
+><command
+>/away </command
+><replaceable
+>missatge</replaceable
+></userinput
+> en qualsevol canal on esteu absent, el &konversation; canviarà automàticament el &i18n-nickname; a l'original. Si no voleu canviar automàticament el vostre &i18n-nickname; en estar absent, deixeu-lo en blanc.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Si marqueu aquesta casella, quan realitzeu una ordre <userinput
+><command
+>/away</command
+></userinput
+>, apareixerà una línia horitzontal al canal, marcant el punt on comença la vostra absència. Aquesta línia horitzontal no serà visible per als altres usuaris de l'&irc;. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Si marqueu aquesta casella, el &konversation; enviarà automàticament l'<guilabel
+>Ordre d'absència</guilabel
+> a tots els canals als quals us heu unit amb aquesta <guilabel
+>Identitat</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> se substitueix pel <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+>. Sempre que realitzeu una ordre <userinput
+><command
+>/away</command
+></userinput
+>, es mostrarà l'<guilabel
+>Ordre de resposta</guilabel
+> a tots els canals als quals us heu unit amb aquesta <guilabel
+>Identitat</guilabel
+>.</para>
+
+<note
+><para
+>Els missatges d'absència sovint són considerats molestos pels altres usuaris. Utilitzeu aquesta opció amb cura, tenint en consideració els altres usuaris d'&irc;. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Feu clic a la pestanya <guilabel
+>Avançat</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identitats (pestanya «Avançat»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identitats (pestanya «Avançat»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Podeu introduir aquí una ordre que s'executarà abans de connectar amb el servidor. Si aquesta identitat s'utilitza per a més d'un servidor, l'ordre s'executarà a cada servidor.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Aquesta opció afecta com són codificats els caràcters que heu teclejat per a enviar-los al servidor. Això afecta com són mostrats els missatges. Quan obriu per primera vegada el &konversation;, ho rebrà automàticament des del sistema operatiu. Si sembla que teniu problemes en veure correctament els missatges d'altres usuaris, proveu canviant aquesta opció.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Quan us connecteu, molts servidors consultaran el vostre ordinador per a una resposta IDENT. Si el vostre ordinador no està executant un servidor IDENT, aquesta resposta serà enviada pel &konversation;. No es permeten espais. Se suggerirà el primer nom.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Quan deixeu aquest canal, aquest missatge s'enviarà al canal.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Quan sigueu expulsat d'un canal (normalment per un operador &irc;), aquest missatge serà enviat al canal.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Feu clic per a aplicar els vostres canvis. Per tal que tots els canvis tinguin efecte, haureu de desconnectar-vos del servidor i tornar a connectar. La manera més fàcil de fer-ho és sortir del &konversation; i tornar-lo a iniciar.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Definir noves xarxes, servidors i entrada automàtica als canals</title>
+
+<para
+>La pantalla <guilabel
+>Llista de servidors</guilabel
+> apareix quan s'obre el programa &konversation;. També apareix quan escolliu <menuchoice
+> <guisubmenu
+>Fitxer</guisubmenu
+> <guisubmenu
+>Llista de servidors</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>La pantalla <guilabel
+>Llista de servidors</guilabel
+></action
+> mostra les xarxes d'&irc; definides, llistades per grup. Una xarxa d'&irc; és un conjunt de servidors que cooperen. Quan connecteu a qualsevol servidor en una xarxa, tindreu accés a tots els canals de la xarxa. Exemples de xarxes &irc; són <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> i <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Llista de servidors</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Llista de servidors</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Les vostres xarxes definides es llisten aquí, juntament amb la <guilabel
+>Identitat</guilabel
+> utilitzada per a connectar-vos i els <guilabel
+>Canals</guilabel
+> als quals us unireu de forma automàtica quan us connecteu. Si heu especificat un grup per a les vostres xarxes, les xarxes apareixeran amb sagnia dins del grup. Feu clic sobre una xarxa per a seleccionar-la. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Utilitzeu aquests botons: <guibutton
+>Afegeix</guibutton
+> una xarxa nova, <guibutton
+>Edita</guibutton
+> o <guibutton
+>Suprimeix</guibutton
+> una xarxa ressaltada. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Feu clic en aquest botó per a connectar-vos a la <guilabel
+>Xarxa</guilabel
+> ressaltada i tancar la pantalla <guilabel
+>Llista de servidors</guilabel
+>. Si voleu, podeu ressaltar més d'una xarxa, el qual us connectarà a totes les xarxes ressaltades.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>En fer clic a aquest botó no descartaran els canvis realitzats. Simplement voldrà dir que no voleu connectar-vos a cap xarxa en aquest moment.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>Quan feu clic sobre el botó <guilabel
+>Nova</guilabel
+>, apareixerà la finestra <guilabel
+>Xarxa nova</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Xarxa nova</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Xarxa nova</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Introduïu aquí el <guilabel
+>Nom de la xarxa</guilabel
+>. Podeu crear tantes entrades com vulgueu a la pantalla <guilabel
+>Llista de servidors</guilabel
+> dins de la mateixa <guilabel
+>Xarxa</guilabel
+> que empreu.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Escolliu una <guilabel
+>Identitat</guilabel
+> que existeixi o feu clic al botó <guibutton
+>Edita</guibutton
+> per a afegir una Identitat nova o editar-ne una d'existent. La <guilabel
+>Identitat</guilabel
+> us identificarà i determinarà el vostre &i18n-nickname; quan connecteu a la xarxa.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Opcional. Aquesta ordre s'envia al servidor després de la connexió. Exemple: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Aquest exemple és per a la xarxa Libera, la qual requereix que els usuaris registrin el seu &i18n-nickname; amb una contrasenya i usuari en connectar. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> és la contrasenya per al &i18n-nickname; donat en la <guilabel
+>Identitat</guilabel
+>. Podeu introduir més d'una ordre separant-les amb punt i coma.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Marqueu aquesta opció si voleu que el &konversation; es connecti automàticament a aquesta xarxa en ser engegat.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Aquesta és la llista de <guilabel
+>Servidors</guilabel
+> &irc; de la xarxa. En connectar-se amb una xarxa, el &konversation; intentarà connectar-se amb el primer servidor, si falla amb el segon, després amb el tercer, &etc; Com a mínim s'ha d'especificar un servidor. Feu clic sobre un servidor per a ressaltar-lo.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Utilitzeu aquests botons: <guibutton
+>Afegeix</guibutton
+> un servidor, <guibutton
+>Edita</guibutton
+> un servidor ressaltat o <guibutton
+>Elimina</guibutton
+> un servidor ressaltat. També podeu ajustar l'ordre de la llista de servidors i per tant l'ordre dels intents de connexió.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Opcional. Aquesta és una llista de canals que podeu afegir automàticament una vegada el &konversation; s'hagi connectat al servidor. Podeu deixar-ho en blanc si no voleu que se us afegeixi automàticament als canals.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Utilitzeu aquests botons: <guibutton
+>Afegeix</guibutton
+> un canal, <guibutton
+>Edita</guibutton
+> o <guibutton
+>Suprimeix</guibutton
+> un canal ressaltat. També podeu canviar l'ordre dels canals als quals us heu unit. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Eviteu barrejar servidors de diferents xarxes d'&irc; en la mateixa <guilabel
+>Xarxa</guilabel
+>. Eviteu introduir el mateix servidor en dues xarxes diferents. En cas contrari, <link linkend="nicksonline"
+>la vigilància dels &i18n-Nickname; connectats</link
+> no funcionarà correctament.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Quan feu clic sobre el botó <guibutton
+>Afegeix</guibutton
+>, apareixerà el marc <guilabel
+>Servidors</guilabel
+>, apareixerà la pantalla <guilabel
+>Afegeix un servidor</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Afegint un servidor</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Afegint un servidor</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>El nom o adreça IP del servidor, irchelp.org manté una <ulink url="https://www.irchelp.org/networks/"
+>llista</ulink
+> de servidors.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Introduïu el nombre del port per a connectar-se amb el servidor. Per a la majoria de servidors és <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Si el servidor requereix una contrasenya per a connectar, introduïu-la aquí, en cas contrari deixeu-la en blanc.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Marqueu aquesta opció si voleu utilitzar el protocol Secure Socket Layer (SSL) per a comunicar-vos amb el servidor. Això protegeix la privadesa de les comunicacions entre el vostre ordinador i el servidor d'&irc;. El servidor ha de poder funcionar amb SSL perquè això sigui possible. En la majoria de casos, si el servidor no funciona amb SSL, la connexió fallarà.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Quan feu clic sobre el botó <guibutton
+>Afegeix</guibutton
+>, apareixerà el marc <guilabel
+>Canals d'entrada automàtica</guilabel
+>, apareixerà la pantalla <guilabel
+>Afegeix un canal</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Afegint un canal</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Afegint un canal</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Introduïu el nom del canal. Cal no oblidar el coixinet <userinput
+><replaceable
+>#</replaceable
+></userinput
+> al començament. Si el canal requereix una contrasenya per a poder participar, introduïu-la, en cas contrari deixeu-la en blanc. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Llistar els canals disponibles</title>
+
+<para
+>Per a mostrar una llista de canals disponibles, escolliu <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+> <guisubmenu
+>Llista de canals</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Després d'una pantalla d'avís, es crearà una pestanya nova anomenada <guilabel
+>Llista de canals</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pestanya «Llista de canals».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pestanya «Llista de canals».</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Introduïu una cadena de filtratge aquí.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Aquí podeu limitar la llista de canals a mostrar als que continguin un nombre mínim o màxim d'usuaris. Escollir <guilabel
+>Sense límit</guilabel
+> inhabilita el criteri respectiu.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Feu clic aquí per a obtenir la llista de canals des del servidor i aplicar el filtratge.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>La llista filtrada de canals apareixerà aquí. Cal tenir en compte que si no utilitzeu expressions regulars, el &konversation; llistarà qualsevol canal on el nom contingui la cadena de filtratge que heu introduït. El nom del canal no té per què començar amb la cadena introduïda.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Seleccioneu el canal al qual voleu unir-vos fent clic. Feu clic dret sobre el canal per a obtenir una llista de totes les adreces web esmentades en el tema del canal.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Per a unir-vos al canal, feu clic aquí. Es crearà una pestanya nova per al canal.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>A vegades els servidors contenen canals «secrets». Aquests canals no apareixen a la <guilabel
+>Llista de canals</guilabel
+>. Podeu unir-vos a aquests canals si coneixeu el seu nom. En qualsevol <interface
+>línia d'entrada</interface
+>, escriviu: <userinput
+><command
+>/join</command
+> <replaceable
+>#nom_canal</replaceable
+></userinput
+>. (El coixinet <userinput
+>#</userinput
+> és necessari). Es crearà una pestanya nova per al canal. Si us uniu a un canal i el plafó de sobrenoms només llista el vostre &i18n-nickname;, això voldrà dir que el canal no existia abans. El servidor ha creat el canal i en sou l'operador. En aquest cas, és probable que vulgueu tancar el canal escrivint: <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Un recorregut per la pantalla principal</title>
+
+<para
+>Aprendrem més sobre la pantalla <interface
+>principal</interface
+>. A sota es mostra la pantalla amb una pestanya de canal seleccionada.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla principal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla principal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Això es coneix com la <interface
+>línia d'entrada</interface
+>. Només apareix quan la pestanya actual és un canal. Per a enviar un missatge a tots els membres del canal, escriviu el missatge aquí i premeu &Intro;. El vostre missatge, així com la resta de missatges, apareixen a la secció superior del canal. Cada missatge és precedit pel temps i el &i18n-nickname; de l'usuari.</para>
+
+ <para
+>També podeu enganxar text des del porta-retalls. Si el text enganxat té més d'una línia (línia nova), apareixerà un diàleg. Editeu el text segons desitgeu i feu clic a <guibutton
+>D'acord</guibutton
+>. </para>
+
+ <para
+>Si el text enganxat és més de 256 caràcters, o conté més d'una línia, apareixerà un missatge d'avís per a indicar que les grans publicacions poden causar un restabliment de la connexió i inundacions de dades. Encara podreu procedir amb l'enganxat, però fer-ho és una mala idea, ja que les inundacions de dades molesten als altres usuaris del canal, o podríeu ser desconnectat del servidor. És millor enviar el missatge en fragments més curts.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>Una convenció que s'utilitza en molts canals ha de precedir els missatges dirigits a un usuari amb el seu &i18n-nickname;. El &konversation; proporciona una característica còmoda de compleció del &i18n-nickname;. Comenceu a escriure el &i18n-nickname; de l'usuari, després premeu la tecla &Tab;. El &konversation; completarà la resta del &i18n-nickname; de l'usuari seguit de dos punts. Per a personalitzar la característica de compleció, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Comportament</guilabel
+>, feu clic a <guilabel
+>General</guilabel
+> i seleccioneu un <guilabel
+>Mode de compleció</guilabel
+>. </para>
+
+ <para
+>També podeu introduir una ordre d'&irc; aquí escrivint primer <userinput
+><command
+>/</command
+></userinput
+> seguit d'una ordre d'&irc; vàlida. Vegeu <link linkend="irc-cmds"
+>Ordres de l'&irc; emprades més freqüentment</link
+>. En alguns servidors, podeu escriure <userinput
+><command
+>/help</command
+></userinput
+> per a obtenir una llista de les ordres disponibles o escriure <userinput
+><command
+>/help</command
+><replaceable
+>ordre</replaceable
+></userinput
+> per a obtenir ajuda sobre una ordre específica. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Podeu unir-vos a servidors i canals addicionals. Cada servidor i cada canal es posa en una pestanya independent. Per a mostrar una llista dels canals disponibles, vegeu <link linkend="list-channels"
+>Llistar els canals disponibles</link
+>. Per a unir-vos a un canal, escriviu: <userinput
+><command
+>/join</command
+> <replaceable
+>#nom_canal</replaceable
+></userinput
+> en la línia d'entrada. (El coixinet <userinput
+>#</userinput
+> és necessari). Per a deixar un canal, només heu d'escriure <userinput
+><command
+>/part</command
+></userinput
+>. Aquí també apareixen pestanyes si obriu una <link linkend="list-channels"
+>llista de canals</link
+>, participeu en una <link linkend="query"
+>conversa privada (consulta)</link
+>, obriu el <link linkend="urlcatcher"
+>capturador d'&URL;</link
+> o obriu un o més <guilabel
+>Konsole</guilabel
+>. Per a alternar la pantalla a una pantalla diferent, feu clic sobre la pestanya corresponent o feu servir la roda del ratolí per a desplaçar-vos per les pestanyes. </para>
+
+<para
+>Per a establir altres opcions per a les pestanyes, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Interfície</guilabel
+> o <guilabel
+>Notificacions</guilabel
+> i feu clic a <guilabel
+>Pestanyes</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Aquests &led; parpellejaran quan hi hagi quelcom que no veieu en aquesta pestanya. El &led; parpellejarà lentament quan els únics missatges que no es veuen siguin <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> o canvis del &i18n-nickname;. El parpelleig és més ràpid si hi ha missatges normals sense veure. Els colors són els següents: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Canal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Missatges del servidor</interface
+>, <link linkend="list-channels"
+>Llista de canals</link
+> o <link linkend="urlcatcher"
+>Capturador d'&URL;</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konsole</guilabel
+> o <link linkend="dcc"
+>Estat DCC</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Missatge privat (Consulta)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Feu clic aquí per a tancar la pestanya actual. Tancar una pestanya de <interface
+>canal</interface
+> deixarà el canal. Tancar una pestanya de <interface
+>missatges del servidor</interface
+> deixarà tots els canals en els quals participeu, tancarà totes les converses obertes al servidor i desconnectarà d'aquest servidor.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Feu clic en aquest botó per a canviar el vostre &i18n-nickname;. Només apareix quan la pestanya actual és un canal. Per a ocultar aquest botó, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Interfície</guilabel
+>, feu clic a <guilabel
+>Finestra de xat</guilabel
+>, i desmarqueu la casella <guilabel
+>Mostra un quadre per a canviar el sobrenom</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>El tema del canal es mostra aquí. Manteniu el ratolí sobre el tema per a veure els temes llargs. Podeu canviar el tema fent clic al botó a l'esquerra del tema. Per a amagar els temes dels canals, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Interfície</guilabel
+>, feu clic a <guilabel
+>Finestra de xat</guilabel
+> i desmarqueu la casella <guilabel
+>Mostra el tema del canal</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Aquests botons mostren l'estat actual dels modes del canal. El botó estarà inactiu si el mode està activat. Si disposeu dels privilegis adequats, també podreu canviar els modes del canal fent clic sobre aquests botons, o feu clic al botó a l'esquerra del tema. Per a ocultar els botons de mode del canal, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Interfície</guilabel
+>, feu clic a <guilabel
+>Finestra de xat</guilabel
+> i desmarqueu la casella <guilabel
+>Mostra els botons de mode del canal</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Això s'anomena <interface
+>plafó de sobrenoms</interface
+>. Es mostra sempre que la pestanya actual sigui un canal. Llista els &i18n-Nickname; de tots els usuaris que s'han unit al canal, inclòs el vostre. Manteniu el punter del ratolí sobre un &i18n-nickname; per a mostrar informació addicional sobre l'usuari. Podeu canviar la visualització de les icones al costat de cada &i18n-nickname; canviant el tema d'icones per als &i18n-Nickname;. Per a més informació, vegeu <link linkend="nickthemes"
+>Configurar els temes del &i18n-nickname;</link
+>. El tema predeterminat, com es mostra a la pantalla de dalt, utilitza les següents icones: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> usuari normal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> usuari amb veu (L'usuari pot parlar en un canal moderat). </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> semioperador del canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> operador del canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> propietari del canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> administrador del canal </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>A més a més, si un usuari no es troba absent, es dibuixa un petit rellotge a la cantonada de la icona. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Feu clic amb el &BDR; sobre qualsevol &i18n-nickname; per a mostrar un menú contextual de les operacions que podeu realitzar amb aquest &i18n-nickname;. Per exemple, podeu <link linkend="dcc"
+>enviar un fitxer</link
+> al &i18n-nickname;. </para>
+
+<para
+>Per a ocultar el <interface
+>plafó de sobrenoms</interface
+>, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Mostra la llista de sobrenoms</guisubmenu
+> </menuchoice
+> des del menú principal. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Aquests s'anomenen <interface
+>botons ràpids</interface
+>. De manera predeterminada, no es mostren. Per a visualitzar-los, vegeu <link linkend="quick-buttons"
+>Configurar els botons ràpids</link
+>. Podeu personalitzar les seves definicions a qualsevol ordre que vulgueu.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Podeu controlar com es mostren els missatges en el desplaçament de missatges a les pestanyes de canal i converses. Per exemple, podeu canviar el color dels missatges, reproduir un so quan es rebi un missatge que conté una cadena o respondre automàticament als missatges. Per a obtenir més informació, vegeu <link linkend="highlighting"
+>Ressaltar els missatges</link
+>. </para>
+</note>
+
+<note>
+<para
+>Els noms dels canals de vegades comencen amb <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> o <userinput
+>!</userinput
+>. El primer caràcter d'un nom de canal determina el tipus de canal (RFC 2811) com segueix: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> - Canals normals. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> - Canals normals. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> - Local. Canals als quals només us podeu unir des del mateix servidor que allotja el canal. A tots els altres canals us podeu unir des de qualsevol servidor a la xarxa. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> - Els canals que no implementen els modes del canal. Això vol dir que tots els modes estan desactivats, amb l'excepció de l'indicador de canal «t» que està establert. </para
+></listitem
+> </itemizedlist
+> Els noms dels canals són de fins a 50 caràcters de longitud i poden contenir qualsevol caràcter excepte espai, coma i Ctrl-G (^G o ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Connectar ràpidament</title>
+
+<para
+>A vegades voleu connectar a un servidor sense passar per la molèstia de crear un nou servidor a la <link linkend="serverlist"
+>llista de servidors</link
+>. </para>
+
+<para
+>Escolliu <menuchoice
+> <guisubmenu
+>Fitxer</guisubmenu
+> <guisubmenu
+>Connexió ràpida</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Connexió ràpida</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Connexió ràpida».</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>La pantalla «Connexió ràpida»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Introduïu l'adreça del servidor al quadre <guilabel
+>Servidor</guilabel
+>, el &i18n-nickname; que vulgueu al quadre <guilabel
+>Sobrenom</guilabel
+> i feu clic al botó <guibutton
+>Connecta</guibutton
+>. Quan el &konversation; hagi connectat al servidor, escriviu l'ordre <userinput
+><command
+>/join</command
+> <replaceable
+>#nom_canal</replaceable
+></userinput
+> per a unir-vos a un canal. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Ordres de l'&irc; emprades més freqüentment</title>
+
+<para
+>La següent és una breu llista de les ordres de l'&irc; d'ús freqüent. Vegeu la <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> per a obtenir una llista completa de totes les ordres, o visiteu <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Per a obtenir una llista de les ordres tractades especialment pel &konversation;, vegeu <link linkend="konvi-cmds"
+>Ordres del &konversation;</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Llista les ordres disponibles al servidor actual. No està implementat a tots els servidors.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>ordre</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Proporciona ajuda per a l'<userinput
+><replaceable
+>ordre</replaceable
+></userinput
+>. No està implementada a tots els servidors.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#canal</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Uneix al <userinput
+><replaceable
+>#canal</replaceable
+></userinput
+>. Si el canal no existeix, es crearà i en sereu l'operador.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Deixa el canal actual i tanca la pestanya del <interface
+>canal</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#canal</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Deixa el <userinput
+><replaceable
+>#canal</replaceable
+></userinput
+> i tanca la pestanya corresponent al <interface
+>canal</interface
+>. Sinònim de <userinput
+><command
+>/leave</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> al canal precedit pel vostre &i18n-nickname;. Per exemple, si el vostre &i18n-nickname; era <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, en escriure <userinput
+><replaceable
+>/me Cervesa en una tassa de te.</replaceable
+></userinput
+> es mostrarà el missatge <interface
+>Cervesa en una tassa de te.</interface
+> Llevat que hagin filtrat contra aquest tipus de missatges, el veuran tots els usuaris. Aquest tipus de missatges s'utilitza normalment per a transmetre informació no verbal, com el seu vostre estat emocional actual, o el que esteu fent físicament. Si deixeu el vostre lloc de treball per un temps curt, utilitzeu l'ordre <userinput
+><command
+>/away</command
+></userinput
+> en el seu lloc.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Si algú tracta d'enviar-vos un missatge privat o convidar-vos a un canal, li dirà que esteu absent del vostre lloc de treball amb <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Cancel·la una ordre <userinput
+><command
+>/away </command
+> <replaceable
+>missatge</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Crea una pestanya nova amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> de l'usuari per a una conversa privada, comunament conegut a l'&irc; com <link linkend="query"
+>consulta (query)</link
+>. Tot l'escrit aquí només serà visible per a vós i la vostra parella de consulta.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>sobrenom</replaceable
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Només veurà el missatge aquest <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Utilitzeu <userinput
+><command
+>/query</command
+></userinput
+> per a converses llargues.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Convida a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> a unir-se a un canal. Aquesta ordre és especialment útil si el canal és només per a convidats.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Converses privades (consultes)</title>
+
+<para
+>Una conversa privada és aquella que només podeu veure vosaltres i una altra persona. Les converses privades s'anomenen «consultes» al &konversation;. Per a iniciar una conversa privada, escriviu el tipus <userinput
+><command
+>/query </command
+><replaceable
+>sobrenom</replaceable
+></userinput
+> en qualsevol línia d'entrada, on <replaceable
+>sobrenom</replaceable
+> és el &i18n-nickname; de la persona amb la qual voleu parlar. També podeu fer clic amb el &BDR; sobre el &i18n-nickname; de la persona en el <interface
+>plafó de sobrenoms</interface
+> i escolliu <menuchoice
+> <guisubmenu
+>Obre una conversa</guisubmenu
+> </menuchoice
+>. <action
+>Es crearà una pestanya nova,</action
+> anunciant que esteu enviant un missatge. </para>
+
+<para
+>Les consultes són com canals, a excepció que només hi poden participar vosaltres i l'altra persona.</para>
+
+<para
+>Per a deixar la consulta, només cal tancar la pestanya. Cal tenir en compte però, que si l'altra persona us envia un altre missatge en la consulta, la pestanya s'obrirà de nou.</para>
+
+<para
+>Per a sortir de totes les consultes, escolliu <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+> <guisubmenu
+>Tanca totes les converses obertes</guisubmenu
+> </menuchoice
+> al menú principal o premeu la tecla <keycap
+>F11</keycap
+>.</para>
+
+<para
+>Quan algú inicia una consulta amb vosaltres, el &konversation; crea una pestanya nova amb el seu &i18n-nickname;. Si no voleu parlar amb aquesta persona, tanqueu la pestanya. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Configurar les notificacions</title>
+
+<para
+>Les <guilabel
+>Notificacions</guilabel
+> són accions que el &konversation; durà a terme sempre que es produeixi un esdeveniment. Suposeu que esteu executant el &konversation;, però minimitzat o ocult al darrere d'altres finestres a l'escriptori. Si algú vol comunicar o el vostre amic s'uneix a un canal, voleu que se us avisi. Les notificacions faran això. </para>
+
+<para
+>Per a configurar les notificacions, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura les notificacions</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura les notificacions</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Configuració de les notificacions».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla «Configuració de les notificacions»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Feu clic aquí per a seleccionar un esdeveniment.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Marqueu els tipus de notificacions que us agradaria que succeeixin quan es produeixi l'esdeveniment. (<guilabel
+>Marca l'entrada de la barra de tasques</guilabel
+> fa que l'entrada a la barra de tasques parpellegi quan es produeixi l'esdeveniment).</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Repetiu seleccionant un altre esdeveniment i marqueu les notificacions desitjades. Una vegada configurades totes les notificacions que desitgeu, feu clic al botó <guibutton
+>D'acord</guibutton
+>.</para>
+
+<para
+>Un cop establertes les vostres notificacions, podeu habilitar o inhabilitar totes les notificacions utilitzant <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+> <guisubmenu
+>Habilita les notificacions</guisubmenu
+> </menuchoice
+> al menú principal. </para>
+
+<tip
+><para
+>També us podeu alertar quan algú esmenta el vostre &i18n-nickname; en un missatge utilitzant la <link linkend="highlighting"
+>característica de ressaltat</link
+> del &konversation;.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Veure qui està connectat</title>
+
+<para
+>El &konversation; us mantindrà informat de quan els vostres amics estan connectats a la xarxa d'&irc;. </para>
+
+<para
+>La xarxa d'&irc; serà enregistrada atès que els &i18n-Nickname; són únics per a la xarxa d'&irc;. El &i18n-nickname; a dues xarxes d'&irc; diferents no són necessàriament la mateixa persona, però el mateix &i18n-nickname; a dos servidors diferents dins de la mateixa xarxa d'&irc; en general són la mateixa persona.</para>
+
+<note
+><para
+>És per això que és important utilitzar la mateixa <guilabel
+>Xarxa</guilabel
+> per a tots els servidors a la mateixa xarxa d'&irc;, vegeu <link linkend="serverlist"
+>Definir noves xarxes, servidors i entrada automàtica als canals</link
+>.</para
+></note>
+
+<para
+>Per a activar la característica de vigilar un &i18n-nickname;, escolliu <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+> <guisubmenu
+>Sobrenoms vigilats</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Sobrenoms vigilats.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Sobrenoms vigilats</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>Els &i18n-Nickname; a la vostra llista de vigilància es llisten aquí. Es llisten segons la xarxa &irc; associada. Si no apareix cap &i18n-nickname;, és que tampoc no s'ha especificat cap &i18n-nickname; a vigilar, o que us cal activar la característica per a la vigilància dels &i18n-Nickname; (vegeu més endavant). Desplegueu cada &i18n-nickname; connectat per a veure una llista dels canals on dit &i18n-nickname; s'ha inscrit. Les icones al costat de cada canal són les mateixes que les icones que apareixen al <interface
+>plafó de sobrenoms</interface
+> a les pantalles dels <link linkend="channel-screen-tour"
+>canals</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>La informació coneguda del &i18n-nickname; es mostra aquí. Quan es mostra per primera vegada la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>, la informació serà escassa. Cada 20 segons s'envia automàticament una ordre <userinput
+><command
+>WHOIS</command
+></userinput
+> al servidor per a sol·licitar informació per als &i18n-Nickname; dels que no té cap informació. Això continua fins que tingueu informació sobre tots els &i18n-Nickname;. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Per a afegir un &i18n-nickname; a vigilar, obriu el menú contextual de la <guilabel
+>Llista de sobrenoms</guilabel
+> fent clic amb el &BDR; sobre un &i18n-nickname; i seleccioneu <guilabel
+>Afegeix als sobrenoms vigilats</guilabel
+>. Si voleu afegir diversos &i18n-Nickname; escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Notificacions</guilabel
+> i feu clic a <guilabel
+>Sobrenoms vigilats</guilabel
+>. Apareixerà la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Sobrenoms vigilats</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Sobrenoms vigilats</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Marqueu aquesta casella per a activar la característica vigilant del &i18n-Nickname;.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Si voleu que la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+> es mostri automàticament quan obriu el &konversation;, marqueu aquesta casella.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>A la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+> de dalt, podeu fer doble clic sobre qualsevol &i18n-nickname; i aquesta ordre serà enviada al servidor. <userinput
+><command
+>%u</command
+></userinput
+> serà substituït pel &i18n-nickname;. El <userinput
+><command
+>%n</command
+></userinput
+> és requerit al final de l'ordre.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>La característica <guilabel
+>Sobrenoms vigilats</guilabel
+> treballa sol·licitant periòdicament informació al servidor. Aquest quadre estableix la freqüència amb què es produeix. Eviteu els nombres inferiors a 20 segons, ja que suposa una càrrega excessiva al servidor.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Feu clic al botó <guibutton
+>D'acord</guibutton
+> una vegada acabeu d'afegir o eliminar &i18n-Nickname;.</para>
+
+<para
+><emphasis
+>Nota: </emphasis
+>Cada vegada que es mostra la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>, passarà un temps abans que es visualitzi cap &i18n-nickname;, ja que el &konversation; ha de sondejar el servidor. Normalment, deixarà funcionant la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>. </para>
+
+<para
+>El &konversation; també mostra un missatge en tots els <link linkend="channel-screen-tour"
+>canals</link
+> cada vegada que un usuari de la llista de <guilabel
+>Sobrenoms vigilats</guilabel
+> es connecta o desconnecta del servidor. El missatge s'assembla al següent: </para>
+
+<para
+><computeroutput
+>[17:52] [Notificació] «psn» està connectat (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Ressaltar els missatges</title>
+
+<para
+>Podeu controlar com es mostren els missatges a les pantalles dels canals i de conversa.</para>
+
+<para
+>Per a activar la característica de ressaltat, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Ressaltat».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla «Ressaltat»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Feu clic aquí per a seleccionar la pantalla <guilabel
+>Ressaltat</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Feu clic aquí per a afegir un element nou a la <guilabel
+>Llista de ressaltat</guilabel
+>. Quan se selecciona un element de la llista, el podreu editar en el plafó inferior.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Introduïu aquí un patró de cadena. Qualsevol missatge rebut que coincideixi amb aquest patró, en qualsevol part del missatge, activarà el ressaltat del missatge. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Si es troba el patró en un missatge, es mostrarà el missatge sencer en el color que seleccioneu aquí.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>Si ho voleu, el &konversation; reproduirà un so quan el patró coincideixi. Feu clic al botó per a escollir un fitxer d'àudio a reproduir. Feu clic al botó de prova per a escoltar el so.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Si voleu que el &konversation; enviï automàticament un missatge de resposta quan el patró coincideixi, introduïu aquí el missatge. Utilitzeu aquesta característica amb precaució, ja que podeu molestar als usuaris de l'&irc; amb massa xerrameca si no teniu cura. També podeu introduir ordres de l'&irc; o del &konversation;.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Si heu configurat sons per a qualsevol dels vostres ressaltats, els podreu inhabilitar tots desmarcant aquesta casella.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Aquest ressaltat només se cercarà en les finestres de xat llistades aquí pel seu nom, o en totes les finestres de xat i es deixa el camp buit. Si hi ha diversos de diversos noms, s'han de separar per comes.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Si marqueu aquesta casella, cada vegada que algú esmenti el vostre &i18n-nickname; en un missatge, es mostrarà al costat dret el missatge en el color que escolliu.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Normalment, el ressaltat no s'aplica als missatges que escriviu. Si voleu ressaltar els missatges que escriviu, marqueu aquesta casella i escolliu un color a la part dreta.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Configurar la visualització en pantalla (&osd;)</title>
+
+<para
+>La visualització en pantalla (<acronym
+>On Screen Display</acronym
+> -&osd;-) és una característica única del &konversation;. Amb l'&osd; activada, els missatges del canal apareixeran a la pantalla de l'escriptori, fins i tot si es minimitza el &konversation;. Heus aquí un exemple de l'&osd; en l'acció. El missatge a la part superior esquerra de la pantalla és del &konversation;, el qual s'executa minimitzat a la safata del sistema.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Exemple de «Visualització en pantalla»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Exemple de «Visualització en pantalla»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Per a activar l'&osd;, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Visualització en pantalla».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla «Visualització en pantalla»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Feu clic aquí per a desplegar l'element <guilabel
+>Notificacions</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Feu clic aquí per a seleccionar la pantalla <guilabel
+>Visualització en pantalla</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Marqueu aquesta casella per a activar l'&osd;.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Feu clic en aquest botó per a escollir un tipus de lletra per a l'&osd;. (<emphasis
+>Nota: </emphasis
+>No tots els tipus de lletra funcionen. Es coneix que «Luxi Sans 22» i «Impact 22» sí que funcionen).</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Marqueu les caselles per a seleccionar els tipus de missatges que apareixeran a la pantalla.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Arrossegueu la <interface
+>vista prèvia de l'&osd;</interface
+> cap a la posició desitjada, i després feu clic al botó <guibutton
+>Aplica</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Enviar missatges en colors</title>
+
+<para
+>Podeu afegir color als missatges que envieu a qualsevol canal. En la <interface
+>línia d'entrada</interface
+> de qualsevol canal, comenceu a escriure el missatge. Feu clic al <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>botó Insereix color &irc;</phrase
+> </textobject
+> </inlinemediaobject
+> el botó <guibutton
+>Color d'&irc;</guibutton
+> o escolliu <menuchoice
+> <guisubmenu
+>Insert</guisubmenu
+> <guisubmenu
+>Color d'&irc;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Selector de color d'&irc;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Selector de color d'&irc;».</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>La pantalla «Selector de color d'&irc;»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Escolliu un color i feu clic a <guibutton
+>D'acord</guibutton
+>. Seguiu escrivint el vostre missatge a la <interface
+>línia d'entrada</interface
+>. Per a canviar el color de nou, feu clic al botó <guibutton
+>Color d'&irc;</guibutton
+>. Escolliu un color diferent i feu clic a <guibutton
+>D'acord</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Configurar els temes del &i18n-nickname;</title>
+
+<para
+>Podeu canviar les icones que apareixen al costat dels &i18n-Nickname; al <interface
+>plafó de sobrenoms</interface
+> de les pestanyes de canal. Per a canviar el tema del &i18n-nickname;, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+><guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura</guilabel
+>.</action
+> Feu clic a <guilabel
+>Interfície</guilabel
+> per a desplegar-la, i després feu clic a <guilabel
+>Temes de la llista de sobrenoms</guilabel
+> per a visualitzar la pantalla <guilabel
+>Temes de la llista de sobrenoms</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Temes».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla «Temes»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Feu clic aquí per a seleccionar la pantalla <guilabel
+>Temes de la llista de sobrenoms</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Seleccioneu un tema.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Aquí es mostren icones d'exemple del tema escollit.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Si heu descarregat un tema de sobrenom d'un altre lloc, feu clic per a instal·lar-lo.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Configurar els botons ràpids</title>
+
+<para
+>Podeu habilitar una característica a mostrar <interface
+>botons ràpids</interface
+> sobre la pantalla <link linkend="channel-screen-tour"
+>principal</link
+>, apareixeran vuit <interface
+>botons ràpids</interface
+>. Per a mostrar els botons ràpids, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura</guilabel
+>.</action
+> Feu clic a <guilabel
+>Interfície</guilabel
+> per a desplegar-la, i després feu clic a <guilabel
+>Finestra de xat</guilabel
+>. Marqueu la casella <guilabel
+>Mostra els botons ràpids</guilabel
+> i feu clic a <guibutton
+>D'acord</guibutton
+>. </para>
+
+<para
+>Els botons es poden personalitzar al vostre gust per a realitzar ordres de l'&irc; d'ús freqüent. Per a personalitzar els <interface
+>botons ràpids</interface
+>, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla de <guilabel
+>Configura</guilabel
+>.</action
+> Feu clic a <guilabel
+>Interfície</guilabel
+> per a desplegar-la, i després feu clic a <guilabel
+>Botons ràpids</guilabel
+> per a mostrar la pantalla <guilabel
+>Botons ràpids</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pantalla «Botons ràpids»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>La pantalla «Botons ràpids»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>De manera predeterminada hi ha 8 <interface
+>botons ràpids</interface
+>. Feu clic sobre una entrada per a canviar-la o utilitzar els botons situats a la part dreta de la llista per a afegir o treure <interface
+>botons ràpids</interface
+>. La columna <guilabel
+>Nom del botó</guilabel
+> és el nom que apareixerà sobre el botó a la pantalla <link linkend="channel-screen-tour"
+>principal</link
+>. Manteniu curts els noms. La columna <guilabel
+>Botó d'acció</guilabel
+> és l'acció que es realitzarà en fer clic al <interface
+>botó ràpid</interface
+>. Sobre la pantalla es donen consells per a la creació d'accions. </para>
+
+<para
+>Feu clic a <guibutton
+>D'acord</guibutton
+> per a completar els canvis. </para>
+
+<para
+>Exemple:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Nom del botó</guilabel
+>: <userinput
+><replaceable
+>Missatge</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Botó d'acció</guilabel
+>: <userinput
+><replaceable
+>Missatge %u </replaceable
+></userinput
+> (hi ha un espai després de <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Per a utilitzar aquest botó a la pantalla <link linkend="channel-screen-tour"
+>principal</link
+>, feu clic sobre un &i18n-nickname; al <interface
+>plafó de sobrenoms</interface
+> i després feu clic al botó. Apareixerà <computeroutput
+>/MSG </computeroutput
+> a la <interface
+>línia d'entrada</interface
+> seguida pel &i18n-nickname; escollit. Escriviu el missatge que voleu enviar a aquesta persona i premeu la tecla &Intro;. El missatge serà enviat a l'usuari. Només aquest usuari veurà el missatge. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Enviar i rebre fitxers</title>
+
+<para
+>Podeu enviar i rebre fitxers a través d'&irc; a altres usuaris connectats. </para>
+
+<para>
+<emphasis
+>AVÍS: Mai obriu un fitxer que algú us enviï llevat que es tracti d'una font de confiança. Podria tractar-se d'un virus.</emphasis>
+</para>
+
+<para
+>Per a enviar un fitxer a algú en un canal, feu clic amb el &BDR; sobre el &i18n-nickname; de la persona en el <interface
+>plafó de sobrenoms</interface
+> de la pantalla <link linkend="channel-screen-tour"
+>principal</link
+>. Escolliu <menuchoice
+> <guisubmenu
+>Envia un fitxer...</guisubmenu
+> </menuchoice
+> <action
+>Apareixerà un diàleg perquè escolliu un fitxer a enviar.</action
+> A continuació, apareixerà una pestanya nova <guilabel
+>Estat DCC</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pestanya «Estat DCC»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pestanya «Estat DCC»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Aquí apareixerà el &i18n-nickname; del destinatari i el nom del fitxer.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>La columna <guilabel
+>Estat</guilabel
+> indicarà l'estat d'enviament o de recepció del fitxer de la següent manera:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>S'està preparant</guilabel>
+		</term>
+		<listitem>
+			<para
+>S'està comprovant una transferència entrant a la cerca de fitxers que es puguin reprendre o una transferència sortint està adquirint les dades a enviar. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>S'està connectant</guilabel>
+		</term>
+		<listitem>
+			<para
+>El &konversation; està tractant d'establir una connexió amb l'altre extrem. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>S'està enviant</guilabel>
+		</term>
+		<listitem>
+			<para
+>El &konversation; està enviant el fitxer a l'altre extrem. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>S'està rebent</guilabel>
+		</term>
+		<listitem>
+			<para
+>El &konversation; rep el fitxer des de l'altre extrem. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Fet</guilabel>
+		</term>
+		<listitem>
+			<para
+>El fitxer s'ha transferit amb èxit. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Està pendent</guilabel>
+		</term>
+		<listitem>
+			<para
+>La transferència està esperant que el company l'accepti o la rebutgi. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>S'ha interromput</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ja sigui que heu fet clic al botó <guibutton
+>Cancel·la</guibutton
+> o l'altra persona ha cancel·lat la transferència. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ha fallat</guilabel>
+		</term>
+		<listitem>
+			<para
+>S'ha produït un error i la transferència no s'ha realitzat correctament. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>En cua</guilabel>
+		</term>
+		<listitem>
+			<para
+>La transferència està esperant que l'accepteu o rebutgeu. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>S'està reprenent</guilabel>
+		</term>
+		<listitem>
+			<para
+>Quan comença una transferència, però el fitxer ja existeix al sistema de l'usuari, es preguntarà a l'usuari. <interface
+>El fitxer ja existeix. S'ha de reprendre la transferència?</interface
+> Aquest estat indica que l'usuari ha reprès la transferència. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Quan algú vol enviar-vos un fitxer, es crearà la pestanya <guilabel
+>Estat DCC</guilabel
+> (si no està ja creada). Feu clic sobre aquesta pestanya per a mostrar-la. Feu clic al fitxer per a seleccionar-lo, i després feu clic en aquest botó per a acceptar el fitxer i la transferència començarà. <emphasis
+>Nota: </emphasis
+>Podeu configurar el &konversation; per a acceptar automàticament els enviaments d'altres persones escollint <menuchoice
+><guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. Feu clic a <guilabel
+>Comportament</guilabel
+> per a desplegar-la, feu clic a <guilabel
+>DCC</guilabel
+> per a mostrar la pantalla <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Si teniu problemes enviant o rebent fitxers, el tallafoc o l'encaminador poden estar bloquejant els ports DCC. Vegeu <link linkend="faq"
+>Preguntes i Respostes</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Capturar els &URL; dels missatges</title>
+
+<para
+>En qualsevol <link linkend="channel-screen-tour"
+>canal</link
+>, els usuaris de vegades publiquen els &URL; de llocs web interessants o d'altres recursos a la web. Podeu fer doble clic sobre qualsevol &URL; i el &konversation; iniciarà l'aplicació associada amb l'&URL;. L'aplicació llançada dependrà del tipus &MIME; de l'&URL;. Per exemple, un &URL; que comença amb <interface
+>https:</interface
+> activarà el navegador web predeterminat i mostrarà la pàgina web. (També podeu especificar el <link linkend="webbrowser"
+>navegador web</link
+> a utilitzar). Si l'&URL; surt fora de la pantalla, és possible que tingueu problemes per a trobar-lo de nou. El &konversation; pot mantenir una llista còmoda de tots els &URL;. Per a activar aquesta característica, escolliu <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+><guisubmenu
+>Capturador d'&URL;</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Es crearà una pestanya nova anomenada <guilabel
+>Capturador d'&URL;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>La pestanya «Capturador d'&URL;».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pestanya «Capturador d'&URL;».</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Aquesta és la llista dels &URL; vistos des que vau iniciar el &konversation;. La columna <guilabel
+>De</guilabel
+> és el &i18n-nickname; de la persona que va publicar l'&URL;, el nom del canal o del servidor on es va publicar. (Els &URL; que apareixen als missatges d'unir i deixar el canal no seran llistats). Feu clic sobre un &URL; per a seleccionar-lo.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Feu clic aquí per a activar l'aplicació associada amb l'&URL; seleccionat. L'aplicació llançada dependrà del tipus &MIME; de l'&URL;. Per exemple, un &URL; que comenci amb <interface
+>http:</interface
+> activarà el navegador web predeterminat i es mostrarà la pàgina web. Per a pàgines web, també podeu especificar el <link linkend="webbrowser"
+>navegador web</link
+> a utilitzar.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Feu clic aquí per a copiar l'&URL; seleccionat al porta-retalls.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Feu clic aquí per a eliminar l'&URL; seleccionat de la llista.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Feu clic aquí per a desar la llista dels &URL; a un fitxer.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Feu clic aquí per a netejar la llista.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Establir el vostre navegador web preferit</title>
+
+<para
+>Quan feu clic sobre un &URL; ressaltat en qualsevol lloc del &konversation;, es llançarà l'aplicació predeterminada amb el tipus &MIME; de l'&URL;. Per exemple, quan feu clic sobre una adreça &URL; que comença amb <interface
+>https</interface
+>, es llançarà el &konqueror; per a mostrar la pàgina web. Podeu especificar una aplicació diferent des del mòdul <guilabel
+>Aplicacions predeterminades</guilabel
+> a l'&systemsettings;. Per exemple, podeu utilitzar <application
+>Firefox</application
+> en el seu lloc. </para>
+
+<para
+>Per a escollir un navegador web diferent des de l'aplicació &konversation;, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal. <action
+>Apareixerà la pantalla <guilabel
+>Configura</guilabel
+>.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>La pantalla «General»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>La pantalla «General»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Feu clic aquí per a mostrar la pantalla <guilabel
+>General</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Feu clic aquí per a especificar que voleu utilitzar un navegador web personalitzat.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Introduïu l'ordre per a llançar el navegador web desitjat. Quan feu clic sobre un &URL;, <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> serà substituït amb l'&URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Nota: </emphasis
+>L'opció del navegador no s'aplica als &URL; <interface
+>mailto:</interface
+>. Els &URL; <interface
+>mailto:</interface
+> sempre llancen el programa de correu predeterminat. </para>
+
+<para
+>Feu clic a <guibutton
+>Aplica</guibutton
+> per a desar els vostres canvis. Haureu de tornar a connectar-vos a cada servidor i canal perquè els canvis tinguin efecte. La forma més fàcil de fer-ho és sortir i tornar a iniciar el &konversation;. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Marcar els registres de canals i consultes</title>
+
+<para
+>Podeu inserir un marcador a les pantalles <link linkend="channel-screen-tour"
+>canal</link
+> i <link linkend="query"
+>consulta</link
+> per a ajudar-vos a localitzar ràpidament la informació. Per a fer-ho, escolliu <menuchoice
+> <guisubmenu
+>Insereix</guisubmenu
+> <guisubmenu
+>Línies de marcador</guisubmenu
+> </menuchoice
+> al menú principal, o premeu la combinació de tecles <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>Apareixerà una línia a la part inferior del text a la pantalla. La línia es desplaçarà amb la resta del text a la pantalla.</action
+> </para>
+
+<para
+>Per a inserir la <interface
+>línia de marcador</interface
+> en tots els canals i consultes alhora, escolliu <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, desplegueu <guilabel
+>Comportament</guilabel
+>, feu clic a <guilabel
+>Finestra de xat</guilabel
+>, i marqueu la casella <guilabel
+>Mostra les línies inserides manualment en totes les finestres de conversa</guilabel
+>. </para>
+
+<para
+>Per a fer que el &konversation; insereixi automàticament una <interface
+>línia de marcador</interface
+> cada vegada que feu una ordre <userinput
+><command
+>/away</command
+> <replaceable
+>missatge</replaceable
+></userinput
+>, vegeu <link linkend="identity-away"
+>Establir la vostra identitat</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Registre</title>
+
+<para
+>Si el registre està habilitat, el &konversation; mantindrà un registre de cada <interface
+>servidor</interface
+>, <link linkend="channel-screen-tour"
+>canal</link
+> i sessió de <link linkend="query"
+>conversa privada (consulta)</link
+>. Cada sessió s'emmagatzemarà en un fitxer de registre al disc. Quan obriu la mateixa sessió una altra vegada, el &konversation; l'afegirà al registre. </para>
+
+<para
+>Cada vegada que obriu una sessió una altra vegada, aproximadament els últims 1.024 caràcters de la sessió anterior seran llegits des del final del registre i es mostraran a la pantalla. </para>
+
+<para
+>Atès que la vostra sessió continua, els missatges sortiran fora per la part superior de la pantalla. Podeu desplaçar cap enrere per a visualitzar aquests missatges. De manera eventual, per tal d'estalviar memòria, els missatges més antics es descartaran. Això s'anomena el <guilabel
+>Límit de l'historial</guilabel
+>. Els missatges que desapareixen de la pantalla a causa del <guilabel
+>Límit de l'historial</guilabel
+> encara estan disponibles al fitxer de registre, si el registre està habilitat.</para>
+
+<para
+>Per a veure el fitxer de registre per a una sessió, feu clic a la pestanya de la sessió perquè sigui la sessió actual i escolliu <menuchoice
+> <guisubmenu
+>Finestra</guisubmenu
+> <guisubmenu
+>Obre el fitxer de registre</guisubmenu
+> </menuchoice
+> des del menú principal. <action
+>Apareixerà una pestanya nova</action
+> mostrant el fitxer de registre. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Fitxer de registre</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Fitxer de registre</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Els missatges del fitxer de registre es mostren aquí. Els missatges més antics són a dalt i els més nous a la part inferior.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Feu clic en aquest botó per a desar el fitxer de registre en un altre fitxer.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Feu clic per a actualitzar la visualització del fitxer de registre. Mentre esteu veient un fitxer de registre, els nous missatges a la sessió corresponent <emphasis
+>no</emphasis
+> s'afegiran automàticament a la vista del fitxer de registre. Utilitzeu aquest botó per a veure els missatges més recents.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Feu clic per a esborrar la vista del fitxer de registre i el fitxer de registre al disc.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>Utilitzeu aquesta casella per a establir la mida màxima de l'historial. Aquesta opció no només té efecte per a les pestanyes de registre obertes recentment. En el següent inici el &konversation; s'utilitzarà l'últim valor modificat per a la mida de l'historial. Cada fitxer de registre pot tenir una opció diferent.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+>El <guilabel
+>Límit de l'historial</guilabel
+> es pot canviar escollint <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> des del menú principal, i després desplegueu <guilabel
+>Comportament</guilabel
+> i feu clic a <guilabel
+>Finestra de xat</guilabel
+>. Apareixerà el quadre <guilabel
+>Límit de l'historial</guilabel
+>. Si l'establiu a <guilabel
+>Sense límit</guilabel
+> (&ead;, zero), els missatges no seran descartats de l'historial. </para>
+
+<para
+>Podeu habilitar o inhabilitar el registre i establir altres opcions de registre, escollint <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> </menuchoice
+> al menú principal, i després desplegar <guilabel
+>Comportament</guilabel
+> i feu clic a <guilabel
+>Registre</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>Ordres del &konversation;</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Les següents ordres són interpretades pel &konversation; i poden diferir de les ordres de l'&irc; estàndards. Els elements entre claudàtors són opcionals. Els elements separats per una barra (|) són formes alternatives de l'ordre. Les ordres no llistades aquí són enviades al servidor tal com s'introdueixen. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> al canal precedit pel vostre &i18n-nickname;. Per exemple, si el vostre &i18n-nickname; era <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, en escriure <userinput
+><replaceable
+>/me Cervesa en una tassa de te.</replaceable
+></userinput
+> es mostrarà el missatge <interface
+>Cervesa en una tassa de te.</interface
+> Llevat que hagin filtrat contra aquest tipus de missatges, el veuran tots els usuaris. Aquest tipus de missatges s'utilitza normalment per a transmetre informació no verbal, com el seu vostre estat emocional actual, o el que esteu fent físicament. Si deixeu el vostre lloc de treball per un temps curt, utilitzeu l'ordre <userinput
+><command
+>/away</command
+></userinput
+> en el seu lloc.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Igual que l'anterior ordre <userinput
+><command
+>/me</command
+></userinput
+>, llevat que el missatge s'envia a tots els canals i consultes que tingueu oberts en tots els servidors als quals esteu connectat amb el &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>canal</replaceable
+> <replaceable
+>[contrasenya]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Uneix al <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Si el servidor ho permet, i si el canal no existeix ja, es crea i sereu l'operador del canal. Si el canal requereix una contrasenya, especifiqueu-la com a <userinput
+><replaceable
+>contrasenya</replaceable
+></userinput
+>. La majoria dels noms de canal comencen amb <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>canal</replaceable
+> <replaceable
+>[contrasenya]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>El mateix que <userinput
+><command
+>/join</command
+></userinput
+> anteriorment.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>[motiu]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Deixa el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> amb el <userinput
+><replaceable
+>motiu</replaceable
+></userinput
+> i tanca la pestanya de <interface
+>canal</interface
+> corresponent. Dins d'una pestanya de canal o consulta, només heu d'introduir <userinput
+><command
+>/part</command
+></userinput
+> per tancar-los amb el motiu predeterminat indicat a l'<link linkend="identity"
+>arranjament</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>[motiu]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>El mateix que <userinput
+><command
+>/part</command
+></userinput
+> anteriorment.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Quan esteu unit a qualsevol canal, consulta o DCC, us desconnectarà del servidor corresponent i tancarà qualsevol pestanya de canal, consulta o DCC oberta sobre aquest servidor.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>sobrenom|canal</replaceable
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> o a tothom en el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. El següent és un exemple del que apareixerà a la pestanya del canal</para>
+
+<para
+><computeroutput
+>[17:14] [Avís] S'està enviant la notificació «Crec que entenc» a #konversation</computeroutput
+></para>
+
+<para
+>I això és el que veuran els destinataris</para>
+
+<para
+><computeroutput
+>[17:15] [Avís] -Eisfuchs- Crec que entenc</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Crea una pestanya nova amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> de l'usuari per a una conversa privada, comunament conegudes com a <link linkend="query"
+>consultes</link
+> d'&irc;. Tot el que hi escriviu només serà visible per a vosaltres i el vostre company de consulta. Podeu introduir més d'un &i18n-nickname; separat per espais i s'obrirà una pestanya de consulta per a cada &i18n-nickname;. Cada pestanya de consulta serà privada entre vosaltres i el company de consulta.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>sobrenom|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia un missatge privat a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> o per a tots els usuaris en el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. A diferència de <userinput
+><command
+>/query</command
+></userinput
+>, no s'obre una pestanya nova. Si el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> comença amb <userinput
+><command
+>/me</command
+></userinput
+>, el missatge tindrà un format de la mateixa manera que una ordre <userinput
+><command
+>/me</command
+></userinput
+>.</para>
+
+<para
+>Exemples</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Necessito ajuda amb l'ordre «msg»</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Hi ha disponible una nova versió del Konvi!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me En aquests moments s'està compilant el manual.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>sobrenom|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>El mateix <userinput
+><command
+>/msg</command
+></userinput
+> excepte que el missatge no apareixerà a la pantalla. Això és útil per a prevenir que les contrasenyes i altra informació sensible quedi exposada a la pantalla o que es registri.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>sobrenom|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Igual que l'anterior ordre <userinput
+><command
+>/msg</command
+></userinput
+>, llevat que el missatge s'envia a tots els canals i consultes que tingueu oberts en tots els servidors als quals esteu connectat amb el &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quan entreu en una pestanya del canal, intenta donar privilegis d'operador al <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> per al canal. Potser no funciona si no disposeu de prou privilegis al canal (heu de ser un operador del canal). Podeu introduir més d'un &i18n-nickname; separats per espais.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quan entreu en una pestanya del canal, li manlleva privilegis d'operador de canal al <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Podeu introduir més d'un &i18n-nickname; separats per espais.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[sobrenom]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Concedeix privilegis d'operador d'&irc; (administrador) a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Això només funciona si el &i18n-nickname; està llistat a la línia O: del servidor. Els operadors d'&irc; tenen el privilegi d'utilitzar ordres com <userinput
+><command
+>/kill</command
+></userinput
+> &i18n-nickname;, <userinput
+><command
+>/connect</command
+></userinput
+> servidors a la xarxa d'&irc;, i molt més. Si no s'introdueix el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>, s'intentarà donar-vos els privilegis d'operador d'&irc;. Se us demanarà el nom d'usuari per a l'operador d'&irc; i la contrasenya en ambdós casos.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>En certs canals (amb l'etiqueta +m), els usuaris no poden enviar missatges a menys que tinguin el privilegi de veu. Aquesta ordre intenta donar el privilegi de veu a un <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Haureu de tenir privilegis d'operador del canal per a executar aquesta ordre. Aquesta ordre s'utilitza sobretot quan s'és operador d'un canal moderat.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>sobrenom</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Manlleva el privilegi de veu al <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> en el canal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[canal]</replaceable
+> <replaceable
+>[missatge]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Intenta establir el tema del <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> al <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+>. Quan entreu en una pestanya de canal, es pot ometre el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> i s'aplicarà de manera predeterminada el canal actiu a la pestanya. Si s'omet el <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+>, es mostrarà el tema actual del canal. El canvi d'un tema del canal pot fallar si no es disposa dels privilegis suficients.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+><replaceable
+>motiu</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Si algú tracta d'enviar-vos un missatge privat o convidar-vos a un canal, li dirà que esteu absent del vostre lloc de treball amb <userinput
+><replaceable
+>motiu</replaceable
+></userinput
+>. Per a canviar el vostre estat a la normalitat, introduïu <userinput
+><command
+>/away</command
+></userinput
+> sense un <userinput
+><replaceable
+>motiu</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>motiu</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Igual que l'anterior ordre <userinput
+><command
+>/away</command
+></userinput
+>, llevat que l'ordre s'envia a tots els servidors als quals esteu connectat amb el &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>sobrenom</replaceable
+> <replaceable
+>[canal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Convida a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> a unir-se a un <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Aquesta ordre és especialment útil si el canal només és per a convidats. Quan entreu en una pestanya de canal, es podrà ometre el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>script</replaceable
+> <replaceable
+>[paràmetres]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Executa l'script d'intèrpret d'ordres implementat al &konversation; anomenat <userinput
+><replaceable
+>script</replaceable
+></userinput
+>, passant-li <userinput
+><replaceable
+>paràmetres</replaceable
+></userinput
+>. Per a més informació sobre l'ús i l'escriptura dels scripts, vegeu <link linkend="scripting"
+>Crear scripts</link
+>.</para>
+<para
+>Exemples:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Envia al canal les versions del &konversation;, &plasma;, &kf5; i &Qt; al vostre sistema.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Envia al canal una cadena amb la versió de &Linux; (la sortida de <quote
+>uname -a</quote
+>).</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[sobrenom]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Afegeix o elimina el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> de la vostra llista dels <link linkend="nicksonline"
+>Sobrenoms vigilats</link
+>. Si el &i18n-nickname; ja és a la llista, serà esborrat. Si no és a la llista, serà afegit. Si s'omet el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>, es mostrarà la llista actual dels &i18n-Nickname; vigilats.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>sobrenom</replaceable
+> <replaceable
+>motiu</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quan entreu en una pestanya de canal, intenta fer fora del canal a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> amb el <userinput
+><replaceable
+>motiu</replaceable
+></userinput
+>. Si no s'introdueix el <userinput
+><replaceable
+>motiu</replaceable
+></userinput
+>, quedarà establert al motiu predeterminat indicat a l'<link linkend="identity"
+>arranjament</link
+>. Aquesta ordre només es pot utilitzar en una pestanya de canal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[canal]</replaceable
+> <replaceable
+>usuari</replaceable
+>|<replaceable
+>màscara</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Intenta prohibir a l'<userinput
+><replaceable
+>usuari</replaceable
+></userinput
+> o <userinput
+><replaceable
+>màscara</replaceable
+></userinput
+> del <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Quan entreu en una pestanya de canal, el <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> es pot ometre. Per a obtenir més informació sobre servidors, dominis i màscares, vegeu els documents a <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Per a obtenir la llista de prohibició actual per a un canal, introduïu <userinput
+><command
+>/mode </command
+><replaceable
+>canal</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>patró</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Reverteix la prohibició anterior d'un canal. Quan entreu en una pestanya de canal, <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> es pot ometre. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>sobrenom</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Afegeix <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> a la vostra llista d'ignorats. Podeu especificar més d'un &i18n-nickname; separats per espais. No es mostraran els missatges de canal dels usuaris a la llista d'ignorats. A més a més, si introduïu <userinput
+><command
+>-all</command
+></userinput
+>, s'ometran tots els tipus de missatges (consultes, notícies, CTCP, DCC i excepcions) de l'usuari, així com els missatges de canal. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia una ordre (<userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>) al servidor. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quan entreu en una pestanya de canal, envieu un <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> al canal. Això és el mateix que introduir un <userinput
+><replaceable
+>missatge</replaceable
+></userinput
+> a la <interface
+>línia d'entrada</interface
+>. Útil per a l'enviament d'ordres de l'&irc; quan no es vol executar l'ordre. Els dos caràcters d'ordre (//) en una fila fan el mateix que <userinput
+><command
+>/say</command
+></userinput
+>. També ho utilitzen els <link linkend="scripting"
+>scripts</link
+> per a enviar missatges. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Posa el registre del servidor en mode RAW (<command
+>open</command
+>) o atura el mode RAW (<command
+>close</command
+>). De manera predeterminada està establert a <command
+>open</command
+>. En el mode RAW, el registre mostra tots els missatges rebuts des del servidor en el format d'&irc; natiu. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Obre una pestanya nova on s'executa el &konsole;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[url]</replaceable
+> <replaceable
+>[contrasenya]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Es connecta al servidor a l'adreça <userinput
+><replaceable
+>url</replaceable
+></userinput
+>. Si s'omet <userinput
+><replaceable
+>url</replaceable
+></userinput
+>, es connectarà amb el servidor associat amb la pestanya on heu introduït l'ordre. Això és útil per a tornar a connectar amb un servidor quan es desconnecta. Si el servidor requereix una contrasenya per a connectar, introduïu la <userinput
+><replaceable
+>contrasenya</replaceable
+></userinput
+>. Si el servidor requereix un número de port diferent del predeterminat (6667), introduïu un <userinput
+><replaceable
+>url</replaceable
+></userinput
+> com aquest: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>sobrenom</replaceable
+> <replaceable
+>[nom_fitxer]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia el <userinput
+><replaceable
+>nom_fitxer</replaceable
+></userinput
+> a l'usuari amb el <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+>. Si s'omet el <userinput
+><replaceable
+>nom_fitxer</replaceable
+></userinput
+>, apareixerà un diàleg per a seleccionar un fitxer. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Obre la pestanya <guilabel
+>Estat DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>sobrenom|canal</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Envia un missatge PING al <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> o <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Això és útil per a determinar si algú amb qui esteu parlant té un retard alt a la xarxa, o (quan s'envia a un canal) si el vostre sistema té un retard alt. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>sobrenom|canal</replaceable
+> <replaceable
+>missatge</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envia un missatge al <userinput
+><replaceable
+>sobrenom</replaceable
+></userinput
+> o a tots els usuaris del <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. És similar a l'ordre <userinput
+><command
+>/msg</command
+></userinput
+> anterior, llevat que el missatge s'envia utilitzant el protocol &CTCP;. La resposta a l'altre extrem dependrà del programa client d'&irc; que executi l'usuari. Per exemple, quan es conversa amb un altre usuari del &konversation;, <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> retornarà l'hora del sistema a l'ordinador d'en Eisfuch. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> retornarà el número de versió del &konversation; des de l'ordinador d'en Eisfuch. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Crear scripts</title>
+
+<para
+>El &konversation; ve amb alguns convenients scripts que es poden executar des del programa. Per a executar un script en una pestanya de canal, consulta, DCC o servidor, escriviu una ordre d'aquesta manera</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>script</replaceable
+> [<replaceable
+>paràmetres</replaceable
+>]</userinput
+></para>
+
+<para
+>el que executarà l'script anomenat <userinput
+><replaceable
+>script</replaceable
+></userinput
+> passant-li (opcional) <userinput
+><replaceable
+>paràmetres</replaceable
+></userinput
+>.</para>
+
+<para
+>Per exemple, escriviu la següent ordre en una pestanya de canal</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>per a enviar al canal els números de versió del &konversation;, &Qt;, &kf5; i &plasma;.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>executa l'script <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>, passant-li <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. Això enviarà al canal la cadena de versió de &Linux;.</para>
+
+<para
+>Per a obtenir més informació sobre els scripts instal·lats amb el &konversation;, vegeu <link linkend="scripts_ref"
+>Guia de referència per als scripts</link
+>.</para>
+
+<para
+>Per a obtenir una llista de tots els scripts disponibles, escriviu la següent ordre en una pantalla del &konversation;.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Després aneu a la carpeta de la sortida per a veure la llista.</para>
+
+<para
+>Podeu escriure els vostres propis scripts. Els scripts són scripts de l'intèrpret d'ordres i es poden escriure en qualsevol llenguatge de l'intèrpret d'ordres, com el bash, perl o python. Quan el &konversation; executa un script, els dos primers paràmetres enviats a l'script són els següents:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>L'adreça del servidor.</para
+></listitem>
+
+<listitem
+><para
+>El nom del canal.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Aquest és un exemple de script de l'intèrpret d'ordres (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Executa una ordre i imprimeix la sortida dins del Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Observeu que l'script utilitza «qdbus» per a comunicar-se amb el &konversation;. L'ordre <computeroutput
+>say</computeroutput
+> fa que la sortida s'enviï al canal com un missatge normal. Per a mostrar quelcom a la pestanya sense enviar-lo als altres usuaris, utilitzeu <computeroutput
+>info</computeroutput
+>. Mireu els fitxers de script existents per a més exemples sobre l'escriptura de scripts.</para>
+
+<para
+>Per a ser capaç d'executar un script que heu escrit, l'heu d'instal·lar copiant-lo a <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. També haureu de donar permisos d'execució al fitxer, per exemple <userinput
+><replaceable
+>chmod a+x el_meu_script</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Guia de referència dels scripts</title>
+
+<para
+>El &konversation; ve amb diversos scripts instal·lats, consulteu aquesta guia per a aprendre com utilitzar-los.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>Número de l'error|Cadena de cerca</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Aquest script s'utilitza per a obrir el navegador per a cercar la cadena o número d'error indicat al <ulink url="https://bugs.kde.org/"
+>Bugzilla del &kde;</ulink
+>.</para>
+<para
+>Exemple: Per a obrir el vostre navegador per a cercar l'error 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Acció d'exemple: El navegador predeterminat a l'&systemsettings; s'obrirà a <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>arguments de la línia d'ordres</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Aquest script s'utilitza per a fer que la sortida dels arguments de la línia d'ordres s'escriguin al canal actual.</para>
+<para
+>Exemple: Per a mostrar a tothom en el canal la versió del &konversation; que teniu instal·lada.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>ALERTA! La sortida completa de l'ordre es publicarà a tothom a la pestanya del canal! Utilitzeu-la amb cura.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Quan s'executa aquest script s'emetrà una fortuna aleatòria.</para>
+<para
+>Exemple: Per a emetre una fortuna a l'atzar a la pestanya del canal.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>percentatge</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Aquest script mostra una simple barra de progrés basada en text per al percentatge indicat.</para>
+<para
+>Exemple: Per a emetre una barra de progrés amb la compleció del 50% a la pestanya del canal.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>Beer load [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>àudio|vídeo|{reproductor}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Aquest és un script «Ara s'està escoltant» per a diversos reproductors multimèdia. També compta amb un mètode per a mostrar dita informació només per a reproductors d'àudio o reproductors de vídeo a través dels arguments opcionals <replaceable
+>àudio</replaceable
+> i <replaceable
+>vídeo</replaceable
+> de l'ordre. A més, és possible especificar el reproductor multimèdia que voleu consultar.</para>
+<para
+>Estan implementats els següents reproductors de suports: Amarok (àudio), JuK (àudio), Kaffeine (vídeo, àudio), KMPlayer (vídeo, àudio), kdetv (vídeo), Yammi (àudio), Audacious (àudio), MPD (àudio).</para>
+<para
+>Exemple: Per a emetre la cançó que està sonant des de l'Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>* user is listening to You Give Love A Bad Name by Bon Jovi on Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Aquest script emet alguna informació detallada sobre el vostre sistema combinant la sortida de diverses ordres i li dona format de manera apropiada.</para>
+<para
+>Exemple: Per a emetre alguna informació sobre el vostre sistema a la pestanya del canal.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple:<replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>Adreça d'enllaç</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Aquest script utilitza l'API de Tinyurl per a activar l'enllaç que figura en un tinyurl que després s'enviarà a la pestanya del canal.</para>
+<para
+>Exemple: Per a donar a algú un enllaç curt a https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Aquest script envia el resultat de l'ordre «uptime» i li dona format de manera apropiada.</para>
+<para
+>Exemple: Per a mostrar el vostre temps de 98 dies d'activitat sense interrupcions.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Tots aquests scripts tenen àlies d'ordre predefinits. Al diàleg de configuració del &konversation;, escolliu <menuchoice
+><guimenu
+>Comportament</guimenu
+> <guimenuitem
+>Àlies d'ordres</guimenuitem
+></menuchoice
+> per a veure, afegir, eliminar o editar els àlies de les ordres. </para>
+
+<para
+>Per a més informació sobre la creació de scripts, consulteu la <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>guia per a escriure scripts que hi ha a Userbase</ulink
+>. </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Referència d'ordres</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>La finestra principal del &konversation;</title>
+
+<sect2>
+<title
+>El menú Fitxer</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Llista de servidors</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Mostra la <link linkend="irc-basics"
+>llista de servidors i canals</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Connexió ràpida</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Mostra la pantalla <link linkend="quickconnect"
+>Connexió ràpida</link
+> per a connectar amb un servidor. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Desconnecta</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Es desconnecta de tots els servidors. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Reconnecta</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Torna a connectar a tots els servidors que s'han desconnectat per un error a la xarxa o qualsevol altre problema. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Entra al canal</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Mostra un diàleg perquè introduïu el nom d'un canal a unir-vos. El mateix que introduir l'ordre <command
+>/join <userinput
+>#nom_canal</userinput
+></command
+> a una pestanya de canal o servidor.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Maj;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Absent globalment</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Canvia l'estat del vostre &i18n-nickname; a absent en tots els canals. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fitxer</guimenu
+> <guimenuitem
+>Surt</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Surt</action
+> del &konversation;.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Edita</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca el text...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Cerca cadenes de text a la pantalla actual.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keysym
+>F3</keysym
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Cerca la següent</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Torna a cercar cadenes de text a la pantalla actual utilitzant la cadena de la cerca anterior.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Neteja la finestra</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Neteja la pantalla actual.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Maj;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Edita</guimenu
+> <guimenuitem
+>Neteja totes les finestres</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Neteja totes les pantalles.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Insereix</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insereix</guimenu
+> <guimenuitem
+>Color d'&irc;...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Vegeu <link linkend="color-msgs"
+>Enviar missatges en colors</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insereix</guimenu
+> <guimenuitem
+>Línia de marcador</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Vegeu <link linkend="rememberlines"
+>Marcar els registres de canals i consultes</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt;&Maj;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insereix</guimenu
+> <guimenuitem
+>Caràcter especial...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>S'utilitza per a introduir caràcters especials, com caràcters estrangers.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Adreces d'interès</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Adreces d'interès</guimenu
+> <guimenuitem
+>Afegeix una adreça d'interès</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Afegeix una adreça d'interès de xarxa i canal.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Adreces d'interès</guimenu
+><guimenuitem
+>Pestanyes d'adreces d'interès com a carpeta...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Afegeix</action
+> tots els canals com un nou element de menú al final del menú adreces d'interès. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Adreces d'interès</guimenu
+><guimenuitem
+>Carpeta d'adreces d'interès nova...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Crea una carpeta nova d'adreces d'interès.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Adreces d'interès</guimenu
+> <guimenuitem
+>Edita les adreces d'interès...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Obre l'editor d'adreces d'interès.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Arranjament</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Mostra la llista de sobrenoms</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Oculta (o mostra) el plafó de &i18n-Nickname; a les pestanyes de canal. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Identitats...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Mostra la pantalla <link linkend="identity"
+>Identitats</link
+> per a establir la informació de la vostra identificació. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Finestra</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Pestanya anterior</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Mostra la pantalla corresponent a la pestanya anterior.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Pestanya següent</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Mostra la pantalla corresponent a la següent pestanya.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Tanca la pestanya</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tanca la pantalla actual. Si tanca un canal, es deixa el canal. Si tanca una pestanya <interface
+>Missatges del servidor</interface
+>, es tancaran tots els canals oberts en aquest servidor i es desconnectarà del servidor. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Tanca totes les converses obertes</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tanca totes les <link linkend="query"
+>converses privades (consultes)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Sobrenoms vigilats</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra la pantalla <guilabel
+>Sobrenoms vigilats</guilabel
+>. Vegeu el capítol <link linkend="nicksonline"
+>Veure qui està connectat</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Capturador d'&URL;</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra la pantalla <link linkend="urlcatcher"
+>Capturador d'&URL;</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Estat DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra la pestanya <link linkend="dcc"
+>Estat DCC</link
+> amb la informació sobre les transferències de fitxers.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Konsole nou</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra una pantalla de terminal. Podeu obrir tantes pestanyes de <guilabel
+>Konsole</guilabel
+> com vulgueu.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Llista de canals per</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra una <link linkend="list-channels"
+>llista dels canals</link
+> disponibles al servidor.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Finestra</guimenu
+> <guimenuitem
+>Obre el fitxer de registre per</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Mostra una pantalla amb el registre dels missatges des de la pestanya actual. Només funciona per a les pestanyes <interface
+>Canal</interface
+>, <interface
+>Missatges del servidor</interface
+> i <interface
+>Consulta</interface
+>. El registre haurà d'estar habilitat a <menuchoice
+> <guisubmenu
+>Arranjament</guisubmenu
+> <guisubmenu
+>Configura el &konversation;...</guisubmenu
+> <guisubmenu
+>Comportament</guisubmenu
+> <guisubmenu
+>Registre</guisubmenu
+> </menuchoice
+> al menú principal. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>El menú Ajuda</title>
+
+<para
+>El &konversation; té la configuració comuna al &kde; i els elements del menú <guimenu
+>Ajuda</guimenu
+>. Per a obtenir més informació, llegiu la secció sobre <ulink url="help:/fundamentals/menus.html#menus-help"
+>El menú Ajuda</ulink
+> en els Fonaments del &kde;. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Preguntes i respostes</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Quan inicio el &konversation;, m'agradaria connectar a un servidor sense unir-me a cap canal. Com puc fer-ho?</para>
+</question>
+<answer>
+<para
+>A la pantalla <link linkend="serverlist-addnetwork"
+>Edita el servidor</link
+>, deixeu buit el marc <guilabel
+>Canals</guilabel
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>El &konversation; no es connecta a cap servidor. Què està malament?</para>
+</question>
+<answer>
+<para
+>Hi ha diverses coses que podrien estar malament.</para>
+<orderedlist>
+<listitem>
+<para
+>Assegureu-vos que heu introduït el <guilabel
+>Nom del servidor</guilabel
+> i el <guilabel
+>Port</guilabel
+> correcte a la pantalla <link linkend="serverlist-addserver"
+>Afegeix un servidor</link
+>. </para>
+</listitem>
+<listitem>
+<para
+>Comproveu la sortida a la pantalla <link linkend="channel-screen-tour"
+>missatges del servidor</link
+> per a qualsevol missatge d'error. El servidor rebutja la connexió a causa d'una contrasenya incorrecta? El servidor rebutja la connexió perquè requereix <acronym
+>IDENTD</acronym
+> i el vostre ordinador no ha respost? Heu marcat la casella del protocol SSL però el servidor no l'implementa? </para>
+</listitem>
+<listitem>
+<para
+>Si esteu al darrere d'un tallafoc, assegureu-vos que estan habilitats els ports correctes. El &konversation; necessita els següents ports habilitats: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Sortides TCP 6667 (o el port del servidor al qual es connecta)</para
+></listitem>
+<listitem
+><para
+>Entrades TCP 113 (si el servidor requereix IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Per a obtenir més informació sobre els problemes de la connexió &irc;, vegeu <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Quan vaig a <menuchoice
+> <guimenu
+>Finestra</guimenu
+> <guisubmenu
+>Llista de canals</guisubmenu
+> </menuchoice
+>, no puc seleccionar. Per què és això?</para>
+</question>
+<answer>
+<para
+>L'entrada del menú <menuchoice
+> <guimenu
+>Finestra</guimenu
+> <guisubmenu
+>Llista de canals</guisubmenu
+> </menuchoice
+> serà atenuada si una pestanya sense canal, &pex;, <guilabel
+>Sobrenoms vigilats</guilabel
+>, s'està veient actualment. Perquè sigui seleccionable de nou torneu a la pestanya del canal o la del servidor. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Com puc fer que el &konversation; em marqui automàticament com a absent després d'un període d'inactivitat? </para>
+</question>
+<answer
+><para
+>Els missatges d'absència automàtica es configuren en funció de cada identitat. Per a activar-los seleccioneu <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Identitats</guimenuitem
+></menuchoice
+>. Escolliu la identitat per a la qual voleu habilitar l'absència automàtica des de la llista desplegable a la part superior del diàleg i aneu a la pestanya <guilabel
+>Absent</guilabel
+>. Marqueu l'opció <guilabel
+>Absent automàticament</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Com puc evitar la característica <guilabel
+>Substitució automàtica</guilabel
+> de la <interface
+>línia d'entrada</interface
+>?</para>
+</question>
+<answer
+><para
+>Utilitzeu <keycombo action="simul"
+>&Ctrl;&Intro;</keycombo
+> en lloc de &Intro; per a evitar l'anàlisi i substitució automàtica del text a la <interface
+>línia d'entrada</interface
+> d'acord amb les opcions a la pàgina <menuchoice
+><guimenu
+>Comportament</guimenu
+> <guimenuitem
+>Substitució automàtica</guimenuitem
+></menuchoice
+> del diàleg de configuració. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>On puc trobar els scripts inclosos amb el &konversation;?</para>
+</question>
+<answer>
+<para
+>Executeu aquesta ordre a la línia d'entrada del &konversation; (amb l'script «media» com a exemple, ja que ve amb qualsevol instal·lació del &konversation;): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Sortida d'exemple: <replaceable
+>S'han trobat els fitxers de script «media» a: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Com faig el meu text en negreta/cursiva/subratllat?</para>
+</question>
+<answer>
+<para
+>Exemple: <userinput
+>Aquest és el meu text en %Bnegreta%B.</userinput
+></para>
+<para
+>Sortida: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple: <userinput
+>Aquest és el meu text en %Icursiva%I.</userinput
+></para>
+<para
+>Sortida: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple: <userinput
+>Aquest és el meu text %Usubratllat%U.</userinput
+></para>
+<para
+>Sortida: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple: <userinput
+>Aquest és el meu text %Statxat%S.</userinput
+></para>
+<para
+>Sortida: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple: <userinput
+>Aquest és el meu text en %Mmonoespai%M.</userinput
+></para>
+<para
+>Sortida: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Crèdits i llicència</title>
+
+<para
+>&konversation; </para>
+<para
+>Copyright del programa 2002-2005 L'equip del &konversation;. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Col·laboradors: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Gràcies a: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Copyright de la documentació &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Traductor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

@@ -1,0 +1,6042 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>псевдонім</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Псевдонім</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>Підручник з &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+>  
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>29 листопада 2016 року</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; — дружній до користувачів &irc;-клієнт, побудований на основі &Qt; та &kf5-full;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>IRC</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>балачка</keyword>
+<keyword
+>обмін даними</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Вступ</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; — це клієнт балачок &irc;, побудований на основі &Qt; та &kf5-full;. У програмі передбачено такі можливості: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Підтримка SSL.</para
+></listitem>
+<listitem
+><para
+>Дружній до користувача інтерфейс з вкладками.</para
+></listitem>
+<listitem
+><para
+>Налаштування допоміжних кнопок для команд, якими ви часто користуєтеся.</para
+></listitem>
+<listitem
+><para
+>Автоматичне повторне з’єднання і вхід на канал.</para
+></listitem>
+<listitem
+><para
+>Надсилання і отримання DCC.</para
+></listitem>
+<listitem
+><para
+>Список спостереження за псевдонімами.</para
+></listitem>
+<listitem
+><para
+>Візуальні та звукові сповіщення для широкого діапазону подій, зокрема для появи повідомлень, що містять ваш псевдонім та переходу осіб з псевдонімами з вашого списку спостереження у стан «У мережі» або «Поза мережею». </para
+></listitem>
+<listitem
+><para
+>Придатне до налаштування підсвічування повідомлень від вказаного псевдоніма або за вказаним формальним виразом шаблоном.</para
+></listitem>
+<listitem
+><para
+>Автоматичне завершення псевдонімів.</para
+></listitem>
+<listitem
+><para
+>Перехоплення і збереження всіх адрес &URL;, що згадувалися у повідомленнях.</para
+></listitem>
+<listitem
+><para
+>Екранна панель для показу повідомлень у разі згортання вікна програми.</para
+></listitem>
+<listitem
+><para
+>Список ігнорування псевдонімів.</para
+></listitem>
+<listitem
+><para
+>Автоматичний запис журналу і керування ним.</para
+></listitem>
+<listitem
+><para
+>Позначення рядків у журналах.</para
+></listitem>
+<listitem
+><para
+>Скрипти.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Вебсайт &konversation; розташовано за адресою <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Докладніші відомості, зокрема відповіді на поширені питання та підказки і настанови можна знайти на <ulink url="https://userbase.kde.org/Special:myLanguage/Konversation"
+>сторінці &konversation; на UserBase</ulink
+>. </para>
+
+<para
+>Зв’язатися з розробниками &konversation; можна за допомогою &irc; на сервері <ulink url="irc://irc.libera.chat/konversation"
+>irc.libera.chat, канал #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Користування &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Якщо ви ніколи раніше не користувалися &irc;...</title>
+
+<para
+>Якщо не ускладнювати, &irc; — це протокол балачки, параметри якого визначаються офіційними інтернет-стандартами. Подібні балачки можуть поглинати ваше життя годинами. Щоб скористатися &irc;, вам слід з’єднати ваш комп’ютер з сервером, а потім приєднатися до каналу (еквіваленту кімнати балачки) або просто відкрити канал особистого спілкування.</para>
+
+<para
+>Щоб з’єднатися з сервером на певному каналі, запустіть &konversation;. Програма відкриє вікно <guilabel
+>Список серверів</guilabel
+>.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Список серверів</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Список серверів</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>За допомогою цього пункту ви можете переглянути список налаштованих <guilabel
+>мереж</guilabel
+> &irc;. Мережа &irc; — це набір серверів, що працюють разом. Для того, щоб з’єднатися з усією мережею IRC, вам достатньо з’єднатися з одним з серверів цієї мережі, &konversation; автоматично приєднається до показаних <guilabel
+>каналів</guilabel
+>. Після першого запуску &konversation; ви зможете увійти до мережі <userinput
+><replaceable
+>Libera Chat</replaceable
+></userinput
+> на канал <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+>.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Натисніть, щоб визначити нову <guilabel
+>мережу</guilabel
+>, зокрема вказати сервери, з якими слід встановлювати з’єднання, і <guilabel
+>канали</guilabel
+>, до яких слід автоматично приєднуватися після встановлення з’єднання. Докладніше про це можна дізнатися з розділу <link linkend="serverlist"
+>Визначення нових мереж, серверів та каналів для автоматичного приєднання</link
+>.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Натисніть, щоб з’єднатися з вибраною мережею &irc; і каналом.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>Якщо ви натиснете кнопку <guibutton
+>З’єднати</guibutton
+> під час першого запуску &konversation;, ви можете побачити наступне повідомлення, у якому програма сповіщає вас про те, що типовий <guilabel
+>профіль</guilabel
+> не налаштовано.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Визначення профілів</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Визначення профілів</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Під час першого запуску &konversation; програма отримає дані про поточного користувача від операційної системи і заповнить ними поля вашого профілю. Якщо дані операційної системи про користувача не будуть повними, наприклад, системі не буде відоме ваше повне ім’я, ви можете побачити повідомлення, подібне до наведеного вище. Щоб виправити проблему, натисніть кнопку <guibutton
+>Змінити профіль</guibutton
+> і ознайомтеся з вмістом розділу <link linkend="identity"
+>Налаштування вашого профілю</link
+> цього підручника.</para>
+</note>
+
+<para
+>Далі, буде показано <interface
+>Головне</interface
+> вікно з повідомленнями, які було надіслано сервером клієнтові. (якщо &konversation; не буде з’єднано з сервером, зверніться до розділу <link linkend="faq"
+>Питання та відповіді</link
+>.) Після показу всіх повідомлень &konversation; буде приєднано до обраного каналу або обраних каналів. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Канал.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Канал</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Цей елемент називається <interface
+>Рядком вводу</interface
+>. Щоб надіслати повідомлення всім учасникам каналу, введіть до цього рядка текст повідомлення і натисніть клавішу &Enter;. Ваше повідомлення, разом з повідомленнями інших учасників, з’явиться у списку повідомлень каналу, розташованому вище. Перед текстом кожного з повідомлень буде показано час і псевдонім користувача.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Ви можете приєднуватися до інших серверів та каналів. У вікні кожному серверу, каналу, списку каналів та іншим вікнам даних надаватиметься окрема вкладка. Щоб дізнатися про те, як переглянути список можливих каналів, ознайомтеся з розділом <link linkend="list-channels"
+>Показ списку доступних каналів</link
+>. Щоб приєднатися до каналу, введіть: <userinput
+><command
+>/join</command
+> <replaceable
+>#назва_каналу</replaceable
+></userinput
+> до рядка вводу. (Символ <userinput
+>#</userinput
+> є обов’язковим.) Крім того, ви можете скористатися командою <userinput
+><command
+>/j</command
+></userinput
+>, яка є скороченням від <userinput
+><command
+>/join</command
+></userinput
+>. Щоб полишити канал, введіть <userinput
+><command
+>/part</command
+></userinput
+>. Щоб перемкнути показ на інший сервер або канал, натисніть заголовок відповідної вкладки. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Це називається <interface
+>Панель псевдонімів</interface
+>. На ній програма показуватиме псевдоніми всіх користувачів, які приєдналися до каналу, зокрема і ваш.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Все це базові відомості, щоб дізнатися більше, ознайомтеся з...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Налаштування вашого профілю</title>
+
+<para
+>Перш ніж почати користуватися &konversation; на регулярній основі, вам слід вказати параметри, за якими вас впізнаватимуть у мережі.</para>
+
+<para
+>Скористайтеся пунктом <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Профілі</guisubmenu
+> </menuchoice
+> головного меню. <action
+>Програма відкриє діалогове вікно <guilabel
+>Профілі</guilabel
+>. Відкрити діалогове вікно <guilabel
+>Профілі</guilabel
+> можна також натисканням кнопки <guibutton
+>Змінити</guibutton
+> у вікні <guilabel
+>Нова мережа</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Профілі (вкладка «Загальне»)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Профілі (вкладка «Загальне»)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Натисніть, щоб обрати <guilabel
+>Профіль</guilabel
+> для редагування.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Скористайтеся натисканням цих кнопок, щоб <guibutton
+>Створити</guibutton
+> новий запис мережі, <guibutton
+>Здублювати</guibutton
+>, <guibutton
+>Перейменувати</guibutton
+> позначений запис мережі або <guibutton
+>Вилучити</guibutton
+> позначений запис мережі.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>У це поле слід ввести ваше справжнє ім’я. У &irc; це ім’я не буде приховано від ваших друзів або ворогів. Пам’ятайте про це, якщо ви схильні до нерозважливої поведінки. Фальшиве «справжнє ім’я» може бути непоганим способом приховати вашу стать від збоченців та збоченок, але завжди можна визначити адресу комп’ютера, за яким ви працюєте, отже повної анонімності ніхто не може забезпечити.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Натискайте ці кнопки для того, щоб <guibutton
+>Додати</guibutton
+> або <guibutton
+>Вилучити</guibutton
+> псевдонім.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Це ваш список псевдонімів. Псевдонім — це ваше ім’я, за яким вас знають інші користувачі. Ви можете скористатися будь-яким псевдонімом. Першим символом псевдоніма має бути літера. Іншими символами можуть бути літери, цифри або спеціальні символи <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>Оскільки псевдоніми у цілій мережі &irc; не повинні повторюватися, вказаний вами псевдонім може бути відкинуто сервером, оскільки цим псевдонімом вже скористався хтось інший. Вам доведеться власноруч ввести інший псевдонім. Якщо обраний псевдонім буде відкинуто сервером, &konversation; спробує скористатися запасними псевдонімами. </para>
+
+<para
+>Відповідно до стандарту RFC 2812, максимальна довжина псевдоніма не повинна перевищувати 9 символів, але, загалом кажучи, обмеження визначаються сервером. Щоб визначити максимальну довжину на сервері, вам слід з’єднатися з цим сервером. На вкладці <interface
+>Повідомлення сервера</interface
+> знайдіть повідомлення <computeroutput
+>[Support]</computeroutput
+>. Приклад:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>Параметр <computeroutput
+>NICKLEN</computeroutput
+> визначає максимальну довжину псевдоніма. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>За допомогою натискання цих кнопок можна змінити порядок псевдонімів. Першим програма спробує використати найвищий псевдонім у списку, потім спробує використати нижчий тощо  .</para
+></callout>
+ 
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Перейдіть на вкладку <guilabel
+>Відсутній</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Профілі (вкладка «Відсутній»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Профілі (вкладка «Відсутній»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Введіть псевдонім, який позначатиме, що ви відсутні. Кожного разу, коли ви виконуватимете команду <userinput
+><command
+>/away</command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+>, на будь-якому з каналів, до якого ви приєдналися за допомогою цього профілю, &konversation; автоматично змінюватиме ваш псевдонім на <guilabel
+>псевдонім відсутності</guilabel
+>. Таким чином, інші користувачі знатимуть, що ви відійшли від комп’ютера. Після виконання команди <userinput
+><command
+>/away</command
+></userinput
+> на будь-якому з каналів, на якому ваш стан було позначено як «відсутній», &konversation; автоматично повертатиме початковий псевдонім. Якщо ви не бажаєте змінювати псевдонім на час відсутності, не заповнюйте це поле.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Якщо ви позначите цей пункт, кожного разу, коли ви виконуватимете команду <userinput
+><command
+>/away</command
+></userinput
+>, у вікні каналу буде з’являтися горизонтальна лінія, яка позначатиме місце, на якому ви полишили балачку. Цю горизонтальну лінію не буде показано решті користувачів &irc;. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Якщо ви позначите цей пункт, &konversation; автоматично надсилатиме <guilabel
+>команда відсутності</guilabel
+> на всі канали, до яких ви приєдналися за допомогою цього <guilabel
+>профілю</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> буде замінено на <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+>. Після виконання команди <userinput
+><command
+>/away</command
+></userinput
+> програма надішле <guilabel
+>команда повернення</guilabel
+> на всі канали, до яких ви приєдналися за допомогою цього <guilabel
+>профілю</guilabel
+>.</para>
+
+<note
+><para
+>Деякі користувачі вважають повідомлення про відсутність набридливими. Будьте обережні з використанням цієї можливості, ставтеся з повагою до інших користувачів &irc;. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Перейдіть на вкладку <guilabel
+>Додатково</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Профілі (вкладка «Додатково»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Профілі (вкладка «Додатково»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Тут ви можете ввести команду, яку буде виконано перед з’єднанням з сервером. Якщо ваш профіль використовується на декількох серверах, команду буде виконано на кожному з серверів.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Значення цього параметра визначатиме те, яким чином буде закодовано для надсилання на сервер символи, які ви введете. Це значення також впливає на показ повідомлень. Після першого запуску &konversation; програма автоматично визначає цей параметр на основі даних операційної системи. Якщо у вас виникають проблеми з переглядом повідомлень інших користувачів, спробуйте змінити значення цього параметра.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Під час з’єднання значна кількість серверів надсилає запит на ваш комп’ютер щодо даних IDENT. Якщо на вашому комп’ютері не запущено сервер IDENT, ці дані буде надіслано &konversation;. Пробіли використовувати не можна. Типово, буде використано ваше ім’я.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Якщо ви полишатимете канал, це повідомлення буде надіслано на канал.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Якщо вас викинуть з каналу (зазвичай, це подібну дію виконують оператори &irc;) це повідомлення буде надіслано на канал.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Натисніть, щоб застосувати внесені вами зміни. Щоб всі зміни набули чинності, вам слід від’єднатися від сервера, а потім встановити повторне з’єднання. Найпростіше цього досягти перезапуском &konversation;.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Визначення нових мереж, серверів та каналів для автоматичного приєднання</title>
+
+<para
+>Вікно <guilabel
+>Список серверів</guilabel
+> буде відкрито після запуску програми &konversation;. Його також можна відкрити за допомогою пункту меню <menuchoice
+> <guisubmenu
+>Файл</guisubmenu
+> <guisubmenu
+>Список серверів</guisubmenu
+> </menuchoice
+>. <action
+>У вікні <guilabel
+>Список серверів</guilabel
+></action
+> буде показано список всіх визначених вами <guilabel
+>Мереж</guilabel
+> &irc;, розподілених за групами. Мережею &irc; є сукупність серверів, що співпрацюють один з одним. Якщо ви встановили з’єднання з будь-яким з серверів мережі, ви отримаєте доступ до всіх каналів мережі. Прикладами мереж &irc; є <userinput
+><replaceable
+>Libera Chat</replaceable
+></userinput
+> і <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Список серверів</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Список серверів</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>У списку буде показано всі визначені вами <guilabel
+>Мережі</guilabel
+> разом з <guilabel
+>Профілем</guilabel
+>, який використовуватиметься для з’єднання з мережею, а також <guilabel
+>Канали</guilabel
+>, до яких вас буде автоматично приєднано після з’єднання. Якщо ви встановили розбиття ваших мереж за групами, мережі буде перелічено за групами. Наведіть вказівник миші на позначку мережі і клацніть лівою кнопкою миші, щоб позначити цю мережу. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Скористайтеся натисканням цих кнопок, щоб <guibutton
+>Створити</guibutton
+> новий запис мережі, <guibutton
+>Змінити</guibutton
+> позначений запис мережі або <guibutton
+>Вилучити</guibutton
+> позначений запис мережі. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Натисніть цю кнопку, щоб наказати програмі з’єднатися з позначеною <guilabel
+>Мережею</guilabel
+> і закрити вікно <guilabel
+>Список серверів</guilabel
+>. Якщо бажаєте, можете позначити декілька мереж, тоді програма з’єднається з усіма цими мережами.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Натискання цієї кнопки не призведе до відкидання всіх внесених вами змін. Воно просто означатиме, що ви не бажаєте зараз встановлювати з’єднання з жодною з мереж.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>Після натискання кнопки <guibutton
+>Створити</guibutton
+> відкривається діалогове вікно <guilabel
+>Нова мережа</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Нова мережа</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Нова мережа</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>У цьому полі слід вказати <guilabel
+>Назву мережі</guilabel
+>. За допомогою вікна <guilabel
+>Списку серверів</guilabel
+> ви можете створювати довільну кількість записів з однаковим значенням мережі.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Оберіть один з існуючих профілів або натисніть кнопку <guibutton
+>Змінити</guibutton
+>, щоб додати новий профіль або змінити існуючий. За допомогою профілю ви зможете вказати ваші ідентифікаційні дані і визначити ваш псевдонім, який буде використано під час з’єднання з мережею.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Не обов’язкова. Цю команду буде надіслано серверу після з’єднання. Приклад: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Цей приклад призначено для мережі Libera Chat, у якій користувачі під час з’єднання реєструються за допомогою імені і пароля. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> — це пароль для псевдоніма, вказаного у профілі. Ви можете вказати декілька команд, відокремивши їх крапками з комами.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Позначте цей пункт, якщо ви бажаєте, щоб програма &konversation; автоматично встановлювала з’єднання з цією мережею одразу після запуску &konversation;.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Тут показано список серверів &irc; у цій мережі. Під час спроби встановлення з’єднання з мережею, &konversation; намагається спочатку з’єднатися з сервером, що перебуває на вершині списку. Якщо спроба зазнає невдачі, програма намагається з’єднатися з другим сервером. Якщо і ця спроба виявляється невдалою, програма спробує третій сервер тощо. Вам слід вказати принаймні один сервер. Наведіть вказівник миші на позначку сервера і клацніть лівою кнопкою миші, щоб позначити його.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>За допомогою натискання цих кнопок можна <guibutton
+>Додати</guibutton
+> сервер, <guibutton
+>Змінити</guibutton
+> параметри позначеного сервера або <guibutton
+>Вилучити</guibutton
+> пункт позначеного сервера. Крім того, ви можете перевпорядкувати список серверів, а отже і змінити порядок, у якому будуть здійснюватися спроби з’єднання.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Необов’язковий. Це список каналів, до яких програма автоматично приєднуватиметься одразу після з’єднання з сервером. Ви можете не заповнювати цей список, якщо ви не бажаєте автоматичного з’єднання з жодним каналом.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Ці кнопки призначено для того, щоб <guibutton
+>Додати</guibutton
+> канал, <guibutton
+>Змінити</guibutton
+> параметри позначеного каналу або <guibutton
+>Вилучити</guibutton
+> позначений канал. Крім того, ви можете змінити порядок приєднання до каналів. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Намагайтеся не збирати позначки серверів різних мереж &irc; у одній <guilabel
+>Мережі</guilabel
+>. Також не варто створювати пункти одного сервера у двох різних <guilabel
+>Мережах</guilabel
+>. Якщо ви так робитимете, можливості інтеграції &konversation; <link linkend="nicksonline"
+>спостереження за псевдонімами у мережі</link
+> може працювати некоректно.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Після натискання кнопки <guibutton
+>Додати</guibutton
+> на панелі <guilabel
+>Сервери</guilabel
+>, програма відкриє діалогове вікно <guilabel
+>Додати сервер</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Додавання сервера</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Додавання сервера</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Назва або адреса IP сервера. <ulink url="https://www.irchelp.org/networks/"
+>Список</ulink
+> серверів зберігається на irchelp.org.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Введіть номер порту, який слід використовувати для з’єднання з сервером. Для більшості серверів цим номером буде <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Якщо для встановлення з’єднання з сервером слід вказати пароль, введіть його у відповідне поле. Якщо цього робити не треба, не заповнюйте поля.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Позначте цей пункт, якщо ви маєте намір використовувати протокол шару безпеки сокетів (Secure Socket Layer або SSL) для обміну даними з сервером. Таким чином можна убезпечити обмін даними між комп’ютером і сервером &irc;. Для того, щоб ви могли скористатися цим варіантом зв’язку, сервер має підтримувати протокол SSL. У більшості випадків, якщо сервер не підтримує SSL, спроба з’єднання з використанням цього протоколу зазнає невдачі.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Після натискання кнопки <guibutton
+>Додати</guibutton
+> на панелі <guilabel
+>Автоматично приєднуватися до каналів</guilabel
+>, програма відкриє діалогове вікно <guilabel
+>Додати канал</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Додавання каналу</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Додавання каналу</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Введіть назву каналу. Не забудьте про префікс <userinput
+><replaceable
+>#</replaceable
+></userinput
+>. Якщо для приєднання до каналу потрібен пароль, введіть його. Якщо ні, не заповнюйте відповідне поле. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Показ списку доступних каналів</title>
+
+<para
+>Щоб переглянути список можливих каналів, скористайтеся пунктом головного меню <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Список каналів</guisubmenu
+> </menuchoice
+>. <action
+>Програма відкриє вікно попередження, а потім створить нову вкладку з назвою <guilabel
+>Список каналів</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка списку каналів.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка списку каналів.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Введіть у це поле рядок фільтрування.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>За допомогою цього пункту ви можете обмежити список каналів тими каналами, на яких перебуває не більше, ніж вказана максимальна кількість користувачів. Вибір значення <guilabel
+>Без обмежень</guilabel
+> вимкне використання цього критерію.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Натисніть, щоб переглянути список каналів з сервера і застосувати фільтрування.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>Тут буде показано фільтрований список каналів. Зауважте, що, якщо ви не користуватиметеся формальними виразами, &konversation; показуватиме у списку всі канали, назви яких містять введений вами рядок фільтрування. Назви таких каналів не обов’язково починатимуться з введеного вами рядка.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Оберіть канал, до якого бажаєте приєднатися наведенням вказівника миші на його пункт з наступним клацанням лівою кнопкою миші. Наведення вказівника на пункт каналу з наступним клацанням правою кнопкою миші відкриє список всіх вебадрес, які згадувалися у темі каналу.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Натисніть, щоб приєднатися до каналу. Для цього каналу буде створено вкладку.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>На деяких серверах є «секретні» канали. Пункти таких каналів не буде показано у <guilabel
+>Списку каналів</guilabel
+>, але ви зможете до них приєднатися, якщо вам відома назва каналу. У будь-якому з <interface
+>Рядків вводу</interface
+>, наберіть команду: <userinput
+><command
+>/join</command
+> <replaceable
+>#назва_каналу</replaceable
+></userinput
+>. (Початкове <userinput
+>#</userinput
+> є обов’язковим.) Програма створить для каналу нову вкладку. Якщо після приєднання до каналу на панелі псевдонімів буде показано лише ваш псевдонім, цього каналу раніше не існувало. Сервер просто створив канал і надав вам право бути його оператором. У такому випадку вам, ймовірно, слід закрити канал за допомогою команди <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Коротка подорож головним вікном</title>
+
+<para
+>Давайте докладніше поглянемо на <interface
+>головне</interface
+> вікно. Знімок цього вікна з відкритою вкладкою каналу наведено нижче.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Головне вікно.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Головне вікно</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Цей елемент називається <interface
+>Рядком вводу</interface
+>. Ви побачите його, лише якщо поточна вкладка є вкладкою каналу. Щоб надіслати повідомлення всім учасникам каналу, введіть до цього рядка текст повідомлення і натисніть клавішу &Enter;. Ваше повідомлення, разом з повідомленнями інших учасників, з’явиться у списку повідомлень каналу, розташованому вище. Перед текстом кожного з повідомлень буде показано час і псевдонім користувача.</para>
+
+ <para
+>Крім того, ви можете вставляти текст з буфера обміну даними. Якщо текст, який ви намагається вставити, складається з декількох рядків (розбито на рядки), програма відкриє діалогове вікно. Змініть у ньому текст належним чином і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>. </para>
+
+ <para
+>Якщо у вставленому тексті міститься більше, ніж 256 символів або більше, ніж один рядок, програма відкриє вікно з попередженням про те, що великі повідомлення можуть спричинити розрив зв’язку та покарання за надмірний розмір повідомлення. Ви можете знехтувати попередженням, але так робити не варто, оскільки великі повідомлення можуть роздратувати інших користувачів каналу або спричинити ваше від’єднання від сервера. Краще надсилати подібні повідомлення невеличкими шматками.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>На багатьох серверах, відповідно до неписаної угоди, перед повідомленнями, адресованими певному користувачеві, слід вказувати його псевдонім. У &konversation; передбачено зручну можливість автоматичного доповнення псевдонімів. Почніть вводити псевдонім користувача, а потім натисніть клавішу &Tab;. &konversation; доповнить решту псевдоніма і поставить за текстом псевдоніма двокрапку. Налаштувати можливість автоматичного доповнення можна за допомогою пункту головного меню програми <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>: у списку <guilabel
+>Поведінка</guilabel
+> виберіть <guilabel
+>Загальне</guilabel
+> і позначте пункт <guilabel
+>Режим автозавершення</guilabel
+>. </para>
+
+ <para
+>Крім того, у це поле ви можете ввести команду &irc;: введіть символ <userinput
+><command
+>/</command
+></userinput
+> і коректну команду &irc;. Див. <link linkend="irc-cmds"
+>Поширені команди &irc;</link
+>. На деяких серверах ви можете ввести команду <userinput
+><command
+>/help</command
+></userinput
+>, щоб отримати перелік всіх доступних команд, або скористатися командою <userinput
+><command
+>/help </command
+><replaceable
+>команда</replaceable
+></userinput
+>, щоб дістати довідку з певної команди. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Ви можете приєднуватися до додаткових серверів та каналів. Для кожного сервера і для кожного каналу у цьому вікні передбачено окрему вкладку. Щоб дізнатися про те, як переглянути список можливих каналів, ознайомтеся з вмістом розділу <link linkend="list-channels"
+>Показ списку доступних каналів</link
+>. Щоб приєднатися до каналу, введіть команду: <userinput
+><command
+>/join</command
+> <replaceable
+>#назва_каналу</replaceable
+></userinput
+> у рядок вводу. (Початковий символ <userinput
+>#</userinput
+> є обов’язковим.) Щоб полишити канал, введіть команду <userinput
+><command
+>/part</command
+></userinput
+>. Крім того, вкладки у цьому вікні з’являться, якщо ви відкриєте <link linkend="list-channels"
+>Список каналів</link
+>, розпочнете участь у <link linkend="query"
+>особистому спілкуванні (діалозі)</link
+>, відкриєте вікно <link linkend="urlcatcher"
+>Перехоплення &URL;</link
+> або одне чи декілька вікон <guilabel
+>Konsole</guilabel
+>. Щоб перемкнути перегляд на інше вікно, натисніть заголовок відповідної вкладки або скористайтеся прокручування коліщатка миші для циклічного пересування між вкладками. </para>
+
+<para
+>Щоб налаштувати інші параметри вкладок, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>, розгорніть список <guilabel
+>Інтерфейс</guilabel
+>, натисніть пункт <guilabel
+>Вкладки</guilabel
+> або розгорніть список <guilabel
+>Сповіщення</guilabel
+>, а потім натисніть пункт <guilabel
+>Вкладки</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Ці позначки блиматимуть, якщо на відповідній вкладці з’явилася якась не переглянута вами інформація. Блимання буде повільнішим, якщо непереглянутими повідомленнями є повідомлення, які є наслідками виконання команд <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> або зміни псевдоніма. Блимання буде швидшим у разі появи звичайних повідомлень від користувачів. Значення кольорів позначок є таким: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Канал </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Повідомлення сервера</interface
+>, <link linkend="list-channels"
+>Список каналів</link
+> або <link linkend="urlcatcher"
+>Перехоплення &URL;</link
+> </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konsole</guilabel
+> або <link linkend="dcc"
+>Стан DCC</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Особисте повідомлення (Діалог)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Натисніть, що закрити поточну вкладку. Якщо буде закрито вкладку <interface
+>Канал</interface
+>, ваш користувач полишить канал. Закриття вкладки <interface
+>Повідомлення сервера</interface
+> призведе до полишення всіх каналів, що яких ви приєдналися, закриття всіх відкритих діалогів на цьому сервері і розірвання з’єднання з сервером.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Натисніть цю кнопку, щоб змінити ваш власний псевдонім. Цю кнопку можна буде побачити лише на вкладках каналів. Щоб сховати цю кнопку, скористайтеся пунктом меню головного вікна програми <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>, перейдіть на сторінку <guilabel
+>Інтерфейс</guilabel
+>, відкрийте вкладку <guilabel
+>Вікно балачки</guilabel
+> і зніміть позначку з пункту <guilabel
+>Показувати панель для зміни власного псевдоніма</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Тут буде показано тему каналу. Якщо тема занадто довга, наведіть вказівник миші на позначку теми і затримайте вказівник миші, щоб побачити тему повністю. Змінити тему можна натисканням кнопки, розташованої ліворуч від позначки теми. Щоб сховати позначки тем каналів, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>, перейдіть на сторінку <guilabel
+>Інтерфейс</guilabel
+>, відкрийте вкладку <guilabel
+>Вікно балачки</guilabel
+> і зніміть позначку з пункту <guilabel
+>Показувати тему каналу</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>За допомогою цих кнопок буде показано поточний стан режимів каналу. Якщо кнопка перебуватиме у натиснутому стані, режим увімкнено. Якщо у вас є належні права доступу, ви зможете змінювати режими каналу за допомогою натискання цих кнопок або кнопки, розташованої ліворуч від позначки теми. Щоб сховати кнопки режимів каналу, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>, перейдіть на сторінку <guilabel
+>Інтерфейс</guilabel
+>, відкрийте вкладку <guilabel
+>Вікно балачки</guilabel
+> і зніміть позначку з пункту <guilabel
+>Показувати кнопки режимів каналу</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Ця панель називається <interface
+>Панель псевдонімів</interface
+>. Її буде показано, якщо поточна вкладка є вкладкою каналу. На панелі псевдонімів ви побачити список псевдонімів всіх користувачів, які приєдналися до каналу, зокрема у цьому списку буде і ваш псевдонім. Щоб переглянути додаткові відомості про користувача, наведіть вказівник миші на позначку його псевдоніма і затримайте його там. Спосіб показу піктограм поряд з кожним псевдонімом можна змінити за допомогою зміни теми піктограм. Докладніше про це можна дізнатися з розділу <link linkend="nickthemes"
+>Налаштування тем псевдонімів</link
+>. У темі <guilabel
+>Типова тема</guilabel
+>, показаній на наведеному вище знімку вікна, використано такі піктограми: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> звичайний користувач </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> користувач з правом голосу. Може писати повідомлення на модерованому каналі. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> напівоператор каналу </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> оператор каналу </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> власник каналу </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> адміністратор каналу </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Крім того, якщо користувач перебуває поза мережею, у куті його піктограми буде показано невеличкий годинничок. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Щоб відкрити контекстне меню зі списком дій, які ви можете виконати щодо користувача з відповідним псевдонімом, наведіть на його позначку вказівник миші і клацніть правою кнопкою миші. Ви, наприклад, можете <link linkend="dcc"
+>надіслати файл</link
+> користувачу з відповідним псевдонімом. </para>
+
+<para
+>Щоб сховати <interface
+>Панель псевдонімів</interface
+>, скористайтеся пунктом головного меню програми <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Показати список псевдонімів</guisubmenu
+> </menuchoice
+>. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Передбачено також так звані <interface
+>Швидкі кнопки</interface
+>. Типово, ці кнопки не буде показано. Щоб дізнатися про те, як наказати програмі показати ці кнопки, прочитайте розділ <link linkend="quick-buttons"
+>Налаштування швидких кнопок</link
+>. Ви можете пов’язати натискання кожної з цих кнопок з будь-якою бажаною командою.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Ви можете змінювати спосіб показу повідомлень на панелі повідомлень і вкладках діалогів. Ви, наприклад, можете змінити колір тексту повідомлень, наказати програмі відтворювати певний звук, якщо у отриманому повідомленні міститься вказаний вами рядок, або налаштувати автоматичну відповідь на повідомлення. Докладніше про це можна дізнатися з розділу <link linkend="highlighting"
+>Підсвічування повідомлень</link
+>. </para>
+</note>
+
+<note>
+<para
+>Іноді назви каналів починаються з символів <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> та <userinput
+>!</userinput
+>. Відповідно до RFC 2811, перший символ назви каналу визначає тип каналу: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> — Звичайні канали. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> — Звичайні канали. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> — Локальні канали, тобто канали, до яких можна приєднатися лише з сервера, який керує каналом. До всіх інших каналів можна приєднатися з будь-якого сервера у мережі. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> — Канали, які не підтримують режимів каналу. Це означає, що всі режими буде вимкнено, якщо не встановлено прапорець каналу «t». </para
+></listitem
+> </itemizedlist
+> Назви каналів можуть складатися не більше, ніж з 50 символів і не повинні місити пробілів, ком і символів Ctrl-G (^G або ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Швидке з’єднання</title>
+
+<para
+>Іноді, у вас може виникнути потреба у встановленні з’єднання з сервером без потреби у створенні нового запису сервера у <link linkend="serverlist"
+>списку серверів</link
+>. </para>
+
+<para
+>Скористайтеся пунктом основного меню <menuchoice
+> <guisubmenu
+>Файл</guisubmenu
+> <guisubmenu
+>Швидке з’єднання</guisubmenu
+> </menuchoice
+> on the main menu. <action
+>Програма відкриє діалогове вікно <guilabel
+>Швидке з’єднання</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно «Швидке з’єднання»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Вікно «Швидке з’єднання»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Введіть адресу сервера до поля <guilabel
+>Вузол сервера</guilabel
+>, бажаний псевдонім до поля <guilabel
+>Псевдонім</guilabel
+> і натисніть кнопку <guibutton
+>З’єднатись</guibutton
+>. Після того, як &konversation; встановить з’єднання з сервером, введіть команду <userinput
+><command
+>/join</command
+> <replaceable
+>#назва_каналу</replaceable
+></userinput
+>, щоб приєднатися до каналу. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Поширені команди &irc;</title>
+
+<para
+>Нижче наведено короткий список поширених команд &irc;. Повний список команд можна знайти у <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> або на сторінці <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Список команд, які призначено лише для керування &konversation;, наведено у розділі <link linkend="konvi-cmds"
+>Команди &konversation;</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Показує список всіх команд, доступних для використання на поточному сервері. Підтримується не всіма серверами.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>команда</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Показує довідку щодо <userinput
+><replaceable
+>команди</replaceable
+></userinput
+>. Підтримується не всіма серверами.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#канал</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Приєднатися до <userinput
+><replaceable
+>#каналу</replaceable
+></userinput
+>. Якщо такого каналу ще не існує, його буде створено, вас буде призначено оператором каналу.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Полишити поточний канал і закрити вкладку <interface
+>каналу</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#канал</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Призводить до полишення каналу <userinput
+><replaceable
+>#канал</replaceable
+></userinput
+> і закриття відповідної вкладки <interface
+>каналу</interface
+>. Синонім команди <userinput
+><command
+>/leave</command
+></userinput
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає ваш псевдонім з наступним текстом <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> на канал. Наприклад, якщо вашим псевдонімом є <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, і ви ввели <userinput
+><replaceable
+>/me п’є чай з чашки.</replaceable
+></userinput
+>, буде показано повідомлення <interface
+>Tux п’є чай з чашки.</interface
+> Якщо користувачем каналу не було увімкнено фільтрування такого типу повідомлень, він побачить ваше повідомлення саме таким. Такі повідомлення, зазвичай, використовуються для надсилання невербальної інформації, зокрема поточного емоційного стану або поточних дій користувача. Якщо ви полишаєте ваш комп’ютер на деякий час, краще скористайтеся командою <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо хтось спробує надіслати вам особисте повідомлення або запросити вас на канал, програма повідомить їм, що ви відійшли від вашої робочої станції і надішле повідомлення <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Скасовує команду <userinput
+><command
+>/away </command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Створює нову вкладку з <userinput
+><replaceable
+>псевдонімом</replaceable
+></userinput
+> користувача для конфіденційного спілкування, яке у &irc; називається <link linkend="query"
+>діалогом</link
+>. Всі повідомлення на цій вкладці зможете побачити лише ви і ваш співрозмовник.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>псевдонім</replaceable
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+>. Повідомлення побачить лише користувач з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+>. Для триваліших обмінів подібними повідомленнями використовуйте <userinput
+><command
+>/query</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає запрошення користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> на приєднання до каналу. Ця команда буде особливо корисною, якщо спілкування ведеться на каналі лише за запрошеннями.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Конфіденційні спілкування (діалоги)</title>
+
+<para
+>Особисте спілкування — це спілкування, повідомлення якого бачите лише ви та інший учасник (чи учасниця) розмови. Особисті спілкування називаються у &konversation; «діалогами». Щоб розпочати особисте спілкування, введіть команду <userinput
+><command
+>/query </command
+><replaceable
+>псевдонім</replaceable
+></userinput
+> у будь-який з рядків вводу. Тут <replaceable
+>псевдонім</replaceable
+> — це псевдонім особи, з якою ви бажаєте поспілкуватися. Крім того, ви можете навести вказівник миші на пункт псевдоніма особи на <interface
+>Панелі псевдонімів</interface
+>, клацнути правою кнопкою миші і обрати у контекстному меню пункт <menuchoice
+> <guisubmenu
+>Відкрити діалог</guisubmenu
+> </menuchoice
+>. <action
+>Програма створить нову вкладку</action
+>. Повідомте про початок діалогу надсиланням відповідного повідомлення. </para>
+
+<para
+>Діалоги подібні до каналі, але у подібному каналі можуть брати участь лише двоє: ви і ваш співрозмовник або співрозмовниця.</para>
+
+<para
+>Щоб полишити діалог, просто закрийте вкладку. Але зауважте, що якщо ваш співрозмовник надішле наступне повідомлення у діалог, вкладку буде знову відкрито.</para>
+
+<para
+>Щоб полишити всі діалоги, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Закрити всі відкриті діалоги</guisubmenu
+> </menuchoice
+> або просто натисканням клавіші <keycap
+>F11</keycap
+>.</para>
+
+<para
+>Якщо хтось розпочне з вами діалог, &konversation; створить нову вкладку з назвою — псевдонімом співрозмовника. Якщо ви не бажаєте спілкуватися з цією особою, закрийте цю вкладку. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Налаштування сповіщень</title>
+
+<para
+><guilabel
+>Сповіщення</guilabel
+> — це дії, які &konversation; виконуватиме у відповідь на якусь подію. Припустімо, що ви запустили &konversation;, але мінімізували або сховали вікно програми на вікнами інших програм стільниці. Звичайно ж, вам захочеться дізнатися про бажання когось поспілкуватися з вами або приєднання до каналу вашого приятеля. Зробити це можна за допомогою сповіщень. </para>
+
+<para
+>Щоб налаштувати сповіщення, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати сповіщення</guisubmenu
+> </menuchoice
+>. <action
+>Програма відкриє діалогове вікно <guilabel
+>Параметри сповіщень</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно «Параметри сповіщень».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вікно «Параметри сповіщень»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Натисніть, щоб обрати подію.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Позначте пункти тих типів сповіщень, які слід виконувати програмі у відповідь на подію. (<guilabel
+>Позначити елемент смужки задач</guilabel
+> означає, що у відповідь на подію почне блимати запис на панелі задач.)</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Повторіть процедуру, обравши іншу подію, позначте потрібні сповіщення. Після налаштування всіх бажаних сповіщень натисніть кнопку <guibutton
+>Гаразд</guibutton
+>.</para>
+
+<para
+>Після налаштування сповіщень ви можете вмикати або вимикати всі сповіщення за допомогою пункту головного меню <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Увімкнути сповіщення</guisubmenu
+> </menuchoice
+>. </para>
+
+<tip
+><para
+>Ви можете наказати програмі повідомляти вам про те, що хтось згадав ваш псевдонім у повідомленні, за допомогою <link linkend="highlighting"
+>можливості підсвічування</link
+> &konversation;.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Спостереження за тим, хто перебуває у мережі</title>
+
+<para
+>&konversation; повідомлятиме вас про те, чи з’єднано ваших приятелів з мережею &irc;, чи ні. </para>
+
+<para
+>Назва мережі &irc; потрібна, оскільки псевдонім є унікальним лише в межах певної мережі &irc;. Певний псевдонім у двох різних мережах &irc; не обов’язково належить одній особі, але однаковий псевдонім на двох різних серверах однієї мережі &irc;, загалом кажучи, має належати одній особі.</para>
+
+<note
+><para
+>Ось чому важливо використовувати єдину <guilabel
+>Мережу</guilabel
+> для всіх серверів у одній мережі &irc; під час <link linkend="serverlist"
+>визначення мереж, серверів і каналів з автоматичним приєднанням</link
+>.</para
+></note>
+
+<para
+>Щоб задіяти можливість спостереження, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Спостереження за псевдонімами</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відриє вікно <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Псевдоніми зі спостереженням.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Псевдоніми зі спостереженням</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>У цьому списку буде перелічено псевдоніми з вашого списку спостереження. Список буде впорядковано за мережами &irc; пунктів. Якщо у списку не буде жодного пункту псевдоніма, ви або не вказали жодного псевдоніма для спостереження, або вам слід задіяти можливість спостереження за псевдонімами (див. нижче). Щоб побачити канали, до яких приєднався користувач з відповідним псевдонімом, розгорніть його список. Піктограми поряд з кожною з позначок каналів збігаються з піктограмами, які буде показано на <interface
+>Панелі псевдонімів</interface
+> у вікні <link linkend="channel-screen-tour"
+>каналу</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>Тут буде показано відомості щодо псевдоніма. Під час першого відкриття вікна <guilabel
+>Псевдоніми зі спостереженням</guilabel
+> цих відомостей буде небагато. Кожні 20 секунд програма автоматично надсилатиме одну команду <userinput
+><command
+>WHOIS</command
+></userinput
+> на сервер, щоб отримати відомості щодо псевдонімів, відомостей про які у програми ще немає. Надсилання запитів продовжуватиметься до отримання даних щодо всіх псевдонімів зі списку. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Щоб додати один псевдонім для спостереження, відкрийте контекстне меню <guilabel
+>Списку псевдонімів</guilabel
+> клацанням правою кнопкою миші на позначці псевдоніма і виберіть пункт <guilabel
+>Додати до списку спостереження</guilabel
+>. Якщо ви хочете додати одразу декілька псевдонімів, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>, розгорніть список <guilabel
+>Сповіщення</guilabel
+> і натисніть пункт <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>. У відповідь буде відкрито сторінку <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Псевдоніми зі спостереженням</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Псевдоніми зі спостереженням</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Позначте цей пункт, щоб задіяти можливість спостереження за псевдонімом.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Якщо ви бажаєте, щоб вікно <guilabel
+>Псевдоніми зі спостереженням</guilabel
+> було автоматично показано після запуску &konversation;, позначте цей пункт.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>Ви можете навести вказівник миші на пункт псевдоніма у вікні <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>, зразок якого наведено вище, а потім двічі клацнути лівою кнопкою миші, щоб надіслати вказану команду на сервер. <userinput
+><command
+>%u</command
+></userinput
+> буде замінено на псевдонім. В кінці команди слід вказати <userinput
+><command
+>%n</command
+></userinput
+>.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>Дані для <guilabel
+>Псевдоніми зі спостереженням</guilabel
+> буде отримано регулярним опитуванням сервера. За допомогою цього поля можна встановити частоту такого опитування. Намагайтеся не використовувати значення, менші за 20 секунд, оскільки використання таких значень призводить до значного навантаження на сервер.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Після завершення додавання або вилучення псевдонімів натисніть кнопку <guibutton
+>Гаразд</guibutton
+>.</para>
+
+<para
+><emphasis
+>Зауваження.</emphasis
+> На опитування сервера і отримання даних псевдонімів під час кожного відкриття вікна <guilabel
+>Спостереження за псевдонімами</guilabel
+> може знадобитися певний час. Зазвичай, на цей час вам слід залишити вікно <guilabel
+>Псевдоніми зі спостереженням</guilabel
+> відкритим. </para>
+
+<para
+>Крім того, &konversation; показує повідомлення для всіх <link linkend="channel-screen-tour"
+>каналів</link
+> про приєднання або розірвання зв’язку з сервером всіх користувачів з вашого списку <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>. Це повідомлення виглядає десь так: </para>
+
+<para
+><computeroutput
+>[17:52] [Notify] psn у мережі (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Підсвічування повідомлень</title>
+
+<para
+>Ви можете керувати способом, у який повідомлення буде показано на каналі або у вікнах діалогів.</para>
+
+<para
+>Щоб задіяти можливість підсвічування, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати &konversation;</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь на вибір цього пункту програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно «Підсвічування».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вікно «Підсвічування»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Натисніть, щоб наказати програмі відкрити вікно <guilabel
+>Підсвічування</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Натисніть, щоб додати новий пункт до <guilabel
+>Списку підсвічування</guilabel
+>. Після вибору пункту у списку ви зможете змінити його параметри за допомогою панелі, розташованої нижче.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Тут ви можете ввести зразок рядка. Будь-яке повідомлення, що відповідатиме цьому зразку у будь-якій частині повідомлення, буде підсвічено. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Якщо у повідомленні буде знайдено вказаний вами шаблон, символи цього повідомлення буде зафарбовано у вказаний колір.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>Якщо бажаєте, можете наказати &konversation; відтворити певний звук, коли у повідомленні буде знайдено вказаний шаблон. Натисніть кнопку, щоб обрати звуковий файл, який буде відтворено. За допомогою натискання кнопки перевірки ви зможете переконатися, що звук відтворюється правильно.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Якщо ви бажаєте, щоб програма &konversation; автоматично надсилала відповіді на повідомлення, яке містить підрядок за вказаним шаблоном, введіть автоматичну відповідь у це поле. Будьте обережні з використанням цієї можливості, оскільки вона може дратувати інших користувачів &irc; надмірною кількістю повідомлень. Крім того, у це поле ви можете ввести команду &irc; або &konversation;.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Якщо ви налаштувати звуки для якогось з ваших підсвічувань, ви можете вимкнути їх: зніміть позначку з цього пункту.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Програма виконуватиме пошук підсвічених повідомлень лише у вікнах спілкування, вказаних у списку цього поля, або у всіх вікнах, якщо у полі не буде вказано жодного вікна. Записи у списку вікон слід відокремлювати комами.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Якщо ви позначите цей пункт, кожного разу, коли хтось згадуватиме ваш псевдонім у повідомленні, повідомлення буде показано кольором, який ви вкажете праворуч.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Зазвичай, підсвічування не застосовується до повідомлень, введених вами. Якщо ви бажаєте, щоб програма застосувала його до таких повідомлень, позначте цей пункт і вкажіть колір праворуч.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Налаштування екранної панелі (&osd;)</title>
+
+<para
+><acronym
+>Екранна панель</acronym
+> є унікальною можливістю &konversation;. Якщо буде увімкнено екранну панель, повідомлення з каналів з’являтимуться на вашій стільниці, навіть якщо вікно програми &konversation; буде мінімізовано. Нижче наведено приклад такої екранної панелі. Повідомлення у верхній лівій частині екрана показано програмою &konversation;, яка працює у згорнутому режимі у системному лотку.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Приклад екранної панелі</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Приклад екранної панелі</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Щоб задіяти можливості екранної панелі, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати &konversation;</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь на вибір цього пункту програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно екранної панелі.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вікно екранної панелі</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Натисніть, щоб наказати програмі розгорнути список <guilabel
+>Сповіщення</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Натисніть, щоб перейти до вікна <guilabel
+>Екранна панель</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Позначте цей пункт, що задіяти екранну панель.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Натисніть цю кнопку, щоб обрати шрифт для екранної панелі. (<emphasis
+>Зауваження.</emphasis
+> Не всі шрифти придатні для цієї панелі. Відомо, що придатними є шрифти Luxi Sans 22 і Impact 22.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Позначте пункти тих типів повідомлень, які ви бажаєте бачити на екрані.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Перетягніть екранну панель на бажану позицію, а потім натисніть кнопку <guibutton
+>Застосувати</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Надсилання розфарбованих повідомлень</title>
+
+<para
+>Ви можете розфарбувати повідомлення, які ви надсилаєте на певний канал. Почніть вводити повідомлення у <interface
+>Рядок вводу</interface
+> якогось каналу. Потім натисніть кнопку <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>Кнопка вставлення кольорів &irc;</phrase
+> </textobject
+> </inlinemediaobject
+> кнопку <guibutton
+>Колір &irc;</guibutton
+> або скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Вставка</guisubmenu
+> <guisubmenu
+>Колір &irc;</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє вікно <guilabel
+>Вибір кольорів &irc;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно вибору кольорів &irc;.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Вікно вибору кольорів &irc;</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Оберіть колір і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>. Продовжіть введення вашого повідомлення у <interface
+>Рядок вводу</interface
+>. Щоб знову змінити колір, натисніть кнопку <guibutton
+>Колір &irc;</guibutton
+>. Оберіть інший колір і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Налаштування тем псевдонімів</title>
+
+<para
+>Ви можете змінити піктограми, показані поряд з пунктом псевдоніма на <interface
+>Панелі псевдонімів</interface
+> вкладок каналів. Щоб змінити тему псевдонімів, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>.</action
+> Розгорніть список <guilabel
+>Інтерфейс</guilabel
+>, а потім натисніть пункт <guilabel
+>Теми списку псевдонімів</guilabel
+>, щоб відкрити сторінку <guilabel
+>Теми списку псевдонімів</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно тем.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вікно тем</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Натисніть, щоб перейти до вікна <guilabel
+>Тем списку псевдонімів</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Вибір теми.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Тут буде показано зразки піктограм у обраній темі.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Якщо ви отримали тему піктограм зі сторонніх джерел, натисніть, щоб встановити її.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Налаштування швидких кнопок</title>
+
+<para
+>Після вмикання можливості <interface
+>Швидкі кнопки</interface
+> у <link linkend="channel-screen-tour"
+>Головному</link
+> вікні з’явиться вісім <interface
+>Швидких кнопок</interface
+>. Увімкнути показ швидких кнопок можна так: скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>. </action
+>Розгорніть список <guilabel
+>Інтерфейс</guilabel
+>, а потім позначте у ньому пункт <guilabel
+>Вікно балачки</guilabel
+>. Позначте пункт <guilabel
+>Показувати швидкі кнопки</guilabel
+> і натисніть кнопку <guibutton
+>Гаразд</guibutton
+>. </para>
+
+<para
+>Ви можете налаштувати ці кнопки так, щоб у відповідь на їх натискання програма виконувала ваші улюблені команди &irc;. Щоб виконати подібне налаштування, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>.</action
+> Розгорніть список <guilabel
+>Інтерфейс</guilabel
+> і натисніть пункт <guilabel
+>Швидкі кнопки</guilabel
+>, щоб відкрити сторінку <guilabel
+>Швидких кнопок</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вікно «Швидкі кнопки»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Вікно «Швидкі кнопки»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>У програмі передбачено 8 типових <interface
+>Швидких кнопок</interface
+>. Наведіть вказівник на пункт швидкої кнопки і клацніть лівою кнопкою миші, щоб змінити параметри кнопки, або скористайтеся кнопками у правій частині списку для додавання або вилучення <interface
+>Швидких кнопок</interface
+>. У полі <guilabel
+>Назва кнопки</guilabel
+> ви можете вказати напис, який буде показано на кнопці у  <link linkend="channel-screen-tour"
+>головному</link
+> вікні. Намагайтеся використовувати короткі назви. Поле <guilabel
+>Дія кнопки</guilabel
+> призначено для визначення команди, яку буде виконано у відповідь на натискання <interface
+>Швидкої кнопки</interface
+>. На сторінці буде подано підказки щодо створення дій. </para>
+
+<para
+>Натисніть кнопку <guibutton
+>Гаразд</guibutton
+>, щоб завершити внесення змін. </para>
+
+<para
+>Приклад:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Назва кнопки</guilabel
+>: <userinput
+><replaceable
+>Повідомлення</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Дія кнопки</guilabel
+>: <userinput
+><replaceable
+>Повідомлення %u </replaceable
+></userinput
+> (після <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> має бути пробіл) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Скористатися цією кнопкою у <link linkend="channel-screen-tour"
+>головному</link
+> вікні можна так: наведіть вказівник на пункт псевдоніма на <interface
+>Панелі псевдонімів</interface
+>, клацніть лівою кнопкою миші, а потім натисніть кнопку. У <interface
+>Рядку вводу</interface
+> з’явиться повідомлення <computeroutput
+>/MSG </computeroutput
+>, за яким буде вказано обраний псевдонім. Введіть повідомлення, яке ви бажаєте надіслати відповідній особі і натисніть &Enter;. Надіслане повідомлення зможе прочитати лише відповідний користувач. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Надсилання і отримування файлів</title>
+
+<para
+>Ви можете надсилати файли іншим користувачам у мережі за допомогою &irc;, вони також можуть надсилати вам файли. </para>
+
+<para>
+<emphasis
+>ПОПЕРЕДЖЕННЯ: Ніколи не відкривайте файли, надіслані вам сторонніми особами, якщо ви не довіряєте тим, хто їх надіслав. У файлах може міститися вірус.</emphasis>
+</para>
+
+<para
+>Щоб надіслати файл комусь з учасників каналу, наведіть вказівник на пункт учасника на <interface
+>Панелі псевдонімів</interface
+> <link linkend="channel-screen-tour"
+>Головного</link
+> вікна і клацніть правою кнопкою миші. Оберіть у контекстному меню пункт <menuchoice
+> <guisubmenu
+>Надіслати файл</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє діалогове вікно, за допомогою якого ви зможете обрати файл, який слід надіслати.</action
+> Після підтвердження надсилання у головному вікні з’явиться нова вкладка <guilabel
+>Стан DCC</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка «Стан DCC»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка «Стан DCC»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Тут буде показано псевдонім отримувача і назву файла.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>У стовпчику <guilabel
+>Стан</guilabel
+> буде вказано стан надсилання або отримання файла у такий спосіб:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Приготування</guilabel>
+		</term>
+		<listitem>
+			<para
+>Перевірка можливості відновлення перенесення файлів у разі отримання файлів або пошук даних для надсилання у разі надсилання файлів. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>З'єднання</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; намагається встановити з’єднання з комп’ютером отримувача. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Надсилання</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; надсилає файл на комп’ютер отримувача. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Отримування</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; отримує файл з комп’ютера відправника. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Завершено</guilabel>
+		</term>
+		<listitem>
+			<para
+>Файл було успішно перенесено. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Очікування</guilabel>
+		</term>
+		<listitem>
+			<para
+>Передані дані очікують на підтвердження чи відкидання з боку співрозмовника. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Припинено</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ви натиснули кнопку <guibutton
+>Перервати</guibutton
+> або передавання було перервано адресатом. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Невдача</guilabel>
+		</term>
+		<listitem>
+			<para
+>Сталася помилка. Спроба перенесення файла зазнала невдачі. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>У черзі</guilabel>
+		</term>
+		<listitem>
+			<para
+>Передані дані очікують на ваше підтвердження чи відкидання. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Поновлення</guilabel>
+		</term>
+		<listitem>
+			<para
+>Якщо після того, як передавання буде розпочато, програма виявить, що файл, який ви надсилаєте, вже існує у системі отримувача, програма надішле отримувачеві запит <interface
+>Файл з цією назвою вже існує. Відновити перенесення?</interface
+> Подібний стан позначає, що користувач відновив перенесення. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Якщо хтось спробує надіслати вам файл, програма створить вкладку <guilabel
+>Стан DCC</guilabel
+> (якщо цієї вкладки ще не було створено). Щоб перейти на вкладку <guilabel
+>Стан DCC</guilabel
+> наведіть вказівник миші на її заголовок і клацніть лівою кнопкою миші. Наведіть вказівник на позначку файла і клацніть лівою кнопкою миші, щоб позначити його, а потім натисніть цю кнопку, щоб підтвердити отримання файла і розпочати перенесення. <emphasis
+>Зауваження.</emphasis
+> Ви можете налаштувати &konversation; так, щоб програма автоматично підтверджувала отримання файлів від інших користувачів. Для цього скористайтеся сторінкою <guilabel
+>DCC</guilabel
+> діалогового вікна, яке можна відкрити за допомогою пункту меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+></menuchoice
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Якщо у вас виникають проблеми з надсиланням або отриманням файлів, ці проблеми може бути пов’язано з тим, що ваш брандмауер або маршрутизатор блокують порти DCC. Див. розділ <link linkend="faq"
+>Питання та відповіді</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Перехоплення &URL; з повідомлень</title>
+
+<para
+>На будь-якому з <link linkend="channel-screen-tour"
+>каналів</link
+> користувачі час від часу повідомляють про адреси &URL; цікавих сайтів або інших ресурсів інтернету. Ви можете навести вказівник миші на запис подібної адреси і двічі клацнути лівою кнопкою миші. У відповідь &konversation; запустить програму, пов’язану з адресами відповідного типу. Назва запущеної програми залежатиме від типу &MIME; адреси &URL;. Наприклад, якщо адреса &URL; починається з <interface
+>http:</interface
+>, буде запущено типовий переглядач інтернету, у якому буде відкрито відповідну вебсторінку. (Ви також можете самі вказати <link linkend="webbrowser"
+>переглядач інтернету</link
+>, який слід використовувати.) Якщо через велику кількість повідомлень адреса &URL; вийде за межі екрана, у вас можуть виникнути проблеми з її повторним відшуканням. &konversation; може зберігати зручний список всіх адрес &URL;. Щоб задіяти цю можливість, оберіть пункт головного вікна програми <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Перехоплення &URL;</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма створить нову вкладку з назвою <guilabel
+>Перехоплення &URL;</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка «Перехоплення &URL;».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка «Перехоплення &URL;».</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Тут ви побачите список адрес &URL; перехоплених з часу запуску &konversation;. У стовпчику <guilabel
+>Від</guilabel
+> буде показано псевдонім особи, яка надіслала повідомлення з адресою &URL;, або назву каналу чи сервера, у дописі на якому було виявлено адресу. Адреси &URL;, які було перехоплено з повідомлень про приєднання або полишення каналу, показано не буде. Наведіть вказівник на пункт адреси &URL; і клацніть лівою кнопкою миші, щоб позначити пункт цієї адреси.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Натисніть, щоб запустити програму, пов’язану з типом позначеної адреси &URL;. Назва запущеної програми залежатиме від типу &MIME; адреси &URL;. Наприклад, якщо адреса &URL; починається з <interface
+>http:</interface
+>, буде запущено типовий переглядач інтернету &kde;, у якому буде відкрито відповідну вебсторінку. Для вебсторінок ви можете самі вказати <link linkend="webbrowser"
+>переглядач інтернету</link
+>, який слід використовувати.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Натисніть, щоб скопіювати вибраний &URL; до буфера обміну даними.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Натисніть, щоб вилучити вибрану адресу &URL; зі списку.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Натисніть, щоб зберегти список адрес &URL; до файла.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Натисніть, щоб спорожнити список.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Визначення бажаного переглядача Тенет</title>
+
+<para
+>Якщо ви натиснете позначку адреси &URL; у будь-якому з вікон &konversation;, програма запустить типову програму, пов’язану з типом &MIME; адреси &URL;. Наприклад, якщо ви натиснете пункт адреси &URL;, яка починається з <interface
+>http</interface
+>, для перегляду вебсторінки буде запущено &konqueror;. Ви можете вказати програму, відмінну від типової програми. Ви, наприклад, можете скористатися для перегляду адреси <application
+>Firefox</application
+>. </para>
+
+<para
+>Щоб обрати інший переглядач інтернету, скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати &konversation;</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь на вибір цього пункту програма відкриє діалогове вікно <guilabel
+>Налаштувати</guilabel
+>.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Сторінка «Загальне»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Сторінка «Загальне»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Натисніть, щоб відкрити вікно <guilabel
+>Загальне</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Натисніть, щоб вказати програмі, що ви бажаєте скористатися нетиповим переглядачем Тенет.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Введіть команду, якою слід запускати потрібний вам переглядач інтернету. Після натискання пункту&URL; <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> буде замінено відповідною адресою &URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Зауваження.</emphasis
+> Значення параметра переглядача інтернету не стосуватиметься адрес <interface
+>mailto:</interface
+>. Для адрес <interface
+>mailto:</interface
+> програма завжди запускатиме типовий клієнт електронної пошти. </para>
+
+<para
+>Натисніть кнопку <guibutton
+>Застосувати</guibutton
+>, щоб наказати програмі зберегти всі внесені вами зміни. Щоб ці зміни набули чинності, вам доведеться повторно з’єднатися з усіма серверами і каналами. Найпростішим способом виконати таке повторне з’єднання є перезапуск &konversation;. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Позначення у каналах і журналах діалогів</title>
+
+<para
+>Для того, щоб пришвидшити пошук потрібної інформації, ви можете вставити позначку у вікно <link linkend="channel-screen-tour"
+>каналу</link
+> або <link linkend="query"
+>діалогу</link
+>. Вставити таку позначку можна за допомогою пункту <menuchoice
+> <guisubmenu
+>Вставка</guisubmenu
+> <guisubmenu
+>Лінія позначки</guisubmenu
+> </menuchoice
+> або натискання комбінації клавіш <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>У відповідь у нижній частині тексту у вікні з’явиться лінія. Цю лінію буде прив’язано до решти тексту на екрані.</action
+> </para>
+
+<para
+>Щоб змусити програму додавати <interface
+>Лінію позначки</interface
+> на всіх каналах і у всіх діалогах одночасно, скористайтеся пунктом <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> </menuchoice
+> головного меню програми, розгорніть список <guilabel
+>Поведінка</guilabel
+>, натисніть пункт <guilabel
+>Вікно балачки</guilabel
+> і позначте пункт <guilabel
+>Показувати рядки, вставлені вручну, у всіх вікнах балачок</guilabel
+>. </para>
+
+<para
+>Щоб дізнатися, як наказати &konversation; автоматично вставляти <interface
+>Лінію позначки</interface
+> кожного разу, коли ви виконуєте команду <userinput
+><command
+>/away</command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+>, прочитайте розділ <link linkend="identity-away"
+>Налаштування вашого профілю</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Журналювання</title>
+
+<para
+>Якщо ви увімкнете журналювання, &konversation; створюватиме журнали для всіх сеансів <interface
+>Серверів</interface
+>, <link linkend="channel-screen-tour"
+>Каналів</link
+> і <link linkend="query"
+>Особистого спілкування (діалогів)</link
+>. Запис кожного сеансу зберігатиметься у окремому файли на диску. Під час повторного відкриття того самого сеансу &konversation; почне додавати записи до існуючого журналу. </para>
+
+<para
+>Під час повторного відкриття сеансу програма прочитає приблизно 1024 символи з попереднього журналу сеансу і покаже їх на екрані. </para>
+
+<para
+>Під час появи нових повідомлень у сеансі, старі повідомлення посуватимуться вгору області перегляду. Ви можете гортанням повернути ці повідомлення у видиму область. З метою обмеження споживання оперативної пам’яті найстаріші повідомлення у списку буде відкинуто. Подібне обмеження називається <guilabel
+>Обмеженням буфера</guilabel
+>. Повідомлення, які зникають з перегляду через <guilabel
+>Обмеження буфера</guilabel
+> можна буде прочитати у файлі журналу, якщо ви увімкнули його ведення.</para>
+
+<para
+>Щоб переглянути файл журналу сеансу, наведіть вказівник миші на вкладку сеансу і клацніть лівою кнопкою миші, щоб зробити сеанс поточним, а потім скористайтеся пунктом меню <menuchoice
+> <guisubmenu
+>Вікно</guisubmenu
+> <guisubmenu
+>Відкрити файл журналу</guisubmenu
+> </menuchoice
+>. <action
+>У відповідь програма відкриє нову вкладку</action
+>, на якій буде показано вміст файла журналу. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Файл журналу</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Файл журналу</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Тут буде показано повідомлення з файла журналу. Найстаріші повідомлення буде показано у верхній частині списку, а найсвіжіші — внизу.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Натисніть цю кнопку для того, щоб зберегти журнал до іншого файла.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Натисніть цю кнопку, щоб наказати програмі оновити дані у перегляді файла журналу. Доки ви переглядатимете файл журналу, у відповідному сеансі можуть з’явитися нові повідомлення, які <emphasis
+>не</emphasis
+> буде автоматично додано до перегляду файла журналу. За допомогою натискання цієї кнопки ви можете переглянути такі повідомлення.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Натисніть, щоб спорожнити показ файла журналу і файл журналу на диску.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>За допомогою цього поля ви можете визначити максимальний розмір файла журналу. Останнє з визначених значень розміру журналу буде використано під час наступного запуску &konversation;. Для кожного з файлів журналу можна вказувати розмір файла окремо.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+>Змінити значення <guilabel
+>Обмеження буфера</guilabel
+> можна так: скористайтеся пунктом <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати &konversation;</guisubmenu
+> </menuchoice
+> головного меню програми, розгорніть список <guilabel
+>Поведінка</guilabel
+> і натисніть пункт <guilabel
+>Вікно балачки</guilabel
+>. На відповідній сторінці ви побачите пункт <guilabel
+>Обмеження буфера</guilabel
+>. Якщо ви встановите значення <guilabel
+>Без обмеження</guilabel
+> (тобто 0), програма не вилучатиме повідомлення з буфера. </para>
+
+<para
+>Ви можете увімкнути або вимкнути журналювання та встановити інші його параметри, якщо скористаєтеся пунктом меню <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати &konversation;</guisubmenu
+> </menuchoice
+>, розгорнете список <guilabel
+>Поведінка</guilabel
+> і натиснете пункт <guilabel
+>Журналювання</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>Команди &konversation;</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Наведені нижче команди виконуються &konversation; і можуть відрізнятися від стандартних команд &irc;. Елементи, вказані у квадратних дужках, є необов’язковими. Елементи, відокремлені вертикальною рискою (|), є варіантами форм команди. Команди, яких немає у цьому списку, буде надіслано на сервер без обробки. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає ваш псевдонім з наступним текстом <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> на канал. Наприклад, якщо вашим псевдонімом є <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, і ви ввели <userinput
+><replaceable
+>/me п’є чай з чашки.</replaceable
+></userinput
+>, буде показано повідомлення <interface
+>Tux п’є чай з чашки.</interface
+> Якщо користувачем каналу не було увімкнено фільтрування такого типу повідомлень, він побачить ваше повідомлення саме таким. Такі повідомлення, зазвичай, використовуються для надсилання невербальної інформації, зокрема поточного емоційного стану або поточних дій користувача. Якщо ви полишаєте ваш комп’ютер на деякий час, краще скористайтеся командою <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подібна до наведеної вище команди <userinput
+><command
+>/me</command
+></userinput
+>, але повідомлення буде надіслано до всіх каналів і діалогів, які ви відкрили на всіх серверах зі встановленим у &konversation; з’єднанням.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>канал</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує приєднання до <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+>. Якщо сервер дозволяє створення каналів і каналу з вказаною назвою не існує, такий канал буде створено, а вас призначено оператором каналу. Якщо для приєднання до каналу потрібен пароль, вкажіть цей <userinput
+><replaceable
+>пароль</replaceable
+></userinput
+>. Назви більшості каналів мають починатися з <userinput
+><replaceable
+>#</replaceable
+></userinput
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>канал</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Те саме, що і <userinput
+><command
+>/join</command
+></userinput
+> вище.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>[причина]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує вихід з <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+> з зазначенням <userinput
+><replaceable
+>причини</replaceable
+></userinput
+> і закриває відповідну вкладку <interface
+>каналу</interface
+>. Якщо поточною вкладкою є вкладка каналу або діалогу, вам достатньо ввести команду <userinput
+><command
+>/part</command
+></userinput
+>, — програма виконає вихід з каналу з типовою причиною, яку ви можете зазначити у <link linkend="identity"
+>параметрах</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>[причина]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Те саме, що і <userinput
+><command
+>/part</command
+></userinput
+> вище.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Якщо ви ввели цю команду на будь-якій з вкладок каналу, діалогу або DCC, програма розірве з’єднання з відповідним сервером і закриє всі вкладки каналів, діалогів і DCC, відкритих на цьому сервері.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>псевдонім|канал</replaceable
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> або всім на <userinput
+><replaceable
+>каналі</replaceable
+></userinput
+>. Нижче наведено приклад вмісту вашої вкладки каналів.</para>
+
+<para
+><computeroutput
+>[17:14] [Сповіщення] Надсилання сповіщення «Здається зрозумів» до #konversation</computeroutput
+></para>
+
+<para
+>А ось що побачать отримувачі:</para>
+
+<para
+><computeroutput
+>[17:15] [Зауваження] -Eisfuchs- Здається зрозумів</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Створює нову вкладку з <userinput
+><replaceable
+>псевдонімом</replaceable
+></userinput
+> користувача для особистого спілкування, також відомого у &irc; як <link linkend="query"
+>Діалог</link
+>. Все написане на цій вкладці зможете переглядати лише ви та інший учасник або учасниця діалогу. Ви можете вказати декілька псевдонімів, відокремлених пробілами. У відповідь програма відкриє вкладку діалогу для кожного з вказаних псевдонімів. Кожна з таких вкладок діалогу буде конфіденційною вкладкою, за спілкуванням на якій зможете спостерігати лише ви і ваш співрозмовник (співрозмовниця).</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>псевдонім|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає особисте повідомлення користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> або всім користувачам <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+>. На відміну від команди <userinput
+><command
+>/query</command
+></userinput
+> програма не відкриває нової вкладки. Якщо текст <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> починається з <userinput
+><command
+>/me </command
+></userinput
+>, формат повідомлення збігатиметься з форматом повідомлення у команді <userinput
+><command
+>/me</command
+></userinput
+>.</para>
+
+<para
+>Приклади</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Мені потрібна довідка щодо команди msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Випущено нову версію Konvi!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me зараз створює підручник.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>псевдонім|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подібна до команди <userinput
+><command
+>/msg</command
+></userinput
+>, але повідомлення не буде показано у вашому вікні. Ця команда корисна для запобігання показу конфіденційної інформації (паролів тощо) на вашому екрані і запису подібних повідомлень до журналу.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>псевдонім|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подібна до наведеної вище команди <userinput
+><command
+>/msg</command
+></userinput
+>, але повідомлення буде надіслано до всіх каналів і діалогів, які ви відкрили на всіх серверах зі встановленим у &konversation; з’єднанням.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо команду було введено на вкладці каналу, програма виконає спробу надати <userinput
+><replaceable
+>псевдонімові</replaceable
+></userinput
+> права доступу оператора каналу. Ця команда може не спрацювати, якщо ваш користувач не має достатніх прав доступу на каналі (ваш користувач сам має бути оператором). Ви можете ввести декілька псевдонімів, відокремлених пробілами.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо цю команду було введено на вкладці каналу, забирає повноваження оператора у користувача з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+>. Ви можете вказати декілька псевдонімів, відокремлених комами.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[псевдонім]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надає користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> права доступу оператора &irc; (адміністратора). Команда працюватиме, лише якщо псевдонім міститься у списку рядка O: сервера. Оператори &irc; мають права доступу до команди <userinput
+><command
+>/kill</command
+></userinput
+> псевдонім, можуть виконувати команду <userinput
+><command
+>/connect</command
+></userinput
+> для серверів мережі &irc; тощо. Якщо не було вказано <userinput
+><replaceable
+>псевдоніма</replaceable
+></userinput
+>, команда спробує надати вам права доступу оператора &irc;. За будь-яких варіантів вам буде надіслано запит на ваше ім’я користувача оператора &irc; та пароль.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Не деяких каналах (каналах з прапорцем +m) користувачі не можуть надсилати повідомлення, якщо не мають права голосу. За допомогою цієї команди можна виконати спробу надання користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> права голосу. Для успішного виконання цієї команди вам будуть потрібні права доступу оператора каналу. Здебільшого, цією командою користуються оператори модерованих каналів.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>псевдонім</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Забрати у користувача <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> право голосу на каналі.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[канал]</replaceable
+> <replaceable
+>[повідомлення]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує спробу встановити темою <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+> <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+>. Якщо команду введено на вкладці каналу, <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можна не зазначати, — типовим каналом вважатиметься канал вкладки. Якщо не вказувати <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+>, програма покаже поточну тему каналу. Спроба зміни теми каналу може зазнати невдачі, якщо у вас немає потрібних прав доступу.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо хтось спробує надіслати вам особисте повідомлення або запросити вас на канал, програма повідомить їм, що вас немає за комп’ютером з певної <userinput
+><replaceable
+>причини</replaceable
+></userinput
+>. Щоб повернути програму до звичайного режиму роботи, введіть команду <userinput
+><command
+>/away</command
+></userinput
+> без зазначення причини.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+> <replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подібна до наведеної вище команди <userinput
+><command
+>/away</command
+></userinput
+>, але команду буде надіслано до всіх серверів зі встановленим у &konversation; з’єднанням.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>псевдонім</replaceable
+> <replaceable
+>[канал]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає запрошення користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> на приєднання до <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+>. Ця команда буде особливо корисною, якщо спілкування ведеться на каналі лише за запрошеннями. Якщо команду було введено на вкладці каналу, <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можна не вказувати.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>скрипт</replaceable
+> <replaceable
+>[параметри]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує сумісний з &konversation; скрипт оболонки з назвою <userinput
+><replaceable
+>скрипт</replaceable
+></userinput
+> з передаванням йому <userinput
+><replaceable
+>параметрів</replaceable
+></userinput
+>. Докладніші відомості щодо використання і написання скриптів можна отримати з розділу <link linkend="scripting"
+>Скрипти</link
+>.</para>
+<para
+>Приклади:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Надсилає на канал дані щодо номерів версій &konversation;, &Qt;, &kf5; та Плазми у вашій системі.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Надсилає рядок вашою версією &Linux; (дані, виведені командою <userinput
+>uname -a</userinput
+>) на канал.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[псевдонім]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Додає або вилучає <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> з вашого списку <link linkend="nicksonline"
+>Спостереження за псевдонімами</link
+>. Якщо псевдонім уже зазначено у списку, його буде вилучено. Якщо псевдоніма у списку немає, його буде додано. Якщо <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> не буде вказано, програма покаже поточний список спостереження за псевдонімами.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>псевдонім</replaceable
+> <replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо команду було введено на вкладці каналу, програма виконає спробу викинути користувача з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> з каналу з причини <userinput
+><replaceable
+>причина</replaceable
+></userinput
+>. Якщо <userinput
+><replaceable
+>причину</replaceable
+></userinput
+> не було вказано, буде використано причину, вказану у <link linkend="identity"
+>Параметрах</link
+>. Цією командою можна користуватися лише на вкладці каналу.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[канал]</replaceable
+> <replaceable
+>користувач</replaceable
+>|<replaceable
+>маска</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує спробу заблокувати <userinput
+><replaceable
+>користувача</replaceable
+></userinput
+> або <userinput
+><replaceable
+>маски</replaceable
+></userinput
+> на <userinput
+><replaceable
+>каналі</replaceable
+></userinput
+>. Якщо команду було введено на вкладці каналу, параметр <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можна пропустити. Докладніше про вузли, домени і маски можна дізнатися з документів на сайті <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Щоб отримати список заблокованих на каналі користувачів, введіть команду <userinput
+><command
+>/mode </command
+><replaceable
+>канал</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>шаблон</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Скасовує попереднє блокування на каналі. Якщо команду було введено на вкладці каналу, параметр <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можна пропустити. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>псевдонім</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Додає <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> до вашого списку ігнорування. Ви можете вказати декілька псевдонімів, відокремлених пробілами. Надіслані користувачами зі списку ігнорування повідомлення на каналах не буде показано. Крім того, якщо ви введете аргумент <userinput
+><command
+>-all</command
+></userinput
+>, ігноруватимуться і інші типи повідомлень від користувачів (запити на діалоги, зауваження, &CTCP;, DCC і винятки). </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>команда</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає <userinput
+><replaceable
+>команду</replaceable
+></userinput
+> на сервер. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Якщо команду буде введено на вкладці каналу, надсилає на канал <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+>. Те саме, що і введення <userinput
+><replaceable
+>повідомлення</replaceable
+></userinput
+> у <interface
+>Рядок вводу</interface
+> каналу. Корисна для надсилання команди &irc;, якщо ви не бажаєте виконувати цю команду. Два символи команди (//), вказані підряд, еквівалентні команді <userinput
+><command
+>/say</command
+></userinput
+>. Крім того, використовується у <link linkend="scripting"
+>скриптах</link
+> для надсилання повідомлень. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Переводить журнал сервера у режим без обробки (<command
+>open</command
+>) або вимикає режим без обробки (<command
+>close</command
+>). Якщо не буде вказано жодної з команд <command
+>open</command
+> або <command
+>close</command
+>, типово, буде виконано команду <command
+>open</command
+>. У режимі без обробки, у журналі всі повідомлення, отримані від сервера, буде показано у необробленому форматі &irc;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Відкриває нову вкладку з запущеною програмою &konsole;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[адреса]</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Виконує з’єднання з сервером за адресою <userinput
+><replaceable
+>адреса</replaceable
+></userinput
+>. Якщо <userinput
+><replaceable
+>адресу</replaceable
+></userinput
+> не буде вказано, з’єднання буде виконано з сервером, пов’язаним з вкладкою, на якій було введено команду. Корисно для встановлення повторного з’єднання з сервером у разі розірвання з’єднання. Якщо для з’єднання з сервером потрібен пароль, вкажіть його як параметр <userinput
+><replaceable
+>пароль</replaceable
+></userinput
+>. Якщо для з’єднання з сервером слід використовувати порт з номером, відмінним від типового (6667), введіть <userinput
+><replaceable
+>адресу</replaceable
+></userinput
+> у такий спосіб: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>псевдонім</replaceable
+> <replaceable
+>[назва файла]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає файл з назвою <userinput
+><replaceable
+>назва_файла</replaceable
+></userinput
+> користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+>. Якщо параметр <userinput
+><replaceable
+>назва_файла</replaceable
+></userinput
+> не буде вказано, програма відкриє діалогове вікно, за допомогою якого ви зможете вказати цю назву. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Відкриває вкладку <guilabel
+>Стан DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>псевдонім|канал</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Надсилає повідомлення PING користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> або на канал <userinput
+><replaceable
+>канал</replaceable
+></userinput
+>. Команда корисна для перевірки того, чи має з’єднання того, з ким ви спілкуєтеся, або (якщо надіслано до каналу) ваше з’єднання високу затримку у зв’язку. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>псевдонім|канал</replaceable
+> <replaceable
+>повідомлення</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Надсилає повідомлення користувачеві з псевдонімом <userinput
+><replaceable
+>псевдонім</replaceable
+></userinput
+> або всім користувачам на <userinput
+><replaceable
+>каналі</replaceable
+></userinput
+>. Ця команда подібна до команди <userinput
+><command
+>/msg</command
+></userinput
+>, наведеної вище, але повідомлення буде надіслано за допомогою протоколу &CTCP;. Відповідь на іншому кінці з’єднання залежатиме від використаної отримувачем клієнтської програми &irc;. Наприклад, якщо передати іншому користувачеві &konversation; команду <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+>, буде показано час системи на комп’ютері Eisfuch. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> покаже номер версії &konversation;, встановленої у системі користувача Eisfuch. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Скрипти</title>
+
+<para
+>Разом з &konversation; постачається декілька корисних скриптів, які ви можете запускати з вікна програми. Щоб запустити скрипт на каналі, у вкладці діалогу, DCC або сервера, введіть команду у формі:</para>
+
+<para
+><userinput
+><command
+>/exec </command
+><replaceable
+>скрипт</replaceable
+> [<replaceable
+>параметри</replaceable
+>]</userinput
+></para>
+
+<para
+>виконує скрипт з назвою <userinput
+><replaceable
+>скрипт</replaceable
+></userinput
+> з передаванням (необов’язковим) <userinput
+><replaceable
+>параметрів</replaceable
+></userinput
+>.</para>
+
+<para
+>Наприклад, введіть таку команду на вкладці каналу</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>щоб надіслати версії &konversation;, &Qt;, &kf5; та Плазми на канал.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>виконує скрипт <userinput
+><replaceable
+>команда</replaceable
+></userinput
+> з передаванням йому даних, які виводить команда <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. Таким чином ви можете надіслати ваш рядок версії &Linux; на канал.</para>
+
+<para
+>Щоб дізнатися більше про встановлені разом з &konversation; скрипти, будь ласка, зверніться до <link linkend="scripts_ref"
+>Довідника зі скриптів</link
+></para>
+
+<para
+>Щоб отримати список всіх доступних скриптів, введіть таку команду у вікні &konversation;:</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Потім перейти до каталогу, вказаного у виведених даних, щоб побачити список.</para>
+
+<para
+>Ви можете створювати власні скрипти. Скрипти виконуються командною оболонкою, їх можна писати будь-якою мовою, яку розуміє командна оболонка, зокрема на bash, perl або python. Під час запуску скрипту у &konversation; першими двома параметрами, які буде передано скрипту, будуть:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Адреса сервера.</para
+></listitem>
+
+<listitem
+><para
+>Назва каналу.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Ось приклад скрипту оболонки (команди).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Виконує команду і надсилає виведені дані до Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Зауважте, що скрипт використовує qdbus для обміну даними з &konversation;. Команда <computeroutput
+>say</computeroutput
+> надає змогу надіслати виведені дані на канал як звичайне повідомлення. Для показу повідомлення у вкладці без надсилання його іншим користувачам, скористайтеся командою <computeroutput
+>info</computeroutput
+>. Додаткові приклади написання скриптів можна знайти серед вже існуючих скриптів, що постачаються з програмою.</para>
+
+<para
+>Щоб ви змогли запустити створений вами скрипт, його слід встановити копіюванням до каталогу <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. Крім того, вам слід надати файлу скрипту права на виконання, наприклад командою <userinput
+><replaceable
+>chmod a+x myscript</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Довідник зі скриптів</title>
+
+<para
+>Типово, разом з &konversation; встановлюється декілька скриптів. За допомогою цього довідника ви зможете ознайомитися з тим, як користуватися цими скриптами.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>Номер вади|Рядок пошуку</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>За допомогою цього скрипту можна відкрити ваш переглядач інтернету на сторінці пошуку за вказаним рядком або сторінці повідомлення про ваду з вказаним номером у <ulink url="https://bugs.kde.org/"
+>Bugzilla &kde;</ulink
+>.</para>
+<para
+>Приклад: відкрити переглядач на сторінці вади 123456.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Приклад дії: типовий переглядач інтернету, встановлений за допомогою Системних параметрів, має бути відкрито на сторінці <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>параметри командного рядка</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Цим скриптом можна скористатися для виводу результатів виконання параметра командного рядка до поточного каналу.</para>
+<para
+>Приклад: показати всіх на поточному каналі, яку версію &konversation; встановлено на вашому комп’ютері.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Приклад виведених даних: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>УВАГА! Дані, виведені командою, буде надіслано всіх учасникам каналу поточної вкладки! Будь ласка, будьте обачнішими з використанням цього скрипту.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Виконання цього скрипту виведе випадкове висловлювання з Fortune.</para>
+<para
+>Приклад: вивести випадкову фразу з fortune у вкладку вашого поточного каналу.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Приклад виведених даних: <replaceable
+>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>значення у відсотках</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>За допомогою цього скрипту можна вивести просту текстову смужку поступу з вказаним значенням виконання у відсотках.</para>
+<para
+>Приклад: вивести смужку поступу з 50% рівнем виконання на поточну вкладку каналу.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Приклад виведених даних: <replaceable
+>Beer load [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{програвач}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Це скрипт «Зараз відтворюється», який може працювати з різноманітними програвачами мультимедійних даних. Крім того, передбачено можливість показу даних про те, що відтворюється, лише для програвачів звукових даних або лише для програвачів відеоданих: достатньо вказати відповідний параметр командного рядка, <replaceable
+>audio</replaceable
+> або <replaceable
+>video</replaceable
+>. Також можна вказати програвач, до якого слід надіслати запит.</para>
+<para
+>Підтримуються такі програвачі мультимедійних даних: Amarok (звук), JuK (звук), Kaffeine (відео, звук), KMPlayer (відео, звук), KPlayer (відео, звук), kdetv (відео), Yammi (звук) Audacious (звук), MPD (звук).</para>
+<para
+>Приклад: вивести поточну пісню, що відтворюється у Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Зразок виведених даних: <replaceable
+>* user is listening to There There by Radiohead on Hail to the Thief [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>За допомогою цього скрипту можна вивести докладні відомості про систему, у яких поєднуватимуться з належним форматуванням дані, виведені різними командами.</para>
+<para
+>Приклад: вивести відомості щодо вашої системи на поточну вкладку каналу.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Приклад виведення: <replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>Адреса посилання</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Цей скрипт використовує програмний інтерфейс Tinyurl для перетворення вказаного посилання на tinyurl, який після цього буде надіслано на поточну вкладку каналу.</para>
+<para
+>Приклад: надати комусь коротке посилання на https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Взірець виведених даних: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>За допомогою цього скрипту можна вивести результат виконання команди «uptime» з відповідним форматуванням.</para>
+<para
+>Приклад: показати стабільну роботу системи протягом 98 днів.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Зразок виведених даних: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Для всіх цих скриптів передбачено скорочення. Скористайтеся пунктом діалогового вікна налаштування &konversation; <menuchoice
+><guimenu
+>Поведінка</guimenu
+> <guimenuitem
+>Скорочення команд</guimenuitem
+></menuchoice
+> для перегляду, додавання, вилучення або зміни скорочень. </para>
+
+<para
+>Щоб дізнатися більше про написання скриптів, будь ласка, зверніться до <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>настанов щодо скриптів на Userbase</ulink
+> </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Довідник з команд</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Головне вікно &konversation;</title>
+
+<sect2>
+<title
+>Меню «Файл»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Список серверів</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Показує <link linkend="irc-basics"
+>список серверів і каналів</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Швидке з’єднання</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Відкриває діалогове вікно <link linkend="quickconnect"
+>Швидке з’єднання</link
+>, за допомогою якого ви зможете встановити з’єднання з сервером. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Від’єднатися</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Від’єднатися від усіх серверів. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перез’єднатися</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Повторно встановити з’єднання з усіма серверами, від’єднання від яких відбулося внаслідок помилки у мережі або іншої проблеми. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Приєднатися до каналу</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Відкриває діалогове вікно, за допомогою якого ви зможете ввести назву каналу, до якого ви бажаєте приєднатися. Виконує ті самі функції, що і команда <command
+>/join <userinput
+>#назва_каналу</userinput
+></command
+> у вкладці каналів або серверів.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Загальний стан відсутності</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Змінює стан вашого псевдоніма на «Відсутній» на всіх каналах. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo
+><keycap
+>&Ctrl;</keycap
+><keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вийти</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Завершує роботу</action
+> &konversation;.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Зміни»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти текст...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Виконати пошук текстових рядків у поточному вікні.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти далі</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Виконати пошук далі за текстом у поточному вікні попередньо введеного рядка пошуку.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Спорожнити вікно</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Спорожнити поточне вікно.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Спорожнити всі вікна</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Спорожнити всі вікна.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Вставка»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Колір &irc;...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Див. <link linkend="color-msgs"
+>Надсилання розфарбованих повідомлень</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Лінія позначки</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Див. <link linkend="rememberlines"
+>Позначення у каналах і журналах діалогів</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift; <keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Спеціальний символ...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Призначено для додавання спеціальних символів, зокрема символів іноземних мов.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Закладки»</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Додати закладку</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Створює закладку у поточній мережі і на каналі.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Зробити з вкладок теку закладок...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Додає</action
+> всі канали до нового пункту меню, розташованого наприкінці списку пунктів меню закладок. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Створити теку закладок...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Створює нову теку закладок.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Редагувати закладки...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Відкриває вікно редактора закладок.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Параметри»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Показати список псевдонімів</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ховає (або показує) панель вкладок псевдоніма на каналах. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Профілі...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Відкриває вікно <link linkend="identity"
+>Профілі</link
+>, за допомогою якого ви зможете вказати ваші ідентифікаційні відомості. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Вікно»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Попередня вкладка</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Відкриває перегляд до попередньої вкладки.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Наступна вкладка</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Відкриває перегляд наступної вкладки.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Закрити вкладку</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Закриває поточну вкладку. Якщо було закрито вкладку каналу, призводить до виходу з каналу. Якщо було закрито вкладку <interface
+>Повідомлення сервера</interface
+>, закриває всі відкриті канали на цьому сервері і від’єднує програму від сервера. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Закрити всі відкриті діалоги</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Закриває всі <link linkend="query"
+>особисті балачки (діалоги)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Псевдоніми зі спостереженням</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Відкриває діалогове вікно <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>. Див. <link linkend="nicksonline"
+>Спостереження за тим, хто перебуває у мережі</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Перехоплення &URL;</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Відкриває діалогове вікно <link linkend="urlcatcher"
+>Перехоплення &URL;</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Стан DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Відкриває вкладку <link linkend="dcc"
+>Стан DCC</link
+> з даними щодо передавання файлів.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Нова вкладка Konsole</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Відкриває вкладку емулятора термінала. Ви можете відкривати довільну кількість вкладок <guilabel
+>Konsole</guilabel
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Список каналів для</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Показує <link linkend="list-channels"
+>список каналі</link
+>, доступних на поточному сервері.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вікно</guimenu
+> <guimenuitem
+>Відкрити файл журналу</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Показує вікно з журналом повідомлень у поточній вкладці. Працює лише для вкладок <interface
+>Канал</interface
+>, <interface
+>Повідомлення сервера</interface
+> і <interface
+>Діалог</interface
+>. Журналювання має бути увімкнено на сторінці <menuchoice
+> <guisubmenu
+>Параметри</guisubmenu
+> <guisubmenu
+>Налаштувати Konversation</guisubmenu
+> <guisubmenu
+>Поведінка</guisubmenu
+> <guisubmenu
+>Журналювання</guisubmenu
+> </menuchoice
+>. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Довідка»</title>
+
+<para
+>У &konversation; передбачено типовий пункт меню <guimenu
+>Довідка</guimenu
+> &kde;. Щоб дізнатися більше, ознайомтеся з розділом, присвяченим <ulink url="help:/fundamentals/menus.html#menus-help"
+>меню «Довідка»</ulink
+> підручника з основ роботи у &kde;. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Питання та відповіді</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Я хочу, щоб після запуску &konversation; програма з’єднувалася з сервером, але не приєднувалася до жодного з каналів. Як це зробити?</para>
+</question>
+<answer>
+<para
+>У вікні <link linkend="serverlist-addnetwork"
+>Змінити сервер</link
+> не заповнюйте списку <guilabel
+>Канали</guilabel
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; не може з’єднатися з жодним сервером. Що не так?</para>
+</question>
+<answer>
+<para
+>Причин може бути декілька:</para>
+<orderedlist>
+<listitem>
+<para
+>Переконайтеся, що у діалоговому вікні <link linkend="serverlist-addserver"
+>Додати сервер</link
+> вами було введено правильну <guilabel
+>Назву сервера</guilabel
+> і правильне значення номеру <guilabel
+>Порту</guilabel
+>. </para>
+</listitem>
+<listitem>
+<para
+>Перевірте, чи немає у даних, виведених у вікно <link linkend="channel-screen-tour"
+>Повідомлення сервера</link
+>, повідомлень про помилки. Можливо, сервер відкинув спробу з’єднання через неправильно вказаний пароль? Можливо, сервер відкинув спробу з’єднання оскільки для з’єднання слід було використовувати <acronym
+>IDENTD</acronym
+>, а ваш комп’ютер не відповів на запит <acronym
+>IDENT</acronym
+>? Можливо, ви позначили пункт шифрування SSL, а сервер не підтримує SSL? </para>
+</listitem>
+<listitem>
+<para
+>Якщо ваш комп’ютер захищено брандмауером, не забудьте відкрити потрібні порти. Для роботи &konversation; слід відкрити такі порти: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Порт вихідних даних TCP 6667 (або порт на сервері, з яким слід встановлювати з’єднання)</para
+></listitem>
+<listitem
+><para
+>Порт вхідних даних TCP 113 (якщо сервер потребує встановлення IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Докладніше про проблеми встановлення з’єднань &irc;, можна дізнатися за адресою <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Після відкриття меню <menuchoice
+> <guimenu
+>Вікно</guimenu
+> <guisubmenu
+>Список каналів</guisubmenu
+> </menuchoice
+> пункт залишається неактивним. У чому причина?</para>
+</question>
+<answer>
+<para
+>Пункт меню <menuchoice
+> <guimenu
+>Вікно</guimenu
+> <guisubmenu
+>Список каналів</guisubmenu
+> </menuchoice
+> буде зафарбовано у сірий колір, якщо поточна вкладка не є вкладкою каналу, наприклад, ви переглядаєте вкладку <guilabel
+>Псевдоніми зі спостереженням</guilabel
+>. Щоб знову задіяти пункт меню, поверніться на вкладку каналу або вкладку сервера. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Якщо наказати &konversation; автоматично встановлювати стан відсутності, якщо не було зареєстровано жодних дій протягом певного часу? </para>
+</question>
+<answer
+><para
+>Автоматичні повідомлення про відсутність можна налаштувати для кожного з профілів окремо. Щоб увімкнути такі автоматичні повідомлення, скористайтеся пунктом меню <menuchoice
+><guimenu
+>Параметри</guimenu
+><guimenuitem
+>Профілі</guimenuitem
+></menuchoice
+>. Виберіть профіль, для якого ви хочете увімкнути автоматичне визначення стану відсутності зі спадного списку у верхній частині діалогового вікна і перейдіть на вкладку <guilabel
+>Відсутність</guilabel
+>. Позначте пункт <guilabel
+>Автоматична відсутність</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Як уникнути використання можливості <guilabel
+>Автоматична заміна</guilabel
+> у <interface
+>Рядку введення</interface
+>?</para>
+</question>
+<answer
+><para
+>Натисніть комбінацію клавіш <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> замість звичайного &Enter;, щоб вимкнути обробку і автоматичну заміну тексту у <interface
+>Рядку введення</interface
+> відповідно до параметрів, встановлених на сторінці налаштування <menuchoice
+><guimenu
+>Поведінка</guimenu
+> <guimenuitem
+>Автоматична заміна</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Де зберігаються скрипти, які є частиною &konversation;?</para>
+</question>
+<answer>
+<para
+>Віддайте цю команду у рядку введення &konversation; (у нашому прикладі ми використали скрипт media, оскільки він постачається разом із &konversation;): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Зразок виведення даних: <replaceable
+>Файл скрипту «media» було знайдено у /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Як зробити фрагмент тексту напівжирним, курсивним або підкресленим?</para>
+</question>
+<answer>
+<para
+>Приклад: <userinput
+>Це мій %Bнапівжирний%B текст.</userinput
+></para>
+<para
+>Виведення: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Приклад: <userinput
+>Це мій %Iкурсивний%I текст.</userinput
+></para>
+<para
+>Виведення: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Приклад: <userinput
+>Це мій %Uпідкреслений%U текст.</userinput
+></para>
+<para
+>Виведення: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Приклад: <userinput
+>Це мій %Sперекреслений%S текст.</userinput
+></para>
+<para
+>Виведення: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Приклад: <userinput
+>Це мій %Mмоноширинний%M текст.</userinput
+></para>
+<para
+>Виведення: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Подяки і ліцензія</title>
+
+<para
+>&konversation; </para>
+<para
+>Авторські права на програму належать Команді &konversation;, ©2002-2005 </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Учасники розробки: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Особливі подяки: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Авторські права на документацію &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

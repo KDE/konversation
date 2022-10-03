@@ -1,0 +1,6099 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>pseudonyme</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Pseudonyme</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % French "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>Manuel de &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Simon</firstname
+><surname
+>Depiets</surname
+><affiliation
+><address
+><email
+>2df@tuxfamily.org</email
+></address
+></affiliation
+><contrib
+>Traduction française&nbsp;</contrib
+></othercredit
+> <othercredit role="reviewer"
+><firstname
+>Ludovic</firstname
+><surname
+>Grossard</surname
+><affiliation
+><address
+><email
+>grossard@kde.org</email
+></address
+></affiliation
+><contrib
+>Relecture de la documentation française&nbsp;</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>29-11-2016</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; est un client &irc; facile à utiliser, construit sur &Qt; et &kf5-full;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>IRC</keyword>
+<keyword
+>Internet Relay Chat</keyword>
+<keyword
+>tchat</keyword>
+<keyword
+>communications</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Introduction</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; est un client &irc; construit sur &Qt; et &kf5-full;. Il offre les fonctionnalités suivantes : </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Prise en charge de SSL. </para
+></listitem>
+<listitem
+><para
+>Interface à onglets facile à utiliser. </para
+></listitem>
+<listitem
+><para
+>Boutons rapides personnalisables pour les commandes fréquemment utilisées.</para
+></listitem>
+<listitem
+><para
+>Reconnexion automatique aux serveurs et aux canaux. </para
+></listitem>
+<listitem
+><para
+>Envoi et réception DCC. </para
+></listitem>
+<listitem
+><para
+>Liste de surveillance de &i18n-Nickname;.</para
+></listitem>
+<listitem
+><para
+>Notifications visuelles et audio pour de nombreux évènements, comme les messages contenant votre &i18n-nickname;, ou les connexions et déconnexions des &i18n-nickname;s de votre liste de surveillance.  </para
+></listitem>
+<listitem
+><para
+>Mise en évidence personnalisables des messages par &i18n-nickname; ou par expression rationnelle. </para
+></listitem>
+<listitem
+><para
+>Complètement des &i18n-Nickname;s. </para
+></listitem>
+<listitem
+><para
+>Capture et enregistrement de toutes les &URL; apparaissant dans les messages. </para
+></listitem>
+<listitem
+><para
+>Affichage à l'écran des messages, même lorsque l'application est minimisée. </para
+></listitem>
+<listitem
+><para
+>Liste de &i18n-Nickname;s à ignorer. </para
+></listitem>
+<listitem
+><para
+>Journalisation automatique des évènements et gestion des historiques. </para
+></listitem>
+<listitem
+><para
+>Marquage de ligne dans les historiques. </para
+></listitem>
+<listitem
+><para
+>Langage de scripts. </para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Le site Internet de &konversation; est <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Pour plus d'informations comme une liste des questions les plus fréquentes « FAQ », des trucs et des astuces, vous pouvez consulter la <ulink url="http://userbase.kde.org/Konversation"
+>base de connaissances des utilisateurs pour &konversation;</ulink
+>. </para>
+
+<para
+>Les développeurs de &konversation; peuvent souvent être contactés grâce au canal &irc; <ulink url="irc://chat.freenode.net/konversation"
+>irc.freenode.net #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Utiliser &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Si vous n'avez jamais utilisé &irc; auparavant...</title>
+
+<para
+>Pour faire simple, &irc; est un protocole de tchat, défini par des standards Internet officiels, et capable de voler beaucoup d'heures de votre vie. Pour utiliser &irc;, vous devez vous connecter à un serveur, puis rejoindre un canal (l'équivalent d'une salle de tchat) ou lancer simplement des conversations privées.</para>
+
+<para
+>Pour vous connecter à un serveur et à un canal, ouvrez &konversation;. La fenêtre <guilabel
+>Liste des serveurs</guilabel
+> apparaît.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Liste des serveurs</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Liste des serveurs</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>La liste des <guilabel
+>Réseaux</guilabel
+> &irc; est affichée ici. Un réseau &irc; est une collection de serveurs coopérant entre eux. Vous n'avez besoin que de vous connecter à un seul des serveurs du réseau pour être connecté au réseau &irc; tout entier. Une fois connecté, &konversation; rejoindra automatiquement les <guilabel
+>Canaux</guilabel
+> affichés. Lorsque &konversation; est lancé pour la première fois, le réseau <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> et le canal <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> sont déjà saisis pour vous. Cliquez sur un réseau et sélectionnez-le.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Cliquez ici pour définir un nouveau <guilabel
+>Réseau</guilabel
+>, et le serveur auquel vous connectez, ainsi que les <guilabel
+>Canaux</guilabel
+> devant être automatiquement rejoints une fois connecté. Consultez <link linkend="serverlist"
+>Définir de nouveaux réseaux, serveurs et rejoindre automatiquement les canaux</link
+> pour plus d'informations.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Cliquez ici pour vous connecter au réseau &irc; et au canal sélectionnés.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>Lorsque vous cliquez sur le bouton <guibutton
+>Connecter</guibutton
+> la première fois que vous ouvrez &konversation;, il est possible que vous voyiez le message suivant, vous indiquant que votre <guilabel
+>identité</guilabel
+> par défaut n'est pas configurée correctement.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Vérifier ses Identités</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Vérifier ses Identités</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>La première fois que vous ouvrez &konversation;, il obtient des informations sur l'utilisateur actuel via le système d'exploitation et remplit l'identité par défaut. Si les informations du système d'exploitation ne sont pas complètes, si par exemple un nom complet n'est pas défini, vous pouvez voir le message ci-dessus. Pour corriger ce problème, cliquez sur <guibutton
+>Modifier l'identité...</guibutton
+> et consulter <link linkend="identity"
+>Configurer votre identité</link
+> pour plus d'informations.</para>
+</note>
+
+<para
+>L'écran <interface
+>Principal</interface
+> sera affiché et vous montrera les messages envoyés par le serveur au client (si &konversation; ne se connecte pas au serveur, consultez la section <link linkend="faq"
+>Questions et Réponses</link
+>). Lorsque les messages du serveur auront fini de défiler, &konversation; rejoindra le ou les canaux choisis. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Canal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Canal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Ceci est appelé la <interface
+>Ligne de saisie</interface
+>. Pour envoyer un message à tout le monde dans le canal, saisissez-le ici et appuyez sur la touche &Entree;. Votre message, et ceux de tous les autres s'afficheront dans le défilement du canal situé au-dessus. Chaque message sera précédé par l'heure à laquelle il est envoyé et le &i18n-nickname; de l'utilisateur expéditeur.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Vous pouvez rejoindre d'autres serveurs et canaux. Chaque serveur, canal, liste de canaux et autre écran s'ouvrira dans un onglet supplémentaire. Pour afficher une liste des canaux disponibles, consultez <link linkend="list-channels"
+>Lister les canaux disponibles</link
+>. Pour rejoindre un canal, saisissez <userinput
+><command
+>/join</command
+> <replaceable
+>#nom-du-canal</replaceable
+></userinput
+> dans la ligne de saisie (le <userinput
+>#</userinput
+> est indispensable). Vous pouvez aussi saisir <userinput
+><command
+>/j</command
+></userinput
+> en raccourci à <userinput
+><command
+>/join</command
+></userinput
+>. Pour quitter un canal, saisissez simplement <userinput
+><command
+>/part</command
+></userinput
+>. Pour afficher un canal ou un serveur différent, cliquez sur l'onglet correspondant. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Ceci est le <interface
+>Panneau des pseudos</interface
+>. Il liste tous les &i18n-nickname;s des utilisateurs ayant rejoint le canal, y compris vous-même.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Voilà pour les bases, pour plus d'informations, continuez à lire…</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Configurer votre identité</title>
+
+<para
+>Avant de commencer à utiliser &konversation; régulièrement, vous devriez configurer la façon dont vous serez identifié sur le réseau.</para>
+
+<para
+>Cliquez sur <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+><guisubmenu
+>Identités</guisubmenu
+></menuchoice
+> dans le menu principal. <action
+> L'écran <guilabel
+>Identités</guilabel
+> s'affichera. Vous pouvez aussi afficher l'écran <guilabel
+>Identités</guilabel
+> en cliquant sur le bouton <guibutton
+>Modifier</guibutton
+> dans les écrans <guilabel
+>Modifier le réseau</guilabel
+> ou <guilabel
+>Nouveau réseau</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Identités (Onglet Général)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Identités (Onglet Général)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Cliquez ici pour sélectionner une <guilabel
+>Identité</guilabel
+> à modifier.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Utilisez ces boutons pour <guibutton
+>Ajouter</guibutton
+>, <guibutton
+>Dupliquer</guibutton
+>, <guibutton
+>Renommer</guibutton
+> ou <guibutton
+>Supprimer</guibutton
+> une <guibutton
+>Identité</guibutton
+>.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Saisissez votre nom réel ici. &irc; n'est pas conçu pour que vous vous cachiez de vos amis ou de vos ennemis. Gardez cela en tête si vous êtes tentés d'agir malicieusement. Un faux « nom réel » peut être une bonne façon de cacher votre féminité de tous les nerds, mais l'ordinateur que vous utilisez peut toujours être tracé et vous ne serez jamais complètement anonyme.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Utilisez ces boutons pour <guibutton
+>Ajouter</guibutton
+> ou <guibutton
+>Supprimer</guibutton
+> un &i18n-nickname;.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>C'est votre liste de &i18n-nickname;s. Un &i18n-nickname; est le nom par lequel les autres utilisateurs vous connaîtront. Vous pouvez utiliser n'importe quel nom. Le premier caractère doit être une lettre de l'alphabet. Les autres caractères peuvent être des lettres, des nombres ou les caractères spéciaux <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>Étant donné que les &i18n-nickname;s doivent être uniques sur tout le réseau &irc;, le nom que vous désirez porter peut être rejeté par le serveur si quelqu'un d'autre l'utilise déjà. Saisissez des &i18n-nickname;s alternatifs. Si votre premier choix est rejeté par le serveur, &konversation; essaiera les &i18n-nickname;s alternatifs. </para>
+
+<para
+>D'après la RFC 2812, la longueur maximale du &i18n-nickname; est de neuf caractères, mais celle-ci est toutefois déterminée par le serveur. Pour déterminer le maximum d'un serveur, il faut vous y connecter. Dans l'onglet <interface
+>Messages du Serveur</interface
+>, cherchez un message <computeroutput
+>[Support]</computeroutput
+>. Par exemple</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=danseur </computeroutput>
+</para>
+
+<para
+>Le paramètre <computeroutput
+>NICKLEN</computeroutput
+> spécifie la longueur maximale des &i18n-nickname;s. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Utilisez ces boutons pour changer l'ordre des &i18n-nickname;s. Le premier &i18n-nickname; est essayé en premier, puis le &i18n-nickname; suivant, etc.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Si vous avez enregistré votre &i18n-nickname; sur le réseau &irc;, saisissez le service et le mot de passe permettant d'authentifier votre &i18n-nickname;. Lorsque &konversation; se connectera, il enverra automatiquement <userinput
+><command
+>/msg</command
+> <replaceable
+>service</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>mot_de_passe</replaceable
+></userinput
+> au serveur. Si vous ne savez pas en quoi cela consiste, laissez ces champs vides.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Cliquez sur l'onglet <guilabel
+>Absent</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identités (Onglet Absent)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identités (Onglet Absent)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Saisissez un &i18n-nickname; indiquant que vous êtes absent. À chaque fois que vous lancerez une commande <userinput
+><command
+>/away </command
+><replaceable
+>msg</replaceable
+></userinput
+> dans n'importe quel canal rejoint avec cette <guilabel
+>Identité</guilabel
+>, &konversation; changera automatiquement votre &i18n-nickname; vers le <guilabel
+>Pseudonyme d'absence</guilabel
+>. Les autres utilisateurs seront en mesure de savoir que vous n'êtes pas devant votre ordinateur. À chaque fois que vous saisirez la commande <userinput
+><command
+>/away</command
+></userinput
+> dans un canal duquel vous êtes absent, &konversation; changera automatiquement votre &i18n-nickname; vers l'original. Si vous ne souhaitez pas changer automatiquement votre &i18n-nickname; lorsque vous vous absentez, laissez ce champ vide.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Si vous cochez cette case, à chaque fois que vous utiliserez la commande <userinput
+><command
+>/away</command
+></userinput
+>, une ligne horizontale s'affichera sur le canal, marquant le point à partir duquel vous vous êtes absenté. Les autres utilisateurs d'&irc; ne verront pas cette ligne horizontale. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Si vous cochez cette case, &konversation; enverra automatiquement le <guilabel
+>Message d'absence</guilabel
+> à tous les canaux rejoints avec cette <guilabel
+>Identité</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> est remplacé par <userinput
+><replaceable
+>msg</replaceable
+></userinput
+>. À chaque fois que vous lancerez la commande <userinput
+><command
+>/away</command
+></userinput
+>, la <guilabel
+>commande de retour</guilabel
+> sera affichée dans tous les canaux rejoints avec cette <guilabel
+>Identité</guilabel
+>.</para>
+
+<note
+><para
+>Les messages d'absence sont parfois considérés comme ennuyeux par les autres utilisateurs. Utilisez cette option avec parcimonie, en prenant en considération vos camarades d'&irc;. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Cliquez sur l'onglet <guilabel
+>Avancé</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identités (Onglet Avancé)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identités (Onglet Avancé)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Vous pouvez saisir ici une commande qui sera exécutée avant la connexion au serveur. Si cette identité est utilisée pour plus d'un serveur, la commande sera exécutée pour chaque serveur.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Cette option affecte la façon dont les caractères que vous saisissez sont encodés avant envoi vers le serveur. Elle affecte aussi l'affichage des messages. La première fois que vous ouvrez &konversation;, elle est automatiquement retrouvée par votre système d'exploitation. Si vous semblez avoir des problèmes pour voir les messages des autres utilisateurs correctement, essayez de modifier cette option.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Lorsque vous vous connectez, beaucoup de serveurs demandent à votre ordinateur une réponse IDENT. Si votre ordinateur n'a pas de serveur IDENT lancé, cette réponse est envoyée par &konversation;. Les espaces ne sont pas autorisés, nous vous suggérons d'utiliser votre prénom.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>À chaque fois que vous quittez un canal, ce message est envoyé sur le canal.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>À chaque fois que vous êtes expulsé d'un canal (de manière générale par un opérateur &irc;), ce message est envoyé au canal.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Cliquez pour appliquer vos changements. Pour que tous les changements prennent effet, vous devez vous déconnecter du serveur et vous reconnecter. La manière la plus simple de faire cela est de quitter &konversation; et de le relancer.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Définir de nouveaux réseaux, serveurs et rejoindre automatiquement les canaux</title>
+
+<para
+>La <guilabel
+>Liste des serveurs</guilabel
+> apparaît lors de l'ouverture de l'application &konversation;. Elle apparaît aussi lorsque vous sélectionnez <menuchoice
+><guisubmenu
+>Fichier</guisubmenu
+><guisubmenu
+>Liste des serveurs</guisubmenu
+></menuchoice
+> dans le menu principal. <action
+>L'écran <guilabel
+>Liste des serveurs</guilabel
+></action
+> affiche la liste des <guilabel
+>Réseaux</guilabel
+> &irc; définis et listés par groupe. Un réseau &irc; est une collection de serveurs coopérant entre eux. Lorsque vous vous connectez à n'importe quel serveur du réseau, vous avez accès à tous les canaux du réseau. Des exemples de réseaux &irc; sont <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> et <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Liste des serveurs</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Liste des serveurs</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Les <guilabel
+>Réseaux</guilabel
+> actuellement définis sont listés ici avec les <guilabel
+>Identités</guilabel
+> utilisées pour s'y connecter et les <guilabel
+>Canaux</guilabel
+> automatiquement rejoints à la connexion. Si vous avez spécifié un groupe pour vos réseaux, les réseaux sont listés avec indentation sous le groupe. Cliquez sur un réseau pour le sélectionner. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Utilisez ces boutons pour ajouter un <guibutton
+>Nouveau</guibutton
+> réseau, <guibutton
+>Modifier</guibutton
+> un réseau surligné, ou <guibutton
+>Supprimer</guibutton
+> un réseau surligné. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Cliquez sur ce bouton pour vous connecter au <guilabel
+>Réseau</guilabel
+> surligné et fermer l'écran de la <guilabel
+>Liste des serveurs</guilabel
+>. Vous pouvez surligner plus d'un réseau si vous le souhaitez, ce qui connectera tous les réseaux surlignés.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Cliquer sur ce bouton n'annule pas les changements que vous avez fait. Cela signifie simplement que vous ne souhaitez vous connecter à aucun réseau à ce moment donné.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>Lorsque vous cliquez sur le bouton <guibutton
+>Nouveau</guibutton
+>, l'écran <guilabel
+>Nouveau réseau</guilabel
+> apparaît.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Nouveau réseau</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Nouveau réseau</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Saisissez le <guilabel
+>Nom du réseau</guilabel
+> ici. Vous pouvez créer autant de lignes dans la <guilabel
+>Liste des serveurs</guilabel
+> avec le même <guilabel
+>Réseau</guilabel
+> si vous le souhaitez.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Choisissez une <guilabel
+>Identité</guilabel
+> existante ou cliquez sur le bouton <guibutton
+>Modifier</guibutton
+> pour ajouter une nouvelle Identité ou éditer une existante. L'<guilabel
+>Identité</guilabel
+> vous identifiera et déterminera votre &i18n-nickname; lorsque vous vous connectez au réseau.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Optionnel. Cette commande sera envoyée au serveur après connexion. Exemple : <userinput
+> / msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Cet exemple s'applique pour le réseau « Libera », imposant aux utilisateurs d'enregistrer leurs &i18n-nickname;s avec un mot de passe et un identifiant lors de la connexion. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> est le mot de passe pour le &i18n-nickname; saisi dans <guilabel
+>Identité</guilabel
+>. Vous pouvez saisir plus d'une commande en les séparant par des point-virgules.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Cochez cette case si vous voulez que &konversation; se connecte automatiquement à ce réseau à chaque fois que vous ouvrez &konversation;.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>C'est une liste de <guilabel
+>Serveurs</guilabel
+> &irc; du réseau. Lorsque vous vous connectez au réseau, &konversation; essaiera de se connecter d'abord au premier serveur. Si cela échoue, il essaiera le deuxième serveur. Si cela échoue, il essaiera le troisième, et ainsi de suite. Au moins un serveur doit être spécifié. Cliquez sur un serveur pour le surligner.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Utilisez ces boutons pour <guibutton
+>Ajouter</guibutton
+> un serveur, <guibutton
+>Modifier</guibutton
+> un serveur surligné, ou <guibutton
+>Supprimer</guibutton
+> un serveur surligné. Vous pouvez aussi ajuster l'ordre des serveurs dans la liste et ainsi l'ordre des tentatives de connexion.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Optionnel. C'est une liste de canaux qui seront automatiquement rejoints une fois que &konversation; sera connecté au serveur. Vous pouvez laisser ce champ vide si vous ne souhaitez pas rejoindre automatiquement de canaux.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Utilisez ces boutons pour <guibutton
+>Ajouter</guibutton
+> un canal, <guibutton
+>Modifier</guibutton
+> un canal surligné ou <guibutton
+>Supprimer</guibutton
+> un canal surligné. Vous pouvez également changer l'ordre dans lequel les canaux sont rejoints. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Évitez de mélanger les serveurs de différents réseaux &irc; dans le même <guilabel
+>Réseau</guilabel
+>. Évitez de saisir le même serveur dans deux <guilabel
+>Réseau</guilabel
+>x différents. Sinon, la surveillance des <link linkend="nicksonline"
+>&i18n-nickname;s en ligne</link
+> ne fonctionnera pas correctement.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Lorsque vous cliquez sur le bouton <guibutton
+>Ajouter</guibutton
+> dans le cadre <guilabel
+>Serveurs</guilabel
+>, l'écran <guilabel
+>Ajouter un serveur</guilabel
+> est affiché.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Ajouter un serveur</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Ajouter un serveur</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Le nom ou l'adresse « IP » du serveur. Le site « irchelp.org » maintient à jour une <ulink url="https://www.irchelp.org/networks/"
+>liste</ulink
+> de serveurs.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Saisissez le numéro de port nécessaire à la connexion au serveur. Pour la plupart des serveurs, celui-ci est <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Si le serveur nécessite un mot de passe à la connexion, saisissez-le ici, sinon laissez ce champ vide.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Cochez si vous souhaitez utiliser le protocole Secure Socket Layer (SSL) pour communiquer avec le serveur. Celui-ci protège la confidentialité de vos communications entre votre ordinateur et le serveur &irc;. Le serveur doit gérer le protocole SSL pour que cela fonctionne. Dans la plupart des cas, si le serveur ne gère pas SSL, la connexion échouera.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Lorsque vous cliquez sur le bouton <guibutton
+>Ajouter</guibutton
+> dans le cadre <guilabel
+>Rejoindre automatiquement les canaux</guilabel
+>, l'écran <guilabel
+>Ajouter un canal</guilabel
+> est affiché.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Ajouter un canal</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Ajouter un canal</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Saisissez un nom de canal. N'oubliez pas le <userinput
+><replaceable
+>#</replaceable
+></userinput
+> initial. Si le canal nécessite un mot de passe pour être rejoint, saisissez-le, sinon laissez ce champ vide. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Lister les canaux disponibles</title>
+
+<para
+>Pour afficher une liste de canaux disponible, choisissez <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+> <guisubmenu
+>Liste des canaux</guisubmenu
+> </menuchoice
+> dans le menu principal. <action
+>Après un écran d'avertissement, un nouvel onglet est créé portant le nom <guilabel
+>Liste de canaux</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'onglet Liste des canaux</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'onglet Listes de canaux.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Saisissez une chaîne de filtrage ici.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Vous pouvez limiter la liste des canaux à ceux ayant un nombre minimal ou maximal d'utilisateurs ici. Choisir <guilabel
+>Pas de limite</guilabel
+> désactive ce critère.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Cliquez ici pour réceptionner la liste des canaux depuis le serveur et appliquer le filtre.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>La liste filtrée des canaux est affichée ici. Notez que si vous n'utilisez pas les expressions rationnelles, &konversation; listera tous les canaux dont le nom contient la chaîne de filtrage que vous avez saisie. Le nom du canal n'a pas besoin de commencer par la chaîne saisie.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Sélectionnez un canal que vous souhaitez rejoindre en cliquant dessus. Un clic droit sur le canal affichera la liste des adresses web mentionnées dans le sujet du canal.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Cliquez ici pour rejoindre un canal. Un nouvel onglet est créé pour le canal.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Parfois, certains canaux sont « secrets ». Ces canaux ne sont pas listés dans la <guilabel
+>Liste des canaux</guilabel
+>. Vous pouvez quand-même rejoindre ces canaux si vous connaissez leur nom. Dans la <interface
+>Ligne de saisie</interface
+>, saisissez : <userinput
+><command
+>/join</command
+> <replaceable
+>#nom-du-canal</replaceable
+></userinput
+>. Le <userinput
+>#</userinput
+> est indispensable. Un nouvel onglet est créé pour le canal. Si vous rejoignez un canal et que le cadre des &i18n-nickname;s ne contient que le vôtre, cela signifie que le canal n'existait pas encore. Le serveur a créé le canal et vous en êtes l'opérateur. Dans ce cas, vous souhaiterez probablement fermer le canal en saisissant : <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Un aperçu de l'écran principal</title>
+
+<para
+>Apprenons-en plus sur l'écran <interface
+>Principal</interface
+>. L'écran est affiché ci-dessous avec un onglet de canal sélectionné.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran Principal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran Principal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>On appelle cela la <interface
+>Ligne de saisie</interface
+>. Elle n'est affichée que lorsque l'onglet actuel est un canal. Pour envoyer un message à tout le monde dans le canal, saisissez-le et appuyez sur &Entree;. Votre message apparaîtra, avec ceux de tout le monde dans le cadre défilant du canal situé au-dessus. Chaque message est précédé de l'heure de réception et du &i18n-nickname; de l'utilisateur.</para>
+
+ <para
+>Vous pouvez aussi coller du texte depuis le presse-papiers. Si le texte collé contient plus d'une ligne, une boîte de dialogue est affichée. Éditez le texte comme vous le souhaitez et cliquez sur <guibutton
+>Ok</guibutton
+>. </para>
+
+ <para
+>Si le texte collé est plus long que 256 caractères, ou s'il contient plus d'une ligne, un message d'avertissement est affiché vous informant que les envois longs peuvent causer la réinitialisation de la connexion ou des exclusions pour inondation de la discussion (flood). Vous pouvez toujours continuer, mais le faire est une mauvaise idée, la pollution par le flood ennuiera les autres utilisateurs du canal, vous pourriez aussi être déconnecté du serveur. Il est préférable d'envoyer le message en plus petits morceaux.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>Une convention utilisée dans de nombreux canaux est de saisir le pseudonyme de l'utilisateur lorsqu'un message lui est adressé. &konversation; fournit une fonctionnalité de complètement des &i18n-nickname;s pratique. Commencez à saisir le nom de l'utilisateur, puis appuyez sur la touche &Tab;. &konversation; complétera automatiquement la fin du &i18n-nickname; de l'utilisateur puis affichera deux-points. Pour personnaliser la fonctionnalité de complètement automatique, allez dans <menuchoice
+> <guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+> </menuchoice
+> depuis le menu principal, développez <guilabel
+>Comportement</guilabel
+>, cliquez sur <guilabel
+>Général</guilabel
+>, et sélectionnez un <guilabel
+>Mode d'auto-complément</guilabel
+>. </para>
+
+ <para
+>Vous pouvez aussi saisir une commande &irc; ici en écrivant d'abord <userinput
+><command
+>/</command
+></userinput
+> suivi d'une commande &irc; valable. Consultez les <link linkend="irc-cmds"
+>Commandes &irc; fréquemment utilisées</link
+>. Sur certains serveurs, vous pouvez saisir <userinput
+><command
+>/help</command
+></userinput
+> pour afficher la liste des commandes disponibles, ou saisir <userinput
+><command
+>/help </command
+><replaceable
+>commande</replaceable
+></userinput
+> pour obtenir de l'aide sur une commande spécifique. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Vous pouvez rejoindre d'autres serveurs et canaux. Chaque serveur et chaque canal ouvriront alors un nouvel onglet. Pour afficher la liste des canaux disponibles, consultez <link linkend="list-channels"
+>Lister les canaux disponibles</link
+>. Pour rejoindre un canal, saisissez <userinput
+><command
+>/join</command
+> <replaceable
+>#nom-du-canal</replaceable
+></userinput
+> dans la ligne de saisie. Le <userinput
+>#</userinput
+> est indispensable. Pour quitter un canal, saisissez simplement <userinput
+><command
+>/part</command
+></userinput
+>. Les onglets sont aussi affichés ici si vous ouvrez la <link linkend="list-channels"
+>Liste des Canaux</link
+>, participez à une <link linkend="query"
+>conversation privée</link
+>, ouvrez <link linkend="urlcatcher"
+>l'attrapeur d'&URL;</link
+>, ou ouvrez plus d'une <guilabel
+>Konsole</guilabel
+>. Pour afficher un autre écran, cliquez sur l'onglet correspondant, ou utilisez la molette de la souris. </para>
+
+<para
+>Pour configurer les autres options des onglets, allez dans <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Interface</guilabel
+>, cliquez sur <guilabel
+>Onglets</guilabel
+> ou développez <guilabel
+>Notifications</guilabel
+> et cliquez sur <guilabel
+>Onglets</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Ces &led;s clignoteront s'il y a quelque chose que vous n'avez pas vu dans cet onglet. La &led; clignotera plus lentement lorsque les seuls messages non lus sont les <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> ou changements de &i18n-nickname;s. Elles clignoteront plus rapidement s'il y a des messages normaux non-lus. Les couleurs sont les suivantes :  <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Canal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Messages serveur</interface
+>, <link linkend="list-channels"
+>Liste de canaux</link
+> ou <link linkend="urlcatcher"
+>Attrapeur d'&URL;</link
+> </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konsole</guilabel
+> ou <link linkend="dcc"
+>État DCC</link
+> </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Message privé (Conversation)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Cliquez ici pour fermer l'onglet actuel. Fermer l'onglet d'un <interface
+>Canal</interface
+> quittera ce canal. Fermer l'onglet <interface
+>Messages du serveur</interface
+> quittera tous les canaux rejoints, fermera toutes les conversations ouvertes sur ce serveur et se déconnectera du serveur.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Cliquez sur ce bouton pour changer votre propre &i18n-nickname;. Il n'apparaîtra que si l'onglet actuel est un canal. Pour cacher ce bouton, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Interface</guilabel
+>, cliquez sur <guilabel
+>Fenêtre de discussion</guilabel
+> et décochez <guilabel
+>Afficher la fenêtre de changement de votre pseudonyme</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Le sujet du canal est affiché ici. Passez votre souris au dessus du sujet pour afficher les sujets longs. Vous pouvez changer le sujet en cliquant sur le bouton à gauche du sujet. Pour cacher les sujets des canaux, allez dans <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Interface</guilabel
+>, cliquez sur <guilabel
+>Fenêtre de discussion</guilabel
+> et décochez la case <guilabel
+>Afficher le sujet du canal</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Ces boutons affichent l'état actuel des modes des canaux. Un bouton est pressé si ce mode est activé. Si vous avez les bons droits, vous pouvez aussi changer les modes des canaux en cliquant sur ces boutons, ou en cliquant sur le bouton à gauche du canal. Pour cacher les boutons des modes des canaux, allez dans <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Interface</guilabel
+>, cliquez sur <guilabel
+>Fenêtre de discussion</guilabel
+> et décochez la case <guilabel
+>Afficher les boutons de mode du canal</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Ceci est appelé le <interface
+>Panneau des pseudonymes</interface
+>. Il est affiché à chaque fois que l'onglet actuel est un canal. Il liste les &i18n-nickname;s de tous les utilisateurs ayant rejoint le canal, y compris vous-même. Survoler un &i18n-nickname; avec le pointeur de souris pour afficher des informations supplémentaires à propos de l'utilisateur. Vous pouvez changer la façon dont les icônes sont affichées pour tout &i18n-nickname; en changeant le thème d'icônes des pseudonymes. Consultez <link linkend="nickthemes"
+>Configurer les thèmes de &i18n-nickname;s</link
+> pour plus d'informations. Le <guilabel
+>Thème par défaut</guilabel
+>, comme montré sur l'écran ci-dessus, utilise les icônes suivantes :  <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> utilisateur normal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> animateur. L'utilisateur peut parler dans un canal modéré. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> semi-opérateur du canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> opérateur du canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> propriétaire du canal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> administrateur du canal </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>De plus, si un utilisateur est absent, une petite horloge sera dessinée dans le coin de l'icône. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Cliquez avec le &BDS; sur n'importe quel &i18n-nickname; pour afficher un menu contextuel des opérations que vous pouvez effectuer avec ce &i18n-nickname;. Par exemple, vous pouvez <link linkend="dcc"
+>envoyer un fichier</link
+> au &i18n-nickname;. </para>
+
+<para
+>Pour cacher le <interface
+>Panneau des pseudonymes</interface
+>, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Afficher la liste des pseudos</guisubmenu
+></menuchoice
+> depuis le menu principal. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>On les appelle les <interface
+>Boutons rapides</interface
+>. Par défaut, ils ne sont pas affichés. Pour les afficher, consultez <link linkend="quick-buttons"
+>Configurer les Boutons rapides</link
+>. Vous pouvez personnaliser leurs définitions avec les commandes que vous voulez.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Vous pouvez contrôler la façon dont les messages sont affichés dans le panneau défilant des messages pour les canaux et les conversations. Par exemple, vous pouvez changer la couleur des messages, jouer un son lorsqu'un message contient une certaine chaîne de caractères, ou répondre automatiquement aux messages. Consultez la rubrique sur le <link linkend="highlighting"
+>Mise en évidence de messages</link
+> pour plus d'informations. </para>
+</note>
+
+<note>
+<para
+>Les noms de canaux commencent parfois par <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> ou <userinput
+> ! </userinput
+>. Le premier caractère d'un nom de canal détermine le type de canal (RFC 2811) de la façon suivante : <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> - Canaux normaux. </para
+></listitem
+><listitem
+><para
+><userinput
+> ! </userinput
+> - Canaux normaux. </para
+></listitem
+><listitem
+><para
+><userinput
+>&amp;</userinput
+> - Local. Canaux qui ne peuvent être rejoints que sur le serveur l'hébergeant, tous les autres canaux pouvant être rejoints depuis n'importe quel serveur du réseau. </para
+></listitem
+><listitem
+><para
+><userinput
+>&plus;</userinput
+> - Canaux ne gérant pas les modes de canaux. Cela signifie que tous les modes sont désactivés, à l'exception du mode « t » qui est activé. </para
+></listitem
+></itemizedlist
+> Les noms de canaux peuvent contenir jusqu'à 50 caractères et n'importe quel caractère à part des espaces, des virgules, et Ctrl-G (^G ou ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Connexion Rapide</title>
+
+<para
+>Parfois vous souhaitez vous connecter à un serveur sans avoir à créer un nouveau serveur dans la <link linkend="serverlist"
+>Liste de serveurs</link
+>. </para>
+
+<para
+>Choisissez <menuchoice
+><guisubmenu
+>Fichier</guisubmenu
+> <guisubmenu
+>Connexion rapide</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Connexion rapide</guilabel
+> sera affiché.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran Connexion rapide</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>L'écran Connexion rapide</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Saisissez l'adresse du serveur dans le champ <guilabel
+>Serveur</guilabel
+>, le &i18n-nickname; que vous souhaitez porter dans le champ <guilabel
+>Pseudo</guilabel
+> et cliquez sur le bouton <guibutton
+>Connecter</guibutton
+>. Lorsque &konversation; sera connecté au serveur, saisissez la commande <userinput
+><command
+>/join</command
+> <replaceable
+>#nom-du-canal</replaceable
+></userinput
+> pour rejoindre un canal. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Commandes &irc; fréquemment utilisées</title>
+
+<para
+>La liste ci-dessous présente les commandes &irc; fréquemment utilisées. Veuillez consulter la <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> pour une liste complète des commandes ou visiter <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Pour une liste de commandes interprétées de manière particulière par &konversation;, veuillez consulter les <link linkend="konvi-cmds"
+>commandes de &konversation;</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Liste les commandes disponibles sur le serveur actuel. N'est pas géré par tous les serveurs.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Propose l'aide de la commande <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>. N'est pas géré par tous les serveurs.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#canal</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Rejoint le <userinput
+><replaceable
+>#canal</replaceable
+></userinput
+>. Si le canal n'existe pas encore, il est créé et vous en devenez l'opérateur.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Quitte le canal actuel et ferme l'onglet du <interface
+>canal</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#canal</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quitte le <userinput
+><replaceable
+>#canal</replaceable
+></userinput
+> et ferme l'onglet <interface
+>canal</interface
+> correspondant. Synonyme de <userinput
+><command
+>/leave</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> au canal précédé par votre &i18n-nickname;. Par exemple, si votre &i18n-nickname; est <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, saisir <userinput
+><replaceable
+>/me prépare un thé.</replaceable
+></userinput
+> affichera le message <interface
+>Tux prépare un thé.</interface
+> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre poste pour un court laps de temps, utilisez plutôt la commande <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Si quelqu'un essaie de vous envoyer un message privé ou de vous inviter à rejoindre un canal, ils sera informé que vous êtes absent de votre ordinateur avec le <userinput
+><replaceable
+>msg</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Annule une commande <userinput
+><command
+>/away</command
+> <replaceable
+>msg</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Crée un nouvel onglet avec le <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> de l'utilisateur pour une conversation privée, connu sur &irc; sous le nom de <link linkend="query"
+>Query</link
+>. Tout ce qui y est écrit n'est visible que de vous et de votre partenaire.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>pseudo</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie le <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> à l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+>. Seul <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> voit le message. Utilisez <userinput
+><command
+>/query</command
+></userinput
+> pour des conversations plus longues.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Invite l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> à rejoindre un canal. Cette commande est particulièrement utile si le canal fonctionne uniquement sur invitation.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Conversations privées</title>
+
+<para
+>Une conversation privée ne peut être consultée que par vous et un seul autre interlocuteur. Les conversations privées sont appelées « conversations » dans &konversation;. Pour commencer une conversation privée, saisissez <userinput
+><command
+>/query </command
+><replaceable
+>pseudo</replaceable
+></userinput
+> dans n'importe quelle ligne de saisie, où <replaceable
+>pseudo</replaceable
+> est le pseudonyme de la personne avec laquelle vous souhaitez discuter. Vous pouvez aussi cliquer avec le &BDS; sur le &i18n-nickname; de la personne, dans le <guilabel
+>Panneau des pseudos</guilabel
+> et choisir <menuchoice
+><guisubmenu
+>Démarrer une conversation</guisubmenu
+></menuchoice
+>. <action
+>Un nouvel onglet sera créé.</action
+> Annoncez-vous en envoyant un message. </para>
+
+<para
+>Les conversations sont comme les canaux, en dehors du fait que seul vous et votre interlocuteur pouvez participer dans le canal.</para>
+
+<para
+>Pour quitter une conversation, fermez simplement l'onglet. Notez toutefois que si votre interlocuteur vous envoie un nouveau message dans la conversation, l'onglet s'ouvrira de nouveau.</para>
+
+<para
+>Pour quitter toutes les conversations, choisissez <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+> <guisubmenu
+>Fermer toutes les conversations ouvertes</guisubmenu
+> </menuchoice
+> dans le menu principal, ou appuyez sur la touche <keycap
+>F11</keycap
+> de votre clavier.</para>
+
+<para
+>Lorsque quelqu'un lance une conversation avec vous, &konversation; crée un nouvel onglet avec son &i18n-nickname;. Si vous ne souhaitez pas parler avec cette personne, fermez l'onglet. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Configurer les notifications</title>
+
+<para
+>Les <guilabel
+>notifications</guilabel
+> sont des actions que &konversation; effectuera à chaque fois qu'un évènement se produit. Supposez que &konversation; fonctionne, mais minimisé ou caché derrière d'autres fenêtres de votre bureau. Si quelqu'un souhaite communiquer avec vous, ou si votre ami rejoint un canal, vous aimeriez peut-être être alerté(e). Les notifications servent à cela. </para>
+
+<para
+>Pour configurer les notifications, allez dans <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer les Notifications</guisubmenu
+></menuchoice
+> dans le menu principal. <action
+>La fenêtre <guilabel
+>Configurer les Notifications</guilabel
+> sera affichée.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran de Configuration des notifications</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran de Configuration des notifications</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Cliquez ici pour sélectionner un évènement.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Cochez les types de notifications que vous souhaitez exécuter lorsqu'un évènement se produit (<guilabel
+>Marquer l'élément de la barre des tâches</guilabel
+> fait clignoter la barre des tâches lorsqu'un évènement se produit).</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Répétez en sélectionnant un autre évènement et en cochant les notifications souhaitées. Lorsque vous avez terminé de configurer toutes les notifications souhaitées, cliquez sur le bouton <guibutton
+>Ok</guibutton
+>.</para>
+
+<para
+>Une fois que vous avez configuré vos notifications, vous pouvez activer ou désactiver toutes les notifications en utilisant <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+> <guisubmenu
+>Activer les Notifications</guisubmenu
+></menuchoice
+> depuis le menu principal. </para>
+
+<tip
+><para
+>Vous pouvez aussi être averti lorsque quelqu'un mentionne votre &i18n-nickname; dans un message en utilisant la <link linkend="highlighting"
+>fonction de surlignement</link
+> de &konversation;.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Surveiller qui est en ligne.</title>
+
+<para
+>&konversation; vous tiendra informé(e) lorsque vos partenaires sont connectés au réseau &irc; ou pas. </para>
+
+<para
+>Le réseau &irc; est enregistré parce que les &i18n-nickname;s sont uniques sur un réseau &irc; donné. Un même &i18n-nickname; dans deux réseaux &irc; différents n'est pas forcément la même personne, mais le même &i18n-nickname; dans deux serveurs différents du même réseau &irc; correspondent en général à la même personne.</para>
+
+<note
+><para
+>C'est pourquoi il est important d'utiliser le même <guilabel
+>Réseau</guilabel
+> pour tous les serveurs du même réseau &irc;, lorsque vous <link linkend="serverlist"
+>définissez les réseaux, serveurs et les canaux à rejoindre automatiquement</link
+>.</para
+></note>
+
+<para
+>Pour activer la fonctionnalité de surveillance des &i18n-nickname;s, choisissez <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+><guisubmenu
+>Pseudonymes surveillés</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> sera affiché.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Pseudonymes surveillés.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Pseudonymes surveillés</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>Les &i18n-nickname;s dans votre liste de surveillance sont listés ici. Ils sont listés sous leur réseau &irc; associé. Si aucun &i18n-nickname; n'est listé, c'est que vous n'avez saisi aucun &i18n-nickname; à surveiller ou que vous devez activer la fonctionnalité de surveillance de &i18n-nickname; (voir ci-dessous). Étendez tout &i18n-nickname; en ligne pour voir la liste de canaux que le &i18n-nickname; a rejoint. Les icônes à côté de chaque canal sont les mêmes que les icônes apparaissant dans le <interface
+>Panneau des pseudonymes</interface
+> des <link linkend="channel-screen-tour"
+>canaux</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>L'information connue à propos du &i18n-nickname; est affichée ici. Lorsque l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> est affiché pour la première fois, cette information est clairsemée. Toutes les 20 secondes, une commande <userinput
+><command
+>WHOIS</command
+></userinput
+> est envoyée automatiquement au serveur pour demander des informations aux &i18n-nickname;s n'ayant aucune information. cela continue jusqu'à ce que tous les &i18n-nickname;s aient leurs informations renseignées. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Pour ajouter un &i18n-nickname; à surveiller, ouvrez le menu contextuel de la <guilabel
+>Liste des pseudos</guilabel
+> en cliquant avec le &BDS; sur un &i18n-nickname; et sélectionnez <guilabel
+>Ajouter aux pseudos surveillés</guilabel
+>. Si vous souhaitez ajouter plusieurs &i18n-nickname;s, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Notifications</guilabel
+> et cliquez sur <guilabel
+>Pseudonymes surveillés</guilabel
+>. L'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> est affiché. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Pseudonymes surveillés</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Pseudonymes surveillés</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Cochez cette case pour activer la fonctionnalité de surveillance des &i18n-nickname;s.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Si vous voulez que l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> soit automatiquement affiché lorsque vous ouvrez &konversation; cochez cette case.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>Dans l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> ci-dessus, vous pouvez double-cliquer sur n'importe quel &i18n-nickname; et cette commande sera envoyée au serveur. <userinput
+><command
+>%u</command
+></userinput
+> sera remplacé par le &i18n-nickname;. <userinput
+><command
+>%n</command
+></userinput
+> est indispensable en fin de commande.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>La fonctionnalité <guilabel
+>Pseudonymes surveillés</guilabel
+> fonctionne en requêtant périodiquement le serveur. Cette case définit à quel intervalle cela se produit. Évitez de mettre moins de 20 secondes car cela place une charge excessive sur le serveur.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Cliquez sur le bouton <guibutton
+>Ok</guibutton
+> une fois que vous avez fini d'ajouter ou de supprimer des &i18n-nickname;s.</para>
+
+<para
+><emphasis
+>Remarque : </emphasis
+> à chaque fois que vous affichez l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+>, cela peut prendre quelques temps avant que le moindre &i18n-nickname; soit affiché et que &konversation; ait pu interroger le serveur. Normalement, vous laisserez l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+> tourner. </para>
+
+<para
+>&konversation; affiche aussi un message dans tous les <link linkend="channel-screen-tour"
+>canaux</link
+> à chaque fois qu'un utilisateur de votre liste de <guilabel
+>Pseudonymes surveillés</guilabel
+> se connecte ou se déconnecte du serveur. Ce message ressemble à cela :  </para>
+
+<para
+><computeroutput
+>[17:52] [Notifier] paul est connecté (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Surlignement de messages</title>
+
+<para
+>Vous pouvez contrôler de quelle manière les messages sont affichés dans les canaux et les écrans de conversations.</para>
+
+<para
+>Pour activer la fonctionnalité de surlignement, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer &konversation;</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran Surlignement.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran Surlignement</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Cliquez ici pour sélectionner l'écran <guilabel
+>Surlignement</guilabel
+></para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Cliquez ici pour ajouter un nouvel élément à la <guilabel
+>liste de mise en évidence</guilabel
+>. Lorsqu'un élément de la liste est sélectionné, vous pouvez le modifier dans le panneau situé dessous.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Saisissez un modèle de chaîne de caractères ici. Tout message reçu correspondant à ce modèle, où que ce soit dans le message, activera le surlignement du message. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Si le modèle est trouvé dans un message, l'intégralité du message sera affiché dans la couleur que vous choisissez ici.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>Si vous le souhaitez, &konversation; jouera un son lorsque le modèle est trouvé. Cliquez sur le bouton pour choisir le fichier audio devant être joué. Cliquez sur le bouton test pour entendre ce son.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Si vous souhaitez que &konversation; envoie automatiquement une réponse lorsque le modèle est trouvé, saisissez ce message ici. Utilisez cette fonctionnalité avec précaution, vous pourriez ennuyer les utilisateurs d'&irc; avec trop de bavardage. Vous pouvez aussi saisir des commandes &irc; ou &konversation; ici.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Si vous avez configuré des sons pour certains surlignements, vous pouvez tous les désactiver en décochant cette case.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Ceci ne sera cherché que dans les fenêtres de conversation listées ici par nom, ou dans toutes les fenêtres de conversation si le champ est vide. Pour saisir plusieurs noms, séparez-les par des virgules.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Si vous cochez cette case, à chaque fois que quelqu'un mentionnera votre &i18n-nickname; dans un message, celui-ci sera affiché dans la couleur que vous choisissez à droite.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Normalement, le surlignement ne s'applique pas aux messages que vous écrivez. Si vous souhaitez surligner vos propres messages, cochez cette case et choisissez une couleur à droite.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Configurer l'affichage à l'écran (&osd;)</title>
+
+<para
+><acronym
+>L'affichage à l'écran</acronym
+> (&osd;) est une fonctionnalité unique de &konversation;. Avec l'&osd;, les messages envoyés sur les canaux apparaîtront sur votre écran, même si &konversation; est minimisé. Voici un exemple d'&osd; en action. Le message dans le coin en haut à gauche de l'écran vient de &konversation; qui est lancé mais minimisé dans la barre des tâches.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Exemple d'affichage à l'écran</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Exemple d'affichage à l'écran</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Pour activer l'&osd;, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer &konversation;</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran d'affichage à l'écran</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran d'affichage à l'écran</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Cliquez ici pour développer l'élément <guilabel
+>Notifications</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Cliquez ici pour sélectionner l'écran <guilabel
+>OSD</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Cochez cette case pour activer l'&osd;.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Cliquez sur ce bouton pour choisir une police pour l'&osd;. (<emphasis
+>Remarque : </emphasis
+>toutes les polices ne fonctionnent pas forcément. Les polices « Luxi Sans 22 » et « Impact 22 » sont connues pour fonctionner).</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Cochez les cases ici pour sélectionner le type de messages que vous souhaitez voir apparaître à l'écran.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Déplacez l'<interface
+>aperçu de l'&osd;</interface
+> vers la position désirée, puis cliquez sur le bouton <guibutton
+>Appliquer</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Envoyer des messages colorés</title>
+
+<para
+>Vous pouvez ajouter de la couleur aux messages que vous envoyez quel que soit le canal. Dans la <interface
+>Ligne de saisie</interface
+> du canal, commencez à saisir votre message. Cliquez sur le <inlinemediaobject
+><imageobject
+><imagedata fileref="format-text-color.png" format="PNG"/></imageobject
+><textobject
+><phrase
+>Bouton Insérer une couleur &irc;...</phrase
+></textobject
+></inlinemediaobject
+> <guibutton
+>Couleurs &irc;...</guibutton
+> ou choisissez <menuchoice
+><guisubmenu
+>Insérer</guisubmenu
+> <guisubmenu
+>Couleurs &irc;</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Sélecteur de couleurs &irc;</guilabel
+> sera affiché</action
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran Sélecteur de couleurs &irc;.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>L'écran Sélecteur de couleurs &irc;</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Choisissez une couleur et cliquez sur <guibutton
+>Ok</guibutton
+>. Continuez à saisir votre message dans la <interface
+>Ligne de saisie</interface
+>. Pour changer de nouveau de couleur, cliquez sur le bouton <guibutton
+>Couleurs &irc;</guibutton
+>. Choisissez une couleur différente et cliquez sur <guibutton
+>Ok</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Configurer les thèmes de &i18n-nickname;s</title>
+
+<para
+>Vous pouvez changer les icônes affichées à côté des &i18n-nickname;s dans le <interface
+>Panneau des pseudos</interface
+> des onglets de canaux. Pour changer le thème des &i18n-nickname;s, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> Cliquez sur <guilabel
+>Interface</guilabel
+> pour le développer, puis cliquez sur <guilabel
+>Thèmes pour la liste des pseudos</guilabel
+> pour afficher l'écran <guilabel
+>Thèmes pour la liste des pseudos</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran des thèmes.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran des thèmes</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Cliquez ici pour sélectionner l'écran <guilabel
+>Thèmes pour la liste des pseudos</guilabel
+></para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Sélectionnez un thème.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Des icônes d'exemple sont affichées ici en fonction du thème choisi.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Si vous avez téléchargé un thème de pseudonymes depuis ailleurs, cliquez ici pour l'installer.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Configurer les boutons rapides</title>
+
+<para
+>Vous pouvez activer une fonctionnalité pour afficher les <interface
+>boutons rapides</interface
+> depuis l'écran <link linkend="channel-screen-tour"
+>principal</link
+>, huit <interface
+>boutons rapides</interface
+> seront affichés. Pour afficher les Boutons rapides, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> Cliquez sur <guilabel
+>Interface</guilabel
+> pour le développer, puis cliquez sur <guilabel
+>Fenêtre de Discussion</guilabel
+>. Cochez la case <guilabel
+>Afficher les Boutons rapides</guilabel
+> puis cliquez sur <guibutton
+>Ok</guibutton
+>. </para>
+
+<para
+>Ces boutons peuvent être personnalisés selon vos préférences pour lancer des commandes &irc; fréquemment utilisées. Pour personnaliser les <interface
+>Boutons rapides</interface
+>, choisissez <menuchoice
+><guisubmenu
+>Paramètres</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> Cliquez sur <guilabel
+>Interface</guilabel
+> pour l'étendre, puis cliquez sur <guilabel
+>Boutons rapides</guilabel
+> pour afficher l'écran <guilabel
+>Boutons rapides</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'écran boutons rapides</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>L'écran boutons rapides</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Il y a huit <interface
+>boutons rapides</interface
+> par défaut. Cliquez sur une entrée pour la changer ou utilisez les boutons situés à droite de la liste pour ajouter ou supprimer des <interface
+>boutons rapides</interface
+>. La colonne <guilabel
+>Nom du bouton</guilabel
+> est le nom qui apparaîtra sur le bouton dans l'écran <link linkend="channel-screen-tour"
+>principal</link
+>. Conservez des noms courts. La colonne <guilabel
+>Action du bouton</guilabel
+> sera l'action qui sera lancée lorsque vous cliquerez sur le <interface
+>bouton rapide</interface
+>. Des astuces pour créer des actions sont données sur l'écran. </para>
+
+<para
+>Cliquez sur <guibutton
+>Ok</guibutton
+> pour valider les changements. </para>
+
+<para
+>Exemple : </para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Nom du bouton</guilabel
+> : <userinput
+><replaceable
+>Msg</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Action du bouton</guilabel
+> : <userinput
+><replaceable
+>Msg %u </replaceable
+></userinput
+> (il y a un espace après <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Pour utiliser ce bouton depuis l'écran <link linkend="channel-screen-tour"
+>principal</link
+>, cliquez sur un &i18n-nickname; dans le <interface
+>Panneau des pseudos</interface
+>, puis cliquez sur le bouton. <computeroutput
+>/MSG </computeroutput
+> sera affiché sur la <interface
+>Ligne de saisie</interface
+> suivi par le &i18n-nickname; choisi. Saisissez le message que vous souhaitez envoyer à cette personne puis appuyez sur la touche &Entree;. Le message sera envoyé à l'utilisateur. Seul cet utilisateur verra le message. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Envoyer et recevoir des fichiers</title>
+
+<para
+>Vous pouvez envoyer des fichiers via &irc; aux autres utilisateurs en ligne, ils peuvent aussi vous en envoyer. </para>
+
+<para>
+<emphasis
+>ATTENTION : n'ouvrez jamais un fichier que quelqu'un vous envoie à moins que vous n'ayez confiance en cette source. Ce pourrait être un virus.</emphasis>
+</para>
+
+<para
+>Pour envoyer un fichier à quelqu'un dans le canal, cliquez avec le &BDS; sur le &i18n-nickname; de cette personne dans le <interface
+>Panneau des pseudos</interface
+> de l'écran <link linkend="channel-screen-tour"
+>principal</link
+>. Choisissez <menuchoice
+><guisubmenu
+>Envoyer un fichier</guisubmenu
+></menuchoice
+>. <action
+>Une fenêtre s'ouvrira vous demandant de choisir un fichier à envoyer.</action
+> Ensuite, un nouvel onglet <guilabel
+>État DCC</guilabel
+> sera ouvert. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'onglet État DCC</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'onglet État DCC</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Le &i18n-nickname; du destinataire et le nom du fichier sont affichés ici.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>La colonne <guilabel
+>État</guilabel
+> indique l'état du fichier en cours d'envoi ou de réception comme ci-dessous :  </para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>En préparation</guilabel>
+		</term>
+		<listitem>
+			<para
+>Une réception est en attente de fichiers pouvant être reçus ou un envoi est en attente de données à envoyer. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Connexion en cours</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; essaie d'établir une connexion avec l'autre partie. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Envoi en cours</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; envoie le fichier à l'autre partie. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Réception en cours</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; reçoit le fichier de l'autre partie. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Terminé</guilabel>
+		</term>
+		<listitem>
+			<para
+>Le fichier a été transféré avec succès. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>En suspend</guilabel>
+		</term>
+		<listitem>
+			<para
+>Le transfert attend que votre partenaire l'accepte ou le rejette. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Abandonné</guilabel>
+		</term>
+		<listitem>
+			<para
+>Vous avez cliqué sur le bouton <guibutton
+>Abandonner</guibutton
+> ou l'autre partie a abandonné le transfert. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Échec</guilabel>
+		</term>
+		<listitem>
+			<para
+>Une erreur s'est produite et le transfert n'a pas réussi. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>En file d'attente</guilabel>
+		</term>
+		<listitem>
+			<para
+>Le transfert est en attente que vous l'acceptiez ou le rejetiez. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Reprise</guilabel>
+		</term>
+		<listitem>
+			<para
+>Lorsqu'un transfert commence mais que le fichier existe déjà sur le système de l'utilisateur, le message suivant sera affiché <interface
+>Le fichier existe déjà. Reprendre le transfert ? </interface
+> Cet état indique que l'utilisateur a repris le transfert. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Lorsque quelqu'un veut vous envoyer un fichier, l'onglet <guilabel
+>État DCC</guilabel
+> sera créé (s'il ne l'est pas déjà). Cliquez sur l'onglet <guilabel
+>État DCC</guilabel
+> pour l'afficher. Cliquez sur le fichier pour le sélectionner, puis cliquez sur ce bouton pour accepter le fichier et le transfert commencera. <emphasis
+>Remarque : </emphasis
+> vous pouvez configurer &konversation; pour qu'il accepte automatiquement les conversations des autres personnes en choisissant <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal. Cliquez sur <guilabel
+>Comportement</guilabel
+> pour le développer, puis cliquez sur <guilabel
+>DCC</guilabel
+> pour afficher l'écran <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Si vous avez des problèmes pour envoyer ou recevoir des fichiers, votre pare-feu ou votre routeur bloquent peut-être les ports DCC. Voir <link linkend="faq"
+>Questions et réponses</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Réceptionner les &URL; des messages</title>
+
+<para
+>Dans n'importe quel <link linkend="channel-screen-tour"
+>canal</link
+>, les utilisateurs postent parfois des &URL; de sites web ou d'autres ressources intéressantes du Web. Vous pouvez double-cliquer sur n'importe quelle &URL; et &konversation; lancera l'application associée à l'&URL;. L'application dépend du type &MIME; de l'&URL;. Par exemple, une &URL; commençant par <interface
+>http:</interface
+> activera le navigateur web par défaut et affichera la page web (vous pouvez aussi spécifier quel <link linkend="webbrowser"
+>navigateur internet</link
+> utiliser). Si l'&URL; n'est plus dans l'historique du canal, vous pourriez avoir du mal à la retrouver. &konversation; peut conserver une liste pratique de toutes les &URL; pour vous. Pour activer cette fonctionnalité, choisissez <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+> <guisubmenu
+>Récupérateur d'&URL; </guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>Un nouvel onglet appelé <guilabel
+>Récupérateur d'&URL; </guilabel
+> sera créé.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>L'onglet « Récupérateur d'&URL; ».</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'onglet « Récupérateur d'&URL; ».</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>C'est la liste des &URL; depuis que vous avez lancé &konversation;. La colonne <guilabel
+>De</guilabel
+> est le &i18n-nickname; de la personne ayant posté l'&URL; où le nom du canal ou du serveur où l'&URL; a été postée (les &URL; apparaissant dans les messages « joindre » et « quitter » ne sont pas listées.) Cliquez sur une &URL; pour la sélectionner.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Cliquez ici pour activer l'application associée à l'&URL; sélectionnée. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple une &URL; commençant par <interface
+>http : </interface
+> activera votre navigateur internet par défaut et affichera la page web. Pour les pages web, vous pouvez aussi spécifier quel <link linkend="webbrowser"
+>navigateur internet</link
+> utiliser.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Cliquez ici pour copier l'&URL; sélectionnée dans le presse-papier.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Cliquez ici pour supprimer l'&URL; sélectionnée de la liste.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Cliquez ici pour enregistrer la liste d'&URL;s dans un fichier.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Cliquez ici pour vider la liste.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Configurer votre navigateur web préféré.</title>
+
+<para
+>Lorsque vous cliquez sur une &URL; surlignée où que ce soit dans &konversation;, cela lancera l'application par défaut associée au type &MIME; de l'&URL;. Par exemple, lorsque vous cliquez sur une &URL; commençant par <interface
+>http</interface
+>, &konqueror; est lancé pour afficher la page web. Vous pouvez spécifier une application différente de l'<guilabel
+>application par défaut</guilabel
+>. Vous pouvez par exemple utiliser <guilabel
+>Firefox</guilabel
+> à la place. </para>
+
+<para
+>Pour choisir un navigateur web différent pour &konversation;, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer &konversation;</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>L'écran <guilabel
+>Configurer</guilabel
+> sera affiché.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>L'écran Général</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>L'écran Général</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Cliquez ici pour afficher l'écran <guilabel
+>Général</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Cliquez ici pour spécifier que vous souhaitez utiliser un navigateur internet personnalisé.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Saisissez la commande pour lancer le navigateur internet souhaité. Lorsque vous cliquez sur une &URL;, <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> sera remplacé par l'&URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Remarque : </emphasis
+> la configuration du navigateur web ne s'applique pas aux &URL; <interface
+>mailto:</interface
+>. Les &URL; <interface
+>mailto:</interface
+> sont toujours lancées avec le client de messagerie électronique par défaut. </para>
+
+<para
+>Cliquez sur le bouton <guibutton
+>Appliquer</guibutton
+> pour enregistrer vos changements. Vous devez vous reconnecter à chaque serveur et à chaque canal pour que les changements prennent effet. La manière la plus simple de faire cela est de quitter et relancer &konversation;. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Marquer les canaux et journalisation de conversations</title>
+
+<para
+>Vous pouvez insérer un marqueur dans le <link linkend="channel-screen-tour"
+>canal</link
+> et les écrans de <link linkend="query"
+>conversations</link
+> pour vous aider à localiser rapidement l'information. Pour faire cela, choisissez <menuchoice
+><guisubmenu
+>Insérer</guisubmenu
+> <guisubmenu
+>Ligne de marquage</guisubmenu
+></menuchoice
+> depuis le menu principal ou appuyez sur la touche <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>Une ligne apparaîtra à l'écran en bas du texte. La ligne remontera avec le reste du texte de l'écran.</action
+> </para>
+
+<para
+>Pour que la <interface
+>Ligne de marquage</interface
+> soit insérée dans tous les canaux en même temps, choisissez <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+></menuchoice
+> depuis le menu principal, développez <guilabel
+>Comportement</guilabel
+>, cliquez sur <guilabel
+>Fenêtre de Discussion</guilabel
+> et cochez la case <guilabel
+>Afficher les lignes insérées manuellement dans toutes les fenêtres de discussion</guilabel
+>. </para>
+
+<para
+>Pour que &konversation; insère automatiquement une <interface
+>Ligne de marquage</interface
+> à chaque fois que vous faites une commande <userinput
+><command
+>/away</command
+> <replaceable
+>msg</replaceable
+></userinput
+>, consultez <link linkend="identity-away"
+>Configurer votre identité</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Journalisation</title>
+
+<para
+>Si la journalisation est activée, &konversation; conserve un journal de tout <interface
+>serveur</interface
+>, tout <link linkend="channel-screen-tour"
+>canal</link
+> et toute <link linkend="query"
+>conversation privée</link
+>. Chaque session est enregistrée dans un fichier de journal sur le disque. Lorsque vous rouvrez la même session, &konversation; y ajoute le journal. </para>
+
+<para
+>À chaque fois que vous rouvrez une session, les 1024 caractères environ de la session précédente sont lus à partir de la fin du journal et affichés à l'écran. </para>
+
+<para
+>Votre session continuant, les messages disparaissent par le haut de la fenêtre. Vous pouvez faire défiler l'écran en arrière pour voir ces messages. Au final, afin de conserver de la mémoire, les messages les plus anciens ne sont plus affichés du tout. C'est la <guilabel
+>Limite pour le défilement vers le haut</guilabel
+>. Les messages qui disparaissent à cause de la <guilabel
+>limite pour le défilement vers le haut</guilabel
+> sont toujours disponibles dans le fichier de journal, si la journalisation est activée.</para>
+
+<para
+>Pour consulter le journal d'une session, cliquez sur l'onglet pour la session afin d'en faire la session actuelle et choisissez <menuchoice
+><guisubmenu
+>Fenêtre</guisubmenu
+> <guisubmenu
+>Ouvrir l'historique pour</guisubmenu
+></menuchoice
+> depuis le menu principal. <action
+>Un nouvel onglet s'ouvre</action
+> affichant le journal. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Fichier d'historique</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Fichier d'historique</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Les messages du fichier d'historique sont affichés ici. Les messages les plus anciens sont en haut et les plus récents en bas.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Cliquez sur ce bouton pour enregistrer le fichier d'historique dans un autre fichier.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Cliquez pour rafraîchir l'affichage du fichier d'historique. Lorsque vous consultez un fichier d'historique, les nouveaux messages de la session correspondante ne sont <emphasis
+>pas</emphasis
+> automatiquement ajoutés à l'affichage historique. Utilisez ce bouton pour consulter les messages les plus récents.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Cliquez pour écraser l'affichage du fichier d'historique et le fichier d'historique du disque.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>Utilisez cette case pour définir la taille maximale du défilement. Cette option ne prend effet que pour les nouveaux onglets d'historique ouverts. La dernière valeur de taille de défilement enregistrée sera utilisée au prochain démarrage de &konversation;. Chaque fichier d'historique peut avoir un paramétrage différent.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+>La <guilabel
+>limite pour le défilement vers le haut</guilabel
+> peut être changée en choisissant <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer &konversation;</guisubmenu
+></menuchoice
+> depuis le menu principal, puis en développant <guilabel
+>Comportement</guilabel
+> et en cliquant sur <guilabel
+>Fenêtre de Discussion</guilabel
+>. La case <guilabel
+>Limite pour le défilement vers le haut</guilabel
+> apparaît sur cet écran. Si vous la mettez à <guilabel
+>Illimité</guilabel
+> (zéro), les messages ne disparaissent pas du défilement. </para>
+
+<para
+>Vous pouvez activer ou désactiver la journalisation et configurer d'autres options de journalisation, en choisissant <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer &konversation;</guisubmenu
+></menuchoice
+> depuis le menu principal, puis en développant <guilabel
+>Comportement</guilabel
+> et en cliquant sur <guilabel
+>Journalisation</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>Commandes &konversation;</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Les commandes suivantes sont interprétées par &konversation; et peuvent différer des commandes &irc; standard. Les éléments à l'intérieur des accolades sont optionnels. Les éléments séparés par une barre (|) sont des formes alternatives de la commande. Les commandes non listées ici sont envoyées au serveur telles quelles. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> au canal précédé par votre &i18n-nickname;. Par exemple, si votre &i18n-nickname; est <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, saisir <userinput
+><replaceable
+>/me prépare un thé.</replaceable
+></userinput
+> affichera le message <interface
+>Tux prépare un thé.</interface
+> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre poste pour un court laps de temps, utilisez plutôt la commande <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Comme le message <userinput
+><command
+>/me</command
+></userinput
+> ci-dessus en dehors du fait que le message est envoyé à tous les canaux et conversations que vous avez ouverts sur tous les serveurs connectés de &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>canal</replaceable
+> <replaceable
+>[mot-de-passe]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Rejoint le <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Si le serveur l'autorise, et si le canal n'existe pas encore, il est créé et vous devenez opérateur du canal. Si le canal demande un mot de passe pour être rejoint, spécifiez-le dans <userinput
+><replaceable
+>mot-de-passe</replaceable
+></userinput
+>. La plupart des noms de canaux commencent par un <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>canal</replaceable
+> <replaceable
+>[mot-de-passe]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Identique à <userinput
+><command
+>/join</command
+></userinput
+> ci-dessus.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>[raison]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Quitte le <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> avec la <userinput
+><replaceable
+>raison</replaceable
+></userinput
+> donnée et ferme l'onglet <interface
+>canal</interface
+> correspondant. Dans un onglet &konversation; de canal ou de conversation, vous pouvez saisir <userinput
+><command
+>/part</command
+></userinput
+> ce qui ferme ce canal ou cette conversation avec la raison par défaut configurée dans les <link linkend="identity"
+>paramètres</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>[raison]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Identique à <userinput
+><command
+>/part</command
+></userinput
+> ci-dessus.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Lorsque saisi dans un canal, une conversation ou un onglet DCC, déconnecte le serveur correspondant et ferme tous les onglets canal, conversation et DCC ouverts sur ce serveur.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>pseudo|canal</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> à l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> ou à n'importe qui dans le <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Ce qui suit est un exemple de ce qui se passe dans l'onglet du canal.</para>
+
+<para
+><computeroutput
+>[17:14] [Remarque] Envoi de l'avertissement « Je crois que je comprends » à #konversation.</computeroutput
+></para>
+
+<para
+>Et voici ce que les destinataires voient</para>
+
+<para
+><computeroutput
+>[17:14] [Remarque] -Eisfuchs- Je crois que je comprends</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Crée un nouvel onglet portant le <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> de l'utilisateur pour une conversation privée, plus connue sur &irc; sous le nom de <link linkend="query"
+>Conversation</link
+>. Tout ce qui est écrit ici n'est visible que de vous et de votre partenaire. Vous pouvez saisir plus d'un &i18n-nickname;, en les séparant par des espaces et un onglet de conversation sera ouvert pour tout &i18n-nickname;. Chaque onglet de conversation ainsi créé sera privé entre vous et votre partenaire.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>pseudo|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>message</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie un message privé à l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> ou à tous les utilisateurs du <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. À la différence de <userinput
+><command
+>/query</command
+></userinput
+>, un nouvel onglet n'est pas ouvert. Si le <userinput
+><replaceable
+>message</replaceable
+></userinput
+> commence par <userinput
+><command
+>/me</command
+></userinput
+>, le message est formaté de la même manière qu'une commande <userinput
+><command
+>/query</command
+></userinput
+>.</para>
+
+<para
+>Exemples</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs J'ai besoin d'un peu d'aide avec la commande msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Une nouvelle version de Konvi est disponible ! </replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me est en cours de compilation du manuel.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>pseudo|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>message</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Identique à <userinput
+><command
+>/msg</command
+></userinput
+> à la différence que le message n'est pas affiché à l'écran. C'est utile pour empêcher que les mots de passe et d'autres informations sensibles restent affichés sur votre écran ou soient enregistrées dans un journal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>pseudo|canal</replaceable
+></userinput
+> <userinput
+><replaceable
+>message</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Identique à <userinput
+><command
+>/msg</command
+></userinput
+> à la différence que le message est envoyé à tous les canaux et à toutes les conversations ouvertes sur tous les serveurs connectés dans &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lorsque saisi dans un onglet de canal, essaie de donner le privilège d'opérateur au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> sur ce canal. Cette commande peut ne pas fonctionner si vous n'avez pas assez de privilèges sur le canal (vous devez être un opérateur du canal vous-même). Vous pouvez saisir plus d'un &i18n-nickname;, séparés par des espaces.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lorsque saisi dans un onglet de canal, essaie de retirer le privilège d'opérateur au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> sur ce canal. Vous pouvez saisir plus d'un &i18n-nickname;, en les séparant par des espaces.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[pseudo]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Donne à l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> le privilège d'un opérateur &irc; (administrateur). Cela ne fonctionne que si le pseudo est listé sur la ligne O: du serveur. Les opérateurs &irc; ont le privilège de <userinput
+><command
+>/kill</command
+></userinput
+> des &i18n-nickname;s, de <userinput
+><command
+>/connect</command
+></userinput
+> des serveurs au réseau &irc; et plus encore. Si le <userinput
+><replaceable
+>pseudonyme</replaceable
+></userinput
+> n'est pas saisi, la commande essaie de vous donner à vous-même le privilège d'opérateur &irc;. Votre nom d'utilisateur et votre mot de passe d'opérateur &irc; vous seront demandés dans tous les cas.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Dans certains canaux (avec le drapeau +m), les utilisateurs ne peuvent pas envoyer de messages à moins qu'ils n'aient le privilège d'animateur. Cette commande essaie de donner au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> le privilège d'animateur. Vous devez avoir le privilège d'opérateur pour exécuter cette commande. Cette commande est principalement utilisée lorsque vous êtes un opérateur sur un canal modéré.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>pseudo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Retire le privilège d'animateur au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> sur le canal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[canal]</replaceable
+> <replaceable
+>[message]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Essaie de définir <userinput
+><replaceable
+>message</replaceable
+></userinput
+> comme sujet du <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Lorsque cette commande est saisie dans un onglet de canal, <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> peut être omis et la commande utilise le canal actif. Si le <userinput
+><replaceable
+>message</replaceable
+></userinput
+> est omis, la commande affiche le sujet actuel du canal. Changer le sujet d'un canal peut échouer si vous n'avez pas les privilèges suffisants.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>raison</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Si quelqu'un essaie de vous envoyer un message privé ou de vous inviter à rejoindre un canal, il sera informé que vous êtes absent de votre poste de travail pour la <userinput
+><replaceable
+>raison</replaceable
+></userinput
+> donnée. Pour revenir à l'état normal, saisissez <userinput
+><command
+>/away</command
+></userinput
+> sans saisir de <userinput
+><replaceable
+>raison</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>raison</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Identique à la commande <userinput
+><command
+>/away</command
+></userinput
+> ci-dessus à l'exception que la commande est envoyée à tous les serveurs connectés dans &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>pseudo</replaceable
+> <replaceable
+>[canal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Invite l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> à rejoindre le <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Cette commande est en particulier utile si le canal fonctionne sur invitation. Lorsque saisi dans un onglet de canal, <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> peut être omis.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>script</replaceable
+> <replaceable
+>[paramètres]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Exécute le script shell compatible avec &konversation; nommé <userinput
+><replaceable
+>script</replaceable
+></userinput
+>, en lui passant les <userinput
+><replaceable
+>paramètres</replaceable
+></userinput
+>. Consultez <link linkend="scripting"
+>Scripts</link
+> pour plus d'informations sur l'utilisation et l'écriture de scripts.</para>
+<para
+>Exemples : </para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Envoie au canal les numéros de versions de &konversation;, &Qt;, &kf5; et &plasma; de votre système.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Envoie votre version de &Linux; (le résultat de <quote
+>uname -a</quote
+>) au canal.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[pseudo]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ajoute ou supprime <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> de votre liste de <link linkend="nicksonline"
+>Pseudonymes surveillés</link
+>. Si le &i18n-nickname; est déjà dans la liste, il est supprimé. S'il n'est pas dans la liste, il est ajouté. Si le <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> est omis, affiche la liste actuelle des &i18n-nickname;s surveillés.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>pseudo</replaceable
+> <replaceable
+>raison</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lorsque saisi dans un onglet de canal, essaie d'exclure l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> du canal avec la <userinput
+><replaceable
+>raison</replaceable
+></userinput
+>. Si la <userinput
+><replaceable
+>raison</replaceable
+></userinput
+> n'est pas saisie, la raison par défaut définie dans les <link linkend="identity"
+>paramètres</link
+> est utilisée. Cette commande ne peut être utilisée que dans un onglet de canal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[canal]</replaceable
+> <replaceable
+>utilisateur</replaceable
+>|<replaceable
+>masque</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Tentatives de bannir l'<userinput
+><replaceable
+>utilisateur</replaceable
+></userinput
+> ou le <userinput
+><replaceable
+>masque</replaceable
+></userinput
+> du <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Lorsque saisi dans un onglet de canal, il n'est pas nécessaire de préciser le <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Pour plus d'informations sur les hôtes, les domaines et les masques, veuillez consulter la documentation sur <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Pour connaître la liste des utilisateurs actuellement bannis du canal, veuillez saisir <userinput
+><command
+>/mode </command
+><replaceable
+>canal</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[canal]</replaceable
+> <replaceable
+>modèle</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Inverse un ban existant d'un canal. Lorsque saisi dans un onglet de canal, la commande <userinput
+><replaceable
+>canal</replaceable
+></userinput
+> peut être omise. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>pseudo</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Ajoute le <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> à votre liste d'utilisateurs ignorés. Vous pouvez spécifier plus d'un &i18n-nickname; en séparant ceux-ci par des espaces. Les messages sur les canaux des utilisateurs que vous ignorez ne seront pas affichés. Si, de plus, vous saisissez <userinput
+><command
+>-all</command
+></userinput
+>, tous les types de messages (conversations, notices, &CTCP;, DCC et exceptions) de l'utilisateur seront également ignorés, en plus des messages sur les canaux. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+> au serveur. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lorsque saisi dans un onglet de canal, envoie <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> au canal. C'est l'équivalent de saisir <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> dans la <interface
+>ligne de saisie</interface
+> du canal. Cette commande est pratique pour envoyer des commandes &irc; sans que celles-ci ne soient interprétées et exécutées. Deux barres obliques à la suite (//) sont l'équivalent de <userinput
+><command
+>/say</command
+></userinput
+>. Cette commande est également utilisée par les <link linkend="scripting"
+>scripts</link
+> pour envoyer des messages. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Place le log serveur en mode brut (<command
+>open</command
+>) ou arrête le mode brut (<command
+>close</command
+>). Si ni <command
+>open</command
+>, ni <command
+>close</command
+> ne sont saisis, <command
+>open</command
+> est choisi par défaut. En mode brut, le journal affiche chaque message reçu du serveur dans le format &irc; natif. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Ouvre une &konsole; dans nouvel onglet. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[URL]</replaceable
+> <replaceable
+>[mot-de-passe]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Se connecte au serveur à l'adresse <userinput
+><replaceable
+>URL</replaceable
+></userinput
+>. Si aucune <userinput
+><replaceable
+>URL</replaceable
+></userinput
+> n'est saisie, se connecte au serveur associé à l'onglet dans lequel vous avez saisi la commande. C'est utile pour se reconnecter à un serveur en cas de déconnexion. Si un serveur nécessite un mot de passe pour s'y connecter, saisissez-le à la place de <userinput
+><replaceable
+>mot-de-passe</replaceable
+></userinput
+>. Si le serveur n'utilise pas le port par défaut (6667), saisissez l'<userinput
+><replaceable
+>URL</replaceable
+></userinput
+> de la façon suivante : <replaceable
+>irc.kde.org : 6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>pseudo</replaceable
+> <replaceable
+>[nom-de-fichier]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie le <userinput
+><replaceable
+>nom-de-fichier</replaceable
+></userinput
+> à l'utilisateur portant le &i18n-nickname; <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+>. Si le <userinput
+><replaceable
+>nom-de-fichier</replaceable
+></userinput
+> n'est pas saisi, une fenêtre est affichée et vous permet de le sélectionner. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Ouvre l'onglet <guilabel
+>État DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>pseudo|canal</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Envoie un message PING au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> ou au <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. C'est utile pour déterminer si quelqu'un avec qui vous parlez a une latence réseau élevée, ou (lorsqu'il est envoyé à un canal) si c'est votre système qui a une latence élevée. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>pseudo|canal</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Envoie un message au <userinput
+><replaceable
+>pseudo</replaceable
+></userinput
+> ou à tous les utilisateurs du <userinput
+><replaceable
+>canal</replaceable
+></userinput
+>. Cette commande est similaire à la commande <userinput
+><command
+>/msg</command
+></userinput
+> décrite ci-dessus, à la différence que le message est envoyé en utilisant le protocole &CTCP;. La réponse renvoyée par votre interlocuteur dépend du client &irc; qu'il utilise. Par exemple, lors d'une conversation avec un autre utilisateur &konversation;, <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> renverra l'heure système de l'ordinateur de Eisfuchs. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> renverra le numéro de version de &konversation; de l'ordinateur de Eisfuchs. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Scripts</title>
+
+<para
+>&konversation; est fourni avec quelques scripts pratiques que vous pouvez lancer depuis le programme. Pour lancer un script, dans un onglet canal, conversation, DCC ou serveur, saisissez une commande au format</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>script</replaceable
+> [<replaceable
+>paramètres</replaceable
+>]</userinput
+></para>
+
+<para
+>ce qui exécute la commande appelée <userinput
+><replaceable
+>script</replaceable
+></userinput
+> en lui passant les <userinput
+><replaceable
+>paramètres</replaceable
+></userinput
+> (optionnels).</para>
+
+<para
+>Par exemple, saisissez la commande suivante dans un onglet de canal</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>pour envoyer au canal les numéros de versions de &konversation;, &Qt;, &kf5; et &plasma; de votre système.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>exécute le script <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>, en lui passant comme arguments <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. Cela renvoie votre numéro de version &Linux; au canal.</para>
+
+<para
+>Pour en savoir plus sur les scripts installés avec &konversation;, veuillez consulter le <link linkend="scripts_ref"
+>guide de référence des scripts</link
+></para>
+
+<para
+>Pour obtenir la liste complète des scripts disponibles, saisissez la commande suivante dans un écran &konversation;.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Puis naviguez dans le dossier de sortie pour voir la liste.</para>
+
+<para
+>Vous pouvez écrire vos propres scripts. Les scripts sont des scripts shell et peuvent être écrits dans n'importe quel langage shell, comme bash, perl ou python. Lorsque &konversation; lance un script, les deux premiers paramètres envoyés au script sont : </para>
+
+<itemizedlist>
+
+<listitem
+><para
+>l'adresse du serveur,</para
+></listitem>
+
+<listitem
+><para
+>le nom du canal.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Voici un exemple de script shell (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Exécute une commande et affiche le résultat dans Konversation.
+
+SERVER=$1 ; 
+TARGET=$2 ; 
+shift ; shift ; 
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line" ; done
+</programlisting>
+</para>
+
+<para
+>Notez que le script utilise qdbus pour communiquer avec &konversation;. La commande <computeroutput
+>/say</computeroutput
+> fait que le résultat est envoyé au canal comme un message classique. Pour afficher quelque chose dans l'onglet sans l'envoyer aux autres utilisateurs, utilisez plutôt <computeroutput
+>info</computeroutput
+>. Regardez les fichiers script existants pour plus d'exemples d'écriture de scripts.</para>
+
+<para
+>Pour pouvoir lancer un script que vous avez écrit, vous devez l'installer en le copiant dans <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. Vous devez également avoir donné le privilège d'exécution au fichier, par exemple <userinput
+><replaceable
+>chmod a+x mon-script</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Guide de référence des scripts</title>
+
+<para
+>&konversation; est fourni avec de nombreux scripts installés par défaut, veuillez vous référer à ce guide pour apprendre à les utiliser.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>Numéro de Bug|Chaîne à Chercher</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Ce script est utilisé pour ouvrir votre navigateur et chercher une chaîne ou un numéro de bogue sur le bugzilla de <ulink url="https://bugs.kde.org/"
+>&kde;</ulink
+>.</para>
+<para
+>Exemple : pour ouvrir votre navigateur et chercher le bug 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Exemple d'action : le navigateur par défaut selon votre &systemsettings; devrait s'ouvrir à la page <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>arguments de la ligne de commande</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ce script est utilisé pour écrire le résultat de la commande en argument dans votre canal actuel.</para>
+<para
+>Exemple : pour afficher à tout le monde dans le canal actuel quelle version de &konversation; vous avez installée.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Exemple de sortie : <replaceable
+>Konversation : 1.6</replaceable
+></para>
+<para
+>ATTENTION ! L'intégralité de la commande est affichée et tous les utilisateurs de l'onglet actuel peuvent le consulter. À utiliser avec précaution.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ce script vous renverra une Fortune aléatoire lorsque lancé.</para>
+<para
+>Exemple : pour afficher une fortune par hasard dans votre onglet de canal actuel.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Exemple de sortie : <replaceable
+>Aléa de fortune : ne faites jamai d'erreurs. -- Anonyme, dans une discussion sur un forum concernant les rapport de bogue du noyau</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>pourcentage</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ce script affiche une barre de défilement en texte pour le pourcentage donné.</para>
+<para
+>Exemple : pour afficher une barre de défilement avancée à 50 % dans l'onglet de canal actuel.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Exemple de sortie : <replaceable
+>Chargement de bière [ | ] 50 % </replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{lecteur}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>C'est un script « En cours de Lecture » pour de nombreux lecteurs multimédia. Il propose aussi une option pour n'afficher les informations de lecture que pour les lecteurs audio, ou que pour les lecteurs vidéo via les arguments <replaceable
+>audio</replaceable
+> et <replaceable
+>video</replaceable
+>. De plus, il est possible de spécifier directement le lecteur multimédia que vous souhaitez interroger.</para>
+<para
+>Les lecteurs multimédia Amarok (audio), JuK (audio), Kaffeine (vidéo, audio), KMPlayer (vidéo, audio), KPlayer (vidéo, audio), kdetv (vidéo), Yammi (audio), Audacious (audio), MPD (audio) sont pris en charge.</para>
+<para
+>Exemple : pour afficher la chanson en cours de lecture dans Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Exemple d'affichage : <replaceable
+>* user is listening to You Give Love A Bad Name by Bon Jovi on Slippery When Wet [AmaroK]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ce script affiche quelques informations détaillées sur votre système en combinant les résultats de plusieurs commandes et en les mettant en forme de manière appropriée. </para>
+<para
+>Exemple : pour afficher des informations sur votre système dans l'onglet de canal actuel.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Exemple d'affichage : <replaceable
+>Sysinfo pour « user-desktop »: lancé dans KDE Plasma 5.6.5 avec Ubuntu 16.04.1 LTS (Xenial Xerus) équipé de Linux 4.4.0-47-generic, Processeur : Intel(R) Core(TM) i7-4910MQ Processeur @ 2.90GHz à 2996-3338/3900 MHz, RAM: 15795 / 15967 MB, Stockage : 1591/2281 GB, 406 procs, 47.59h depuis démarrage</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>Adresse du Lien</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ce script utilise l'api de tinyurl pour transformer une clé donnée en une tinyurl envoyée dans l'onglet de canal actuel.</para>
+<para
+>Exemple : pour donner à quelqu'un un lien court vers https://konversation.kde.org.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Exemple d'affichage : <replaceable
+>http://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ce script affiche le résultat de la commande « uptime » et le met dans une forme appropriée.</para>
+<para
+>Exemple : pour afficher votre uptime de beau gosse de 98 jours.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Exemple d'affichage : <replaceable
+>Uptime : 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Tous ces scripts ont des alias de commande prédéfinis. Dans la fenêtre de configuration de &konversation;, sélectionnez <menuchoice
+><guimenu
+>Comportement</guimenu
+> <guimenuitem
+>Alias de commandes</guimenuitem
+></menuchoice
+> pour consulter, ajouter, supprimer ou éditer des alias de commandes. </para>
+
+<para
+>Pour plus d'information sur les scripts, veuillez lire le <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>guide des scripts de la base utilisateur</ulink
+> </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Référence des commandes</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>La fenêtre principale de &konversation;</title>
+
+<sect2>
+<title
+>Le menu Fichier</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F2</keycap
+></shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Liste des serveurs</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Affiche la <link linkend="irc-basics"
+>liste des serveurs et canaux</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Connexion rapide</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Affiche l'écran <link linkend="quickconnect"
+>Connexion rapide</link
+> pour la connexion à un serveur. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Déconnecter</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Se déconnecte de tous les serveurs </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Reconnecter</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Se reconnecte à tous les serveurs déconnectés suite à une erreur réseau ou tout autre problème. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Rejoindre le canal</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Affiche une fenêtre vous permettant de saisir le nom du canal que vous souhaitez rejoindre. C'est l'équivalent de saisir <command
+>/join <userinput
+>#nom-du-canal</userinput
+></command
+> dans un onglet canal ou serveur.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Maj;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Parti globalement</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Change votre état de &i18n-nickname; à absent dans tous les canaux. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fichier</guimenu
+> <guimenuitem
+>Quitter</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Quitte</action
+> &konversation;</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Édition</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Édition</guimenu
+> <guimenuitem
+>Trouver le texte...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Cherche une chaîne texte dans l'écran actuel.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Édition</guimenu
+> <guimenuitem
+>Poursuivre la recherche</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Cherche de nouveau les chaînes de caractères de l'écran actuel en utilisant la chaîne texte précédemment saisie.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Édition</guimenu
+> <guimenuitem
+>Effacer la fenêtre</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Efface l'écran actuel.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Maj;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Édition</guimenu
+> <guimenuitem
+>Effacer toutes les fenêtres</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Efface toutes les fenêtres.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Insérer</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insérer</guimenu
+> <guimenuitem
+>Couleurs &irc;...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Voir <link linkend="color-msgs"
+>Envoyer des messages colorés</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insérer</guimenu
+> <guimenuitem
+>Ligne de marquage</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Voir <link linkend="rememberlines"
+>Marquer les canaux et journalisation de Conversations</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Maj;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Insérer</guimenu
+> <guimenuitem
+>Caractère spécial...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Utilisé pour saisir des caractères spéciaux, des caractères étrangers par exemple.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Signets</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Signets</guimenu
+> <guimenuitem
+>Ajouter un signet</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Ajoute un signet pour le canal &amp; le réseau actuel.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Signets</guimenu
+> <guimenuitem
+>Mettre les onglets dans un dossier de signets…</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Ajoute</action
+> tous les canaux à un nouvel élément du menu à la fin du menu des signets. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Signets</guimenu
+> <guimenuitem
+>Nouveau dossier de signets...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Crée un nouveau dossier de signets.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Signets</guimenu
+> <guimenuitem
+>Modifier les signets...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ouvre l'éditeur de signets.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Configuration</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Afficher la liste des pseudos</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Affiche (ou cache) le panneau de la liste des &i18n-nickname;s dans les onglets de canaux. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Identités...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Affiche l'écran <link linkend="identity"
+>Identités</link
+> permettant la configuration des informations d'identification. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Fenêtre</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Onglet Précédent</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Affiche l'écran correspondant à l'onglet précédent.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Onglet Suivant</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Affiche l'écran correspondant à l'écran suivant.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Fermer l'onglet</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ferme l'écran actuel. Si c'est un canal, il est aussi quitté. Si vous fermez un onglet <interface
+>Messages Serveurs</interface
+>, tous les canaux ouverts sur ce serveur sont fermés ainsi que la connexion avec le serveur. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Fermer toutes les conversations ouvertes</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ferme toutes les <link linkend="query"
+>conversations privées</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Pseudonymes surveillés</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Affiche l'écran <guilabel
+>Pseudonymes surveillés</guilabel
+>. Consultez <link linkend="nicksonline"
+>Surveiller qui est en ligne.</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Récupérateur d'&URL;</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Affiche l'écran du <link linkend="urlcatcher"
+>récupérateur d'&URL;</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>État DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Affiche l'onglet <link linkend="dcc"
+>État DCC</link
+> contenant l'information sur les transferts de fichier.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Nouvelle Konsole</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Affiche un écran de terminal. Vous pouvez ouvrir autant d'onglets de <guilabel
+>Konsole</guilabel
+> que vous le souhaitez.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Liste des canaux pour</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Ouvre une <link linkend="list-channels"
+>liste des canaux</link
+> disponibles sur le serveur.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fenêtre</guimenu
+> <guimenuitem
+>Ouvrir l'historique pour</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Affiche un écran avec le journal des messages de l'onglet actuel. Ne fonctionne que pour les onglets de <interface
+>Canaux</interface
+>, <interface
+>Messages Serveur</interface
+> et <interface
+>Conversations</interface
+>. La journalisation doit être activée dans <menuchoice
+><guisubmenu
+>Configuration</guisubmenu
+> <guisubmenu
+>Configurer Konversation</guisubmenu
+> <guisubmenu
+>Comportement</guisubmenu
+> <guisubmenu
+>Journalisation</guisubmenu
+></menuchoice
+> depuis le menu principal. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Le menu Aide</title>
+
+<para
+>&konversation; possède l'entrée habituelle de &kde; dans le menu <guimenu
+>Aide</guimenu
+>. Pour plus d'informations, veuillez consulter la section sur le <ulink url="help:/fundamentals/menus.html#menus-help"
+>Menu Aide</ulink
+> des fondamentaux de &kde;. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Questions et réponses</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Lorsque je démarre &konversation;, j'aimerais me connecter à un serveur sans rejoindre aucun canal. Comme faire ? </para>
+</question>
+<answer>
+<para
+>Dans l'écran <link linkend="serverlist-addnetwork"
+>Modifier le Serveur</link
+>, laissez le champ <guilabel
+>Canaux</guilabel
+> vide.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; ne se connecte à aucun serveur. Qu'est-ce qui ne va pas ? </para>
+</question>
+<answer>
+<para
+>Il y a beaucoup de choses qui peuvent être fausses.</para>
+<orderedlist>
+<listitem>
+<para
+>Assurez-vous d'avoir saisi le bon <guilabel
+>nom de serveur</guilabel
+> et le bon <guilabel
+>port</guilabel
+> dans l'écran <link linkend="serverlist-addserver"
+>Ajouter un serveur</link
+>. </para>
+</listitem>
+<listitem>
+<para
+>Vérifiez les messages d'erreur dans la sortie de l'écran <link linkend="channel-screen-tour"
+>Messages Serveur</link
+>. Est-ce que le serveur rejette la connexion à cause d'un mauvais mot de passe ? Est-ce que le serveur rejette la connexion car il demande un <acronym
+>IDENTD</acronym
+> et que votre ordinateur ne répond pas à la conversation <acronym
+>IDENT</acronym
+> ? Avez-vous coché la case protocole SSL alors que le serveur ne gère pas SSL ?  </para>
+</listitem>
+<listitem>
+<para
+>Si vous êtes derrière un pare-feu, assurez-vous que les bons ports sont ouverts. &konversation; aura besoin des ports suivants :  </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>TCP 6667 sortant (ou le port du serveur auquel vous voulez vous connecter)</para
+></listitem>
+<listitem
+><para
+>TCP 113 entrant (si le serveur à besoin de IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Pour plus d'informations sur les problèmes de connexion à &irc;, consultez <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Lorsque je vais dans <menuchoice
+><guimenu
+>Fenêtre</guimenu
+> <guisubmenu
+>Liste des canaux</guisubmenu
+></menuchoice
+>, je ne peux pas le sélectionner. Pourquoi ? </para>
+</question>
+<answer>
+<para
+>Le menu <menuchoice
+><guimenu
+>Fenêtre</guimenu
+> <guisubmenu
+>Liste des canaux</guisubmenu
+></menuchoice
+> sera grisé si vous n'êtes pas dans un canal, par exemple si <guilabel
+>Pseudonymes surveillés</guilabel
+> est actuellement consulté. Pour pouvoir le sélectionner à nouveau retournez dans un onglet de canal ou de serveur. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Comment faire pour que &konversation; me mette automatiquement absent après une période d'inactivité ?  </para>
+</question>
+<answer
+><para
+>Les messages d'absence automatiques sont configurés par identité. Pour activer l'absence automatique, sélectionnez <menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Identités</guimenuitem
+></menuchoice
+>. Choisissez l'identité pour laquelle vous voulez activer l'absence automatique depuis la liste déroulante en haut de la fenêtre et allez dans l'onglet <guilabel
+>Absent</guilabel
+>. Cochez l'option <guilabel
+>Mode absent automatique</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Comment éviter la fonctionnalité <guilabel
+>Remplacement auto</guilabel
+> de la <interface
+>ligne de saisie</interface
+> ? </para>
+</question>
+<answer
+><para
+>Utilisez <keycombo action="simul"
+>&Ctrl;&Entree;</keycombo
+> à la place d'&Entree; pour éviter le parcours et le remplacement automatique du texte dans la <interface
+>ligne de saisie</interface
+> en fonction des options de la page de configuration <menuchoice
+><guimenu
+>Comportement</guimenu
+> <guimenuitem
+>Remplacement auto</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Où puis-je trouver les scripts inclus dans &konversation; ?</para>
+</question>
+<answer>
+<para
+>Lancez cette commande dans la ligne de saisie de &konversation; (nous utilisons à titre d'exemple le script de média puisqu'il est installé par défaut avec &konversation;) : </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Exemple d'affichage : <replaceable
+>Le script 'media' a été trouvé ici : /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Comment mettre le texte en gras/italique/souligné ?</para>
+</question>
+<answer>
+<para
+>Exemple : <userinput
+>Ceci est mon texte %Bgras%B.</userinput
+></para>
+<para
+>Sortie : <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple : <userinput
+>Ceci est mon texte %Iitalique%I.</userinput
+></para>
+<para
+>Sortie : <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple : <userinput
+>Ceci est mon texte %Usouligné%U.</userinput
+></para>
+<para
+>Sortie : <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple : <userinput
+>Ceci est mon texte %Sbarré%S.</userinput
+></para>
+<para
+>Sortie : <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exemple : <userinput
+>Ceci est mon texte %Mmonospace%M.</userinput
+></para>
+<para
+>Sortie : <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Remerciements et licence</title>
+
+<para
+>&konversation; </para>
+<para
+>Programme sous copyright 2002-2005 par l'équipe de &konversation;. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Contributeurs :  <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Merci à :  <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>hébergement de www.konversation.org</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Documentation protégée par copyright &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Traduction française par Simon Depiets <email
+>2df@tuxfamily.org</email
+>. Relecture par Ludovic Grossard <email
+>grossard@kde.org</email
+>.</para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

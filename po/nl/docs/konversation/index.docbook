@@ -1,0 +1,6027 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>schermnaam</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Schermnaam</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>Het handboek van &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+&Bram.Schoenmakers;&Freek.de.Kruijf; 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>2016-11-29</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; is een gebruiksvriendelijk &irc;-client gebouwd op &Qt; en &kf5-full;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>chat</keyword>
+<keyword
+>communicatie</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Inleiding</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; is een &irc;-programma gebouwd op &Qt; en &kf5-full;. Het biedt de volgende functies: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>SSL-ondersteuning.</para
+></listitem>
+<listitem
+><para
+>Gebruiksvriendelijke interface met tabbladen.</para
+></listitem>
+<listitem
+><para
+>Snelknoppen met veelgebruikte commando's die aangepast kunnen worden.</para
+></listitem>
+<listitem
+><para
+>Automatisch verbinden en teruggaan naar kanalen.</para
+></listitem>
+<listitem
+><para
+>Bestanden verzenden en ontvangen over DCC.</para
+></listitem>
+<listitem
+><para
+>Schermnamenvolglijst.</para
+></listitem>
+<listitem
+><para
+>Visuele en 'auditory' notificaties voor uiteenlopende gebeurtenissen, zoals berichten die uw &i18n-nickname; bevatten of schermnamen die op uw volglijst staan die online of offline gaan. </para
+></listitem>
+<listitem
+><para
+>Aanpasbare accentuering van berichten gebaseerd op &i18n-nickname; of reguliere expressie.</para
+></listitem>
+<listitem
+><para
+>Schermnaamaanvulling.</para
+></listitem>
+<listitem
+><para
+>Alle &URL;-adressen verzamelen en opslaan die in de berichten voorkomen.</para
+></listitem>
+<listitem
+><para
+>On-screen display van berichten, zelfs wanneer het programma geminimaliseerd is.</para
+></listitem>
+<listitem
+><para
+>Negeerlijst voor een bepaalde &i18n-nickname;.</para
+></listitem>
+<listitem
+><para
+>Automatisch loggen en logbeheer.</para
+></listitem>
+<listitem
+><para
+>Markeren van regels in de logbestanden.</para
+></listitem>
+<listitem
+><para
+>Script-functionaliteit.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>De website van &konversation; is <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Verdere informatie zoals een FAQ en tips en trucs vindt u in de <ulink url="https://userbase.kde.org/Konversation"
+>&konversation; UserBase pagina</ulink
+>. </para>
+
+<para
+>De ontwikkelaars van &konversation; kunnen meestal gevonden worden op &irc; op <ulink url="irc://irc.libera.chat/konversation"
+>kanaal #konversation op irc.libera.chat</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>&konversation; gebruiken</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Wanneer u nog nooit &irc; gebruikt hebt...</title>
+
+<para
+>&irc; is een chatprotocol, opgesteld volgens de officiële internetstandaarden. Het is bovendien goed in staat om vele uren van uw leven op te slokken. Om &irc; te gebruiken dient u verbinding te maken met een server om vervolgens aan een kanaal (chatroom) deel te nemen. U kunt ook privégesprekken aangaan.</para>
+
+<para
+>Om met een server en kanaal te verbinden start u &konversation;. De <guilabel
+>Serverlijst</guilabel
+> komt in beeld.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Serverlijst</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Serverlijst</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>Onder<guilabel
+>Netwerken</guilabel
+> vindt u de ingestelde &irc;-netwerken. Een &irc;-netwerk is een verzameling samenwerkende servers. U hoeft maar bij één server een verbinding te maken om toegang te krijgen tot het hele &irc;-netwerk. Wanneer u eenmaal verbonden bent, zal &konversation; automatisch aan de kanalen onder <guilabel
+>Kanalen</guilabel
+> deelnemen. Wanneer &konversation; voor de eerste keer opgestart wordt, is het netwerk <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> en het kanaal <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> al voor u ingevuld. Klik op een netwerk om daar een verbinding mee te maken.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Klik hier om een nieuw <guilabel
+>Netwerk</guilabel
+> in te stellen, inclusief de te verbinden server en de <guilabel
+>Kanalen</guilabel
+> die automatisch geopend moeten worden. Zie het onderdeel <link linkend="serverlist"
+>Het instellen van netwerken, servers en kanalen</link
+> voor meer informatie.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Klik hier om een verbinding te maken met het geselecteerde &irc;-netwerk en kanaal.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>Wanneer u op de knop <guibutton
+>Verbinden</guibutton
+> klikt nadat u &konversation; voor de eerste keer hebt opgestart, kunt u een melding krijgen dat uw <guilabel
+>Identiteit</guilabel
+> nog niet goed is ingesteld.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Identiteiten controleren</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Identiteiten controleren</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Wanneer u &konversation; voor de eerste keer opstart zal het enkele gegevens van uw besturingssysteem ophalen zodat enkele identiteitsgegevens alvast ingevuld kunnen worden. Wanneer deze gegevens nog niet compleet zijn, bijvoorbeeld uw volledige naam, krijgt u het bovenstaande bericht in beeld. Om dit probleem te verhelpen klikt u op <guibutton
+>Identiteit bewerken...</guibutton
+> en kunt u uw <link linkend="identity"
+>identiteit instellen</link
+>.</para>
+</note>
+
+<para
+>Het <interface
+>hoofdscherm</interface
+> bevat de berichten die door de server naar het programma verzonden zijn. (Wanneer &konversation; geen verbinding kon maken, raadpleeg dan <link linkend="faq"
+>Vraag en antwoord</link
+>.) Wanneer de serverberichten allemaal binnengekomen zijn, zal &konversation; aan het geselecteerde kanaal deelnemen. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kanaal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kanaal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Dit is de zogenaamde <interface
+>invoerregel</interface
+>. Om een bericht naar iedereen in het kanaal te verzenden, typt u hier het bericht en drukt u op &Enter;. Uw bericht (en de berichten van anderen) zijn vervolgens te zien in het vak daarboven. Ieder bericht wordt vooraf gegaan met de tijd en de &i18n-nickname; van de gebruiker.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>U kunt aan verschillende servers en kanalen deelnemen. Iedere server, kanaal, kanaallijst en andere schermen krijgen een eigen tabblad. Om een lijst van verschillende kanalen te openen, raadpleeg dan de sectie <link linkend="list-channels"
+>De beschikbare kanalen tonen</link
+>. Om aan een kanaal deel te nemen, typt u <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaalnaam</replaceable
+></userinput
+> in de invoerregel. (Het teken <userinput
+>#</userinput
+> is vereist.) U kunt ook <userinput
+><command
+>/j</command
+></userinput
+> typen, wat de afkorting is van <userinput
+><command
+>/join</command
+></userinput
+>. Om een kanaal te verlaten typt u <userinput
+><command
+>/part</command
+></userinput
+>. Om van scherm te wisselen klikt u op het betreffende tabblad. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Dit is de <interface
+>Schermnamenlijst</interface
+>. Het toont alle schermnamen van alle gebruikers die deelnemen aan het kanaal, inclusief uzelf.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Dit zijn de basisbeginselen. Lees verder voor meer informatie...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Uw identiteit instellen</title>
+
+<para
+>Voordat u &konversation; gaat gebruiken dient u uw identiteit in te stellen in de instellingen, zodat u geïdentificeerd kunt worden op het netwerk.</para>
+
+<para
+>Ga naar in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Identiteiten</guisubmenu
+></menuchoice
+>. <action
+> Het venster <guilabel
+>Identiteiten</guilabel
+> komt dan in beeld. U kunt dit venster ook openen door op de knop <guibutton
+>Bewerken</guibutton
+> te klikken in het venster <guilabel
+>Netwerk bewerken</guilabel
+> of <guilabel
+>Nieuw netwerk</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Identiteiten (tabblad Algemeen)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Identiteiten (tabblad Algemeen)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Klik hier om een <guilabel
+>Identiteit</guilabel
+> te selecteren zodat u deze kunt bewerken.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Gebruik deze knoppen <guibutton
+>Toevoegen</guibutton
+>, <guibutton
+>Dupliceren</guibutton
+>, <guibutton
+>Hernoemen</guibutton
+> of <guibutton
+>Verwijderen</guibutton
+> om een <guilabel
+>Identiteit</guilabel
+> te bewerken.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Voer hier uw echte naam in. &irc; is niet bedoeld om u verborgen te houden van uw vrienden of vijanden. Houd hier rekening mee wanneer u de neiging hebt om helemaal los te gaan. Het invullen van een valse naam is een goede manier om uw geslacht te verbergen voor al die andere nerds op IRC, maar alles kan achteraf alsnog achterhaald worden zodat u nooit volledig anoniem kunt zijn.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Gebruik deze knoppen <guibutton
+>Toevoegen</guibutton
+> of <guilabel
+>Verwijderen</guilabel
+> om een &i18n-nickname; te bewerken.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Dit is de lijst met schermnamen. Uw &i18n-nickname; is de naam die andere gebruikers zullen zien en u ook leren kennen onder deze naam. U mag hier iedere naam invullen die u wilt. Het eerste teken moet een letter zijn, de overige tekens kunnen letters, cijfers of speciale tekens als <literal
+>-[]\`_^{}|</literal
+> zijn.</para>
+
+<para
+>Omdat een &i18n-nickname; uniek moet zijn voor de server die u gebruikt, kan de naam afgewezen worden omdat iemand anders deze &i18n-nickname; al gebruikt. Voer ook de alternatieve schermnamenn. Zodra de eerste keuze wordt afgewezen zal &konversation; de overige schermnamen proberen. </para>
+
+<para
+>Volgens RFC 2812 mag de maximale lengte van de &i18n-nickname; slechts 9 tekens bevatten, maar dit wordt in feite bepaald door de server. Om te bepalen wat het maximum van de server is dient u daarmee te verbinden. In het tabblad <interface
+>Serverberichten</interface
+> zoekt u naar een bericht met <computeroutput
+>[Support ]</computeroutput
+>. Bijvoorbeeld:</para>
+
+<para>
+<computeroutput
+>[18:51] *bram85* [21:45] [Support] bram85 MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>De parameter <computeroutput
+>NICKLEN</computeroutput
+> geeft de maximale lengte van de &i18n-nickname; aan. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Gebruik deze knoppen om de volgorde van de schermnamen te veranderen. De bovenste &i18n-nickname; wordt als eerste geprobeerd en daarna de volgende enzovoorts.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Wanneer u uw &i18n-nickname; geregistreerd hebt op het &irc;-netwerk, voert u de naam van de dienst in en het wachtwoord om uw &i18n-nickname; te authenticeren. Zodra &konversation; een verbinding maakt zal het automatisch <userinput
+><command
+>/msg</command
+> <replaceable
+>dienst</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>wachtwoord</replaceable
+></userinput
+> naar de server sturen. Wanneer u niet weet waar dit over gaat kunt u deze velden ook leeg laten.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Klik op het tabblad <guilabel
+>Afwezig</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identiteiten (tabblad Afwezig)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identiteiten (tabblad Afwezig)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Voer een &i18n-nickname; in waaruit blijkt dat u afwezig bent. Wanneer u het commando <userinput
+><command
+>/away </command
+><replaceable
+>bericht</replaceable
+></userinput
+> invoert op een willekeurig kanaal in combinatie met deze <guilabel
+>Identiteit</guilabel
+>, zal &konversation; automatisch uw &i18n-nickname; veranderen naar uw afwezigheidsschermnaam. Andere gebruikers kunnen dan zien dat u afwezig bent. Wanneer u zo'n <userinput
+><command
+>/away</command
+></userinput
+>-commando invoert terwijl u afwezig bent, zal &konversation; uw &i18n-nickname; automatisch weer veranderen naar uw oorspronkelijke &i18n-nickname;. Wanneer u deze schermnaamveranderingen niet wenst dient u dit veld gewoon leeg te laten.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Wanneer u dit vakje selecteert tijdens het uitvoeren van een <userinput
+><command
+>/away</command
+></userinput
+>-commando zal er een horizontale lijn in het kanaal verschijnen. Deze geeft aan op welk punt u weg ging. Andere &irc;-gebruikers kunnen deze lijn niet zien. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Wanneer u dit vakje selecteert zal &konversation; automatisch het <guilabel
+>Afwezigheidscommando</guilabel
+> sturen naar alle kanalen waarmee u met de betreffende <guilabel
+>Identiteit</guilabel
+> aan deelneemt. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> wordt vervangen door <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+>. Wanneer u het commando <userinput
+><command
+>/away</command
+></userinput
+> uitvoert zal het <guilabel
+>Terugkomstcommando</guilabel
+> getoond worden in alle kanalen waarmee u met de betreffende <guilabel
+>Identiteit</guilabel
+> aan deelneemt.</para>
+
+<note
+><para
+>Afwezigheidsberichten worden over het algemeen als irritant ervaren door andere gebruikers. Gebruik deze optie met zorg, met oog op uw mede &irc;-gebruikers. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Klik op het tabblad <guilabel
+>Geavanceerd</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identiteiten (tabblad Geavanceerd)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identiteiten (tabblad Geavanceerd)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>U kunt hier een commando invoeren dat zal worden uitgevoerd voordat er verbinding wordt gemaakt met de server. Als deze identiteit op meer dan één server wordt gebruikt, dan zal het commando op elke server worden uitgevoerd.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Deze instelling bepaalt hoe lettertekens gecodeerd worden om ze naar de server te kunnen sturen. Het beïnvloedt ook de manier waarop berichten getoond worden. Wanneer u &konversation; voor het eerst opstart haalt het automatisch deze instellingen op van het besturingssysteem. Wanneer u problemen hebt om de berichten van anderen goed te kunnen zien kunt u proberen deze instelling te wijzigen.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Wanneer u een verbinding maakt, kunnen servers een IDENT-aanvraag doen. Wanneer uw computer geen IDENT-server heeft draaien zal &konversation; deze voor u beantwoorden. Er zijn geen spaties toegestaan. Het wordt aangeraden om hier gewoon uw voornaam in te vullen.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Wanneer u een server verlaat, zal dit bericht naar het kanaal verzonden worden.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Wanneer u van een kanaal getrapt wordt (meestal door een &irc;-operator), zal dit bericht naar de server verzonden worden.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Klik hier om uw instellingen toe te passen. Om te zorgen dat al deze instellingen van kracht zijn dient u de verbinding met de server te verbreken en opnieuw te verbinden. De eenvoudigste manier om dat te doen is door &konversation; af te sluiten en opnieuw te starten.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Het instellen van netwerken, servers en kanalen</title>
+
+<para
+>De <guilabel
+>Serverlijst</guilabel
+> komt in beeld zodra &konversation; is opgestart. U kunt deze ook opvragen door in het hoofdmenu voor <menuchoice
+><guisubmenu
+>Bestand</guisubmenu
+> <guisubmenu
+>Serverlijst</guisubmenu
+></menuchoice
+> te kiezen. <action
+>De <guilabel
+>Serverlijst</guilabel
+></action
+> toont uw huidig ingestelde &irc;-netwerken, getoond per groep. Een &irc;-netwerk is een verzameling samenwerkende servers. Wanneer u verbinding maakt met één enkele server hebt u toegang tot alle kanalen op het netwerk. Voorbeelden van &irc;-netwerken zijn <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> en <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Serverlijst</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Serverlijst</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Uw huidig ingestelde netwerken worden getoond samen met de <guilabel
+>Identiteit</guilabel
+> waarmee u het netwerk gebruikt en de <guilabel
+>Kanalen</guilabel
+> die automatisch geopend worden bij een verbinding. Wanneer u een groep hebt opgegeven voor uw netwerken worden de items ingesprongen. Klik op een netwerk om die te selecteren. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Gebruik deze knoppen <guibutton
+>Toevoegen</guibutton
+> voor een nieuw netwerk en <guibutton
+>Bewerken</guibutton
+> of <guibutton
+>Verwijderen</guibutton
+> van een geaccentueerd netwerk. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Klik op deze knop om een verbinding te maken met het geselecteerde <guilabel
+>Netwerk</guilabel
+> en om de <guilabel
+>Serverlijst</guilabel
+> te sluiten. U kunt meer dan één netwerk tegelijkertijd selecteren, zodat er een verbinding gemaakt zal worden naar meerdere servers tegelijk.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Wanneer u op deze knop drukt raken de gemaakte instellingen nog niet verloren. Het komt er meer op neer dat u op dit moment nog geen verbinding wilt maken.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>Wanneer u op de knop <guibutton
+>Nieuw</guibutton
+> drukt zal het venster <guilabel
+>Nieuw netwerk</guilabel
+> verschijnen.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Nieuw netwerk</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Nieuw netwerk</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Voer de <guilabel
+>Netwerknaam</guilabel
+> hier in. U kunt hetzelfde <guilabel
+>Netwerk</guilabel
+> zo vaak aan de <guilabel
+>Serverlijst</guilabel
+> toevoegen als u wilt.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Selecteer een bestaande <guilabel
+>Identiteit</guilabel
+> of klik op <guibutton
+>Bewerken</guibutton
+> om een nieuwe identiteit toe te voegen of om er een te bewerken. De <guilabel
+>Identiteit</guilabel
+> is nodig om u te identificeren op het netwerk.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Optioneel. Dit commando zal naar de server verzonden worden nadat er een verbinding is gemaakt. Voorbeeld: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Dit voorbeeld geldt voor het Libera-netwerk, dat vereist dat gebruikers hun &i18n-nickname; registreren aan de hand van een wachtwoord bij het verbinden. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> is het wachtwoord voor de &i18n-nickname; gegeven in <guilabel
+>Identiteit</guilabel
+>. U mag meer dan één commando invoeren door deze te scheiden met puntkomma's.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Selecteer deze optie wanneer u wilt dat &konversation; automatisch verbinding maakt met dit netwerk wanneer u &konversation; opstart.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Dit is de lijst met &irc;-<guilabel
+>servers</guilabel
+> in het netwerk. Wanneer u een verbinding maakt met het netwerk zal &konversation; eerst proberen om met de server te verbinden die bovenaan staat. Wanneer dat mislukt zal de tweede server geprobeerd worden. Als dat ook mislukt zal de derde geprobeerd worden enzovoorts. Er dient op z'n minst 'één server opgegeven te worden. Klik op een server om die te selecteren.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Gebruik deze knoppen om een server te kunnen <guibutton
+>Toevoegen</guibutton
+>, een geselecteerde server te <guibutton
+>Bewerken</guibutton
+> of te <guibutton
+>Verwijderen</guibutton
+>. U kunt ook de volgorde veranderen van de serverlijst, dus zal ook de volgorde van verbindingspogingen gewijzigd worden.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Optioneel. Dit is de lijst met kanalen die automatisch geopend worden zodra &konversation; een verbinding met de server heeft gelegd. U kunt dit veld ook leeg laten wanneer u dat niet wenst.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Gebruik deze knoppen om een kanaal te kunnen <guibutton
+>Toevoegen</guibutton
+>, een geselecteerd kanaal te kunnen <guibutton
+>Bewerken</guibutton
+> of te <guibutton
+>Verwijderen</guibutton
+>. U kunt ook de volgorde wijzigen waarin de kanalen geopend worden. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Voorkom het door elkaar halen van servers op verschillende &irc;-netwerken onder hetzelfde <guilabel
+>Netwerk</guilabel
+>. Voorkom ook dat u dezelfde server onder twee verschillende Netwerken plaatst. Anders zal de <link linkend="nicksonline"
+>monitoring van online schermnamen</link
+> niet juist werken.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Wanneer u op de knop <guibutton
+>Toevoegen</guibutton
+> drukt in het vak <guilabel
+>Servers</guilabel
+> zal het venster <guilabel
+>Server toevoegen</guilabel
+> in beeld komen.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Server toevoegen</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Server toevoegen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>De naam of het IP-adres van de server. irc.help.org houdt een <ulink url="https://www.irchelp.org/networks/"
+>lijst</ulink
+> bij van servers.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Voer het poortnummer van deze server in. Voor de meeste servers zal dat <userinput
+>6667</userinput
+> zijn.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Wanneer de server een wachtwoord vereist kunt u dat hier invullen. In de andere gevallen dient u dit veld leeg te laten.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Selecteer deze optie om gebruik te maken van het SSL-protocol (Secure Socket Layer) met de server. Dit beschermt uw privacy door gesprekken tussen uw computer en de &irc;-server af te dekken. De server moet het SSL-protocol wel ondersteunen, anders werkt het niet. In de meeste gevallen zal de verbinding mislukken wanneer de server het niet ondersteunt.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Wanneer u op de knop <guibutton
+>Toevoegen</guibutton
+> drukt in het vak <guilabel
+>Automatisch deelnemen aan kanalen</guilabel
+>, komt het venster <guilabel
+>Kanaal toevoegen</guilabel
+> in beeld.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Kanaal toevoegen</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Kanaal toevoegen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Voer een kanaalnaam in. Vergeet het teken <userinput
+><replaceable
+>#</replaceable
+></userinput
+> niet vooraf te plaatsen. Wanneer een kanaal een wachtwoord nodig heeft kunt u het invullen, anders kunt u dat veld gewoon leeg laten. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Het tonen van de beschikbare kanalen</title>
+
+<para
+>Om een lijst van beschikbare kanalen te tonen, kiest u in het hoofdmenu voor <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+> <guisubmenu
+>Kanaallijst</guisubmenu
+></menuchoice
+>.<action
+>Na een waarschuwingsvenster wordt er een nieuw tabblad aangemaakt met de <guilabel
+>Kanaallijst</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het tabblad Kanaallijst</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het tabblad Kanaallijst.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Voer hier een filtertekst in.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>U kunt het aantal kanalen limiteren door hier een minimum en maximum aantal gebruikers op te geven. Door <guilabel
+>Geen limiet</guilabel
+>  te kiezen wordt het betreffende criterium uitgeschakeld.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Klik hier om een kanaallijst op te halen van de server en daar de filter op uit te voeren.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>De gefilterde lijst wordt hier getoond. Merk op dat als u hier geen reguliere expressies gebruikt, &konversation; ieder kanaal zal tonen dat de filtertekst bevat in zijn naam. De kanaalnaam hoeft niet te beginnen met de tekst die u hebt opgegeven.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Selecteer een kanaal waaraan u wilt deelnemen door er op te klikken. Klik er met de rechter muisknop op om alle webadressen te zien die in het onderwerp van het kanaal staan.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Klik hier om deel te nemen aan een kanaal. Er wordt een nieuw tabblad aangemaakt.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Er zijn soms "geheime" kanalen op servers. Deze kanalen worden niet getoond in de <guilabel
+>Kanaallijst</guilabel
+>. U kunt alsnog deelnemen aan deze kanalen wanneer u de naam weet. In iedere <interface
+>invoerregel</interface
+> kunt u <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaalnaam</replaceable
+></userinput
+> typen. (De <userinput
+>#</userinput
+> is vereist.) Voor ieder kanaal wordt een nieuw tabblad aangemaakt. Wanneer u aan een kanaal deelneemt en u bent de enige in dat kanaal houdt dan dat in dat het kanaal voorheen nog niet bestond. De server heeft daarom het kanaal aangemaakt en u tot operator benoemd. In dat geval wilt u in de meeste gevallen het kanaal weer sluiten. Dat kunt u doen door <userinput
+><command
+>/part</command
+></userinput
+> te typen. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Een rondleiding door het hoofdscherm</title>
+
+<para
+>Laten we het <interface
+>hoofdscherm</interface
+> eens wat nader bekijken. Het scherm wordt hieronder getoond, waarbij er een kanaaltabblad actief is.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het hoofdscherm.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het hoofdscherm</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Dit is de zogenaamde <interface
+>invoerregel</interface
+>. Deze is alleen in beeld als het actieve kanaal een tabblad bevat. Om een bericht naar iedereen in het kanaal te verzenden typt u hier een bericht en drukt u op &Enter;. Uw bericht - net zoals de berichten van anderen - komen in het berichtvenster boven de invoerregel. Ieder bericht gaat vooraf aan de tijd en de &i18n-nickname; van de gebruiker.</para>
+
+ <para
+>U kunt ook tekst van het klembord plakken. Wanneer de geplakte tekst meer dan één regel (regeleindetekens) bevat komt er een dialoogvenster in beeld. Bewerk de tekst naar wens en druk vervolgens op <guibutton
+>OK</guibutton
+>. </para>
+
+ <para
+>Wanneer de geplakte tekst langer is dan 256 lettertekens of meer dan één regel bevat komt er een waarschuwing in beeld waarin vermeld wordt dat grote berichten kunnen leiden tot het verbreken van de verbinding met de server. U kunt nog doorgaan met het plaatsen van het bericht, maar het wordt zeker niet aangeraden. Het overvloedig plaatsen van tekst zal andere gebruikers irriteren. Het is beter om berichten in kleinere gedeeltes op te splitsen.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>Het is een ongeschreven regel in veel kanalen dat de berichten die u aan een bepaald persoon wilt sturen vooraf gegaan worden diens betreffende &i18n-nickname;. &konversation; biedt daarom een handige aanvulling van de &i18n-nickname;. Typ de eerste letter(s) van de &i18n-nickname; en druk op &Tab;. &konversation; zal de rest van de &i18n-nickname; aanvullen en er een dubbele punt achter plaatsen. Om deze functie aan te passen, kies <menuchoice
+> <guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Konversation instellen...</guisubmenu
+> </menuchoice
+> in het hoofdvenster, vouw <guilabel
+>Gedrag</guilabel
+> uit, klik op <guilabel
+>Algemeen</guilabel
+> en ga vervolgens naar het vak <guilabel
+>Aanvulmodus</guilabel
+>. </para>
+
+ <para
+>U kunt ook een &irc;-commando invoeren door eerst <userinput
+><command
+>/</command
+></userinput
+> te typen gevolgd door een geldig &irc;-commando. Zie de sectie <link linkend="irc-cmds"
+>Vaakgebruikte &irc;-commando's</link
+>. Op sommige servers kunt u ook <userinput
+><command
+>/help</command
+></userinput
+> typen voor een lijst met beschikbare commando's. U kunt ook <userinput
+><command
+>/help</command
+> <replaceable
+>commando</replaceable
+></userinput
+> typen om een helptekst te krijgen over een specifiek commando. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>U kunt deelnemen aan meerdere servers en kanalen. Iedere server en kanaal krijgt een eigen tabblad. Om een lijst met de beschikbare kanalen te tonen dient u de sectie <link linkend="list-channels"
+>Het tonen van de beschikbare kanalen</link
+> te lezen. Om aan een kanaal deel te nemen typt u <userinput
+><command
+>/join</command
+> <replaceable
+>#kanaalnaam</replaceable
+></userinput
+> in de invoerregel. (Het teken <userinput
+>#</userinput
+> is vereist.) Om een kanaal te verlaten typt u <userinput
+><command
+>/part</command
+></userinput
+>. Er komt ook een tabblad bij zodra u een <link linkend="list-channels"
+>kanaallijst</link
+> opent, een <link linkend="query"
+>privégesprek</link
+> (conversatie) aangaat, een <link linkend="urlcatcher"
+>URL-lijst</link
+> of  <guilabel
+>Konsole</guilabel
+> opent. Om naar een ander scherm te gaan klikt u op het bijbehorende tabblad of gebruikt u het muiswieltje om tussen de tabbladen te bladeren. </para>
+
+<para
+>Om andere opties voor tabbladen in te stellen, kies <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen...</guisubmenu
+></menuchoice
+> in het hoofdvenster, vouw <guilabel
+>Interface</guilabel
+> uit, klik op <guilabel
+>Tabbladen</guilabel
+> of vouw <guilabel
+>Meldingen</guilabel
+> en klik op <guilabel
+>Tabbladen</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Deze &led;'s zullen knipperen zodra er iets in een tabblad gebeurt wat u nog niet onder ogen hebt gehad. De &led; zal langzamer knipperen wanneer het gaat om <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> of om schermnaamveranderingen. Ze zullen sneller knipperen wanneer het om gewone berichten gaat. De volgende kleuren worden gehanteerd: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kanaal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Serverberichten</interface
+>, <link linkend="list-channels"
+>Kanaallijst</link
+> of <link linkend="urlcatcher"
+>URL-lijst</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konsole</guilabel
+> of <link linkend="dcc"
+>DCC-status</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Privégesprek (conversatie)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Klik hier om het huidige tabblad te sluiten. Door een <interface
+>kanaaltabblad</interface
+> te sluiten zult u dat kanaal verlaten. Het sluiten van het tabblad met <interface
+>serverberichten</interface
+> zal alle kanalen verlaten waaraan u deelnam, alle open conversaties sluiten en de verbinding verbreken met de server.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Klik op deze knop om uw eigen &i18n-nickname; te veranderen. Het verschijnt alleen als het huidige tabblad een kanaal is. Om deze knop te verbergen kies <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen...</guisubmenu
+></menuchoice
+> in het hoofdvenster, vouw <guilabel
+>Interface</guilabel
+> uit, klik op <guilabel
+>Chatvenster</guilabel
+> en deselecteer het keuzevakje <guilabel
+>Vak voor wijzigen van eigen schermnaam tonen</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Hier wordt het kanaalonderwerp getoond. Houd de muis boven het onderwerp om het volledige onderwerp te zien, indien nodig. U kunt het onderwerp veranderen door op de knop links van het onderwerp te klikken. Om de kanaalonderwerpen te verbergen, gaat u naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Konversation instellen</guisubmenu
+> </menuchoice
+>, vouw <guilabel
+>Interface</guilabel
+> uit, klik op <guilabel
+>Chatvenster</guilabel
+> en deselecteer daar het keuzevakje <guilabel
+>Kanaalonderwerp tonen</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Deze knoppen geven de status van alle kanaalmodi weer. Wanneer een knop is ingedrukt wil dat zeggen dat die bepaalde modus actief is. Wanneer je de juiste rechten hebt, kan je de kanaalmodi ook wijzigen door er simpelweg op te klikken. U kunt ook op de knop links van het onderwerp klikken. Om de knoppen voor de kanaalmodi te verbergen, gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+>. Van daaruit, vouwt u <guilabel
+>Interface</guilabel
+> uit en klikt u op <guilabel
+>Chatvenster</guilabel
+>. Deselecteer daar het keuzevakje <guilabel
+>Kanaalmodusknoppen tonen</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Dit is de <interface
+>Schermnamenlijst</interface
+>. Deze wordt getoond wanneer u zich in een kanaalvenster bevindt. Het toont alle mensen die ook deelnemen aan dat kanaal, inclusief uzelf. Wanneer u de muis op een &i18n-nickname; plaatst krijgt u extra informatie in beeld met betrekking tot die &i18n-nickname;. Het is ook mogelijk om de pictogrammen die naast de namen staan te wijzigen, door het thema te wijzigen. Zie <link linkend="nickthemes"
+>Instellen van thema's</link
+> voor meer informatie. Het thema <guilabel
+>Standaard thema</guilabel
+>, dat u hierboven ziet, gebruikt de volgende pictogrammen: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> normale gebruiker </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> gebruiker met voice. Gebruiker mag in een beheerd kanaal praten. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> mede-operator van kanaal </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanaaloperator </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanaaleigenaar </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanaalbeheerder </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Bovendien zal er een klein klokje in een hoekje van het pictogram staan, wanneer een gebruiker afwezig is. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Klik met de &RMB; op een willekeurige &i18n-nickname; om het contextmenu in beeld te krijgen, zodat u bepaalde acties kunt uitvoeren op die &i18n-nickname;. U kunt bijvoorbeeld <link linkend="dcc"
+>een bestand verzenden</link
+> naar die &i18n-nickname;. </para>
+
+<para
+>Om de <interface
+>Schermnamenlijst</interface
+> te verbergen gaat u naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Schermnamenlijst tonen</guisubmenu
+></menuchoice
+> in het hoofdmenu. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Dit zijn de zogenaamde <interface
+>snelknoppen</interface
+>. Deze worden standaard niet getoond. Om ze tevoorschijn te halen raadpleeg dan de sectie <link linkend="quick-buttons"
+>Snelknoppen instellen</link
+>. U kunt de knoppen precies zo laten doen zoals u ze wilt hebben.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>U kunt instellen hoe berichten worden getoond in bericht-, kanaal- of conversatievensters. Zo kunt u bijvoorbeeld de kleur van de berichten wijzigen, een geluid laten afspelen wanneer er een bericht binnenkomt dat een bepaalde tekenreeks bevat of automatisch op berichten reageren. Zie het hoofdstuk <link linkend="highlighting"
+>Berichtaccentuering</link
+> voor meer informatie. </para>
+</note>
+
+<note>
+<para
+>Kanaalnamen kunnen soms beginnen met <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> of met <userinput
+>!</userinput
+>. Het eerste teken van een kanaal bepaalt het type kanaal (RFC 2811) als volgt: <itemizedlist
+> <listitem
+><para
+><userinput
+>#</userinput
+> - Normaal kanaal.</para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> Normaal kanaal.</para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> - Lokaal. Kanalen die alleen op een bepaalde server staan. U kunt aan alle andere kanalen deelnemen vanaf iedere andere server in het netwerk. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> - Kanalen die de kanaalmodi niet ondersteunen. Dit betekent dat alle modi uit staan met uitzondering van de onderwerpsbescherming.</para
+></listitem
+> </itemizedlist
+> Kanaalnamen mogen hooguit 50 lettertekens lang zijn en kunnen ieder teken bevatten behalve een spatie, komma en Ctrl-G (^G of ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Snelverbinden</title>
+
+<para
+>Soms wilt u een verbinding maken met een server zonder dat u de server hoeft aan te maken in de <link linkend="serverlist"
+>Serverlijst</link
+>. </para>
+
+<para
+>Kies in het hoofdmenu voor de optie <menuchoice
+><guisubmenu
+>Bestand</guisubmenu
+><guisubmenu
+>Snelverbinden</guisubmenu
+></menuchoice
+>. <action
+>Het venster <guilabel
+>Snelverbinden</guilabel
+> komt in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster Snelverbinden.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Het venster Snelverbinden</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Voer het serveradres in in het veld <guilabel
+>Serverhost</guilabel
+>, uw &i18n-nickname; in het veld <guilabel
+>Schermnaam</guilabel
+> en klik op <guibutton
+>Verbinden</guibutton
+>. Wanneer &konversation; een verbinding met de server gemaakt heeft voert u het commando <userinput
+><command
+>/join</command
+><replaceable
+>#kanaalnaam</replaceable
+></userinput
+> in om deel te nemen aan een kanaal. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Vaakgebruikte &irc;-commando's</title>
+
+<para
+>Hier volgt een korte lijst met veelgebruikte &irc;-commando's. Zie <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> voor een volledige lijst of kijk op <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Voor de commando's die door &konversation; ondersteund worden kunt u kijken bij <link linkend="konvi-cmds"
+>Commando's in Konversation</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Toont alle beschikbare commando's op de huidige server. Wordt niet door alle servers ondersteund.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>commando</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Biedt hulp voor een bepaald <userinput
+><replaceable
+>commando</replaceable
+></userinput
+>. Wordt niet door alle servers ondersteund.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#kanaal</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Neemt deel aan een <userinput
+><replaceable
+>#kanaal</replaceable
+></userinput
+>. Wanneer het kanaal nog niet bestaat zal het aangemaakt worden en bent u de kanaaloperator.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Verlaat het huidige kanaal en sluit het bijbehorende <interface
+>kanaaltabblad</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>#kanaal</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verlaat een bepaald <userinput
+><replaceable
+>#kanaal</replaceable
+></userinput
+> en sluit het bijbehorende <interface
+>kanaaltabblad</interface
+>. Gelijkwaardig aan <userinput
+><command
+>/leave</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt het <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> naar het kanaal, voorafgegaan door uw &i18n-nickname;. Wanneer uw &i18n-nickname; bijvoorbeeld <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+> is, zal het commando <userinput
+><replaceable
+>/me maakt een kopje thee.</replaceable
+></userinput
+> als volgt in beeld komen: <interface
+>Tux maakt een kopje thee.</interface
+> Tenzij u een filter hebt aangemaakt voor zulke berichten kunt u - en alle andere aanwezigen in het kanaal - dit bericht zien. Dit soort berichten worden doorgaans gebruikt om een emotie uit te drukken of om te laten merken waar u ondertussen allemaal mee bezig bent. Wanneer u uw computer even achterlaat, maak dan gebruik van het commando <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer iemand u  een privébericht verzendt of u uitnodigt voor een kanaal zullen ze een <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> krijgen waarin staat dat u nu even niet achter de computer zit.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Maakt het commando <userinput
+><command
+>/away </command
+><replaceable
+>bericht</replaceable
+></userinput
+> ongedaan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query</command
+><replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Maakt een nieuw tabblad aan met de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> van de gebruiker voor een privégesprek. Dit heet officieel een <link linkend="query"
+>Query</link
+>. In de Nederlandstalige Konversation heet dit 'Conversatie'. Alles wat hier geschreven wordt is alleen voor u en uw gesprekspartner zichtbaar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>schermnaam</replaceable
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt het <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> naar de opgegeven <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+>. Alleen de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> zal het bericht kunnen zien. Gebruik <userinput
+><command
+>/query</command
+></userinput
+> voor langere privégesprekken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite</command
+> <replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Nodigt de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> uit om aan een kanaal deel te nemen. Dit is vooral wanneer gebruikers alleen op uitnodiging in een kanaal kunnen komen.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Privégesprekken (conversaties)</title>
+
+<para
+>Een privégesprek is iets wat alleen u en uw gesprekspartner kunnen zien. Privégesprekken worden in &konversation; "conversaties (queries)" genoemd. Om een privégesprek te beginnen typt u <userinput
+><command
+>/query </command
+><replaceable
+>schermnaam</replaceable
+></userinput
+> op een willekeurige invoerregel waarbij de <replaceable
+>schermnaam</replaceable
+> de &i18n-nickname; is van de persoon waarmee u een gesprek wilt aangaan. U kunt ook met de &RMB; op de &i18n-nickname; klikken in de <interface
+>Namenlijst</interface
+> en kiezen voor <menuchoice
+><guisubmenu
+>Conversatie openen</guisubmenu
+></menuchoice
+>. <action
+>Er wordt een nieuw tabblad aangemaakt</action
+>. Kondig uzelf aan door een bericht te verzenden. </para>
+
+<para
+>Conversaties (queries) zijn hetzelfde als kanalen, behalve dan het feit dat alleen u en uw gesprekspartner aan het kanaal kunnen deelnemen.</para>
+
+<para
+>Om een conversatie te verlaten hoeft u alleen het tabblad te sluiten. Opmerking: Wanneer uw gesprekspartner weer een bericht verstuurt via de conversatie zal het tabblad weer geopend worden.</para>
+
+<para
+>Om alle conversaties te verlaten kiest u in het hoofdmenu <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+><guisubmenu
+>Alle open conversaties sluiten</guisubmenu
+></menuchoice
+> of u drukt op <keycap
+>F11</keycap
+>.</para>
+
+<para
+>Wanneer iemand een conversatie met u start zal &konversation; een nieuw tabblad met de &i18n-nickname; van die persoon aanmaken. Wanneer u niet met die persoon wilt praten sluit u het tabblad. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Notificaties instellen</title>
+
+<para
+><guilabel
+>Meldingen</guilabel
+> zijn acties die &konversation; kan ondernemen wanneer er iets gebeurt. U hebt bijvoorbeeld &konversation; draaien, maar is geminimaliseerd of verborgen achter andere vensters. Het zou dan fijn zijn dat &konversation; een signaal geeft wanneer iemand bijvoorbeeld met u probeert te praten of wanneer uw maatje net op een kanaal komt. </para>
+
+<para
+>Om de notificaties in te stellen kiest u in het hoofdmenu voor <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Notificaties instellen</guisubmenu
+></menuchoice
+>.<action
+>Het venster <guilabel
+>Notificatie-instellingen</guilabel
+> komt vervolgens in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster Notificatie-instellingen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het venster Notificatie-instellingen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Klik hier om een gebeurtenis te selecteren.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Controleer het type notificaties die u wilt krijgen wanneer er iets gebeurt (De optie <guilabel
+>Taakbalkitem markeren</guilabel
+> zal er voor zorgen dat het taakbalkitem van &konversation; gaat knipperen wanneer er iets gebeurt.)</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>U kunt dit herhalen door een andere gebeurtenis te selecteren en de nodige notificaties te selecteren. Wanneer u klaar bent drukt u op de knop <guibutton
+>OK</guibutton
+>.</para>
+
+<para
+>Nadat u uw meldingen hebt ingesteld kunt u alle meldingen aan- en uitzetten met <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+><guisubmenu
+>Meldingen inschakelen</guisubmenu
+></menuchoice
+> in het hoofdmenu. </para>
+
+<tip
+><para
+>U kunt met <link linkend="highlighting"
+>deze optie</link
+> ook een waarschuwing instellen voor het vermelden van uw &i18n-nickname; in een bericht in &konversation;.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Bijhouden wie er online is</title>
+
+<para
+>&konversation; kan u op de hoogte houden van de aanwezigheid van vrienden op het &irc;-netwerk. </para>
+
+<para
+>Het &irc;-netwerk wordt vermeld omdat ieder netwerk unieke schermnamen kent. Achter de &i18n-nickname; op twee verschillende netwerken hoeft niet noodzakelijk dezelfde persoon te zitten, maar twee dezelfde schermnamen op twee verschillende servers binnen hetzelfde &irc;-netwerk horen over het algemeen bij dezelfde persoon.</para>
+
+<note
+><para
+>Daarom is het belangrijk om hetzelfde <guilabel
+>Netwerk</guilabel
+> te gebruiken voor alle servers die binnen dat &irc;-netwerk zitten, bij <link linkend="serverlist"
+>het instellen van netwerken, servers en kanalen</link
+>.</para
+></note>
+
+<para
+>Om het volgen van schermnamen in te schakelen, gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+> <guisubmenu
+>Gevolgde schermnamen</guisubmenu
+></menuchoice
+>. <action
+>Het venster <guilabel
+>Gevolgde schermnamen</guilabel
+> komt in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Gevolgde schermnamen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Gevolgde schermnamen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>De schermnamen die in uw volglijst staan worden hier getoond. Ze worden samen met het bijbehorende &irc;-netwerk getoond. Wanneer er geen &i18n-nickname; getoond wordt, kan het zijn dat u geen gevolgde schermnamen hebt of dat deze functie uit staat. U ziet hieronder hoe u dat aanzet. U kunt iedere &i18n-nickname; uitvouwen om te zien aan welke kanalen deze deelneemt. De pictogrammen naast ieder kanaal zijn hetzelfde als de pictogrammen in de <interface
+>namenlijst</interface
+> in een <link linkend="channel-screen-tour"
+>kanaalscherm</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>De informatie die bekend is over deze &i18n-nickname; wordt hier getoond. Wanneer het dialoogvenster <guilabel
+>Gevolgde schermnamen</guilabel
+> in eerste instantie getoond wordt zal er weinig informatie zijn. Iedere 20 seconden wordt er een <userinput
+><command
+>WHOIS</command
+></userinput
+>-commando verzonden naar de server om informatie op te vragen voor de schermnamen waarvan geen informatie bekend is. Dit zal doorgaan totdat alle schermnamen informatie bevatten. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Om een enkele te bewaken &i18n-nickname; toe te voegen, opent u het contextmenu in de <guilabel
+>Schermnaamlijst</guilabel
+> door met de &RMB; op een &i18n-nickname; te klikken en <guilabel
+>Aan gevolgde schermnamen toevoegen</guilabel
+> te selecteren. Als u een aantal &i18n-nickname;en wilt toevoegen kies dan <menuchoice
+> <guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Konversation instellen</guisubmenu
+> </menuchoice
+> uit het hoofdmenu, kies <guilabel
+>Meldingen</guilabel
+> en klik op <guilabel
+>Bewaakte schermnamen</guilabel
+>. Het venster <guilabel
+>Bewaakte schermnamen</guilabel
+> zal verschijnen. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Gevolgde schermnamen</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Gevolgde schermnamen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Selecteer dit vakje om het volgen van &i18n-nickname;en aan te zetten.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Wanneer u het venster <guilabel
+>Gevolgde schermnamen</guilabel
+> in beeld wilt na het opstarten van &konversation; selecteert u deze optie.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>In het venster <guilabel
+>Gevolgde schermnamen</guilabel
+> u kunt dubbelklikken op iedere &i18n-nickname; zodat het volgende commando naar de server verzonden zal worden, waarbij <userinput
+><command
+>%u</command
+></userinput
+> vervangen wordt door de &i18n-nickname;. <userinput
+><command
+>%n</command
+></userinput
+> is altijd nodig aan het einde van een commando.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>De optie <guilabel
+>Gevolgde schermnamen</guilabel
+> kan alleen werken door regelmatig met de server te communiceren. Deze optie bepaalt hoe vaak dat moet gebeuren. Vul geen getal in dat kleiner is dan 20 seconden omdat het de server te zwaar zal belasten.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Klik op <guibutton
+>OK</guibutton
+> wanneer u klaar bent met het toevoegen of het verwijderen van schermnamen.</para>
+
+<para
+><emphasis
+>Opmerking:</emphasis
+>Wanneer u het venster <guilabel
+>Gevolgde schermnamen</guilabel
+> kiest kan het even duren voordat alle &i18n-nickname;en in beeld staan, omdat &konversation; de server nog moet raadplegen voor de gegevens. Normaal gesproken hoort u het venster <guilabel
+>Gevolgde schermnamen</guilabel
+> in beeld te houden. </para>
+
+<para
+>&konversation; toont ook een melding in alle <link linkend="channel-screen-tour"
+>kanalen</link
+> wanneer een gebruiker die in uw lijstje van gevolgde schermnamen staat verbinding maakt met de server of de verbinding verbreekt. Zo'n melding ziet er als volgt uit: </para>
+
+<para
+><computeroutput
+>[17:52] [Notify] psn is online (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Berichtaccentuering</title>
+
+<para
+>U kunt instellen hoe berichten worden getoond in kanaal- en conversatievensters.</para>
+
+<para
+>Om de accentuering te activeren gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>&konversation; instellen</guisubmenu
+></menuchoice
+>. Het venster <action
+><guilabel
+>Instellingen</guilabel
+> komt in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster Accentuering.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het venster Accentuering</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Klik hier om het venster <guilabel
+>Accentueren</guilabel
+> te openen.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Klik hier om een nieuw item toe te voegen aan de <guilabel
+>Accentueringslijst</guilabel
+>. Wanneer u een item in de lijst selecteert kunt u dat aanpassen in de onderste helft van het venster.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Voor hier een tekenreekspatroon in. Elk ontvangen bericht dat overeenkomt met dit patroon, ergens in het bericht, zal voor het bericht het accentueren activeren. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Wanneer de tekenreeks wordt gevonden in een bericht zal het hele bericht worden geaccentueerd in de opgegeven kleur.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>U kunt eventueel ook een geluid laten afspelen wanneer een tekenreeks overeen kwam met een deel van een bericht. Klik op de knop om een geluidsbestand te selecteren. Door op de testknop te klikken wordt het geluid afgespeeld.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Wanneer u wilt dat er automatisch een reactie wordt teruggestuurd zodra een bepaalde tekenreeks overeenkomt met een deel van een bericht kunt u dat hier opgeven. Gebruik deze optie met mate. Wanneer u hier teveel gebruik van maakt zal dit irritatie opwekken bij de andere kanaalleden. U kunt in dit veld ook &irc;- of &konversation;-commando's opgeven.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Wanneer u geluiden hebt ingesteld voor de accentuering kunt u ze hier allemaal in één keer uitschakelen door deze optie te deselecteren.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Naar wat hier is geaccentueerd zal alleen op naam worden gezocht in chatvensters die hier in de lijst staan of in alle chatvensters als het veld leeg is gelaten. Meervoudige namen moeten gescheiden worden komma's.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Wanneer u deze optie selecteert zal ieder bericht waarin uw &i18n-nickname; voorkomt worden geaccentueerd met de kleur die u aan de rechterzijde opgeeft.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Normaal gesproken wordt er geen accentuering toegepast op de berichten die u typt. Wanneer u deze toch wilt accentueren selecteert u deze optie en kiest u aan de rechterzijde een kleur.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Het On Screen Display instellen (&osd;)</title>
+
+<para
+>Het <acronym
+>On Screen Display</acronym
+> (&osd;) is een unieke functie van &konversation;. Wanneer het &osd; aan staat zullen kanaalberichten op uw bureaublad verschijnen, zelfs wanneer &konversation; geminimaliseerd is. Hier is een voorbeeld van zo'n &osd;. Het bericht dat u in de linker bovenhoek kunt zien is van &konversation;, die zelf in het systeemvak draait.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Voorbeeld van het On Screen Display</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Voorbeeld van het On Screen Display</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Om het &osd; te activeren kiest u eerst <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>&konversation; instellen</guisubmenu
+></menuchoice
+> in het hoofdmenu. <action
+>Het venster <guilabel
+>Instellen</guilabel
+> komt in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster On Screen Display.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het venster On Screen Display</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Klik hier om het item <guilabel
+>Notificatie</guilabel
+> uit te klappen.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Klik hier om het venster <guilabel
+>On Screen Display</guilabel
+> te openen.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Selecteer dit vakje om het &osd; te activeren.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Klik hier om een lettertype voor het &osd; te kiezen. (<emphasis
+>Opmerking:</emphasis
+> Niet alle lettertypes werken. Luxi Sans 22 en Impact 22 werken zeker.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Selecteer deze vakjes om te bepalen wat voor soort berichten u in beeld wilt krijgen.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Sleep het <interface
+>&osd;-voorbeeld</interface
+> naar de gewenste positie en klik daarna op de knop <guibutton
+>Toepassen</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Kleurberichten verzenden</title>
+
+<para
+>U kunt een kleur toevoegen aan de berichten in ieder kanaal. Voer uw bericht in in het <interface
+>invoerveld</interface
+>. Klik daarna op <inlinemediaobject
+><imageobject
+><imagedata fileref="format-text-color.png" format="PNG"/></imageobject
+><textobject
+><phrase
+>&irc;-kleurkiezer</phrase
+></textobject
+></inlinemediaobject
+> knop <guibutton
+>&irc;-kleur</guibutton
+> of kies voor menu-optie <menuchoice
+><guisubmenu
+>Invoegen</guisubmenu
+><guisubmenu
+>&irc;-kleur</guisubmenu
+></menuchoice
+>. <action
+>De <guilabel
+>&irc;-kleurenkiezer</guilabel
+> komt in beeld.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>De &irc;-kleurenkiezer.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>De &irc;-kleurenkiezer.</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Klik op een kleur en klik op <guibutton
+>OK</guibutton
+>. Ga verder met invoeren van uw bericht in de <interface
+>invoerregel</interface
+>. Om een kleur weer te veranderen klikt u op de knop <guibutton
+>&irc;-kleur</guibutton
+>. Kies een andere kleur uit en klik op <guibutton
+>OK</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Instellen van thema's van schermnamen</title>
+
+<para
+>U kunt de pictogrammen wijzigen die naast de &i18n-nickname;en staan van de <interface
+>Schermnamenlijst</interface
+> van de kanaaltabbladen. Om het thema van de &i18n-nickname; te veranderen gaat u naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+>, zodat het venster <guilabel
+>Instellingen</guilabel
+> in beeld komt. Klik op <guilabel
+>Interface</guilabel
+> om het uit vouwen, klik dan op <guilabel
+>Schermnamenlijstthema's</guilabel
+> om deze te tonen. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster Thema's.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het venster Thema's</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Klik hier om het venster <guilabel
+>Thema's schermnamenlijst</guilabel
+> te openen.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Selecteer een thema.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Hier worden voorbeeldpictogrammen van het gekozen thema getoond.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Wanneer u ergens anders een thema hebt gedownload kunt u het aanklikken om te installeren.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Snelknoppen instellen</title>
+
+<para
+>Het is mogelijk om acht <interface
+>Snelknoppen</interface
+> te tonen in het <link linkend="channel-screen-tour"
+>hoofdvenster</link
+>. Om de Snelknoppen in te schakelen gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+>. <action
+>Het venster <guilabel
+>Instellen</guilabel
+> komt in beeld.</action
+> Klik op <guilabel
+>Interface</guilabel
+> en vervolgens op <guilabel
+>Chatvenster</guilabel
+>. Klik op <guilabel
+>Snelknoppen tonen</guilabel
+> en druk op <guibutton
+>OK</guibutton
+>. </para>
+
+<para
+>De knoppen kunnen naar eigen wens aangepast worden voor veelgebruikte &irc;-commando's. Om de <interface
+>snelknoppen</interface
+> aan te passen gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+>. <action
+>Het venster <guilabel
+>Instellen</guilabel
+> komt in beeld.</action
+> Klik op <guilabel
+>Interface</guilabel
+> om het uit te klappen, klik daarna op <guilabel
+>Snelknoppen</guilabel
+> om het betreffende venster in beeld te krijgen. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Het venster Snelknoppen</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Het venster Snelknoppen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Er zijn 8 standaard <interface
+>Snelknop</interface
+>pen beschikbaar. Klik op een item om deze te veranderen of gebruik de knoppen aan de rechterkant van de lijst om <interface
+>Snelknop</interface
+>pen toe te voegen of te verwijderen. De kolom <guilabel
+>Knopnaam</guilabel
+> bevat de tekst die in de knop in het <link linkend="channel-screen-tour"
+>hoofdscherm</link
+> zal komen. Houd de namen kort. De kolom <guilabel
+>Knopactie</guilabel
+> bevat de actie die uitgevoerd zal worden zodra u op de <interface
+>Snelknop</interface
+> drukt. Tips bij het maken van acties staan in het scherm. </para>
+
+<para
+>Klik op <guibutton
+>OK</guibutton
+> om de veranderingen door te voeren. </para>
+
+<para
+>Voorbeeld:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Knopnaam</guilabel
+>: <userinput
+><replaceable
+>Msg</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Knopactie</guilabel
+>: <userinput
+><replaceable
+>Msg %u </replaceable
+></userinput
+> (er is een spatie achter <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Om deze knop in het <link linkend="channel-screen-tour"
+>Hoofdscherm</link
+> te gebruiken klikt u op een &i18n-nickname; in de <interface
+>Schermnamenlijst</interface
+> en drukt u op de knop. <computeroutput
+>/MSG </computeroutput
+> komt in de <interface
+>Invoerregel</interface
+> gevolgd door de gekozen &i18n-nickname;. Typ een bericht dat u naar dat persoon wilt verzenden en druk op &Enter;. Het bericht wordt naar dat persoon verstuurd zonder dat anderen het kunnen zien. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Het verzenden en ontvangen van bestanden</title>
+
+<para
+>U kunt bestanden verzenden via &irc; naar andere online personen, of ze kunnen u bestanden toezenden. </para>
+
+<para>
+<emphasis
+>WAARSCHUWING: Open nooit een bestand dat u toegezonden krijgt tenzij het om een vertrouwde bron gaat. Het kan namelijk een virus bevatten.</emphasis>
+</para>
+
+<para
+>Om een bestand te verzenden naar iemand in het actieve kanaal, klikt u met de &RMB; op de &i18n-nickname; van die persoon in <interface
+>Schermnamenlijst</interface
+> van het <link linkend="channel-screen-tour"
+>Hoofdscherm</link
+>. Kies <menuchoice
+><guisubmenu
+>Bestand verzenden</guisubmenu
+></menuchoice
+>. <action
+>Er komt een dialoogvenster in beeld waarin u een bestand kunt selecteren.</action
+> Daarna komt er een nieuw tabblad <guilabel
+>DCC-status</guilabel
+> tevoorschijn. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Tabblad DCC-status</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Tabblad DCC-status</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>De &i18n-nickname; van de ontvanger en de bestandsnaam komen hier in beeld.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>De kolom <guilabel
+>Status</guilabel
+> geeft de status aan van de verzending of ontvangst als volgt aan:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Voorbereiden</guilabel>
+		</term>
+		<listitem>
+			<para
+>Een ontvangende overdracht is aan het controleren of bestanden herstart moeten worden of een verzenden overdracht is de gegevens aan het ophalen voor verzending. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Verbinden</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; probeert een verbinding op te zetten met de ontvanger. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Verzenden</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is bezig het bestand te verzenden. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ontvangen</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; ontvangt een bestand van de verzender. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Klaar</guilabel>
+		</term>
+		<listitem>
+			<para
+>Het bestand is met succes overgebracht. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>In behandeling</guilabel>
+		</term>
+		<listitem>
+			<para
+>De overdracht wacht op de partner voor acceptatie of afwijzen. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Afgebroken</guilabel>
+		</term>
+		<listitem>
+			<para
+>U hebt of op de knop <guibutton
+>Afbreken</guibutton
+> gedrukt of degene aan de andere kant heeft de overdracht afgebroken. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Mislukt</guilabel>
+		</term>
+		<listitem>
+			<para
+>Er deed zich een fout voor en de overdracht was daarom niet succesvol. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>In wachtrij</guilabel>
+		</term>
+		<listitem>
+			<para
+>De overdracht wacht op u om het te accepteren of af te wijzen. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Hervatten</guilabel>
+		</term>
+		<listitem>
+			<para
+>Wanneer een overdracht is begonnen maar het bestand bestaat al op uw systeem, zal de gebruiker de melding krijgen dat het bestand al bestaat. U kunt dan kiezen om de overdracht te hervatten. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Wanneer iemand u een bestand wilt zenden wordt het tabblad <guilabel
+>DCC-status</guilabel
+> aangemaakt (wanneer die nog niet bestond). Klik op het tabblad <guilabel
+>DCC-status</guilabel
+> om de inhoud te kunnen zien. Klik op het bestand om het te selecteren, klik daarna op deze knop om het bestand te accepteren zodat de overdracht zal beginnen. <emphasis
+>Opmerking: </emphasis
+>u kunt er voor kiezen om bestanden van anderen automatisch te laten accepteren door &konversation;. Dit kunt u doen door in het hoofdmenu <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+> te kiezen. Klik op <guilabel
+>Gedrag</guilabel
+> om te tonen en klik dan op <guilabel
+>DCC</guilabel
+> om het venster <guilabel
+>DCC</guilabel
+> weer te geven. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Wanneer u problemen ondervindt bij het verzenden of ontvangen van bestanden kan het zijn dat uw firewall de DCC-poorten blokkeert. Zie daarvoor <link linkend="faq"
+>Vraag en antwoord</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Alle &URL;sen verzamelen en opslaan die in de berichten voorkomen</title>
+
+<para
+>In een <link linkend="channel-screen-tour"
+>kanaal</link
+> kan het voorkomen dat een gebruiker een interessante &URL; doorgeeft. U kunt daarop dubbelklikken zodat &konversation; de juiste toepassing start voor die &URL;. Welke toepassing gestart zal worden hangt af van het &MIME;-type van het &URL;. Een &URL; die begint met <interface
+>http:</interface
+> zal de standaard webbrowser starten en de pagina tonen. (U kunt ook een andere <link linkend="webbrowser"
+>webbrowser</link
+> opgeven.) Wanneer de &URL; van het scherm afschuift is het wat lastiger om die weer terug te vinden. &konversation; houdt een lijst bij van alle &URL;-adressen die voorbij gekomen zijn. Om deze optie te bekijken gaat u in het hoofdmenu naar <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+><guisubmenu
+>&URL;-lijst</guisubmenu
+></menuchoice
+>. <action
+>Er komt een nieuw tabblad in beeld met de <guilabel
+>&URL;-lijst</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>De &URL;-lijst.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>De &URL;-lijst.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Dit is de lijst met URL-adressen die &konversation; is tegengekomen sinds het gestart is. De kolom <guilabel
+>Van</guilabel
+> bevat de &i18n-nickname; van de persoon die die &URL; postte of de naam van het kanaal of server, waar de &URL; werd gepost. (&URL;-adressen die in deelname- en verlaatberichten staan worden hier niet vermeld.) Klik op een &URL; om deze te selecteren.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Klik hier om een toepassing te koppelen aan het geselecteerde &URL;. De uitgevoerde toepassing hangt af van het &MIME;-type van het &URL;. Wanneer u bijvoorbeeld een &URL; hebt dat begint met <interface
+>http:</interface
+> zal het uw standaard webbrowser starten. U kunt bij webpagina's aangeven welke <link linkend="webbrowser"
+>webbrowser</link
+> u wilt gebruiken.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Klik hier om de geselecteerde &URL; naar het klembord te kopiëren.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Klik hier om het geselecteerde &URL; uit de lijst te verwijderen.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Klik hier om de lijst met de URL-adressen naar een bestand te schrijven.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Klik hier om de lijst te wissen.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Het instellen van uw voorkeursbrowser</title>
+
+<para
+>Wanneer u op het geselecteerde &URL;-adres klikt in &konversation; zal het de standaard toepassing uitvoeren die gekoppeld is aan dat &MIME;-type. Wanneer u bijvoorbeeld klikt op een &URL; die begint met <interface
+>http</interface
+> zal &konqueror; uitgevoerd worden zodat de webpagina getoond wordt. U kunt ook een andere toepassing kiezen met de module <guilabel
+>Standaard toepassingen</guilabel
+> uit &systemsettings;. U kunt bijvoorbeeld in plaats daarvan <application
+>Firefox</application
+> gebruiken. </para>
+
+<para
+>Om een andere webbrowser te kiezen vanuit de &konversation; toepassing, gaat u naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>&konversation; instellen</guisubmenu
+></menuchoice
+> in het hoofdmenu. <action
+>Het scherm <guilabel
+>Instellen</guilabel
+> komt in beeld.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Het venster Algemeen</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Het venster Algemeen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Klik hier om het venster <guilabel
+>Algemeen</guilabel
+> te tonen.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Klik hier om aan te geven dat u een andere webbrowser wilt gebruiken.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Voer het commando in die uw gewenste webbrowser start. Wanneer u dan op een &URL; klikt, zal <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> vervangen worden door het &URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Opmerking:</emphasis
+> De instelling webbrowser is niet van toepassing op een &URL; die begint met <interface
+>mailto:</interface
+>. Bij <interface
+>mailto:</interface
+> wordt namelijk het standaard ingestelde e-mailprogramma gestart. </para>
+
+<para
+>Klik op <guibutton
+>Toepassen</guibutton
+> om uw instellingen te bewaren. U moet bij iedere server een nieuwe verbinding starten voordat de instellingen van kracht worden. De eenvoudigste manier om dat te doen is door &konversation; af te sluiten en opnieuw te starten. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Kanaal- en conversatielogs markeren</title>
+
+<para
+>U kunt een markering aanbrengen in een <link linkend="channel-screen-tour"
+>kanaal</link
+> of <link linkend="query"
+>conversatie</link
+> zodat u snel bepaalde informatie kunt terugvinden. U gaat dan naar <menuchoice
+><guisubmenu
+>Invoegen</guisubmenu
+> <guisubmenu
+>Regelmarkering</guisubmenu
+></menuchoice
+> in het hoofdmenu of druk op <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>Er komt nu onderaan de berichtenlijst een horizontale lijn in beeld. Deze lijn zal meeschuiven met de rest van de tekst.</action
+> </para>
+
+<para
+>Om in ieder kanaal of conversatie een <interface
+>Regelmarkering</interface
+> aan te brengen, gaat u in het hoofdmenu naar <menuchoice
+> <guisubmenu
+>Instellingen</guisubmenu
+> <guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+>, vervolgens kiest u voor <guilabel
+>Gedrag</guilabel
+> en klikt u op <guilabel
+>Chatvenster</guilabel
+>. Schakel daarna de optie <guilabel
+>Handmatig ingevoegde regels tonen in alle chatvensters</guilabel
+> in. </para>
+
+<para
+>Om &konversation; automatisch een <interface
+>Regelmarkering</interface
+> in te laten voegen wanneer u het commando <userinput
+><command
+>/away</command
+> <replaceable
+>ber</replaceable
+></userinput
+> invoert kunt u de sectie <link linkend="identity-away"
+>Uw identiteit instellen</link
+> raadplegen. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Loggen</title>
+
+<para
+>Wanneer het loggen aan staat, zal &konversation; een logboek bijhouden voor iedere <interface
+>server</interface
+>, <link linkend="channel-screen-tour"
+>kanaal</link
+> en <link linkend="query"
+>privégesprek (query)</link
+>. Iedere sessie wordt opgeslagen in een logbestand op de harde schijf. Wanneer u een bepaalde sessie opnieuw opent zal &konversation; deze gewoon toevoegen aan het logboek. </para>
+
+<para
+>Wanneer u een sessie opnieuw opent zullen er ongeveer 1024 lettertekens van de vorige sessie in beeld komen. </para>
+
+<para
+>Tijdens zo'n sessie verdwijnen de berichten bovenaan het scherm. U kunt terugscrollen om deze berichten alsnog te zien. U kunt eventueel ook de oudste berichten verwijderen zodat er niet gescrolld kan worden, dit scheelt wat geheugen. Dit is de zogenaamde <guilabel
+>Terugloopgrens</guilabel
+>. Berichten die van het scherm zijn verdwenen door deze optie zijn nog steeds beschikbaar in het logbestand, wanneer het loggen aan staat.</para>
+
+<para
+>Om een logbestand van een sessie te bekijken, opent u het betreffende tabblad en gaat u naar <menuchoice
+><guisubmenu
+>Venster</guisubmenu
+> <guisubmenu
+>Logbestand openen</guisubmenu
+></menuchoice
+>. <action
+>Er komt een nieuw tabblad in beeld</action
+> waarin het logbestand is afgebeeld. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Logbestand</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Logbestand</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>De berichten die in uw logbestand staan worden hier getoond. Het oudste bericht wordt bovenaan getoond en het laatste bericht onderaan.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Klik op deze knop om het logbestand op te slaan in een ander bestand.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Klik hier om de logbestandweergave te vernieuwen. Wanneer u een logbestand aan het bekijken bent zullen nieuwere berichten van de betreffende sessie <emphasis
+>niet</emphasis
+> automatisch toegevoegd worden aan de logbestandweergave. Klik op deze knop om de meest recente berichten te tonen.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Klik hier om het logbestand te wissen.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>Gebruik dit vakje om de maximale grootte van het schuiven op te geven. Deze instelling heeft alleen effect voor nieuw geopende tabbladen. De laatst gewijzigde waarde van de sghuiflengte zal worden gebruikt wanneer &konversation; de volgende keer opstart. Ieder logbestand kan een eigen instelling hebben.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+>De <guilabel
+>Terugloopgrens</guilabel
+> kunt u veranderen door naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+> te gaan. Ga daarna naar het onderdeel <guilabel
+>Gedrag</guilabel
+> en klik op <guilabel
+>Conversatievenster</guilabel
+>. Het vakje <guilabel
+>Terugloopgrens</guilabel
+> komt in beeld. Wanneer u dit op <guilabel
+>Onbeperkt</guilabel
+> (&ie; nul) zet, zullen berichten niet verwijderd worden als ze uit beeld verdwijnen. </para>
+
+<para
+>U kunt de loginstellingen wijzigen door naar <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+></menuchoice
+> te gaan, kiest voor <guilabel
+>Gedrag</guilabel
+> en vervolgens naar <guilabel
+>Loginstellingen</guilabel
+> te gaan. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>Commando's in &konversation;</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>De volgende commando's worden door &konversation; verwerkt en kunnen verschillen met de standaard &irc;-commando's. Items die tussen vierkante haken staan zijn optioneel. Items die worden gescheiden door een | zijn alternatieven voor het commando. Commando's die hier niet worden besproken zullen direct naar de server verzonden worden. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt het <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> naar het kanaal, voorafgegaan door uw &i18n-nickname;. Wanneer uw &i18n-nickname; bijvoorbeeld <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+> is, zal het commando <userinput
+><replaceable
+>/me maakt een kopje thee.</replaceable
+></userinput
+> als volgt in beeld komen: <interface
+>Tux maakt een kopje thee.</interface
+> Tenzij u een filter hebt aangemaakt voor zulke berichten kunt u - en alle andere aanwezigen in het kanaal - dit bericht zien. Dit soort berichten worden doorgaans gebruikt om een emotie uit te drukken of om te laten merken waar u ondertussen allemaal mee bezig bent. Wanneer u uw computer even achterlaat, maak dan gebruik van het commando <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Gelijk aan het commando <userinput
+><command
+>/me</command
+></userinput
+> behalve dan dat het bericht naar alle open kanalen en conversaties van alle servers verzonden zal worden waarmee u in &konversation; verbonden bent.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>kanaal</replaceable
+> <replaceable
+>[wachtwoord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Neemt deel aan een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+>. Wanneer de server het toestaat en het kanaal nog niet bestaat, zal er een nieuw kanaal aangemaakt worden met u als operator. Wanneer een kanaal een wachtwoord vereist voor deelname, kunt u dat opgeven voor <userinput
+><replaceable
+>wachtwoord</replaceable
+></userinput
+>. De meeste kanaalnamen beginnen met <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>kanaal</replaceable
+> <replaceable
+>[wachtwoord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Hetzelfde als het commando <userinput
+><command
+>/join</command
+></userinput
+> dat hierboven staat beschreven.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[kanaal]</replaceable
+> <replaceable
+>[reden]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verlaat een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> met een bepaalde <userinput
+><replaceable
+>reden</replaceable
+></userinput
+> en sluit het bijbehorende <interface
+>kanaal</interface
+>tabblad. U kunt in &konversation; in een kanaal- of conversatietabblad gewoon <userinput
+><command
+>/part</command
+></userinput
+> typen zodat u het betreffende tabblad kunt sluiten met de standaard reden die u in de <link linkend="identity"
+>instellingen</link
+> hebt opgegeven.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[kanaal]</replaceable
+> <replaceable
+>[reden]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Hetzelfde als het commando <userinput
+><command
+>/part</command
+></userinput
+> dat hierboven beschreven staat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Wanneer dit opgegeven wordt in een willekeurig kanaal-, conversatie- of DCC-tabblad zal de verbinding met de bijbehorende server verbroken worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>schermnaam|kanaal</replaceable
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> naar de gebruiker met de &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> of naar iedereen in het kanaal. Hier volgt een voorbeeld van wat er in het kanaaltabblad komt te staan</para>
+
+<para
+><computeroutput
+>[17:14] [Notice] Sending notice "Ik denk dat ik het begrijp" to #konversation</computeroutput
+></para>
+
+<para
+>Dit zullen de ontvangers zien</para>
+
+<para
+><computeroutput
+>[17:15] [Notice] -Eisfuchs- Ik denk dat ik het begrijp</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query</command
+><replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Maakt een nieuw tabblad met de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> van de gebruiker zodat u een privégesprek kunt beginnen. In &irc;-termen wordt dit vaak een <link linkend="query"
+>query</link
+> genoemd. Alles wat hier wordt geschreven is alleen zichtbaar voor u en uw gesprekspartner. U kunt meer dan één schermnaam invoeren, gescheiden door spaties, zodat er een conversatietabblad geopend wordt voor iedere partner in de query.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>schermnaam|kanaal</replaceable
+></userinput
+> <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt een privébericht naar de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> of naar alle gebruikers in een bepaald<userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+>. In tegenstelling tot <userinput
+><command
+>/query</command
+></userinput
+> wordt hier geen nieuw tabblad geopend. Wanneer <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> begint met <userinput
+><command
+>/me</command
+></userinput
+> zal het bericht op dezelfde manier in beeld komen als bij het commando <userinput
+><command
+>/me</command
+></userinput
+> is uitgelegd.</para>
+
+<para
+>Voorbeelden</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Ik wil wat meer weten over het commando msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation De nieuwe versie van Konversation is beschikbaar!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me is het handboek nu aan het compileren.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>schermnaam|kanaal</replaceable
+></userinput
+> <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Hetzelfde als <userinput
+><command
+>/msg</command
+></userinput
+> behalve dat het bericht niet getoond wordt in het scherm. Dit is handig om bijvoorbeeld wachtwoorden of andere gevoelige informatie uit te wisselen, zonder dat deze in beeld komen of gelogd worden.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>schermnaam|kanaal</replaceable
+></userinput
+> <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Net zoals het commando <userinput
+><command
+>/msg</command
+></userinput
+> van hierboven, alleen zal het bericht naar alle open kanalen en conversaties van alle servers verzonden worden waarmee u bent verbonden in &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op</command
+> <replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer u een kanaaltabblad betreedt wordt geprobeerd de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> operatorrechten te geven voor het kanaal. Dit kan mislukken wanneer u onvoldoende toegangsrechten hebt (u dient namelijk zelf kanaaloperator te zijn). U kunt meer dan één &i18n-nickname; opgeven, gescheiden door een spatie.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop</command
+> <replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer dit wordt ingevoerd in een kanaaltabblad zal het de kanaaloperatorrechten afnemen van deze <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+>. U kunt meer dan één &i18n-nickname; opgeven, gescheiden door spaties.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper</command
+> <replaceable
+>[schermnaam]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Geeft de gebruiker met de &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> &irc;-operatorrechten. Dit werkt alleen wanneer de &i18n-nickname; wordt vermeld in de O-regel van de server. &irc;-operators hebben de rechten om <userinput
+><command
+>/kill</command
+></userinput
+> uit te voeren op een schermnaam, <userinput
+><command
+>/connect</command
+></userinput
+> te doen om servers aan het netwerk te koppelen en nog wat meer. Wanneer de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> niet is opgegeven wordt geprobeerd om uzelf deze rechten te geven. In beide gevallen zal gevraagd worden om uw gebruikersnaam en wachtwoord als &irc;-operator.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice</command
+> <replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>In sommige kanalen (met een +m-vlag) kunnen alleen de mensen spreken met voice. Dit commando probeert een <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> voicerechten te geven. U dient hievoor kanaaloperator te zijn om dit commando uit te kunnen voeren. Dit wordt vooral gebruikt door operators in een gemodereerd kanaal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice</command
+> <replaceable
+>schermnaam</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Neemt de voicerechten van een bepaalde <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> af in een kanaal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic</command
+> <replaceable
+>[kanaal]</replaceable
+> <replaceable
+>[bericht]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Probeert het onderwerp van een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> te veranderen in <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+>. Wanneer dit in een kanaaltabblad wordt opgegeven kan de parameter <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> weggelaten worden, zodat het van toepassing is op het kanaal van het huidige tabblad. Wanneer <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> wordt weggelaten wordt het huidige onderwerp van het kanaal getoond. Dit hoeft niet altijd goed te gaan, bijvoorbeeld wanneer u onvoldoende toegangsrechten hebt.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+> <replaceable
+>reden</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer iemand u een privébericht of uitnodiging verzendt, zal diegene een melding krijgen dat u afwezig bent van uw computer met de volgende <userinput
+><replaceable
+>reden</replaceable
+></userinput
+>. Om uzelf weer als aanwezig naar buiten te brengen, voert u het commando <userinput
+><command
+>/away</command
+></userinput
+> uit zonder een <userinput
+><replaceable
+>reden</replaceable
+></userinput
+> op te geven.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>reden</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Zoals het commando <userinput
+><command
+>/away</command
+></userinput
+> dat hierboven is beschreven, behalve dan dat het naar alle servers verzonden zal worden waarmee u in &konversation; verbonden bent.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite</command
+> <replaceable
+>schermnaam</replaceable
+> <replaceable
+>[kanaal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Nodigt de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> uit om deel te nemen aan een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+>. Dit commando is vooral handig bij kanalen waarbij je alleen naar binnen komt op uitnodiging. Wanneer dit in een kanaaltabblad opgegeven wordt, kan de parameter <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> weggelaten worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec</command
+> <replaceable
+>script</replaceable
+> <replaceable
+>[parameters]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Voert het voor &konversation; geschikte shellscript genaamd <userinput
+><replaceable
+>script</replaceable
+></userinput
+> uit met de (optionele) <userinput
+><replaceable
+>parameters</replaceable
+></userinput
+>. Zie <link linkend="scripting"
+>Script-functionaliteit</link
+> voor meer informatie over het gebruiken en schrijven van scripts.</para>
+<para
+>Voorbeelden:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Verzendt de versienummers van &konversation;, &Qt;, &kf5; en &plasma; van uw systeem naar het kanaal.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Hiermee wordt uw &Linux;-versie ( de uitvoer van <quote
+>uname -a</quote
+>) naar het kanaal verzonden.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify</command
+> <replaceable
+>[schermnaam]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Voegt of verwijdert <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> van uw lijst van <link linkend="nicksonline"
+>Gevolgde schermnamen</link
+>. Wanneer de &i18n-nickname; zich al in de lijst bevindt zal het uit de lijst verwijderd worden, anders wordt deze toegevoegd. Wanneer de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> weggelaten wordt, wordt de huidige lijst van schermnamen getoond.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick</command
+> <replaceable
+>schermnaam</replaceable
+> <replaceable
+>reden</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer dit in een kanaaltabblad wordt gebruikt zal de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> uit het kanaal getrapt worden met de volgende <userinput
+><replaceable
+>reden</replaceable
+></userinput
+>. Wanneer de <userinput
+><replaceable
+>reden</replaceable
+></userinput
+> niet wordt opgegeven zal de standaard reden ingevuld worden die ingevuld is in de <link linkend="identity"
+>Instellingen</link
+>. Dit commando kan alleen uitgevoerd worden in een kanaaltabblad.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban</command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>|<command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[kanaal]</replaceable
+> <replaceable
+>gebruiker</replaceable
+>|<replaceable
+>masker</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Probeert een <userinput
+><replaceable
+>gebruiker</replaceable
+></userinput
+> of <userinput
+><replaceable
+>masker</replaceable
+></userinput
+> uit een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> te bannen. Wanneer dit in een kanaaltabblad wordt uitgevoerd, kan het <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> worden weggelaten. Voor meer informatie over hosts, domeinen en maskers kunt u de documentatie op <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+> raadplegen. Om een huidige banlijst te krijgen van een kanaal, voert u <userinput
+><command
+>/mode </command
+><replaceable
+>kanaal</replaceable
+> <command
+>b</command
+></userinput
+> in. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban</command
+> <replaceable
+>[kanaal]</replaceable
+> <replaceable
+>patroon</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Draait een ban-actie in een kanaal terug. Wanneer het in een kanaaltabblad ingevoerd wordt, kan de parameter <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> weggelaten worden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore</command
+> [<command
+>-all</command
+>] <replaceable
+>schermnaam</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Voegt &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> toe aan uw negeerlijst. U kunt meer dan één &i18n-nickname; opgeven, gescheiden door spaties. Kanaalberichten van gebruikers op de negeerlijst zullen niet getoond worden. Wanneer u bovendien de parameter <userinput
+><command
+>-all</command
+></userinput
+> meegeeft zullen alle berichttypen (queries, meldingen, &CTCP;, DCC en uitzonderingen) van deze gebruiker ook genegeerd worden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote</command
+> <replaceable
+>commando</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt de uitvoer van het <userinput
+><replaceable
+>commando</replaceable
+></userinput
+> naar de server. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say</command
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Wanneer dit in een kanaaltabblad wordt opgegeven, wordt dit <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> naar het kanaal verzonden. Dit is hetzelfde als het invoeren van <userinput
+><replaceable
+>bericht</replaceable
+></userinput
+> in de <interface
+>invoerregel</interface
+> van het kanaal. Dit is handig voor het verzenden van &irc;-commando's wanneer u geen commando wilt uitvoeren. Twee commandotekens achter elkaar (//) zijn equivalent aan <userinput
+><command
+>/say</command
+></userinput
+>. Wordt ook gebruikt door <link linkend="scripting"
+>scripts</link
+> om berichten te verzenden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw</command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Zet de logmodus van de server op pure modus (<command
+>open</command
+>) of zet deze modus weer uit (<command
+>close</command
+>). Wanneer geen van beide opties is gegeven zal <command
+>open</command
+> gebruikt worden. In de pure modus zal iedere bericht van de server in de serverlog komen in &irc;-formaat. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Opent een nieuw tabblad met een &konsole;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server</command
+> <replaceable
+>[url-adres]</replaceable
+> <replaceable
+>[wachtwoord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verbindt met de server op een bepaald <userinput
+><replaceable
+>URL-adres</replaceable
+></userinput
+>. Wanneer het <userinput
+><replaceable
+>URL-adres</replaceable
+></userinput
+> wordt weggelaten wordt er een verbinding met de server gemaakt dat bij het huidige tabblad hoort. Dit is handig bij het opnieuw verbinden met de server wanneer de verbinding is verbroken. Wanneer de server een wachtwoord nodig heeft om te kunnen verbinden, kunt u dat ook eventueel opgeven. Wanneer de server een ander poortnummer nodig heeft dan 6667 kunt u dat op de volgende manier achter het <userinput
+><replaceable
+>URL-adres</replaceable
+></userinput
+> plaatsen: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc</command
+> <command
+>SEND</command
+> <replaceable
+>schermnaam</replaceable
+> <replaceable
+>[bestandsnaam]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt een bestand aan de hand van een <userinput
+><replaceable
+>bestandsnaam</replaceable
+></userinput
+> naar de gebruiker met &i18n-nickname; <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+>. Wanneer u de <userinput
+><replaceable
+>bestandsnaam</replaceable
+></userinput
+> niet invult zal er een dialoogvenster in beeld komen waarin u dit kunt opgeven. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Opent het tabblad <guilabel
+>DCC-status</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp</command
+> <replaceable
+>schermnaam|kanaal</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Een PING-verzoek wordt naar de <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> of het <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+> verzenden. Dit is handig om te bepalen hoeveel vertraging er zit tussen u en degene waarmee u praat. Wanneer u een PING-verzoek naar een kanaal stuurt kunt u zien hoeveel vertraging er is tussen u en de server. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp</command
+> <replaceable
+>schermnaam|kanaal</replaceable
+> <replaceable
+>bericht</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Verzendt een bericht naar een bepaalde <userinput
+><replaceable
+>schermnaam</replaceable
+></userinput
+> of naar alle gebruikers in een <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+>. Dit is gelijkwaardig aan het commando <userinput
+><command
+>/msg</command
+></userinput
+> dat hierboven staat beschreven, behalve dan dat het bericht via het CTCP-protocol wordt verzonden. Het antwoord van de andere kant hangt af van het &irc;-programma dat die gebruiker gebruikt. Wanneer u bijvoorbeeld praat met een andere &konversation;-gebruiker, zal het commando <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> de systeemtijd teruggeven van Eisfuchs' computer. Een andere mogelijkheid is <userinput
+><replaceable
+>/ctcp bram85 VERSION</replaceable
+></userinput
+>, welke het versienummer van &konversation; zal teruggeven die bram85 op dat moment aan het draaien is. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Scripten</title>
+
+<para
+>Bij &konversation; wordt een aantal handige scripts meegeleverd die u vanuit het programma kunt aanroepen. Om een script uit te voeren in een kanaal-, conversatie- of servertabblad dient u het commando in de volgende vorm te typen:</para>
+
+<para
+><userinput
+><command
+>/exec</command
+> <replaceable
+>script</replaceable
+> [<replaceable
+>parameters</replaceable
+>]</userinput
+></para>
+
+<para
+>welke het script genaamd <userinput
+><replaceable
+>script</replaceable
+></userinput
+> uitvoert met (optionele) <userinput
+><replaceable
+>parameters</replaceable
+></userinput
+>.</para>
+
+<para
+>Wanneer u bijvoorbeeld het volgende commando in een kanaaltabblad typt</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>om uw versienummers van &konversation;, &Qt;, &kf5; en &plasma; naar het kanaal te sturen.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>voert het script <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+> uit met de parameter <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. Hiermee zendt u uw &Linux;-versienummer naar het kanaal.</para>
+
+<para
+>Om meer te weten te komen over de scripts die met &konversation; geïnstalleerd zijn kijkt u op <link linkend="scripts_ref"
+>Referentiegids voor scripts</link
+></para>
+
+<para
+>Om een lijst te krijgen van alle beschikbare scripts typt u het volgende commando in een &konversation;-scherm.</para>
+
+<para
+><userinput
+>/exec --showpath medium</userinput
+></para>
+
+<para
+>Blader daarna naar de map uit de uitvoer om de lijst te zien.</para>
+
+<para
+>U kunt ook uw eigen scripts schrijven. Scripts zijn shellscripts en kunnen in iedere shelltaal geschreven worden, zoals bash, perl of python. Wanneer &konversation; een script uitvoert, zijn de eerste twee parameters voor het script als volgt:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Het adres van de server.</para
+></listitem>
+
+<listitem
+><para
+>De kanaalnaam.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Hier is een voorbeeldscript (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Voert een commando uit en zendt de uitvoer naar Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Merk op dat het script qdbus gebruikt om te kunnen communiceren met &konversation;. Het commando <computeroutput
+>say</computeroutput
+> zorgt ervoor dat de uitvoer als een normaal bericht in het kanaal belandt. Om een bepaalde bericht in een tabblad te krijgen zonder dat de andere gebruikers het krijgen te zien, gebruikt u <computeroutput
+>info</computeroutput
+>. Neem eens een kijkje in de bestaande scripts om te kijken hoe u deze kunt schrijven.</para>
+
+<para
+>Om een zelfgeschreven script uit te voeren dient u het te installeren door het te kopiëren naar <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. U dient het bestand ook uitvoeringsrechten te geven, bijvoorbeeld met <userinput
+><replaceable
+>chmod a+x mijnscript</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Referentiegids voor scripts</title>
+
+<para
+>&konversation; komt standaard met verschillende geïnstalleerde scripts, kijk in deze gids om te leren deze te gebruiken.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>Bugnummer|Zoektekenreeks</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Dit script wordt gebruikt om uw browser te openen en te zoeken naar de gegeven tekenreeks of bugnummer in de <ulink url="https://bugs.kde.org/"
+>Bugzilla van &kde;</ulink
+>.</para>
+<para
+>Voorbeeld: om uw browser te openen en te zoeken naar bug 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Voorbeeldactie: de standaard browser in uw &systemsettings; zou <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+> moeten openen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>commandoregelargumenten</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Dit script wordt gebruikt om de uitvoer van de commandoregelargumenten naar uw huidige kanaal te schrijven.</para>
+<para
+>Voorbeeld: om aan iedereen in uw huidige kanaal te laten zien welke versie van &konversation; u hebt geïnstalleerd.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>WAARSCHUWING! De uitvoer van het gehele commando wordt gepost naar iedereen in het huidige kanaaltabblad! Dus voorzichtig gebruiken.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Dit script geeft bij uitvoeren als uitvoer een willekeurige Fortune.</para>
+<para
+>Voorbeeld: om een willekeurig 'fortune' uit te voeren naar uw huidige kanaaltabblad.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>percentage</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Dit script geeft een eenvoudige op tekst gebaseerde voortgangsbalk voor het gegeven percentage.</para>
+<para
+>Voorbeeld: om een voortgangsbalk met 50% voltooid naar het huidige kanaal uit te voeren.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>Bier laden [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{player}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Dit is een script "Speelt nu" voor verschillende mediaspelers. Het biedt ook een methode om "Speel nu"-informatie alleen voor audiospelers or videospelers via de optionele commando-argumenten <replaceable
+>audio</replaceable
+> en <replaceable
+>video</replaceable
+> te tonen. Bovendien is het mogelijk om de mediaspeler die u wilt bekijken te specificeren.</para>
+<para
+>De volgende mediaspelers worden ondersteund: Amarok (audio), JuK (audio), Kaffeine (video, audio), KMPlayer (video, audio), KPlayer (video, audio), kdetv (video), Yammi (audio), Audacious (audio) en MPD (audio).</para>
+<para
+>Voorbeeld: om uw nu spelende song in Amarok uit te voeren.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>* gebruiker luistert naar You Give Love A Bad Name door Bon Jovi op Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Dit script voert enige gedetailleerde informatie uit over uw systeem door de uitvoer van verschillende commando's te combineren en ze naar behoren op te maken.</para>
+<para
+>Voorbeeld: om enige informatie over uw systeem uit te voeren naar het huidige kanaal.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Voorbeeld uitvoer: <replaceable
+>Sysinfo voor 'user-desktop': Actief binnen KDE Plasma 5.6.5 op Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>Adres van koppeling</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Dit script gebruikt de api van Tinyurl om de gegeven koppeling om te vormen in een tinyurl die dan wordt verzonden naar het huidige kanaaltabblad.</para>
+<para
+>Voorbeeld: om iemand een korte koppeling te geven naar https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Dit script wordt gebruikt om het resultaat van het commando "uptime" opgemaakt uit te voeren.</para>
+<para
+>Voorbeeld: om op te scheppen met uw steenharde 98 dagen uptime.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Al deze scripts hebben voorgedefinieerde commando-aliassen. In de instellingendialoog van &konversation; selecteert u <menuchoice
+><guimenu
+>Gedrag</guimenu
+> <guimenuitem
+>Commando-aliassen</guimenuitem
+></menuchoice
+> om commando-aliassen te bekijken, toe te voegen, te verwijderen of te bewerken. </para>
+
+<para
+>Voor meer informatie over scripting lees de <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>Userbase Scripting guide</ulink
+> </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Menu's</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Het hoofdvenster van &konversation;</title>
+
+<sect2>
+<title
+>Het menu Bestand</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F2</keycap
+></shortcut
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Serverlijst</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Toont de <link linkend="irc-basics"
+>lijst met servers en kanalen</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F7</keycap
+></shortcut
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Snel verbinden</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Toont het venster <link linkend="quickconnect"
+>Snelverbinden</link
+> om een verbinding met een server te maken. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Verbinding verbreken</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Verbreekt de verbinding met alle servers. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opnieuw verbinden</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Verbindt opnieuw met alle servers waarvan de verbinding is verbroken. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Deelnemen aan kanaal</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Toont een dialoogvenster waarin u de naam van het kanaal kunt invoeren waaraan u wilt deelnemen. Dit is equivalent aan het typen van <command
+>/join<userinput
+>#kanaalnaam</userinput
+></command
+> in een kanaal- of servervenster.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Globaal weg</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Verandert d status van uw &i18n-nickname; naar afwezig in alle kanalen. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afsluiten</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Sluit af</action
+> &konversation;.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Het menu Bewerken</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Tekst zoeken...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Zoekt naar een bepaald tekstgedeelte in het huidige scherm.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Volgende zoeken</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Zoekt opnieuw naar het vorig gevraagde tekstgedeelte in het huidige scherm.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Venster wissen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Wist het huidige scherm.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Alle vensters wissen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Leegt de inhoud van alle vensters.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Het menu Invoegen</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Invoegen</guimenu
+> <guimenuitem
+>&irc;-kleur...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Zie <link linkend="color-msgs"
+>Kleurberichten verzenden</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Invoegen</guimenu
+><guimenuitem
+>Regelmarkering</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Zie <link linkend="rememberlines"
+>Kanaal- en conversatielogs markeren</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Invoegen</guimenu
+><guimenuitem
+>Speciaal teken...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Dit kunt u gebruiken om speciale tekens in te voeren, zoals buitenlandse tekens.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menu Bladwijzers</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+></shortcut
+><guimenu
+>Bladwijzers</guimenu
+><guimenuitem
+>Bladwijzer toevoegen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Maakt een bladwijzer aan voor het huidige netwerk en kanaal.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Tabs bewaren als bladwijzermap...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Voegt toe</action
+> alle kanalen aan een nieuw menu-item aan het eind van het bladwijzermenu. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Nieuwe bladwijzermap...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Maakt een nieuwe bladwijzermap aan.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bladwijzers</guimenu
+> <guimenuitem
+>Bladwijzers bewerken...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Opent de bladwijzerbewerker.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Het menu Instellingen</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Lijst met schermnamen tonen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Verbergt (of toont) het paneel met schermnamen in kanaaltabbladen. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Identiteiten...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Toont het venster <link linkend="identity"
+>Identiteiten</link
+> waarin u uw indentiteit kunt instellen. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Het menu "Venster"</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Venster</guimenu
+> <guimenuitem
+>vorig tabblad</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Toont het scherm dat hoort bij het vorige tabblad.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Venster</guimenu
+> <guimenuitem
+>Volgend tabblad</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Toont het scherm dat hoort bij het volgende tabblad.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+><guimenu
+>Venster</guimenu
+> <guimenuitem
+>Tabblad sluiten</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Sluit het huidige scherm. Wanneer een kanaaltabblad gesloten wordt, verlaat u ook het bijbehorende kanaal. Wanneer u een tabblad met <interface
+>serverberichten</interface
+> sluit, worden alle open kanalen op die server afgesloten en wordt de verbinding met de server verbroken. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+><guimenu
+>Venster</guimenu
+> <guimenuitem
+>Alle open conversaties sluiten</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Sluit alle <link linkend="query"
+>privégesprekken (conversaties)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F4</keycap
+></shortcut
+><guimenu
+>Venster</guimenu
+><guimenuitem
+>Gevolgde schermnamen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont het venster <guilabel
+>Gevolgde schermnamen</guilabel
+>. Zie <link linkend="nicksonline"
+>Bijhouden wie er online is</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F6</keycap
+></shortcut
+><guimenu
+>Venster</guimenu
+><guimenuitem
+>URL-lijst</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont de <link linkend="urlcatcher"
+>URL-lijst</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Venster</guimenu
+> <guimenuitem
+>DCC-status</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont het tabblad <link linkend="dcc"
+>DCC-status</link
+> met informatie over bestandsoverdrachten.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Venster</guimenu
+> <guimenuitem
+>Nieuwe Konsole</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont een nieuw terminalvenster. U kunt zoveel <guilabel
+>Konsole</guilabel
+>-tabbladen openen als u wilt.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+><guimenu
+>Venster</guimenu
+><guimenuitem
+>Kanaallijst voor</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont een <link linkend="list-channels"
+>lijst met kanalen</link
+> die op de server beschikbaar zijn.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+></shortcut
+><guimenu
+>Venster</guimenu
+><guimenuitem
+>Logbestand openen voor</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Toont een scherm met logberichten van het huidige tabblad. Werkt alleen in een <interface
+>kanaaltabblad</interface
+>, <interface
+>servertabblad</interface
+> en een <interface
+>conversatietabblad</interface
+>. Het loggen moet wel ingeschakeld zijn in het hoofdmenu onder <menuchoice
+><guisubmenu
+>Instellingen</guisubmenu
+><guisubmenu
+>Konversation instellen</guisubmenu
+><guisubmenu
+>Gedrag</guisubmenu
+><guisubmenu
+>Loginstellingen</guisubmenu
+></menuchoice
+>. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Het menu Help</title>
+
+<para
+>&konversation; heeft een aantal van de algemene &kde; items in het menu <guimenu
+>Help</guimenu
+>, voor meer informatie lees de sectie hierover in het <ulink url="help:/fundamentals/menus.html#menus-help"
+>Menu Help</ulink
+> van &kde; Fundamentals. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Vraag en antwoord</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Wanneer ik &konversation; opstart wil ik verbinding maken met een server zonder dat ik daarna een kanaal open. Hoe doe ik dat?</para>
+</question>
+<answer>
+<para
+>In het venster <link linkend="serverlist-addnetwork"
+>Server bewerken</link
+> dient u het tekstvak <guilabel
+>Kanaalnaam</guilabel
+> leeg te laten.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; kan nergens een verbinding mee maken. Wat is er aan de hand?</para>
+</question>
+<answer>
+<para
+>Dit kan verschillende oorzaken hebben.</para>
+<orderedlist>
+<listitem>
+<para
+>Controleer of u de <guilabel
+>Servernaam</guilabel
+> goed ingevuld hebt met de juiste <guilabel
+>Poort</guilabel
+> in de <guilabel
+>Serverlijst</guilabel
+>. </para>
+</listitem>
+<listitem>
+<para
+>Controleer de uitvoer van de <guilabel
+>Serverberichten</guilabel
+> of er foutmeldingen in voorkomen. Wees de server de verbinding af vanwege een verkeerd wachtwoord? Of was het omdat de server een <acronym
+>IDENTD</acronym
+> nodig heeft en uw computer die niet voorzien heeft? Of heeft u gekozen om het SSL-protocol te gebruiken terwijl dat niet ondersteund wordt door de server? </para>
+</listitem>
+<listitem>
+<para
+>Wanneer u achter een firewall zit, controleer of de juiste poorten zijn geopend. Om &konversation; te kunnen gebruiken moeten de volgende poorten geopend zijn: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Uitgaand TCP 6667 (of de poort van de server waarmee u wilt verbinden)</para
+></listitem>
+<listitem
+><para
+>Incoming TCP 113 (if the server requires IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Voor meer informatie over verbindingsproblemen met &irc;-servers, zie <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Wanneer ik naar <menuchoice
+><guimenu
+>Venster</guimenu
+> <guisubmenu
+>Kanaallijst</guisubmenu
+></menuchoice
+> ga, kan ik deze niet selecteren. Waarom is dat?</para>
+</question>
+<answer>
+<para
+>De optie <menuchoice
+> <guimenu
+>Venster</guimenu
+> <guisubmenu
+>Kanaallijst</guisubmenu
+> </menuchoice
+> wordt inactief wanneer het huidig geselecteerde tabblad geen kanaaltabblad is, bijvoorbeeld wanneer <guilabel
+>Gevolgde schermnamen</guilabel
+> actief is. Om het weer op te laten lichten dient u terug te gaan naar een kanaal- of servertabblad. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Hoe kan &konversation; mij automatisch markeren als afwezig na een periode van inactiviteit? </para>
+</question>
+<answer
+><para
+>Automatische afwezigheidsberichten worden geconfigureerd op basis van per identiteit. Om dit in te schakelen selectert u <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Identiteiten</guimenuitem
+></menuchoice
+>. Kies de identiteit waarvoor u automatisch afwezig wilt inschakelen uit de afrollijst bovenaan de dialoog en ga naar het tabblad <guilabel
+>Afwezig</guilabel
+>. Activeer de optie <guilabel
+>Automatisch afwezig</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Hoe kan de functie <guilabel
+>Automatisch vervangen</guilabel
+> van de <interface
+>Invoerregel</interface
+> worden vermeden?</para>
+</question>
+<answer
+><para
+>Gebruik <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> in plaats van gewoon &Enter; om het ontleden en automatisch vervangen van de tekst te vermijden in de <interface
+>Invoerregel</interface
+> volgens de opties in de pagina instellingendialoog <menuchoice
+><guimenu
+>Gedrag</guimenu
+> <guimenuitem
+>Automatisch vervangen</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Waar kan ik de scripts bijgevoegd met &konversation; vinden?</para>
+</question>
+<answer>
+<para
+>Voer dit commandu uit in de invoerregel van &konversation; (met gebruik van het media-script als voorbeeld, omdat het samen komt met elke installatie van &konversation;): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Voorbeelduitvoer: <replaceable
+>Het script-bestand 'media' is gevonden in: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Hoe maak ik mijn tekst vet/cursief/onderstreept?</para>
+</question>
+<answer>
+<para
+>Voorbeeld: <userinput
+>Dit is mijn %Bvette%B tekst.</userinput
+></para>
+<para
+>Uitvoer: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Voorbeeld: <userinput
+>Dit is mijn %Icursieve%I tekst.</userinput
+></para>
+<para
+>Uitvoer: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Voorbeeld: <userinput
+>Dit is mijn %Uonderstreepte%U tekst.</userinput
+></para>
+<para
+>Uitvoer: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Voorbeeld: <userinput
+>Dit is mijn %Sdoorgestreepte%S tekst.</userinput
+></para>
+<para
+>Uitvoer: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Voorbeeld: <userinput
+>Dit is mijn %Mgelijke breedte%M tekst.</userinput
+></para>
+<para
+>Uitvoer: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&konversation; </para>
+<para
+>Programma copyright 2002-2005 door het &konversation;-team. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Medewerkers: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Met dank aan: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Documentatie copyright &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+&vertaling.bram; &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->

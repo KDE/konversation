@@ -1,0 +1,6089 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>smeknamn</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Smeknamn</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>Handbok &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Stefan</firstname
+><surname
+>Asserhäll</surname
+><affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+><contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>2016-11-29</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; är en användarvänlig &irc;-klient byggd på &Qt; och &kde; Ramverk 5. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>chatt</keyword>
+<keyword
+>kommunikationer</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Inledning</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; är en &irc;-klient byggd på &Qt; och &kde; Ramverk 5. Den erbjuder följande funktioner: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Stöd för SSL.</para
+></listitem>
+<listitem
+><para
+>Användarvänligt gränssnitt med flikar.</para
+></listitem>
+<listitem
+><para
+>Anpassningsbara snabbknappar för ofta använda kommandon.</para
+></listitem>
+<listitem
+><para
+>Automatisk återuppkoppling och gå med igen.</para
+></listitem>
+<listitem
+><para
+>Skicka och ta emot filer.</para
+></listitem>
+<listitem
+><para
+>Bevakningslista för smeknamn.</para
+></listitem>
+<listitem
+><para
+>Visuella och ljudbaserade underrättelser för en stor mängd händelser, som meddelanden som innehåller ditt smeknamn, eller uppkoppling och nerkoppling för smeknamn i din bevakningslista. </para
+></listitem>
+<listitem
+><para
+>Anpassningsbar färgläggning av meddelanden enligt smeknamn eller mönster med reguljärt uttryck.</para
+></listitem>
+<listitem
+><para
+>Komplettering av smeknamn.</para
+></listitem>
+<listitem
+><para
+>Fånga och spara alla webbadresser som ingår i meddelanden.</para
+></listitem>
+<listitem
+><para
+>Visning av meddelanden på skärmen, också om minimerad.</para
+></listitem>
+<listitem
+><para
+>Lista över smeknamn att ignorera.</para
+></listitem>
+<listitem
+><para
+>Automatisk loggning och logghantering.</para
+></listitem>
+<listitem
+><para
+>Markering av rader i loggar.</para
+></listitem>
+<listitem
+><para
+>Styrning via skript.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>&konversation;s webbplats är <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Ytterligare information, som svar på vanliga frågor, tips och trick, hittar du på <ulink url="https://userbase.kde.org/Konversation"
+>&konversation;s sida på användarbasen</ulink
+>. </para>
+
+<para
+>Utvecklare av &konversation; kan oftast kontaktas via &irc; på <ulink url="irc://irc.libera.chat/konversation"
+>irc.libera.chat kanal #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Att använda &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Om du inte har använt &irc; tidigare...</title>
+
+<para
+>Enkelt uttryckt är &irc; ett chattprotokoll, definierat av officiella Internetstandarder, med möjlighet att stjäla många timmar av ditt liv. För att använda &irc; måste du ansluta till en server, och därefter gå med i en kanal (som motsvarar ett chattrum) eller bara inleda en privat konversation.</para>
+
+<para
+>För att ansluta till en server och kanal, starta &konversation;. Skärmen <guilabel
+>Serverlista</guilabel
+> visas.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Serverlista</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Serverlista</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>Listan med inställda &irc; <guilabel
+>Nätverk</guilabel
+> anges här. Ett &irc;-nätverk är en samling samarbetande servrar. Du behöver bara ansluta dig till en av servrarna i nätverket för att vara ansluten till hela &irc;-nätverket. När du väl är ansluten, kommer &konversation; automatiskt att gå med i de visade <guilabel
+>Kanalerna</guilabel
+>. När &konversation; startas för första gången, är nätverket <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> och kanalen <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> redan inskrivna åt dig. Klicka på ett nätverk för att välja det.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Klicka här för att definiera ett nytt <guilabel
+>Nätverk</guilabel
+>, inklusive servern att ansluta till, och <guilabel
+>Kanalerna</guilabel
+> som automatiskt ska gås med i efter anslutning. Se <link linkend="serverlist"
+>Definiera nya nätverk, servrar och kanaler att automatiskt gå med i</link
+> för mer information.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Klicka här för att ansluta till valt &irc;-nätverk och kanal.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>När du klickar på knappen <guibutton
+>Anslut</guibutton
+> första gången du öppnar &konversation;, kanske du ser följande meddelande, som talar om för dig att din förvalda <guilabel
+>identitet</guilabel
+> inte är riktigt inställd.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Kontrollera identiteter</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Kontrollera identiteter</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Första gången du öppnar &konversation; hämtas information om nuvarande användare från operativsystemet, och förvalda värden för identiteten fylls i. Om användarinformationen i operativsystemet inte är fullständig, till exempel om inget Fullständigt namn är definierat, kan du se meddelandet ovan. För att rätta problemet, klicka på <guibutton
+>Redigera identitet...</guibutton
+> och titta i <link linkend="identity"
+>Ställa in din identitet</link
+> för mer information.</para>
+</note>
+
+<para
+><interface
+>Huvudskärmen</interface
+> öppnas och visar meddelanden som skickas av servern till klienten. (Om &konversation; inte ansluter till servern, se <link linkend="faq"
+>Vanliga frågor</link
+>.) När servermeddelanden har slutat bläddra förbi, går &konversation; med i kanalen eller kanalerna som valts. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kanal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kanal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Det här kallas <interface
+>inmatningsraden</interface
+>. För att skicka ett meddelande till alla i kanalen, skriv in meddelandet här och tryck på <keycap
+>Enter</keycap
+>. Meddelandet samt alla andras meddelanden syns i kanalfönstret ovanför. Varje meddelande inleds med tiden och användarens smeknamn.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Du kan gå med i ytterligare servrar och kanaler. Varje server, kanal, kanallista och annan skärm får en separat flik här. För att visa en lista med tillgängliga kanaler, se <link linkend="list-channels"
+>Lista över tillgängliga kanaler</link
+>. För att gå med i en kanal, skriv: <userinput
+><command
+>/join</command
+> <replaceable
+>#kanalnamn</replaceable
+></userinput
+> på indataraden. (Tecknet <userinput
+>#</userinput
+> krävs.) Du kan också skriva <userinput
+><command
+>/j</command
+></userinput
+> som förkortning av <userinput
+><command
+>/join</command
+></userinput
+>. För att lämna en kanal, skriv bara <userinput
+><command
+>/part</command
+></userinput
+>. För att byta visning till en annan server eller kanal, klicka på motsvarande flik. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Det här kallas <interface
+>smeknamnsrutan</interface
+>. Den listar smeknamnen för alla användare som har gått med i kanalen, inklusive dig själv.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Det här är grunderna, för mer detaljerad information, läs vidare...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Ställa in din identitet</title>
+
+<para
+>Innan du börjar använda &konversation; regelbundet bör du ställa in hur du vill bli identifierad på nätverket.</para>
+
+<para
+>Klicka på <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Identiteter</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Identiteter</guilabel
+> visas. Du kan också visa skärmen <guilabel
+>Identiteter</guilabel
+> genom att klicka på knappen <guibutton
+>Redigera</guibutton
+> på skärmen <guilabel
+>Redigera nätverk</guilabel
+> eller <guilabel
+>Nytt nätverk</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Identiteter (fliken Allmänt)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Identiteter (fliken Allmänt)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Klicka här för att välja en <guilabel
+>Identitet</guilabel
+> att redigera.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Använd de här knapparna för åtgärderna <guibutton
+>Lägg till</guibutton
+>, <guibutton
+>Duplicera</guibutton
+>, <guibutton
+>Byt namn</guibutton
+> eller <guibutton
+>Ta bort</guibutton
+> för en <guilabel
+>Identitet</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Skriv in ditt riktiga namn här. &irc; är inte avsett att dölja dig för dina vänner eller fiender. Kom ihåg det om du är frestad att bete dig ondsint. Ett felaktigt "riktigt namn" kan vara ett bra sätt att dölja om du är man eller kvinna för alla töntar därute, men datorn som du använder kan alltid spåras, så du kan aldrig vara verkligt anonym.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Använd de här knapparna för åtgärderna <guibutton
+>Lägg till</guibutton
+> eller <guilabel
+>Ta bort</guilabel
+> för ett smeknamn.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Det här är din lista med dina smeknamn. Ett smeknamn är namnet som övriga användare känner dig som. Du kan skriva in vilket namn du än önskar. Det första tecknet måste vara en bokstav, medan övriga tecken kan vara bokstäver, siffror eller specialtecken <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>Eftersom smeknamn måste vara unika i ett helt &irc;-nätverk, kanske ditt önskade namn inte tillåts av servern eftersom någon annan redan använder det. Skriv in alternativa smeknamn för dig själv. Om ditt första val inte tillåts av servern, försöker &konversation; med de alternativa smeknamnen. </para>
+
+<para
+>Enligt RFC 2812 är den maximala smeknamnslängden 9, men det avgörs i själva verket av servern. För att avgöra maximum för en server, anslut till servern. Leta efter meddelandet <computeroutput
+>[Support]</computeroutput
+> under fliken <interface
+>Servermeddelanden</interface
+>. Till exempel:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>Parametern <computeroutput
+>NICKLEN</computeroutput
+> anger maximala längden på smeknamnet. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Använd de här knapparna för att ändra ordning på smeknamnen. Det översta smeknamnet provas först, därefter nästa, och så vidare.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Om du har registrerat ditt smeknamn med &irc;-nätverket, skriv in tjänsten och lösenordet för att behörighetskontrollera ditt smeknamn. När &konversation; ansluter, skickas automatiskt <userinput
+><command
+>/msg</command
+> <replaceable
+>tjänst</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>lösenord</replaceable
+></userinput
+> till servern. Om du inte vet vad det är, lämna rutorna tomma.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Klicka på fliken <guilabel
+>Borta</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identiteter (fliken Borta)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identiteter (fliken Borta)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Skriv in ett smeknamn som anger att du är borta. Så fort du utför kommandot <userinput
+><command
+>/away </command
+><replaceable
+>meddelande</replaceable
+></userinput
+> i någon kanal som du gått med i med denna <guilabel
+>Identitet</guilabel
+>, ändrar &konversation; automatiskt ditt smeknamn till <guilabel
+>Borta smeknamn</guilabel
+>. Andra användare märker att du är borta från datorn. Så fort du utför kommandot <userinput
+><command
+>/away</command
+></userinput
+> i någon kanal där du är borta, ändrar &konversation; automatiskt tillbaka ditt smeknamn till det normala. Om du inte automatiskt vill ändra ditt smeknamn när du är borta, lämna det tomt.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Om du markerar den här rutan, så ritas en horisontell linje i kanalen så fort du utför kommandot <userinput
+><command
+>/away</command
+></userinput
+>, som markerar stället där du gick ifrån. Andra &irc;-användare ser inte den här horisontella linjen. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Om du markerar den här rutan skickar &konversation; automatiskt <guilabel
+>Frånvarokommandot</guilabel
+> till alla kanaler som du gått med i med denna <guilabel
+>Identitet:</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> ersätts med <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+>. Så fort du utför kommandot <userinput
+><command
+>/away</command
+></userinput
+>, visas <guilabel
+>Återkomstkommandot</guilabel
+> i alla kanaler du gått med i med denna <guilabel
+>Identitet</guilabel
+>.</para>
+
+<note
+><para
+>Frånvaromeddelanden anses ofta irriterande av andra användare. Använd alternativet med försiktighet, och tag hänsyn till andra &irc;-användare. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Klicka på fliken <guilabel
+>Avancerat</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identiteter (fliken Avancerat)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identiteter (fliken Avancerat)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Du kan skriva in ett kommando här som körs innan anslutning till servern. Om identiteten används för mer än en server, körs kommandot för varje server.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Den här inställningen påverkar hur tecken du skriver kodas när de ska skickas till servern. Den påverkar också hur meddelanden visas. När du först öppnar &konversation;, hämtas den här inställningen automatiskt från operativsystemet. Om du verkar ha problem med att se andra användares meddelanden riktigt, försök då ändra inställningen.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>När du ansluter, frågar många servrar din dator efter ett IDENT-svar. Om du dator inte kör en IDENT-server, skickas svaret av &konversation;. Inga mellanslag tillåts. Ett förslag är att använda ditt förnamn.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Så fort du lämnar en kanal, skickas det här meddelandet till kanalen.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Så fort du sparkas ut från en kanal (oftast av en &irc;-operatör), skickas det här meddelandet till kanalen.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Klicka för att verkställa dina ändringar. För att alla ändringar ska få effekt, måste du koppla ner från servern och koppla upp igen. Det enklaste sättet att göra det är att avsluta &konversation; och starta om.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Definiera nya nätverk, servrar och kanaler att automatiskt gå med i</title>
+
+<para
+>Skärmen <guilabel
+>Serverlista</guilabel
+> visas när du startar programmet &konversation;. Den visas också när du väljer <menuchoice
+><guisubmenu
+>Arkiv</guisubmenu
+> <guisubmenu
+>Serverlista</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Serverlista</guilabel
+></action
+> anger de befintliga definierade &irc;-<guilabel
+>nätverk</guilabel
+>en, enligt grupp. Ett &irc;-nätverk är en samling samarbetande servrar. När du ansluter till någon server i ett nätverk, kan du komma åt alla kanaler i nätverket. Exempel på &irc;-nätverk är <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> och <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Serverlista</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Serverlista</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Dina befintliga definierade <guilabel
+>nätverk</guilabel
+> listas här tillsammans med den <guilabel
+>identitet</guilabel
+> som används för att ansluta till nätverket, och de <guilabel
+>kanaler</guilabel
+> som du automatiskt går med i när du är ansluten. Om du har angivit en grupp för dina nätverk, listas nätverken indragna under gruppen. Klicka på ett nätverk för att markera det. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Använd de här knapparna för åtgärden <guibutton
+>Lägg till</guibutton
+> för ett nytt nätverk, <guibutton
+>Redigera</guibutton
+> för ett markerat nätverk eller <guibutton
+>Ta bort</guibutton
+> för ett markerat nätverk. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Klicka på den här knappen för att ansluta till ett markerat <guilabel
+>nätverk</guilabel
+> och stänga skärmen <guilabel
+>Serverlista</guilabel
+>. Du kan markera mer än ett nätverk om du önskar, vilket ansluter till alla markerade nätverk.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Att klicka på den här knappen kastar inte ändringarna du har gjort. Den betyder bara att du inte vill ansluta till något nätverk för närvarande.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>När du klickar på knappen <guilabel
+>Nytt</guilabel
+> visas skärmen <guilabel
+>Nytt nätverk</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Nytt nätverk</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Nytt nätverk</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Skriv in <guilabel
+>Nätverksnamn</guilabel
+> här. Du kan skapa så många poster på skärmen <guilabel
+>Serverlista</guilabel
+> med samma <guilabel
+>Nätverk</guilabel
+> som du vill.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Välj en befintlig <guilabel
+>identitet</guilabel
+> eller klicka på knappen <guibutton
+>Redigera</guibutton
+> för att lägga till en ny identitet eller redigera en befintlig. En <guilabel
+>identitet</guilabel
+> kommer att identifiera dig och avgöra ditt smeknamn när du ansluter till nätverket.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Valfritt. Kommandot skickas till servern efter anslutning. Exempel: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Exemplet gäller för nätverket Libera, som kräver att användare registrerar sina smeknamn med ett lösenord och inloggningsnamn vid anslutning. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> är lösenordet för smeknamnet som anges under <interface
+>Identitet</interface
+>. Du kan skriva in mer än ett kommando genom att skilja dem åt med semikolon.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Markera det här om du vill att &konversation; automatiskt ska ansluta till nätverket så fort du öppnar &konversation;.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Det här är en lista med &irc;-<guilabel
+>servrar</guilabel
+> i nätverket. Vid anslutning till nätverket, försöker &konversation; ansluta till den översta servern först. Om det misslyckas, försöker den med den andra servern. Om det misslyckas, försöker den med den tredje, och så vidare. Åtminstone en server måste anges. Klicka på en server för att markera den.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Använd de här knapparna för att <guibutton
+>lägga till</guibutton
+> en server, <guibutton
+>redigera</guibutton
+> en markerad server eller <guibutton
+>ta bort</guibutton
+> en markerad server. Du kan också justera servrarnas ordning, och på så sätt ordningen på anslutningsförsöken.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Valfritt. Det här är en lista över kanalerna du automatiskt går med i så fort &konversation; har anslutit till en server. Du kan lämna den tom om du inte vill gå med i några kanaler automatiskt.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Använd de här knapparna för att <guibutton
+>lägga till</guibutton
+> en kanal, <guibutton
+>redigera</guibutton
+> en markerad kanal eller <guibutton
+>ta bort</guibutton
+> en markerad kanal. Du kan också ändra ordningen som du går med i kanalerna. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Undvik att blanda servrar på olika &irc;-nätverk under samma <guilabel
+>nätverk</guilabel
+>. Undvik att skriva in samma server under två olika <guilabel
+>nätverk</guilabel
+>. Annars fungerar inte <link linkend="nicksonline"
+>bevakning av uppkopplade smeknamn</link
+> riktigt.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>När du klickar på knappen <guibutton
+>Lägg till</guibutton
+> i rutan <guilabel
+>Servrar</guilabel
+>, visas skärmen <guilabel
+>Lägg till server</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Lägg till server</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Lägg till server</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Namnet eller IP-adressen till servern. En <ulink url="https://www.irchelp.org/networks/"
+>lista</ulink
+> med servrar finns på irchelp.org.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Skriv in portnumret som krävs för att ansluta till servern. För de flesta servrar ska det vara <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Om servern kräver ett lösenord för att ansluta, skriv in det här. Lämna det annars tomt.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Markera om du vill använda SSL-protokollet (Secure Socket Layer) för att kommunicera med servern. Det skyddar kommunikationen mellan din dator och &irc;-servern, och gör den privat. Servern måste stöda SSL-protokollet för att det ska fungera. I de flesta fall, om servern inte stöder SSL, misslyckas anslutningen.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>När du klickar på knappen <guibutton
+>Lägg till</guibutton
+> i rutan <guilabel
+>Gå med automatiskt i kanaler</guilabel
+>, visas skärmen <guilabel
+>Lägg till kanal</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Lägg till kanal</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Lägg till kanal</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Skriv in ett kanalnamn. Glöm inte det inledande tecknet <userinput
+><replaceable
+>#</replaceable
+></userinput
+>. Om kanalen kräver ett lösenord för att gå med, skriv in det, lämna det annars tomt. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Lista över tillgängliga kanaler</title>
+
+<para
+>För att visa en lista med tillgängliga kanaler, välj <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+> <guisubmenu
+>Kanallista</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Efter en varningsskärm skapas en ny flik som heter <guilabel
+>Kanallista</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Fliken med kanallistan.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Fliken med kanallistan.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Skriv in en filtersträng här.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Här kan du begränsa kanallistan till de kanaler som har ett minimalt eller maximalt antal användare. Att välja <guilabel
+>Ingen begränsning</guilabel
+> inaktiverar respektive kriterium.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Klicka här för att hämta listan över kanaler från servern och tillämpa filtret.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>Den filtrerade listan med kanaler visas här. Observera att om du inte använder reguljära uttryck, listar &konversation; alla kanaler vars namn innehåller filtersträngen som du skrev in. Kanalnamnet behöver inte börja med strängen du skrev in.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Välj en kanal som du vill gå med i genom att klicka på den. Högerklicka på kanalen för att få en lista med alla webbadresser som nämns i kanalens ämne.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Klicka här för att gå med i en kanal. En ny flik skapas för kanalen.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Ibland finns det "hemliga" kanaler på en server. Sådana kanaler listas inte i <guilabel
+>Kanallistan</guilabel
+>. Du kan fortfarande gå med i kanalerna om du känner till deras namn. Skriv i vilken <interface
+>inmatningsrad</interface
+> som helst, <userinput
+><command
+>/join</command
+> <replaceable
+>#kanalnamn</replaceable
+></userinput
+>. (Tecknet <userinput
+>#</userinput
+> krävs.) En ny flik skapas för kanalen. Om du går med i en kanal och smeknamnsrutan bara listar ditt smeknamn, betyder det att kanalen inte tidigare fanns. Servern skapade kanalen, och du är operatör. I detta fall vill du troligen stänga kanalen genom att skriva: <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>En översikt över huvudskärmen</title>
+
+<para
+>Låt oss lära oss mer om <interface
+>huvudskärmen</interface
+>. Skärmen visas nedan med en kanalflik vald.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Huvudskärmen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Huvudskärmen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Det här kallas <interface
+>inmatningsraden</interface
+>. Den visas bara om aktuell flik är en kanal. För att skicka ett meddelande till alla i kanalen, skriv in meddelandet här och tryck på <keycap
+>Enter</keycap
+>. Meddelandet samt alla andras meddelanden syns i kanalfönstret ovanför. Varje meddelande inleds med tiden och användarens smeknamn.</para>
+
+ <para
+>Du kan också klistra in text från klippbordet. Om den inklistrade texten har mer än en rad (nyrader), visas en dialogruta. Redigera texten enligt dina önskemål och klicka på <guibutton
+>Ok</guibutton
+>. </para>
+
+ <para
+>Om den inklistrade texten är längre än 256 tecken, eller om den består av mer än en rad, visas ett varningsmeddelande som informerar dig om att långa inlägg kan orsaka återställningar av anslutningen och överfyllnad. Du kan fortfarande fortsätta med den inmatade texten, men det är inte en god idé att göra det, eftersom överfyllnad kan irritera övriga användare av kanalen, eller göra att du kopplas ner från servern. Det är bättre att skicka meddelandet i kortare delar.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>En konvention som används i många kanaler är att inleda meddelanden riktade till en användare med deras smeknamn. &konversation; tillhandahåller en bekväm funktion för att komplettera smeknamn. Börja skriva användarens smeknamn, tryck sedan på <keycap
+>Tabulator</keycap
+>. &konversation; kompletterar resten av användarens smeknamn, följt av ett kolon. För att anpassa kompletteringsfunktionen, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+>i huvudmenyn, expandera <guilabel
+>Beteende</guilabel
+>, klicka på <guilabel
+>Allmänt</guilabel
+> och välj <guilabel
+>Kompletteringsläge</guilabel
+>. </para>
+
+ <para
+>Du kan också skriva in &irc;-kommandon här genom att först skriva <userinput
+><command
+>/</command
+></userinput
+> följt av ett giltigt &irc;-kommando. Se <link linkend="irc-cmds"
+>Ofta använda &irc;-kommandon</link
+>. På vissa servrar kan du skriva <userinput
+><command
+>/help</command
+></userinput
+> för att få en lista med tillgängliga kommandon, eller skriva <userinput
+><command
+>/help</command
+> <replaceable
+>kommando</replaceable
+></userinput
+> för att få hjälp med ett angivet kommando. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Du kan gå med i ytterligare servrar och kanaler. Varje server och kanal får en separat flik här. För att visa en lista med tillgängliga kanaler, se <link linkend="list-channels"
+>Lista över tillgängliga kanaler</link
+>. För att gå med i en kanal, skriv: <userinput
+><command
+>/join</command
+> <replaceable
+>#kanalnamn</replaceable
+></userinput
+> på indataraden. (Tecknet <userinput
+>#</userinput
+> krävs.) För att lämna en kanal, skriv bara <userinput
+><command
+>/part</command
+></userinput
+>. Flikar visas också här om du öppnar en <link linkend="list-channels"
+>Kanallista</link
+>, deltar i en <link linkend="query"
+>privat konversation (fråga)</link
+>, öppnar en <link linkend="urlcatcher"
+>Webbadressinfångning</link
+> eller öppnar en eller flera <guilabel
+>Terminaler</guilabel
+>. För att byta till en annan skärm, klicka på motsvarande flik, eller använd mushjulet för att gå igenom flikarna cykliskt. </para>
+
+<para
+>För att ställa in andra alternativ för flikar, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn, expandera <guilabel
+>Gränssnitt</guilabel
+> och klicka på <guilabel
+>Flikar</guilabel
+>, eller expandera <guilabel
+>Underrättelser</guilabel
+> och klicka på <guilabel
+>Flikar</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>De här lamporna blinkar när det finns något du inte sett under fliken. En lampa blinkar långsammare när de enda meddelandena du inte sett är <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> eller ändringar av smeknamn. De blinkar snabbare om det finns vanliga meddelanden du inte sett. Färgerna är följande: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kanal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Servermeddelanden</interface
+>, <link linkend="list-channels"
+>Kanallista</link
+> eller <link linkend="urlcatcher"
+>Webbadressinfångning</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Terminal</guilabel
+> eller <link linkend="dcc"
+>DCC Status</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Privat meddelande (fråga)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Klicka här för att stänga aktuell flik. Stängs en <interface
+>kanalflik</interface
+> lämnas kanalen. Stängs en flik med <interface
+>servermeddelanden</interface
+> lämnas alla kanaler som du har gått med i, alla öppna frågekanaler på servern stängs och servern kopplas ner.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Klicka på knappen för att ändra ditt eget smeknamn. Den visas bara när den aktuella fliken är en kanal. Välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn, expandera <guilabel
+>Gränssnitt</guilabel
+>, klicka på <guilabel
+>Chattfönster</guilabel
+> och avmarkera rutan <guilabel
+>Visa ruta för att ändra eget smeknamn</guilabel
+> för att dölja knappen. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Kanalämnet visas här. Håll musen stilla på ämnet för att se det långa ämnet. Du kan ändra ämnet genom att klicka på knappen till vänster om ämnet. Välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn, expandera <guilabel
+>Gränssnitt</guilabel
+>, klicka på <guilabel
+>Chattfönster</guilabel
+> och avmarkera rutan <guilabel
+>Visa kanalämne</guilabel
+> för att dölja kanalämnen. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Dessa knappar visar nuvarande status hos kanallägen. En knapp är nertryckt om läget är aktiverat. Om du har rätt privilegier kan du också ändra kanallägen genom att klicka på knapparna, eller genom att klicka på knappen till vänster om ämnet. Välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn, expandera <guilabel
+>Gränssnitt</guilabel
+>, klicka på <guilabel
+>Chattfönster</guilabel
+> och avmarkera rutan <guilabel
+>Visa kanallägesknappar</guilabel
+> för att dölja kanallägesknapparna. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Det här kallas <interface
+>smeknamnsrutan</interface
+>. Den visas så fort den aktuella fliken är en kanal. Den listar smeknamnen på alla användare som har gått med i kanalen, inklusive dig själv. Håll musen stilla över ett smeknamn för att visa ytterligare information om användaren. Du kan ändra hur ikoner visas intill varje smeknamn genom att ändra ikontemat för smeknamn. Se <link linkend="nickthemes"
+>Anpassa smeknamnsteman</link
+> för mer information. <guilabel
+>Standardtemat</guilabel
+>, som visas på skärmen ovan, använder följande ikoner: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> normal användare </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> användare med röst. Användaren kan prata i en modererad kanal. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> deloperatör för kanalen </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> operatör för kanalen </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanalägare </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanaladministratör </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Om en användare är borta, ritas dessutom en liten klocka i ikonens hörn. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Klicka med högerknappen på vilket smeknamn som helst för att visa en sammanhangsberoende meny med åtgärder som du kan utföra med smeknamnet. Du kan till exempel <link linkend="dcc"
+>skicka en fil</link
+> till smeknamnet. </para>
+
+<para
+>För att dölja <interface
+>smeknamnsrutan</interface
+>, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Visa smeknamnslista</guisubmenu
+></menuchoice
+> i huvudmenyn. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>De här kallas <interface
+>snabbknappar</interface
+>. Normalt visas de inte. För att visa dem, se <link linkend="quick-buttons"
+>Anpassa snabbknappar</link
+>. Du kan ställa in deras definitioner till vilka kommandon du vill.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Du kan styra hur meddelanden visas för meddelanden som visas i kanal- och frågeflikar. Du kan till exempel ändra meddelandets färg, spela ett ljud när ett meddelande som innehåller en sträng tas emot, eller svara på meddelanden automatiskt. Se <link linkend="highlighting"
+>Färgläggning av meddelanden</link
+> för mer information. </para>
+</note>
+
+<note>
+<para
+>Kanalnamn börjar ibland med <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+>, eller <userinput
+>!</userinput
+>. Det första tecknet i ett kanalnamn avgör kanaltypen (RFC 2811) enligt följande: <itemizedlist
+><listitem
+><para
+> <userinput
+>#</userinput
+> - Vanliga kanaler. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> - Vanliga kanaler. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> - Lokal. Kanaler som man bara kan gå med i från servern som är värd för kanalen. Alla andra kanaler kan man gå med i från vilken server som helst i nätverket. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> - Kanaler som inte stöder kanallägen. Det betyder att inga lägen är aktiverade, med undantag av kanalflaggan 't' som är aktiverad. </para
+></listitem
+></itemizedlist
+>Kanalnamn kan vara upp till 50 tecken långa och innehålla alla tecken utom mellanslag, kommatecken och Ctrl+G (^G eller ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Snabbanslutning</title>
+
+<para
+>Ibland vill du ansluta till en server utan besväret med att skapa en ny server i <link linkend="serverlist"
+>serverlistan</link
+>. </para>
+
+<para
+>Välj <menuchoice
+><guisubmenu
+>Arkiv</guisubmenu
+> <guisubmenu
+>Snabbanslutning</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Snabbanslutning</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Snabbanslutningsskärmen</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Snabbanslutningsskärmen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Skriv in serveradressen i rutan <guilabel
+>Servervärddator</guilabel
+>, ditt önskade smeknamn i rutan <guilabel
+>Smeknamn</guilabel
+> och klicka på knappen <guibutton
+>Anslut</guibutton
+>. När &konversation; har anslutit till servern, skriv in kommandot <userinput
+><command
+>/join</command
+> <replaceable
+>#kanalnamn</replaceable
+></userinput
+> för att gå med i en kanal. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Ofta använda &irc;-kommandon</title>
+
+<para
+>Det följande är en kort lista med ofta använda &irc;-kommandon. Se <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> för en fullständig lista över alla kommandon, eller besök <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. För en lista med kommandon som hanteras speciellt av &konversation;, se <link linkend="konvi-cmds"
+>&konversation;s kommandon</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Listar kommandon tillgängliga på aktuell server. Stöds inte av alla servrar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>kommando</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Tillhandahåller hjälp för <userinput
+><replaceable
+>kommando</replaceable
+></userinput
+>. Stöds inte av alla servrar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#kanal</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Går med i <userinput
+><replaceable
+>#kanal</replaceable
+></userinput
+>. Om kanalen inte redan finns, skapas den och du blir kanaloperatör.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Lämnar aktuell kanal och stänger <interface
+>kanalfliken</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#kanal</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lämnar <userinput
+><replaceable
+>#kanal</replaceable
+></userinput
+> och stänger motsvarande <interface
+>kanalflik</interface
+>. Synonym för <userinput
+><command
+>/leave</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> till kanalen föregått av ditt smeknamn. Om ditt smeknamn till exempel var <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, skulle meddelandet <interface
+>Tux brygger en kopp te</interface
+> visas genom att skriva  <userinput
+><replaceable
+>/me brygger en kopp te</replaceable
+></userinput
+>. Om de inte har filter för den här sortens meddelanden, ser alla användare dem. Den här sortens meddelanden används oftast för att uttrycka icke-verbal information, som ditt känslomässiga tillstånd just nu, eller vad du fysiskt sysslar med. Om du lämnar datorn en kort stund, använd kommandot <userinput
+><command
+>/away</command
+></userinput
+> istället.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Om någon försöker skicka dig ett privat meddelande eller inbjuda dig till en kanal, får de reda på att du är borta från din dator med <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Avbryter kommandot <userinput
+><command
+>/away</command
+> <replaceable
+>meddelande</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skapar en ny flik med användarens <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> för en privat konversation, vanligtvis känd på &irc; som en <link linkend="query"
+>fråga</link
+>. Allt som skrivs här syns bara hos dig och din partner.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>smeknamn</replaceable
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> till användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+>. Bara <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> ser meddelandet. Använd <userinput
+><command
+>/query</command
+></userinput
+> för längre konversationer.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Inbjuder användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> att gå med i en kanal. Kommandot är särskilt användbart om kanalen enbart är öppen för inbjudna.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Privata konversationer (frågor)</title>
+
+<para
+>En privat konversation är en som bara du och en annan person kan se. Privata konversationer kallas "frågor" i &konversation;. För att starta en privat konversation, skriv <userinput
+><command
+>/query </command
+><replaceable
+>smeknamn</replaceable
+></userinput
+> på vilken inmatningsrad som helst, där <replaceable
+>smeknamn</replaceable
+> är smeknamnet på personen som du vill prata med. Du kan också klicka med höger musknapp i <interface
+>smeknamnsrutan</interface
+> och välja <menuchoice
+><guisubmenu
+>Öppna frågekanal</guisubmenu
+></menuchoice
+>. <action
+>En ny flik skapas.</action
+> Tillkännage dig genom att skicka ett meddelande. </para>
+
+<para
+>Frågekanaler är precis som andra kanaler, utom att bara du och den andra personen kan delta i kanalen.</para>
+
+<para
+>För att lämna frågekanalen, stäng bara fliken. Observera dock att om den andra personen skickar ett meddelande till i frågekanalen, öppnas fliken igen.</para>
+
+<para
+>För att lämna alla frågekanaler, välj <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+> <guisubmenu
+>Stäng alla öppna frågekanaler</guisubmenu
+></menuchoice
+> i huvudmenyn, eller tryck på tangenten <keycap
+>F11</keycap
+>.</para>
+
+<para
+>När någon annan öppnar en frågekanal till dig, skapar &konversation; en ny flik med deras smeknamn. Om du inte vill prata med personen, stäng fliken. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Ställa in meddelanden</title>
+
+<para
+><guilabel
+>Meddelanden</guilabel
+> är åtgärder som &konversation; utför så fort en händelse inträffar. Antag att du låter &konversation; köra, men minimerad eller dold bakom andra programfönster på skrivbordet. Om någon vill kommunicera med dig, eller om en kompis går med i en kanal, vill du få reda på det. Meddelanden åstadkommer detta. </para>
+
+<para
+>För att anpassa meddelanden, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa meddelanden</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+><guilabel
+>Skärmen för meddelandeinställning</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Skärmen för meddelandeinställning.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Skärmen för meddelandeinställning</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Klicka här för att välja en händelse.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Markera de typer av meddelanden som du vill ska visas när händelsen inträffar. (<guilabel
+>Använd systembrickan för underrättelse om nytt meddelande</guilabel
+> gör att ikonen i systembrickan blinkar när händelsen inträffar.)</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Upprepa genom att välja en annan händelse och markera önskat meddelande. När du har anpassat alla önskade meddelanden, klicka på knappen <guibutton
+>Ok</guibutton
+>.</para>
+
+<para
+>När du väl har ställt in underrättelser, kan alla underrättelser aktiveras eller inaktiveras genom att använda <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+><guisubmenu
+>Aktivera underrättelser</guisubmenu
+></menuchoice
+> i huvudmenyn. </para>
+
+<tip
+><para
+>Du kan också själv bli underrättad när någon nämner ditt smeknamn i ett meddelande med &konversation;s <link linkend="highlighting"
+>färgläggningsfunktion</link
+>.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Bevaka vem som är uppkopplad</title>
+
+<para
+>&konversation; håller dig informerad om när dina kompisar är anslutna till &irc;-nätverket. </para>
+
+<para
+>&irc;-nätverket lagras eftersom smeknamn är unika i ett enstaka &irc;-nätverk. Smeknamn i två olika &irc;-nätverk motsvarar inte nödvändigtvis samma person, men samma smeknamn på två olika servrar i samma &irc;-nätverk motsvarar i allmänhet samma person.</para>
+
+<note
+><para
+>Det här är orsaken till att det är viktigt att använda samma <guilabel
+>nätverk</guilabel
+> för alla servrar i samma &irc;-nätverk, när <link linkend="serverlist"
+>nätverk, servrar och kanaler att automatiskt gå med i</link
+> definieras.</para
+></note>
+
+<para
+>För att aktivera funktionen för smeknamnsbevakning, välj <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+> <guisubmenu
+>Bevakade smeknamn</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Bevakade smeknamn</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Bevakade smeknamn.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Bevakade smeknamn</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>Smeknamnen i bevakningslistan anges här. De anges under tillhörande &irc;-nätverk. Om inga smeknamn anges, har du antingen inte specificerat några smeknamn att bevaka, eller behöver du aktivera funktionen för smeknamnsbevakning (se nedan). Expandera varje uppkopplat smeknamn för att se en lista med kanaler som smeknamnet har gått med i. Ikonerna intill varje kanal är samma som ikonerna som visas i <interface
+>smeknamnsrutan</interface
+> på skärmarna med <link linkend="channel-screen-tour"
+>kanaler</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>Informationen som är känd om smeknamnet visas här. När skärmen <guilabel
+>Bevakade smeknamn</guilabel
+> först visas, är informationen gles. Var 20:e sekund, skickas automatiskt kommandot <userinput
+><command
+>WHOIS</command
+></userinput
+> till servern för att begära information om smeknamn som inte har någon information. Det fortsätter till alla smeknamn har information. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>För att lägga till ett enstaka smeknamn, visa den sammanhangsberoende menyn i <guilabel
+>Smeknamnslistan</guilabel
+> genom att klicka med höger musknapp på ett smeknamn, och välj <guilabel
+>Lägg till i bevakade smeknamn</guilabel
+>. Om du vill lägga till flera smeknamn, välj <menuchoice
+> <guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+> </menuchoice
+> i huvudmenyn, expandera <guilabel
+>Underrättelser</guilabel
+> och klicka på <guilabel
+>Bevakade smeknamn</guilabel
+>. Rutan <guilabel
+>Bevakade smeknamn</guilabel
+> visas då. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Bevakade smeknamn</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Bevakade smeknamn</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Markera den här rutan för att aktivera funktionen för smeknamnsbevakning.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Om du vill att skärmen <guilabel
+>Bevakade smeknamn</guilabel
+> automatiskt ska visas när du startar &konversation;, markera den här rutan.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>På skärmen <guilabel
+>Bevakade smeknamn</guilabel
+>, kan du dubbelklicka på vilket smeknamn som helst, så skickas det här kommandot till servern. <userinput
+><command
+>%u</command
+></userinput
+> ersätts med smeknamnet. <userinput
+><command
+>%n</command
+></userinput
+> krävs i slutet av kommandot.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>Funktionen <guilabel
+>Bevakade smeknamn</guilabel
+> fungerar genom att periodiskt fråga servern. Den här rutan anger hur ofta det sker. Undvik tal mindre än 20 sekunder, eftersom det orsakar onödigt stor last på servern.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Klicka på knappen <guibutton
+>Ok</guibutton
+> när du är klar med att lägga till eller ta bort smeknamn.</para>
+
+<para
+><emphasis
+>Observera:</emphasis
+> När du visar skärmen <guilabel
+>Bevakade smeknamn</guilabel
+>, kan det ta ett tag innan några smeknamn visas, innan &konversation; har frågat servern. Normalt lämnar du skärmen <guilabel
+>Bevakade smeknamn</guilabel
+> igång. </para>
+
+<para
+>&konversation; visar också meddelanden i alla <link linkend="channel-screen-tour"
+>kanaler</link
+> så fort en användare i din <guilabel
+>Bevakningslista för smeknamn</guilabel
+> ansluter till eller kopplar ner från servern. Meddelandet ser ut så här: </para>
+
+<para
+><computeroutput
+>[17:52] [Underrättelse] psn är uppkopplad (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Färgläggning av meddelanden</title>
+
+<para
+>Du kan styra hur meddelanden visas på kanal- och frågeskärmar.</para>
+
+<para
+>För att aktivera färgläggningsfunktionen, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa &konversation;</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Anpassa</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Skärmen Färgläggning.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Skärmen Färgläggning</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Klicka här för att välja skärmen <guilabel
+>Färgläggning</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Klicka här för att lägga till ett nytt objekt i <guilabel
+>Färgläggningslistan</guilabel
+>. När ett objekt i listan markeras, kan du redigera det i rutan nedanför.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Skriv in ett strängmönster här. Alla mottagna meddelanden som motsvarar mönstret, var som helst i meddelandet, aktiverar färgläggning av meddelandet. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Om mönstret hittas i ett meddelande, visas hela meddelandet med färgen du väljer här.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>Om du vill kan &konversation; spela ett ljud när mönstret matchas. Klicka på knappen för att välja en ljudfil att spela. Klicka på testknappen för att höra ljudet.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Om du vill att &konversation; automatiskt ska skicka ett svarsmeddelande när mönstret matchas, skriv in meddelandet här. Använd funktionen med försiktighet eftersom du kan irritera &irc;-användare med för mycket prat om du inte är försiktig. Du kan också skriva in &irc;- eller &konversation;-kommandon här.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Om du har ställt in ljud för några av dina färgläggningar, kan du inaktivera alla genom att avmarkera rutan.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Markeringen söks bara efter i chattfönster som listas här enligt namn, eller i alla chattfönster om fältet är tomt. </para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Om du markerar rutan, och någon nämner ditt smeknamn i ett meddelande, visas meddelandet med färgen som du väljer till höger.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Normalt gäller inte färgläggning för meddelanden du skriver in. Om du vill färglägga meddelanden du skriver in, markera rutan och välj en färg till höger.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Anpassa meddelanden på skärmen (&osd;)</title>
+
+<para
+>Meddelanden på skärmen (<acronym
+>OSD</acronym
+>) är en unik funktion i &konversation;. När de är aktiverade, visas kanalmeddelanden på skrivbordets skärm, även om &konversation; är minimerad. Här är ett exempel på skärmmeddelanden i funktion. Meddelandet längst upp till vänster på skärmen är från &konversation;, som kör minimerad i systembrickan.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Exempel på meddelanden på skärmen</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Exempel på meddelanden på skärmen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>För att aktivera meddelanden på skärmen, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa &konversation;</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Anpassa</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Meddelanden på skärmen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Meddelanden på skärmen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Klicka här för att expandera objektet <guilabel
+>Underrättelse</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Klicka här för att välja <guilabel
+>Meddelanden på skärmen</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Markera den här rutan för att aktivera meddelanden på skärmen.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Klicka på den här knappen för att välja teckensnitt för meddelanden på skärmen. (<emphasis
+>Observera:</emphasis
+> Alla teckensnitt fungerar inte. Det är känt att Luxi Sans 22 och Impact 22 fungerar.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Markera rutorna här för att välja typ av meddelanden som du vill ska visas på skärmen.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Dra <interface
+>förhandsgranskningen av skärmvisningen</interface
+> till önskad position, och klicka därefter på knappen <guibutton
+>Verkställ</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Skicka färglagda meddelanden</title>
+
+<para
+>Du kan lägga till färg till meddelanden du skickar i vilken kanal som helst. Börja skriva meddelandet på <interface
+>inmatningsraden</interface
+> för vilken kanal som helst. Klicka på <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>knappen Infoga &irc;-färg</phrase
+> </textobject
+> </inlinemediaobject
+> knappen <guibutton
+>&irc;-färg</guibutton
+> eller välj <menuchoice
+><guisubmenu
+>Infoga</guisubmenu
+> <guisubmenu
+>&irc;-färg</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>&irc;-färgväljare</guilabel
+> visas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Skärmen &irc;-färgväljare.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Skärmen &irc;-färgväljare</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Välj en färg och klicka på <guibutton
+>Ok</guibutton
+>. Fortsätt att skriva in meddelandet på <interface
+>inmatningsraden</interface
+>. För att ändra färg igen, klicka på knappen <guibutton
+>&irc;-färg</guibutton
+>. Välj en annan färg och klicka på <guibutton
+>Ok</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Anpassa smeknamnsteman</title>
+
+<para
+>Du kan ändra ikonerna som visas intill smeknamn i <interface
+>smeknamnsrutan</interface
+> i kanalflikar. För att ändra smeknamnstema, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Anpassa</guilabel
+> visas.</action
+> Klicka på <guilabel
+>Gränssnitt</guilabel
+> för att expandera det, klicka därefter på <guilabel
+>Teman för smeknamnslista</guilabel
+> för att visa skärmen <guilabel
+>Teman för smeknamnslista</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Skärmen Teman.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Skärmen Teman</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Klicka här för att välja skärmen <guilabel
+>Teman för smeknamnslista</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Välj ett tema.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Exempelikoner visas här med det valda temat.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Om du har laddat ner ett smeknamnstema någon annanstans ifrån, klicka för att installera det.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Anpassa snabbknappar</title>
+
+<para
+>Du kan aktivera funktionen att visa <interface
+>snabbknappar</interface
+> på <link linkend="channel-screen-tour"
+>huvudskärmen</link
+>. Då visas åtta <interface
+>snabbknappar</interface
+>. För att visa snabbknapparna, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn. Skärmen <guilabel
+>Anpassa</guilabel
+> visas. Klicka på <guilabel
+>Gränssnitt</guilabel
+> för att expandera det, och klicka på <guilabel
+>Chattfönster</guilabel
+>. Markera rutan <guilabel
+>Visa snabbknappar</guilabel
+> och kicka på <guibutton
+>Ok</guibutton
+>. </para>
+
+<para
+>Knapparna kan anpassas som du tycker för att utföra &irc;-kommandon som ofta används. För att anpassa <interface
+>snabbknapparna</interface
+>, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Anpassa</guilabel
+> visas.</action
+> Klicka på <guilabel
+>Gränssnitt</guilabel
+> för att expandera det, och klicka på <guilabel
+>Snabbknappar</guilabel
+> för att visa skärmen <guilabel
+>Snabbknappar</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Skärmen Snabbknappar</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Skärmen Snabbknappar</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Det finns åtta <interface
+>snabbknappar</interface
+>. Klicka på en post för att ändra den, eller använd knapparna på höger sida om listan för att lägga till eller ta bort <interface
+>snabbknappar</interface
+>. Kolumnen <guilabel
+>Knappnamn</guilabel
+> är namnet som visas på knappen på <link linkend="channel-screen-tour"
+>huvudskärmen</link
+>. Håll namnen korta. Kolumnen <guilabel
+>Knapphändelse</guilabel
+> är åtgärden som utförs när du klickar på <interface
+>snabbknappen</interface
+>. Tips för att skapa åtgärder ges på skärmen. </para>
+
+<para
+>Klicka på <guibutton
+>Ok</guibutton
+> för att slutföra ändringarna. </para>
+
+<para
+>Exempel:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Knappnamn</guilabel
+>: <userinput
+><replaceable
+>Meddelande</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Knapphändelse</guilabel
+>: <userinput
+><replaceable
+>Msg %u </replaceable
+></userinput
+> (det är ett mellanslag efter <userinput
+><replaceable
+>%u</replaceable
+></userinput
+>) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>För att använda den här knappen på <link linkend="channel-screen-tour"
+>huvudskärmen</link
+>, klicka på ett smeknamn i <interface
+>smeknamnsrutan</interface
+>, och klicka därefter på knappen. <computeroutput
+>/MSG </computeroutput
+> visas på <interface
+>inmatningsraden</interface
+> följt av det valda smeknamnet. Skriv in ett meddelande som du vill skicka till personen och tryck på <keycap
+>Enter</keycap
+>. Meddelandet skickas till användaren. Bara den användaren kommer att se meddelandet. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Skicka och ta emot filer</title>
+
+<para
+>Du kan skicka filer via &irc; till andra uppkopplade användare, eller så kan de skicka filer till dig. </para>
+
+<para>
+<emphasis
+>Varning: Öppna aldrig en fil någon skickar till dig om det inte är en pålitlig källa. Det kan vara ett virus.</emphasis>
+</para>
+
+<para
+>För att skicka en fil till någon i en kanal, klicka med höger musknapp på personens smeknamn i <interface
+>smeknamnsrutan</interface
+> på <link linkend="channel-screen-tour"
+>huvudskärmen</link
+>. Välj <menuchoice
+><guisubmenu
+>Skicka fil</guisubmenu
+></menuchoice
+>. <action
+>En dialogruta visas så att du kan välja filen som ska skickas</action
+>. Därefter visas en ny flik med <guilabel
+>DCC Status</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Fliken DCC Status</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Fliken DCC Status</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Mottagarens smeknamn och filnamnet visas här.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>Kolumnen <guilabel
+>Status</guilabel
+> anger status för sändningen eller mottagningen av filen enligt följande:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Förbereder</guilabel>
+		</term>
+		<listitem>
+			<para
+>En mottagande överföring kontrollerar om det finns filer som kan återupptas, eller en sändande överföring hämtar data att skicka. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ansluter</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; försöker upprätta en förbindelse med andra ändan. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Skickar</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; skickar filen till andra ändan. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Tar emot</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; tar emot filen från andra ändan. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Klar</guilabel>
+		</term>
+		<listitem>
+			<para
+>Filen har överförts utan problem. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Vilande</guilabel>
+		</term>
+		<listitem>
+			<para
+>Överföringen väntar på att motparten ska acceptera eller avslå den. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Avbruten</guilabel>
+		</term>
+		<listitem>
+			<para
+>Antingen klickade du på knappen <guibutton
+>Avbryt</guibutton
+>, eller så avbröt den andra personen överföringen. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Misslyckad</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ett fel uppstod och överföringen lyckades inte. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Köad</guilabel>
+		</term>
+		<listitem>
+			<para
+>Överföringen väntar på att du ska acceptera eller avslå den. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Fortsätter</guilabel>
+		</term>
+		<listitem>
+			<para
+>När en överföring börjar men filen redan finns på användarens system, får användaren frågan <interface
+>Filen finns redan. Återuppta överföring?</interface
+> Denna status anger att användaren återupptog överföringen. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>När någon vill skicka en fil till dig, skapas fliken <guilabel
+>DCC Status</guilabel
+> (om den inte redan skapats). Klicka på fliken <guilabel
+>DCC Status</guilabel
+> för att visa den. Klicka på filen för att markera den, och klicka därefter på den här knappen för att acceptera filen, så börjar överföringen. <emphasis
+>Observera:</emphasis
+> Du kan ställa in &konversation; att automatiskt acceptera sändningar från andra personer genom att välja <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+>  i huvudmenyn. Klicka på <guilabel
+>Beteende</guilabel
+> för att expandera det, och klicka därefter på <guilabel
+>DCC</guilabel
+> för att visa skärmen <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Om du har problem med att skicka eller ta emot filer, kanske din brandvägg blockerar DCC-portar. Se <link linkend="faq"
+>Vanliga frågor</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Fånga webbadresser i meddelanden</title>
+
+<para
+>Användare skickar ibland webbadresser till intressanta webbplatser eller andra resurser på webben, i vilken <link linkend="channel-screen-tour"
+>kanal</link
+> som helst. Du kan dubbelklicka på alla sådana webbadresser så startar &konversation; programmet som hör ihop med webbadressen. Programmet som startas beror på &MIME;-typen som webbadressen har. Till exempel aktiveras din vanliga webbläsare för en webbadress som börjar med <interface
+>http:</interface
+>, och visar webbsidan. (Du kan också ange <link linkend="webbrowser"
+>webbläsaren</link
+> som ska användas.) Om webbadressen rullar förbi på skärmen, kan det vara svårt att hitta den igen. &konversation; kan spara en bekväm lista med alla webbadresser åt dig. För att aktivera funktionen, välj <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+> <guisubmenu
+>Webbadressinfångning</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>En ny flik som heter <guilabel
+>Webbadressinfångning</guilabel
+> skapas.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Fliken Webbadressinfångning.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Fliken Webbadressinfångning.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Det här är listan med webbadresser som synts sedan du startade &konversation;. Kolumnen <guilabel
+>Från</guilabel
+> är smeknamnet på personen som skickade webbadressen, eller namnet på kanalen eller servern dit webbadressen skickades. (Webbadresser som visas i meddelanden för att gå med eller lämna kanaler listas inte.) Klicka på en webbadress för att markera den.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Klicka här för att aktivera programmet som hör ihop med den markerade webbadressen. Programmet som startas beror på &MIME;-typen som webbadressen har. Till exempel aktiveras din vanliga webbläsare för en webbadress som börjar med <interface
+>http:</interface
+>, och visar webbsidan. Du kan också ange <link linkend="webbrowser"
+>webbläsaren</link
+> som ska användas för webbsidor.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Klicka här för att kopiera markerad webbadress till klippbordet.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Klicka här för att ta bort markerad webbadress från listan.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Klicka här för att spara listan med webbadress i en fil.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Klicka här för att rensa listan.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Ställa in webbläsaren du föredrar</title>
+
+<para
+>När du klickar på en markerad webbadress någonstans i &konversation;, startas det förvalda programmet som hör ihop med webbadressens &MIME;-typ. Om du till exempel klickar på en webbadress som börjar med <interface
+>http</interface
+>, startas &konqueror; för att visa webbsidan. Du kan ange ett program som skiljer sig från modulen <guilabel
+>Förvalda program</guilabel
+> i systeminställningarna. Du kan till exempel använda <application
+>Firefox</application
+> istället. </para>
+
+<para
+>För att välja en annan webbläsare i programmet &konversation;, använd <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa &konversation;</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>Skärmen <guilabel
+>Anpassa</guilabel
+> visas.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Skärmen Allmänt</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Skärmen Allmänt</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Klicka här för att visa skärmen <guilabel
+>Allmänt</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Klicka här för att ange att du vill använda en egen webbläsare.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Skriv in kommandot för att starta önskad webbläsare. När du klickar på en webbadress, ersätts <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> med webbadressen.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Observera:</emphasis
+> Inställningen av webbläsare gäller inte webbadresser med <interface
+>mailto:</interface
+>. Webbadresser med <interface
+>mailto:</interface
+> startar alltid det förvalda e-postprogrammet. </para>
+
+<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> för att spara dina ändringar. Du måste återansluta till varje server och kanal för att ändringar ska få effekt. Det enklaste sättet att göra det är att avsluta &konversation; och starta om. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Markera kanal- och frågeloggar</title>
+
+<para
+>Du kan infoga en markering på skärmen för en <link linkend="channel-screen-tour"
+>kanal</link
+> och en <link linkend="query"
+>frågekanal</link
+> för att hjälpa dig att snabbt lokalisera information. För att göra det, välj <menuchoice
+> <guisubmenu
+>Infoga</guisubmenu
+> <guisubmenu
+>Markeringslinje</guisubmenu
+> </menuchoice
+> i huvudmenyn, eller tryck på <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>En linje visas längst ner i texten på skärmen. Linjen rullar med resten av texten på skärmen.</action
+> </para>
+
+<para
+>För att få en <interface
+>Markeringslinje</interface
+> att infogas i alla kanaler och frågor samtidigt, välj <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+></menuchoice
+> i huvudmenyn, expandera <guilabel
+>Beteende</guilabel
+>, klicka på <guilabel
+>Chattfönster</guilabel
+> och markera rutan <guilabel
+>Visa manuellt infogade linjer i alla chattfönster</guilabel
+>. </para>
+
+<para
+>För att få &konversation; att automatiskt infoga en <interface
+>Markeringslinje</interface
+> så fort du skickar kommandot <userinput
+><command
+>/away</command
+> <replaceable
+>meddelande</replaceable
+></userinput
+>, se <link linkend="identity-away"
+>Ställa in din identitet</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Loggning</title>
+
+<para
+>Om loggning är aktiverad, loggar &konversation; varje <interface
+>server</interface
+>, <link linkend="channel-screen-tour"
+>kanal</link
+> och <link linkend="query"
+>privat konversation (fråga)</link
+>. Varje session lagras i en loggfil på disk. När du öppnar samma session igen, lägger &konversation; till loggen. </para>
+
+<para
+>Så fort du öppnar en session igen, läses ungefär de sista 1024 tecknen av föregående session från slutet av loggen och visas på skärmen. </para>
+
+<para
+>Medan sessionen pågår, rullar meddelanden bort längst upp på skärmen. Du kan rulla bakåt för att visa meddelandena. Slutligen, för att spara minne, tas de äldsta meddelandena bort från skärmen. Det kallas för <guilabel
+>historikgräns</guilabel
+>. Meddelanden som försvinner från skärmen på grund av denna <guilabel
+>historikgräns</guilabel
+> är fortfarande tillgängliga i loggfilen, om loggning är aktiverad.</para>
+
+<para
+>För att visa loggfilen för en session, klicka på sessionens flik för att göra den till aktuell session och välj <menuchoice
+><guisubmenu
+>Fönster</guisubmenu
+> <guisubmenu
+>Öppna loggfil</guisubmenu
+></menuchoice
+> i huvudmenyn. <action
+>En ny flik öppnas</action
+> som visar loggfilen. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Loggfil</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Loggfil</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Meddelanden från loggfilen visas här. De äldsta meddelandena är längst upp och de senaste längst ner.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Klicka på den här knappen för att spara loggfilen i en annan fil.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Klicka för att uppdatera visningen av loggfilen. Medan du tittar på en loggfil, läggs nya meddelanden i motsvarande session <emphasis
+>inte</emphasis
+> till automatiskt i visningen av loggfilen. Använd den här knappen för att titta på de senaste meddelandena.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Klicka för att rensa skärmen med loggfilen och ta bort loggfilen på disk.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>Använd rutan för att ställa in maximal storlek på historiken. Inställningen får bara effekt för nyöppnade loggflikar. Historikens senast ändrade värde används av &konversation; vid nästa start. Varje loggfil kan ha en separat inställning.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+><guilabel
+>Historikgränsen</guilabel
+> kan ändras genom att välja <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa &konversation;</guisubmenu
+></menuchoice
+> i huvudmenyn, och därefter expandera <guilabel
+>Beteende</guilabel
+> och klicka på <guilabel
+>Chattfönster</guilabel
+>. Rutan <guilabel
+>Historikgräns</guilabel
+> visas på skärmen. Om du ställer in den till <guilabel
+>Obegränsad</guilabel
+> (dvs. noll), tas inte meddelanden bort från historiken. </para>
+
+<para
+>Du kan aktivera eller inaktivera loggning och ställa in andra loggningsalternativ genom att välja <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa &konversation;</guisubmenu
+></menuchoice
+> i huvudmenyn, och därefter expandera <guilabel
+>Beteende</guilabel
+> och klicka på <guilabel
+>Loggning</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>&konversation;s kommandon</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Följande kommandon tolkas av &konversation; och kan skilja sig från vanliga &irc;-kommandon. Väljare inom hakparenteser är valfria. Väljare åtskilda med ett vertikalt streck (|) är olika former av kommandot. Kommandon som inte listas här skickas till servern som de skrivs in. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> till kanalen föregått av ditt smeknamn. Om ditt smeknamn till exempel var <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, skulle meddelandet <interface
+>Tux brygger en kopp te</interface
+> visas genom att skriva  <userinput
+><replaceable
+>/me brygger en kopp te</replaceable
+></userinput
+>. Om de inte har filter för den här sortens meddelanden, ser alla användare dem. Den här sortens meddelanden används oftast för att uttrycka icke-verbal information, som ditt känslomässiga tillstånd just nu, eller vad du fysiskt sysslar med. Om du lämnar datorn en kort stund, använd kommandot <userinput
+><command
+>/away</command
+></userinput
+> istället.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Som <userinput
+><command
+>/me</command
+></userinput
+> kommandot ovan, utom att meddelandet skickas till alla kanaler och frågor som är öppna på alla servrar du har anslutit till i &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>kanal</replaceable
+> <replaceable
+>[lösenord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Går med i <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. Om servern tillåter det, och om kanalen inte redan finns, skapas den och du blir kanaloperatör. Om kanalen kräver ett lösenord för att gå med, ange det som <userinput
+><replaceable
+>lösenord</replaceable
+></userinput
+>. De flesta kanalnamn börjar med <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>kanal</replaceable
+> <replaceable
+>[lösenord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Samma som <userinput
+><command
+>/join</command
+></userinput
+> ovan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>[orsak]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lämnar <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> med <userinput
+><replaceable
+>orsak</replaceable
+></userinput
+> och stänger motsvarande <interface
+>kanalflik</interface
+>. Inne i en &konversation; kanal eller frågeflik, kan du bara skriva in <userinput
+><command
+>/part</command
+></userinput
+> vilket stänger kanalen eller frågan med din standardorsak som anges i <link linkend="identity"
+>Inställningar</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>[orsak]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Samma som <userinput
+><command
+>/part</command
+></userinput
+> ovan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>När det skrivs in i någon kanalflik, frågeflik eller DCC-flik, kopplar ner från motsvarande server och stänger alla kanalflikar, frågeflikar eller DCC-flikar som är öppna för den servern.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>smeknamn|kanal</replaceable
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> till användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> eller till alla i en <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. Det följande är ett exempel på vad du ser i kanalfliken</para>
+
+<para
+><computeroutput
+>[17:14] [Notis] Skickar meddelande "Jag tror jag förstår" till #konversation</computeroutput
+></para>
+
+<para
+>Och det här är var mottagarna ser</para>
+
+<para
+><computeroutput
+>[17:15] [Notis] -Eisfuchs- Jag tror jag förstår</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skapar en ny flik med användarens <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> för en privat konversation, vanligtvis känd på IRC som en <link linkend="query"
+>fråga</link
+>. Allt som skrivs här syns bara hos dig och din frågepartner. Du kan skriva in mer än ett smeknamn, åtskilda med mellanslag, så öppnas en frågeflik för varje smeknamn. Varje sådan frågeflik är privat mellan dig och frågepartnern.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg</command
+> <replaceable
+>smeknamn|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar ett privat meddelande till användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> eller till alla användare i <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. I motsats till <userinput
+><command
+>/query</command
+></userinput
+> öppnar det inte en ny flik. Om <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> börjar med <userinput
+><command
+>/me</command
+></userinput
+>, formateras meddelandet på samma sätt som ett <userinput
+><command
+>/me</command
+></userinput
+> kommando.</para>
+
+<para
+>Exempel</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Jag behöver en del hjälp med kommandot msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Ny version av Konvi är uppkopplad!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me kompilerar handboken just nu.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg</command
+> <replaceable
+>smeknamn|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Samma som <userinput
+><command
+>/msg</command
+></userinput
+> utom att meddelandet inte visas på din skärm. Det är användbart för att förhindra att lösenord och annan känslig information förblir synlig på din skärm eller loggas.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg</command
+> <replaceable
+>smeknamn|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Samma som <userinput
+><command
+>/msg</command
+></userinput
+> kommandot ovan, utom att meddelandet skickas till alla kanaler och frågor som du har öppnat på alla servrar du har anslutit till i &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op</command
+> <replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>När det skrivs in under en kanalflik, försöker ge <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> operatörsrättigheter för kanalen. Kanske inte fungerar om du saknar tillräckliga rättigheter i kanalen (du måste själv vara kanaloperatör). Du kan skriva in mer än ett smeknamn åtskilda med mellanslag.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop</command
+> <replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>När det skrivs in under en kanalflik, tar bort operatörsrättigheter  från <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+>. Du kan skriva in mer än ett smeknamn åtskilda med mellanslag.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper</command
+> <replaceable
+>[smeknamn]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ger användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> &irc;-op rättigheter (administratör). Det fungerar bara om smeknamn listas på serverns O:-rad. En &irc;-op har rättigheter att utföra <userinput
+><command
+>/kill</command
+></userinput
+> för ett smeknamn, ansluta servrar till &irc;-nätverket med <userinput
+><command
+>/connect</command
+></userinput
+> med mera. Om <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> inte skrivs in, försöker ge dig själv &irc;-op rättigheter. Du blir tillfrågad om ditt &irc;-op användarnamn och lösenord i båda fallen.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice</command
+> <replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>I vissa kanaler (med +m flagga) kan inte användare skicka meddelanden om de inte har rösträttigheter. Det här kommandot försöker ge <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> rösträttigheter. Du måste ha kanaloperatörsrättigheter för att utföra kommandot. Kommandot används oftast när du är operatör på en modererad kanal.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice</command
+> <replaceable
+>smeknamn</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Tar bort rösträttigheter från <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> i kanalen.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>[meddelande]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Försöker ändra ämnet i <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> till <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+>. När det skrivs in under en kanalflik, kan <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> utelämnas, och blir förvald till kanalen som är aktiv under fliken. Om <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> utelämnas, visas kanalens nuvarande ämne. Ändra kanalens ämne kan misslyckas om du saknar tillräckliga rättigheter.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+> <replaceable
+>orsak</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Om någon försöker skicka dig ett privat meddelande eller inbjuda dig till en kanal, får de reda på att du är borta från din dator med <userinput
+><replaceable
+>orsak</replaceable
+></userinput
+>. För att ändra tillbaka ditt tillstånd till det normala, skriv in <userinput
+><replaceable
+>/away</replaceable
+></userinput
+> utan en <userinput
+><replaceable
+>orsak</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway</command
+><replaceable
+>orsak</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Som kommandot <userinput
+><command
+>/away</command
+></userinput
+> ovan, utom att kommandot skickas till alla servrar du har anslutit till i &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite</command
+> <replaceable
+>smeknamn</replaceable
+> <replaceable
+>[kanal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Inbjuder användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> att gå med i <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. Kommandot är särskilt användbart om kanalen enbart är öppen för inbjudna. När det skrivs in under en kanalflik kan <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> utelämnas.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec</command
+> <replaceable
+>skript</replaceable
+> <replaceable
+>[parametrar]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Kör ett skalskript som fungerar med &konversation; som heter <userinput
+><replaceable
+>skript</replaceable
+></userinput
+>, och skickar det <userinput
+><replaceable
+>parametrar</replaceable
+></userinput
+>. Se <link linkend="scripting"
+>Styrning via skript</link
+> för mer information om att använda och skriva skript.</para>
+<para
+>Exempel:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Skickar ditt systems &konversation;-, &Qt;-, KF5-, och &plasma;-versionsnummer till kanalen.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Skickar din &Linux;-versionssträng (utskriften från <quote
+>uname -a</quote
+>) till kanalen.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify</command
+> <replaceable
+>[smeknamn]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Lägger till eller tar bort <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> från listan <link linkend="nicksonline"
+>Bevakade smeknamn</link
+>. Om smeknamnet redan finns i listan, tas det bort. Om det inte finns i listan, läggs det till. Om <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> utelämnas, visas den nuvarande listan över bevakade smeknamn.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick</command
+> <replaceable
+>smeknamn</replaceable
+> <replaceable
+>orsak</replaceable
+></userinput
+></term>
+<listitem
+><para
+>När det skrivs in under en kanalflik, försöker sparka användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> från kanalen med <userinput
+><replaceable
+>orsak</replaceable
+></userinput
+>. Om <userinput
+><replaceable
+>orsak</replaceable
+></userinput
+> inte skrivs in, används standardorsaken från <link linkend="identity"
+>Inställningar</link
+>. Kommandot får bara användas under en kanalflik.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[kanal]</replaceable
+> <replaceable
+>användare</replaceable
+>|<replaceable
+>mask</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Försöker bannlysa <userinput
+><replaceable
+>användare</replaceable
+></userinput
+> eller <userinput
+><replaceable
+>mask</replaceable
+></userinput
+> från <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. När det skrivs in under en kanalflik, kan <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> utelämnas. För mer information om värddatorer, domäner och masker, se dokumenten på <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. För att hämta den aktuella bannlysningslistan för en kanal, skriv in <userinput
+><command
+>/mode</command
+> <replaceable
+>kanal</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban</command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>mönster</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Återtar en tidigare bannlysning från en kanal. När det skrivs in under en kanalflik kan <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> utelämnas. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore</command
+> [<command
+>-all</command
+>] <replaceable
+>smeknamn</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Lägger till <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> i din ignorera-lista. Du kan ange mer än ett smeknamn åtskilda med mellanslag. Kanalmeddelanden från användare i din ignorera-lista visas inte. Dessutom om du skriver in <userinput
+><command
+>-all</command
+></userinput
+>, ignoreras alla typer av meddelanden från användaren (frågor, notiser, &CTCP;, DCC och undantag) förutom kanalmeddelanden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote</command
+> <replaceable
+>kommando</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>kommando</replaceable
+></userinput
+> till servern. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say</command
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>När det skrivs in under en kanalflik, skickar <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> till kanalen. Det här är samma sak som att skriva in <userinput
+><replaceable
+>meddelande</replaceable
+></userinput
+> på kanalens <interface
+>inmatningsrad</interface
+>. Användbart för att skicka &irc;-kommandon när du inte vill utföra kommandot. Två kommandotecken i rad (//) gör samma sak som <userinput
+><command
+>/say</command
+></userinput
+>. Används också av <link linkend="scripting"
+>skript</link
+> för att skicka meddelanden. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Ställer in serverloggen i obehandlat läge (<command
+>open</command
+>) eller avslutar obehandlat läge (<command
+>close</command
+>). Om varken <command
+>open</command
+> eller <command
+>close</command
+> skrivs in, är förvalt värde <command
+>open</command
+>. I obehandlat läge visar loggen alla meddelanden som tas emot från servern på riktigt &irc;-format. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Öppnar en ny flik som kör en terminal. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server</command
+> <replaceable
+>[webbadress]</replaceable
+> <replaceable
+>[lösenord]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ansluter till servern på adress <userinput
+><replaceable
+>webbadress</replaceable
+></userinput
+>. Om <userinput
+><replaceable
+>webadress</replaceable
+></userinput
+> utelämnas, ansluter till servern som hör ihop med fliken där du skrev in kommandot. Det är användbart för att ansluta till en server igen om du blev nerkopplad. Om servern kräver ett lösenord för anslutning till den, skriv in det som <userinput
+><replaceable
+>lösenord</replaceable
+></userinput
+>. Om servern kräver ett annat portnummer än det förvalda (6667), skriv in <userinput
+><replaceable
+>webbadress</replaceable
+></userinput
+> så här: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc</command
+> <command
+>SEND</command
+> <replaceable
+>smeknamn</replaceable
+> <replaceable
+>[filnamn]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar <userinput
+><replaceable
+>filnamn</replaceable
+></userinput
+> till användaren med smeknamnet <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+>. Om <userinput
+><replaceable
+>filnamn</replaceable
+></userinput
+> utelämnas, visas en dialogruta så att du kan välja en fil. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Öppnar fliken <guilabel
+>DCC-status</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp</command
+> <replaceable
+>smeknamn|kanal</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Skickar ett PING-meddelande till <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> eller <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. Det är användbart för att avgöra om någon som du pratar med har en lång nätverksfördröjning eller (när det skickas till en kanal) om ditt system har en lång fördröjning. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp</command
+> <replaceable
+>smeknamn|kanal</replaceable
+> <replaceable
+>meddelande</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Skickar ett meddelande till <userinput
+><replaceable
+>smeknamn</replaceable
+></userinput
+> eller alla använder i <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. Det liknar kommandot <userinput
+><command
+>/msg</command
+></userinput
+> ovan, utom att meddelandet skickas med &CTCP;-protokollet. Svaret från andra sidan beror på &irc;-klientprogrammet användaren kör. Om du till exempel samtalar med en annan användare av &konversation;, returnerar <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> systemtiden på Eisfuchs dator. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> returnerar versionsnumret för &konversation; från Eisfuchs dator. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Styrning via skript</title>
+
+<para
+>&konversation; levereras med några praktiska skript som du kan köra från programmet. För att köra ett skript under en kanalflik, DCC-flik eller serverflik, skriv in ett kommando på formen</para>
+
+<para
+><userinput
+><command
+>/exec</command
+> <replaceable
+>skript</replaceable
+> [<replaceable
+>parametrar</replaceable
+>]</userinput
+></para>
+
+<para
+>vilket kör ett skript som heter <userinput
+><replaceable
+>skript</replaceable
+></userinput
+> och skickar det (valfritt) <userinput
+><replaceable
+>parametrar</replaceable
+></userinput
+>.</para>
+
+<para
+>Skriv till exempel följande kommandon under en kanalflik</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>för att skicka dina &konversation;-, &Qt;-, KF5- och &plasma;-versionsnummer till kanalen.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>kör skriptet <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>, och skickar <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+> till det. Det skickar din &Linux;-versionssträng till kanalen.</para>
+
+<para
+>För att ta reda på mer om skripten som installeras med &konversation;, se <link linkend="scripts_ref"
+>Referensguide för skript</link
+></para>
+
+<para
+>För att få en lista över alla tillgängliga skript, skriv in följande kommando på en av &konversation;s skärmar:</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Bläddra därefter till katalogen från utmatningen för att se listan.</para>
+
+<para
+>Du kan skriva dina egna skript. Skript är skalskript och kan skrivas med vilket skalspråk som helst, som bash, perl eller python. När &konversation; kör ett skript, är de första två parametrarna som skickas till skriptet:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Serverns adress.</para
+></listitem>
+
+<listitem
+><para
+>Kanalnamnet.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Här är ett exempel på ett skalskript (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Kör ett kommando och skriver ut resultatet i Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Observera att skriptet använder qdbus för att kommunicera med &konversation;. Kommandot <computeroutput
+>/say</computeroutput
+> gör att utmatningen skickas till kanalen som ett normal meddelande. För att visa något under fliken utan att skicka det till andra användare, använd <computeroutput
+>info</computeroutput
+> istället. Titta i befintliga skriptfiler för mer exempel på att skriva skript.</para>
+
+<para
+>För att kunna köra ett skript som du har skrivit, måste du installera det genom att kopiera det till <filename class="directory"
+>`$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. Du måste också ge filen körrättigheter, till exempel med <userinput
+><replaceable
+>chmod a+x mitt_skript</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Referensguide för skript</title>
+
+<para
+>&konversation; levereras med flera skript som normalt installeras. Läs den här guiden för att ta reda på hur de används.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>felnummer|söksträng</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Skriptet används för att starta en sökning efter en given sträng eller ett givet felnummer på <ulink url="https://bugs.kde.org/"
+>&kde;:s Bugzilla</ulink
+> i en webbläsare.</para>
+<para
+>Exempel: För att starta en webbläsare och söka efter fel nummer 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Exempel på åtgärd: Standardwebbläsaren i systeminställningarna ska visa <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>kommandorad</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Skriptet används för att låta utmatning från kommandoraden skrivas in i aktuell kanal.</para>
+<para
+>Exempel: För att visa för alla i aktuell kanal vilken version av &konversation; som är installerad.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>Varning! Utmatning från hela kommandot skickas till alla under den aktuella kanalfliken. Använd med försiktighet.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Skriptet skriver ut en slumpmässig lyckokaka när det körs.</para>
+<para
+>Exempel: För att skriva ut en slumpmässig lyckokaka under den aktuella kanalfliken</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>procentvärde</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Skriptet visar en enkel textbaserad förloppsrad för det givna procentvärdet.</para>
+<para
+>Exempel: För att visa en förloppsrad med 50 % färdigt under den aktuella kanalfliken</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Ölintag [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{spelare}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Det här är ett Nu spelas-skript för diverse mediaspelare. Det har också ett sätt att bara visa Nu spelas-information för ljudspelare, eller bara för videospelare, via det valfria kommandoväljarna <replaceable
+>audio</replaceable
+> och <replaceable
+>video</replaceable
+>. Dessutom är det möjligt att ange mediaspelare du vill kontrollera.</para>
+<para
+>Följande mediaspelare stöds: Amarok (ljud), JuK (ljud), Kaffeine (video, ljud), KMPlayer (video, ljud), KPlayer (video, ljud), kdetv (video), Yammi (ljud), Audacious (ljud), MPD (ljud).</para>
+<para
+>Exempel: För att visa låten som för närvarande spelas i Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>* user is listening to You Give Love A Bad Name by Bon Jovi on Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Skriptet skriver ut en del detaljerad information om systemet genom att kombinera utmatning från flera kommandon och formatera den på lämpligt sätt.</para>
+<para
+>Exempel: För att visa en del information om systemet under den aktuella kanalfliken</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>länkadress</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Skriptet använder programmeringsgränssnittet för Tinyurl för att omvandla den givna länken till en kort webbadress som sedan skickas till aktuell kanalflik.</para>
+<para
+>Exempel: För att ge någon en kort länk till https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>https://tinyurl.com/n3pdum</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Skriptet matar ut resultatet av kommandot "uptime" och formaterar det på lämpligt sätt.</para>
+<para
+>Exempel: För att glänsa med de gedigna 98 dagar din dator varit igång</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Alla dessa skript har fördefinierade kommandoalias. Välj  <menuchoice
+><guimenu
+>Beteende</guimenu
+> <guimenuitem
+>Kommandoalias</guimenuitem
+></menuchoice
+> i &konversation;s inställningsdialogruta för att visa, lägga till, ta bort eller redigera kommandoalias. </para>
+
+<para
+>För mer information om skript läs gärna <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>Scripting guide på användarbasen</ulink
+>. </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Kommandoreferens</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Huvudfönstret i &konversation;</title>
+
+<sect2>
+<title
+>Menyn Arkiv</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Serverlista</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Visar <link linkend="irc-basics"
+>listan med servrar och kanaler</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Snabbanslutning</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Visar skärmen <link linkend="quickconnect"
+>Snabbanslutning</link
+> för att ansluta till en server. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Koppla ner</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Kopplar ner från alla servrar. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Anslut igen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Ansluter igen till alla servrar som kopplades ner på grund av ett nätverksfel eller annat problem. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Gå med i kanal</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Visar en dialogruta där du kan skriva in namnet på en kanal att gå med i. Gör samma sak som att skriva in <command
+>/join <userinput
+>#kanalnamn</userinput
+></command
+> i en kanal eller serverflik.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Allmän frånvaro</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Ändrar status för ditt smeknamn till frånvaro i alla kanaler. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Avsluta</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Avslutar</action
+> &konversation;</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Redigera</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök text...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Söker efter textsträngar på aktuell skärm.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Sök igen</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Söker igen efter textsträngar på aktuell skärm med användning av den föregående söksträngen.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Töm fönster</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tömmer aktuell skärm.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Töm alla fönsters</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Tömmer alla skärmar.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Infoga</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Infoga</guimenu
+> <guimenuitem
+>&irc;-färg...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Se <link linkend="color-msgs"
+>Skicka färglagda meddelanden</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Infoga</guimenu
+> <guimenuitem
+>Markeringslinje</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Se <link linkend="rememberlines"
+>Markera kanal- och frågeloggar</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Infoga</guimenu
+> <guimenuitem
+>Specialtecken...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Används för att skriva in specialtecken, som tecken på främmande språk.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Bokmärken</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Lägg till bokmärke</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Lägger till ett bokmärke för nuvarande nätverk och kanal</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Skapa bokmärken för flikar som en katalog...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Lägger till</action
+> alla kanaler i ett nytt menyalternativ sist i bokmärkesmenyn. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Ny bokmärkeskatalog...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Skapar en ny bokmärkeskatalog.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Bokmärken</guimenu
+> <guimenuitem
+>Redigera bokmärken...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Öppnar bokmärkeseditorn.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Inställningar</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Visa smeknamnslista</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Döljer (eller visar) rutan med smeknamn i kanalflikar. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Identiteter...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Visar skärmen <link linkend="identity"
+>Identiteter</link
+> för att ställa in din identifikationsinformation. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Fönster</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Föregående flik</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Visar skärmen som motsvarar föregående flik.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Nästa flik</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Visar skärmen som motsvarar nästa flik.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Stäng flik</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Stänger aktuell skärm. Om en kanal stängs, lämnas kanalen. Om en flik med <interface
+>Servermeddelanden</interface
+> stängs, stängs alla öppna kanaler på servern och servern kopplas ner. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Stäng alla öppna frågekanaler</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Stänger alla <link linkend="query"
+>Privata konversationer (frågor)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Bevakade smeknamn</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar skärmen <guilabel
+>Bevakande smeknamn</guilabel
+>. Se <link linkend="nicksonline"
+>Bevaka vem som är uppkopplad</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Webbadressinfångning</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar skärmen <link linkend="urlcatcher"
+>Webbadressinfångning</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>DCC-status</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar fliken <link linkend="dcc"
+>DCC-status</link
+> med information om filöverföringar.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Ny terminal</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar en terminalskärm. Du kan öppna så många <guilabel
+>terminalflikar</guilabel
+> som du vill.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Kanallista för</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar en <link linkend="list-channels"
+>lista över kanaler</link
+> tillgängliga på servern.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fönster</guimenu
+> <guimenuitem
+>Öppna loggfil för</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Visar en skärm med meddelandeloggen från aktuell flik. Fungerar bara för flikarna <interface
+>kanal</interface
+>, <interface
+>servermeddelanden</interface
+> och <interface
+>frågekanal</interface
+>. Loggning måste vara aktiverad med <menuchoice
+><guisubmenu
+>Inställningar</guisubmenu
+> <guisubmenu
+>Anpassa Konversation</guisubmenu
+> <guisubmenu
+>Loggning</guisubmenu
+></menuchoice
+> i huvudmenyn. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Menyn Hjälp</title>
+
+<para
+>&konversation; har &kde;:s vanliga menyalternativ i menyn <guimenu
+>Hjälp</guimenu
+>. För mer information läs avsnittet om <ulink url="help:/fundamentals/menus.html#menus-help"
+>hjälpmenyn</ulink
+> i &kde;:s grunder. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Vanliga frågor</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>När jag startar &konversation; vill jag ansluta till en server utan att gå med i några kanaler. Hur gör jag det?</para>
+</question>
+<answer>
+<para
+>Lämna rutan <guilabel
+>Kanaler</guilabel
+> tom på skärmen <link linkend="serverlist-addnetwork"
+>Redigera server</link
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; ansluter inte till någon server. Vad är fel?</para>
+</question>
+<answer>
+<para
+>Det finns flera saker som kan vara fel.</para>
+<orderedlist>
+<listitem>
+<para
+>Försäkra dig om att du har skrivit in rätt <guilabel
+>Servernamn</guilabel
+> och rätt <guilabel
+>Port</guilabel
+> på skärmen <link linkend="serverlist-addserver"
+>Lägg till server</link
+>. </para>
+</listitem>
+<listitem>
+<para
+>Kontrollera utmatningen på skärmen <link linkend="channel-screen-tour"
+>Servermeddelanden</link
+> om det finns några felmeddelanden. Nekade servern till anslutningen på grund av ett felaktigt lösenord? Nekade servern till anslutningen eftersom den kräver <acronym
+>IDENTD</acronym
+> och din dator inte svarade på begäran om <acronym
+>IDENT</acronym
+>? Markerade du rutan SSL-protokoll, men servern stöder inte SSL? </para>
+</listitem>
+<listitem>
+<para
+>Om du är bakom en brandvägg, försäkra dig om att riktiga portar är aktiverade. &konversation; kräver att följande portar är aktiverade: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Utgående TCP 6667 (eller porten på servern som du anslöt till)</para
+></listitem>
+<listitem
+><para
+>Inkommande TCP 113 (om servern kräver IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>För mer information om &irc;-anslutningsproblem, se <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>När jag går till <menuchoice
+><guimenu
+>Fönster</guimenu
+> <guisubmenu
+>Kanallista</guisubmenu
+></menuchoice
+>, kan jag inte välja alternativet. Vad beror det på?</para>
+</question>
+<answer>
+<para
+>Menyalternativet <menuchoice
+><guimenu
+>Fönster</guimenu
+> <guisubmenu
+>Kanallista</guisubmenu
+></menuchoice
+> är grått om en flik som inte är en kanal, t.ex. <guilabel
+>Bevakade smeknamn</guilabel
+> för närvarande visas. För att göra det valbart igen, gå tillbaka till en kanalflik eller serverfliken. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Hur får man &konversation; att automatiskt markera frånvaro efter en viss tid utan aktivitet? </para>
+</question>
+<answer
+><para
+>Automatiska meddelanden om frånvaro ställs in baserat på identitet. För att aktivera automatisk frånvaro, välj <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Identiteter</guimenuitem
+></menuchoice
+>. Välj identiteten som du vill aktivera automatisk frånvaro för i kombinationsrutan längst upp i dialogrutan och gå till fliken <guilabel
+>Borta</guilabel
+>. Markera alternativet <guilabel
+>Automatisk frånvaro</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Hur undviker man funktionen <guilabel
+>Automatisk ersättning</guilabel
+> på <interface
+>inmatningsraden</interface
+>?</para>
+</question>
+<answer
+><para
+>Använd <keycombo action="simul"
+>&Ctrl; <keysym
+>returtangent</keysym
+></keycombo
+> istället för bara returtangenten för att undvika tolkning och automatisk ersättning av texten på <interface
+>inmatningsraden</interface
+> enligt alternativen på inställningsdialogrutans sida <menuchoice
+><guimenu
+>Beteende</guimenu
+><guimenuitem
+>Ersätt automatiskt</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Var hittar man skripten som ingår i &konversation;?</para>
+</question>
+<answer>
+<para
+>Kör följande kommando på &konversation;s inmatningsrad (med mediaskriptet som exempel, eftersom det levereras med alla installationer av &konversation;): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Exempel på utmatning: <replaceable
+>Skriptfilen 'media' hittades i: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Hur gör man texten till fetstil, kursiv eller understruken?</para>
+</question>
+<answer>
+<para
+>Exempel: <userinput
+>Här är min text med %Bfetstil%B.</userinput
+></para>
+<para
+>Utmatning: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exempel: <userinput
+>Här är min text med %Ikursiv stil%I.</userinput
+></para>
+<para
+>Utmatning: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exempel: <userinput
+>Här är min text %Uunderstruken%U.</userinput
+></para>
+<para
+>Utmatning: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exempel: <userinput
+>Här är min text %Söverstruken%S.</userinput
+></para>
+<para
+>Utmatning: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Exempel: <userinput
+>Här är min text med %Mfast breddsteg%M.</userinput
+></para>
+<para
+>Utmatning: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Tack till och licens</title>
+
+<para
+>&konversation; </para>
+<para
+>Program copyright 2002-2005 av &konversation;-gruppen. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Bidragsgivare: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Tack till: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Dokumentation Copyright &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
