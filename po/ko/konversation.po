@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-29 00:46+0000\n"
-"PO-Revision-Date: 2022-05-15 22:34+0200\n"
+"PO-Revision-Date: 2022-10-03 15:51+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
-"Language-Team: Korean <kde-kr@kde.org>\n"
+"Language-Team: Korean <kde-i18n-doc@kde.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3371,13 +3371,11 @@ msgid_plural ""
 msgstr[0] "파일 %1개 진행을 선택했습니다. 계속 진행하시겠습니까?"
 
 #: src/dcc/transferpanel.cpp:430
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] "파일 %1개 진행"
+msgstr[0] "파일 %1개 실행"
 
 #: src/dcc/transferrecv.cpp:194
 #, kde-format
