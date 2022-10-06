@@ -699,7 +699,7 @@ msgstr "Colors a mida"
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
 msgstr ""
-"&Utilitza els colors a mida al quadro d'entrada, la llista de sobrenoms i la "
+"Utilit&za els colors a mida al quadro d'entrada, la llista de sobrenoms i la "
 "llista de pestanyes"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
@@ -1080,7 +1080,7 @@ msgstr "&Carpeta de baixades:"
 #: src/config/dcc_configui.ui:53
 #, kde-format
 msgid "&Add sender to file name"
-msgstr "&Afig el remitent al nom del fitxer"
+msgstr "Afi&g el remitent al nom del fitxer"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccCreateFolder)
 #: src/config/dcc_configui.ui:60
@@ -1249,7 +1249,7 @@ msgstr "Activa la safata del sistema"
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr "&Utilitza la safata del sistema per a la notificació de missatges nous"
+msgstr "Utilit&za la safata del sistema per a la notificació de missatges nous"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -1317,7 +1317,7 @@ msgstr "Distingix entre majúscules i minúscules"
 #: src/config/generalbehavior_configui.ui:185
 #, kde-format
 msgid "Miscellaneous"
-msgstr "Miscelànea"
+msgstr "Miscel·lània"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
 #: src/config/generalbehavior_configui.ui:191
@@ -2279,7 +2279,7 @@ msgstr "Obtín t&emes nous..."
 #: src/config/theme_configui.ui:35
 #, kde-format
 msgid "I&nstall from File..."
-msgstr "I&nstala des d'un fitxer..."
+msgstr "I&nstal·la des d'un fitxer..."
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2638,7 +2638,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:112
 #, kde-format
 msgid "&Update interval:"
-msgstr "Interval d'act&ualisació:"
+msgstr "Interval d'act&ualització:"
 
 #. i18n, and in preShellCommandExited and preShellCommandError
 #: src/connectionmanager.cpp:217 src/connectionmanager.cpp:250
@@ -3018,7 +3018,7 @@ msgstr "Nom del fitxer &original"
 #: src/dcc/resumedialog.cpp:97
 #, kde-format
 msgid "Suggest &New Filename"
-msgstr "&Suggerix un nom de fitxer nou"
+msgstr "S&uggerix un nom de fitxer nou"
 
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
@@ -3033,7 +3033,7 @@ msgstr "&Continua"
 #: src/dcc/resumedialog.cpp:170
 #, kde-format
 msgid "R&ename"
-msgstr "Canvia &el nom"
+msgstr "Ca&nvia el nom"
 
 #: src/dcc/transferdetailedinfopanel.cpp:32 src/dcc/transferlistmodel.cpp:40
 #, kde-format
@@ -3426,7 +3426,7 @@ msgstr "Neteja tots els elements completats"
 #: src/dcc/transferpanel.cpp:86
 #, kde-format
 msgid "&Open File"
-msgstr "&Obri un fitxer"
+msgstr "O&bri un fitxer"
 
 #: src/dcc/transferpanel.cpp:87
 #, kde-format
@@ -5296,7 +5296,7 @@ msgstr "Per a guardar la llista de canals, cliqueu ací."
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr "&Actualitza la llista"
+msgstr "Act&ualitza la llista"
 
 #: src/irc/channellistpanel.cpp:163
 #, kde-format
@@ -6246,7 +6246,7 @@ msgstr "Sobrenoms vigilats en línia"
 #: src/irc/nicksonline.cpp:34
 #, kde-format
 msgid "&Add Nickname..."
-msgstr "&Afig un sobrenom..."
+msgstr "Afi&g un sobrenom..."
 
 #: src/irc/nicksonline.cpp:35
 #, kde-format
@@ -7313,7 +7313,7 @@ msgstr ""
 #: src/irc/serverdialogui.ui:108
 #, kde-format
 msgid "&Use global proxy"
-msgstr "&Utilitza un servidor intermediari global"
+msgstr "Utilit&za un servidor intermediari global"
 
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
@@ -7473,7 +7473,7 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:151
 #, kde-format
 msgid "&Add..."
-msgstr "&Afig..."
+msgstr "Afi&g..."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_changeServerButton)
 #: src/irc/servergroupdialogui.ui:161
@@ -8253,7 +8253,7 @@ msgstr "Estat &DCC"
 #: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile"
-msgstr "&Obri el fitxer de registre"
+msgstr "O&bri el fitxer de registre"
 
 #: src/mainwindow.cpp:200
 #, kde-format
@@ -8938,7 +8938,7 @@ msgstr ""
 #: src/quickconnectdialog.cpp:79
 #, kde-format
 msgid "&Use SSL"
-msgstr "&Utilitza SSL"
+msgstr "Utilit&za SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
 #, kde-format
@@ -9042,7 +9042,7 @@ msgstr "Capturador d'URL"
 #, kde-format
 msgctxt "open url"
 msgid "&Open"
-msgstr "&Obri"
+msgstr "O&bri"
 
 #: src/urlcatcher.cpp:94
 #, kde-format
@@ -9821,7 +9821,7 @@ msgstr "Trau dels sobrenoms vigilats"
 #: src/viewer/irccontextmenus.cpp:456
 #, kde-format
 msgid "Send &File..."
-msgstr "Envia un &fitxer..."
+msgstr "Envia un fi&txer..."
 
 #: src/viewer/irccontextmenus.cpp:458
 #, kde-format
@@ -10204,7 +10204,7 @@ msgstr "&Llista de canals per a %1"
 #: src/viewer/viewcontainer.cpp:926
 #, kde-format
 msgid "&Open Logfile for %1"
-msgstr "&Obri el fitxer de registre per a %1"
+msgstr "O&bri el fitxer de registre per a %1"
 
 #: src/viewer/viewcontainer.cpp:937
 #, kde-format
@@ -10230,7 +10230,7 @@ msgstr "Predeterminat ( %1 )"
 #: src/viewer/viewcontainer.cpp:2234
 #, kde-format
 msgid "&Rename Tab..."
-msgstr "&Canvia el nom la pestanya..."
+msgstr "Ca&nvia el nom de la pestanya..."
 
 #: src/viewer/viewcontainer.cpp:2383
 #, kde-format
