@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-08-29 00:46+0000\n"
-"PO-Revision-Date: 2022-08-29 12:59+0300\n"
+"PO-Revision-Date: 2022-10-08 12:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 22.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5243,12 +5243,12 @@ msgstr "Kanal listesini kaydetmek için buraya tıklayın."
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr "&Listeyi Tazele"
+msgstr "&Listeyi Yenile"
 
 #: src/irc/channellistpanel.cpp:163
 #, kde-format
 msgid "Click here to refresh the channel list."
-msgstr "Kanal listesini tazelemek için buraya tıklayın."
+msgstr "Kanal listesini yenilemek için buraya tıklayın."
 
 #: src/irc/channellistpanel.cpp:165
 #, kde-format
@@ -5265,7 +5265,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
 #, kde-format
 msgid "Refreshing."
-msgstr "Tazeleniyor."
+msgstr "Yenileniyor."
 
 #: src/irc/channellistpanel.cpp:357
 #, kde-format
