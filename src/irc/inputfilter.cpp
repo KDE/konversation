@@ -683,7 +683,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             Q_EMIT invitation(sourceNick, channel);
         }
     }
-    else if (command == QLatin1String("away"))
+    else if (command == QLatin1String("away") && plHas(0))
     {
         NickInfoPtr nickInfo = m_server->getNickInfo(sourceNick);
 
