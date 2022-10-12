@@ -4695,7 +4695,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 >vídeo</replaceable
 > de l'ordre. A més, és possible especificar el reproductor multimèdia que voleu consultar.</para>
 <para
->Estan implementats els següents reproductors de suports: Amarok (àudio), JuK (àudio), Kaffeine (vídeo, àudio), KMPlayer (vídeo, àudio), kdetv (vídeo), Yammi (àudio), Audacious (àudio), MPD (àudio).</para>
+>Estan implementats els següents reproductors multimèdia: Amarok (àudio), JuK (àudio), Kaffeine (vídeo, àudio), KMPlayer (vídeo, àudio), kdetv (vídeo), Yammi (àudio), Audacious (àudio), MPD (àudio).</para>
 <para
 >Exemple: Per a emetre la cançó que està sonant des de l'Amarok.</para>
 <para
