@@ -3449,8 +3449,10 @@ msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
-msgstr[0] "Heu seleccionat %1 fitxer a executar. Segur que voleu continuar?"
-msgstr[1] "Heu seleccionat %1 fitxers a executar. Segur que voleu continuar?"
+msgstr[0] ""
+"Heu seleccionat %1 fitxer que s'executarà. Segur que voleu continuar?"
+msgstr[1] ""
+"Heu seleccionat %1 fitxers que s'executaran. Segur que voleu continuar?"
 
 #: src/dcc/transferpanel.cpp:430
 #, kde-format
@@ -5427,8 +5429,9 @@ msgid ""
 "You can limit the channel list to those channels with a minimum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"Podeu limitar la llista de canals a mostrar als que continguen un nombre "
-"mínim d'usuaris. Si trieu «Sense límit» deixa este criteri sense efecte."
+"Podeu limitar la llista de canals que es mostrarà als que continguen un "
+"nombre mínim d'usuaris. Si trieu «Sense límit» deixa este criteri sense "
+"efecte."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_maxUser)
@@ -5444,8 +5447,9 @@ msgid ""
 "You can limit the channel list to those channels with a maximum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"Podeu limitar la llista de canals a mostrar als que continguen un nombre "
-"màxim d'usuaris. Si trieu «Sense límit» deixa este criteri sense efecte."
+"Podeu limitar la llista de canals que es mostrarà als que continguen un "
+"nombre màxim d'usuaris. Si trieu «Sense límit» deixa este criteri sense "
+"efecte."
 
 #: src/irc/channelnick.cpp:187
 #, kde-format
@@ -8103,7 +8107,7 @@ msgstr "servidor"
 #: src/main.cpp:105
 #, kde-format
 msgid "Port to use"
-msgstr "Port que s'utilitzarà"
+msgstr "Port que s'ha d'utilitzar"
 
 #: src/main.cpp:105
 #, kde-format
@@ -8123,7 +8127,7 @@ msgstr "canal"
 #: src/main.cpp:107
 #, kde-format
 msgid "Nickname to use"
-msgstr "Sobrenom que s'utilitzarà"
+msgstr "Sobrenom que s'ha d'utilitzar"
 
 #: src/main.cpp:107
 #, kde-format
