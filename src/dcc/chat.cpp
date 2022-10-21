@@ -24,6 +24,7 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
+#include <kwidgetsaddons_version.h>
 #include <KMessageBox>
 #include <KGuiItem>
 
@@ -143,14 +144,22 @@ namespace Konversation
             {
                 if (!Preferences::self()->dccChatAutoAccept())
                 {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+                    int ret = KMessageBox::questionTwoActions(nullptr,
+#else
                     int ret = KMessageBox::questionYesNo(nullptr,
+#endif
                                                          i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard", "%1 (on %2) offers to DCC %3 with you", m_partnerNick, server->getServerName(), localizedExtensionString()),
                                                          i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick", "DCC %1 offer from %2", localizedExtensionString(), m_partnerNick),
                                                          KGuiItem(i18n("Accept"), QStringLiteral("dialog-ok")),
                                                          KGuiItem(i18n("Reject"), QStringLiteral("dialog-cancel"))
                                                          );
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+                    if (ret == KMessageBox::SecondaryAction)
+#else
                     if (ret == KMessageBox::No)
+#endif
                     {
                         setStatus(Aborted, i18nc("%1=dcc extension like Chat or Whiteboard",
                                                  "You rejected the DCC %1 offer.",

@@ -15,6 +15,7 @@
 #include <QMimeData>
 #include <QRegularExpression>
 
+#include <kwidgetsaddons_version.h>
 #include <KMessageBox>
 #include <KCompletionBox>
 #include <KActionCollection>
@@ -463,32 +464,39 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
 
 bool IRCInput::checkPaste(QString& text)
 {
-    int doPaste=KMessageBox::Yes;
-
     //text is now preconditioned when you get here
     const int lines = text.count(QLatin1Char('\n'));
 
-    if(text.length()>256 || lines)
-    {
-        QString bytesString = i18np("1 byte", "%1 bytes", text.length());
-        QString linesString = i18np("1 line", "%1 lines", lines+1);
-
-        doPaste=KMessageBox::warningYesNoCancel
-            (this,
-            i18nc(
-            "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are localised (see the two previous messages).",
-            "<qt>You are attempting to paste a large portion of text (%1 or %2) into "
-            "the chat. This can cause connection resets or flood kills. "
-            "Do you really want to continue?</qt>", bytesString, linesString),
-            i18n("Large Paste Warning"),
-            KGuiItem(i18n("Paste"), QStringLiteral("edit-paste")),
-            KGuiItem(i18n("&Edit..."), QStringLiteral("document-edit")),
-            KStandardGuiItem::cancel(),
-            QStringLiteral("LargePaste"),
-            KMessageBox::Dangerous);
+    if ((text.length() <= 256) && (lines == 0)) {
+        return true;
     }
 
-    if (doPaste==KMessageBox::No)
+    QString bytesString = i18np("1 byte", "%1 bytes", text.length());
+    QString linesString = i18np("1 line", "%1 lines", lines+1);
+
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    const int reply = KMessageBox::warningTwoActionsCancel(
+#else
+    const int reply = KMessageBox::warningYesNoCancel(
+#endif
+        this,
+        i18nc(
+        "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are localised (see the two previous messages).",
+        "<qt>You are attempting to paste a large portion of text (%1 or %2) into "
+        "the chat. This can cause connection resets or flood kills. "
+        "Do you really want to continue?</qt>", bytesString, linesString),
+        i18n("Large Paste Warning"),
+        KGuiItem(i18n("Paste"), QStringLiteral("edit-paste")),
+        KGuiItem(i18n("&Edit..."), QStringLiteral("document-edit")),
+        KStandardGuiItem::cancel(),
+        QStringLiteral("LargePaste"),
+        KMessageBox::Dangerous);
+
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    if (reply == KMessageBox::SecondaryAction)
+#else
+    if (reply == KMessageBox::No)
+#endif
     {
         QString ret(PasteEditor::edit(this,text));
         if (ret.isEmpty())
@@ -497,7 +505,11 @@ bool IRCInput::checkPaste(QString& text)
         return true;
     }
 
-    return (doPaste==KMessageBox::Yes);
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+    return (reply==KMessageBox::PrimaryAction);
+#else
+    return (reply==KMessageBox::Yes);
+#endif
 }
 
 void IRCInput::showCompletionList(const QStringList& nicks)
