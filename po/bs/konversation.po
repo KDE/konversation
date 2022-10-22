@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-29 00:46+0000\n"
+"POT-Creation-Date: 2022-10-22 00:44+0000\n"
 "PO-Revision-Date: 2014-10-20 20:22+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: <bs@li.org>\n"
@@ -2754,52 +2754,52 @@ msgstr "Greška: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "uzetiNadimak: Server %1 nije pronađen."
 
-#: src/dcc/chat.cpp:97
+#: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "Ne mogu da pošaljem DCC %1 zahtjev sagovorniku preko IRC servera."
 
-#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Čekam prihvatanje udaljenog korisnika..."
 
-#: src/dcc/chat.cpp:147
+#: src/dcc/chat.cpp:152
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (sa %2) nudi vam DCC %3"
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:153
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "Ponuda DCC %1 od %2"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:154
 #, kde-format
 msgid "Accept"
 msgstr "Prihvati"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:155
 #, kde-format
 msgid "Reject"
 msgstr "Odbaci"
 
-#: src/dcc/chat.cpp:156
+#: src/dcc/chat.cpp:165
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "Odbili ste ponudu DCC %1."
 
-#: src/dcc/chat.cpp:195
+#: src/dcc/chat.cpp:204
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "Zahtjev za DCC %1 je odbijen"
 
-#: src/dcc/chat.cpp:284
+#: src/dcc/chat.cpp:293
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2808,7 +2808,7 @@ msgid ""
 msgstr ""
 "Ne mogu da pošaljem obrnuto DCC %1 odobrenje sagovorniku, preko IRC servera."
 
-#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:586
+#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
 #: src/dcc/transfersend.cpp:394
 #, fuzzy, kde-format
 msgid ""
@@ -2817,7 +2817,7 @@ msgstr ""
 "Neuspjelo prosljeđivanje porta <numid>%1</numid>. Šaljem DCC zahtjev "
 "udaljenom korisniku bez obzira na to."
 
-#: src/dcc/chat.cpp:316
+#: src/dcc/chat.cpp:325
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2826,59 +2826,59 @@ msgid ""
 msgstr ""
 "Ne mogu da pošaljem obrnuto DCC %1 odobrenje sagovorniku, preko IRC servera."
 
-#: src/dcc/chat.cpp:358
+#: src/dcc/chat.cpp:367
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Nisam mogao da otvorim soket za slušanje: %1"
 
-#: src/dcc/chat.cpp:369
+#: src/dcc/chat.cpp:378
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "Nudim DCC %1 vezu za %2 na portu <numid>%3</numid>..."
 
-#: src/dcc/chat.cpp:430
+#: src/dcc/chat.cpp:439
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Tabla"
 
-#: src/dcc/chat.cpp:433
+#: src/dcc/chat.cpp:442
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Ćaskanje"
 
-#: src/dcc/chat.cpp:464
+#: src/dcc/chat.cpp:473
 #, fuzzy, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "Uspostavljam DCC %1 vezu sa %2 (%3:<numid>%4</numid>)..."
 
-#: src/dcc/chat.cpp:481
+#: src/dcc/chat.cpp:490
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Uspostavljena DCC %1 veza sa %2."
 
-#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Greška soketa: %1"
 
-#: src/dcc/chat.cpp:549
+#: src/dcc/chat.cpp:558
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Nisam mogao prihvatiti klijenta."
 
-#: src/dcc/chat.cpp:571
+#: src/dcc/chat.cpp:580
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Uspostavljena DCC %1 veza sa %2."
 
-#: src/dcc/chat.cpp:577
+#: src/dcc/chat.cpp:586
 #, kde-format
 msgid "Connection closed."
 msgstr "Veza je zatvorena."
@@ -3335,88 +3335,88 @@ msgstr "Dolazni prenosi"
 msgid "Outgoing Transfers"
 msgstr "Odlazni prenosi"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC status"
 
-#: src/dcc/transferpanel.cpp:72
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
 msgstr "&Izaberi sve stavke"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "Izaberi sve &završene stavke"
 
-#: src/dcc/transferpanel.cpp:75
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "&Accept"
 msgstr "&Prihvati"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
 msgstr "Počni primanje"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "A&bort"
 msgstr "Pre&kini"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:79
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "Prekini prenose"
 
-#: src/dcc/transferpanel.cpp:80
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgid "Resend"
 msgstr "Ponovi slanje"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&Očisti"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "Očisti sve izabrane stavke"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
 msgstr "Očisti završene"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:85
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "Očisti završene stavke"
 
-#: src/dcc/transferpanel.cpp:86
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "&Open File"
 msgstr "Otvori &datoteku"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
 msgstr "Pokreni datoteku"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open Location"
 msgstr "Otvori mjesto"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
 msgstr "Otvori lokaciju datoteke"
 
-#: src/dcc/transferpanel.cpp:426
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3426,7 +3426,7 @@ msgstr[0] "Izabrali ste %1 datoteku za izvršavanje. Želite li da nastavite?"
 msgstr[1] "Izabrali ste %1 datoteke za izvršavanje. Želite li da nastavite?"
 msgstr[2] "Izabrali ste %1 datoteka za izvršavanje. Želite li da nastavite?"
 
-#: src/dcc/transferpanel.cpp:430
+#: src/dcc/transferpanel.cpp:435
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"
@@ -7393,7 +7393,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:490
 #, kde-format
 msgid "&Edit..."
 msgstr "&Izmijeni..."
@@ -9879,7 +9879,7 @@ msgstr "Želite li da prestanete zanemarivati izabrane korisnike?"
 msgid "Query author"
 msgstr "Upit autora"
 
-#: src/viewer/ircinput.cpp:53
+#: src/viewer/ircinput.cpp:54
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9907,7 +9907,7 @@ msgstr ""
 "se nalaze.</td></tr></table><p>Za još naredbi, pogledajte priručnik "
 "Konverzacije.</p><p>Poruka ne može sadržati više redova.</p></qt>"
 
-#: src/viewer/ircinput.cpp:473
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
@@ -9915,7 +9915,7 @@ msgstr[0] "%1 bajt"
 msgstr[1] "%1 bajta"
 msgstr[2] "%1 bajtova"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
@@ -9923,7 +9923,7 @@ msgstr[0] "%1 red"
 msgstr[1] "%1 reda"
 msgstr[2] "%1 redova"
 
-#: src/viewer/ircinput.cpp:480
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9937,12 +9937,12 @@ msgstr ""
 "izazvati resetovanja veze ili poplavna izbacivanja. Želite li zaista da "
 "nastavite?</qt>"
 
-#: src/viewer/ircinput.cpp:483
+#: src/viewer/ircinput.cpp:488
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Upozorenje o velikom umetanju"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:489
 #, kde-format
 msgid "Paste"
 msgstr "Umetni"

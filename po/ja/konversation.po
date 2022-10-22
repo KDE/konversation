@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-29 00:46+0000\n"
+"POT-Creation-Date: 2022-10-22 00:44+0000\n"
 "PO-Revision-Date: 2019-04-21 19:00-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2801,52 +2801,52 @@ msgstr "KIO エラー: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "getNickname: サーバ %1 が見つかりません。"
 
-#: src/dcc/chat.cpp:97
+#: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "IRC サーバを介して DCC %1 リクエストを相手に送信できませんでした。"
 
-#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr ""
 
-#: src/dcc/chat.cpp:147
+#: src/dcc/chat.cpp:152
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr ""
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:153
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr ""
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:154
 #, kde-format
 msgid "Accept"
 msgstr "受信"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:155
 #, kde-format
 msgid "Reject"
 msgstr "拒否"
 
-#: src/dcc/chat.cpp:156
+#: src/dcc/chat.cpp:165
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr ""
 
-#: src/dcc/chat.cpp:195
+#: src/dcc/chat.cpp:204
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr ""
 
-#: src/dcc/chat.cpp:284
+#: src/dcc/chat.cpp:293
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2854,14 +2854,14 @@ msgid ""
 "server."
 msgstr "IRC サーバを介して DCC SEND リクエストを相手に送信できませんでした。"
 
-#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:586
+#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
 #: src/dcc/transfersend.cpp:394
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
 
-#: src/dcc/chat.cpp:316
+#: src/dcc/chat.cpp:325
 #, fuzzy, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2869,32 +2869,32 @@ msgid ""
 "server."
 msgstr "IRC サーバを介して DCC SEND リクエストを相手に送信できませんでした。"
 
-#: src/dcc/chat.cpp:358
+#: src/dcc/chat.cpp:367
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "待ち受けソケットを開けませんでした: %1"
 
-#: src/dcc/chat.cpp:369
+#: src/dcc/chat.cpp:378
 #, fuzzy, kde-format
 #| msgid "Offering DCC Chat connection to %1 on port %2..."
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "%1 へ DCC チャット接続を提案しています (ポート %2)..."
 
-#: src/dcc/chat.cpp:430
+#: src/dcc/chat.cpp:439
 #, fuzzy, kde-format
 #| msgid "Open DCC &Chat"
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "DCC チャット(&C)"
 
-#: src/dcc/chat.cpp:433
+#: src/dcc/chat.cpp:442
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr ""
 
-#: src/dcc/chat.cpp:464
+#: src/dcc/chat.cpp:473
 #, fuzzy, kde-format
 #| msgctxt "%1 = nickname, %2 = IP, %3 = port"
 #| msgid "Establishing DCC Chat connection to %1 (%2:%3)..."
@@ -2903,31 +2903,31 @@ msgctxt ""
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "%1 (%2:%3) への DCC チャット接続を確立しています..."
 
-#: src/dcc/chat.cpp:481
+#: src/dcc/chat.cpp:490
 #, fuzzy, kde-format
 #| msgid "Established DCC Chat connection to %1."
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%1 への DCC チャット接続を確立しました。"
 
-#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, kde-format
 msgid "Socket error: %1"
 msgstr "ソケットのエラー: %1"
 
-#: src/dcc/chat.cpp:549
+#: src/dcc/chat.cpp:558
 #, kde-format
 msgid "Could not accept the client."
 msgstr "クライアントを受け付けられませんでした。"
 
-#: src/dcc/chat.cpp:571
+#: src/dcc/chat.cpp:580
 #, fuzzy, kde-format
 #| msgid "Established DCC Chat connection to %1."
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%1 への DCC チャット接続を確立しました。"
 
-#: src/dcc/chat.cpp:577
+#: src/dcc/chat.cpp:586
 #, fuzzy, kde-format
 #| msgid "Connection"
 msgid "Connection closed."
@@ -3413,93 +3413,93 @@ msgstr "受信"
 msgid "Outgoing Transfers"
 msgstr "送信"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC ステータス"
 
-#: src/dcc/transferpanel.cpp:72
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
 msgstr "すべてのアイテムを選択(&S)"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "すべての完了したアイテムを選択(&E)"
 
-#: src/dcc/transferpanel.cpp:75
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "&Accept"
 msgstr "受信(&A)"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
 msgstr "受信を開始"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "A&bort"
 msgstr "中止(&B)"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:79
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "転送を中止"
 
-#: src/dcc/transferpanel.cpp:80
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgid "Resend"
 msgstr "再送"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:82
 #, fuzzy, kde-format
 #| msgid "&Clear"
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "クリア(&C)"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:83
 #, fuzzy, kde-format
 #| msgid "S&elect All Completed Items"
 msgid "Clear all selected Items"
 msgstr "すべての完了したアイテムを選択(&E)"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:84
 #, fuzzy, kde-format
 #| msgid "Clear Logfile"
 msgid "Clear Completed"
 msgstr "ログファイルをクリア"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:85
 #, fuzzy, kde-format
 #| msgid "S&elect All Completed Items"
 msgid "Clear Completed Items"
 msgstr "すべての完了したアイテムを選択(&E)"
 
-#: src/dcc/transferpanel.cpp:86
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "&Open File"
 msgstr "ファイルを開く(&O)"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
 msgstr "ファイルを実行"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:89
 #, fuzzy, kde-format
 #| msgid "Location:"
 msgid "Open Location"
 msgstr "場所:"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:426
+#: src/dcc/transferpanel.cpp:431
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -3515,7 +3515,7 @@ msgstr[1] ""
 "<qt>実行中の DCC ファイル転送があります。本当に <b>Konversation</b> を終了し"
 "ますか？</qt>"
 
-#: src/dcc/transferpanel.cpp:430
+#: src/dcc/transferpanel.cpp:435
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -7647,7 +7647,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:490
 #, kde-format
 msgid "&Edit..."
 msgstr "編集(&E)..."
@@ -10232,7 +10232,7 @@ msgstr "選択したユーザを無視するのを止めますか？"
 msgid "Query author"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:53
+#: src/viewer/ircinput.cpp:54
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>The input line is where you type messages to be sent the channel, "
@@ -10274,7 +10274,7 @@ msgstr ""
 "マンドについては「Konversation ハンドブック」をご覧ください。<p>複数の行を一"
 "度に送ることはできません。</qt>"
 
-#: src/viewer/ircinput.cpp:473
+#: src/viewer/ircinput.cpp:474
 #, fuzzy, kde-format
 #| msgid " bytes"
 msgid "1 byte"
@@ -10282,7 +10282,7 @@ msgid_plural "%1 bytes"
 msgstr[0] " バイト"
 msgstr[1] " バイト"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, fuzzy, kde-format
 #| msgid " lines"
 msgid "1 line"
@@ -10290,7 +10290,7 @@ msgid_plural "%1 lines"
 msgstr[0] " 行"
 msgstr[1] " 行"
 
-#: src/viewer/ircinput.cpp:480
+#: src/viewer/ircinput.cpp:485
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>You are attempting to paste a large portion of text (%1 bytes or %2 "
@@ -10307,12 +10307,12 @@ msgstr ""
 "<qt>チャットに長いテキスト (%1 バイト %2 行) を貼り付けようとしています。これ"
 "によって接続を切られるか無視される可能性があります。続行しますか？</qt>"
 
-#: src/viewer/ircinput.cpp:483
+#: src/viewer/ircinput.cpp:488
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "長いテキスト貼り付けの警告"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:489
 #, fuzzy, kde-format
 #| msgid "Part"
 msgid "Paste"

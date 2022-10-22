@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-29 00:46+0000\n"
+"POT-Creation-Date: 2022-10-22 00:44+0000\n"
 "PO-Revision-Date: 2013-05-15 04:56+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -2739,52 +2739,52 @@ msgstr "Қате: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "getNickname: %1 сервері табылған жоқ."
 
-#: src/dcc/chat.cpp:97
+#: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "Бұл IRC сервері арқылы әріптеске DCC %1 талабы жіберілмеді."
 
-#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Қашық пайдаланушыдан қабылдауын күту..."
 
-#: src/dcc/chat.cpp:147
+#: src/dcc/chat.cpp:152
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (%2 сервердегі) Сізге DCC %3 ұсынады"
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:153
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "%2 дегеннен DCC %1 ұсынысы"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:154
 #, kde-format
 msgid "Accept"
 msgstr "Қабылдау"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:155
 #, kde-format
 msgid "Reject"
 msgstr "Бас тарту"
 
-#: src/dcc/chat.cpp:156
+#: src/dcc/chat.cpp:165
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "DCC %1 ұсыныстан бас тарттыңыз."
 
-#: src/dcc/chat.cpp:195
+#: src/dcc/chat.cpp:204
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "DCC %1 талабы қабыл етілмеді"
 
-#: src/dcc/chat.cpp:284
+#: src/dcc/chat.cpp:293
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2792,7 +2792,7 @@ msgid ""
 "server."
 msgstr "Бұл IRC сервері арқылы әріптеске кері DCC %1 құптауы жіберілмеді."
 
-#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:586
+#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
 #: src/dcc/transfersend.cpp:394
 #, fuzzy, kde-format
 #| msgid ""
@@ -2804,7 +2804,7 @@ msgstr ""
 "<numid>%1</numid> портына бағытау болмады. Бәрібір DCC талабы қашық "
 "пайдаланушыға жіберіледі."
 
-#: src/dcc/chat.cpp:316
+#: src/dcc/chat.cpp:325
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2812,12 +2812,12 @@ msgid ""
 "server."
 msgstr "Бұл IRC сервері арқылы әріптеске кері DCC %1 құптауы жіберілмеді."
 
-#: src/dcc/chat.cpp:358
+#: src/dcc/chat.cpp:367
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Сокет тыңдауға ашылмады: %1"
 
-#: src/dcc/chat.cpp:369
+#: src/dcc/chat.cpp:378
 #, fuzzy, kde-format
 #| msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 #| msgid "Offering DCC %1 connection to %2 on port <numid>%3</numid>..."
@@ -2825,19 +2825,19 @@ msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "DCC %1 байланысын %2 дегенге <numid>%3</numid> порт арқылы ұсыну..."
 
-#: src/dcc/chat.cpp:430
+#: src/dcc/chat.cpp:439
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Чат-тақта"
 
-#: src/dcc/chat.cpp:433
+#: src/dcc/chat.cpp:442
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Чат-әңгіме"
 
-#: src/dcc/chat.cpp:464
+#: src/dcc/chat.cpp:473
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
@@ -2847,29 +2847,29 @@ msgctxt ""
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "%2 дегенмен (%3:<numid>%4</numid> порты) DCC %1 байланысын орнату..."
 
-#: src/dcc/chat.cpp:481
+#: src/dcc/chat.cpp:490
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%2 дегенмен DCC %1 байланысы орнатылды."
 
-#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Сокет қатесі: %1"
 
-#: src/dcc/chat.cpp:549
+#: src/dcc/chat.cpp:558
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Бұл клиент қабылданбады."
 
-#: src/dcc/chat.cpp:571
+#: src/dcc/chat.cpp:580
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "%2 дегенмен DCC %1 байланысы орнатылды."
 
-#: src/dcc/chat.cpp:577
+#: src/dcc/chat.cpp:586
 #, kde-format
 msgid "Connection closed."
 msgstr "Байланыс жабылды."
@@ -3335,88 +3335,88 @@ msgstr "Кіріс тасымалдар"
 msgid "Outgoing Transfers"
 msgstr "Шығыс тасымалдар"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC күй-жайы"
 
-#: src/dcc/transferpanel.cpp:72
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
 msgstr "Бүкіл аталымдарын &таңдау"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "Бүкіл біткен аталымдарын т&аңдау"
 
-#: src/dcc/transferpanel.cpp:75
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "&Accept"
 msgstr "Қаб&ылдау"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
 msgstr "Қабылдауын бастау"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "A&bort"
 msgstr "Д&оғару"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:79
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "Тасымал(дар)ды доғару"
 
-#: src/dcc/transferpanel.cpp:80
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgid "Resend"
 msgstr "Қайта жіберу"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&Тазалау"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "Бүкіл таңдалғандарын тазалау"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
 msgstr "Біткенін тазалау"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:85
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "Біткен аталымдарын тазалау"
 
-#: src/dcc/transferpanel.cpp:86
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "&Open File"
 msgstr "Файлды &ашу"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
 msgstr "Файлды жегу"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open Location"
 msgstr "Орынын ашу"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
 msgstr "Файл жатқан орынын ашу"
 
-#: src/dcc/transferpanel.cpp:426
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3424,7 +3424,7 @@ msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] "%1 файл орындалуға таңдалған. Жалғастырмақсыз ба?"
 
-#: src/dcc/transferpanel.cpp:430
+#: src/dcc/transferpanel.cpp:435
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"
@@ -7364,7 +7364,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:490
 #, kde-format
 msgid "&Edit..."
 msgstr "Ө&згерту..."
@@ -9823,7 +9823,7 @@ msgstr "Таңдалғандарды елемеуін тоқтату дейсі�
 msgid "Query author"
 msgstr "Авторымен жеке әңгімелесу"
 
-#: src/viewer/ircinput.cpp:53
+#: src/viewer/ircinput.cpp:54
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9851,19 +9851,19 @@ msgstr ""
 "td></tr></table><p>Басқа командалар туралы Konversation анықтамасын қараңыз."
 "</p><p>Мәтіні бір жолдан аспау тиіс.</p></qt>"
 
-#: src/viewer/ircinput.cpp:473
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "%1 байт"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "%1 жол"
 
-#: src/viewer/ircinput.cpp:480
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9876,12 +9876,12 @@ msgstr ""
 "<qt>Тым үлкен мәтін үзіндісін чатқа орналастырмақсыз (%2, %1).Ол үшін жазаға "
 "ұшырауыңыз мүмкін. Жалғастыруға қажеті бар ма?</qt>"
 
-#: src/viewer/ircinput.cpp:483
+#: src/viewer/ircinput.cpp:488
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Көп орналастыру туралы ескерту"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:489
 #, kde-format
 msgid "Paste"
 msgstr "Орналастыру"

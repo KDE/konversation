@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-29 00:46+0000\n"
+"POT-Creation-Date: 2022-10-22 00:44+0000\n"
 "PO-Revision-Date: 2020-01-12 11:38+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -2766,7 +2766,7 @@ msgstr "Erro: %1"
 msgid "getNickname: Server %1 is not found."
 msgstr "getNickname: Non se atopou o servidor %1."
 
-#: src/dcc/chat.cpp:97
+#: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
@@ -2774,46 +2774,46 @@ msgstr ""
 "Non foi posíbel enviar unha solicitude %1 de DCC ao parceiro mediante o "
 "servidor de IRC."
 
-#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Estase a agardar a aceptación do usuario remoto…"
 
-#: src/dcc/chat.cpp:147
+#: src/dcc/chat.cpp:152
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (en %2) ofrécese a %3 DCC con vostede"
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:153
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "Oferta de %1 de DCC de %2"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:154
 #, kde-format
 msgid "Accept"
 msgstr "Aceptar"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:155
 #, kde-format
 msgid "Reject"
 msgstr "Rexeitar"
 
-#: src/dcc/chat.cpp:156
+#: src/dcc/chat.cpp:165
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "Rexeito a oferta de %1 de DCC."
 
-#: src/dcc/chat.cpp:195
+#: src/dcc/chat.cpp:204
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "Rexeitouse a solicitude %1 de DCC"
 
-#: src/dcc/chat.cpp:284
+#: src/dcc/chat.cpp:293
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2823,7 +2823,7 @@ msgstr ""
 "Non foi posíbel enviar o recoñecemento inverso de %1 de DCC ao parceiro "
 "mediante o servidor de IRC."
 
-#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:586
+#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
 #: src/dcc/transfersend.cpp:394
 #, kde-format
 msgid ""
@@ -2832,7 +2832,7 @@ msgstr ""
 "Non foi posíbel reenviar ao porto %1. Envíanse solicitudes de DCC ao usuario "
 "remoto mesmo así."
 
-#: src/dcc/chat.cpp:316
+#: src/dcc/chat.cpp:325
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2842,59 +2842,59 @@ msgstr ""
 "Non foi posíbel enviar o recoñecemento inverso de %1 de DCC ao parceiro "
 "mediante o servidor de IRC."
 
-#: src/dcc/chat.cpp:358
+#: src/dcc/chat.cpp:367
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Non foi posíbel abrir un socket para escoitar: %1"
 
-#: src/dcc/chat.cpp:369
+#: src/dcc/chat.cpp:378
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "Ofrecendo unha conexión de %1 de DCC a %2 no porto %3…"
 
-#: src/dcc/chat.cpp:430
+#: src/dcc/chat.cpp:439
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Encerado"
 
-#: src/dcc/chat.cpp:433
+#: src/dcc/chat.cpp:442
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Conversar"
 
-#: src/dcc/chat.cpp:464
+#: src/dcc/chat.cpp:473
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "Estabelecendo unha conexión de %1 de DCC con %2 (%3:%4)…"
 
-#: src/dcc/chat.cpp:481
+#: src/dcc/chat.cpp:490
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Estabeleceuse unha conexión de %1 de DCC con %2."
 
-#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Erro no socket: %1"
 
-#: src/dcc/chat.cpp:549
+#: src/dcc/chat.cpp:558
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Non foi posíbel aceptar o cliente."
 
-#: src/dcc/chat.cpp:571
+#: src/dcc/chat.cpp:580
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Estabeleceuse a conexión de %1 de DCC con %2."
 
-#: src/dcc/chat.cpp:577
+#: src/dcc/chat.cpp:586
 #, kde-format
 msgid "Connection closed."
 msgstr "A conexión está pechada."
@@ -3356,88 +3356,88 @@ msgstr "Transferencias entrantes"
 msgid "Outgoing Transfers"
 msgstr "Transferencias saíntes"
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
 msgid "DCC Status"
 msgstr "Estado de DCC"
 
-#: src/dcc/transferpanel.cpp:72
+#: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
 msgstr "E&scoller todos os elementos"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
 msgstr "E&scoller todos os elementos completos"
 
-#: src/dcc/transferpanel.cpp:75
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "&Accept"
 msgstr "&Aceptar"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
 msgstr "Iniciar a recepción"
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "A&bort"
 msgstr "I&nterromper"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:79
 #, kde-format
 msgid "Abort the transfer(s)"
 msgstr "Interromper as transferencias"
 
-#: src/dcc/transferpanel.cpp:80
+#: src/dcc/transferpanel.cpp:81
 #, kde-format
 msgid "Resend"
 msgstr "Enviar de novo"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:82
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "&Limpar"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
 msgstr "Limpar todos os elementos seleccionados"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
 msgstr "Limpar os completados"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:85
 #, kde-format
 msgid "Clear Completed Items"
 msgstr "Limpar os elementos completos"
 
-#: src/dcc/transferpanel.cpp:86
+#: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "&Open File"
 msgstr "Abrir o ficheir&o"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
 msgstr "Executar o ficheiro"
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:89
 #, kde-format
 msgid "Open Location"
 msgstr "Abrir un lugar"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
 msgstr "Abrir o lugar do ficheiro"
 
-#: src/dcc/transferpanel.cpp:426
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3448,7 +3448,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Escolleu %1 ficheiros para executar; está seguro de que quere continuar?"
 
-#: src/dcc/transferpanel.cpp:430
+#: src/dcc/transferpanel.cpp:435
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"
@@ -7403,7 +7403,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:490
 #, kde-format
 msgid "&Edit..."
 msgstr "&Editar…"
@@ -9882,7 +9882,7 @@ msgstr "Quere parar de ignorar os usuarios escollidos?"
 msgid "Query author"
 msgstr "Interrogar o autor"
 
-#: src/viewer/ircinput.cpp:53
+#: src/viewer/ircinput.cpp:54
 #, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9912,21 +9912,21 @@ msgstr ""
 "ordes, consulte o Manual de Konversation.</p><p>Unha mensaxe non pode conter "
 "varias liñas.</p></qt>"
 
-#: src/viewer/ircinput.cpp:473
+#: src/viewer/ircinput.cpp:474
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "1 byte"
 msgstr[1] "%1 bytes"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "1 liña"
 msgstr[1] "%1 liñas"
 
-#: src/viewer/ircinput.cpp:480
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9940,12 +9940,12 @@ msgstr ""
 "%2). Isto pode causar a quebra de conexión ou desconexións por demasiados "
 "dados enviados. Está seguro de que quere continuar?</qt>"
 
-#: src/viewer/ircinput.cpp:483
+#: src/viewer/ircinput.cpp:488
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Aviso de apegado grande"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:489
 #, kde-format
 msgid "Paste"
 msgstr "Apegar"

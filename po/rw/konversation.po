@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-08-29 00:46+0000\n"
+"POT-Creation-Date: 2022-10-22 00:44+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -2692,53 +2692,53 @@ msgstr "Ikosa : %1 "
 msgid "getNickname: Server %1 is not found."
 msgstr "%1 OYA Byabonetse . %2 "
 
-#: src/dcc/chat.cpp:97
+#: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/chat.cpp:118 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr ""
 
-#: src/dcc/chat.cpp:147
+#: src/dcc/chat.cpp:152
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr ""
 
-#: src/dcc/chat.cpp:148
+#: src/dcc/chat.cpp:153
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "Kohereza kuri :%1"
 
-#: src/dcc/chat.cpp:149
+#: src/dcc/chat.cpp:154
 #, fuzzy, kde-format
 msgid "Accept"
 msgstr "Kwemera"
 
-#: src/dcc/chat.cpp:150
+#: src/dcc/chat.cpp:155
 #, fuzzy, kde-format
 msgid "Reject"
 msgstr "Kongerakwihuza "
 
-#: src/dcc/chat.cpp:156
+#: src/dcc/chat.cpp:165
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr ""
 
-#: src/dcc/chat.cpp:195
+#: src/dcc/chat.cpp:204
 #, fuzzy, kde-format
 #| msgid "request was canceled"
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "igisabwa cyahagaritswe"
 
-#: src/dcc/chat.cpp:284
+#: src/dcc/chat.cpp:293
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2746,14 +2746,14 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:302 src/dcc/chat.cpp:334 src/dcc/transferrecv.cpp:586
+#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
 #: src/dcc/transfersend.cpp:394
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
 
-#: src/dcc/chat.cpp:316
+#: src/dcc/chat.cpp:325
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2761,59 +2761,59 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:358
+#: src/dcc/chat.cpp:367
 #, fuzzy, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "OYA Gufungura A "
 
-#: src/dcc/chat.cpp:369
+#: src/dcc/chat.cpp:378
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "Ukwihuza Kuri %1 ku Umuyoboro: %2 ... "
 
-#: src/dcc/chat.cpp:430
+#: src/dcc/chat.cpp:439
 #, fuzzy, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Gufungura "
 
-#: src/dcc/chat.cpp:433
+#: src/dcc/chat.cpp:442
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr ""
 
-#: src/dcc/chat.cpp:464
+#: src/dcc/chat.cpp:473
 #, fuzzy, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:481
+#: src/dcc/chat.cpp:490
 #, fuzzy, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:488 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, fuzzy, kde-format
 msgid "Socket error: %1"
 msgstr "Ikosa : %1 "
 
-#: src/dcc/chat.cpp:549
+#: src/dcc/chat.cpp:558
 #, fuzzy, kde-format
 msgid "Could not accept the client."
 msgstr "OYA Kwemera i Ukwihuza . ( Ikosa ) "
 
-#: src/dcc/chat.cpp:571
+#: src/dcc/chat.cpp:580
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:577
+#: src/dcc/chat.cpp:586
 #, fuzzy, kde-format
 msgid "Connection closed."
 msgstr "Ukwihuza kwanze."
@@ -3274,89 +3274,89 @@ msgstr "Isobeka:"
 msgid "Outgoing Transfers"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:35 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, fuzzy, kde-format
 msgid "DCC Status"
 msgstr "Imimerere"
 
-#: src/dcc/transferpanel.cpp:72
+#: src/dcc/transferpanel.cpp:73
 #, fuzzy, kde-format
 msgid "&Select All Items"
 msgstr "Gutoranya ibintu byose"
 
-#: src/dcc/transferpanel.cpp:73
+#: src/dcc/transferpanel.cpp:74
 #, fuzzy, kde-format
 msgid "S&elect All Completed Items"
 msgstr "Kudatoranya ibyatoranyijwe byose"
 
-#: src/dcc/transferpanel.cpp:75
+#: src/dcc/transferpanel.cpp:76
 #, kde-format
 msgid "&Accept"
 msgstr "Kwemera"
 
-#: src/dcc/transferpanel.cpp:76
+#: src/dcc/transferpanel.cpp:77
 #, fuzzy, kde-format
 msgid "Start receiving"
 msgstr "Gutangira "
 
-#: src/dcc/transferpanel.cpp:77
+#: src/dcc/transferpanel.cpp:78
 #, fuzzy, kde-format
 msgid "A&bort"
 msgstr "Kureka"
 
-#: src/dcc/transferpanel.cpp:78
+#: src/dcc/transferpanel.cpp:79
 #, fuzzy, kde-format
 msgid "Abort the transfer(s)"
 msgstr "i ( S ) "
 
-#: src/dcc/transferpanel.cpp:80
+#: src/dcc/transferpanel.cpp:81
 #, fuzzy, kde-format
 msgid "Resend"
 msgstr "Cisha make"
 
-#: src/dcc/transferpanel.cpp:81
+#: src/dcc/transferpanel.cpp:82
 #, fuzzy, kde-format
 #| msgid "&Clear"
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
 msgstr "Gusiba"
 
-#: src/dcc/transferpanel.cpp:82
+#: src/dcc/transferpanel.cpp:83
 #, fuzzy, kde-format
 msgid "Clear all selected Items"
 msgstr "Kudatoranya ibyatoranyijwe byose"
 
-#: src/dcc/transferpanel.cpp:83
+#: src/dcc/transferpanel.cpp:84
 #, fuzzy, kde-format
 msgid "Clear Completed"
 msgstr "Guhanagura muyunguruzi"
 
-#: src/dcc/transferpanel.cpp:84
+#: src/dcc/transferpanel.cpp:85
 #, fuzzy, kde-format
 msgid "Clear Completed Items"
 msgstr "Kudatoranya ibyatoranyijwe byose"
 
-#: src/dcc/transferpanel.cpp:86
+#: src/dcc/transferpanel.cpp:87
 #, fuzzy, kde-format
 msgid "&Open File"
 msgstr "Gufungura Dosiye"
 
-#: src/dcc/transferpanel.cpp:87
+#: src/dcc/transferpanel.cpp:88
 #, fuzzy, kde-format
 msgid "Run the file"
 msgstr "i Idosiye "
 
-#: src/dcc/transferpanel.cpp:88
+#: src/dcc/transferpanel.cpp:89
 #, fuzzy, kde-format
 msgid "Open Location"
 msgstr "Igikorwa:"
 
-#: src/dcc/transferpanel.cpp:89
+#: src/dcc/transferpanel.cpp:90
 #, fuzzy, kde-format
 msgid "Open the file location"
 msgstr "Gufungura Dosiye"
 
-#: src/dcc/transferpanel.cpp:426
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3365,7 +3365,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferpanel.cpp:430
+#: src/dcc/transferpanel.cpp:435
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -7188,7 +7188,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:490
 #, kde-format
 msgid "&Edit..."
 msgstr "Kwandika..."
@@ -9601,7 +9601,7 @@ msgstr "Kuri Kureka i Byahiswemo Abakoresha ? "
 msgid "Query author"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:53
+#: src/viewer/ircinput.cpp:54
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The input line is where you type messages to be sent the channel, "
@@ -9627,14 +9627,14 @@ msgstr ""
 "Birenzeho Amabwiriza , i . <p> A &Ubutumwa A Kinini Bya Birebire , na "
 "Igikubo Imirongo . </qt> "
 
-#: src/viewer/ircinput.cpp:473
+#: src/viewer/ircinput.cpp:474
 #, fuzzy, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "Bayite"
 msgstr[1] "Bayite"
 
-#: src/viewer/ircinput.cpp:474
+#: src/viewer/ircinput.cpp:475
 #, fuzzy, kde-format
 #| msgid " lines"
 msgid "1 line"
@@ -9642,7 +9642,7 @@ msgid_plural "%1 lines"
 msgstr[0] "imirongo"
 msgstr[1] "imirongo"
 
-#: src/viewer/ircinput.cpp:480
+#: src/viewer/ircinput.cpp:485
 #, fuzzy, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9653,12 +9653,12 @@ msgid ""
 "continue?</qt>"
 msgstr "<qt>Urifuzakokogukomeza."
 
-#: src/viewer/ircinput.cpp:483
+#: src/viewer/ircinput.cpp:488
 #, fuzzy, kde-format
 msgid "Large Paste Warning"
 msgstr "Izamuka murongo"
 
-#: src/viewer/ircinput.cpp:484
+#: src/viewer/ircinput.cpp:489
 #, fuzzy, kde-format
 msgid "Paste"
 msgstr "Inzira%s"
