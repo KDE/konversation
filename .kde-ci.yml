@@ -24,7 +24,6 @@ Dependencies:
     'frameworks/knotifications': '@stable'
     'frameworks/kwindowsystem': '@stable'
     'frameworks/kitemviews': '@stable'
-    'libraries/phonon': '@stable'
 
 - 'on': ['Linux', 'FreeBSD']
   'require':
