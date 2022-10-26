@@ -3961,7 +3961,7 @@ msgstr "Heu de donar un nom a la identitat."
 #: src/identitydialog.cpp:279
 #, kde-format
 msgid "Rename Identity"
-msgstr "Canvia el nom la identitat"
+msgstr "Canvia el nom de la identitat"
 
 #: src/identitydialog.cpp:313
 #, kde-format
@@ -10219,7 +10219,7 @@ msgstr "Paràmetres de &canal per a %1..."
 #: src/viewer/viewcontainer.cpp:2120
 #, kde-format
 msgid "Rename Tab"
-msgstr "Canvia el nom la pestanya"
+msgstr "Canvia el nom de la pestanya"
 
 #: src/viewer/viewcontainer.cpp:2121
 #, kde-format
