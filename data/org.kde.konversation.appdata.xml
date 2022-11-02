@@ -20,6 +20,7 @@
   <name xml:lang="hu">Konversation</name>
   <name xml:lang="ia">Konversation</name>
   <name xml:lang="id">Konversation</name>
+  <name xml:lang="ie">Konversation</name>
   <name xml:lang="it">Konversation</name>
   <name xml:lang="ka">Konversation</name>
   <name xml:lang="ko">Konversation</name>
@@ -59,6 +60,7 @@
   <summary xml:lang="hu">IRC kliens</summary>
   <summary xml:lang="ia">Cliente IRC</summary>
   <summary xml:lang="id">Klien IRC</summary>
+  <summary xml:lang="ie">Cliente de IRC</summary>
   <summary xml:lang="it">Client IRC</summary>
   <summary xml:lang="ka">IRC კლიენტი</summary>
   <summary xml:lang="ko">IRC 클라이언트</summary>
@@ -129,6 +131,7 @@
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
+    <p xml:lang="ie">Caracteristicas:</p>
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
@@ -242,6 +245,7 @@
       <li xml:lang="he">תמיכה בסימניות</li>
       <li xml:lang="hu">Könyvjelzők</li>
       <li xml:lang="id">Dukungan pemarkahan</li>
+      <li xml:lang="ie">Supporte de marca-págines</li>
       <li xml:lang="it">Supporto per i segnalibri</li>
       <li xml:lang="ka">სანიშნეების მხარდაჭერა</li>
       <li xml:lang="ko">책갈피 지원</li>
@@ -351,6 +355,7 @@
       <li xml:lang="he">העברת קבצים באמצעות DCC</li>
       <li xml:lang="hu">DCC fájlátvitel</li>
       <li xml:lang="id">Transfer file DCC</li>
+      <li xml:lang="ie">Transferte de files med DCC</li>
       <li xml:lang="it">Trasferimento file tramite DCC</li>
       <li xml:lang="ka">DCC ფაილის გადაცემა</li>
       <li xml:lang="ko">DCC 파일 전송</li>
@@ -425,6 +430,7 @@
       <li xml:lang="hu">Szövegdíszítés és színek</li>
       <li xml:lang="ia">Decorationes de texto e colores</li>
       <li xml:lang="id">Dekorasi teks dan warna</li>
+      <li xml:lang="ie">Decorationes e colores de textu</li>
       <li xml:lang="it">Decorazioni e colori per il testo</li>
       <li xml:lang="ka">ტექსტური დეკორაციები და ფერები</li>
       <li xml:lang="ko">텍스트 장식과 색상</li>
@@ -499,6 +505,7 @@
       <li xml:lang="hu">UTF-8 automatikus felismerése</li>
       <li xml:lang="ia">Detection automatic de UTF-8</li>
       <li xml:lang="id">Deteksi UTF-8 otomatis</li>
+      <li xml:lang="ie">Automatic detection de UTF-8</li>
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
       <li xml:lang="ko">자동 UTF-8 감지</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
