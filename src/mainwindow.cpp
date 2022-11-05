@@ -958,9 +958,7 @@ void MainWindow::activateAndRaiseWindow()
 
 void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
 {
-    if (isMinimized())
-        KWindowSystem::unminimizeWindow(winId());
-    else if (Preferences::self()->showTrayIcon() && !isVisible())
+    if (Preferences::self()->showTrayIcon() && !isVisible())
         m_trayIcon->restoreWindow();
 
     if (!isActiveWindow())
