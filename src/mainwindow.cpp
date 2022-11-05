@@ -972,6 +972,6 @@ void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
             if (!info.onAllDesktops())
                 KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
         }
-        KWindowSystem::activateWindow(winId());
+        KWindowSystem::activateWindow(windowHandle());
     }
 }
