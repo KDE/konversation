@@ -943,7 +943,7 @@ void MainWindow::toggleVisibility()
         if (Preferences::self()->showTrayIcon())
             m_trayIcon->hideWindow();
         else
-            KWindowSystem::minimizeWindow(winId());
+            windowHandle()->showMinimized();
     }
     else
     {
