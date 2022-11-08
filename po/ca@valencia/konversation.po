@@ -1620,7 +1620,7 @@ msgstr "Obri la pestanya de sobrenoms vigilats a l'inici de l'aplicació"
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
 msgstr ""
-"&Activa el comptador d'esdeveniments no vistos a l'entrada de l'iniciador"
+"&Activa el comptador d'esdeveniments no vistos en l'entrada de l'iniciador"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
@@ -2592,7 +2592,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:69
 #, kde-format
 msgid "Command e&xecuted when nickname is double clicked:"
-msgstr "Ordre e&xecutada en fer doble clic a un sobrenom:"
+msgstr "Ordre e&xecutada en fer doble clic en un sobrenom:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_NotifyDoubleClickAction)
 #: src/config/watchednicknames_configui.ui:99
