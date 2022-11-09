@@ -4395,7 +4395,7 @@ part of the listing.
 
 <sect1 id="scripting">
 <title
->Scripten</title>
+>Scripts maken</title>
 
 <para
 >Bij &konversation; wordt een aantal handige scripts meegeleverd die u vanuit het programma kunt aanroepen. Om een script uit te voeren in een kanaal-, conversatie- of servertabblad dient u het commando in de volgende vorm te typen:</para>
