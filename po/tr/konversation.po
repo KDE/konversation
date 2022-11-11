@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-10-09 06:00+0300\n"
+"PO-Revision-Date: 2022-11-10 21:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -477,7 +477,7 @@ msgstr "Kendi takma adınızı değiştirmeniz için &kutu göster"
 #: src/config/chatwindowappearance_config.ui:238
 #, kde-format
 msgid "Show sc&rollbar"
-msgstr "&Kaydırma çubuğunu göster"
+msgstr "&Sarma çubuğunu göster"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBackgroundImage)
 #: src/config/chatwindowappearance_config.ui:251
@@ -580,7 +580,7 @@ msgstr "Sınırsız"
 #: src/config/chatwindowbehaviour_config.ui:101
 #, kde-format
 msgid "Scrollbac&k limit:"
-msgstr "Geri kaydırma &sınırı:"
+msgstr "Geri sarma &sınırı:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:135
@@ -1554,7 +1554,7 @@ msgstr "&Hepsini Kaldır"
 #: src/config/konversation.kcfg:217
 #, kde-format
 msgid "Hide the scrollbar"
-msgstr "Kaydırma çubuğunu gizle"
+msgstr "Sarma çubuğunu gizle"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:223
