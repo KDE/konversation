@@ -20,7 +20,7 @@ class DccFileDialog : public QDialog
 public:
     DccFileDialog(QWidget* parent);
 
-    QList<QUrl> getOpenUrls(const QUrl &startDir = QUrl(), const QString& filter = QString(), const QString& caption = QString());
+    QList<QUrl> getOpenUrls(const QUrl &startDir = QUrl(), const QString& caption = QString());
 
     bool passiveSend() const;
 

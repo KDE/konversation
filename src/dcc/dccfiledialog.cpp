@@ -36,11 +36,9 @@ DccFileDialog::DccFileDialog(QWidget* parent)
     m_checkBox->setCheckState(Preferences::self()->dccPassiveSend() ? Qt::Checked : Qt::Unchecked);
 }
 
-QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& filter, const QString& caption)
+QList<QUrl> DccFileDialog::getOpenUrls(const QUrl &startDir, const QString& caption)
 {
     KFileWidget::setStartDir(startDir);
-
-    m_fileWidget->setFilter(filter);
 
     m_fileWidget->setOperationMode( KFileWidget::Opening );
 

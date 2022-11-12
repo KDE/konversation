@@ -2167,7 +2167,6 @@ void Server::requestDccSend(const QString &a_recipient)
         //DccFileDialog fileDialog(KUrl(), QString(), getViewContainer()->getWindow());
         const QList<QUrl> fileURLs = dlg->getOpenUrls(
             QUrl(),
-            QString(),
             i18n("Select File(s) to Send to %1", recipient)
         );
         for (const QUrl& fileUrl : fileURLs) {
