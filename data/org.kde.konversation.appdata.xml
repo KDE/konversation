@@ -14,6 +14,7 @@
   <name xml:lang="en-GB">Konversation</name>
   <name xml:lang="es">Konversation</name>
   <name xml:lang="et">Konversation</name>
+  <name xml:lang="eu">Konversation</name>
   <name xml:lang="fi">Konversation</name>
   <name xml:lang="fr">Konversation</name>
   <name xml:lang="gl">Konversation</name>
@@ -53,6 +54,7 @@
   <summary xml:lang="en-GB">IRC client</summary>
   <summary xml:lang="es">Cliente de IRC</summary>
   <summary xml:lang="et">IRC klient</summary>
+  <summary xml:lang="eu">IRC bezeroa</summary>
   <summary xml:lang="fi">IRC-asiakas</summary>
   <summary xml:lang="fr">Client IRC</summary>
   <summary xml:lang="gl">Cliente de IRC</summary>
@@ -94,6 +96,7 @@
     <p xml:lang="el">Το Konversation είναι μια φιλική στον χρήστη εφαρμογή-πελάτης για την προώθηση συνομιλίας στο Διαδίκτυο (Internet Relay Chat, IRC) από το KDE. Παρέχει εύκολη πρόσβαση σε τυπικά IRC δίκτυα όπως το Libera, όπου μπορείτε να βρείτε τους διαύλους IRC του KDE.</p>
     <p xml:lang="en-GB">Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE. It provides easy access to standard IRC networks such as Libera, where the KDE IRC channels can be found.</p>
     <p xml:lang="es">Konversation es un cliente IRC (Internet Relay Chat) fácil de usar desarrollado por KDE. Proporciona un fácil acceso a las redes estándar IRC como Libera, donde se pueden encontrar los canales IRC de KDE.</p>
+    <p xml:lang="eu">Konversation KDEren IRC (Internet Relay Chat / Interneteko txandakako berriketa) bezero lagunkoi bat da. IRC sare estandarretara sarbide erraza ematen du, Libera-ra esaterako, non KDE IRC kanalak aurki daitezkeen.</p>
     <p xml:lang="fi">Konversation on KDE:n käyttäjäystävällinen IRC-asiakas (Internet Relay Chat), joka tarjoaa helpon pääsyn IRC-vakioverkkoihin kuten Liberaan, mistä löytyvät KDE:n IRC-kanavat.</p>
     <p xml:lang="fr">Konversation est un client IRC (Internet Relay Chat) convivial de KDE. Il fournit un accès facile aux réseaux IRC standards tels que Libera, où les canaux IRC de KDE se trouvent.</p>
     <p xml:lang="hu">A Konversation a KDE felhasználóbarát Internet Relay Chat (IRC) kliense. Könnyű hozzáférést biztosít a szabványos IRC hálózatokhoz, mint például a Libera, ahol a KDE IRC csatornák találhatók.</p>
@@ -124,6 +127,7 @@
     <p xml:lang="en-GB">Features:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Ezaugarriak:</p>
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
@@ -164,6 +168,7 @@
       <li xml:lang="en-GB">Standard IRC features</li>
       <li xml:lang="es">Características estándar de IRC</li>
       <li xml:lang="et">Tavapärased IRC omadused</li>
+      <li xml:lang="eu">IRC ezaugarri estandarrak</li>
       <li xml:lang="fi">IRCin vakio-ominaisuudet</li>
       <li xml:lang="fr">Fonctionnalités standards IRC</li>
       <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
@@ -201,6 +206,7 @@
       <li xml:lang="en-GB">SSL server support</li>
       <li xml:lang="es">Reconocimiento de servidor SSL</li>
       <li xml:lang="et">SSL-serveri toetus</li>
+      <li xml:lang="eu">SSL zerbitzariaren euskarria</li>
       <li xml:lang="fi">SSL-palvelintuki</li>
       <li xml:lang="fr">Prise en charge de serveurs SSL</li>
       <li xml:lang="gl">Compatibilidade con servidores SSL.</li>
@@ -239,6 +245,7 @@
       <li xml:lang="en-GB">Bookmarking support</li>
       <li xml:lang="es">Uso de marcadores</li>
       <li xml:lang="et">Järjehoidjate toetus</li>
+      <li xml:lang="eu">Laster-marka euskarria</li>
       <li xml:lang="fi">Kirjanmerkkituki</li>
       <li xml:lang="fr">Prise en charge des signets</li>
       <li xml:lang="gl">Funcionalidade de marcar</li>
@@ -277,6 +284,7 @@
       <li xml:lang="en-GB">Easy to use graphical user interface</li>
       <li xml:lang="es">Interfaz gráfica fácil de usar</li>
       <li xml:lang="et">Hõlpsasti mõistetav graafiline kasutajaliides</li>
+      <li xml:lang="eu">Erabiltzailearen interfaze erabilerraza</li>
       <li xml:lang="fi">Helppokäyttöinen graafinen käyttöliittymä</li>
       <li xml:lang="fr">Interface graphique simple d'utilisation</li>
       <li xml:lang="gl">Interface de usuario fácil de usar.</li>
@@ -313,6 +321,7 @@
       <li xml:lang="en-GB">Multiple servers and channels in one single window</li>
       <li xml:lang="es">Varios servidores y canales en una sola ventana</li>
       <li xml:lang="et">Eri serverite ja kanalite koondamine ühte aknasse</li>
+      <li xml:lang="eu">Leiho bakarrean zerbitzari eta kanal anizkoitzak</li>
       <li xml:lang="fi">Useampi palvelin ja kanava yhdessä ikkunassa</li>
       <li xml:lang="fr">Multiples serveurs et canaux dans une unique fenêtre</li>
       <li xml:lang="gl">Varios servidores e canles nunha mesma xanela.</li>
@@ -349,6 +358,7 @@
       <li xml:lang="en-GB">DCC file transfer</li>
       <li xml:lang="es">Trasferencia de archivos DCC</li>
       <li xml:lang="et">DCC-failiedastus</li>
+      <li xml:lang="eu">DCC fitxategi transferentzia</li>
       <li xml:lang="fi">DCC-tiedostonsiirto</li>
       <li xml:lang="fr">Transfert de fichier DCC</li>
       <li xml:lang="gl">Transferencia de ficheiros por DCC.</li>
@@ -387,6 +397,7 @@
       <li xml:lang="en-GB">Multiple identities for different servers</li>
       <li xml:lang="es">Varias identidades para distintos servidores</li>
       <li xml:lang="et">Eri serverites eri identiteedi kasutamise võimalus</li>
+      <li xml:lang="eu">Zerbitzari ezberdinetan nortasun anizkoitzak</li>
       <li xml:lang="fi">Useampi henkilöys eri palvelimiin</li>
       <li xml:lang="fr">Multiples identités pour différents serveurs</li>
       <li xml:lang="gl">Varias identidades para distintos servidores.</li>
@@ -423,6 +434,7 @@
       <li xml:lang="en-GB">Text decorations and colours</li>
       <li xml:lang="es">Decoraciones de texto y colores</li>
       <li xml:lang="et">Teksti dekoratsioonid ja värvid</li>
+      <li xml:lang="eu">Testu apaindurak eta koloreak</li>
       <li xml:lang="fi">Tekstitehosteet ja -värit</li>
       <li xml:lang="fr">Décorations du texte et couleurs</li>
       <li xml:lang="gl">Decoracións e cores de texto.</li>
@@ -462,6 +474,7 @@
       <li xml:lang="en-GB">OnScreen Display for notifications</li>
       <li xml:lang="es">Visualización en pantalla para notificaciones</li>
       <li xml:lang="et">Märguannete kuvamine ekraanil</li>
+      <li xml:lang="eu">Jakinarazpenak pantailan azaltzea (OSD)</li>
       <li xml:lang="fi">Ilmoitusten ruutunäyttö</li>
       <li xml:lang="fr">Affichage à l'écran des notifications</li>
       <li xml:lang="gl">Notificacións visualizadas na pantalla.</li>
@@ -498,6 +511,7 @@
       <li xml:lang="en-GB">Automatic UTF-8 detection</li>
       <li xml:lang="es">Detección automática de UTF-8</li>
       <li xml:lang="et">Automaatne UTF-8 tuvastamine</li>
+      <li xml:lang="eu">UTF-8 antzemate automatikoa</li>
       <li xml:lang="fi">Automaattinen UTF-8-tunnistus</li>
       <li xml:lang="fr">Détection automatique de l'UTF-8</li>
       <li xml:lang="gl">Detección automática de UTF-8.</li>
@@ -536,6 +550,7 @@
       <li xml:lang="en-GB">Per channel encoding support</li>
       <li xml:lang="es">Uso de codificación por canal</li>
       <li xml:lang="et">Võimalus määrata kodeeringut igal kanalil eraldi</li>
+      <li xml:lang="eu">Kanal bakoitzeko kodeketa-euskarria</li>
       <li xml:lang="fi">Kanavakohtainen merkistökoodaustuki</li>
       <li xml:lang="fr">Prise en charge de l'encodage par canal</li>
       <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
@@ -573,6 +588,7 @@
       <li xml:lang="en-GB">Theme support for nick icons</li>
       <li xml:lang="es">Uso de temas para iconos de apodos</li>
       <li xml:lang="et">Kasutajate ikoonidel teemavälimuse kasutamise võimalus</li>
+      <li xml:lang="eu">Goitizen-ikonoetarako gaien euskarria</li>
       <li xml:lang="fi">Teematuki tunnuskuvakkeille</li>
       <li xml:lang="fr">Prise en charge de thèmes pour les images de pseudonyme</li>
       <li xml:lang="gl">Funcionalidade de temas para iconas de alcumes.</li>
@@ -609,6 +625,7 @@
       <li xml:lang="en-GB">Highly configurable</li>
       <li xml:lang="es">Altamente configurable</li>
       <li xml:lang="et">Igati seadistatav</li>
+      <li xml:lang="eu">Oso konfiguragarria</li>
       <li xml:lang="fi">Laajalti mukautettavissa</li>
       <li xml:lang="fr">Hautement configurable</li>
       <li xml:lang="gl">Altamente configurábel.</li>
