@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-11-16 08:03+0100\n"
+"PO-Revision-Date: 2022-11-17 06:53+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -190,7 +190,7 @@ msgstr ""
 #: src/common.cpp:26
 #, kde-format
 msgid "no messages from outside"
-msgstr ""
+msgstr "kanpoko mezurik ez"
 
 #: src/common.cpp:27
 #, kde-format
@@ -200,7 +200,7 @@ msgstr "sekretua"
 #: src/common.cpp:28
 #, kde-format
 msgid "invite only"
-msgstr ""
+msgstr "gonbidatuak bakarrik"
 
 #: src/common.cpp:29
 #, kde-format
@@ -225,7 +225,7 @@ msgstr "anonimoa"
 #: src/common.cpp:33
 #, kde-format
 msgid "no colors allowed"
-msgstr ""
+msgstr "ez da kolorerik onartzen"
 
 #: src/common.cpp:34
 #, kde-format
@@ -1648,6 +1648,8 @@ msgstr "Gaitu egunkarian erregistratzea"
 #, kde-format
 msgid "Only log private conversations (queries, DCC chats)"
 msgstr ""
+"Elkarrizketa pribatuak bakarrik erregistratzen ditu (kontsultak, DCC "
+"berriketak)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LowerLog)
 #: src/config/log_config.ui:40
@@ -1686,7 +1688,7 @@ msgstr ""
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
 msgid "Halfops (+h)"
-msgstr ""
+msgstr "Erdi-eragilea (+h)"
 
 #: src/config/nicklistbehavior_config.cpp:48
 #, kde-format
@@ -4466,322 +4468,322 @@ msgstr ""
 #: src/irc/channel.cpp:1444
 #, kde-format
 msgid "You give channel owner privileges to yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-jabearen pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1445
 #, kde-format
 msgid "You give channel owner privileges to %1."
-msgstr ""
+msgstr "Kanalaren jabeari %1 egiteko pribilegioak ematen dizkiozu."
 
 #: src/irc/channel.cpp:1449
 #, kde-format
 msgid "%1 gives channel owner privileges to you."
-msgstr ""
+msgstr "%1(e)k zuri kanal-jabearen pribilegioak eman dizkizu."
 
 #: src/irc/channel.cpp:1450
 #, kde-format
 msgid "%1 gives channel owner privileges to %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-jabearen pribilegioak eman dizkio."
 
 #: src/irc/channel.cpp:1457
 #, kde-format
 msgid "You take channel owner privileges from yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-jabearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1458
 #, kde-format
 msgid "You take channel owner privileges from %1."
-msgstr ""
+msgstr "%1(e)ri kanal-jabearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1462
 #, kde-format
 msgid "%1 takes channel owner privileges from you."
-msgstr ""
+msgstr "%1(e) zuri kanal-jabearen pribilegioak kendu dizkizu."
 
 #: src/irc/channel.cpp:1463
 #, kde-format
 msgid "%1 takes channel owner privileges from %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-jabearen pribilegioak kendu dizkio."
 
 #: src/irc/channel.cpp:1479
 #, kde-format
 msgid "You give channel admin privileges to yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-administratzailearen pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1480
 #, kde-format
 msgid "You give channel admin privileges to %1."
-msgstr ""
+msgstr "%1(e)ri kanal-administratzailearen pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1484
 #, kde-format
 msgid "%1 gives channel admin privileges to you."
-msgstr ""
+msgstr "%1(e)k zuri kanal-administratzailearen pribilegioak eman dizkizu."
 
 #: src/irc/channel.cpp:1485
 #, kde-format
 msgid "%1 gives channel admin privileges to %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-administratzailearen pribilegioak eman dizkio."
 
 #: src/irc/channel.cpp:1492
 #, kde-format
 msgid "You take channel admin privileges from yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-administratzailearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1493
 #, kde-format
 msgid "You take channel admin privileges from %1."
-msgstr ""
+msgstr "%1(e)ri kanal-administratzailearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1497
 #, kde-format
 msgid "%1 takes channel admin privileges from you."
-msgstr ""
+msgstr "%1(e) kanal-administratzailearen pribilegioak kendu dizkizu."
 
 #: src/irc/channel.cpp:1498
 #, kde-format
 msgid "%1 takes channel admin privileges from %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-administratzailearen pribilegioak kendu dizkio."
 
 #: src/irc/channel.cpp:1513
 #, kde-format
 msgid "You give channel operator privileges to yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-eragilearen pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1514
 #, kde-format
 msgid "You give channel operator privileges to %1."
-msgstr ""
+msgstr "%1(e)ri kanal-eragilearen pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1518
 #, kde-format
 msgid "%1 gives channel operator privileges to you."
-msgstr ""
+msgstr "%1(e)k kanal-eragilearen pribilegioak eman dizkizu."
 
 #: src/irc/channel.cpp:1519
 #, kde-format
 msgid "%1 gives channel operator privileges to %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-eragilearen pribilegioak eman dizkio."
 
 #: src/irc/channel.cpp:1526
 #, kde-format
 msgid "You take channel operator privileges from yourself."
-msgstr ""
+msgstr "Zeure buruari kanal-eragilearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1527
 #, kde-format
 msgid "You take channel operator privileges from %1."
-msgstr ""
+msgstr "%1(e)ri kanal-eragilearen pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1531
 #, kde-format
 msgid "%1 takes channel operator privileges from you."
-msgstr ""
+msgstr "%1(e)k kanal-eragilearen pribilegioak kendu dizkizu."
 
 #: src/irc/channel.cpp:1532
 #, kde-format
 msgid "%1 takes channel operator privileges from %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanal-eragilearen pribilegioak kendu dizkio."
 
 #: src/irc/channel.cpp:1547
 #, kde-format
 msgid "You give channel halfop privileges to yourself."
-msgstr ""
+msgstr "Zeure buruari kanaleko erdi-eragile pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1548
 #, kde-format
 msgid "You give channel halfop privileges to %1."
-msgstr ""
+msgstr "%1(e)ri kanaleko erdi-eragile pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1552
 #, kde-format
 msgid "%1 gives channel halfop privileges to you."
-msgstr ""
+msgstr "%1(e)k zuri kanaleko erdi-eragile pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1553
 #, kde-format
 msgid "%1 gives channel halfop privileges to %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri kanaleko erdi-eragile pribilegioak eman dizkiozu."
 
 #: src/irc/channel.cpp:1560
 #, kde-format
 msgid "You take channel halfop privileges from yourself."
-msgstr ""
+msgstr "Zeure buruari erdi-eragile pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1561
 #, kde-format
 msgid "You take channel halfop privileges from %1."
-msgstr ""
+msgstr "%1(e)ri erdi-eragile pribilegioak kendu dizkiozu."
 
 #: src/irc/channel.cpp:1565
 #, kde-format
 msgid "%1 takes channel halfop privileges from you."
-msgstr ""
+msgstr "%1(e)k zuri erdi-eragile pribilegioak kendu dizkizu."
 
 #: src/irc/channel.cpp:1566
 #, kde-format
 msgid "%1 takes channel halfop privileges from %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri erdi-eragile pribilegioak kendu dizkio."
 
 #: src/irc/channel.cpp:1583
 #, kde-format
 msgid "You give yourself permission to talk."
-msgstr ""
+msgstr "Zeure buruari hitz egiteko baimena eman diozu."
 
 #: src/irc/channel.cpp:1584
 #, kde-format
 msgid "You give %1 permission to talk."
-msgstr ""
+msgstr "%1(e)ri hitz egiteko baimena eman diozu."
 
 #: src/irc/channel.cpp:1588
 #, kde-format
 msgid "%1 gives you permission to talk."
-msgstr ""
+msgstr "%1(e)k hitz egiteko baimena ematen dizu."
 
 #: src/irc/channel.cpp:1589
 #, kde-format
 msgid "%1 gives %2 permission to talk."
-msgstr ""
+msgstr "%1(e)k %2(e)ri hitz egiteko baimena ematen dio."
 
 #: src/irc/channel.cpp:1596
 #, kde-format
 msgid "You take the permission to talk from yourself."
-msgstr ""
+msgstr "Zeure buruari hitz egiteko baimena kendu diozu."
 
 #: src/irc/channel.cpp:1597
 #, kde-format
 msgid "You take the permission to talk from %1."
-msgstr ""
+msgstr "%1(e)ri hitz egiteko baimena kendu diozu."
 
 #: src/irc/channel.cpp:1601
 #, kde-format
 msgid "%1 takes the permission to talk from you."
-msgstr ""
+msgstr "%1(e)k hitz egiteko baimena kendu dizu."
 
 #: src/irc/channel.cpp:1602
 #, kde-format
 msgid "%1 takes the permission to talk from %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ri hitz egiteko baimena kendu dio."
 
 #: src/irc/channel.cpp:1614
 #, kde-format
 msgid "You set the channel mode to 'no colors allowed'."
-msgstr ""
+msgstr "Kanala 'ez da kolorerik onartzen' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1615
 #, kde-format
 msgid "%1 sets the channel mode to 'no colors allowed'."
-msgstr ""
+msgstr "%1(e)k kanala 'ez da kolorerik onartzen' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1619
 #, kde-format
 msgid "You set the channel mode to 'allow color codes'."
-msgstr ""
+msgstr "Kanala 'kolore-kodeak baimendu' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1620
 #, kde-format
 msgid "%1 sets the channel mode to 'allow color codes'."
-msgstr ""
+msgstr "%1(e)k kanala 'kolore-kodeak baimendu' moduan ezarri du."
 
 #: src/irc/channel.cpp:1627
 #, kde-format
 msgid "You set the channel mode to 'invite only'."
-msgstr ""
+msgstr "Kanala 'gonbidatuak bakarrik' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1628
 #, kde-format
 msgid "%1 sets the channel mode to 'invite only'."
-msgstr ""
+msgstr "%1(e)k kanala 'gonbidatuak bakarrik' moduan ezarri du."
 
 #: src/irc/channel.cpp:1632
 #, kde-format
 msgid "You remove the 'invite only' mode from the channel."
-msgstr ""
+msgstr "Kanaletik 'gonbidatuak bakarrik' modua kendu duzu."
 
 #: src/irc/channel.cpp:1633
 #, kde-format
 msgid "%1 removes the 'invite only' mode from the channel."
-msgstr ""
+msgstr "%1(e)k kanaletik 'gonbidatuak bakarrik' modua kendu du."
 
 #: src/irc/channel.cpp:1641
 #, kde-format
 msgid "You set the channel mode to 'moderated'."
-msgstr ""
+msgstr "Kanala 'moderatua' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1642
 #, kde-format
 msgid "%1 sets the channel mode to 'moderated'."
-msgstr ""
+msgstr "%1(e)k kanala 'moderatua' moduan ezarri du."
 
 #: src/irc/channel.cpp:1646
 #, kde-format
 msgid "You set the channel mode to 'unmoderated'."
-msgstr ""
+msgstr "Kanala 'ez moderatua' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1647
 #, kde-format
 msgid "%1 sets the channel mode to 'unmoderated'."
-msgstr ""
+msgstr "%1(e)k kanala 'ez moderatua' moduan ezarri du."
 
 #: src/irc/channel.cpp:1655
 #, kde-format
 msgid "You set the channel mode to 'no messages from outside'."
-msgstr ""
+msgstr "Kanala 'kanpoko mezurik ez' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1656
 #, kde-format
 msgid "%1 sets the channel mode to 'no messages from outside'."
-msgstr ""
+msgstr "%1(e)k kanala 'kanpoko mezurik ez' moduan ezarri du."
 
 #: src/irc/channel.cpp:1660
 #, kde-format
 msgid "You set the channel mode to 'allow messages from outside'."
-msgstr ""
+msgstr "Kanala 'baimendu kanpoko mezuak' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1661
 #, kde-format
 msgid "%1 sets the channel mode to 'allow messages from outside'."
-msgstr ""
+msgstr "%1(e)k kanala 'baimendu kanpoko mezuak' moduan ezarri du."
 
 #: src/irc/channel.cpp:1669
 #, kde-format
 msgid "You set the channel mode to 'private'."
-msgstr ""
+msgstr "Kanala 'pribatua' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1670
 #, kde-format
 msgid "%1 sets the channel mode to 'private'."
-msgstr ""
+msgstr "%1(e)k kanala 'pribatua' moduan ezarri du."
 
 #: src/irc/channel.cpp:1674
 #, kde-format
 msgid "You set the channel mode to 'public'."
-msgstr ""
+msgstr "Kanala 'publikoa' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1675
 #, kde-format
 msgid "%1 sets the channel mode to 'public'."
-msgstr ""
+msgstr "%1(e)k kanala 'publikoa' moduan ezarri du."
 
 #: src/irc/channel.cpp:1684
 #, kde-format
 msgid "You set the channel mode to 'secret'."
-msgstr ""
+msgstr "Kanala 'sekretua' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1685
 #, kde-format
 msgid "%1 sets the channel mode to 'secret'."
-msgstr ""
+msgstr "%1(e) kanala 'sekretua' moduan ezarri du."
 
 #: src/irc/channel.cpp:1689
 #, kde-format
 msgid "You set the channel mode to 'visible'."
-msgstr ""
+msgstr "Kanala 'ikusgai' moduan ezarri duzu."
 
 #: src/irc/channel.cpp:1690
 #, kde-format
 msgid "%1 sets the channel mode to 'visible'."
-msgstr ""
+msgstr "%1(e)k kanala 'ikusgai' moduan ezarri du."
 
 #: src/irc/channel.cpp:1701
 #, kde-format
@@ -4965,47 +4967,47 @@ msgstr ""
 #: src/irc/channel.cpp:2207
 #, kde-format
 msgid "Secret channel.  %1"
-msgstr ""
+msgstr "Kanal sekretua. %1"
 
 #: src/irc/channel.cpp:2208
 #, kde-format
 msgid "Invite only channel.  %1"
-msgstr ""
+msgstr "Bakarrik gonbidatuentzako kanala. %1"
 
 #: src/irc/channel.cpp:2209
 #, kde-format
 msgid "Private channel.  %1"
-msgstr ""
+msgstr "Kanal pribatua. %1"
 
 #: src/irc/channel.cpp:2210
 #, kde-format
 msgid "Moderated channel.  %1"
-msgstr ""
+msgstr "Moderatutako kanala. %1"
 
 #: src/irc/channel.cpp:2211
 #, kde-format
 msgid "Protect channel with a password."
-msgstr ""
+msgstr "Babestu kanala pasahitz batekin."
 
 #: src/irc/channel.cpp:2212
 #, kde-format
 msgid "Set user limit to channel."
-msgstr ""
+msgstr "Ezarri kanalaren erabiltzaile-muga."
 
 #: src/irc/channel.cpp:2389
 #, kde-format
 msgid "Do you want to leave %1?"
-msgstr ""
+msgstr "%1 utzi nahi duzu?"
 
 #: src/irc/channel.cpp:2390
 #, kde-format
 msgid "Leave Channel"
-msgstr ""
+msgstr "Kanala utzi"
 
 #: src/irc/channel.cpp:2391
-#, fuzzy, kde-format
+#, kde-format
 msgid "Leave"
-msgstr "Irten"
+msgstr "Utzi"
 
 #: src/irc/channel.cpp:2562 src/irc/query.cpp:400
 #: src/viewer/statuspanel.cpp:302
@@ -5015,92 +5017,93 @@ msgstr "Nortasun lehenetsia (%1)"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLbl)
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pass&word:"
-msgstr "&Pasahitza:"
+msgstr "Pasa&hitza:"
 
 #. i18n: ectx: property (text), widget (QLabel, channelLabel)
 #. i18n: ectx: property (text), widget (QLabel, channelLbl)
 #: src/irc/channeldialogui.ui:44 src/irc/joinchannelui.ui:35
-#, fuzzy, kde-format
+#, kde-format
 msgid "C&hannel:"
-msgstr "Kanala:"
+msgstr "&Kanala:"
 
 #: src/irc/channellistpanel.cpp:78
 #, kde-format
 msgid "Channel Name"
-msgstr ""
+msgstr "Kanalaren izena"
 
 #: src/irc/channellistpanel.cpp:80 src/irc/inputfilter.cpp:1700
 #: src/irc/inputfilter.cpp:1710 src/irc/inputfilter.cpp:2427
-#, fuzzy, kde-format
+#, kde-format
 msgid "Users"
 msgstr "Erabiltzaileak"
 
 #: src/irc/channellistpanel.cpp:82
 #, kde-format
 msgid "Channel Topic"
-msgstr ""
+msgstr "Kanalaren gaia"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
 #: src/irc/channellistpanel.cpp:143 src/irc/channellistpanelui.ui:14
 #: src/viewer/viewcontainer.cpp:2971 src/viewer/viewcontainer.cpp:2992
 #, kde-format
 msgid "Channel List"
-msgstr ""
+msgstr "Kanal-zerrenda"
 
 #: src/irc/channellistpanel.cpp:160
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "save list"
 msgid "Save &List..."
-msgstr "Gorde zerrenda"
+msgstr "Gorde &zerrenda..."
 
 #: src/irc/channellistpanel.cpp:161
 #, kde-format
 msgid "Click here to save the channel list."
-msgstr ""
+msgstr "Egin klik hemen kanal-zerrenda gordetzeko."
 
 #: src/irc/channellistpanel.cpp:162
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr "&Freskatu zerrenda"
+msgstr "F&reskatu zerrenda"
 
 #: src/irc/channellistpanel.cpp:163
 #, kde-format
 msgid "Click here to refresh the channel list."
-msgstr ""
+msgstr "Egin klik hemen kanal-zerrenda freskatzeko."
 
 #: src/irc/channellistpanel.cpp:165
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "join channel"
 msgid "&Join Channel"
-msgstr "&Sartu kanalean..."
+msgstr "&Batu kanalera"
 
 #: src/irc/channellistpanel.cpp:166
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
 msgstr ""
+"Egin klik hemen kanalera elkartzeko. Kanalerako fitxa berri bat sortzen da."
 
 #: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
 #, kde-format
 msgid "Refreshing."
-msgstr ""
+msgstr "Freskatzen."
 
 #: src/irc/channellistpanel.cpp:357
 #, kde-format
 msgid "Channels: %1 (%2 shown)"
-msgstr ""
+msgstr "Kanalak: %1 (%2 erakutsita)"
 
 #: src/irc/channellistpanel.cpp:358
 #, kde-format
 msgid " Non-unique users: %1 (%2 shown)"
-msgstr ""
+msgstr "Erabiltzaile bakarrak ez: %1 (%2 erakutsita)"
 
 #: src/irc/channellistpanel.cpp:366
 #, kde-format
 msgid "Save Channel List"
-msgstr ""
+msgstr "Gorde kanal-zerrenda"
 
 #: src/irc/channellistpanel.cpp:398
 #, kde-format
@@ -5108,33 +5111,35 @@ msgid ""
 "Konversation Channel List: %1 - %2\n"
 "\n"
 msgstr ""
+"Konversation kanal-zerrenda: %1 - %2\n"
+"\n"
 
 #: src/irc/channellistpanel.cpp:462 src/irc/joinchanneldialog.cpp:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "Join Channel"
-msgstr "&Sartu kanalean..."
+msgstr "Batu kanalera"
 
 #: src/irc/channellistpanel.cpp:471
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open URL"
 msgstr "Ireki URLa"
 
 #: src/irc/channellistpanel.cpp:531
 #, kde-format
 msgid "Channel List for %1"
-msgstr ""
+msgstr "%1(e)rako kanal-zerrenda"
 
 #. i18n: ectx: property (text), widget (QLabel, m_lblMaxUser)
 #: src/irc/channellistpanelui.ui:35
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ma&ximum users:"
-msgstr "Gehienezko erabiltzaileak:"
+msgstr "Gehiene&zko erabiltzaileak:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_lblMinuser)
 #: src/irc/channellistpanelui.ui:51
 #, kde-format
 msgid "&Minimum users:"
-msgstr ""
+msgstr "Gut&xieneko erabiltzaileak:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
@@ -5150,33 +5155,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Channel"
-msgstr "Kanala:"
+msgstr "&Kanala"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_topicBox)
 #: src/irc/channellistpanelui.ui:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Topic"
-msgstr "Gaia:"
+msgstr "&Gaia"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_filterLine)
 #: src/irc/channellistpanelui.ui:121
 #, kde-format
 msgid "Enter a filter string here."
-msgstr ""
+msgstr "Sartu hemen iragazki-kate bat."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
 #: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:148
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search"
 msgstr "Bilatu"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_regexBox)
 #: src/irc/channellistpanelui.ui:156
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Regular expression"
-msgstr "Adierazpen erregularra"
+msgstr "Adierazpen e&rregularra"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, m_minUser)
 #: src/irc/channellistpanelui.ui:186
@@ -5189,9 +5194,9 @@ msgstr ""
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_maxUser)
 #: src/irc/channellistpanelui.ui:189 src/irc/channellistpanelui.ui:208
-#, fuzzy, kde-format
+#, kde-format
 msgid "No Limit"
-msgstr "Mugarik ez"
+msgstr "Mugarik gabe"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, m_maxUser)
 #: src/irc/channellistpanelui.ui:205
@@ -5202,24 +5207,24 @@ msgid ""
 msgstr ""
 
 #: src/irc/channelnick.cpp:187
-#, fuzzy, kde-format
+#, kde-format
 msgid "Operator"
-msgstr "Operadorea"
+msgstr "Eragilea"
 
 #: src/irc/channelnick.cpp:188
-#, fuzzy, kde-format
+#, kde-format
 msgid "Admin"
-msgstr "Administratzailea"
+msgstr "Admin"
 
 #: src/irc/channelnick.cpp:189
-#, fuzzy, kde-format
+#, kde-format
 msgid "Owner"
 msgstr "Jabea"
 
 #: src/irc/channelnick.cpp:190
 #, kde-format
 msgid "Half-operator"
-msgstr ""
+msgstr "Erdi-eragilea"
 
 #: src/irc/channelnick.cpp:191
 #, kde-format
@@ -5345,7 +5350,7 @@ msgid "%1 sets mode: %2"
 msgstr ""
 
 #: src/irc/inputfilter.cpp:1167 src/irc/inputfilter.cpp:1175
-#, fuzzy, kde-format
+#, kde-format
 msgid "Welcome"
 msgstr "Ongi etorri"
 
@@ -5362,12 +5367,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1300
 #, kde-format
 msgid "Your personal modes are:"
-msgstr ""
+msgstr "Hauek dira zure modu pertsonalak:"
 
 #: src/irc/inputfilter.cpp:1312 src/irc/inputfilter.cpp:1349
 #, kde-format
 msgid "Channel modes: "
-msgstr ""
+msgstr "Kanal-moduak:"
 
 #: src/irc/inputfilter.cpp:1330
 #, kde-format
@@ -5377,17 +5382,17 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:171
-#, fuzzy, kde-format
+#, kde-format
 msgid "URL"
 msgstr "URLa"
 
 #: src/irc/inputfilter.cpp:1359
 #, kde-format
 msgid "Channel URL: %1"
-msgstr ""
+msgstr "Kanalaren URLa: %1"
 
 #: src/irc/inputfilter.cpp:1369
-#, fuzzy, kde-format
+#, kde-format
 msgid "Created"
 msgstr "Sortua"
 
@@ -5411,7 +5416,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2184
 #, kde-format
 msgid "Whois"
-msgstr ""
+msgstr "Whois"
 
 #: src/irc/inputfilter.cpp:1389
 #, kde-format
@@ -5419,7 +5424,7 @@ msgid "%1 is logged in as %2."
 msgstr ""
 
 #: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
-#, fuzzy, kde-format
+#, kde-format
 msgid "Names"
 msgstr "Izenak"
 
@@ -5626,7 +5631,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2012
 #, kde-format
 msgid "%1 is a halfop on channels: %2"
-msgstr ""
+msgstr "%1 erdi-eragilea da kanalean: %2"
 
 #: src/irc/inputfilter.cpp:2018
 #, kde-format
@@ -6052,12 +6057,12 @@ msgstr "Ahotsa"
 #: src/irc/nicksonline.cpp:306
 #, kde-format
 msgid " HalfOp"
-msgstr ""
+msgstr "Erdi-eragilea"
 
 #: src/irc/nicksonline.cpp:307
-#, fuzzy, kde-format
+#, kde-format
 msgid " Operator"
-msgstr "Operadorea"
+msgstr "Eragilea"
 
 #: src/irc/nicksonline.cpp:308
 #, fuzzy, kde-format
@@ -8909,13 +8914,13 @@ msgstr ""
 #: src/viewer/channeloptionsui.ui:124
 #, kde-format
 msgid "&No messages from outside the channel"
-msgstr ""
+msgstr "Kanaletik kanpoko mezurik e&z"
 
 #. i18n: ectx: property (text), widget (QCheckBox, secretModeChBox)
 #: src/viewer/channeloptionsui.ui:131
 #, kde-format
 msgid "&Secret channel, the channel is not listed in the channel list"
-msgstr ""
+msgstr "Kanal &sekretua, kanala ez da kanal-zerrendan zerrendatzen."
 
 #. i18n: ectx: property (text), widget (QCheckBox, inviteModeChBox)
 #: src/viewer/channeloptionsui.ui:138
@@ -9200,12 +9205,12 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:398
 #, kde-format
 msgid "Give HalfOp"
-msgstr ""
+msgstr "Eman Erdi-eragilea"
 
 #: src/viewer/irccontextmenus.cpp:399
 #, kde-format
 msgid "Take HalfOp"
-msgstr ""
+msgstr "Kendu Erdi-eragilea"
 
 #: src/viewer/irccontextmenus.cpp:400
 #, kde-format
