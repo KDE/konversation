@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-11-17 06:53+0100\n"
+"PO-Revision-Date: 2022-11-19 00:20+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -8270,7 +8270,7 @@ msgid "%1 File Transfer is complete"
 msgstr ""
 
 #: src/notificationhandler.cpp:301
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Opens the file from the finished dcc transfer"
 msgid "Open"
 msgstr "Ireki"
@@ -8315,32 +8315,34 @@ msgstr "Nabarmendu"
 #: src/notificationhandler.cpp:442
 #, kde-format
 msgid "Failed to connect to %1"
-msgstr ""
+msgstr "%1(e)ra konektatzea huts egin du\t\t"
 
 #: src/notificationhandler.cpp:455
 #, kde-format
 msgid "You have joined %1."
-msgstr ""
+msgstr "%1(e)ra batu zara."
 
 #: src/queuetuner.cpp:224
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reset..."
-msgstr "Berrezarri"
+msgstr "Berrezarri..."
 
 #: src/queuetuner.cpp:229
 #, kde-format
 msgid ""
 "This cannot be undone, are you sure you wish to reset to default values?"
 msgstr ""
+"Hori ezin da desegin, ziur zaude lehenetsitako balioetan berrezarri nahi "
+"duzula?"
 
 #: src/queuetuner.cpp:231
 #, kde-format
 msgid "Reset Values"
-msgstr ""
+msgstr "Berrezarri balioak"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_closeButton)
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close"
 msgstr "Itxi"
 
@@ -8348,14 +8350,14 @@ msgstr "Itxi"
 #: src/queuetunerbase.ui:96
 #, kde-format
 msgid "Slow Queue"
-msgstr ""
+msgstr "Erakutsi ilara"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_slowType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_normalType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fastType)
 #: src/queuetunerbase.ui:130 src/queuetunerbase.ui:301
 #: src/queuetunerbase.ui:469
-#, fuzzy, kde-format
+#, kde-format
 msgid "Lines"
 msgstr "Lerroak"
 
@@ -8364,9 +8366,9 @@ msgstr "Lerroak"
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fastType)
 #: src/queuetunerbase.ui:135 src/queuetunerbase.ui:306
 #: src/queuetunerbase.ui:474
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bytes"
-msgstr "Byte"
+msgstr "Byteak"
 
 #. i18n: ectx: property (text), widget (QLabel, m_slowAge)
 #. i18n: ectx: property (text), widget (QLabel, m_slowCount)
@@ -8394,14 +8396,14 @@ msgstr "Byte"
 #: src/queuetunerbase.ui:682 src/queuetunerbase.ui:692
 #, kde-format
 msgid "888"
-msgstr ""
+msgstr "888"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2_3)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2_3_2)
 #: src/queuetunerbase.ui:186 src/queuetunerbase.ui:417
 #: src/queuetunerbase.ui:505
-#, fuzzy, kde-format
+#, kde-format
 msgid "Age:"
 msgstr "Adina:"
 
@@ -8410,9 +8412,9 @@ msgstr "Adina:"
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_4_2)
 #: src/queuetunerbase.ui:196 src/queuetunerbase.ui:381
 #: src/queuetunerbase.ui:541
-#, fuzzy, kde-format
+#, kde-format
 msgid "Count:"
-msgstr "Kopurua:"
+msgstr "Kopurua"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
@@ -8420,18 +8422,18 @@ msgstr "Kopurua:"
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/queuetunerbase.ui:216 src/queuetunerbase.ui:331
 #: src/queuetunerbase.ui:561 src/queuetunerbase.ui:702
-#, fuzzy, kde-format
+#, kde-format
 msgid "Lines:"
-msgstr "Lerroak"
+msgstr "Lerroak:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/queuetunerbase.ui:226 src/queuetunerbase.ui:341
 #: src/queuetunerbase.ui:571
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bytes:"
-msgstr "%1 byte"
+msgstr "Byteak:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_normalBox)
 #: src/queuetunerbase.ui:267
@@ -8485,24 +8487,24 @@ msgid "Enter the host of the network here."
 msgstr ""
 
 #: src/quickconnectdialog.cpp:53
-#, kde-format
+#, fuzzy, kde-format
 msgid "The port that the IRC server is using."
-msgstr ""
+msgstr "IRC zerbitzuaren "
 
 #: src/quickconnectdialog.cpp:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Nick:"
 msgstr "&Goitizena:"
 
 #: src/quickconnectdialog.cpp:61
 #, kde-format
 msgid "The nick you want to use."
-msgstr ""
+msgstr "Erabili nahi duzun ezizena."
 
 #: src/quickconnectdialog.cpp:68
-#, fuzzy, kde-format
+#, kde-format
 msgid "P&assword:"
-msgstr "P&asahitza:"
+msgstr "P&asahitza::"
 
 #: src/quickconnectdialog.cpp:69
 #, kde-format
@@ -8512,12 +8514,12 @@ msgid ""
 msgstr ""
 
 #: src/quickconnectdialog.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Use SSL"
-msgstr "Erabili SSL?"
+msgstr "Era&bili SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ready"
 msgstr "Prest"
 
@@ -8557,9 +8559,9 @@ msgid "Lag: %1 ms"
 msgstr ""
 
 #: src/statusbar.cpp:149 src/statusbar.cpp:210
-#, kde-format
+#, fuzzy, kde-format
 msgid "Lag: %1 s"
-msgstr ""
+msgstr "Egunkaria: %1 s"
 
 #: src/statusbar.cpp:181
 #, kde-format
@@ -8590,9 +8592,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/upnp/upnprouter.cpp:123
-#, fuzzy, kde-format
+#, kde-format
 msgid "Failed to download %1: %2"
-msgstr "Huts egin du %1 deskargatzean: %2"
+msgstr "%1 zama-jaistea huts egin du %1:%2"
 
 #: src/upnp/upnprouter.cpp:134
 #, fuzzy, kde-format
@@ -8605,7 +8607,7 @@ msgid "URL Catcher"
 msgstr ""
 
 #: src/urlcatcher.cpp:91
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "open url"
 msgid "&Open"
 msgstr "&Ireki"
@@ -8613,7 +8615,7 @@ msgstr "&Ireki"
 #: src/urlcatcher.cpp:94
 #, kde-format
 msgid "Open URLs in external browser."
-msgstr ""
+msgstr "Ireki URLak kanpoko nabigatzailea."
 
 #: src/urlcatcher.cpp:95
 #, kde-format
@@ -8625,22 +8627,22 @@ msgid ""
 msgstr ""
 
 #: src/urlcatcher.cpp:98
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Save..."
 msgstr "&Gorde..."
 
 #: src/urlcatcher.cpp:101
 #, kde-format
 msgid "Save selected URLs to the disk."
-msgstr ""
+msgstr "Gorde hautatutako URLak diskora."
 
 #: src/urlcatcher.cpp:104
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Bookmark..."
 msgstr "Gehitu laster-markak..."
 
 #: src/urlcatcher.cpp:112
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "copy url"
 msgid "&Copy"
 msgstr "&Kopiatu"
@@ -8648,7 +8650,7 @@ msgstr "&Kopiatu"
 #: src/urlcatcher.cpp:115
 #, kde-format
 msgid "Copy URLs to the clipboard."
-msgstr ""
+msgstr "Kopiatu URLak arbelera."
 
 #: src/urlcatcher.cpp:116
 #, kde-format
@@ -8656,12 +8658,14 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
+"Goran hautatu <b>URL</b> bat edo gehiago, ondoren egin klik botoi horretan "
+"haiek arbelean kopiatzeko"
 
 #: src/urlcatcher.cpp:119
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "delete url"
 msgid "&Delete"
-msgstr "&Ezabatu"
+msgstr "E&zabatu"
 
 #: src/urlcatcher.cpp:122
 #, kde-format
@@ -8673,39 +8677,39 @@ msgstr ""
 #: src/urlcatcher.cpp:123
 #, kde-format
 msgid "Delete selected link."
-msgstr ""
+msgstr "Ezabatu hautatutako esteka."
 
 #: src/urlcatcher.cpp:129
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
-msgstr "Gorde zerrenda"
+msgstr "&Gorde zerrenda..."
 
 #: src/urlcatcher.cpp:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save list."
-msgstr "Gorde zerrenda"
+msgstr "Gorde zerrenda."
 
 #: src/urlcatcher.cpp:132
 #, kde-format
 msgid "Click to save the entire list to a file."
-msgstr ""
+msgstr "Egin klik zerrenda osoa fitxategi batean gordetzeko."
 
 #: src/urlcatcher.cpp:135
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "clear url list"
 msgid "&Clear List"
 msgstr "&Hustu zerrenda"
 
 #: src/urlcatcher.cpp:137
-#, fuzzy, kde-format
+#, kde-format
 msgid "Clear list."
-msgstr "Garbitu zerrenda"
+msgstr "Hustu zerrenda."
 
 #: src/urlcatcher.cpp:138
 #, kde-format
 msgid "Click to erase the entire list."
-msgstr ""
+msgstr "Egin klik zerrenda osoa kentzeko."
 
 #: src/urlcatcher.cpp:156
 #, kde-format
@@ -8720,7 +8724,7 @@ msgid "From"
 msgstr "Nork"
 
 #: src/urlcatcher.cpp:173
-#, fuzzy, kde-format
+#, kde-format
 msgid "Date"
 msgstr "Data"
 
@@ -8734,7 +8738,7 @@ msgstr ""
 #: src/urlcatcher.cpp:232 src/urlcatcher.cpp:254
 #, kde-format
 msgid "Open URLs"
-msgstr ""
+msgstr "Ireki URLak"
 
 #: src/urlcatcher.cpp:252
 #, kde-format
@@ -8744,14 +8748,14 @@ msgid ""
 msgstr ""
 
 #: src/urlcatcher.cpp:267 src/viewer/irccontextmenus.cpp:772
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save link as"
-msgstr "&Gorde esteka honela..."
+msgstr "Gorde esteka honela"
 
 #: src/urlcatcher.cpp:335
 #, kde-format
 msgid "Save URL List"
-msgstr ""
+msgstr "Gorde URL-zerrenda"
 
 #: src/urlcatcher.cpp:362
 #, kde-format
@@ -8759,6 +8763,8 @@ msgid ""
 "Konversation URL List: %1\n"
 "\n"
 msgstr ""
+"Konversation URL-zerrenda: %1\n"
+"\n"
 
 #: src/viewer/awaylabel.cpp:16
 #, fuzzy, kde-format
@@ -8788,20 +8794,20 @@ msgstr ""
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
 msgid "Channel Settings for %1"
-msgstr ""
+msgstr "%1(e)ren kanal-ezarpenak"
 
 #: src/viewer/channeloptionsdialog.cpp:218
 #, kde-format
 msgid "&Hide Advanced Modes <<"
-msgstr ""
+msgstr "E&zkutatu modu aurreratuak <<"
 
 #: src/viewer/channeloptionsdialog.cpp:222
 #, kde-format
 msgid "&Show Advanced Modes >>"
-msgstr ""
+msgstr "Erakut&si modu aurreratua >>"
 
 #: src/viewer/channeloptionsdialog.cpp:313
-#, fuzzy, kde-format
+#, kde-format
 msgid "Parameter"
 msgstr "Parametroa"
 
@@ -8809,7 +8815,7 @@ msgstr "Parametroa"
 #, kde-format
 msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
-msgstr ""
+msgstr "%1 (%2)"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -8887,28 +8893,28 @@ msgstr ""
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
 #: src/viewer/channeloptionsui.ui:36
-#, fuzzy, kde-format
+#, kde-format
 msgid "Topi&c"
-msgstr "Gaia:"
+msgstr "&Gaia:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/viewer/channeloptionsui.ui:69 src/viewer/channeloptionsui.ui:266
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search:"
 msgstr "Bilatu:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, modesPage)
 #: src/viewer/channeloptionsui.ui:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mo&des"
-msgstr "Moduak"
+msgstr "Mo&duak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, topicModeChBox)
 #: src/viewer/channeloptionsui.ui:117
 #, kde-format
 msgid "&Topic can only be changed by channel operators"
-msgstr ""
+msgstr "&Gaia, kanal-eragileek bakarrik alda dezakete"
 
 #. i18n: ectx: property (text), widget (QCheckBox, messageModeChBox)
 #: src/viewer/channeloptionsui.ui:124
@@ -8926,31 +8932,32 @@ msgstr "Kanal &sekretua, kanala ez da kanal-zerrendan zerrendatzen."
 #: src/viewer/channeloptionsui.ui:138
 #, kde-format
 msgid "Only &invited are allowed to join the channel"
-msgstr ""
+msgstr "Gonb&idatutakoak bakarrik batu daitezke kanalera"
 
 #. i18n: ectx: property (text), widget (QCheckBox, moderatedModeChBox)
 #: src/viewer/channeloptionsui.ui:145
 #, kde-format
 msgid "&Moderated channel, only people with voice can write to the channel"
 msgstr ""
+"&Moderatutako kanala, hitza duten pertsonek soilik idatz dezakete kanalera"
 
 #. i18n: ectx: property (text), widget (QCheckBox, userLimitChBox)
 #: src/viewer/channeloptionsui.ui:152
 #, kde-format
 msgid "User &limit:"
-msgstr ""
+msgstr "Erabiltzaile-&muga:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, keyModeChBox)
 #: src/viewer/channeloptionsui.ui:188
 #, kde-format
 msgid "Channel &password:"
-msgstr ""
+msgstr "Kanalaren &pasahitza:"
 
 #. i18n: ectx: property (text), widget (QPushButton, toggleAdvancedModes)
 #: src/viewer/channeloptionsui.ui:202
 #, kde-format
 msgid "Show &Advanced Modes >>"
-msgstr ""
+msgstr "Erakutsi modu &aurreratuak >>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, TabPage)
 #: src/viewer/channeloptionsui.ui:252
@@ -8962,7 +8969,7 @@ msgstr ""
 #: src/viewer/channeloptionsui.ui:288
 #, kde-format
 msgid "Hostmask"
-msgstr ""
+msgstr "Ostalari-maskara"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, banList)
 #: src/viewer/channeloptionsui.ui:293
@@ -9011,17 +9018,17 @@ msgstr ""
 #: src/viewer/editnotifydialog.cpp:46
 #, kde-format
 msgid "&Network name:"
-msgstr ""
+msgstr "&Sare-izena:"
 
 #: src/viewer/editnotifydialog.cpp:48
 #, kde-format
 msgid "Pick the server network you will connect to here."
-msgstr ""
+msgstr "Hautatu hemen konektatuko zaren zerbitzari-sarea."
 
 #: src/viewer/editnotifydialog.cpp:55
-#, fuzzy, kde-format
+#, kde-format
 msgid "N&ickname:"
-msgstr "&Goitizena:"
+msgstr "Go&itizena:"
 
 #: src/viewer/editnotifydialog.cpp:57
 #, kde-format
@@ -9032,40 +9039,40 @@ msgstr ""
 #: src/viewer/editnotifydialog.cpp:65
 #, kde-format
 msgid "All Networks"
-msgstr ""
+msgstr "Sare guztiak"
 
 #: src/viewer/editnotifydialog.cpp:78
 #, kde-format
 msgid "Change notify information"
-msgstr ""
+msgstr "Aldatu jakinarazpen informazioa"
 
 #: src/viewer/ignorelistviewitem.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgid "Exception"
 msgstr "Salbuespena"
 
 #: src/viewer/insertchardialog.cpp:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "Insert Character"
 msgstr "Txertatu karakterea"
 
 #: src/viewer/insertchardialog.cpp:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Insert"
 msgstr "T&xertatu"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "Insert a character"
-msgstr ""
+msgstr "Txertatu karaktere bat"
 
 #: src/viewer/irccolorchooser.cpp:18
 #, kde-format
 msgid "IRC Color Chooser"
-msgstr ""
+msgstr "IRC kolore-hautatzailea"
 
 #: src/viewer/irccolorchooser.cpp:23
-#, fuzzy, kde-format
+#, kde-format
 msgid "None"
 msgstr "Bat ere ez"
 
@@ -9073,7 +9080,7 @@ msgstr "Bat ere ez"
 #: src/viewer/irccolorchooserui.ui:17
 #, kde-format
 msgid "This is how your message will look with these colors"
-msgstr ""
+msgstr "Horrela ikusiko da zure mezua kolore horiekin"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:22
@@ -9088,9 +9095,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preview"
-msgstr "Aurrebista"
+msgstr "Aurreikuspegia"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_fgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_fgColorLbl)
@@ -9113,9 +9120,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Fore&ground color:"
-msgstr "Aurreko planoko kolorea"
+msgstr "Aurreko &planoko kolorea:"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
@@ -9143,22 +9150,22 @@ msgid ""
 msgstr ""
 
 #: src/viewer/irccontextmenus.cpp:141
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copy Link Address"
 msgstr "Kopiatu estekaren helbidea"
 
 #: src/viewer/irccontextmenus.cpp:145
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add to Bookmarks"
-msgstr "Gehitu Lastermarkatara"
+msgstr "Gehitu Laster-markatara"
 
 #: src/viewer/irccontextmenus.cpp:146
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open With..."
 msgstr "Ireki honekin..."
 
 #: src/viewer/irccontextmenus.cpp:147
-#, fuzzy, kde-format
+#, kde-format
 msgid "Save Link As..."
 msgstr "Gorde esteka honela..."
 
@@ -9168,19 +9175,19 @@ msgid "Search for '%1' with"
 msgstr "Bilatu '%1' honekin"
 
 #: src/viewer/irccontextmenus.cpp:301
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfiguratu web-lasterbideak..."
 
 #: src/viewer/irccontextmenus.cpp:337
 #, kde-format
 msgid "Get &topic"
-msgstr ""
+msgstr "Lortu &gaia"
 
 #: src/viewer/irccontextmenus.cpp:338
 #, kde-format
 msgid "Get &user list"
-msgstr ""
+msgstr "Lortu erabilt&zaile-zerrenda"
 
 #: src/viewer/irccontextmenus.cpp:383
 #, kde-format
@@ -9188,7 +9195,7 @@ msgid "Open Query"
 msgstr ""
 
 #: src/viewer/irccontextmenus.cpp:395
-#, fuzzy, kde-format
+#, kde-format
 msgid "Modes"
 msgstr "Moduak"
 
@@ -9215,12 +9222,12 @@ msgstr "Kendu Erdi-eragilea"
 #: src/viewer/irccontextmenus.cpp:400
 #, kde-format
 msgid "Give Voice"
-msgstr ""
+msgstr "Eman hitza"
 
 #: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Take Voice"
-msgstr ""
+msgstr "Hartu hitza"
 
 #: src/viewer/irccontextmenus.cpp:405
 #, kde-format
@@ -9278,14 +9285,14 @@ msgid "Kickban *!user@domain"
 msgstr ""
 
 #: src/viewer/irccontextmenus.cpp:436
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Version"
-msgstr "Bertsioa"
+msgstr "&Bertsioa"
 
 #: src/viewer/irccontextmenus.cpp:437
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Ping"
-msgstr "Ping"
+msgstr "&Ping"
 
 #: src/viewer/irccontextmenus.cpp:444 src/viewer/irccontextmenus.cpp:629
 #: src/viewer/irccontextmenus.cpp:630
@@ -9304,7 +9311,7 @@ msgid "Remove From Watched Nicks"
 msgstr ""
 
 #: src/viewer/irccontextmenus.cpp:456
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send &File..."
 msgstr "Bidali &fitxategia..."
 
@@ -9361,17 +9368,17 @@ msgid ""
 msgstr ""
 
 #: src/viewer/ircinput.cpp:474
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
-msgstr[0] "byte 1"
+msgstr[0] "Byte 1"
 msgstr[1] "%1 byte"
 
 #: src/viewer/ircinput.cpp:475
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
-msgstr[0] "Lerroa"
+msgstr[0] "Lerroa 1"
 msgstr[1] "%1 lerro"
 
 #: src/viewer/ircinput.cpp:485
@@ -9391,7 +9398,7 @@ msgid "Large Paste Warning"
 msgstr ""
 
 #: src/viewer/ircinput.cpp:489
-#, fuzzy, kde-format
+#, kde-format
 msgid "Paste"
 msgstr "Itsatsi"
 
@@ -9403,27 +9410,27 @@ msgstr ""
 #: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:292
 #, kde-format
 msgid "Join the channel %1"
-msgstr ""
+msgstr "Batu %1 kanalera"
 
 #: src/viewer/logfilereader.cpp:30
 #, kde-format
 msgid "Logfile of %1"
-msgstr ""
+msgstr "%1(e)ren egunkari-fitxategia"
 
 #: src/viewer/logfilereader.cpp:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reload"
 msgstr "Birzamatu"
 
 #: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:139
 #, kde-format
 msgid "Clear Logfile"
-msgstr ""
+msgstr "Garbitu egunkari-fitxategia"
 
 #: src/viewer/logfilereader.cpp:42
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show last:"
-msgstr "Erakutsi azkena"
+msgstr "Erakutsi azkena:"
 
 #: src/viewer/logfilereader.cpp:48
 #, kde-format
@@ -9434,7 +9441,7 @@ msgid ""
 msgstr ""
 
 #: src/viewer/logfilereader.cpp:50
-#, fuzzy, kde-format
+#, kde-format
 msgid " KB"
 msgstr " KB"
 
@@ -9461,12 +9468,12 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:153
 #, kde-format
 msgid "Save Logfile"
-msgstr ""
+msgstr "Gorde egunkari-fitxategia"
 
 #: src/viewer/logfilereader.cpp:157
 #, kde-format
 msgid "Choose Destination Folder"
-msgstr ""
+msgstr "Aukeratu helburuko karpeta"
 
 #: src/viewer/osd.cpp:325
 #, kde-format
@@ -9479,7 +9486,7 @@ msgid "Edit Multiline Paste"
 msgstr ""
 
 #: src/viewer/pasteeditor.cpp:28
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Send"
 msgstr "&Bidali"
 
@@ -9499,7 +9506,7 @@ msgstr ""
 #: src/viewer/pasteeditor.ui:43
 #, kde-format
 msgid "&Remove Newlines"
-msgstr ""
+msgstr "&Kendu lerro berriak"
 
 #: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2751
 #, kde-format
@@ -9507,54 +9514,54 @@ msgid "Raw Log"
 msgstr ""
 
 #: src/viewer/searchbar.cpp:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "Match Case"
 msgstr "Bereizi maiuskulak"
 
 #: src/viewer/searchbar.cpp:67
-#, fuzzy, kde-format
+#, kde-format
 msgid "Whole Words Only"
 msgstr "Hitz osoak bakarrik"
 
 #. i18n: ectx: property (text), widget (QLabel, m_findLabel)
 #: src/viewer/searchbarbase.ui:55
-#, fuzzy, kde-format
+#, kde-format
 msgid "F&ind:"
-msgstr "&Bilatu:"
+msgstr "Aurk&itu:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:68
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to next match"
 msgstr "Joan hurrengo bat-etortzera"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:71
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Next"
 msgstr "&Hurrengoa"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to previous match"
 msgstr "Joan aurreko bat-etortzera"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:84
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Previous"
 msgstr "&Aurrekoa"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:110
-#, fuzzy, kde-format
+#, kde-format
 msgid "Modify search behavior"
 msgstr "Aldatu bilaketaren jokabidea"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:113
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Options"
 msgstr "&Aukerak"
 
@@ -9565,9 +9572,12 @@ msgid ""
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
+"Benetan itxi nahi duzu '%1'\n"
+"\n"
+"Harekin lotutako fitxa guztiak ere itxiko dira."
 
 #: src/viewer/statuspanel.cpp:226
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close Tab"
 msgstr "Itxi fitxa"
 
@@ -9578,26 +9588,30 @@ msgid ""
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
+"'%1'(e)tik deskonektatu nahi duzu?\n"
+"\n"
+"Harekin lotutako fitxa guztiak ere itxiko dira."
 
 #: src/viewer/statuspanel.cpp:236
 #, kde-format
 msgid "Disconnect From Server"
-msgstr ""
+msgstr "Deskonektatu zerbitzaritik"
 
 #: src/viewer/statuspanel.cpp:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Disconnect"
 msgstr "Deskonektatu"
 
 #: src/viewer/topicedit.cpp:189
 #, kde-format
 msgid "Delete excess text"
-msgstr ""
+msgstr "Ezabatu testu-soberakina"
 
 #: src/viewer/topicedit.cpp:203
 #, kde-format
 msgid "Text past the server limit of %1 bytes is shown in color."
 msgstr ""
+"Zerbitzariaren %1 byteko muga gainditzen duen testua koloretan erakusten da."
 
 #: src/viewer/topichistoryview.cpp:36
 #, kde-format
@@ -9624,19 +9638,19 @@ msgid ""
 msgstr ""
 
 #: src/viewer/trayicon.cpp:23
-#, fuzzy, kde-format
+#, kde-format
 msgid "IRC Client"
 msgstr "IRC bezeroa"
 
 #: src/viewer/viewcontainer.cpp:886
-#, fuzzy, kde-format
+#, kde-format
 msgid "Find Text..."
-msgstr "Aurkitu testua"
+msgstr "Aurkitu testua..."
 
 #: src/viewer/viewcontainer.cpp:888
 #, kde-format
 msgid "Search for text in the current tab"
-msgstr ""
+msgstr "Bilatu testua uneko fitxan"
 
 #: src/viewer/viewcontainer.cpp:906
 #, kde-format
@@ -9654,20 +9668,20 @@ msgid "&Channel Settings for %1..."
 msgstr ""
 
 #: src/viewer/viewcontainer.cpp:2120
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename Tab"
-msgstr "Aldatu fitxaren izena"
+msgstr "Berrizendatu fitxa"
 
 #: src/viewer/viewcontainer.cpp:2121
 #, kde-format
 msgid "Enter new tab name:"
-msgstr ""
+msgstr "Sartu fitxa-izen berria:"
 
 #: src/viewer/viewcontainer.cpp:2193
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr "Lehenetsia"
+msgstr "Lehenetsia ( %1 )"
 
 #: src/viewer/viewcontainer.cpp:2234
 #, fuzzy, kde-format
@@ -9682,7 +9696,7 @@ msgstr ""
 #: src/viewer/viewcontainer.cpp:2384
 #, kde-format
 msgid "Find Text Information"
-msgstr ""
+msgstr "Bilatu testu-informazioa"
 
 #: src/viewer/viewcontainer.cpp:2988
 #, kde-format
