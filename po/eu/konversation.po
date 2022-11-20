@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-11-19 00:20+0100\n"
+"PO-Revision-Date: 2022-11-19 07:48+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1648,8 +1648,7 @@ msgstr "Gaitu egunkarian erregistratzea"
 #, kde-format
 msgid "Only log private conversations (queries, DCC chats)"
 msgstr ""
-"Elkarrizketa pribatuak bakarrik erregistratzen ditu (kontsultak, DCC "
-"berriketak)"
+"Elkarrizketa pribatuak bakarrik erregistratzen ditu (itaunak, DCC berriketak)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LowerLog)
 #: src/config/log_config.ui:40
@@ -7752,70 +7751,74 @@ msgid ""
 msgstr ""
 
 #: src/main.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "msec"
-msgstr " ms"
+msgstr "ms"
 
 #: src/main.cpp:112
 #, kde-format
 msgid "Quits and restarts Konversation (if running, otherwise has no effect)"
 msgstr ""
+"Konversation-etik irten eta berrabiarazten du (martxan badago, bestela ez "
+"dauka eraginik)"
 
 #: src/main.cpp:114
 #, kde-format
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
+"«KUniqueApplication::NonUniqueInstance» ezartzen du (arazteko bakarrik, "
+"arretaz erabili)"
 
 #: src/mainwindow.cpp:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restart"
 msgstr "Berrabiarazi"
 
 #: src/mainwindow.cpp:133
 #, kde-format
 msgid "Quit and restart the application"
-msgstr ""
+msgstr "Irten eta aplikazioa berrabiarazi"
 
 #: src/mainwindow.cpp:138
 #, kde-format
 msgid "&Server List..."
-msgstr ""
+msgstr "&Zerbitzari-zerrenda..."
 
 #: src/mainwindow.cpp:141
 #, kde-format
 msgid "Manage networks and servers"
-msgstr ""
+msgstr "Kudeatu sareak eta zerbitzariak"
 
 #: src/mainwindow.cpp:146
 #, kde-format
 msgid "Quick &Connect..."
-msgstr ""
+msgstr "&Konexio bizkorra..."
 
 #: src/mainwindow.cpp:149
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
-msgstr ""
+msgstr "Tekleatu konektatu beharreko IRC zerbitzari berri baten helbidea"
 
 #: src/mainwindow.cpp:154
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Reconnect"
-msgstr "Birkonektatu"
+msgstr "Bi&rkonektatu"
 
 #: src/mainwindow.cpp:157
 #, kde-format
 msgid "Reconnect to the current server."
-msgstr ""
+msgstr "Birkonektatu uneko zerbitzarira."
 
 #: src/mainwindow.cpp:163
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Disconnect"
-msgstr "Deskonektatu"
+msgstr "&Deskonektatu"
 
 #: src/mainwindow.cpp:166
 #, kde-format
 msgid "Disconnect from the current server."
-msgstr ""
+msgstr "Deskonektatu uneko zerbitzaritik."
 
 #: src/mainwindow.cpp:171
 #, kde-format
@@ -7823,218 +7826,218 @@ msgid "&Identities..."
 msgstr "&Nortasunak..."
 
 #: src/mainwindow.cpp:174
-#, kde-format
+#, fuzzy, kde-format
 msgid "Manage your nick, away and other identity settings"
-msgstr ""
+msgstr "Kudeatu zure goitizena, "
 
 #: src/mainwindow.cpp:179
 #, kde-format
 msgid "&Watched Nicks"
-msgstr ""
+msgstr "&Gainbegiratutako goitizenak"
 
 #: src/mainwindow.cpp:187
 #, kde-format
 msgid "&DCC Status"
-msgstr ""
+msgstr "&DCC egoera"
 
 #: src/mainwindow.cpp:196 src/mainwindow.cpp:841
 #: src/viewer/viewcontainer.cpp:921
 #, kde-format
 msgid "&Open Logfile"
-msgstr ""
+msgstr "&Ireki egunkari-fitxategia"
 
 #: src/mainwindow.cpp:200
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
-msgstr ""
+msgstr "Ireki kanal honetarako historia ezaguna fitxa berri batean"
 
 #: src/mainwindow.cpp:205 src/viewer/viewcontainer.cpp:942
 #, kde-format
 msgid "&Channel Settings..."
-msgstr ""
+msgstr "&Kanal ezarpenak..."
 
 #: src/mainwindow.cpp:208
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
-msgstr ""
+msgstr "Ireki kanal-ezarpen elkarrizketa-koadroa fitxa honetarako"
 
 #: src/mainwindow.cpp:213 src/viewer/viewcontainer.cpp:912
 #, kde-format
 msgid "Channel &List"
-msgstr ""
+msgstr "Kanal-&zerrenda"
 
 #: src/mainwindow.cpp:217
 #, kde-format
 msgid "Show a list of all the known channels on this server"
-msgstr ""
+msgstr "Erakutsi zerbitzari honetan ezagunak diren kanal guztien zerrenda bat"
 
 #: src/mainwindow.cpp:222
 #, kde-format
 msgid "&URL Catcher"
-msgstr ""
+msgstr "&URL harrapatzailea"
 
 #: src/mainwindow.cpp:225
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
-msgstr ""
+msgstr "Zerrendatu berriki aipatu diren URL denak fitxa berri batean"
 
 #: src/mainwindow.cpp:232
 #, kde-format
 msgid "New &Konsole"
-msgstr ""
+msgstr "&Konsole berria"
 
 #: src/mainwindow.cpp:234
 #, kde-format
 msgid "Open a terminal in a new tab"
-msgstr ""
+msgstr "Ireki terminal bat fitxa berri batean"
 
 #: src/mainwindow.cpp:264
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Next Tab"
 msgstr "&Hurrengo fitxa"
 
 #: src/mainwindow.cpp:272
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Previous Tab"
 msgstr "A&urreko fitxa"
 
 #: src/mainwindow.cpp:280
-#, fuzzy, kde-format
+#, kde-format
 msgid "Close &Tab"
-msgstr "Itxi fitxa"
+msgstr "Itxi fi&txa"
 
 #: src/mainwindow.cpp:288
 #, kde-format
 msgid "Last Focused Tab"
-msgstr ""
+msgstr "Fokua izan duen azken fitxa"
 
 #: src/mainwindow.cpp:295
 #, kde-format
 msgid "Next Active Tab"
-msgstr ""
+msgstr "Hurrengo fitxa aktiboa"
 
 #: src/mainwindow.cpp:308 src/viewer/viewcontainer.cpp:300
 #, kde-format
 msgid "Move Tab Up"
-msgstr ""
+msgstr "Eraman fitxa gora"
 
 #: src/mainwindow.cpp:312 src/mainwindow.cpp:317 src/mainwindow.cpp:334
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355 src/mainwindow.cpp:364
 #, kde-format
 msgid "Move this tab"
-msgstr ""
+msgstr "Mugitu fitxa hau"
 
 #: src/mainwindow.cpp:319 src/viewer/viewcontainer.cpp:308
 #, kde-format
 msgid "Move Tab Down"
-msgstr ""
+msgstr "Eraman fitxa behera"
 
 #: src/mainwindow.cpp:330 src/mainwindow.cpp:360
 #: src/viewer/viewcontainer.cpp:354
-#, fuzzy, kde-format
+#, kde-format
 msgid "Move Tab Right"
 msgstr "Eraman fitxa eskuinera"
 
 #: src/mainwindow.cpp:339 src/mainwindow.cpp:351
 #: src/viewer/viewcontainer.cpp:346
-#, fuzzy, kde-format
+#, kde-format
 msgid "Move Tab Left"
 msgstr "Eraman fitxa ezkerrera"
 
 #: src/mainwindow.cpp:374
 #, kde-format
 msgid "Rejoin Channel"
-msgstr ""
+msgstr "Berriz batu kanalera"
 
 #: src/mainwindow.cpp:380 src/mainwindow.cpp:849
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable Notifications"
 msgstr "Gaitu jakinarazpenak"
 
 #: src/mainwindow.cpp:386
 #, kde-format
 msgid "Join on Connect"
-msgstr ""
+msgstr "Batu konektatzean"
 
 #: src/mainwindow.cpp:391
 #, kde-format
 msgid "Connect at Startup"
-msgstr ""
+msgstr "Konektatu abiatzerakoan"
 
 #: src/mainwindow.cpp:396
-#, fuzzy, kde-format
+#, kde-format
 msgid "Default"
 msgstr "Lehenetsia"
 
 #: src/mainwindow.cpp:401
-#, fuzzy, kde-format
+#, kde-format
 msgid "Set Encoding"
-msgstr "Ezarri &kodeketa"
+msgstr "Ezarri kodeketa"
 
 #: src/mainwindow.cpp:410
 #, kde-format
 msgid "Go to Tab %1"
-msgstr ""
+msgstr "Joan %1 fitxara"
 
 #: src/mainwindow.cpp:417
 #, kde-format
 msgid "Clear &Marker Lines"
-msgstr ""
+msgstr "Garbitu &markatzeko lerroak"
 
 #: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear marker lines in the current tab"
-msgstr ""
+msgstr "Garbitu uneko fitxako markatzeko lerroak"
 
 #: src/mainwindow.cpp:425
 #, kde-format
 msgid "Enlarge Font Size"
-msgstr ""
+msgstr "Zabaldu letra-tipoaren neurria"
 
 #: src/mainwindow.cpp:429
 #, kde-format
 msgid "Increase the current font size"
-msgstr ""
+msgstr "Handiagotu uneko letra-tipoaren neurria"
 
 #: src/mainwindow.cpp:434
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reset Font Size"
 msgstr "Berrezarri letra-tipoaren neurria"
 
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr ""
+msgstr "Berrezarri uneko letra-tipo neurria ezarpenetako balioetan"
 
 #: src/mainwindow.cpp:443
 #, kde-format
 msgid "Shrink Font Size"
-msgstr ""
+msgstr "Uzkurtu letra-tipoaren neurria"
 
 #: src/mainwindow.cpp:447
 #, kde-format
 msgid "Decrease the current font size"
-msgstr ""
+msgstr "Txikiagotu uneko letra-tipoaren neurria"
 
 #: src/mainwindow.cpp:452
 #, kde-format
 msgid "&Clear Window"
-msgstr ""
+msgstr "&Garbitu leihoa"
 
 #: src/mainwindow.cpp:455
 #, kde-format
 msgid "Clear the contents of the current tab"
-msgstr ""
+msgstr "Garbitu uneko fitxako edukia"
 
 #: src/mainwindow.cpp:460
 #, kde-format
 msgid "Clear &All Windows"
-msgstr ""
+msgstr "Garbitu leiho guzti&ak"
 
 #: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear the contents of all open tabs"
-msgstr ""
+msgstr "Garbitu irekita dauden fitxa guztietako edukia"
 
 #: src/mainwindow.cpp:468
 #, kde-format
@@ -8042,72 +8045,72 @@ msgid "Global Away"
 msgstr ""
 
 #: src/mainwindow.cpp:476 src/viewer/irccontextmenus.cpp:334
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Join Channel..."
-msgstr "&Sartu kanalean..."
+msgstr "&Batu kanalera..."
 
 #: src/mainwindow.cpp:480
 #, kde-format
 msgid "Join a new channel on this server"
-msgstr ""
+msgstr "Batu zerbitzari honetako kanal berri batera"
 
 #: src/mainwindow.cpp:492 src/mainwindow.cpp:851
 #, kde-format
 msgid "&IRC Color..."
-msgstr ""
+msgstr "&IRC kolorea..."
 
 #: src/mainwindow.cpp:496
 #, kde-format
 msgid "Set the color of your current IRC message"
-msgstr ""
+msgstr "Ezarri zure uneko IRC mezuaren kolorea"
 
 #: src/mainwindow.cpp:501 src/mainwindow.cpp:853
 #, kde-format
 msgid "&Marker Line"
-msgstr ""
+msgstr "&Markatzeko lerroa"
 
 #: src/mainwindow.cpp:504
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
-msgstr ""
+msgstr "Txertatu zuk bakarrik ikus dezakezun lerro horizontal bat uneko fitxan"
 
 #: src/mainwindow.cpp:509 src/mainwindow.cpp:852
-#, fuzzy, kde-format
+#, kde-format
 msgid "Special &Character..."
-msgstr "%1 karaktere berezia"
+msgstr "&Karaktere berezia..."
 
 #: src/mainwindow.cpp:513
 #, kde-format
 msgid "Insert any character into your current IRC message"
-msgstr ""
+msgstr "Txertatu nahi duzun karakterea zure uneko IRC mezuan"
 
 #: src/mainwindow.cpp:524
 #, kde-format
 msgid "Focus Input Box"
-msgstr ""
+msgstr "Fokua sarrerako laukian"
 
 #: src/mainwindow.cpp:531
 #, kde-format
 msgid "Close &All Open Queries"
-msgstr ""
+msgstr "Itxi irekita dauden itaun guzti&ak"
 
 #: src/mainwindow.cpp:540
 #, kde-format
 msgid "Show Nicklist"
-msgstr ""
+msgstr "Erakutsi goitizen-zerrenda"
 
 #: src/mainwindow.cpp:546
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr ""
+msgstr "Erakutsi/Ezkutatu Konversation"
 
 #: src/mainwindow.cpp:557
 #, kde-format
 msgid "Enable On Screen Display"
-msgstr ""
+msgstr "Gaitu pantailan azaltzea (OSD)"
 
 #: src/mainwindow.cpp:564
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bookmarks"
 msgstr "Laster-markak"
 
@@ -8117,16 +8120,18 @@ msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
 "<b>Konversation</b>?</qt>"
 msgstr ""
+"<qt>DCC fitxategi-transferentzia aktiboak dituzu. Ziur zaude "
+"<b>Konversation</b>etik irten nahi duzula ?</qt>"
 
 #: src/mainwindow.cpp:610 src/mainwindow.cpp:620
-#, fuzzy, kde-format
+#, kde-format
 msgid "Confirm Quit"
 msgstr "Berretsi irtetea"
 
 #: src/mainwindow.cpp:619
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
-msgstr ""
+msgstr "<qt>Ziur zaude <b>Konversation</b>etik atera nahi duzula?</qt>"
 
 #: src/mainwindow.cpp:656
 #, kde-format
@@ -8135,14 +8140,17 @@ msgid ""
 "tray. Use <b>Quit</b> from the <b>Konversation</b> menu to quit the "
 "application.</p>"
 msgstr ""
+"<p>Leiho nagusia ixtean, Konversation-ek sistema-erretiluan martxan "
+"jarraituko du. Erabili <b>Konversation</b>en menuko <b>Irten</b>, "
+"aplikaziotik ateratzeko.</p>"
 
 #: src/mainwindow.cpp:658
-#, fuzzy, kde-format
+#, kde-format
 msgid "Docking in System Tray"
 msgstr "Sistemaren erretiluan atrakatzea"
 
 #: src/mainwindow.cpp:800
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
@@ -8151,14 +8159,14 @@ msgstr ""
 "dezakezu.</qt>"
 
 #: src/mainwindow.cpp:801
-#, fuzzy, kde-format
+#, kde-format
 msgid "Hide menu bar"
 msgstr "Ezkutatu menu-barra"
 
 #: src/mainwindow.cpp:833
 #, kde-format
 msgid "Toggle Notifications"
-msgstr ""
+msgstr "Txandakatu jakinarazpenak"
 
 #: src/mainwindow.cpp:834
 #, kde-format
@@ -8168,22 +8176,22 @@ msgstr ""
 #: src/mainwindow.cpp:835
 #, kde-format
 msgid "Insert &IRC Color..."
-msgstr ""
+msgstr "Txertatu &IRC kolorea..."
 
 #: src/mainwindow.cpp:836
-#, fuzzy, kde-format
+#, kde-format
 msgid "Insert Special &Character..."
-msgstr "Sartu karaktere berezia"
+msgstr "Txertatu &karaktere berezia..."
 
 #: src/mainwindow.cpp:837
 #, kde-format
 msgid "Insert &Marker Line"
-msgstr ""
+msgstr "Txertatu &markatzeko lerroa"
 
 #: src/mainwindow.cpp:839
 #, kde-format
 msgid "&Channel List"
-msgstr ""
+msgstr "&Kanal-zerrenda"
 
 #: src/mainwindow.cpp:850
 #, kde-format
@@ -8193,19 +8201,19 @@ msgstr ""
 #: src/mainwindow.cpp:865
 #, kde-format
 msgid "Server List"
-msgstr ""
+msgstr "Zerbitzari-zerrenda"
 
 #: src/notificationhandler.cpp:47
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
-msgstr ""
+msgstr "%1(e)ren mezu berria %2(e)(a)n"
 
 #: src/notificationhandler.cpp:100
 #, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
-msgstr ""
+msgstr "Zure goitizena aipatu du %1(e)k %2(e)(a)n"
 
 #: src/notificationhandler.cpp:111
 #, fuzzy, kde-format
