@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-11-19 07:48+0100\n"
+"PO-Revision-Date: 2022-11-20 20:57+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1248,7 +1248,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:141
 #, kde-format
 msgid "&Elsewhere:"
-msgstr ""
+msgstr "B&este nonbait:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
 #: src/config/generalbehavior_configui.ui:172
@@ -1266,7 +1266,7 @@ msgstr "Beste zenbait"
 #: src/config/generalbehavior_configui.ui:191
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr ""
+msgstr "Ezgaitu jakinarazpenak &kanpoan egon bitartean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:200
@@ -2217,7 +2217,7 @@ msgstr "Erabiltzaile arruntetarako Ikonoa"
 #: src/config/theme_configui.ui:104
 #, kde-format
 msgid "Icon for away users"
-msgstr ""
+msgstr "Kanpoan dauden erabiltzaileen ikonoa"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel3)
 #: src/config/theme_configui.ui:120
@@ -3964,7 +3964,7 @@ msgstr "*.pem"
 
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
 #: src/identitydialog.ui:331
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "Kanpoan"
@@ -5548,14 +5548,14 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
 #: src/irc/server.cpp:4082 src/irc/server.cpp:4084 src/irc/server.cpp:4110
 #: src/irc/server.cpp:4120
-#, fuzzy, kde-format
+#, kde-format
 msgid "Away"
 msgstr "Kanpoan"
 
 #: src/irc/inputfilter.cpp:1741
 #, kde-format
 msgid "%1 is away: %2"
-msgstr ""
+msgstr "%1 kanpoan da: %2"
 
 #: src/irc/inputfilter.cpp:1752
 #, kde-format
@@ -5608,9 +5608,9 @@ msgid "%1 is %2@%3 (%4)%5"
 msgstr "da"
 
 #: src/irc/inputfilter.cpp:1895
-#, fuzzy, kde-format
+#, kde-format
 msgid " (Away)"
-msgstr "Kanpoan"
+msgstr " (kanpoan)"
 
 #: src/irc/inputfilter.cpp:1916
 #, kde-format
@@ -5739,10 +5739,10 @@ msgid "Userhost"
 msgstr ""
 
 #: src/irc/inputfilter.cpp:2224
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away"
 msgid "%1%2 is %3%4."
-msgstr "da"
+msgstr "%1%2, %3%4 da."
 
 #: src/irc/inputfilter.cpp:2226
 #, kde-format
@@ -5750,9 +5750,9 @@ msgid " (IRC Operator)"
 msgstr ""
 
 #: src/irc/inputfilter.cpp:2228
-#, fuzzy, kde-format
+#, kde-format
 msgid " (away)"
-msgstr "Kanpoan"
+msgstr " (kanpoan)"
 
 #: src/irc/inputfilter.cpp:2246 src/irc/inputfilter.cpp:2259
 #: src/irc/inputfilter.cpp:2275
@@ -5944,7 +5944,7 @@ msgstr ""
 #: src/irc/nickinfo.cpp:224
 #, kde-format
 msgid "Away&nbsp;Message:"
-msgstr ""
+msgstr "Kanpoan&nbsp;mezua:"
 
 #: src/irc/nickinfo.cpp:228
 #, fuzzy, kde-format
@@ -7730,9 +7730,9 @@ msgid "Password for connection"
 msgstr ""
 
 #: src/main.cpp:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "password"
-msgstr "Pasahitza:"
+msgstr "pasahitza"
 
 #: src/main.cpp:109
 #, kde-format
@@ -7826,9 +7826,9 @@ msgid "&Identities..."
 msgstr "&Nortasunak..."
 
 #: src/mainwindow.cpp:174
-#, fuzzy, kde-format
+#, kde-format
 msgid "Manage your nick, away and other identity settings"
-msgstr "Kudeatu zure goitizena, "
+msgstr "Kudeatu zure goitizena, urrunaldia eta beste nortasun ezarpen batzuk"
 
 #: src/mainwindow.cpp:179
 #, kde-format
@@ -8042,7 +8042,7 @@ msgstr "Garbitu irekita dauden fitxa guztietako edukia"
 #: src/mainwindow.cpp:468
 #, kde-format
 msgid "Global Away"
-msgstr ""
+msgstr "Kanpoan globala"
 
 #: src/mainwindow.cpp:476 src/viewer/irccontextmenus.cpp:334
 #, kde-format
@@ -8171,7 +8171,7 @@ msgstr "Txandakatu jakinarazpenak"
 #: src/mainwindow.cpp:834
 #, kde-format
 msgid "Toggle Away Globally"
-msgstr ""
+msgstr "Txandakatu Kanpoan globalki"
 
 #: src/mainwindow.cpp:835
 #, kde-format
@@ -8196,7 +8196,7 @@ msgstr "&Kanal-zerrenda"
 #: src/mainwindow.cpp:850
 #, kde-format
 msgid "Set &Away Globally"
-msgstr ""
+msgstr "Ezarri &Kanpoan globalki"
 
 #: src/mainwindow.cpp:865
 #, kde-format
@@ -8216,66 +8216,66 @@ msgid "Your nick was mentioned by %1 in %2"
 msgstr "Zure goitizena aipatu du %1(e)k %2(e)(a)n"
 
 #: src/notificationhandler.cpp:111
-#, fuzzy, kde-format
+#, kde-format
 msgid "[HighLight] (%1) <%2>"
-msgstr "Nabarmendu"
+msgstr "[Nabarmendu] (%1) <%2>"
 
 #: src/notificationhandler.cpp:125 src/notificationhandler.cpp:431
-#, fuzzy, kde-format
+#, kde-format
 msgid "[HighLight] (%1) <%2> %3"
-msgstr "Nabarmendu"
+msgstr "[Nabarmendu] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:150
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
-msgstr ""
+msgstr "%1(e)ren itaun-mezu berria"
 
 #: src/notificationhandler.cpp:161
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Query] <%1>"
-msgstr "Kontsulta"
+msgstr "[Itauna] <%1>"
 
 #: src/notificationhandler.cpp:175
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Query] <%1> %2"
-msgstr "Kontsulta"
+msgstr "[Itauna] <%1> %2"
 
 #: src/notificationhandler.cpp:209 src/notificationhandler.cpp:216
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 joined %2"
-msgstr "Batu da"
+msgstr "%1 %2(e)ra batu da"
 
 #: src/notificationhandler.cpp:228 src/notificationhandler.cpp:235
 #, kde-format
 msgid "%1 parted %2"
-msgstr ""
+msgstr "%1(e)k %2(e)tik alde egin du"
 
 #: src/notificationhandler.cpp:247
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 quit %2"
-msgstr "Irten"
+msgstr "%1 %2(e)tik irten da"
 
 #: src/notificationhandler.cpp:258
 #, kde-format
 msgid "%1 changed nickname to %2"
-msgstr ""
+msgstr "%1(e)k goitizena %2(e)ra aldatu du"
 
 #: src/notificationhandler.cpp:269
 #, kde-format
 msgid "%1 wants to send a file to you"
-msgstr ""
+msgstr "%1(e)k fitxategi bat bidali nahi dizu"
 
 #: src/notificationhandler.cpp:280
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
-msgstr ""
+msgstr "DCC transferentzia batean errore bat gertatu da: %1"
 
 #: src/notificationhandler.cpp:293 src/notificationhandler.cpp:299
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
-msgstr ""
+msgstr "%1 fitxategiaren transferentzia osatu da"
 
 #: src/notificationhandler.cpp:301
 #, kde-format
@@ -8286,39 +8286,39 @@ msgstr "Ireki"
 #: src/notificationhandler.cpp:317
 #, kde-format
 msgid "%1 changed modes in %2: %3"
-msgstr ""
+msgstr "%1(e)k %2(e)an modua aldatu du: %3"
 
 #: src/notificationhandler.cpp:333
 #, kde-format
 msgid "%1 has started a conversation (query) with you."
-msgstr ""
+msgstr "%1(e)k zurekin elkarrizketa (itaun) bat hasi du."
 
 #: src/notificationhandler.cpp:377
 #, kde-format
 msgid "You are kicked by %1 from %2"
-msgstr ""
+msgstr "%1(e) %2(e)tik kaleratu zaitu"
 
 #: src/notificationhandler.cpp:392
 #, kde-format
 msgid "%1 started a DCC chat with you"
-msgstr ""
+msgstr "%1(e)k zurekin DCC berriketa bat hasi du"
 
 #: src/notificationhandler.cpp:412
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
-msgstr ""
+msgstr "Nabarmentzea piztu da %1(e)an"
 
 #: src/notificationhandler.cpp:417
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
-msgstr ""
+msgstr "%2(e)k %1(e)an nabarmentzea piztu du"
 
 #: src/notificationhandler.cpp:428
-#, fuzzy, kde-format
+#, kde-format
 msgid "[HighLight] (%1) *** %2"
-msgstr "Nabarmendu"
+msgstr "[Nabarmendu] (%1) *** %2"
 
 #: src/notificationhandler.cpp:442
 #, kde-format
@@ -8447,57 +8447,57 @@ msgstr "Byteak:"
 #: src/queuetunerbase.ui:267
 #, kde-format
 msgid "Normal Queue"
-msgstr ""
+msgstr "Ilara arrunta"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_fastBox)
 #: src/queuetunerbase.ui:438
 #, kde-format
 msgid "Fast Queue"
-msgstr ""
+msgstr "Ilara azkarra"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_globalBox)
 #: src/queuetunerbase.ui:612
 #, kde-format
 msgid "All Queues"
-msgstr ""
+msgstr "Ilara guztiak"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel13)
 #: src/queuetunerbase.ui:632
-#, fuzzy, kde-format
+#, kde-format
 msgid "Received:"
-msgstr "Jasota"
+msgstr "Jasota:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel9)
 #: src/queuetunerbase.ui:662
 #, kde-format
 msgid "Bytes (Raw):"
-msgstr ""
+msgstr "Byteak (gordina):"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
 #: src/queuetunerbase.ui:672
 #, kde-format
 msgid "Bytes (Encoded):"
-msgstr ""
+msgstr "Byteak (kodetuta):"
 
 #: src/quickconnectdialog.cpp:36
 #, kde-format
 msgid "Quick Connect"
-msgstr ""
+msgstr "Konexio bizkorra"
 
 #: src/quickconnectdialog.cpp:44
 #, kde-format
 msgid "&Server host:"
-msgstr ""
+msgstr "&Zerbitzariaren ostalaria:"
 
 #: src/quickconnectdialog.cpp:45
 #, kde-format
 msgid "Enter the host of the network here."
-msgstr ""
+msgstr "Sartu sarearen ostalaria hemen."
 
 #: src/quickconnectdialog.cpp:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "The port that the IRC server is using."
-msgstr "IRC zerbitzuaren "
+msgstr "IRC zerbitzaria erabiltzen ari den ataka."
 
 #: src/quickconnectdialog.cpp:60
 #, kde-format
@@ -8520,6 +8520,8 @@ msgid ""
 "If the IRC server requires a password, enter it here (most servers do not "
 "require a password.)"
 msgstr ""
+"IRC zerbitzariak pasahitz bat behar badu, sartu ezazu hemen (zerbitzari "
+"gehienek ez dute pasahitzik behar)."
 
 #: src/quickconnectdialog.cpp:79
 #, kde-format
@@ -8543,7 +8545,7 @@ msgstr ""
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
 #, kde-format
 msgid "Lag: Unknown"
-msgstr ""
+msgstr "Atzerapena: Ezezaguna"
 
 #: src/statusbar.cpp:53
 #, kde-format
@@ -8551,6 +8553,8 @@ msgid ""
 "All communication with the server is encrypted.  This makes it harder for "
 "someone to listen in on your communications."
 msgstr ""
+"Zerbitzariarekiko komunikazio osoa zifratuta dago. Horrek, inork zure "
+"komunikazioak entzutea zailtzen du."
 
 #: src/statusbar.cpp:60
 #, kde-format
@@ -8564,12 +8568,12 @@ msgstr ""
 #: src/statusbar.cpp:147
 #, kde-format
 msgid "Lag: %1 ms"
-msgstr ""
+msgstr "Atzerapena: %1 ms"
 
 #: src/statusbar.cpp:149 src/statusbar.cpp:210
-#, fuzzy, kde-format
+#, kde-format
 msgid "Lag: %1 s"
-msgstr "Egunkaria: %1 s"
+msgstr "Atzerapena: %1 s"
 
 #: src/statusbar.cpp:181
 #, kde-format
@@ -8577,27 +8581,27 @@ msgctxt ""
 "%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "No answer from server %1 for more than %2, %3, %4, and %5."
-msgstr ""
+msgstr "%1 zerbitzariaren erantzunik gabe %2, %3, %4, eta %5z."
 
 #: src/statusbar.cpp:189
 #, kde-format
 msgctxt ""
 "%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "No answer from server %1 for more than %2, %3, and %4."
-msgstr ""
+msgstr "%1 zerbitzariaren erantzunik gabe %2, %3, eta %4z."
 
 #: src/statusbar.cpp:196
 #, kde-format
 msgctxt "%1 = name of server, %2 = (x minutes), %3 = (x seconds)"
 msgid "No answer from server %1 for more than %2 and %3."
-msgstr ""
+msgstr "%1 zerbitzariaren erantzunik gabe %2 eta %3z."
 
 #: src/statusbar.cpp:201
 #, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 zerbitzariaren erantzunik gabe 1 segundo baino gehiago igarota."
+msgstr[1] "%2 zerbitzariaren erantzunik gabe %1 segundo baino gehiago igarota."
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -8605,14 +8609,14 @@ msgid "Failed to download %1: %2"
 msgstr "%1 zama-jaistea huts egin du %1:%2"
 
 #: src/upnp/upnprouter.cpp:134
-#, fuzzy, kde-format
+#, kde-format
 msgid "Error parsing router description."
-msgstr "Errorea gertatu da bideratzailearen deskribapena analizatzean."
+msgstr "Errorea bideratzailearen deskribapena sintaktikoki analizatzean."
 
 #: src/urlcatcher.cpp:70 src/viewer/viewcontainer.cpp:2626
 #, kde-format
 msgid "URL Catcher"
-msgstr ""
+msgstr "URL harrapatzailea"
 
 #: src/urlcatcher.cpp:91
 #, kde-format
@@ -8727,7 +8731,7 @@ msgid ""
 msgstr ""
 
 #: src/urlcatcher.cpp:169
-#, fuzzy, kde-format
+#, kde-format
 msgid "From"
 msgstr "Nork"
 
@@ -8742,6 +8746,8 @@ msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
 msgstr ""
+"URL bat baina gehiago hautatu duzu. Benetan ireki nahi dituzu hainbat URL "
+"batera?"
 
 #: src/urlcatcher.cpp:232 src/urlcatcher.cpp:254
 #, kde-format
@@ -8754,6 +8760,8 @@ msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
+"URL bat baina gehiago hautatu duzu. Jomuga ezartzeko fitxategi-"
+"elkarrizketabana irekiko da. Benetan gorde nahi dituzu hainbat URL batera?"
 
 #: src/urlcatcher.cpp:267 src/viewer/irccontextmenus.cpp:772
 #, kde-format
@@ -8775,29 +8783,29 @@ msgstr ""
 "\n"
 
 #: src/viewer/awaylabel.cpp:16
-#, fuzzy, kde-format
+#, kde-format
 msgid "(away)"
-msgstr "Kanpoan"
+msgstr "(kanpoan)"
 
 #: src/viewer/awaylabel.cpp:19
 #, kde-format
 msgid "&Unaway"
-msgstr ""
+msgstr "E&z kanpoan"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr ""
+msgstr "&Aldatu urrunaldi mezua..."
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr ""
+msgstr "Aldatu urrunaldi mezua"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Enter new away message:"
-msgstr ""
+msgstr "Sartu urrunaldi-mezu berria:"
 
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
@@ -9178,9 +9186,9 @@ msgid "Save Link As..."
 msgstr "Gorde esteka honela..."
 
 #: src/viewer/irccontextmenus.cpp:287
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search for '%1' with"
-msgstr "Bilatu '%1' honekin"
+msgstr "Bilatu '%1' honekin,"
 
 #: src/viewer/irccontextmenus.cpp:301
 #, kde-format
@@ -9403,7 +9411,7 @@ msgstr ""
 #: src/viewer/ircinput.cpp:488
 #, kde-format
 msgid "Large Paste Warning"
-msgstr ""
+msgstr "Itsaste handiaren abisua"
 
 #: src/viewer/ircinput.cpp:489
 #, kde-format
@@ -9413,7 +9421,7 @@ msgstr "Itsatsi"
 #: src/viewer/ircview.cpp:2233
 #, kde-format
 msgid "Open a query with %1"
-msgstr ""
+msgstr "Ireki itaun bat %1(e)kin"
 
 #: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:292
 #, kde-format
@@ -9465,6 +9473,8 @@ msgstr ""
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
 msgstr ""
+"Fitxategi honetako erregistro-informazio guztia, benetan, betiko baztertu "
+"nahi duzu?"
 
 #: src/viewer/logfilereader.cpp:152
 #, kde-format
@@ -9472,6 +9482,8 @@ msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
+"Oharra: Egunkari-fitxategia gordetzean fitxategiko datu guztiak gordeko "
+"dituzu, ez bakarrik erakuslean ikus dezakezun zatia."
 
 #: src/viewer/logfilereader.cpp:153
 #, kde-format
@@ -9486,12 +9498,12 @@ msgstr "Aukeratu helburuko karpeta"
 #: src/viewer/osd.cpp:325
 #, kde-format
 msgid "OSD Preview - drag to reposition"
-msgstr ""
+msgstr "OSD aurreikuspegia - arrastatu gordetegira"
 
 #: src/viewer/pasteeditor.cpp:23
 #, kde-format
 msgid "Edit Multiline Paste"
-msgstr ""
+msgstr "Editatu lerro anitzeko itsaskina"
 
 #: src/viewer/pasteeditor.cpp:28
 #, kde-format
@@ -9502,13 +9514,13 @@ msgstr "&Bidali"
 #: src/viewer/pasteeditor.ui:14
 #, kde-format
 msgid "Paste Editor"
-msgstr ""
+msgstr "Itsaste-editorea"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addQuotesButton)
 #: src/viewer/pasteeditor.ui:23
 #, kde-format
 msgid "Add &Quotation Indicators"
-msgstr ""
+msgstr "Gehitu &aipu adierazleak"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_removeNewlinesButton)
 #: src/viewer/pasteeditor.ui:43
@@ -9519,7 +9531,7 @@ msgstr "&Kendu lerro berriak"
 #: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2751
 #, kde-format
 msgid "Raw Log"
-msgstr ""
+msgstr "Egunkari gordina"
 
 #: src/viewer/searchbar.cpp:64
 #, kde-format
@@ -9663,17 +9675,17 @@ msgstr "Bilatu testua uneko fitxan"
 #: src/viewer/viewcontainer.cpp:906
 #, kde-format
 msgid "Channel &List for %1"
-msgstr ""
+msgstr "%1(e)ren kanal zerrenda"
 
 #: src/viewer/viewcontainer.cpp:926
 #, kde-format
 msgid "&Open Logfile for %1"
-msgstr ""
+msgstr "&Ireki %1(e)ren egunkari-fitxategia"
 
 #: src/viewer/viewcontainer.cpp:937
 #, kde-format
 msgid "&Channel Settings for %1..."
-msgstr ""
+msgstr "%1(e)ren &kanal-ezarpenak..."
 
 #: src/viewer/viewcontainer.cpp:2120
 #, kde-format
@@ -9692,14 +9704,14 @@ msgid "Default ( %1 )"
 msgstr "Lehenetsia ( %1 )"
 
 #: src/viewer/viewcontainer.cpp:2234
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Rename Tab..."
-msgstr "&Aldatu fitxaren izena..."
+msgstr "Be&rrizendatu fitxa..."
 
 #: src/viewer/viewcontainer.cpp:2383
 #, kde-format
 msgid "You can only search in text fields."
-msgstr ""
+msgstr "Testu-eremuetan bakarrik bila dezakezu."
 
 #: src/viewer/viewcontainer.cpp:2384
 #, kde-format
@@ -9712,6 +9724,8 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
+"Zein zerbitzariko kanal-zerrenda azaldu jakiteko, zerrenda itaun, kanal edo "
+"egoera-leiho batetik bakarrik ireki daiteke."
 
 #: src/viewer/viewcontainer.cpp:3018
 #, kde-format
@@ -9720,13 +9734,15 @@ msgid ""
 "connection is not fast enough, it is possible that your client will be "
 "disconnected by the server."
 msgstr ""
+"Funtzio hau erabiltzeak trafiko handia sor dezake. Zure konexioa behar "
+"bezain azkarra ez bada, baliteke zerbitzariak zure bezeroa deskonektatzea."
 
 #: src/viewer/viewcontainer.cpp:3022
 #, kde-format
 msgid "Channel List Warning"
-msgstr ""
+msgstr "Kanal-zerrendaren abisua"
 
 #: src/viewer/viewcontainer.cpp:3052
 #, kde-format
 msgid "Watched Nicks"
-msgstr ""
+msgstr "Gainbegiratutako goitizenak"
