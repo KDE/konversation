@@ -642,39 +642,21 @@ void Application::readOptions()
     // Put back the changed autoreplace list
     Preferences::setAutoreplaceList(autoreplaceList);
 
-    //TODO FIXME I assume this is in the <default> group, but I have a hunch we just don't care about <1.0.1
     // Highlight List
-    KConfigGroup cgDefault(KSharedConfig::openConfig()->group("<default>"));
-    if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
+    index = 0;
+    while (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Highlight%1").arg(index)))
     {
-        QString highlight=cgDefault.readEntry("Highlight");
-        QStringList hiList = highlight.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-
-        for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
-        {
-            Preferences::addHighlight(hiList[hiIndex], false, QString(QLatin1Char('#')+hiList[hiIndex+1]), QString(), QString(), QString(), true);
-        }
-
-        cgDefault.deleteEntry("Highlight");
-    }
-    else
-    {
-        int i = 0;
-
-        while (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Highlight%1").arg(i)))
-        {
-            KConfigGroup cgHilight(KSharedConfig::openConfig()->group(QStringLiteral("Highlight%1").arg(i)));
-            Preferences::addHighlight(
-                cgHilight.readEntry("Pattern"),
-                cgHilight.readEntry("RegExp", false),
-                cgHilight.readEntry("Color", QColor(Qt::black)),
-                cgHilight.readPathEntry("Sound", QString()),
-                cgHilight.readEntry("AutoText"),
-                cgHilight.readEntry("ChatWindows"),
-                cgHilight.readEntry("Notify", true)
-                );
-            i++;
-        }
+        KConfigGroup cgHighlight (KSharedConfig::openConfig()->group(QStringLiteral("Highlight%1").arg(index)));
+        Preferences::addHighlight(
+            cgHighlight.readEntry("Pattern"),
+            cgHighlight.readEntry("RegExp", false),
+            cgHighlight.readEntry("Color", QColor(Qt::black)),
+            cgHighlight.readPathEntry("Sound", QString()),
+            cgHighlight.readEntry("AutoText"),
+            cgHighlight.readEntry("ChatWindows"),
+            cgHighlight.readEntry("Notify", true)
+            );
+        index++;
     }
 
     // Ignore List
@@ -696,21 +678,6 @@ void Application::readOptions()
         Preferences::self()->setAliasList(newList);
 
     // Channel Encodings
-
-    //Legacy channel encodings read in Jun. 29, 2009
-    KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group("Channel Encodings"));
-    const QMap<QString,QString> channelEncodingEntries = cgChannelEncodings.entryMap();
-    const QRegularExpression re(QStringLiteral("^(.+) ([^\\s]+)$"));
-
-    for (auto it = channelEncodingEntries.begin(), end = channelEncodingEntries.end(); it != end; ++it) {
-        const QRegularExpressionMatch match = re.match(it.key());
-        if(match.hasMatch())
-        {
-            Preferences::setChannelEncoding(match.captured(1), match.captured(2), it.value());
-        }
-    }
-    //End legacy channel encodings read in Jun 29, 2009
-
     KConfigGroup cgEncodings(KSharedConfig::openConfig()->group("Encodings"));
     const QMap<QString,QString> encodingEntries = cgEncodings.entryMap();
 
