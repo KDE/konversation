@@ -399,8 +399,6 @@ void Application::dbusInfo(const QString& string)
 
 void Application::readOptions()
 {
-    // get standard config file
-
     // read nickname sorting order for channel nick lists
     KConfigGroup cgSortNicknames(KSharedConfig::openConfig()->group("Sort Nicknames"));
 
@@ -465,7 +463,6 @@ void Application::readOptions()
 
     m_osd->setEnabled(Preferences::self()->useOSD());
 
-    //How to load the font from the text?
     m_osd->setFont(Preferences::self()->oSDFont());
 
     m_osd->setDuration(Preferences::self()->oSDDuration());
