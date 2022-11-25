@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-01-22 22:13+0400\n"
+"PO-Revision-Date: 2022-11-24 10:05+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.07.70\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -142,7 +142,7 @@ msgstr ""
 #: src/irc/server.cpp:3840
 #, kde-format
 msgid "D-Bus"
-msgstr ""
+msgstr "دي-بس"
 
 #: src/bookmarkhandler.cpp:35
 #, kde-format
@@ -214,7 +214,7 @@ msgstr "محميّة بكلمة مرور"
 #: src/common.cpp:32
 #, kde-format
 msgid "anonymous"
-msgstr ""
+msgstr "مجهّل"
 
 #: src/common.cpp:33
 #, kde-format
@@ -222,9 +222,9 @@ msgid "no colors allowed"
 msgstr "لا ألوان مسموحة"
 
 #: src/common.cpp:34
-#, kde-format
+#, fuzzy, kde-format
 msgid "user limit"
-msgstr ""
+msgstr "ح&دّ المستخدِمين:"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
@@ -648,10 +648,9 @@ msgstr "أقصى عدد للمستخدِمين في القناة:"
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
-#, fuzzy, kde-format
-#| msgid "Update interval:"
+#, kde-format
 msgid "Update inter&val:"
-msgstr "فترة التحديث:"
+msgstr "&فترة التحديث:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/colorsappearance_config.ui:30
@@ -873,12 +872,12 @@ msgstr ""
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] " ثانية"
+msgstr[1] " ثانية"
+msgstr[2] " ثانية"
+msgstr[3] " ثانية"
+msgstr[4] " ثانية"
+msgstr[5] " ثانية"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -973,7 +972,7 @@ msgstr ""
 #: src/config/connectionbehavior_config.ui:166
 #, kde-format
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. i18n: ectx: property (text), widget (QLabel, addressLabel)
 #: src/config/connectionbehavior_config.ui:174
@@ -1003,12 +1002,12 @@ msgstr "كلمة المرور:"
 #, kde-format
 msgid " byte"
 msgid_plural " bytes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "صفر بايت"
+msgstr[1] " بايت واحد"
+msgstr[2] " بايتان"
+msgstr[3] " بايتات"
+msgstr[4] " بايتا"
+msgstr[5] " بايت"
 
 #: src/config/dcc_config.cpp:92
 #, kde-format
@@ -1113,15 +1112,15 @@ msgstr "انت&هاء مهلة إرسال DCC:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/config/dcc_configui.ui:179
-#, kde-format
+#, fuzzy, kde-format
 msgid "Buffer si&ze:"
-msgstr ""
+msgstr "حجم الصّوان:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/dcc_configui.ui:207
 #, kde-format
 msgid "IP"
-msgstr ""
+msgstr "آي بي:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/dcc_configui.ui:213
@@ -1398,7 +1397,7 @@ msgstr "اختبر الصوت"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
 #: src/config/highlight_configui.ui:329
-#, fuzzy, kde-format
+#, kde-format
 msgid "A&uto text:"
 msgstr "ال&نصّ الآلي:"
 
@@ -1480,9 +1479,9 @@ msgstr "قناة"
 #: src/irc/server.cpp:2787 src/irc/server.cpp:2792 src/irc/server.cpp:2804
 #: src/irc/server.cpp:2807 src/irc/server.cpp:2821 src/irc/server.cpp:2828
 #: src/viewer/ignorelistviewitem.cpp:39
-#, kde-format
+#, fuzzy, kde-format
 msgid "DCC"
-msgstr ""
+msgstr "DCC1"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkNotice)
 #: src/config/ignore_configui.ui:104 src/irc/inputfilter.cpp:488
@@ -1549,10 +1548,9 @@ msgstr "أ&ظهر الأسماء الحقيقية بجانب الأسماء ال
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Networks"
+#, kde-format
 msgid "All events"
-msgstr "كلّ الشبكات"
+msgstr "كلّ الأحداث"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
@@ -1777,7 +1775,7 @@ msgstr ""
 #: src/config/osd_configui.ui:45
 #, kde-format
 msgid "On &Screen Display"
-msgstr ""
+msgstr "&على شاشة العرض"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
@@ -1985,9 +1983,9 @@ msgid "Tabs"
 msgstr "الألسنة"
 
 #: src/config/settingsdialog.cpp:102
-#, fuzzy, kde-format
+#, kde-format
 msgid "General Behavior"
-msgstr "السلوك"
+msgstr "السلوك العام"
 
 #: src/config/settingsdialog.cpp:107
 #, kde-format
@@ -1998,23 +1996,23 @@ msgstr "الاتصال"
 #, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "سطر"
+msgstr[1] "سطر واحد"
+msgstr[2] "سطران"
+msgstr[3] " أسطر"
+msgstr[4] "سطرا"
+msgstr[5] " سطر"
 
 #: src/config/settingsdialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
 msgid " nick"
 msgid_plural " nicks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الل&قب:"
+msgstr[1] "مستخدم واحد"
+msgstr[2] "مستخدمان"
+msgstr[3] "%1 مستخدمين"
+msgstr[4] "%1 مستخدمًا"
+msgstr[5] "%1 مستخدم"
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2043,10 +2041,10 @@ msgid "Logging"
 msgstr "السجلّ"
 
 #: src/config/settingsdialog.cpp:152
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@title:tab"
 msgid "DCC"
-msgstr ""
+msgstr "DCC1"
 
 #: src/config/settingsdialog.cpp:170
 #, kde-format
@@ -2056,7 +2054,7 @@ msgstr "الأسماء المستعارة المُراقَبة"
 #: src/config/settingsdialog.cpp:174
 #, kde-format
 msgid "On Screen Display"
-msgstr ""
+msgstr "على شاشة العرض"
 
 #: src/config/settingsdialog.cpp:180
 #, kde-format
@@ -2190,10 +2188,9 @@ msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
 msgstr ""
 
 #: src/config/theme_config.cpp:207
-#, fuzzy, kde-format
-#| msgid "Unknown error. Code %1"
+#, kde-format
 msgid "Unknown error (0)"
-msgstr "خطأ مجهول. الشِفرة: %1"
+msgstr "خطأ مجهول (0)"
 
 #: src/config/theme_config.cpp:211
 #, kde-format
@@ -2228,17 +2225,15 @@ msgstr "تضبيط_السمة"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "&ثبّت سمة..."
+msgstr "ا&حصل على سمات جديدة..."
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "&ثبّت سمة..."
+msgstr "&ثبت من ملف..."
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2575,7 +2570,7 @@ msgstr "&فترة التحديث:"
 #: src/irc/server.cpp:1138 src/irc/server.cpp:1168
 #, kde-format
 msgid "Info"
-msgstr ""
+msgstr "معلومات"
 
 #: src/connectionmanager.cpp:217
 #, fuzzy, kde-format
@@ -2691,7 +2686,7 @@ msgstr "حرّر الهويّة..."
 #: src/dbus.cpp:150
 #, kde-format
 msgid "Debug: %1"
-msgstr ""
+msgstr "التنقيح: %1"
 
 #: src/dbus.cpp:156
 #, kde-format
@@ -2846,7 +2841,7 @@ msgstr "%1 DCC مع %2 على %3:<numid>%4</numid>."
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
-msgstr ""
+msgstr "UPnP"
 
 #: src/dcc/chatcontainer.cpp:178
 #, kde-format
@@ -2866,10 +2861,10 @@ msgid "Talking to yourself"
 msgstr "تتحدّث مع نفسك"
 
 #: src/dcc/chatcontainer.cpp:216
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr ""
+msgstr "المبدئيّ ( %1 )"
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -2914,9 +2909,9 @@ msgid "Open"
 msgstr "افتح"
 
 #: src/dcc/recipientdialog.cpp:32
-#, kde-format
+#, fuzzy, kde-format
 msgid "Select Recipient"
-msgstr ""
+msgstr "اختر المستلم:"
 
 #: src/dcc/recipientdialog.cpp:55
 #, kde-format
@@ -2987,7 +2982,7 @@ msgstr ""
 #: src/dcc/transferdetailedinfopanel.cpp:151
 #, kde-format
 msgid "Unknown server"
-msgstr ""
+msgstr "خادوم مجهول"
 
 #: src/dcc/transferdetailedinfopanel.cpp:156
 #, fuzzy, kde-format
@@ -3002,10 +2997,10 @@ msgid "%1 on %2"
 msgstr "%1 على %2"
 
 #: src/dcc/transferdetailedinfopanel.cpp:169
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr "%1 (المنفذ <numid>%2</numid>)"
+msgstr "%1 (المنفذ %2)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
@@ -3169,7 +3164,7 @@ msgstr "%1/ثا"
 #: src/dcc/transferlistmodel.cpp:471
 #, kde-format
 msgid "Queued"
-msgstr ""
+msgstr "مصطفّ"
 
 #: src/dcc/transferlistmodel.cpp:473
 #, kde-format
@@ -3524,9 +3519,9 @@ msgstr ""
 "المُستلِم، أو ألغِ نقل DCC</qt>"
 
 #: src/dcc/transfersend.cpp:195
-#, fuzzy, kde-format
+#, kde-format
 msgid "unknown"
-msgstr "(مجهول)"
+msgstr "مجهول"
 
 #: src/dcc/transfersend.cpp:200
 #, kde-format
@@ -3843,12 +3838,12 @@ msgstr "شهادة عميل SSL"
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] " (أقلّ من دقيقة)"
+msgstr[1] " دقيقة"
+msgstr[2] " (دقيقتان)"
+msgstr[3] " دقائق"
+msgstr[4] " دقيقة"
+msgstr[5] " دقيقة"
 
 #: src/identitydialog.cpp:111
 #, kde-format
@@ -3942,7 +3937,7 @@ msgstr ""
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
-msgstr ""
+msgstr "(اختياري)"
 
 #: src/identitydialog.cpp:485
 #, kde-format
@@ -3967,7 +3962,7 @@ msgstr "أضف"
 #: src/identitydialog.ui:108
 #, kde-format
 msgid "Duplicate"
-msgstr ""
+msgstr "كرّر"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_editBtn)
 #: src/identitydialog.ui:139
@@ -4337,7 +4332,7 @@ msgstr ""
 #: src/irc/channel.cpp:566
 #, kde-format
 msgid "Completion"
-msgstr ""
+msgstr "الإكمال"
 
 #: src/irc/channel.cpp:566
 #, kde-format
@@ -4365,7 +4360,7 @@ msgstr "أدخِل حدًّا جديدًا لمستخدمي القناة:"
 #: src/irc/inputfilter.cpp:2410 src/irc/query.cpp:163
 #, kde-format
 msgid "Nick"
-msgstr ""
+msgstr "اللقب"
 
 #: src/irc/channel.cpp:1057
 #, kde-format
@@ -4419,7 +4414,7 @@ msgstr "غادرت (%1) الخادوم هذا (%2)."
 #, kde-format
 msgctxt "Message type"
 msgid "Part"
-msgstr ""
+msgstr "جزء"
 
 #: src/irc/channel.cpp:1146
 #, kde-format
@@ -5415,12 +5410,12 @@ msgstr "-%1 إلى %2- %3"
 #, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ثانية"
+msgstr[1] "ثانية"
+msgstr[2] "ثانية"
+msgstr[3] "ثانية"
+msgstr[4] "ثانية"
+msgstr[5] "ثانية"
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5455,7 +5450,7 @@ msgstr "دعاكَ %1 إلى القناة %2."
 #: src/irc/inputfilter.cpp:842
 #, kde-format
 msgid "Capabilities"
-msgstr ""
+msgstr "الإمكانيات"
 
 #: src/irc/inputfilter.cpp:895
 #, kde-format
@@ -5485,7 +5480,7 @@ msgstr "الخادوم %1 (الإصدار %2)، أوضاع المستخدِمي�
 #: src/irc/inputfilter.cpp:1200
 #, kde-format
 msgid "Support"
-msgstr ""
+msgstr "الدعم"
 
 #: src/irc/inputfilter.cpp:1300
 #, kde-format
@@ -5551,9 +5546,9 @@ msgid "%1 is logged in as %2."
 msgstr "%1 والج كـ %2."
 
 #: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
 msgid "Names"
-msgstr ""
+msgstr "الأسماء:"
 
 #: src/irc/inputfilter.cpp:1440
 #, kde-format
@@ -5561,9 +5556,9 @@ msgid "End of NAMES list."
 msgstr "نهاية قائمة الأسماء."
 
 #: src/irc/inputfilter.cpp:1453
-#, kde-format
+#, fuzzy, kde-format
 msgid "TOPIC"
-msgstr ""
+msgstr "موضوع"
 
 #: src/irc/inputfilter.cpp:1453
 #, kde-format
@@ -5678,7 +5673,7 @@ msgstr "المستخدِمين الحاليين في %1: %2."
 #: src/irc/server.cpp:4120
 #, kde-format
 msgid "Away"
-msgstr ""
+msgstr "غائب"
 
 #: src/irc/inputfilter.cpp:1741
 #, kde-format
@@ -5728,7 +5723,7 @@ msgstr "يستخدم %1 اتّصالًا آمنًا."
 #: src/irc/inputfilter.cpp:1890 src/irc/inputfilter.cpp:1915
 #, kde-format
 msgid "Who"
-msgstr ""
+msgstr "من"
 
 #: src/irc/inputfilter.cpp:1891
 #, kde-format
@@ -6020,7 +6015,7 @@ msgstr ""
 #: src/irc/invitedialog.cpp:166
 #, kde-format
 msgid "Join"
-msgstr ""
+msgstr "انضم"
 
 #. i18n: ectx: property (text), widget (QLabel, m_iconLabel)
 #: src/irc/invitedialog.ui:23
@@ -6106,7 +6101,7 @@ msgstr ""
 #: src/irc/nickinfo.cpp:228
 #, kde-format
 msgid "(unknown)"
-msgstr ""
+msgstr "(مجهول)"
 
 #: src/irc/nickinfo.cpp:233
 #, kde-format
@@ -6206,9 +6201,9 @@ msgid " since %1"
 msgstr " منذ %1"
 
 #: src/irc/nicksonline.cpp:305
-#, kde-format
+#, fuzzy, kde-format
 msgid " Voice"
-msgstr ""
+msgstr "الصّوت"
 
 #: src/irc/nicksonline.cpp:306
 #, kde-format
@@ -6218,17 +6213,17 @@ msgstr ""
 #: src/irc/nicksonline.cpp:307
 #, kde-format
 msgid " Operator"
-msgstr ""
+msgstr "مشغل"
 
 #: src/irc/nicksonline.cpp:308
 #, kde-format
 msgid " Owner"
-msgstr ""
+msgstr "مالك"
 
 #: src/irc/nicksonline.cpp:309
 #, kde-format
 msgid " Admin"
-msgstr ""
+msgstr "مدير"
 
 #: src/irc/outputfilter.cpp:214
 #, kde-format
@@ -6246,7 +6241,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:323
 #, kde-format
 msgid "Raw"
-msgstr ""
+msgstr "خام"
 
 #: src/irc/outputfilter.cpp:380
 #, kde-format
@@ -6373,7 +6368,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:977
 #, kde-format
 msgid "File \"%1\" does not exist."
-msgstr ""
+msgstr "الملفّ \"%1\" غير موجود."
 
 #: src/irc/outputfilter.cpp:981
 #, kde-format
@@ -6478,7 +6473,7 @@ msgstr ""
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
-msgstr ""
+msgstr "الإخطار"
 
 #: src/irc/outputfilter.cpp:1331
 #, kde-format
@@ -6534,7 +6529,7 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:600
 #, kde-format
 msgid "Ignore"
-msgstr ""
+msgstr "تجاهل"
 
 #: src/irc/outputfilter.cpp:1549
 #, kde-format
@@ -6738,7 +6733,7 @@ msgstr ""
 #: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "تحذير"
 
 #: src/irc/server.cpp:475
 #, kde-format
@@ -6857,7 +6852,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
-msgstr ""
+msgstr "استُقبل طلب إرسال DCC غير صالح من %1."
 
 #: src/irc/server.cpp:2372
 #, kde-format
@@ -7427,23 +7422,23 @@ msgstr "مجهول"
 #: src/irc/topichistorymodel.cpp:172
 #, kde-format
 msgid "Text"
-msgstr ""
+msgstr "النص"
 
 #: src/irc/topichistorymodel.cpp:175
 #, kde-format
 msgid "Author"
-msgstr ""
+msgstr "المؤلف"
 
 #: src/irc/topichistorymodel.cpp:178
 #, kde-format
 msgid "Time"
-msgstr ""
+msgstr "الوقت"
 
 #: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2615
 #: src/viewer/viewcontainer.cpp:2616
 #, kde-format
 msgid "Konsole"
-msgstr ""
+msgstr "كونسول"
 
 #: src/konsolepanel.cpp:42
 #, kde-format
@@ -7501,7 +7496,7 @@ msgstr "مصين"
 #: src/main.cpp:57
 #, kde-format
 msgid "Eike Hein"
-msgstr ""
+msgstr "Eike Hein"
 
 #: src/main.cpp:57
 #, fuzzy, kde-format
@@ -7544,7 +7539,7 @@ msgstr ""
 #: src/main.cpp:61
 #, kde-format
 msgid "John Tapsell"
-msgstr ""
+msgstr "John Tapsell"
 
 #: src/main.cpp:61
 #, fuzzy, kde-format
@@ -7594,7 +7589,7 @@ msgstr ""
 #: src/main.cpp:67
 #, kde-format
 msgid "Gary Cramblitt"
-msgstr ""
+msgstr "Gary Cramblitt"
 
 #: src/main.cpp:67
 #, fuzzy, kde-format
@@ -7614,7 +7609,7 @@ msgstr "ضابِط الألوان، حواري الإبراز"
 #: src/main.cpp:69
 #, kde-format
 msgid "Alex Zepeda"
-msgstr ""
+msgstr "Alex Zepeda"
 
 #: src/main.cpp:69
 #, kde-format
@@ -7624,7 +7619,7 @@ msgstr "واجهة DCOP"
 #: src/main.cpp:70
 #, kde-format
 msgid "Stanislav Karchebny"
-msgstr ""
+msgstr "Stanislav Karchebny"
 
 #: src/main.cpp:70
 #, kde-format
@@ -7644,7 +7639,7 @@ msgstr ""
 #: src/main.cpp:72
 #, kde-format
 msgid "Michael Goettsche"
-msgstr ""
+msgstr "Michael Goettsche"
 
 #: src/main.cpp:72
 #, kde-format
@@ -7654,7 +7649,7 @@ msgstr "الاتصال السريع، نقل OSD الجديد، ميزات أخ�
 #: src/main.cpp:73
 #, kde-format
 msgid "Benjamin Meyer"
-msgstr ""
+msgstr "Benjamin Meyer"
 
 #: src/main.cpp:73
 #, kde-format
@@ -7664,7 +7659,7 @@ msgstr ""
 #: src/main.cpp:74
 #, kde-format
 msgid "Jakub Stachowski"
-msgstr ""
+msgstr "Jakub Stachowski"
 
 #: src/main.cpp:74
 #, kde-format
@@ -7684,7 +7679,7 @@ msgstr "العمل الفنّي"
 #: src/main.cpp:76
 #, kde-format
 msgid "Renchi Raju"
-msgstr ""
+msgstr "Renchi Raju"
 
 #: src/main.cpp:76
 #, kde-format
@@ -7724,7 +7719,7 @@ msgstr "إصلاح للعلل"
 #: src/main.cpp:80
 #, kde-format
 msgid "Sascha Cunz"
-msgstr ""
+msgstr "Sascha Cunz"
 
 #: src/main.cpp:80
 #, kde-format
@@ -7742,9 +7737,9 @@ msgid "Close visible tab with shortcut patch"
 msgstr "رقعة إغلاق اللسان المعروض باختصار"
 
 #: src/main.cpp:82
-#, kde-format
+#, fuzzy, kde-format
 msgid "Thomas Nagy"
-msgstr ""
+msgstr "Thomas Nagy"
 
 #: src/main.cpp:82
 #, kde-format
@@ -7779,7 +7774,7 @@ msgstr ""
 #: src/main.cpp:86
 #, kde-format
 msgid "Ivor Hewitt"
-msgstr ""
+msgstr "Ivor Hewitt"
 
 #: src/main.cpp:86
 #, kde-format
@@ -7863,10 +7858,9 @@ msgid "Server to connect"
 msgstr "الخادوم للاتصال به"
 
 #: src/main.cpp:104
-#, fuzzy, kde-format
-#| msgid "&Server:"
+#, kde-format
 msgid "server"
-msgstr "ال&خادوم:"
+msgstr "الخادم"
 
 #: src/main.cpp:105
 #, kde-format
@@ -7876,7 +7870,7 @@ msgstr "المنفذ لاستخدامه"
 #: src/main.cpp:105
 #, kde-format
 msgid "port"
-msgstr ""
+msgstr "منفذ"
 
 #: src/main.cpp:106
 #, kde-format
@@ -7884,8 +7878,7 @@ msgid "Channel to join after connection"
 msgstr "القناة للانضمام إليها بعد الاتصال"
 
 #: src/main.cpp:106
-#, fuzzy, kde-format
-#| msgid "Channel"
+#, kde-format
 msgid "channel"
 msgstr "قناة"
 
@@ -7906,10 +7899,9 @@ msgid "Password for connection"
 msgstr "كلمة مرور الاتصال"
 
 #: src/main.cpp:108
-#, fuzzy, kde-format
-#| msgid "Password:"
+#, kde-format
 msgid "password"
-msgstr "كلمة المرور:"
+msgstr "كلمة السر"
 
 #: src/main.cpp:109
 #, kde-format
@@ -7930,7 +7922,7 @@ msgstr ""
 #: src/main.cpp:111
 #, kde-format
 msgid "msec"
-msgstr ""
+msgstr "م.ث"
 
 #: src/main.cpp:112
 #, kde-format
@@ -8175,7 +8167,7 @@ msgstr ""
 #: src/mainwindow.cpp:434
 #, kde-format
 msgid "Reset Font Size"
-msgstr ""
+msgstr "صفّر حجم الخط"
 
 #: src/mainwindow.cpp:438
 #, kde-format
@@ -8315,7 +8307,7 @@ msgstr ""
 #: src/mainwindow.cpp:658
 #, kde-format
 msgid "Docking in System Tray"
-msgstr ""
+msgstr "إرساء في صينية النظام"
 
 #: src/mainwindow.cpp:800
 #, kde-format
@@ -8384,16 +8376,14 @@ msgid "Your nick was mentioned by %1 in %2"
 msgstr "عيّن %1 الموضوع في %2."
 
 #: src/notificationhandler.cpp:111
-#, fuzzy, kde-format
-#| msgid "[HighLight] (%1) *** %2"
+#, kde-format
 msgid "[HighLight] (%1) <%2>"
-msgstr "[إبراز] (%1) *** %2"
+msgstr "[الإبراز] (%1) <%2>"
 
 #: src/notificationhandler.cpp:125 src/notificationhandler.cpp:431
-#, fuzzy, kde-format
-#| msgid "[HighLight] (%1) &lt;%2&gt; %3"
+#, kde-format
 msgid "[HighLight] (%1) <%2> %3"
-msgstr "[إبراز] (%1) &lt;%2&gt; %3"
+msgstr "[الإبراز] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:150
 #, fuzzy, kde-format
@@ -8403,16 +8393,14 @@ msgid "New query message from %1"
 msgstr "رسالة الاست&علام:"
 
 #: src/notificationhandler.cpp:161
-#, fuzzy, kde-format
-#| msgid "[Query] &lt;%1&gt;"
+#, kde-format
 msgid "[Query] <%1>"
-msgstr "[استعلام] &lt;%1&gt;"
+msgstr "[استعلام] <%1>"
 
 #: src/notificationhandler.cpp:175
-#, fuzzy, kde-format
-#| msgid "[Query] &lt;%1&gt; %2"
+#, kde-format
 msgid "[Query] <%1> %2"
-msgstr "[استعلام] &lt;%1&gt; %2"
+msgstr "[استعلام] <%1> %2"
 
 #: src/notificationhandler.cpp:209 src/notificationhandler.cpp:216
 #, kde-format
@@ -8427,7 +8415,7 @@ msgstr ""
 #: src/notificationhandler.cpp:247
 #, kde-format
 msgid "%1 quit %2"
-msgstr ""
+msgstr "%1 خرج من %2"
 
 #: src/notificationhandler.cpp:258
 #, kde-format
@@ -8538,7 +8526,7 @@ msgstr ""
 #: src/queuetunerbase.ui:469
 #, kde-format
 msgid "Lines"
-msgstr ""
+msgstr "سطر"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_slowType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_normalType)
@@ -8547,7 +8535,7 @@ msgstr ""
 #: src/queuetunerbase.ui:474
 #, kde-format
 msgid "Bytes"
-msgstr ""
+msgstr "بايت"
 
 #. i18n: ectx: property (text), widget (QLabel, m_slowAge)
 #. i18n: ectx: property (text), widget (QLabel, m_slowCount)
@@ -8584,7 +8572,7 @@ msgstr ""
 #: src/queuetunerbase.ui:505
 #, kde-format
 msgid "Age:"
-msgstr ""
+msgstr "العمر:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_4)
@@ -8593,7 +8581,7 @@ msgstr ""
 #: src/queuetunerbase.ui:541
 #, kde-format
 msgid "Count:"
-msgstr ""
+msgstr "العدد:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
@@ -8699,10 +8687,9 @@ msgid "&Use SSL"
 msgstr "ا&ستخدم SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "جاهز."
+msgstr "جاهز"
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -8784,7 +8771,7 @@ msgstr "فشل تنزيل %1: ‏%2"
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr ""
+msgstr "فشل تحليل وصف المُوجِّه."
 
 #: src/urlcatcher.cpp:70 src/viewer/viewcontainer.cpp:2626
 #, kde-format
@@ -8996,7 +8983,7 @@ msgstr "أ&ظهر الأوضاع المتقدّمة >>"
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
 msgid "Parameter"
-msgstr ""
+msgstr "المعامل"
 
 #: src/viewer/channeloptionsdialog.cpp:320
 #, kde-format
@@ -9089,7 +9076,7 @@ msgstr "ال&موضوع"
 #: src/viewer/channeloptionsui.ui:69 src/viewer/channeloptionsui.ui:266
 #, kde-format
 msgid "Search:"
-msgstr ""
+msgstr "ابحث:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, modesPage)
 #: src/viewer/channeloptionsui.ui:111
@@ -9239,7 +9226,7 @@ msgstr "غيّر معلومات الإخطار"
 #: src/viewer/ignorelistviewitem.cpp:41
 #, kde-format
 msgid "Exception"
-msgstr ""
+msgstr "استثناء"
 
 #: src/viewer/insertchardialog.cpp:33
 #, kde-format
@@ -9310,9 +9297,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Fore&ground color:"
-msgstr "اللون الأ&مامي:"
+msgstr "لون ال&مقدّمة:"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
@@ -9382,7 +9369,7 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:383
 #, kde-format
 msgid "Open Query"
-msgstr ""
+msgstr "افتح استعلامًا"
 
 #: src/viewer/irccontextmenus.cpp:395
 #, kde-format
@@ -9480,9 +9467,9 @@ msgid "&Version"
 msgstr "الإ&صدار"
 
 #: src/viewer/irccontextmenus.cpp:437
-#, kde-format
+#, fuzzy, kde-format
 msgid "&Ping"
-msgstr ""
+msgstr "وخزة"
 
 #: src/viewer/irccontextmenus.cpp:444 src/viewer/irccontextmenus.cpp:629
 #: src/viewer/irccontextmenus.cpp:630
@@ -9618,7 +9605,7 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:39
 #, kde-format
 msgid "Reload"
-msgstr ""
+msgstr "أعد التحميل"
 
 #: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:139
 #, kde-format
@@ -9641,7 +9628,7 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:50
 #, kde-format
 msgid " KB"
-msgstr ""
+msgstr "كيلوبايت"
 
 #: src/viewer/logfilereader.cpp:57
 #, kde-format
@@ -9686,7 +9673,7 @@ msgstr ""
 #: src/viewer/pasteeditor.cpp:28
 #, kde-format
 msgid "&Send"
-msgstr ""
+msgstr "أ&رسل"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, PasteEditor)
 #: src/viewer/pasteeditor.ui:14
@@ -9714,54 +9701,54 @@ msgstr ""
 #: src/viewer/searchbar.cpp:64
 #, kde-format
 msgid "Match Case"
-msgstr ""
+msgstr "مطابقة الحالة"
 
 #: src/viewer/searchbar.cpp:67
 #, kde-format
 msgid "Whole Words Only"
-msgstr ""
+msgstr "كلمات كاملة فقط"
 
 #. i18n: ectx: property (text), widget (QLabel, m_findLabel)
 #: src/viewer/searchbarbase.ui:55
 #, kde-format
 msgid "F&ind:"
-msgstr ""
+msgstr "ا&عثر:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:68
 #, kde-format
 msgid "Jump to next match"
-msgstr ""
+msgstr "انتقل إلى المطابقة التّالية"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:71
 #, kde-format
 msgid "&Next"
-msgstr ""
+msgstr "ال&تالي"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:81
 #, kde-format
 msgid "Jump to previous match"
-msgstr ""
+msgstr "انتقل إلى المطابقة السّابقة"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:84
 #, kde-format
 msgid "&Previous"
-msgstr ""
+msgstr "ال&سّابقة"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:110
 #, kde-format
 msgid "Modify search behavior"
-msgstr ""
+msgstr "عدّل سلوك البحث"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:113
 #, kde-format
 msgid "&Options"
-msgstr ""
+msgstr "&خيارات"
 
 #: src/viewer/statuspanel.cpp:225
 #, kde-format
@@ -9774,7 +9761,7 @@ msgstr ""
 #: src/viewer/statuspanel.cpp:226
 #, kde-format
 msgid "Close Tab"
-msgstr ""
+msgstr "أغلق اللسان"
 
 #: src/viewer/statuspanel.cpp:235
 #, kde-format
@@ -9792,7 +9779,7 @@ msgstr ""
 #: src/viewer/statuspanel.cpp:237
 #, kde-format
 msgid "Disconnect"
-msgstr ""
+msgstr "اقطع الاتصال"
 
 #: src/viewer/topicedit.cpp:189
 #, kde-format
@@ -9831,7 +9818,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "عميل آي‌آر‌سي"
 
 #: src/viewer/viewcontainer.cpp:886
 #, kde-format
