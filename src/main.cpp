@@ -27,19 +27,6 @@ int main(int argc, char* argv[])
 #endif
     Application app(argc, argv);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // Migrate pre-existing (4.x) configuration
-
-    const QStringList configFiles = {
-        QStringLiteral("konversationrc"),
-        QStringLiteral("konversation.notifyrc"),
-    };
-    Kdelibs4ConfigMigrator migrate(QStringLiteral("konversation"));
-    migrate.setConfigFiles(configFiles);
-    migrate.setUiFiles(QStringList { QStringLiteral("konversationui.rc") });
-    migrate.migrate();
-#endif
-
     KLocalizedString::setApplicationDomain("konversation");
 
     KAboutData aboutData(QStringLiteral("konversation"),
