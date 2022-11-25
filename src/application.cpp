@@ -483,10 +483,7 @@ void Application::readOptions()
         m_osd->setPalette(p);
     }
 
-    // Check if there is old server list config //TODO FIXME why are we doing this here?
-    KConfigGroup cgServerList(KSharedConfig::openConfig()->group("Server List"));
-
-    // Read the new server settings
+    // Server list
     const QStringList groups = KSharedConfig::openConfig()->groupList().filter(
                                         QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
