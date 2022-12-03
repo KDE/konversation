@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-22 00:44+0000\n"
+"POT-Creation-Date: 2022-12-03 00:46+0000\n"
 "PO-Revision-Date: 2022-09-03 21:47+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -157,8 +157,8 @@ msgstr ""
 "\"/media { Predvajalnik }\" - poročajte kaj se predvaja v določenem "
 "predvajalniku (če je najden)."
 
-#: src/application.cpp:397 src/irc/server.cpp:1801 src/irc/server.cpp:3835
-#: src/irc/server.cpp:3840
+#: src/application.cpp:397 src/irc/server.cpp:1801 src/irc/server.cpp:3834
+#: src/irc/server.cpp:3839
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
@@ -1515,10 +1515,10 @@ msgstr "Kanal"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2371 src/irc/server.cpp:2501 src/irc/server.cpp:2513
-#: src/irc/server.cpp:2525 src/irc/server.cpp:2660 src/irc/server.cpp:2716
-#: src/irc/server.cpp:2787 src/irc/server.cpp:2792 src/irc/server.cpp:2804
-#: src/irc/server.cpp:2807 src/irc/server.cpp:2821 src/irc/server.cpp:2828
+#: src/irc/server.cpp:2370 src/irc/server.cpp:2500 src/irc/server.cpp:2512
+#: src/irc/server.cpp:2524 src/irc/server.cpp:2659 src/irc/server.cpp:2715
+#: src/irc/server.cpp:2786 src/irc/server.cpp:2791 src/irc/server.cpp:2803
+#: src/irc/server.cpp:2806 src/irc/server.cpp:2820 src/irc/server.cpp:2827
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1529,7 +1529,7 @@ msgstr "DCC"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4308 src/irc/server.cpp:4337
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4307 src/irc/server.cpp:4336
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2675,11 +2675,11 @@ msgstr[3] ""
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
 #: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:760
 #: src/irc/server.cpp:804 src/irc/server.cpp:827 src/irc/server.cpp:953
-#: src/irc/server.cpp:2339 src/irc/server.cpp:2410 src/irc/server.cpp:2583
-#: src/irc/server.cpp:2619 src/irc/server.cpp:2670 src/irc/server.cpp:2738
-#: src/irc/server.cpp:2757 src/irc/server.cpp:2773 src/irc/server.cpp:4266
-#: src/irc/server.cpp:4278 src/irc/server.cpp:4302 src/irc/server.cpp:4325
-#: src/irc/server.cpp:4341
+#: src/irc/server.cpp:2338 src/irc/server.cpp:2409 src/irc/server.cpp:2582
+#: src/irc/server.cpp:2618 src/irc/server.cpp:2669 src/irc/server.cpp:2737
+#: src/irc/server.cpp:2756 src/irc/server.cpp:2772 src/irc/server.cpp:4265
+#: src/irc/server.cpp:4277 src/irc/server.cpp:4301 src/irc/server.cpp:4324
+#: src/irc/server.cpp:4340
 #, kde-format
 msgid "Error"
 msgstr "Napaka"
@@ -2974,7 +2974,7 @@ msgctxt "passive dcc send"
 msgid "Passive Send"
 msgstr "Pasivno poslano"
 
-#: src/dcc/dccfiledialog.cpp:49 src/notificationhandler.cpp:76
+#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:76
 #: src/notificationhandler.cpp:129 src/notificationhandler.cpp:179
 #, kde-format
 msgid "Open"
@@ -5795,8 +5795,8 @@ msgid "Current users on %1: %2."
 msgstr "Trenutnih uporabnikov na %1: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4082 src/irc/server.cpp:4084 src/irc/server.cpp:4110
-#: src/irc/server.cpp:4120
+#: src/irc/server.cpp:4081 src/irc/server.cpp:4083 src/irc/server.cpp:4109
+#: src/irc/server.cpp:4119
 #, kde-format
 msgid "Away"
 msgstr "Odsoten"
@@ -6614,8 +6614,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "Trenuten seznam obvestil: %1."
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3158
-#: src/irc/server.cpp:3172
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3157
+#: src/irc/server.cpp:3171
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -7022,57 +7022,57 @@ msgstr ""
 msgid "Nickname error"
 msgstr "Napaka vzdevka"
 
-#: src/irc/server.cpp:2171
+#: src/irc/server.cpp:2170
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "Izberite datoteke, ki bi jih radi poslali %1"
 
-#: src/irc/server.cpp:2340
+#: src/irc/server.cpp:2339
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "Prejeta neveljavna zahteva DCC SEND od %1."
 
-#: src/irc/server.cpp:2372
+#: src/irc/server.cpp:2371
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "%1 vam želi poslati \"%2\" (%3) ..."
 
-#: src/irc/server.cpp:2375 src/irc/server.cpp:2505 src/irc/server.cpp:2517
-#: src/irc/server.cpp:2666 src/irc/server.cpp:2722 src/irc/server.cpp:2831
+#: src/irc/server.cpp:2374 src/irc/server.cpp:2504 src/irc/server.cpp:2516
+#: src/irc/server.cpp:2665 src/irc/server.cpp:2721 src/irc/server.cpp:2830
 #, kde-format
 msgid "unknown size"
 msgstr "neznana velikost"
 
-#: src/irc/server.cpp:2411
+#: src/irc/server.cpp:2410
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "Prejeta neveljavna zahteva DCC CHAT od %1."
 
-#: src/irc/server.cpp:2502
+#: src/irc/server.cpp:2501
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "Spraševanje %1, če želi sprejeti pošiljanje \"%2\" (%3) ..."
 
-#: src/irc/server.cpp:2514
+#: src/irc/server.cpp:2513
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "Spraševanje %1, če želi sprejeti pasivno pošiljanje \"%2\" (%3) ..."
 
-#: src/irc/server.cpp:2526
+#: src/irc/server.cpp:2525
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "Spraševanje %1, če želi sprejeti %2 ..."
 
-#: src/irc/server.cpp:2585
+#: src/irc/server.cpp:2584
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "Prejeto neveljavno sporočilo sprejetja pasivnega klepeta DCC od %1."
 
-#: src/irc/server.cpp:2621
+#: src/irc/server.cpp:2620
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
@@ -7080,7 +7080,7 @@ msgid ""
 msgstr ""
 "Prejeto neveljavno sporočilo sprejetja pasivnega klepeta DCC za \"%1\" od %2."
 
-#: src/irc/server.cpp:2662
+#: src/irc/server.cpp:2661
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -7088,13 +7088,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "Nadaljevanje prejema \"%1\" iz %2 od %3 % od %4 naprej ..."
 
-#: src/irc/server.cpp:2672
+#: src/irc/server.cpp:2671
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "Prejeto neveljavno sporočilo sprejetja nadaljevanja za \"%1\" od %2."
 
-#: src/irc/server.cpp:2718
+#: src/irc/server.cpp:2717
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -7102,123 +7102,123 @@ msgctxt ""
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr "Nadaljevanje pošiljanja \"%1\" k %2 od %3 % od %4 naprej ..."
 
-#: src/irc/server.cpp:2740
+#: src/irc/server.cpp:2739
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "Prejeta neveljavna zahteva za nadaljevanje za \"%1\" od %2."
 
-#: src/irc/server.cpp:2759
+#: src/irc/server.cpp:2758
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "Prejeta neveljavna zahteva za zavrnitev za \"%1\" od %2."
 
-#: src/irc/server.cpp:2775
+#: src/irc/server.cpp:2774
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "Prejeta neveljavna zahteva za zavrnitev od %1."
 
-#: src/irc/server.cpp:2788
+#: src/irc/server.cpp:2787
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "Prejemanje \"%1\" od %2 se je končalo."
 
-#: src/irc/server.cpp:2793
+#: src/irc/server.cpp:2792
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "Prejemanje \"%1\" od %2 je spodletelo. Razlog: %3."
 
-#: src/irc/server.cpp:2805
+#: src/irc/server.cpp:2804
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "Pošiljanje \"%1\" k %2 se je končalo."
 
-#: src/irc/server.cpp:2808
+#: src/irc/server.cpp:2807
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "Pošiljanje \"%1\" k %2 je spodletelo. Razlog: %3."
 
-#: src/irc/server.cpp:2822
+#: src/irc/server.cpp:2821
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "Pošiljanje \"%1\" k %2 ..."
 
-#: src/irc/server.cpp:2829
+#: src/irc/server.cpp:2828
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "Prejemanje \"%1\" (%2) od %3..."
 
-#: src/irc/server.cpp:3158 src/notificationhandler.cpp:347
+#: src/irc/server.cpp:3157 src/notificationhandler.cpp:347
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 je povezan (%2)."
 
-#: src/irc/server.cpp:3172 src/notificationhandler.cpp:362
+#: src/irc/server.cpp:3171 src/notificationhandler.cpp:362
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 je prekinil povezavo (%2)."
 
-#: src/irc/server.cpp:3835
+#: src/irc/server.cpp:3834
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "Napaka: Ne morem najti skripta \"%1\"."
 
-#: src/irc/server.cpp:3840
+#: src/irc/server.cpp:3839
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr ""
 "Napaka: Ne morem izvesti skripta \"%1\". Preverite dovoljenja datoteke."
 
-#: src/irc/server.cpp:4051
+#: src/irc/server.cpp:4050
 #, kde-format
 msgid "Gone away for now"
 msgstr "Trenutno sem odsoten"
 
-#: src/irc/server.cpp:4082
+#: src/irc/server.cpp:4081
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "Označeni ste kot odsotni (razlog: %1)."
 
-#: src/irc/server.cpp:4084
+#: src/irc/server.cpp:4083
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "Označeni ste kot odsotni."
 
-#: src/irc/server.cpp:4110
+#: src/irc/server.cpp:4109
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "Niste več označeni kot odsotni."
 
-#: src/irc/server.cpp:4120
+#: src/irc/server.cpp:4119
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "Niste označeni kot odsotni."
 
-#: src/irc/server.cpp:4266
+#: src/irc/server.cpp:4265
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "Ni bilo mogoče začeti izmenjave ključa z %1."
 
-#: src/irc/server.cpp:4278
+#: src/irc/server.cpp:4277
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "Ni bilo mogoče izvesti izmenjave ključa z %1."
 
-#: src/irc/server.cpp:4302
+#: src/irc/server.cpp:4301
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr ""
 "Ni bilo mogoče razčleniti DH1080_INIT od %1. Izmenjava ključa je spodletela."
 
-#: src/irc/server.cpp:4308
+#: src/irc/server.cpp:4307
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
@@ -7227,12 +7227,12 @@ msgstr ""
 "Vaš ključ je nastavljen in vaša sporočila bodo sedaj šifrirana, pošiljanje "
 "DH1080_FINISH k %1."
 
-#: src/irc/server.cpp:4325
+#: src/irc/server.cpp:4324
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "Ni bilo mogoče zaključiti izmenjave ključa z %1."
 
-#: src/irc/server.cpp:4337
+#: src/irc/server.cpp:4336
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -7241,7 +7241,7 @@ msgstr ""
 "DH1080_FINISH, ki ga je poslal %1, je bil uspešno razčlenjen. Vaš ključ je "
 "nastavljen in vaša sporočila bodo sedaj šifrirana."
 
-#: src/irc/server.cpp:4341
+#: src/irc/server.cpp:4340
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
