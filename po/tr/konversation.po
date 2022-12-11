@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2022-11-28 19:25+0300\n"
+"PO-Revision-Date: 2022-12-10 18:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -483,7 +483,7 @@ msgstr "&Sarma çubuğunu göster"
 #: src/config/chatwindowappearance_config.ui:251
 #, kde-format
 msgid "Enable Back&ground Image"
-msgstr "A&rkaplan Resmini Etkinleştir"
+msgstr "A&rka Plan Görselini Etkinleştir"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/chatwindowappearance_config.ui:260
@@ -667,7 +667,7 @@ msgstr "Elle girilen işaretleme çizgilerini tüm sohbet pencerelerinde göster
 #: src/config/chatwindowbehaviour_config.ui:255
 #, kde-format
 msgid "Enable Automatic User Information Look Up (/WHO)"
-msgstr "Kendiliğinden Kişi Bilgisi Gözatımını (/WHO) etkinleştir"
+msgstr "Kendiliğinden Kişi Bilgisi Bakmayı (/WHO) etkinleştir"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/chatwindowbehaviour_config.ui:267
@@ -753,7 +753,7 @@ msgstr "&Zaman damgası:"
 #: src/config/colorsappearance_config.ui:390
 #, kde-format
 msgid "A&lternate background:"
-msgstr "&Alternatif arkaplan:"
+msgstr "&Alternatif arka plan:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_UseColoredNicks)
 #: src/config/colorsappearance_config.ui:409
@@ -3754,7 +3754,7 @@ msgstr "72"
 #: src/dcc/whiteboardtoolbar.cpp:33
 #, kde-format
 msgid "Clear Image"
-msgstr "Resmi Temizle"
+msgstr "Görseli Temizle"
 
 #: src/dcc/whiteboardtoolbar.cpp:35 src/viewer/logfilereader.cpp:38
 #, kde-format
@@ -3800,7 +3800,7 @@ msgstr "Silgi"
 #: src/dcc/whiteboardtoolbar.cpp:77
 #, kde-format
 msgid "Fill a contiguous area with the foreground color"
-msgstr "Yakın bir bölgeyi önplan rengi ile doldur"
+msgstr "Yakın bir bölgeyi ön plan rengi ile doldur"
 
 #: src/dcc/whiteboardtoolbar.cpp:82
 #, kde-format
@@ -3810,17 +3810,17 @@ msgstr "Ok çiz"
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr "Resimden bir renk seç"
+msgstr "Görselden bir renk seç"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Save Image"
-msgstr "Resmi Kaydet"
+msgstr "Görseli Kaydet"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Images (*.png *.xpm *.jpg)"
-msgstr "Resimler (*.png *.xpm *.jpg)"
+msgstr "Görseller (*.png *.xpm *.jpg)"
 
 #: src/identitydialog.cpp:35
 #, kde-format
@@ -9551,7 +9551,7 @@ msgstr "&Önalan rengi:"
 #: src/viewer/irccolorchooserui.ui:99 src/viewer/irccolorchooserui.ui:113
 #, kde-format
 msgid "The chosen text-background color is added to the input line."
-msgstr "Seçilen metin-arkaplanı rengi, girdi satırına eklendi."
+msgstr "Seçilen metin arka plan rengi, girdi satırına eklendi."
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_bgColorLbl)
@@ -9574,7 +9574,7 @@ msgstr ""
 "seçebilirsiniz.\n"
 "Eğer bir rengi seçer ve Tamam'ı tıklarsanız bu renk girdi satırına "
 "eklenecektir.\n"
-"Tekrar değiştirene kadar, yazdıklarınız bu renkte görüntülenecektir.<br>\n"
+"Yeniden değiştirene kadar, yazdıklarınız bu renkte görüntülenecektir.<br>\n"
 "Öntanımlı <i>Hiçbiri</i>'ni seçerseniz iletinizin fon rengi değişmeyecek, "
 "okuyucularınız kendi normal metin fonu renginde göreceklerdir.<br>\n"
 "<b>Not: Tüm istemciler bunu desteklemediği gibi tüm kullanıcılar bunu görme "
