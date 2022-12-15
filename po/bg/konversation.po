@@ -3380,8 +3380,6 @@ msgstr[1] ""
 
 #: src/dcc/transferpanel.cpp:435
 #, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
