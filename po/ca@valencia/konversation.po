@@ -541,7 +541,8 @@ msgstr "Desactiva l'e&xpansió de variables (p. ex. %C, %B, %G...)"
 #: src/config/chatwindowbehaviour_config.ui:62
 #, kde-format
 msgid "&Redirect status messages to the server status window"
-msgstr "&Redirigix els missatges d'estat a la finestra d'estat del servidor"
+msgstr ""
+"&Redirigix els missatges d'estat cap a la finestra d'estat del servidor"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseLiteralModes)
 #: src/config/chatwindowbehaviour_config.ui:69
