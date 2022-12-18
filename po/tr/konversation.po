@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-12-11 20:09+0300\n"
+"PO-Revision-Date: 2022-12-17 18:40+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1214,13 +1214,13 @@ msgstr "Sekme çubuğu:"
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr "Günün iletisini sabit yazı tipinde göster"
+msgstr "Günün iletisini eş aralıklı yazıtipinde göster"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr "Günün iletileri için sabit yazı tipi k&ullan"
+msgstr "Günün iletileri için eş aralıklı yazıtipi k&ullan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
@@ -3641,7 +3641,7 @@ msgstr "Sütunlar"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr "Beyaz Tahta Yazı Tipi Seçicisi"
+msgstr "Beyaz Tahta Yazıtipi Seçici"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -8338,17 +8338,17 @@ msgstr "Yazı Boyutunu Büyüt"
 #: src/mainwindow.cpp:429
 #, kde-format
 msgid "Increase the current font size"
-msgstr "Geçerli yazı tipi boyutunu artırır"
+msgstr "Geçerli yazıtipi boyutunu artırır"
 
 #: src/mainwindow.cpp:434
 #, kde-format
 msgid "Reset Font Size"
-msgstr "Yazı Tipi Boyutunu Sıfırla"
+msgstr "Yazıtipi Boyutunu Sıfırla"
 
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "Geçerli yazı tipi boyutunu ayar değerlerine sıfırlayın"
+msgstr "Geçerli yazıtipi boyutunu ayar değerlerine sıfırlayın"
 
 #: src/mainwindow.cpp:443
 #, kde-format
@@ -8358,7 +8358,7 @@ msgstr "Yazıtipi Boyutunu Küçült"
 #: src/mainwindow.cpp:447
 #, kde-format
 msgid "Decrease the current font size"
-msgstr "Geçerli yazı tipi boyutunu azaltır"
+msgstr "Geçerli yazıtipi boyutunu azaltır"
 
 #: src/mainwindow.cpp:452
 #, kde-format
