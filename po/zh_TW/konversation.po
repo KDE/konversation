@@ -10,20 +10,21 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2009.
+# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2020-04-11 23:38+0800\n"
-"Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"PO-Revision-Date: 2022-12-30 18:31+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -547,7 +548,7 @@ msgstr "顯示原始模式字元（如 +o）而非描述"
 #: src/config/chatwindowbehaviour_config.ui:98
 #, kde-format
 msgid "How many lines to keep in buffers, 0 = unlimited"
-msgstr "在緩衝區裏保留多少列目，0為無限制"
+msgstr "在緩衝區裡保留多少列目，0為無限制"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_ReconnectCount)
 #. i18n: ectx: property (specialValueText), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
@@ -822,7 +823,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:747
 #, kde-format
 msgid "&Allow Colored Text in IRC Messages"
-msgstr "允許在 IRC 訊息裏使用彩色文字(&A)"
+msgstr "允許在 IRC 訊息裡使用彩色文字(&A)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_12)
 #: src/config/colorsappearance_config.ui:1051
@@ -1304,7 +1305,7 @@ msgstr "自訂版本回復(&V)："
 msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
 "</qt>"
-msgstr "<qt>您可以在這裏為 <b>CTCP<i> 版本</i></b>請求設定自訂回復。</qt>"
+msgstr "<qt>您可以在這裡為 <b>CTCP<i> 版本</i></b>請求設定自訂回復。</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
 #: src/config/generalbehavior_configui.ui:263
@@ -1548,17 +1549,16 @@ msgstr "在暱稱旁顯示真實姓名(&S)"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "所有佇列"
+msgstr "所有事件"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "有事件的頻道與對話"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:573
@@ -1570,20 +1570,19 @@ msgstr "在程式啟動時自動開啟被監視的暱稱清單"
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr ""
+msgstr "啟用啟動器項目上的未讀事件數量顯示(&E)"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "補齊模式(&M)："
+msgstr "計數模式(&M)："
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "已計數的事件"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -1642,7 +1641,7 @@ msgid ""
 "Application events occur in Konsole tabs, the DCC Status tab and other "
 "application tabs not used directly for chatting."
 msgstr ""
-"應用程式事件會發生在 Konsole 分頁裏，DCC 狀態分頁和其他程式分頁不能被直接地用"
+"應用程式事件會發生在 Konsole 分頁裡，DCC 狀態分頁和其他程式分頁不能被直接地用"
 "於聊天。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
@@ -2045,7 +2044,7 @@ msgstr "螢幕顯示"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "啟動器項目"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2213,17 +2212,15 @@ msgstr "主題配置"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "安裝主題(&N)..."
+msgstr "取得新主題(&E)…"
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "安裝主題(&N)..."
+msgstr "從檔案安裝(&N)…"
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2463,7 +2460,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<p>\n"
-"如果暱稱監視器被啟用，每當那些使用在<b>被監視網路/暱稱</b>清單裏的暱稱的人上"
+"如果暱稱監視器被啟用，每當那些使用在<b>被監視網路/暱稱</b>清單裡的暱稱的人上"
 "線或離線時您將會獲得通知。</p>\n"
 "<p>您也可以開啟<b>被監視的暱稱</b>視窗檢閱所有被監視暱稱的目前狀態。</p>\n"
 "</qt>"
@@ -2507,8 +2504,8 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>當您在<b>被監視的暱稱</b>視窗裏按兩下一個暱稱時，這些\n"
-"命令會被存置在伺服器視窗裏的<b>輸入列</b>上。</p>\n"
+"<p>當您在<b>被監視的暱稱</b>視窗裡按兩下一個暱稱時，這些\n"
+"命令會被存置在伺服器視窗裡的<b>輸入列</b>上。</p>\n"
 "<p>在命令中可以使用如下這些符號：</p><ul>\n"
 "<li>%u：指代被按兩下的暱稱。</li>\n"
 "<li>%K：指代伺服器密碼。</li>\n"
@@ -2539,8 +2536,8 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>當您在<b>被監視的暱稱</b>視窗裏按兩下一個暱稱時，這些\n"
-"命令會被存置在伺服器視窗裏的<b>輸入列</b>上。</p>\n"
+"<p>當您在<b>被監視的暱稱</b>視窗裡按兩下一個暱稱時，這些\n"
+"命令會被存置在伺服器視窗裡的<b>輸入列</b>上。</p>\n"
 "<p>在命令中可以使用如下這些符號：</p><ul>\n"
 "<li>%u：指代被按兩下的暱稱。</li>\n"
 "<li>%K：指代伺服器密碼。</li>\n"
@@ -3358,9 +3355,7 @@ msgid_plural ""
 msgstr[0] "您已選擇要執行 %1 個檔案。您確定要繼續嗎？"
 
 #: src/dcc/transferpanel.cpp:435
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
@@ -3776,7 +3771,7 @@ msgid ""
 "that nickname. Enter alternate nicknames for yourself. If your first choice "
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
-"這裏是您的暱稱的清單。暱稱是一種能讓其他使用者識別您的名稱，您可在此使用任何"
+"這裡是您的暱稱的清單。暱稱是一種能讓其他使用者識別您的名稱，您可在此使用任何"
 "您願意的名稱，不過首字元必須是一個字母。\n"
 "\n"
 "由於暱稱在通行於一個完整 IRC 網路中時必須是唯一的，所以您想用的名稱可能會被伺"
@@ -3880,7 +3875,7 @@ msgstr "您必須在身分資訊內加入至少一個暱稱。"
 #: src/identitydialog.cpp:389
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "暱稱不能包含空白。"
 
 #: src/identitydialog.cpp:402
 #, kde-format
@@ -3890,7 +3885,7 @@ msgstr "請輸入真實姓名。"
 #: src/identitydialog.cpp:413
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "身份不能包含空白。"
 
 #: src/identitydialog.cpp:460
 #, kde-format
@@ -4183,7 +4178,7 @@ msgid ""
 "starts<br>If you have multiple servers in this identity this command will be "
 "executed for each server"
 msgstr ""
-"您可以在這裏輸入一條在連線伺服器前預先要執行的命令。<br/>如果您以目前身分對應"
+"您可以在這裡輸入一條在連線伺服器前預先要執行的命令。<br/>如果您以目前身分對應"
 "了多個伺服器，則此命令會為每個伺服器分別執行。"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
@@ -4321,7 +4316,7 @@ msgid ""
 "'Enter' at the end.</p><p>You can edit the alternative nicknames from the "
 "<em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"
 msgstr ""
-"<qt><p>這裏顯示的是您目前以及所有備選的暱稱。如果您選擇或輸入了一個與現在的不"
+"<qt><p>這裡顯示的是您目前以及所有備選的暱稱。如果您選擇或輸入了一個與現在的不"
 "同的暱稱，會有一個改名請求被提交到 IRC 伺服器，如果伺服器允許您改名，新的暱稱"
 "就會所選中。當您在輸入一個新的暱稱時，需要在最後輸入回車使其生效。</p><p>您可"
 "以透過<em>檔案</em>選單下的<em>身分</em>選項卡加入或修改備選暱稱。</p></qt>"
@@ -5238,8 +5233,8 @@ msgid ""
 "on it. Right click on the channel to get a list of all web addresses "
 "mentioned in the channel's topic."
 msgstr ""
-"這裏顯示的是過濾後的頻道清單，請注意如果您不使用正規運算式，Konversation 只會"
-"列出在名稱裏包含您所輸入的過濾字串的頻道，這些頻道的名稱不一定以您輸入的字串"
+"這裡顯示的是過濾後的頻道清單，請注意如果您不使用正規運算式，Konversation 只會"
+"列出在名稱裡包含您所輸入的過濾字串的頻道，這些頻道的名稱不一定以您輸入的字串"
 "為起始。\\n\\n您點擊任一一個頻道即可加入它，滑鼠右擊頻道名稱可以獲取頻道話題"
 "中提及到的所有 Web 位址的清單。"
 
@@ -5280,7 +5275,7 @@ msgid ""
 "You can limit the channel list to those channels with a minimum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"您可以在此根據頻道清單限制頻道裏的最小使用者數量。選擇「不限制」會停用此判"
+"您可以在此根據頻道清單限制頻道裡的最小使用者數量。選擇「不限制」會停用此判"
 "定。"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
@@ -5297,7 +5292,7 @@ msgid ""
 "You can limit the channel list to those channels with a maximum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"您可以在此根據頻道清單限制頻道裏的最大使用者數量。選擇「不限制」會停用此判"
+"您可以在此根據頻道清單限制頻道裡的最大使用者數量。選擇「不限制」會停用此判"
 "定。"
 
 #: src/irc/channelnick.cpp:187
@@ -6044,23 +6039,7 @@ msgid "Online&nbsp;Since:"
 msgstr "上線&nbsp;時間："
 
 #: src/irc/nicklistview.cpp:146
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>This shows all the people in the channel.  The nick for each "
-#| "person is shown, with a picture showing their status.<br /></"
-#| "p><table><tr><th><img src=\"%1\"/></th><td>This person has administrator "
-#| "privileges.</td></tr><tr><th><img src=\"%2\"/></th><td>This person is a "
-#| "channel owner.</td></tr><tr><th><img src=\"%3\"/></th><td>This person is "
-#| "a channel operator.</td></tr><tr><th><img src=\"%4\"/></th><td>This "
-#| "person is a channel half-operator.</td></tr><tr><th><img src=\"%5\"/></"
-#| "th><td>This person has voice, and can therefore talk in a moderated "
-#| "channel.</td></tr><tr><th><img src=\"%6\"/></th><td>This person does not "
-#| "have any special privileges.</td></tr><tr><th><img src=\"%7\"/></"
-#| "th><td>This, overlaid on any of the above, indicates that this person is "
-#| "currently away.</td></tr></table><p>The meaning of admin, owner and "
-#| "halfop varies between different IRC servers.</p><p>Hovering over any nick "
-#| "shows their current status. See the Konversation Handbook for more "
-#| "information.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>This shows all the people in the channel.  The nick for each person "
 "is shown, with a picture showing their status.<br /></p><table><tr><th>%1</"
@@ -6076,17 +6055,15 @@ msgid ""
 "their current status. See the Konversation Handbook for more information.</"
 "p></qt>"
 msgstr ""
-"<qt><p>這裏顯示了目前頻道裏的所有人員，每個人的暱稱都會被列出，輔以表示他們各"
-"自狀態的圖示。<br /></p> <p><table><tr><th><img src=\"%1\"/></th><td>表示此人"
-"擁有總管權限。</td></tr> <tr><th><img src=\"%2\"/></th><td>表示此人是頻道的擁"
-"有者。</td></tr> <tr><th><img src=\"%3\"/></th><td>表示此人是頻道的管理員。</"
-"td></tr> <tr><th><img src=\"%4\"/></th><td>表示此人是頻道的管理助理。</td></"
-"tr> <tr><th><img src=\"%5\"/></th><td>表示此人擁有語音權限，可以在受控管的頻"
-"道裏談話。</td></tr> <tr><th><img src=\"%6\"/></th><td>表示此人沒有任何特別權"
-"限。</td></tr> <tr><th><img src=\"%7\"/></th><td>這意味著此人目前處於離開狀"
-"態。</td></tr> </table></p><p>管理員、頻道擁有者、助理在不同 IRC 伺服器上的含"
-"義可能會各不一樣。</p> <p>將滑鼠懸停在暱稱上將會顯示相應人員的目前狀態以及任"
-"何關聯到通訊錄裏的資訊，檢視 Konversation 手冊可以獲得更多相關說明。</p></qt>"
+"<qt><p>這裡顯示了頻道裡的所有人。每個人的暱稱都會顯示，輔以表示他們各自狀態的"
+"圖示。<br /></p><table><tr><th>%1</th><td>表示此人擁有總管權限。</td></"
+"tr><tr><th>%2</th><td>表示此人是頻道的擁有者。</td></tr><tr><th>%3</th><td>表"
+"示此人是頻道的管理員。</td></tr><tr><th>%4</th><td>表示此人是頻道的管理助理。"
+"</td></tr><tr><th>%5</th><td>表示此人擁有語音權限，可以在受控管的頻道裡談話。"
+"</td></tr><tr><th>%6</th><td>表示此人沒有任何特別權限。</td></tr><tr><th>%7</"
+"th><td>表示此人目前處於離開狀態。</td></tr></table><p>管理員、頻道擁有者、管"
+"理助理在不同 IRC 伺服器上可能有不同的定義。</p><p>將滑鼠懸停在暱稱上將會顯示"
+"其目前狀態。檢視 Konversation 手冊以獲得更多相關說明。</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -6151,7 +6128,7 @@ msgid ""
 "the network.</p><p>Right-click with the mouse on a nickname to perform "
 "additional functions.</p>"
 msgstr ""
-"<p>這些是在您的暱稱監視清單裏的所有暱稱，它們會陳列在您連線到的伺服器下面。</"
+"<p>這些是在您的暱稱監視清單裡的所有暱稱，它們會陳列在您連線到的伺服器下面。</"
 "p><p><b>額外資訊</b>列顯示的是每個暱稱的其他已知資訊。</p><p>這些暱稱所加入的"
 "頻道會顯示在暱稱的下面。</p><p>標以<b>離線</b>狀態的暱稱還沒有連線到目前網路"
 "中的任何一個伺服器。</p><p>滑鼠右擊任一暱稱，可以執行其他一些附加功能。</p>"
@@ -6667,7 +6644,7 @@ msgid ""
 "<i>Konversation Handbook</i> for an explanation of what the hostmask is.</"
 "p></qt>"
 msgstr ""
-"<qt><p>與您正在對話的使用者的部分細節資訊會在此欄裏顯示。其中包括他的完整名稱"
+"<qt><p>與您正在對話的使用者的部分細節資訊會在此欄裡顯示。其中包括他的完整名稱"
 "與主機遮罩。</p> <p>參看<i>Konversation 手冊</i> 可以獲得將暱稱關聯到通訊錄連"
 "絡人的更多相關資訊，您也可以從中讀到對主機遮罩的解釋。</p></qt>"
 
@@ -7133,7 +7110,7 @@ msgstr "編輯頻道"
 #: src/irc/servergroupdialog.cpp:420
 #, kde-format
 msgid "The network name is required."
-msgstr "這裏需要一個網路名稱。"
+msgstr "這裡需要一個網路名稱。"
 
 #: src/irc/servergroupdialog.cpp:424
 #, kde-format
@@ -7189,14 +7166,7 @@ msgstr "命令："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_commandEdit)
 #: src/irc/servergroupdialogui.ui:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Optional. This command will be sent to the server after connecting. "
-#| "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
-#| "for the freenode network, which requires users to register their nickname "
-#| "with a password and login when connecting. <i>konvirocks</i> is the "
-#| "password for the nickname given in Identity. You may enter more than one "
-#| "command by separating them with semicolons.</qt>"
+#, kde-format
 msgid ""
 "<qt>Optional. This command will be sent to the server after connecting. "
 "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
@@ -7206,9 +7176,9 @@ msgid ""
 "separating them with semicolons.</qt>"
 msgstr ""
 "<qt>可選設定，您指定的命令會在連線到伺服器後被自動提交。例：<b>/msg NickServ "
-"IDENTIFY <i>konvirocks</i></b>，此範例適用於 freenode 網路，它需要使用者在登"
-"入後註冊自己的暱稱並設定一個密碼，在這裏 <i>konvirocks</i> 就是繫結到身分暱稱"
-"的密碼。您可以在這裏輸入一個或更多命令，用分號將它們間隔開來。</qt>"
+"IDENTIFY <i>konvirocks</i></b>，此範例適用於 Libera 網路，它需要使用者在登入"
+"後註冊自己的暱稱並設定一個密碼，在這裡 <i>konvirocks</i> 就是繫結到身分暱稱的"
+"密碼。您可以在這裡輸入一個或更多命令，用分號將它們間隔開來。</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nameEdit)
 #: src/irc/servergroupdialogui.ui:101
@@ -7217,7 +7187,7 @@ msgid ""
 "Enter the name of the Network here. You may create as many entries in the "
 "Server List screen with the same Network as you like."
 msgstr ""
-"在此輸入網路名稱，您可以使用同一個網路名稱在伺服器清單螢幕裏建立盡可能多的您"
+"在此輸入網路名稱，您可以使用同一個網路名稱在伺服器清單螢幕裡建立盡可能多的您"
 "所喜愛的條目。"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
@@ -7256,7 +7226,7 @@ msgid ""
 "attempt the third, and so on. At least one server must be specified. Click a "
 "server to highlight it."
 msgstr ""
-"這裏是網路上的 IRC 伺服器清單，當您連線到網路時，Konversation 會自動嘗試連線"
+"這裡是網路上的 IRC 伺服器清單，當您連線到網路時，Konversation 會自動嘗試連線"
 "到位於清單頂端的伺服器，如果連線失敗再嘗試第二個，若再次失敗則嘗試第三個，以"
 "下皆然。您需要在此至少指定一個伺服器，點擊任一伺服器可高亮度顯示它。"
 
@@ -7387,14 +7357,7 @@ msgstr "刪除(&D)"
 
 #. i18n: ectx: property (whatsThis), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:86
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shows the list of configured IRC networks. An IRC network is a "
-#| "collection of cooperating servers. You need only connect to one of the "
-#| "servers in the network to be connected to the entire IRC network. Once "
-#| "connected, Konversation will automatically join the channels shown. When "
-#| "Konversation is started for the first time, the Freenode network and the "
-#| "<i>#kde</i> channel are already entered for you."
+#, kde-format
 msgid ""
 "This shows the list of configured IRC networks. An IRC network is a "
 "collection of cooperating servers. You need only connect to one of the "
@@ -7403,10 +7366,10 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
-"這裏顯示的是已配置過的 IRC 網路清單，一個 IRC 網路是一組互相協作的伺服器的集"
-"合。您只需連線到完整 IRC 網路中的一個或若幹個伺服器，連線完成後，"
-"Konversation 將自動加入指定的頻道。當 Konversaion 第一次啟動時，Freenode 網路"
-"和 <i>#kde</i> 頻道已被自動填充到清單。"
+"這裡顯示的是已設定的 IRC 網路清單。一個 IRC 網路是由互相協作的伺服器所構成的"
+"集合。您只需連線到 IRC 網路中的其中一個伺服器，就會連線到整個 IRC 網路。連線"
+"完成後， Konversation 將自動加入指定的頻道。當 Konversaion 第一次啟動時，"
+"Libera 網路和 <i>#kde</i> 頻道已自動幫您加到清單中。"
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -7474,10 +7437,9 @@ msgid "A user-friendly IRC client"
 msgstr "一種使用者介面十分友善 IRC 用戶端程式"
 
 #: src/main.cpp:50
-#, fuzzy, kde-format
-#| msgid "(C) 2002-2018 by the Konversation team"
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "(C) 2002-2018 Konversation 團隊"
+msgstr "Copyright 2002-%1 Konversation 團隊"
 
 #: src/main.cpp:51
 #, kde-format
@@ -8170,7 +8132,7 @@ msgstr "清除標記線(&M)"
 #: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear marker lines in the current tab"
-msgstr "清除目前分頁裏的標記線"
+msgstr "清除目前分頁裡的標記線"
 
 #: src/mainwindow.cpp:425
 #, kde-format
@@ -8210,7 +8172,7 @@ msgstr "清除視窗(&C)"
 #: src/mainwindow.cpp:455
 #, kde-format
 msgid "Clear the contents of the current tab"
-msgstr "清除目前分頁裏的內容"
+msgstr "清除目前分頁裡的內容"
 
 #: src/mainwindow.cpp:460
 #, kde-format
@@ -8220,7 +8182,7 @@ msgstr "清除所有視窗(&A)"
 #: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear the contents of all open tabs"
-msgstr "清除所有已開啟分頁裏的內容"
+msgstr "清除所有已開啟分頁裡的內容"
 
 #: src/mainwindow.cpp:468
 #, kde-format
@@ -8255,7 +8217,7 @@ msgstr "標記線(&M)"
 #: src/mainwindow.cpp:504
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
-msgstr "在目前分頁裏插入一條只有您能看見的水平線"
+msgstr "在目前分頁裡插入一條只有您能看見的水平線"
 
 #: src/mainwindow.cpp:509 src/mainwindow.cpp:852
 #, kde-format
@@ -8265,7 +8227,7 @@ msgstr "特殊字元(&C)..."
 #: src/mainwindow.cpp:513
 #, kde-format
 msgid "Insert any character into your current IRC message"
-msgstr "在目前 IRC 訊息裏插入任何可能的字元"
+msgstr "在目前 IRC 訊息裡插入任何可能的字元"
 
 #: src/mainwindow.cpp:524
 #, kde-format
@@ -8716,7 +8678,7 @@ msgid ""
 "special privileges, such as the ability to kick and ban users, change the "
 "channel modes, make other users operators</p></qt>"
 msgstr ""
-"<qt><p>這裏顯示頻道內的使用者以及管理員(ops)數量。</p><p>頻道管理員是擁有特殊"
+"<qt><p>這裡顯示頻道內的使用者以及管理員(ops)數量。</p><p>頻道管理員是擁有特殊"
 "權限的使用者，具備諸如踢出並封停用戶、變更頻道模式、賦予其他使用者管理權限等"
 "能力。</p></qt>"
 
@@ -8730,7 +8692,7 @@ msgstr "延遲：不明"
 msgid ""
 "All communication with the server is encrypted.  This makes it harder for "
 "someone to listen in on your communications."
-msgstr "所有和伺服器間的通訊已被加密，這可以使他人更難監聽到您對話裏的內容。"
+msgstr "所有和伺服器間的通訊已被加密，這可以使他人更難監聽到您對話裡的內容。"
 
 #: src/statusbar.cpp:60
 #, kde-format
@@ -9017,7 +8979,7 @@ msgid ""
 "change these.</p><p>The <b>T</b>opic mode means that only the channel "
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
 "設定<b>T</b> 模式 (Topic) 意味著只有頻道的管理員才可以改動頻道的話題。</p></"
 "qt>"
 
@@ -9029,7 +8991,7 @@ msgid ""
 "in the channel cannot send messages for everybody in the channel to see.  "
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> "
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> "
 "<p><b>N</b> 模式 (No messages from outside) 意味著不在此頻道的使用者不能給此"
 "頻道傳送公開訊息，幾乎所有的頻道都會啟用此設定來防止討厭的訊息。</p></qt>"
 
@@ -9043,10 +9005,10 @@ msgid ""
 "same channel will know that you are in this channel, if this mode is set.</"
 "p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
 "如果設定了<b>S</b>模式 (Secret)，此頻道將不會在頻道清單中顯示，同時任何人都無"
 "法利用對他人使用 <em>WHOIS</em> 或其他類似命令來察覺此頻道。只有和您位於同一"
-"機密頻道的人才能知道您正在這個頻道裏。</p></qt>"
+"機密頻道的人才能知道您正在這個頻道裡。</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -9057,7 +9019,7 @@ msgid ""
 "needs to issue the command <em>/invite nick</em> from within the channel.</"
 "p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
 "設定了 <b>I</b> 模式(Invite only)的頻道意味著他人若非被邀請否則無法進入此頻"
 "道。如果需要邀請某人，頻道管理員應在他所處於的頻道內傳送此命令 <em>/invite "
 "nick</em>。</p></qt>"
@@ -9071,8 +9033,8 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
-"設定為 <b>P</b> 模式(Private)的頻道雖然會在全部頻道的清單裏顯示，但話題將被隱"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"設定為 <b>P</b> 模式(Private)的頻道雖然會在全部頻道的清單裡顯示，但話題將被隱"
 "藏。使用者的 <em>WHOIS</em> 命令能否顯示出這些則取決於不同 IRC 伺服器對私人頻"
 "道的規劃。</p></qt>"
 
@@ -9083,8 +9045,8 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
-"在設定了 <b>M</b> 模式(Moderated)的頻道裏只有管理員、助理以及擁有語音權限的使"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"在設定了 <b>M</b> 模式(Moderated)的頻道裡只有管理員、助理以及擁有語音權限的使"
 "用者才可以相互交談。</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:625
@@ -9094,7 +9056,7 @@ msgid ""
 "change these.</p><p>A protected channel requires users to enter a password "
 "in order to join.</p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
 "具有 <b>P</b> 模式(Protected)設定的頻道要求使用者輸入正確的密碼才能夠加入。</"
 "p></qt>"
 
@@ -9107,7 +9069,7 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
-"<qt><p>在這裏可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
+"<qt><p>在這裡可以控制頻道<em>模式</em>，只有管理員才能對它進行更動。</p> <p>"
 "一個頻道若具有 <b>L</b> 模式 (Limit) 設定則意味著它在同一時刻所能容納的使用者"
 "數量是有限制的，有些頻道會布置 bot 常駐於內並根據頻道的繁忙程度自動調整其數"
 "量。</p></qt>"
@@ -9159,7 +9121,7 @@ msgstr "只有受邀請的使用者才能加入此頻道(&I)"
 #: src/viewer/channeloptionsui.ui:145
 #, kde-format
 msgid "&Moderated channel, only people with voice can write to the channel"
-msgstr "監管頻道，只有具備語音權限的人才能在這裏發言(&M)"
+msgstr "監管頻道，只有具備語音權限的人才能在這裡發言(&M)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, userLimitChBox)
 #: src/viewer/channeloptionsui.ui:152
@@ -9304,7 +9266,7 @@ msgstr "無"
 #: src/viewer/irccolorchooserui.ui:17
 #, kde-format
 msgid "This is how your message will look with these colors"
-msgstr "這裏是使用了定義的顏色的訊息文字範本"
+msgstr "這裡是使用了定義的顏色的訊息文字範本"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:22
@@ -9316,7 +9278,7 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
-"<qt>這裏提供預覽的是當您選擇了這些顏色後，您的訊息的讀者會看到的文字的模樣。"
+"<qt>這裡提供預覽的是當您選擇了這些顏色後，您的訊息的讀者會看到的文字的模樣。"
 "<br/>\n"
 "<b>注意：並非所有用戶端都支援這種功能，而且使用者還可以選擇忽略您的顏色變動。"
 "</b>\n"
@@ -9346,7 +9308,7 @@ msgid ""
 "until you change the color again.<br>\n"
 "<b>Note:  Not all users turn on the option to see this.</b></qt>"
 msgstr ""
-"<qt>這裏是供您調配下面要傳送的訊息文字的顏色的地方。如果您選擇了一個顏色並點"
+"<qt>這裡是供您調配下面要傳送的訊息文字的顏色的地方。如果您選擇了一個顏色並點"
 "擊確定，選取的顏色會被自動加到輸入列，任何在這之後寫入的文字都會帶有相對的顏"
 "色，直到您再次變更顏色設定。<br/>\n"
 "<b>注意：並非所有使用者都會開啟可觀覽彩色文字的選項。</b></qt>"
@@ -9381,7 +9343,7 @@ msgid ""
 "<b>Note:  Not all clients support this, and not all users turn on the option "
 "to see this.</b></qt>"
 msgstr ""
-"<qt>這裏是供您調配下面要傳送的訊息文字的顏色的地方。\n"
+"<qt>這裡是供您調配下面要傳送的訊息文字的顏色的地方。\n"
 "如果您選擇了一個顏色並點擊確定，選取的顏色會被自動加到輸入列。\n"
 "任何在這之後寫入的文字都會帶有相對的顏色，直到您再次變更顏色設定。<br/>\n"
 "選擇預設的「<i>無</i>」不會變更您訊息的背景色，因此讀者看到的您的訊息文字背景"
@@ -9702,7 +9664,7 @@ msgid ""
 "The messages in the log file are displayed here. The oldest messages are at "
 "the top and the most recent are at the bottom."
 msgstr ""
-"日誌檔案中的資訊會顯示在這裏，置於頂端的是最舊的資訊，置於底端的則是最新的訊"
+"日誌檔案中的資訊會顯示在這裡，置於頂端的是最舊的資訊，置於底端的則是最新的訊"
 "息。"
 
 #: src/viewer/logfilereader.cpp:138
@@ -9900,7 +9862,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "IRC 用戶端"
 
 #: src/viewer/viewcontainer.cpp:886
 #, kde-format
