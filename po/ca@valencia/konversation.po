@@ -6,20 +6,20 @@
 # Joan Maspons <joanmaspons@gmail.com>, 2009, 2010.
 # Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
 # Manuel Tortosa <manutortosa@gmail.com>, 2009.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2022-10-26 08:43+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2022-12-30 23:03+0100\n"
+"Last-Translator: Antoni Bella <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Kate 22.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2578,11 +2578,11 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>En fer doble clic damunt d'un sobrenom de la finestra de <b>Sobrenoms\n"
+"<p>En fer doble clic damunt d'un sobrenom en la finestra de <b>Sobrenoms\n"
 "vigilats</b>, esta ordre s'emplaçarà en la <b>Línia d'entrada</b> de la\n"
 "finestra del servidor.</p>\n"
-"<p>Es poden utilitzar els següents símbols en l'ordre:</p><ul>\n"
-"<li>%u: El sobrenom doble clicat.</li>\n"
+"<p>Es poden utilitzar els símbols següents en l'ordre:</p><ul>\n"
+"<li>%u: El sobrenom en el qual s'ha fet doble clic.</li>\n"
 "<li>%K: La contrasenya del servidor.</li>\n"
 "<li>%n: Envia l'ordre directament al servidor en lloc de la línia d'entrada."
 "</li>\n"
@@ -2612,11 +2612,11 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>En fer doble clic damunt d'un sobrenom de la finestra de <b>Sobrenoms\n"
+"<p>En fer doble clic damunt d'un sobrenom en la finestra de <b>Sobrenoms\n"
 "vigilats</b>, esta ordre s'emplaçarà en la <b>Línia d'entrada</b> de la\n"
 "finestra del servidor.</p>\n"
-"<p>Es poden utilitzar els següents símbols en l'ordre:</p><ul>\n"
-"<li>%u: El sobrenom doble clicat.</li>\n"
+"<p>Es poden utilitzar els símbols següents en l'ordre:</p><ul>\n"
+"<li>%u: El sobrenom en el qual s'ha fet doble clic.</li>\n"
 "<li>%K: La contrasenya del servidor.</li>\n"
 "<li>%n: Envia l'ordre directament al servidor en lloc de la línia d'entrada."
 "</li>\n"
@@ -3991,7 +3991,7 @@ msgstr "Duplica la identitat"
 #: src/identitydialog.cpp:377
 #, kde-format
 msgid "You must add at least one nick to the identity."
-msgstr "Heu d'afegir un sobrenom com a mínim a la identitat."
+msgstr "Heu d'afegir com a mínim un sobrenom a la identitat."
 
 #: src/identitydialog.cpp:389
 #, kde-format

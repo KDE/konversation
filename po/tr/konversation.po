@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2022-12-17 18:40+0300\n"
+"PO-Revision-Date: 2022-12-31 17:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2293,25 +2293,25 @@ msgstr "Sesli kullanıcılar için simge"
 #: src/config/theme_configui.ui:136
 #, kde-format
 msgid "Icon for users with half-operator privileges"
-msgstr "Yarı operatör yetkileri olanlar için simge"
+msgstr "Yarı operatör ayrıcalıkları olanlar simgesi"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel5)
 #: src/config/theme_configui.ui:152
 #, kde-format
 msgid "Icon for users with operator privileges"
-msgstr "Operatör yetkileri olanlar için simge"
+msgstr "Operatör ayrıcalıkları olanlar simgesi"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel6)
 #: src/config/theme_configui.ui:168
 #, kde-format
 msgid "Icon for users with admin privileges"
-msgstr "Yönetici yetkileri olanlar için simge"
+msgstr "Yönetici ayrıcalıkları olanlar simgesi"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel7)
 #: src/config/theme_configui.ui:184
 #, kde-format
 msgid "Icon for users with owner privileges"
-msgstr "Sahip yetkileri olanlar için simge"
+msgstr "Sahip ayrıcalıkları olanlar simgesi"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/theme_configui.ui:209
@@ -6171,8 +6171,8 @@ msgid ""
 msgstr ""
 "<qt><p>Bu kanaldaki bütün kişileri gösterir.  Her kişi için durumunu "
 "belirten bir resimle birlikte takma adı de görüntülenir.<br /></"
-"p><table><tr><th>%1</th><td>Bu kullanıcı yönetici haklarına sahiptir.</td></"
-"tr><tr><th>%2</th><td>Bu kişi bir kanal sahibidir.</td></tr><tr><th>%3</"
+"p><table><tr><th>%1</th><td>Bu kullanıcı yönetici ayrıcalıklarına sahiptir.</"
+"td></tr><tr><th>%2</th><td>Bu kişi bir kanal sahibidir.</td></tr><tr><th>%3</"
 "th><td>Bu kullanıcı kanal operatörüdür.</td></tr><tr><th>%4</th><td>Bu "
 "kullanıcı yarı kanal operatörüdür.</td></tr><tr><th>%5</th><td>Bu kullanıcı "
 "yönetilen kanallarda konuşabilir.</td></tr><tr><th>%6</th><td>Bu "
@@ -6180,7 +6180,7 @@ msgstr ""
 "yukarıdakilerin üzerinde yer alarak, kullanıcının uzakta olduğunu gösterir.</"
 "td></tr></table><p>Yönetici, sahip ve yarı yöneticinin anlamı IRC sunucuları "
 "arasında değişiklik gösterir.</p><p>Bir takma adın üzerine gidince onun "
-"mevcut durumu görüntülenecektir. Daha fazla bilgi için Konversation El "
+"geçerli durumu görüntülenecektir. Daha fazla bilgi için Konversation El "
 "Kitabına bakabilirsiniz.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
