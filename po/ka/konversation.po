@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-01 07:14+0100\n"
+"PO-Revision-Date: 2023-01-02 06:59+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -61,11 +61,11 @@ msgstr ""
 
 #: data/scripts/media:176
 msgid "No running audio players found."
-msgstr ""
+msgstr "გაშვებული აუდიო დამკვრელი აღმოჩენილი არაა."
 
 #: data/scripts/media:178
 msgid "No running video players found."
-msgstr ""
+msgstr "გაშვებული ვიდეო დამკვრელი აღმოჩენილი არაა."
 
 #: data/scripts/media:180
 msgid "\"%1\" is not running."
@@ -73,7 +73,7 @@ msgstr "\"%1\" გაშვებული არაა."
 
 #: data/scripts/media:182
 msgid "No running media players found."
-msgstr ""
+msgstr "გაშვებული მედია დამკვრელი აღმოჩენილი არაა."
 
 #: data/scripts/media:196
 msgid "Nothing is playing in %1."
@@ -256,7 +256,7 @@ msgstr "&ახალი"
 #: src/config/ignore_configui.ui:137
 #, kde-format
 msgid "&Remove"
-msgstr ""
+msgstr "&წაშლა"
 
 #. i18n: ectx: property (text), widget (QLabel, aliasLabel)
 #: src/config/alias_configui.ui:88
@@ -457,7 +457,7 @@ msgstr ""
 #: src/config/chatwindowappearance_config.ui:260
 #, kde-format
 msgid "P&ath:"
-msgstr ""
+msgstr "&ბილიკი:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, generalWidget)
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
@@ -565,7 +565,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last 10 min"
-msgstr ""
+msgstr "ბოლო 10 წუთი"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:160
@@ -573,7 +573,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last hour"
-msgstr ""
+msgstr "ბოლო საათი"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:165
@@ -581,7 +581,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last day"
-msgstr ""
+msgstr "ბოლო დღე"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:170
@@ -669,19 +669,19 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:299
 #, kde-format
 msgid "H&yperlink:"
-msgstr ""
+msgstr "&ჰიპერბმული:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/colorsappearance_config.ui:312
 #, kde-format
 msgid "Channel &message:"
-msgstr ""
+msgstr "არხის &შეტყობინება:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/colorsappearance_config.ui:325
 #, kde-format
 msgid "Actio&n:"
-msgstr ""
+msgstr "&ქმედება:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/colorsappearance_config.ui:338
@@ -705,7 +705,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:377
 #, kde-format
 msgid "&Timestamp:"
-msgstr ""
+msgstr "&დროის შტამპი:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_10)
 #: src/config/colorsappearance_config.ui:390
@@ -717,7 +717,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:409
 #, kde-format
 msgid "Colored Nicks"
-msgstr ""
+msgstr "ფერადი ნიკები"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel9)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_6)
@@ -1109,7 +1109,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:229
 #, kde-format
 msgid "O&wn IP:"
-msgstr ""
+msgstr "&საკუთარი IP:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/dcc_configui.ui:248
