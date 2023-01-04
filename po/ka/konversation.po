@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-02 06:59+0100\n"
+"PO-Revision-Date: 2023-01-03 09:21+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -187,12 +187,12 @@ msgstr ""
 #: src/common.cpp:27
 #, kde-format
 msgid "secret"
-msgstr ""
+msgstr "საიდუმლო"
 
 #: src/common.cpp:28
 #, kde-format
 msgid "invite only"
-msgstr ""
+msgstr "მხოლოდ მოსაწვევით"
 
 #: src/common.cpp:29
 #, kde-format
@@ -202,12 +202,12 @@ msgstr "პირადი"
 #: src/common.cpp:30
 #, kde-format
 msgid "moderated"
-msgstr ""
+msgstr "მოდერირებული"
 
 #: src/common.cpp:31 src/irc/inputfilter.cpp:1325
 #, kde-format
 msgid "password protected"
-msgstr ""
+msgstr "პაროლით დაცული"
 
 #: src/common.cpp:32
 #, kde-format
@@ -217,12 +217,12 @@ msgstr "ანონიმური"
 #: src/common.cpp:33
 #, kde-format
 msgid "no colors allowed"
-msgstr ""
+msgstr "ფერები დაშვებული არაა"
 
 #: src/common.cpp:34
 #, kde-format
 msgid "user limit"
-msgstr ""
+msgstr "მომხმარებელთა ლიმიტი"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
