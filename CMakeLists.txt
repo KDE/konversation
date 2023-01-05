@@ -77,7 +77,7 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 ecm_set_disabled_deprecation_versions(
     QT 5.15.2
-    KF 5.97
+    KF 5.100.0
 )
 
 add_subdirectory(src)
