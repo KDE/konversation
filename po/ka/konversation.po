@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-03 09:21+0100\n"
+"PO-Revision-Date: 2023-01-04 07:34+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -663,7 +663,7 @@ msgstr "ფონი:"
 #: src/config/colorsappearance_config.ui:286
 #, kde-format
 msgid "&Server message:"
-msgstr ""
+msgstr "&სერვერის შეტყობინება:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/colorsappearance_config.ui:299
@@ -693,13 +693,13 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:351
 #, kde-format
 msgid "Comman&d message:"
-msgstr ""
+msgstr "&ბრძანების შეტყობინება:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: src/config/colorsappearance_config.ui:364
 #, kde-format
 msgid "&Query message:"
-msgstr ""
+msgstr "&მოთხოვნის შეტყობინება:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_9)
 #: src/config/colorsappearance_config.ui:377
@@ -711,7 +711,7 @@ msgstr "&დროის შტამპი:"
 #: src/config/colorsappearance_config.ui:390
 #, kde-format
 msgid "A&lternate background:"
-msgstr ""
+msgstr "&ალტერნატიული ფონი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_UseColoredNicks)
 #: src/config/colorsappearance_config.ui:409
@@ -787,7 +787,7 @@ msgstr "6:"
 #: src/config/colorsappearance_config.ui:700
 #, kde-format
 msgid "&Own nick color:"
-msgstr ""
+msgstr "&საკუთარი მეტსახელის ფერი:"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:744
@@ -1091,7 +1091,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:179
 #, kde-format
 msgid "Buffer si&ze:"
-msgstr ""
+msgstr "ბუფერის &ზომა:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/dcc_configui.ui:207
@@ -1140,13 +1140,13 @@ msgstr ""
 #: src/config/fontappearance_config.ui:28
 #, kde-format
 msgid "Chat text:"
-msgstr ""
+msgstr "ჩატის ტექსტი:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomListFont)
 #: src/config/fontappearance_config.ui:45
 #, kde-format
 msgid "Nickname list:"
-msgstr ""
+msgstr "მეტსახელების სია:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTabFont)
 #: src/config/fontappearance_config.ui:62
@@ -1206,7 +1206,7 @@ msgstr "მეტსახელის დასრულება"
 #: src/config/generalbehavior_configui.ui:91
 #, kde-format
 msgid "Completion &mode:"
-msgstr ""
+msgstr "დასრულების &რეჟიმი:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
 #: src/config/generalbehavior_configui.ui:105
@@ -1236,7 +1236,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:141
 #, kde-format
 msgid "&Elsewhere:"
-msgstr ""
+msgstr "&სადმე სხვაგან:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
 #: src/config/generalbehavior_configui.ui:172
@@ -1260,7 +1260,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:200
 #, kde-format
 msgid "Use custom web &browser:"
-msgstr ""
+msgstr "&ბრაუზერის ხელით მითითება:"
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
 #: src/config/generalbehavior_configui.ui:216
@@ -1339,7 +1339,7 @@ msgstr ""
 #: src/config/highlight_configui.ui:160
 #, kde-format
 msgid "Chat Windows"
-msgstr ""
+msgstr "ჩატის ფანჯრები"
 
 #. i18n: ectx: property (text), widget (QLabel, patternLabel)
 #: src/config/highlight_configui.ui:222
@@ -1357,7 +1357,7 @@ msgstr "ფერი:"
 #: src/config/highlight_configui.ui:274
 #, kde-format
 msgid "&Sound:"
-msgstr ""
+msgstr "&ხმა:"
 
 #. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
 #: src/config/highlight_configui.ui:298
@@ -1369,19 +1369,19 @@ msgstr ""
 #: src/config/highlight_configui.ui:314
 #, kde-format
 msgid "Test sound"
-msgstr ""
+msgstr "ხმის გატესვა"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
 #: src/config/highlight_configui.ui:329
 #, kde-format
 msgid "A&uto text:"
-msgstr ""
+msgstr "&ავტომატური ტექსტი:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
 #: src/config/highlight_configui.ui:352
 #, kde-format
 msgid "Chat windows:"
-msgstr ""
+msgstr "ჩატის ფანჯრები:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
 #: src/config/highlight_configui.ui:374
@@ -1396,7 +1396,7 @@ msgstr ""
 #: src/config/highlight_configui.ui:384
 #, kde-format
 msgid "Enable &notifications:"
-msgstr ""
+msgstr "&გაფრთხილებების ჩართვა:"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:45
@@ -1420,7 +1420,7 @@ msgstr "შაბლონი:"
 #: src/config/ignore_configui.ui:77
 #, kde-format
 msgid "Message Types"
-msgstr ""
+msgstr "შეტყობინების ტიპები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkCTCP)
 #: src/config/ignore_configui.ui:83 src/dcc/chatcontainer.cpp:310
@@ -1485,7 +1485,7 @@ msgstr "მოწვევა"
 #: src/config/ignore_configui.ui:144
 #, kde-format
 msgid "Remove &All"
-msgstr ""
+msgstr "&ყველას წაშლა"
 
 #. i18n: ectx: label, entry, group (Appearance)
 #: src/config/konversation.kcfg:217
@@ -1603,7 +1603,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:113
 #, kde-format
 msgid "Channel event"
-msgstr ""
+msgstr "არხის მოვლენა"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1621,7 +1621,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:126
 #, kde-format
 msgid "Application event"
-msgstr ""
+msgstr "აპლიკაციის მოვლენა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_Log)
 #: src/config/log_config.ui:24
@@ -1651,7 +1651,7 @@ msgstr ""
 #: src/config/log_config.ui:54
 #, kde-format
 msgid "Logfile &path:"
-msgstr ""
+msgstr "ჟურნალის ფაილის &ბილიკი:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseExternalLogViewer)
 #: src/config/log_config.ui:77
@@ -1662,12 +1662,12 @@ msgstr ""
 #: src/config/nicklistbehavior_config.cpp:45
 #, kde-format
 msgid "Normal Users"
-msgstr ""
+msgstr "ნორმალური მომხმარებლები"
 
 #: src/config/nicklistbehavior_config.cpp:46
 #, kde-format
 msgid "Voice (+v)"
-msgstr ""
+msgstr "ხმა (+v)"
 
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
@@ -1677,17 +1677,17 @@ msgstr ""
 #: src/config/nicklistbehavior_config.cpp:48
 #, kde-format
 msgid "Operators (+o)"
-msgstr ""
+msgstr "ოპერატორები (+o)"
 
 #: src/config/nicklistbehavior_config.cpp:49
 #, kde-format
 msgid "Channel Admins (+p)"
-msgstr ""
+msgstr "არხის ადმინები (+p)"
 
 #: src/config/nicklistbehavior_config.cpp:50
 #, kde-format
 msgid "Channel Owners (+q)"
-msgstr ""
+msgstr "არხის მფლობელები (+q)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/nicklistbehavior_configui.ui:26
@@ -1750,13 +1750,13 @@ msgstr ""
 #: src/config/osd_configui.ui:54
 #, kde-format
 msgid "&Draw shadows"
-msgstr ""
+msgstr "&ჩრდილების დახატვა"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr ""
+msgstr "OSD ფონტი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
