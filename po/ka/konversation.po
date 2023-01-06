@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-04 07:34+0100\n"
+"PO-Revision-Date: 2023-01-05 05:43+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -361,7 +361,7 @@ msgstr "ჩანაცვლება:"
 #: src/config/chatwindowappearance_config.ui:33
 #, kde-format
 msgid "Enable &Timestamps"
-msgstr ""
+msgstr "&დროის შტამპების ჩვენება"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/chatwindowappearance_config.ui:42
@@ -373,7 +373,7 @@ msgstr "&ფორმატი:"
 #: src/config/chatwindowappearance_config.ui:62
 #, kde-format
 msgid "Sho&w dates"
-msgstr ""
+msgstr "&თარიღების ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowDateLine)
 #: src/config/chatwindowappearance_config.ui:69
@@ -433,7 +433,7 @@ msgstr ""
 #: src/config/chatwindowappearance_config.ui:222
 #, kde-format
 msgid "Show &quick buttons"
-msgstr ""
+msgstr "&სწრაფი ღილაკების ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNicknameBox)
 #: src/config/chatwindowappearance_config.ui:231
@@ -445,7 +445,7 @@ msgstr ""
 #: src/config/chatwindowappearance_config.ui:238
 #, kde-format
 msgid "Show sc&rollbar"
-msgstr ""
+msgstr "&ჩოჩიის ჩვენება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBackgroundImage)
 #: src/config/chatwindowappearance_config.ui:251
