@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-05 05:43+0100\n"
+"PO-Revision-Date: 2023-01-06 06:48+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -639,13 +639,13 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:299
 #, kde-format
 msgid "Update inter&val:"
-msgstr ""
+msgstr "განახლების &ინტერვალი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/colorsappearance_config.ui:30
 #, kde-format
 msgid "Custom Colors"
-msgstr ""
+msgstr "ფერების ხელით მითითება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_InputFieldsBackgroundColor)
 #: src/config/colorsappearance_config.ui:36
@@ -999,7 +999,7 @@ msgstr ""
 #: src/config/dcc_config.cpp:94
 #, kde-format
 msgid "Specify Manually"
-msgstr ""
+msgstr "&ხელით მითითება"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DCC_ConfigUI)
 #: src/config/dcc_configui.ui:18
@@ -1011,7 +1011,7 @@ msgstr "DCC_Settings"
 #: src/config/dcc_configui.ui:28
 #, kde-format
 msgid "Download &folder:"
-msgstr ""
+msgstr "გადმოწერის &საქაღალდე:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccAddPartner)
 #: src/config/dcc_configui.ui:53
@@ -1128,7 +1128,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:279 src/config/dcc_configui.ui:332
 #, kde-format
 msgid "to"
-msgstr ""
+msgstr "ვის"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificChatPorts)
 #: src/config/dcc_configui.ui:307
@@ -1315,7 +1315,7 @@ msgstr ""
 #: src/config/highlight_configui.ui:118
 #, kde-format
 msgid "Highlight List"
-msgstr ""
+msgstr "სიის გამოკვეთა"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:145
@@ -1333,7 +1333,7 @@ msgstr "ხმა"
 #: src/config/highlight_configui.ui:155
 #, kde-format
 msgid "Auto Text"
-msgstr ""
+msgstr "ავტომატური ტექსტი"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:160
@@ -1491,7 +1491,7 @@ msgstr "&ყველას წაშლა"
 #: src/config/konversation.kcfg:217
 #, kde-format
 msgid "Hide the scrollbar"
-msgstr ""
+msgstr "ჩოჩიის დამალვა"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:223
@@ -1549,13 +1549,13 @@ msgstr ""
 #: src/config/launcherentry_config.ui:45
 #, kde-format
 msgid "Count &mode:"
-msgstr ""
+msgstr "დათვლის &რეჟიმი"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "დათვლილი მოვლენები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -1579,7 +1579,7 @@ msgstr "პირადი შეტყობინება"
 #: src/config/tabnotifications_config.ui:166
 #, kde-format
 msgid "Current nick used"
-msgstr ""
+msgstr "ამჟამად გამოყენებული მეტსახელი"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseHighlights)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsHighlights)
@@ -1732,7 +1732,7 @@ msgstr "რეჟიმი"
 #: src/config/nicklistbehavior_configui.ui:103
 #, kde-format
 msgid "Explanation"
-msgstr ""
+msgstr "ახსნა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseOSD)
 #: src/config/osd_configui.ui:35
@@ -1792,7 +1792,7 @@ msgstr ""
 #: src/config/osd_configui.ui:175
 #, kde-format
 msgid "Enable Custom Colors"
-msgstr ""
+msgstr "ფერების ხელით მითითება"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/osd_configui.ui:187
@@ -1811,7 +1811,7 @@ msgstr "&ფონის ფერი:"
 #: src/config/osd_configui.ui:233
 #, kde-format
 msgid "O&ther Settings"
-msgstr ""
+msgstr "&სხვა პარამეტრები"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/osd_configui.ui:239
@@ -1823,7 +1823,7 @@ msgstr "&ხანგრძლივობა:"
 #: src/config/osd_configui.ui:252
 #, kde-format
 msgid "S&creen:"
-msgstr ""
+msgstr "&ეკრანი:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_OSDDuration)
 #: src/config/osd_configui.ui:265
@@ -1968,12 +1968,12 @@ msgstr[1] ""
 #: src/config/settingsdialog.cpp:121
 #, kde-format
 msgid "Nickname List"
-msgstr ""
+msgstr "მეტსახელების სია"
 
 #: src/config/settingsdialog.cpp:127
 #, kde-format
 msgid "Command Aliases"
-msgstr ""
+msgstr "ბრძანების მეტსახელები"
 
 #: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:518
 #, kde-format
@@ -2040,7 +2040,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:202
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "პარამეტრები"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsOverride)
 #: src/config/tabnotifications_config.ui:208
@@ -2131,7 +2131,7 @@ msgstr ""
 #: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Select Theme Package"
-msgstr ""
+msgstr "თემის პაკეტის დაყენება"
 
 #: src/config/theme_config.cpp:181
 #, kde-format
@@ -2141,22 +2141,22 @@ msgstr ""
 #: src/config/theme_config.cpp:207
 #, kde-format
 msgid "Unknown error (0)"
-msgstr ""
+msgstr "უცნობი შეცდომა (0)"
 
 #: src/config/theme_config.cpp:211
 #, kde-format
 msgid "Failed to Download Theme"
-msgstr ""
+msgstr "თემის გადმოწერის შეცდომა"
 
 #: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, kde-format
 msgid "Theme archive is invalid."
-msgstr ""
+msgstr "თემის არქივი არასწორია."
 
 #: src/config/theme_config.cpp:237 src/config/theme_config.cpp:267
 #, kde-format
 msgid "Cannot Install Theme"
-msgstr ""
+msgstr "თემის დაყენება შეუძლებელია"
 
 #: src/config/theme_config.cpp:291
 #, kde-format
@@ -2184,13 +2184,13 @@ msgstr ""
 #: src/config/theme_configui.ui:35
 #, kde-format
 msgid "I&nstall from File..."
-msgstr ""
+msgstr "&ფაილიდან დაყენება..."
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
 #, kde-format
 msgid "&Remove Theme"
-msgstr ""
+msgstr "&თემის წაშლა"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel1)
 #: src/config/theme_configui.ui:85
