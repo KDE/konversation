@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-06 06:48+0100\n"
+"PO-Revision-Date: 2023-01-07 07:50+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1549,7 +1549,7 @@ msgstr ""
 #: src/config/launcherentry_config.ui:45
 #, kde-format
 msgid "Count &mode:"
-msgstr "დათვლის &რეჟიმი"
+msgstr "დათვლის &რეჟიმი:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
@@ -2497,7 +2497,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:112
 #, kde-format
 msgid "&Update interval:"
-msgstr ""
+msgstr "&განახლების ინტერვალი:"
 
 #. i18n, and in preShellCommandExited and preShellCommandError
 #: src/connectionmanager.cpp:217 src/connectionmanager.cpp:250
@@ -2569,7 +2569,7 @@ msgstr ""
 #: src/connectionmanager.cpp:513
 #, kde-format
 msgid "Create connection"
-msgstr ""
+msgstr "შეერთების შექმნა"
 
 #: src/connectionmanager.cpp:527
 #, kde-format
@@ -2581,7 +2581,7 @@ msgstr ""
 #: src/connectionmanager.cpp:534
 #, kde-format
 msgid "Switch Server"
-msgstr ""
+msgstr "სერვერის გადართვა"
 
 #: src/connectionmanager.cpp:577
 #, kde-format
@@ -2611,12 +2611,12 @@ msgstr ""
 #: src/connectionmanager.cpp:593
 #, kde-format
 msgid "Edit Identity..."
-msgstr ""
+msgstr "იდენტიფიკაციის ჩასწორება..."
 
 #: src/dbus.cpp:150
 #, kde-format
 msgid "Debug: %1"
-msgstr ""
+msgstr "გამართვა: %1"
 
 #: src/dbus.cpp:156
 #, kde-format
@@ -2735,7 +2735,7 @@ msgstr ""
 #: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
 #, kde-format
 msgid "Socket error: %1"
-msgstr ""
+msgstr "სოკეტის შეცდომა: %1"
 
 #: src/dcc/chat.cpp:558
 #, kde-format
@@ -2794,7 +2794,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr ""
+msgstr "ნაგულისხმები ( %1 )"
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -2819,7 +2819,7 @@ msgstr ""
 #: src/dcc/dcccommon.cpp:152
 #, kde-format
 msgid "No vacant port"
-msgstr ""
+msgstr "თავისუფალი პორტის გარეშე"
 
 #: src/dcc/dcccommon.cpp:163
 #, kde-format
@@ -2830,13 +2830,13 @@ msgstr ""
 #, kde-format
 msgctxt "passive dcc send"
 msgid "Passive Send"
-msgstr ""
+msgstr "პასიური გაგზავნა"
 
 #: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:76
 #: src/notificationhandler.cpp:129 src/notificationhandler.cpp:179
 #, kde-format
 msgid "Open"
-msgstr ""
+msgstr "გახსნა"
 
 #: src/dcc/recipientdialog.cpp:32
 #, kde-format
@@ -2861,7 +2861,7 @@ msgstr ""
 #: src/dcc/resumedialog.cpp:96
 #, kde-format
 msgid "O&riginal Filename"
-msgstr ""
+msgstr "ფაილის საწყისი სახელი"
 
 #: src/dcc/resumedialog.cpp:97
 #, kde-format
@@ -2881,7 +2881,7 @@ msgstr "გაგრძელება"
 #: src/dcc/resumedialog.cpp:170
 #, kde-format
 msgid "R&ename"
-msgstr ""
+msgstr "&გადარქმევა"
 
 #: src/dcc/transferdetailedinfopanel.cpp:32 src/dcc/transferlistmodel.cpp:40
 #, kde-format
@@ -2891,17 +2891,17 @@ msgstr "სტატუსი"
 #: src/dcc/transferdetailedinfopanel.cpp:35
 #, kde-format
 msgid "Details"
-msgstr ""
+msgstr "დეტალები"
 
 #: src/dcc/transferdetailedinfopanel.cpp:127
 #, kde-format
 msgid "DCC Send"
-msgstr ""
+msgstr "DCC გაგზავნა"
 
 #: src/dcc/transferdetailedinfopanel.cpp:127
 #, kde-format
 msgid "DCC Receive"
-msgstr ""
+msgstr "DCC მიღება"
 
 #: src/dcc/transferdetailedinfopanel.cpp:130
 #, kde-format
@@ -2912,7 +2912,7 @@ msgstr ""
 #: src/dcc/transferdetailedinfopanel.cpp:151
 #, kde-format
 msgid "Unknown server"
-msgstr ""
+msgstr "უცნობი სერვერი"
 
 #: src/dcc/transferdetailedinfopanel.cpp:156
 #, kde-format
@@ -2930,13 +2930,13 @@ msgstr "%1 %2-ზე"
 #, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr ""
+msgstr "%1 (პორტი %2)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
 msgctxt "%1=Transferstartposition"
 msgid "Yes, %1"
-msgstr ""
+msgstr "დიახ, %1"
 
 #: src/dcc/transferdetailedinfopanel.cpp:179
 #, kde-format
@@ -2948,7 +2948,7 @@ msgstr "არა"
 #, kde-format
 msgctxt "less than 1 sec"
 msgid "&lt; 1sec"
-msgstr ""
+msgstr "&lt; 1წმ"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/dcc/transferdetailedinfopanelui.ui:43
@@ -2960,13 +2960,13 @@ msgstr "ფაილის სახელი:"
 #: src/dcc/transferdetailedinfopanelui.ui:63
 #, kde-format
 msgid "Partner:"
-msgstr ""
+msgstr "პარტნიორი:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/dcc/transferdetailedinfopanelui.ui:83
 #, kde-format
 msgid "Self:"
-msgstr ""
+msgstr "თვით:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel10)
 #: src/dcc/transferdetailedinfopanelui.ui:103
@@ -2990,7 +2990,7 @@ msgstr "მდებარეობა:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:28
 #, kde-format
 msgid "Current position:"
-msgstr ""
+msgstr "მიმდინარე მდებარეობა:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel21)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:48
@@ -3008,13 +3008,13 @@ msgstr ""
 #: src/dcc/transferdetailedtimeinfopanelui.ui:88
 #, kde-format
 msgid "Current speed:"
-msgstr ""
+msgstr "მიმდინარე სიჩქარე:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:108
 #, kde-format
 msgid "Average speed:"
-msgstr ""
+msgstr "საშუალო სიჩქარე:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:145
@@ -3127,7 +3127,7 @@ msgstr "გაგზავნა"
 #, kde-format
 msgctxt "Transfer has completed successfully"
 msgid "Done"
-msgstr ""
+msgstr "დასრულებულია"
 
 #: src/dcc/transferlistmodel.cpp:492
 #, kde-format
@@ -3208,7 +3208,7 @@ msgstr ""
 #: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
 msgid "DCC Status"
-msgstr ""
+msgstr "DCC სტატუსი"
 
 #: src/dcc/transferpanel.cpp:73
 #, kde-format
@@ -3269,12 +3269,12 @@ msgstr ""
 #: src/dcc/transferpanel.cpp:87
 #, kde-format
 msgid "&Open File"
-msgstr ""
+msgstr "&ფაილის გახსნა"
 
 #: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
-msgstr ""
+msgstr "ფაილის გაშვება"
 
 #: src/dcc/transferpanel.cpp:89
 #, kde-format
@@ -3284,7 +3284,7 @@ msgstr "მდებარეობის გახსნა"
 #: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
-msgstr ""
+msgstr "ფაილის მდებარეობის გახსნა"
 
 #: src/dcc/transferpanel.cpp:431
 #, kde-format
@@ -3400,7 +3400,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:801
 #, kde-format
 msgid "KIO error: %1"
-msgstr ""
+msgstr "KIO შეცდომა: %1"
 
 #: src/dcc/transferrecv.cpp:822 src/dcc/transfersend.cpp:590
 #, kde-format
@@ -3420,7 +3420,7 @@ msgstr ""
 #: src/dcc/transfersend.cpp:193
 #, kde-format
 msgid "Enter Filename"
-msgstr ""
+msgstr "შეიყვანეთ ფაილის სახელი"
 
 #: src/dcc/transfersend.cpp:194
 #, kde-format
@@ -4998,7 +4998,7 @@ msgstr ""
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
 #, kde-format
 msgid "Pass&word:"
-msgstr ""
+msgstr "&პაროლი:"
 
 #. i18n: ectx: property (text), widget (QLabel, channelLabel)
 #. i18n: ectx: property (text), widget (QLabel, channelLbl)
