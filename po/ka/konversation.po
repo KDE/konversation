@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-07 07:50+0100\n"
+"PO-Revision-Date: 2023-01-08 11:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1017,13 +1017,13 @@ msgstr "გადმოწერის &საქაღალდე:"
 #: src/config/dcc_configui.ui:53
 #, kde-format
 msgid "&Add sender to file name"
-msgstr ""
+msgstr "&ფაილის სახელისთვის გამგზავნის დამატება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccCreateFolder)
 #: src/config/dcc_configui.ui:60
 #, kde-format
 msgid "Cr&eate folder for sender"
-msgstr ""
+msgstr "&გამგზავნისთვის საქაღალდის შექნა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpaceToUnderscore)
 #: src/config/dcc_configui.ui:67
@@ -9643,7 +9643,7 @@ msgstr ""
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr ""
+msgstr "ნაგულისხმები ( %1 )"
 
 #: src/viewer/viewcontainer.cpp:2234
 #, kde-format
