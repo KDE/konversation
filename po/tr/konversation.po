@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-01-10 21:56+0300\n"
+"PO-Revision-Date: 2023-01-18 22:31+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -589,7 +589,8 @@ msgid ""
 "If checked, only events concerning active and watched nicks will be "
 "displayed."
 msgstr ""
-"İşaretli ise sadece olayla ilgili etkin ve izlenen takma adlar gösterilecek."
+"İşaretli ise yalnızca olayla ilgili etkin ve izlenen takma adlar "
+"gösterilecek."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:138
@@ -1245,7 +1246,7 @@ msgstr "Yeni ileti haberi için sis&tem çubuğunu kullan"
 #, kde-format
 msgid "Only &notify when a highlight is triggered or your current nick is used"
 msgstr ""
-"Sadece bir vurgu tetiklendiği&nde ya da takma adınız kullanıldığında "
+"Yalnızca bir vurgu tetiklendiği&nde ya da takma adınız kullanıldığında "
 "bildirilsin"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
@@ -1451,9 +1452,9 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
-"Bu vurgu, sadece sohbet pencerelerinde ada göre listelenmiş olarak aranacak, "
-"ya da alan boş bırakılırsa tüm sohbet pencerelerinde. Çoklu adlar virgül ile "
-"ayrılmış olmalılar."
+"Bu vurgu, yalnızca sohbet pencerelerinde ada göre listelenmiş olarak "
+"aranacak, ya da alan boş bırakılırsa tüm sohbet pencerelerinde. Çoklu adlar "
+"virgül ile ayrılmış olmalılar."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:384
@@ -1698,7 +1699,7 @@ msgstr "&Günlüklemeyi Etkinleştir"
 #: src/config/log_config.ui:33
 #, kde-format
 msgid "Only log private conversations (queries, DCC chats)"
-msgstr "Sadece özel konuşmaları günlükle (sorgular, DCC sohbetleri)"
+msgstr "Yalnızca özel konuşmaları günlükle (sorgular, DCC sohbetleri)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LowerLog)
 #: src/config/log_config.ui:40
@@ -2333,7 +2334,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... saving a log file would save only the visible portion"
-msgstr "... bir günlük dosyasının sadece görünür kısmı kaydedildiğinde"
+msgstr "... bir günlük dosyasının yalnızca görünür kısmı kaydedildiğinde"
 
 #: src/config/warnings_config.cpp:149
 #, kde-format
@@ -3842,10 +3843,10 @@ msgstr ""
 "Burası sizin takma adlar listenizdir. İlk karakteri harf olmak şartı ile "
 "istediğiniz takma adı kendiniz için seçebilirsiniz.\n"
 "\n"
-"IRC ağında, herhangi takma ad sadece bir kişi tarafından kullanılıyor olmalı "
-"kuralından dolayı seçtiğiniz takma ad sunucu tarafından red edilebilir. Bu "
-"duruma karşılık alternatif takma adlarda ekleyebilirsiniz. Eğer sunucu ilk "
-"tercihinizi red ederse Konversation sıra ile diğer takma ad "
+"IRC ağında, herhangi takma ad yalnızca bir kişi tarafından kullanılıyor "
+"olmalı kuralından dolayı seçtiğiniz takma ad sunucu tarafından red "
+"edilebilir. Bu duruma karşılık alternatif takma adlarda ekleyebilirsiniz. "
+"Eğer sunucu ilk tercihinizi red ederse Konversation sıra ile diğer takma ad "
 "alternatiflerinizi deneyecektir."
 
 #: src/identitydialog.cpp:85
@@ -4865,22 +4866,22 @@ msgstr "%1, kanal kipini 'renkli kodlara izin ver' olarak ayarladı."
 #: src/irc/channel.cpp:1627
 #, kde-format
 msgid "You set the channel mode to 'invite only'."
-msgstr "Kanal kipini 'sadece davet et' olarak ayarladınız."
+msgstr "Kanal kipini 'yalnızca davet et' olarak ayarladınız."
 
 #: src/irc/channel.cpp:1628
 #, kde-format
 msgid "%1 sets the channel mode to 'invite only'."
-msgstr "%1, kanal kipini 'sadece davet et' olarak ayarladı."
+msgstr "%1, kanal kipini 'yalnızca davet et' olarak ayarladı."
 
 #: src/irc/channel.cpp:1632
 #, kde-format
 msgid "You remove the 'invite only' mode from the channel."
-msgstr "'Sadece davet et' kipini kanaldan kaldırdınız."
+msgstr "'Yalnızca davet et' kipini kanaldan kaldırdınız."
 
 #: src/irc/channel.cpp:1633
 #, kde-format
 msgid "%1 removes the 'invite only' mode from the channel."
-msgstr "%1, 'sadece davet et' kipini kanaldan kaldırdı."
+msgstr "%1, 'yalnızca davet et' kipini kanaldan kaldırdı."
 
 #: src/irc/channel.cpp:1641
 #, kde-format
@@ -5134,7 +5135,7 @@ msgstr "Bu değiştirmek için operatör olmalısınız."
 #: src/irc/channel.cpp:2205
 #, kde-format
 msgid "Topic can be changed by channel operator only.  %1"
-msgstr "Konu sadece kanal operatörü tarafından değiştirilebilir.  %1"
+msgstr "Konu yalnızca kanal operatörü tarafından değiştirilebilir.  %1"
 
 #: src/irc/channel.cpp:2206
 #, kde-format
@@ -5149,7 +5150,7 @@ msgstr "Gizli kanal.  %1"
 #: src/irc/channel.cpp:2208
 #, kde-format
 msgid "Invite only channel.  %1"
-msgstr "Sadece davet edilenlerin girebileceği kanal.  %1"
+msgstr "Yalnızca davet edilenlerin girebileceği kanal.  %1"
 
 #: src/irc/channel.cpp:2209
 #, kde-format
@@ -6323,7 +6324,7 @@ msgstr "Kullanım: %1KICK <takmaad> [neden]"
 #: src/irc/outputfilter.cpp:434
 #, kde-format
 msgid "%1KICK only works from within channels."
-msgstr "%1KICK sadece kanalı içerisinde çalışır."
+msgstr "%1KICK yalnızca kanalı içerisinde çalışır."
 
 #: src/irc/outputfilter.cpp:454
 #, kde-format
@@ -6331,23 +6332,23 @@ msgid ""
 "%1PART and %1LEAVE without parameters only work from within a channel or a "
 "query."
 msgstr ""
-"%1PART ve %1LEAVE parametresiz olarak sadece bir kanal ve ya sorgudan "
+"%1PART ve %1LEAVE parametresiz olarak yalnızca bir kanal ve ya sorgudan "
 "çalışır."
 
 #: src/irc/outputfilter.cpp:479
 #, kde-format
 msgid "%1PART without channel name only works from within a channel."
-msgstr "%1PART kanal adı olmadan sadece kanal içinde çalışır."
+msgstr "%1PART kanal adı olmadan yalnızca kanal içinde çalışır."
 
 #: src/irc/outputfilter.cpp:503
 #, kde-format
 msgid "%1TOPIC without parameters only works from within a channel."
-msgstr "%1TOPIC parametreler olmadan sadece kanal içinde çalışır."
+msgstr "%1TOPIC parametreler olmadan yalnızca kanal içinde çalışır."
 
 #: src/irc/outputfilter.cpp:540
 #, kde-format
 msgid "%1TOPIC without channel name only works from within a channel."
-msgstr "%1TOPIC kanal adı olmadan sadece kanal içinde çalışır."
+msgstr "%1TOPIC kanal adı olmadan yalnızca kanal içinde çalışır."
 
 #: src/irc/outputfilter.cpp:596
 #, kde-format
@@ -6381,7 +6382,7 @@ msgstr "\"%2\" iletisi %1 konumuna gönderiliyor."
 #: src/irc/outputfilter.cpp:674
 #, kde-format
 msgid "%1ME only works from a channel, query or DCC chat tab."
-msgstr "%1ME sadece kanal, sorgu ve ya DCC sohbet sekmesinde çalışır."
+msgstr "%1ME yalnızca kanal, sorgu ve ya DCC sohbet sekmesinde çalışır."
 
 #: src/irc/outputfilter.cpp:741
 #, kde-format
@@ -6564,12 +6565,12 @@ msgstr "IRC Operatörü Şifresi"
 #: src/irc/outputfilter.cpp:1396
 #, kde-format
 msgid "%1BAN without channel name works only from inside a channel."
-msgstr "Kanal adı olmadığında, %1BAN sadece kanal içerisinde çalışır."
+msgstr "Kanal adı olmadığında, %1BAN yalnızca kanal içerisinde çalışır."
 
 #: src/irc/outputfilter.cpp:1399
 #, kde-format
 msgid "%1KICKBAN without channel name works only from inside a channel."
-msgstr "Kanal adı olmadığında, %1KICKBAN sadece kanal içerisinde çalışır."
+msgstr "Kanal adı olmadığında, %1KICKBAN yalnızca kanal içerisinde çalışır."
 
 #: src/irc/outputfilter.cpp:1434
 #, kde-format
@@ -6592,7 +6593,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
 msgid "%1UNBAN without channel name works only from inside a channel."
-msgstr "Kanal adı olmadığında, %1UNBAN sadece kanal içerisinde çalışır."
+msgstr "Kanal adı olmadığında, %1UNBAN yalnızca kanal içerisinde çalışır."
 
 #: src/irc/outputfilter.cpp:1493
 #, kde-format
@@ -8108,8 +8109,8 @@ msgstr ""
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
-"KUniqueApplication::NonUniqueInstance (sadece hata ayıkla, tedbir kullan) 'ı "
-"ayarlar"
+"KUniqueApplication::NonUniqueInstance (yalnızca hata ayıkla, tedbir kullan) "
+"'ı ayarlar"
 
 #: src/mainwindow.cpp:131
 #, kde-format
@@ -8414,7 +8415,7 @@ msgstr "&İşaretleme Satırı"
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
-"Şu andaki pencereye sadece kendinizin görebileceği yatay bir çizgi ekler"
+"Şu andaki pencereye yalnızca kendinizin görebileceği yatay bir çizgi ekler"
 
 #: src/mainwindow.cpp:509 src/mainwindow.cpp:852
 #, kde-format
@@ -9323,7 +9324,7 @@ msgstr "&Kipler"
 #: src/viewer/channeloptionsui.ui:117
 #, kde-format
 msgid "&Topic can only be changed by channel operators"
-msgstr "Konu sadece kanal &operatörü tarafından değiştirilebilir"
+msgstr "Konu yalnızca kanal &operatörü tarafından değiştirilebilir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, messageModeChBox)
 #: src/viewer/channeloptionsui.ui:124
@@ -9341,7 +9342,7 @@ msgstr "&Gizli kanal, bu kanal kanal listesinde gösterilmeyecek"
 #: src/viewer/channeloptionsui.ui:138
 #, kde-format
 msgid "Only &invited are allowed to join the channel"
-msgstr "Sadece &davet edilenler kanala katılabilir"
+msgstr "Yalnızca &davet edilenler kanala katılabilir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, moderatedModeChBox)
 #: src/viewer/channeloptionsui.ui:145
@@ -9802,7 +9803,7 @@ msgid ""
 msgstr ""
 "<qt><p>Girdi satırı kanala, sorguya veya sunucuya göndereceğiniz iletileri "
 "girdiğiniz yerdir.  Kanala gönderilen bir iletiyi herkes görürken bir kişiye "
-"gönderdiğiniz sorguyu sadece iletişimde olduğunuz kişi görebilir.</"
+"gönderdiğiniz sorguyu yalnızca iletişimde olduğunuz kişi görebilir.</"
 "p><p>Takma adların otomatik tamamlanması için Sekme düğmesini "
 "kullanabilirsiniz. Eğer yazmaya başlamamışsanız başarıyla tamamlanmış son "
 "takma ad kullanılacaktır.</p><p>Özel komutlar da gönderebilirsiniz:</"
@@ -9921,7 +9922,7 @@ msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
-"Not: Bu günlük dosyasını kaydederek, sadece göstericide gördüğünüz bölümü "
+"Not: Bu günlük dosyasını kaydederek, yalnızca göstericide gördüğünüz bölümü "
 "değil, dosyadaki tüm veriyi kaydetmiş olacaksınız."
 
 #: src/viewer/logfilereader.cpp:153
@@ -9980,7 +9981,7 @@ msgstr "BÜYÜK/Küçük Harf Eşleştir"
 #: src/viewer/searchbar.cpp:67
 #, kde-format
 msgid "Whole Words Only"
-msgstr "Sadece Tam Sözcükler"
+msgstr "Yalnızca Tam Sözcükler"
 
 #. i18n: ectx: property (text), widget (QLabel, m_findLabel)
 #: src/viewer/searchbarbase.ui:55
@@ -10096,8 +10097,8 @@ msgid ""
 msgstr ""
 "Bu sekmesi açıkken kanalın konusu için atanan tüm konuları listesidir.\n"
 "\n"
-"Bir konu aynı kişi tarafından birden çok defa atanmışsa sadece son görünümü "
-"gösterilecektir.\n"
+"Bir konu aynı kişi tarafından birden çok defa atanmışsa yalnızca son "
+"görünümü gösterilecektir.\n"
 "\n"
 "Listeden bir konuyu seçtiğinizde altında bir düzenleme alanı açılacaktır. "
 "Bir kere alanın içeriğini düzenlemeye başladığınızda, liste normal girdi "
@@ -10159,7 +10160,7 @@ msgstr "Sekmeyi &Yeniden Adlandır..."
 #: src/viewer/viewcontainer.cpp:2383
 #, kde-format
 msgid "You can only search in text fields."
-msgstr "Sadece metin alanlarında arama yapabilirsiniz."
+msgstr "Yalnızca metin alanlarında arama yapabilirsiniz."
 
 #: src/viewer/viewcontainer.cpp:2384
 #, kde-format
@@ -10172,7 +10173,7 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
-"Kanal listesi görüntülenecek sunucuyu bilmek için, bu liste sadece bir "
+"Kanal listesi görüntülenecek sunucuyu bilmek için, bu liste yalnızca bir "
 "sorgu, kanal veya durum penceresinden açılabilir."
 
 #: src/viewer/viewcontainer.cpp:3018
