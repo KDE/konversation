@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2023-02-01 08:03+0100\n"
+"PO-Revision-Date: 2023-02-02 08:21+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -145,7 +145,7 @@ msgstr "D-Bus"
 #: src/bookmarkhandler.cpp:35
 #, kde-format
 msgid "Konversation Bookmarks Editor"
-msgstr ""
+msgstr "Konversation-ის სანიშნების რედაქტორი"
 
 #: src/cipher.cpp:477
 #, kde-format
@@ -177,7 +177,7 @@ msgstr ""
 #: src/common.cpp:25
 #, kde-format
 msgid "topic protection"
-msgstr ""
+msgstr "თემის დაცვა"
 
 #: src/common.cpp:26
 #, kde-format
@@ -403,7 +403,7 @@ msgstr "&განლაგება"
 #: src/config/chatwindowappearance_config.ui:120
 #, kde-format
 msgid "&Show channel topic"
-msgstr ""
+msgstr "&არხის თემის ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowModeButtons)
 #: src/config/chatwindowappearance_config.ui:127
@@ -451,7 +451,7 @@ msgstr "&ჩოჩიის ჩვენება"
 #: src/config/chatwindowappearance_config.ui:251
 #, kde-format
 msgid "Enable Back&ground Image"
-msgstr ""
+msgstr "&ფონის სურათის ჩართვა"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/chatwindowappearance_config.ui:260
@@ -1152,7 +1152,7 @@ msgstr "მეტსახელების სია:"
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr ""
+msgstr "ჩანართების ზოლი:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
@@ -1176,7 +1176,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:26
 #, kde-format
 msgid "Enable System Tray"
-msgstr ""
+msgstr "ხატულა სისტემის კუთხეში"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotify)
 #: src/config/generalbehavior_configui.ui:38
@@ -2028,7 +2028,7 @@ msgstr "გარეგნობა"
 #: src/config/tabnotifications_config.ui:35
 #, kde-format
 msgid "Use colored text"
-msgstr ""
+msgstr "ფერადი ტექსტის გამოყენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsLeds)
 #: src/config/tabnotifications_config.ui:45
@@ -2740,7 +2740,7 @@ msgstr "სოკეტის შეცდომა: %1"
 #: src/dcc/chat.cpp:558
 #, kde-format
 msgid "Could not accept the client."
-msgstr "კლიენტის დადასტურების შეცდომა"
+msgstr "კლიენტის დადასტურების შეცდომა."
 
 #: src/dcc/chat.cpp:580
 #, kde-format
@@ -4315,13 +4315,13 @@ msgstr ""
 #: src/irc/channel.cpp:1162
 #, kde-format
 msgid "%1 (%2) has left this server."
-msgstr ""
+msgstr "%1 (%2) გავიდა ამ სერვერიდან."
 
 #: src/irc/channel.cpp:1166
 #, kde-format
 msgctxt "%1 = nick, %2 = hostname, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr ""
+msgstr "%1 (%2) გავიდა ამ სერვერიდან (%3)."
 
 #: src/irc/channel.cpp:1171
 #, kde-format
@@ -5991,7 +5991,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:42
 #, kde-format
 msgid "&Join Channel"
-msgstr ""
+msgstr "&არხზე შესვლა"
 
 #: src/irc/nicksonline.cpp:54
 #, kde-format
