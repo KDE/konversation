@@ -3,14 +3,14 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vit@pelcak.org>, 2021, 2022.
+# Vit Pelcak <vit@pelcak.org>, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-03 00:46+0000\n"
-"PO-Revision-Date: 2022-10-10 16:53+0200\n"
+"PO-Revision-Date: 2023-02-06 13:42+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.08.1\n"
+"X-Generator: Lokalize 22.12.1\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -4245,7 +4245,7 @@ msgstr "Možná doplnění: %1."
 #: src/irc/channel.cpp:883
 #, kde-format
 msgid "Channel Password"
-msgstr "Hesla do kanálu"
+msgstr "Heslo kanálu"
 
 #: src/irc/channel.cpp:899
 #, kde-format
@@ -8966,7 +8966,7 @@ msgstr "&Limit uživatelů:"
 #: src/viewer/channeloptionsui.ui:188
 #, kde-format
 msgid "Channel &password:"
-msgstr "Hesla do &kanálu:"
+msgstr "Heslo &kanálu:"
 
 #. i18n: ectx: property (text), widget (QPushButton, toggleAdvancedModes)
 #: src/viewer/channeloptionsui.ui:202
