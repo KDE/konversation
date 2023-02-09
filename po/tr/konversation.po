@@ -14,13 +14,13 @@
 # Türker SEZER <turkersezer@tsdesign.info>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017.
 # Kaan Ozdincer <kaanozdincer@gmail.com>, 2014.
-# Emir SARI <emir_sari@icloud.com>, 2022.
+# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-12-31 17:43+0300\n"
+"PO-Revision-Date: 2023-02-08 19:56+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1346,7 +1346,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:263
 #, kde-format
 msgid "Input box expands with text"
-msgstr "Giriş satırı yazıya göre genişlesin"
+msgstr "Giriş satırı yazıyla genişlesin"
 
 #: src/config/highlight_config.cpp:31
 #, kde-format
@@ -1658,7 +1658,9 @@ msgstr "Vurgulama"
 #: src/config/tabnotifications_config.ui:110
 #, kde-format
 msgid "Channel events are mode changes or users joining/leaving a channel."
-msgstr "Kullanıcıların kanala giriş çıkışı ve benzeri olaylar."
+msgstr ""
+"Kanal olayları, kip değişiklikleri veya bir kanala katılan/kanaldan ayrılan "
+"kullanıcılardır."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseChannelEvents)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsEvents)
@@ -6035,7 +6037,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2482
 #, kde-format
 msgid "You are now logged in as %1."
-msgstr "%1 olarak giriş yaptınız."
+msgstr "%1 olarak oturum açtınız."
 
 #: src/irc/inputfilter.cpp:2490
 #, kde-format
@@ -7434,9 +7436,9 @@ msgid ""
 "once Konversation has connected to a server. You may leave this blank if you "
 "wish to not automatically join any channels."
 msgstr ""
-"Zorunlu değil. Konversation sunucuya bağlanınca kendiliğinden girilecek olan "
-"kanalları listeler. Eğer hiçbir kanala otomatik giriş yapmak istemiyorsanız "
-"burayı boş bırakabilirsiniz."
+"Zorunlu değil. Konversation sunucuya bağlanınca kendiliğinden katılınacak "
+"kanalları listeler. Eğer hiçbir kanala otomatik olarak katılmak "
+"istemiyorsanız burayı boş bırakabilirsiniz."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addChannelButton)
 #: src/irc/servergroupdialogui.ui:239
@@ -9282,8 +9284,8 @@ msgid ""
 "in order to join.</p></qt>"
 msgstr ""
 "<qt><p>Bunlar bir kanalın <em>kip</em>ini denetler. Bunları yalnızca bir "
-"operatör değiştirebilir.</p><p>Korumalı bir kanal kullanıcıların giriş "
-"yaparken parola girmelerini gerektirir.</p></qt>"
+"operatör değiştirebilir.</p><p>Korumalı bir kanal kullanıcıların katılırken "
+"parola girmelerini gerektirir.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:627
 #, kde-format
