@@ -167,7 +167,7 @@ QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
     connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
 QT_WARNING_POP
 #else
-    QNetworkInformation::load(QNetworkInformation::Feature::Reachability);
+    QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability);
     connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
 #endif
 
