@@ -14,7 +14,6 @@
 #include <KBookmarkDialog>
 #include <KBookmarkManager>
 #include <QFileDialog>
-#include <KFilterProxySearchLine>
 #include <KIO/CopyJob>
 #include <QIcon>
 #include <KLocalizedString>
