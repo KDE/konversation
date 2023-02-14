@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:46+0000\n"
+"POT-Creation-Date: 2023-02-14 00:58+0000\n"
 "PO-Revision-Date: 2022-09-24 16:14+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -249,7 +249,7 @@ msgstr "användargräns"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
 msgid "New"
 msgstr "Ny"
@@ -5366,7 +5366,7 @@ msgid "Enter a filter string here."
 msgstr "Skriv in en filtreringssträng här."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
-#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:148
+#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
 #, kde-format
 msgid "Search"
 msgstr "Sök"
@@ -5579,7 +5579,7 @@ msgid_plural "limited to %1 users"
 msgstr[0] "begränsad till %1 användare"
 msgstr[1] "begränsad till %1 användare"
 
-#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:171
+#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
 msgid "URL"
 msgstr "Webbadress"
@@ -8970,23 +8970,23 @@ msgstr "Misslyckades ladda ner %1: %2"
 msgid "Error parsing router description."
 msgstr "Fel vid tolkning av routerbeskrivning."
 
-#: src/urlcatcher.cpp:70 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
 #, kde-format
 msgid "URL Catcher"
 msgstr "Webbadressinfångning"
 
-#: src/urlcatcher.cpp:91
+#: src/urlcatcher.cpp:90
 #, kde-format
 msgctxt "open url"
 msgid "&Open"
 msgstr "Ö&ppna"
 
-#: src/urlcatcher.cpp:94
+#: src/urlcatcher.cpp:93
 #, kde-format
 msgid "Open URLs in external browser."
 msgstr "Öppna webbadresser i extern webbläsare."
 
-#: src/urlcatcher.cpp:95
+#: src/urlcatcher.cpp:94
 #, kde-format
 msgid ""
 "<p>Select one or several <b>URLs</b> below, then click this button to launch "
@@ -9000,33 +9000,33 @@ msgstr ""
 "<p>Du kan ange en egen webbläsare för webbadresser med <b>Inställningar</b>, "
 "under <b>Beteende</b> | <b>Allmänt</b>.</p>"
 
-#: src/urlcatcher.cpp:98
+#: src/urlcatcher.cpp:97
 #, kde-format
 msgid "&Save..."
 msgstr "&Spara..."
 
-#: src/urlcatcher.cpp:101
+#: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
 msgstr "Spara markerade webbadresser på disk."
 
-#: src/urlcatcher.cpp:104
+#: src/urlcatcher.cpp:103
 #, kde-format
 msgid "Add Bookmark..."
 msgstr "Lägg till bokmärke..."
 
-#: src/urlcatcher.cpp:112
+#: src/urlcatcher.cpp:111
 #, kde-format
 msgctxt "copy url"
 msgid "&Copy"
 msgstr "K&opiera"
 
-#: src/urlcatcher.cpp:115
+#: src/urlcatcher.cpp:114
 #, kde-format
 msgid "Copy URLs to the clipboard."
 msgstr "Kopiera webbadresser till klippbordet."
 
-#: src/urlcatcher.cpp:116
+#: src/urlcatcher.cpp:115
 #, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
@@ -9035,13 +9035,13 @@ msgstr ""
 "Markera en eller flera <b>webbadresser</b> ovan, och klicka därefter på "
 "knappen för att kopiera dem till klippbordet."
 
-#: src/urlcatcher.cpp:119
+#: src/urlcatcher.cpp:118
 #, kde-format
 msgctxt "delete url"
 msgid "&Delete"
 msgstr "&Ta bort"
 
-#: src/urlcatcher.cpp:122
+#: src/urlcatcher.cpp:121
 #, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
@@ -9050,44 +9050,44 @@ msgstr ""
 "Markera en eller flera <b>webbadresser</b> ovan, och klicka därefter på "
 "knappen för att ta bort dem från listan."
 
-#: src/urlcatcher.cpp:123
+#: src/urlcatcher.cpp:122
 #, kde-format
 msgid "Delete selected link."
 msgstr "Ta bort markerad länk."
 
-#: src/urlcatcher.cpp:129
+#: src/urlcatcher.cpp:128
 #, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
 msgstr "&Spara lista..."
 
-#: src/urlcatcher.cpp:131
+#: src/urlcatcher.cpp:130
 #, kde-format
 msgid "Save list."
 msgstr "Spara lista."
 
-#: src/urlcatcher.cpp:132
+#: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
 msgstr "Klicka för att spara hela listan i en fil."
 
-#: src/urlcatcher.cpp:135
+#: src/urlcatcher.cpp:134
 #, kde-format
 msgctxt "clear url list"
 msgid "&Clear List"
 msgstr "&Rensa lista"
 
-#: src/urlcatcher.cpp:137
+#: src/urlcatcher.cpp:136
 #, kde-format
 msgid "Clear list."
 msgstr "Rensa lista."
 
-#: src/urlcatcher.cpp:138
+#: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
 msgstr "Klicka för att rensa hela listan."
 
-#: src/urlcatcher.cpp:156
+#: src/urlcatcher.cpp:155
 #, kde-format
 msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
@@ -9096,17 +9096,17 @@ msgstr ""
 "Lista med webbadresser som nämns i något av fönstren i Konversation under "
 "den här sessionen."
 
-#: src/urlcatcher.cpp:169
+#: src/urlcatcher.cpp:168
 #, kde-format
 msgid "From"
 msgstr "Från"
 
-#: src/urlcatcher.cpp:173
+#: src/urlcatcher.cpp:172
 #, kde-format
 msgid "Date"
 msgstr "Datum"
 
-#: src/urlcatcher.cpp:231
+#: src/urlcatcher.cpp:230
 #, kde-format
 msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
@@ -9115,12 +9115,12 @@ msgstr ""
 "Du har markerat mer än en webbadress. Vill du verkligen öppna flera "
 "webbadresser på en gång?"
 
-#: src/urlcatcher.cpp:232 src/urlcatcher.cpp:254
+#: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, kde-format
 msgid "Open URLs"
 msgstr "Öppna webbadresser"
 
-#: src/urlcatcher.cpp:252
+#: src/urlcatcher.cpp:251
 #, kde-format
 msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
@@ -9130,17 +9130,17 @@ msgstr ""
 "kommer att öppnas för var och en av dem. Vill du verkligen spara flera "
 "webbadresser på en gång?"
 
-#: src/urlcatcher.cpp:267 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
 #, kde-format
 msgid "Save link as"
 msgstr "Spara länk som"
 
-#: src/urlcatcher.cpp:335
+#: src/urlcatcher.cpp:334
 #, kde-format
 msgid "Save URL List"
 msgstr "Spara webbadresslista"
 
-#: src/urlcatcher.cpp:362
+#: src/urlcatcher.cpp:361
 #, kde-format
 msgid ""
 "Konversation URL List: %1\n"

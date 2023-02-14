@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:46+0000\n"
+"POT-Creation-Date: 2023-02-14 00:58+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -234,7 +234,7 @@ msgstr "उपयोक्ता सीमा: (&l)"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
 msgid "New"
 msgstr "नया"
@@ -5235,7 +5235,7 @@ msgid "Enter a filter string here."
 msgstr "नेटवर्क के होस्ट को यहाँ भरें."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
-#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:148
+#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
 #, fuzzy, kde-format
 msgid "Search"
 msgstr "सेवाएँ: (&v)"
@@ -5447,7 +5447,7 @@ msgid_plural "limited to %1 users"
 msgstr[0] "_n: %1 उपयोक्ता तक सीमितuser"
 msgstr[1] "%1 उपयोक्ताओं तक सीमित"
 
-#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:171
+#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
 msgid "URL"
 msgstr "यूआरएल"
@@ -8724,24 +8724,24 @@ msgstr "प्रसंग डाउनलोड करने में अस�
 msgid "Error parsing router description."
 msgstr ""
 
-#: src/urlcatcher.cpp:70 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
 #, kde-format
 msgid "URL Catcher"
 msgstr "यूआरएल कैचर"
 
-#: src/urlcatcher.cpp:91
+#: src/urlcatcher.cpp:90
 #, fuzzy, kde-format
 #| msgid "Open URL"
 msgctxt "open url"
 msgid "&Open"
 msgstr "यूआरएल खोलें"
 
-#: src/urlcatcher.cpp:94
+#: src/urlcatcher.cpp:93
 #, kde-format
 msgid "Open URLs in external browser."
 msgstr ""
 
-#: src/urlcatcher.cpp:95
+#: src/urlcatcher.cpp:94
 #, kde-format
 msgid ""
 "<p>Select one or several <b>URLs</b> below, then click this button to launch "
@@ -8750,146 +8750,146 @@ msgid ""
 "custom web browser for web URLs.</p>"
 msgstr ""
 
-#: src/urlcatcher.cpp:98
+#: src/urlcatcher.cpp:97
 #, fuzzy, kde-format
 msgid "&Save..."
 msgstr "सूची सहेजें... (&v)"
 
-#: src/urlcatcher.cpp:101
+#: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
 msgstr ""
 
-#: src/urlcatcher.cpp:104
+#: src/urlcatcher.cpp:103
 #, fuzzy, kde-format
 #| msgid "Add to Bookmarks"
 msgid "Add Bookmark..."
 msgstr "पसंद में जोड़ें"
 
-#: src/urlcatcher.cpp:112
+#: src/urlcatcher.cpp:111
 #, fuzzy, kde-format
 #| msgid "&Copy URL"
 msgctxt "copy url"
 msgid "&Copy"
 msgstr "यूआरएल की नकल बनाएँ (&C)"
 
-#: src/urlcatcher.cpp:115
+#: src/urlcatcher.cpp:114
 #, fuzzy, kde-format
 #| msgid "Copy URL to Clipboard"
 msgid "Copy URLs to the clipboard."
 msgstr "यूआरएल की नकल क्लिपबोर्ड पर बनाएं"
 
-#: src/urlcatcher.cpp:116
+#: src/urlcatcher.cpp:115
 #, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
 
-#: src/urlcatcher.cpp:119
+#: src/urlcatcher.cpp:118
 #, fuzzy, kde-format
 #| msgid "&Delete URL"
 msgctxt "delete url"
 msgid "&Delete"
 msgstr "यूआरएल मिटाएँ (&D)"
 
-#: src/urlcatcher.cpp:122
+#: src/urlcatcher.cpp:121
 #, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
 "them from the list."
 msgstr ""
 
-#: src/urlcatcher.cpp:123
+#: src/urlcatcher.cpp:122
 #, fuzzy, kde-format
 #| msgid "&Delete URL"
 msgid "Delete selected link."
 msgstr "यूआरएल मिटाएँ (&D)"
 
-#: src/urlcatcher.cpp:129
+#: src/urlcatcher.cpp:128
 #, fuzzy, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
 msgstr "सूची सहेजें... (&v)"
 
-#: src/urlcatcher.cpp:131
+#: src/urlcatcher.cpp:130
 #, fuzzy, kde-format
 #| msgid "Save URL List"
 msgid "Save list."
 msgstr "यूआरएल सूची सहेजें"
 
-#: src/urlcatcher.cpp:132
+#: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
 msgstr "संपूर्ण सूची को एक फ़ाइल में सहेजने के लिए क्लिक करें"
 
-#: src/urlcatcher.cpp:135
+#: src/urlcatcher.cpp:134
 #, fuzzy, kde-format
 #| msgid "C&lear List"
 msgctxt "clear url list"
 msgid "&Clear List"
 msgstr "सूची साफ करें (&l)"
 
-#: src/urlcatcher.cpp:137
+#: src/urlcatcher.cpp:136
 #, fuzzy, kde-format
 #| msgid "C&lear List"
 msgid "Clear list."
 msgstr "सूची साफ करें (&l)"
 
-#: src/urlcatcher.cpp:138
+#: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
 msgstr "पूरी सूची मिटाने के लिए क्लिक करें."
 
-#: src/urlcatcher.cpp:156
+#: src/urlcatcher.cpp:155
 #, kde-format
 msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
 "windows during this session."
 msgstr ""
 
-#: src/urlcatcher.cpp:169
+#: src/urlcatcher.cpp:168
 #, fuzzy, kde-format
 #| msgid "&Format:"
 msgid "From"
 msgstr "फॉर्मेट: (&F)"
 
-#: src/urlcatcher.cpp:173
+#: src/urlcatcher.cpp:172
 #, kde-format
 msgid "Date"
 msgstr "तारीख़"
 
-#: src/urlcatcher.cpp:231
+#: src/urlcatcher.cpp:230
 #, kde-format
 msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:232 src/urlcatcher.cpp:254
+#: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, fuzzy, kde-format
 #| msgid "Open URL"
 msgid "Open URLs"
 msgstr "यूआरएल खोलें"
 
-#: src/urlcatcher.cpp:252
+#: src/urlcatcher.cpp:251
 #, kde-format
 msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:267 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
 #, fuzzy, kde-format
 msgid "Save link as"
 msgstr "सूची सहेजें... (&S)"
 
-#: src/urlcatcher.cpp:335
+#: src/urlcatcher.cpp:334
 #, kde-format
 msgid "Save URL List"
 msgstr "यूआरएल सूची सहेजें"
 
-#: src/urlcatcher.cpp:362
+#: src/urlcatcher.cpp:361
 #, fuzzy, kde-format
 #| msgid ""
 #| "Konversation Channel List: %1 - %2\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:46+0000\n"
+"POT-Creation-Date: 2023-02-14 00:58+0000\n"
 "PO-Revision-Date: 2011-07-26 16:07+0300\n"
 "Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -230,7 +230,7 @@ msgstr "&Ограничение за потребители:"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
 msgid "New"
 msgstr "Нов"
@@ -5324,7 +5324,7 @@ msgid "Enter a filter string here."
 msgstr "Въвеждане на филтриращ низ."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
-#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:148
+#: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
 #, kde-format
 msgid "Search"
 msgstr "Търсене"
@@ -5537,7 +5537,7 @@ msgid_plural "limited to %1 users"
 msgstr[0] "ограничено до %1 потребител"
 msgstr[1] "ограничен до %1 потребители"
 
-#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:171
+#: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
 msgid "URL"
 msgstr "URL-адрес"
@@ -8871,23 +8871,23 @@ msgstr "Грешка при изтегляне на %1: %2"
 msgid "Error parsing router description."
 msgstr ""
 
-#: src/urlcatcher.cpp:70 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
 #, kde-format
 msgid "URL Catcher"
 msgstr "Ловец на URL"
 
-#: src/urlcatcher.cpp:91
+#: src/urlcatcher.cpp:90
 #, kde-format
 msgctxt "open url"
 msgid "&Open"
 msgstr "&Отваряне"
 
-#: src/urlcatcher.cpp:94
+#: src/urlcatcher.cpp:93
 #, kde-format
 msgid "Open URLs in external browser."
 msgstr ""
 
-#: src/urlcatcher.cpp:95
+#: src/urlcatcher.cpp:94
 #, fuzzy, kde-format
 msgid ""
 "<p>Select one or several <b>URLs</b> below, then click this button to launch "
@@ -8900,33 +8900,33 @@ msgstr ""
 "меню<b>Настройки</b>, под <b>Поведение</b> | <b>основни</b>, можете да "
 "зададете потребителски браузър за уеб URL адреси.</p>"
 
-#: src/urlcatcher.cpp:98
+#: src/urlcatcher.cpp:97
 #, kde-format
 msgid "&Save..."
 msgstr "&Запис..."
 
-#: src/urlcatcher.cpp:101
+#: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
 msgstr ""
 
-#: src/urlcatcher.cpp:104
+#: src/urlcatcher.cpp:103
 #, kde-format
 msgid "Add Bookmark..."
 msgstr "Добавяне на отметка..."
 
-#: src/urlcatcher.cpp:112
+#: src/urlcatcher.cpp:111
 #, kde-format
 msgctxt "copy url"
 msgid "&Copy"
 msgstr "&Копиране"
 
-#: src/urlcatcher.cpp:115
+#: src/urlcatcher.cpp:114
 #, kde-format
 msgid "Copy URLs to the clipboard."
 msgstr ""
 
-#: src/urlcatcher.cpp:116
+#: src/urlcatcher.cpp:115
 #, fuzzy, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
@@ -8935,13 +8935,13 @@ msgstr ""
 "Изберете <b>URL адрес</b> по-горе, след което щракнете този бутон, за да "
 "копирате URL адресът в системния буфер."
 
-#: src/urlcatcher.cpp:119
+#: src/urlcatcher.cpp:118
 #, kde-format
 msgctxt "delete url"
 msgid "&Delete"
 msgstr "&Изтриване"
 
-#: src/urlcatcher.cpp:122
+#: src/urlcatcher.cpp:121
 #, fuzzy, kde-format
 msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
@@ -8950,44 +8950,44 @@ msgstr ""
 "Изберете <b>URL адрес</b> по-горе, след което щракнете този бутон, за да "
 "изтриете URL адреса от списъка."
 
-#: src/urlcatcher.cpp:123
+#: src/urlcatcher.cpp:122
 #, fuzzy, kde-format
 msgid "Delete selected link."
 msgstr "&Изтриване на URL адрес"
 
-#: src/urlcatcher.cpp:129
+#: src/urlcatcher.cpp:128
 #, fuzzy, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
 msgstr "Запис на списък..."
 
-#: src/urlcatcher.cpp:131
+#: src/urlcatcher.cpp:130
 #, fuzzy, kde-format
 msgid "Save list."
 msgstr "Записване на списъка с URL адреси"
 
-#: src/urlcatcher.cpp:132
+#: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
 msgstr "Щракнете, за да запишете целия списък във файл."
 
-#: src/urlcatcher.cpp:135
+#: src/urlcatcher.cpp:134
 #, kde-format
 msgctxt "clear url list"
 msgid "&Clear List"
 msgstr "&Изчистване на списъка"
 
-#: src/urlcatcher.cpp:137
+#: src/urlcatcher.cpp:136
 #, kde-format
 msgid "Clear list."
 msgstr "Изчистване на списъка."
 
-#: src/urlcatcher.cpp:138
+#: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
 msgstr "Щракнете, за да изтриете целия списък."
 
-#: src/urlcatcher.cpp:156
+#: src/urlcatcher.cpp:155
 #, kde-format
 msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
@@ -8996,46 +8996,46 @@ msgstr ""
 "Списък с постоянни източници на ресурси, споменати във всеки прозорец на "
 "Konversation по време на тази сесия."
 
-#: src/urlcatcher.cpp:169
+#: src/urlcatcher.cpp:168
 #, kde-format
 msgid "From"
 msgstr "От"
 
-#: src/urlcatcher.cpp:173
+#: src/urlcatcher.cpp:172
 #, kde-format
 msgid "Date"
 msgstr "Дата"
 
-#: src/urlcatcher.cpp:231
+#: src/urlcatcher.cpp:230
 #, kde-format
 msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:232 src/urlcatcher.cpp:254
+#: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, fuzzy, kde-format
 msgid "Open URLs"
 msgstr "&Отваряне на URL адрес"
 
-#: src/urlcatcher.cpp:252
+#: src/urlcatcher.cpp:251
 #, kde-format
 msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:267 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
 #, kde-format
 msgid "Save link as"
 msgstr "Запис на връзката като"
 
-#: src/urlcatcher.cpp:335
+#: src/urlcatcher.cpp:334
 #, kde-format
 msgid "Save URL List"
 msgstr "Записване на списъка с URL адреси"
 
-#: src/urlcatcher.cpp:362
+#: src/urlcatcher.cpp:361
 #, fuzzy, kde-format
 msgid ""
 "Konversation URL List: %1\n"
