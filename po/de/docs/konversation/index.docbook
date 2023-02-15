@@ -5845,6 +5845,16 @@ application work. -->
 ><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
 </inlinemediaobject>
 </para>
+<para
+>Beispiel: <userinput
+>Dies ist mein Text %Mfester Breite%M.</userinput
+></para>
+<para
+>Ausgabe: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
 </answer>
 </qandaentry>
 
