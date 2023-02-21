@@ -1,12 +1,12 @@
 # Translation of konversation to Norwegian Nynorsk
 #
-# Karl Ove Hufthammer <karl@huftis.org>, 2015, 2016, 2018, 2020, 2021, 2022.
+# Karl Ove Hufthammer <karl@huftis.org>, 2015, 2016, 2018, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-22 00:44+0000\n"
-"PO-Revision-Date: 2022-06-19 12:45+0200\n"
+"PO-Revision-Date: 2023-02-19 21:23+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -7398,7 +7398,7 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:131
 #, kde-format
 msgid "Co&nnect on application start up"
-msgstr "&Kobla til ved programstart"
+msgstr "&Kopla til ved programstart"
 
 #. i18n: ectx: property (whatsThis), widget (QListWidget, m_serverLBox)
 #: src/irc/servergroupdialogui.ui:144
