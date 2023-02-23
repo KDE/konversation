@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-02-16 09:03+0100\n"
+"PO-Revision-Date: 2023-02-22 16:47+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -7308,7 +7308,7 @@ msgstr "Uživatelsky přívětivý klient IRC"
 #: src/main.cpp:50
 #, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "Copyright 2002-%1, Tým Konversation"
+msgstr "Autorská práva 2002-%1, Tým Konversation"
 
 #: src/main.cpp:51
 #, kde-format
