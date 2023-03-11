@@ -4293,7 +4293,7 @@ msgid ""
 "activity is detected."
 msgstr ""
 "Si vous cochez cette case, Konversation annulera automatiquement le mode "
-"absent pour toute les connexion utilisant cette identité lorsque "
+"absent pour toutes les connexions utilisant cette identité lorsque "
 "l'économiseur d'écran s'arrête ou quand une nouvelle activité de "
 "l'utilisateur est détecté."
 
@@ -6276,7 +6276,7 @@ msgid ""
 msgstr ""
 "<qt><p>Ceci affiche la liste des personnes situées dans le canal. Le pseudo "
 "de chaque personne est affiché, avec une image décrivant son état.<br/></"
-"p><table><tr><th><%1</th><td>Cette personne possède les privilèges "
+"p><table><tr><th>%1</th><td>Cette personne possède les privilèges "
 "d'administrateur.</td></tr><tr><th>%2</th><td>Cette personne est le "
 "propriétaire du canal.</td></tr><tr><th>%3</th><td>Cette personne est un "
 "opérateur du canal.</td></tr><tr><th>%4</th><td>Cette personne est un semi-"
@@ -8934,7 +8934,7 @@ msgstr "File rapide"
 #: src/queuetunerbase.ui:612
 #, kde-format
 msgid "All Queues"
-msgstr "Toute les files"
+msgstr "Toutes les files"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel13)
 #: src/queuetunerbase.ui:632
