@@ -12,6 +12,7 @@
   <name xml:lang="de">Konversation</name>
   <name xml:lang="el">Konversation</name>
   <name xml:lang="en-GB">Konversation</name>
+  <name xml:lang="eo">Konversation</name>
   <name xml:lang="es">Konversation</name>
   <name xml:lang="et">Konversation</name>
   <name xml:lang="eu">Konversation</name>
@@ -52,6 +53,7 @@
   <summary xml:lang="de">IRC-Programm</summary>
   <summary xml:lang="el">Εφαρμογή IRC</summary>
   <summary xml:lang="en-GB">IRC client</summary>
+  <summary xml:lang="eo">IRC-kliento</summary>
   <summary xml:lang="es">Cliente de IRC</summary>
   <summary xml:lang="et">IRC klient</summary>
   <summary xml:lang="eu">IRC bezeroa</summary>
@@ -96,6 +98,7 @@
     <p xml:lang="de">Konversation ist ein benutzerfreundliches Internet-Relay-Chat (IRC)-Programm von KDE. Es bietet einen einfachen Zugang zu Standard-IRC-Netzwerken wie Libera, wo die KDE-IRC-Kanäle zu finden sind.</p>
     <p xml:lang="el">Το Konversation είναι μια φιλική στον χρήστη εφαρμογή-πελάτης για την προώθηση συνομιλίας στο Διαδίκτυο (Internet Relay Chat, IRC) από το KDE. Παρέχει εύκολη πρόσβαση σε τυπικά IRC δίκτυα όπως το Libera, όπου μπορείτε να βρείτε τους διαύλους IRC του KDE.</p>
     <p xml:lang="en-GB">Konversation is a user-friendly Internet Relay Chat (IRC) client by KDE. It provides easy access to standard IRC networks such as Libera, where the KDE IRC channels can be found.</p>
+    <p xml:lang="eo">Konversation estas facile uzebla Interreta Relajsa Babilejo (IRC) kliento de KDE. Ĝi disponigas facilan aliron al normaj IRC-retoj kiel Libera, kie la KDE IRC-kanaloj troveblas.</p>
     <p xml:lang="es">Konversation es un cliente IRC (Internet Relay Chat) fácil de usar desarrollado por KDE. Proporciona un fácil acceso a las redes estándar IRC como Libera, donde se pueden encontrar los canales IRC de KDE.</p>
     <p xml:lang="eu">Konversation KDEren IRC (Internet Relay Chat / Interneteko txandakako berriketa) bezero lagunkoi bat da. IRC sare estandarretara sarbide erraza ematen du, Libera-ra esaterako, non KDE IRC kanalak aurki daitezkeen.</p>
     <p xml:lang="fi">Konversation on KDE:n käyttäjäystävällinen IRC-asiakas (Internet Relay Chat), joka tarjoaa helpon pääsyn IRC-vakioverkkoihin kuten Liberaan, mistä löytyvät KDE:n IRC-kanavat.</p>
@@ -127,6 +130,7 @@
     <p xml:lang="de">Funktionen:</p>
     <p xml:lang="el">Λειτουργίες:</p>
     <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="eo">Trajtoj:</p>
     <p xml:lang="es">Características:</p>
     <p xml:lang="et">Omadused:</p>
     <p xml:lang="eu">Ezaugarriak:</p>
@@ -168,6 +172,7 @@
       <li xml:lang="de">Standard-IRC-Funktionen</li>
       <li xml:lang="el">Τυπικές IRC λειτουργίες</li>
       <li xml:lang="en-GB">Standard IRC features</li>
+      <li xml:lang="eo">Normaj IRC-funkcioj</li>
       <li xml:lang="es">Características estándar de IRC</li>
       <li xml:lang="et">Tavapärased IRC omadused</li>
       <li xml:lang="eu">IRC ezaugarri estandarrak</li>
@@ -206,6 +211,7 @@
       <li xml:lang="de">Unterstützung für SSL-Server</li>
       <li xml:lang="el">Υποστήριξη διακομιστή SSL</li>
       <li xml:lang="en-GB">SSL server support</li>
+      <li xml:lang="eo">Subteno de SSL-servilo</li>
       <li xml:lang="es">Reconocimiento de servidor SSL</li>
       <li xml:lang="et">SSL-serveri toetus</li>
       <li xml:lang="eu">SSL zerbitzariaren euskarria</li>
@@ -245,6 +251,7 @@
       <li xml:lang="de">Unterstützung für Lesezeichen</li>
       <li xml:lang="el">Υποστήριξη σελιδοδεικτών</li>
       <li xml:lang="en-GB">Bookmarking support</li>
+      <li xml:lang="eo">Legomarksubteno</li>
       <li xml:lang="es">Uso de marcadores</li>
       <li xml:lang="et">Järjehoidjate toetus</li>
       <li xml:lang="eu">Laster-marka euskarria</li>
@@ -284,6 +291,7 @@
       <li xml:lang="de">Einfach zu bedienende grafische Benutzeroberfläche</li>
       <li xml:lang="el">Ευκολόχρηστο γραφικό περιβάλλον χρήστη</li>
       <li xml:lang="en-GB">Easy to use graphical user interface</li>
+      <li xml:lang="eo">Facile uzebla grafika uzantinterfaco</li>
       <li xml:lang="es">Interfaz gráfica fácil de usar</li>
       <li xml:lang="et">Hõlpsasti mõistetav graafiline kasutajaliides</li>
       <li xml:lang="eu">Erabiltzailearen interfaze erabilerraza</li>
@@ -321,6 +329,7 @@
       <li xml:lang="de">Mehrere Server und Kanäle in einem einzelnen Fenster</li>
       <li xml:lang="el">Πολλοί εξυπηρετητές και κανάλια σε ένα μόνο παράθυρο</li>
       <li xml:lang="en-GB">Multiple servers and channels in one single window</li>
+      <li xml:lang="eo">Multoblaj serviloj kaj kanaloj en unu sola fenestro</li>
       <li xml:lang="es">Varios servidores y canales en una sola ventana</li>
       <li xml:lang="et">Eri serverite ja kanalite koondamine ühte aknasse</li>
       <li xml:lang="eu">Leiho bakarrean zerbitzari eta kanal anizkoitzak</li>
@@ -358,6 +367,7 @@
       <li xml:lang="de">DCC-Dateiübertragung</li>
       <li xml:lang="el">Μεταφορά αρχείων DCC</li>
       <li xml:lang="en-GB">DCC file transfer</li>
+      <li xml:lang="eo">DCC-dosiertransigo</li>
       <li xml:lang="es">Trasferencia de archivos DCC</li>
       <li xml:lang="et">DCC-failiedastus</li>
       <li xml:lang="eu">DCC fitxategi transferentzia</li>
@@ -397,6 +407,7 @@
       <li xml:lang="de">Unterschiedliche Identitäten für verschiedene Server</li>
       <li xml:lang="el">Πολλές ταυτότητες για διαφορετικούς διακομιστές</li>
       <li xml:lang="en-GB">Multiple identities for different servers</li>
+      <li xml:lang="eo">Multoblaj identecoj por malsamaj serviloj</li>
       <li xml:lang="es">Varias identidades para distintos servidores</li>
       <li xml:lang="et">Eri serverites eri identiteedi kasutamise võimalus</li>
       <li xml:lang="eu">Zerbitzari ezberdinetan nortasun anizkoitzak</li>
@@ -434,6 +445,7 @@
       <li xml:lang="de">Textdekoration und -farben</li>
       <li xml:lang="el">Διακόσμηση κειμένου και χρώματα</li>
       <li xml:lang="en-GB">Text decorations and colours</li>
+      <li xml:lang="eo">Tekstaj dekoracioj kaj koloroj</li>
       <li xml:lang="es">Decoraciones de texto y colores</li>
       <li xml:lang="et">Teksti dekoratsioonid ja värvid</li>
       <li xml:lang="eu">Testu apaindurak eta koloreak</li>
@@ -474,6 +486,7 @@
       <li xml:lang="de">OnScreen-Anzeige fir Benachrichtigungen</li>
       <li xml:lang="el">Εμφάνιση ειδοποιήσεων στην οθόνη</li>
       <li xml:lang="en-GB">OnScreen Display for notifications</li>
+      <li xml:lang="eo">Surekrana Bildigo por sciigoj</li>
       <li xml:lang="es">Visualización en pantalla para notificaciones</li>
       <li xml:lang="et">Märguannete kuvamine ekraanil</li>
       <li xml:lang="eu">Jakinarazpenak pantailan azaltzea (OSD)</li>
@@ -511,6 +524,7 @@
       <li xml:lang="de">Automatische UTF-8-Erkennung</li>
       <li xml:lang="el">Αυτόματος εντοπισμός UTF-8</li>
       <li xml:lang="en-GB">Automatic UTF-8 detection</li>
+      <li xml:lang="eo">Aŭtomata UTF-8-detekto</li>
       <li xml:lang="es">Detección automática de UTF-8</li>
       <li xml:lang="et">Automaatne UTF-8 tuvastamine</li>
       <li xml:lang="eu">UTF-8 antzemate automatikoa</li>
@@ -550,6 +564,7 @@
       <li xml:lang="de">Unterstützung für Kodierung pro Kanal</li>
       <li xml:lang="el">Υποστήριξη κωδικοποίησης ανά κανάλι</li>
       <li xml:lang="en-GB">Per channel encoding support</li>
+      <li xml:lang="eo">Subteno por kodigo po kanalo</li>
       <li xml:lang="es">Uso de codificación por canal</li>
       <li xml:lang="et">Võimalus määrata kodeeringut igal kanalil eraldi</li>
       <li xml:lang="eu">Kanal bakoitzeko kodeketa-euskarria</li>
@@ -588,6 +603,7 @@
       <li xml:lang="de">Unterstützung für Spitznamen-Symbol-Designs</li>
       <li xml:lang="el">Υποστήριξη θεμάτων για εικονίδια ψευδωνύμων</li>
       <li xml:lang="en-GB">Theme support for nick icons</li>
+      <li xml:lang="eo">Etosa subteno por krompiktogramoj</li>
       <li xml:lang="es">Uso de temas para iconos de apodos</li>
       <li xml:lang="et">Kasutajate ikoonidel teemavälimuse kasutamise võimalus</li>
       <li xml:lang="eu">Goitizen-ikonoetarako gaien euskarria</li>
@@ -625,6 +641,7 @@
       <li xml:lang="de">Sehr anpassbar</li>
       <li xml:lang="el">Πλήρως διαμορφώσιμο</li>
       <li xml:lang="en-GB">Highly configurable</li>
+      <li xml:lang="eo">Tre agordebla</li>
       <li xml:lang="es">Altamente configurable</li>
       <li xml:lang="et">Igati seadistatav</li>
       <li xml:lang="eu">Oso konfiguragarria</li>
