@@ -788,7 +788,7 @@ void IrcContextMenus::setupTopicHistoryMenu()
 
     m_topicHistoryMenu->addAction(m_textCopyAction);
 
-    m_queryTopicAuthorAction = createAction(m_topicHistoryMenu, OpenQuery, i18n("Query author"));
+    m_queryTopicAuthorAction = createAction(m_topicHistoryMenu, OpenQuery, i18nc("Opens a query (private message) window with the author of the topic", "Query author"));
 }
 
 void IrcContextMenus::topicHistoryMenu(const QPoint& pos, Server* server, const QString& text, const QString& author)
