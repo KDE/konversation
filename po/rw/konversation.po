@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 03:31+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -9598,6 +9598,7 @@ msgstr "Kuri Kureka i Byahiswemo Abakoresha ? "
 
 #: src/viewer/irccontextmenus.cpp:791
 #, kde-format
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr ""
 

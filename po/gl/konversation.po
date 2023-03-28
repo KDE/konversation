@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 03:31+0000\n"
 "PO-Revision-Date: 2020-01-12 11:38+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -9878,7 +9878,9 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "Quere parar de ignorar os usuarios escollidos?"
 
 #: src/viewer/irccontextmenus.cpp:791
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Query author"
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "Interrogar o autor"
 

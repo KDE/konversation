@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 03:31+0000\n"
 "PO-Revision-Date: 2022-10-03 15:51+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-i18n-doc@kde.org>\n"
@@ -9639,7 +9639,9 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "선택한 사용자 무시를 중단하시겠습니까?"
 
 #: src/viewer/irccontextmenus.cpp:791
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Query author"
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "쿼리 작성자"
 

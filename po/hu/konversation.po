@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 03:31+0000\n"
 "PO-Revision-Date: 2021-12-06 10:50+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -9797,7 +9797,9 @@ msgstr ""
 "Meg szeretné szüntetni a kiválasztott felhasználók figyelmen kívül hagyását?"
 
 #: src/viewer/irccontextmenus.cpp:791
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Query author"
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "Kérés szerzője"
 
