@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-03-28 03:31+0000\n"
 "PO-Revision-Date: 2014-09-30 10:05+0200\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -9720,8 +9720,9 @@ msgstr "Vil du slutte å ignorere de valgte brukerne?"
 
 #: src/viewer/irccontextmenus.cpp:791
 #, kde-format
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr "Forespørsel-forfatter"
+msgstr ""
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
