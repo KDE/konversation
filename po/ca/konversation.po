@@ -1,5 +1,5 @@
 # Translation of konversation.po to Catalan
-# Copyright (C) 2006-2022 This_file_is_part_of_KDE
+# Copyright (C) 2006-2023 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2006.
 # Carles Ferrando Garcia. <carles.ferrando@gmail.com>, 2009.
