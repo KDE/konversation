@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-03-26 17:08+0300\n"
+"PO-Revision-Date: 2023-03-31 21:38+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -7025,7 +7025,7 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr ""
 "%2 kullanıcısından \"%1\" dosyasının alınmasına sürdürülüyor. İşleme %4 "
-"kalanının %%3 kısmından başlanıyor."
+"kalanının %​%3 kısmından başlanıyor."
 
 #: src/irc/server.cpp:2671
 #, kde-format
