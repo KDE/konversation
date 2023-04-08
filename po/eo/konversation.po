@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-03-18 16:41+0100\n"
+"PO-Revision-Date: 2023-04-07 10:09+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -505,7 +505,7 @@ msgstr "Ebligi s&istempepon ĉe envenanta ASCII BEL"
 #: src/config/chatwindowbehaviour_config.ui:45
 #, kde-format
 msgid "Hide &Join/Part/Nick events"
-msgstr "Kaŝi evento&jn de &Aliĝi/Parto/Nick"
+msgstr "Kaŝi evento&jn de Aliĝi/Parto/Nick"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_DisableExpansion)
 #: src/config/chatwindowbehaviour_config.ui:52
@@ -8965,7 +8965,7 @@ msgid ""
 msgstr ""
 "<p>Elektu unu aŭ plurajn <b>URL-ojn</b> sube, tiam alklaku ĉi tiun butonon "
 "por lanĉi la aplikaĵon asociitan kun la mimetipo de la URL.</p>-<p>En la "
-"<b>Agordoj</b> >, sub <b>Konduto</b> | <b>Ĝenerale</b>, vi povas specifi "
+"<b>Agordoj</b>, sub <b>Konduto</b> | <b>Ĝenerale</b>, vi povas specifi "
 "propran retumilon por retaj URLoj.</p>"
 
 #: src/urlcatcher.cpp:97
