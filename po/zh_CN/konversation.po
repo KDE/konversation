@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-03-27 11:59\n"
+"PO-Revision-Date: 2023-04-10 14:10\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -9510,7 +9510,7 @@ msgstr "您想要停止忽略已选中的用户吗？"
 #: src/viewer/irccontextmenus.cpp:791
 #, kde-format
 msgid "Query author"
-msgstr "查询作者"
+msgstr ""
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
