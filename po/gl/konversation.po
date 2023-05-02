@@ -7,13 +7,13 @@
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2015, 2017.
 # Miguel Branco <mgl.branco@gmail.com>, 2013.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2020-01-12 11:38+0100\n"
+"PO-Revision-Date: 2023-05-01 10:55+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.08.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1593,17 +1593,16 @@ msgstr "Mo&strar os nomes verdadeiros ao lado dos alcumes"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "Todas as filas"
+msgstr "Todos os eventos"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "Canles e consultas con eventos"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:573
@@ -1615,20 +1614,19 @@ msgstr "Mostrar o separador de alcumes vixiados no inicio da aplicación"
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr ""
+msgstr "Mostrar o contador de &eventos sen ver na entrada do iniciador"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "&Modo de completado:"
+msgstr "&Modo de contar:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Eventos contados"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -2099,7 +2097,7 @@ msgstr "Visualización na pantalla"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Entrada do iniciador"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2267,17 +2265,15 @@ msgstr "Theme_Config"
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "I&nstalar un tema…"
+msgstr "Obt&er temas novos…"
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "I&nstalar un tema…"
+msgstr "I&nstalar desde un ficheiro…"
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2307,7 +2303,7 @@ msgstr "Icona para usuarios con voz"
 #: src/config/theme_configui.ui:136
 #, kde-format
 msgid "Icon for users with half-operator privileges"
-msgstr "Icona para usuarios con privilexios de suboperador"
+msgstr "Icona para usuarios con privilexios de semioperador"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel5)
 #: src/config/theme_configui.ui:152
@@ -3449,9 +3445,7 @@ msgstr[1] ""
 "Escolleu %1 ficheiros para executar; está seguro de que quere continuar?"
 
 #: src/dcc/transferpanel.cpp:435
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
@@ -3993,7 +3987,7 @@ msgstr "Débelle engadir polo menos un alcume á identidade."
 #: src/identitydialog.cpp:389
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "Os alcumes non poden conter espazos."
 
 #: src/identitydialog.cpp:402
 #, kde-format
@@ -4003,12 +3997,12 @@ msgstr "Escriba un nome real."
 #: src/identitydialog.cpp:413
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "Os identificadores non poden conter espazos."
 
 #: src/identitydialog.cpp:460
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
-msgstr ""
+msgstr "NickServ podería non funcionar con unión automática; recoméndase SASL."
 
 #: src/identitydialog.cpp:467
 #, kde-format
@@ -4817,12 +4811,12 @@ msgstr "%1 retiroulle os privilexios de operador da canle a %2."
 #: src/irc/channel.cpp:1547
 #, kde-format
 msgid "You give channel halfop privileges to yourself."
-msgstr "Deuse privilexios de suboperador da canle a si mesmo."
+msgstr "Deuse privilexios de semioperador da canle a si mesmo."
 
 #: src/irc/channel.cpp:1548
 #, kde-format
 msgid "You give channel halfop privileges to %1."
-msgstr "Deu privilexios de suboperador da canle a %1."
+msgstr "Deu privilexios de semioperador da canle a %1."
 
 #: src/irc/channel.cpp:1552
 #, kde-format
@@ -4837,22 +4831,22 @@ msgstr "%1 deu privilexios de operador da canle a %2."
 #: src/irc/channel.cpp:1560
 #, kde-format
 msgid "You take channel halfop privileges from yourself."
-msgstr "Retirouse os privilexios de suboperador da canle a si mesmo."
+msgstr "Retirouse os privilexios de semioperador da canle a si mesmo."
 
 #: src/irc/channel.cpp:1561
 #, kde-format
 msgid "You take channel halfop privileges from %1."
-msgstr "Retiroulle os privilexios de suboperador da canle a %1."
+msgstr "Retiroulle os privilexios de semioperador da canle a %1."
 
 #: src/irc/channel.cpp:1565
 #, kde-format
 msgid "%1 takes channel halfop privileges from you."
-msgstr "%1 retiroulle os privilexios de suboperador da canle."
+msgstr "%1 retiroulle os privilexios de semioperador da canle."
 
 #: src/irc/channel.cpp:1566
 #, kde-format
 msgid "%1 takes channel halfop privileges from %2."
-msgstr "%1 retiroulle os privilexios de suboperador da canle a %2."
+msgstr "%1 retiroulle os privilexios de semioperador da canle a %2."
 
 #: src/irc/channel.cpp:1583
 #, kde-format
@@ -5464,7 +5458,7 @@ msgstr "Dono"
 #: src/irc/channelnick.cpp:190
 #, kde-format
 msgid "Half-operator"
-msgstr "Suboperador"
+msgstr "Semioperador"
 
 #: src/irc/channelnick.cpp:191
 #, kde-format
@@ -5875,7 +5869,7 @@ msgstr "%1 ten voz nas canles: %2"
 #: src/irc/inputfilter.cpp:2012
 #, kde-format
 msgid "%1 is a halfop on channels: %2"
-msgstr "%1 é suboperador nas canles: %2"
+msgstr "%1 é semioperador nas canles: %2"
 
 #: src/irc/inputfilter.cpp:2018
 #, kde-format
@@ -6163,18 +6157,14 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: src/irc/joinchanneldialog.cpp:216
-#, fuzzy, kde-format
-#| msgid "Are you sure you want to delete all information for this identity?"
+#, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr ""
-"Está seguro de que quere eliminar permanentemente toda a información desta "
-"identidade?"
+msgstr "Seguro que quere eliminar esta canle do historial?"
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Ban"
+#, kde-format
 msgid "Remove channel"
-msgstr "Retirar a prohibición"
+msgstr "Retirar a canle"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -6210,23 +6200,7 @@ msgid "Online&nbsp;Since:"
 msgstr "En&nbsp;liña&nbsp;desde:"
 
 #: src/irc/nicklistview.cpp:146
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>This shows all the people in the channel.  The nick for each "
-#| "person is shown, with a picture showing their status.<br /></"
-#| "p><table><tr><th><img src=\"%1\"/></th><td>This person has administrator "
-#| "privileges.</td></tr><tr><th><img src=\"%2\"/></th><td>This person is a "
-#| "channel owner.</td></tr><tr><th><img src=\"%3\"/></th><td>This person is "
-#| "a channel operator.</td></tr><tr><th><img src=\"%4\"/></th><td>This "
-#| "person is a channel half-operator.</td></tr><tr><th><img src=\"%5\"/></"
-#| "th><td>This person has voice, and can therefore talk in a moderated "
-#| "channel.</td></tr><tr><th><img src=\"%6\"/></th><td>This person does not "
-#| "have any special privileges.</td></tr><tr><th><img src=\"%7\"/></"
-#| "th><td>This, overlaid on any of the above, indicates that this person is "
-#| "currently away.</td></tr></table><p>The meaning of admin, owner and "
-#| "halfop varies between different IRC servers.</p><p>Hovering over any nick "
-#| "shows their current status. See the Konversation Handbook for more "
-#| "information.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>This shows all the people in the channel.  The nick for each person "
 "is shown, with a picture showing their status.<br /></p><table><tr><th>%1</"
@@ -6243,19 +6217,18 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>Isto mostra todas as persoas da canle. Aparece o alcume de cada "
-"persoa cunha imaxe que mostra o seu estado.<br /></p><table><tr><th><img src="
-"\"%1\"/></th><td>Esta persoa ten privilexios de administrador.</td></"
-"tr><tr><th><img src=\"%2\"/></th><td>Esta persoa é o dono da canle.</td></"
-"tr><tr><th><img src=\"%3\"/></th><td>Esta persoa é un operador da canle.</"
-"td></tr><tr><th><img src=\"%4\"/></th><td>Esta  persoa é un suboperador da "
-"canle.</td></tr> <tr><th><img src=\"%5\"/></th><td>Esta persoa ten voz, polo "
-"que pode falar nunha canle moderada.</td></tr> <tr><th><img src=\"%6\"/></"
-"th><td>Esta persoa non ten privilexios especiais.</td></tr> <tr><th><img src="
-"\"%7\"/></th><td>Isto, sobreposta a calquera das anteriores, indica que a "
-"persoa está ausente.</td></tr></table><p>O significado de administrador, "
-"dono e semioperador varía entre os diferentes servidores de IRC.</p><p>Se "
-"pasa o rato por riba dun alcume aparece o seu estado actual. Consulte o "
-"Manual de Konversation para máis informacións.</p></qt>"
+"persoa cunha imaxe que mostra o seu estado.<br /></p><table><tr><th>%1</"
+"th><td>Esta persoa ten privilexios de administrador.</td></tr><tr><th>%2</"
+"th><td>Esta persoa é o dono da canle.</td></tr><tr><th>%3</th><td>Esta "
+"persoa é un operador da canle.</td></tr><tr><th>%4</th><td>Esta  persoa é un "
+"semioperador da canle.</td></tr> <tr><th>%5</th><td>Esta persoa ten voz, "
+"polo que pode falar nunha canle moderada.</td></tr> <tr><th>%6</th><td>Esta "
+"persoa non ten privilexios especiais.</td></tr> <tr><th>%7</th><td>Isto, "
+"sobreposta a calquera das anteriores, indica que a persoa está ausente.</"
+"td></tr></table><p>O significado de administrador, dono e semioperador varía "
+"entre os diferentes servidores de IRC.</p><p>Se pasa o rato por riba dun "
+"alcume aparece o seu estado actual. Consulte o Manual de Konversation para "
+"máis informacións.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -6349,7 +6322,7 @@ msgstr "Voz"
 #: src/irc/nicksonline.cpp:306
 #, kde-format
 msgid " HalfOp"
-msgstr " Suboperador"
+msgstr " Semioperador"
 
 #: src/irc/nicksonline.cpp:307
 #, kde-format
@@ -7416,14 +7389,7 @@ msgstr "Ordes:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_commandEdit)
 #: src/irc/servergroupdialogui.ui:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Optional. This command will be sent to the server after connecting. "
-#| "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
-#| "for the freenode network, which requires users to register their nickname "
-#| "with a password and login when connecting. <i>konvirocks</i> is the "
-#| "password for the nickname given in Identity. You may enter more than one "
-#| "command by separating them with semicolons.</qt>"
+#, kde-format
 msgid ""
 "<qt>Optional. This command will be sent to the server after connecting. "
 "Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is "
@@ -7434,7 +7400,7 @@ msgid ""
 msgstr ""
 "<qt>Opcional. Esta orde envíase ao servidor despois de conectar. Exemplo: "
 "<b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. Este é un exemplo para a "
-"rede Freenode, que esixe que os usuarios rexistren o seu alcume cun "
+"rede Libera, que esixe que os usuarios rexistren o seu alcume cun "
 "contrasinal e se identifiquen para conectar. <i>konvirocks</i> é o "
 "contrasinal do alcume dado na identidade. Pode inserir máis dunha orde "
 "separándoas con puntos e comas (;).</qt>"
@@ -7625,14 +7591,7 @@ msgstr "Elimina&r"
 
 #. i18n: ectx: property (whatsThis), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:86
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shows the list of configured IRC networks. An IRC network is a "
-#| "collection of cooperating servers. You need only connect to one of the "
-#| "servers in the network to be connected to the entire IRC network. Once "
-#| "connected, Konversation will automatically join the channels shown. When "
-#| "Konversation is started for the first time, the Freenode network and the "
-#| "<i>#kde</i> channel are already entered for you."
+#, kde-format
 msgid ""
 "This shows the list of configured IRC networks. An IRC network is a "
 "collection of cooperating servers. You need only connect to one of the "
@@ -7645,8 +7604,8 @@ msgstr ""
 "colección de servidores a cooperar. Só é necesario conectar cun dos "
 "servidores da rede para ligar con toda a rede IRC. Cando estea conectado, o "
 "Konversation unirase automaticamente aos canles presentados. Cando o "
-"Konversation se inicia por primeira vez xa están introducidas a rede "
-"Freenode e a canle <i>#kde</i>."
+"Konversation se inicia por primeira vez xa están introducidas a rede Libera "
+"e a canle <i>#kde</i>."
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -7714,10 +7673,9 @@ msgid "A user-friendly IRC client"
 msgstr "Un cliente de IRC doado de utilizar"
 
 #: src/main.cpp:50
-#, fuzzy, kde-format
-#| msgid "(C) 2002-2018 by the Konversation team"
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "© 2002-2018 Equipo de Konversation"
+msgstr "© 2002-%1 Equipo de Konversation"
 
 # skip-rule: PT-2011_chat
 #: src/main.cpp:51
@@ -7806,7 +7764,7 @@ msgstr "John Tapsell"
 #: src/main.cpp:61
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
-msgstr "Refactorizazón, integración con Kadddresbook/Kontact"
+msgstr "Reescritura, integración con KAddressBook e Kontact"
 
 #: src/main.cpp:62
 #, kde-format
@@ -8193,7 +8151,7 @@ msgstr ""
 #: src/main.cpp:111
 #, kde-format
 msgid "msec"
-msgstr "mseg"
+msgstr "ms"
 
 #: src/main.cpp:112
 #, kde-format
@@ -8450,10 +8408,9 @@ msgid "Reset the current font size to settings values"
 msgstr "Restabelecer o tamaño actual do texto aos valores da configuración."
 
 #: src/mainwindow.cpp:443
-#, fuzzy, kde-format
-#| msgid "Enlarge Font Size"
+#, kde-format
 msgid "Shrink Font Size"
-msgstr "Aumentar o tamaño do texto"
+msgstr "Reducir o tamaño do texto"
 
 #: src/mainwindow.cpp:447
 #, kde-format
@@ -8588,7 +8545,7 @@ msgstr ""
 #: src/mainwindow.cpp:658
 #, kde-format
 msgid "Docking in System Tray"
-msgstr "Acoplamento na bandexa do sistema"
+msgstr "Ancoraxe ma área de notificación"
 
 #: src/mainwindow.cpp:800
 #, kde-format
@@ -8753,7 +8710,7 @@ msgstr "Disparouse un realce en %1."
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
-msgstr "%2 diparou un realce en %1."
+msgstr "%2 disparou un realce en %1."
 
 #: src/notificationhandler.cpp:428
 #, kde-format
@@ -9369,7 +9326,7 @@ msgid ""
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
 "<qt><p>Isto controla o <em>modo</em> da canle. Só un operador pode cambialo."
-"</p><p>Unha canle <b>M</b>oderado é un onde só os operadores, suboperadores "
+"</p><p>Unha canle <b>M</b>oderado é un onde só os operadores, semioperadores "
 "e os que teñan voz poden falar.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:625
@@ -9744,12 +9701,12 @@ msgstr "Retirar Op"
 #: src/viewer/irccontextmenus.cpp:398
 #, kde-format
 msgid "Give HalfOp"
-msgstr "Dar suboperador"
+msgstr "Dar semioperador"
 
 #: src/viewer/irccontextmenus.cpp:399
 #, kde-format
 msgid "Take HalfOp"
-msgstr "Retirar suboperador"
+msgstr "Retirar semioperador"
 
 #: src/viewer/irccontextmenus.cpp:400
 #, kde-format
@@ -10208,7 +10165,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "Cliente de IRC"
 
 #: src/viewer/viewcontainer.cpp:886
 #, kde-format
