@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-03-31 21:38+0300\n"
+"PO-Revision-Date: 2023-05-24 01:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4051,7 +4051,7 @@ msgstr "Kendiliğinden Tanımla"
 #: src/identitydialog.ui:256
 #, kde-format
 msgid "Ser&vice:"
-msgstr "Ser&vis:"
+msgstr "&Hizmet:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nickservNicknameEdit)
 #: src/identitydialog.ui:266
@@ -4060,7 +4060,7 @@ msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
-"Servis adı <b><i>nickserv</i> olabilir</b> ya da <b><i>nickserv@services.dal."
+"Hizmet adı <b><i>nickserv</i> olabilir</b> ya da <b><i>nickserv@services.dal."
 "net</i></b> gibi ağ bağımlı bir ad olabilir"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
@@ -5728,7 +5728,7 @@ msgstr "Şu anda bu sunucuda bir IRC yöneticisisiniz."
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
-msgstr "'%1' şimdi sizin gizli makineniz (servisler tarafından ayarlandı)."
+msgstr "'%1' şimdi sizin gizli makineniz (hizmetler tarafından ayarlandı)."
 
 #: src/irc/inputfilter.cpp:1700
 #, kde-format
