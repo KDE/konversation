@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
@@ -884,13 +884,10 @@ msgstr "13:"
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:35
 #: src/config/settingsdialog.cpp:116
-#, fuzzy, kde-format
-#| msgid "1 second"
-#| msgid_plural "%1 seconds"
+#, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] "%1秒"
-msgstr[1] ""
+msgstr[0] ""
 
 # ACCELERATOR added by translator
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
@@ -1018,7 +1015,6 @@ msgstr "パスワード:"
 msgid " byte"
 msgid_plural " bytes"
 msgstr[0] " バイト"
-msgstr[1] " バイト"
 
 #: src/config/dcc_config.cpp:92
 #, kde-format
@@ -2031,7 +2027,6 @@ msgstr "接続"
 msgid " line"
 msgid_plural " lines"
 msgstr[0] " 行"
-msgstr[1] " 行"
 
 #: src/config/settingsdialog.cpp:115
 #, fuzzy, kde-format
@@ -2039,7 +2034,6 @@ msgstr[1] " 行"
 msgid " nick"
 msgid_plural " nicks"
 msgstr[0] " 人"
-msgstr[1] " 人"
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2685,7 +2679,6 @@ msgstr ""
 msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
 msgstr[0] "%2 秒後に %1 (ポート <numid>%3</numid>) に接続を試みます。"
-msgstr[1] "%2 秒後に %1 (ポート <numid>%3</numid>) に接続を試みます。"
 
 #: src/connectionmanager.cpp:262
 #, fuzzy, kde-format
@@ -2695,7 +2688,6 @@ msgstr[1] "%2 秒後に %1 (ポート <numid>%3</numid>) に接続を試みま�
 msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
 msgstr[0] "%2 秒後に %1 (ポート <numid>%3</numid>) に再接続を試みます。"
-msgstr[1] "%2 秒後に %1 (ポート <numid>%3</numid>) に再接続を試みます。"
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -3511,9 +3503,6 @@ msgid_plural ""
 msgstr[0] ""
 "<qt>実行中の DCC ファイル転送があります。本当に <b>Konversation</b> を終了し"
 "ますか？</qt>"
-msgstr[1] ""
-"<qt>実行中の DCC ファイル転送があります。本当に <b>Konversation</b> を終了し"
-"ますか？</qt>"
 
 #: src/dcc/transferpanel.cpp:435
 #, kde-format
@@ -3521,7 +3510,6 @@ msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
 msgstr[0] ""
-msgstr[1] ""
 
 #: src/dcc/transferrecv.cpp:194
 #, kde-format
@@ -3569,9 +3557,6 @@ msgid_plural ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: %1 bytes."
 "<br/>"
 msgstr[0] ""
-"不完全なファイルが存在しています。<br>%1<br>不完全なファイルのサイズ: %2 バイ"
-"ト<br>"
-msgstr[1] ""
 "不完全なファイルが存在しています。<br>%1<br>不完全なファイルのサイズ: %2 バイ"
 "ト<br>"
 
@@ -4021,7 +4006,6 @@ msgstr ""
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " 分"
-msgstr[1] " 分"
 
 #: src/identitydialog.cpp:111
 #, kde-format
@@ -4781,14 +4765,12 @@ msgstr "%1 が %2 にチャンネルから追い出されました (%3)。"
 msgid "%1 nick"
 msgid_plural "%1 nicks"
 msgstr[0] "%1人"
-msgstr[1] "%1人"
 
 #: src/irc/channel.cpp:1341
 #, fuzzy, kde-format
 msgid " (%1 op)"
 msgid_plural " (%1 ops)"
 msgstr[0] " (op %1人)"
-msgstr[1] " (op %1人)"
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
@@ -5203,7 +5185,6 @@ msgstr "%1 がチャンネルキーを削除しました。"
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
 msgstr[0] "チャンネルの人数制限を %1 人に設定しました。"
-msgstr[1] "チャンネルの人数制限を %1 人に設定しました。"
 
 #: src/irc/channel.cpp:1730
 #, fuzzy, kde-format
@@ -5211,7 +5192,6 @@ msgstr[1] "チャンネルの人数制限を %1 人に設定しました。"
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
 msgstr[0] "%1 がチャンネルの人数制限を %2 人に設定しました。"
-msgstr[1] "%1 がチャンネルの人数制限を %2 人に設定しました。"
 
 #: src/irc/channel.cpp:1734
 #, kde-format
@@ -5714,13 +5694,10 @@ msgid "-%1 to %2- %3"
 msgstr "-%1 -> %2- %3"
 
 #: src/irc/inputfilter.cpp:509
-#, fuzzy, kde-format
-#| msgid "1 second"
-#| msgid_plural "%1 seconds"
+#, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] "%1秒"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5805,7 +5782,6 @@ msgstr "チャンネルモード: "
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
 msgstr[0] "%1 人に制限"
-msgstr[1] "%1 人に制限"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -6093,45 +6069,33 @@ msgid "%1 is an IRC Operator."
 msgstr "%1 は IRC オペレータです。"
 
 #: src/irc/inputfilter.cpp:2126 src/statusbar.cpp:177
-#, fuzzy, kde-format
-#| msgid "1 day"
-#| msgid_plural "%1 days"
+#, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] "%1日"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
-#, fuzzy, kde-format
-#| msgid "1 hour"
-#| msgid_plural "%1 hours"
+#, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] "%1時"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
 #: src/statusbar.cpp:194
-#, fuzzy, kde-format
-#| msgid "1 minute"
-#| msgid_plural "%1 minutes"
+#, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] "%1分"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
 #: src/statusbar.cpp:195
-#, fuzzy, kde-format
-#| msgid "1 second"
-#| msgid_plural "%1 seconds"
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1秒"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -6155,13 +6119,10 @@ msgid "%1 has been idle for %2 and %3."
 msgstr "%1 は%2%3間アイドル状態です。"
 
 #: src/irc/inputfilter.cpp:2161
-#, fuzzy, kde-format
-#| msgid "%2 has been idle for 1 second."
-#| msgid_plural "%2 has been idle for %1 seconds."
+#, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] "%2 は%1秒間アイドル状態です。"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
@@ -6206,13 +6167,10 @@ msgid "List of channels:"
 msgstr "チャンネルリスト:"
 
 #: src/irc/inputfilter.cpp:2258
-#, fuzzy, kde-format
-#| msgid "%2 (%1 user): %3"
-#| msgid_plural "%2 (%1 users): %3"
+#, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] "%2 (%1人): %3"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -6947,7 +6905,6 @@ msgstr "%1 を無視リストから削除しました。"
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
 msgstr[0] "%1: 無視リストにありません。"
-msgstr[1] "%1: 無視リストにありません。"
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -7833,10 +7790,6 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
-"選択したサーバを削除することはできません。\n"
-"\n"
-"ネットワーク %1 には最低一つのサーバが必要です。"
-msgstr[1] ""
 "選択したサーバを削除することはできません。\n"
 "\n"
 "ネットワーク %1 には最低一つのサーバが必要です。"
@@ -9319,13 +9272,10 @@ msgid "No answer from server %1 for more than %2 and %3."
 msgstr "サーバ %1 から%2%3間以上応答がありません。"
 
 #: src/statusbar.cpp:201
-#, fuzzy, kde-format
-#| msgid "No answer from server %2 for more than 1 second."
-#| msgid_plural "No answer from server %2 for more than %1 seconds."
+#, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] "サーバ %2 から%1秒間以上応答がありません。"
-msgstr[1] ""
+msgstr[0] ""
 
 #: src/upnp/upnprouter.cpp:123
 #, fuzzy, kde-format
@@ -10280,7 +10230,6 @@ msgstr ""
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] " バイト"
-msgstr[1] " バイト"
 
 #: src/viewer/ircinput.cpp:475
 #, fuzzy, kde-format
@@ -10288,7 +10237,6 @@ msgstr[1] " バイト"
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] " 行"
-msgstr[1] " 行"
 
 #: src/viewer/ircinput.cpp:485
 #, fuzzy, kde-format
