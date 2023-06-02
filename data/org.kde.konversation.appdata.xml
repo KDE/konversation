@@ -672,10 +672,10 @@
     <binary>konversation</binary>
   </provides>
   <releases>
+    <release version="1.9.23042" date="2023-06-08"/>
     <release version="1.9.23041" date="2023-05-11"/>
     <release version="1.9.23040" date="2023-04-20"/>
     <release version="1.9.22123" date="2023-03-02"/>
-    <release version="1.9.22122" date="2023-02-02"/>
   </releases>
   <custom>
     <value key="KDE::irc">#konversation</value>
