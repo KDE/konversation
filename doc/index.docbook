@@ -2405,7 +2405,7 @@ scripts.</para>
 
 <para><userinput><replaceable>/sayversion</replaceable></userinput></para>
 
-<para>Sends your system's &konversation;, &Qt;, &kf5; and &plasma; version numbers to the channel.</para>
+<para>Sends your system's &konversation;, &Qt;, &kde-frameworks; and &plasma; version numbers to the channel.</para>
 
 <para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
 
@@ -2559,7 +2559,7 @@ passing it (optional) <userinput><replaceable>parameters</replaceable></userinpu
 
 <para><userinput><replaceable>/sayversion</replaceable></userinput></para>
 
-<para>to send your &konversation;, &Qt;, &kf5; and &plasma; version numbers to the channel.</para>
+<para>to send your &konversation;, &Qt;, &kde-frameworks; and &plasma; version numbers to the channel.</para>
 
 <para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
 
