@@ -3988,7 +3988,7 @@ part of the listing.
 ></para>
 
 <para
->Надсилає на канал дані щодо номерів версій &konversation;, &Qt;, &kf5; та Плазми у вашій системі.</para>
+>Надсилає на канал дані щодо номерів версій &konversation;, &Qt;, &kde-frameworks; та Плазми у вашій системі.</para>
 
 <para
 ><userinput
@@ -4440,7 +4440,7 @@ part of the listing.
 ></para>
 
 <para
->щоб надіслати версії &konversation;, &Qt;, &kf5; та Плазми на канал.</para>
+>щоб надіслати версії &konversation;, &Qt;, &kde-frameworks; та Плазми на канал.</para>
 
 <para
 ><userinput
