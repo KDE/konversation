@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:58+0000\n"
-"PO-Revision-Date: 2023-05-10 20:14+0100\n"
+"PO-Revision-Date: 2023-06-15 21:48+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -890,8 +890,8 @@ msgstr "13:"
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " sekundo"
+msgstr[1] " sekundoj"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -3401,7 +3401,9 @@ msgid ""
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] ""
+"Vi elektis %1 dosieron por ruligi, ĉu vi certas ke vi volas daŭrigi?"
 msgstr[1] ""
+"Vi elektis %1 dosierojn por ruligi, ĉu vi certas ke vi volas daŭrigi?"
 
 #: src/dcc/transferpanel.cpp:435
 #, kde-format
@@ -5482,8 +5484,8 @@ msgstr "-%1 al %2- %3"
 #, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " sekundo"
+msgstr[1] " sekundoj"
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5855,16 +5857,16 @@ msgstr "%1 estas IRC-Operaciisto."
 #, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 tago"
+msgstr[1] "%1 tagoj"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
 #, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 horo"
+msgstr[1] "%1 horoj"
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
@@ -5872,8 +5874,8 @@ msgstr[1] ""
 #, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 minuto"
+msgstr[1] "%1 minutoj"
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
@@ -5881,8 +5883,8 @@ msgstr[1] ""
 #, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 sekundo"
+msgstr[1] "%1 sekundoj"
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -5909,8 +5911,8 @@ msgstr "%1 estis neaktiva por %2 kaj %3."
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 estis senokupa dum %1 sekundo."
+msgstr[1] "%2 estis senokupa dum %1 sekundoj."
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
@@ -5958,8 +5960,8 @@ msgstr "Listo de kanaloj:"
 #, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 (%1 uzanto): %3"
+msgstr[1] "%2 (%1 uzantoj): %3"
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -9442,7 +9444,7 @@ msgstr "Escepto"
 #: src/viewer/insertchardialog.cpp:33
 #, kde-format
 msgid "Insert Character"
-msgstr "Enmetu Karakteron"
+msgstr "Enmeti signon"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
