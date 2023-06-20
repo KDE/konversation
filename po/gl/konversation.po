@@ -119,7 +119,7 @@ msgstr "Hai un problema coa expresión regular indicada en REGEX_FIXUP."
 
 #: data/scripts/media:265
 msgid "%1 did not report the metadata needed to output a message."
-msgstr "%1 non informou dos metadatos precisos para mostrar unha mensaxe."
+msgstr "%1 non informou dos metadatos precisos para amosar unha mensaxe."
 
 #: data/scripts/media:281
 msgid "There is a problem in the output format configuration."
@@ -404,19 +404,19 @@ msgstr "&Formato:"
 #: src/config/chatwindowappearance_config.ui:62
 #, kde-format
 msgid "Sho&w dates"
-msgstr "Mostrar as &datas"
+msgstr "Amosar as &datas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowDateLine)
 #: src/config/chatwindowappearance_config.ui:69
 #, kde-format
 msgid "Show date marker when date changes"
-msgstr "Mostrar un marcador de data cando a data cambie"
+msgstr "Amosar un marcador de data cando a data cambie"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBacklog)
 #: src/config/chatwindowappearance_config.ui:79
 #, kde-format
 msgid "Show &Backlog"
-msgstr "Mostrar o histórico"
+msgstr "Amosar o histórico"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/chatwindowappearance_config.ui:88
@@ -440,37 +440,37 @@ msgstr "Mo&strar o tema da canle"
 #: src/config/chatwindowappearance_config.ui:127
 #, kde-format
 msgid "Show channel &mode buttons"
-msgstr "Mostrar os botóns do &modo de canle"
+msgstr "Amosar os botóns do &modo de canle"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNickList)
 #: src/config/chatwindowappearance_config.ui:134
 #, kde-format
 msgid "Show channel &nick list and quick buttons"
-msgstr "Mostrar a lista de alcu&mes da canle e os botóns rápidos"
+msgstr "Amosar a lista de alcu&mes da canle e os botóns rápidos"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoUserhost)
 #: src/config/chatwindowappearance_config.ui:162
 #, kde-format
 msgid "Show hostmas&ks in nickname list"
-msgstr "Mostrar as más&caras de nomes na lista de alcumes"
+msgstr "Amosar as más&caras de nomes na lista de alcumes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowRealNames)
 #: src/config/chatwindowappearance_config.ui:192
 #, kde-format
 msgid "Show real names in nickname list"
-msgstr "Mostrar os nomes verdadeiros na lista de alcumes"
+msgstr "Amosar os nomes verdadeiros na lista de alcumes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtons)
 #: src/config/chatwindowappearance_config.ui:222
 #, kde-format
 msgid "Show &quick buttons"
-msgstr "Mostrar os &botóns rápidos"
+msgstr "Amosar os &botóns rápidos"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNicknameBox)
 #: src/config/chatwindowappearance_config.ui:231
 #, kde-format
 msgid "Show bo&x to change own nickname"
-msgstr "Mostrar un &campo para cambiar o alcume propio"
+msgstr "Amosar un &campo para cambiar o alcume propio"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowIRCViewScrollBar)
 #: src/config/chatwindowappearance_config.ui:238
@@ -560,7 +560,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:72
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
-msgstr "Mostrar os caracteres de modo cru (p.ex. +o) no canto de descricións"
+msgstr "Amosar os caracteres de modo cru (p.ex. +o) no canto de descricións"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
 #. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
@@ -591,8 +591,8 @@ msgid ""
 "If checked, only events concerning active and watched nicks will be "
 "displayed."
 msgstr ""
-"Se se marca isto, só se mostran os eventos relacionados con alcumes activos "
-"e vixiados."
+"Se se marca isto, só se amosan os eventos relacionados con alcumes activos e "
+"vixiados."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:138
@@ -665,7 +665,7 @@ msgstr "Mover a liña só cando o texto novo estea a piques de aparecer"
 #: src/config/chatwindowbehaviour_config.ui:245
 #, kde-format
 msgid "Show manually inserted lines in all chat windows"
-msgstr "Mostrar as liñas inseridas manualmente en todas as xanelas de conversa"
+msgstr "Amosar as liñas inseridas manualmente en todas as xanelas de conversa"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoWhoContinuousEnabled)
 #: src/config/chatwindowbehaviour_config.ui:255
@@ -844,7 +844,7 @@ msgid ""
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
 "Se activar esta opción, os códigos de cor engadidos á mensaxe de IRC "
-"móstranse na xanela de conversa como texto colorido. Pode engadir códigos de "
+"amósanse na xanela de conversa como texto colorido. Pode engadir códigos de "
 "cores ás súas mensaxes escollendo Inserir -> Cor de IRC"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
@@ -937,7 +937,7 @@ msgstr "Depuración"
 #: src/config/connectionbehavior_config.ui:93
 #, kde-format
 msgid "Show raw &log window when connecting"
-msgstr "Mostrar a xanela de rexistros en bruto no inicio da conexión"
+msgstr "Amosar a xanela de rexistros en bruto no inicio da conexión"
 
 #. i18n: ectx: property (title), widget (QGroupBox, encryptionGBox)
 #: src/config/connectionbehavior_config.ui:103
@@ -969,10 +969,9 @@ msgstr ""
 "inseguro.\n"
 "\n"
 "FISH non admite o modo CBC ou Cipher Block Chaining, pero si Mircryption. Se "
-"vai empregar o intercambio de claves é mellor atopar antes se o parceiro "
-"dispón dun cliente que poida empregar CBC; en caso contrario, vostede poderá "
-"ver o que están a dicir, pero eles non serán quen de ler o que vostede está "
-"a dicir."
+"vai usar o intercambio de claves é mellor atopar antes se o parceiro dispón "
+"dun cliente que poida usar CBC; en caso contrario, vostede poderá ver o que "
+"están a dicir, pero eles non serán quen de ler o que vostede está a dicir."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:122
@@ -1250,8 +1249,7 @@ msgstr "&Usar a bandexa do sistema para a notificación de mensaxes novas"
 #: src/config/generalbehavior_configui.ui:66
 #, kde-format
 msgid "Only &notify when a highlight is triggered or your current nick is used"
-msgstr ""
-"&Notificar só cando se active un realce ou cando se empregue o seu alcume"
+msgstr "&Notificar só cando se active un realce ou cando se use o seu alcume"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:75
@@ -1608,13 +1606,13 @@ msgstr "Canles e consultas con eventos"
 #: src/config/konversation.kcfg:573
 #, kde-format
 msgid "Open Watched Nicks tab at application startup"
-msgstr "Mostrar o separador de alcumes vixiados no inicio da aplicación"
+msgstr "Amosar o separador de alcumes vixiados no inicio da aplicación"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLauncherEntryCount)
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr "Mostrar o contador de &eventos sen ver na entrada do iniciador"
+msgstr "Amosar o contador de &eventos sen ver na entrada do iniciador"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
@@ -1734,7 +1732,7 @@ msgstr "&Ruta ao rexistro:"
 #: src/config/log_config.ui:77
 #, kde-format
 msgid "Use system text editor to open logs"
-msgstr "Empregar o editor de textos do sistema para abrir os rexistros"
+msgstr "Usar o editor de textos do sistema para abrir os rexistros"
 
 #: src/config/nicklistbehavior_config.cpp:45
 #, kde-format
@@ -1979,7 +1977,7 @@ msgstr "Acción do botón:"
 #, kde-format
 msgid "Show quick buttons that operate on nicknames in nickname context menus"
 msgstr ""
-"Mostrar os botóns rápidos que actúan sobre os alcumes nos menús de contexto "
+"Amosar os botóns rápidos que actúan sobre os alcumes nos menús de contexto "
 "dos alcumes"
 
 #: src/config/settingsdialog.cpp:47
@@ -2179,13 +2177,13 @@ msgstr "Esquerda"
 #: src/config/tabs_configui.ui:81
 #, kde-format
 msgid "Show &close button on tabs"
-msgstr "Mostrar botón de &pechar nos separadores"
+msgstr "Amosar botón de &pechar nos separadores"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTabBarCloseButton)
 #: src/config/tabs_configui.ui:88
 #, kde-format
 msgid "Show a close button on the &right side of the tab bar"
-msgstr "Mostrar un botón de pechar á &dereita da barra de separadores"
+msgstr "Amosar un botón de pechar á &dereita da barra de separadores"
 
 #. i18n: ectx: property (title), widget (QGroupBox, focusGBox)
 #: src/config/tabs_configui.ui:98
@@ -2505,7 +2503,7 @@ msgstr "… pechar a xanela minimízaa na bandexa do sistema"
 #: src/config/warnings_configui.ui:29
 #, kde-format
 msgid "Show a warning dialog when..."
-msgstr "Mostrar unha diálogo de alerta cando…"
+msgstr "Amosar unha diálogo de alerta cando…"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:24
@@ -2548,7 +2546,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:40
 #, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "Mostrar o separador dos alcumes vixiados no inicio da &aplicación"
+msgstr "Amosar o separador dos alcumes vixiados no inicio da &aplicación"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -2569,7 +2567,7 @@ msgstr ""
 "<qt>\n"
 "<p>Cando prema dúas veces un alcume na xanela <b>Alcumes vixiados</b>, esta\n"
 " orde é colocada na <b>liña de entrada</b> da xanela do servidor.</p>\n"
-"<p>Na orde pódense empregar os símbolos seguintes:</p> <ul>\n"
+"<p>Na orde pódense usar os símbolos seguintes:</p> <ul>\n"
 "<li>%u: O alcume premido.</li>\n"
 "<li>%K: Contrasinal do servidor.</li>\n"
 "<li>%n: Enviar a orde directamente ao servidor no canto de á liña de entrada."
@@ -2602,7 +2600,7 @@ msgstr ""
 "<qt>\n"
 "<p>Cando prema dúas veces un alcume na xanela <b>Alcumes vixiados</b>,\n"
 "esta orde colócase na <b>liña de entrada</b> na xanela do servidor.</p>\n"
-"<p>Na orde pódense empregar os símbolos seguintes:</p><ul>\n"
+"<p>Na orde pódense usar os símbolos seguintes:</p><ul>\n"
 "<li>%u: O alcume premido.</li>\n"
 "<li>%K: Contrasinal do servidor.</li>\n"
 "<li>%n: Enviar a orde directamente ao servidor no canto de á liña de entrada."
@@ -3013,7 +3011,7 @@ msgstr "Suxerir un nome &novo"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "Empregar como novo cartafol de descargas por omisión"
+msgstr "Usar como novo cartafol de descargas por omisión"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -4171,7 +4169,7 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
-"O texto que introduza aquí emprégase como mensaxe de ausencia cando non se "
+"O texto que introduza aquí úsase como mensaxe de ausencia cando non se "
 "introduza ningunha mensaxe como argumento das ordes <b>/away</b> ou <b>/"
 "aaway</b>, así como cando se conmuta Ausente global no menú ou mediante o "
 "atallo de teclado."
@@ -4676,7 +4674,7 @@ msgstr "Estabeleceu unha prohibición sobre %1."
 #: src/irc/channel.cpp:1430
 #, kde-format
 msgid "%1 sets a quiet on %2."
-msgstr "%1 estabelece unha prohibición sobre %2."
+msgstr "%1 define unha prohibición sobre %2."
 
 #: src/irc/channel.cpp:1434
 #, kde-format
@@ -5316,12 +5314,12 @@ msgstr "Estase a refrescar."
 #: src/irc/channellistpanel.cpp:357
 #, kde-format
 msgid "Channels: %1 (%2 shown)"
-msgstr "Canles: %1 (%2 mostradas)"
+msgstr "Canles: %1 (%2 amosadas)"
 
 #: src/irc/channellistpanel.cpp:358
 #, kde-format
 msgid " Non-unique users: %1 (%2 shown)"
-msgstr " Usuarios non únicos: %1 (móstranse %2)"
+msgstr " Usuarios non únicos: %1 (amósanse %2)"
 
 #: src/irc/channellistpanel.cpp:366
 #, kde-format
@@ -5834,7 +5832,7 @@ msgstr "%1 é un usuario identificado."
 #: src/irc/inputfilter.cpp:1849
 #, kde-format
 msgid "%1 is using a secure connection."
-msgstr "%1 está a empregar unha conexión segura."
+msgstr "%1 está a usar unha conexión segura."
 
 #: src/irc/inputfilter.cpp:1890 src/irc/inputfilter.cpp:1915
 #, kde-format
@@ -6838,7 +6836,7 @@ msgid ""
 "p></qt>"
 msgstr ""
 "<qt><p>Algúns detalles da persoa coa que está a falar aparecen nesta barra. "
-"Móstrase o nome completo e a máscara de servido.</p><p>Consulte no <i>Manual "
+"Amósase o nome completo e a máscara de servido.</p><p>Consulte no <i>Manual "
 "do Konversation</i> que é a máscara do servidor.</p></qt>"
 
 #: src/irc/query.cpp:410
@@ -8093,7 +8091,7 @@ msgstr "servidor"
 #: src/main.cpp:105
 #, kde-format
 msgid "Port to use"
-msgstr "O porto que empregar"
+msgstr "O porto que usar"
 
 #: src/main.cpp:105
 #, kde-format
@@ -8113,7 +8111,7 @@ msgstr "canle"
 #: src/main.cpp:107
 #, kde-format
 msgid "Nickname to use"
-msgstr "Alcume que empregar"
+msgstr "Alcume que usar"
 
 #: src/main.cpp:107
 #, kde-format
@@ -8164,7 +8162,7 @@ msgstr ""
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
-"Configura KUniqueApplication::NonUniqueInstance (depuración só, empregar con "
+"Configura KUniqueApplication::NonUniqueInstance (depuración só, usar con "
 "intento)"
 
 #: src/mainwindow.cpp:131
@@ -8266,7 +8264,7 @@ msgstr "&Lista de canles"
 #: src/mainwindow.cpp:217
 #, kde-format
 msgid "Show a list of all the known channels on this server"
-msgstr "Mostrar unha lista con todas as canles coñecidas deste servidor"
+msgstr "Amosar unha lista con todas as canles coñecidas deste servidor"
 
 #: src/mainwindow.cpp:222
 #, kde-format
@@ -8276,8 +8274,7 @@ msgstr "Extractor de &URL"
 #: src/mainwindow.cpp:225
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
-msgstr ""
-"Mostrar todos os URL que se mencionaron recentemente nun novo separador"
+msgstr "Amosar todos os URL que se mencionaron recentemente nun novo separador"
 
 #: src/mainwindow.cpp:232
 #, kde-format
@@ -8495,12 +8492,12 @@ msgstr "Pechar todas as consultas &abertas"
 #: src/mainwindow.cpp:540
 #, kde-format
 msgid "Show Nicklist"
-msgstr "Mostrar a lista de alcumes"
+msgstr "Amosar a lista de alcumes"
 
 #: src/mainwindow.cpp:546
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr "Agochar/Mostrar o Konversation"
+msgstr "Agochar/Amosar o Konversation"
 
 #: src/mainwindow.cpp:557
 #, kde-format
@@ -8553,7 +8550,7 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Isto agocha a barra de menú. Pódea mostrar de novo escribindo %1.</qt>"
+"<qt>Isto agocha a barra de menú. Pódea amosar de novo escribindo %1.</qt>"
 
 #: src/mainwindow.cpp:801
 #, kde-format
@@ -8965,7 +8962,7 @@ msgid ""
 "and from the server back to you.</qt>"
 msgstr ""
 "<qt>A barra de estado mostra varias mensaxes, incluíndo todos os problemas "
-"de conexión co servidor. Do lado dereito móstrase a demora ata o servidor. A "
+"de conexión co servidor. Do lado dereito amósase a demora ata o servidor. A "
 "demora é o tempo que as mensaxes precisan desde vostede ata acadar o "
 "servidor e do servidor de volta a vostede.</qt>"
 
@@ -9236,7 +9233,7 @@ msgstr "Agoc&har os modos avanzados ←"
 #: src/viewer/channeloptionsdialog.cpp:222
 #, kde-format
 msgid "&Show Advanced Modes >>"
-msgstr "Mostrar os modos &avanzados →"
+msgstr "Amosar os modos &avanzados →"
 
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
@@ -9315,7 +9312,7 @@ msgid ""
 msgstr ""
 "<qt><p>Isto controla o <em>modo</em> da canle. Só un operador pode cambialo."
 "</p><p>Unha canle <b>P</b>rivada aparece nunha lista con todos as canles, "
-"pero o tema aparece. O <em>WHOIS</em> dun usuario pode ou non mostralo como "
+"pero o tema aparece. O <em>WHOIS</em> dun usuario pode ou non amosalo como "
 "que está nunha canle privada, dependendo do servidor de IRC.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:623
@@ -9420,7 +9417,7 @@ msgstr "Con&trasinal da canle:"
 #: src/viewer/channeloptionsui.ui:202
 #, kde-format
 msgid "Show &Advanced Modes >>"
-msgstr "Mostrar os modos &avanzados >>"
+msgstr "Amosar os modos &avanzados >>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, TabPage)
 #: src/viewer/channeloptionsui.ui:252
@@ -9936,7 +9933,7 @@ msgstr "Limpar o rexistro"
 #: src/viewer/logfilereader.cpp:42
 #, kde-format
 msgid "Show last:"
-msgstr "Mostrar os últimos:"
+msgstr "Amosar os últimos:"
 
 #: src/viewer/logfilereader.cpp:48
 #, kde-format
@@ -10230,7 +10227,7 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
-"Para saber de que servidor mostrar a lista, a lista só pode abrirse desde "
+"Para saber de que servidor amosar a lista, a lista só pode abrirse desde "
 "unha xanela de consulta, canle ou estado."
 
 #: src/viewer/viewcontainer.cpp:3018
