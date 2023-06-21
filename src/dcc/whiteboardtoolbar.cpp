@@ -502,3 +502,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_whiteboardtoolbar.cpp"

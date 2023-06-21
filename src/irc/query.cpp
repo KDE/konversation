@@ -471,3 +471,5 @@ Konversation::Cipher* Query::getCipher() const
     return m_cipher;
 }
 #endif
+
+#include "moc_query.cpp"

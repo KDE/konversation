@@ -137,3 +137,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_whiteboardfontchooser.cpp"

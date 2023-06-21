@@ -69,3 +69,5 @@ void OutputFilterResolveJob::resolved(const QHostInfo &hostInfo)
 
     deleteLater();
 }
+
+#include "moc_outputfilterresolvejob.cpp"

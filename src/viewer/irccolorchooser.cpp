@@ -80,4 +80,4 @@ void IRCColorChooser::initColors(KComboBox* combo)
     }
 }
 
-
+#include "moc_irccolorchooser.cpp"

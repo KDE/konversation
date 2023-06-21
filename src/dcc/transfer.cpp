@@ -428,4 +428,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_transfer.cpp"

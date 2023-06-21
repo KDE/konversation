@@ -19,4 +19,4 @@ void SSLLabel::mouseReleaseEvent(QMouseEvent *e)
     Q_EMIT clicked();
 }
 
-
+#include "moc_ssllabel.cpp"

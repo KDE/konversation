@@ -116,3 +116,5 @@ void LauncherEntryHandler::emitNumber(int number)
 }
 
 }
+
+#include "moc_launcherentryhandler.cpp"

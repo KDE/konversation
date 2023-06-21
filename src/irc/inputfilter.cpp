@@ -2525,5 +2525,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
         qCDebug(KONVERSATION_LOG) << "numeric format error" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(QLatin1Char(' '));
 }
 
+#include "moc_inputfilter.cpp"
+
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

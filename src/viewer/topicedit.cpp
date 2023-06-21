@@ -312,3 +312,5 @@ void TopicEdit::moveCursorToEnd()
 {
     moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 }
+
+#include "moc_topicedit.cpp"

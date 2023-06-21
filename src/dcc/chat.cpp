@@ -620,4 +620,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_chat.cpp"

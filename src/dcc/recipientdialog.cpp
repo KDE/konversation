@@ -115,4 +115,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_recipientdialog.cpp"

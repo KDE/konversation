@@ -234,3 +234,4 @@ namespace Konversation
 
 }
 
+#include "moc_joinchanneldialog.cpp"

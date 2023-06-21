@@ -456,4 +456,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_serverlistdialog.cpp"

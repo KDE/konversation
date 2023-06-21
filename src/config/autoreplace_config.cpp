@@ -333,4 +333,4 @@ void Autoreplace_Config::removeEntry()
   }
 }
 
-
+#include "moc_autoreplace_config.cpp"

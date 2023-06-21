@@ -487,3 +487,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_identitydialog.cpp"

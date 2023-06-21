@@ -326,3 +326,4 @@ bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeD
 }
 
 #include "nicklistview.moc"
+#include "moc_nicklistview.cpp"

@@ -35,4 +35,4 @@ void AwayLabel::changeAwayMessage()
         Q_EMIT awayMessageChanged(awayMessage);
 }
 
-
+#include "moc_awaylabel.cpp"

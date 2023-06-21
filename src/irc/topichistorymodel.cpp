@@ -196,3 +196,5 @@ int TopicHistoryModel::rowCount(const QModelIndex& parent) const
 
     return m_topicList.count();
 }
+
+#include "moc_topichistorymodel.cpp"

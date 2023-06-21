@@ -91,3 +91,5 @@ void TestCommon::testMatchLength()
     }
     QCOMPARE(length, expectedLength);
 }
+
+#include "moc_testcommon.cpp"

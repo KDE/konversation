@@ -226,3 +226,5 @@ void SearchBar::toggleWholeWords(bool value)
     m_fromCursor = true;
     slotFind();
 }
+
+#include "moc_searchbar.cpp"

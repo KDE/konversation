@@ -34,4 +34,4 @@ void ModeButton::wasClicked()
     setOn(on);
 }
 
-
+#include "moc_modebutton.cpp"

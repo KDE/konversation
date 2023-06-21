@@ -77,4 +77,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_sound.cpp"

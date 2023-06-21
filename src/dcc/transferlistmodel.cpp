@@ -644,3 +644,5 @@ namespace Konversation
 
     }
 }
+
+#include "moc_transferlistmodel.cpp"

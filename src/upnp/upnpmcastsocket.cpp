@@ -230,6 +230,4 @@ namespace Konversation
     }
 }
 
-
-
-
+#include "moc_upnpmcastsocket.cpp"

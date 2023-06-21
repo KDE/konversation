@@ -20,3 +20,5 @@ void HighlightTreeWidget::dropEvent(QDropEvent *event)
     if (event->isAccepted())
         Q_EMIT itemDropped();
 }
+
+#include "moc_highlighttreewidget.cpp"

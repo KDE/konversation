@@ -105,3 +105,5 @@ ChatWindow* ViewSpringLoader::viewForPos(QObject* widget, const QPoint& pos)
 
     return nullptr;
 }
+
+#include "moc_viewspringloader.cpp"

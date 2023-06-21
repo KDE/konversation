@@ -88,4 +88,4 @@ bool NicklistBehavior_Config::hasChanged()
   return(m_oldSortingOrder!=currentSortingOrder());
 }
 
-
+#include "moc_nicklistbehavior_config.cpp"

@@ -296,4 +296,4 @@ QIcon Images::getHighlightsLed() const
         return m_highlightsLedOn;
 }
 
-
+#include "moc_images.cpp"

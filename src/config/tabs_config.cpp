@@ -50,4 +50,4 @@ void Tabs_Config::toggleCheckBoxes(int activated)
     }
 }
 
-
+#include "moc_tabs_config.cpp"

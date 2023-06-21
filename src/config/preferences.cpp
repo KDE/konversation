@@ -635,3 +635,5 @@ void Preferences::itemChanged(quint64 flags)
 {
     mSettingsChanged |= flags;
 }
+
+#include "moc_preferences.cpp"

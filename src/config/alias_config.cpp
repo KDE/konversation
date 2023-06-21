@@ -205,4 +205,4 @@ void Alias_Config::removeEntry()
     }
 }
 
-
+#include "moc_alias_config.cpp"

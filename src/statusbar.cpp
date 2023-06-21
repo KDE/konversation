@@ -236,4 +236,4 @@ namespace Konversation
 
 }
 
-
+#include "moc_statusbar.cpp"

@@ -117,4 +117,4 @@ void ServerListView::dropEvent(QDropEvent *event)
     Q_EMIT moved();
 }
 
-
+#include "moc_serverlistview.cpp"

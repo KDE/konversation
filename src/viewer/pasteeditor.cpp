@@ -134,4 +134,4 @@ void PasteEditor::doInlineAutoreplace()
     Application::instance()->doInlineAutoreplace(m_textEditor);
 }
 
-
+#include "moc_pasteeditor.cpp"

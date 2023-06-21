@@ -108,3 +108,4 @@ void EditNotifyDialog::delayedDestruct()
     deleteLater();
 }
 
+#include "moc_editnotifydialog.cpp"

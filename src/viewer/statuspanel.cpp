@@ -317,4 +317,4 @@ void StatusPanel::setServer(Server* server)
     connect(awayLabel, &AwayLabel::awayMessageChanged, m_server, &Server::requestAway);
 }
 
-
+#include "moc_statuspanel.cpp"

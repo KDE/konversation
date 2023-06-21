@@ -2467,3 +2467,4 @@ QDebug operator<<(QDebug d, const QTextBlock &b)
 }
 
 #include "ircview.moc"
+#include "moc_ircview.cpp"

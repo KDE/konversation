@@ -414,3 +414,5 @@ void UrlCatcher::startFilterTimer(const QString &filter)
     Q_UNUSED(filter)
     m_filterTimer->start(300);
 }
+
+#include "moc_urlcatcher.cpp"

@@ -241,4 +241,4 @@ void QuickButtons_Config::removeEntry()
   }
 }
 
-
+#include "moc_quickbuttons_config.cpp"

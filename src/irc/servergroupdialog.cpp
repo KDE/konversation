@@ -561,4 +561,4 @@ namespace Konversation
 
 }
 
-
+#include "moc_servergroupdialog.cpp"

@@ -187,4 +187,4 @@ void OSD_Config::slotUpdateFont(const QFont& font)
     m_pOSDPreview->setFont(font);
 }
 
-
+#include "moc_osd_config.cpp"

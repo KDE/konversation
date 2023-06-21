@@ -59,3 +59,5 @@ QSize DccFileDialog::sizeHint() const
 {
     return m_fileWidget->dialogSizeHint();
 }
+
+#include "moc_dccfiledialog.cpp"

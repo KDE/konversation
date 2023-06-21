@@ -354,4 +354,4 @@ void Theme_Config::updateButtons()
     themeRC.close();
 }
 
-
+#include "moc_theme_config.cpp"

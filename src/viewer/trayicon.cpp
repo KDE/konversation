@@ -69,4 +69,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_trayicon.cpp"

@@ -278,4 +278,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_transferdetailedinfopanel.cpp"

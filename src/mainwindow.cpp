@@ -975,3 +975,5 @@ void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
         KWindowSystem::activateWindow(winId());
     }
 }
+
+#include "moc_mainwindow.cpp"

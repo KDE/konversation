@@ -290,3 +290,5 @@ void TopicHistoryView::updateGeometries()
 
     setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
+
+#include "moc_topichistoryview.cpp"

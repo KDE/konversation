@@ -134,3 +134,4 @@ void QuickConnectDialog::delayedDestruct()
     deleteLater();
 }
 
+#include "moc_quickconnectdialog.cpp"

@@ -310,4 +310,4 @@ void Highlight_Config::saveSettings()
     m_oldHighlightList=currentHighlightList();
 }
 
-
+#include "moc_highlight_config.cpp"

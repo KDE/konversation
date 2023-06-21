@@ -376,3 +376,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_upnprouter.cpp"

@@ -120,4 +120,4 @@ void KonsolePanel::konsoleChanged(const QString& /* data */)
   activateTabNotification(Konversation::tnfSystem);
 }
 
-
+#include "moc_konsolepanel.cpp"

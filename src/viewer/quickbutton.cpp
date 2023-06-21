@@ -28,4 +28,4 @@ void QuickButton::setDefinition(const QString &newDefinition)
     definition=newDefinition;
 }
 
-
+#include "moc_quickbutton.cpp"

@@ -98,4 +98,4 @@ DCC_Config::~DCC_Config()
 {
 }
 
-
+#include "moc_dcc_config.cpp"

@@ -537,4 +537,4 @@ void ChannelListPanel::setFilter(const QString& filter)
     m_filterLine->setText(filter);
 }
 
-
+#include "moc_channellistpanel.cpp"

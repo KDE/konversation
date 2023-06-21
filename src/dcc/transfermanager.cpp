@@ -411,4 +411,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_transfermanager.cpp"

@@ -574,3 +574,5 @@ namespace Konversation
 
     }
 }
+
+#include "moc_whiteboard.cpp"

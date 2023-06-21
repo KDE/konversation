@@ -819,3 +819,5 @@ void ChatWindow::activateView()
     Q_EMIT windowActivationRequested();
     Q_EMIT showView(this);
 }
+
+#include "moc_chatwindow.cpp"

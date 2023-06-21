@@ -39,3 +39,5 @@ bool LauncherEntry_Config::hasChanged()
     // follow the interface, no Non-KConfigXT settings here, so none have changed
     return false;
 }
+
+#include "moc_launcherentry_config.cpp"

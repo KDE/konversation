@@ -339,4 +339,4 @@ void AwayManager::identityOnAutoAwayWentOffline(int identityId)
     implementRemoveIdleTimeout(timerId);
 }
 
-
+#include "moc_awaymanager.cpp"

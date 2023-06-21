@@ -870,3 +870,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_whiteboardpaintarea.cpp"

@@ -499,5 +499,4 @@ void ViewTree::selectionChanged(const QItemSelection& selected, const QItemSelec
     viewport()->update();
 }
 
-
-
+#include "moc_viewtree.cpp"

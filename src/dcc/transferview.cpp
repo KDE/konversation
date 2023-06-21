@@ -649,4 +649,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_transferview.cpp"

@@ -487,4 +487,4 @@ namespace ShadowEngine
     }
 }
 
-
+#include "moc_osd.cpp"

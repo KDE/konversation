@@ -897,3 +897,5 @@ void IrcContextMenus::commandToServer(Server* server, const QString& command,
     for (const QString& argument : arguments)
         commandToServer(server, command.arg(argument), destination);
 }
+
+#include "moc_irccontextmenus.cpp"

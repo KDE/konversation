@@ -181,3 +181,5 @@ void LogfileReader::childAdjustFocus()
 }
 
 bool LogfileReader::searchView() const { return true; }
+
+#include "moc_logfilereader.cpp"

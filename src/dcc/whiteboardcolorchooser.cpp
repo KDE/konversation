@@ -235,3 +235,5 @@ namespace Konversation
 
     }
 }
+
+#include "moc_whiteboardcolorchooser.cpp"

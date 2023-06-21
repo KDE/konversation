@@ -68,4 +68,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_insertchardialog.cpp"

@@ -457,4 +457,4 @@ namespace Konversation
 
 }
 
-
+#include "moc_notificationhandler.cpp"

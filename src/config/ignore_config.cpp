@@ -204,4 +204,4 @@ void Ignore_Config::languageChange()
   loadSettings();
 }
 
-
+#include "moc_ignore_config.cpp"

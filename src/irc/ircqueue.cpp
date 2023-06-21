@@ -201,4 +201,4 @@ void IRCQueue::serverOnline(bool on)
     }
 }
 
-
+#include "moc_ircqueue.cpp"

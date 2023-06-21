@@ -261,4 +261,4 @@ void Warnings_Config::languageChange()
     loadSettings();
 }
 
-
+#include "moc_warnings_config.cpp"

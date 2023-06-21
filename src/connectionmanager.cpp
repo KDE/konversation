@@ -690,4 +690,4 @@ void ConnectionManager::onOnlineStateChanged(QNetworkInformation::Reachability r
     }
 }
 
-
+#include "moc_connectionmanager.cpp"

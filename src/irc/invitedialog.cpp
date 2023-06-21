@@ -205,4 +205,4 @@ bool InviteChannelListModel::setData(const QModelIndex& index, const QVariant& v
     return true;
 }
 
-
+#include "moc_invitedialog.cpp"

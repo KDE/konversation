@@ -359,4 +359,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_topiclabel.cpp"

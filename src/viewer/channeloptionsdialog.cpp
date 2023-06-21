@@ -631,4 +631,4 @@ QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
     }
 }
 
-
+#include "moc_channeloptionsdialog.cpp"

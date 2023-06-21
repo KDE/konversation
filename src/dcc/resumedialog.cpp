@@ -233,4 +233,4 @@ namespace Konversation
     }
 }
 
-
+#include "moc_resumedialog.cpp"

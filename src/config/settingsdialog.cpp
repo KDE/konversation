@@ -247,5 +247,4 @@ bool KonviSettingsDialog::isDefault()
   return true;
 }
 
-
-
+#include "moc_settingsdialog.cpp"

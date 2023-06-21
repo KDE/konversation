@@ -333,3 +333,5 @@ namespace Konversation
         }
     }
 }
+
+#include "moc_chatcontainer.cpp"
