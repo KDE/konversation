@@ -139,7 +139,6 @@ namespace Konversation
             bool accept             = false,
                  abort              = false,
                  clear              = false,
-                 info               = false,
                  open               = false,
                  openLocation       = false,
                  resend             = false,
@@ -162,9 +161,6 @@ namespace Konversation
                     abort  |= (status < Transfer::Done);
 
                     clear  |= (status >= Transfer::Done);
-
-                    info   |= (type == Transfer::Send ||
-                        status == Transfer::Done);
 
                     open   |= (type == Transfer::Send ||
                         status == Transfer::Done);
