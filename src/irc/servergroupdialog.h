@@ -62,7 +62,6 @@ namespace Konversation
             Ui::ServerGroupDialogUI* m_mainWidget;
             bool m_expanded;
             bool m_enableNotifications;
-            bool m_configBacked;
             int m_id;
             int m_sortIndex;
 

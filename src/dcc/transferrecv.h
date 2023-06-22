@@ -125,13 +125,7 @@ namespace Konversation
 
             private:
                 QUrl m_saveToTmpFileURL;
-                ///Current filesize of the file saved on the disk.
-                KIO::filesize_t m_saveToFileSize;
-                ///Current filesize of the file+".part" saved on the disk.
-                KIO::filesize_t m_partialFileSize;
                 TransferRecvWriteCacheHandler *m_writeCacheHandler;
-                bool m_saveToFileExists;
-                bool m_partialFileExists;
                 QTimer *m_connectionTimer;
 
                 QTcpServer *m_serverSocket;

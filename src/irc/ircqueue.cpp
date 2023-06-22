@@ -53,10 +53,10 @@ IRCQueue::EmptyingRate& IRCQueue::getRate()
 }
 
 
-IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
+IRCQueue::IRCQueue(Server *server, EmptyingRate& rate) :
         m_rate(rate), m_blocked(true), m_server(server),
         m_linesSent(0), m_globalLinesSent(0),
-        m_bytesSent(0), m_globalBytesSent(0), m_lastWait(0), m_myIndex(ind)
+        m_bytesSent(0), m_globalBytesSent(0), m_lastWait(0)
 {
     //KX << _S(m_rate.m_rate) << _S(m_rate.m_interval) << _S(m_rate.m_type) << endl;
     m_timer=new QTimer(this);

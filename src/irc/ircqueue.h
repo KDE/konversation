@@ -83,7 +83,7 @@ public:
         }
     };
 
-    IRCQueue(Server *server, EmptyingRate& rate, int myindex=0);
+    IRCQueue(Server *server, EmptyingRate& rate);
     ~IRCQueue() override;
 
     void enqueue(const QString& line);
@@ -129,7 +129,6 @@ private:
     int m_linesSent, m_globalLinesSent;
     int m_bytesSent, m_globalBytesSent;
     int m_lastWait;
-    int m_myIndex;
 
     Q_DISABLE_COPY(IRCQueue)
 };
