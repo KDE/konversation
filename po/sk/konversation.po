@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-06-23 00:47+0000\n"
 "PO-Revision-Date: 2022-04-15 19:11+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -3394,7 +3394,7 @@ msgstr "Otvoriť umiestnenie"
 msgid "Open the file location"
 msgstr "Otvoriť umiestnenie súboru"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3404,7 +3404,7 @@ msgstr[0] "Vybrali ste %1 súbor na spustenie, určite chcete pokračovať?"
 msgstr[1] "Vybrali ste %1 súbory na spustenie, určite chcete pokračovať?"
 msgstr[2] "Vybrali ste %1 súborov na spustenie, určite chcete pokračovať?"
 
-#: src/dcc/transferpanel.cpp:435
+#: src/dcc/transferpanel.cpp:431
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"

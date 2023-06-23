@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-06-23 00:47+0000\n"
 "PO-Revision-Date: 2019-02-09 13:59-0800\n"
 "Last-Translator: A S Alam <alam.yellow@gmail.com>\n"
 "Language-Team: Punjabi <punjabi-users@lists.sf.net>\n"
@@ -3328,7 +3328,7 @@ msgstr "ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ"
 msgid "Open the file location"
 msgstr "ਫਾਇਲ ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -3344,7 +3344,7 @@ msgstr[1] ""
 "<qt>ਤੁਹਾਡੇ ਕੋਲ ਐਕਟਿਵ DCC ਫਾਇਲ ਟਰਾਂਸਫਰ ਹੈ। ਕੀ ਤੁਸੀਂ <b>ਕੰਨਵਰਸ਼ੇਸ਼ਨ</b> ਨੂੰ ਬੰਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 "</qt>"
 
-#: src/dcc/transferpanel.cpp:435
+#: src/dcc/transferpanel.cpp:431
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"

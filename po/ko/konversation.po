@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-06-23 00:47+0000\n"
 "PO-Revision-Date: 2023-04-22 00:53+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -3362,7 +3362,7 @@ msgstr "파일 위치 열기"
 msgid "Open the file location"
 msgstr "파일 위치를 엽니다"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3370,7 +3370,7 @@ msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] "파일 %1개 진행을 선택했습니다. 계속 진행하시겠습니까?"
 
-#: src/dcc/transferpanel.cpp:435
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"

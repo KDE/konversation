@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-06-23 00:47+0000\n"
 "PO-Revision-Date: 2023-03-31 19:24+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
@@ -3477,7 +3477,7 @@ msgstr "Ouvrir l'emplacement :"
 msgid "Open the file location"
 msgstr "Ouvrir le fichier à l'emplacement"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3490,7 +3490,7 @@ msgstr[1] ""
 "Vous avez sélectionné les fichiers %1 pour exécution, voulez-vous vraiment "
 "continuer ?"
 
-#: src/dcc/transferpanel.cpp:435
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"

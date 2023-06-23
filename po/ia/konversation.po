@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:58+0000\n"
+"POT-Creation-Date: 2023-06-23 00:47+0000\n"
 "PO-Revision-Date: 2022-12-18 22:55+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -3293,7 +3293,7 @@ msgstr "Aperi location"
 msgid "Open the file location"
 msgstr "Aperi le location de file"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3302,7 +3302,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferpanel.cpp:435
+#: src/dcc/transferpanel.cpp:431
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
