@@ -63,7 +63,7 @@ msgstr ""
 
 #: data/scripts/media:102
 msgid "The media script requires Python %1 or higher."
-msgstr "O script de multimedia require Python %1 ou superior."
+msgstr "O guión de multimedia require Python %1 ou superior."
 
 #: data/scripts/media:132
 msgid "An error occurred while trying to list the running media players."
@@ -6548,12 +6548,12 @@ msgstr "Uso: %1EXEC [-SHOWPATH] <script> [lista de parámetros]"
 #, kde-format
 msgctxt "%2 is a filesystem path to the script file"
 msgid "The script file '%1' was found at: %2"
-msgstr "Atopouse o ficheiro de script «%1» en: %2"
+msgstr "Atopouse o ficheiro de guión «%1» en: %2"
 
 #: src/irc/outputfilter.cpp:1234
 #, kde-format
 msgid "The script name may not contain \"../\"."
-msgstr "O nome do script non pode conter «../»."
+msgstr "O nome do guión non pode conter «../»."
 
 #: src/irc/outputfilter.cpp:1249
 #, kde-format
@@ -7157,13 +7157,13 @@ msgstr "%1 desconectouse (%2)."
 #: src/irc/server.cpp:3834
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
-msgstr "Erro: Non foi posíbel atopar o script «%1»."
+msgstr "Erro: Non foi posíbel atopar o guión «%1»."
 
 #: src/irc/server.cpp:3839
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr ""
-"Erro: non foi posíbel executar o script «%1». Comprobe os permisos do "
+"Erro: non foi posíbel executar o guión «%1». Comprobe os permisos do "
 "ficheiro."
 
 #: src/irc/server.cpp:4050
@@ -7293,14 +7293,14 @@ msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
 msgstr ""
-"Marque esta opción para usar a configuración de proxy global para a "
+"Marque esta opción para usar a configuración de mandatario global para a "
 "comunicación co servidor."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:108
 #, kde-format
 msgid "&Use global proxy"
-msgstr "&Usar a configuración global de proxy."
+msgstr "&Usar a configuración global de mandatario."
 
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
@@ -7598,7 +7598,7 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
-"Isto mostra a lista das redes de IRC configuradas. Unha rede IRC é unha "
+"Isto amosa a lista das redes de IRC configuradas. Unha rede IRC é unha "
 "colección de servidores a cooperar. Só é necesario conectar cun dos "
 "servidores da rede para ligar con toda a rede IRC. Cando estea conectado, o "
 "Konversation unirase automaticamente aos canles presentados. Cando o "
@@ -10192,7 +10192,7 @@ msgstr "Configuración da &canle para %1…"
 #: src/viewer/viewcontainer.cpp:2120
 #, kde-format
 msgid "Rename Tab"
-msgstr "Cambiar o nome do separador"
+msgstr "Renomear o separador"
 
 #: src/viewer/viewcontainer.cpp:2121
 #, kde-format
