@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-28 03:31+0000\n"
-"PO-Revision-Date: 2023-03-29 16:10+0200\n"
+"PO-Revision-Date: 2023-06-23 08:20+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.2\n"
 "X-Language: cs_CZ\n"
 "X-Source-Language: en_US\n"
 
@@ -8954,7 +8954,7 @@ msgstr "Pouze pozvaným je dovoleno připoj&it se ke kanálu"
 #: src/viewer/channeloptionsui.ui:145
 #, kde-format
 msgid "&Moderated channel, only people with voice can write to the channel"
-msgstr "&Moderovaný kanál, pouze uživatelé s hlasem mouhou psát"
+msgstr "&Moderovaný kanál, pouze uživatelé s hlasem mohou psát"
 
 #. i18n: ectx: property (text), widget (QCheckBox, userLimitChBox)
 #: src/viewer/channeloptionsui.ui:152
