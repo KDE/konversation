@@ -17,9 +17,11 @@
 #include <KMessageBox>
 #include <KMessageWidget>
 #include <KUser>
+#include <KStandardGuiItem>
+#include <kio_version.h>
+
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <KStandardGuiItem>
 #include <QVBoxLayout>
 #include <QRegularExpressionValidator>
 #include <QListView>
@@ -101,6 +103,12 @@ namespace Konversation
         m_nicknameLBox->lineEdit()->setValidator(validator);
 
         m_authPasswordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+
+#if KIO_VERSION >= QT_VERSION_CHECK(5, 108, 0)
+        m_pemClientCertFile->setNameFilter(QStringLiteral("*.pem"));
+#else
+        m_pemClientCertFile->setFilter(QStringLiteral("*.pem"));
+#endif
 
         // set values for the widgets
         updateIdentity(0);
