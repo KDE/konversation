@@ -29,6 +29,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const QString& name)
 
     soundPlayBtn->setIcon(QIcon::fromTheme(QStringLiteral("media-playback-start")));
     soundURL->setWhatsThis(i18n("Select Sound File"));
+    soundURL->setMimeTypeFilters({QStringLiteral("audio/x-wav"), QStringLiteral("audio/x-mp3"), QStringLiteral("application/ogg"), QStringLiteral("audio/x-adpcm")});
 
     // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
     // find the first "sound"-resource that contains files
