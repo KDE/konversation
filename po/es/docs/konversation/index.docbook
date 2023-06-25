@@ -4063,7 +4063,7 @@ part of the listing.
 ></para>
 
 <para
->Envía al canal las versiones de &konversation;, &Qt;, &kf5; y &plasma; de su sistema.</para>
+>Envía al canal las versiones de &konversation;, &Qt;, &kde-frameworks; y &plasma; de su sistema.</para>
 
 <para
 ><userinput
@@ -4515,7 +4515,7 @@ part of the listing.
 ></para>
 
 <para
->para enviar su versión de &konversation;, &Qt;, &kf5; y &plasma; al canal.</para>
+>para enviar su versión de &konversation;, &Qt;, &kde-frameworks; y &plasma; al canal.</para>
 
 <para
 ><userinput
