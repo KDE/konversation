@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:47+0000\n"
+"POT-Creation-Date: 2023-06-26 00:50+0000\n"
 "PO-Revision-Date: 2023-04-22 00:53+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -241,7 +241,7 @@ msgid "user limit"
 msgstr "사용자 제한"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1395,32 +1395,26 @@ msgstr "색:"
 msgid "&Sound:"
 msgstr "소리(&S):"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "소리 테스트"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "자동 텍스트(&U):"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "대화 창:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1431,7 +1425,7 @@ msgstr ""
 "으면 모든 대화 창에서 검색합니다. 이름 여러 개는 쉼표로 구분합니다."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "알림 사용(&N):"
@@ -3774,12 +3768,12 @@ msgstr "그림 저장"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "그림 (*.png *.xpm *.jpg)"
 
-#: src/identitydialog.cpp:35
+#: src/identitydialog.cpp:37
 #, kde-format
 msgid "Identities"
 msgstr "프로필"
 
-#: src/identitydialog.cpp:52
+#: src/identitydialog.cpp:54
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3800,72 +3794,72 @@ msgstr ""
 "체 대화명을 입력하십시오. 대화명을 사용할 수 없다면 Konversation에서 목록에 "
 "있는 순서대로 시도합니다."
 
-#: src/identitydialog.cpp:85
+#: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL PLAIN"
 
-#: src/identitydialog.cpp:86
+#: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "SASL EXTERNAL(인증서)"
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
 msgstr "표준 NickServ"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
 msgstr "서버 암호"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "SSL 클라이언트 인증서"
 
-#: src/identitydialog.cpp:95
+#: src/identitydialog.cpp:97
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "분"
 
-#: src/identitydialog.cpp:111
+#: src/identitydialog.cpp:119
 #, kde-format
 msgid "Change identity information"
 msgstr "프로필 정보 변경"
 
-#: src/identitydialog.cpp:112 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "모든 변경 사항 삭제"
 
-#: src/identitydialog.cpp:256
+#: src/identitydialog.cpp:264
 #, kde-format
 msgid "Add Identity"
 msgstr "프로필 추가"
 
-#: src/identitydialog.cpp:256 src/identitydialog.cpp:279
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Identity name:"
 msgstr "프로필 이름:"
 
-#: src/identitydialog.cpp:270 src/identitydialog.cpp:288
-#: src/identitydialog.cpp:347
+#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
+#: src/identitydialog.cpp:355
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "프로필 이름을 입력해야 합니다."
 
-#: src/identitydialog.cpp:279
+#: src/identitydialog.cpp:287
 #, kde-format
 msgid "Rename Identity"
 msgstr "프로필 이름 바꾸기"
 
-#: src/identitydialog.cpp:313
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3874,49 +3868,49 @@ msgstr ""
 "이 프로필은 사용 중입니다. 이 프로필을 삭제하면 프로필을 사용하는 모든 네트워"
 "크에서 기본 프로필을 대신 사용합니다. 그래도 삭제하시겠습니까?"
 
-#: src/identitydialog.cpp:318
+#: src/identitydialog.cpp:326
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "이 프로필의 모든 정보를 삭제하시겠습니까?"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:329
 #, kde-format
 msgid "Delete Identity"
 msgstr "프로필 삭제"
 
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "프로필 복사"
 
-#: src/identitydialog.cpp:377
+#: src/identitydialog.cpp:385
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "프로필에 대화명을 하나 이상 추가해야 합니다."
 
-#: src/identitydialog.cpp:389
+#: src/identitydialog.cpp:397
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "별명에는 공백이 포함되면 안 됩니다."
 
-#: src/identitydialog.cpp:402
+#: src/identitydialog.cpp:410
 #, kde-format
 msgid "Please enter a real name."
 msgstr "실명을 입력하십시오."
 
-#: src/identitydialog.cpp:413
+#: src/identitydialog.cpp:421
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "식별자에는 공백이 포함되면 안 됩니다."
 
-#: src/identitydialog.cpp:460
+#: src/identitydialog.cpp:468
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "자동 입장 시 NickServ가 제대로 작동하지 않을 수도 있습니다. SASL을 추천합니"
 "다."
 
-#: src/identitydialog.cpp:467
+#: src/identitydialog.cpp:475
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -3924,13 +3918,13 @@ msgid ""
 msgstr ""
 "여기에 입력한 암호는 서버 설정에서 지정한 암호(있는 경우)보다 우선합니다."
 
-#: src/identitydialog.cpp:478
+#: src/identitydialog.cpp:486
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(선택 사항)"
 
-#: src/identitydialog.cpp:485
+#: src/identitydialog.cpp:493
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4036,21 +4030,15 @@ msgstr "암호(&S):"
 msgid "PEM file:"
 msgstr "PEM 파일:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, m_pemClientCertFile)
-#: src/identitydialog.ui:320
-#, kde-format
-msgid "*.pem"
-msgstr "*.pem"
-
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
-#: src/identitydialog.ui:331
+#: src/identitydialog.ui:327
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "자리 비움"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:337
+#: src/identitydialog.ui:333
 #, kde-format
 msgid ""
 "If you check this box, whenever you perform an <b>/away</b> command, a "
@@ -4061,19 +4049,19 @@ msgstr ""
 "는 수평선을 표시합니다. 다른 사용자에게는 표시되지 않습니다."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:340
+#: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
 msgstr "자리를 비울 때 대화 창의 마지막 위치 기억하기"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
-#: src/identitydialog.ui:347
+#: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
 msgstr "기본 자리 비움 메시지:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
-#: src/identitydialog.ui:357
+#: src/identitydialog.ui:353
 #, kde-format
 msgid ""
 "The text you enter here is used as the away message when no message is "
@@ -4085,13 +4073,13 @@ msgstr ""
 "로 전역 자리 비움을 설정했을 때에도 이 메시지를 사용합니다."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
-#: src/identitydialog.ui:364
+#: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
 msgstr "자리 비움 대화명:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
-#: src/identitydialog.ui:374
+#: src/identitydialog.ui:370
 #, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
@@ -4110,7 +4098,7 @@ msgstr ""
 "오."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:387
+#: src/identitydialog.ui:383
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically set all connections "
@@ -4122,25 +4110,25 @@ msgstr ""
 "움을 설정합니다."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:390
+#: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
 msgstr "자동 자리 비움"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
-#: src/identitydialog.ui:408
+#: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
 msgstr "사용자가 활동을 중지한 후"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
-#: src/identitydialog.ui:434
+#: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
 msgstr "뒤 자동으로 자리 비움"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:441
+#: src/identitydialog.ui:437
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically cancel away for all "
@@ -4151,13 +4139,13 @@ msgstr ""
 "프로필을 사용하여 입장한 모든 대화방의 자리 비움을 해제합니다."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:444
+#: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
 msgstr "활동이 있으면 자동으로 복귀"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:460
+#: src/identitydialog.ui:456
 #, no-c-format, kde-format
 msgid ""
 "If you check this box, Konversation will automatically run the away command "
@@ -4172,37 +4160,37 @@ msgstr ""
 "다. 복귀 명령의 <b>%t</b> 문자열은 자리를 비운 시간으로 대체됩니다."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:463
+#: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
 msgstr "자리 비움 명령"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
-#: src/identitydialog.ui:475
+#: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
 msgstr "자리 비움 명령:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
-#: src/identitydialog.ui:488
+#: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
 msgstr "복귀 명령:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
-#: src/identitydialog.ui:518
+#: src/identitydialog.ui:514
 #, kde-format
 msgid "Advanced"
 msgstr "고급"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
-#: src/identitydialog.ui:530
+#: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
 msgstr "먼저 실행할 셸 명령(&P):"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
-#: src/identitydialog.ui:540
+#: src/identitydialog.ui:536
 #, kde-format
 msgid ""
 "Here you can enter a command to be executed before connection to server "
@@ -4213,13 +4201,13 @@ msgstr ""
 "정의되어 있으면 각각 서버에 연결할 때마다 실행됩니다"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
-#: src/identitydialog.ui:553
+#: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
 msgstr "인코딩(&E):"
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
-#: src/identitydialog.ui:563
+#: src/identitydialog.ui:559
 #, kde-format
 msgid ""
 "This setting affects how characters you type are encoded for sending to the "
@@ -4234,13 +4222,13 @@ msgstr ""
 "서버에서 운영 체제와 다른 인코딩을 사용한다면 이 설정을 변경하십시오."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
-#: src/identitydialog.ui:576
+#: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
 msgstr "IDENT(&D):"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
-#: src/identitydialog.ui:586
+#: src/identitydialog.ui:582
 #, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
@@ -4252,44 +4240,44 @@ msgstr ""
 "답을 보냅니다. 공백 문자를 사용할 수 없습니다."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
-#: src/identitydialog.ui:599
+#: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
 msgstr "끝내는 이유(&Q):"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
-#: src/identitydialog.ui:609
+#: src/identitydialog.ui:605
 #, kde-format
 msgid "Whenever you leave a server, this message is shown to others."
 msgstr "서버를 떠날 때 이 메시지를 다른 사람에게 보냅니다."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_quitEdit)
 #. i18n: ectx: property (text), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:612 src/identitydialog.ui:638
+#: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, kde-format
 msgid "Konversation terminated."
 msgstr "Konversation이 종료되었습니다."
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
-#: src/identitydialog.ui:625
+#: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
 msgstr "나가는 이유(&P):"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:635
+#: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
 msgstr "대화방을 떠날 때 이 메시지를 대화방에 보냅니다."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
-#: src/identitydialog.ui:651
+#: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
 msgstr "추방하는 이유(&K):"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:661
+#: src/identitydialog.ui:657
 #, kde-format
 msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
@@ -4299,7 +4287,7 @@ msgstr ""
 "니다."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:664
+#: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
 msgstr "사용자가 끝냈습니다."
@@ -10047,6 +10035,12 @@ msgstr "대화방 목록 경고"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "주시하는 대화명"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+
+#~ msgid "*.pem"
+#~ msgstr "*.pem"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - IRC 클라이언트"

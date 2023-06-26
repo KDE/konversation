@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:47+0000\n"
+"POT-Creation-Date: 2023-06-26 00:50+0000\n"
 "PO-Revision-Date: 2022-12-30 18:31+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -240,7 +240,7 @@ msgid "user limit"
 msgstr "使用者限制"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1384,32 +1384,26 @@ msgstr "顏色："
 msgid "&Sound:"
 msgstr "聲音(&S)："
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "測試聲音"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "自動文字(&U)："
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "聊天視窗："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1420,7 +1414,7 @@ msgstr ""
 "天視窗。多個名稱請以逗號分隔。"
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "啟用通知(&N)："
@@ -3754,12 +3748,12 @@ msgstr "儲存影像"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "影像 (*.png *.xpm *.jpg)"
 
-#: src/identitydialog.cpp:35
+#: src/identitydialog.cpp:37
 #, kde-format
 msgid "Identities"
 msgstr "身分"
 
-#: src/identitydialog.cpp:52
+#: src/identitydialog.cpp:54
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3778,72 +3772,72 @@ msgstr ""
 "服器拒絕，這是因為有人正在使用相同的暱稱。輸入您的可選暱稱，如果偏好的暱稱被"
 "伺服器拒絕，Konversation 可以自動嘗試使用備選的暱稱。"
 
-#: src/identitydialog.cpp:85
+#: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL PLAIN"
 
-#: src/identitydialog.cpp:86
+#: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "外部 SASL (Cert)"
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
 msgstr "標準 NickServ"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
 msgstr "伺服器密碼"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "SSL 用戶端憑證"
 
-#: src/identitydialog.cpp:95
+#: src/identitydialog.cpp:97
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " 分鐘"
 
-#: src/identitydialog.cpp:111
+#: src/identitydialog.cpp:119
 #, kde-format
 msgid "Change identity information"
 msgstr "變更身分資訊"
 
-#: src/identitydialog.cpp:112 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "丟棄所有變動"
 
-#: src/identitydialog.cpp:256
+#: src/identitydialog.cpp:264
 #, kde-format
 msgid "Add Identity"
 msgstr "加入身分"
 
-#: src/identitydialog.cpp:256 src/identitydialog.cpp:279
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Identity name:"
 msgstr "身分名稱："
 
-#: src/identitydialog.cpp:270 src/identitydialog.cpp:288
-#: src/identitydialog.cpp:347
+#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
+#: src/identitydialog.cpp:355
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "您需要給身分起個名稱。"
 
-#: src/identitydialog.cpp:279
+#: src/identitydialog.cpp:287
 #, kde-format
 msgid "Rename Identity"
 msgstr "重新命名身分"
 
-#: src/identitydialog.cpp:313
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3852,60 +3846,60 @@ msgstr ""
 "此身分正被使用中，如果您將其刪除，使用它的網路將會回溯到預設身分的設定。確認"
 "無論如何都要刪除嗎？"
 
-#: src/identitydialog.cpp:318
+#: src/identitydialog.cpp:326
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "您確定要刪除這個身分的所有資訊嗎？"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:329
 #, kde-format
 msgid "Delete Identity"
 msgstr "刪除身分"
 
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "複製身分"
 
-#: src/identitydialog.cpp:377
+#: src/identitydialog.cpp:385
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "您必須在身分資訊內加入至少一個暱稱。"
 
-#: src/identitydialog.cpp:389
+#: src/identitydialog.cpp:397
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "暱稱不能包含空白。"
 
-#: src/identitydialog.cpp:402
+#: src/identitydialog.cpp:410
 #, kde-format
 msgid "Please enter a real name."
 msgstr "請輸入真實姓名。"
 
-#: src/identitydialog.cpp:413
+#: src/identitydialog.cpp:421
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "身份不能包含空白。"
 
-#: src/identitydialog.cpp:460
+#: src/identitydialog.cpp:468
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr "NickServ 可能在自動加入沒有作用；建議使用 SASL。"
 
-#: src/identitydialog.cpp:467
+#: src/identitydialog.cpp:475
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr "在此輸入的密碼會覆蓋伺服器的設定。"
 
-#: src/identitydialog.cpp:478
+#: src/identitydialog.cpp:486
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "（選用）"
 
-#: src/identitydialog.cpp:485
+#: src/identitydialog.cpp:493
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4009,21 +4003,15 @@ msgstr "密碼(&S)："
 msgid "PEM file:"
 msgstr "PEM 檔："
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, m_pemClientCertFile)
-#: src/identitydialog.ui:320
-#, kde-format
-msgid "*.pem"
-msgstr "*.pem"
-
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
-#: src/identitydialog.ui:331
+#: src/identitydialog.ui:327
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "離開"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:337
+#: src/identitydialog.ui:333
 #, kde-format
 msgid ""
 "If you check this box, whenever you perform an <b>/away</b> command, a "
@@ -4034,19 +4022,19 @@ msgstr ""
 "道內，標記出您離開時的錨點。其他 IRC 使用者並不會看到這條線。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:340
+#: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
 msgstr "離開時標記聊天視窗中的最後位置"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
-#: src/identitydialog.ui:347
+#: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
 msgstr "預設離開訊息："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
-#: src/identitydialog.ui:357
+#: src/identitydialog.ui:353
 #, kde-format
 msgid ""
 "The text you enter here is used as the away message when no message is "
@@ -4057,13 +4045,13 @@ msgstr ""
 "域離開」透過選單或快捷鍵切換時，做為預設的離開訊息。"
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
-#: src/identitydialog.ui:364
+#: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
 msgstr "離開暱稱："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
-#: src/identitydialog.ui:374
+#: src/identitydialog.ui:370
 #, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
@@ -4081,7 +4069,7 @@ msgstr ""
 "離開時自動變更暱稱，請將此項留空。"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:387
+#: src/identitydialog.ui:383
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically set all connections "
@@ -4092,25 +4080,25 @@ msgstr ""
 "Konversation 會自動將所有連線設定使用底下的身份。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:390
+#: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
 msgstr "自動離開"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
-#: src/identitydialog.ui:408
+#: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
 msgstr "設定離開時間："
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
-#: src/identitydialog.ui:434
+#: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
 msgstr "使用者沒有任何動作"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:441
+#: src/identitydialog.ui:437
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically cancel away for all "
@@ -4121,13 +4109,13 @@ msgstr ""
 "取消離開的狀態。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:444
+#: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
 msgstr "活動時自動返回"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:460
+#: src/identitydialog.ui:456
 #, no-c-format, kde-format
 msgid ""
 "If you check this box, Konversation will automatically run the away command "
@@ -4141,37 +4129,37 @@ msgstr ""
 "時，它會執行 回來的指令。回來的指令中的 <b>%t</b> 會以您離開的時間長度取代。"
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:463
+#: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
 msgstr "離開指令"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
-#: src/identitydialog.ui:475
+#: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
 msgstr "離開指令："
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
-#: src/identitydialog.ui:488
+#: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
 msgstr "回傳指令："
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
-#: src/identitydialog.ui:518
+#: src/identitydialog.ui:514
 #, kde-format
 msgid "Advanced"
 msgstr "進階"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
-#: src/identitydialog.ui:530
+#: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
 msgstr "預執行命令(&P)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
-#: src/identitydialog.ui:540
+#: src/identitydialog.ui:536
 #, kde-format
 msgid ""
 "Here you can enter a command to be executed before connection to server "
@@ -4182,13 +4170,13 @@ msgstr ""
 "了多個伺服器，則此命令會為每個伺服器分別執行。"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
-#: src/identitydialog.ui:553
+#: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
 msgstr "編碼(&E)："
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
-#: src/identitydialog.ui:563
+#: src/identitydialog.ui:559
 #, kde-format
 msgid ""
 "This setting affects how characters you type are encoded for sending to the "
@@ -4202,13 +4190,13 @@ msgstr ""
 "定。要是您在檢視其他使用者的訊息文字時出現問題，可嘗試變更此設定。"
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
-#: src/identitydialog.ui:576
+#: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
 msgstr "身分(&D)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
-#: src/identitydialog.ui:586
+#: src/identitydialog.ui:582
 #, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
@@ -4219,44 +4207,44 @@ msgstr ""
 "以 IDENT 伺服器執行，此應答會由 Konversation 代為傳送。此處不允許留空。"
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
-#: src/identitydialog.ui:599
+#: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
 msgstr "離開原因(&Q)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
-#: src/identitydialog.ui:609
+#: src/identitydialog.ui:605
 #, kde-format
 msgid "Whenever you leave a server, this message is shown to others."
 msgstr "當您離開某伺服器時會被傳送到頻道內的訊息。"
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_quitEdit)
 #. i18n: ectx: property (text), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:612 src/identitydialog.ui:638
+#: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, kde-format
 msgid "Konversation terminated."
 msgstr "Konversation 已結束。"
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
-#: src/identitydialog.ui:625
+#: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
 msgstr "退出原因(&P)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:635
+#: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
 msgstr "當您退出頻道時會被傳送到頻道內的訊息。"
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
-#: src/identitydialog.ui:651
+#: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
 msgstr "踢出原因(&K)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:661
+#: src/identitydialog.ui:657
 #, kde-format
 msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
@@ -4265,7 +4253,7 @@ msgstr ""
 "當您從一個被頻道踢出時(一般是 IRC 管理員的行為)，此訊息會被傳送到頻道內。"
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:664
+#: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
 msgstr "使用者已終結。"
@@ -9946,6 +9934,12 @@ msgstr "頻道清單警告"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "被監視的暱稱"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+
+#~ msgid "*.pem"
+#~ msgstr "*.pem"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - IRC 用戶端"

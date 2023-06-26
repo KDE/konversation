@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:47+0000\n"
+"POT-Creation-Date: 2023-06-26 00:50+0000\n"
 "PO-Revision-Date: 2023-06-21 18:59+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -255,7 +255,7 @@ msgid "user limit"
 msgstr "límit d'usuaris"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1429,32 +1429,26 @@ msgstr "Color:"
 msgid "&Sound:"
 msgstr "&So:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "Prova de so"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "Text a&utomàtic:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "Finestres de xat:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1466,7 +1460,7 @@ msgstr ""
 "múltiples noms, s'han de separar per comes."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "Activa les &notificacions:"
@@ -3869,12 +3863,12 @@ msgstr "Desa la imatge"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "Imatges (*.png *.xpm *.jpg)"
 
-#: src/identitydialog.cpp:35
+#: src/identitydialog.cpp:37
 #, kde-format
 msgid "Identities"
 msgstr "Identitats"
 
-#: src/identitydialog.cpp:52
+#: src/identitydialog.cpp:54
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3895,73 +3889,73 @@ msgstr ""
 "Si el primer sobrenom és rebutjat pel servidor, el Konversation provarà amb "
 "altres àlies alternatius."
 
-#: src/identitydialog.cpp:85
+#: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL NORMAL"
 
-#: src/identitydialog.cpp:86
+#: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "SASL EXTERN (Cert)"
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
 msgstr "NickServ estàndard"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
 msgstr "Contrasenya del servidor"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "Certificat del client SSL"
 
-#: src/identitydialog.cpp:95
+#: src/identitydialog.cpp:97
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " minut"
 msgstr[1] " minuts"
 
-#: src/identitydialog.cpp:111
+#: src/identitydialog.cpp:119
 #, kde-format
 msgid "Change identity information"
 msgstr "Canviar la informació d'identitat"
 
-#: src/identitydialog.cpp:112 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "Descarta tots els canvis fets"
 
-#: src/identitydialog.cpp:256
+#: src/identitydialog.cpp:264
 #, kde-format
 msgid "Add Identity"
 msgstr "Afegeix una identitat"
 
-#: src/identitydialog.cpp:256 src/identitydialog.cpp:279
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Identity name:"
 msgstr "Nom de la identitat:"
 
-#: src/identitydialog.cpp:270 src/identitydialog.cpp:288
-#: src/identitydialog.cpp:347
+#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
+#: src/identitydialog.cpp:355
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "Heu de donar un nom a la identitat."
 
-#: src/identitydialog.cpp:279
+#: src/identitydialog.cpp:287
 #, kde-format
 msgid "Rename Identity"
 msgstr "Reanomena la identitat"
 
-#: src/identitydialog.cpp:313
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3970,48 +3964,48 @@ msgstr ""
 "Aquesta identitat està en ús, si elimineu els paràmetres de xarxa, tornarà a "
 "la identitat per defecte. Voleu suprimir-la de totes maneres?"
 
-#: src/identitydialog.cpp:318
+#: src/identitydialog.cpp:326
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "Esteu segur de voler suprimir tota la informació d'aquesta identitat?"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:329
 #, kde-format
 msgid "Delete Identity"
 msgstr "Suprimeix la identitat"
 
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "Duplica la identitat"
 
-#: src/identitydialog.cpp:377
+#: src/identitydialog.cpp:385
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "Heu d'afegir un sobrenom com a mínim a la identitat."
 
-#: src/identitydialog.cpp:389
+#: src/identitydialog.cpp:397
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "Els sobrenoms no poden contenir espais."
 
-#: src/identitydialog.cpp:402
+#: src/identitydialog.cpp:410
 #, kde-format
 msgid "Please enter a real name."
 msgstr "Si us plau, introduïu un nom real."
 
-#: src/identitydialog.cpp:413
+#: src/identitydialog.cpp:421
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "La identitat no pot contenir espais."
 
-#: src/identitydialog.cpp:460
+#: src/identitydialog.cpp:468
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "El NickServ podria no funcionar amb l'entrada automàtica; es recomana SASL."
 
-#: src/identitydialog.cpp:467
+#: src/identitydialog.cpp:475
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -4020,13 +4014,13 @@ msgstr ""
 "La contrasenya que introduïu aquí substituirà la definida en l'arranjament "
 "del servidor, si n'hi ha."
 
-#: src/identitydialog.cpp:478
+#: src/identitydialog.cpp:486
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(opcional)"
 
-#: src/identitydialog.cpp:485
+#: src/identitydialog.cpp:493
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4133,21 +4127,15 @@ msgstr "&Contrasenya:"
 msgid "PEM file:"
 msgstr "Fitxer PEM:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, m_pemClientCertFile)
-#: src/identitydialog.ui:320
-#, kde-format
-msgid "*.pem"
-msgstr "*.pem"
-
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
-#: src/identitydialog.ui:331
+#: src/identitydialog.ui:327
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "Absent"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:337
+#: src/identitydialog.ui:333
 #, kde-format
 msgid ""
 "If you check this box, whenever you perform an <b>/away</b> command, a "
@@ -4160,19 +4148,19 @@ msgstr ""
 "usuaris de l'IRC."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:340
+#: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
 msgstr "Marqueu la darrera posició en la finestra de xat quan éreu fora"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
-#: src/identitydialog.ui:347
+#: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
 msgstr "Missatge d'absència per omissió:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
-#: src/identitydialog.ui:357
+#: src/identitydialog.ui:353
 #, kde-format
 msgid ""
 "The text you enter here is used as the away message when no message is "
@@ -4185,13 +4173,13 @@ msgstr ""
 "mitjançant la drecera de teclat."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
-#: src/identitydialog.ui:364
+#: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
 msgstr "Sobrenom d'absència:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
-#: src/identitydialog.ui:374
+#: src/identitydialog.ui:370
 #, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
@@ -4212,7 +4200,7 @@ msgstr ""
 "el vostre sobrenom en estar absent, deixeu-lo en blanc."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:387
+#: src/identitydialog.ui:383
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically set all connections "
@@ -4224,25 +4212,25 @@ msgstr ""
 "període d'inactivitat configurat a sota."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:390
+#: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
 msgstr "Absent automàticament"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
-#: src/identitydialog.ui:408
+#: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
 msgstr "Posa absent després"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
-#: src/identitydialog.ui:434
+#: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
 msgstr "d'inactivitat de l'usuari"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:441
+#: src/identitydialog.ui:437
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically cancel away for all "
@@ -4254,13 +4242,13 @@ msgstr ""
 "pantalla s'aturi o es detecti un nou usuari."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:444
+#: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
 msgstr "Torna automàticament a l'activitat"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:460
+#: src/identitydialog.ui:456
 #, no-c-format, kde-format
 msgid ""
 "If you check this box, Konversation will automatically run the away command "
@@ -4276,37 +4264,37 @@ msgstr ""
 "de retorn, <b>%t</b> serà substituït pel temps que heu estat absent."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:463
+#: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
 msgstr "Ordres d'absència"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
-#: src/identitydialog.ui:475
+#: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
 msgstr "Ordres d'absència:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
-#: src/identitydialog.ui:488
+#: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
 msgstr "Missatge de retorn:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
-#: src/identitydialog.ui:518
+#: src/identitydialog.ui:514
 #, kde-format
 msgid "Advanced"
 msgstr "Avançat"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
-#: src/identitydialog.ui:530
+#: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
 msgstr "Ordre del &preintèrpret d'ordres:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
-#: src/identitydialog.ui:540
+#: src/identitydialog.ui:536
 #, kde-format
 msgid ""
 "Here you can enter a command to be executed before connection to server "
@@ -4318,13 +4306,13 @@ msgstr ""
 "ordre serà executada en cada servidor"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
-#: src/identitydialog.ui:553
+#: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
 msgstr "&Codificació:"
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
-#: src/identitydialog.ui:563
+#: src/identitydialog.ui:559
 #, kde-format
 msgid ""
 "This setting affects how characters you type are encoded for sending to the "
@@ -4340,13 +4328,13 @@ msgstr ""
 "missatges d'altres usuaris, prova de canviar aquesta opció."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
-#: src/identitydialog.ui:576
+#: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
 msgstr "I&dentitat:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
-#: src/identitydialog.ui:586
+#: src/identitydialog.ui:582
 #, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
@@ -4358,13 +4346,13 @@ msgstr ""
 "aquesta resposta serà enviada pel Konversation. No es permeten espais."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
-#: src/identitydialog.ui:599
+#: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
 msgstr "&Motiu de la sortida:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
-#: src/identitydialog.ui:609
+#: src/identitydialog.ui:605
 #, kde-format
 msgid "Whenever you leave a server, this message is shown to others."
 msgstr ""
@@ -4372,31 +4360,31 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_quitEdit)
 #. i18n: ectx: property (text), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:612 src/identitydialog.ui:638
+#: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, kde-format
 msgid "Konversation terminated."
 msgstr "El Konversation ha finalitzat."
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
-#: src/identitydialog.ui:625
+#: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
 msgstr "Motiu de &Part:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:635
+#: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
 msgstr "Quan deixeu aquest canal, aquest missatge s'enviarà al canal."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
-#: src/identitydialog.ui:651
+#: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
 msgstr "Motiu d'&expulsió:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:661
+#: src/identitydialog.ui:657
 #, kde-format
 msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
@@ -4406,7 +4394,7 @@ msgstr ""
 "missatge serà enviat al canal."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:664
+#: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
 msgstr "Finalitzat per l'usuari."
@@ -10275,3 +10263,9 @@ msgstr "Avís de llista de canals"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Sobrenoms vigilats"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+
+#~ msgid "*.pem"
+#~ msgstr "*.pem"

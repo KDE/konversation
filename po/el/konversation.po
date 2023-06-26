@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:47+0000\n"
+"POT-Creation-Date: 2023-06-26 00:50+0000\n"
 "PO-Revision-Date: 2023-01-07 13:34+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -254,7 +254,7 @@ msgid "user limit"
 msgstr "όριο χρηστών"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1428,32 +1428,26 @@ msgstr "Χρώμα:"
 msgid "&Sound:"
 msgstr "Ή&χος:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "Δοκιμή ήχου"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "&Αυτόματο κείμενο:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "Παράθυρα συνομιλίας:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1465,7 +1459,7 @@ msgstr ""
 "κενό. Πολλαπλά ονόματα να διαχωρίζονται με κόμμα."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "Ενεργοποίηση &ειδοποιήσεων:"
@@ -3875,12 +3869,12 @@ msgstr "Αποθήκευση εικόνας"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr "Εικόνες (*.png *.xpm *.jpg)"
 
-#: src/identitydialog.cpp:35
+#: src/identitydialog.cpp:37
 #, kde-format
 msgid "Identities"
 msgstr "Ταυτότητες"
 
-#: src/identitydialog.cpp:52
+#: src/identitydialog.cpp:54
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3903,73 +3897,73 @@ msgstr ""
 "επιλογή απορριφθεί από τον εξυπηρετητή, το Konversation θα δοκιμάσει τα "
 "εναλλακτικά ψευδώνυμα."
 
-#: src/identitydialog.cpp:85
+#: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
 msgstr "SASL PLAIN"
 
-#: src/identitydialog.cpp:86
+#: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr "SASL EXTERNAL (Cert)"
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
 msgstr "Τυπικό ψευδώνυμο"
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
 msgstr "Κωδικός πρόσβασης εξυπηρετητή"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr "Πιστοποιητικό SSL Client"
 
-#: src/identitydialog.cpp:95
+#: src/identitydialog.cpp:97
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " λεπτό"
 msgstr[1] " λεπτά"
 
-#: src/identitydialog.cpp:111
+#: src/identitydialog.cpp:119
 #, kde-format
 msgid "Change identity information"
 msgstr "Τροποποίηση πληροφοριών ταυτότητας"
 
-#: src/identitydialog.cpp:112 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "Απόρριψη όλων των τροποποιήσεων"
 
-#: src/identitydialog.cpp:256
+#: src/identitydialog.cpp:264
 #, kde-format
 msgid "Add Identity"
 msgstr "Προσθήκη ταυτότητας"
 
-#: src/identitydialog.cpp:256 src/identitydialog.cpp:279
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Identity name:"
 msgstr "Όνομα ταυτότητας:"
 
-#: src/identitydialog.cpp:270 src/identitydialog.cpp:288
-#: src/identitydialog.cpp:347
+#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
+#: src/identitydialog.cpp:355
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "Πρέπει να δώσετε ένα όνομα στην ταυτότητα."
 
-#: src/identitydialog.cpp:279
+#: src/identitydialog.cpp:287
 #, kde-format
 msgid "Rename Identity"
 msgstr "Μετονομασία ταυτότητας"
 
-#: src/identitydialog.cpp:313
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3978,50 +3972,50 @@ msgstr ""
 "Αυτή η ταυτότητα χρησιμοποιείται, αν την αφαιρέσετε οι ρυθμίσεις δικτύου θα "
 "κάνουν χρήση της εφεδρικής προκαθορισμένης ταυτότητας. Να διαγραφεί;"
 
-#: src/identitydialog.cpp:318
+#: src/identitydialog.cpp:326
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr ""
 "Επιθυμείτε σίγουρα τη διαγραφή όλων των πληροφοριών αυτής της ταυτότητας;"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:329
 #, kde-format
 msgid "Delete Identity"
 msgstr "Διαγραφή ταυτότητας"
 
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "Αντιγραφή ταυτότητας"
 
-#: src/identitydialog.cpp:377
+#: src/identitydialog.cpp:385
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "Πρέπει να προσθέσετε τουλάχιστον ένα ψευδώνυμο στην ταυτότητα."
 
-#: src/identitydialog.cpp:389
+#: src/identitydialog.cpp:397
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr "Τα ψευδώνυμα δεν πρέπει να περιέχουν κενά."
 
-#: src/identitydialog.cpp:402
+#: src/identitydialog.cpp:410
 #, kde-format
 msgid "Please enter a real name."
 msgstr "Δώστε ένα πραγματικό όνομα."
 
-#: src/identitydialog.cpp:413
+#: src/identitydialog.cpp:421
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr "Η ταυτότητα δεν πρέπει να περιέχει κενά."
 
-#: src/identitydialog.cpp:460
+#: src/identitydialog.cpp:468
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 "Το NickServ ίσως να μη λειτουργεί με την αυτόματη εγγραφή, συνιστάται το "
 "SASL."
 
-#: src/identitydialog.cpp:467
+#: src/identitydialog.cpp:475
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -4030,13 +4024,13 @@ msgstr ""
 "Ο κωδικός πρόσβασης που εισήχθη εδώ θα αντικαταστήσει εκείνον που ορίστηκε "
 "στις ρυθμίσεις του εξυπηρετητή, αν υπήρχαν κάποιες."
 
-#: src/identitydialog.cpp:478
+#: src/identitydialog.cpp:486
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(προαιρετικό)"
 
-#: src/identitydialog.cpp:485
+#: src/identitydialog.cpp:493
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4144,21 +4138,15 @@ msgstr "&Κωδικός πρόσβασης:"
 msgid "PEM file:"
 msgstr "PEM αρχείο:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, m_pemClientCertFile)
-#: src/identitydialog.ui:320
-#, kde-format
-msgid "*.pem"
-msgstr "*.pem"
-
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
-#: src/identitydialog.ui:331
+#: src/identitydialog.ui:327
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "Απουσιάζει"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:337
+#: src/identitydialog.ui:333
 #, kde-format
 msgid ""
 "If you check this box, whenever you perform an <b>/away</b> command, a "
@@ -4171,19 +4159,19 @@ msgstr ""
 "γραμμή."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:340
+#: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
 msgstr "Να σημειωθεί η τελευταία θέση στα παράθυρα συνομιλίας κατά την απουσία"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
-#: src/identitydialog.ui:347
+#: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
 msgstr "Προκαθορισμένο μήνυμα απουσίας:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
-#: src/identitydialog.ui:357
+#: src/identitydialog.ui:353
 #, kde-format
 msgid ""
 "The text you enter here is used as the away message when no message is "
@@ -4196,13 +4184,13 @@ msgstr ""
 "πληκτρολογίου."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
-#: src/identitydialog.ui:364
+#: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
 msgstr "Ψευδώνυμο απουσίας:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
-#: src/identitydialog.ui:374
+#: src/identitydialog.ui:370
 #, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
@@ -4223,7 +4211,7 @@ msgstr ""
 "αυτόματη τροποποίηση του ψευδώνυμου σας κατά την απουσία σας, αφήστε το κενό."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:387
+#: src/identitydialog.ui:383
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically set all connections "
@@ -4236,25 +4224,25 @@ msgstr ""
 "διαμορφώθηκε παρακάτω."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:390
+#: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
 msgstr "Αυτόματη απουσία"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
-#: src/identitydialog.ui:408
+#: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
 msgstr "Ορισμός απουσίας μετά από"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
-#: src/identitydialog.ui:434
+#: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
 msgstr "αδράνεια του χρήστη"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:441
+#: src/identitydialog.ui:437
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically cancel away for all "
@@ -4266,13 +4254,13 @@ msgstr ""
 "οθόνης ή ανιχνεύεται δραστηριότητα νέου χρήστη."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:444
+#: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
 msgstr "Αυ&τόματη επιστροφή αν υπάρχει δραστηριότητα"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:460
+#: src/identitydialog.ui:456
 #, no-c-format, kde-format
 msgid ""
 "If you check this box, Konversation will automatically run the away command "
@@ -4288,37 +4276,37 @@ msgstr ""
 "με τη χρονική διάρκεια απουσίας."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:463
+#: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
 msgstr "Εντολές απουσίας:"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
-#: src/identitydialog.ui:475
+#: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
 msgstr "Εντολή απουσίας:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
-#: src/identitydialog.ui:488
+#: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
 msgstr "Εντολή επιστροφής:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
-#: src/identitydialog.ui:518
+#: src/identitydialog.ui:514
 #, kde-format
 msgid "Advanced"
 msgstr "Για προχωρημένους"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
-#: src/identitydialog.ui:530
+#: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
 msgstr "&Προεντολή κελύφους:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
-#: src/identitydialog.ui:540
+#: src/identitydialog.ui:536
 #, kde-format
 msgid ""
 "Here you can enter a command to be executed before connection to server "
@@ -4330,13 +4318,13 @@ msgstr ""
 "ταυτότητα, αυτή η εντολή θα εκτελεστεί για κάθε εξυπηρετητή"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
-#: src/identitydialog.ui:553
+#: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
 msgstr "&Κωδικοποίηση:"
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
-#: src/identitydialog.ui:563
+#: src/identitydialog.ui:559
 #, kde-format
 msgid ""
 "This setting affects how characters you type are encoded for sending to the "
@@ -4353,13 +4341,13 @@ msgstr ""
 "αυτήν τη ρύθμιση."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
-#: src/identitydialog.ui:576
+#: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
 msgstr "Ταυ&τοποίηση:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
-#: src/identitydialog.ui:586
+#: src/identitydialog.ui:582
 #, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
@@ -4371,13 +4359,13 @@ msgstr ""
 "απάντηση αποστέλλεται από το Konversation. Δεν επιτρέπονται τα κενά."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
-#: src/identitydialog.ui:599
+#: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
 msgstr "Αι&τία εξόδου:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
-#: src/identitydialog.ui:609
+#: src/identitydialog.ui:605
 #, kde-format
 msgid "Whenever you leave a server, this message is shown to others."
 msgstr ""
@@ -4386,19 +4374,19 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_quitEdit)
 #. i18n: ectx: property (text), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:612 src/identitydialog.ui:638
+#: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, kde-format
 msgid "Konversation terminated."
 msgstr "Τερματισμός Konversation."
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
-#: src/identitydialog.ui:625
+#: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
 msgstr "Αι&τία αποχώρησης:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:635
+#: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
 msgstr ""
@@ -4406,13 +4394,13 @@ msgstr ""
 "κανάλι."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
-#: src/identitydialog.ui:651
+#: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
 msgstr "Αι&τία Kick:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:661
+#: src/identitydialog.ui:657
 #, kde-format
 msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
@@ -4422,7 +4410,7 @@ msgstr ""
 "IRC), αυτό το μήνυμα αποστέλλεται στο κανάλι."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:664
+#: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
 msgstr "Τερματισμός χρήστη."
@@ -10313,6 +10301,12 @@ msgstr "Προειδοποίηση λίστας καναλιών"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Ψευδώνυμα σε παρακολούθηση"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+
+#~ msgid "*.pem"
+#~ msgstr "*.pem"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - Πελάτης IRC"

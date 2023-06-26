@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-23 00:47+0000\n"
+"POT-Creation-Date: 2023-06-26 00:50+0000\n"
 "PO-Revision-Date: 2021-06-19 20:37+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -237,7 +237,7 @@ msgid "user limit"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1383,33 +1383,27 @@ msgstr "வண்ணங்கள்"
 msgid "&Sound:"
 msgstr "&ஒலி:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr ""
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, fuzzy, kde-format
 msgid "Test sound"
 msgstr "தேடவேண்டிய உரை:"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, fuzzy, kde-format
 #| msgid "&Auto text:"
 msgid "A&uto text:"
 msgstr "&தானியங்கி உரை:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, fuzzy, kde-format
 msgid "Chat windows:"
 msgstr "&சாளரத்தைக் காலிசெய்"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1418,7 +1412,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, fuzzy, kde-format
 #| msgid "Enable Notifications"
 msgid "Enable &notifications:"
@@ -3782,12 +3776,12 @@ msgstr "கோப்புப் பதிவேட்டைச் சேமி"
 msgid "Images (*.png *.xpm *.jpg)"
 msgstr ""
 
-#: src/identitydialog.cpp:35
+#: src/identitydialog.cpp:37
 #, kde-format
 msgid "Identities"
 msgstr "அடையாளங்கள்"
 
-#: src/identitydialog.cpp:52
+#: src/identitydialog.cpp:54
 #, kde-format
 msgid ""
 "This is your list of nicknames. A nickname is the name that other users will "
@@ -3800,135 +3794,135 @@ msgid ""
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
 
-#: src/identitydialog.cpp:85
+#: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
 msgstr ""
 
-#: src/identitydialog.cpp:86
+#: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
 msgstr ""
 
-#: src/identitydialog.cpp:87
+#: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
 msgstr ""
 
-#: src/identitydialog.cpp:88
+#: src/identitydialog.cpp:90
 #, fuzzy, kde-format
 #| msgid "IRC Operator Password"
 msgid "Server Password"
 msgstr "IRC செயல்படுத்துபவர் கடவுச்சொல்"
 
-#: src/identitydialog.cpp:89
+#: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
 msgstr ""
 
-#: src/identitydialog.cpp:95
+#: src/identitydialog.cpp:97
 #, fuzzy, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "வரிகள்"
 msgstr[1] "வரிகள்"
 
-#: src/identitydialog.cpp:111
+#: src/identitydialog.cpp:119
 #, kde-format
 msgid "Change identity information"
 msgstr "அடையாள செய்தியை மாற்று"
 
-#: src/identitydialog.cpp:112 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "செய்த அனைத்து மாற்றங்களையும் கைவிடும்"
 
-#: src/identitydialog.cpp:256
+#: src/identitydialog.cpp:264
 #, kde-format
 msgid "Add Identity"
 msgstr "அடையாளத்தைச் சேர்"
 
-#: src/identitydialog.cpp:256 src/identitydialog.cpp:279
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Identity name:"
 msgstr "அடையாளப் பெயர்:"
 
-#: src/identitydialog.cpp:270 src/identitydialog.cpp:288
-#: src/identitydialog.cpp:347
+#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
+#: src/identitydialog.cpp:355
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "அடையாள பெயரை குறிப்பிடவேண்டும்."
 
-#: src/identitydialog.cpp:279
+#: src/identitydialog.cpp:287
 #, kde-format
 msgid "Rename Identity"
 msgstr "அடையாளத்தின் பெயரை மாற்று"
 
-#: src/identitydialog.cpp:313
+#: src/identitydialog.cpp:321
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
 
-#: src/identitydialog.cpp:318
+#: src/identitydialog.cpp:326
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "இந்த தகவல் தொடர்பான குறிகளை நீக்குதல் வேண்டுமா?"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:329
 #, kde-format
 msgid "Delete Identity"
 msgstr "முன்னிருப்பு அடையாளம்"
 
-#: src/identitydialog.cpp:334
+#: src/identitydialog.cpp:342
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "போலி அடையாளம்"
 
-#: src/identitydialog.cpp:377
+#: src/identitydialog.cpp:385
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr ""
 
-#: src/identitydialog.cpp:389
+#: src/identitydialog.cpp:397
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:402
+#: src/identitydialog.cpp:410
 #, kde-format
 msgid "Please enter a real name."
 msgstr ""
 
-#: src/identitydialog.cpp:413
+#: src/identitydialog.cpp:421
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:460
+#: src/identitydialog.cpp:468
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:467
+#: src/identitydialog.cpp:475
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
 
-#: src/identitydialog.cpp:478
+#: src/identitydialog.cpp:486
 #, fuzzy, kde-format
 #| msgid "Completion"
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "நிறைவு"
 
-#: src/identitydialog.cpp:485
+#: src/identitydialog.cpp:493
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -4027,14 +4021,8 @@ msgstr "கடவுச்சொல்"
 msgid "PEM file:"
 msgstr ""
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, m_pemClientCertFile)
-#: src/identitydialog.ui:320
-#, kde-format
-msgid "*.pem"
-msgstr ""
-
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
-#: src/identitydialog.ui:331
+#: src/identitydialog.ui:327
 #, fuzzy, kde-format
 #| msgid "Away"
 msgctxt "@title:tab"
@@ -4042,7 +4030,7 @@ msgid "Away"
 msgstr "தள்ளி"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:337
+#: src/identitydialog.ui:333
 #, kde-format
 msgid ""
 "If you check this box, whenever you perform an <b>/away</b> command, a "
@@ -4051,20 +4039,20 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
-#: src/identitydialog.ui:340
+#: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
-#: src/identitydialog.ui:347
+#: src/identitydialog.ui:343
 #, fuzzy, kde-format
 #| msgid "Away &message:"
 msgid "Default away message:"
 msgstr "தகவல்& Away"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
-#: src/identitydialog.ui:357
+#: src/identitydialog.ui:353
 #, kde-format
 msgid ""
 "The text you enter here is used as the away message when no message is "
@@ -4073,13 +4061,13 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
-#: src/identitydialog.ui:364
+#: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
 msgstr "Away புனை பெயர்"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
-#: src/identitydialog.ui:374
+#: src/identitydialog.ui:370
 #, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
@@ -4092,7 +4080,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:387
+#: src/identitydialog.ui:383
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically set all connections "
@@ -4101,25 +4089,25 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
-#: src/identitydialog.ui:390
+#: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
-#: src/identitydialog.ui:408
+#: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
-#: src/identitydialog.ui:434
+#: src/identitydialog.ui:430
 #, fuzzy, kde-format
 msgid "of user inactivity"
 msgstr "& கேள்வியால் ஏற்படும் செயல்"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:441
+#: src/identitydialog.ui:437
 #, kde-format
 msgid ""
 "If you check this box, Konversation will automatically cancel away for all "
@@ -4128,13 +4116,13 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
-#: src/identitydialog.ui:444
+#: src/identitydialog.ui:440
 #, fuzzy, kde-format
 msgid "Automatically return on activity"
 msgstr "DCC இறக்குதலை தானாகவே ஏற்று கொள்"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:460
+#: src/identitydialog.ui:456
 #, no-c-format, kde-format
 msgid ""
 "If you check this box, Konversation will automatically run the away command "
@@ -4145,38 +4133,38 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
-#: src/identitydialog.ui:463
+#: src/identitydialog.ui:459
 #, fuzzy, kde-format
 msgid "Away Commands"
 msgstr "கட்டளைகள்:"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
-#: src/identitydialog.ui:475
+#: src/identitydialog.ui:471
 #, fuzzy, kde-format
 msgid "Away command:"
 msgstr "கட்டளைகள்:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
-#: src/identitydialog.ui:488
+#: src/identitydialog.ui:484
 #, fuzzy, kde-format
 #| msgid "Re&turn message:"
 msgid "Return command:"
 msgstr "திரும்பிய தகவல்"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
-#: src/identitydialog.ui:518
+#: src/identitydialog.ui:514
 #, kde-format
 msgid "Advanced"
 msgstr "மேம்பட்ட"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
-#: src/identitydialog.ui:530
+#: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
 msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
-#: src/identitydialog.ui:540
+#: src/identitydialog.ui:536
 #, kde-format
 msgid ""
 "Here you can enter a command to be executed before connection to server "
@@ -4185,13 +4173,13 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
-#: src/identitydialog.ui:553
+#: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
 msgstr "குறியிடல்"
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
-#: src/identitydialog.ui:563
+#: src/identitydialog.ui:559
 #, kde-format
 msgid ""
 "This setting affects how characters you type are encoded for sending to the "
@@ -4202,13 +4190,13 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
-#: src/identitydialog.ui:576
+#: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
 msgstr "அடையாளம்"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
-#: src/identitydialog.ui:586
+#: src/identitydialog.ui:582
 #, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
@@ -4217,45 +4205,45 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
-#: src/identitydialog.ui:599
+#: src/identitydialog.ui:595
 #, fuzzy, kde-format
 msgid "&Quit reason:"
 msgstr "காரண பகுதி&"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
-#: src/identitydialog.ui:609
+#: src/identitydialog.ui:605
 #, kde-format
 msgid "Whenever you leave a server, this message is shown to others."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_quitEdit)
 #. i18n: ectx: property (text), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:612 src/identitydialog.ui:638
+#: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, fuzzy, kde-format
 #| msgid "Konversation"
 msgid "Konversation terminated."
 msgstr "வண்ணம்"
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
-#: src/identitydialog.ui:625
+#: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
 msgstr "காரண பகுதி"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
-#: src/identitydialog.ui:635
+#: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
-#: src/identitydialog.ui:651
+#: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
 msgstr "&புனை பகுதி"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:661
+#: src/identitydialog.ui:657
 #, kde-format
 msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
@@ -4263,7 +4251,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
-#: src/identitydialog.ui:664
+#: src/identitydialog.ui:660
 #, fuzzy, kde-format
 #| msgid "Konversation"
 msgid "User terminated."
