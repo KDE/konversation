@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 03:31+0000\n"
+"POT-Creation-Date: 2023-06-26 02:41+0000\n"
 "PO-Revision-Date: 2020-10-04 16:42+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -246,7 +246,7 @@ msgid "user limit"
 msgstr "brugergrænse"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1407,32 +1407,26 @@ msgstr "Farve:"
 msgid "&Sound:"
 msgstr "&Lyd:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "Test lyd"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "A&utotekst:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "Chatvinduer:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1444,7 +1438,7 @@ msgstr ""
 "skal separeres med kommaer."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "Aktivér &bekendtgørelser:"
@@ -10224,6 +10218,9 @@ msgstr "Kanalliste-advarsel"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Overvågede nicks"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - IRC-klient"

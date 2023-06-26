@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 03:31+0000\n"
+"POT-Creation-Date: 2023-06-26 02:41+0000\n"
 "PO-Revision-Date: 2021-12-06 10:50+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -250,7 +250,7 @@ msgid "user limit"
 msgstr "felhasználókorlát"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1414,32 +1414,26 @@ msgstr "Szín:"
 msgid "&Sound:"
 msgstr "Ha&ng:"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "Teszthang"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "&Automatikus szöveg:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "Csevegőablakok:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1451,7 +1445,7 @@ msgstr ""
 "vesszővel kell elválasztani."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "Ért&esítések engedélyezése:"
@@ -10215,6 +10209,9 @@ msgstr "Csatornalista figyelmeztetés"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Figyelt becenevek"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - IRC-kliens"

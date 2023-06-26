@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 03:31+0000\n"
+"POT-Creation-Date: 2023-06-26 02:41+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -237,7 +237,7 @@ msgid "user limit"
 msgstr "Impera yo hejuru:"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1384,32 +1384,26 @@ msgstr "Amabara"
 msgid "&Sound:"
 msgstr "Ijwi..."
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, fuzzy, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "Inyumvo /x - Inyumvo /x - Porogaramu /Inyumvo /x - "
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, fuzzy, kde-format
 msgid "Test sound"
 msgstr "Umwandiko wo gushaka:"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, fuzzy, kde-format
 msgid "A&uto text:"
 msgstr "Umwandiko : "
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, fuzzy, kde-format
 msgid "Chat windows:"
 msgstr "Gufunga Idirishya"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1418,7 +1412,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, fuzzy, kde-format
 msgid "Enable &notifications:"
 msgstr "Gushira kugihe amabwiriza"
@@ -9991,6 +9985,10 @@ msgstr "Guhindura Urumuri"
 #, fuzzy, kde-format
 msgid "Watched Nicks"
 msgstr "Utuzina duto twa Eudora"
+
+#, fuzzy
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "Inyumvo /x - Inyumvo /x - Porogaramu /Inyumvo /x - "
 
 #, fuzzy
 #~ msgid "Enable emoticons"

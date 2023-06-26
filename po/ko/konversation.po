@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 03:31+0000\n"
+"POT-Creation-Date: 2023-06-26 02:41+0000\n"
 "PO-Revision-Date: 2023-04-22 00:53+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -241,7 +241,7 @@ msgid "user limit"
 msgstr "사용자 제한"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1395,32 +1395,26 @@ msgstr "색:"
 msgid "&Sound:"
 msgstr "소리(&S):"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "소리 테스트"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
 msgstr "자동 텍스트(&U):"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
 msgstr "대화 창:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1431,7 +1425,7 @@ msgstr ""
 "으면 모든 대화 창에서 검색합니다. 이름 여러 개는 쉼표로 구분합니다."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, kde-format
 msgid "Enable &notifications:"
 msgstr "알림 사용(&N):"
@@ -10048,6 +10042,9 @@ msgstr "대화방 목록 경고"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "주시하는 대화명"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
 
 #~ msgid "Konversation - IRC Client"
 #~ msgstr "Konversation - IRC 클라이언트"

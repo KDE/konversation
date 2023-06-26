@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-28 03:31+0000\n"
+"POT-Creation-Date: 2023-06-26 02:41+0000\n"
 "PO-Revision-Date: 2019-04-21 19:00-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -235,7 +235,7 @@ msgid "user limit"
 msgstr "人数制限(&L):"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
-#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:215
+#: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
 #: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
 #, kde-format
@@ -1400,34 +1400,28 @@ msgstr "色:"
 msgid "&Sound:"
 msgstr "サウンド(&S):"
 
-#. i18n: ectx: property (filter), widget (KUrlRequester, soundURL)
-#: src/config/highlight_configui.ui:298
-#, kde-format
-msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
 #. i18n: ectx: property (toolTip), widget (QToolButton, soundPlayBtn)
-#: src/config/highlight_configui.ui:314
+#: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
 msgstr "サウンドをテスト"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
-#: src/config/highlight_configui.ui:329
+#: src/config/highlight_configui.ui:326
 #, fuzzy, kde-format
 #| msgid "&Auto text:"
 msgid "A&uto text:"
 msgstr "自動応答(&A):"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
-#: src/config/highlight_configui.ui:352
+#: src/config/highlight_configui.ui:349
 #, fuzzy, kde-format
 #| msgid "Chat Window"
 msgid "Chat windows:"
 msgstr "チャットウィンドウ"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
-#: src/config/highlight_configui.ui:374
+#: src/config/highlight_configui.ui:371
 #, kde-format
 msgid ""
 "This highlight will only be searched for in chat windows listed here by "
@@ -1436,7 +1430,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
-#: src/config/highlight_configui.ui:384
+#: src/config/highlight_configui.ui:381
 #, fuzzy, kde-format
 #| msgid "Enable Notifications"
 msgid "Enable &notifications:"
@@ -10616,3 +10610,6 @@ msgstr "チャンネルリスト警告"
 #| msgid "Watched Nicknames"
 msgid "Watched Nicks"
 msgstr "監視するニックネーム"
+
+#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
+#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
