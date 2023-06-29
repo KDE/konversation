@@ -9737,6 +9737,3 @@ msgstr "Varování seznamu kanálů"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Sledované přezdívky"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
