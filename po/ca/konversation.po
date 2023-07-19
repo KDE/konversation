@@ -10263,9 +10263,3 @@ msgstr "Avís de llista de canals"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Sobrenoms vigilats"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
