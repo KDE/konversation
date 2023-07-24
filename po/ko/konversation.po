@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:50+0000\n"
-"PO-Revision-Date: 2023-04-22 00:53+0200\n"
+"PO-Revision-Date: 2023-07-23 21:52+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -626,8 +626,7 @@ msgid ""
 "Inserts a remember line into the chat window when you switch to another chat "
 "window or minimize the application."
 msgstr ""
-"다른 대화 창으로 전환하거나 프로그램을 최소화할 때 대화 창에 기억 줄을 삽입합"
-"니다."
+"다른 대화 창으로 전환하거나 앱을 최소화할 때 대화 창에 기억 줄을 삽입합니다."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticRememberLine)
 #: src/config/chatwindowbehaviour_config.ui:205
@@ -1569,7 +1568,7 @@ msgstr "이벤트가 있는 채널과 쿼리"
 #: src/config/konversation.kcfg:573
 #, kde-format
 msgid "Open Watched Nicks tab at application startup"
-msgstr "프로그램을 시작할 때 주시하는 대화명 탭 열기"
+msgstr "앱을 시작할 때 주시하는 대화명 탭 열기"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLauncherEntryCount)
 #: src/config/launcherentry_config.ui:29
@@ -1646,8 +1645,8 @@ msgid ""
 "Application events occur in Konsole tabs, the DCC Status tab and other "
 "application tabs not used directly for chatting."
 msgstr ""
-"프로그램 이벤트는 Konsole 탭, DCC 상태 탭, 기타 대화에 직접 사용되지 않는 탭"
-"에서 발생합니다."
+"앱 이벤트는 Konsole 탭, DCC 상태 탭, 기타 대화에 직접 사용되지 않는 탭에서 발"
+"생합니다."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1655,7 +1654,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:126
 #, kde-format
 msgid "Application event"
-msgstr "프로그램 이벤트"
+msgstr "앱 이벤트"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_Log)
 #: src/config/log_config.ui:24
@@ -2144,19 +2143,19 @@ msgstr "탭 표시줄 오른쪽에 닫기 단추 표시(&R)"
 #: src/config/tabs_configui.ui:98
 #, kde-format
 msgid "Focus"
-msgstr "초점"
+msgstr "포커스"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_BringToFront)
 #: src/config/tabs_configui.ui:104
 #, kde-format
 msgid "&Focus new tabs"
-msgstr "새 탭에 초점 맞추기(&F)"
+msgstr "새 탭에 포커스 맞추기(&F)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FocusNewQueries)
 #: src/config/tabs_configui.ui:111
 #, kde-format
 msgid "Focus new &queries"
-msgstr "새 쿼리에 초점 맞추기(&Q)"
+msgstr "새 쿼리에 포커스 맞추기(&Q)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, mouseGBox)
 #: src/config/tabs_configui.ui:121
@@ -2492,7 +2491,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:40
 #, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "프로그램을 시작할 때 주시하는 대화명 탭 열기(&A)"
+msgstr "앱을 시작할 때 주시하는 대화명 탭 열기(&A)"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -7279,7 +7278,7 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:131
 #, kde-format
 msgid "Co&nnect on application start up"
-msgstr "프로그램을 시작할 때 연결(&N)"
+msgstr "앱을 시작할 때 연결(&N)"
 
 #. i18n: ectx: property (whatsThis), widget (QListWidget, m_serverLBox)
 #: src/irc/servergroupdialogui.ui:144
@@ -7460,7 +7459,7 @@ msgstr "대화방"
 #: src/irc/serverlistdialogui.ui:165
 #, kde-format
 msgid "&Show at application startup"
-msgstr "프로그램을 시작할 때 표시(&S)"
+msgstr "앱을 시작할 때 표시(&S)"
 
 #: src/irc/topichistorymodel.cpp:28
 #, kde-format
@@ -7991,7 +7990,7 @@ msgstr "다시 시작"
 #: src/mainwindow.cpp:133
 #, kde-format
 msgid "Quit and restart the application"
-msgstr "프로그램을 끝내고 다시 시작하기"
+msgstr "앱을 끝내고 다시 시작하기"
 
 #: src/mainwindow.cpp:138
 #, kde-format
@@ -8122,7 +8121,7 @@ msgstr "탭 닫기(&T)"
 #: src/mainwindow.cpp:288
 #, kde-format
 msgid "Last Focused Tab"
-msgstr "마지막으로 초점이 맞은 탭"
+msgstr "마지막으로 포커스가 맞은 탭"
 
 #: src/mainwindow.cpp:295
 #, kde-format
@@ -8300,7 +8299,7 @@ msgstr "현재 IRC 메시지에 임의의 문자 삽입"
 #: src/mainwindow.cpp:524
 #, kde-format
 msgid "Focus Input Box"
-msgstr "입력 상자에 초점 맞추기"
+msgstr "입력 상자에 포커스 맞추기"
 
 #: src/mainwindow.cpp:531
 #, kde-format
@@ -8354,8 +8353,7 @@ msgid ""
 "application.</p>"
 msgstr ""
 "<p>주 창을 닫아도 Konversation은 시스템 트레이에서 계속 실행됩니다. "
-"<b>Konversation</b> 메뉴의 <b>끝내기</b>를 선택하면 프로그램이 종료됩니다.</"
-"p>"
+"<b>Konversation</b> 메뉴의 <b>끝내기</b>를 선택하면 앱이 종료됩니다.</p>"
 
 #: src/mainwindow.cpp:658
 #, kde-format
@@ -8851,9 +8849,8 @@ msgid ""
 "custom web browser for web URLs.</p>"
 msgstr ""
 "<p>아래에서 하나 이상의 <b>URL</b>을 선택한 다음 이 단추를 클릭하여 URL의 "
-"MIME 형식과 연결된 프로그램을 실행하십시오.</p>-<p>웹 URL에 사용할 웹 브라우"
-"저를 사용자 정의하려면 <b>설정</b>, <b>행동</b> | <b>일반</b>에서 변경하십시"
-"오.</p>"
+"MIME 형식과 연결된 앱을 실행하십시오.</p>-<p>웹 URL에 사용할 웹 브라우저를 사"
+"용자 정의하려면 <b>설정</b>, <b>행동</b> | <b>일반</b>에서 변경하십시오.</p>"
 
 #: src/urlcatcher.cpp:97
 #, kde-format
