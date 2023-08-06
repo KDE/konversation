@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-26 00:50+0000\n"
-"PO-Revision-Date: 2023-03-31 21:13+0200\n"
+"PO-Revision-Date: 2023-08-05 23:24+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1596,6 +1596,7 @@ msgstr "Opna fana «Overvakte kallenamn» når programmet startar"
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
 msgstr ""
+"&Slå på vising av talet på usette hendingar i program­ikonet på oppgåvelinja"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
@@ -2077,7 +2078,7 @@ msgstr "Skjermmeldingar"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Programikon på oppgåvelinja"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
