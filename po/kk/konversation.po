@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-26 00:50+0000\n"
+"POT-Creation-Date: 2023-08-07 03:00+0000\n"
 "PO-Revision-Date: 2013-05-15 04:56+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -141,8 +141,8 @@ msgstr ""
 "\"/media { Player }\" -  көрсетілген плейерде (ол табылса) не орындалып "
 "жатыр екенін хабарлау."
 
-#: src/application.cpp:397 src/irc/server.cpp:1801 src/irc/server.cpp:3834
-#: src/irc/server.cpp:3839
+#: src/application.cpp:397 src/irc/server.cpp:1803 src/irc/server.cpp:3836
+#: src/irc/server.cpp:3841
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
@@ -1485,10 +1485,10 @@ msgstr "Арна"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2370 src/irc/server.cpp:2500 src/irc/server.cpp:2512
-#: src/irc/server.cpp:2524 src/irc/server.cpp:2659 src/irc/server.cpp:2715
-#: src/irc/server.cpp:2786 src/irc/server.cpp:2791 src/irc/server.cpp:2803
-#: src/irc/server.cpp:2806 src/irc/server.cpp:2820 src/irc/server.cpp:2827
+#: src/irc/server.cpp:2372 src/irc/server.cpp:2502 src/irc/server.cpp:2514
+#: src/irc/server.cpp:2526 src/irc/server.cpp:2661 src/irc/server.cpp:2717
+#: src/irc/server.cpp:2788 src/irc/server.cpp:2793 src/irc/server.cpp:2805
+#: src/irc/server.cpp:2808 src/irc/server.cpp:2822 src/irc/server.cpp:2829
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1499,7 +1499,7 @@ msgstr "DCC"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4307 src/irc/server.cpp:4336
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4309 src/irc/server.cpp:4338
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2599,8 +2599,8 @@ msgstr "&Жаңарту аралығы:"
 #: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
 #: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:264 src/irc/server.cpp:412
 #: src/irc/server.cpp:475 src/irc/server.cpp:682 src/irc/server.cpp:717
-#: src/irc/server.cpp:781 src/irc/server.cpp:796 src/irc/server.cpp:814
-#: src/irc/server.cpp:1138 src/irc/server.cpp:1168
+#: src/irc/server.cpp:781 src/irc/server.cpp:798 src/irc/server.cpp:816
+#: src/irc/server.cpp:1140 src/irc/server.cpp:1170
 #, kde-format
 msgid "Info"
 msgstr "Ақпар"
@@ -2640,12 +2640,12 @@ msgstr[0] ""
 #: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
 #: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:760
-#: src/irc/server.cpp:804 src/irc/server.cpp:827 src/irc/server.cpp:953
-#: src/irc/server.cpp:2338 src/irc/server.cpp:2409 src/irc/server.cpp:2582
-#: src/irc/server.cpp:2618 src/irc/server.cpp:2669 src/irc/server.cpp:2737
-#: src/irc/server.cpp:2756 src/irc/server.cpp:2772 src/irc/server.cpp:4265
-#: src/irc/server.cpp:4277 src/irc/server.cpp:4301 src/irc/server.cpp:4324
-#: src/irc/server.cpp:4340
+#: src/irc/server.cpp:806 src/irc/server.cpp:829 src/irc/server.cpp:955
+#: src/irc/server.cpp:2340 src/irc/server.cpp:2411 src/irc/server.cpp:2584
+#: src/irc/server.cpp:2620 src/irc/server.cpp:2671 src/irc/server.cpp:2739
+#: src/irc/server.cpp:2758 src/irc/server.cpp:2774 src/irc/server.cpp:4267
+#: src/irc/server.cpp:4279 src/irc/server.cpp:4303 src/irc/server.cpp:4326
+#: src/irc/server.cpp:4342
 #, kde-format
 msgid "Error"
 msgstr "Қате"
@@ -5732,8 +5732,8 @@ msgid "Current users on %1: %2."
 msgstr "Қазір %1 дегендегілердің саны: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4081 src/irc/server.cpp:4083 src/irc/server.cpp:4109
-#: src/irc/server.cpp:4119
+#: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
+#: src/irc/server.cpp:4121
 #, kde-format
 msgid "Away"
 msgstr "Орнында жоқ"
@@ -6557,8 +6557,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "Құлақтандыру тізімі: %1."
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3157
-#: src/irc/server.cpp:3171
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3159
+#: src/irc/server.cpp:3173
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -6883,18 +6883,18 @@ msgstr ""
 msgid "Requesting capabilities: %1"
 msgstr "SASL мүмкіндігін сұрау..."
 
-#: src/irc/server.cpp:796
+#: src/irc/server.cpp:798
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr "Мүмкіндіктер туралы келіссөзін аяқтау."
 
-#: src/irc/server.cpp:804
+#: src/irc/server.cpp:806
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr ""
 "Мүмкіндіктер туралы келіссөз жаңылысы: сервер жақтан қолдауы жақ сияқты."
 
-#: src/irc/server.cpp:814
+#: src/irc/server.cpp:816
 #, fuzzy, kde-format
 #| msgid ""
 #| "SASL capability acknowledged by server, attempting SASL PLAIN "
@@ -6903,17 +6903,17 @@ msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr "Сервер SASL протоколын таниды, SASL PLAIN аутентификация талпынысы..."
 
-#: src/irc/server.cpp:827
+#: src/irc/server.cpp:829
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr "Сервер SASL аутентификациядан бас тартты немесе оны қолдамайды."
 
-#: src/irc/server.cpp:927 src/irc/server.cpp:1035
+#: src/irc/server.cpp:929 src/irc/server.cpp:1037
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "SSL байланыс қатесі"
 
-#: src/irc/server.cpp:928
+#: src/irc/server.cpp:930
 #, fuzzy, kde-format
 #| msgid ""
 #| "Connection to server %1 (port <numid>%2</numid>) lost while waiting for "
@@ -6926,13 +6926,13 @@ msgstr ""
 "%1 серверімен (<numid>%2</numid> порты) SSL қатеге жауабын күту кезде "
 "үзілді. Қате елемейтін болса автоматты түрде қайта байланысады."
 
-#: src/irc/server.cpp:948
+#: src/irc/server.cpp:950
 #, fuzzy, kde-format
 #| msgid "Connection to server %1 (port <numid>%2</numid>) lost: %3."
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "%1 серверімен (<numid>%2</numid> порты) байланыс үзілді: %3."
 
-#: src/irc/server.cpp:997
+#: src/irc/server.cpp:999
 #, fuzzy, kde-format
 #| msgid ""
 #| "The SSL certificate for the server %1 (port <numid>%2</numid>) failed the "
@@ -6944,12 +6944,12 @@ msgstr ""
 "%1 серверінің (<numid>%2</numid> порты) SSL куәлігі шындылық тексеруден өте "
 "алмады."
 
-#: src/irc/server.cpp:1001
+#: src/irc/server.cpp:1003
 #, kde-format
 msgid "SSL Connection Warning"
 msgstr "SSL байланыс ескертуі"
 
-#: src/irc/server.cpp:1030
+#: src/irc/server.cpp:1032
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. "
@@ -6964,18 +6964,18 @@ msgstr ""
 "Немесе ол SSL-ді танымайды (порты дұрыс па?), немесе куәлігіңізді "
 "қабылдамады. %3"
 
-#: src/irc/server.cpp:1138
+#: src/irc/server.cpp:1140
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr "Кідірткен байланыс доғарылды."
 
-#: src/irc/server.cpp:1168
+#: src/irc/server.cpp:1170
 #, fuzzy, kde-format
 #| msgid "Disconnected from %1 (port <numid>%2</numid>)."
 msgid "Disconnected from %1 (port %2)."
 msgstr "%1 (<numid>%2</numid> порты) ажыратылды."
 
-#: src/irc/server.cpp:1326
+#: src/irc/server.cpp:1328
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -6986,63 +6986,63 @@ msgstr ""
 "қабылдамады.\n"
 "Жаңа бүркеншік атты келтіріңіз немесе Қайту деп ажыратыңыз."
 
-#: src/irc/server.cpp:1327
+#: src/irc/server.cpp:1329
 #, kde-format
 msgid "Nickname error"
 msgstr "Қате бүркеншік аты"
 
-#: src/irc/server.cpp:2170
+#: src/irc/server.cpp:2172
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "%1 дегенге жіберетін файл(дар)ды таңдаңыз"
 
-#: src/irc/server.cpp:2339
+#: src/irc/server.cpp:2341
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "%1 дегеннен дұрыс емес DCC SEND талабы келді."
 
-#: src/irc/server.cpp:2371
+#: src/irc/server.cpp:2373
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "%1 Сізге \"%2\" (%3) жіберуді ұсынады..."
 
-#: src/irc/server.cpp:2374 src/irc/server.cpp:2504 src/irc/server.cpp:2516
-#: src/irc/server.cpp:2665 src/irc/server.cpp:2721 src/irc/server.cpp:2830
+#: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
+#: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
 #, kde-format
 msgid "unknown size"
 msgstr "(өлшемі беймәлім)"
 
-#: src/irc/server.cpp:2410
+#: src/irc/server.cpp:2412
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "%1 дегеннен дұрыс емес DCC CHAT талабы келді."
 
-#: src/irc/server.cpp:2501
+#: src/irc/server.cpp:2503
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "%1 дегенге \"%2\" (%3) жүктеп беруді сұрау..."
 
-#: src/irc/server.cpp:2513
+#: src/irc/server.cpp:2515
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "%1 дегенге пассивті \"%2\" (%3) жүктеп беруді сұрау..."
 
-#: src/irc/server.cpp:2525
+#: src/irc/server.cpp:2527
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "%1 дегеннен %2 қабылдауын сұрау..."
 
-#: src/irc/server.cpp:2584
+#: src/irc/server.cpp:2586
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr ""
 "%1 дегеннен дұрыс емес пассивті DCC әңгімені қабылдау хабарламасы келді."
 
-#: src/irc/server.cpp:2620
+#: src/irc/server.cpp:2622
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
@@ -7051,7 +7051,7 @@ msgstr ""
 "%2 дегеннен \"%1\" дегенге дұрыс емес пассивті DCC жіберуді қабылдау "
 "хабарламасы келді."
 
-#: src/irc/server.cpp:2661
+#: src/irc/server.cpp:2663
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -7059,7 +7059,7 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "%2 дегеннен %4 \"%1\" файлының %3%-ынан бастап жүктеуін жалғаыстыру..."
 
-#: src/irc/server.cpp:2671
+#: src/irc/server.cpp:2673
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
@@ -7067,7 +7067,7 @@ msgstr ""
 "%2 дегеннен \"%1\" дегенге дұрыс емес жалғастыруды қабылдау хабарламасы "
 "келді."
 
-#: src/irc/server.cpp:2717
+#: src/irc/server.cpp:2719
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -7076,121 +7076,121 @@ msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr ""
 "%2 дегенге %4 \"%1\" файлының %3%-ынан бастап жүктеп беруін жалғастыру..."
 
-#: src/irc/server.cpp:2739
+#: src/irc/server.cpp:2741
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "%2 дегеннен \"%1\" дегенді жалғастыруға дұрыс емес талабы келді."
 
-#: src/irc/server.cpp:2758
+#: src/irc/server.cpp:2760
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "%2 дегеннен \"%1\" дегеннен бас тарту дұрыс емес талабы келді."
 
-#: src/irc/server.cpp:2774
+#: src/irc/server.cpp:2776
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "%1 дегеннен дұрыс емес бас тарту талабы келді."
 
-#: src/irc/server.cpp:2787
+#: src/irc/server.cpp:2789
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "%2 дегеннен \"%1\" файлын жүктеп алу аяқталды."
 
-#: src/irc/server.cpp:2792
+#: src/irc/server.cpp:2794
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "%2 дегеннен \"%1\" жүктеп алу жаңылысы. Себебі: %3."
 
-#: src/irc/server.cpp:2804
+#: src/irc/server.cpp:2806
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "%2 дегенге \"%1\" жүктеп беруі аяқталды."
 
-#: src/irc/server.cpp:2807
+#: src/irc/server.cpp:2809
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "%2 дегенге \"%1\" жүктеп беруі жаңылды. Себебі: %3."
 
-#: src/irc/server.cpp:2821
+#: src/irc/server.cpp:2823
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "%2 дегенге \"%1\" жіберуі..."
 
-#: src/irc/server.cpp:2828
+#: src/irc/server.cpp:2830
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "%3 дегеннен \"%1\" (%2) жүктеп алу..."
 
-#: src/irc/server.cpp:3157 src/notificationhandler.cpp:347
+#: src/irc/server.cpp:3159 src/notificationhandler.cpp:347
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 желіде (%2)"
 
-#: src/irc/server.cpp:3171 src/notificationhandler.cpp:362
+#: src/irc/server.cpp:3173 src/notificationhandler.cpp:362
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 желіден тыс шықты (%2)."
 
-#: src/irc/server.cpp:3834
+#: src/irc/server.cpp:3836
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "Қате: \"%1\" скрипті табылмады."
 
-#: src/irc/server.cpp:3839
+#: src/irc/server.cpp:3841
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr "Қате: \"%1\" скрипті орындалмады. Файл рұқсаттарын түгелдеңіз. "
 
-#: src/irc/server.cpp:4050
+#: src/irc/server.cpp:4052
 #, kde-format
 msgid "Gone away for now"
 msgstr "Әзірше жоқ"
 
-#: src/irc/server.cpp:4081
+#: src/irc/server.cpp:4083
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "Сіз орнында жоқ деп белгіленгенсіз (себебі: %1)."
 
-#: src/irc/server.cpp:4083
+#: src/irc/server.cpp:4085
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "Сіз орнында жоқ деп белгіленгенсіз."
 
-#: src/irc/server.cpp:4109
+#: src/irc/server.cpp:4111
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "Сіз енді орнында жоқ деп белгіленбегенсіз."
 
-#: src/irc/server.cpp:4119
+#: src/irc/server.cpp:4121
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "Сіз орнында жоқ деп белгіленбегенсіз."
 
-#: src/irc/server.cpp:4265
+#: src/irc/server.cpp:4267
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "%1 дегенмен кілттер алмасуды бастау жаңылысы."
 
-#: src/irc/server.cpp:4277
+#: src/irc/server.cpp:4279
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "%1 дегенмен кілт алмасуы етілмеді."
 
-#: src/irc/server.cpp:4301
+#: src/irc/server.cpp:4303
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr "%1 дегеннің DH1080_INIT талдауға келмеді. Кілт алмасу жаңылды."
 
-#: src/irc/server.cpp:4307
+#: src/irc/server.cpp:4309
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
@@ -7199,12 +7199,12 @@ msgstr ""
 "Кілтіңіз орнатыды, енді хабарламаларыңыз шифрланған болады, %1 дегенге "
 "DH1080_FINISH жіберуде."
 
-#: src/irc/server.cpp:4324
+#: src/irc/server.cpp:4326
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "%1 дегенмен кілт алмасуы аяқтауға келмеді."
 
-#: src/irc/server.cpp:4336
+#: src/irc/server.cpp:4338
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -7213,7 +7213,7 @@ msgstr ""
 "%1 жіберген DH1080_FINISH талдауға келді. Кілтіңіз орнатыды, енді "
 "хабарламаларыңыз шифрланған болады."
 
-#: src/irc/server.cpp:4340
+#: src/irc/server.cpp:4342
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr "%1 жіберген DH1080_FINISH талдауға келмеді. Кілт алмасу жаңылды."
