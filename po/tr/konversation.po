@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:46+0000\n"
-"PO-Revision-Date: 2023-08-02 01:02+0300\n"
+"PO-Revision-Date: 2023-08-26 12:30+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -91,7 +91,7 @@ msgstr "\"%1\" çalışmıyor."
 
 #: data/scripts/media:182
 msgid "No running media players found."
-msgstr "Çalışan bir ortam oynatıcı bulunamadı."
+msgstr "Çalışan bir ortam oynatıcısı bulunamadı."
 
 #: data/scripts/media:196
 msgid "Nothing is playing in %1."
@@ -9912,8 +9912,8 @@ msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
-"Not: Bu günlük dosyasını kaydederek, yalnızca göstericide gördüğünüz bölümü "
-"değil, dosyadaki tüm veriyi kaydetmiş olacaksınız."
+"Not: Bu günlük dosyasını kaydederek, yalnızca görüntüleyicide gördüğünüz "
+"bölümü değil, dosyadaki tüm veriyi kaydetmiş olacaksınız."
 
 #: src/viewer/logfilereader.cpp:153
 #, kde-format
