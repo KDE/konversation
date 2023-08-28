@@ -6696,6 +6696,7 @@ msgstr "S'ha canviat a la codificació %1."
 msgid "%1 is not a valid encoding."
 msgstr "%1 no és una codificació vàlida."
 
+# skip-rule: tags-key
 #: src/irc/outputfilter.cpp:1680
 #, kde-format
 msgid ""

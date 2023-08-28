@@ -535,7 +535,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:55
 #, no-c-format, kde-format
 msgid "Disable variable (e.g. %C, %B, %G...) e&xpansion"
-msgstr "Desactiva l'e&xpansió de variables (p. ex. %C, %B, %G...)"
+msgstr "Desactiva l'e&xpansió de variables (p. ex., %C, %B, %G...)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_RedirectServerAndAppMsgToStatusPane)
 #: src/config/chatwindowbehaviour_config.ui:62
@@ -561,7 +561,7 @@ msgstr ""
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
 msgstr ""
-"Mostra els caràcters en mode sense processar (p. ex. +o) en comptes de "
+"Mostra els caràcters en mode sense processar (p. ex., +o) en comptes de "
 "descripcions"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
@@ -6700,6 +6700,7 @@ msgstr "S'ha canviat a la codificació %1."
 msgid "%1 is not a valid encoding."
 msgstr "%1 no és una codificació vàlida."
 
+# skip-rule: tags-key
 #: src/irc/outputfilter.cpp:1680
 #, kde-format
 msgid ""
