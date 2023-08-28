@@ -2298,8 +2298,8 @@ part of the listing.
 
 <para
 ><emphasis
->Nota: </emphasis
->Cada vegada que es mostra la pantalla <guilabel
+>Nota:</emphasis
+> Cada vegada que es mostra la pantalla <guilabel
 >Sobrenoms vigilats</guilabel
 >, passarà un temps abans que es visualitzi cap &i18n-nickname;, ja que el &konversation; ha de sondejar el servidor. Normalment, deixarà funcionant la pantalla <guilabel
 >Sobrenoms vigilats</guilabel
@@ -2515,8 +2515,8 @@ part of the listing.
 <callout arearefs="pt-osd-4"
 ><para
 >Feu clic en aquest botó per a escollir un tipus de lletra per a l'&osd;. (<emphasis
->Nota: </emphasis
->No tots els tipus de lletra funcionen. Es coneix que «Luxi Sans 22» i «Impact 22» sí que funcionen).</para
+>Nota:</emphasis
+> No tots els tipus de lletra funcionen. Es coneix que «Luxi Sans 22» i «Impact 22» sí que funcionen).</para
 ></callout>
 
 <callout arearefs="pt-osd-5"
@@ -3205,8 +3205,8 @@ part of the listing.
 
 <para
 ><emphasis
->Nota: </emphasis
->L'opció del navegador no s'aplica als &URL; <interface
+>Nota:</emphasis
+> L'opció del navegador no s'aplica als &URL; <interface
 >mailto:</interface
 >. Els &URL; <interface
 >mailto:</interface
