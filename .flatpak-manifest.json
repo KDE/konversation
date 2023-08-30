@@ -1,0 +1,21 @@
+{
+    "id": "org.kde.konversation",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "5.15-22.08",
+    "sdk": "org.kde.Sdk",
+    "command": "konversation",
+    "tags": ["nightly"],
+    "desktop-file-name-suffix": " (Nightly)",
+    "finish-args": ["--share=ipc", "--share=network", "--socket=x11", "--socket=wayland",
+                    "--talk-name=org.kde.StatusNotifierWatcher", "--talk-name=org.freedesktop.Notifications" ],
+    "separate-locales": false,
+
+    "modules": [
+        {
+            "name": "konversation",
+            "buildsystem": "cmake-ninja",
+            "sources": [ { "type": "dir", "path": "." } ]
+        }
+    ]
+}
