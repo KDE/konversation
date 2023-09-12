@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-08 00:46+0000\n"
-"PO-Revision-Date: 2023-09-08 05:18+0300\n"
+"PO-Revision-Date: 2023-09-11 22:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -214,7 +214,7 @@ msgstr "konu koruması"
 #: src/common.cpp:26
 #, kde-format
 msgid "no messages from outside"
-msgstr "dışarıdan ileti yok"
+msgstr "Dışarıdan ileti yok"
 
 #: src/common.cpp:27
 #, kde-format
@@ -7561,7 +7561,7 @@ msgstr "Kimlik"
 #: src/irc/serverlistdialogui.ui:157
 #, kde-format
 msgid "Channels"
-msgstr "kanallar"
+msgstr "Kanallar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_showAtStartup)
 #: src/irc/serverlistdialogui.ui:165
@@ -7858,7 +7858,7 @@ msgstr "Michael Kreitzer"
 #: src/main.cpp:77
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
-msgstr "Ham kip, sunucuya göre sekme sınıflandırması, Yasakla listesi"
+msgstr "Ham kip, sunucuya göre sekme sınıflandırması, yasakla listesi"
 
 #: src/main.cpp:78
 #, kde-format
@@ -9657,12 +9657,12 @@ msgstr "Ses Al"
 #: src/viewer/irccontextmenus.cpp:405
 #, kde-format
 msgid "Kick / Ban"
-msgstr "Kov / Yasakla"
+msgstr "Kov/Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Kickban"
-msgstr "Kov ve yasakla"
+msgstr "Kov ve Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:408
 #, kde-format
@@ -9672,42 +9672,42 @@ msgstr "Takma Adı Yasakla"
 #: src/viewer/irccontextmenus.cpp:410
 #, kde-format
 msgid "Ban *!*@*.host"
-msgstr "*!*@*.sunucuyu yasakla"
+msgstr "*!*@*.makine'yi Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Ban *!*@domain"
-msgstr "*!*@domain'i yasakla"
+msgstr "*!*@alanadı'nı Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Ban *!user@*.host"
-msgstr "*!kullanıcı@*.sunucuyu yasakla"
+msgstr "*!kullanıcı@*.makine'yi Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Ban *!user@domain"
-msgstr "*!kullanıcı@domain'i yasakla"
+msgstr "*!kullanıcı@alanadı'nı Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:415
 #, kde-format
 msgid "Kickban *!*@*.host"
-msgstr "*!*@*.sunucuyu kov ve yasakla"
+msgstr "*!*@*.makine'yi Kov ve Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:416
 #, kde-format
 msgid "Kickban *!*@domain"
-msgstr "*!*@domain'i kov ve yasakla"
+msgstr "*!*@alanadı'nı Kov ve Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:417
 #, kde-format
 msgid "Kickban *!user@*.host"
-msgstr "*!kullanıcı@*.sunucuyu kov ve yasakla"
+msgstr "*!kullanıcı@*.makine'yi Kov ve Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:418
 #, kde-format
 msgid "Kickban *!user@domain"
-msgstr "*!kullanıcı@domain'i kov ve yasakla"
+msgstr "*!kullanıcı@alanadı'nı Kov ve Yasakla"
 
 #: src/viewer/irccontextmenus.cpp:436
 #, kde-format
