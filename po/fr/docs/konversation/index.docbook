@@ -4045,7 +4045,7 @@ part of the listing.
 ></para>
 
 <para
->Envoie au canal les numéros de versions de &konversation;, &Qt;, &kf5; et &plasma; de votre système.</para>
+>Envoie les numéros de versions de &konversation;, &Qt;, &kde-frameworks;  et &plasma; de votre système vers le canal.</para>
 
 <para
 ><userinput
@@ -4497,7 +4497,7 @@ part of the listing.
 ></para>
 
 <para
->pour envoyer au canal les numéros de versions de &konversation;, &Qt;, &kf5; et &plasma; de votre système.</para>
+>pour envoyer les numéros de versions de &konversation;, &Qt;, &kde-frameworks;  et &plasma; vers le canal.</para>
 
 <para
 ><userinput

@@ -553,7 +553,7 @@ msgid ""
 "messages from outside' will become '*** Channel modes: n'"
 msgstr ""
 "Mantín la cadena del mode del canal com una combinació de caràcters en lloc "
-"de traduir-la a paraules intel·ligibles. P. ex. «*** Modes del canal: sense "
+"de traduir-la a paraules intel·ligibles. P. ex., «*** Modes del canal: sense "
 "missatges de l'exterior» passaria a ser «*** Modes del canal: n»"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseLiteralModes)
@@ -10059,7 +10059,7 @@ msgstr "Bu&sca:"
 #: src/viewer/searchbarbase.ui:68
 #, kde-format
 msgid "Jump to next match"
-msgstr "Salta a la coincidència següent"
+msgstr "Salta fins a la coincidència següent"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:71
@@ -10071,7 +10071,7 @@ msgstr "Següe&nt"
 #: src/viewer/searchbarbase.ui:81
 #, kde-format
 msgid "Jump to previous match"
-msgstr "Salta a la coincidència anterior"
+msgstr "Salta fins a la coincidència anterior"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:84
