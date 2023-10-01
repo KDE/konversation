@@ -22,7 +22,6 @@
 #include <KIO/DeleteJob>
 #include <KIO/CopyJob>
 #include <KSharedConfig>
-#include <KNSCore/DownloadManager>
 
 #include <QStringList>
 #include <QUrl>
