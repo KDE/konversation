@@ -48,16 +48,14 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
     headerWidgetLayout->addWidget(m_konsoleLabel);
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
-    KPluginFactory* fact = nullptr;
-    KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("konsolepart"));
-    if( service )
-    {
-        fact = KPluginFactory::loadFactory(KPluginMetaData(service->library())).plugin;
+    const QString konsolePart = QStringLiteral("kf6/parts/konsolepart");
+    KPluginFactory *factory = KPluginFactory::loadFactory(konsolePart).plugin;
+    if (!factory) {
+        return;
     }
 
-    if (!fact) return;
+    k_part = factory->create<KParts::ReadOnlyPart>(m_headerSplitter);
 
-    k_part = fact->create<KParts::ReadOnlyPart>(m_headerSplitter);
     if (!k_part) return;
 
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(k_part->widget()), 1);
