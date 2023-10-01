@@ -1133,7 +1133,7 @@ msgid ""
 "IPv4 interface set here"
 msgstr ""
 "Se esta opción estiver activa as transferencias DCC das conexións IPv6 fanse "
-"utilizando a interface IPv4 configurada aquí"
+"usando a interface IPv4 configurada aquí"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:127
@@ -1236,13 +1236,13 @@ msgstr "Mostra os alcumes do remitente en &letra grosa na vista da charla"
 #: src/config/generalbehavior_configui.ui:26
 #, kde-format
 msgid "Enable System Tray"
-msgstr "Activar a bandexa do sistema"
+msgstr "Activar a área de notificación"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotify)
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr "&Usar a bandexa do sistema para a notificación de mensaxes novas"
+msgstr "&Usar a área de notificación para a notificación de mensaxes novas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -1332,7 +1332,7 @@ msgstr "Carácter &de orde:"
 #: src/config/generalbehavior_configui.ui:244
 #, kde-format
 msgid "Use custom &version reply:"
-msgstr "Utilizar unha resposta de &versión personalizada:"
+msgstr "Usar unha resposta de &versión personalizada:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
 #: src/config/generalbehavior_configui.ui:254
@@ -2489,7 +2489,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing the window will minimize to the system tray"
-msgstr "… pechar a xanela minimízaa na bandexa do sistema"
+msgstr "… pechar a xanela minimízaa na área de notificación"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, dialogListView)
 #: src/config/warnings_configui.ui:29
@@ -2763,7 +2763,7 @@ msgstr ""
 #: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
-msgstr "Estase a agardar a aceptación do usuario remoto…"
+msgstr "Agardando a aceptación do usuario remoto…"
 
 #: src/dcc/chat.cpp:152
 #, kde-format
@@ -3231,7 +3231,7 @@ msgstr "Na fila"
 #: src/dcc/transferlistmodel.cpp:473
 #, kde-format
 msgid "Preparing"
-msgstr "Estase a preparar"
+msgstr "Preparando"
 
 #: src/dcc/transferlistmodel.cpp:475
 #, kde-format
@@ -3243,17 +3243,17 @@ msgstr "Pendente"
 #, kde-format
 msgctxt "Transfer is connecting to the partner"
 msgid "Connecting"
-msgstr "Estase a conectar"
+msgstr "Conectando"
 
 #: src/dcc/transferlistmodel.cpp:482
 #, kde-format
 msgid "Receiving"
-msgstr "Estase a recibir"
+msgstr "Recibindo"
 
 #: src/dcc/transferlistmodel.cpp:484
 #, kde-format
 msgid "Sending"
-msgstr "Estase a enviar"
+msgstr "Enviando"
 
 #: src/dcc/transferlistmodel.cpp:490
 #, kde-format
@@ -3300,17 +3300,17 @@ msgstr ""
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
 msgid "Connecting - Transfer is connecting to the partner"
-msgstr "Estase a conectar - A transferencia está a ligar co parceiro"
+msgstr "Conectando - A transferencia está a ligar co parceiro"
 
 #: src/dcc/transferlistmodel.cpp:526
 #, kde-format
 msgid "Receiving - Transfer is receiving data from the partner"
-msgstr "Estase a recibir - A transferencia está a recibir datos do parceiro"
+msgstr "Recibindo - A transferencia está a recibir datos do parceiro"
 
 #: src/dcc/transferlistmodel.cpp:528
 #, kde-format
 msgid "Sending - Transfer is sending data to partner"
-msgstr "Estase a enviar - A transferencia estalle a enviar datos ao parceiro"
+msgstr "Enviando - A transferencia estalle a enviar datos ao parceiro"
 
 #: src/dcc/transferlistmodel.cpp:534
 #, kde-format
@@ -3518,7 +3518,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:590
 #, kde-format
 msgid "Waiting for connection"
-msgstr "Estase a agardar pola conexión"
+msgstr "Agardando pola conexión"
 
 #: src/dcc/transferrecv.cpp:599
 #, kde-format
@@ -3638,7 +3638,7 @@ msgstr "Produciuse un erro fatal non recuperábel."
 #: src/dcc/transfersend.cpp:612
 #, kde-format
 msgid "Could not open file \"%1\"."
-msgstr "Non se puido abrir o ficheiro «%1»."
+msgstr "Non foi posíbel abrir o ficheiro «%1»."
 
 #: src/dcc/transfersend.cpp:621
 #, kde-format
@@ -3948,9 +3948,8 @@ msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
-"Esta identidade está a ser utilizada; se a borra, as configuracións de rede "
-"que a usen utilizarán de novo a identidade predefinida. Desexa borrala aínda "
-"así?"
+"Esta identidade está a ser usada; se a borra, as configuracións de rede que "
+"a usen utilizarán de novo a identidade predefinida. Desexa borrala aínda así?"
 
 #: src/identitydialog.cpp:326
 #, kde-format
@@ -5295,7 +5294,7 @@ msgstr ""
 #: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
 #, kde-format
 msgid "Refreshing."
-msgstr "Estase a refrescar."
+msgstr "Refrescando."
 
 #: src/irc/channellistpanel.cpp:357
 #, kde-format
@@ -6410,7 +6409,7 @@ msgstr "Uso: %1NOTICE <destinatario> <mensaxe>"
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr "Estase a enviar un aviso «%1» a %2."
+msgstr "Enviando un aviso «%1» a %2."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
@@ -6427,7 +6426,7 @@ msgstr "Hai que especificar un destinatario."
 #: src/irc/outputfilter.cpp:746
 #, kde-format
 msgid "You cannot open queries to channels."
-msgstr "Non se poden abrir as consultas ás canles."
+msgstr "Non é posíbel abrir as consultas ás canles."
 
 #: src/irc/outputfilter.cpp:752
 #, kde-format
@@ -6437,7 +6436,7 @@ msgstr "Hai que especificar unha mensaxe."
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
 msgid "Sending CTCP-%1 request to %2."
-msgstr "Estase a enviar un pedido de CTCP-%1 a %2."
+msgstr "Enviando un pedido de CTCP-%1 a %2."
 
 #: src/irc/outputfilter.cpp:852
 #, kde-format
@@ -6457,7 +6456,7 @@ msgstr "Uso: %1OMSG texto"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr "Estase a enviar un pedido de «%1» a %2."
+msgstr "Enviando un pedido de «%1» a %2."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6746,7 +6745,7 @@ msgstr "Non foi posíbel iniciar un intercambio de claves con %1."
 #: src/irc/outputfilter.cpp:1726
 #, kde-format
 msgid "Beginning DH1080 key exchange with %1."
-msgstr "Estase a iniciar un intercambio de claves DH1080 con %1."
+msgstr "Iniciando un intercambio de claves DH1080 con %1."
 
 #: src/irc/outputfilter.cpp:1745
 #, kde-format
@@ -6901,7 +6900,7 @@ msgstr "Solicitando as funcionalidades: %1"
 #: src/irc/server.cpp:798
 #, kde-format
 msgid "Closing capabilities negotiation."
-msgstr "Estase a pechar a negociación das capacidades."
+msgstr "Pechando a negociación das capacidades."
 
 #: src/irc/server.cpp:806
 #, kde-format
@@ -6963,7 +6962,7 @@ msgid ""
 "does not support SSL (did you use the correct port?) or you rejected the "
 "certificate. %3"
 msgstr ""
-"Non foi posíbel conectar con %1 (porto %2) utilizando cifrado SSL. Quizais o "
+"Non foi posíbel conectar con %1 (porto %2) usando cifrado SSL. Quizais o "
 "servidor non admita SSL (usou o porto correcto?) ou vostede rexeitou o "
 "certificado. %3"
 
@@ -7122,7 +7121,7 @@ msgstr "Fallou o envío de «%1» para %2. Motivo: %3."
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr "Estase a enviar «%1» para %2…"
+msgstr "Enviando «%1» para %2…"
 
 #: src/irc/server.cpp:2830
 #, kde-format
@@ -7654,7 +7653,7 @@ msgstr "Konversation"
 #: src/main.cpp:48
 #, kde-format
 msgid "A user-friendly IRC client"
-msgstr "Un cliente de IRC doado de utilizar"
+msgstr "Un cliente de IRC doado de usar"
 
 #: src/main.cpp:50
 #, kde-format
@@ -7914,7 +7913,7 @@ msgstr "Frauke Oster"
 #: src/main.cpp:78
 #, kde-format
 msgid "System tray patch"
-msgstr "Parche para a bandexa do sistema"
+msgstr "Parche para a área de notificación"
 
 #: src/main.cpp:79
 #, kde-format
@@ -8521,8 +8520,8 @@ msgid ""
 "tray. Use <b>Quit</b> from the <b>Konversation</b> menu to quit the "
 "application.</p>"
 msgstr ""
-"<p>Se pecha a xanela principal Konversation seguirá a executarse na bandexa "
-"do sistema. Utilice <b>Saír</b> no menú <b>Konversation</b> para saír da "
+"<p>Se pecha a xanela principal Konversation seguirá a executarse na área de "
+"notificación. Use <b>Saír</b> no menú <b>Konversation</b> para saír da "
 "aplicación.</p>"
 
 #: src/mainwindow.cpp:658
@@ -8886,7 +8885,7 @@ msgstr "Alcu&me:"
 #: src/quickconnectdialog.cpp:61
 #, kde-format
 msgid "The nick you want to use."
-msgstr "O alcume que quere utilizar."
+msgstr "O alcume que quere usar."
 
 #: src/quickconnectdialog.cpp:68
 #, kde-format
@@ -8905,7 +8904,7 @@ msgstr ""
 #: src/quickconnectdialog.cpp:79
 #, kde-format
 msgid "&Use SSL"
-msgstr "&Utilizar SSL"
+msgstr "&Usar SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
 #, kde-format
