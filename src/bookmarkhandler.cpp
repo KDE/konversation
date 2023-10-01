@@ -31,8 +31,7 @@ m_mainWindow(mainWindow)
     if ( m_file.isEmpty() )
         m_file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QStringLiteral("konversation/bookmarks.xml") ;
 
-    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, QStringLiteral("konversation"));
-    manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
+    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file);
     manager->setUpdate( true );
 
     m_bookmarkMenu = new KBookmarkMenu(manager, this, menu);
