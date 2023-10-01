@@ -347,6 +347,7 @@ target_link_libraries(konversation
     KF${KF_MAJOR_VERSION}::TextWidgets
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::ItemViews
+    KF${KF_MAJOR_VERSION}::Codecs
     KF${KF_MAJOR_VERSION}::NewStuffWidgets
 )
 if (QT_MAJOR_VERSION STREQUAL "6")

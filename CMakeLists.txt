@@ -58,6 +58,7 @@ find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS
     DBusAddons
     NewStuff
     Notifications
+    Codecs
     StatusNotifierItem
     TextWidgets
     WindowSystem
