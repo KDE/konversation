@@ -940,10 +940,11 @@ void MainWindow::toggleVisibility()
 {
     if (isActiveWindow())
     {
-        if (Preferences::self()->showTrayIcon())
+        if (Preferences::self()->showTrayIcon()) {
             m_trayIcon->hideWindow();
-        else
+        } else {
             KWindowSystem::minimizeWindow(winId());
+        }
     }
     else
     {
