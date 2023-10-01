@@ -49,7 +49,10 @@ namespace Konversation
 
         if (message.isEmpty())
         {
-            msg = KNotification::event(QStringLiteral("message"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(
+                QStringLiteral("message"),
+                eventTitle,
+                QStringLiteral("&lt;%1&gt;").arg(fromNick));
 
             if (osd)
             {
@@ -63,7 +66,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("message"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("message"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify));
 
             if (osd)
             {
@@ -102,7 +105,7 @@ namespace Konversation
         KNotification* msg;
         if (message.isEmpty())
         {
-            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick));
 
             if (osd)
             {
@@ -116,7 +119,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("nick"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify));
 
             if (osd)
             {
@@ -152,7 +155,7 @@ namespace Konversation
         KNotification* msg;
         if (message.isEmpty()) // TODO document how this can happen, seems nonsensical
         {
-            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt;").arg(fromNick));
 
             if (osd)
             {
@@ -166,7 +169,7 @@ namespace Konversation
             QString cleanedMessage = removeIrcMarkup(message);
             QString forKNotify = cleanedMessage.toHtmlEscaped();
 
-            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify), QPixmap(), m_mainWindow);
+            msg = KNotification::event(QStringLiteral("queryMessage"), eventTitle, QStringLiteral("&lt;%1&gt; %2").arg(fromNick, forKNotify));
 
             if (osd)
             {
@@ -206,7 +209,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("join"), i18n("%1 joined %2",nick, chatWin->getName()));
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
@@ -225,7 +228,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("part"), i18n("%1 parted %2",nick, chatWin->getName()));
 
         // OnScreen Message
         if(Preferences::self()->oSDShowChannelEvent() &&
@@ -244,7 +247,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()));
     }
 
     void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick)
@@ -255,7 +258,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick));
     }
 
     void NotificationHandler::dccIncoming(ChatWindow* chatWin, const QString& fromNick)
@@ -266,7 +269,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick));
     }
 
     void NotificationHandler::dccError(ChatWindow* chatWin, const QString& error)
@@ -277,7 +280,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("dcc_error"), i18n("An error has occurred in a DCC transfer: %1",error));
     }
 
     void NotificationHandler::dccTransferDone(ChatWindow* chatWin, const QString& file, DCC::Transfer* transfer)
@@ -290,15 +293,14 @@ namespace Konversation
 
         if (transfer->getType() == DCC::Transfer::Send)
         {
-            KNotification::event(QStringLiteral("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file), QPixmap(), m_mainWindow);
+            KNotification::event(QStringLiteral("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file));
         }
         else
         {
             auto *notification = new KNotification(QStringLiteral("dcctransfer_done"));
-            notification->setWidget(m_mainWindow);
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
-            //notification->setPixmap( QPixmap() );
             notification->setActions(QStringList(i18nc("Opens the file from the finished dcc transfer", "Open")));
+            notification->setWindow(m_mainWindow->windowHandle());
             connect(notification, QOverload<unsigned int>::of(&KNotification::activated), transfer, &DCC::Transfer::runFile);
             notification->sendEvent();
         }
@@ -313,8 +315,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("mode"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 changed modes in %2: %3", nick, subject, change));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
     }
 
@@ -329,8 +331,8 @@ namespace Konversation
         startTrayNotification(chatWin);
 
         auto *ev=new KNotification(QStringLiteral("query"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 has started a conversation (query) with you.",fromNick));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
     }
 
@@ -343,8 +345,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("notify"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 is online (%2).", nick, chatWin->getServer()->getServerName()));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
 
     }
@@ -358,8 +360,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("notify"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 went offline (%2).", nick, chatWin->getServer()->getServerName()));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
 
     }
@@ -373,8 +375,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("kick"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("You are kicked by %1 from %2", nick, channel));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
 
     }
@@ -388,8 +390,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("dccChat"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("%1 started a DCC chat with you", nick));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
 
     }
@@ -410,12 +412,12 @@ namespace Konversation
         if(fromNick.isEmpty()) // TODO document this one too
         {
             QString eventTitle = i18nc("Notification title; see Event/highlight in konversation.notifyrc", "Highlight triggered in %1", chatWin->getName());
-            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) *** %2").arg(chatWin->getName(), forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) *** %2").arg(chatWin->getName(), forKNotify));
         }
         else
         {
             QString eventTitle = i18nc("Notification title; see Event/highlight in konversation.notifyrc", "Highlight triggered by %2 in %1", chatWin->getName(), fromNick);
-            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) &lt;%2&gt; %3").arg(chatWin->getName(), fromNick, forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QStringLiteral("highlight"), eventTitle, QStringLiteral("(%1) &lt;%2&gt; %3").arg(chatWin->getName(), fromNick, forKNotify));
         }
 
         if(Preferences::self()->oSDShowOwnNick() &&
@@ -438,8 +440,8 @@ namespace Konversation
             return;
 
         auto *ev=new KNotification(QStringLiteral("connectionFailure"));
-        ev->setWidget(m_mainWindow);
         ev->setText(i18n("Failed to connect to %1", server));
+        ev->setWindow(m_mainWindow->windowHandle());
         ev->sendEvent();
 
     }
@@ -452,7 +454,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QStringLiteral("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);
+        KNotification::event(QStringLiteral("channelJoin"), i18n("You have joined %1.",channel));
     }
 
 }
