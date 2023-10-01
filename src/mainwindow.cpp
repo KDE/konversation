@@ -53,6 +53,10 @@
 #include <KGlobalAccel>
 #endif
 
+#if HAVE_X11
+#include <KX11Extras>
+#endif
+
 MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
 {
     setStateConfigGroup(QStringLiteral("MainWindow"));
@@ -942,9 +946,12 @@ void MainWindow::toggleVisibility()
     {
         if (Preferences::self()->showTrayIcon()) {
             m_trayIcon->hideWindow();
-        } else {
-            KWindowSystem::minimizeWindow(winId());
         }
+#if HAVE_X11
+        else {
+            KX11Extras::minimizeWindow(winId());
+        }
+#endif
     }
     else
     {
@@ -959,21 +966,29 @@ void MainWindow::activateAndRaiseWindow()
 
 void MainWindow::activateRaiseAndMoveToDesktop(MoveToDesktopMode moveToDesktop)
 {
-    if (isMinimized())
-        KWindowSystem::unminimizeWindow(winId());
-    else if (Preferences::self()->showTrayIcon() && !isVisible())
+#if HAVE_X11
+    if (isMinimized()) {
+        KX11Extras::unminimizeWindow(winId());
+    } else if (Preferences::self()->showTrayIcon() && !isVisible()) {
         m_trayIcon->restoreWindow();
+    }
+#else
+    if (Preferences::self()->showTrayIcon() && !isVisible()) {
+        m_trayIcon->restoreWindow();
+    }
+#endif
 
     if (!isActiveWindow())
     {
         raise();
-        if (moveToDesktop == MoveToDesktop)
-        {
+#if HAVE_X11
+        if (moveToDesktop == MoveToDesktop) {
             KWindowInfo info(winId(), NET::WMDesktop);
             if (!info.onAllDesktops())
-                KWindowSystem::setOnDesktop(winId(), KWindowSystem::currentDesktop());
+                KX11Extras::setOnDesktop(winId(), KX11Extras::currentDesktop());
         }
-        KWindowSystem::activateWindow(winId());
+        KX11Extras::activateWindow(winId());
+#endif
     }
 }
 

@@ -70,6 +70,10 @@ if(NOT WIN32)
 endif()
 set(HAVE_KGLOBALACCEL ${KF${KF_MAJOR_VERSION}GlobalAccel_FOUND})
 
+if (UNIX AND NOT APPLE)
+    set(HAVE_X11 TRUE)
+endif()
+
 find_package(Qca-qt${QT_MAJOR_VERSION} 2.2.0)
 set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
