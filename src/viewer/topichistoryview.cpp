@@ -145,7 +145,7 @@ QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& i
     return widgets;
 }
 
-void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option,
+void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> &widgets, const QStyleOptionViewItem& option,
     const QPersistentModelIndex& index) const
 {
     if (widgets.isEmpty()) return;
