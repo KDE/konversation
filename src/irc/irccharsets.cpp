@@ -107,12 +107,17 @@ namespace Konversation
 
     QTextCodec* IRCCharsets::codecForName(const QString& shortName) const
     {
+#if 0
+        KF6 Removed those functions and I have no idea what to do.
+        Going back to Qt only.
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.
         if (shortName == QLatin1String("jis7"))
-            return KCharsets::charsets()->codecForName(QStringLiteral("ISO-2022-JP"));
-        else
-            return KCharsets::charsets()->codecForName(shortName);
+            return KCodecs::Codec::codecForName("ISO-2022-JP");
+
+        return KCodecs::Codec::codecForName(shortName.toByteArray());
+#endif
+        return QTextCodec::codecForName(shortName.toLocal8Bit());
     }
 
     IRCCharsets::IRCCharsets()
