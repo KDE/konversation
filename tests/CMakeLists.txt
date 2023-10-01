@@ -7,6 +7,6 @@ ecm_add_test(
     ../src/common.cpp
     config/preferences.cpp
     TEST_NAME testcommon
-    LINK_LIBRARIES KF5::I18n Qt::Test
+    LINK_LIBRARIES KF${KF_MAJOR_VERSION}::I18n Qt::Test
 )
 target_include_directories(testcommon PRIVATE ${CMAKE_SOURCE_DIR}/src)

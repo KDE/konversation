@@ -328,31 +328,33 @@ target_link_libraries(konversation
     Qt::Multimedia
     Qt::Network
     Qt::Widgets
-    KF5::Archive
-    KF5::Bookmarks
-    KF5::ConfigWidgets
-    KF5::Crash
-    KF5::I18n
-    KF5::IdleTime
-    KF5::NotifyConfig
-    KF5::KIOFileWidgets
-    KF5::KIOWidgets
-    KF5::Parts
-    KF5::Wallet
-    KF5::WidgetsAddons
-    KF5::DBusAddons
-    KF5::CoreAddons
-    KF5::Notifications
-    KF5::WindowSystem
-    KF5::ItemViews
-    KF5::NewStuffWidgets
+    KF${KF_MAJOR_VERSION}::Archive
+    KF${KF_MAJOR_VERSION}::Bookmarks
+    KF${KF_MAJOR_VERSION}::ConfigWidgets
+    KF${KF_MAJOR_VERSION}::Crash
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::IdleTime
+    KF${KF_MAJOR_VERSION}::NotifyConfig
+    KF${KF_MAJOR_VERSION}::KIOFileWidgets
+    KF${KF_MAJOR_VERSION}::KIOWidgets
+    KF${KF_MAJOR_VERSION}::Parts
+    KF${KF_MAJOR_VERSION}::Wallet
+    KF${KF_MAJOR_VERSION}::WidgetsAddons
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::CoreAddons
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::StatusNotifierItem
+    KF${KF_MAJOR_VERSION}::TextWidgets
+    KF${KF_MAJOR_VERSION}::WindowSystem
+    KF${KF_MAJOR_VERSION}::ItemViews
+    KF${KF_MAJOR_VERSION}::NewStuffWidgets
 )
 if (QT_MAJOR_VERSION STREQUAL "6")
     target_link_libraries(konversation Qt6::Core5Compat)  # QTextCodec
 endif()
 
-if(TARGET KF5::GlobalAccel)
-    target_link_libraries(konversation KF5::GlobalAccel)
+if(TARGET KF${KF_MAJOR_VERSION}::GlobalAccel)
+    target_link_libraries(konversation KF${KF_MAJOR_VERSION}::GlobalAccel)
 endif()
 
 if (Qca-qt${QT_MAJOR_VERSION}_FOUND)

@@ -35,9 +35,12 @@ include(FeatureSummary)
 find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
 if (QT_MAJOR_VERSION STREQUAL "6")
     find_package(Qt6Core5Compat ${QT_MIN_VERSION} CONFIG REQUIRED) # QTextCodec
+    set(KF_MAJOR_VERSION "6")
+else()
+    set(KF_MAJOR_VERSION "5")
 endif()
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
+find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS
     Archive
     Bookmarks
     Config
@@ -55,14 +58,16 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED
     DBusAddons
     NewStuff
     Notifications
+    StatusNotifierItem
+    TextWidgets
     WindowSystem
     ItemViews
 )
 
 if(NOT WIN32)
-    find_package(KF5 REQUIRED GlobalAccel)
+    find_package(KF${KF_MAJOR_VERSION} REQUIRED GlobalAccel)
 endif()
-set(HAVE_KGLOBALACCEL ${KF5GlobalAccel_FOUND})
+set(HAVE_KGLOBALACCEL ${KF${KF_MAJOR_VERSION}GlobalAccel_FOUND})
 
 find_package(Qca-qt${QT_MAJOR_VERSION} 2.2.0)
 set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support for encryption"
