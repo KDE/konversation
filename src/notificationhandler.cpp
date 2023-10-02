@@ -300,7 +300,11 @@ namespace Konversation
             auto *notification = new KNotification(QStringLiteral("dcctransfer_done"));
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
             notification->setActions(QStringList(i18nc("Opens the file from the finished dcc transfer", "Open")));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             notification->setWindow(m_mainWindow->windowHandle());
+#else
+            notification->setWidget(m_mainWindow);
+#endif
             connect(notification, QOverload<unsigned int>::of(&KNotification::activated), transfer, &DCC::Transfer::runFile);
             notification->sendEvent();
         }
