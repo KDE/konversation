@@ -59,11 +59,14 @@ find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS
     NewStuff
     Notifications
     Codecs
-    StatusNotifierItem
     TextWidgets
     WindowSystem
     ItemViews
 )
+
+if (KF_MAJOR_VERSION STREQUAL "6")
+    find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS  StatusNotifierItem)
+endif()
 
 if(NOT WIN32)
     find_package(KF${KF_MAJOR_VERSION} REQUIRED GlobalAccel)
