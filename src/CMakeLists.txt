@@ -343,15 +343,18 @@ target_link_libraries(konversation
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::CoreAddons
     KF${KF_MAJOR_VERSION}::Notifications
-    KF${KF_MAJOR_VERSION}::StatusNotifierItem
     KF${KF_MAJOR_VERSION}::TextWidgets
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::ItemViews
     KF${KF_MAJOR_VERSION}::Codecs
     KF${KF_MAJOR_VERSION}::NewStuffWidgets
 )
+
 if (QT_MAJOR_VERSION STREQUAL "6")
-    target_link_libraries(konversation Qt6::Core5Compat)  # QTextCodec
+    target_link_libraries(konversation
+        Qt6::Core5Compat
+        KF${KF_MAJOR_VERSION}::StatusNotifierItem
+    )  # QTextCodec
 endif()
 
 if(TARGET KF${KF_MAJOR_VERSION}::GlobalAccel)
