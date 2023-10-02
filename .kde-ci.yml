@@ -2,7 +2,31 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['@all']
+- 'on':['linux/Qt6', 'FreeBSD/Qt6', 'Windows/Qt6', 'macOS/Qt6']
+  'require':
+    'frameworks/extra-cmake-modules': '@latest-kf6'
+    'frameworks/karchive': '@latest-kf6'
+    'frameworks/kbookmarks': '@latest-kf6'
+    'frameworks/kconfig': '@latest-kf6'
+    'frameworks/kconfigwidgets': '@latest-kf6'
+    'frameworks/kcoreaddons': '@latest-kf6'
+    'frameworks/kcrash': '@latest-kf6'
+    'frameworks/kdoctools': '@latest-kf6'
+    'frameworks/ki18n': '@latest-kf6'
+    'frameworks/kidletime': '@latest-kf6'
+    'frameworks/knotifyconfig': '@latest-kf6'
+    'frameworks/kio': '@latest-kf6'
+    'frameworks/kparts': '@latest-kf6'
+    'frameworks/kwallet': '@latest-kf6'
+    'frameworks/kwidgetsaddons': '@latest-kf6'
+    'frameworks/kdbusaddons': '@latest-kf6'
+    'frameworks/knewstuff': '@latest-kf6'
+    'frameworks/knotifications': '@latest-kf6'
+    'frameworks/kwindowsystem': '@latest-kf6'
+    'frameworks/kitemviews': '@latest-kf6'
+    'frameworks/kstatusnotifieritem': '@latest-kf6'
+
+- 'on': ['linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5', 'macOS/Qt5']
   'require':
     'frameworks/extra-cmake-modules': '@stable'
     'frameworks/karchive': '@stable'
@@ -25,6 +49,10 @@ Dependencies:
     'frameworks/kwindowsystem': '@stable'
     'frameworks/kitemviews': '@stable'
 
-- 'on': ['Linux', 'FreeBSD']
+- 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
+  'require':
+    'frameworks/kglobalaccel': '@latest-kf6'
+
+- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
   'require':
     'frameworks/kglobalaccel': '@stable'
