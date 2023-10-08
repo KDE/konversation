@@ -742,7 +742,7 @@ void IrcContextMenus::processLinkAction(int  actionId, const QString& link)
         }
         case LinkBookmark:
         {
-            KBookmarkManager* manager = KBookmarkManager::userBookmarksManager();
+            KBookmarkManager* manager = KBookmarkManager::managerForFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/konqueror/bookmarks.xml"));
             auto* dialog = new KBookmarkDialog(manager, Application::instance()->getMainWindow());
 
             dialog->addBookmark(link, QUrl(link), QString());

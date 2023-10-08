@@ -354,6 +354,7 @@ if (QT_MAJOR_VERSION STREQUAL "6")
     target_link_libraries(konversation
         Qt6::Core5Compat
         KF${KF_MAJOR_VERSION}::StatusNotifierItem
+        KF${KF_MAJOR_VERSION}::BookmarksWidgets
     )  # QTextCodec
 endif()
 
