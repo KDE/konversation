@@ -11,6 +11,7 @@
 #include <QTextCodec>
 
 #include <KCharsets>
+#include <kcodecs.h>
 
 
 namespace Konversation
@@ -107,17 +108,24 @@ namespace Konversation
 
     QTextCodec* IRCCharsets::codecForName(const QString& shortName) const
     {
-#if 0
-        KF6 Removed those functions and I have no idea what to do.
-        Going back to Qt only.
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.
         if (shortName == QLatin1String("jis7"))
             return KCodecs::Codec::codecForName("ISO-2022-JP");
 
         return KCodecs::Codec::codecForName(shortName.toByteArray());
-#endif
+#else
+        // KF6 removed `KCodecs::Codec::codecForName`. assuming that this
+        // exists on Qt. Someone with better understanding of codecs, what 
+        // should I do here?
+        //
+        // a KCodec is not convertible to a QTextCodec
+        // KCodecs::Codec *codec = KCodecs::Codec::codecForName("ISO-2022-JP");
+        // return ???
+
         return QTextCodec::codecForName(shortName.toLocal8Bit());
+#endif
     }
 
     IRCCharsets::IRCCharsets()
