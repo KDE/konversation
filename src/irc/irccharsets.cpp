@@ -112,9 +112,9 @@ namespace Konversation
         // Qt 5 / KCharsets seem to no longer support jis7 in common builds, but we have
         // to assume existing user config.
         if (shortName == QLatin1String("jis7"))
-            return KCodecs::Codec::codecForName("ISO-2022-JP");
-
-        return KCodecs::Codec::codecForName(shortName.toByteArray());
+            return KCharsets::charsets()->codecForName(QStringLiteral("ISO-2022-JP"));
+        else
+            return KCharsets::charsets()->codecForName(shortName);
 #else
         // KF6 removed `KCodecs::Codec::codecForName`. assuming that this
         // exists on Qt. Someone with better understanding of codecs, what 
