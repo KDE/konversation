@@ -79,8 +79,11 @@ class TopicHistoryItemDelegate : public KWidgetItemDelegate
 
     protected:
         QList<QWidget*> createItemWidgets (const QModelIndex& index) const override;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        void updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option, const QPersistentModelIndex& index) const override;
+#else
         void updateItemWidgets(const QList<QWidget *> &widgets, const QStyleOptionViewItem &option, const QPersistentModelIndex &index) const override;
-
+#endif
     private:
         TopicHistoryLabel* m_hiddenLabel;
         bool m_shownBefore;

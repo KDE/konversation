@@ -34,8 +34,14 @@ namespace Konversation
 
     void TrayIcon::restoreWindow()
     {
+#if QT_VERSION <QT_VERSION_CHECK(6,0,0)
+        if (associatedWidget()->isVisible())
+            return;
+#else
         if (associatedWindow()->isVisible())
             return;
+
+#endif
         activate(QPoint());
     }
 
