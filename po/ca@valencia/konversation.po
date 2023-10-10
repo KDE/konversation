@@ -9024,7 +9024,9 @@ msgstr "No s'ha pogut baixar %1: %2"
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr "S'ha produït un error en analitzar la descripció de l'encaminador."
+msgstr ""
+"S'ha produït un error en l'anàlisi sintàctica de la descripció de "
+"l'encaminador."
 
 #: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
 #, kde-format
