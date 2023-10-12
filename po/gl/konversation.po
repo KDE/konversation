@@ -1027,7 +1027,7 @@ msgstr "Porto:"
 #: src/config/connectionbehavior_config.ui:208
 #, kde-format
 msgid "Username:"
-msgstr "Nome de usuario:"
+msgstr "Nome de usuaria:"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLabel)
 #: src/config/connectionbehavior_config.ui:222
@@ -6591,7 +6591,7 @@ msgstr "Notificar"
 #, kde-format
 msgid "Enter username and password for IRC operator privileges:"
 msgstr ""
-"Insira o nome de usuario e o contrasinal para obter privilexios de operador "
+"Insira o nome de usuaria e o contrasinal para obter privilexios de operador "
 "de IRC:"
 
 #: src/irc/outputfilter.cpp:1333
