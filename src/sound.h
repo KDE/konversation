@@ -12,9 +12,7 @@
 #include <QQueue>
 #include <QUrl>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 class QAudioOutput;
-#endif
 
 namespace Konversation
 {
@@ -34,20 +32,14 @@ namespace Konversation
             void play(const QUrl &url);
 
         private Q_SLOTS:
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-            void tryPlayNext(QMediaPlayer::State newState);
-#else
             void tryPlayNext(QMediaPlayer::PlaybackState newState);
-#endif
 
         private:
             void playSound(const QUrl &url);
 
         private:
             QMediaPlayer *const m_mediaObject;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             QAudioOutput *const m_audioOutput;
-#endif
 
             QQueue<QUrl> m_playQueue;
             QUrl m_currentUrl;

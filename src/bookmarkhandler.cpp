@@ -31,11 +31,7 @@ m_mainWindow(mainWindow)
     if ( m_file.isEmpty() )
         m_file = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1Char('/') + QStringLiteral("konversation/bookmarks.xml") ;
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file);
-#else
-    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, QStringLiteral("konversation"));
-#endif
 
     manager->setUpdate( true );
 

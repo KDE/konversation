@@ -282,7 +282,7 @@ ki18n_wrap_ui(konversation
      dcc/whiteboardfontchooserui.ui
 )
 
-if (Qca-qt${QT_MAJOR_VERSION}_FOUND)
+if (Qca-qt6_FOUND)
     target_sources(konversation PRIVATE
         cipher.cpp)
 endif ()
@@ -328,42 +328,38 @@ target_link_libraries(konversation
     Qt::Multimedia
     Qt::Network
     Qt::Widgets
-    KF${KF_MAJOR_VERSION}::Archive
-    KF${KF_MAJOR_VERSION}::Bookmarks
-    KF${KF_MAJOR_VERSION}::ConfigWidgets
-    KF${KF_MAJOR_VERSION}::Crash
-    KF${KF_MAJOR_VERSION}::I18n
-    KF${KF_MAJOR_VERSION}::IdleTime
-    KF${KF_MAJOR_VERSION}::NotifyConfig
-    KF${KF_MAJOR_VERSION}::KIOFileWidgets
-    KF${KF_MAJOR_VERSION}::KIOWidgets
-    KF${KF_MAJOR_VERSION}::Parts
-    KF${KF_MAJOR_VERSION}::Wallet
-    KF${KF_MAJOR_VERSION}::WidgetsAddons
-    KF${KF_MAJOR_VERSION}::DBusAddons
-    KF${KF_MAJOR_VERSION}::CoreAddons
-    KF${KF_MAJOR_VERSION}::Notifications
-    KF${KF_MAJOR_VERSION}::TextWidgets
-    KF${KF_MAJOR_VERSION}::WindowSystem
-    KF${KF_MAJOR_VERSION}::ItemViews
-    KF${KF_MAJOR_VERSION}::Codecs
-    KF${KF_MAJOR_VERSION}::NewStuffWidgets
+    Qt6::Core5Compat
+
+    KF6::Archive
+    KF6::Bookmarks
+    KF6::ConfigWidgets
+    KF6::Crash
+    KF6::I18n
+    KF6::IdleTime
+    KF6::NotifyConfig
+    KF6::KIOFileWidgets
+    KF6::KIOWidgets
+    KF6::Parts
+    KF6::Wallet
+    KF6::WidgetsAddons
+    KF6::DBusAddons
+    KF6::CoreAddons
+    KF6::Notifications
+    KF6::TextWidgets
+    KF6::WindowSystem
+    KF6::ItemViews
+    KF6::Codecs
+    KF6::NewStuffWidgets
+    KF6::StatusNotifierItem
+    KF6::BookmarksWidgets
 )
 
-if (QT_MAJOR_VERSION STREQUAL "6")
-    target_link_libraries(konversation
-        Qt6::Core5Compat
-        KF${KF_MAJOR_VERSION}::StatusNotifierItem
-        KF${KF_MAJOR_VERSION}::BookmarksWidgets
-    )  # QTextCodec
+if(TARGET KF6::GlobalAccel)
+    target_link_libraries(konversation KF6::GlobalAccel)
 endif()
 
-if(TARGET KF${KF_MAJOR_VERSION}::GlobalAccel)
-    target_link_libraries(konversation KF${KF_MAJOR_VERSION}::GlobalAccel)
-endif()
-
-if (Qca-qt${QT_MAJOR_VERSION}_FOUND)
-    target_link_libraries(konversation qca-qt${QT_MAJOR_VERSION})
+if (Qca-qt6_FOUND)
+    target_link_libraries(konversation qca-qt6)
 endif ()
 if (WIN32)
   target_link_libraries(konversation ws2_32) # for symbols from winsock2.h: ntohl, etc.

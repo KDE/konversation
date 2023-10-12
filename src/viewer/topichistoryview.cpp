@@ -145,11 +145,7 @@ QList<QWidget*> TopicHistoryItemDelegate::createItemWidgets(const QModelIndex& i
     return widgets;
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget*> widgets, const QStyleOptionViewItem& option, const QPersistentModelIndex& index) const
-#else
 void TopicHistoryItemDelegate::updateItemWidgets(const QList<QWidget *> &widgets, const QStyleOptionViewItem &option, const QPersistentModelIndex &index) const
-#endif
 {
     if (widgets.isEmpty()) return;
 

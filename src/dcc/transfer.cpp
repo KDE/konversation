@@ -18,11 +18,7 @@
 #include <config-konversation.h>
 
 #include <kio_version.h>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
 #include <KIO/JobUiDelegateFactory>
-#else
-#include <KIO/JobUiDelegate>
-#endif
 
 #include <KIO/OpenUrlJob>
 
@@ -108,11 +104,7 @@ namespace Konversation
             if (getType() == Transfer::Send || getStatus() == Transfer::Done)
             {
                 auto *job = new KIO::OpenUrlJob(getFileURL());
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
                 job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
-#else
-                job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, nullptr));
-#endif
                 job->setRunExecutables(false);
                 job->start();
             }

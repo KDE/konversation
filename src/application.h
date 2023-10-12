@@ -20,9 +20,6 @@
 #include "ircqueue.h"
 
 #include <QApplication>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QNetworkConfigurationManager>
-#endif
 
 class ConnectionManager;
 class AwayManager;
@@ -204,14 +201,6 @@ class Application : public QApplication
         Konversation::LauncherEntryHandler* m_launcherEntryHandler;
 
         KWallet::Wallet* m_wallet;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-        QNetworkConfigurationManager* m_networkConfigurationManager = nullptr;
-QT_WARNING_POP
-#endif
         QCommandLineParser *m_commandLineParser;
         QStringList m_restartArguments;
 

@@ -104,11 +104,7 @@ namespace Konversation
 
         m_authPasswordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
 
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 108, 0)
         m_pemClientCertFile->setNameFilter(QStringLiteral("*.pem"));
-#else
-        m_pemClientCertFile->setFilter(QStringLiteral("*.pem"));
-#endif
 
         // set values for the widgets
         updateIdentity(0);

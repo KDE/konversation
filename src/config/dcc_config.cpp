@@ -10,12 +10,7 @@
 #include "application.h"
 #include "transfermanager.h"
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QNetworkConfiguration>
-#include <QNetworkConfigurationManager>
-#else
 #include <QNetworkInterface>
-#endif
 
 using namespace Konversation;
 
@@ -34,23 +29,10 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     kcfg_DccBufferSize->setSuffix(ki18np(" byte", " bytes"));
     kcfg_DccSendTimeout->setSuffix(ki18np(" second", " seconds"));
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-    QNetworkConfigurationManager manager;
-    const auto configurations = manager.allConfigurations();
-    for (const QNetworkConfiguration& conf : configurations) {
-        kcfg_DccIPv4FallbackIface->addItem(conf.name());
-    }
-QT_WARNING_POP
-#else
     const QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
     for (const QNetworkInterface& interface : interfaces) {
         kcfg_DccIPv4FallbackIface->addItem(interface.humanReadableName());
     }
-#endif
 
 #ifdef Q_OS_WIN
     //This option does nothing under windows, it just confuses the user

@@ -7,13 +7,13 @@ set (RELEASE_SERVICE_VERSION_MICRO "90")
 set (RELEASE_SERVICE_COMPACT_VERSION "${RELEASE_SERVICE_VERSION_MAJOR}${RELEASE_SERVICE_VERSION_MINOR}${RELEASE_SERVICE_VERSION_MICRO}")
 
 # Bump KONVERSATION_BASE_VERSION once new features are added
-set(KONVERSATION_BASE_VERSION "1.9")
+set(KONVERSATION_BASE_VERSION "1.10")
 set(KONVERSATION_VERSION "${KONVERSATION_BASE_VERSION}.${RELEASE_SERVICE_COMPACT_VERSION}")
 
 project(konversation VERSION ${KONVERSATION_VERSION})
 
-set(QT_MIN_VERSION "5.15.2")
-set(KF5_MIN_VERSION "5.91.0")
+set(QT_MIN_VERSION "6.4.0")
+set(KF5_MIN_VERSION "5.240.0")
 set(KDE_COMPILERSETTINGS_LEVEL "5.85")
 
 find_package(ECM ${KF5_MIN_VERSION} REQUIRED NO_MODULE)
@@ -32,66 +32,53 @@ include(ECMQtDeclareLoggingCategory)
 include(CheckIncludeFile)
 include(FeatureSummary)
 
-find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
-if (QT_MAJOR_VERSION STREQUAL "6")
-    find_package(Qt6Core5Compat ${QT_MIN_VERSION} CONFIG REQUIRED) # QTextCodec
-    set(KF_MAJOR_VERSION "6")
-else()
-    set(KF_MAJOR_VERSION "5")
-endif()
+find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
+find_package(Qt6Core5Compat ${QT_MIN_VERSION} CONFIG REQUIRED) # QTextCodec
 
-find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS
+find_package(KF6 REQUIRED COMPONENTS
     Archive
     Bookmarks
+    Codecs
     Config
     ConfigWidgets
     CoreAddons
     Crash
+    DBusAddons
     DocTools
     I18n
     IdleTime
-    NotifyConfig
+    ItemViews
     KIO
-    Parts
-    Wallet
-    WidgetsAddons
-    DBusAddons
     NewStuff
     Notifications
-    Codecs
+    NotifyConfig
+    Parts
+    StatusNotifierItem
     TextWidgets
+    Wallet
+    WidgetsAddons
     WindowSystem
-    ItemViews
 )
 
-if (KF_MAJOR_VERSION STREQUAL "6")
-    find_package(KF${KF_MAJOR_VERSION} ${KF5_DEP_VERSION} REQUIRED COMPONENTS  StatusNotifierItem)
-endif()
-
 if(NOT WIN32)
-    find_package(KF${KF_MAJOR_VERSION} REQUIRED GlobalAccel)
+    find_package(KF6 REQUIRED GlobalAccel)
 endif()
-set(HAVE_KGLOBALACCEL ${KF${KF_MAJOR_VERSION}GlobalAccel_FOUND})
+set(HAVE_KGLOBALACCEL ${KF6GlobalAccel_FOUND})
 
 if (UNIX AND NOT APPLE)
     set(HAVE_X11 TRUE)
 endif()
 
-find_package(Qca-qt${QT_MAJOR_VERSION} 2.2.0)
-set_package_properties(Qca-qt${QT_MAJOR_VERSION} PROPERTIES DESCRIPTION "Support for encryption"
+find_package(Qca-qt6 2.2.0)
+set_package_properties(Qca-qt6 PROPERTIES DESCRIPTION "Support for encryption"
                        URL "https://download.kde.org/stable/qca/"
                        TYPE OPTIONAL)
 check_include_file("stropts.h" HAVE_STROPTS_H)
 
-set(HAVE_QCA2 ${Qca-qt${QT_MAJOR_VERSION}_FOUND})
+set(HAVE_QCA2 ${Qca-qt6_FOUND})
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
-ecm_set_disabled_deprecation_versions(
-    QT 5.15.2
-    KF 5.100.0
-)
 
 add_subdirectory(src)
 add_subdirectory(data)

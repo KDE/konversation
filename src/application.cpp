@@ -31,11 +31,7 @@
 #include "konversation_state.h"
 
 #include <kio_version.h>
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
 #include <KIO/JobUiDelegateFactory>
-#else
-#include <KIO/JobUiDelegate>
-#endif
 #include <KIO/OpenUrlJob>
 #include <KConfig>
 #include <KShell>
@@ -54,9 +50,7 @@
 #include <QTextCursor>
 #include <QDesktopServices>
 #include <QCommandLineParser>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QNetworkInformation>
-#endif
 
 using namespace Konversation;
 
@@ -105,9 +99,6 @@ Application::~Application()
     delete m_osd;
     m_osd = nullptr;
     closeWallet();
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    delete m_networkConfigurationManager;
-#endif
     if (m_restartScheduled) implementRestart();
 }
 
@@ -158,18 +149,8 @@ void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestor
     connect(m_connectionManager, &ConnectionManager::identityOffline, m_awayManager, &AwayManager::identityOffline);
     connect(m_connectionManager, &ConnectionManager::connectionChangedAwayState, m_awayManager, &AwayManager::updateGlobalAwayAction);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-// Silence deprecation warnings as long as there is no known substitute for QNetworkConfigurationManager
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_CLANG("-Wdeprecated-declarations")
-QT_WARNING_DISABLE_GCC("-Wdeprecated-declarations")
-    m_networkConfigurationManager = new QNetworkConfigurationManager();
-    connect(m_networkConfigurationManager, &QNetworkConfigurationManager::onlineStateChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
-QT_WARNING_POP
-#else
     QNetworkInformation::loadBackendByFeatures(QNetworkInformation::Feature::Reachability);
     connect(QNetworkInformation::instance(), &QNetworkInformation::reachabilityChanged, m_connectionManager, &ConnectionManager::onOnlineStateChanged);
-#endif
 
     m_scriptLauncher = new ScriptLauncher(this);
 
@@ -1212,14 +1193,10 @@ void Application::openUrl(const QString& url)
 #else
         auto *job = new KIO::OpenUrlJob(QUrl(url));
         job->setFollowRedirections(false);
-#if KIO_VERSION >= QT_VERSION_CHECK(5, 98, 0)
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
-#else
-        job->setUiDelegate(new KIO::JobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, Application::instance()->getMainWindow()));
-#endif
         job->start();
-#endif
         return;
+#endif
     }
 
     // Use custom browser

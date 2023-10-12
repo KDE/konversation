@@ -26,33 +26,6 @@ Dependencies:
     'frameworks/kitemviews': '@latest-kf6'
     'frameworks/kstatusnotifieritem': '@latest-kf6'
 
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5', 'macOS/Qt5']
-  'require':
-    'frameworks/extra-cmake-modules': '@stable'
-    'frameworks/karchive': '@stable'
-    'frameworks/kbookmarks': '@stable'
-    'frameworks/kconfig': '@stable'
-    'frameworks/kconfigwidgets': '@stable'
-    'frameworks/kcoreaddons': '@stable'
-    'frameworks/kcrash': '@stable'
-    'frameworks/kdoctools': '@stable'
-    'frameworks/ki18n': '@stable'
-    'frameworks/kidletime': '@stable'
-    'frameworks/knotifyconfig': '@stable'
-    'frameworks/kio': '@stable'
-    'frameworks/kparts': '@stable'
-    'frameworks/kwallet': '@stable'
-    'frameworks/kwidgetsaddons': '@stable'
-    'frameworks/kdbusaddons': '@stable'
-    'frameworks/knewstuff': '@stable'
-    'frameworks/knotifications': '@stable'
-    'frameworks/kwindowsystem': '@stable'
-    'frameworks/kitemviews': '@stable'
-
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
   'require':
     'frameworks/kglobalaccel': '@latest-kf6'
-
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
-  'require':
-    'frameworks/kglobalaccel': '@stable'

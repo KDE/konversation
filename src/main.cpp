@@ -12,9 +12,6 @@
 
 #include <KAboutData>
 #include <KCrash>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <Kdelibs4ConfigMigrator>
-#endif
 #include <KDBusService>
 
 #include <chrono>
@@ -22,9 +19,6 @@
 
 int main(int argc, char* argv[])
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-#endif
     Application app(argc, argv);
 
     KLocalizedString::setApplicationDomain("konversation");

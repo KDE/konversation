@@ -474,11 +474,7 @@ bool IRCInput::checkPaste(QString& text)
     QString bytesString = i18np("1 byte", "%1 bytes", text.length());
     QString linesString = i18np("1 line", "%1 lines", lines+1);
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const int reply = KMessageBox::warningTwoActionsCancel(
-#else
-    const int reply = KMessageBox::warningYesNoCancel(
-#endif
         this,
         i18nc(
         "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are localised (see the two previous messages).",
@@ -492,11 +488,7 @@ bool IRCInput::checkPaste(QString& text)
         QStringLiteral("LargePaste"),
         KMessageBox::Dangerous);
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (reply == KMessageBox::SecondaryAction)
-#else
-    if (reply == KMessageBox::No)
-#endif
     {
         QString ret(PasteEditor::edit(this,text));
         if (ret.isEmpty())
@@ -505,11 +497,7 @@ bool IRCInput::checkPaste(QString& text)
         return true;
     }
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     return (reply==KMessageBox::PrimaryAction);
-#else
-    return (reply==KMessageBox::Yes);
-#endif
 }
 
 void IRCInput::showCompletionList(const QStringList& nicks)

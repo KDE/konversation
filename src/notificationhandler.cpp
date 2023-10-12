@@ -300,11 +300,7 @@ namespace Konversation
             auto *notification = new KNotification(QStringLiteral("dcctransfer_done"));
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
             notification->setActions(QStringList(i18nc("Opens the file from the finished dcc transfer", "Open")));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             notification->setWindow(m_mainWindow->windowHandle());
-#else
-            notification->setWidget(m_mainWindow);
-#endif
             connect(notification, QOverload<unsigned int>::of(&KNotification::activated), transfer, &DCC::Transfer::runFile);
             notification->sendEvent();
         }
@@ -320,11 +316,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("mode"));
         ev->setText(i18n("%1 changed modes in %2: %3", nick, subject, change));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
     }
 
@@ -340,11 +332,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("query"));
         ev->setText(i18n("%1 has started a conversation (query) with you.",fromNick));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
     }
 
@@ -358,11 +346,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("notify"));
         ev->setText(i18n("%1 is online (%2).", nick, chatWin->getServer()->getServerName()));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
 
     }
@@ -377,11 +361,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("notify"));
         ev->setText(i18n("%1 went offline (%2).", nick, chatWin->getServer()->getServerName()));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
 
     }
@@ -396,11 +376,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("kick"));
         ev->setText(i18n("You are kicked by %1 from %2", nick, channel));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
 
     }
@@ -415,11 +391,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("dccChat"));
         ev->setText(i18n("%1 started a DCC chat with you", nick));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
 
     }
@@ -469,11 +441,7 @@ namespace Konversation
 
         auto *ev=new KNotification(QStringLiteral("connectionFailure"));
         ev->setText(i18n("Failed to connect to %1", server));
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         ev->setWindow(m_mainWindow->windowHandle());
-#else
-        ev->setWidget(m_mainWindow);
-#endif
         ev->sendEvent();
 
     }

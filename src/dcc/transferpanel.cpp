@@ -419,11 +419,7 @@ namespace Konversation
             const int selectedRows = m_transferView->selectedRows().count();
             if (selectedRows > 3)
             {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
                 int ret = KMessageBox::questionTwoActions(this,
-#else
-                int ret = KMessageBox::questionYesNo(this,
-#endif
                                                      i18np("You have selected %1 file to execute, are you sure you want to continue?",
                                                            "You have selected %1 files to execute, are you sure you want to continue?",
                                                            selectedRows),
@@ -433,11 +429,7 @@ namespace Konversation
                                                      KStandardGuiItem::cancel()
                                                      );
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
                 if (ret == KMessageBox::SecondaryAction)
-#else
-                if (ret == KMessageBox::No)
-#endif
                 {
                     return;
                 }
