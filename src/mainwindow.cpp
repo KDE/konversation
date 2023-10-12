@@ -45,7 +45,6 @@
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
-#include <KStartupInfo>
 
 #include "config-konversation.h"
 
@@ -54,6 +53,7 @@
 #endif
 
 #if HAVE_X11
+#include <KStartupInfo>
 #include <KX11Extras>
 #endif
 
@@ -688,9 +688,11 @@ bool MainWindow::restore()
 
     // TODO: also save & restore any TrayIcon state, needs API in KStatusNotifierItem
 
+#if HAVE_X11
     // in case no window is shown & registered, the window manager needs to be told directly the start is done
     if (!show)
         KStartupInfo::appStarted();
+#endif
 
     return KXmlGuiWindow::restore(1, show);
 }

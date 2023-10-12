@@ -39,8 +39,11 @@
 #include <KWallet>
 #include <KTextEdit>
 #include <KSharedConfig>
-#include <KStartupInfo>
 #include <KWindowSystem>
+
+#if HAVE_X11
+#include <KStartupInfo>
+#endif
 
 #include <QRegularExpression>
 #include <QDBusConnection>
@@ -203,7 +206,9 @@ void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestor
     else if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
     {
         mainWindow->systemTrayIcon()->hideWindow();
+#if HAVE_X11
         KStartupInfo::appStarted();
+#endif
     }
     else
         mainWindow->show();
