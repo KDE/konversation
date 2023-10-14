@@ -8339,13 +8339,13 @@ msgstr "Baixa la pestanya"
 #: src/viewer/viewcontainer.cpp:354
 #, kde-format
 msgid "Move Tab Right"
-msgstr "Mou la pestanya a la dreta"
+msgstr "Mou la pestanya cap a la dreta"
 
 #: src/mainwindow.cpp:339 src/mainwindow.cpp:351
 #: src/viewer/viewcontainer.cpp:346
 #, kde-format
 msgid "Move Tab Left"
-msgstr "Mou la pestanya a l'esquerra"
+msgstr "Mou la pestanya cap a l'esquerra"
 
 #: src/mainwindow.cpp:374
 #, kde-format
@@ -8380,7 +8380,7 @@ msgstr "Establix la codificació"
 #: src/mainwindow.cpp:410
 #, kde-format
 msgid "Go to Tab %1"
-msgstr "Ves a la pestanya %1"
+msgstr "Ves fins a la pestanya %1"
 
 #: src/mainwindow.cpp:417
 #, kde-format
@@ -9081,7 +9081,7 @@ msgstr "&Copia"
 #: src/urlcatcher.cpp:114
 #, kde-format
 msgid "Copy URLs to the clipboard."
-msgstr "Copia els URL al porta-retalls."
+msgstr "Copia els URL a dins del porta-retalls."
 
 #: src/urlcatcher.cpp:115
 #, kde-format
