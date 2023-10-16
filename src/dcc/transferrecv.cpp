@@ -389,8 +389,8 @@ namespace Konversation
 
             //Now we create the directories
 
-            for (const QUrl& dir : qAsConst(dirList)) {
-                KIO::StatJob* statJob = KIO::statDetails(dir, KIO::StatJob::SourceSide, KIO::StatNoDetails);
+            for (const QUrl& dir : std::as_const(dirList)) {
+                KIO::StatJob* statJob = KIO::stat(dir, KIO::StatJob::SourceSide, KIO::StatNoDetails);
                 statJob->exec();
                 if (statJob->error())
                 {

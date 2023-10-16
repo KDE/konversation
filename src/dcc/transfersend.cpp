@@ -178,7 +178,7 @@ namespace Konversation
             qCDebug(KONVERSATION_LOG) << "Fast DCC send: " << m_fastSend;
 
             //Check the file exists
-            KIO::StatJob* statJob = KIO::statDetails(m_fileURL, KIO::StatJob::SourceSide, KIO::StatNoDetails);
+            KIO::StatJob* statJob = KIO::stat(m_fileURL, KIO::StatJob::SourceSide, KIO::StatNoDetails);
             statJob->exec();
             if (statJob->error())
             {
