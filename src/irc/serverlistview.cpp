@@ -61,7 +61,7 @@ bool ServerListView::badDropSelection()
                 children.append(item);
                 parent = children.at(0)->parent();
                 // make sure all the children have the same parent
-                for (QTreeWidgetItem* child : qAsConst(children)) {
+                for (QTreeWidgetItem* child : std::as_const(children)) {
                     if (child->parent() != parent)
                         return true;
                 }

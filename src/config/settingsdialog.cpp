@@ -194,7 +194,7 @@ void KonviSettingsDialog::modifiedSlot()
   // something or went back to the old settings
 // qCDebug(KONVERSATION_LOG) << __FUNCTION__;
   m_modified = false;
-  for (KonviSettingsPage *page : qAsConst(m_pages)) {
+  for (KonviSettingsPage *page : std::as_const(m_pages)) {
     if (page->hasChanged())
     {
       m_modified = true;
@@ -211,7 +211,7 @@ KonviSettingsDialog::~KonviSettingsDialog()
 
 void KonviSettingsDialog::updateSettings()
 {
-  for (KonviSettingsPage *page : qAsConst(m_pages)) {
+  for (KonviSettingsPage *page : std::as_const(m_pages)) {
     // this is for the non KConfigXT parts to update the UI (like quick buttons)
     page->saveSettings();
   }
@@ -221,7 +221,7 @@ void KonviSettingsDialog::updateSettings()
 
 void KonviSettingsDialog::updateWidgets()
 {
-  for (KonviSettingsPage *page : qAsConst(m_pages)) {
+  for (KonviSettingsPage *page : std::as_const(m_pages)) {
     page->loadSettings();
   }
   m_modified = false;
@@ -229,7 +229,7 @@ void KonviSettingsDialog::updateWidgets()
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
-  for (KonviSettingsPage *page : qAsConst(m_pages)) {
+  for (KonviSettingsPage *page : std::as_const(m_pages)) {
     page->restorePageToDefaults();
   }
   m_modified = true;

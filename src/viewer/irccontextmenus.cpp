@@ -160,7 +160,7 @@ void IrcContextMenus::setupTextMenu()
 
     m_textActionsSeparator = m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedBasicNickActions))
+    for (QAction* action : std::as_const(m_sharedBasicNickActions))
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
@@ -169,12 +169,12 @@ void IrcContextMenus::setupTextMenu()
 
     m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedNickSettingsActions))
+    for (QAction* action : std::as_const(m_sharedNickSettingsActions))
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedDccActions))
+    for (QAction* action : std::as_const(m_sharedDccActions))
         m_textMenu->addAction(action);
 
     m_textMenu->addSeparator();
@@ -194,7 +194,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     bool showLinkActions = options.testFlag(ShowLinkActions);
 
-    for (QAction* action : qAsConst(self()->m_linkActions))
+    for (QAction* action : std::as_const(self()->m_linkActions))
         action->setVisible(showLinkActions);
 
     self()->m_textCopyAction->setEnabled(!selectedText.isEmpty());
@@ -203,7 +203,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
 
     bool showNickActions = options.testFlag(ShowNickActions);
 
-    for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+    for (QAction* action : std::as_const(self()->m_sharedBasicNickActions))
         action->setVisible(showNickActions);
 
     self()->m_quickButtonMenu->menuAction()->setVisible(showNickActions && self()->shouldShowQuickButtonMenu());
@@ -212,21 +212,21 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
     {
         bool connected = server->isConnected();
 
-        for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+        for (QAction* action : std::as_const(self()->m_sharedBasicNickActions))
             action->setEnabled(connected);
 
         updateSharedNickSettingsActions(server, QStringList { nick });
 
-        for (QAction* action : qAsConst(self()->m_sharedDccActions))
+        for (QAction* action : std::as_const(self()->m_sharedDccActions))
             action->setEnabled(connected);
     }
     else
     {
-        for (QAction* action : qAsConst(self()->m_sharedNickSettingsActions))
+        for (QAction* action : std::as_const(self()->m_sharedNickSettingsActions))
             action->setVisible(false);
     }
 
-    for (QAction* action : qAsConst(self()->m_sharedDccActions))
+    for (QAction* action : std::as_const(self()->m_sharedDccActions))
         action->setVisible(showNickActions);
 
     if (options.testFlag(ShowFindAction))
@@ -381,7 +381,7 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedBasicNickActions))
+    for (QAction* action : std::as_const(m_sharedBasicNickActions))
         m_nickMenu->addAction(action);
 
     m_nickMenu->addSeparator();
@@ -417,12 +417,12 @@ void IrcContextMenus::setupNickMenu()
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedNickSettingsActions))
+    for (QAction* action : std::as_const(m_sharedNickSettingsActions))
         m_nickMenu->addAction(action);
 
     m_nickMenu->addSeparator();
 
-    for (QAction* action : qAsConst(m_sharedDccActions))
+    for (QAction* action : std::as_const(m_sharedDccActions))
         m_nickMenu->addAction(action);
 }
 
@@ -473,10 +473,10 @@ void IrcContextMenus::nickMenu(const QPoint& pos, MenuOptions options, Server* s
 
     bool connected = server->isConnected();
 
-    for (QAction* action : qAsConst(self()->m_sharedBasicNickActions))
+    for (QAction* action : std::as_const(self()->m_sharedBasicNickActions))
         action->setEnabled(connected);
 
-    for (QAction* action : qAsConst(self()->m_sharedDccActions))
+    for (QAction* action : std::as_const(self()->m_sharedDccActions))
         action->setEnabled(connected);
 
     self()->m_modesMenu->menuAction()->setEnabled(connected);

@@ -275,7 +275,7 @@ namespace Konversation
                 QList<QStandardItem*> items = model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 0);
                 items += model->findItems(QStringLiteral("*"), Qt::MatchWildcard, 1);
 
-                for (QStandardItem* item : qAsConst(items))
+                for (QStandardItem* item : std::as_const(items))
                     item->setEnabled(m_isAnyTypeOfOp);
             }
 
@@ -312,7 +312,7 @@ namespace Konversation
         modesModel->clear();
         modesModel->setHorizontalHeaderLabels(QStringList { i18n("Mode"), i18n("Parameter") });
 
-        for (const QChar mode : qAsConst(modeString)) {
+        for (const QChar mode : std::as_const(modeString)) {
             const QString modeAsString(mode);
 
             QStandardItem *item = nullptr;

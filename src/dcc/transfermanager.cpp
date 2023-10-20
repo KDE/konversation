@@ -126,7 +126,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            for (TransferSend* it : qAsConst(m_sendItems)) {
+            for (TransferSend* it : std::as_const(m_sendItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -149,7 +149,7 @@ namespace Konversation
             Chat* chat = nullptr;
 
             // find applicable one
-            for (Chat* it : qAsConst(m_chatItems)) {
+            for (Chat* it : std::as_const(m_chatItems)) {
                 if (it->status() == Chat::WaitingRemote &&
                     it->connectionId() == connectionId &&
                     it->partnerNick() == partnerNick)
@@ -170,7 +170,7 @@ namespace Konversation
             TransferRecv* transfer = nullptr;
 
             // find applicable one
-            for (TransferRecv* it : qAsConst(m_recvItems)) {
+            for (TransferRecv* it : std::as_const(m_recvItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -198,7 +198,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            for (TransferSend* it : qAsConst(m_sendItems)) {
+            for (TransferSend* it : std::as_const(m_sendItems)) {
                 if ( ( it->getStatus() == Transfer::Queued || it->getStatus() == Transfer::WaitingRemote ) &&
                     it->getConnectionId() == connectionId &&
                     it->getPartnerNick() == partnerNick &&
@@ -227,7 +227,7 @@ namespace Konversation
             TransferSend* transfer = nullptr;
 
             // find applicable one
-            for (TransferSend* it : qAsConst(m_sendItems)) {
+            for (TransferSend* it : std::as_const(m_sendItems)) {
                 if (
                     it->getStatus() == Transfer::WaitingRemote &&
                     it->getConnectionId() == connectionId &&
@@ -255,7 +255,7 @@ namespace Konversation
             Chat* chat = nullptr;
 
             // find applicable one
-            for (Chat* it :qAsConst(m_chatItems)) {
+            for (Chat* it :std::as_const(m_chatItems)) {
                 if (
                     it->status() == Chat::WaitingRemote &&
                     it->connectionId() == connectionId &&
@@ -361,7 +361,7 @@ namespace Konversation
             // update the default incoming directory for already existed DCCRECV items
             if ( Preferences::self()->dccPath() != m_defaultIncomingFolder )
             {
-                for (TransferRecv* it : qAsConst(m_recvItems)) {
+                for (TransferRecv* it : std::as_const(m_recvItems)) {
                     if ( it->getStatus() == Transfer::Queued &&
                          it->getFileURL().adjusted(QUrl::RemoveFilename) == m_defaultIncomingFolder.adjusted(QUrl::RemoveFilename))
                     {

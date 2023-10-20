@@ -234,7 +234,7 @@ namespace Konversation
 
         // Have fun deleting
         QTreeWidgetItem* rootItem = m_serverList->invisibleRootItem();
-        for (QTreeWidgetItem* item : qAsConst(selectedItems)) {
+        for (QTreeWidgetItem* item : std::as_const(selectedItems)) {
             if (item == m_selectedItemPtr)
                 m_selectedItemPtr = nullptr;
 

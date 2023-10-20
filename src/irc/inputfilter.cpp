@@ -1952,7 +1952,7 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
                 channelList.sort();
 
                 // split up the list in channels where they are operator / user / voice
-                for (const QString& lookChannel : qAsConst(channelList)) {
+                for (const QString& lookChannel : std::as_const(channelList)) {
                     if (lookChannel.startsWith(QLatin1Char('*')) || lookChannel.startsWith(QLatin1Char('&')))
                     {
                         adminChannels.append(lookChannel.mid(1));

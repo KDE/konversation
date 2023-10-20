@@ -194,7 +194,7 @@ void UrlCatcher::updateItemActionStates()
 {
     bool enable = m_urlTree->selectionModel()->hasSelection();
 
-    for (QAction* action : qAsConst(m_itemActions))
+    for (QAction* action : std::as_const(m_itemActions))
         action->setEnabled(enable);
 }
 
@@ -203,7 +203,7 @@ void UrlCatcher::updateListActionStates()
     Application* konvApp = Application::instance();
     bool enable = konvApp->getUrlModel()->rowCount();
 
-    for (QAction* action : qAsConst(m_listActions))
+    for (QAction* action : std::as_const(m_listActions))
         action->setEnabled(enable);
 }
 
@@ -325,7 +325,7 @@ void UrlCatcher::deleteSelectedUrls()
 
     Application* konvApp = Application::instance();
 
-    for (const QPersistentModelIndex& index : qAsConst(selectedIndices))
+    for (const QPersistentModelIndex& index : std::as_const(selectedIndices))
         if (index.isValid()) konvApp->getUrlModel()->removeRow(index.row());
 }
 

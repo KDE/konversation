@@ -261,7 +261,7 @@ namespace Konversation
                 }
             }
 
-            for (Transfer* transfer : qAsConst(transferList)) {
+            for (Transfer* transfer : std::as_const(transferList)) {
                 TransferSend *newTransfer = Application::instance()->getDccTransferManager()->newUpload();
 
                 newTransfer->setConnectionId(transfer->getConnectionId());
@@ -296,7 +296,7 @@ namespace Konversation
             QModelIndexList indexes = m_transferView->selectedRows();
             QModelIndexList indexesToRemove;
 
-            for (const QModelIndex &index : qAsConst(indexes)) {
+            for (const QModelIndex &index : std::as_const(indexes)) {
                 if (index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
                     indexesToRemove.append(index);
@@ -308,7 +308,7 @@ namespace Konversation
             std::sort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
 
             //remove from last to first item, to keep a valid row
-            for (const QModelIndex &index : qAsConst(indexesToRemove)) {
+            for (const QModelIndex &index : std::as_const(indexesToRemove)) {
                 m_transferView->model()->removeRow(index.row(), QModelIndex());
                 //needed, otherwise valid rows "can be treated" as invalid,
                 //proxymodel does not keep up with changes
@@ -316,7 +316,7 @@ namespace Konversation
             }
 
             //remove all gone items
-            for (const QModelIndex &index : qAsConst(indexesToRemove)) {
+            for (const QModelIndex &index : std::as_const(indexesToRemove)) {
                 indexes.removeOne(index);
             }
 
@@ -324,9 +324,9 @@ namespace Konversation
             QList<int> toSelectList;
             toSelectList.reserve(indexes.size());
             //select everything that got not removed
-            for (const QModelIndex &index : qAsConst(indexes)) {
+            for (const QModelIndex &index : std::as_const(indexes)) {
                 int offset = 0;
-                for (const QModelIndex &removedIndex : qAsConst(indexesToRemove)) {
+                for (const QModelIndex &removedIndex : std::as_const(indexesToRemove)) {
                     if (removedIndex.row() < index.row())
                     {
                         ++offset;
@@ -374,7 +374,7 @@ namespace Konversation
             std::sort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
 
             //remove from last to first item, to keep a valid row
-            for (const QModelIndex &index : qAsConst(indexesToRemove)) {
+            for (const QModelIndex &index : std::as_const(indexesToRemove)) {
                 m_transferView->model()->removeRow(index.row(), QModelIndex());
                 //needed, otherwise valid rows "can be treated" as invalid,
                 //proxymodel does not keep up with changes
@@ -382,7 +382,7 @@ namespace Konversation
             }
 
             //remove all gone items
-            for (const QModelIndex &index : qAsConst(indexesToRemove)) {
+            for (const QModelIndex &index : std::as_const(indexesToRemove)) {
                 selectedIndexes.removeOne(index);
             }
 
@@ -390,9 +390,9 @@ namespace Konversation
             QList<int> toSelectList;
             toSelectList.reserve(selectedIndexes.size());
             //select everything that got not removed
-            for (const QModelIndex &index : qAsConst(selectedIndexes)) {
+            for (const QModelIndex &index : std::as_const(selectedIndexes)) {
                 int offset = 0;
-                for (const QModelIndex &removedIndex : qAsConst(indexesToRemove)) {
+                for (const QModelIndex &removedIndex : std::as_const(indexesToRemove)) {
                     if (removedIndex.row() < index.row())
                     {
                         ++offset;

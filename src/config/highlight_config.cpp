@@ -40,7 +40,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const QString& name)
     {
         QDir dir;
         dir.setFilter( QDir::Files | QDir::Readable );
-        for (const QString& soundDir : qAsConst(soundDirs)) {
+        for (const QString& soundDir : std::as_const(soundDirs)) {
             dir.setPath(soundDir);
             if ( dir.isReadable() && dir.count() > 2 )
             {

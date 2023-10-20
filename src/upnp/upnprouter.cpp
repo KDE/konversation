@@ -93,7 +93,7 @@ namespace Konversation
 
         UPnPRouter::~UPnPRouter()
         {
-            for (Forwarding *check : qAsConst(forwards)) {
+            for (Forwarding *check : std::as_const(forwards)) {
                 undoForward(check->port, check->proto);
             }
 
@@ -228,7 +228,7 @@ namespace Konversation
             {
                 Forwarding *forward = nullptr;
 
-                for (Forwarding *check : qAsConst(forwards)) {
+                for (Forwarding *check : std::as_const(forwards)) {
                     if (check->port == port && check->proto == proto)
                         forward = check;
                 }

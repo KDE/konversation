@@ -1691,11 +1691,11 @@ void ViewContainer::unclutterTabs()
         m_tabWidget->removeTab(0);
     }
 
-    for (ChatWindow *view : qAsConst(topLevelViews)) {
+    for (ChatWindow *view : std::as_const(topLevelViews)) {
         m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace(QLatin1Char('&'), QLatin1String("&&")));
     }
 
-    for (ChatWindow *view : qAsConst(nonTopLevelViews)) {
+    for (ChatWindow *view : std::as_const(nonTopLevelViews)) {
         m_tabWidget->insertTab(insertIndex(view), view, QIcon(), view->getName().replace(QLatin1Char('&'), QLatin1String("&&")));
     }
 
@@ -1814,7 +1814,7 @@ void ViewContainer::showNextActiveView()
         ChatWindow* prev = m_activeViewOrderList.first();
         ChatWindow* view = prev;
 
-        for (ChatWindow* activeView : qAsConst(m_activeViewOrderList)) {
+        for (ChatWindow* activeView : std::as_const(m_activeViewOrderList)) {
             if (activeView->currentTabNotification() < prev->currentTabNotification()) {
                 view = activeView;
             }

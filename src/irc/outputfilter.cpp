@@ -1528,7 +1528,7 @@ namespace Konversation
             // were there enough parameters?
             if (parameterList.count() >= 1)
             {
-                for (QString parameter : qAsConst(parameterList)) {
+                for (QString parameter : std::as_const(parameterList)) {
                     if (!parameter.contains(QLatin1Char('!')))
                         parameter += QLatin1String("!*");
 

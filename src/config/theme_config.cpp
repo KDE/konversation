@@ -90,7 +90,7 @@ void Theme_Config::loadSettings()
         // initialize index counter
         int i = 0;
         // iterate through all found theme directories
-        for (const QString& dir : qAsConst(m_dirs)) {
+        for (const QString& dir : std::as_const(m_dirs)) {
             KDesktopFile themeRC(dir);
             // get the name and comment from the theme
             themeName = themeRC.readName();

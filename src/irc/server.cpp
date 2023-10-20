@@ -180,7 +180,7 @@ Server::~Server()
         Konversation::ChannelList channelList;
 
         channelList.reserve(m_channelList.size());
-        for (Channel* channel : qAsConst(m_channelList)) {
+        for (Channel* channel : std::as_const(m_channelList)) {
             channelList << channel->channelSettings();
         }
 
@@ -833,7 +833,7 @@ void Server::capDel(const QString &unavailableCaps)
 {
     const QStringList capsList = unavailableCaps.split(QLatin1Char(' '), Qt::SkipEmptyParts);
 
-    for (const QString &capString : qAsConst(capsList))
+    for (const QString &capString : std::as_const(capsList))
     {
         if (m_capabilityNames.contains(capString))
             m_capabilities &= ~(m_capabilityNames.value(capString));
@@ -1197,7 +1197,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     QString lcPrevISON = QLatin1Char(' ') + (m_prevISONList.join(QLatin1Char(' '))) + QLatin1Char(' ');
 
     //Are any nicks gone offline
-    for (const QString& nick : qAsConst(m_prevISONList)) {
+    for (const QString& nick : std::as_const(m_prevISONList)) {
         if (!lcActual.contains(QLatin1Char(' ') + nick + QLatin1Char(' '), Qt::CaseInsensitive)) {
             setNickOffline(nick);
             nicksOnlineChanged = true;
@@ -1276,7 +1276,7 @@ void Server::autoCommandsAndChannels()
 
     if (getAutoJoin())
     {
-        for (const QString& command : qAsConst(m_autoJoinCommands)) {
+        for (const QString& command : std::as_const(m_autoJoinCommands)) {
             queue(command);
         }
     }
@@ -2995,7 +2995,7 @@ Query* Server::getQueryByName(const QString& name) const
     QString wanted = name.toLower();
 
     // Traverse through list to find the query with "name"
-    for (Query* lookQuery : qAsConst(m_queryList)) {
+    for (Query* lookQuery : std::as_const(m_queryList)) {
         if(lookQuery->getName().toLower()==wanted) return lookQuery;
     }
     // No query by that name found? Must be a new query request. Return 0
@@ -3501,7 +3501,7 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
 
 void Server::removeNickFromServer(const QString &nickname,const QString &reason, const QHash<QString, QString> &messageTags)
 {
-    for (Channel* channel : qAsConst(m_channelList)) {
+    for (Channel* channel : std::as_const(m_channelList)) {
         channel->flushNickQueue();
         // Check if nick is in this channel or not.
         if(channel->getNickByName(nickname))
@@ -3541,7 +3541,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick, const Q
         //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 
         // Rename the nick in every channel they are in
-        for (Channel* channel : qAsConst(m_channelList)) {
+        for (Channel* channel : std::as_const(m_channelList)) {
             channel->flushNickQueue();
 
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
@@ -3801,7 +3801,7 @@ const QString& inputLineText
 void Server::sendToAllChannels(const QString &text)
 {
     // Send a message to all channels we are in
-    for (Channel* channel : qAsConst(m_channelList)) {
+    for (Channel* channel : std::as_const(m_channelList)) {
         channel->sendText(text);
     }
 }
@@ -3909,7 +3909,7 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
     if (!channels.isEmpty())
     {
         tmpList.reserve(channels.size());
-        for (const ChannelSettings& cs : qAsConst(channels)) {
+        for (const ChannelSettings& cs : std::as_const(channels)) {
             tmpList << cs;
         }
     }
@@ -3918,7 +3918,7 @@ void Server::updateAutoJoin(Konversation::ChannelList channels)
     else
     {
         tmpList.reserve(m_channelList.size());
-        for (Channel* channel : qAsConst(m_channelList)) {
+        for (Channel* channel : std::as_const(m_channelList)) {
             tmpList << channel->channelSettings();
         }
     }
@@ -4028,12 +4028,12 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 void Server::sendToAllChannelsAndQueries(const QString& text)
 {
     // Send a message to all channels we are in
-    for (Channel* channel : qAsConst(m_channelList)) {
+    for (Channel* channel : std::as_const(m_channelList)) {
         channel->sendText(text);
     }
 
     // Send a message to all queries we are in
-    for (Query* query : qAsConst(m_queryList)) {
+    for (Query* query : std::as_const(m_queryList)) {
         query->sendText(text);
     }
 }
@@ -4359,7 +4359,7 @@ void Server::sendNickInfoChangedSignals()
 {
     Q_EMIT nickInfoChanged();
 
-    for (NickInfoPtr nickInfo : qAsConst(m_allNicks)) {
+    for (NickInfoPtr nickInfo : std::as_const(m_allNicks)) {
         if(nickInfo->isChanged())
         {
             Q_EMIT nickInfoChanged(this, nickInfo);
@@ -4378,12 +4378,12 @@ void Server::startChannelNickChangedTimer(const QString& channel)
 
 void Server::sendChannelNickChangedSignals()
 {
-    for (const QString& channel : qAsConst(m_changedChannels)) {
+    for (const QString& channel : std::as_const(m_changedChannels)) {
         if (m_joinedChannels.contains (channel))
         {
             Q_EMIT channelNickChanged(channel);
 
-            for (ChannelNickPtr nick : qAsConst(*m_joinedChannels[channel])) {
+            for (ChannelNickPtr nick : std::as_const(*m_joinedChannels[channel])) {
                 if(nick->isChanged())
                 {
                     nick->setChanged(false);

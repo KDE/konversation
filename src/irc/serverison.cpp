@@ -62,7 +62,7 @@ void ServerISON::recalculateAddressees()
         // in doing an ISON on such nicks.
         m_ISONList.clear();
 
-        for (const QString& nickName : qAsConst(m_watchList)) {
+        for (const QString& nickName : std::as_const(m_watchList)) {
             if (m_server->getNickJoinedChannels(nickName).isEmpty()) {
                 m_ISONList.append(nickName);
             }

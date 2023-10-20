@@ -325,7 +325,7 @@ void ConfigDialog::showEvent(QShowEvent *e)
     if (!d->shown) {
         updateWidgets();
         d->manager->updateWidgets();
-        for (KConfigDialogManager* manager : qAsConst(d->managerForPage)) {
+        for (KConfigDialogManager* manager : std::as_const(d->managerForPage)) {
             manager->updateWidgets();
         }
 

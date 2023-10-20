@@ -278,14 +278,14 @@ void ConnectionManager::handleReconnect(Server* server)
 
 void ConnectionManager::quitServers()
 {
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         server->quitServer();
     }
 }
 
 void ConnectionManager::reconnectServers()
 {
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         server->reconnectServer();
     }
 }
@@ -481,7 +481,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
     Application* konvApp = Application::instance();
     MainWindow* mainWindow = konvApp->getMainWindow();
 
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         if (server->getServerGroup() && settings.serverGroup()
             && server->getServerGroup() == settings.serverGroup())
         {
@@ -494,7 +494,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
     if (!dupe)
     {
-        for (Server* server : qAsConst(m_connectionList)) {
+        for (Server* server : std::as_const(m_connectionList)) {
             if (server->getConnectionSettings().server() == settings.server()) {
                 dupe = server;
                 dupeType = SameServer;
@@ -617,7 +617,7 @@ QList<Server*> ConnectionManager::getServerList() const
     QList<Server*> serverList;
 
     serverList.reserve(m_connectionList.size());
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         serverList.append(server);
     }
 
@@ -647,7 +647,7 @@ Server* ConnectionManager::getServerByName(const QString& name, NameMatchFlags f
         }
     }
 
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         if (server->getDisplayName() == name || server->getServerName() == name) {
             return server;
         }
@@ -660,7 +660,7 @@ void ConnectionManager::involuntaryQuitServers()
 {
     m_overrideAutoReconnect = true;
 
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         server->involuntaryQuit();
     }
 }
@@ -669,7 +669,7 @@ void ConnectionManager::reconnectInvoluntary()
 {
     m_overrideAutoReconnect = false;
 
-    for (Server* server : qAsConst(m_connectionList)) {
+    for (Server* server : std::as_const(m_connectionList)) {
         server->reconnectInvoluntary();
     }
 }

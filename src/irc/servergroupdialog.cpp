@@ -114,13 +114,13 @@ namespace Konversation
         m_channelHistory = settings->channelHistory();
         m_mainWidget->m_serverLBox->clear();
 
-        for (const auto& server : qAsConst(m_serverList)) {
+        for (const auto& server : std::as_const(m_serverList)) {
             m_mainWidget->m_serverLBox->addItem(server.host());
         }
 
         m_channelList = settings->channelList();
 
-        for (const auto& channel : qAsConst(m_channelList)) {
+        for (const auto& channel : std::as_const(m_channelList)) {
             m_mainWidget->m_channelLBox->addItem(channel.name());
         }
     }

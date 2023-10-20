@@ -184,7 +184,7 @@ void Images::initializeNickIcons()
     QStringList dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QLatin1String("konversation/themes/") + iconTheme, QStandardPaths::LocateDirectory);
     const bool isDefaultTheme = (iconTheme == QLatin1String("default"));
 
-    for (const QString& dir : qAsConst(dirs)) {
+    for (const QString& dir : std::as_const(dirs)) {
         if (nickIconSet->load(dir)) {
             break;
         }
@@ -194,7 +194,7 @@ void Images::initializeNickIcons()
     if (nickIconSet->isNull() && !isDefaultTheme) {
         dirs = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/themes/default"), QStandardPaths::LocateDirectory);
 
-        for (const QString& dir : qAsConst(dirs)) {
+        for (const QString& dir : std::as_const(dirs)) {
             if (nickIconSet->load(dir)) {
                 break;
             }

@@ -163,7 +163,7 @@ namespace Konversation
 
     ChannelSettings ServerGroupSettings::channelByNameFromHistory(const QString& channelName)
     {
-        for (const auto& channel : qAsConst(m_channelHistory)) {
+        for (const auto& channel : std::as_const(m_channelHistory)) {
             if (channelName == channel.name()) {
                 return channel;
             }

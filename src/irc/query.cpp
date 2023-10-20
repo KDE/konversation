@@ -244,7 +244,7 @@ void Query::sendText(const QString& sendLine)
         else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
-                for (const QString& out : qAsConst(result.outputList)) {
+                for (const QString& out : std::as_const(result.outputList)) {
                     appendQuery(m_server->getNickname(), out);
                 }
             }

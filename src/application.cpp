@@ -233,7 +233,7 @@ void Application::createMainWindow(AutoConnectMode autoConnectMode, WindowRestor
             return left->sortIndex() < right->sortIndex();
         });
 
-        for (const auto& server : qAsConst(serversToAutoconnect)) {
+        for (const auto& server : std::as_const(serversToAutoconnect)) {
             m_connectionManager->connectTo(Konversation::CreateNewConnection, server->id());
         }
     }
@@ -793,7 +793,7 @@ void Application::saveOptions(bool updateGUI)
     QStringList channelHistory;
     QHash<int, int> sgKeys;
 
-    for (const auto& serverGroup : qAsConst(sortedServerGroupMap)) {
+    for (const auto& serverGroup : std::as_const(sortedServerGroupMap)) {
         const Konversation::ServerList serverList = serverGroup->serverList();
         servers.clear();
         servers.reserve(serverList.size());

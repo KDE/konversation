@@ -577,7 +577,7 @@ void Channel::completeNick()
                     uint timeStamp = 0;
                     int listPosition = 0;
 
-                    for (Nick* nick : qAsConst(nicknameList)) {
+                    for (Nick* nick : std::as_const(nicknameList)) {
                         if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive) &&
                           (nick->getChannelNick()->timeStamp() > timeStamp))
                         {
@@ -709,7 +709,7 @@ void Channel::setAutoJoin(bool autojoin)
             }
 
             if (!channelMap.isEmpty()) {
-                for (Channel* channel : qAsConst(channelMap)) {
+                for (Channel* channel : std::as_const(channelMap)) {
                     if (channel->autoJoin())
                     {
                         before = channel->channelSettings();
@@ -821,7 +821,7 @@ void Channel::sendText(const QString& sendLine)
         else if (!result.outputList.isEmpty()) {
             if (result.type == Konversation::Message)
             {
-                for (const QString& out : qAsConst(result.outputList)) {
+                for (const QString& out : std::as_const(result.outputList)) {
                     append(m_server->getNickname(), out);
                 }
             }
@@ -854,7 +854,7 @@ QStringList Channel::getSelectedNickList() const
 {
     QStringList selectedNicks;
 
-    for (Nick* nick : qAsConst(nicknameList)) {
+    for (Nick* nick : std::as_const(nicknameList)) {
         if (nick->isSelected())
             selectedNicks << nick->getChannelNick()->getNickname();
     }
@@ -930,7 +930,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 
     Nick* nick=nullptr;
 
-    for (Nick* lookNick : qAsConst(nicknameList)) {
+    for (Nick* lookNick : std::as_const(nicknameList)) {
         if(lookNick->getChannelNick()->loweredNickname() == nickname)
         {
             nick = lookNick;
@@ -1828,7 +1828,7 @@ void Channel::clearModeList()
     QString k;
 
     // Keep channel password in the backing store, for rejoins.
-    for (const QString& mode : qAsConst(m_modeList)) {
+    for (const QString& mode : std::as_const(m_modeList)) {
         if (mode[0] == QLatin1Char('k'))
             k = mode;
     }
@@ -2226,7 +2226,7 @@ void Channel::autoUserhost()
 
         QString nickString;
 
-        for (Nick* nick : qAsConst(nicknameList)) {
+        for (Nick* nick : std::as_const(nicknameList)) {
             if(nick->getChannelNick()->getHostmask().isEmpty())
             {
                 if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + QLatin1Char(' ');
@@ -2365,7 +2365,7 @@ void Channel::updateAutoWho()
 
 void Channel::fadeActivity()
 {
-    for (Nick *nick : qAsConst(nicknameList)) {
+    for (Nick *nick : std::as_const(nicknameList)) {
         nick->getChannelNick()->lessActive();
     }
 }
@@ -2751,7 +2751,7 @@ Konversation::Cipher* Channel::getCipher() const
 
 void Channel::updateNickInfos()
 {
-    for (Nick* nick : qAsConst(nicknameList)) {
+    for (Nick* nick : std::as_const(nicknameList)) {
         if(nick->getChannelNick()->getNickInfo()->isChanged())
         {
             nick->refresh();
@@ -2764,7 +2764,7 @@ void Channel::updateChannelNicks(const QString& channel)
     if(channel != name.toLower())
         return;
 
-    for (Nick* nick : qAsConst(nicknameList)) {
+    for (Nick* nick : std::as_const(nicknameList)) {
         if(nick->getChannelNick()->isChanged())
         {
             nick->refresh();
@@ -2831,7 +2831,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     std::sort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
 
     found.reserve(found.size() + foundNicks.size());
-    for (Nick *nick : qAsConst(foundNicks)) {
+    for (Nick *nick : std::as_const(foundNicks)) {
         found.append(nick->getChannelNick()->getNickname());
     }
 
