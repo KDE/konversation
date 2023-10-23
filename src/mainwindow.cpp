@@ -41,7 +41,6 @@
 #include <QIcon>
 #include <QMenu>
 #include <KWindowSystem>
-#include <KWindowInfo>
 #include <KShortcutsDialog>
 #include <KStandardShortcut>
 #include <KNotifyConfigWidget>
@@ -53,6 +52,7 @@
 #endif
 
 #if HAVE_X11
+#include <KWindowInfo>
 #include <KStartupInfo>
 #include <KX11Extras>
 #endif
