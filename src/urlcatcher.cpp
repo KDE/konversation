@@ -278,8 +278,8 @@ void UrlCatcher::bookmarkSelectedUrls()
     const QModelIndexList selectedIndexes = m_urlTree->selectionModel()->selectedRows(1);
 
     //TODO: Use the user-configured browser for this.
-    KBookmarkManager* manager = KBookmarkManager::managerForFile(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/konqueror/bookmarks.xml"));
-    auto* dialog = new KBookmarkDialog(manager, this);
+    auto manager =  std::make_unique<KBookmarkManager>(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/konqueror/bookmarks.xml"));
+    auto dialog = std::make_unique<KBookmarkDialog>(manager.get(), this);
 
     if (selectedIndexes.count() > 1)
     {
@@ -297,8 +297,6 @@ void UrlCatcher::bookmarkSelectedUrls()
 
         dialog->addBookmark(url, QUrl(url), QString());
     }
-
-    delete dialog;
 }
 
 void UrlCatcher::copySelectedUrls()
