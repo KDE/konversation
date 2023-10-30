@@ -41,8 +41,8 @@ SearchBar::SearchBar(QWidget* parent)
     m_findNextButton->setIcon(m_goUpSearch);
     m_findPreviousButton->setIcon(m_goDownSearch);
     Application* konvApp = Application::instance();
-    konvApp->getMainWindow()->actionCollection()->action(QString::fromLatin1(KStandardAction::name(KStandardAction::FindNext)))->setIcon(m_goUpSearch);
-    konvApp->getMainWindow()->actionCollection()->action(QString::fromLatin1(KStandardAction::name(KStandardAction::FindPrev)))->setIcon(m_goDownSearch);
+    konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
+    konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
     m_optionsButton->setIcon(QIcon::fromTheme(QStringLiteral("settings-configure")));
 
     m_timer = new QTimer(this);

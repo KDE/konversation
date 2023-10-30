@@ -230,7 +230,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
         action->setVisible(showNickActions);
 
     if (options.testFlag(ShowFindAction))
-        textMenu->insertAction(self()->m_textActionsSeparator, actionCollection->action(QString::fromLatin1(KStandardAction::name(KStandardAction::Find))));
+        textMenu->insertAction(self()->m_textActionsSeparator, actionCollection->action(KStandardAction::name(KStandardAction::Find)));
 
     if (options.testFlag(ShowLogAction))
         textMenu->addAction(actionCollection->action(QStringLiteral("open_logfile")));
@@ -249,7 +249,7 @@ int IrcContextMenus::textMenu(const QPoint& pos, MenuOptions options, Server* se
         processQuickButtonAction(action, server, nick, QStringList { nick });
 
     textMenu->removeAction(toggleMenuBarAction);
-    textMenu->removeAction(actionCollection->action(QString::fromLatin1(KStandardAction::name(KStandardAction::Find))));
+    textMenu->removeAction(actionCollection->action(KStandardAction::name(KStandardAction::Find)));
     textMenu->removeAction(actionCollection->action(QStringLiteral("open_logfile")));
     textMenu->removeAction(actionCollection->action(QStringLiteral("channel_settings")));
 
