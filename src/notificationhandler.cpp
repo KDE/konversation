@@ -76,8 +76,8 @@ namespace Konversation
             }
         }
 
-        msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+        KNotificationAction* action = msg->addDefaultAction(i18n("Open"));
+        connect(action, &KNotificationAction::activated, chatWin, [msg, chatWin]{
             KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
             chatWin->activateView();
         });
@@ -129,8 +129,8 @@ namespace Konversation
             }
         }
 
-        msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+        KNotificationAction* action = msg->addDefaultAction(i18n("Open"));
+        connect(action, &KNotificationAction::activated, chatWin, [msg, chatWin]{
             KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
             chatWin->activateView();
         });
@@ -179,8 +179,8 @@ namespace Konversation
             }
         }
 
-        msg->setDefaultAction(i18n("Open"));
-        connect(msg, &KNotification::defaultActivated, chatWin, [msg, chatWin]{
+        KNotificationAction* action = msg->addDefaultAction(i18n("Open"));
+        connect(action, &KNotificationAction::activated, chatWin, [msg, chatWin]{
             KWindowSystem::setCurrentXdgActivationToken(msg->xdgActivationToken());
             chatWin->activateView();
         });
@@ -299,9 +299,9 @@ namespace Konversation
         {
             auto *notification = new KNotification(QStringLiteral("dcctransfer_done"));
             notification->setText(i18nc("%1 - filename","%1 File Transfer is complete", file));
-            notification->setActions(QStringList(i18nc("Opens the file from the finished dcc transfer", "Open")));
+            KNotificationAction* action = notification->addAction(i18nc("Opens the file from the finished dcc transfer", "Open"));
             notification->setWindow(m_mainWindow->windowHandle());
-            connect(notification, QOverload<unsigned int>::of(&KNotification::activated), transfer, &DCC::Transfer::runFile);
+            connect(action, &KNotificationAction::activated, transfer, &DCC::Transfer::runFile);
             notification->sendEvent();
         }
     }
