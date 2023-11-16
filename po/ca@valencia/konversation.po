@@ -595,7 +595,7 @@ msgid ""
 "If checked, only events concerning active and watched nicks will be "
 "displayed."
 msgstr ""
-"Si està activada, només es mostraran els esdeveniments referits als "
+"Si se selecciona, només es mostraran els esdeveniments referits als "
 "sobrenoms actius i vigilats."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
@@ -847,9 +847,9 @@ msgid ""
 "in your chat window as colored text. You can add color codes to your "
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
-"En activar esta opció, els codis de color afegits als missatges IRC es "
-"mostraran en la finestra de conversa com text acolorit. Podeu afegir codis "
-"de color als missatges seleccionant Inserix -> Color d'IRC"
+"Quan se selecciona esta opció, els codis de color afegits als missatges IRC "
+"es mostraran en la finestra de conversa com text acolorit. Podeu afegir "
+"codis de color als missatges seleccionant Inserix -> Color d'IRC"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:747
@@ -1138,7 +1138,7 @@ msgid ""
 "If this option enabled dcc transfers for IPv6 connections will be done over "
 "IPv4 interface set here"
 msgstr ""
-"Si esta opció està activada, les transferències DCC de les connexions IPv6 "
+"Si se selecciona esta opció, les transferències DCC de les connexions IPv6 "
 "seran realitzades per la interfície IPv4 establida ací"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccIPv4Fallback)
@@ -1568,8 +1568,8 @@ msgstr "Oculta la barra de desplaçament"
 msgid ""
 "Enable if you want all the IRC input lines to check your spelling as you type"
 msgstr ""
-"Activeu-la si voleu comprovar l'ortografia de totes les línies introduïdes "
-"en l'IRC a mesura que escriviu"
+"Seleccioneu-la si voleu comprovar l'ortografia de totes les línies "
+"introduïdes en l'IRC a mesura que escriviu"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:232
@@ -2546,7 +2546,7 @@ msgid ""
 "<qt>When checked, the <b>Watched Nicks</b> window will be automatically "
 "opened when starting Konversation.</qt>"
 msgstr ""
-"<qt>Si està marcada, la finestra de <b>Sobrenoms vigilats</b> s'obrirà "
+"<qt>Si se selecciona, la finestra de <b>Sobrenoms vigilats</b> s'obrirà "
 "automàticament en iniciar Konversation.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
@@ -4145,10 +4145,10 @@ msgid ""
 "horizontal line will appear in the channel, marking the point where you went "
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
-"Si marqueu esta casella, quan realitzeu una ordre <b>/away</b>, apareixerà "
-"una línia horitzontal al canal, marcant el punt on comença la vostra "
-"absència. Esta línia horitzontal no serà visible per als altres usuaris de "
-"l'IRC."
+"Si seleccioneu esta casella, quan realitzeu una ordre <b>/away</b>, "
+"apareixerà una línia horitzontal al canal, marcant el punt on comença la "
+"vostra absència. Esta línia horitzontal no serà visible per als altres "
+"usuaris de l'IRC."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:336
@@ -7281,8 +7281,8 @@ msgid ""
 "support SSL protocol for this to work. In most cases, if the server does not "
 "support SSL, the connection will fail."
 msgstr ""
-"Marqueu esta opció si voleu utilitzar el protocol Secure Socket Layer (SSL) "
-"per a comunicar-vos amb el servidor. Açò protegix la privadesa de les "
+"Seleccioneu esta opció si voleu utilitzar el protocol Secure Socket Layer "
+"(SSL) per a comunicar-vos amb el servidor. Açò protegix la privadesa de les "
 "comunicacions entre el vostre ordinador i el servidor d'IRC. El servidor ha "
 "de poder funcionar amb SSL perquè açò siga possible. En la majoria de casos, "
 "si el servidor no funciona amb SSL, la connexió fallarà."
@@ -7300,7 +7300,7 @@ msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
 msgstr ""
-"Marqueu esta opció si voleu utilitzar la configuració global de servidor "
+"Seleccioneu esta opció si voleu utilitzar la configuració global de servidor "
 "intermediari per a comunicar amb este servidor."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
@@ -7439,8 +7439,8 @@ msgid ""
 "Check here if you want Konversation to automatically connect to this network "
 "whenever you open Konversation."
 msgstr ""
-"Marqueu esta opció si voleu que Konversation es connecte automàticament a "
-"esta xarxa en ser iniciat."
+"Seleccioneu esta opció si voleu que Konversation es connecte automàticament "
+"a esta xarxa en ser iniciat."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:131
