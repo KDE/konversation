@@ -133,7 +133,7 @@ namespace Konversation
             if (!m_ui.topicEdit->isReadOnly())
                 m_ui.topicEdit->setFocus();
 
-            KConfigGroup config(KSharedConfig::openConfig(), "ChannelOptionsDialog");
+            KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("ChannelOptionsDialog"));
 
             resize(config.readEntry("Size", sizeHint()));
 
@@ -150,7 +150,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::hideEvent(QHideEvent* event)
     {
-        KConfigGroup config(KSharedConfig::openConfig(), "ChannelOptionsDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("ChannelOptionsDialog"));
 
         config.writeEntry("Size", size());
         config.writeEntry("SplitterSizes", m_ui.splitter->sizes());
@@ -592,7 +592,7 @@ namespace Konversation
         if (treeWidget()->sortColumn() == 2)
         {
             QVariant userdata = item.data(2, Qt::UserRole);
-            if (userdata.isValid() && userdata.type() == QVariant::DateTime)
+            if (userdata.isValid() && userdata.typeId() == QVariant::DateTime)
             {
               return m_timestamp < userdata.toDateTime();
             }

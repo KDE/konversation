@@ -386,7 +386,7 @@ void Application::dbusInfo(const QString& string)
 void Application::readOptions()
 {
     // read nickname sorting order for channel nick lists
-    KConfigGroup cgSortNicknames(KSharedConfig::openConfig()->group("Sort Nicknames"));
+    KConfigGroup cgSortNicknames(KSharedConfig::openConfig()->group(QStringLiteral("Sort Nicknames")));
 
     QString sortOrder=cgSortNicknames.readEntry("SortOrder");
     QStringList sortOrderList=sortOrder.split(QString());
@@ -466,7 +466,14 @@ void Application::readOptions()
         m_osd->setPalette(p);
     }
 
+<<<<<<< HEAD
     // Server list
+=======
+    // Check if there is old server list config //TODO FIXME why are we doing this here?
+    KConfigGroup cgServerList(KSharedConfig::openConfig()->group(QStringLiteral("Server List")));
+
+    // Read the new server settings
+>>>>>>> c449b5e2 (Remove many deprecated warnings)
     const QStringList groups = KSharedConfig::openConfig()->groupList().filter(
                                         QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
@@ -551,10 +558,11 @@ void Application::readOptions()
     // Quick Buttons List
 
     // if there are button definitions in the config file, remove default buttons
-    if (KSharedConfig::openConfig()->hasGroup("Button List"))
+    if (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Button List"))) {
         Preferences::clearQuickButtonList();
+    }
 
-    KConfigGroup cgQuickButtons(KSharedConfig::openConfig()->group("Button List"));
+    KConfigGroup cgQuickButtons(KSharedConfig::openConfig()->group(QStringLiteral("Button List")));
     // Read all default buttons
     QStringList buttonList(Preferences::quickButtonList());
     // Read all quick buttons
@@ -569,10 +577,11 @@ void Application::readOptions()
     // Autoreplace List
 
     // if there are autoreplace definitions in the config file, remove default entries
-    if (KSharedConfig::openConfig()->hasGroup("Autoreplace List"))
+    if (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Autoreplace List"))) {
         Preferences::clearAutoreplaceList();
+    }
 
-    KConfigGroup cgAutoreplace(KSharedConfig::openConfig()->group("Autoreplace List"));
+    KConfigGroup cgAutoreplace(KSharedConfig::openConfig()->group(QStringLiteral("Autoreplace List")));
     // Read all default entries
     QList<QStringList> autoreplaceList(Preferences::autoreplaceList());
     // Read all entries
@@ -610,13 +619,15 @@ void Application::readOptions()
         QString replace = cgAutoreplace.readEntry(replaceString + indexString, QString());
         if (!replace.isEmpty()) {
             int repLen=replace.length()-1;
-            if (replace.at(repLen)==QLatin1Char('#'))
+            if (replace.at(repLen)==QLatin1Char('#')) {
                 replace.truncate(repLen);
+            }
         }
         if (!pattern.isEmpty()) {
             int patLen=pattern.length()-1;
-            if (pattern.at(patLen)==QLatin1Char('#'))
+            if (pattern.at(patLen)==QLatin1Char('#')) {
                 pattern.truncate(patLen);
+                }
         }
         index++;
         indexString = QString::number(index);
@@ -626,8 +637,13 @@ void Application::readOptions()
     Preferences::setAutoreplaceList(autoreplaceList);
 
     // Highlight List
+<<<<<<< HEAD
     index = 0;
     while (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Highlight%1").arg(index)))
+=======
+    KConfigGroup cgDefault(KSharedConfig::openConfig()->group(QStringLiteral("<default>")));
+    if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
+>>>>>>> c449b5e2 (Remove many deprecated warnings)
     {
         KConfigGroup cgHighlight (KSharedConfig::openConfig()->group(QStringLiteral("Highlight%1").arg(index)));
         Preferences::addHighlight(
@@ -643,7 +659,7 @@ void Application::readOptions()
     }
 
     // Ignore List
-    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group("Ignore List"));
+    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group(QStringLiteral("Ignore List")));
     // Remove all default entries if there is at least one Ignore in the Preferences::file
     if (cgIgnoreList.hasKey("Ignore0"))
         Preferences::clearIgnoreList();
@@ -655,13 +671,32 @@ void Application::readOptions()
     }
 
     // Aliases
-    KConfigGroup cgAliases(KSharedConfig::openConfig()->group("Aliases"));
+    KConfigGroup cgAliases(KSharedConfig::openConfig()->group(QStringLiteral("Aliases")));
     QStringList newList=cgAliases.readEntry("AliasList", QStringList());
     if (!newList.isEmpty())
         Preferences::self()->setAliasList(newList);
 
     // Channel Encodings
+<<<<<<< HEAD
     KConfigGroup cgEncodings(KSharedConfig::openConfig()->group("Encodings"));
+=======
+
+    //Legacy channel encodings read in Jun. 29, 2009
+    KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group(QStringLiteral("Channel Encodings")));
+    const QMap<QString,QString> channelEncodingEntries = cgChannelEncodings.entryMap();
+    const QRegularExpression re(QStringLiteral("^(.+) ([^\\s]+)$"));
+
+    for (auto it = channelEncodingEntries.begin(), end = channelEncodingEntries.end(); it != end; ++it) {
+        const QRegularExpressionMatch match = re.match(it.key());
+        if(match.hasMatch())
+        {
+            Preferences::setChannelEncoding(match.captured(1), match.captured(2), it.value());
+        }
+    }
+    //End legacy channel encodings read in Jun 29, 2009
+
+    KConfigGroup cgEncodings(KSharedConfig::openConfig()->group(QStringLiteral("Encodings")));
+>>>>>>> c449b5e2 (Remove many deprecated warnings)
     const QMap<QString,QString> encodingEntries = cgEncodings.entryMap();
 
     const QRegularExpression reg(QStringLiteral("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$"));
@@ -677,7 +712,7 @@ void Application::readOptions()
     }
 
     // Spell Checking Languages
-    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group("Spell Checking Languages"));
+    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group(QStringLiteral("Spell Checking Languages")));
     const QMap<QString, QString> spellCheckingLanguageEntries = cgSpellCheckingLanguages.entryMap();
 
     for (auto it = spellCheckingLanguageEntries.begin(), end = spellCheckingLanguageEntries.end(); it != end; ++it) {
@@ -855,11 +890,11 @@ void Application::saveOptions(bool updateGUI)
         index++;
     }
 
-    KSharedConfig::openConfig()->deleteGroup("Server List");
+    KSharedConfig::openConfig()->deleteGroup(QStringLiteral("Server List"));
 
     // Ignore List
-    KSharedConfig::openConfig()->deleteGroup("Ignore List");
-    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group("Ignore List"));
+    KSharedConfig::openConfig()->deleteGroup(QStringLiteral("Ignore List"));
+    KConfigGroup cgIgnoreList(KSharedConfig::openConfig()->group(QStringLiteral("Ignore List")));
     QList<Ignore*> ignoreList=Preferences::ignoreList();
     for (int i = 0; i < ignoreList.size(); ++i) {
         cgIgnoreList.writeEntry(QStringLiteral("Ignore%1").arg(i), QStringLiteral("%1,%2").arg(ignoreList.at(i)->getName()).arg(ignoreList.at(i)->getFlags()));
@@ -867,9 +902,9 @@ void Application::saveOptions(bool updateGUI)
 
     // Channel Encodings
     // remove all entries once
-    KSharedConfig::openConfig()->deleteGroup("Channel Encodings"); // legacy Jun 29, 2009
-    KSharedConfig::openConfig()->deleteGroup("Encodings");
-    KConfigGroup cgEncoding(KSharedConfig::openConfig()->group("Encodings"));
+    KSharedConfig::openConfig()->deleteGroup(QStringLiteral("Channel Encodings")); // legacy Jun 29, 2009
+    KSharedConfig::openConfig()->deleteGroup(QStringLiteral("Encodings"));
+    KConfigGroup cgEncoding(KSharedConfig::openConfig()->group(QStringLiteral("Encodings")));
     const QList<int> encServers = Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
     for (int encServer : encServers) {
@@ -892,8 +927,8 @@ void Application::saveOptions(bool updateGUI)
     }
 
     // Spell Checking Languages
-    KSharedConfig::openConfig()->deleteGroup("Spell Checking Languages");
-    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group("Spell Checking Languages"));
+    KSharedConfig::openConfig()->deleteGroup(QStringLiteral("Spell Checking Languages"));
+    KConfigGroup cgSpellCheckingLanguages(KSharedConfig::openConfig()->group(QStringLiteral("Spell Checking Languages")));
 
     QHashIterator<Konversation::ServerGroupSettingsPtr, QHash<QString, QString> > i(Preferences::serverGroupSpellCheckingLanguages());
 

@@ -149,7 +149,7 @@ void Theme_Config::saveSettings()
         {
             // save icon theme name
             KSharedConfigPtr config = KSharedConfig::openConfig();
-            KConfigGroup grp = config->group("Themes");
+            KConfigGroup grp = config->group(QStringLiteral("Themes"));
             grp.writeEntry("IconTheme",m_currentTheme);
             // set in-memory theme to the saved theme
             Preferences::self()->setIconTheme(m_currentTheme);

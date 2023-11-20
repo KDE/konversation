@@ -85,7 +85,7 @@ void TestCommon::testMatchLength()
     QFETCH(int, expectedLength);
 
     int length = 0;
-    QRegularExpressionMatch match = Konversation::colorRegExp.match(ircText, 0, QRegularExpression::NormalMatch, QRegularExpression::AnchoredMatchOption);
+    QRegularExpressionMatch match = Konversation::colorRegExp.match(ircText, 0, QRegularExpression::NormalMatch, QRegularExpression::AnchorAtOffsetMatchOption);
     if (match.hasMatch()) {
         length = match.capturedLength();
     }

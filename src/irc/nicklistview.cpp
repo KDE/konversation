@@ -305,7 +305,7 @@ void NickListView::dragMoveEvent(QDragMoveEvent *event)
 {
     QTreeWidget::dragMoveEvent(event);
 
-    if (!indexAt(event->pos()).isValid())
+    if (!indexAt(event->position().toPoint()).isValid())
     {
         event->ignore();
         return;

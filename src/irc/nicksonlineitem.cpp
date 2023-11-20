@@ -32,7 +32,7 @@ bool NicksOnlineItem::operator<(const QTreeWidgetItem &item) const
 {
   // make sure that offline items are always at the bottom
   QVariant itemState = item.data(0, Qt::UserRole);
-  if (itemState.type() == QVariant::Bool)
+  if (itemState.typeId() == QVariant::Bool)
   {
     bool itemOffline = itemState.toBool();
     // we are online but other item is offline

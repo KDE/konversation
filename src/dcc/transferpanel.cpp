@@ -43,7 +43,7 @@ namespace Konversation
 
         TransferPanel::~TransferPanel()
         {
-            KConfigGroup config(KSharedConfig::openConfig(), "DCC Settings");
+            KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("DCC Settings"));
             const QByteArray state = m_splitter->saveState();
             config.writeEntry(QStringLiteral("PanelSplitter"), state.toBase64());
         }
@@ -104,7 +104,7 @@ namespace Konversation
             m_toolBar->addAction(m_open);
             m_toolBar->addAction(m_openLocation);
 
-            KConfigGroup config(KSharedConfig::openConfig(), "DCC Settings");
+            KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("DCC Settings"));
             QByteArray state;
             if (config.hasKey("PanelSplitter"))
             {

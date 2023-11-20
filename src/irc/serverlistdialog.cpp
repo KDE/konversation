@@ -37,14 +37,7 @@ namespace Konversation
         int column = treeWidget()->sortColumn();
         if (column==0)
         {
-            if (data(0,SortIndex).toInt() >= other.data(0,SortIndex).toInt())
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !(data(0,SortIndex).toInt() >= other.data(0,SortIndex).toInt());
         }
         return text(column) < other.text(column);
     }
@@ -85,7 +78,7 @@ namespace Konversation
 
         updateButtons();
 
-        KConfigGroup config(KSharedConfig::openConfig(), "ServerListDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("ServerListDialog"));
         QSize newSize = size();
         newSize = config.readEntry("Size", newSize);
         resize(newSize);
@@ -99,7 +92,7 @@ namespace Konversation
 
     ServerListDialog::~ServerListDialog()
     {
-        KConfigGroup config(KSharedConfig::openConfig(), "ServerListDialog");
+        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("ServerListDialog"));
         config.writeEntry("Size", size());
         config.writeEntry("ServerListHeaderState", m_serverList->header()->saveState());
     }

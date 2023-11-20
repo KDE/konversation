@@ -56,7 +56,7 @@ static const char tr16[] = "0123456789ABCDEF";
 
 static QString toPercentEncoding(const QByteArray& input, QString output=QString()) // Do NOT 'fix' this for krazy, I want to see the EBN --argonel
 {
-    int len = input.count();
+    int len = input.size();
     const char *inputData = input.constData();
 
     // skip a few allocations - most of my raw log is more than 200 characters with "&nbsp;" replaced

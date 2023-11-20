@@ -123,8 +123,8 @@ ViewContainer::ViewContainer(MainWindow* window) : QAbstractItemModel(window)
 , m_queryViewCount(0)
 {
     // move existing entries to their new location
-    KConfigGroup appearanceStateConfig = KSharedConfig::openStateConfig()->group("Appearance");
-    KConfigGroup appearanceGrp = KSharedConfig::openConfig()->group("Appearance");
+    KConfigGroup appearanceStateConfig = KSharedConfig::openStateConfig()->group(QStringLiteral("Appearance"));
+    KConfigGroup appearanceGrp = KSharedConfig::openConfig()->group(QStringLiteral("Appearance"));
     appearanceGrp.moveValuesTo({"TreeSplitterSizes", "TopicSplitterSizes", "ChannelSplitterSizes"}, appearanceStateConfig);
 
     m_viewSpringLoader = new ViewSpringLoader(this);

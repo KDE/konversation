@@ -69,9 +69,9 @@ void QuickButtons_Config::saveSettings()
   KSharedConfigPtr config=KSharedConfig::openConfig();
 
   // delete all buttons
-  config->deleteGroup("Button List");
+  config->deleteGroup(QStringLiteral("Button List"));
   // create new empty button group
-  KConfigGroup grp = config->group("Button List");
+  KConfigGroup grp = config->group(QStringLiteral("Button List"));
 
   // create empty list
   QStringList newList=currentButtonList();

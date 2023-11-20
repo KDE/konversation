@@ -1961,7 +1961,7 @@ void IRCView::adjustUrlRanges(QList< QPair<int, int> >& urlRanges, const QString
             }
             else
             {
-                QRegularExpressionMatch match = colorRegExp.match(richtext, i, QRegularExpression::NormalMatch, QRegularExpression::AnchoredMatchOption);
+                QRegularExpressionMatch match = colorRegExp.match(richtext, i, QRegularExpression::NormalMatch, QRegularExpression::AnchorAtOffsetMatchOption);
                 if (match.hasMatch())
                 {
                     // forward to the last matched position

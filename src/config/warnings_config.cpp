@@ -60,7 +60,7 @@ void Warnings_Config::restorePageToDefaults()
 void Warnings_Config::saveSettings()
 {
     KSharedConfigPtr config = KSharedConfig::openConfig();
-    KConfigGroup grp = config->group("Notification Messages");
+    KConfigGroup grp = config->group(QStringLiteral("Notification Messages"));
 
     // prepare list
     QString warningsChecked;
@@ -204,7 +204,7 @@ void Warnings_Config::loadSettings()
     dialogListView->clear();
 
     KSharedConfigPtr config = KSharedConfig::openConfig();
-    KConfigGroup grp =  config->group("Notification Messages");
+    KConfigGroup grp =  config->group(QStringLiteral("Notification Messages"));
 
     for (const auto& warningDialogDefinition : warningDialogDefinitions) {
         const QLatin1String flagName(warningDialogDefinition.flagName);

@@ -98,10 +98,10 @@ void Autoreplace_Config::saveSettings()
   KSharedConfigPtr config=KSharedConfig::openConfig();
 
   // delete all patterns
-  config->deleteGroup("Autoreplace List");
+  config->deleteGroup(QStringLiteral("Autoreplace List"));
   // create new empty autoreplace group
 
-  KConfigGroup grp = config->group("Autoreplace List");
+  KConfigGroup grp = config->group(QStringLiteral("Autoreplace List"));
 
   // create empty list
   QList<QStringList> newList=currentAutoreplaceList();

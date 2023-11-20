@@ -17,7 +17,7 @@ ServerListView::~ServerListView()
 }
 void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 {
-    QTreeWidgetItem* item = this->itemAt(e->pos());
+    QTreeWidgetItem* item = this->itemAt(e->position().toPoint());
     QTreeWidgetItem* sItem = this->currentItem();
     bool bad;
     //  bad selection || dropping on viewport must be a toplevelitem || children of the same parent (or lack thereof)

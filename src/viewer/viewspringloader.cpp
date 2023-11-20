@@ -46,7 +46,7 @@ bool ViewSpringLoader::eventFilter(QObject* watched, QEvent* event)
 
         if (!dragMoveEvent->mimeData()->hasFormat(QStringLiteral("application/x-konversation-chatwindow")))
         {
-            ChatWindow* hoveredView = viewForPos(watched, dragMoveEvent->pos());
+            ChatWindow* hoveredView = viewForPos(watched, dragMoveEvent->position().toPoint());
 
             if (hoveredView != m_hoveredView)
             {

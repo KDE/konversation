@@ -56,7 +56,7 @@ void InviteDialog::slotOk()
     if(!channels.isEmpty())
         Q_EMIT joinChannelsRequested(channels);
     KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
-    KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
+    KConfigGroup cg(KSharedConfig::openConfig().data(), QStringLiteral("Notification Messages"));
     cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
     cg.sync();
 
@@ -65,7 +65,7 @@ void InviteDialog::slotOk()
 
 bool InviteDialog::shouldBeShown(QDialogButtonBox::StandardButton& buttonCode)
 {
-    KConfigGroup cg(KSharedConfig::openConfig().data(), "Notification Messages");
+    KConfigGroup cg(KSharedConfig::openConfig().data(), QStringLiteral("Notification Messages"));
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 
@@ -144,8 +144,10 @@ QVariant InviteChannelListModel::data(const QModelIndex& index, int role) const
     }
     if(role == Qt::SizeHintRole)
     {
+        QFontMetricsF fntMetrics(qApp->font());
+
         return QSize(0, qMax(qApp->style()->sizeFromContents(QStyle::CT_CheckBox, nullptr, QSize(0, 0), nullptr).height(),
-                             qApp->fontMetrics().height()));
+                             static_cast<int>(fntMetrics.height())));
     }
     else if((role == Qt::CheckStateRole) && (index.column() == 0))
     {
