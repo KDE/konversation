@@ -3664,7 +3664,7 @@ msgstr "L'operació s'ha avortat inesperadament."
 #: src/dcc/transfersend.cpp:624
 #, kde-format
 msgid "The operation timed out."
-msgstr "L'operació ha excedit el temps límit."
+msgstr "L'operació ha excedit el temps."
 
 #: src/dcc/transfersend.cpp:627
 #, kde-format
