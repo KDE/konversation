@@ -68,10 +68,13 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if (link.startsWith(QLatin1Char('#')) && m_server && m_server->isConnected()) {
-                QString channel(link);
-                channel.replace(QLatin1String("##"),QLatin1String("#"));
-                m_server->sendJoinCommand(channel);
+            if (link.startsWith(QLatin1Char('#')))
+            {
+                if (m_server && m_server->isConnected())
+                {
+                    QString channel(QUrl::fromEncoded(link.toUtf8()).fragment(QUrl::FullyDecoded));
+                    m_server->sendJoinCommand(channel);
+                }
             }
             else
                 Application::openUrl(link);
@@ -284,10 +287,10 @@ namespace Konversation
 
             m_lastStatusText = link;
 
-            if (link.startsWith(QLatin1String("##")))
+            if (link.startsWith(QLatin1Char('#')))
             {
                 m_isOnChannel = true;
-                m_currentChannel = link.mid(1);
+                m_currentChannel = QUrl::fromEncoded(link.toUtf8()).fragment(QUrl::FullyDecoded);
 
                 Q_EMIT setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
             }
