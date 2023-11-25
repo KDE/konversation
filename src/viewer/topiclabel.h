@@ -35,6 +35,7 @@ namespace Konversation
         public Q_SLOTS:
             virtual void openLink(const QString& link);
             void setText(const QString& text);
+            void clear();
 
         Q_SIGNALS:
             void setStatusBarTempText(const QString&);

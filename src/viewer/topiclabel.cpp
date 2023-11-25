@@ -75,6 +75,9 @@ namespace Konversation
                     QString channel(QUrl::fromEncoded(link.toUtf8()).fragment(QUrl::FullyDecoded));
                     m_server->sendJoinCommand(channel);
                 }
+                else {
+                // NOTE openUrl doesn't support these channel "links", this unhandled case is supported by clearing the topic on disconnect
+                }
             }
             else
                 Application::openUrl(link);
@@ -194,13 +197,19 @@ namespace Konversation
         updateSqueezedText();
     }
 
+    void TopicLabel::clear()
+    {
+        m_fullText.clear();
+        updateSqueezedText();
+    }
+
     void TopicLabel::updateSqueezedText()
     {
         setToolTip(QString());
 
         if (m_fullText.isEmpty())
         {
-            QLabel::setText(QString());
+            QLabel::clear();
 
             return;
         }
