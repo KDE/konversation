@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-05 12:32+0000\n"
+"POT-Creation-Date: 2023-11-27 00:42+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -7381,23 +7381,23 @@ msgstr "कंसोल"
 msgid "Manage Konsole Profiles"
 msgstr ""
 
-#: src/main.cpp:46 src/viewer/trayicon.cpp:23
+#: src/main.cpp:33 src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "Konversation"
 msgstr "कनवर्सेसन"
 
-#: src/main.cpp:48
+#: src/main.cpp:35
 #, fuzzy, kde-format
 #| msgid "A user friendly IRC client"
 msgid "A user-friendly IRC client"
 msgstr "उपयोक्ता मित्रवत् आईआरसी क्लाएंट"
 
-#: src/main.cpp:50
+#: src/main.cpp:37
 #, fuzzy, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
 msgstr "(C) 2002-2004 कनवर्सेसन टोली द्वारा"
 
-#: src/main.cpp:51
+#: src/main.cpp:38
 #, kde-format
 msgid ""
 "Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
@@ -7406,465 +7406,465 @@ msgid ""
 "about your favorite subject."
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:42
 #, kde-format
 msgid "Dario Abatianni"
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:42
 #, kde-format
 msgid "Original Author, Project Founder"
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:43
 #, kde-format
 msgid "Peter Simonsson"
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:43
 #, kde-format
 msgid "Maintainer"
 msgstr ""
 
-#: src/main.cpp:57
+#: src/main.cpp:44
 #, kde-format
 msgid "Eike Hein"
 msgstr ""
 
-#: src/main.cpp:57
+#: src/main.cpp:44
 #, kde-format
 msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:45
 #, kde-format
 msgid "Shintaro Matsuoka"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:45
 #, fuzzy, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
 msgstr "डीसीसी पुन:लेखन, एनकोडिंग सुधार, ओएसडी पोज़िशनिंग"
 
-#: src/main.cpp:59
+#: src/main.cpp:46
 #, kde-format
 msgid "Eli MacKenzie"
 msgstr ""
 
-#: src/main.cpp:59
+#: src/main.cpp:46
 #, kde-format
 msgid "Protocol handling, Input line"
 msgstr ""
 
-#: src/main.cpp:60
+#: src/main.cpp:47
 #, kde-format
 msgid "İsmail Dönmez"
 msgstr ""
 
-#: src/main.cpp:60
+#: src/main.cpp:47
 #, fuzzy, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr "एसएसएल समर्थन, के-नेटवर्क पर पोर्टेड, रंगीन उपनाम, प्रतीक प्रसंग समर्थन"
 
-#: src/main.cpp:61
+#: src/main.cpp:48
 #, kde-format
 msgid "John Tapsell"
 msgstr ""
 
-#: src/main.cpp:61
+#: src/main.cpp:48
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
 msgstr "रिफ्रेक्टरिंग, के-एड्रेस-बुक/कॉन्टेक्ट इंटीग्रेशन"
 
-#: src/main.cpp:62
+#: src/main.cpp:49
 #, kde-format
 msgid "Bernd Buschinski"
 msgstr ""
 
-#: src/main.cpp:62
+#: src/main.cpp:49
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
 msgstr ""
 
-#: src/main.cpp:64
+#: src/main.cpp:51
 #, kde-format
 msgid "Olivier Bédard"
 msgstr ""
 
-#: src/main.cpp:64
+#: src/main.cpp:51
 #, kde-format
 msgid "Website hosting"
 msgstr ""
 
-#: src/main.cpp:65
+#: src/main.cpp:52
 #, kde-format
 msgid "Jędrzej Lisowski"
 msgstr ""
 
-#: src/main.cpp:65
+#: src/main.cpp:52
 #, kde-format
 msgid "Website maintenance"
 msgstr ""
 
-#: src/main.cpp:66
+#: src/main.cpp:53
 #, kde-format
 msgid "Christian Muehlhaeuser"
 msgstr ""
 
-#: src/main.cpp:66
+#: src/main.cpp:53
 #, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
 msgstr "मल्टीपल मोड्स विस्तार, क्लोज़ विज़ेट प्लेसमेंट, ओएसडी फंक्शनलिटी"
 
-#: src/main.cpp:67
+#: src/main.cpp:54
 #, kde-format
 msgid "Gary Cramblitt"
 msgstr ""
 
-#: src/main.cpp:67
+#: src/main.cpp:54
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
 
-#: src/main.cpp:68
+#: src/main.cpp:55
 #, kde-format
 msgid "Matthias Gierlings"
 msgstr ""
 
-#: src/main.cpp:68
+#: src/main.cpp:55
 #, kde-format
 msgid "Color configurator, Highlight dialog"
 msgstr "रंग कॉन्फ़िगरेटर, उभारने का संवाद"
 
-#: src/main.cpp:69
+#: src/main.cpp:56
 #, kde-format
 msgid "Alex Zepeda"
 msgstr ""
 
-#: src/main.cpp:69
+#: src/main.cpp:56
 #, kde-format
 msgid "DCOP interface"
 msgstr "डीकॉप इंटरफेस"
 
-#: src/main.cpp:70
+#: src/main.cpp:57
 #, kde-format
 msgid "Stanislav Karchebny"
 msgstr ""
 
-#: src/main.cpp:70
+#: src/main.cpp:57
 #, kde-format
 msgid "Non-Latin1-Encodings"
 msgstr "नॉन-लेटिन1-एनकोडिंग्स"
 
-#: src/main.cpp:71
+#: src/main.cpp:58
 #, kde-format
 msgid "Mickael Marchand"
 msgstr ""
 
-#: src/main.cpp:71
+#: src/main.cpp:58
 #, kde-format
 msgid "Konsole part view"
 msgstr "कंसोल पार्ट व्यू"
 
-#: src/main.cpp:72
+#: src/main.cpp:59
 #, kde-format
 msgid "Michael Goettsche"
 msgstr ""
 
-#: src/main.cpp:72
+#: src/main.cpp:59
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr "क्विक कनेक्ट, नया ओएसडी पोर्टेड, अन्य विशेषताएँ तथा बग सुधार"
 
-#: src/main.cpp:73
+#: src/main.cpp:60
 #, kde-format
 msgid "Benjamin Meyer"
 msgstr ""
 
-#: src/main.cpp:73
+#: src/main.cpp:60
 #, fuzzy, kde-format
 msgid "A Handful of fixes and code cleanup"
 msgstr "बहुत से सुधार तथा कोड साफसफाई."
 
-#: src/main.cpp:74
+#: src/main.cpp:61
 #, kde-format
 msgid "Jakub Stachowski"
 msgstr ""
 
-#: src/main.cpp:74
+#: src/main.cpp:61
 #, kde-format
 msgid "Drag&Drop improvements"
 msgstr ""
 
-#: src/main.cpp:75
+#: src/main.cpp:62
 #, kde-format
 msgid "Sebastian Sariego"
 msgstr ""
 
-#: src/main.cpp:75
+#: src/main.cpp:62
 #, fuzzy, kde-format
 msgid "Artwork"
 msgstr "नेटवर्क"
 
-#: src/main.cpp:76
+#: src/main.cpp:63
 #, kde-format
 msgid "Renchi Raju"
 msgstr ""
 
-#: src/main.cpp:76
+#: src/main.cpp:63
 #, kde-format
 msgid "Firefox style searchbar"
 msgstr ""
 
-#: src/main.cpp:77
+#: src/main.cpp:64
 #, kde-format
 msgid "Michael Kreitzer"
 msgstr ""
 
-#: src/main.cpp:77
+#: src/main.cpp:64
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
 msgstr ""
 
-#: src/main.cpp:78
+#: src/main.cpp:65
 #, kde-format
 msgid "Frauke Oster"
 msgstr ""
 
-#: src/main.cpp:78
+#: src/main.cpp:65
 #, kde-format
 msgid "System tray patch"
 msgstr "तंत्र तश्तरी पैच"
 
-#: src/main.cpp:79
+#: src/main.cpp:66
 #, kde-format
 msgid "Lucijan Busch"
 msgstr ""
 
-#: src/main.cpp:79 src/main.cpp:85 src/main.cpp:88
+#: src/main.cpp:66 src/main.cpp:72 src/main.cpp:75
 #, kde-format
 msgid "Bug fixes"
 msgstr "बग फिक्सेस"
 
-#: src/main.cpp:80
+#: src/main.cpp:67
 #, kde-format
 msgid "Sascha Cunz"
 msgstr ""
 
-#: src/main.cpp:80
+#: src/main.cpp:67
 #, kde-format
 msgid "Extended user modes patch"
 msgstr "विस्तारित उपयोक्ता मोड पैच"
 
-#: src/main.cpp:81
+#: src/main.cpp:68
 #, kde-format
 msgid "Steve Wollkind"
 msgstr ""
 
-#: src/main.cpp:81
+#: src/main.cpp:68
 #, kde-format
 msgid "Close visible tab with shortcut patch"
 msgstr "शॉर्टकट पैच के साथ दृष्टिगोचर टैब को बन्द करें"
 
-#: src/main.cpp:82
+#: src/main.cpp:69
 #, kde-format
 msgid "Thomas Nagy"
 msgstr ""
 
-#: src/main.cpp:82
+#: src/main.cpp:69
 #, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
 msgstr "माउस स्क्रॉल व्हील के द्वारा टैब को सायकल करें"
 
-#: src/main.cpp:83
+#: src/main.cpp:70
 #, kde-format
 msgid "Tobias Olry"
 msgstr ""
 
-#: src/main.cpp:83
+#: src/main.cpp:70
 #, kde-format
 msgid "Channel ownership mode patch"
 msgstr "चैनल मालिक मोड पैच"
 
-#: src/main.cpp:84
+#: src/main.cpp:71
 #, kde-format
 msgid "Ruud Nabben"
 msgstr ""
 
-#: src/main.cpp:84
+#: src/main.cpp:71
 #, kde-format
 msgid "Option to enable IRC color filtering"
 msgstr "आईआरसी रंग फिल्टरिंग सक्षम करने का विकल्प"
 
-#: src/main.cpp:85
+#: src/main.cpp:72
 #, kde-format
 msgid "Lothar Braun"
 msgstr ""
 
-#: src/main.cpp:86
+#: src/main.cpp:73
 #, kde-format
 msgid "Ivor Hewitt"
 msgstr ""
 
-#: src/main.cpp:86
+#: src/main.cpp:73
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
 msgstr ""
 
-#: src/main.cpp:87
+#: src/main.cpp:74
 #, kde-format
 msgid "Emil Obermayr"
 msgstr ""
 
-#: src/main.cpp:87
+#: src/main.cpp:74
 #, kde-format
 msgid "Sysinfo script"
 msgstr ""
 
-#: src/main.cpp:88
+#: src/main.cpp:75
 #, kde-format
 msgid "Stanislav Nikolov"
 msgstr ""
 
-#: src/main.cpp:89
+#: src/main.cpp:76
 #, kde-format
 msgid "Juan Carlos Torres"
 msgstr ""
 
-#: src/main.cpp:89
+#: src/main.cpp:76
 #, kde-format
 msgid "Auto-join context menu"
 msgstr ""
 
-#: src/main.cpp:90
+#: src/main.cpp:77
 #, kde-format
 msgid "Travis McHenry"
 msgstr ""
 
-#: src/main.cpp:90
+#: src/main.cpp:77
 #, kde-format
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
 msgstr ""
 
-#: src/main.cpp:91
+#: src/main.cpp:78
 #, kde-format
 msgid "Modestas Vainius"
 msgstr ""
 
-#: src/main.cpp:91
+#: src/main.cpp:78
 #, kde-format
 msgid "Bug fixes and enhancements."
 msgstr ""
 
-#: src/main.cpp:92
+#: src/main.cpp:79
 #, kde-format
 msgid "Abdurrahman AVCI"
 msgstr ""
 
-#: src/main.cpp:92
+#: src/main.cpp:79
 #, kde-format
 msgid "Various bug fixes and enhancements."
 msgstr ""
 
-#: src/main.cpp:93
+#: src/main.cpp:80
 #, kde-format
 msgid "Martin Blumenstingl"
 msgstr ""
 
-#: src/main.cpp:93
+#: src/main.cpp:80
 #, kde-format
 msgid "KStatusNotifierItem support, KIdleTime support, other enhancements"
 msgstr ""
 
-#: src/main.cpp:103
+#: src/main.cpp:90
 #, kde-format
 msgid "irc:// URL or server hostname"
 msgstr ""
 
-#: src/main.cpp:104
+#: src/main.cpp:91
 #, fuzzy, kde-format
 msgid "Server to connect"
 msgstr "सर्वर मिला, जुड़ रहा है..."
 
-#: src/main.cpp:104
+#: src/main.cpp:91
 #, fuzzy, kde-format
 msgid "server"
 msgstr "सर्वरः (&S)"
 
-#: src/main.cpp:105
+#: src/main.cpp:92
 #, kde-format
 msgid "Port to use"
 msgstr ""
 
-#: src/main.cpp:105
+#: src/main.cpp:92
 #, fuzzy, kde-format
 #| msgid "Support"
 msgid "port"
 msgstr "समर्थन"
 
-#: src/main.cpp:106
+#: src/main.cpp:93
 #, kde-format
 msgid "Channel to join after connection"
 msgstr ""
 
-#: src/main.cpp:106
+#: src/main.cpp:93
 #, fuzzy, kde-format
 #| msgid "Channel"
 msgid "channel"
 msgstr "चैनल"
 
-#: src/main.cpp:107
+#: src/main.cpp:94
 #, fuzzy, kde-format
 msgid "Nickname to use"
 msgstr "उपनाम सूची (&N)"
 
-#: src/main.cpp:107
+#: src/main.cpp:94
 #, fuzzy, kde-format
 #| msgid "Nickname"
 msgid "nickname"
 msgstr "उपनाम"
 
-#: src/main.cpp:108
+#: src/main.cpp:95
 #, fuzzy, kde-format
 msgid "Password for connection"
 msgstr "पासवर्ड सुरक्षित"
 
-#: src/main.cpp:108
+#: src/main.cpp:95
 #, fuzzy, kde-format
 #| msgid "P&assword:"
 msgid "password"
 msgstr "पासवर्डः (&a)"
 
-#: src/main.cpp:109
+#: src/main.cpp:96
 #, fuzzy, kde-format
 msgid "Use SSL for connection"
 msgstr "एसएसएल कनेक्शन त्रुटि"
 
-#: src/main.cpp:110
+#: src/main.cpp:97
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
 msgstr ""
 
-#: src/main.cpp:111
+#: src/main.cpp:98
 #, kde-format
 msgid ""
 "Delay D-Bus activity and UI creation by the specified amount of milliseconds"
 msgstr ""
 
-#: src/main.cpp:111
+#: src/main.cpp:98
 #, kde-format
 msgid "msec"
 msgstr ""
 
-#: src/main.cpp:112
+#: src/main.cpp:99
 #, kde-format
 msgid "Quits and restarts Konversation (if running, otherwise has no effect)"
 msgstr ""
 
-#: src/main.cpp:114
+#: src/main.cpp:101
 #, kde-format
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
@@ -9480,6 +9480,7 @@ msgstr "क्या आप चयनित नेटवर्क को मि�
 
 #: src/viewer/irccontextmenus.cpp:791
 #, kde-format
+msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr ""
 
@@ -9542,7 +9543,7 @@ msgstr "पार्ट"
 msgid "Open a query with %1"
 msgstr "क्वैरी खोलें"
 
-#: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:292
+#: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:304
 #, fuzzy, kde-format
 msgid "Join the channel %1"
 msgstr "चैनल %1 पर जुड़ें"
