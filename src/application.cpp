@@ -466,14 +466,6 @@ void Application::readOptions()
         m_osd->setPalette(p);
     }
 
-<<<<<<< HEAD
-    // Server list
-=======
-    // Check if there is old server list config //TODO FIXME why are we doing this here?
-    KConfigGroup cgServerList(KSharedConfig::openConfig()->group(QStringLiteral("Server List")));
-
-    // Read the new server settings
->>>>>>> c449b5e2 (Remove many deprecated warnings)
     const QStringList groups = KSharedConfig::openConfig()->groupList().filter(
                                         QRegularExpression(QStringLiteral("ServerGroup [0-9]+")));
     QMap<int,QStringList> notifyList;
@@ -637,13 +629,8 @@ void Application::readOptions()
     Preferences::setAutoreplaceList(autoreplaceList);
 
     // Highlight List
-<<<<<<< HEAD
     index = 0;
     while (KSharedConfig::openConfig()->hasGroup(QStringLiteral("Highlight%1").arg(index)))
-=======
-    KConfigGroup cgDefault(KSharedConfig::openConfig()->group(QStringLiteral("<default>")));
-    if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
->>>>>>> c449b5e2 (Remove many deprecated warnings)
     {
         KConfigGroup cgHighlight (KSharedConfig::openConfig()->group(QStringLiteral("Highlight%1").arg(index)));
         Preferences::addHighlight(
@@ -677,26 +664,7 @@ void Application::readOptions()
         Preferences::self()->setAliasList(newList);
 
     // Channel Encodings
-<<<<<<< HEAD
-    KConfigGroup cgEncodings(KSharedConfig::openConfig()->group("Encodings"));
-=======
-
-    //Legacy channel encodings read in Jun. 29, 2009
-    KConfigGroup cgChannelEncodings(KSharedConfig::openConfig()->group(QStringLiteral("Channel Encodings")));
-    const QMap<QString,QString> channelEncodingEntries = cgChannelEncodings.entryMap();
-    const QRegularExpression re(QStringLiteral("^(.+) ([^\\s]+)$"));
-
-    for (auto it = channelEncodingEntries.begin(), end = channelEncodingEntries.end(); it != end; ++it) {
-        const QRegularExpressionMatch match = re.match(it.key());
-        if(match.hasMatch())
-        {
-            Preferences::setChannelEncoding(match.captured(1), match.captured(2), it.value());
-        }
-    }
-    //End legacy channel encodings read in Jun 29, 2009
-
     KConfigGroup cgEncodings(KSharedConfig::openConfig()->group(QStringLiteral("Encodings")));
->>>>>>> c449b5e2 (Remove many deprecated warnings)
     const QMap<QString,QString> encodingEntries = cgEncodings.entryMap();
 
     const QRegularExpression reg(QStringLiteral("^([^\\s]+) ([^\\s]+)\\s?([^\\s]*)$"));
