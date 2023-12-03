@@ -12,20 +12,20 @@
 # Quique <quique@sindominio.net>, 2011.
 # Raul Gonzalez <raulgf83@gmail.com>, 2012, 2013, 2014.
 # Javier Vinal <fjvinal@gmail.com>, 2015, 2016, 2017, 2018.
-# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2019, 2020, 2021, 2022.
+# Víctor Rodrigo Córdoba <vrcordoba@gmail.com>, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-27 00:42+0000\n"
-"PO-Revision-Date: 2022-09-10 18:00+0200\n"
+"PO-Revision-Date: 2023-12-02 11:24+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -9875,8 +9875,7 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "¿Desea parar de ignorar a los usuarios seleccionados?"
 
 #: src/viewer/irccontextmenus.cpp:791
-#, fuzzy, kde-format
-#| msgid "Query author"
+#, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
 msgstr "Autor de la consulta"
@@ -10297,9 +10296,3 @@ msgstr "Aviso de la lista de canales"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Apodos vigilados"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"

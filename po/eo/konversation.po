@@ -6748,7 +6748,7 @@ msgstr "%1CYCLE [-APP | -SERVER] [kanalo | kromnomo]"
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr "%1CLEAR [-ĈIUJ] [kanalo | kromnomo]"
+msgstr "%1CLEAR [-ALL] [kanalo | kromnomo]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
@@ -7324,7 +7324,7 @@ msgid ""
 "separating them with semicolons.</qt>"
 msgstr ""
 "<qt>Laŭvola. Ĉi tiu komando estos sendita al la servilo post konekto. "
-"Ekzemplo: <b>/msg NickServ IDENTIFU <i>konvirocks</i></b>. Ĉi tiu ekzemplo "
+"Ekzemplo: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. Ĉi tiu ekzemplo "
 "estas por la reto Libera, kiu postulas uzantojn registri sian kromnomon kun "
 "pasvorto kaj ensalutu kiam konektiĝi. <i>konvirocks</i> estas la pasvorto "
 "por la kromnomo donita en Identeco. Vi povas enigi pli ol unu komandon "
