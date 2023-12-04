@@ -9812,11 +9812,10 @@ msgid "Do you want to stop ignoring the selected users?"
 msgstr "Quere parar de ignorar os usuarios escollidos?"
 
 #: src/viewer/irccontextmenus.cpp:791
-#, fuzzy, kde-format
-#| msgid "Query author"
+#, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr "Interrogar o autor"
+msgstr "Consultar a persoa autora"
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
