@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-27 00:42+0000\n"
-"PO-Revision-Date: 2023-11-25 02:29\n"
+"PO-Revision-Date: 2023-12-09 09:27\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -666,7 +666,7 @@ msgstr "自定义颜色"
 #: src/config/colorsappearance_config.ui:36
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
-msgstr "对文字输入框、昵称列表和标签列表使用自定义的颜色(&U)"
+msgstr "对文字输入框、昵称列表和标签页列表使用自定义的颜色(&U)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/colorsappearance_config.ui:273
@@ -1173,7 +1173,7 @@ msgstr "昵称列表字体："
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr "标签栏："
+msgstr "标签页栏："
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
@@ -1631,8 +1631,8 @@ msgid ""
 "Application events occur in Konsole tabs, the DCC Status tab and other "
 "application tabs not used directly for chatting."
 msgstr ""
-"应用程序事件会发生在 Konsole 标签里，DCC 状态标签和其他程序标签不能被直接地用"
-"于聊天。"
+"应用程序事件会发生在 Konsole 标签页里，DCC 状态标签页和其他程序标签页不能被直"
+"接地用于聊天。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1966,7 +1966,7 @@ msgstr "快捷按钮"
 #: src/config/settingsdialog.cpp:96 src/config/settingsdialog.cpp:158
 #, kde-format
 msgid "Tabs"
-msgstr "标签"
+msgstr "标签页"
 
 #: src/config/settingsdialog.cpp:102
 #, kde-format
@@ -2087,7 +2087,7 @@ msgstr "给予高亮色的聊天窗口较高优先级"
 #: src/config/tabs_configui.ui:17
 #, kde-format
 msgid "TabBar_Config"
-msgstr "标签栏配置"
+msgstr "标签页栏配置"
 
 #. i18n: ectx: property (text), widget (QLabel, placementLabel)
 #: src/config/tabs_configui.ui:34
@@ -2117,13 +2117,13 @@ msgstr "左侧"
 #: src/config/tabs_configui.ui:81
 #, kde-format
 msgid "Show &close button on tabs"
-msgstr "在标签上显示关闭按钮(&C)"
+msgstr "在标签页上显示关闭按钮(&C)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTabBarCloseButton)
 #: src/config/tabs_configui.ui:88
 #, kde-format
 msgid "Show a close button on the &right side of the tab bar"
-msgstr "在标签右侧显示一个关闭按钮(&R)"
+msgstr "在标签页右侧显示一个关闭按钮(&R)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, focusGBox)
 #: src/config/tabs_configui.ui:98
@@ -2135,7 +2135,7 @@ msgstr "强制"
 #: src/config/tabs_configui.ui:104
 #, kde-format
 msgid "&Focus new tabs"
-msgstr "强制使用新标签(&F)"
+msgstr "焦点转移至新标签页(&F)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FocusNewQueries)
 #: src/config/tabs_configui.ui:111
@@ -2153,7 +2153,7 @@ msgstr "鼠标"
 #: src/config/tabs_configui.ui:127
 #, kde-format
 msgid "&Middle-click on a tab to close it"
-msgstr "中键点击标签可关闭它(&M)"
+msgstr "中键点击标签页可关闭它(&M)"
 
 #: src/config/theme_config.cpp:180
 #, kde-format
@@ -2322,7 +2322,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a server tab"
-msgstr "... 关闭服务器标签"
+msgstr "... 关闭服务器标签页"
 
 #: src/config/warnings_config.cpp:164
 #, kde-format
@@ -2330,7 +2330,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a channel tab"
-msgstr "... 关闭频道标签"
+msgstr "... 关闭频道标签页"
 
 #: src/config/warnings_config.cpp:167
 #, kde-format
@@ -2338,7 +2338,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a query tab"
-msgstr "... 关闭查询标签"
+msgstr "... 关闭查询标签页"
 
 #: src/config/warnings_config.cpp:170
 #, kde-format
@@ -2346,7 +2346,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a DCC Chat tab"
-msgstr "... 关闭 DCC 聊天标签"
+msgstr "... 关闭 DCC 聊天标签页"
 
 #: src/config/warnings_config.cpp:173
 #, kde-format
@@ -2355,7 +2355,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... a source for the channel list cannot be determined from the current tab"
-msgstr "……无法从当前标签确定频道列表的源"
+msgstr "……无法从当前标签页确定频道列表的源"
 
 #: src/config/warnings_config.cpp:176
 #, kde-format
@@ -2476,7 +2476,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:40
 #, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "在程序启动时显示被监视的昵称标签"
+msgstr "在程序启动时显示被监视的昵称标签页"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -5141,7 +5141,7 @@ msgstr "加入频道(&J)"
 #: src/irc/channellistpanel.cpp:166
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
-msgstr "点此可加入一个频道，程序会为它创建一个新标签。"
+msgstr "点此可加入一个频道，程序会为它创建一个新标签页。"
 
 #: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
 #, kde-format
@@ -7627,7 +7627,7 @@ msgstr "Michael Kreitzer"
 #: src/main.cpp:64
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
-msgstr "原始模式、按服务器分组标签、封禁列表"
+msgstr "原始模式、按服务器分组标签页、封禁列表"
 
 #: src/main.cpp:65
 #, kde-format
@@ -7667,7 +7667,7 @@ msgstr "Steve Wollkind"
 #: src/main.cpp:68
 #, kde-format
 msgid "Close visible tab with shortcut patch"
-msgstr "快速关闭可见标签功能的补丁"
+msgstr "用快捷键关闭可见标签页"
 
 #: src/main.cpp:69
 #, kde-format
@@ -7677,7 +7677,7 @@ msgstr "Thomas Nagy"
 #: src/main.cpp:69
 #, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
-msgstr "使用鼠标滚轮循环标签"
+msgstr "使用鼠标滚轮循环标签页"
 
 #: src/main.cpp:70
 #, kde-format
@@ -7946,7 +7946,7 @@ msgstr "打开日志文件(&O)"
 #: src/mainwindow.cpp:200
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
-msgstr "在一个新标签中打开已有的频道历史记录"
+msgstr "在一个新标签页中打开已有的频道历史记录"
 
 #: src/mainwindow.cpp:205 src/viewer/viewcontainer.cpp:942
 #, kde-format
@@ -7956,7 +7956,7 @@ msgstr "频道设置(&C)..."
 #: src/mainwindow.cpp:208
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
-msgstr "打开此标签的频道设置对话框"
+msgstr "打开此标签页的频道设置对话框"
 
 #: src/mainwindow.cpp:213 src/viewer/viewcontainer.cpp:912
 #, kde-format
@@ -7976,7 +7976,7 @@ msgstr "URL 捕捉器(&U)"
 #: src/mainwindow.cpp:225
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
-msgstr "在一个新标签中列出最近的对话中所有提及到的 URL。"
+msgstr "在一个新标签页中列出最近的对话中所有提及到的 URL。"
 
 #: src/mainwindow.cpp:232
 #, kde-format
@@ -7986,37 +7986,37 @@ msgstr "新建 &Konsole"
 #: src/mainwindow.cpp:234
 #, kde-format
 msgid "Open a terminal in a new tab"
-msgstr "在新标签中打开终端"
+msgstr "在新标签页中打开终端"
 
 #: src/mainwindow.cpp:264
 #, kde-format
 msgid "&Next Tab"
-msgstr "下一个标签(&N)"
+msgstr "下一个标签页(&N)"
 
 #: src/mainwindow.cpp:272
 #, kde-format
 msgid "&Previous Tab"
-msgstr "前一个标签(&P)"
+msgstr "上一个标签页(&P)"
 
 #: src/mainwindow.cpp:280
 #, kde-format
 msgid "Close &Tab"
-msgstr "关闭标签(&T)"
+msgstr "关闭标签页(&T)"
 
 #: src/mainwindow.cpp:288
 #, kde-format
 msgid "Last Focused Tab"
-msgstr "最后聚焦的标签"
+msgstr "焦点最后所在的标签页"
 
 #: src/mainwindow.cpp:295
 #, kde-format
 msgid "Next Active Tab"
-msgstr "下一个活动标签"
+msgstr "下一个活动标签页"
 
 #: src/mainwindow.cpp:308 src/viewer/viewcontainer.cpp:300
 #, kde-format
 msgid "Move Tab Up"
-msgstr "上移标签"
+msgstr "上移标签页"
 
 #: src/mainwindow.cpp:312 src/mainwindow.cpp:317 src/mainwindow.cpp:334
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355 src/mainwindow.cpp:364
@@ -8027,19 +8027,19 @@ msgstr "移动此标签页"
 #: src/mainwindow.cpp:319 src/viewer/viewcontainer.cpp:308
 #, kde-format
 msgid "Move Tab Down"
-msgstr "下移标签"
+msgstr "下移标签页"
 
 #: src/mainwindow.cpp:330 src/mainwindow.cpp:360
 #: src/viewer/viewcontainer.cpp:354
 #, kde-format
 msgid "Move Tab Right"
-msgstr "向右移动标签"
+msgstr "右移标签页"
 
 #: src/mainwindow.cpp:339 src/mainwindow.cpp:351
 #: src/viewer/viewcontainer.cpp:346
 #, kde-format
 msgid "Move Tab Left"
-msgstr "向左移动标签"
+msgstr "左移标签页"
 
 #: src/mainwindow.cpp:374
 #, kde-format
@@ -8074,7 +8074,7 @@ msgstr "设定编码"
 #: src/mainwindow.cpp:410
 #, kde-format
 msgid "Go to Tab %1"
-msgstr "到第 %1 个标签"
+msgstr "跳转到标签页 %1"
 
 #: src/mainwindow.cpp:417
 #, kde-format
@@ -8084,7 +8084,7 @@ msgstr "清除助记行(&M)"
 #: src/mainwindow.cpp:420
 #, kde-format
 msgid "Clear marker lines in the current tab"
-msgstr "清除当前标签内的助记行"
+msgstr "清除当前标签页内的标记行"
 
 #: src/mainwindow.cpp:425
 #, kde-format
@@ -8124,7 +8124,7 @@ msgstr "清除窗口(&C)"
 #: src/mainwindow.cpp:455
 #, kde-format
 msgid "Clear the contents of the current tab"
-msgstr "清除当前标签里的内容"
+msgstr "清除当前标签页的内容"
 
 #: src/mainwindow.cpp:460
 #, kde-format
@@ -8134,7 +8134,7 @@ msgstr "清除所有窗口(&A)"
 #: src/mainwindow.cpp:463
 #, kde-format
 msgid "Clear the contents of all open tabs"
-msgstr "清除所有已打开标签里的内容"
+msgstr "清除所有已打开标签页的内容"
 
 #: src/mainwindow.cpp:468
 #, kde-format
@@ -8169,7 +8169,7 @@ msgstr "助记行(&M)"
 #: src/mainwindow.cpp:504
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
-msgstr "在当前标签里插入一条只有您能看见的水平线"
+msgstr "在当前标签页中插入一条只有您能看见的水平线"
 
 #: src/mainwindow.cpp:509 src/mainwindow.cpp:852
 #, kde-format
@@ -9735,14 +9735,14 @@ msgid ""
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
-"您真的要关闭“%1”吗？\n"
+"您确定要关闭“%1”吗？\n"
 "\n"
-" 所有相关标签都会被一起关闭。"
+" 所有相关标签页都会被一起关闭。"
 
 #: src/viewer/statuspanel.cpp:226
 #, kde-format
 msgid "Close Tab"
-msgstr "关闭标签"
+msgstr "关闭标签页"
 
 #: src/viewer/statuspanel.cpp:235
 #, kde-format
@@ -9751,9 +9751,9 @@ msgid ""
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
-"您真要断开与“%1”的连接吗？\n"
+"您确定要断开与“%1”的连接吗？\n"
 "\n"
-" 所有相关标签都会被一起关闭。"
+" 所有相关标签页都会被一起关闭。"
 
 #: src/viewer/statuspanel.cpp:236
 #, kde-format
@@ -9812,7 +9812,7 @@ msgstr "查找文本..."
 #: src/viewer/viewcontainer.cpp:888
 #, kde-format
 msgid "Search for text in the current tab"
-msgstr "在当前标签中搜索文本"
+msgstr "在当前标签页中搜索文本"
 
 #: src/viewer/viewcontainer.cpp:906
 #, kde-format
@@ -9832,12 +9832,12 @@ msgstr "%1 的频道设置(&C)..."
 #: src/viewer/viewcontainer.cpp:2120
 #, kde-format
 msgid "Rename Tab"
-msgstr "重命名标签"
+msgstr "重命名标签页"
 
 #: src/viewer/viewcontainer.cpp:2121
 #, kde-format
 msgid "Enter new tab name:"
-msgstr "输入新标签名："
+msgstr "输入新标签页名："
 
 #: src/viewer/viewcontainer.cpp:2193
 #, kde-format
@@ -9848,7 +9848,7 @@ msgstr "默认 (%1)"
 #: src/viewer/viewcontainer.cpp:2234
 #, kde-format
 msgid "&Rename Tab..."
-msgstr "重命名标签(&R)..."
+msgstr "重命名标签页(&R)..."
 
 #: src/viewer/viewcontainer.cpp:2383
 #, kde-format
