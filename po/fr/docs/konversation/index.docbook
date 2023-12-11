@@ -650,7 +650,7 @@ revision history. (see installation appendix comment) -->
 
 <para>
 <computeroutput
->[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=danseur </computeroutput>
+>[18:51] *Eisfuchs* [21:45] [Prise en charge] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=danseur </computeroutput>
 </para>
 
 <para
@@ -5837,7 +5837,7 @@ application work. -->
 ></para>
 <para
 >Exemple d'affichage : <replaceable
->Le script 'media' a été trouvé ici : /usr/share/konversation/scripts/media</replaceable
+>Le script « media » a été trouvé ici : /usr/share/konversation/scripts/media</replaceable
 ></para>
 </answer>
 </qandaentry>
