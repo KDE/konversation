@@ -685,17 +685,19 @@ void Application::readOptions()
 
     for (auto it = spellCheckingLanguageEntries.begin(), end = spellCheckingLanguageEntries.end(); it != end; ++it) {
         const QRegularExpressionMatch match = reg.match(it.key());
-        if (match.hasMatch())
+        if (!match.hasMatch()) {
+            continue;
+        }
+        if (match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
         {
-            if (match.captured(1) == QLatin1String("ServerGroup") && !match.captured(3).isEmpty())
-            {
-                ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(match.captured(2).toInt()));
+            ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(sgKeys.at(match.captured(2).toInt()));
 
-                if (serverGroup)
-                    Preferences::setSpellCheckingLanguage(serverGroup, match.captured(3), it.value());
+            if (serverGroup) {
+                Preferences::setSpellCheckingLanguage(serverGroup, match.captured(3), it.value());
             }
-            else
-                Preferences::setSpellCheckingLanguage(match.captured(1), match.captured(2), it.value());
+        }
+        else {
+            Preferences::setSpellCheckingLanguage(match.captured(1), match.captured(2), it.value());
         }
     }
 
