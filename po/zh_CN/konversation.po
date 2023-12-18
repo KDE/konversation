@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-07 03:00+0000\n"
-"PO-Revision-Date: 2023-12-09 09:29\n"
+"PO-Revision-Date: 2023-12-17 11:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1068,7 +1068,7 @@ msgstr "自动续传(&T)"
 #: src/config/dcc_configui.ui:91
 #, kde-format
 msgid "Enable fast DCC send (Might &not work with all clients)"
-msgstr "启用快速 DCC 发送(不是所有客户端都能正常工作)(&N)"
+msgstr "启用快速 DCC 发送 (不是所有客户端都能正常工作) (&N)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccPassiveSend)
 #: src/config/dcc_configui.ui:98
@@ -7022,7 +7022,7 @@ msgstr ""
 #: src/irc/serverdialogui.ui:98
 #, kde-format
 msgid "S&ecure Connection (SSL)"
-msgstr "安全连接(SSL)(&E)"
+msgstr "安全连接 (SSL) (&E)"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:105
