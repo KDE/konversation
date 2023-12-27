@@ -10,21 +10,21 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2009.
-# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2022.
+# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-07 03:00+0000\n"
-"PO-Revision-Date: 2022-12-30 18:31+0900\n"
+"PO-Revision-Date: 2023-12-26 21:04+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
-"Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 24.01.85\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1370,7 +1370,7 @@ msgstr "聊天視窗"
 #: src/config/highlight_configui.ui:222
 #, kde-format
 msgid "&Pattern:"
-msgstr "模式(&P)："
+msgstr "樣式(&P)："
 
 #. i18n: ectx: property (text), widget (QLabel, colorLabel)
 #: src/config/highlight_configui.ui:251
@@ -1423,7 +1423,7 @@ msgstr "啟用通知(&N)："
 #: src/config/ignore_configui.ui:45
 #, kde-format
 msgid "Pattern"
-msgstr "模式"
+msgstr "樣式"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:50 src/dcc/transferlistmodel.cpp:44
@@ -1435,7 +1435,7 @@ msgstr "輸入"
 #: src/config/ignore_configui.ui:58
 #, kde-format
 msgid "Pattern:"
-msgstr "模式："
+msgstr "樣式："
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpMessageTypes)
 #: src/config/ignore_configui.ui:77
@@ -6455,7 +6455,7 @@ msgstr "%1UNBAN 而不帶頻道名稱，只能用在頻道內。"
 #: src/irc/outputfilter.cpp:1493
 #, kde-format
 msgid "Usage: %1UNBAN [channel] pattern"
-msgstr "用法：%1UNBAN ［頻道] 模式"
+msgstr "用法：%1UNBAN ［頻道] 樣式"
 
 #: src/irc/outputfilter.cpp:1539
 #, kde-format
