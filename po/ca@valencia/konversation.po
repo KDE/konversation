@@ -700,8 +700,8 @@ msgstr "Colors a mida"
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
 msgstr ""
-"Utilit&za els colors a mida al quadro d'entrada, la llista de sobrenoms i la "
-"llista de pestanyes"
+"Utilit&za els colors a mida en el quadro d'entrada, la llista de sobrenoms i "
+"la llista de pestanyes"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/colorsappearance_config.ui:273
