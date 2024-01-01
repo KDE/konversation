@@ -9091,7 +9091,7 @@ msgid ""
 "to the clipboard."
 msgstr ""
 "Seleccioneu un o més <b>URL</b> a dalt, llavors premeu este botó per a "
-"copiar-los al porta-retalls."
+"copiar-los a dins del porta-retalls."
 
 #: src/urlcatcher.cpp:118
 #, kde-format
