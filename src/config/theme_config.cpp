@@ -194,7 +194,7 @@ void Theme_Config::installTheme()
         tmpFile.close(); // no need to keep the file open, it isn't deleted until the destructor is called
 
         QUrl tmpUrl = QUrl::fromLocalFile(tmpFile.fileName());
-        KIO::FileCopyJob *fileCopyJob = KIO::file_copy(themeURL, tmpUrl, -1, KIO::Overwrite);
+        KIO::CopyJob *fileCopyJob = KIO::copy(themeURL, tmpUrl, KIO::Overwrite);
         if (!fileCopyJob->exec())
         {
             int errorCode = fileCopyJob->error();

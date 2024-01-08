@@ -35,6 +35,8 @@
 #include <KAuthorized>
 
 #include <KIO/Job>
+#include <KIO/StatJob>
+#include <KIO/CopyJob>
 
 using namespace Konversation::UPnP;
 
@@ -216,9 +218,9 @@ namespace Konversation
                 m_tmpFile->close(); // no need to keep the file open, it isn't deleted until the destructor is called
 
                 QUrl tmpUrl = QUrl::fromLocalFile(m_tmpFile->fileName());
-                KIO::FileCopyJob *fileCopyJob = KIO::file_copy(m_fileURL, tmpUrl, -1, KIO::Overwrite);
+                KIO::CopyJob *fileCopyJob = KIO::copy(m_fileURL, tmpUrl, KIO::Overwrite);
 
-                connect(fileCopyJob, &KIO::FileCopyJob::result, this, &TransferSend::slotLocalCopyReady);
+                connect(fileCopyJob, &KIO::CopyJob::result, this, &TransferSend::slotLocalCopyReady);
                 fileCopyJob->start();
                 setStatus(Preparing);
                 return false; // not ready to send yet

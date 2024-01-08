@@ -33,6 +33,9 @@
 #include <KUser>
 #include <KAuthorized>
 #include <KIO/Job>
+#include <KIO/StatJob>
+#include <KIO/MkdirJob>
+#include <KIO/StoredTransferJob>
 
 /*
  *flow chart*
