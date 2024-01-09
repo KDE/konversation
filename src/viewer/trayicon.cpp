@@ -29,7 +29,7 @@ namespace Konversation
 
     void TrayIcon::hideWindow()
     {
-        hideAssociatedWidget();
+        hideAssociatedWindow();
     }
 
     void TrayIcon::restoreWindow()
