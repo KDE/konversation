@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 00:42+0000\n"
+"POT-Creation-Date: 2024-01-10 01:34+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -148,16 +148,11 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:397 src/irc/server.cpp:1803 src/irc/server.cpp:3836
+#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
 #: src/irc/server.cpp:3841
 #, kde-format
 msgid "D-Bus"
 msgstr ""
-
-#: src/bookmarkhandler.cpp:35
-#, fuzzy, kde-format
-msgid "Konversation Bookmarks Editor"
-msgstr "Muhindura Ibirango bya Konnqueror"
 
 #: src/cipher.cpp:477
 #, kde-format
@@ -239,7 +234,7 @@ msgstr "Impera yo hejuru:"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
 #, kde-format
 msgid "New"
 msgstr "Gishya"
@@ -873,7 +868,7 @@ msgstr "14"
 msgid "13:"
 msgstr "F13"
 
-#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:35
+#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
 #, fuzzy, kde-format
 #| msgid " seconds"
@@ -1003,24 +998,24 @@ msgstr "Idosiye:"
 msgid "Password:"
 msgstr "Ijambobanga:"
 
-#: src/config/dcc_config.cpp:34
+#: src/config/dcc_config.cpp:29
 #, fuzzy, kde-format
 msgid " byte"
 msgid_plural " bytes"
 msgstr[0] "Bayite"
 msgstr[1] "Bayite"
 
-#: src/config/dcc_config.cpp:92
+#: src/config/dcc_config.cpp:74
 #, fuzzy, kde-format
 msgid "Network Interface"
 msgstr "Name=Imigaragarire y'Urusobemiyoboro"
 
-#: src/config/dcc_config.cpp:93
+#: src/config/dcc_config.cpp:75
 #, fuzzy, kde-format
 msgid "Reply From IRC Server"
 msgstr "Subiza Uwohereje"
 
-#: src/config/dcc_config.cpp:94
+#: src/config/dcc_config.cpp:76
 #, fuzzy, kde-format
 msgid "Specify Manually"
 msgstr "N'intoki"
@@ -1455,7 +1450,7 @@ msgstr "KopiKubandi"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkChannel)
 #: src/config/ignore_configui.ui:90 src/irc/inputfilter.cpp:2364
-#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:168
+#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:170
 #: src/viewer/ignorelistviewitem.cpp:35
 #, fuzzy, kde-format
 msgid "Channel"
@@ -1955,7 +1950,7 @@ msgstr "Amabara"
 msgid "Fonts"
 msgstr "Mu nyoborayandika"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:92
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
 #, fuzzy, kde-format
 msgid "Quick Buttons"
 msgstr "Nta Kwihuza"
@@ -2000,7 +1995,7 @@ msgstr "Urutonde : "
 msgid "Command Aliases"
 msgstr "Nta Kwihuza"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:518
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
 #, fuzzy, kde-format
 msgid "Auto Replace"
 msgstr "Gusimbuza muhinduzi"
@@ -2155,42 +2150,42 @@ msgstr "Ubwoko"
 msgid "&Middle-click on a tab to close it"
 msgstr ""
 
-#: src/config/theme_config.cpp:180
+#: src/config/theme_config.cpp:179
 #, fuzzy, kde-format
 msgid "Select Theme Package"
 msgstr "Guhitamo Ishusho"
 
-#: src/config/theme_config.cpp:181
+#: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
 msgstr ""
 
-#: src/config/theme_config.cpp:207
+#: src/config/theme_config.cpp:206
 #, fuzzy, kde-format
 msgid "Unknown error (0)"
 msgstr "Ikosa . %1 "
 
-#: src/config/theme_config.cpp:211
+#: src/config/theme_config.cpp:210
 #, fuzzy, kde-format
 msgid "Failed to Download Theme"
 msgstr "Kuri "
 
-#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
+#: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, fuzzy, kde-format
 msgid "Theme archive is invalid."
 msgstr "ni Bitemewe . "
 
-#: src/config/theme_config.cpp:237 src/config/theme_config.cpp:267
+#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, fuzzy, kde-format
 msgid "Cannot Install Theme"
 msgstr "Shyiraho Insanganyamatsiko"
 
-#: src/config/theme_config.cpp:291
+#: src/config/theme_config.cpp:290
 #, fuzzy, kde-format
 msgid "Do you want to remove %1?"
 msgstr "Kuri Gukuraho %1 ? "
 
-#: src/config/theme_config.cpp:292
+#: src/config/theme_config.cpp:291
 #, kde-format
 msgid "Remove Theme"
 msgstr "Kuvanamo Insanganyamatsiko"
@@ -2692,47 +2687,47 @@ msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr ""
 
-#: src/dcc/chat.cpp:152
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr ""
 
-#: src/dcc/chat.cpp:153
+#: src/dcc/chat.cpp:149
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "Kohereza kuri :%1"
 
-#: src/dcc/chat.cpp:154
+#: src/dcc/chat.cpp:150
 #, fuzzy, kde-format
 msgid "Accept"
 msgstr "Kwemera"
 
-#: src/dcc/chat.cpp:155
+#: src/dcc/chat.cpp:151
 #, fuzzy, kde-format
 msgid "Reject"
 msgstr "Kongerakwihuza "
 
-#: src/dcc/chat.cpp:165
+#: src/dcc/chat.cpp:157
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr ""
 
-#: src/dcc/chat.cpp:204
+#: src/dcc/chat.cpp:196
 #, fuzzy, kde-format
 #| msgid "request was canceled"
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "igisabwa cyahagaritswe"
 
-#: src/dcc/chat.cpp:293
+#: src/dcc/chat.cpp:285
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2740,14 +2735,14 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
 
-#: src/dcc/chat.cpp:325
+#: src/dcc/chat.cpp:317
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2755,59 +2750,59 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:367
+#: src/dcc/chat.cpp:359
 #, fuzzy, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "OYA Gufungura A "
 
-#: src/dcc/chat.cpp:378
+#: src/dcc/chat.cpp:370
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "Ukwihuza Kuri %1 ku Umuyoboro: %2 ... "
 
-#: src/dcc/chat.cpp:439
+#: src/dcc/chat.cpp:431
 #, fuzzy, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Gufungura "
 
-#: src/dcc/chat.cpp:442
+#: src/dcc/chat.cpp:434
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr ""
 
-#: src/dcc/chat.cpp:473
+#: src/dcc/chat.cpp:465
 #, fuzzy, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:490
+#: src/dcc/chat.cpp:482
 #, fuzzy, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
 #, fuzzy, kde-format
 msgid "Socket error: %1"
 msgstr "Ikosa : %1 "
 
-#: src/dcc/chat.cpp:558
+#: src/dcc/chat.cpp:550
 #, fuzzy, kde-format
 msgid "Could not accept the client."
 msgstr "OYA Kwemera i Ukwihuza . ( Ikosa ) "
 
-#: src/dcc/chat.cpp:580
+#: src/dcc/chat.cpp:572
 #, fuzzy, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Ukwihuza Kuri %1 ( %2 : %3 ) ... "
 
-#: src/dcc/chat.cpp:586
+#: src/dcc/chat.cpp:578
 #, fuzzy, kde-format
 msgid "Connection closed."
 msgstr "Ukwihuza kwanze."
@@ -2825,8 +2820,8 @@ msgctxt ""
 msgid "DCC %1 with %2 on %3:%4."
 msgstr "Na: %1 ku %2 : %3 "
 
-#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
@@ -2891,8 +2886,8 @@ msgctxt "passive dcc send"
 msgid "Passive Send"
 msgstr ""
 
-#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:76
-#: src/notificationhandler.cpp:129 src/notificationhandler.cpp:179
+#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:79
+#: src/notificationhandler.cpp:132 src/notificationhandler.cpp:182
 #, fuzzy, kde-format
 msgid "Open"
 msgstr "Gufungura "
@@ -3268,7 +3263,7 @@ msgstr "Isobeka:"
 msgid "Outgoing Transfers"
 msgstr ""
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
 #, fuzzy, kde-format
 msgid "DCC Status"
 msgstr "Imimerere"
@@ -3350,7 +3345,7 @@ msgstr "Igikorwa:"
 msgid "Open the file location"
 msgstr "Gufungura Dosiye"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:423
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3359,7 +3354,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -3367,39 +3362,39 @@ msgid_plural "Execute %1 Files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferrecv.cpp:194
+#: src/dcc/transferrecv.cpp:197
 #, fuzzy, kde-format
 msgid "The admin has restricted the right to receive files"
 msgstr "Umuyobozi Nta gukoresha bisesuye i Iburyo: Kuri Akira Idosiye "
 
-#: src/dcc/transferrecv.cpp:201
+#: src/dcc/transferrecv.cpp:204
 #, kde-format
 msgid "Invalid sender address (%1)"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:208
+#: src/dcc/transferrecv.cpp:211
 #, fuzzy, kde-format
 msgid "Unsupported negotiation (filesize=0)"
 msgstr "( = 0 %S ) "
 
-#: src/dcc/transferrecv.cpp:313
+#: src/dcc/transferrecv.cpp:316
 #, fuzzy, kde-format
 msgid ""
 "<b>Cannot create the folder or destination is not writable.</b><br/>Folder: "
 "%1<br/>"
 msgstr "<b> Kurema i Ububiko... . </b> <br> : %1 <br> "
 
-#: src/dcc/transferrecv.cpp:323
+#: src/dcc/transferrecv.cpp:326
 #, fuzzy, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr "<b> Idosiye ni . </b> <br> %1 <br> "
 
-#: src/dcc/transferrecv.cpp:347
+#: src/dcc/transferrecv.cpp:350
 #, fuzzy, kde-format
 msgid "Could not create a KIO instance"
 msgstr "OYA Kurema A Urugero "
 
-#: src/dcc/transferrecv.cpp:446
+#: src/dcc/transferrecv.cpp:449
 #, fuzzy, kde-format
 msgid ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: 1 byte."
@@ -3414,7 +3409,7 @@ msgstr[1] ""
 "<b> A Bituzuye Idosiye ni . </b> <br> %1 <br> Bya i Bituzuye Idosiye : %2 "
 "Bayite <br> "
 
-#: src/dcc/transferrecv.cpp:479
+#: src/dcc/transferrecv.cpp:482
 #, fuzzy, kde-format
 msgctxt "%1=fileName, %2=local filesize, %3=sender filesize"
 msgid ""
@@ -3422,75 +3417,75 @@ msgid ""
 "%3<br/>"
 msgstr "<b> Idosiye ni . </b> <br> %1 <br> "
 
-#: src/dcc/transferrecv.cpp:488
+#: src/dcc/transferrecv.cpp:491
 #, fuzzy, kde-format
 msgid "<b>Could not open the file.<br/>Error: %1</b><br/>%2<br/>"
 msgstr "<b> OYA Gufungura i Idosiye . <br> Ikosa : %1 </b> <br> %2 <br> "
 
-#: src/dcc/transferrecv.cpp:535 src/dcc/transferrecv.cpp:571
+#: src/dcc/transferrecv.cpp:538 src/dcc/transferrecv.cpp:574
 #, kde-format
 msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
 "server."
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:590
+#: src/dcc/transferrecv.cpp:593
 #, fuzzy, kde-format
 msgid "Waiting for connection"
 msgstr "ya:  Ukwihuza "
 
-#: src/dcc/transferrecv.cpp:599
+#: src/dcc/transferrecv.cpp:602
 #, fuzzy, kde-format
 msgid "Waiting for remote host's acceptance"
 msgstr "ya:  &Bya kure: "
 
-#: src/dcc/transferrecv.cpp:609
+#: src/dcc/transferrecv.cpp:612
 #, kde-format
 msgid ""
 "Could not send DCC RECV resume request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:634
+#: src/dcc/transferrecv.cpp:637
 #, fuzzy, kde-format
 msgid "Unexpected response from remote host"
 msgstr "Kuva: &Bya kure: Inturo: "
 
-#: src/dcc/transferrecv.cpp:694 src/dcc/transfersend.cpp:453
+#: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, fuzzy, kde-format
 msgid "Could not accept the connection (socket error)."
 msgstr "OYA Kwemera i Ukwihuza . ( Ikosa ) "
 
-#: src/dcc/transferrecv.cpp:785
+#: src/dcc/transferrecv.cpp:788
 #, fuzzy, kde-format
 msgid "Transfer error"
 msgstr "Ikosa "
 
-#: src/dcc/transferrecv.cpp:801
+#: src/dcc/transferrecv.cpp:804
 #, fuzzy, kde-format
 msgid "KIO error: %1"
 msgstr "Ikosa : %1 "
 
-#: src/dcc/transferrecv.cpp:822 src/dcc/transfersend.cpp:590
+#: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, fuzzy, kde-format
 msgid "Timed out"
 msgstr "Kyarangije igihe"
 
-#: src/dcc/transfersend.cpp:163
+#: src/dcc/transfersend.cpp:165
 #, fuzzy, kde-format
 msgid "The admin has restricted the right to send files"
 msgstr "Umuyobozi Nta gukoresha bisesuye i Iburyo: Kuri Kohereza Idosiye "
 
-#: src/dcc/transfersend.cpp:185
+#: src/dcc/transfersend.cpp:187
 #, fuzzy, kde-format
 msgid "The url \"%1\" does not exist"
 msgstr "URL: \" %1 \" OYA "
 
-#: src/dcc/transfersend.cpp:193
+#: src/dcc/transfersend.cpp:195
 #, fuzzy, kde-format
 msgid "Enter Filename"
 msgstr "Kwinjiza izina:"
 
-#: src/dcc/transfersend.cpp:194
+#: src/dcc/transfersend.cpp:196
 #, fuzzy, kde-format
 msgid ""
 "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/"
@@ -3500,79 +3495,79 @@ msgstr ""
 "<qt> Idosiye Kuri <i> %1 </i> OYA A Izina ry'idosiye: . <br> Injiza A Izina "
 "ry'idosiye: Kuri Kuri i Mwakirizi , Cyangwa Kureka i </qt> "
 
-#: src/dcc/transfersend.cpp:195
+#: src/dcc/transfersend.cpp:197
 #, fuzzy, kde-format
 #| msgid "(unknown)"
 msgid "unknown"
 msgstr "(bitazwi)"
 
-#: src/dcc/transfersend.cpp:200
+#: src/dcc/transfersend.cpp:202
 #, fuzzy, kde-format
 msgid "No filename was given"
 msgstr "Izina ry'idosiye: "
 
-#: src/dcc/transfersend.cpp:241
+#: src/dcc/transfersend.cpp:243
 #, fuzzy, kde-format
 msgid "Could not retrieve \"%1\""
 msgstr "OYA \" %1 \" "
 
-#: src/dcc/transfersend.cpp:262
+#: src/dcc/transfersend.cpp:264
 #, kde-format
 msgid "Unable to send a 0 byte file."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:278
+#: src/dcc/transfersend.cpp:280
 #, fuzzy, kde-format
 #| msgid "request was canceled"
 msgid "DCC SEND request was rejected"
 msgstr "igisabwa cyahagaritswe"
 
-#: src/dcc/transfersend.cpp:305 src/dcc/transfersend.cpp:381
+#: src/dcc/transfersend.cpp:307 src/dcc/transfersend.cpp:383
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:600
+#: src/dcc/transfersend.cpp:602
 #, fuzzy, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr "Igikorwa Byakunze . Nta na rimwe in Ikosa Ikiganiro . "
 
-#: src/dcc/transfersend.cpp:603
+#: src/dcc/transfersend.cpp:605
 #, fuzzy, kde-format
 msgid "Could not read from file \"%1\"."
 msgstr "OYA Soma Kuva: Idosiye \" %1 \" . "
 
-#: src/dcc/transfersend.cpp:606
+#: src/dcc/transfersend.cpp:608
 #, fuzzy, kde-format
 msgid "Could not write to file \"%1\"."
 msgstr "Ntibyashobotse kwandika kuri dosiye %1."
 
-#: src/dcc/transfersend.cpp:609
+#: src/dcc/transfersend.cpp:611
 #, fuzzy, kde-format
 msgid "A fatal unrecoverable error occurred."
 msgstr "A Ikosa . "
 
-#: src/dcc/transfersend.cpp:612
+#: src/dcc/transfersend.cpp:614
 #, fuzzy, kde-format
 msgid "Could not open file \"%1\"."
 msgstr "OYA Gufungura Idosiye \" %1 \" . "
 
-#: src/dcc/transfersend.cpp:621
+#: src/dcc/transfersend.cpp:623
 #, fuzzy, kde-format
 msgid "The operation was unexpectedly aborted."
 msgstr "Igikorwa Byahagaritswe . "
 
-#: src/dcc/transfersend.cpp:624
+#: src/dcc/transfersend.cpp:626
 #, fuzzy, kde-format
 msgid "The operation timed out."
 msgstr "Igikorwa Inyuma . "
 
-#: src/dcc/transfersend.cpp:627
+#: src/dcc/transfersend.cpp:629
 #, fuzzy, kde-format
 msgid "An unspecified error happened on close."
 msgstr "Ikosa ku Gufunga . "
 
-#: src/dcc/transfersend.cpp:630
+#: src/dcc/transfersend.cpp:632
 #, fuzzy, kde-format
 msgid "Unknown error. Code %1"
 msgstr "Ikosa . %1 "
@@ -3825,40 +3820,40 @@ msgid_plural " minutes"
 msgstr[0] "imirongo"
 msgstr[1] "imirongo"
 
-#: src/identitydialog.cpp:119
+#: src/identitydialog.cpp:115
 #, fuzzy, kde-format
 msgid "Change identity information"
 msgstr "Ikiranga Ibisobanuro: "
 
-#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, fuzzy, kde-format
 msgid "Discards all changes made"
 msgstr "Byose Amahinduka "
 
-#: src/identitydialog.cpp:264
+#: src/identitydialog.cpp:260
 #, fuzzy, kde-format
 msgid "Add Identity"
 msgstr "Ikiranga"
 
-#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
+#: src/identitydialog.cpp:338
 #, fuzzy, kde-format
 msgid "Identity name:"
 msgstr "Izina: : "
 
-#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
-#: src/identitydialog.cpp:355
+#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
+#: src/identitydialog.cpp:351
 #, fuzzy, kde-format
 msgid "You need to give the identity a name."
 msgstr "Kuri i Ikiranga A Izina: . "
 
-#: src/identitydialog.cpp:287
+#: src/identitydialog.cpp:283
 #, fuzzy, kde-format
 msgid "Rename Identity"
 msgstr "Ikiranga mburabuzi"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:317
 #, fuzzy, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3867,60 +3862,60 @@ msgstr ""
 "Ikiranga ni in Koresha , NIBA Gukuraho i urusobe Igenamiterere ikoresha "
 "Inyuma Kuri i Mburabuzi Ikiranga . Kyasibwe: %S ? "
 
-#: src/identitydialog.cpp:326
+#: src/identitydialog.cpp:322
 #, fuzzy, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "Kuri Gusiba Byose Ibisobanuro: ya:  iyi Ikiranga ? "
 
-#: src/identitydialog.cpp:329
+#: src/identitydialog.cpp:325
 #, fuzzy, kde-format
 msgid "Delete Identity"
 msgstr "Ikiranga mburabuzi"
 
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:338
 #, fuzzy, kde-format
 msgid "Duplicate Identity"
 msgstr "Kugira kabiri Umwirondoro"
 
-#: src/identitydialog.cpp:385
+#: src/identitydialog.cpp:381
 #, fuzzy, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "&Ongera Ku Rimwe Kuri i Ikiranga . "
 
-#: src/identitydialog.cpp:397
+#: src/identitydialog.cpp:393
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:410
+#: src/identitydialog.cpp:406
 #, kde-format
 msgid "Please enter a real name."
 msgstr ""
 
-#: src/identitydialog.cpp:421
+#: src/identitydialog.cpp:417
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:468
+#: src/identitydialog.cpp:464
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:475
+#: src/identitydialog.cpp:471
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
 
-#: src/identitydialog.cpp:486
+#: src/identitydialog.cpp:482
 #, fuzzy, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "NameCompletion"
 
-#: src/identitydialog.cpp:493
+#: src/identitydialog.cpp:489
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -3973,7 +3968,7 @@ msgstr ""
 "na rimwe Bitazwi nyirabyo . "
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
-#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:170
+#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
 #, kde-format
 msgid "Nickname"
 msgstr "Irihimbano"
@@ -4367,7 +4362,7 @@ msgstr "NONEAHA Nka %1 . "
 msgid "%1 is now known as %2."
 msgstr "%1 ni NONEAHA Nka %2 . "
 
-#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:844
+#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:836
 #, fuzzy, kde-format
 msgctxt "Message type"
 msgid "Join"
@@ -4387,7 +4382,7 @@ msgstr "%1 iyi . ( %2 ) "
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
-#: src/viewer/ircview.cpp:849
+#: src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Quit"
@@ -4405,7 +4400,7 @@ msgid "You (%1) have left this server (%2)."
 msgstr "Ibumoso: iyi Seriveri: . ( %1 ) "
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
-#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:849
+#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
 #, fuzzy, kde-format
 msgctxt "Message type"
 msgid "Part"
@@ -4447,7 +4442,7 @@ msgstr "%1 Ibumoso: iyi . ( %2 ) "
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:402
 #, fuzzy, kde-format
 msgid "Kick"
 msgstr "Kanda"
@@ -5134,83 +5129,83 @@ msgid "Channel Topic"
 msgstr "Umurongo wa 1 "
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
-#: src/irc/channellistpanel.cpp:143 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2971 src/viewer/viewcontainer.cpp:2992
+#: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
+#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
 #, fuzzy, kde-format
 msgid "Channel List"
 msgstr "Umurongo wa 1 "
 
-#: src/irc/channellistpanel.cpp:160
+#: src/irc/channellistpanel.cpp:156
 #, fuzzy, kde-format
 msgctxt "save list"
 msgid "Save &List..."
 msgstr "Kubika ... "
 
-#: src/irc/channellistpanel.cpp:161
+#: src/irc/channellistpanel.cpp:157
 #, fuzzy, kde-format
 msgid "Click here to save the channel list."
 msgstr "Kuri i Urutonde . "
 
-#: src/irc/channellistpanel.cpp:162
+#: src/irc/channellistpanel.cpp:158
 #, fuzzy, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
 msgstr "Kugaruraho Ibiro"
 
-#: src/irc/channellistpanel.cpp:163
+#: src/irc/channellistpanel.cpp:159
 #, fuzzy, kde-format
 msgid "Click here to refresh the channel list."
 msgstr "Kuri i Urutonde . "
 
-#: src/irc/channellistpanel.cpp:165
+#: src/irc/channellistpanel.cpp:161
 #, fuzzy, kde-format
 msgctxt "join channel"
 msgid "&Join Channel"
 msgstr "Inzira-Nyakamwe"
 
-#: src/irc/channellistpanel.cpp:166
+#: src/irc/channellistpanel.cpp:162
 #, fuzzy, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
 msgstr "Kuri i . A Gishya tab ni Byaremwe ya:  i . "
 
-#: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
+#: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, fuzzy, kde-format
 msgid "Refreshing."
 msgstr "Kugaruraho Ibiro"
 
-#: src/irc/channellistpanel.cpp:357
+#: src/irc/channellistpanel.cpp:345
 #, kde-format
 msgid "Channels: %1 (%2 shown)"
 msgstr ""
 
-#: src/irc/channellistpanel.cpp:358
+#: src/irc/channellistpanel.cpp:346
 #, fuzzy, kde-format
 msgid " Non-unique users: %1 (%2 shown)"
 msgstr "- Cyo nyine Abakoresha : %1 ( %2 ) "
 
-#: src/irc/channellistpanel.cpp:366
+#: src/irc/channellistpanel.cpp:354
 #, fuzzy, kde-format
 msgid "Save Channel List"
 msgstr "Kubika "
 
-#: src/irc/channellistpanel.cpp:398
+#: src/irc/channellistpanel.cpp:386
 #, kde-format
 msgid ""
 "Konversation Channel List: %1 - %2\n"
 "\n"
 msgstr ""
 
-#: src/irc/channellistpanel.cpp:462 src/irc/joinchanneldialog.cpp:30
+#: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
 #, fuzzy, kde-format
 msgid "Join Channel"
 msgstr "Inzira-Nyakamwe"
 
-#: src/irc/channellistpanel.cpp:471
+#: src/irc/channellistpanel.cpp:459
 #, fuzzy, kde-format
 msgid "Open URL"
 msgstr "Gufungura "
 
-#: src/irc/channellistpanel.cpp:531
+#: src/irc/channellistpanel.cpp:519
 #, fuzzy, kde-format
 msgid "Channel List for %1"
 msgstr "ya:  %1 "
@@ -5599,7 +5594,7 @@ msgid "You are not on %1."
 msgstr "NONEAHA Nka %1 . "
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
-#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:814
+#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
 #, fuzzy, kde-format
 msgid "MOTD"
 msgstr "MOD"
@@ -5961,7 +5956,7 @@ msgstr "Kwemeza seriveri"
 msgid "Channel Invites"
 msgstr "Umurongo wa 1 "
 
-#: src/irc/invitedialog.cpp:166
+#: src/irc/invitedialog.cpp:168
 #, fuzzy, kde-format
 msgid "Join"
 msgstr "ku"
@@ -6114,7 +6109,7 @@ msgid ""
 "Click to remove a nick from the list of nicknames that appear on this screen."
 msgstr "Kuri Kwandika i Urutonde Bya Kugaragara ku iyi Mugaragaza . "
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:435
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
 #, fuzzy, kde-format
 msgid "&Whois"
 msgstr " Amakopi"
@@ -6492,8 +6487,8 @@ msgid "Added %1 to your ignore list."
 msgstr "%1 Kuri Kureka Urutonde . "
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:442 src/viewer/irccontextmenus.cpp:599
-#: src/viewer/irccontextmenus.cpp:600
+#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
+#: src/viewer/irccontextmenus.cpp:596
 #, kde-format
 msgid "Ignore"
 msgstr "Kureka"
@@ -6957,12 +6952,12 @@ msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "Iyimura Bya Idosiye \" %1 \" Byarangiye . "
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:347
+#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
 #, fuzzy, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 ni kiri kuri interineti ( %2 ) . "
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:362
+#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
 #, fuzzy, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 Ntibicometse kuri interineti ( %2 ) . "
@@ -7176,7 +7171,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:490
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "Kwandika..."
@@ -7297,32 +7292,32 @@ msgstr "Ongera..."
 msgid "Ed&it..."
 msgstr "Kwandika..."
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "C&onnect"
 msgstr "Kwihuza"
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, fuzzy, kde-format
 msgid "Connect to the server"
 msgstr "Kuri i Seriveri: "
 
-#: src/irc/serverlistdialog.cpp:60
+#: src/irc/serverlistdialog.cpp:53
 #, fuzzy, kde-format
 msgid "Click here to connect to the selected IRC network and channel."
 msgstr "Kuri Kwihuza Kuri i Byahiswemo urusobe na . "
 
-#: src/irc/serverlistdialog.cpp:128
+#: src/irc/serverlistdialog.cpp:121
 #, fuzzy, kde-format
 msgid "New Network"
 msgstr "urusobe"
 
-#: src/irc/serverlistdialog.cpp:149
+#: src/irc/serverlistdialog.cpp:142
 #, fuzzy, kde-format
 msgid "Edit Network"
 msgstr "urusobe"
 
-#: src/irc/serverlistdialog.cpp:205
+#: src/irc/serverlistdialog.cpp:198
 #, kde-format
 msgid ""
 "You cannot delete %1.\n"
@@ -7330,7 +7325,7 @@ msgid ""
 "The network %2 needs to have at least one server."
 msgstr ""
 
-#: src/irc/serverlistdialog.cpp:210
+#: src/irc/serverlistdialog.cpp:203
 #, kde-format
 msgid ""
 "You cannot delete the selected server.\n"
@@ -7343,12 +7338,12 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/irc/serverlistdialog.cpp:226
+#: src/irc/serverlistdialog.cpp:219
 #, fuzzy, kde-format
 msgid "Do you really want to delete the selected entries?"
 msgstr "Kuri Gusiba i Byahiswemo ? "
 
-#: src/irc/serverlistdialog.cpp:228
+#: src/irc/serverlistdialog.cpp:221
 #, fuzzy, kde-format
 msgid "Do you really want to delete %1?"
 msgstr "Kuri Gukuraho %1 ? "
@@ -7436,8 +7431,8 @@ msgstr "urusobe"
 msgid "Time"
 msgstr "Kyarangije igihe"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2615
-#: src/viewer/viewcontainer.cpp:2616
+#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -7447,22 +7442,22 @@ msgstr "Konsole"
 msgid "Manage Konsole Profiles"
 msgstr ""
 
-#: src/main.cpp:33 src/viewer/trayicon.cpp:23
+#: src/main.cpp:27 src/viewer/trayicon.cpp:23
 #, fuzzy, kde-format
 msgid "Konversation"
 msgstr "Ihindurangero"
 
-#: src/main.cpp:35
+#: src/main.cpp:29
 #, fuzzy, kde-format
 msgid "A user-friendly IRC client"
 msgstr "A Umukoresha Umukiriya "
 
-#: src/main.cpp:37
+#: src/main.cpp:31
 #, fuzzy, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
 msgstr "( ) - ku i "
 
-#: src/main.cpp:38
+#: src/main.cpp:32
 #, fuzzy, kde-format
 msgid ""
 "Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
@@ -7473,836 +7468,836 @@ msgstr ""
 "ni A Umukiriya ya:  i ( ) Porotokole . \n"
 "ku i net , Ubwoko Gishya na Bigyanye Icyatoranijwe Ikivugwaho: . "
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, kde-format
 msgid "Dario Abatianni"
 msgstr ""
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, fuzzy, kde-format
 msgid "Original Author, Project Founder"
 msgstr "Umwanditsi Mwimerere"
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Peter Simonsson"
 msgstr ""
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Maintainer"
 msgstr "Umurinzi"
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, kde-format
 msgid "Eike Hein"
 msgstr ""
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, fuzzy, kde-format
 msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ", , Iyinjiza "
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, kde-format
 msgid "Shintaro Matsuoka"
 msgstr ""
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, fuzzy, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
 msgstr ", , Ibirindiro "
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Eli MacKenzie"
 msgstr ""
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
 msgstr ""
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, kde-format
 msgid "İsmail Dönmez"
 msgstr ""
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, fuzzy, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ", , Kuri , , "
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "John Tapsell"
 msgstr ""
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
 msgstr ""
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "Bernd Buschinski"
 msgstr ""
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
 msgstr ""
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Olivier Bédard"
 msgstr ""
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Website hosting"
 msgstr ""
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Jędrzej Lisowski"
 msgstr ""
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Website maintenance"
 msgstr ""
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, kde-format
 msgid "Christian Muehlhaeuser"
 msgstr ""
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, fuzzy, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
 msgstr "Umugereka: , Funga Ishyira mu mwanya , "
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, kde-format
 msgid "Gary Cramblitt"
 msgstr ""
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, fuzzy, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
 ", kiri kuri interineti , Kunozaidosiyeya Urubuga Mucukumbuzi Umugereka: "
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, kde-format
 msgid "Matthias Gierlings"
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, fuzzy, kde-format
 msgid "Color configurator, Highlight dialog"
 msgstr ", Ikiganiro "
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, kde-format
 msgid "Alex Zepeda"
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, fuzzy, kde-format
 msgid "DCOP interface"
 msgstr "Imigaragarire "
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Stanislav Karchebny"
 msgstr ""
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Non-Latin1-Encodings"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, kde-format
 msgid "Mickael Marchand"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, fuzzy, kde-format
 msgid "Konsole part view"
 msgstr "Inzira %s Reba "
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, kde-format
 msgid "Michael Goettsche"
 msgstr ""
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, fuzzy, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr "Kwihuza , Gishya , Ikindi Ibiranga na "
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, kde-format
 msgid "Benjamin Meyer"
 msgstr ""
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, fuzzy, kde-format
 msgid "A Handful of fixes and code cleanup"
 msgstr "A Bya na Inyandikoporogaramu "
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Jakub Stachowski"
 msgstr ""
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Drag&Drop improvements"
 msgstr ""
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, kde-format
 msgid "Sebastian Sariego"
 msgstr ""
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, fuzzy, kde-format
 msgid "Artwork"
 msgstr "urusobe"
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, kde-format
 msgid "Renchi Raju"
 msgstr ""
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, fuzzy, kde-format
 msgid "Firefox style searchbar"
 msgstr "Imisusire "
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, kde-format
 msgid "Michael Kreitzer"
 msgstr ""
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, fuzzy, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
 msgstr ", Mu itsinda Seriveri: "
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, kde-format
 msgid "Frauke Oster"
 msgstr ""
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, fuzzy, kde-format
 msgid "System tray patch"
 msgstr "Agasanduku "
 
-#: src/main.cpp:66
+#: src/main.cpp:60
 #, kde-format
 msgid "Lucijan Busch"
 msgstr ""
 
-#: src/main.cpp:66 src/main.cpp:72 src/main.cpp:75
+#: src/main.cpp:60 src/main.cpp:66 src/main.cpp:69
 #, fuzzy, kde-format
 msgid "Bug fixes"
 msgstr "Imigereka"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, fuzzy, kde-format
 #| msgid "Search Columns"
 msgid "Sascha Cunz"
 msgstr "Gushaka Inkongi"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, fuzzy, kde-format
 msgid "Extended user modes patch"
 msgstr "Umukoresha "
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, kde-format
 msgid "Steve Wollkind"
 msgstr ""
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, fuzzy, kde-format
 msgid "Close visible tab with shortcut patch"
 msgstr "Funga Kigaragara tab Na: Iy'ibusamo "
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, kde-format
 msgid "Thomas Nagy"
 msgstr ""
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, fuzzy, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
 msgstr "Amasimbuka Na: Imbeba Ipine "
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, kde-format
 msgid "Tobias Olry"
 msgstr ""
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, fuzzy, kde-format
 msgid "Channel ownership mode patch"
 msgstr "Ugutunga Ubwoko "
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, kde-format
 msgid "Ruud Nabben"
 msgstr ""
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, fuzzy, kde-format
 msgid "Option to enable IRC color filtering"
 msgstr "Kuri Gushoboza Ibara: Iyungurura "
 
-#: src/main.cpp:72
+#: src/main.cpp:66
 #, kde-format
 msgid "Lothar Braun"
 msgstr ""
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Ivor Hewitt"
 msgstr ""
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
 msgstr ""
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Emil Obermayr"
 msgstr ""
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Sysinfo script"
 msgstr ""
 
-#: src/main.cpp:75
+#: src/main.cpp:69
 #, kde-format
 msgid "Stanislav Nikolov"
 msgstr ""
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Juan Carlos Torres"
 msgstr ""
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
 msgstr ""
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid "Travis McHenry"
 msgstr ""
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
 msgstr ""
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Modestas Vainius"
 msgstr ""
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
 msgstr ""
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, kde-format
 msgid "Abdurrahman AVCI"
 msgstr ""
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, fuzzy, kde-format
 msgid "Various bug fixes and enhancements."
 msgstr "Imigereka"
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "Martin Blumenstingl"
 msgstr ""
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "KStatusNotifierItem support, KIdleTime support, other enhancements"
 msgstr ""
 
-#: src/main.cpp:90
+#: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
 msgstr ""
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, fuzzy, kde-format
 msgid "Server to connect"
 msgstr "Kuri Kwihuza "
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, fuzzy, kde-format
 #| msgid "Server:"
 msgid "server"
 msgstr "Seriveri"
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, kde-format
 msgid "Port to use"
 msgstr ""
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, fuzzy, kde-format
 #| msgid "Support"
 msgid "port"
 msgstr "Gushigikira"
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, fuzzy, kde-format
 msgid "Channel to join after connection"
 msgstr "Kuri Nyuma Ukwihuza "
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, fuzzy, kde-format
 msgid "channel"
 msgstr "Umurongo wa 1 "
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, fuzzy, kde-format
 msgid "Nickname to use"
 msgstr "Kuri Koresha "
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, fuzzy, kde-format
 #| msgid "Nickname"
 msgid "nickname"
 msgstr "Irihimbano"
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, fuzzy, kde-format
 msgid "Password for connection"
 msgstr "ya:  Ukwihuza "
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, fuzzy, kde-format
 msgid "password"
 msgstr "Ijambobanga:"
 
-#: src/main.cpp:96
+#: src/main.cpp:90
 #, fuzzy, kde-format
 msgid "Use SSL for connection"
 msgstr "ya:  Ukwihuza "
 
-#: src/main.cpp:97
+#: src/main.cpp:91
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, kde-format
 msgid ""
 "Delay D-Bus activity and UI creation by the specified amount of milliseconds"
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, kde-format
 msgid "msec"
 msgstr ""
 
-#: src/main.cpp:99
+#: src/main.cpp:93
 #, kde-format
 msgid "Quits and restarts Konversation (if running, otherwise has no effect)"
 msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:95
 #, kde-format
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
 
-#: src/mainwindow.cpp:131
+#: src/mainwindow.cpp:135
 #, kde-format
 msgid "Restart"
 msgstr ""
 
-#: src/mainwindow.cpp:133
+#: src/mainwindow.cpp:137
 #, kde-format
 msgid "Quit and restart the application"
 msgstr ""
 
-#: src/mainwindow.cpp:138
+#: src/mainwindow.cpp:142
 #, fuzzy, kde-format
 msgid "&Server List..."
 msgstr "Kubika ihuza mu..."
 
-#: src/mainwindow.cpp:141
+#: src/mainwindow.cpp:145
 #, kde-format
 msgid "Manage networks and servers"
 msgstr ""
 
-#: src/mainwindow.cpp:146
+#: src/mainwindow.cpp:150
 #, fuzzy, kde-format
 msgid "Quick &Connect..."
 msgstr "ImpuZa..."
 
-#: src/mainwindow.cpp:149
+#: src/mainwindow.cpp:153
 #, fuzzy, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "in i Aderesi: Bya A Gishya Seriveri: Kuri Kwihuza Kuri ... "
 
-#: src/mainwindow.cpp:154
+#: src/mainwindow.cpp:158
 #, fuzzy, kde-format
 msgid "&Reconnect"
 msgstr "Kongerakwihuza "
 
-#: src/mainwindow.cpp:157
+#: src/mainwindow.cpp:161
 #, fuzzy, kde-format
 msgid "Reconnect to the current server."
 msgstr "Kuri i Seriveri: "
 
-#: src/mainwindow.cpp:163
+#: src/mainwindow.cpp:167
 #, fuzzy, kde-format
 msgid "&Disconnect"
 msgstr "Gucomokora"
 
-#: src/mainwindow.cpp:166
+#: src/mainwindow.cpp:170
 #, fuzzy, kde-format
 msgid "Disconnect from the current server."
 msgstr "Kwihuza na seriveri ntibishobotse"
 
-#: src/mainwindow.cpp:171
+#: src/mainwindow.cpp:175
 #, fuzzy, kde-format
 msgid "&Identities..."
 msgstr "Yobora ibiranga..."
 
-#: src/mainwindow.cpp:174
+#: src/mainwindow.cpp:178
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr ""
 
-#: src/mainwindow.cpp:179
+#: src/mainwindow.cpp:183
 #, fuzzy, kde-format
 msgid "&Watched Nicks"
 msgstr "Utuzina duto twa Eudora"
 
-#: src/mainwindow.cpp:187
+#: src/mainwindow.cpp:191
 #, fuzzy, kde-format
 msgid "&DCC Status"
 msgstr "Imimerere"
 
-#: src/mainwindow.cpp:196 src/mainwindow.cpp:841
-#: src/viewer/viewcontainer.cpp:921
+#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
+#: src/viewer/viewcontainer.cpp:917
 #, fuzzy, kde-format
 msgid "&Open Logfile"
 msgstr "Gufungura "
 
-#: src/mainwindow.cpp:200
+#: src/mainwindow.cpp:204
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:205 src/viewer/viewcontainer.cpp:942
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
 #, fuzzy, kde-format
 msgid "&Channel Settings..."
 msgstr "Indi mikorere"
 
-#: src/mainwindow.cpp:208
+#: src/mainwindow.cpp:212
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:213 src/viewer/viewcontainer.cpp:912
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
 #, fuzzy, kde-format
 msgid "Channel &List"
 msgstr "Umurongo wa 1 "
 
-#: src/mainwindow.cpp:217
+#: src/mainwindow.cpp:221
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr ""
 
-#: src/mainwindow.cpp:222
+#: src/mainwindow.cpp:226
 #, fuzzy, kde-format
 msgid "&URL Catcher"
 msgstr "Gukoresha ubwihisho "
 
-#: src/mainwindow.cpp:225
+#: src/mainwindow.cpp:229
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:232
+#: src/mainwindow.cpp:236
 #, fuzzy, kde-format
 msgid "New &Konsole"
 msgstr "Name=Konsole"
 
-#: src/mainwindow.cpp:234
+#: src/mainwindow.cpp:238
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:264
+#: src/mainwindow.cpp:268
 #, fuzzy, kde-format
 msgid "&Next Tab"
 msgstr "Isimbuka nshya"
 
-#: src/mainwindow.cpp:272
+#: src/mainwindow.cpp:276
 #, fuzzy, kde-format
 msgid "&Previous Tab"
 msgstr "Ibanjirije"
 
-#: src/mainwindow.cpp:280
+#: src/mainwindow.cpp:284
 #, fuzzy, kde-format
 msgid "Close &Tab"
 msgstr "Funga Isimbuka"
 
-#: src/mainwindow.cpp:288
+#: src/mainwindow.cpp:292
 #, kde-format
 msgid "Last Focused Tab"
 msgstr ""
 
-#: src/mainwindow.cpp:295
+#: src/mainwindow.cpp:299
 #, fuzzy, kde-format
 msgid "Next Active Tab"
 msgstr "Isimbuka nshya"
 
-#: src/mainwindow.cpp:308 src/viewer/viewcontainer.cpp:300
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
 #, fuzzy, kde-format
 msgid "Move Tab Up"
 msgstr "Kwimurira Agafishi Ibumoso"
 
-#: src/mainwindow.cpp:312 src/mainwindow.cpp:317 src/mainwindow.cpp:334
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355 src/mainwindow.cpp:364
+#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
+#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
 #, fuzzy, kde-format
 #| msgid "Move Right"
 msgid "Move this tab"
 msgstr "Kwerekeza Iburyo"
 
-#: src/mainwindow.cpp:319 src/viewer/viewcontainer.cpp:308
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
 #, fuzzy, kde-format
 msgid "Move Tab Down"
 msgstr "Kwimurira Agafishi Ibumoso"
 
-#: src/mainwindow.cpp:330 src/mainwindow.cpp:360
-#: src/viewer/viewcontainer.cpp:354
+#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
+#: src/viewer/viewcontainer.cpp:350
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Kwimurira Agafishi Iburyo"
 
-#: src/mainwindow.cpp:339 src/mainwindow.cpp:351
-#: src/viewer/viewcontainer.cpp:346
+#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
+#: src/viewer/viewcontainer.cpp:342
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Kwimurira Agafishi Ibumoso"
 
-#: src/mainwindow.cpp:374
+#: src/mainwindow.cpp:378
 #, fuzzy, kde-format
 msgid "Rejoin Channel"
 msgstr "Inzira-Nyakamwe"
 
-#: src/mainwindow.cpp:380 src/mainwindow.cpp:849
+#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
 #, fuzzy, kde-format
 msgid "Enable Notifications"
 msgstr "Gushira kugihe amabwiriza"
 
-#: src/mainwindow.cpp:386
+#: src/mainwindow.cpp:390
 #, fuzzy, kde-format
 msgid "Join on Connect"
 msgstr "Inzira-Nyakamwe"
 
-#: src/mainwindow.cpp:391
+#: src/mainwindow.cpp:395
 #, fuzzy, kde-format
 msgid "Connect at Startup"
 msgstr "ku Porogaramu Tangira &vendorShortName; Hejuru "
 
-#: src/mainwindow.cpp:396
+#: src/mainwindow.cpp:400
 #, fuzzy, kde-format
 #| msgid "&Default"
 msgid "Default"
 msgstr "Mburabuzi"
 
-#: src/mainwindow.cpp:401
+#: src/mainwindow.cpp:405
 #, fuzzy, kde-format
 msgid "Set Encoding"
 msgstr "Gushyiraho Isobeka"
 
-#: src/mainwindow.cpp:410
+#: src/mainwindow.cpp:414
 #, fuzzy, kde-format
 msgid "Go to Tab %1"
 msgstr "Kuri %1 "
 
-#: src/mainwindow.cpp:417
+#: src/mainwindow.cpp:421
 #, fuzzy, kde-format
 msgid "Clear &Marker Lines"
 msgstr "Gusiba Amateka"
 
-#: src/mainwindow.cpp:420
+#: src/mainwindow.cpp:424
 #, fuzzy, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "Ibirimo: Bya KIGEZWEHO Idirishya "
 
-#: src/mainwindow.cpp:425
+#: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:434
+#: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr ""
 
-#: src/mainwindow.cpp:443
+#: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:452
+#: src/mainwindow.cpp:456
 #, fuzzy, kde-format
 msgid "&Clear Window"
 msgstr "Gufunga Idirishya"
 
-#: src/mainwindow.cpp:455
+#: src/mainwindow.cpp:459
 #, fuzzy, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "Ibirimo: Bya KIGEZWEHO Idirishya "
 
-#: src/mainwindow.cpp:460
+#: src/mainwindow.cpp:464
 #, fuzzy, kde-format
 msgid "Clear &All Windows"
 msgstr "Gufunga Amadirishya Yose"
 
-#: src/mainwindow.cpp:463
+#: src/mainwindow.cpp:467
 #, fuzzy, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "Ibigize Bya Byose Windows "
 
-#: src/mainwindow.cpp:468
+#: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
 msgstr ""
 
-#: src/mainwindow.cpp:476 src/viewer/irccontextmenus.cpp:334
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, fuzzy, kde-format
 msgid "&Join Channel..."
 msgstr "Guhindura..."
 
-#: src/mainwindow.cpp:480
+#: src/mainwindow.cpp:484
 #, fuzzy, kde-format
 msgid "Join a new channel on this server"
 msgstr "Kuri Mukoresha Kuri Guhindura... iyi . "
 
-#: src/mainwindow.cpp:492 src/mainwindow.cpp:851
+#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, fuzzy, kde-format
 msgid "&IRC Color..."
 msgstr "Kugena Ibara..."
 
-#: src/mainwindow.cpp:496
+#: src/mainwindow.cpp:500
 #, fuzzy, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "i Ibara: Bya KIGEZWEHO &Ubutumwa . "
 
-#: src/mainwindow.cpp:501 src/mainwindow.cpp:853
+#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, fuzzy, kde-format
 msgid "&Marker Line"
 msgstr "Kwibuka"
 
-#: src/mainwindow.cpp:504
+#: src/mainwindow.cpp:508
 #, fuzzy, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr "A Utambitse: Umurongo: . "
 
-#: src/mainwindow.cpp:509 src/mainwindow.cpp:852
+#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, fuzzy, kde-format
 msgid "Special &Character..."
 msgstr "Inyuguti zidasanzwe..."
 
-#: src/mainwindow.cpp:513
+#: src/mainwindow.cpp:517
 #, fuzzy, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "Icyo ari cyo cyose Inyuguti: KIGEZWEHO &Ubutumwa . "
 
-#: src/mainwindow.cpp:524
+#: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
 msgstr ""
 
-#: src/mainwindow.cpp:531
+#: src/mainwindow.cpp:535
 #, fuzzy, kde-format
 msgid "Close &All Open Queries"
 msgstr "Funga Gufungura "
 
-#: src/mainwindow.cpp:540
+#: src/mainwindow.cpp:544
 #, fuzzy, kde-format
 msgid "Show Nicklist"
 msgstr "Iheruka : "
 
-#: src/mainwindow.cpp:546
+#: src/mainwindow.cpp:550
 #, fuzzy, kde-format
 msgid "Show/Hide Konversation"
 msgstr "Ihindurangero"
 
-#: src/mainwindow.cpp:557
+#: src/mainwindow.cpp:561
 #, fuzzy, kde-format
 msgid "Enable On Screen Display"
 msgstr "Kuringaniza Iyerekana rya MUgaragazi"
 
-#: src/mainwindow.cpp:564
+#: src/mainwindow.cpp:568
 #, fuzzy, kde-format
 #| msgid "Add to Bookmarks"
 msgid "Bookmarks"
 msgstr "Kongera ku Birango"
 
-#: src/mainwindow.cpp:609
+#: src/mainwindow.cpp:613
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
 "<b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:610 src/mainwindow.cpp:620
+#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
 #, kde-format
 msgid "Confirm Quit"
 msgstr ""
 
-#: src/mainwindow.cpp:619
+#: src/mainwindow.cpp:623
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:656
+#: src/mainwindow.cpp:660
 #, fuzzy, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8313,12 +8308,12 @@ msgstr ""
 "Ibikubiyemo Kuri &Kuvamo i Porogaramu . </p> <p> <center> <img Inkomoko = \" "
 "\" > < /Hagati > </p> "
 
-#: src/mainwindow.cpp:658
+#: src/mainwindow.cpp:662
 #, fuzzy, kde-format
 msgid "Docking in System Tray"
 msgstr "in "
 
-#: src/mainwindow.cpp:800
+#: src/mainwindow.cpp:806
 #, fuzzy, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8327,47 +8322,47 @@ msgstr ""
 "<qt> Gushisha i Ibikubiyemo Umurongo . Herekana %S Nanone ku Kwandika :$1 "
 "%1 . </qt> "
 
-#: src/mainwindow.cpp:801
+#: src/mainwindow.cpp:807
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: src/mainwindow.cpp:833
+#: src/mainwindow.cpp:839
 #, fuzzy, kde-format
 msgid "Toggle Notifications"
 msgstr "Gushira kugihe amabwiriza"
 
-#: src/mainwindow.cpp:834
+#: src/mainwindow.cpp:840
 #, fuzzy, kde-format
 msgid "Toggle Away Globally"
 msgstr "Kubashisha Java muri rusange"
 
-#: src/mainwindow.cpp:835
+#: src/mainwindow.cpp:841
 #, fuzzy, kde-format
 msgid "Insert &IRC Color..."
 msgstr "Kugena Ibara..."
 
-#: src/mainwindow.cpp:836
+#: src/mainwindow.cpp:842
 #, fuzzy, kde-format
 msgid "Insert Special &Character..."
 msgstr "Inyuguti zidasanzwe..."
 
-#: src/mainwindow.cpp:837
+#: src/mainwindow.cpp:843
 #, fuzzy, kde-format
 msgid "Insert &Marker Line"
 msgstr "Kwibuka"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:845
 #, fuzzy, kde-format
 msgid "&Channel List"
 msgstr "Umurongo wa 1 "
 
-#: src/mainwindow.cpp:850
+#: src/mainwindow.cpp:856
 #, fuzzy, kde-format
 msgid "Set &Away Globally"
 msgstr "Kubashisha Java muri rusange"
 
-#: src/mainwindow.cpp:865
+#: src/mainwindow.cpp:871
 #, fuzzy, kde-format
 msgid "Server List"
 msgstr "Amaseriveri"
@@ -8378,123 +8373,123 @@ msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
 msgstr "Oya Ubutumwa Kuva: Hanze "
 
-#: src/notificationhandler.cpp:100
+#: src/notificationhandler.cpp:103
 #, fuzzy, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
 msgstr "Gushyiraho ku %1 ku %2 . "
 
-#: src/notificationhandler.cpp:111
+#: src/notificationhandler.cpp:114
 #, kde-format
 msgid "[HighLight] (%1) <%2>"
 msgstr ""
 
-#: src/notificationhandler.cpp:125 src/notificationhandler.cpp:431
+#: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
 #, kde-format
 msgid "[HighLight] (%1) <%2> %3"
 msgstr ""
 
-#: src/notificationhandler.cpp:150
+#: src/notificationhandler.cpp:153
 #, fuzzy, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
 msgstr "&Ubutumwa : "
 
-#: src/notificationhandler.cpp:161
+#: src/notificationhandler.cpp:164
 #, kde-format
 msgid "[Query] <%1>"
 msgstr ""
 
-#: src/notificationhandler.cpp:175
+#: src/notificationhandler.cpp:178
 #, kde-format
 msgid "[Query] <%1> %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:209 src/notificationhandler.cpp:216
+#: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, fuzzy, kde-format
 msgid "%1 joined %2"
 msgstr "%1$S kuri %2$S"
 
-#: src/notificationhandler.cpp:228 src/notificationhandler.cpp:235
+#: src/notificationhandler.cpp:231 src/notificationhandler.cpp:238
 #, fuzzy, kde-format
 msgid "%1 parted %2"
 msgstr "%1 (Umuyoboro %2)"
 
-#: src/notificationhandler.cpp:247
+#: src/notificationhandler.cpp:250
 #, fuzzy, kde-format
 msgid "%1 quit %2"
 msgstr "%1 &Kuvamo %2 "
 
-#: src/notificationhandler.cpp:258
+#: src/notificationhandler.cpp:261
 #, fuzzy, kde-format
 msgid "%1 changed nickname to %2"
 msgstr "%1 Byahinduwe Akazina gato Kuri %2 "
 
-#: src/notificationhandler.cpp:269
+#: src/notificationhandler.cpp:272
 #, fuzzy, kde-format
 msgid "%1 wants to send a file to you"
 msgstr "%1 Kuri Kohereza A Idosiye Kuri "
 
-#: src/notificationhandler.cpp:280
+#: src/notificationhandler.cpp:283
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:293 src/notificationhandler.cpp:299
+#: src/notificationhandler.cpp:296 src/notificationhandler.cpp:301
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
 msgstr ""
 
-#: src/notificationhandler.cpp:301
+#: src/notificationhandler.cpp:302
 #, fuzzy, kde-format
 msgctxt "Opens the file from the finished dcc transfer"
 msgid "Open"
 msgstr "Gufungura "
 
-#: src/notificationhandler.cpp:317
+#: src/notificationhandler.cpp:318
 #, fuzzy, kde-format
 msgid "%1 changed modes in %2: %3"
 msgstr "%1 Byahinduwe Akazina gato Kuri %2 "
 
-#: src/notificationhandler.cpp:333
+#: src/notificationhandler.cpp:334
 #, fuzzy, kde-format
 msgid "%1 has started a conversation (query) with you."
 msgstr "%1 Yatangiye: A ( Ikibazo # ) Na: . "
 
-#: src/notificationhandler.cpp:377
+#: src/notificationhandler.cpp:378
 #, fuzzy, kde-format
 msgid "You are kicked by %1 from %2"
 msgstr "ku %1 Kuva: %2 "
 
-#: src/notificationhandler.cpp:392
+#: src/notificationhandler.cpp:393
 #, fuzzy, kde-format
 msgid "%1 started a DCC chat with you"
 msgstr "%1 Yatangiye: A Na: "
 
-#: src/notificationhandler.cpp:412
+#: src/notificationhandler.cpp:414
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:417
+#: src/notificationhandler.cpp:419
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:428
+#: src/notificationhandler.cpp:430
 #, kde-format
 msgid "[HighLight] (%1) *** %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:442
+#: src/notificationhandler.cpp:443
 #, fuzzy, kde-format
 msgid "Failed to connect to %1"
 msgstr "Idosiye Kuri Kuri %1 "
 
-#: src/notificationhandler.cpp:455
+#: src/notificationhandler.cpp:457
 #, fuzzy, kde-format
 msgid "You have joined %1."
 msgstr "NONEAHA Nka %1 . "
@@ -8791,7 +8786,7 @@ msgstr "Kuri "
 msgid "Error parsing router description."
 msgstr ""
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, fuzzy, kde-format
 msgid "URL Catcher"
 msgstr "Izina rya URL"
@@ -8943,17 +8938,17 @@ msgid ""
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, fuzzy, kde-format
 msgid "Save link as"
 msgstr "Kubika ... "
 
-#: src/urlcatcher.cpp:334
+#: src/urlcatcher.cpp:333
 #, fuzzy, kde-format
 msgid "Save URL List"
 msgstr "Kubika "
 
-#: src/urlcatcher.cpp:361
+#: src/urlcatcher.cpp:360
 #, fuzzy, kde-format
 msgid ""
 "Konversation URL List: %1\n"
@@ -9011,7 +9006,7 @@ msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
 msgstr "%1 (Umuyoboro %2)"
 
-#: src/viewer/channeloptionsdialog.cpp:613
+#: src/viewer/channeloptionsdialog.cpp:609
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9021,7 +9016,7 @@ msgstr ""
 "<qt> Igenzura i <em> Ubwoko </em> Bya i . Mukoresha Guhindura... . <p> <b> </"
 "b> Ubwoko i Mukoresha Guhindura... i ya:  i . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:615
+#: src/viewer/channeloptionsdialog.cpp:611
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9033,7 +9028,7 @@ msgstr ""
 "b> o Ubutumwa Kuva: Hanze Abakoresha OYA in i Ubutumwa Buri wese in i . "
 "Byose iyi Gushyiraho Kuri Ubutumwa . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:617
+#: src/viewer/channeloptionsdialog.cpp:613
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9048,7 +9043,7 @@ msgstr ""
 "Kuri in i Na: i <em> </em> command Cyangwa . i Abantu in i in iyi , NIBA iyi "
 "Ubwoko ni Gushyiraho . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:619
+#: src/viewer/channeloptionsdialog.cpp:615
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9061,7 +9056,7 @@ msgstr ""
 "</b> Abantu i NIBA . Gutumira , A Mukoresha Kuri Itangwa i command <em> /"
 "Gutumira </em> Kuva: muri i . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:621
+#: src/viewer/channeloptionsdialog.cpp:617
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9074,7 +9069,7 @@ msgstr ""
 "</b> ni in A Bya Byose , i ni OYA . A <em> < /e > Gicurasi Cyangwa Gicurasi "
 "OYA Herekana %S Nka in A By'umwihariko ku i Seriveri: . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:623
+#: src/viewer/channeloptionsdialog.cpp:619
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9084,7 +9079,7 @@ msgstr ""
 "<qt> Igenzura i <em> Ubwoko </em> Bya i . Mukoresha Guhindura... . <p> A <b> "
 "</b> ni Rimwe Mukoresha , - Mukoresha na Na: Ijwi . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:625
+#: src/viewer/channeloptionsdialog.cpp:621
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9094,7 +9089,7 @@ msgstr ""
 "<qt> Igenzura i <em> Ubwoko </em> Bya i . Mukoresha Guhindura... . <p> A <b> "
 "</b> Abakoresha Kuri Injiza A Ijambobanga in Itondekanya Kuri . </qt> "
 
-#: src/viewer/channeloptionsdialog.cpp:627
+#: src/viewer/channeloptionsdialog.cpp:623
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9217,7 +9212,7 @@ msgstr "Shene RF"
 msgid "Remove Ban"
 msgstr "Gukuraho idosiye"
 
-#: src/viewer/chatwindow.cpp:515
+#: src/viewer/chatwindow.cpp:509
 #, fuzzy, kde-format
 msgid ""
 "\n"
@@ -9387,204 +9382,204 @@ msgstr ""
 "<b> icyitonderwa : Byose Gushigikira iyi , na OYA Byose Abakoresha ku i "
 "Ihitamo Kuri iyi . </b> </qt> "
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:137
 #, kde-format
 msgid "Copy Link Address"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:145
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "Kongera ku Birango"
 
-#: src/viewer/irccontextmenus.cpp:146
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:147
+#: src/viewer/irccontextmenus.cpp:143
 #, fuzzy, kde-format
 msgid "Save Link As..."
 msgstr "Kubika ... "
 
-#: src/viewer/irccontextmenus.cpp:287
+#: src/viewer/irccontextmenus.cpp:283
 #, fuzzy, kde-format
 #| msgid "Search for text"
 msgid "Search for '%1' with"
 msgstr "Gushakisha k'umwandiko"
 
-#: src/viewer/irccontextmenus.cpp:301
+#: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:337
+#: src/viewer/irccontextmenus.cpp:333
 #, fuzzy, kde-format
 msgid "Get &topic"
 msgstr "Hejuru habanza"
 
-#: src/viewer/irccontextmenus.cpp:338
+#: src/viewer/irccontextmenus.cpp:334
 #, kde-format
 msgid "Get &user list"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:383
+#: src/viewer/irccontextmenus.cpp:379
 #, fuzzy, kde-format
 msgid "Open Query"
 msgstr "Gufungura "
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:391
 #, fuzzy, kde-format
 msgid "Modes"
 msgstr "Ubwoko"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Give Op"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Take Op"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:398
+#: src/viewer/irccontextmenus.cpp:394
 #, fuzzy, kde-format
 msgid "Give HalfOp"
 msgstr "Gusa n'ibyikaraga"
 
-#: src/viewer/irccontextmenus.cpp:399
+#: src/viewer/irccontextmenus.cpp:395
 #, fuzzy, kde-format
 msgid "Take HalfOp"
 msgstr "Gusa n'ibyikaraga"
 
-#: src/viewer/irccontextmenus.cpp:400
+#: src/viewer/irccontextmenus.cpp:396
 #, fuzzy, kde-format
 msgid "Give Voice"
 msgstr "Ingano yatanzwe"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:397
 #, fuzzy, kde-format
 msgid "Take Voice"
 msgstr "imigaragarire y'imbonerahamwe"
 
-#: src/viewer/irccontextmenus.cpp:405
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick / Ban"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Kickban"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:404
 #, fuzzy, kde-format
 msgid "Ban Nickname"
 msgstr "Irihimbano"
 
-#: src/viewer/irccontextmenus.cpp:410
+#: src/viewer/irccontextmenus.cpp:406
 #, fuzzy, kde-format
 msgid "Ban *!*@*.host"
 msgstr "* ! * @ * . Inturo: "
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:407
 #, fuzzy, kde-format
 msgid "Ban *!*@domain"
 msgstr "* ! * @ Urubuga: "
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:408
 #, fuzzy, kde-format
 msgid "Ban *!user@*.host"
 msgstr "* ! Umukoresha @ * . Inturo: "
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:409
 #, fuzzy, kde-format
 msgid "Ban *!user@domain"
 msgstr "* ! Umukoresha @ Urubuga: "
 
-#: src/viewer/irccontextmenus.cpp:415
+#: src/viewer/irccontextmenus.cpp:411
 #, fuzzy, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "* ! * @ * . Inturo: "
 
-#: src/viewer/irccontextmenus.cpp:416
+#: src/viewer/irccontextmenus.cpp:412
 #, fuzzy, kde-format
 msgid "Kickban *!*@domain"
 msgstr "* ! * @ Urubuga: "
 
-#: src/viewer/irccontextmenus.cpp:417
+#: src/viewer/irccontextmenus.cpp:413
 #, fuzzy, kde-format
 msgid "Kickban *!user@*.host"
 msgstr "* ! Umukoresha @ * . Inturo: "
 
-#: src/viewer/irccontextmenus.cpp:418
+#: src/viewer/irccontextmenus.cpp:414
 #, fuzzy, kde-format
 msgid "Kickban *!user@domain"
 msgstr "* ! Umukoresha @ Urubuga: "
 
-#: src/viewer/irccontextmenus.cpp:436
+#: src/viewer/irccontextmenus.cpp:432
 #, fuzzy, kde-format
 msgid "&Version"
 msgstr "Verisiyo"
 
-#: src/viewer/irccontextmenus.cpp:437
+#: src/viewer/irccontextmenus.cpp:433
 #, fuzzy, kde-format
 msgid "&Ping"
 msgstr "&Shyira ku rupapuro"
 
-#: src/viewer/irccontextmenus.cpp:444 src/viewer/irccontextmenus.cpp:629
-#: src/viewer/irccontextmenus.cpp:630
+#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
+#: src/viewer/irccontextmenus.cpp:626
 #, fuzzy, kde-format
 msgid "Unignore"
 msgstr "Kureka"
 
-#: src/viewer/irccontextmenus.cpp:447
+#: src/viewer/irccontextmenus.cpp:443
 #, fuzzy, kde-format
 msgid "Add to Watched Nicks"
 msgstr "Utuzina duto twa Eudora"
 
-#: src/viewer/irccontextmenus.cpp:449
+#: src/viewer/irccontextmenus.cpp:445
 #, fuzzy, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "Utuzina duto twa Eudora"
 
-#: src/viewer/irccontextmenus.cpp:456
+#: src/viewer/irccontextmenus.cpp:452
 #, fuzzy, kde-format
 msgid "Send &File..."
 msgstr "Kohereza Idosiye..."
 
-#: src/viewer/irccontextmenus.cpp:458
+#: src/viewer/irccontextmenus.cpp:454
 #, fuzzy, kde-format
 msgid "Open DCC Chat"
 msgstr "Gufungura "
 
-#: src/viewer/irccontextmenus.cpp:459
+#: src/viewer/irccontextmenus.cpp:455
 #, fuzzy, kde-format
 msgid "Open DCC Whiteboard"
 msgstr "Gufungura "
 
-#: src/viewer/irccontextmenus.cpp:592
+#: src/viewer/irccontextmenus.cpp:588
 #, fuzzy, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "Kuri Kureka %1 ? "
 
-#: src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:590
 #, fuzzy, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "Kuri Kureka i Byahiswemo Abakoresha ? "
 
-#: src/viewer/irccontextmenus.cpp:622
+#: src/viewer/irccontextmenus.cpp:618
 #, fuzzy, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "Kuri Kureka %1 ? "
 
-#: src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:620
 #, fuzzy, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "Kuri Kureka i Byahiswemo Abakoresha ? "
 
-#: src/viewer/irccontextmenus.cpp:791
+#: src/viewer/irccontextmenus.cpp:781
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
@@ -9631,7 +9626,7 @@ msgid_plural "%1 lines"
 msgstr[0] "imirongo"
 msgstr[1] "imirongo"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:481
 #, fuzzy, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9642,22 +9637,22 @@ msgid ""
 "continue?</qt>"
 msgstr "<qt>Urifuzakokogukomeza."
 
-#: src/viewer/ircinput.cpp:488
+#: src/viewer/ircinput.cpp:484
 #, fuzzy, kde-format
 msgid "Large Paste Warning"
 msgstr "Izamuka murongo"
 
-#: src/viewer/ircinput.cpp:489
+#: src/viewer/ircinput.cpp:485
 #, fuzzy, kde-format
 msgid "Paste"
 msgstr "Inzira%s"
 
-#: src/viewer/ircview.cpp:2233
+#: src/viewer/ircview.cpp:2225
 #, fuzzy, kde-format
 msgid "Open a query with %1"
 msgstr "Gufungura "
 
-#: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:304
+#: src/viewer/ircview.cpp:2232 src/viewer/topiclabel.cpp:304
 #, fuzzy, kde-format
 msgid "Join the channel %1"
 msgstr "ku %1 "
@@ -9673,7 +9668,7 @@ msgstr "Bya %1 "
 msgid "Reload"
 msgstr "Cyiteguye."
 
-#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:139
+#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, fuzzy, kde-format
 msgid "Clear Logfile"
 msgstr "Guhanagura muyunguruzi"
@@ -9706,14 +9701,14 @@ msgid ""
 "the top and the most recent are at the bottom."
 msgstr "Ubutumwa in i LOG Idosiye . Ubutumwa Ku i Hejuru: na i Ku i Hasi: . "
 
-#: src/viewer/logfilereader.cpp:138
+#: src/viewer/logfilereader.cpp:135
 #, fuzzy, kde-format
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
 msgstr ""
 "Kuri Mu buryo buhoraho Kwanga Byose LOG Ibisobanuro: Bya iyi Idosiye ? "
 
-#: src/viewer/logfilereader.cpp:152
+#: src/viewer/logfilereader.cpp:149
 #, fuzzy, kde-format
 msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
@@ -9722,12 +9717,12 @@ msgstr ""
 "icyitonderwa : Mu kubika i Kubika Byose Ibyatanzwe in i Idosiye , OYA i "
 "Inzira %s in iyi . "
 
-#: src/viewer/logfilereader.cpp:153
+#: src/viewer/logfilereader.cpp:150
 #, fuzzy, kde-format
 msgid "Save Logfile"
 msgstr "Kubika "
 
-#: src/viewer/logfilereader.cpp:157
+#: src/viewer/logfilereader.cpp:154
 #, fuzzy, kde-format
 msgid "Choose Destination Folder"
 msgstr "Ububiko bw'Ishyika"
@@ -9766,7 +9761,7 @@ msgstr "Nta biranga"
 msgid "&Remove Newlines"
 msgstr "Gukuraho idosiye"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2751
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, fuzzy, kde-format
 msgid "Raw Log"
 msgstr "Koresha ibikwa ry'imikorere"
@@ -9870,7 +9865,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr ""
 
-#: src/viewer/topichistoryview.cpp:209
+#: src/viewer/topichistoryview.cpp:208
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
@@ -9893,65 +9888,65 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:886
+#: src/viewer/viewcontainer.cpp:882
 #, fuzzy, kde-format
 msgid "Find Text..."
 msgstr "Shaka inyandiko:"
 
-#: src/viewer/viewcontainer.cpp:888
+#: src/viewer/viewcontainer.cpp:884
 #, fuzzy, kde-format
 msgid "Search for text in the current tab"
 msgstr "Ibirimo: Bya KIGEZWEHO Idirishya "
 
-#: src/viewer/viewcontainer.cpp:906
+#: src/viewer/viewcontainer.cpp:902
 #, fuzzy, kde-format
 msgid "Channel &List for %1"
 msgstr "ya:  %1 "
 
-#: src/viewer/viewcontainer.cpp:926
+#: src/viewer/viewcontainer.cpp:922
 #, fuzzy, kde-format
 msgid "&Open Logfile for %1"
 msgstr "Gufungura ya:  %1 "
 
-#: src/viewer/viewcontainer.cpp:937
+#: src/viewer/viewcontainer.cpp:933
 #, fuzzy, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "ya:  %1 "
 
-#: src/viewer/viewcontainer.cpp:2120
+#: src/viewer/viewcontainer.cpp:2116
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "Rename Tab"
 msgstr "Guhindura izina"
 
-#: src/viewer/viewcontainer.cpp:2121
+#: src/viewer/viewcontainer.cpp:2117
 #, fuzzy, kde-format
 msgid "Enter new tab name:"
 msgstr "Kwinjiza izina:"
 
-#: src/viewer/viewcontainer.cpp:2193
+#: src/viewer/viewcontainer.cpp:2189
 #, fuzzy, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Mburabuzi(%S)"
 
-#: src/viewer/viewcontainer.cpp:2234
+#: src/viewer/viewcontainer.cpp:2230
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgid "&Rename Tab..."
 msgstr "Guhindura izina"
 
-#: src/viewer/viewcontainer.cpp:2383
+#: src/viewer/viewcontainer.cpp:2379
 #, fuzzy, kde-format
 msgid "You can only search in text fields."
 msgstr "Shakisha in Umwandiko Amashami: . "
 
-#: src/viewer/viewcontainer.cpp:2384
+#: src/viewer/viewcontainer.cpp:2380
 #, fuzzy, kde-format
 msgid "Find Text Information"
 msgstr "Amakuru yo kwinjira"
 
-#: src/viewer/viewcontainer.cpp:2988
+#: src/viewer/viewcontainer.cpp:2980
 #, fuzzy, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
@@ -9960,7 +9955,7 @@ msgstr ""
 "Urutonde Kuva: A Ikibazo # , Cyangwa Imimerere Idirishya Kuri Gushaka "
 "Inyuma , Seriveri: iyi Urutonde Kuri . "
 
-#: src/viewer/viewcontainer.cpp:3018
+#: src/viewer/viewcontainer.cpp:3010
 #, fuzzy, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -9970,15 +9965,19 @@ msgstr ""
 "iyi Umumaro Gicurasi Igisubizo in A Bya urusobe . Ukwihuza ni OYA Byihuta , "
 "ni Umukiriya Byatandukanye ku i Seriveri: . "
 
-#: src/viewer/viewcontainer.cpp:3022
+#: src/viewer/viewcontainer.cpp:3014
 #, fuzzy, kde-format
 msgid "Channel List Warning"
 msgstr "Guhindura Urumuri"
 
-#: src/viewer/viewcontainer.cpp:3052
+#: src/viewer/viewcontainer.cpp:3044
 #, fuzzy, kde-format
 msgid "Watched Nicks"
 msgstr "Utuzina duto twa Eudora"
+
+#, fuzzy
+#~ msgid "Konversation Bookmarks Editor"
+#~ msgstr "Muhindura Ibirango bya Konnqueror"
 
 #, fuzzy
 #~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"

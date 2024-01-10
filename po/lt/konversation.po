@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 00:42+0000\n"
+"POT-Creation-Date: 2024-01-10 01:34+0000\n"
 "PO-Revision-Date: 2017-06-25 15:15+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -145,16 +145,11 @@ msgstr ""
 "„/media { Player }“ - pateikia tai kas yra grojama nurodytame grotuve jei "
 "jis randamas."
 
-#: src/application.cpp:397 src/irc/server.cpp:1803 src/irc/server.cpp:3836
+#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
 #: src/irc/server.cpp:3841
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
-
-#: src/bookmarkhandler.cpp:35
-#, kde-format
-msgid "Konversation Bookmarks Editor"
-msgstr "Konversation žymelių redaktorius"
 
 #: src/cipher.cpp:477
 #, kde-format
@@ -240,7 +235,7 @@ msgstr "naudotojų limitas"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
 #, kde-format
 msgid "New"
 msgstr "Nauja"
@@ -882,7 +877,7 @@ msgstr "14:"
 msgid "13:"
 msgstr "13:"
 
-#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:35
+#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
 #, kde-format
 msgid " second"
@@ -1011,7 +1006,7 @@ msgstr "Naudotojo vardas:"
 msgid "Password:"
 msgstr "Sl&aptažodis:"
 
-#: src/config/dcc_config.cpp:34
+#: src/config/dcc_config.cpp:29
 #, kde-format
 msgid " byte"
 msgid_plural " bytes"
@@ -1020,17 +1015,17 @@ msgstr[1] " baitai"
 msgstr[2] " baitų"
 msgstr[3] " baitas"
 
-#: src/config/dcc_config.cpp:92
+#: src/config/dcc_config.cpp:74
 #, kde-format
 msgid "Network Interface"
 msgstr "Tinklo sąsaja"
 
-#: src/config/dcc_config.cpp:93
+#: src/config/dcc_config.cpp:75
 #, kde-format
 msgid "Reply From IRC Server"
 msgstr "Atsakymas iš IRC serverio"
 
-#: src/config/dcc_config.cpp:94
+#: src/config/dcc_config.cpp:76
 #, kde-format
 msgid "Specify Manually"
 msgstr "Nurodyti rankiniu būdu"
@@ -1472,7 +1467,7 @@ msgstr "CTCP"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkChannel)
 #: src/config/ignore_configui.ui:90 src/irc/inputfilter.cpp:2364
-#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:168
+#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:170
 #: src/viewer/ignorelistviewitem.cpp:35
 #, kde-format
 msgid "Channel"
@@ -1986,7 +1981,7 @@ msgstr "Spalvos"
 msgid "Fonts"
 msgstr "Šriftai"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:92
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
 #, kde-format
 msgid "Quick Buttons"
 msgstr "Greitieji mygtukai"
@@ -2034,7 +2029,7 @@ msgstr "Slapyvardžių sąrašas"
 msgid "Command Aliases"
 msgstr "Komandų trumpiniai"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:518
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
 #, kde-format
 msgid "Auto Replace"
 msgstr "Automatinis keitimas"
@@ -2190,42 +2185,42 @@ msgstr "Pelė"
 msgid "&Middle-click on a tab to close it"
 msgstr "&Spragtelėti viduriniu mygtuku, kad užverti kortelę"
 
-#: src/config/theme_config.cpp:180
+#: src/config/theme_config.cpp:179
 #, kde-format
 msgid "Select Theme Package"
 msgstr "Pažymėkite apipavidalinimo paketą"
 
-#: src/config/theme_config.cpp:181
+#: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
 msgstr "Konversation apipavidalinimai (*.tar.gz *.tar.bz2 *.tar *.zip)"
 
-#: src/config/theme_config.cpp:207
+#: src/config/theme_config.cpp:206
 #, kde-format
 msgid "Unknown error (0)"
 msgstr "Nežinoma klaida (0)"
 
-#: src/config/theme_config.cpp:211
+#: src/config/theme_config.cpp:210
 #, kde-format
 msgid "Failed to Download Theme"
 msgstr "Nepavyko atsisiųsti apipavidalinimo"
 
-#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
+#: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, kde-format
 msgid "Theme archive is invalid."
 msgstr "Apipavidalinimų archyvas neteisingas."
 
-#: src/config/theme_config.cpp:237 src/config/theme_config.cpp:267
+#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, kde-format
 msgid "Cannot Install Theme"
 msgstr "Nepavyko įdiegti apipavidalinimo"
 
-#: src/config/theme_config.cpp:291
+#: src/config/theme_config.cpp:290
 #, kde-format
 msgid "Do you want to remove %1?"
 msgstr "Ar norite pašalinti %1?"
 
-#: src/config/theme_config.cpp:292
+#: src/config/theme_config.cpp:291
 #, kde-format
 msgid "Remove Theme"
 msgstr "Pašalinti apipavidalinimą"
@@ -2716,46 +2711,46 @@ msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr "Nepavyko nusiųsti DCC %1 užklausos partneriui per IRC serverį."
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr "Laukiama patvirtinimo iš nutolusio naudotojo..."
 
-#: src/dcc/chat.cpp:152
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr "%1 (iš %2) siūlo DCC %3 su jumis"
 
-#: src/dcc/chat.cpp:153
+#: src/dcc/chat.cpp:149
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr "DCC %1 pasiūlymas iš %2"
 
-#: src/dcc/chat.cpp:154
+#: src/dcc/chat.cpp:150
 #, kde-format
 msgid "Accept"
 msgstr "Priimti"
 
-#: src/dcc/chat.cpp:155
+#: src/dcc/chat.cpp:151
 #, kde-format
 msgid "Reject"
 msgstr "Atmesti"
 
-#: src/dcc/chat.cpp:165
+#: src/dcc/chat.cpp:157
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr "Jūs atmetėte DCC %1 pasiūlymą."
 
-#: src/dcc/chat.cpp:204
+#: src/dcc/chat.cpp:196
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr "DCC %1 užklausa buvo atmesta"
 
-#: src/dcc/chat.cpp:293
+#: src/dcc/chat.cpp:285
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2763,8 +2758,8 @@ msgid ""
 "server."
 msgstr "Nepavyko nusiųsti DCC %1 patvirtinimo partneriui per IRC serverį."
 
-#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
@@ -2772,7 +2767,7 @@ msgstr ""
 "Nepavyko persiųsti prievado %1. Siunčiama DCC užklausa nutolusiam naudotojui "
 "nepaisant to."
 
-#: src/dcc/chat.cpp:325
+#: src/dcc/chat.cpp:317
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2782,59 +2777,59 @@ msgstr ""
 "Nepavyko nusiųsti atvirkštinio DCC %1 patvirtinimo partneriui per IRC "
 "serverį."
 
-#: src/dcc/chat.cpp:367
+#: src/dcc/chat.cpp:359
 #, kde-format
 msgid "Could not open a socket for listening: %1"
 msgstr "Nepavyko atverti lizdo klausymuisi: %1"
 
-#: src/dcc/chat.cpp:378
+#: src/dcc/chat.cpp:370
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr "Siūlomas DCC %1 prisijungimas prie %2 per prievadą %3..."
 
-#: src/dcc/chat.cpp:439
+#: src/dcc/chat.cpp:431
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "Lenta"
 
-#: src/dcc/chat.cpp:442
+#: src/dcc/chat.cpp:434
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "Pokalbis"
 
-#: src/dcc/chat.cpp:473
+#: src/dcc/chat.cpp:465
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr "Mezgamas DCC %1 ryšys su %2 (%3:%4)..."
 
-#: src/dcc/chat.cpp:490
+#: src/dcc/chat.cpp:482
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Užmegztas DCC %1 ryšys su %2."
 
-#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "Lizdo klaida: %1"
 
-#: src/dcc/chat.cpp:558
+#: src/dcc/chat.cpp:550
 #, kde-format
 msgid "Could not accept the client."
 msgstr "Nepavyko priimti kliento."
 
-#: src/dcc/chat.cpp:580
+#: src/dcc/chat.cpp:572
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr "Užmegztas DCC %1 ryšys su %2."
 
-#: src/dcc/chat.cpp:586
+#: src/dcc/chat.cpp:578
 #, kde-format
 msgid "Connection closed."
 msgstr "Ryšys nutrauktas."
@@ -2852,8 +2847,8 @@ msgctxt ""
 msgid "DCC %1 with %2 on %3:%4."
 msgstr "DCC %1 su %2 per %3 %4."
 
-#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
@@ -2918,8 +2913,8 @@ msgctxt "passive dcc send"
 msgid "Passive Send"
 msgstr "Pasyvus siuntimas"
 
-#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:76
-#: src/notificationhandler.cpp:129 src/notificationhandler.cpp:179
+#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:79
+#: src/notificationhandler.cpp:132 src/notificationhandler.cpp:182
 #, kde-format
 msgid "Open"
 msgstr "Atverti"
@@ -3291,7 +3286,7 @@ msgstr "Įeinantys siuntimai"
 msgid "Outgoing Transfers"
 msgstr "Išeinantys siuntimai"
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC būsena"
@@ -3372,7 +3367,7 @@ msgstr "Atverti vietą"
 msgid "Open the file location"
 msgstr "Atverti failo vietą"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:423
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3383,7 +3378,7 @@ msgstr[1] "Pasirinkote %1 failus įvykdymui, ar esate tikrai, kad norite tęsti?
 msgstr[2] "Pasirinkote %1 failų įvykdymui, ar esate tikrai, kad norite tęsti?"
 msgstr[3] "Pasirinkote %1 failą įvykdymui, ar esate tikrai, kad norite tęsti?"
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, fuzzy, kde-format
 #| msgid "Execute %1 file"
 #| msgid_plural "Execute %1 files"
@@ -3395,22 +3390,22 @@ msgstr[1] "Vykdyti %1 failus"
 msgstr[2] "Vykdyti %1 failų"
 msgstr[3] "Vykdyti %1 failą"
 
-#: src/dcc/transferrecv.cpp:194
+#: src/dcc/transferrecv.cpp:197
 #, kde-format
 msgid "The admin has restricted the right to receive files"
 msgstr "Administratorius apribojo galimybę gauti failus"
 
-#: src/dcc/transferrecv.cpp:201
+#: src/dcc/transferrecv.cpp:204
 #, kde-format
 msgid "Invalid sender address (%1)"
 msgstr "Netinkamas siuntėjo adresas (%1)"
 
-#: src/dcc/transferrecv.cpp:208
+#: src/dcc/transferrecv.cpp:211
 #, kde-format
 msgid "Unsupported negotiation (filesize=0)"
 msgstr "Nepalaikomos derybos  (failodygis=0)"
 
-#: src/dcc/transferrecv.cpp:313
+#: src/dcc/transferrecv.cpp:316
 #, kde-format
 msgid ""
 "<b>Cannot create the folder or destination is not writable.</b><br/>Folder: "
@@ -3419,17 +3414,17 @@ msgstr ""
 "<b>Nepavyksta sukurti aplanko arba tikslas yra neįrašomas.</b><br/>Aplankas: "
 "%1<br/>"
 
-#: src/dcc/transferrecv.cpp:323
+#: src/dcc/transferrecv.cpp:326
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr "<b>Failas naudojamas kitame siuntime.</b><br/>%1<br/>"
 
-#: src/dcc/transferrecv.cpp:347
+#: src/dcc/transferrecv.cpp:350
 #, kde-format
 msgid "Could not create a KIO instance"
 msgstr "Nepavyko sukurti KIO egzemplioriaus"
 
-#: src/dcc/transferrecv.cpp:446
+#: src/dcc/transferrecv.cpp:449
 #, kde-format
 msgid ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: 1 byte."
@@ -3448,7 +3443,7 @@ msgstr[3] ""
 "<b>Yra dalinis failas:</b><br/>%2<br/>Dalinio failo dydis yra: %1 baitas.<br/"
 ">"
 
-#: src/dcc/transferrecv.cpp:479
+#: src/dcc/transferrecv.cpp:482
 #, kde-format
 msgctxt "%1=fileName, %2=local filesize, %3=sender filesize"
 msgid ""
@@ -3458,12 +3453,12 @@ msgstr ""
 "<b>Failas jau yra.</b><br/>%1 (%2)<br/>Siuntėjas sako, kad failo dydis %3<br/"
 ">"
 
-#: src/dcc/transferrecv.cpp:488
+#: src/dcc/transferrecv.cpp:491
 #, kde-format
 msgid "<b>Could not open the file.<br/>Error: %1</b><br/>%2<br/>"
 msgstr "<b>Nepavyko atverti failo.<br/>Klaida: %1</b><br/>%2<br/>"
 
-#: src/dcc/transferrecv.cpp:535 src/dcc/transferrecv.cpp:571
+#: src/dcc/transferrecv.cpp:538 src/dcc/transferrecv.cpp:574
 #, kde-format
 msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
@@ -3472,64 +3467,64 @@ msgstr ""
 "Nepavyko nusiųsti atvirkštinio DCC SEND patvirtinimo partneriui per IRC "
 "serverį."
 
-#: src/dcc/transferrecv.cpp:590
+#: src/dcc/transferrecv.cpp:593
 #, kde-format
 msgid "Waiting for connection"
 msgstr "Laukiama susijungimo"
 
-#: src/dcc/transferrecv.cpp:599
+#: src/dcc/transferrecv.cpp:602
 #, kde-format
 msgid "Waiting for remote host's acceptance"
 msgstr "Laukiama nuotolinio mazgo patvirtinimo"
 
-#: src/dcc/transferrecv.cpp:609
+#: src/dcc/transferrecv.cpp:612
 #, kde-format
 msgid ""
 "Could not send DCC RECV resume request to the partner via the IRC server."
 msgstr ""
 "Nepavyko nusiųsti DCC RECV pratęsimo užklausos partneriui per IRC serverį."
 
-#: src/dcc/transferrecv.cpp:634
+#: src/dcc/transferrecv.cpp:637
 #, kde-format
 msgid "Unexpected response from remote host"
 msgstr "Netikėtas atsakymas iš nuotolinio mazgo"
 
-#: src/dcc/transferrecv.cpp:694 src/dcc/transfersend.cpp:453
+#: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, kde-format
 msgid "Could not accept the connection (socket error)."
 msgstr "Nepavyko priimti kliento."
 
-#: src/dcc/transferrecv.cpp:785
+#: src/dcc/transferrecv.cpp:788
 #, kde-format
 msgid "Transfer error"
 msgstr "Siuntimo klaida"
 
-#: src/dcc/transferrecv.cpp:801
+#: src/dcc/transferrecv.cpp:804
 #, kde-format
 msgid "KIO error: %1"
 msgstr "KIO klaida: %1"
 
-#: src/dcc/transferrecv.cpp:822 src/dcc/transfersend.cpp:590
+#: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, kde-format
 msgid "Timed out"
 msgstr "Baigėsi laiko limitas"
 
-#: src/dcc/transfersend.cpp:163
+#: src/dcc/transfersend.cpp:165
 #, kde-format
 msgid "The admin has restricted the right to send files"
 msgstr "Administratorius apribojo teises siųsti failus"
 
-#: src/dcc/transfersend.cpp:185
+#: src/dcc/transfersend.cpp:187
 #, kde-format
 msgid "The url \"%1\" does not exist"
 msgstr "Url „%1“ neegzistuoja"
 
-#: src/dcc/transfersend.cpp:193
+#: src/dcc/transfersend.cpp:195
 #, kde-format
 msgid "Enter Filename"
 msgstr "Įrašykite failo vardą"
 
-#: src/dcc/transfersend.cpp:194
+#: src/dcc/transfersend.cpp:196
 #, kde-format
 msgid ""
 "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/"
@@ -3540,78 +3535,78 @@ msgstr ""
 "įvesti failo pavadinimą, kurį rodysite gavėjui, arba atšaukite DCC "
 "perdavimą</qt>"
 
-#: src/dcc/transfersend.cpp:195
+#: src/dcc/transfersend.cpp:197
 #, kde-format
 msgid "unknown"
 msgstr "nežinoma"
 
-#: src/dcc/transfersend.cpp:200
+#: src/dcc/transfersend.cpp:202
 #, kde-format
 msgid "No filename was given"
 msgstr "Nebuvo pateiktas failo pavadinimas"
 
-#: src/dcc/transfersend.cpp:241
+#: src/dcc/transfersend.cpp:243
 #, kde-format
 msgid "Could not retrieve \"%1\""
 msgstr "Nepavyko atsiųsti „%1“"
 
-#: src/dcc/transfersend.cpp:262
+#: src/dcc/transfersend.cpp:264
 #, kde-format
 msgid "Unable to send a 0 byte file."
 msgstr "Nepavyksta išsiųsti 0 baitų failo. "
 
-#: src/dcc/transfersend.cpp:278
+#: src/dcc/transfersend.cpp:280
 #, kde-format
 msgid "DCC SEND request was rejected"
 msgstr "DCC SEND užklausa buvo atmesta"
 
-#: src/dcc/transfersend.cpp:305 src/dcc/transfersend.cpp:381
+#: src/dcc/transfersend.cpp:307 src/dcc/transfersend.cpp:383
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr "Nepavyko nusiųsti DCC SEND užklausos partneriui per IRC serverį."
 
-#: src/dcc/transfersend.cpp:600
+#: src/dcc/transfersend.cpp:602
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr ""
 "Operacija buvo sėkminga. Taip neturėtų nutikti klaidos pranešimo dialoge."
 
-#: src/dcc/transfersend.cpp:603
+#: src/dcc/transfersend.cpp:605
 #, kde-format
 msgid "Could not read from file \"%1\"."
 msgstr "Nepavyksta skaityti iš failo „%1“."
 
-#: src/dcc/transfersend.cpp:606
+#: src/dcc/transfersend.cpp:608
 #, kde-format
 msgid "Could not write to file \"%1\"."
 msgstr "Nepavyksta rašyti į failą „%1“."
 
-#: src/dcc/transfersend.cpp:609
+#: src/dcc/transfersend.cpp:611
 #, kde-format
 msgid "A fatal unrecoverable error occurred."
 msgstr "Įvyko kritinė klaida."
 
-#: src/dcc/transfersend.cpp:612
+#: src/dcc/transfersend.cpp:614
 #, kde-format
 msgid "Could not open file \"%1\"."
 msgstr "Nepavyksta atverti failo „%1“."
 
-#: src/dcc/transfersend.cpp:621
+#: src/dcc/transfersend.cpp:623
 #, kde-format
 msgid "The operation was unexpectedly aborted."
 msgstr "Operacija buvo netikėtai nutraukta."
 
-#: src/dcc/transfersend.cpp:624
+#: src/dcc/transfersend.cpp:626
 #, kde-format
 msgid "The operation timed out."
 msgstr "Pasibaigė operacijai skirtas laikas."
 
-#: src/dcc/transfersend.cpp:627
+#: src/dcc/transfersend.cpp:629
 #, kde-format
 msgid "An unspecified error happened on close."
 msgstr "Užveriant įvyko nenurodyta klaida."
 
-#: src/dcc/transfersend.cpp:630
+#: src/dcc/transfersend.cpp:632
 #, kde-format
 msgid "Unknown error. Code %1"
 msgstr "Nežinoma klaida. Kodas %1"
@@ -3868,40 +3863,40 @@ msgstr[1] " minutės"
 msgstr[2] " minučių"
 msgstr[3] " minutė"
 
-#: src/identitydialog.cpp:119
+#: src/identitydialog.cpp:115
 #, kde-format
 msgid "Change identity information"
 msgstr "Keisti tapatybės informaciją"
 
-#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
 msgstr "Atmesti visus padarytus pakeitimus"
 
-#: src/identitydialog.cpp:264
+#: src/identitydialog.cpp:260
 #, kde-format
 msgid "Add Identity"
 msgstr "Pridėti tapatybę"
 
-#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
+#: src/identitydialog.cpp:338
 #, kde-format
 msgid "Identity name:"
 msgstr "Tapatybės vardas:"
 
-#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
-#: src/identitydialog.cpp:355
+#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
+#: src/identitydialog.cpp:351
 #, kde-format
 msgid "You need to give the identity a name."
 msgstr "Turite suteikti tapatybei vardą."
 
-#: src/identitydialog.cpp:287
+#: src/identitydialog.cpp:283
 #, kde-format
 msgid "Rename Identity"
 msgstr "Pervadinti tapatybę"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:317
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
@@ -3910,47 +3905,47 @@ msgstr ""
 "Tapatybė šiuo metu naudojama; jei ją ištrinsite, ją naudojančios tinklo "
 "nuostatos grįš prie numatytosios  tapatybės. Ar vis tiek norite ją ištrinti?"
 
-#: src/identitydialog.cpp:326
+#: src/identitydialog.cpp:322
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr "Ar tikrai norite ištrinti visą šios tapatybės informaciją?"
 
-#: src/identitydialog.cpp:329
+#: src/identitydialog.cpp:325
 #, kde-format
 msgid "Delete Identity"
 msgstr "Trinti tapatybę"
 
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:338
 #, kde-format
 msgid "Duplicate Identity"
 msgstr "Dubliuoti tapatybę"
 
-#: src/identitydialog.cpp:385
+#: src/identitydialog.cpp:381
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr "Šiai tapatybei turite priskirti bent vieną slapyvardį."
 
-#: src/identitydialog.cpp:397
+#: src/identitydialog.cpp:393
 #, kde-format
 msgid "Nicks must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:410
+#: src/identitydialog.cpp:406
 #, kde-format
 msgid "Please enter a real name."
 msgstr "Prašome įvesti tikrąjį vartą."
 
-#: src/identitydialog.cpp:421
+#: src/identitydialog.cpp:417
 #, kde-format
 msgid "Ident must not contain spaces."
 msgstr ""
 
-#: src/identitydialog.cpp:468
+#: src/identitydialog.cpp:464
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:475
+#: src/identitydialog.cpp:471
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
@@ -3959,14 +3954,14 @@ msgstr ""
 "Slaptažodis įvestas čia perrašys slaptažodį nustatytą serverio nuostatose, "
 "jei toks yra."
 
-#: src/identitydialog.cpp:486
+#: src/identitydialog.cpp:482
 #, fuzzy, kde-format
 #| msgid "Completion"
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "Užbaigimas"
 
-#: src/identitydialog.cpp:493
+#: src/identitydialog.cpp:489
 #, fuzzy, kde-format
 #| msgid ""
 #| "SSL Client Certificate authentication forces SSL to be enabled for a "
@@ -4025,7 +4020,7 @@ msgstr ""
 "susektas, tad niekada neįgausite visiško anonimiškumo."
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
-#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:170
+#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
 #, kde-format
 msgid "Nickname"
 msgstr "Slapyvardis"
@@ -4413,7 +4408,7 @@ msgstr "Dabar Jūs žinoma(-s) kaip %1."
 msgid "%1 is now known as %2."
 msgstr "%1 dabar žinomas kaip %2."
 
-#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:844
+#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:836
 #, kde-format
 msgctxt "Message type"
 msgid "Join"
@@ -4433,7 +4428,7 @@ msgstr "%1 (%2) prisijungė prie šio kanalo."
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
-#: src/viewer/ircview.cpp:849
+#: src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Quit"
@@ -4451,7 +4446,7 @@ msgid "You (%1) have left this server (%2)."
 msgstr "Jūs (%1) palikote šį serverį (%2)."
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
-#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:849
+#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Part"
@@ -4493,7 +4488,7 @@ msgstr "%1 (%2) paliko šį kanalą (%3)."
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kick"
 msgstr "Išmesti"
@@ -5188,68 +5183,68 @@ msgid "Channel Topic"
 msgstr "Kanalo tema"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
-#: src/irc/channellistpanel.cpp:143 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2971 src/viewer/viewcontainer.cpp:2992
+#: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
+#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
 #, kde-format
 msgid "Channel List"
 msgstr "Kanalų sąrašas"
 
-#: src/irc/channellistpanel.cpp:160
+#: src/irc/channellistpanel.cpp:156
 #, kde-format
 msgctxt "save list"
 msgid "Save &List..."
 msgstr "Į&rašyti sąrašą..."
 
-#: src/irc/channellistpanel.cpp:161
+#: src/irc/channellistpanel.cpp:157
 #, kde-format
 msgid "Click here to save the channel list."
 msgstr "Spauskite čia, kad įrašytumėte kanalų sąrašą."
 
-#: src/irc/channellistpanel.cpp:162
+#: src/irc/channellistpanel.cpp:158
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
 msgstr "&Atnaujinti sąrašą"
 
-#: src/irc/channellistpanel.cpp:163
+#: src/irc/channellistpanel.cpp:159
 #, kde-format
 msgid "Click here to refresh the channel list."
 msgstr "Spauskite čia, kad atnaujintumėte kanalų sąrašą."
 
-#: src/irc/channellistpanel.cpp:165
+#: src/irc/channellistpanel.cpp:161
 #, kde-format
 msgctxt "join channel"
 msgid "&Join Channel"
 msgstr "&Jungtis prie kanalo"
 
-#: src/irc/channellistpanel.cpp:166
+#: src/irc/channellistpanel.cpp:162
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
 msgstr ""
 "Spauskite čia norėdami prisijungti prie kanalo. Kanalui sukuriama nauja "
 "kortelė."
 
-#: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
+#: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
 msgstr "Atnaujinama."
 
-#: src/irc/channellistpanel.cpp:357
+#: src/irc/channellistpanel.cpp:345
 #, kde-format
 msgid "Channels: %1 (%2 shown)"
 msgstr "Kanalai: %1 (%2 rodomi)"
 
-#: src/irc/channellistpanel.cpp:358
+#: src/irc/channellistpanel.cpp:346
 #, kde-format
 msgid " Non-unique users: %1 (%2 shown)"
 msgstr " Ne unikalūs naudotojai: %1 (%2 rodoma)"
 
-#: src/irc/channellistpanel.cpp:366
+#: src/irc/channellistpanel.cpp:354
 #, kde-format
 msgid "Save Channel List"
 msgstr "Išsaugoti kanalo sąrašą"
 
-#: src/irc/channellistpanel.cpp:398
+#: src/irc/channellistpanel.cpp:386
 #, kde-format
 msgid ""
 "Konversation Channel List: %1 - %2\n"
@@ -5258,17 +5253,17 @@ msgstr ""
 "Konversation kanalų sąrašas: %1 – %2\n"
 "\n"
 
-#: src/irc/channellistpanel.cpp:462 src/irc/joinchanneldialog.cpp:30
+#: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
 #, kde-format
 msgid "Join Channel"
 msgstr "Jungtis prie kanalo"
 
-#: src/irc/channellistpanel.cpp:471
+#: src/irc/channellistpanel.cpp:459
 #, kde-format
 msgid "Open URL"
 msgstr "Atverti URL"
 
-#: src/irc/channellistpanel.cpp:531
+#: src/irc/channellistpanel.cpp:519
 #, kde-format
 msgid "Channel List for %1"
 msgstr "Kanalų sąrašas tinkle %1"
@@ -5665,7 +5660,7 @@ msgid "You are not on %1."
 msgstr "Jūs nesate prisijungę prie %1."
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
-#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:814
+#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
 #, kde-format
 msgid "MOTD"
 msgstr "Dienos pranešimas"
@@ -6037,7 +6032,7 @@ msgstr "SASL autentifikacija nutraukta."
 msgid "Channel Invites"
 msgstr "Kanalo kvietimai"
 
-#: src/irc/invitedialog.cpp:166
+#: src/irc/invitedialog.cpp:168
 #, kde-format
 msgid "Join"
 msgstr "Prisijungti (Join)"
@@ -6215,7 +6210,7 @@ msgstr ""
 "Spustelėkite norėdami pašalinti slapyvardį iš slapyvardžių, kurie atsiranda "
 "šiame ekrane sąrašo."
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:435
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Whois"
 msgstr "&Whois"
@@ -6599,8 +6594,8 @@ msgid "Added %1 to your ignore list."
 msgstr "%1 pridėtas prie jūsų ignoruojamųjų sąrašo."
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:442 src/viewer/irccontextmenus.cpp:599
-#: src/viewer/irccontextmenus.cpp:600
+#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
+#: src/viewer/irccontextmenus.cpp:596
 #, kde-format
 msgid "Ignore"
 msgstr "Ignoruoti"
@@ -7068,12 +7063,12 @@ msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "Atsiunčiamas „%1“ (%2) iš %3..."
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:347
+#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 prisijungė (%2)."
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:362
+#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 atsijungė (%2)."
@@ -7292,7 +7287,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:490
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "&Keisti..."
@@ -7412,33 +7407,33 @@ msgstr "Įdėti..."
 msgid "Ed&it..."
 msgstr "K&eisti..."
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "C&onnect"
 msgstr "P&risijungti"
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "Connect to the server"
 msgstr "Prisijungti prie serverio"
 
-#: src/irc/serverlistdialog.cpp:60
+#: src/irc/serverlistdialog.cpp:53
 #, kde-format
 msgid "Click here to connect to the selected IRC network and channel."
 msgstr ""
 "Spauskite čia norėdami prisijungti prie pasirinkto IRC tinklo ir kanalo."
 
-#: src/irc/serverlistdialog.cpp:128
+#: src/irc/serverlistdialog.cpp:121
 #, kde-format
 msgid "New Network"
 msgstr "Naujas tinklas"
 
-#: src/irc/serverlistdialog.cpp:149
+#: src/irc/serverlistdialog.cpp:142
 #, kde-format
 msgid "Edit Network"
 msgstr "Redaguoti tinklą"
 
-#: src/irc/serverlistdialog.cpp:205
+#: src/irc/serverlistdialog.cpp:198
 #, kde-format
 msgid ""
 "You cannot delete %1.\n"
@@ -7449,7 +7444,7 @@ msgstr ""
 "\n"
 "Tinklo %2 nustatymams reikia bent vieno serverio."
 
-#: src/irc/serverlistdialog.cpp:210
+#: src/irc/serverlistdialog.cpp:203
 #, kde-format
 msgid ""
 "You cannot delete the selected server.\n"
@@ -7476,12 +7471,12 @@ msgstr[3] ""
 "\n"
 "Tinklas %2 privalo turėti bent vieną serverį."
 
-#: src/irc/serverlistdialog.cpp:226
+#: src/irc/serverlistdialog.cpp:219
 #, kde-format
 msgid "Do you really want to delete the selected entries?"
 msgstr "Ar tikrai norite ištrinti pasirinktus įrašus?"
 
-#: src/irc/serverlistdialog.cpp:228
+#: src/irc/serverlistdialog.cpp:221
 #, kde-format
 msgid "Do you really want to delete %1?"
 msgstr "Ar tikrai norite ištrinti %1?"
@@ -7577,8 +7572,8 @@ msgstr "Autorius"
 msgid "Time"
 msgstr "Laikas"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2615
-#: src/viewer/viewcontainer.cpp:2616
+#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -7588,23 +7583,23 @@ msgstr "Konsole"
 msgid "Manage Konsole Profiles"
 msgstr "Tvarkyti Konsole profilius"
 
-#: src/main.cpp:33 src/viewer/trayicon.cpp:23
+#: src/main.cpp:27 src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "Konversation"
 msgstr "Konversation"
 
-#: src/main.cpp:35
+#: src/main.cpp:29
 #, kde-format
 msgid "A user-friendly IRC client"
 msgstr "Naudotojui draugiškas IRC klientas"
 
-#: src/main.cpp:37
+#: src/main.cpp:31
 #, fuzzy, kde-format
 #| msgid "(C) 2002-2014 by the Konversation team"
 msgid "Copyright 2002-%1 by the Konversation team"
 msgstr "(C) 2002-2014 Konversation komanda"
 
-#: src/main.cpp:38
+#: src/main.cpp:32
 #, kde-format
 msgid ""
 "Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
@@ -7617,32 +7612,32 @@ msgstr ""
 "Susiraskite internete draugų, naujų pažįstamų ir įsitraukite į pokalbius "
 "mėgstamomis temomis."
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, kde-format
 msgid "Dario Abatianni"
 msgstr "Dario Abatianni"
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, kde-format
 msgid "Original Author, Project Founder"
 msgstr "Pradinis autorius, projekto įkūrėjas"
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Peter Simonsson"
 msgstr "Peter Simonsson"
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Maintainer"
 msgstr "Prižiūrėtojas"
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, kde-format
 msgid "Eike Hein"
 msgstr "Eike Hein"
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, kde-format
 msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
@@ -7651,319 +7646,319 @@ msgstr ""
 "Prižiūrėtojas, leidimų tvarkytojas, naudotojo sąsaja, tinklo valdymas, "
 "protokolo palaikymas, autoišėjimas"
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, kde-format
 msgid "Shintaro Matsuoka"
 msgstr "Shintaro Matsuoka"
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
 msgstr "DCC, koduočių palaikymas, OSD nuostatos"
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Eli MacKenzie"
 msgstr "Eli MacKenzie"
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
 msgstr "Protokolų valdymas, Įvesties eilutė"
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, kde-format
 msgid "İsmail Dönmez"
 msgstr "İsmail Dönmez"
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
 "Blowfish, SSL palaikymas, pritaikymas prie KNetwork, spalvoti slapyvardžiai, "
 "slapyvardžių sąrašos temos"
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "John Tapsell"
 msgstr "John Tapsell"
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
 msgstr "Modifikuotojas, KAddressBook/Kontact integravimo programuotojas"
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "Bernd Buschinski"
 msgstr "Bernd Buschinski"
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
 msgstr "DCC perkėlimas į KDE 4, įvairūs DCC patobulinimai"
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Olivier Bédard"
 msgstr "Olivier Bédard"
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Website hosting"
 msgstr "Svetainės talpinimas"
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Jędrzej Lisowski"
 msgstr "Jędrzej Lisowski"
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Website maintenance"
 msgstr "Žiniatinklio svetainės priežiūra"
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, kde-format
 msgid "Christian Muehlhaeuser"
 msgstr "Christian Muehlhaeuser"
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
 msgstr ""
 "Kelių veiksenų plėtinys, Valdiklio uždarymo išdėstymas, OSD funkcionalumas"
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, kde-format
 msgid "Gary Cramblitt"
 msgstr "Gary Cramblitt"
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
 "Dokumentacija, Stebimų slapyvardžių pagerinimai, Savitos interneto naršyklės "
 "plėtinys"
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, kde-format
 msgid "Matthias Gierlings"
 msgstr "Matthias Gierlings"
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, kde-format
 msgid "Color configurator, Highlight dialog"
 msgstr "Spalvų konfigūravimas, Paryškinimo dialogas"
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, kde-format
 msgid "Alex Zepeda"
 msgstr "Alex Zepeda"
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, kde-format
 msgid "DCOP interface"
 msgstr "DCOP sąsaja"
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Stanislav Karchebny"
 msgstr "Stanislav Karchebny"
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Non-Latin1-Encodings"
 msgstr "Ne Latin1 koduotės"
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, kde-format
 msgid "Mickael Marchand"
 msgstr "Mickael Marchand"
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, kde-format
 msgid "Konsole part view"
 msgstr "Konsolės dalies rodinys"
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, kde-format
 msgid "Michael Goettsche"
 msgstr "Michael Goettsche"
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr ""
 "Greitas prisijungimas, Perkeltas naujas OSD, kitos savybės ir klaidų taisymas"
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, kde-format
 msgid "Benjamin Meyer"
 msgstr "Benjamin Meyer"
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, kde-format
 msgid "A Handful of fixes and code cleanup"
 msgstr "Pagalba taisant ir valant kodą"
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Jakub Stachowski"
 msgstr "Jakub Stachowski"
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Drag&Drop improvements"
 msgstr "Tempti ir mesti patobulinimai"
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, kde-format
 msgid "Sebastian Sariego"
 msgstr "Sebastian Sariego"
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, kde-format
 msgid "Artwork"
 msgstr "Grafika"
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, kde-format
 msgid "Renchi Raju"
 msgstr "Renchi Raju"
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, kde-format
 msgid "Firefox style searchbar"
 msgstr "Firefox stiliaus paieškos juosta"
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, kde-format
 msgid "Michael Kreitzer"
 msgstr "Michael Kreitzer"
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
 msgstr ""
 "Neapdorotos veiksenos, Kortelių grupavimas pagal serverius, Blokuotų sąrašas"
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, kde-format
 msgid "Frauke Oster"
 msgstr "Frauke Oster"
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, kde-format
 msgid "System tray patch"
 msgstr "Sistemos dėklo pataisymas"
 
-#: src/main.cpp:66
+#: src/main.cpp:60
 #, kde-format
 msgid "Lucijan Busch"
 msgstr "Lucijan Busch"
 
-#: src/main.cpp:66 src/main.cpp:72 src/main.cpp:75
+#: src/main.cpp:60 src/main.cpp:66 src/main.cpp:69
 #, kde-format
 msgid "Bug fixes"
 msgstr "Klaidų taisymai"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, kde-format
 msgid "Sascha Cunz"
 msgstr "Sascha Cunz"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, kde-format
 msgid "Extended user modes patch"
 msgstr "Išplėstinių naudotojo veiksenų pataisymas"
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, kde-format
 msgid "Steve Wollkind"
 msgstr "Steve Wollkind"
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, kde-format
 msgid "Close visible tab with shortcut patch"
 msgstr "Uždaryti matomą kortelę su šaukiniu pataisymas"
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, kde-format
 msgid "Thomas Nagy"
 msgstr "Thomas Nagy"
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
 msgstr "Keisti korteles su pelės slinkimo ratuku"
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, kde-format
 msgid "Tobias Olry"
 msgstr "Tobias Olry"
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, kde-format
 msgid "Channel ownership mode patch"
 msgstr "Kanalo nuosavybės veiksenos pataisymas"
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, kde-format
 msgid "Ruud Nabben"
 msgstr "Ruud Nabben"
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, kde-format
 msgid "Option to enable IRC color filtering"
 msgstr "Parinktis įjungti IRC spalvų filtravimą"
 
-#: src/main.cpp:72
+#: src/main.cpp:66
 #, kde-format
 msgid "Lothar Braun"
 msgstr "Lothar Braun"
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Ivor Hewitt"
 msgstr "Ivor Hewitt"
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
 msgstr "Klaidų taisymas, OSD darbas, temų valymas"
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Emil Obermayr"
 msgstr "Emil Obermayr"
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Sysinfo script"
 msgstr "Sysinfo scenarijus"
 
-#: src/main.cpp:75
+#: src/main.cpp:69
 #, kde-format
 msgid "Stanislav Nikolov"
 msgstr "Stanislav Nikolov"
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Juan Carlos Torres"
 msgstr "Juan Carlos Torres"
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
 msgstr "Autoprisijungimo kontekstinis meniu"
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid "Travis McHenry"
 msgstr "Travis McHenry"
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
@@ -7971,103 +7966,103 @@ msgstr ""
 "Įvairūs pataisymai, šifravimas su QCA2 biblioteka, pridėjo DH1080 raktų "
 "apsikeitimo palaikymą."
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
 msgstr "Ydų taisymai ir patobulinimai."
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, kde-format
 msgid "Abdurrahman AVCI"
 msgstr "Abdurrahman AVCI"
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, kde-format
 msgid "Various bug fixes and enhancements."
 msgstr "Įvairūs klaidų taisymai ir patobulinimai."
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "Martin Blumenstingl"
 msgstr "Martin Blumenstingl"
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "KStatusNotifierItem support, KIdleTime support, other enhancements"
 msgstr ""
 "KStatusNotifierItem palaikymas, KIdleTime palaikymas, kiti patobulinimai"
 
-#: src/main.cpp:90
+#: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
 msgstr "irc:// URL arba serverio vardas"
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, kde-format
 msgid "Server to connect"
 msgstr "Serveris prie kurio jungtis"
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, kde-format
 msgid "server"
 msgstr "serveris"
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, kde-format
 msgid "Port to use"
 msgstr "Naudoti prievadą"
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, kde-format
 msgid "port"
 msgstr "prievadas"
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, kde-format
 msgid "Channel to join after connection"
 msgstr "Kanalas, prie kurio jungtis prisijungus"
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, kde-format
 msgid "channel"
 msgstr "kanalas"
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, kde-format
 msgid "Nickname to use"
 msgstr "Naudoti slapyvardį"
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, kde-format
 msgid "nickname"
 msgstr "slapyvardis"
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, kde-format
 msgid "Password for connection"
 msgstr "Slaptažodis prisijungimui"
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, kde-format
 msgid "password"
 msgstr "slaptažodis"
 
-#: src/main.cpp:96
+#: src/main.cpp:90
 #, kde-format
 msgid "Use SSL for connection"
 msgstr "Prisijungimui naudoti SSL"
 
-#: src/main.cpp:97
+#: src/main.cpp:91
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
 msgstr "Išjungti auto prisijungimą prie bet kokių IRC tinklų"
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, fuzzy, kde-format
 #| msgid ""
 #| "Delay D-Bus activity and UI creation by the specified amount of "
@@ -8077,370 +8072,370 @@ msgid ""
 msgstr ""
 "Užlaikyti D-Bus veiklą ir NS sukūrimą nurodytą laiko tarpą mili sekundėmis"
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, kde-format
 msgid "msec"
 msgstr "milisek."
 
-#: src/main.cpp:99
+#: src/main.cpp:93
 #, kde-format
 msgid "Quits and restarts Konversation (if running, otherwise has no effect)"
 msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:95
 #, kde-format
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
 
-#: src/mainwindow.cpp:131
+#: src/mainwindow.cpp:135
 #, kde-format
 msgid "Restart"
 msgstr "Perkrauti"
 
-#: src/mainwindow.cpp:133
+#: src/mainwindow.cpp:137
 #, kde-format
 msgid "Quit and restart the application"
 msgstr "Išjungti ir perkrauti programą"
 
-#: src/mainwindow.cpp:138
+#: src/mainwindow.cpp:142
 #, kde-format
 msgid "&Server List..."
 msgstr "&Serverių sąrašas..."
 
-#: src/mainwindow.cpp:141
+#: src/mainwindow.cpp:145
 #, kde-format
 msgid "Manage networks and servers"
 msgstr "Tvarkyti tinklus ir serverius"
 
-#: src/mainwindow.cpp:146
+#: src/mainwindow.cpp:150
 #, kde-format
 msgid "Quick &Connect..."
 msgstr "Greitas &prisijungimas..."
 
-#: src/mainwindow.cpp:149
+#: src/mainwindow.cpp:153
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr "Įrašykite IRC serverio, prie kurio norite prisijungti, adresą"
 
-#: src/mainwindow.cpp:154
+#: src/mainwindow.cpp:158
 #, kde-format
 msgid "&Reconnect"
 msgstr "Prisijungti iš &naujo"
 
-#: src/mainwindow.cpp:157
+#: src/mainwindow.cpp:161
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr "Iš naujo prisijungti prie dabartinio serverio"
 
-#: src/mainwindow.cpp:163
+#: src/mainwindow.cpp:167
 #, kde-format
 msgid "&Disconnect"
 msgstr "&Atsijungti"
 
-#: src/mainwindow.cpp:166
+#: src/mainwindow.cpp:170
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr "Atsijungti nuo dabartinio serverio."
 
-#: src/mainwindow.cpp:171
+#: src/mainwindow.cpp:175
 #, kde-format
 msgid "&Identities..."
 msgstr "&Tapatybės..."
 
-#: src/mainwindow.cpp:174
+#: src/mainwindow.cpp:178
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr ""
 "Tvarkyti slapyvardžio, pasitraukimo pranešimo ir kitas tapatybės nuostatas"
 
-#: src/mainwindow.cpp:179
+#: src/mainwindow.cpp:183
 #, kde-format
 msgid "&Watched Nicks"
 msgstr "&Stebimi slapyvardžiai"
 
-#: src/mainwindow.cpp:187
+#: src/mainwindow.cpp:191
 #, kde-format
 msgid "&DCC Status"
 msgstr "&DCC Būsena"
 
-#: src/mainwindow.cpp:196 src/mainwindow.cpp:841
-#: src/viewer/viewcontainer.cpp:921
+#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
+#: src/viewer/viewcontainer.cpp:917
 #, kde-format
 msgid "&Open Logfile"
 msgstr "&Atverti žurnalo failą"
 
-#: src/mainwindow.cpp:200
+#: src/mainwindow.cpp:204
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr "Atverti žinomą šio kanalo istoriją naujoje kortelėje"
 
-#: src/mainwindow.cpp:205 src/viewer/viewcontainer.cpp:942
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&Kanalo nustatymai..."
 
-#: src/mainwindow.cpp:208
+#: src/mainwindow.cpp:212
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr "Atverti šios kortelės kanalo nuostatų dialogą"
 
-#: src/mainwindow.cpp:213 src/viewer/viewcontainer.cpp:912
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
 #, kde-format
 msgid "Channel &List"
 msgstr "Kanalų &sąrašas"
 
-#: src/mainwindow.cpp:217
+#: src/mainwindow.cpp:221
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr "Rodyti visų šiame serveryje žinomų kanalų sąrašą"
 
-#: src/mainwindow.cpp:222
+#: src/mainwindow.cpp:226
 #, kde-format
 msgid "&URL Catcher"
 msgstr "&URL gaudyklė"
 
-#: src/mainwindow.cpp:225
+#: src/mainwindow.cpp:229
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr "Išvardinti visus neseniai minėtus URL naujoje kortelėje"
 
-#: src/mainwindow.cpp:232
+#: src/mainwindow.cpp:236
 #, kde-format
 msgid "New &Konsole"
 msgstr "Nauja &Konsolė"
 
-#: src/mainwindow.cpp:234
+#: src/mainwindow.cpp:238
 #, kde-format
 msgid "Open a terminal in a new tab"
 msgstr "Atverti terminalą naujoje kortelėje"
 
-#: src/mainwindow.cpp:264
+#: src/mainwindow.cpp:268
 #, kde-format
 msgid "&Next Tab"
 msgstr "&Kita kortelė"
 
-#: src/mainwindow.cpp:272
+#: src/mainwindow.cpp:276
 #, kde-format
 msgid "&Previous Tab"
 msgstr "&Ankstesnė kortelė"
 
-#: src/mainwindow.cpp:280
+#: src/mainwindow.cpp:284
 #, kde-format
 msgid "Close &Tab"
 msgstr "Užverti k&ortelę"
 
-#: src/mainwindow.cpp:288
+#: src/mainwindow.cpp:292
 #, kde-format
 msgid "Last Focused Tab"
 msgstr "Paskutinė sufokusuota kortelė"
 
-#: src/mainwindow.cpp:295
+#: src/mainwindow.cpp:299
 #, kde-format
 msgid "Next Active Tab"
 msgstr "Kita aktyvi kortelė"
 
-#: src/mainwindow.cpp:308 src/viewer/viewcontainer.cpp:300
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
 #, kde-format
 msgid "Move Tab Up"
 msgstr "Perkelti kortelę į viršų"
 
-#: src/mainwindow.cpp:312 src/mainwindow.cpp:317 src/mainwindow.cpp:334
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355 src/mainwindow.cpp:364
+#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
+#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
 #, kde-format
 msgid "Move this tab"
 msgstr "Perkelti šią kortelę"
 
-#: src/mainwindow.cpp:319 src/viewer/viewcontainer.cpp:308
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
 #, kde-format
 msgid "Move Tab Down"
 msgstr "Perkelti kortelę į apačią"
 
-#: src/mainwindow.cpp:330 src/mainwindow.cpp:360
-#: src/viewer/viewcontainer.cpp:354
+#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
+#: src/viewer/viewcontainer.cpp:350
 #, kde-format
 msgid "Move Tab Right"
 msgstr "Perkelti kortelę į dešinę"
 
-#: src/mainwindow.cpp:339 src/mainwindow.cpp:351
-#: src/viewer/viewcontainer.cpp:346
+#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
+#: src/viewer/viewcontainer.cpp:342
 #, kde-format
 msgid "Move Tab Left"
 msgstr "Perkelti kortelę į kairę"
 
-#: src/mainwindow.cpp:374
+#: src/mainwindow.cpp:378
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "Pakartotinai eiti į kanalą"
 
-#: src/mainwindow.cpp:380 src/mainwindow.cpp:849
+#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
 #, kde-format
 msgid "Enable Notifications"
 msgstr "Įgalinti pranešimus"
 
-#: src/mainwindow.cpp:386
+#: src/mainwindow.cpp:390
 #, kde-format
 msgid "Join on Connect"
 msgstr "Įeiti prisijungiant"
 
-#: src/mainwindow.cpp:391
+#: src/mainwindow.cpp:395
 #, kde-format
 msgid "Connect at Startup"
 msgstr "Prisijungti paleidimo metu"
 
-#: src/mainwindow.cpp:396
+#: src/mainwindow.cpp:400
 #, kde-format
 msgid "Default"
 msgstr "Numatyta"
 
-#: src/mainwindow.cpp:401
+#: src/mainwindow.cpp:405
 #, kde-format
 msgid "Set Encoding"
 msgstr "Nustatyti koduotę"
 
-#: src/mainwindow.cpp:410
+#: src/mainwindow.cpp:414
 #, kde-format
 msgid "Go to Tab %1"
 msgstr "Eiti į kortelę %1"
 
-#: src/mainwindow.cpp:417
+#: src/mainwindow.cpp:421
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr "Išvalyti žymeklio &linijas"
 
-#: src/mainwindow.cpp:420
+#: src/mainwindow.cpp:424
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr "Išvalyti žymeklio linijas dabartinėje kortelėje"
 
-#: src/mainwindow.cpp:425
+#: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:434
+#: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr ""
 
-#: src/mainwindow.cpp:443
+#: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
 msgstr ""
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:452
+#: src/mainwindow.cpp:456
 #, kde-format
 msgid "&Clear Window"
 msgstr "&Išvalyti langą"
 
-#: src/mainwindow.cpp:455
+#: src/mainwindow.cpp:459
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "Išvalyti šios kortelės turinį"
 
-#: src/mainwindow.cpp:460
+#: src/mainwindow.cpp:464
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "Išvalyti &visus langus"
 
-#: src/mainwindow.cpp:463
+#: src/mainwindow.cpp:467
 #, kde-format
 msgid "Clear the contents of all open tabs"
 msgstr "Išvalyti visų atvertų kortelių turinį"
 
-#: src/mainwindow.cpp:468
+#: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
 msgstr "Visuotinis pasitraukimas"
 
-#: src/mainwindow.cpp:476 src/viewer/irccontextmenus.cpp:334
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
 msgid "&Join Channel..."
 msgstr "&Prisijungti prie kanalo..."
 
-#: src/mainwindow.cpp:480
+#: src/mainwindow.cpp:484
 #, kde-format
 msgid "Join a new channel on this server"
 msgstr "Prisijungti prie naujo kanalo šiame serveryje"
 
-#: src/mainwindow.cpp:492 src/mainwindow.cpp:851
+#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
 msgid "&IRC Color..."
 msgstr "&IRC spalva..."
 
-#: src/mainwindow.cpp:496
+#: src/mainwindow.cpp:500
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr "Nustatykite dabartinio IRC pranešimo spalvą"
 
-#: src/mainwindow.cpp:501 src/mainwindow.cpp:853
+#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, kde-format
 msgid "&Marker Line"
 msgstr "&Žymeklio linija"
 
-#: src/mainwindow.cpp:504
+#: src/mainwindow.cpp:508
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
 "Horizontalios linijos, kurią galite matyti tik Jūs, įterpimas dabartinėje "
 "kortelėje"
 
-#: src/mainwindow.cpp:509 src/mainwindow.cpp:852
+#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, kde-format
 msgid "Special &Character..."
 msgstr "Ypatingi &simboliai"
 
-#: src/mainwindow.cpp:513
+#: src/mainwindow.cpp:517
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr "Bet kokio simbolio įterpimas į dabartinį IRC pranešimą"
 
-#: src/mainwindow.cpp:524
+#: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
 msgstr "Fokusuoti įvesties eilutę"
 
-#: src/mainwindow.cpp:531
+#: src/mainwindow.cpp:535
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr "Užverti visas atvertas užklausas"
 
-#: src/mainwindow.cpp:540
+#: src/mainwindow.cpp:544
 #, kde-format
 msgid "Show Nicklist"
 msgstr "Rodyti slapyvardžių sąrašą:"
 
-#: src/mainwindow.cpp:546
+#: src/mainwindow.cpp:550
 #, kde-format
 msgid "Show/Hide Konversation"
 msgstr "Rodyti/slėpti Konversation"
 
-#: src/mainwindow.cpp:557
+#: src/mainwindow.cpp:561
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr "Įgalinti rodymą ekrane"
 
-#: src/mainwindow.cpp:564
+#: src/mainwindow.cpp:568
 #, kde-format
 msgid "Bookmarks"
 msgstr "Žymelės"
 
-#: src/mainwindow.cpp:609
+#: src/mainwindow.cpp:613
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
@@ -8449,17 +8444,17 @@ msgstr ""
 "<qt>Turite aktyvius DCC failų perdavimus. Ar tikrai norite uždaryti "
 "<b>Konversation</b>?</qt>"
 
-#: src/mainwindow.cpp:610 src/mainwindow.cpp:620
+#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
 #, kde-format
 msgid "Confirm Quit"
 msgstr "Patvirtinti išjungimą"
 
-#: src/mainwindow.cpp:619
+#: src/mainwindow.cpp:623
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr "<qt>Ar tikrai norite uždaryti <b>Konversation</b>?</qt>"
 
-#: src/mainwindow.cpp:656
+#: src/mainwindow.cpp:660
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8470,12 +8465,12 @@ msgstr ""
 "Norėdami <b>išjungti</b> programą naudokite meniu įrašą <b>Baigti</b> iš "
 "<b>Konversation</b> meniu.</p>"
 
-#: src/mainwindow.cpp:658
+#: src/mainwindow.cpp:662
 #, kde-format
 msgid "Docking in System Tray"
 msgstr "Nukelti į sistemos dėklą"
 
-#: src/mainwindow.cpp:800
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8484,47 +8479,47 @@ msgstr ""
 "<qt>Tai pilnai paslėps meniu juostą. Norėdami vėl ją parodyti spauskite %1.</"
 "qt>"
 
-#: src/mainwindow.cpp:801
+#: src/mainwindow.cpp:807
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Slėpti meniu juostą"
 
-#: src/mainwindow.cpp:833
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Notifications"
 msgstr "Perjungti pranešimus"
 
-#: src/mainwindow.cpp:834
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr "Įjungti būseną „pasitraukęs“ globaliai"
 
-#: src/mainwindow.cpp:835
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr "Įterpti &IRC spalvą..."
 
-#: src/mainwindow.cpp:836
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert Special &Character..."
 msgstr "Įterpti ypatingą &simbolį..."
 
-#: src/mainwindow.cpp:837
+#: src/mainwindow.cpp:843
 #, kde-format
 msgid "Insert &Marker Line"
 msgstr "Įterpti žymeklio &liniją"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:845
 #, kde-format
 msgid "&Channel List"
 msgstr "&Kanalų sąrašas"
 
-#: src/mainwindow.cpp:850
+#: src/mainwindow.cpp:856
 #, kde-format
 msgid "Set &Away Globally"
 msgstr "Nustatyti būseną „pasitraukęs“ globaliai"
 
-#: src/mainwindow.cpp:865
+#: src/mainwindow.cpp:871
 #, kde-format
 msgid "Server List"
 msgstr "Serverių sąrašas"
@@ -8535,127 +8530,127 @@ msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
 msgstr "Nauja žinutė nuo %1 kanale %2"
 
-#: src/notificationhandler.cpp:100
+#: src/notificationhandler.cpp:103
 #, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
 msgstr "Jūsų slapyvardis paminėjo %1 kanale %2"
 
-#: src/notificationhandler.cpp:111
+#: src/notificationhandler.cpp:114
 #, fuzzy, kde-format
 #| msgid "[HighLight] (%1) *** %2"
 msgid "[HighLight] (%1) <%2>"
 msgstr "[Paryškinimas] (%1) *** %2"
 
-#: src/notificationhandler.cpp:125 src/notificationhandler.cpp:431
+#: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
 #, fuzzy, kde-format
 #| msgid "[HighLight] (%1) &lt;%2&gt; %3"
 msgid "[HighLight] (%1) <%2> %3"
 msgstr "[Paryškinti] (%1) &lt;%2&gt; %3"
 
-#: src/notificationhandler.cpp:150
+#: src/notificationhandler.cpp:153
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
 msgstr "Nauja užklausos žinutė nuo %1"
 
-#: src/notificationhandler.cpp:161
+#: src/notificationhandler.cpp:164
 #, fuzzy, kde-format
 #| msgid "[Query] &lt;%1&gt;"
 msgid "[Query] <%1>"
 msgstr "[Užklausa] &lt;%1&gt;"
 
-#: src/notificationhandler.cpp:175
+#: src/notificationhandler.cpp:178
 #, fuzzy, kde-format
 #| msgid "[Query] &lt;%1&gt; %2"
 msgid "[Query] <%1> %2"
 msgstr "[Užklausa] &lt;%1&gt; %2"
 
-#: src/notificationhandler.cpp:209 src/notificationhandler.cpp:216
+#: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, kde-format
 msgid "%1 joined %2"
 msgstr "%1 prisijungė prie %2"
 
-#: src/notificationhandler.cpp:228 src/notificationhandler.cpp:235
+#: src/notificationhandler.cpp:231 src/notificationhandler.cpp:238
 #, kde-format
 msgid "%1 parted %2"
 msgstr "%1 paliko %2"
 
-#: src/notificationhandler.cpp:247
+#: src/notificationhandler.cpp:250
 #, kde-format
 msgid "%1 quit %2"
 msgstr "%1 atsijungė nuo %2"
 
-#: src/notificationhandler.cpp:258
+#: src/notificationhandler.cpp:261
 #, kde-format
 msgid "%1 changed nickname to %2"
 msgstr "%1 pakeitė slapyvardį į %2"
 
-#: src/notificationhandler.cpp:269
+#: src/notificationhandler.cpp:272
 #, kde-format
 msgid "%1 wants to send a file to you"
 msgstr "%1 nori jums atsiųsti failą"
 
-#: src/notificationhandler.cpp:280
+#: src/notificationhandler.cpp:283
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
 msgstr "Įvyko klaida DCC perdavime: %1"
 
-#: src/notificationhandler.cpp:293 src/notificationhandler.cpp:299
+#: src/notificationhandler.cpp:296 src/notificationhandler.cpp:301
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
 msgstr "%1 failo perdavimas baigtas"
 
-#: src/notificationhandler.cpp:301
+#: src/notificationhandler.cpp:302
 #, kde-format
 msgctxt "Opens the file from the finished dcc transfer"
 msgid "Open"
 msgstr "Atverti"
 
-#: src/notificationhandler.cpp:317
+#: src/notificationhandler.cpp:318
 #, kde-format
 msgid "%1 changed modes in %2: %3"
 msgstr "%1 pakeitė veiksenas %2: %3"
 
-#: src/notificationhandler.cpp:333
+#: src/notificationhandler.cpp:334
 #, kde-format
 msgid "%1 has started a conversation (query) with you."
 msgstr "%1 pradėjo pokalbį (užklausą) su jumis."
 
-#: src/notificationhandler.cpp:377
+#: src/notificationhandler.cpp:378
 #, kde-format
 msgid "You are kicked by %1 from %2"
 msgstr "%1 išmetė jus iš %2"
 
-#: src/notificationhandler.cpp:392
+#: src/notificationhandler.cpp:393
 #, kde-format
 msgid "%1 started a DCC chat with you"
 msgstr "%1 su Jumis pradėjo DCC pokalbį"
 
-#: src/notificationhandler.cpp:412
+#: src/notificationhandler.cpp:414
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
 msgstr "Paryškinimas įjungtas kanale %1"
 
-#: src/notificationhandler.cpp:417
+#: src/notificationhandler.cpp:419
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
 msgstr "Paryškinimą įjungė %2 kanale %1"
 
-#: src/notificationhandler.cpp:428
+#: src/notificationhandler.cpp:430
 #, kde-format
 msgid "[HighLight] (%1) *** %2"
 msgstr "[Paryškinimas] (%1) *** %2"
 
-#: src/notificationhandler.cpp:442
+#: src/notificationhandler.cpp:443
 #, kde-format
 msgid "Failed to connect to %1"
 msgstr "Nepavyko prisijungti prie %1"
 
-#: src/notificationhandler.cpp:455
+#: src/notificationhandler.cpp:457
 #, kde-format
 msgid "You have joined %1."
 msgstr "Jūs prisijungėte prie %1."
@@ -8954,7 +8949,7 @@ msgstr "Nepavyko atsisiųsti %1: %2"
 msgid "Error parsing router description."
 msgstr "Klaida analizuojant maršruto parinktuvo aprašymą."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
 msgid "URL Catcher"
 msgstr "URL gaudyklė"
@@ -9104,17 +9099,17 @@ msgid ""
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
 msgid "Save link as"
 msgstr "Įrašyti nuorodą kaip"
 
-#: src/urlcatcher.cpp:334
+#: src/urlcatcher.cpp:333
 #, kde-format
 msgid "Save URL List"
 msgstr "Įrašyti URL sąrašą"
 
-#: src/urlcatcher.cpp:361
+#: src/urlcatcher.cpp:360
 #, kde-format
 msgid ""
 "Konversation URL List: %1\n"
@@ -9176,7 +9171,7 @@ msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: src/viewer/channeloptionsdialog.cpp:613
+#: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9187,7 +9182,7 @@ msgstr ""
 "keisti.</p><p><b>T</b>emos veiksena reiškia, kad tik operatorius gali "
 "pakeisti kanalo temą.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:615
+#: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9201,7 +9196,7 @@ msgstr ""
 "turi beveik visi kanalai, ji nustatoma siekiant išvengti erzinančių "
 "pranešimų.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:617
+#: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9217,7 +9212,7 @@ msgstr ""
 "<em>WHOIS</em> užklausą ar bet kaip kitaip. Jei ši veiksena įjungta, tik "
 "asmenys, esantys tame pačiame kanale, galės Jus matyti.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:619
+#: src/viewer/channeloptionsdialog.cpp:615
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9232,7 +9227,7 @@ msgstr ""
 "pakviesti kanalo operatorius turi įvykdyti komandą <em>/invite slapyvardis</"
 "em> iš kanalo vidaus.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:621
+#: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9246,7 +9241,7 @@ msgstr ""
 "tema nėra rodoma. Naudotojo <em>WHOIS</em> gali rodyti ir nerodyti, kad "
 "naudotojai yra privačiame kanale priklausomai nuo IRC serverio.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:623
+#: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9257,7 +9252,7 @@ msgstr ""
 "pakeisti.</p><p><b>M</b>oderuojamas kanalas reiškia, kad tik operatorius, "
 "pusiau moderatorius ir tie kas kas turi balso teisę gali čia rašyti.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:625
+#: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9268,7 +9263,7 @@ msgstr ""
 "pakeisti.</p><p>Apsaugotas kanalas reikalauja slaptažodžio, kad į jį "
 "prisijungti.</p></qt>"
 
-#: src/viewer/channeloptionsdialog.cpp:627
+#: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -9393,7 +9388,7 @@ msgstr "Pridėti draudimą"
 msgid "Remove Ban"
 msgstr "Pašalinti draudimą"
 
-#: src/viewer/chatwindow.cpp:515
+#: src/viewer/chatwindow.cpp:509
 #, kde-format
 msgid ""
 "\n"
@@ -9546,203 +9541,203 @@ msgid ""
 "to see this.</b></qt>"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:137
 #, kde-format
 msgid "Copy Link Address"
 msgstr "Kopijuoti nuorodos adresą"
 
-#: src/viewer/irccontextmenus.cpp:145
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "Pridėti žymelę"
 
-#: src/viewer/irccontextmenus.cpp:146
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
 msgstr "Atverti su..."
 
-#: src/viewer/irccontextmenus.cpp:147
+#: src/viewer/irccontextmenus.cpp:143
 #, kde-format
 msgid "Save Link As..."
 msgstr "Įrašyti nuorodą kaip..."
 
-#: src/viewer/irccontextmenus.cpp:287
+#: src/viewer/irccontextmenus.cpp:283
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "Ieškoti „%1“ su"
 
-#: src/viewer/irccontextmenus.cpp:301
+#: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "Konfigūruoti žiniatinklio trumpinius..."
 
-#: src/viewer/irccontextmenus.cpp:337
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &topic"
 msgstr "Gauti &temą"
 
-#: src/viewer/irccontextmenus.cpp:338
+#: src/viewer/irccontextmenus.cpp:334
 #, kde-format
 msgid "Get &user list"
 msgstr "Gauti &naudotojų sąrašą"
 
-#: src/viewer/irccontextmenus.cpp:383
+#: src/viewer/irccontextmenus.cpp:379
 #, kde-format
 msgid "Open Query"
 msgstr "Atverti užklausą"
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Modes"
 msgstr "Veiksenos"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Give Op"
 msgstr "Suteikti Op"
 
-#: src/viewer/irccontextmenus.cpp:397
+#: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Take Op"
 msgstr "Atimti Op"
 
-#: src/viewer/irccontextmenus.cpp:398
+#: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Give HalfOp"
 msgstr "Suteikti HalfOp (dalinį Op)"
 
-#: src/viewer/irccontextmenus.cpp:399
+#: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Take HalfOp"
 msgstr "Atimti HalfOp (dalinį Op)"
 
-#: src/viewer/irccontextmenus.cpp:400
+#: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Give Voice"
 msgstr "Suteikti balsą"
 
-#: src/viewer/irccontextmenus.cpp:401
+#: src/viewer/irccontextmenus.cpp:397
 #, kde-format
 msgid "Take Voice"
 msgstr "Pašalinti balsą"
 
-#: src/viewer/irccontextmenus.cpp:405
+#: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick / Ban"
 msgstr "Išmesti / Uždrausti"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Kickban"
 msgstr "Kickban"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:404
 #, kde-format
 msgid "Ban Nickname"
 msgstr "Uždrausti (Ban) slapyvardį"
 
-#: src/viewer/irccontextmenus.cpp:410
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr "Uždrausti (Ban) *!*@*.mazgas"
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr "Uždrausti (Ban) *!*@domenas"
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr "Uždrausti (Ban) *!naudotojas@*.mazgas"
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:409
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr "Uždrausti (Ban) *!naudotojas@domenas"
 
-#: src/viewer/irccontextmenus.cpp:415
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr "Uždrausti ir išmesti (Kickban) *!*@*.mazgas"
 
-#: src/viewer/irccontextmenus.cpp:416
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr "Uždrausti ir išmesti (Kickban) *!*@domenas"
 
-#: src/viewer/irccontextmenus.cpp:417
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr "Uždrausti ir išmesti (Kickban) *!naudotojas@*.mazgas"
 
-#: src/viewer/irccontextmenus.cpp:418
+#: src/viewer/irccontextmenus.cpp:414
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr "Uždrausti ir išmesti (Kickban) *!naudotojas@domenas"
 
-#: src/viewer/irccontextmenus.cpp:436
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Version"
 msgstr "&Versija"
 
-#: src/viewer/irccontextmenus.cpp:437
+#: src/viewer/irccontextmenus.cpp:433
 #, kde-format
 msgid "&Ping"
 msgstr "&Ping"
 
-#: src/viewer/irccontextmenus.cpp:444 src/viewer/irccontextmenus.cpp:629
-#: src/viewer/irccontextmenus.cpp:630
+#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
+#: src/viewer/irccontextmenus.cpp:626
 #, kde-format
 msgid "Unignore"
 msgstr "Nebeignoruoti"
 
-#: src/viewer/irccontextmenus.cpp:447
+#: src/viewer/irccontextmenus.cpp:443
 #, kde-format
 msgid "Add to Watched Nicks"
 msgstr "Pridėti prie stebimų slapyvardžių"
 
-#: src/viewer/irccontextmenus.cpp:449
+#: src/viewer/irccontextmenus.cpp:445
 #, kde-format
 msgid "Remove From Watched Nicks"
 msgstr "Pašalinti iš stebimų slapyvardžių"
 
-#: src/viewer/irccontextmenus.cpp:456
+#: src/viewer/irccontextmenus.cpp:452
 #, kde-format
 msgid "Send &File..."
 msgstr "Siųsti &failą..."
 
-#: src/viewer/irccontextmenus.cpp:458
+#: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Chat"
 msgstr "Atverti DCC pokalbį"
 
-#: src/viewer/irccontextmenus.cpp:459
+#: src/viewer/irccontextmenus.cpp:455
 #, kde-format
 msgid "Open DCC Whiteboard"
 msgstr "Atverti DCC Interaktyvioje lentoje"
 
-#: src/viewer/irccontextmenus.cpp:592
+#: src/viewer/irccontextmenus.cpp:588
 #, kde-format
 msgid "Do you want to ignore %1?"
 msgstr "Ar norite ignoruoti %1?"
 
-#: src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:590
 #, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr "Ar norite ignoruoti pažymėtus naudotojus?"
 
-#: src/viewer/irccontextmenus.cpp:622
+#: src/viewer/irccontextmenus.cpp:618
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr "Ar norite nustoti ignoruoti %1?"
 
-#: src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:620
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr "Ar norite nustoti ignoruoti pažymėtus naudotojus?"
 
-#: src/viewer/irccontextmenus.cpp:791
+#: src/viewer/irccontextmenus.cpp:781
 #, fuzzy, kde-format
 #| msgid "Query author"
 msgctxt "Opens a query (private message) window with the author of the topic"
@@ -9784,7 +9779,7 @@ msgstr[1] "%1 eilutės"
 msgstr[2] "%1 eilučių"
 msgstr[3] "%1 eilutė"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:481
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9795,22 +9790,22 @@ msgid ""
 "continue?</qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:488
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr "Perspėjimas dėl didelės apimties įterpimo"
 
-#: src/viewer/ircinput.cpp:489
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
 msgstr "Padėti"
 
-#: src/viewer/ircview.cpp:2233
+#: src/viewer/ircview.cpp:2225
 #, kde-format
 msgid "Open a query with %1"
 msgstr "Atverti užklausą su %1"
 
-#: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:304
+#: src/viewer/ircview.cpp:2232 src/viewer/topiclabel.cpp:304
 #, kde-format
 msgid "Join the channel %1"
 msgstr "Prisijungti prie kanalo %1"
@@ -9825,7 +9820,7 @@ msgstr "%1 žurnalo failas"
 msgid "Reload"
 msgstr "Įkelti iš naujo"
 
-#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:139
+#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, kde-format
 msgid "Clear Logfile"
 msgstr "Išvalyti žurnalo failą"
@@ -9860,7 +9855,7 @@ msgstr ""
 "Čia rodomi žurnalo faile esantys pranešimai. Seniausi pranešimai yra "
 "viršuje, o naujausi – apačioje."
 
-#: src/viewer/logfilereader.cpp:138
+#: src/viewer/logfilereader.cpp:135
 #, kde-format
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
@@ -9868,7 +9863,7 @@ msgstr ""
 "Ar tikrai norite visam laikui pašalinti visą šiame faile esančio žurnalo "
 "informaciją?"
 
-#: src/viewer/logfilereader.cpp:152
+#: src/viewer/logfilereader.cpp:149
 #, kde-format
 msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
@@ -9877,12 +9872,12 @@ msgstr ""
 "Pastaba: Įrašydami žurnalo failą įrašysite visus duomenys, kurie jame yra, o "
 "ne tik tai, ką galite matyti šioje žiūryklėje."
 
-#: src/viewer/logfilereader.cpp:153
+#: src/viewer/logfilereader.cpp:150
 #, kde-format
 msgid "Save Logfile"
 msgstr "Įrašyti žurnalo failą"
 
-#: src/viewer/logfilereader.cpp:157
+#: src/viewer/logfilereader.cpp:154
 #, kde-format
 msgid "Choose Destination Folder"
 msgstr "Pasirinkite paskirties aplanką"
@@ -9920,7 +9915,7 @@ msgstr "Pridėti &citavimo indikatorius"
 msgid "&Remove Newlines"
 msgstr "&Pašalinti naujas eilutes"
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2751
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, kde-format
 msgid "Raw Log"
 msgstr "Paprastas žurnalas"
@@ -10030,7 +10025,7 @@ msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
 msgstr "%1, autorius %2"
 
-#: src/viewer/topichistoryview.cpp:209
+#: src/viewer/topichistoryview.cpp:208
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
@@ -10053,70 +10048,70 @@ msgstr ""
 msgid "IRC Client"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:886
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Find Text..."
 msgstr "Rasti tekstą..."
 
-#: src/viewer/viewcontainer.cpp:888
+#: src/viewer/viewcontainer.cpp:884
 #, kde-format
 msgid "Search for text in the current tab"
 msgstr "Ieškoti teksto šioje kortelėje"
 
-#: src/viewer/viewcontainer.cpp:906
+#: src/viewer/viewcontainer.cpp:902
 #, kde-format
 msgid "Channel &List for %1"
 msgstr "Kanalų sąrašas tinkle %1"
 
-#: src/viewer/viewcontainer.cpp:926
+#: src/viewer/viewcontainer.cpp:922
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr "&Atverti %1 žurnalo failą"
 
-#: src/viewer/viewcontainer.cpp:937
+#: src/viewer/viewcontainer.cpp:933
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr "&Kanalo nustatymai %1..."
 
-#: src/viewer/viewcontainer.cpp:2120
+#: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Rename Tab"
 msgstr "Pervadinti kortelę"
 
-#: src/viewer/viewcontainer.cpp:2121
+#: src/viewer/viewcontainer.cpp:2117
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "Įveskite naują kortelės pavadinimą:"
 
-#: src/viewer/viewcontainer.cpp:2193
+#: src/viewer/viewcontainer.cpp:2189
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "Numatyta ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2234
+#: src/viewer/viewcontainer.cpp:2230
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "&Pervadinti kortelę..."
 
-#: src/viewer/viewcontainer.cpp:2383
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "You can only search in text fields."
 msgstr "Galite atlikti paiešką tik teksto laukuose."
 
-#: src/viewer/viewcontainer.cpp:2384
+#: src/viewer/viewcontainer.cpp:2380
 #, kde-format
 msgid "Find Text Information"
 msgstr "Rasti tekstinę informaciją"
 
-#: src/viewer/viewcontainer.cpp:2988
+#: src/viewer/viewcontainer.cpp:2980
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3018
+#: src/viewer/viewcontainer.cpp:3010
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -10127,15 +10122,18 @@ msgstr ""
 "prisijungimas nėra užtektinai greitas, gali būti, kad programa būs atjungta "
 "nuo serverio."
 
-#: src/viewer/viewcontainer.cpp:3022
+#: src/viewer/viewcontainer.cpp:3014
 #, kde-format
 msgid "Channel List Warning"
 msgstr "Kanalų sąrašo perspėjimas"
 
-#: src/viewer/viewcontainer.cpp:3052
+#: src/viewer/viewcontainer.cpp:3044
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Stebimi slapyvardžiai"
+
+#~ msgid "Konversation Bookmarks Editor"
+#~ msgstr "Konversation žymelių redaktorius"
 
 #~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
 #~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"

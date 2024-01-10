@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 00:42+0000\n"
-"PO-Revision-Date: 2023-02-14 06:33+0100\n"
+"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"PO-Revision-Date: 2024-01-09 21:09+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -107,10 +107,11 @@ msgstr ""
 #: data/scripts/media:265
 msgid "%1 did not report the metadata needed to output a message."
 msgstr ""
+"%1-მა არ გადმოგვცა მეტამონაცემები, რომელიც შეტყობინების გამოსატანადაა საჭირო."
 
 #: data/scripts/media:281
 msgid "There is a problem in the output format configuration."
-msgstr ""
+msgstr "პრობლემა გამოტანის ფორმატის კონფიგურაციასთან."
 
 #: data/scripts/media:301
 msgid "media v%1 for Konversation."
@@ -136,16 +137,11 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:397 src/irc/server.cpp:1803 src/irc/server.cpp:3836
+#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
 #: src/irc/server.cpp:3841
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
-
-#: src/bookmarkhandler.cpp:35
-#, kde-format
-msgid "Konversation Bookmarks Editor"
-msgstr "Konversation-ის სანიშნების რედაქტორი"
 
 #: src/cipher.cpp:477
 #, kde-format
@@ -227,7 +223,7 @@ msgstr "მომხმარებელთა ლიმიტი"
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/alias_config.cpp:162 src/config/highlight_config.cpp:216
 #: src/config/quickbuttons_config.cpp:198
-#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:291
+#: src/config/quickbuttons_configui.ui:89 src/urlcatcher.cpp:292
 #, kde-format
 msgid "New"
 msgstr "&ახალი"
@@ -852,7 +848,7 @@ msgstr "14:"
 msgid "13:"
 msgstr "13:"
 
-#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:35
+#: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
 #, kde-format
 msgid " second"
@@ -979,24 +975,24 @@ msgstr "მომხმარებელი:"
 msgid "Password:"
 msgstr "პაროლი:"
 
-#: src/config/dcc_config.cpp:34
+#: src/config/dcc_config.cpp:29
 #, kde-format
 msgid " byte"
 msgid_plural " bytes"
 msgstr[0] " ბაიტი"
 msgstr[1] " ბაიტი"
 
-#: src/config/dcc_config.cpp:92
+#: src/config/dcc_config.cpp:74
 #, kde-format
 msgid "Network Interface"
 msgstr "ქსელის ინტერფეისი"
 
-#: src/config/dcc_config.cpp:93
+#: src/config/dcc_config.cpp:75
 #, kde-format
 msgid "Reply From IRC Server"
-msgstr ""
+msgstr "პასუხი IRC სერვერიდან"
 
-#: src/config/dcc_config.cpp:94
+#: src/config/dcc_config.cpp:76
 #, kde-format
 msgid "Specify Manually"
 msgstr "&ხელით მითითება"
@@ -1035,13 +1031,13 @@ msgstr ""
 #: src/config/dcc_configui.ui:77
 #, kde-format
 msgid "Automaticall&y accept download offer"
-msgstr ""
+msgstr "&გადმოწერის შემოთავაზებების ავტომატური მიღება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccAutoResume)
 #: src/config/dcc_configui.ui:84
 #, kde-format
 msgid "Au&tomatically resume download"
-msgstr ""
+msgstr "&გადმოწერის ავტომატური გაგრძელება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccFastSend)
 #: src/config/dcc_configui.ui:91
@@ -1053,19 +1049,19 @@ msgstr ""
 #: src/config/dcc_configui.ui:98
 #, kde-format
 msgid "Enable passive DCC send"
-msgstr ""
+msgstr "პასიური DCC გაგზავნის ჩართვა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
 #, kde-format
 msgid "Automatically accept DCC chat offer"
-msgstr ""
+msgstr "DCC ჩატის შემოთავაზების ავტომატური მიღება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccUPnP)
 #: src/config/dcc_configui.ui:115
 #, kde-format
 msgid "Enable UPnP for NAT traversal"
-msgstr ""
+msgstr "NAT-ში გავლისთვის UPnP-ის გამოყენება"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:124
@@ -1085,7 +1081,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:156
 #, kde-format
 msgid "DCC send t&imeout:"
-msgstr ""
+msgstr "DCC გაგზავნის &მოლოდინის ვადა:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/config/dcc_configui.ui:179
@@ -1103,7 +1099,7 @@ msgstr "IP"
 #: src/config/dcc_configui.ui:213
 #, kde-format
 msgid "&Method to get own IP:"
-msgstr ""
+msgstr "&საკუთარი IP-ის მიღების მეთოდი:"
 
 #. i18n: ectx: property (text), widget (QLabel, ownIP)
 #: src/config/dcc_configui.ui:229
@@ -1194,7 +1190,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:75
 #, kde-format
 msgid "Hide window on startup"
-msgstr ""
+msgstr "გაშვებისას მთავარი ფანჯრის დამალვა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
 #: src/config/generalbehavior_configui.ui:85
@@ -1254,7 +1250,7 @@ msgstr "სხვადასხვა"
 #: src/config/generalbehavior_configui.ui:191
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr ""
+msgstr "გაფრთხილებების გამორთვა, როცა &გასული ვარ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:200
@@ -1430,7 +1426,7 @@ msgstr "CTCP"
 
 #. i18n: ectx: property (text), widget (QCheckBox, chkChannel)
 #: src/config/ignore_configui.ui:90 src/irc/inputfilter.cpp:2364
-#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:168
+#: src/irc/inputfilter.cpp:2368 src/irc/invitedialog.cpp:170
 #: src/viewer/ignorelistviewitem.cpp:35
 #, kde-format
 msgid "Channel"
@@ -1699,13 +1695,13 @@ msgstr ""
 #: src/config/nicklistbehavior_configui.ui:46
 #, kde-format
 msgid "Sort by &activity"
-msgstr ""
+msgstr "დალაგება &აქტივობის მიხედვით"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortByStatus)
 #: src/config/nicklistbehavior_configui.ui:59
 #, kde-format
 msgid "Sort b&y user status"
-msgstr ""
+msgstr "დალაგება &მომხმარებლის სტატუსით"
 
 #. i18n: ectx: property (text), widget (QLabel, orderHintLabel)
 #: src/config/nicklistbehavior_configui.ui:72
@@ -1732,13 +1728,13 @@ msgstr "ახსნა"
 #: src/config/osd_configui.ui:35
 #, kde-format
 msgid "&Enable On Screen Display"
-msgstr ""
+msgstr "მთელ &ეკრანზე ჩვენების ჩართვა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/osd_configui.ui:45
 #, kde-format
 msgid "On &Screen Display"
-msgstr ""
+msgstr "&მთელ ეკრანზე ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
@@ -1828,7 +1824,7 @@ msgstr " მწმ"
 #: src/config/preferences.cpp:56
 #, kde-format
 msgid "Default Identity"
-msgstr ""
+msgstr "ნაგულისხმევი იდენტიფიკატორი"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/quickbuttons_configui.ui:20
@@ -1925,7 +1921,7 @@ msgstr "ფერები"
 msgid "Fonts"
 msgstr "ფონტები"
 
-#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:92
+#: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
 #, kde-format
 msgid "Quick Buttons"
 msgstr "სწრაფი ღილაკები"
@@ -1969,7 +1965,7 @@ msgstr "მეტსახელების სია"
 msgid "Command Aliases"
 msgstr "ბრძანების მეტსახელები"
 
-#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:518
+#: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
 #, kde-format
 msgid "Auto Replace"
 msgstr "ავტომატური ჩანაცვლება"
@@ -2122,42 +2118,42 @@ msgstr "თაგუნა"
 msgid "&Middle-click on a tab to close it"
 msgstr ""
 
-#: src/config/theme_config.cpp:180
+#: src/config/theme_config.cpp:179
 #, kde-format
 msgid "Select Theme Package"
 msgstr "თემის პაკეტის დაყენება"
 
-#: src/config/theme_config.cpp:181
+#: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
 msgstr "Konversation-ის თემები (*.tar.gz *.tar.bz2 *.tar *.zip)"
 
-#: src/config/theme_config.cpp:207
+#: src/config/theme_config.cpp:206
 #, kde-format
 msgid "Unknown error (0)"
 msgstr "უცნობი შეცდომა (0)"
 
-#: src/config/theme_config.cpp:211
+#: src/config/theme_config.cpp:210
 #, kde-format
 msgid "Failed to Download Theme"
 msgstr "თემის გადმოწერის შეცდომა"
 
-#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
+#: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, kde-format
 msgid "Theme archive is invalid."
 msgstr "თემის არქივი არასწორია."
 
-#: src/config/theme_config.cpp:237 src/config/theme_config.cpp:267
+#: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, kde-format
 msgid "Cannot Install Theme"
 msgstr "თემის დაყენება შეუძლებელია"
 
-#: src/config/theme_config.cpp:291
+#: src/config/theme_config.cpp:290
 #, kde-format
 msgid "Do you want to remove %1?"
 msgstr "მართლა გნებავთ %1 -ის წაშლა?"
 
-#: src/config/theme_config.cpp:292
+#: src/config/theme_config.cpp:291
 #, kde-format
 msgid "Remove Theme"
 msgstr "თემის წაშლა"
@@ -2401,7 +2397,7 @@ msgstr ""
 #: src/config/warnings_configui.ui:29
 #, kde-format
 msgid "Show a warning dialog when..."
-msgstr ""
+msgstr "გაფრთხილების ფანჯრის ჩვენება, როცა..."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:24
@@ -2600,7 +2596,7 @@ msgstr ""
 #: src/connectionmanager.cpp:592
 #, kde-format
 msgid "Identity Settings"
-msgstr ""
+msgstr "იდენტიფიკაციის მორგება"
 
 #: src/connectionmanager.cpp:593
 #, kde-format
@@ -2628,46 +2624,46 @@ msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:372
+#: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
 msgstr ""
 
-#: src/dcc/chat.cpp:152
+#: src/dcc/chat.cpp:148
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
 msgstr ""
 
-#: src/dcc/chat.cpp:153
+#: src/dcc/chat.cpp:149
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
 msgstr ""
 
-#: src/dcc/chat.cpp:154
+#: src/dcc/chat.cpp:150
 #, kde-format
 msgid "Accept"
 msgstr "დასტური"
 
-#: src/dcc/chat.cpp:155
+#: src/dcc/chat.cpp:151
 #, kde-format
 msgid "Reject"
 msgstr "უარყოფა"
 
-#: src/dcc/chat.cpp:165
+#: src/dcc/chat.cpp:157
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
 msgstr ""
 
-#: src/dcc/chat.cpp:204
+#: src/dcc/chat.cpp:196
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
 msgstr ""
 
-#: src/dcc/chat.cpp:293
+#: src/dcc/chat.cpp:285
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
@@ -2675,14 +2671,14 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:311 src/dcc/chat.cpp:343 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
 
-#: src/dcc/chat.cpp:325
+#: src/dcc/chat.cpp:317
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
@@ -2690,59 +2686,59 @@ msgid ""
 "server."
 msgstr ""
 
-#: src/dcc/chat.cpp:367
+#: src/dcc/chat.cpp:359
 #, kde-format
 msgid "Could not open a socket for listening: %1"
-msgstr ""
+msgstr "ვერ გავხსენი სოკეტი მოსასმენად: %1"
 
-#: src/dcc/chat.cpp:378
+#: src/dcc/chat.cpp:370
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
 msgstr ""
 
-#: src/dcc/chat.cpp:439
+#: src/dcc/chat.cpp:431
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
 msgstr "დაფა"
 
-#: src/dcc/chat.cpp:442
+#: src/dcc/chat.cpp:434
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
 msgstr "ჩატი"
 
-#: src/dcc/chat.cpp:473
+#: src/dcc/chat.cpp:465
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
 msgstr ""
 
-#: src/dcc/chat.cpp:490
+#: src/dcc/chat.cpp:482
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr ""
 
-#: src/dcc/chat.cpp:497 src/dcc/transfersend.cpp:568
+#: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
 #, kde-format
 msgid "Socket error: %1"
 msgstr "სოკეტის შეცდომა: %1"
 
-#: src/dcc/chat.cpp:558
+#: src/dcc/chat.cpp:550
 #, kde-format
 msgid "Could not accept the client."
 msgstr "კლიენტის დადასტურების შეცდომა."
 
-#: src/dcc/chat.cpp:580
+#: src/dcc/chat.cpp:572
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
 msgstr ""
 
-#: src/dcc/chat.cpp:586
+#: src/dcc/chat.cpp:578
 #, kde-format
 msgid "Connection closed."
 msgstr "მიერთება დახურულია."
@@ -2760,8 +2756,8 @@ msgctxt ""
 msgid "DCC %1 with %2 on %3:%4."
 msgstr ""
 
-#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:586
-#: src/dcc/transfersend.cpp:394
+#: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
+#: src/dcc/transfersend.cpp:396
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
@@ -2826,8 +2822,8 @@ msgctxt "passive dcc send"
 msgid "Passive Send"
 msgstr "პასიური გაგზავნა"
 
-#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:76
-#: src/notificationhandler.cpp:129 src/notificationhandler.cpp:179
+#: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:79
+#: src/notificationhandler.cpp:132 src/notificationhandler.cpp:182
 #, kde-format
 msgid "Open"
 msgstr "გახსნა"
@@ -2850,7 +2846,7 @@ msgstr ""
 #: src/dcc/resumedialog.cpp:48
 #, kde-format
 msgid "DCC Receive Question"
-msgstr ""
+msgstr "DCC მიღების კითხვა"
 
 #: src/dcc/resumedialog.cpp:96
 #, kde-format
@@ -2860,7 +2856,7 @@ msgstr "ფაილის საწყისი სახელი"
 #: src/dcc/resumedialog.cpp:97
 #, kde-format
 msgid "Suggest &New Filename"
-msgstr ""
+msgstr "&ახალი სახელის შეთავაზება"
 
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
@@ -3192,14 +3188,14 @@ msgstr ""
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
 msgid "Incoming Transfers"
-msgstr ""
+msgstr "შემომავალი ინფორმაცია"
 
 #: src/dcc/transferlistmodel.cpp:641
 #, kde-format
 msgid "Outgoing Transfers"
-msgstr ""
+msgstr "გამავალი ინფორმაცია"
 
-#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
+#: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
 #, kde-format
 msgid "DCC Status"
 msgstr "DCC სტატუსი"
@@ -3207,7 +3203,7 @@ msgstr "DCC სტატუსი"
 #: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
-msgstr ""
+msgstr "&ყველაფრის მონიშვნა"
 
 #: src/dcc/transferpanel.cpp:74
 #, kde-format
@@ -3280,7 +3276,7 @@ msgstr "მდებარეობის გახსნა"
 msgid "Open the file location"
 msgstr "ფაილის მდებარეობის გახსნა"
 
-#: src/dcc/transferpanel.cpp:427
+#: src/dcc/transferpanel.cpp:423
 #, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
@@ -3289,7 +3285,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferpanel.cpp:431
+#: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
@@ -3297,39 +3293,39 @@ msgid_plural "Execute %1 Files"
 msgstr[0] "%1 ფაილის შესრულება"
 msgstr[1] "%1 ფაილის შესრულება"
 
-#: src/dcc/transferrecv.cpp:194
+#: src/dcc/transferrecv.cpp:197
 #, kde-format
 msgid "The admin has restricted the right to receive files"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:201
+#: src/dcc/transferrecv.cpp:204
 #, kde-format
 msgid "Invalid sender address (%1)"
 msgstr "გამომგზავნის არასწორი მისამართი (%1)"
 
-#: src/dcc/transferrecv.cpp:208
+#: src/dcc/transferrecv.cpp:211
 #, kde-format
 msgid "Unsupported negotiation (filesize=0)"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:313
+#: src/dcc/transferrecv.cpp:316
 #, kde-format
 msgid ""
 "<b>Cannot create the folder or destination is not writable.</b><br/>Folder: "
 "%1<br/>"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:323
+#: src/dcc/transferrecv.cpp:326
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:347
+#: src/dcc/transferrecv.cpp:350
 #, kde-format
 msgid "Could not create a KIO instance"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:446
+#: src/dcc/transferrecv.cpp:449
 #, kde-format
 msgid ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: 1 byte."
@@ -3340,7 +3336,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/dcc/transferrecv.cpp:479
+#: src/dcc/transferrecv.cpp:482
 #, kde-format
 msgctxt "%1=fileName, %2=local filesize, %3=sender filesize"
 msgid ""
@@ -3348,75 +3344,75 @@ msgid ""
 "%3<br/>"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:488
+#: src/dcc/transferrecv.cpp:491
 #, kde-format
 msgid "<b>Could not open the file.<br/>Error: %1</b><br/>%2<br/>"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:535 src/dcc/transferrecv.cpp:571
+#: src/dcc/transferrecv.cpp:538 src/dcc/transferrecv.cpp:574
 #, kde-format
 msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
 "server."
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:590
+#: src/dcc/transferrecv.cpp:593
 #, kde-format
 msgid "Waiting for connection"
 msgstr "მიერთების მოლოდინი"
 
-#: src/dcc/transferrecv.cpp:599
+#: src/dcc/transferrecv.cpp:602
 #, kde-format
 msgid "Waiting for remote host's acceptance"
 msgstr "დაშორებული ჰოსტის დასტურის მოლოდინი"
 
-#: src/dcc/transferrecv.cpp:609
+#: src/dcc/transferrecv.cpp:612
 #, kde-format
 msgid ""
 "Could not send DCC RECV resume request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:634
+#: src/dcc/transferrecv.cpp:637
 #, kde-format
 msgid "Unexpected response from remote host"
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:694 src/dcc/transfersend.cpp:453
+#: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, kde-format
 msgid "Could not accept the connection (socket error)."
 msgstr ""
 
-#: src/dcc/transferrecv.cpp:785
+#: src/dcc/transferrecv.cpp:788
 #, kde-format
 msgid "Transfer error"
 msgstr "გადაცემის შეცდომა"
 
-#: src/dcc/transferrecv.cpp:801
+#: src/dcc/transferrecv.cpp:804
 #, kde-format
 msgid "KIO error: %1"
 msgstr "KIO შეცდომა: %1"
 
-#: src/dcc/transferrecv.cpp:822 src/dcc/transfersend.cpp:590
+#: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, kde-format
 msgid "Timed out"
 msgstr "ვადა გავიდა"
 
-#: src/dcc/transfersend.cpp:163
+#: src/dcc/transfersend.cpp:165
 #, kde-format
 msgid "The admin has restricted the right to send files"
 msgstr ""
 
-#: src/dcc/transfersend.cpp:185
+#: src/dcc/transfersend.cpp:187
 #, kde-format
 msgid "The url \"%1\" does not exist"
-msgstr ""
+msgstr "ბმული \"%1\" არ არსებობს"
 
-#: src/dcc/transfersend.cpp:193
+#: src/dcc/transfersend.cpp:195
 #, kde-format
 msgid "Enter Filename"
 msgstr "შეიყვანეთ ფაილის სახელი"
 
-#: src/dcc/transfersend.cpp:194
+#: src/dcc/transfersend.cpp:196
 #, kde-format
 msgid ""
 "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/"
@@ -3424,77 +3420,77 @@ msgid ""
 "transfer</qt>"
 msgstr ""
 
-#: src/dcc/transfersend.cpp:195
+#: src/dcc/transfersend.cpp:197
 #, kde-format
 msgid "unknown"
 msgstr "უცნობია"
 
-#: src/dcc/transfersend.cpp:200
+#: src/dcc/transfersend.cpp:202
 #, kde-format
 msgid "No filename was given"
-msgstr ""
+msgstr "ფაილის სახელი მითითებული არაა"
 
-#: src/dcc/transfersend.cpp:241
+#: src/dcc/transfersend.cpp:243
 #, kde-format
 msgid "Could not retrieve \"%1\""
 msgstr "\"%1\"-ის მიღების შეცდომა"
 
-#: src/dcc/transfersend.cpp:262
+#: src/dcc/transfersend.cpp:264
 #, kde-format
 msgid "Unable to send a 0 byte file."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:278
+#: src/dcc/transfersend.cpp:280
 #, kde-format
 msgid "DCC SEND request was rejected"
 msgstr ""
 
-#: src/dcc/transfersend.cpp:305 src/dcc/transfersend.cpp:381
+#: src/dcc/transfersend.cpp:307 src/dcc/transfersend.cpp:383
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:600
+#: src/dcc/transfersend.cpp:602
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:603
+#: src/dcc/transfersend.cpp:605
 #, kde-format
 msgid "Could not read from file \"%1\"."
-msgstr ""
+msgstr "ფაილიდან '%1' წაკითხვა შეუძლებელია."
 
-#: src/dcc/transfersend.cpp:606
+#: src/dcc/transfersend.cpp:608
 #, kde-format
 msgid "Could not write to file \"%1\"."
-msgstr ""
+msgstr "ვერ ჩავწერე ფაილში \"%1\"."
 
-#: src/dcc/transfersend.cpp:609
+#: src/dcc/transfersend.cpp:611
 #, kde-format
 msgid "A fatal unrecoverable error occurred."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:612
+#: src/dcc/transfersend.cpp:614
 #, kde-format
 msgid "Could not open file \"%1\"."
 msgstr "ფაილის გახსნის შეცდომა: %1."
 
-#: src/dcc/transfersend.cpp:621
+#: src/dcc/transfersend.cpp:623
 #, kde-format
 msgid "The operation was unexpectedly aborted."
 msgstr ""
 
-#: src/dcc/transfersend.cpp:624
+#: src/dcc/transfersend.cpp:626
 #, kde-format
 msgid "The operation timed out."
-msgstr ""
+msgstr "ოპერაციის მოლოდინის ვადა ამოიწურა."
 
-#: src/dcc/transfersend.cpp:627
+#: src/dcc/transfersend.cpp:629
 #, kde-format
 msgid "An unspecified error happened on close."
-msgstr ""
+msgstr "დახურვისას აღმოჩენილია უცნობი შეცდომა."
 
-#: src/dcc/transfersend.cpp:630
+#: src/dcc/transfersend.cpp:632
 #, kde-format
 msgid "Unknown error. Code %1"
 msgstr "უცნობი შეცდომა. კოდი %1"
@@ -3508,7 +3504,7 @@ msgstr "სვეტები"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr ""
+msgstr "დაფის ფონტის ამომრჩევი"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -3677,7 +3673,7 @@ msgstr "ისრის დახატვა"
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr ""
+msgstr "აირჩიეთ ფერი გამოსახულებიდან"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -3716,12 +3712,12 @@ msgstr "SASL PLAIN"
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
-msgstr ""
+msgstr "SASL EXTERNAL (სერტ)"
 
 #: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
-msgstr ""
+msgstr "სტანდარტული NickServ"
 
 #: src/identitydialog.cpp:90
 #, kde-format
@@ -3731,7 +3727,7 @@ msgstr "სერვერის პაროლი"
 #: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
-msgstr ""
+msgstr "SSL კლიენტის სერტიფიკატი"
 
 #: src/identitydialog.cpp:97
 #, kde-format
@@ -3740,100 +3736,100 @@ msgid_plural " minutes"
 msgstr[0] " წუთი"
 msgstr[1] " წუთი"
 
-#: src/identitydialog.cpp:119
+#: src/identitydialog.cpp:115
 #, kde-format
 msgid "Change identity information"
-msgstr ""
+msgstr "იდენტიფიკაციის მონაცემების შეცვლა"
 
-#: src/identitydialog.cpp:120 src/irc/servergroupdialog.cpp:85
+#: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
-msgstr ""
+msgstr "ყველა ცვლილების მოცილება"
 
-#: src/identitydialog.cpp:264
+#: src/identitydialog.cpp:260
 #, kde-format
 msgid "Add Identity"
-msgstr ""
+msgstr "იდენტიფიკაციის დამატება"
 
-#: src/identitydialog.cpp:264 src/identitydialog.cpp:287
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:260 src/identitydialog.cpp:283
+#: src/identitydialog.cpp:338
 #, kde-format
 msgid "Identity name:"
-msgstr ""
+msgstr "იდენტიფიკატორის სახელი:"
 
-#: src/identitydialog.cpp:278 src/identitydialog.cpp:296
-#: src/identitydialog.cpp:355
+#: src/identitydialog.cpp:274 src/identitydialog.cpp:292
+#: src/identitydialog.cpp:351
 #, kde-format
 msgid "You need to give the identity a name."
-msgstr ""
+msgstr "იდენტიფიკატორის სახელის მითითება აუცილებელია."
 
-#: src/identitydialog.cpp:287
+#: src/identitydialog.cpp:283
 #, kde-format
 msgid "Rename Identity"
-msgstr ""
+msgstr "იდენტიფიკატორის სახელის გადარქმევა"
 
-#: src/identitydialog.cpp:321
+#: src/identitydialog.cpp:317
 #, kde-format
 msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
 
-#: src/identitydialog.cpp:326
+#: src/identitydialog.cpp:322
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
 msgstr ""
 
-#: src/identitydialog.cpp:329
+#: src/identitydialog.cpp:325
 #, kde-format
 msgid "Delete Identity"
-msgstr ""
+msgstr "იდენტიფიკატორის წაშლა"
 
-#: src/identitydialog.cpp:342
+#: src/identitydialog.cpp:338
 #, kde-format
 msgid "Duplicate Identity"
-msgstr ""
+msgstr "იდენტიფიკატორის დუბლირება"
 
-#: src/identitydialog.cpp:385
+#: src/identitydialog.cpp:381
 #, kde-format
 msgid "You must add at least one nick to the identity."
 msgstr ""
 
-#: src/identitydialog.cpp:397
+#: src/identitydialog.cpp:393
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "ფსევდონიმები გამოტოვებებს არ უნდა შეიცავდეს."
 
-#: src/identitydialog.cpp:410
+#: src/identitydialog.cpp:406
 #, kde-format
 msgid "Please enter a real name."
-msgstr ""
+msgstr "შეიყვანეთ ნამდვილ სახელი."
 
-#: src/identitydialog.cpp:421
+#: src/identitydialog.cpp:417
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "Ident გამოტოვებებს არ უნდა შეიცავდეს."
 
-#: src/identitydialog.cpp:468
+#: src/identitydialog.cpp:464
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
 
-#: src/identitydialog.cpp:475
+#: src/identitydialog.cpp:471
 #, kde-format
 msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
 
-#: src/identitydialog.cpp:486
+#: src/identitydialog.cpp:482
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
 msgstr "(არასავალდებულო)"
 
-#: src/identitydialog.cpp:493
+#: src/identitydialog.cpp:489
 #, kde-format
 msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
@@ -3882,7 +3878,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
-#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:170
+#: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
 #, kde-format
 msgid "Nickname"
 msgstr "მეტსახელი"
@@ -3891,7 +3887,7 @@ msgstr "მეტსახელი"
 #: src/identitydialog.ui:234
 #, kde-format
 msgid "Auto Identify"
-msgstr ""
+msgstr "ავტოდენტიფიკატორი"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservNicknameLabel)
 #: src/identitydialog.ui:256
@@ -3957,7 +3953,7 @@ msgstr ""
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr ""
+msgstr "ნაგულისხმევი გასულობის შეტყობინება:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -3972,7 +3968,7 @@ msgstr ""
 #: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
-msgstr ""
+msgstr "გასულობის ფსევდონიმი:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
@@ -4000,19 +3996,19 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr ""
+msgstr "ავტომატური გასულობა"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
-msgstr ""
+msgstr "გასულობის შეტყობინების დრო"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
 #: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
-msgstr ""
+msgstr "მომხმარებლის არააქტიურობისას"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:437
@@ -4044,19 +4040,19 @@ msgstr ""
 #: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
-msgstr ""
+msgstr "გასულობის ბრძანებები"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr ""
+msgstr "გასულობის ბრძანება:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr ""
+msgstr "დაბრუნების ბრძანება:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -4068,7 +4064,7 @@ msgstr "დამატებით"
 #: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
-msgstr ""
+msgstr "&გარსამდელი ბრძანება:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
 #: src/identitydialog.ui:536
@@ -4100,7 +4096,7 @@ msgstr ""
 #: src/identitydialog.ui:572
 #, kde-format
 msgid "I&dent:"
-msgstr ""
+msgstr "I&dent:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
@@ -4115,7 +4111,7 @@ msgstr ""
 #: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
-msgstr ""
+msgstr "&გასვლის მიზეზი:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
 #: src/identitydialog.ui:605
@@ -4128,13 +4124,13 @@ msgstr ""
 #: src/identitydialog.ui:608 src/identitydialog.ui:634
 #, kde-format
 msgid "Konversation terminated."
-msgstr ""
+msgstr "Konversation შეწყდა."
 
 #. i18n: ectx: property (text), widget (QLabel, partLabel)
 #: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
-msgstr ""
+msgstr "&არხიდან გასვლის მიზეზი:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
 #: src/identitydialog.ui:631
@@ -4146,7 +4142,7 @@ msgstr ""
 #: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
-msgstr ""
+msgstr "&გაგდების მიზეზი:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:657
@@ -4160,12 +4156,12 @@ msgstr ""
 #: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
-msgstr ""
+msgstr "მომხმარებელი შეწყდა."
 
 #: src/irc/channel.cpp:120
 #, kde-format
 msgid "Edit Channel Settings"
-msgstr ""
+msgstr "არხის პარამეტრების ჩასწორება"
 
 #: src/irc/channel.cpp:128
 #, kde-format
@@ -4180,7 +4176,7 @@ msgstr ""
 #: src/irc/channel.cpp:182
 #, kde-format
 msgid "Maximum users allowed in channel"
-msgstr ""
+msgstr "არხზე დაშვებული მომხმარებლების მაქსიმალური რაოდენობა"
 
 #: src/irc/channel.cpp:183
 #, kde-format
@@ -4220,12 +4216,12 @@ msgstr "არხის პაროლი"
 #: src/irc/channel.cpp:899
 #, kde-format
 msgid "Channel User Limit"
-msgstr ""
+msgstr "არხის მომხმარებლებისშე ზღუდვა"
 
 #: src/irc/channel.cpp:900
 #, kde-format
 msgid "Enter the new user limit for the channel:"
-msgstr ""
+msgstr "შეიყვანეთ მომხმარებლების ახალი შეზღუდვა არხისთვის:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
 #: src/irc/inputfilter.cpp:1560 src/irc/inputfilter.cpp:1581
@@ -4238,14 +4234,14 @@ msgstr "მეტსახელი"
 #: src/irc/channel.cpp:1057
 #, kde-format
 msgid "You are now known as %1."
-msgstr ""
+msgstr "ახლა ცნობილი ხართ, როგორც %1."
 
 #: src/irc/channel.cpp:1062 src/irc/query.cpp:163
 #, kde-format
 msgid "%1 is now known as %2."
-msgstr "%1 ახლა ცნობილია, როგორც %2"
+msgstr "%1 ახლა ცნობილია, როგორც %2."
 
-#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:844
+#: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:836
 #, kde-format
 msgctxt "Message type"
 msgid "Join"
@@ -4255,17 +4251,17 @@ msgstr "შეერთება"
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = channel"
 msgid "You (%1) have joined the channel %2."
-msgstr ""
+msgstr "თქვენ (%1) შეუერთდით არხს %2."
 
 #: src/irc/channel.cpp:1112
 #, kde-format
 msgctxt "%1 is the nick joining and %2 the hostmask of that nick"
 msgid "%1 (%2) has joined this channel."
-msgstr ""
+msgstr "%1 (%2) შეუერთდა ამ არხს."
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
-#: src/viewer/ircview.cpp:849
+#: src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Quit"
@@ -4274,16 +4270,16 @@ msgstr "დატოვება"
 #: src/irc/channel.cpp:1138
 #, kde-format
 msgid "You (%1) have left this server."
-msgstr ""
+msgstr "თქვენ (%1) დატოვეთ ეს სერვერი."
 
 #: src/irc/channel.cpp:1140
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = reason"
 msgid "You (%1) have left this server (%2)."
-msgstr ""
+msgstr "თქვენ (%1) დატოვეთ ეს სერვერი (%2)."
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
-#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:849
+#: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Part"
@@ -4292,13 +4288,13 @@ msgstr "ნაწილი"
 #: src/irc/channel.cpp:1146
 #, kde-format
 msgid "You have left channel %1."
-msgstr ""
+msgstr "თქვენ გახვედით არხიდან %1."
 
 #: src/irc/channel.cpp:1149
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = channel, %3 = reason"
 msgid "You (%1) have left channel %2 (%3)."
-msgstr ""
+msgstr "თქვენ (%1) დატოვეთ არხი %2 (%3)."
 
 #: src/irc/channel.cpp:1162
 #, kde-format
@@ -4314,18 +4310,18 @@ msgstr "%1 (%2) გავიდა ამ სერვერიდან (%3)."
 #: src/irc/channel.cpp:1171
 #, kde-format
 msgid "%1 (%2) has left this channel."
-msgstr ""
+msgstr "%1-მა (%2) დატოვა არხი."
 
 #: src/irc/channel.cpp:1175
 #, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this channel (%3)."
-msgstr ""
+msgstr "%1-მა (%2) დატოვა ეს არხი (%3)."
 
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
 #: src/irc/channel.cpp:1267 src/irc/channel.cpp:1272
-#: src/viewer/irccontextmenus.cpp:406
+#: src/viewer/irccontextmenus.cpp:402
 #, kde-format
 msgid "Kick"
 msgstr "გაგდება"
@@ -4333,48 +4329,48 @@ msgstr "გაგდება"
 #: src/irc/channel.cpp:1223
 #, kde-format
 msgid "You have kicked yourself from channel %1."
-msgstr ""
+msgstr "თქვენ გააგდეთ თქვენი თავი არხიდან %1."
 
 #: src/irc/channel.cpp:1226
 #, kde-format
 msgctxt "%1 adds the channel and %2 the reason"
 msgid "You have kicked yourself from channel %1 (%2)."
-msgstr ""
+msgstr "თქვენ გააგდეთ თქვენი თავი არხიდან %1 (%2)."
 
 #: src/irc/channel.cpp:1233
 #, kde-format
 msgctxt "%1 adds the channel, %2 adds the kicker"
 msgid "You have been kicked from channel %1 by %2."
-msgstr ""
+msgstr "თქვენ გამოგაგდოთ არხიდან %1 %2-მა."
 
 #: src/irc/channel.cpp:1238
 #, kde-format
 msgctxt "%1 adds the channel, %2 the kicker and %3 the reason"
 msgid "You have been kicked from channel %1 by %2 (%3)."
-msgstr ""
+msgstr "თქვენ გამოგაგდოთ არხიდან %1 %2-მა (%3)."
 
 #: src/irc/channel.cpp:1258
 #, kde-format
 msgid "You have kicked %1 from the channel."
-msgstr ""
+msgstr "თქვენ გააგდეთ %1 არხიდან."
 
 #: src/irc/channel.cpp:1261
 #, kde-format
 msgctxt "%1 adds the kicked nick and %2 the reason"
 msgid "You have kicked %1 from the channel (%2)."
-msgstr ""
+msgstr "თქვენ გააგდეთ %1 არხიდან (%2)."
 
 #: src/irc/channel.cpp:1268
 #, kde-format
 msgctxt "%1 adds the kicked nick, %2 adds the kicker"
 msgid "%1 has been kicked from the channel by %2."
-msgstr ""
+msgstr "%1 გააგდო არხიდან %2-მა."
 
 #: src/irc/channel.cpp:1273
 #, kde-format
 msgctxt "%1 adds the kicked nick, %2 the kicker and %3 the reason"
 msgid "%1 has been kicked from the channel by %2 (%3)."
-msgstr ""
+msgstr "%1 გააგდო არხიდან %2-მა (%3)."
 
 #: src/irc/channel.cpp:1340
 #, kde-format
@@ -4785,12 +4781,12 @@ msgstr ""
 #: src/irc/channel.cpp:1720
 #, kde-format
 msgid "You remove the channel key."
-msgstr ""
+msgstr "თქვენ წაშალეთ არხის გასაღები."
 
 #: src/irc/channel.cpp:1721
 #, kde-format
 msgid "%1 removes the channel key."
-msgstr ""
+msgstr "%1-მა არხის გასაღების წაშლა."
 
 #: src/irc/channel.cpp:1729
 #, kde-format
@@ -4809,32 +4805,32 @@ msgstr[1] ""
 #: src/irc/channel.cpp:1734
 #, kde-format
 msgid "You remove the channel limit."
-msgstr ""
+msgstr "თქვენ წაშალეთ არხის შეზღუდვა."
 
 #: src/irc/channel.cpp:1735
 #, kde-format
 msgid "%1 removes the channel limit."
-msgstr ""
+msgstr "%1-მა წაშალა არხის შეზღუდვა."
 
 #: src/irc/channel.cpp:1745
 #, kde-format
 msgid "You set a ban on %1."
-msgstr ""
+msgstr "თქვენ დაადეთ ბანი %1-ს."
 
 #: src/irc/channel.cpp:1746
 #, kde-format
 msgid "%1 sets a ban on %2."
-msgstr ""
+msgstr "%1-მა დაადო ბანი %2-ს."
 
 #: src/irc/channel.cpp:1750
 #, kde-format
 msgid "You remove the ban on %1."
-msgstr ""
+msgstr "თქვენ მოხსენით ბანი %1-ს."
 
 #: src/irc/channel.cpp:1751
 #, kde-format
 msgid "%1 removes the ban on %2."
-msgstr ""
+msgstr "%1-მა მოხსნა ბანი %2-ს."
 
 #: src/irc/channel.cpp:1758
 #, kde-format
@@ -4859,12 +4855,12 @@ msgstr ""
 #: src/irc/channel.cpp:1771
 #, kde-format
 msgid "You set invitation mask %1."
-msgstr ""
+msgstr "თქვენ დააყენეთ გამოსაწვევის ნიღაბი %1."
 
 #: src/irc/channel.cpp:1772
 #, kde-format
 msgid "%1 sets invitation mask %2."
-msgstr ""
+msgstr "%1-მა დააყენა მოსაწვევის ნიღაბი %2."
 
 #: src/irc/channel.cpp:1776
 #, kde-format
@@ -4879,7 +4875,7 @@ msgstr ""
 #: src/irc/channel.cpp:1785
 #, kde-format
 msgid "You set the channel mode '%1'."
-msgstr ""
+msgstr "თქვენ დააყენეთ არხის რეჟიმი '%1'."
 
 #: src/irc/channel.cpp:1786
 #, kde-format
@@ -4889,32 +4885,32 @@ msgstr ""
 #: src/irc/channel.cpp:1790
 #, kde-format
 msgid "You set channel mode +%1"
-msgstr ""
+msgstr "თქვენ დააყენეთ არხის რეჟიმი +%1"
 
 #: src/irc/channel.cpp:1791
 #, kde-format
 msgid "%1 sets channel mode +%2"
-msgstr ""
+msgstr "%1-მა დააყენა არხის რეჟიმი +%2"
 
 #: src/irc/channel.cpp:1798
 #, kde-format
 msgid "You remove the channel mode '%1'."
-msgstr ""
+msgstr "ვენ წაშალეთ არხის რეჟიმი '%1'."
 
 #: src/irc/channel.cpp:1799
 #, kde-format
 msgid "%1 removes the channel mode '%2'."
-msgstr ""
+msgstr "%1-მა წაშალა არხის რეჟიმი +%2"
 
 #: src/irc/channel.cpp:1803
 #, kde-format
 msgid "You set channel mode -%1"
-msgstr ""
+msgstr "თქვენ დააყენეთ არხის რეჟიმი -%1"
 
 #: src/irc/channel.cpp:1804
 #, kde-format
 msgid "%1 sets channel mode -%2"
-msgstr ""
+msgstr "%1-მა დააყენა არხის რეჟიმი -%2"
 
 #: src/irc/channel.cpp:2203
 #, kde-format
@@ -4939,32 +4935,32 @@ msgstr "საიდუმლო არხი.   %1"
 #: src/irc/channel.cpp:2208
 #, kde-format
 msgid "Invite only channel.  %1"
-msgstr ""
+msgstr "არხი, მხოლოდ, მოსაწვევით.  %1"
 
 #: src/irc/channel.cpp:2209
 #, kde-format
 msgid "Private channel.  %1"
-msgstr ""
+msgstr "პირადი არხი.  %1"
 
 #: src/irc/channel.cpp:2210
 #, kde-format
 msgid "Moderated channel.  %1"
-msgstr ""
+msgstr "მოდერირებული არხი.  %1"
 
 #: src/irc/channel.cpp:2211
 #, kde-format
 msgid "Protect channel with a password."
-msgstr ""
+msgstr "არხის დაცვა პაროლით."
 
 #: src/irc/channel.cpp:2212
 #, kde-format
 msgid "Set user limit to channel."
-msgstr ""
+msgstr "არხის მომხმარებლბის რაოდენობის შეზღუდვის დაყეენბა."
 
 #: src/irc/channel.cpp:2389
 #, kde-format
 msgid "Do you want to leave %1?"
-msgstr ""
+msgstr "გნებავთ, გახვიდეთ %1-დან?"
 
 #: src/irc/channel.cpp:2390
 #, kde-format
@@ -4980,7 +4976,7 @@ msgstr "გასვლა"
 #: src/viewer/statuspanel.cpp:302
 #, kde-format
 msgid "Identity Default ( %1 )"
-msgstr ""
+msgstr "ნაგულისხმევი იდენტიფიკატორი ( %1 )"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLbl)
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
@@ -5012,86 +5008,88 @@ msgid "Channel Topic"
 msgstr "არხის თემა"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, ChannelListWidgetUI)
-#: src/irc/channellistpanel.cpp:143 src/irc/channellistpanelui.ui:14
-#: src/viewer/viewcontainer.cpp:2971 src/viewer/viewcontainer.cpp:2992
+#: src/irc/channellistpanel.cpp:139 src/irc/channellistpanelui.ui:14
+#: src/viewer/viewcontainer.cpp:2963 src/viewer/viewcontainer.cpp:2984
 #, kde-format
 msgid "Channel List"
 msgstr "არხების სია"
 
-#: src/irc/channellistpanel.cpp:160
+#: src/irc/channellistpanel.cpp:156
 #, kde-format
 msgctxt "save list"
 msgid "Save &List..."
-msgstr ""
+msgstr "&სიის შენახვა..."
 
-#: src/irc/channellistpanel.cpp:161
+#: src/irc/channellistpanel.cpp:157
 #, kde-format
 msgid "Click here to save the channel list."
-msgstr ""
+msgstr "დააწკაპუნეთ აქ არხების სიის შესანახად."
 
-#: src/irc/channellistpanel.cpp:162
+#: src/irc/channellistpanel.cpp:158
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
 msgstr "&სიის განახლება"
 
-#: src/irc/channellistpanel.cpp:163
+#: src/irc/channellistpanel.cpp:159
 #, kde-format
 msgid "Click here to refresh the channel list."
-msgstr ""
+msgstr "დააწკაპუნეთ აქ არხების სიის გასაახლებლად."
 
-#: src/irc/channellistpanel.cpp:165
+#: src/irc/channellistpanel.cpp:161
 #, kde-format
 msgctxt "join channel"
 msgid "&Join Channel"
 msgstr "&არხზე შესვლა"
 
-#: src/irc/channellistpanel.cpp:166
+#: src/irc/channellistpanel.cpp:162
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
 msgstr ""
 
-#: src/irc/channellistpanel.cpp:234 src/irc/channellistpanel.cpp:340
+#: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
 msgstr "განახლება."
 
-#: src/irc/channellistpanel.cpp:357
+#: src/irc/channellistpanel.cpp:345
 #, kde-format
 msgid "Channels: %1 (%2 shown)"
-msgstr ""
+msgstr "არხები: %1 (ნაჩვენებია %2)"
 
-#: src/irc/channellistpanel.cpp:358
+#: src/irc/channellistpanel.cpp:346
 #, kde-format
 msgid " Non-unique users: %1 (%2 shown)"
-msgstr ""
+msgstr "არაუნიკალური მომხმარებლები: %1 (ნაჩვენებია %2)"
 
-#: src/irc/channellistpanel.cpp:366
+#: src/irc/channellistpanel.cpp:354
 #, kde-format
 msgid "Save Channel List"
 msgstr "არხების სიის შენახვა"
 
-#: src/irc/channellistpanel.cpp:398
+#: src/irc/channellistpanel.cpp:386
 #, kde-format
 msgid ""
 "Konversation Channel List: %1 - %2\n"
 "\n"
 msgstr ""
+"Konversation-ის არხების სია: %1 - %2\n"
+"\n"
 
-#: src/irc/channellistpanel.cpp:462 src/irc/joinchanneldialog.cpp:30
+#: src/irc/channellistpanel.cpp:450 src/irc/joinchanneldialog.cpp:30
 #, kde-format
 msgid "Join Channel"
 msgstr "არხზე შესვლა"
 
-#: src/irc/channellistpanel.cpp:471
+#: src/irc/channellistpanel.cpp:459
 #, kde-format
 msgid "Open URL"
 msgstr "URL-ის გახსნა"
 
-#: src/irc/channellistpanel.cpp:531
+#: src/irc/channellistpanel.cpp:519
 #, kde-format
 msgid "Channel List for %1"
-msgstr ""
+msgstr "არხების სია %1"
 
 #. i18n: ectx: property (text), widget (QLabel, m_lblMaxUser)
 #: src/irc/channellistpanelui.ui:35
@@ -5133,7 +5131,7 @@ msgstr "&თემა"
 #: src/irc/channellistpanelui.ui:121
 #, kde-format
 msgid "Enter a filter string here."
-msgstr ""
+msgstr "აქ შეიყვანეთ ფილტრს სტრიქონი."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
 #: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
@@ -5311,7 +5309,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:918
 #, kde-format
 msgid "%1 sets mode: %2"
-msgstr ""
+msgstr "%1 აყენებს რეჟიმს: %2"
 
 #: src/irc/inputfilter.cpp:1167 src/irc/inputfilter.cpp:1175
 #, kde-format
@@ -5331,7 +5329,7 @@ msgstr "მხარდაჭერა"
 #: src/irc/inputfilter.cpp:1300
 #, kde-format
 msgid "Your personal modes are:"
-msgstr ""
+msgstr "თქვენი პირადი რეჟიმებია:"
 
 #: src/irc/inputfilter.cpp:1312 src/irc/inputfilter.cpp:1349
 #, kde-format
@@ -5342,8 +5340,8 @@ msgstr "არხის რეჟიმები: "
 #, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "შეზღუდულია %1 მომხმარებელზე"
+msgstr[1] "შეზღუდულია %1 მომხმარებელზე"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5353,7 +5351,7 @@ msgstr "URL"
 #: src/irc/inputfilter.cpp:1359
 #, kde-format
 msgid "Channel URL: %1"
-msgstr ""
+msgstr "არხის ბმული: %1"
 
 #: src/irc/inputfilter.cpp:1369
 #, kde-format
@@ -5363,7 +5361,7 @@ msgstr "შექმნილია"
 #: src/irc/inputfilter.cpp:1370
 #, kde-format
 msgid "This channel was created on %1."
-msgstr ""
+msgstr "არხის შექმნის დროა %1."
 
 #. i18n("Whois"),parameterList.join(" ").section(QLatin1Char(' '),1)+' '+trailing);
 #. The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
@@ -5385,7 +5383,7 @@ msgstr "Whois"
 #: src/irc/inputfilter.cpp:1389
 #, kde-format
 msgid "%1 is logged in as %2."
-msgstr ""
+msgstr "%1 შემოსულია, როგორც %2"
 
 #: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
 #, kde-format
@@ -5395,7 +5393,7 @@ msgstr "სახელები"
 #: src/irc/inputfilter.cpp:1440
 #, kde-format
 msgid "End of NAMES list."
-msgstr ""
+msgstr "სახელების სიის ბოლო."
 
 #: src/irc/inputfilter.cpp:1453
 #, kde-format
@@ -5405,7 +5403,7 @@ msgstr "თემა"
 #: src/irc/inputfilter.cpp:1453
 #, kde-format
 msgid "The channel %1 has no topic set."
-msgstr ""
+msgstr "არხს %1 თემა დაყენებული არ აქვს."
 
 #: src/irc/inputfilter.cpp:1474
 #, kde-format
@@ -5430,22 +5428,22 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1530
 #, kde-format
 msgid "%1: No such nick/channel."
-msgstr ""
+msgstr "%1: ასეთი ფსევდონიმი/არხი არ არსებობს."
 
 #: src/irc/inputfilter.cpp:1534
 #, kde-format
 msgid "No such nick: %1."
-msgstr ""
+msgstr "ფსევდონიმი არ არსებობს: %1."
 
 #: src/irc/inputfilter.cpp:1547
 #, kde-format
 msgid "%1: No such channel."
-msgstr ""
+msgstr "%1: ასეთ არხი არ არსებობს."
 
 #: src/irc/inputfilter.cpp:1560
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr ""
+msgstr "ფსევდონიმი უკვე გამოიყენება. შეიყვანეთ რამე სხვა."
 
 #: src/irc/inputfilter.cpp:1573
 #, kde-format
@@ -5457,12 +5455,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr ""
+msgstr "ფსევდონიმი უკვე გამოიყენება. ვცდი ფსევდონიმს %1."
 
 #: src/irc/inputfilter.cpp:1610
 #, kde-format
 msgid "Erroneous nickname. Changing nick to %1."
-msgstr ""
+msgstr "შეცდომიანი ფსევდონიმი. ის შეიცვლება ფსევდონიმზე %1."
 
 #: src/irc/inputfilter.cpp:1621
 #, kde-format
@@ -5470,7 +5468,7 @@ msgid "You are not on %1."
 msgstr ""
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
-#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:814
+#: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
 #, kde-format
 msgid "MOTD"
 msgstr "დღის შეტყობინება"
@@ -5503,12 +5501,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1700
 #, kde-format
 msgid "Current users on the network: %1"
-msgstr ""
+msgstr "ამჟამად მომხმარებლები ქსელში: %1"
 
 #: src/irc/inputfilter.cpp:1710
 #, kde-format
 msgid "Current users on %1: %2."
-msgstr ""
+msgstr "ამჟამად მომხმარებლები სერვერზე %1: %2"
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
 #: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
@@ -5520,12 +5518,12 @@ msgstr "გასული"
 #: src/irc/inputfilter.cpp:1741
 #, kde-format
 msgid "%1 is away: %2"
-msgstr ""
+msgstr "%1 გასულია: %2"
 
 #: src/irc/inputfilter.cpp:1752
 #, kde-format
 msgid "You invited %1 to channel %2."
-msgstr ""
+msgstr "თქვენ მოიწვიეთ %1 არხზე %2."
 
 #: src/irc/inputfilter.cpp:1774 src/irc/inputfilter.cpp:1872
 #, kde-format
@@ -5555,12 +5553,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1839
 #, kde-format
 msgid "%1 is an identified user."
-msgstr ""
+msgstr "%1 იდენტიფიცირებული მომხმარებელია."
 
 #: src/irc/inputfilter.cpp:1849
 #, kde-format
 msgid "%1 is using a secure connection."
-msgstr ""
+msgstr "%1 დაცულ მიერთებას იყენებს."
 
 #: src/irc/inputfilter.cpp:1890 src/irc/inputfilter.cpp:1915
 #, kde-format
@@ -5575,7 +5573,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1895
 #, kde-format
 msgid " (Away)"
-msgstr ""
+msgstr " (გასული)"
 
 #: src/irc/inputfilter.cpp:1916
 #, kde-format
@@ -5620,7 +5618,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2071
 #, kde-format
 msgid "%1 is available for help."
-msgstr ""
+msgstr "%1 ხელმისაწვდომია დასახმარებლად."
 
 #: src/irc/inputfilter.cpp:2086
 #, kde-format
@@ -5666,20 +5664,20 @@ msgctxt ""
 "%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "%1 has been idle for %2, %3, %4, and %5."
-msgstr ""
+msgstr "%1-ის უქმეობის დროა %2, %3, %4, და %5."
 
 #: src/irc/inputfilter.cpp:2145
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "%1 has been idle for %2, %3, and %4."
-msgstr ""
+msgstr "%1-ის უქმეობის დროა %2, %3, და %4."
 
 #: src/irc/inputfilter.cpp:2155
 #, kde-format
 msgctxt "%1 = name of person, %2 = (x minutes), %3 = (x seconds)"
 msgid "%1 has been idle for %2 and %3."
-msgstr ""
+msgstr "%1-ის უქმეობის დროა %2 და %3."
 
 #: src/irc/inputfilter.cpp:2161
 #, kde-format
@@ -5712,7 +5710,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2226
 #, kde-format
 msgid " (IRC Operator)"
-msgstr ""
+msgstr " (IRC ოპერატორი)"
 
 #: src/irc/inputfilter.cpp:2228
 #, kde-format
@@ -5734,8 +5732,8 @@ msgstr "არხების სია:"
 #, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 (%1 მომხმარებელი): %3"
+msgstr[1] "%2 (%1 მომხმარებელი): %3"
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -5774,12 +5772,12 @@ msgstr "ასეთი სერვერი არ არსებობს: %
 #: src/irc/inputfilter.cpp:2398
 #, kde-format
 msgid "%1 is currently unavailable."
-msgstr ""
+msgstr "%1 ამჟამად ხელმიუწვდომელია."
 
 #: src/irc/inputfilter.cpp:2411
 #, kde-format
 msgid "Nickname %1 is unavailable. Trying %2."
-msgstr ""
+msgstr "ფსევდონიმი %1 ხელმიუწვდომელია. ვცდი ფსევდონიმს %2."
 
 #: src/irc/inputfilter.cpp:2435
 #, kde-format
@@ -5794,7 +5792,7 @@ msgstr "დაურეგისტრირებელია."
 #: src/irc/inputfilter.cpp:2451
 #, kde-format
 msgid "%1: This command requires more parameters."
-msgstr ""
+msgstr "%1: ამ ბრძანებას მეტი პარამეტრი სჭირდება."
 
 #: src/irc/inputfilter.cpp:2475
 #, kde-format
@@ -5806,29 +5804,29 @@ msgstr ""
 #: src/irc/inputfilter.cpp:2482
 #, kde-format
 msgid "You are now logged in as %1."
-msgstr ""
+msgstr "შესული ხართ, როგორც %1."
 
 #: src/irc/inputfilter.cpp:2490
 #, kde-format
 msgid "SASL authentication successful."
-msgstr ""
+msgstr "SASL ავთენტიკაცია წარმატებულია."
 
 #: src/irc/inputfilter.cpp:2503
 #, kde-format
 msgid "SASL authentication attempt failed."
-msgstr ""
+msgstr "SASL ავთენტიკაციის მცდელობა ჩავარდა."
 
 #: src/irc/inputfilter.cpp:2512
 #, kde-format
 msgid "SASL authentication aborted."
-msgstr ""
+msgstr "SASL ავთენტიკაცია გაუქმდა."
 
 #: src/irc/invitedialog.cpp:22
 #, kde-format
 msgid "Channel Invites"
 msgstr "არხის მოსაწვევები"
 
-#: src/irc/invitedialog.cpp:166
+#: src/irc/invitedialog.cpp:168
 #, kde-format
 msgid "Join"
 msgstr "შეერთება"
@@ -5904,7 +5902,7 @@ msgstr "&პაროლი:"
 #: src/irc/nickinfo.cpp:216 src/viewer/channeloptionsui.ui:308
 #, kde-format
 msgid "Hostmask:"
-msgstr ""
+msgstr "კლიენტის ნიღაბი:"
 
 #: src/irc/nickinfo.cpp:224
 #, kde-format
@@ -5966,7 +5964,7 @@ msgid ""
 "Click to remove a nick from the list of nicknames that appear on this screen."
 msgstr ""
 
-#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:435
+#: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Whois"
 msgstr "&ვინაა"
@@ -5974,7 +5972,7 @@ msgstr "&ვინაა"
 #: src/irc/nicksonline.cpp:40
 #, kde-format
 msgid "Open &Query"
-msgstr ""
+msgstr "&მოთხოვნის გახსნა"
 
 #: src/irc/nicksonline.cpp:42
 #, kde-format
@@ -5984,7 +5982,7 @@ msgstr "&არხზე შესვლა"
 #: src/irc/nicksonline.cpp:54
 #, kde-format
 msgid "Network/Nickname/Channel"
-msgstr ""
+msgstr "ქსელი/ფსევდონიმი/არხი"
 
 #: src/irc/nicksonline.cpp:55
 #, kde-format
@@ -6006,7 +6004,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:217
 #, kde-format
 msgid " online via %1"
-msgstr ""
+msgstr " ხაზზეა %1-ით"
 
 #: src/irc/nicksonline.cpp:222
 #, kde-format
@@ -6049,7 +6047,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:218
 #, kde-format
 msgid "Encoding Conflict Warning"
-msgstr ""
+msgstr "კოდირების შეუთავსებლობის გაფრთხილება"
 
 #: src/irc/outputfilter.cpp:323
 #, kde-format
@@ -6059,12 +6057,12 @@ msgstr "დაუმუშავებელი"
 #: src/irc/outputfilter.cpp:380
 #, kde-format
 msgid "Usage: %1JOIN <channel> [password]"
-msgstr ""
+msgstr "გამოყენება: %1JOIN <არხი> [პაროლი]"
 
 #: src/irc/outputfilter.cpp:420
 #, kde-format
 msgid "Usage: %1KICK <nick> [reason]"
-msgstr ""
+msgstr "გამოყენება: %1KICK <ფსევდონიმი> [მიზეზი]"
 
 #: src/irc/outputfilter.cpp:434
 #, kde-format
@@ -6126,7 +6124,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:741
 #, kde-format
 msgid "You need to specify a recipient."
-msgstr ""
+msgstr "მიმღების მითითება აუცილებელა."
 
 #: src/irc/outputfilter.cpp:746
 #, kde-format
@@ -6136,7 +6134,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:752
 #, kde-format
 msgid "You need to specify a message."
-msgstr ""
+msgstr "შეტყობინების მითითება აუცილებელია."
 
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
@@ -6146,17 +6144,17 @@ msgstr ""
 #: src/irc/outputfilter.cpp:852
 #, kde-format
 msgid "Usage: %1AME [-LOCAL] text"
-msgstr ""
+msgstr "გამოყენება: %1AME [-LOCAL] ტექსტი"
 
 #: src/irc/outputfilter.cpp:865
 #, kde-format
 msgid "Usage: %1AMSG [-LOCAL] text"
-msgstr ""
+msgstr "გამოყენება: %1AMSG [-LOCAL] ტექსტი"
 
 #: src/irc/outputfilter.cpp:878
 #, kde-format
 msgid "Usage: %1OMSG text"
-msgstr ""
+msgstr "გამოყენება: %1OMSG ტექსტი"
 
 #: src/irc/outputfilter.cpp:896
 #, kde-format
@@ -6166,7 +6164,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:899
 #, kde-format
 msgid "Usage: %1ONOTICE text"
-msgstr ""
+msgstr "გამოყენება: %1ONOTICE ტექსტი"
 
 #: src/irc/outputfilter.cpp:909
 #, kde-format
@@ -6176,12 +6174,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:921
 #, kde-format
 msgid "Usage: %1SAY text"
-msgstr ""
+msgstr "გამოყენება: %1SAY ტექსტი"
 
 #: src/irc/outputfilter.cpp:977
 #, kde-format
 msgid "File \"%1\" does not exist."
-msgstr ""
+msgstr "ფაილი '%1' არ არსებობს."
 
 #: src/irc/outputfilter.cpp:981
 #, kde-format
@@ -6338,8 +6336,8 @@ msgid "Added %1 to your ignore list."
 msgstr ""
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
-#: src/viewer/irccontextmenus.cpp:442 src/viewer/irccontextmenus.cpp:599
-#: src/viewer/irccontextmenus.cpp:600
+#: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
+#: src/viewer/irccontextmenus.cpp:596
 #, kde-format
 msgid "Ignore"
 msgstr "იგნორი"
@@ -6379,7 +6377,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1662
 #, kde-format
 msgid "%1 is not a valid encoding."
-msgstr ""
+msgstr "%1 სწორი კოდირება არაა."
 
 #: src/irc/outputfilter.cpp:1680
 #, kde-format
@@ -6444,12 +6442,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1760 src/irc/outputfilter.cpp:1780
 #, kde-format
 msgid "No key has been set for %1."
-msgstr ""
+msgstr "%1-სთვის გასაღები დაყენებული არაა."
 
 #: src/irc/outputfilter.cpp:1777
 #, kde-format
 msgid "The key for %1 is \"%2\"."
-msgstr ""
+msgstr "გასაღებს %1-სთვის წარმოადგენს \"%2\"."
 
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
@@ -6459,12 +6457,12 @@ msgstr "Blowfish"
 #: src/irc/outputfilter.cpp:1790
 #, kde-format
 msgid "Usage: %1KILL <nick> [comment]"
-msgstr ""
+msgstr "გამოყენება: %1KILL <ფსევდონიმი> [კომენტარი]"
 
 #: src/irc/outputfilter.cpp:1804
 #, kde-format
 msgid "Usage: %1DNS <nick>"
-msgstr ""
+msgstr "გამოყენება: %1DNS <ფსევდონიმი>"
 
 #: src/irc/outputfilter.cpp:1834
 #, kde-format
@@ -6547,17 +6545,17 @@ msgstr "ყურადღება"
 #: src/irc/server.cpp:475
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
-msgstr ""
+msgstr "ვეძებ სერვერს %1 (პორტი %2)..."
 
 #: src/irc/server.cpp:682
 #, kde-format
 msgid "Server found, connecting..."
-msgstr ""
+msgstr "სერვერი აღმოჩენილია. მიერთება..."
 
 #: src/irc/server.cpp:717
 #, kde-format
 msgid "Negotiating capabilities with server..."
-msgstr ""
+msgstr "სერვერის შესაძლებლობების გადამოწმება..."
 
 #: src/irc/server.cpp:760
 #, kde-format
@@ -6569,12 +6567,12 @@ msgstr ""
 #: src/irc/server.cpp:781
 #, kde-format
 msgid "Requesting capabilities: %1"
-msgstr ""
+msgstr "შესაძლებლობების მოთხოვნა: %1"
 
 #: src/irc/server.cpp:798
 #, kde-format
 msgid "Closing capabilities negotiation."
-msgstr ""
+msgstr "შესაძლებლობების მოთხოვნის დახურვა."
 
 #: src/irc/server.cpp:806
 #, kde-format
@@ -6595,7 +6593,7 @@ msgstr ""
 #: src/irc/server.cpp:929 src/irc/server.cpp:1037
 #, kde-format
 msgid "SSL Connection Error"
-msgstr ""
+msgstr "SSL კავშირის შეცდომა"
 
 #: src/irc/server.cpp:930
 #, kde-format
@@ -6619,7 +6617,7 @@ msgstr ""
 #: src/irc/server.cpp:1003
 #, kde-format
 msgid "SSL Connection Warning"
-msgstr ""
+msgstr "SSL მიერთების გაფრთხილება"
 
 #: src/irc/server.cpp:1032
 #, kde-format
@@ -6632,7 +6630,7 @@ msgstr ""
 #: src/irc/server.cpp:1140
 #, kde-format
 msgid "Delayed connect aborted."
-msgstr ""
+msgstr "დაყოვნებული მიერთება შეწყდა."
 
 #: src/irc/server.cpp:1170
 #, kde-format
@@ -6785,50 +6783,50 @@ msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr ""
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:347
+#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
-msgstr ""
+msgstr "%1 ხაზზეა (%2)."
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:362
+#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
-msgstr ""
+msgstr "%1 ხაზგარეშე გავიდა (%2)."
 
 #: src/irc/server.cpp:3836
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
-msgstr ""
+msgstr "შეცდომა: ვერ ვიპოვე სკრიპტი \"%1\"."
 
 #: src/irc/server.cpp:3841
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
-msgstr ""
+msgstr "შეცდომა: ვერ შევასრულე სკრიპტი \"%1\". შეამოწმეთ ფაილის წვდომები."
 
 #: src/irc/server.cpp:4052
 #, kde-format
 msgid "Gone away for now"
-msgstr ""
+msgstr "ჯერჯერობით გასულია"
 
 #: src/irc/server.cpp:4083
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
-msgstr ""
+msgstr "ახლა მონიშნული ბრძანდებით, როგორც გასული (მიზეზი: %1)."
 
 #: src/irc/server.cpp:4085
 #, kde-format
 msgid "You are now marked as being away."
-msgstr ""
+msgstr "ახლა მონიშნული ბრძანდებით, როგორც გასული."
 
 #: src/irc/server.cpp:4111
 #, kde-format
 msgid "You are no longer marked as being away."
-msgstr ""
+msgstr "თქვენ აღარ ხართ მონიშნული, როგორც გასული."
 
 #: src/irc/server.cpp:4121
 #, kde-format
 msgid "You are not marked as being away."
-msgstr ""
+msgstr "არ ბრძანდებით მონიშნული, როგორც გასული."
 
 #: src/irc/server.cpp:4267
 #, kde-format
@@ -6996,7 +6994,7 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
 #: src/irc/servergroupdialogui.ui:71 src/irc/serverlistdialogui.ui:64
-#: src/viewer/ircinput.cpp:490
+#: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
 msgstr "&ჩასწორება..."
@@ -7037,7 +7035,7 @@ msgstr "სერვერები:"
 #: src/irc/servergroupdialogui.ui:118
 #, kde-format
 msgid "Auto Join Channels:"
-msgstr ""
+msgstr "ავტომატური მიერთება არხებზე:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:128
@@ -7104,32 +7102,32 @@ msgstr "დამატება..."
 msgid "Ed&it..."
 msgstr "&ჩასწორება..."
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "C&onnect"
 msgstr "&მიერთება"
 
-#: src/irc/serverlistdialog.cpp:59 src/quickconnectdialog.cpp:95
+#: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "Connect to the server"
-msgstr ""
+msgstr "მიერთება სერვერთან"
 
-#: src/irc/serverlistdialog.cpp:60
+#: src/irc/serverlistdialog.cpp:53
 #, kde-format
 msgid "Click here to connect to the selected IRC network and channel."
 msgstr ""
 
-#: src/irc/serverlistdialog.cpp:128
+#: src/irc/serverlistdialog.cpp:121
 #, kde-format
 msgid "New Network"
 msgstr "ახალი ქსელი"
 
-#: src/irc/serverlistdialog.cpp:149
+#: src/irc/serverlistdialog.cpp:142
 #, kde-format
 msgid "Edit Network"
 msgstr "ქსელის რედაქტირება"
 
-#: src/irc/serverlistdialog.cpp:205
+#: src/irc/serverlistdialog.cpp:198
 #, kde-format
 msgid ""
 "You cannot delete %1.\n"
@@ -7137,7 +7135,7 @@ msgid ""
 "The network %2 needs to have at least one server."
 msgstr ""
 
-#: src/irc/serverlistdialog.cpp:210
+#: src/irc/serverlistdialog.cpp:203
 #, kde-format
 msgid ""
 "You cannot delete the selected server.\n"
@@ -7150,15 +7148,15 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/irc/serverlistdialog.cpp:226
+#: src/irc/serverlistdialog.cpp:219
 #, kde-format
 msgid "Do you really want to delete the selected entries?"
 msgstr ""
 
-#: src/irc/serverlistdialog.cpp:228
+#: src/irc/serverlistdialog.cpp:221
 #, kde-format
 msgid "Do you really want to delete %1?"
-msgstr ""
+msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ %1?"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, m_addButton)
 #: src/irc/serverlistdialogui.ui:23
@@ -7236,8 +7234,8 @@ msgstr "ავტორი"
 msgid "Time"
 msgstr "დრო"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2615
-#: src/viewer/viewcontainer.cpp:2616
+#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
@@ -7247,22 +7245,22 @@ msgstr "Konsole"
 msgid "Manage Konsole Profiles"
 msgstr ""
 
-#: src/main.cpp:33 src/viewer/trayicon.cpp:23
+#: src/main.cpp:27 src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "Konversation"
 msgstr "Konversation"
 
-#: src/main.cpp:35
+#: src/main.cpp:29
 #, kde-format
 msgid "A user-friendly IRC client"
-msgstr ""
+msgstr "მარტივი, მეგობრული კლიენტი IRC-სთვის"
 
-#: src/main.cpp:37
+#: src/main.cpp:31
 #, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
 msgstr ""
 
-#: src/main.cpp:38
+#: src/main.cpp:32
 #, kde-format
 msgid ""
 "Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
@@ -7271,828 +7269,828 @@ msgid ""
 "about your favorite subject."
 msgstr ""
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, kde-format
 msgid "Dario Abatianni"
 msgstr "Dario Abatianni"
 
-#: src/main.cpp:42
+#: src/main.cpp:36
 #, kde-format
 msgid "Original Author, Project Founder"
 msgstr ""
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Peter Simonsson"
 msgstr "Peter Simonsson"
 
-#: src/main.cpp:43
+#: src/main.cpp:37
 #, kde-format
 msgid "Maintainer"
 msgstr "წამყვანი პროგრამისტი"
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, kde-format
 msgid "Eike Hein"
 msgstr "აიკე ჰაინი"
 
-#: src/main.cpp:44
+#: src/main.cpp:38
 #, kde-format
 msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, kde-format
 msgid "Shintaro Matsuoka"
 msgstr "Shintaro Matsuoka"
 
-#: src/main.cpp:45
+#: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
 msgstr ""
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Eli MacKenzie"
 msgstr "Eli MacKenzie"
 
-#: src/main.cpp:46
+#: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
-msgstr ""
+msgstr "პროტოკოლის დამუშავება, შეყვანის ხაზი"
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, kde-format
 msgid "İsmail Dönmez"
 msgstr "İsmail Dönmez"
 
-#: src/main.cpp:47
+#: src/main.cpp:41
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "John Tapsell"
 msgstr "John Tapsell"
 
-#: src/main.cpp:48
+#: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
 msgstr ""
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "Bernd Buschinski"
 msgstr "Bernd Buschinski"
 
-#: src/main.cpp:49
+#: src/main.cpp:43
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
 msgstr ""
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Olivier Bédard"
 msgstr "Olivier Bédard"
 
-#: src/main.cpp:51
+#: src/main.cpp:45
 #, kde-format
 msgid "Website hosting"
-msgstr ""
+msgstr "ვებგვერდის ჰოსტინგი"
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Jędrzej Lisowski"
 msgstr "Jędrzej Lisowski"
 
-#: src/main.cpp:52
+#: src/main.cpp:46
 #, kde-format
 msgid "Website maintenance"
-msgstr ""
+msgstr "ვემგვერდის მიხედვა"
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, kde-format
 msgid "Christian Muehlhaeuser"
 msgstr "Christian Muehlhaeuser"
 
-#: src/main.cpp:53
+#: src/main.cpp:47
 #, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
 msgstr ""
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, kde-format
 msgid "Gary Cramblitt"
 msgstr "Gary Cramblitt"
 
-#: src/main.cpp:54
+#: src/main.cpp:48
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, kde-format
 msgid "Matthias Gierlings"
 msgstr "Matthias Gierlings"
 
-#: src/main.cpp:55
+#: src/main.cpp:49
 #, kde-format
 msgid "Color configurator, Highlight dialog"
 msgstr ""
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, kde-format
 msgid "Alex Zepeda"
 msgstr "Alex Zepeda"
 
-#: src/main.cpp:56
+#: src/main.cpp:50
 #, kde-format
 msgid "DCOP interface"
 msgstr "DCOP ინტერფეისი"
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Stanislav Karchebny"
 msgstr "Stanislav Karchebny"
 
-#: src/main.cpp:57
+#: src/main.cpp:51
 #, kde-format
 msgid "Non-Latin1-Encodings"
 msgstr ""
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, kde-format
 msgid "Mickael Marchand"
 msgstr "Mickael Marchand"
 
-#: src/main.cpp:58
+#: src/main.cpp:52
 #, kde-format
 msgid "Konsole part view"
 msgstr ""
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, kde-format
 msgid "Michael Goettsche"
 msgstr "Michael Goettsche"
 
-#: src/main.cpp:59
+#: src/main.cpp:53
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr ""
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, kde-format
 msgid "Benjamin Meyer"
 msgstr "Benjamin Meyer"
 
-#: src/main.cpp:60
+#: src/main.cpp:54
 #, kde-format
 msgid "A Handful of fixes and code cleanup"
 msgstr ""
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Jakub Stachowski"
 msgstr "Jakub Stachowski"
 
-#: src/main.cpp:61
+#: src/main.cpp:55
 #, kde-format
 msgid "Drag&Drop improvements"
-msgstr ""
+msgstr "გადათრევა&დაგდების გაუმჯობესება"
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, kde-format
 msgid "Sebastian Sariego"
 msgstr "Sebastian Sariego"
 
-#: src/main.cpp:62
+#: src/main.cpp:56
 #, kde-format
 msgid "Artwork"
 msgstr "ნამუშევრები"
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, kde-format
 msgid "Renchi Raju"
 msgstr "Renchi Raju"
 
-#: src/main.cpp:63
+#: src/main.cpp:57
 #, kde-format
 msgid "Firefox style searchbar"
-msgstr ""
+msgstr "Firefox-ის სტილის ძებნის პანელი"
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, kde-format
 msgid "Michael Kreitzer"
 msgstr "Michael Kreitzer"
 
-#: src/main.cpp:64
+#: src/main.cpp:58
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
 msgstr ""
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, kde-format
 msgid "Frauke Oster"
 msgstr "Frauke Oster"
 
-#: src/main.cpp:65
+#: src/main.cpp:59
 #, kde-format
 msgid "System tray patch"
-msgstr ""
+msgstr "სისტემის კუთხეში ჩვენების პაჩი"
 
-#: src/main.cpp:66
+#: src/main.cpp:60
 #, kde-format
 msgid "Lucijan Busch"
 msgstr "Lucijan Busch"
 
-#: src/main.cpp:66 src/main.cpp:72 src/main.cpp:75
+#: src/main.cpp:60 src/main.cpp:66 src/main.cpp:69
 #, kde-format
 msgid "Bug fixes"
 msgstr "შეცდომების გასწორება"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, kde-format
 msgid "Sascha Cunz"
 msgstr "საშა კანზი"
 
-#: src/main.cpp:67
+#: src/main.cpp:61
 #, kde-format
 msgid "Extended user modes patch"
 msgstr ""
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, kde-format
 msgid "Steve Wollkind"
 msgstr "Steve Wollkind"
 
-#: src/main.cpp:68
+#: src/main.cpp:62
 #, kde-format
 msgid "Close visible tab with shortcut patch"
 msgstr ""
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, kde-format
 msgid "Thomas Nagy"
 msgstr "Thomas Nagy"
 
-#: src/main.cpp:69
+#: src/main.cpp:63
 #, kde-format
 msgid "Cycle tabs with mouse scroll wheel"
 msgstr ""
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, kde-format
 msgid "Tobias Olry"
 msgstr "Tobias Olry"
 
-#: src/main.cpp:70
+#: src/main.cpp:64
 #, kde-format
 msgid "Channel ownership mode patch"
 msgstr ""
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, kde-format
 msgid "Ruud Nabben"
 msgstr "Ruud Nabben"
 
-#: src/main.cpp:71
+#: src/main.cpp:65
 #, kde-format
 msgid "Option to enable IRC color filtering"
 msgstr ""
 
-#: src/main.cpp:72
+#: src/main.cpp:66
 #, kde-format
 msgid "Lothar Braun"
 msgstr "Lothar Braun"
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Ivor Hewitt"
 msgstr "Ivor Hewitt"
 
-#: src/main.cpp:73
+#: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
 msgstr ""
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Emil Obermayr"
 msgstr "Emil Obermayr"
 
-#: src/main.cpp:74
+#: src/main.cpp:68
 #, kde-format
 msgid "Sysinfo script"
-msgstr ""
+msgstr "Sysinfo-ის სკრიპტი"
 
-#: src/main.cpp:75
+#: src/main.cpp:69
 #, kde-format
 msgid "Stanislav Nikolov"
 msgstr "Stanislav Nikolov"
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Juan Carlos Torres"
 msgstr "Juan Carlos Torres"
 
-#: src/main.cpp:76
+#: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
 msgstr ""
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid "Travis McHenry"
 msgstr "Travis McHenry"
 
-#: src/main.cpp:77
+#: src/main.cpp:71
 #, kde-format
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
 msgstr ""
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Modestas Vainius"
 msgstr "Modestas Vainius"
 
-#: src/main.cpp:78
+#: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
 msgstr ""
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, kde-format
 msgid "Abdurrahman AVCI"
-msgstr ""
+msgstr "Abdurrahman AVCI"
 
-#: src/main.cpp:79
+#: src/main.cpp:73
 #, kde-format
 msgid "Various bug fixes and enhancements."
 msgstr ""
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "Martin Blumenstingl"
 msgstr "Martin Blumenstingl"
 
-#: src/main.cpp:80
+#: src/main.cpp:74
 #, kde-format
 msgid "KStatusNotifierItem support, KIdleTime support, other enhancements"
 msgstr ""
 
-#: src/main.cpp:90
+#: src/main.cpp:84
 #, kde-format
 msgid "irc:// URL or server hostname"
-msgstr ""
+msgstr "irc:// URL ან სერვერის ჰოსტის სახელი"
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, kde-format
 msgid "Server to connect"
 msgstr "სერვერის სახელი"
 
-#: src/main.cpp:91
+#: src/main.cpp:85
 #, kde-format
 msgid "server"
 msgstr "სერვერი"
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, kde-format
 msgid "Port to use"
 msgstr "პორტის ნომერი"
 
-#: src/main.cpp:92
+#: src/main.cpp:86
 #, kde-format
 msgid "port"
 msgstr "პორტი"
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, kde-format
 msgid "Channel to join after connection"
 msgstr ""
 
-#: src/main.cpp:93
+#: src/main.cpp:87
 #, kde-format
 msgid "channel"
 msgstr "არხი"
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, kde-format
 msgid "Nickname to use"
-msgstr ""
+msgstr "გამოყენებული ფსევდონიმი"
 
-#: src/main.cpp:94
+#: src/main.cpp:88
 #, kde-format
 msgid "nickname"
 msgstr "მეტსახელი"
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, kde-format
 msgid "Password for connection"
-msgstr ""
+msgstr "მიერთების პაროლი"
 
-#: src/main.cpp:95
+#: src/main.cpp:89
 #, kde-format
 msgid "password"
 msgstr "password"
 
-#: src/main.cpp:96
+#: src/main.cpp:90
 #, kde-format
 msgid "Use SSL for connection"
-msgstr ""
+msgstr "SSL-ის გამოყენება მიერთებისთვის"
 
-#: src/main.cpp:97
+#: src/main.cpp:91
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, kde-format
 msgid ""
 "Delay D-Bus activity and UI creation by the specified amount of milliseconds"
 msgstr ""
 
-#: src/main.cpp:98
+#: src/main.cpp:92
 #, kde-format
 msgid "msec"
 msgstr "მწმ"
 
-#: src/main.cpp:99
+#: src/main.cpp:93
 #, kde-format
 msgid "Quits and restarts Konversation (if running, otherwise has no effect)"
 msgstr ""
 
-#: src/main.cpp:101
+#: src/main.cpp:95
 #, kde-format
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
 
-#: src/mainwindow.cpp:131
+#: src/mainwindow.cpp:135
 #, kde-format
 msgid "Restart"
 msgstr "გადატვრთვა"
 
-#: src/mainwindow.cpp:133
+#: src/mainwindow.cpp:137
 #, kde-format
 msgid "Quit and restart the application"
-msgstr ""
+msgstr "გასვლა და აპლიკაციის გადატვირთვა"
 
-#: src/mainwindow.cpp:138
+#: src/mainwindow.cpp:142
 #, kde-format
 msgid "&Server List..."
 msgstr "&სერვერების სია..."
 
-#: src/mainwindow.cpp:141
+#: src/mainwindow.cpp:145
 #, kde-format
 msgid "Manage networks and servers"
-msgstr ""
+msgstr "ქსელებისა და სერვერების მართვა"
 
-#: src/mainwindow.cpp:146
+#: src/mainwindow.cpp:150
 #, kde-format
 msgid "Quick &Connect..."
-msgstr ""
+msgstr "სწრაფი &დაკავშირება..."
 
-#: src/mainwindow.cpp:149
+#: src/mainwindow.cpp:153
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
 msgstr ""
 
-#: src/mainwindow.cpp:154
+#: src/mainwindow.cpp:158
 #, kde-format
 msgid "&Reconnect"
 msgstr "&თავიდან დაკავშირება"
 
-#: src/mainwindow.cpp:157
+#: src/mainwindow.cpp:161
 #, kde-format
 msgid "Reconnect to the current server."
 msgstr ""
 
-#: src/mainwindow.cpp:163
+#: src/mainwindow.cpp:167
 #, kde-format
 msgid "&Disconnect"
 msgstr "&გათიშვა"
 
-#: src/mainwindow.cpp:166
+#: src/mainwindow.cpp:170
 #, kde-format
 msgid "Disconnect from the current server."
 msgstr ""
 
-#: src/mainwindow.cpp:171
+#: src/mainwindow.cpp:175
 #, kde-format
 msgid "&Identities..."
-msgstr ""
+msgstr "&იდენტიფიკატორები..."
 
-#: src/mainwindow.cpp:174
+#: src/mainwindow.cpp:178
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
 msgstr ""
 
-#: src/mainwindow.cpp:179
+#: src/mainwindow.cpp:183
 #, kde-format
 msgid "&Watched Nicks"
 msgstr ""
 
-#: src/mainwindow.cpp:187
+#: src/mainwindow.cpp:191
 #, kde-format
 msgid "&DCC Status"
 msgstr "&DCC სტატუსი"
 
-#: src/mainwindow.cpp:196 src/mainwindow.cpp:841
-#: src/viewer/viewcontainer.cpp:921
+#: src/mainwindow.cpp:200 src/mainwindow.cpp:847
+#: src/viewer/viewcontainer.cpp:917
 #, kde-format
 msgid "&Open Logfile"
 msgstr "&ჟურნალის ფაილის გახსნა"
 
-#: src/mainwindow.cpp:200
+#: src/mainwindow.cpp:204
 #, kde-format
 msgid "Open the known history for this channel in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:205 src/viewer/viewcontainer.cpp:942
+#: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
 #, kde-format
 msgid "&Channel Settings..."
 msgstr "&არხის პარამეტრები..."
 
-#: src/mainwindow.cpp:208
+#: src/mainwindow.cpp:212
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
 msgstr ""
 
-#: src/mainwindow.cpp:213 src/viewer/viewcontainer.cpp:912
+#: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
 #, kde-format
 msgid "Channel &List"
 msgstr "არხების &სია"
 
-#: src/mainwindow.cpp:217
+#: src/mainwindow.cpp:221
 #, kde-format
 msgid "Show a list of all the known channels on this server"
 msgstr ""
 
-#: src/mainwindow.cpp:222
+#: src/mainwindow.cpp:226
 #, kde-format
 msgid "&URL Catcher"
 msgstr ""
 
-#: src/mainwindow.cpp:225
+#: src/mainwindow.cpp:229
 #, kde-format
 msgid "List all URLs that have been mentioned recently in a new tab"
 msgstr ""
 
-#: src/mainwindow.cpp:232
+#: src/mainwindow.cpp:236
 #, kde-format
 msgid "New &Konsole"
-msgstr ""
+msgstr "ახალი &Konsole"
 
-#: src/mainwindow.cpp:234
+#: src/mainwindow.cpp:238
 #, kde-format
 msgid "Open a terminal in a new tab"
-msgstr ""
+msgstr "ტერმინალის ახალი ჩანართის გახსნა"
 
-#: src/mainwindow.cpp:264
+#: src/mainwindow.cpp:268
 #, kde-format
 msgid "&Next Tab"
 msgstr "&შემდეგი ჩანართი"
 
-#: src/mainwindow.cpp:272
+#: src/mainwindow.cpp:276
 #, kde-format
 msgid "&Previous Tab"
 msgstr "&წინა ჩანართი"
 
-#: src/mainwindow.cpp:280
+#: src/mainwindow.cpp:284
 #, kde-format
 msgid "Close &Tab"
-msgstr ""
+msgstr "ჩანართის &დახურვა"
 
-#: src/mainwindow.cpp:288
+#: src/mainwindow.cpp:292
 #, kde-format
 msgid "Last Focused Tab"
-msgstr ""
+msgstr "ბოლო მონიშნული ჩანართი"
 
-#: src/mainwindow.cpp:295
+#: src/mainwindow.cpp:299
 #, kde-format
 msgid "Next Active Tab"
-msgstr ""
+msgstr "შემდეგი აქტიური ჩანართი"
 
-#: src/mainwindow.cpp:308 src/viewer/viewcontainer.cpp:300
+#: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
 #, kde-format
 msgid "Move Tab Up"
 msgstr "ჩანართის მაღლა ატანა"
 
-#: src/mainwindow.cpp:312 src/mainwindow.cpp:317 src/mainwindow.cpp:334
-#: src/mainwindow.cpp:343 src/mainwindow.cpp:355 src/mainwindow.cpp:364
+#: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
+#: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
 #, kde-format
 msgid "Move this tab"
 msgstr "ამ ჩანართის გადატანა"
 
-#: src/mainwindow.cpp:319 src/viewer/viewcontainer.cpp:308
+#: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
 #, kde-format
 msgid "Move Tab Down"
 msgstr "ჩანართის დაბლა ჩამოტანა"
 
-#: src/mainwindow.cpp:330 src/mainwindow.cpp:360
-#: src/viewer/viewcontainer.cpp:354
+#: src/mainwindow.cpp:334 src/mainwindow.cpp:364
+#: src/viewer/viewcontainer.cpp:350
 #, kde-format
 msgid "Move Tab Right"
 msgstr "ჩანართის მარჯვნივ გადატანა"
 
-#: src/mainwindow.cpp:339 src/mainwindow.cpp:351
-#: src/viewer/viewcontainer.cpp:346
+#: src/mainwindow.cpp:343 src/mainwindow.cpp:355
+#: src/viewer/viewcontainer.cpp:342
 #, kde-format
 msgid "Move Tab Left"
 msgstr "ჩანართის მარცხნივ გადატანა"
 
-#: src/mainwindow.cpp:374
+#: src/mainwindow.cpp:378
 #, kde-format
 msgid "Rejoin Channel"
 msgstr "არხზე თავიდან შესვლა"
 
-#: src/mainwindow.cpp:380 src/mainwindow.cpp:849
+#: src/mainwindow.cpp:384 src/mainwindow.cpp:855
 #, kde-format
 msgid "Enable Notifications"
 msgstr "გაფრთხილებების ჩართვა"
 
-#: src/mainwindow.cpp:386
+#: src/mainwindow.cpp:390
 #, kde-format
 msgid "Join on Connect"
 msgstr "მიერთებისას შესვლა"
 
-#: src/mainwindow.cpp:391
+#: src/mainwindow.cpp:395
 #, kde-format
 msgid "Connect at Startup"
 msgstr "გაშვებისას ავტომატური მიერთება"
 
-#: src/mainwindow.cpp:396
+#: src/mainwindow.cpp:400
 #, kde-format
 msgid "Default"
 msgstr "სტანდარტული"
 
-#: src/mainwindow.cpp:401
+#: src/mainwindow.cpp:405
 #, kde-format
 msgid "Set Encoding"
 msgstr "კოდირების დაყენება"
 
-#: src/mainwindow.cpp:410
+#: src/mainwindow.cpp:414
 #, kde-format
 msgid "Go to Tab %1"
-msgstr ""
+msgstr "%1-ე ჩანართეზე გადართვა"
 
-#: src/mainwindow.cpp:417
+#: src/mainwindow.cpp:421
 #, kde-format
 msgid "Clear &Marker Lines"
 msgstr ""
 
-#: src/mainwindow.cpp:420
+#: src/mainwindow.cpp:424
 #, kde-format
 msgid "Clear marker lines in the current tab"
 msgstr ""
 
-#: src/mainwindow.cpp:425
+#: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
 msgstr "ფონტის ზომის გადიდება"
 
-#: src/mainwindow.cpp:429
+#: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
 msgstr ""
 
-#: src/mainwindow.cpp:434
+#: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
 msgstr "ფონტის ზომის საწყის მნიშვნელობაზე დაბრუნება"
 
-#: src/mainwindow.cpp:438
+#: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
 msgstr ""
 
-#: src/mainwindow.cpp:443
+#: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
 msgstr "ფონტის ზომის შემცირება"
 
-#: src/mainwindow.cpp:447
+#: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
-msgstr ""
+msgstr "მიმდინარე ფონტის ზომის შემცირება"
 
-#: src/mainwindow.cpp:452
+#: src/mainwindow.cpp:456
 #, kde-format
 msgid "&Clear Window"
 msgstr "&ფანჯრის გასუფთავება"
 
-#: src/mainwindow.cpp:455
+#: src/mainwindow.cpp:459
 #, kde-format
 msgid "Clear the contents of the current tab"
 msgstr "მიმდინარე ჩანართის შემცველობის გასუფთავება"
 
-#: src/mainwindow.cpp:460
+#: src/mainwindow.cpp:464
 #, kde-format
 msgid "Clear &All Windows"
 msgstr "&ყველა ფანჯრის გასუფთავება"
 
-#: src/mainwindow.cpp:463
+#: src/mainwindow.cpp:467
 #, kde-format
 msgid "Clear the contents of all open tabs"
-msgstr ""
+msgstr "ყველა ღია ჩანართის შემცველობის გასუფთავება"
 
-#: src/mainwindow.cpp:468
+#: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
 msgstr "გლობალურად გასული"
 
-#: src/mainwindow.cpp:476 src/viewer/irccontextmenus.cpp:334
+#: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
 msgid "&Join Channel..."
 msgstr "&არხზე შესვლა..."
 
-#: src/mainwindow.cpp:480
+#: src/mainwindow.cpp:484
 #, kde-format
 msgid "Join a new channel on this server"
 msgstr ""
 
-#: src/mainwindow.cpp:492 src/mainwindow.cpp:851
+#: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
 msgid "&IRC Color..."
 msgstr "&IRC ფერი..."
 
-#: src/mainwindow.cpp:496
+#: src/mainwindow.cpp:500
 #, kde-format
 msgid "Set the color of your current IRC message"
 msgstr ""
 
-#: src/mainwindow.cpp:501 src/mainwindow.cpp:853
+#: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, kde-format
 msgid "&Marker Line"
 msgstr "&სანიშნი ხაზი"
 
-#: src/mainwindow.cpp:504
+#: src/mainwindow.cpp:508
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
 msgstr ""
 
-#: src/mainwindow.cpp:509 src/mainwindow.cpp:852
+#: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, kde-format
 msgid "Special &Character..."
 msgstr "&სპეციალური სიმბოლო..."
 
-#: src/mainwindow.cpp:513
+#: src/mainwindow.cpp:517
 #, kde-format
 msgid "Insert any character into your current IRC message"
 msgstr ""
 
-#: src/mainwindow.cpp:524
+#: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
-msgstr ""
+msgstr "ფოკუსი შეყვანის ზოლზე"
 
-#: src/mainwindow.cpp:531
+#: src/mainwindow.cpp:535
 #, kde-format
 msgid "Close &All Open Queries"
 msgstr ""
 
-#: src/mainwindow.cpp:540
+#: src/mainwindow.cpp:544
 #, kde-format
 msgid "Show Nicklist"
 msgstr ""
 
-#: src/mainwindow.cpp:546
+#: src/mainwindow.cpp:550
 #, kde-format
 msgid "Show/Hide Konversation"
-msgstr ""
+msgstr "Konversation-ის ჩვენება/დამალვა"
 
-#: src/mainwindow.cpp:557
+#: src/mainwindow.cpp:561
 #, kde-format
 msgid "Enable On Screen Display"
 msgstr ""
 
-#: src/mainwindow.cpp:564
+#: src/mainwindow.cpp:568
 #, kde-format
 msgid "Bookmarks"
 msgstr "სანიშნები"
 
-#: src/mainwindow.cpp:609
+#: src/mainwindow.cpp:613
 #, kde-format
 msgid ""
 "<qt>You have active DCC file transfers. Are you sure you want to quit "
 "<b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:610 src/mainwindow.cpp:620
+#: src/mainwindow.cpp:614 src/mainwindow.cpp:624
 #, kde-format
 msgid "Confirm Quit"
 msgstr "გასვლის დადასტურება"
 
-#: src/mainwindow.cpp:619
+#: src/mainwindow.cpp:623
 #, kde-format
 msgid "<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"
 msgstr ""
 
-#: src/mainwindow.cpp:656
+#: src/mainwindow.cpp:660
 #, kde-format
 msgid ""
 "<p>Closing the main window will keep Konversation running in the system "
@@ -8100,12 +8098,12 @@ msgid ""
 "application.</p>"
 msgstr ""
 
-#: src/mainwindow.cpp:658
+#: src/mainwindow.cpp:662
 #, kde-format
 msgid "Docking in System Tray"
-msgstr ""
+msgstr "სისტემურ საათთან მიმაგრება"
 
-#: src/mainwindow.cpp:800
+#: src/mainwindow.cpp:806
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -8114,47 +8112,47 @@ msgstr ""
 "<qt>მენიუს ზოლი მთლიანად დაიმალება. მისი თავიდან საჩვენებლად დააწექით: %1.</"
 "qt>"
 
-#: src/mainwindow.cpp:801
+#: src/mainwindow.cpp:807
 #, kde-format
 msgid "Hide menu bar"
 msgstr "მენიუს ზოლის დამალვა"
 
-#: src/mainwindow.cpp:833
+#: src/mainwindow.cpp:839
 #, kde-format
 msgid "Toggle Notifications"
-msgstr ""
+msgstr "შეტყობინებების გადართვა"
 
-#: src/mainwindow.cpp:834
+#: src/mainwindow.cpp:840
 #, kde-format
 msgid "Toggle Away Globally"
 msgstr ""
 
-#: src/mainwindow.cpp:835
+#: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert &IRC Color..."
 msgstr ""
 
-#: src/mainwindow.cpp:836
+#: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert Special &Character..."
-msgstr ""
+msgstr "&სპეციალური სიმბოლოს ჩასმა..."
 
-#: src/mainwindow.cpp:837
+#: src/mainwindow.cpp:843
 #, kde-format
 msgid "Insert &Marker Line"
-msgstr ""
+msgstr "&ხაზის ნიშნის ჩასმა"
 
-#: src/mainwindow.cpp:839
+#: src/mainwindow.cpp:845
 #, kde-format
 msgid "&Channel List"
 msgstr "არხების &სია"
 
-#: src/mainwindow.cpp:850
+#: src/mainwindow.cpp:856
 #, kde-format
 msgid "Set &Away Globally"
 msgstr ""
 
-#: src/mainwindow.cpp:865
+#: src/mainwindow.cpp:871
 #, kde-format
 msgid "Server List"
 msgstr "სერვერების სია"
@@ -8163,133 +8161,133 @@ msgstr "სერვერების სია"
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
-msgstr ""
+msgstr "ახალი შეტყობინება %1-სგან %2-ში"
 
-#: src/notificationhandler.cpp:100
+#: src/notificationhandler.cpp:103
 #, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
-msgstr ""
+msgstr "თქვენი ფსევდონიმი მოიხსენია %1-მა %2-ში"
 
-#: src/notificationhandler.cpp:111
+#: src/notificationhandler.cpp:114
 #, kde-format
 msgid "[HighLight] (%1) <%2>"
 msgstr ""
 
-#: src/notificationhandler.cpp:125 src/notificationhandler.cpp:431
+#: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
 #, kde-format
 msgid "[HighLight] (%1) <%2> %3"
 msgstr ""
 
-#: src/notificationhandler.cpp:150
+#: src/notificationhandler.cpp:153
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:161
+#: src/notificationhandler.cpp:164
 #, kde-format
 msgid "[Query] <%1>"
-msgstr ""
+msgstr "[მოთხოვნა] <%1>"
 
-#: src/notificationhandler.cpp:175
+#: src/notificationhandler.cpp:178
 #, kde-format
 msgid "[Query] <%1> %2"
-msgstr ""
+msgstr "[მოთხოვნა] <%1> %2"
 
-#: src/notificationhandler.cpp:209 src/notificationhandler.cpp:216
+#: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, kde-format
 msgid "%1 joined %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:228 src/notificationhandler.cpp:235
+#: src/notificationhandler.cpp:231 src/notificationhandler.cpp:238
 #, kde-format
 msgid "%1 parted %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:247
+#: src/notificationhandler.cpp:250
 #, kde-format
 msgid "%1 quit %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:258
+#: src/notificationhandler.cpp:261
 #, kde-format
 msgid "%1 changed nickname to %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:269
+#: src/notificationhandler.cpp:272
 #, kde-format
 msgid "%1 wants to send a file to you"
 msgstr ""
 
-#: src/notificationhandler.cpp:280
+#: src/notificationhandler.cpp:283
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:293 src/notificationhandler.cpp:299
+#: src/notificationhandler.cpp:296 src/notificationhandler.cpp:301
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
-msgstr ""
+msgstr "%1 ფაილის მიმოცვლა დასრულდა"
 
-#: src/notificationhandler.cpp:301
+#: src/notificationhandler.cpp:302
 #, kde-format
 msgctxt "Opens the file from the finished dcc transfer"
 msgid "Open"
 msgstr "გახსნა"
 
-#: src/notificationhandler.cpp:317
+#: src/notificationhandler.cpp:318
 #, kde-format
 msgid "%1 changed modes in %2: %3"
 msgstr ""
 
-#: src/notificationhandler.cpp:333
+#: src/notificationhandler.cpp:334
 #, kde-format
 msgid "%1 has started a conversation (query) with you."
 msgstr ""
 
-#: src/notificationhandler.cpp:377
+#: src/notificationhandler.cpp:378
 #, kde-format
 msgid "You are kicked by %1 from %2"
 msgstr ""
 
-#: src/notificationhandler.cpp:392
+#: src/notificationhandler.cpp:393
 #, kde-format
 msgid "%1 started a DCC chat with you"
 msgstr ""
 
-#: src/notificationhandler.cpp:412
+#: src/notificationhandler.cpp:414
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:417
+#: src/notificationhandler.cpp:419
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
 msgstr ""
 
-#: src/notificationhandler.cpp:428
+#: src/notificationhandler.cpp:430
 #, kde-format
 msgid "[HighLight] (%1) *** %2"
 msgstr "[გამოკვეთა] (%1) *** %2"
 
-#: src/notificationhandler.cpp:442
+#: src/notificationhandler.cpp:443
 #, kde-format
 msgid "Failed to connect to %1"
-msgstr ""
+msgstr "ჩავარდა შეერთება არხისთვის %1"
 
-#: src/notificationhandler.cpp:455
+#: src/notificationhandler.cpp:457
 #, kde-format
 msgid "You have joined %1."
-msgstr ""
+msgstr "შეუერთდით არხს %1."
 
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr ""
+msgstr "ჩამოყრა..."
 
 #: src/queuetuner.cpp:229
 #, kde-format
@@ -8300,7 +8298,7 @@ msgstr ""
 #: src/queuetuner.cpp:231
 #, kde-format
 msgid "Reset Values"
-msgstr ""
+msgstr "მნიშვნელობების ჩამოყრა"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_closeButton)
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
@@ -8312,7 +8310,7 @@ msgstr "დახურვა"
 #: src/queuetunerbase.ui:96
 #, kde-format
 msgid "Slow Queue"
-msgstr ""
+msgstr "ნელი რიგი"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_slowType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_normalType)
@@ -8401,13 +8399,13 @@ msgstr "ბაიტი:"
 #: src/queuetunerbase.ui:267
 #, kde-format
 msgid "Normal Queue"
-msgstr ""
+msgstr "ნორმალური რიგი"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_fastBox)
 #: src/queuetunerbase.ui:438
 #, kde-format
 msgid "Fast Queue"
-msgstr ""
+msgstr "სწრაფი რიგი"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_globalBox)
 #: src/queuetunerbase.ui:612
@@ -8461,7 +8459,7 @@ msgstr "&მეტსახელი:"
 #: src/quickconnectdialog.cpp:61
 #, kde-format
 msgid "The nick you want to use."
-msgstr ""
+msgstr "ფსევდონიმი, რომელიც გნებავთ, გამოიყენოთ."
 
 #: src/quickconnectdialog.cpp:68
 #, kde-format
@@ -8478,7 +8476,7 @@ msgstr ""
 #: src/quickconnectdialog.cpp:79
 #, kde-format
 msgid "&Use SSL"
-msgstr ""
+msgstr "SSL-ის &გამოყენება"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
 #, kde-format
@@ -8497,7 +8495,7 @@ msgstr ""
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
 #, kde-format
 msgid "Lag: Unknown"
-msgstr ""
+msgstr "დაყოვნება: უცნობი"
 
 #: src/statusbar.cpp:53
 #, kde-format
@@ -8563,10 +8561,10 @@ msgstr "%1-ის გადმოწერის შეცდომა: %2"
 msgid "Error parsing router description."
 msgstr "რაუტერის აღწერის დამუშავების შეცდომა."
 
-#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2626
+#: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
 msgid "URL Catcher"
-msgstr ""
+msgstr "&ბმულების ჩამჭერი"
 
 #: src/urlcatcher.cpp:90
 #, kde-format
@@ -8577,7 +8575,7 @@ msgstr "&გახსნა"
 #: src/urlcatcher.cpp:93
 #, kde-format
 msgid "Open URLs in external browser."
-msgstr ""
+msgstr "ბმულების გარე ბრაუზერში გახსნა."
 
 #: src/urlcatcher.cpp:94
 #, kde-format
@@ -8596,7 +8594,7 @@ msgstr "&შენახვა..."
 #: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
-msgstr ""
+msgstr "მონიშნული ბმულების დისკზე ჩაწრა."
 
 #: src/urlcatcher.cpp:103
 #, kde-format
@@ -8612,7 +8610,7 @@ msgstr "&კოპირება"
 #: src/urlcatcher.cpp:114
 #, kde-format
 msgid "Copy URLs to the clipboard."
-msgstr ""
+msgstr "ბმულების კოპირება ბუფერში."
 
 #: src/urlcatcher.cpp:115
 #, kde-format
@@ -8625,7 +8623,7 @@ msgstr ""
 #, kde-format
 msgctxt "delete url"
 msgid "&Delete"
-msgstr ""
+msgstr "&წაშლა"
 
 #: src/urlcatcher.cpp:121
 #, kde-format
@@ -8637,7 +8635,7 @@ msgstr ""
 #: src/urlcatcher.cpp:122
 #, kde-format
 msgid "Delete selected link."
-msgstr ""
+msgstr "მონიშნული ბმულის წაშლა."
 
 #: src/urlcatcher.cpp:128
 #, kde-format
@@ -8653,7 +8651,7 @@ msgstr "სიის შენახვა."
 #: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
-msgstr ""
+msgstr "დააწკაპუნეთ მთლიანი სიის ფაილში ჩასაწერად."
 
 #: src/urlcatcher.cpp:134
 #, kde-format
@@ -8669,7 +8667,7 @@ msgstr "სიის გასუფთავება."
 #: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
-msgstr ""
+msgstr "დააწკაპუნეთ მთელი სიის წასაშლელად."
 
 #: src/urlcatcher.cpp:155
 #, kde-format
@@ -8698,7 +8696,7 @@ msgstr ""
 #: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, kde-format
 msgid "Open URLs"
-msgstr ""
+msgstr "ბმულების გახნა"
 
 #: src/urlcatcher.cpp:251
 #, kde-format
@@ -8707,47 +8705,49 @@ msgid ""
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
 
-#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:772
+#: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
 msgid "Save link as"
-msgstr ""
+msgstr "ბმულის შენახვა, როგორც"
 
-#: src/urlcatcher.cpp:334
+#: src/urlcatcher.cpp:333
 #, kde-format
 msgid "Save URL List"
-msgstr ""
+msgstr "ბმულების სიის შენახვა"
 
-#: src/urlcatcher.cpp:361
+#: src/urlcatcher.cpp:360
 #, kde-format
 msgid ""
 "Konversation URL List: %1\n"
 "\n"
 msgstr ""
+"Konversation-ის ბმულების სია: %1\n"
+"\n"
 
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
 msgid "(away)"
-msgstr ""
+msgstr "(გასული)"
 
 #: src/viewer/awaylabel.cpp:19
 #, kde-format
 msgid "&Unaway"
-msgstr ""
+msgstr "&გასულობის მოხსნა"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr ""
+msgstr "&გასულობის შეტყობინების შეცვლა..."
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr ""
+msgstr "გასულობის შეტყობინების შეცვლა"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Enter new away message:"
-msgstr ""
+msgstr "შეიყვანეთ ახალი გასულობის შეტყობინება:"
 
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
@@ -8757,12 +8757,12 @@ msgstr ""
 #: src/viewer/channeloptionsdialog.cpp:218
 #, kde-format
 msgid "&Hide Advanced Modes <<"
-msgstr ""
+msgstr "&დამატებითი რეჟიმების დამალვა <<"
 
 #: src/viewer/channeloptionsdialog.cpp:222
 #, kde-format
 msgid "&Show Advanced Modes >>"
-msgstr ""
+msgstr "&დამატებითი რეჟიმების ჩვენება >>"
 
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
@@ -8775,7 +8775,7 @@ msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: src/viewer/channeloptionsdialog.cpp:613
+#: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8783,7 +8783,7 @@ msgid ""
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:615
+#: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8792,7 +8792,7 @@ msgid ""
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:617
+#: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8803,7 +8803,7 @@ msgid ""
 "p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:619
+#: src/viewer/channeloptionsdialog.cpp:615
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8813,7 +8813,7 @@ msgid ""
 "p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:621
+#: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8823,7 +8823,7 @@ msgid ""
 "p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:623
+#: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8831,7 +8831,7 @@ msgid ""
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:625
+#: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8839,7 +8839,7 @@ msgid ""
 "in order to join.</p></qt>"
 msgstr ""
 
-#: src/viewer/channeloptionsdialog.cpp:627
+#: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
 msgid ""
 "<qt><p>These control the <em>mode</em> of the channel.  Only an operator can "
@@ -8926,7 +8926,7 @@ msgstr "&ბანებს სია"
 #: src/viewer/channeloptionsui.ui:288
 #, kde-format
 msgid "Hostmask"
-msgstr ""
+msgstr "კლიენტის ნიღაბი"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, banList)
 #: src/viewer/channeloptionsui.ui:293
@@ -8938,13 +8938,13 @@ msgstr "დაყენებულია"
 #: src/viewer/channeloptionsui.ui:298
 #, kde-format
 msgid "Time Set"
-msgstr ""
+msgstr "დაყენების დრო"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, updateBan)
 #: src/viewer/channeloptionsui.ui:321
 #, kde-format
 msgid "Update Ban"
-msgstr ""
+msgstr "ბანის განახლება"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, addBan)
 #: src/viewer/channeloptionsui.ui:340
@@ -8958,7 +8958,7 @@ msgstr "ბანის დამატება"
 msgid "Remove Ban"
 msgstr "ბანის წაშლა"
 
-#: src/viewer/chatwindow.cpp:515
+#: src/viewer/chatwindow.cpp:509
 #, kde-format
 msgid ""
 "\n"
@@ -8985,7 +8985,7 @@ msgstr ""
 #: src/viewer/editnotifydialog.cpp:55
 #, kde-format
 msgid "N&ickname:"
-msgstr ""
+msgstr "&მეტსახელი:"
 
 #: src/viewer/editnotifydialog.cpp:57
 #, kde-format
@@ -9106,203 +9106,203 @@ msgid ""
 "to see this.</b></qt>"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:141
+#: src/viewer/irccontextmenus.cpp:137
 #, kde-format
 msgid "Copy Link Address"
 msgstr "ბმულის მისამართის კოპირება"
 
-#: src/viewer/irccontextmenus.cpp:145
+#: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Add to Bookmarks"
 msgstr "სანიშნეებში დამატება"
 
-#: src/viewer/irccontextmenus.cpp:146
+#: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
 msgstr "გამხსნელი პროგრამა..."
 
-#: src/viewer/irccontextmenus.cpp:147
+#: src/viewer/irccontextmenus.cpp:143
 #, kde-format
 msgid "Save Link As..."
 msgstr "ბმის შენახვა როგორც..."
 
-#: src/viewer/irccontextmenus.cpp:287
+#: src/viewer/irccontextmenus.cpp:283
 #, kde-format
 msgid "Search for '%1' with"
 msgstr "'%1'-ის მოძებნა მოხდება"
 
-#: src/viewer/irccontextmenus.cpp:301
+#: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
 msgstr "ვებ მალსახმობების მორგება..."
 
-#: src/viewer/irccontextmenus.cpp:337
+#: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &topic"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:338
+#: src/viewer/irccontextmenus.cpp:334
 #, kde-format
 msgid "Get &user list"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:383
+#: src/viewer/irccontextmenus.cpp:379
 #, kde-format
 msgid "Open Query"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:395
+#: src/viewer/irccontextmenus.cpp:391
 #, kde-format
 msgid "Modes"
 msgstr "რეჟიმები"
 
-#: src/viewer/irccontextmenus.cpp:396
+#: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Give Op"
-msgstr ""
+msgstr "ოპის მიცემა"
+
+#: src/viewer/irccontextmenus.cpp:393
+#, kde-format
+msgid "Take Op"
+msgstr "ოპის წართმევა"
+
+#: src/viewer/irccontextmenus.cpp:394
+#, kde-format
+msgid "Give HalfOp"
+msgstr "ნახევრადოპის მიცემა"
+
+#: src/viewer/irccontextmenus.cpp:395
+#, kde-format
+msgid "Take HalfOp"
+msgstr "ნახევრადოპის წართმევა"
+
+#: src/viewer/irccontextmenus.cpp:396
+#, kde-format
+msgid "Give Voice"
+msgstr "ვოისის მიცემა"
 
 #: src/viewer/irccontextmenus.cpp:397
 #, kde-format
-msgid "Take Op"
-msgstr ""
-
-#: src/viewer/irccontextmenus.cpp:398
-#, kde-format
-msgid "Give HalfOp"
-msgstr ""
-
-#: src/viewer/irccontextmenus.cpp:399
-#, kde-format
-msgid "Take HalfOp"
-msgstr ""
-
-#: src/viewer/irccontextmenus.cpp:400
-#, kde-format
-msgid "Give Voice"
-msgstr ""
+msgid "Take Voice"
+msgstr "ვოისის წართმევა"
 
 #: src/viewer/irccontextmenus.cpp:401
 #, kde-format
-msgid "Take Voice"
-msgstr ""
-
-#: src/viewer/irccontextmenus.cpp:405
-#, kde-format
 msgid "Kick / Ban"
-msgstr ""
+msgstr "გაგდება / ბანი"
 
-#: src/viewer/irccontextmenus.cpp:407
+#: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Kickban"
-msgstr ""
+msgstr "გაგდებადაბანი"
 
-#: src/viewer/irccontextmenus.cpp:408
+#: src/viewer/irccontextmenus.cpp:404
 #, kde-format
 msgid "Ban Nickname"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:410
+#: src/viewer/irccontextmenus.cpp:406
 #, kde-format
 msgid "Ban *!*@*.host"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:411
+#: src/viewer/irccontextmenus.cpp:407
 #, kde-format
 msgid "Ban *!*@domain"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:412
+#: src/viewer/irccontextmenus.cpp:408
 #, kde-format
 msgid "Ban *!user@*.host"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:413
+#: src/viewer/irccontextmenus.cpp:409
 #, kde-format
 msgid "Ban *!user@domain"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:415
+#: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@*.host"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:416
+#: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!*@domain"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:417
+#: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@*.host"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:418
+#: src/viewer/irccontextmenus.cpp:414
 #, kde-format
 msgid "Kickban *!user@domain"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:436
+#: src/viewer/irccontextmenus.cpp:432
 #, kde-format
 msgid "&Version"
 msgstr "&ვერსია"
 
-#: src/viewer/irccontextmenus.cpp:437
+#: src/viewer/irccontextmenus.cpp:433
 #, kde-format
 msgid "&Ping"
-msgstr ""
+msgstr "&დაპინგვა"
 
-#: src/viewer/irccontextmenus.cpp:444 src/viewer/irccontextmenus.cpp:629
-#: src/viewer/irccontextmenus.cpp:630
+#: src/viewer/irccontextmenus.cpp:440 src/viewer/irccontextmenus.cpp:625
+#: src/viewer/irccontextmenus.cpp:626
 #, kde-format
 msgid "Unignore"
 msgstr "იგნორის გაუქმება"
 
-#: src/viewer/irccontextmenus.cpp:447
+#: src/viewer/irccontextmenus.cpp:443
 #, kde-format
 msgid "Add to Watched Nicks"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:449
+#: src/viewer/irccontextmenus.cpp:445
 #, kde-format
 msgid "Remove From Watched Nicks"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:456
+#: src/viewer/irccontextmenus.cpp:452
 #, kde-format
 msgid "Send &File..."
 msgstr "ფაილის &გაგზავნა…"
 
-#: src/viewer/irccontextmenus.cpp:458
+#: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Chat"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:459
+#: src/viewer/irccontextmenus.cpp:455
 #, kde-format
 msgid "Open DCC Whiteboard"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:592
+#: src/viewer/irccontextmenus.cpp:588
 #, kde-format
 msgid "Do you want to ignore %1?"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:594
+#: src/viewer/irccontextmenus.cpp:590
 #, kde-format
 msgid "Do you want to ignore the selected users?"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:622
+#: src/viewer/irccontextmenus.cpp:618
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:624
+#: src/viewer/irccontextmenus.cpp:620
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
 msgstr ""
 
-#: src/viewer/irccontextmenus.cpp:791
+#: src/viewer/irccontextmenus.cpp:781
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
@@ -9339,7 +9339,7 @@ msgid_plural "%1 lines"
 msgstr[0] "1 ხაზი"
 msgstr[1] "%1 ხაზი"
 
-#: src/viewer/ircinput.cpp:485
+#: src/viewer/ircinput.cpp:481
 #, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
@@ -9350,22 +9350,22 @@ msgid ""
 "continue?</qt>"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:488
+#: src/viewer/ircinput.cpp:484
 #, kde-format
 msgid "Large Paste Warning"
 msgstr ""
 
-#: src/viewer/ircinput.cpp:489
+#: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
 msgstr "ჩასმა"
 
-#: src/viewer/ircview.cpp:2233
+#: src/viewer/ircview.cpp:2225
 #, kde-format
 msgid "Open a query with %1"
 msgstr ""
 
-#: src/viewer/ircview.cpp:2240 src/viewer/topiclabel.cpp:304
+#: src/viewer/ircview.cpp:2232 src/viewer/topiclabel.cpp:304
 #, kde-format
 msgid "Join the channel %1"
 msgstr ""
@@ -9380,7 +9380,7 @@ msgstr ""
 msgid "Reload"
 msgstr "თავიდან ჩატვირთვა"
 
-#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:139
+#: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, kde-format
 msgid "Clear Logfile"
 msgstr "ჟურნალის ფაილის გასუფთავება"
@@ -9410,25 +9410,25 @@ msgid ""
 "the top and the most recent are at the bottom."
 msgstr ""
 
-#: src/viewer/logfilereader.cpp:138
+#: src/viewer/logfilereader.cpp:135
 #, kde-format
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
 msgstr ""
 
-#: src/viewer/logfilereader.cpp:152
+#: src/viewer/logfilereader.cpp:149
 #, kde-format
 msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
 
-#: src/viewer/logfilereader.cpp:153
+#: src/viewer/logfilereader.cpp:150
 #, kde-format
 msgid "Save Logfile"
 msgstr "ჟურნალის ფაილის შენახვა"
 
-#: src/viewer/logfilereader.cpp:157
+#: src/viewer/logfilereader.cpp:154
 #, kde-format
 msgid "Choose Destination Folder"
 msgstr "აირჩიეთ სამიზნე საქაღალდე"
@@ -9452,7 +9452,7 @@ msgstr "&გაგზავნა"
 #: src/viewer/pasteeditor.ui:14
 #, kde-format
 msgid "Paste Editor"
-msgstr ""
+msgstr "ჩასმის რედაქტორი"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addQuotesButton)
 #: src/viewer/pasteeditor.ui:23
@@ -9466,7 +9466,7 @@ msgstr ""
 msgid "&Remove Newlines"
 msgstr ""
 
-#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2751
+#: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, kde-format
 msgid "Raw Log"
 msgstr "დაუმუშავებელი ჟურნალი"
@@ -9557,7 +9557,7 @@ msgstr "გათიშვა"
 #: src/viewer/topicedit.cpp:189
 #, kde-format
 msgid "Delete excess text"
-msgstr ""
+msgstr "ზედმეტი ტექსტის წაშლა"
 
 #: src/viewer/topicedit.cpp:203
 #, kde-format
@@ -9568,9 +9568,9 @@ msgstr ""
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
-msgstr ""
+msgstr "დრო: %1 ავტორი: %2"
 
-#: src/viewer/topichistoryview.cpp:209
+#: src/viewer/topichistoryview.cpp:208
 #, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
@@ -9593,70 +9593,70 @@ msgstr ""
 msgid "IRC Client"
 msgstr "IRC კლიენტი"
 
-#: src/viewer/viewcontainer.cpp:886
+#: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Find Text..."
 msgstr "ტექსტის ძებნა..."
 
-#: src/viewer/viewcontainer.cpp:888
+#: src/viewer/viewcontainer.cpp:884
 #, kde-format
 msgid "Search for text in the current tab"
-msgstr ""
+msgstr "ტექსტის ძებნა მიმდინარე ჩანარში"
 
-#: src/viewer/viewcontainer.cpp:906
+#: src/viewer/viewcontainer.cpp:902
 #, kde-format
 msgid "Channel &List for %1"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:926
+#: src/viewer/viewcontainer.cpp:922
 #, kde-format
 msgid "&Open Logfile for %1"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:937
+#: src/viewer/viewcontainer.cpp:933
 #, kde-format
 msgid "&Channel Settings for %1..."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:2120
+#: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Rename Tab"
 msgstr "ჩანართის სახელის გადარქმევა"
 
-#: src/viewer/viewcontainer.cpp:2121
+#: src/viewer/viewcontainer.cpp:2117
 #, kde-format
 msgid "Enter new tab name:"
 msgstr "ჩანართის ახალი სახელი:"
 
-#: src/viewer/viewcontainer.cpp:2193
+#: src/viewer/viewcontainer.cpp:2189
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
 msgstr "ნაგულისხმები ( %1 )"
 
-#: src/viewer/viewcontainer.cpp:2234
+#: src/viewer/viewcontainer.cpp:2230
 #, kde-format
 msgid "&Rename Tab..."
 msgstr "&ჩანართის სახელის გადარქმევა..."
 
-#: src/viewer/viewcontainer.cpp:2383
+#: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "You can only search in text fields."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:2384
+#: src/viewer/viewcontainer.cpp:2380
 #, kde-format
 msgid "Find Text Information"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:2988
+#: src/viewer/viewcontainer.cpp:2980
 #, kde-format
 msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3018
+#: src/viewer/viewcontainer.cpp:3010
 #, kde-format
 msgid ""
 "Using this function may result in a lot of network traffic. If your "
@@ -9664,15 +9664,18 @@ msgid ""
 "disconnected by the server."
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3022
+#: src/viewer/viewcontainer.cpp:3014
 #, kde-format
 msgid "Channel List Warning"
 msgstr ""
 
-#: src/viewer/viewcontainer.cpp:3052
+#: src/viewer/viewcontainer.cpp:3044
 #, kde-format
 msgid "Watched Nicks"
 msgstr ""
+
+#~ msgid "Konversation Bookmarks Editor"
+#~ msgstr "Konversation-ის სანიშნების რედაქტორი"
 
 #~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
 #~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
