@@ -1,10 +1,10 @@
 # Translation of konversation.po to Catalan (Valencian)
-# Copyright (C) 2006-2023 This_file_is_part_of_KDE
+# Copyright (C) 2006-2024 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2006.
 # Carles Ferrando Garcia. <carles.ferrando@gmail.com>, 2009.
 # Joan Maspons <joanmaspons@gmail.com>, 2009, 2010.
-# Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Manuel Tortosa <manutortosa@gmail.com>, 2009.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2023-11-27 10:49+0100\n"
+"PO-Revision-Date: 2024-01-10 12:35+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -181,7 +181,7 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
-"Blowfish en mode d'encadenament de bloc de xifrat (CBC) no està admés en "
+"Blowfish en mode d'encadenament de bloc de xifratge (CBC) no està admés en "
 "esta instal·lació de la «Qt Cryptographic Architecture» (QCA) Cal instal·lar "
 "un connector de proveïdor addicional. L'admissió de Blowfish normalment es "
 "proporciona amb el connector qca-ossl."
@@ -1220,13 +1220,13 @@ msgstr "Barra de pestanyes:"
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr "Mostra el MOTD (missatge del dia) en un tipus de lletra fixa"
+msgstr "Mostra el MOTD (missatge del dia) en una lletra d'amplària fixa"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr "Activa l'ús d'un tipus de lletra fi&xa per als missatges del dia"
+msgstr "Activa l'ús d'una lletra d'amplària fi&xa per als missatges del dia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
@@ -1828,7 +1828,7 @@ msgstr "&Dibuixa ombres"
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr "Tipus de lletra d'OSD:"
+msgstr "Lletra d'OSD:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
@@ -2011,7 +2011,7 @@ msgstr "Colors"
 #: src/config/settingsdialog.cpp:86
 #, kde-format
 msgid "Fonts"
-msgstr "Tipus de lletra"
+msgstr "Lletres"
 
 #: src/config/settingsdialog.cpp:90 src/viewer/irccontextmenus.cpp:88
 #, kde-format
@@ -2568,7 +2568,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<p>En fer doble clic damunt d'un sobrenom en la finestra de <b>Sobrenoms\n"
-"vigilats</b>, esta ordre s'emplaçarà en la <b>Línia d'entrada</b> de la\n"
+"vigilats</b>, esta ordre se situa a la <b>Línia d'entrada</b> de la\n"
 "finestra del servidor.</p>\n"
 "<p>Es poden utilitzar els símbols següents en l'ordre:</p><ul>\n"
 "<li>%u: El sobrenom en el qual s'ha fet doble clic.</li>\n"
@@ -2602,7 +2602,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<p>En fer doble clic damunt d'un sobrenom en la finestra de <b>Sobrenoms\n"
-"vigilats</b>, esta ordre s'emplaçarà en la <b>Línia d'entrada</b> de la\n"
+"vigilats</b>, esta ordre se situa a la <b>Línia d'entrada</b> de la\n"
 "finestra del servidor.</p>\n"
 "<p>Es poden utilitzar els símbols següents en l'ordre:</p><ul>\n"
 "<li>%u: El sobrenom en el qual s'ha fet doble clic.</li>\n"
@@ -3090,7 +3090,7 @@ msgstr "No"
 #, kde-format
 msgctxt "less than 1 sec"
 msgid "&lt; 1sec"
-msgstr "&lt; 1 seg"
+msgstr "&lt; 1 s"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/dcc/transferdetailedinfopanelui.ui:43
@@ -3231,7 +3231,7 @@ msgstr "Resta"
 #: src/dcc/transferlistmodel.cpp:416
 #, kde-format
 msgid "%1/sec"
-msgstr "%1/seg"
+msgstr "%1/s"
 
 #: src/dcc/transferlistmodel.cpp:471
 #, kde-format
@@ -3480,7 +3480,7 @@ msgstr ""
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr ""
-"<b>El fitxer està sent utilitzat per una altra transferència.</b><br/>%1<br/>"
+"<b>El fitxer s'està utilitzant per una altra transferència.</b><br/>%1<br/>"
 
 #: src/dcc/transferrecv.cpp:350
 #, kde-format
@@ -3680,7 +3680,7 @@ msgstr "Columnes"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr "Selector de tipus de lletra de la pissarra"
+msgstr "Selector de la lletra de la pissarra"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -6217,8 +6217,8 @@ msgstr ""
 "th><td>Esta persona és un propietari del canal.</td></tr><tr><th>%3</"
 "th><td>Esta persona és un operador del canal.</td></tr><tr><th>%4</"
 "th><td>Esta persona és un semioperador del canal.</td></tr><tr><th>%5</"
-"th><td>Esta persona té veu i per tant, pot parlar en un canal moderat.</td></"
-"tr><tr><th>%6</th><td>Esta persona no té cap privilegi especial.</td></"
+"th><td>Esta persona té veu i, per tant, pot parlar en un canal moderat.</"
+"td></tr><tr><th>%6</th><td>Esta persona no té cap privilegi especial.</td></"
 "tr><tr><th>%7</th><td>Açò, sobreposat a qualsevol dels anteriors, indica que "
 "esta persona actualment està absent.</td></tr></table><p>Les funcions d'un "
 "administrador, propietari i un semioperador varien entre diferents servidors "
@@ -6711,7 +6711,7 @@ msgstr ""
 "Ús: %1setkey <sobrenom|canal> <clau> establix la clau d'encriptació per a un "
 "sobrenom o un canal. %1setkey <clau> en un canal o una pestanya de conversa "
 "n'establix la clau. El camp clau reconeix els prefixos «cbc:» i «ecb:» per a "
-"establir el mode de bloqueig del xifrat de l'operació tant per a Cipher-Bloc "
+"establir el mode de xifratge de bloc de l'operació tant per a Cipher-Bloc "
 "Chaining o Electronic Codebook. El mode predeterminat quan no s'ha donat un "
 "prefix es pot canviar en el diàleg de configuració davall «Comportament -> "
 "Connexió -> Encriptació -> Tipus d'encriptació predeterminat», el "
@@ -6736,7 +6736,7 @@ msgid ""
 "Konversation with QCA present."
 msgstr ""
 "L'establiment d'una clau d'encriptació requerix que Konversation haja estat "
-"construït amb la biblioteca de l'arquitectura de xifrat de les Qt (QCA). "
+"construït amb la biblioteca de l'arquitectura de xifratge de les Qt (QCA). "
 "Poseu-vos en contacte amb el distribuïdor sobre un paquet de Konversation "
 "amb el suport QCA, o reconstruïu Konversation amb QCA."
 
@@ -8391,32 +8391,32 @@ msgstr "Neteja les línies de marcador de la pestanya actual"
 #: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
-msgstr "Augmenta la mida del tipus de lletra"
+msgstr "Augmenta la mida de la lletra"
 
 #: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
-msgstr "Incrementa la mida actual del tipus de lletra"
+msgstr "Incrementa la mida actual de la lletra"
 
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
-msgstr "Reinicia la mida del tipus de lletra"
+msgstr "Reinicia la mida de la lletra"
 
 #: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "Restablix la mida actual del tipus de lletra als valors predeterminats"
+msgstr "Restablix la mida actual de la lletra als valors predeterminats"
 
 #: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
-msgstr "Minva la mida del tipus de lletra"
+msgstr "Minva la mida de la lletra"
 
 #: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
-msgstr "Disminuïx la mida actual del tipus de lletra"
+msgstr "Disminuïx la mida actual de la lletra"
 
 #: src/mainwindow.cpp:456
 #, kde-format
@@ -8451,7 +8451,7 @@ msgstr "&Entra al canal..."
 #: src/mainwindow.cpp:484
 #, kde-format
 msgid "Join a new channel on this server"
-msgstr "Entra a un canal nou d'este servidor"
+msgstr "Entra en un canal nou d'este servidor"
 
 #: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
@@ -9271,9 +9271,9 @@ msgid ""
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
 "<qt><p>Controla el <em>mode</em> del canal. Només ho pot canviar un operador."
-"</p><p><b>C</b>ap missatge de l'exterior vol dir que els usuaris de no estan "
-"en el canal no poden enviar missatges a algú del canal. La majoria dels "
-"canals tenen açò establit per a evitar missatges molestos.</p></qt>"
+"</p><p><b>C</b>ap missatge de l'exterior vol dir que els usuaris que no "
+"estan en el canal no poden enviar missatges a algú del canal. La majoria "
+"dels canals tenen açò establit per a evitar missatges molestos.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -9636,7 +9636,7 @@ msgstr ""
 "Qualsevol text escrit després d'açò, tindrà el color seleccionat, fins que "
 "canvieu el color de nou.\n"
 "En escollir l'opció predeterminada «<i>Cap</i>» no canviarà el color de fons "
-"del missatge, per tant els lectors veuran el missatge amb el seu habitual "
+"del missatge, per tant, els lectors veuran el missatge amb el seu habitual "
 "color de fons de text.\n"
 "<b>Nota: no tots els clients admeten açò, i no tots els usuaris activen "
 "l'opció de veure açò.</b></qt>"
@@ -10252,8 +10252,7 @@ msgid ""
 "disconnected by the server."
 msgstr ""
 "Utilitzar esta funció pot crear molt trànsit de xarxa. Si la vostra connexió "
-"no és suficientment ràpida, és possible que el client siga desconnectat del "
-"servidor."
+"no és prou ràpida, és possible que el client siga desconnectat del servidor."
 
 #: src/viewer/viewcontainer.cpp:3014
 #, kde-format
@@ -10264,6 +10263,3 @@ msgstr "Avís de llista de canals"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Sobrenoms vigilats"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Editor de punts de Konversation"

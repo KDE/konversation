@@ -17,7 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.6\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -855,11 +856,13 @@ msgstr "13:"
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
-#, kde-format
+#, fuzzy, kde-format
 msgid " second"
 msgid_plural " seconds"
 msgstr[0] "שנייה אחת"
 msgstr[1] " שניות"
+msgstr[2] ""
+msgstr[3] ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -981,11 +984,13 @@ msgid "Password:"
 msgstr "ססמה:"
 
 #: src/config/dcc_config.cpp:29
-#, kde-format
+#, fuzzy, kde-format
 msgid " byte"
 msgid_plural " bytes"
 msgstr[0] " בית אחד"
 msgstr[1] " בתים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/config/dcc_config.cpp:74
 #, kde-format
@@ -1956,18 +1961,22 @@ msgid "Connection"
 msgstr "חיבור"
 
 #: src/config/settingsdialog.cpp:114
-#, kde-format
+#, fuzzy, kde-format
 msgid " line"
 msgid_plural " lines"
 msgstr[0] "שורה אחת"
 msgstr[1] " שורות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/config/settingsdialog.cpp:115
-#, kde-format
+#, fuzzy, kde-format
 msgid " nick"
 msgid_plural " nicks"
 msgstr[0] " כינוי"
 msgstr[1] " כינויים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2529,6 +2538,8 @@ msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
 msgstr[0] "מנסה להתחבר אל %2 (יציאה <numid>%3</numid>) בתוך שנייה אחת."
 msgstr[1] "מנסה להתחבר אל %2 (יציאה <numid>%3</numid>) בתוך %1 שניות."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/connectionmanager.cpp:262
 #, fuzzy, kde-format
@@ -2536,6 +2547,8 @@ msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
 msgstr[0] "מנסה להתחבר מחדש אל %2 (יציאה <numid>%3ֵ</numid>) בתוך שנייה אחת."
 msgstr[1] "מנסה להתחבר מחדש אל %2  (יציאה <numid>%3</numid>) בתוך %1 שניות."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -3297,13 +3310,15 @@ msgid "Open the file location"
 msgstr "פתח את מיקום הקובץ"
 
 #: src/dcc/transferpanel.cpp:423
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] "אתה בחרת את הקובץ %1 להפעלה, האם ברצונך להמשיך?"
 msgstr[1] "אתה בחרת %1 קבצים להפעלה, האם אתה בטוח שאתה רוצה להמשיך?"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/dcc/transferpanel.cpp:427
 #, fuzzy, kde-format
@@ -3314,6 +3329,8 @@ msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
 msgstr[0] "הפעל את הקובץ %1"
 msgstr[1] "הפעל %1 קבצים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -3349,7 +3366,7 @@ msgid "Could not create a KIO instance"
 msgstr "אין אפשרות ליצור מופע של KIO"
 
 #: src/dcc/transferrecv.cpp:449
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: 1 byte."
 "<br/>"
@@ -3360,6 +3377,8 @@ msgstr[0] ""
 "<b>קובץ חלקי כבר קיים:</b><br />%2<br />גודל הקובץ החלקי הוא בית אחד.<br />"
 msgstr[1] ""
 "<b>קובץ חלקי כבר קיים.</b><br />%1<br />גודל הקובץ החלקי הוא %2 בתים<br />"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/dcc/transferrecv.cpp:482
 #, kde-format
@@ -3758,11 +3777,13 @@ msgid "SSL Client Certificate"
 msgstr ""
 
 #: src/identitydialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " דקה"
 msgstr[1] " דקות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/identitydialog.cpp:115
 #, kde-format
@@ -4414,11 +4435,13 @@ msgid "%1 has been kicked from the channel by %2 (%3)."
 msgstr "המשתמש %1 הועף מהחדר על ידי %2 (%3)."
 
 #: src/irc/channel.cpp:1340
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 nick"
 msgid_plural "%1 nicks"
 msgstr[0] "כינוי %1"
 msgstr[1] "%1 כינויים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/channel.cpp:1341
 #, kde-format
@@ -4426,6 +4449,8 @@ msgid " (%1 op)"
 msgid_plural " (%1 ops)"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
@@ -4830,18 +4855,22 @@ msgid "%1 removes the channel key."
 msgstr "המשתמש %1 מסיר את מפתח החדר."
 
 #: src/irc/channel.cpp:1729
-#, kde-format
+#, fuzzy, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
 msgstr[0] "אתה הגבלת את החדר אל כינוי אחד."
 msgstr[1] "אתה הגבלת את החדר אל %1 כינויים."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/channel.cpp:1730
-#, kde-format
+#, fuzzy, kde-format
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
 msgstr[0] "המשתמש %2 הגביל את החדר אל כינוי אחד."
 msgstr[1] "המשתמש %2 הגבלת את החדר אל %1 כינויים."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/channel.cpp:1734
 #, kde-format
@@ -5300,11 +5329,13 @@ msgid "-%1 to %2- %3"
 msgstr "-%1 אל %2- %3"
 
 #: src/irc/inputfilter.cpp:509
-#, kde-format
+#, fuzzy, kde-format
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "שנייה אחת"
 msgstr[1] "שניות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5382,11 +5413,13 @@ msgid "Channel modes: "
 msgstr "מצבי חדר: "
 
 #: src/irc/inputfilter.cpp:1330
-#, kde-format
+#, fuzzy, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
 msgstr[0] "מוגבל אל המשתמש %1"
 msgstr[1] "מוגבל %1 למשתמשים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5671,37 +5704,45 @@ msgid "%1 is an IRC Operator."
 msgstr "המשתמש %1 הוא אופ."
 
 #: src/irc/inputfilter.cpp:2126 src/statusbar.cpp:177
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
 msgstr[0] "יום אחד"
 msgstr[1] "%1 ימים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
 msgstr[0] "שעה אחת"
 msgstr[1] "%1 שעות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
 #: src/statusbar.cpp:194
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
 msgstr[0] "דקה אחת"
 msgstr[1] "%1 דקות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
 #: src/statusbar.cpp:195
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
 msgstr[0] "שנייה אחת"
 msgstr[1] "%1 שניות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -5725,11 +5766,13 @@ msgid "%1 has been idle for %2 and %3."
 msgstr "המשתמש %1 לא פעיל במשך %2 דקות, %3 שניות."
 
 #: src/irc/inputfilter.cpp:2161
-#, kde-format
+#, fuzzy, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
 msgstr[0] "המשתמש %2 לא פעיל במשך שנייה אחת."
 msgstr[1] "המשתמש %2 לא פעיל במשך %1 שניות."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
@@ -5774,11 +5817,13 @@ msgid "List of channels:"
 msgstr "List of channels:"
 
 #: src/irc/inputfilter.cpp:2258
-#, kde-format
+#, fuzzy, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
 msgstr[0] "%2 (%1 משתמש): %3"
 msgstr[1] "%2 (%1 משתמשים): %3"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -6421,6 +6466,8 @@ msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
 msgstr[0] "אין כזה כינוי: %1."
 msgstr[1] "אין כזה כינוי: %1."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -7207,7 +7254,7 @@ msgstr ""
 "הרשת %2 צריכה להכיל לפחות שרת אחד."
 
 #: src/irc/serverlistdialog.cpp:203
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "You cannot delete the selected server.\n"
 "\n"
@@ -7224,6 +7271,8 @@ msgstr[1] ""
 "אין באפשרותך למחוק את השרתים הנבחרים.\n"
 "\n"
 "הרשת %2 צריכה להכיל לפחות שרת אחד."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -8635,11 +8684,13 @@ msgid "No answer from server %1 for more than %2 and %3."
 msgstr "אין תשובה מהשרת %1 יותר מ־%2 דקות ו־%3 שניות."
 
 #: src/statusbar.cpp:201
-#, kde-format
+#, fuzzy, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
 msgstr[0] "אין תשובה מהשרת %2 למשך יותר משנייה אחת."
 msgstr[1] "אין תשובה מהשרת %2 יותר מ־%1 שניות."
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -9420,18 +9471,22 @@ msgid ""
 msgstr ""
 
 #: src/viewer/ircinput.cpp:474
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "בית אחד"
 msgstr[1] "%1 בתים"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/viewer/ircinput.cpp:475
-#, kde-format
+#, fuzzy, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
 msgstr[0] "שורה אחת"
 msgstr[1] "%1 שורות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: src/viewer/ircinput.cpp:481
 #, kde-format

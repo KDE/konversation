@@ -312,7 +312,7 @@ revision history. (see installation appendix comment) -->
 <para
 >El lloc web del &konversation; és <ulink url="&konviwebsite;"
 >&konviwebsite;</ulink
->. Informació addicional com una PMF, consells i trucs la trobareu al <ulink url="https://userbase.kde.org/Konversation"
+>. Informació addicional com algunes PMF, consells i trucs la trobareu al <ulink url="https://userbase.kde.org/Konversation"
 >wiki del &konversation;</ulink
 >. </para>
 
@@ -1025,7 +1025,7 @@ here, all the <guilabel
 >Edita</guibutton
 > un servidor ressaltat o <guibutton
 >Elimina</guibutton
-> un servidor ressaltat. També podeu ajustar l'ordre de la llista de servidors i per tant l'ordre dels intents de connexió.</para
+> un servidor ressaltat. També podeu ajustar l'ordre de la llista de servidors i, per tant, l'ordre dels intents de connexió.</para
 ></callout>
 <callout arearefs="pt-addnetwork-7"
 ><para
@@ -1922,7 +1922,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 ></userinput
 > de l'usuari per a una conversa privada, comunament conegut a l'&irc; com <link linkend="query"
 >consulta (query)</link
->. Tot l'escrit aquí només serà visible per a vós i la vostra parella de consulta.</para
+>. Tot l'escrit aquí només serà visible per a vós i el vostre company de consulta.</para
 ></listitem>
 </varlistentry>
 
@@ -2086,7 +2086,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 
 <callout arearefs="pt-notification-2"
 ><para
->Marqueu els tipus de notificacions que us agradaria que succeeixin quan es produeixi l'esdeveniment. (<guilabel
+>Marqueu els tipus de notificacions que us agradaria que succeïssin quan es produeixi l'esdeveniment. (<guilabel
 >Marca l'entrada de la barra de tasques</guilabel
 > fa que l'entrada a la barra de tasques parpellegi quan es produeixi l'esdeveniment).</para
 ></callout>
@@ -2514,9 +2514,9 @@ part of the listing.
 
 <callout arearefs="pt-osd-4"
 ><para
->Feu clic en aquest botó per a escollir un tipus de lletra per a l'&osd;. (<emphasis
+>Feu clic en aquest botó per a escollir una lletra per a l'&osd;. (<emphasis
 >Nota:</emphasis
-> No tots els tipus de lletra funcionen. Es coneix que «Luxi Sans 22» i «Impact 22» sí que funcionen).</para
+> No totes les lletres funcionen. Es coneix que «Luxi Sans 22» i «Impact 22» sí que funcionen).</para
 ></callout>
 
 <callout arearefs="pt-osd-5"
@@ -3539,7 +3539,7 @@ part of the listing.
 ><command
 >/part</command
 ></userinput
-> per tancar-los amb el motiu predeterminat indicat a l'<link linkend="identity"
+> que els tanca amb el motiu predeterminat indicat a l'<link linkend="identity"
 >arranjament</link
 >.</para
 ></listitem>
@@ -3730,7 +3730,7 @@ part of the listing.
 ><command
 >/msg</command
 ></userinput
-> excepte que el missatge no apareixerà a la pantalla. Això és útil per a prevenir que les contrasenyes i altra informació sensible quedi exposada a la pantalla o que es registri.</para>
+> excepte que el missatge no apareixerà a la pantalla. Això és útil per a prevenir que les contrasenyes i altra informació confidencial quedi exposada a la pantalla o que es registri.</para>
 </listitem
 ></varlistentry>
 
@@ -4017,9 +4017,7 @@ part of the listing.
 ></para>
 
 <para
->Envia al canal una cadena amb la versió de &Linux; (la sortida de <quote
->uname -a</quote
->).</para>
+>Envia al canal una cadena amb la versió de &Linux; (la sortida de «uname -a»).</para>
 
 </listitem>
 </varlistentry>
