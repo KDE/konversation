@@ -1,10 +1,10 @@
 # Translation of konversation.po to Catalan
-# Copyright (C) 2006-2023 This_file_is_part_of_KDE
+# Copyright (C) 2006-2024 This_file_is_part_of_KDE
 #
 # Albert Astals Cid <aacid@kde.org>, 2006.
 # Carles Ferrando Garcia. <carles.ferrando@gmail.com>, 2009.
 # Joan Maspons <joanmaspons@gmail.com>, 2009, 2010.
-# Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Manuel Tortosa <manutortosa@gmail.com>, 2009.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-07 03:00+0000\n"
-"PO-Revision-Date: 2023-06-21 18:59+0200\n"
+"PO-Revision-Date: 2024-01-10 12:34+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -9271,9 +9271,10 @@ msgid ""
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
 "<qt><p>Això controla el <em>mode</em> del canal. Només ho pot canviar un "
-"operador.</p><p><b>C</b>ap missatge de l'exterior vol dir que els usuaris de "
-"no estan en el canal no poden enviar missatges a algú del canal. La majoria "
-"dels canals tenen això establert per a evitar missatges molestos.</p></qt>"
+"operador.</p><p><b>C</b>ap missatge de l'exterior vol dir que els usuaris "
+"que no estan en el canal no poden enviar missatges a algú del canal. La "
+"majoria dels canals tenen això establert per a evitar missatges molestos.</"
+"p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
@@ -10251,8 +10252,7 @@ msgid ""
 "disconnected by the server."
 msgstr ""
 "Usar aquesta funció pot crear molt trànsit de xarxa. Si la vostra connexió "
-"no és suficientment ràpida, és possible que el client sigui desconnectat del "
-"servidor."
+"no és prou ràpida, és possible que el client sigui desconnectat del servidor."
 
 #: src/viewer/viewcontainer.cpp:3022
 #, kde-format

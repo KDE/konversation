@@ -2086,7 +2086,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 
 <callout arearefs="pt-notification-2"
 ><para
->Marqueu els tipus de notificacions que us agradaria que succeeixin quan es produeixi l'esdeveniment. (<guilabel
+>Marqueu els tipus de notificacions que us agradaria que succeïssin quan es produeixi l'esdeveniment. (<guilabel
 >Marca l'entrada de la barra de tasques</guilabel
 > fa que l'entrada a la barra de tasques parpellegi quan es produeixi l'esdeveniment).</para
 ></callout>
@@ -3730,7 +3730,7 @@ part of the listing.
 ><command
 >/msg</command
 ></userinput
-> excepte que el missatge no apareixerà a la pantalla. Això és útil per a prevenir que les contrasenyes i altra informació sensible quedi exposada a la pantalla o que es registri.</para>
+> excepte que el missatge no apareixerà a la pantalla. Això és útil per a prevenir que les contrasenyes i altra informació confidencial quedi exposada a la pantalla o que es registri.</para>
 </listitem
 ></varlistentry>
 
