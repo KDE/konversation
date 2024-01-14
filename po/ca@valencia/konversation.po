@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-10 12:35+0100\n"
+"PO-Revision-Date: 2024-01-12 18:07+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -3480,7 +3480,7 @@ msgstr ""
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr ""
-"<b>El fitxer s'està utilitzant per una altra transferència.</b><br/>%1<br/>"
+"<b>El fitxer s'està utilitzant en una altra transferència.</b><br/>%1<br/>"
 
 #: src/dcc/transferrecv.cpp:350
 #, kde-format

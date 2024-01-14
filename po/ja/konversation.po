@@ -10599,6 +10599,3 @@ msgstr "チャンネルリスト警告"
 #| msgid "Watched Nicknames"
 msgid "Watched Nicks"
 msgstr "監視するニックネーム"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Konversation ブックマークエディタ"

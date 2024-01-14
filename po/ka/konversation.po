@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-12 16:07+0100\n"
+"PO-Revision-Date: 2024-01-13 14:29+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2488,6 +2488,14 @@ msgid ""
 "all the watched nicknames.</p>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>\n"
+"როცა ფსევდონიმების დამკვირვებელი ჩართულია, გაგაფრთხილებთ, როცა ფსევდონიმი, "
+"რომელიც <b>დაკვირვების ქვეშ მყოფ ქსელებში/ფსევდონიმების</b> ჩამონათვალშია, "
+"ხაზზე შემოვა ან გავა.</p>\n"
+"<p>ასევე შეგიძლიათ გახნათ <b>დაკვირვებადი ფსევდონიმების</b> ფანჯარა, თუ "
+"გნებავთ, ყველა დაკვრივებადი ფსევდონიმი იხილოთ.</p>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:27
@@ -2527,6 +2535,16 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>როცა ორჯერ დააწკაპუნებთ ფსევდონიმზე <b>დაკვირვებადი ფსევდონიმების</b> "
+"ფანჯარაში, \n"
+"ეს ბრძანება ჩაისმება <b>შეყვანის ხაზში</b> სერვერის ფანჯარაში.</p>\n"
+"<p>ბრძანებისთვის, შეგიძლიათ, შემდეგი სიმბოლოები გამოიყენოთ:</p><ul>\n"
+"<li>%u: ფსევდონიმი, რომელზეც ორჯერ დააწკაპუნეთ.</li>\n"
+"<li>%K: სერვერის პაროლი.</li>\n"
+"<li>%n: ბრძანების შეყვანის ხაზის მაგიერ პირდაპირ სერვერზე გაგზავნა.</li>\"\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:69
@@ -2550,6 +2568,16 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>როცა ორჯერ დააწკაპუნებთ ფსევდონიმზე <b>დაკვირვებადი ფსევდონიმების</b> "
+"ფანჯარაში, \n"
+"ეს ბრძანება ჩაისმება <b>შეყვანის ხაზში</b> სერვერის ფანჯარაში.</p>\n"
+"<p>ბრძანებისთვის, შეგიძლიათ, შემდეგი სიმბოლოები გამოიყენოთ:</p><ul>\n"
+"<li>%u: ფსევდონიმი, რომელზეც ორჯერ დააწკაპუნეთ.</li>\n"
+"<li>%K: სერვერის პაროლი.</li>\n"
+"<li>%n: ბრძანების შეყვანის ხაზის მაგიერ პირდაპირ სერვერზე გაგზავნა.</li>\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyDelayLabel)
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_NotifyDelay)
@@ -3805,6 +3833,14 @@ msgid ""
 "that nickname. Enter alternate nicknames for yourself. If your first choice "
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
+"ეს ფსევდონიმების თქვენი სიაა. ფსევდონიმები სახელია, რომლითაც სხვა "
+"მომხმარებლები გიცნობენ. შეგიძლიათ გამოიყენოთ ნებისმიერი სასურველი სახელი. "
+"პირველი სიმბოლო ლათინური ანბანის ასო უნდა იყოს.\n"
+"\n"
+"იმის გამო, რომ ფსევდონიმები უნიკალური უნდა იყოს IRC ქსელში მთლიანად, თქვენი "
+"სასურველი სახელი შეიძლება სერვერმა უარყოს, რადგამ ამ ფსევდონიმს უკვე "
+"იყენებენ. შეიყვანეთ სხვა ფსევდონიმი. თუ თქვენი პირველი არჩევანი უარყოფილია "
+"სერვერის მიერ, Konversation სხვა ფსევდონიმებს ამ სიიდან სცდის."
 
 #: src/identitydialog.cpp:87
 #, kde-format
@@ -3990,6 +4026,11 @@ msgid ""
 "all the nerds out there, but the PC you use can always be traced so you will "
 "never be truly anonymous."
 msgstr ""
+"შეიყვანეთ აქ თქვენი ნამდვილი სახელი. IRC არაა განკუთვნილი, რომ თქვენი "
+"მტრებისგან ან მოყვარეებისგან დაგმალოთ. დაიმახსოვრეთ ეს, თუ აპირებთ, ცუდად "
+"მოიქცეთ. ყალბი \"რეალური სახელი\" შეიძლება თქვენი სქესის დამალვაში "
+"დაგეხმაროთ, მაგრამ PC, რომელსაც იყენებთ, ყოველთვის შეიძლება, იპოვონ, ასე "
+"რომ, სრულად ანონიმური მაინც არ ბრძანდებით."
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
 #: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
@@ -4016,6 +4057,8 @@ msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
+"სერვისის სახელი შეიძლება იყოს <b><i>nickserv</i></b>, ან ქსელზე დამოკიდებული "
+"სახელი, როგორიცაა <b><i>nickserv@services.dal.net</i></b>"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
 #: src/identitydialog.ui:273
@@ -4056,6 +4099,9 @@ msgid ""
 "horizontal line will appear in the channel, marking the point where you went "
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
+"თუ ამ პარამეტრს ჩართავთ, როცა <b>/away</b> ბრძანებას შეასრულებთ, არხში "
+"გამოჩნდება ჰორიზონტალური ხაზი, რომელიც აღნიშნავს მომენტს, როცა გახვედით. ამ "
+"ჰორიზონტალურ ხაზს სხვა მომხმარებლები ვერ ხედავენ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:336
@@ -4077,6 +4123,10 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
+"ტექსტი, რომელსაც აქ შეიყვანთ, გამოყენებული იქნება გასულობის შეტყობინების "
+"სახით, როცა <b>/away</b> ან <b>/aaway</b> ბრძანებებს პარამეტრი მითითებული არ "
+"აქვს და ასევე მაშინ, როცა მენიუთი ან კლავიატურის მალსახმობით გლობალური "
+"გასულობა გადაირთვება."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
 #: src/identitydialog.ui:360
@@ -4096,6 +4146,14 @@ msgid ""
 "will automatically change your nickname back to the original. If you do not "
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
+"შეიყვანეთ ფსევდონიმი, რომელიც მიანიშნებს, რომ თქვენ გასული ბრძანდებით. როცა "
+"თქვენ გაუშვებთ <b>/away შეტყობინება</b> ბრძანებას ნებისმიერ არხზე, რომელზეც "
+"ამ იდენტიფიკატორით ბრძანდებით შესული, Konversation თქვენს ფსევდონიმს "
+"ავტომატურად შეცვლის თქვენს ფსევდონიმს ამ მნიშვნელობაზე. სხვა მომხმარებლებს "
+"შეეძლებათ მიხვდნენ, რომ კომპიუტერთან არ ბრძანდებით. როცა შეასრულებთ <b>/"
+"away</b> ბრძანებას ნებისმიერ არხზე, სადაც გასული ბრძანდებით, Konversation "
+"თქვენს თავდაპირველ ფსევდონიმს დააბრუნებს. თუ არ გნებავთ ფსევდონიმის "
+"ავტომატური შევლა, როცა გასული იქნებით, დატოვეთ ეს ცარიელი."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:383
@@ -4105,6 +4163,9 @@ msgid ""
 "using this Identity away when the screensaver starts or after a period of "
 "user inactivity configured below."
 msgstr ""
+"თუ ამას ჩართავთ, Konversation ავტომატურად დააყენებს ყველა მიერთებას გასულად "
+"ამ იდენტიფიკატორის გამოყენებით, როცა ეკრანის შემნახველი გაეშვება, ან ქვემოთ "
+"მითითებული ხანგრძლივობის შუალედის უქმედ გასვლის შემდეგ."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:386
@@ -4132,6 +4193,9 @@ msgid ""
 "connections using this Identity when the screensaver stops or new user "
 "activity is detected."
 msgstr ""
+"თუ ამას ჩართავთ, Konversation ავტომატურად გააუქმებს გასულობას ყველა "
+"მიერთებისთვის, რომელიც ამ იდენტიფიკატორს იყენებს, როცა ეკრანის შემნახველი "
+"გაჩერდება ან აღმოჩენილი იქნება მომხმარებლის აქტივობა."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:440
@@ -4149,6 +4213,11 @@ msgid ""
 "command. <b>%t</b> in the return command is replaced with the length of time "
 "you were away."
 msgstr ""
+"თუ ამას ჩართავთ, Konversation ავტომატურად გაუშვებს გასულობის ბრძანებას ყველა "
+"არხზე, რომელიც ამ იდენტიფიკატორს იყენებს. <b>%s</b> გასულობის ბრძანებაში "
+"ჩანაცვლდება გასულობის შეტყობინებით. როცა დაბრუნდებით, ის დაბრუნების "
+"ბრძანებას გაუშვებს. <b>%t</b> დაბრუნების ბრძანებაში ჩანაცვლდება დროით, "
+"რომლის განმავლობაშიც გასული ბრძანდებოდით."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
@@ -4208,6 +4277,11 @@ msgid ""
 "system. If you seem to be having trouble seeing other user's messages "
 "correctly, try changing this setting."
 msgstr ""
+"ეს პარამეტრი განსაზღვრავს, როგორ იგზავნება სერვერთან სიმბოლოები, რომელსაც "
+"თქვენ კრეფთ. ის ასევე განსაზღვრავს, როგორ გამოჩნდება შეტყობინებები. როცა "
+"Konversation-ს პირველად გახსნით, ის ავტომატურად მიიღებს პარამეტრს ოპერაციული "
+"სისტემიდან. თუ სხვა მომხმარებლების მიერ გამოგზავნილ შეტყობინებებს ვერ "
+"კითხულობთ, სცადეთ, შეცვალოთ ეს პარამეტრი."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
 #: src/identitydialog.ui:572
@@ -4223,6 +4297,9 @@ msgid ""
 "you computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
+"მიერთებისას ბევრი სერვერი თქვენს კომპიუტერს IDENT პასუხზე ამოწმებს. თუ "
+"თქვენს კომპიუტერზე IDENT სერვერი გაშვებული არ გაქვთ, Konversation ამ პასუხს "
+"გააგზავნის. გამოტოვებები დაშვებული არაა."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
@@ -4268,6 +4345,8 @@ msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
 "message is sent to the channel."
 msgstr ""
+"როცა არხიდან გაგაგდებენ, (ჩვეულებრივ, ამას IRC ოპერატორი აკეთებს), არხზე ეს "
+"შეტყობინება გაიგზავნება."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:660
@@ -4289,6 +4368,11 @@ msgid ""
 "clicking the Edit Channel Properties button to the left of the topic.  You "
 "can also view the history of topics there.</p></qt>"
 msgstr ""
+"<qt><p>თითოეულ არხს IRC-ზე თავისი თემა გააჩნია.  ეს უბრალო შეტყობინებაა, "
+"რომლის დანახვაც ყველას შეუძლია.</p><p>თუ თქვენ ოპერატორი ბრძანდებით, ან "
+"არხის რეჟიმი <em>'T'</em> დაყენებული არაა, შეგიძლიათ, ის თემის გასწვრივ "
+"არხის პარამეტრის ჩასწორების ღილაკით ჩაასწოროთ.  იქ ასევე შეგიძლიათ თემების "
+"ისტორია იხილოთ.</p></qt>"
 
 #: src/irc/channel.cpp:182
 #, kde-format
@@ -4303,6 +4387,10 @@ msgid ""
 "channel mode <b>T</b>opic (button to left) will automatically be set if set "
 "this.</p></qt>"
 msgstr ""
+"<qt><p>ეს არხის მომხმარებლების ზღვარია - მომხმარებლების მაქსიმალური "
+"რაოდენობა, რომლებიც შეიძლება, არხზე ერთდროულად იყოს.  ამის დაყენება "
+"შეგიძლიათ, თუ ოპერატორი ბრძანდებით.  არხის რეჟიმი <b>T</b>თემა (ღილაკი "
+"მარცხნივ) თქვენთვის ამას ავტომატურად გააკეთებს.</p></qt>"
 
 #: src/irc/channel.cpp:230 src/viewer/statuspanel.cpp:48
 #, kde-format
@@ -4314,6 +4402,13 @@ msgid ""
 "'Enter' at the end.</p><p>You can edit the alternative nicknames from the "
 "<em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"
 msgstr ""
+"<qt><p>ეს აჩვენებს თქვენს მიმდინარე ფსევდონიმს და ყველა ალტერნატივას, "
+"რომელიც მიუთითეთ.  თუ აირჩევთ ან აკრეფთ სხვა ფსევდონიმს, IRC სერვერთან "
+"გაიგზავნება მოთხოვნა, თქვენი ფსევდონიმი შეცვალოს.  თუ სერვერი ამის უფლებას "
+"მოგცემთ ახალი ფსევდონიმიმი გექნებათ.  თუ აკრეფთ ახალ ფსევდონიმს, ბოლოში "
+"'Enter'-ს უნდა დააწვეთ.</p><p>ალტერნატიული ფსევდონიმების ჩასწორება "
+"<em>იდენტიფიკატორების</em> პარამეტრით შეგიძლიათ <em>მორგების</em> მენიუდან.</"
+"p></qt>"
 
 #: src/irc/channel.cpp:566
 #, kde-format
@@ -5231,6 +5326,12 @@ msgid ""
 "on it. Right click on the channel to get a list of all web addresses "
 "mentioned in the channel's topic."
 msgstr ""
+"გაფილტრული არხების სია აქ გამოჩნდება. დაიმახსოვრეთ, რომ თუ რეგულარულ "
+"გამოსახულებებს არ იყენებთ, Konversation გაჩვენებთ ყველა არხს, რომლის სახელიც "
+"ფილტრში შეყვანილ სტრიქონს შეიცავს. არხის სახელი აუცილებელი არაა, შეყვანილი "
+"სტრიქონით იწყებოდეს.\\n\\nაირჩიეთ არხი, სადაც შესვლა გნებავთ, მასზე "
+"დაწკაპუნებით. მარჯვენა წკაპი არხზე, რათა მიიღოთ სია ყველა ვებმისამართისა, "
+"რომელიც არხის თემაშია მითითებული."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
@@ -6062,6 +6163,19 @@ msgid ""
 "their current status. See the Konversation Handbook for more information.</"
 "p></qt>"
 msgstr ""
+"<qt><p>ეს ყველა არხზე მყოფს აჩვენებს.  ნაჩვენებია ყველა პიროვნების "
+"ფსევდონიმი, სურათით, რომელიც მათ სტატუსს აღნიშნავს.<br /><p><table><tr><th>"
+"%1</th><td>ამ პიროვნებას ადმინისტრატორის პრივილეგიები აქვს.</td></tr><th>%2</"
+"th><th>ეს პიროვნება არხის მფლობელია.</td><tr><tr><th>%3</th><td> ეს "
+"პიროვნება არხის ოპერატორია.</td></tr><tr><th>%4</th><td>ეს პიროვნება "
+"ნახევრადოპერატორია.</td></tr><tr><th>%5</th><td>ამ პიროვნებას ხმის უფლება "
+"აქვს და შეუძლია ილაპარაკოს მოდერირებულ არხზეც.</td></tr><tr><th>%6</"
+"th><td>ამ პიროვნებას სპეციალური პრივილეგიები არ გააჩნია.</td></tr><tr><th>"
+"%7</th><td> ეს, ყველაფერი ზემოთ მოხსენიებულის გარდა, ნიშნავს, რომ პიროვნება "
+"გასულია. </td></tr></table><p>ადმინისტრატორის, მფლობლის და ნახევრადოპის "
+"მნიშვნელობა IRC სერვერებს შორის იცვლება.</p><p>ფსევდონიმებზე გადატარებისას, "
+"შეგიძლიათ, მათი სტატუსი დაინახოთ. მეტი ინფორმაციისთვის იხილეთ Konversation-"
+"ის სახელმძღვანელო.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -6127,6 +6241,13 @@ msgid ""
 "the network.</p><p>Right-click with the mouse on a nickname to perform "
 "additional functions.</p>"
 msgstr ""
+"<p>ეს ყველა ფსევდონიმია თქვენი დაკვირვებადი ფსევდონიმების სიიდან, რომელიც იმ "
+"სერვერის ქსელის ქვეშაა მითითებული, რომელზეც ის მიერთებულია></"
+"p><p><b>დამატებითი ინფორმაციის</b> სვეტი გაჩვენებთ ცნობილ ინფორმაციას "
+"თითოეული ფსევდონიმის შესახებ.</p><p>არხები, რომლებზეც ეს ფსევდონიმებია "
+"შესული, თითოეული ფსევდონიმის ქვეშაა ჩამოთვლილი.</p><p>ფსევდონიმები, რომლებიც "
+"<b>გათიშულ</b> სვეტშია, ქსელში სერვერზე მიერთებული არაა.</p><p>დამატებითი "
+"ფუნქციებისთვის ფსევდონიმზე მარჯვენა ღილაკით დააწკაპუნეთ.</p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
@@ -6205,6 +6326,7 @@ msgid ""
 "%1PART and %1LEAVE without parameters only work from within a channel or a "
 "query."
 msgstr ""
+"%1PART და %1LEAVE პარამეტრის გარეშე, მხოლოდ, არხიდან ან მოთხოვნიდან მუშაობს."
 
 #: src/irc/outputfilter.cpp:479
 #, kde-format
@@ -6227,6 +6349,8 @@ msgid ""
 "%1NAMES with no target may disconnect you from the server. Specify '*' if "
 "you really want this."
 msgstr ""
+"%1NAMES ბრძანებამ სამიზნის გარეშე, შეიძლება, სერვერიდან გაგთიშოთ. მიუთითეთ "
+"'*', თუ ეს მართლა გნებავთ."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -6234,6 +6358,8 @@ msgid ""
 "Usage: %1close [window] closes the named channel or query tab, or the "
 "current tab if none specified."
 msgstr ""
+"გამოყენება: %1close [ფანჯარა] დახურავს მითითებული სახელის მქონე არხის ან "
+"საუბრის ჩანართს, ან მიმდინარეს, თუ სამიზნე მითითებული არაა."
 
 #: src/irc/outputfilter.cpp:655
 #, kde-format
@@ -6337,6 +6463,8 @@ msgid ""
 "Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE, GET, "
 "WHITEBOARD."
 msgstr ""
+"უცნობი ბრძანება %1DCC %2. შესაძლო ბრძანებებია SEND, CHAT, CLOSE, GET და "
+"WHITEBOARD."
 
 #: src/irc/outputfilter.cpp:1186
 #, kde-format
@@ -6442,6 +6570,8 @@ msgid ""
 "Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <nickname "
 "| mask>"
 msgstr ""
+"გამოყენება: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [არხი] "
+"<ფსევდონიმი | ნიღაბი>"
 
 #: src/irc/outputfilter.cpp:1437
 #, kde-format
@@ -6449,6 +6579,8 @@ msgid ""
 "Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] "
 "<nickname | mask> [reason]"
 msgstr ""
+"გამოყენება: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [არხი] "
+"<ფსევდონიმი | ნიღაბი> [მიზეზი]"
 
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
@@ -6524,6 +6656,13 @@ msgid ""
 "Default Encryption Type, with the default for that setting being Electronic "
 "Codebook (ECB)."
 msgstr ""
+"გამოყენება: %1setkey <ფსევდონიმი|არხი> <გასაღები> აყენებს დაშიფვრის გასაღებს "
+"ფსევდონიმისთვის ან არხისთვის. %1setkey <გასაღები>, როცა გასაღები ან საუბრის "
+"ჩანართი გასაღებს თვითონ აყენებს. გასაღების ველი ცნობს \"cbc:\" და \"ecb:\" "
+"პრეფიქსებს, რომ დააყენოს ბლოკის შიფრის რეჟიმი CBC-სთვის ან ECB-სთვის. "
+"რეჟიმი, რომელზეც ის ნაგულისხმევად გადაერთვება, თუ პრეფიქსი მითითებული არაა, "
+"შეგიძლიათ შეცვალოთ მორგების ფანჯარაში ჩანართში ქცევა -> მიერთება -> დაშიფვრა "
+"-> ნაგულისხმევი დაშიფვრის ტიპ, სადაც ნაგულისხმევი მნიშვნელობაა ECB."
 
 #: src/irc/outputfilter.cpp:1692
 #, kde-format
@@ -6543,12 +6682,18 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
+"დაშიფვრის გასაღების დასაყენებლად აუცილებელია, Konversation, Qt Cryptographic "
+"Architecture (QCA) ბიბლიოთეკით იყოს აგებული. დაუკავშირდით დისტრიბუტორს QCA-"
+"ის მხარდაჭერით აგებული Konversation-ის პაკეტისთვის, ან თვითონ ააგეთ "
+"Konversation კოდიდან, QCA-ის მხარდაჭერით."
 
 #: src/irc/outputfilter.cpp:1719
 #, kde-format
 msgid ""
 "Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target."
 msgstr ""
+"გამოყენება: %1keyx <ფსევდონიმი|არხი> სამიზნესთან DH1080 გასაღებების "
+"მიმოცვლის დაწყება."
 
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
@@ -6566,6 +6711,8 @@ msgid ""
 "Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or "
 "channel"
 msgstr ""
+"გამოყენება: %1delkey <ფსევდონიმი> ან <არხი> წაშლის დაშიფვრის გასაღებს "
+"ფსევდონიმისთვის ან არხისთვის"
 
 #: src/irc/outputfilter.cpp:1757
 #, kde-format
@@ -6630,6 +6777,10 @@ msgid ""
 "<i>Konversation Handbook</i> for an explanation of what the hostmask is.</"
 "p></qt>"
 msgstr ""
+"<qt><p>ზოგიერთი დეტალი პიროვნებეაზე, რომელსაც ესაუბრებით ფანჯარაში, რომელიც "
+"პანელზეა მითითებული. ნაჩვენებია სრული სახელი და კომპიუტერის ნიღაბი.</"
+"p><p>იხილეთ <i>Konversation</i>-ის სახელმძღვანელო, რათა გაიგოთ, რა არის "
+"კომპიუტერის ნიღაბი.</p></qt>"
 
 #: src/irc/query.cpp:410
 #, kde-format
@@ -6739,6 +6890,8 @@ msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
+"მიერთება სერვერთან %1 (პორტი %2) SSL-ის შეცდომაზე მომხმარებლის პასუხის "
+"მოლოდინისას. თუ შეცდომას გამოტოვებთ, თავიდან დავუკავშირდები."
 
 #: src/irc/server.cpp:950
 #, kde-format
@@ -6765,6 +6918,9 @@ msgid ""
 "does not support SSL (did you use the correct port?) or you rejected the "
 "certificate. %3"
 msgstr ""
+"%1-სთან (პორტი %2) SSL დაშიფვრის გამოყენებით მიერთება შეუძლებელია. ან "
+"სერვერს SSL-ის მხარდაჭერა არ აქვს (სწორ პორტს იყენებთ?) ან თქვენ უარყავით "
+"სერტიფიკატი. %3"
 
 #: src/irc/server.cpp:1140
 #, kde-format
@@ -6783,6 +6939,9 @@ msgid ""
 "\"%2\".\n"
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
+"ყველა ფსევდონიმი \"%1\" იდენტიფიკატორიდან უარყოფილი იყო \"%2\" მიერთების "
+"მიერ.\n"
+"შეიყვანეთ ახალი ან დააწექით გაუქმებას კავშირის გასაწყვეტად:"
 
 #: src/irc/server.cpp:1329
 #, kde-format
@@ -7006,6 +7165,8 @@ msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
 "messages will now be encrypted."
 msgstr ""
+"%1-ის მიერ გამოგზავნილი DH1080_FINISH წარმატებით დამუშავდა. თქვენი გასაღები "
+"დაყენებულია და თქვენი შეტყობინებები ახლა დაშიფრული იქნება."
 
 #: src/irc/server.cpp:4342
 #, kde-format
@@ -7042,6 +7203,8 @@ msgid ""
 "Enter the port number required to connect to the server. For most servers, "
 "this should be <b>6667</b>."
 msgstr ""
+"შეიყვანეთ სერვერთან მიერთებისთვის საჭირო პორტის ნომერი. სერვერების ძირითადი "
+"ნაწილისთვის ეს რიცხვია <b>6667</b>."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:95
@@ -7053,6 +7216,11 @@ msgid ""
 "support SSL protocol for this to work. In most cases, if the server does not "
 "support SSL, the connection will fail."
 msgstr ""
+"ჩართეთ, თუ გნებავთ გამოიყენოთ დაცული სოკეტების ფენის (SSL) პროტოკოლი "
+"სერვერთან კომუნიკაციისთვის. ეს იცავს კონფიდენციალობას თქვენს კომპიუტერსა და "
+"IRC სერვერს შორის. იმისათვის, რომ ამან იმუშაოს, სერვერს SSL პროტოკოლის "
+"მხარდაჭერა უნდა გააჩნდეს. ძირითად შემთხვევაში, თუ სერვერს SSL-ის მხარდაჭერა "
+"არ გააჩნია, მიერთება ჩავარდება."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:98
@@ -7067,6 +7235,8 @@ msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
 msgstr ""
+"ჩართეთ, თუ გნებავთ, ამ სერვერთან დასაკავშირებლად გლობალური პროქსის "
+"კონფიგურაცია გამოიყენოთ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:108
@@ -7139,6 +7309,9 @@ msgid ""
 "or edit an existing one. The Identity will identify you and determine your "
 "nickname when you connect to the network."
 msgstr ""
+"აირჩიეთ არსებული იდენტიფიკატორი, ან დააწკაპუნეთ ჩასწორების ღილაკს, რომ ახალი "
+"იდენტიფიკატორი დაამატოთ, ან არსებული ჩაასწოროთ. ეს იდენტიფიკატორი "
+"განსაზღვრავს თქვენს ფსევდონიმს, როცა ქსელს უერთდებით."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
@@ -7165,6 +7338,12 @@ msgid ""
 "the nickname given in Identity. You may enter more than one command by "
 "separating them with semicolons.</qt>"
 msgstr ""
+"<qt>არასავალდებულო. ეს ბრძანება გაიგზავნება სერვერზე მიერთების შემდეგ. მაგ: "
+"<b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. ეს მაგალითი Libra "
+"ქსელისთვისაა, რომელიც მოითხოვს, მომხმარებლებმა თავიანთი ფსევდონიმები "
+"პაროლითა და მომხმარებლის სახელით დაარეგისტრირონ. <i>konvirocks</i> პაროლია "
+"მითითებული ფსევდონიმისთვის. ერთზე მეტი ბრძანების მითითება მათი წერტილმძიმით "
+"გამოყოფით შეგიძლიათ.</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nameEdit)
 #: src/irc/servergroupdialogui.ui:101
@@ -7173,6 +7352,8 @@ msgid ""
 "Enter the name of the Network here. You may create as many entries in the "
 "Server List screen with the same Network as you like."
 msgstr ""
+"შეიყვანეთ აქ ქსელის სახელი. შეგიძლიათ შექმნათ იმდენი ჩანაწერი სერვერებს სიის "
+"ეკრანზე იგივე ქსელით, რამდენიც გნებავთ."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/irc/servergroupdialogui.ui:108
@@ -7193,6 +7374,8 @@ msgid ""
 "Check here if you want Konversation to automatically connect to this network "
 "whenever you open Konversation."
 msgstr ""
+"ჩართეთ ეს, თუ გნებავთ, Konversation-მა მისი გახსნისას ეს ქსელი ავტომატურად "
+"მიაერთოს."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:131
@@ -7210,6 +7393,10 @@ msgid ""
 "attempt the third, and so on. At least one server must be specified. Click a "
 "server to highlight it."
 msgstr ""
+"ეს ქსელში არსებული IRC სერვერების სიაა. როცა ქსელ მიუერთდებით, Konversation "
+"სცდის, ჯერ საუკეთესო სერვერს მიუერთდეს. თუ მცდელობა ჩავარდება, ის მეორე "
+"სერვერს სცდის. თუ ესეც, მაშინ მესამეს და ა.შ. საჭიროა, ერთი სერვერი მაინც "
+"მიუთითოთ. სერვერის გამოსაკვეთად მასზე დააწკაპუნეთ."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addServerButton)
 #: src/irc/servergroupdialogui.ui:151
@@ -7238,6 +7425,9 @@ msgid ""
 "once Konversation has connected to a server. You may leave this blank if you "
 "wish to not automatically join any channels."
 msgstr ""
+"არასავალდებულო. ეს არხების სიაა, სადაც Konversation ავტომატურად შევა, როცა "
+"ის სერვერს მიუერთდება. შეგიძლიათ, ეს ცარიელი დატოვოთ, თუ არ გნებავთ, არხებზე "
+"ავტომატურად შეხვიდეთ."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addChannelButton)
 #: src/irc/servergroupdialogui.ui:239
@@ -7298,7 +7488,13 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
+"მონიშნული სერვერი წაშლა არ შეგიძლიათ.\n"
+"\n"
+"ქსელს %2 ერთი სერვერი მაინც უნდა ჰქონდეს."
 msgstr[1] ""
+"მონიშნული სერვერი წაშლა არ შეგიძლიათ.\n"
+"\n"
+"ქსელს %2 ერთი სერვერი მაინც უნდა ჰქონდეს."
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -7317,6 +7513,8 @@ msgid ""
 "Click here to define a new Network, including the server to connect to, and "
 "the Channels to automatically join once connected."
 msgstr ""
+"დააწკაპუნეთ აქ ახალი ქსელის აღსაწერად. მათ შორის სერვერი, რომელსაც უნდა "
+"მივუერთდე და არხი, რომელზეც მიერთების შემდეგ უნდა შევიდე."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addButton)
 #: src/irc/serverlistdialogui.ui:26
@@ -7341,6 +7539,11 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
+"ეს აჩვენებს მორგებული IRC ქსელების სიას. IRC ქსელი კავშირში მყოფი სერვერების "
+"კოლექციას წარმოადგენს. საჭიროა ქსელიდან მხოლოდ ერთ სერვერს დაუკავშირდეთ და "
+"თქვენ მთელ IRC ქსელს დაინახავთ. როცა მიუერთდებით, Konversation ავტომატურად "
+"შევა არხებზე, რომლებიც მითითებულია. როცა Konversation პირველა გაეშვება, "
+"ქსელი Libera და არხი <i>#kde</i> ავტომატურადაა მითითებული."
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -7420,6 +7623,10 @@ msgid ""
 "Meet friends on the net, make new acquaintances and lose yourself in talk "
 "about your favorite subject."
 msgstr ""
+"Konversation კლიენტია IRC პროტოკოლისთვის.\n"
+"\n"
+"შეხვდით მეგობრებს ქსელში, გაიცანით ახალი მეგობრები და დაკარგეთ თქვენი თავი "
+"თქენს საყვარელ თემებზე ლაპარაკით."
 
 #: src/main.cpp:36
 #, kde-format
@@ -7546,6 +7753,7 @@ msgstr "Gary Cramblitt"
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
+"დოკუმენტაცია, დაკვირვებადი ფსევდონიმების გაუმჯობესება, ბრაუზერის გაფართოება"
 
 #: src/main.cpp:49
 #, kde-format
@@ -8267,6 +8475,9 @@ msgid ""
 "tray. Use <b>Quit</b> from the <b>Konversation</b> menu to quit the "
 "application.</p>"
 msgstr ""
+"<p>მთავარი ფანჯრის დახურვისას Konversation სისტემურ საათთან გააგრძელებს "
+"მუშაობას. გამოიყენეთ <b>გასვლა</b> <b>Konversation</b> მენიუდან, რომ "
+"აპლიკაციიდან გახვიდეთ.</p>"
 
 #: src/mainwindow.cpp:662
 #, kde-format
@@ -8664,6 +8875,11 @@ msgid ""
 "special privileges, such as the ability to kick and ban users, change the "
 "channel modes, make other users operators</p></qt>"
 msgstr ""
+"<qt><p>ეს აჩვენებს არხზე მყოფი მომხმარებლების რაოდენობას და რიცხვს, რამდენია "
+"იქიდან ოპერატორი (ოპი).</p><p>არხის ოპერატორი მომხმარებელია, რომელსაც "
+"სპეციალური პრივილეგიები გააჩნია. მაგალითად, მომხმარებლების გაყრა და მათი "
+"ბანი, არხის რეჟიმების შეცვლა და სხვა მომხმარებლებისთვის ოპერატორის უფლებების "
+"მიცემა.</p></qt>"
 
 #: src/statusbar.cpp:44 src/statusbar.cpp:145 src/statusbar.cpp:161
 #, kde-format
@@ -8687,6 +8903,10 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
+"<qt>სტატუსის ზოლი აჩვენებს სხვადასხვა შეტყობინებებს, სერვერთან მიერთების "
+"პრობლემების ჩათვლით.  მარჯვენა ბოლოში სერვერამდე მიმდინარე დაყოვნებაა "
+"ნაჩვენები.  დაყოვნება დროა, რომელიც პაკეტებს სერვერამდე, შემდეგ კი თქვენამდე "
+"დასაბრუნებლად სჭირდებათ.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
@@ -8760,6 +8980,10 @@ msgid ""
 "<b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a "
 "custom web browser for web URLs.</p>"
 msgstr ""
+"<p>აირჩიეთ ერთი ან რამდენიმე <b>ბმული</b> ქვემოდან, შემდეგ დააწკაპუნეთ ამ "
+"ღილაკზე, რომ გავუშვა აპლიკაცია, რომელიც ამ ბმულის MIME ტიპთანაა ასოცირებული. "
+"</p>-<p><b>მორგების ფანჯარაში</b>, <b>ქცევისს</b> | <b>ზოგადის</b> ქვეშ "
+"შეგიძლიათ მიუთითოთ თქვენი ბრაუზერი ვებ-ბმულებისთვის.</p>"
 
 #: src/urlcatcher.cpp:97
 #, kde-format
@@ -8793,6 +9017,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
+"აირჩიეთ ერთი ან მეტი <b>ბმული</b> ზემოდან, შემდეგ კი დააწკაპუნეთ ამ ღილაკს, "
+"რათა ისინი ბუფერში გადავიტანო."
 
 #: src/urlcatcher.cpp:118
 #, kde-format
@@ -8806,6 +9032,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
 "them from the list."
 msgstr ""
+"აირჩიეთ ერთი ან მეტი <b>ბმული</b> ზემოდან შემდეგ კი დააწკაპუნეთ ამ ღილაკზე, "
+"რომ ისინი სიიდან წაშალოთ."
 
 #: src/urlcatcher.cpp:122
 #, kde-format
@@ -8850,6 +9078,8 @@ msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
 "windows during this session."
 msgstr ""
+"ერთგვაროვანი რესურსის მძებნელების (URL) სია Konversation-ის ყველა ფანჯარაში "
+"ამ სესის მიმდინარეობისას."
 
 #: src/urlcatcher.cpp:168
 #, kde-format
@@ -8879,6 +9109,8 @@ msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
+"მონიშნეთ ერთზე მეტი ბმული. ფაილის დიალოგი, რომ სამიზნე მიუთითოთ, სათითაო "
+"მათგანისთვის გაიხსნება. მართლა გნებავთ შეინახოთ რამდენიმე ბმული ერთდროულად?"
 
 #: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
@@ -8957,6 +9189,9 @@ msgid ""
 "change these.</p><p>The <b>T</b>opic mode means that only the channel "
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟმს</em> მართავს.  მათი შეცვლა, მხოლოდ, ოპერატორს "
+"შეუძლია.</p><p><b>თ</b>ემის რეჟიმი ნიშნავს, რომ ამ არხისთვის თემის შეცვლა, "
+"მხოლოდ, ოპერატორს შეუძლია.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
@@ -8966,6 +9201,11 @@ msgid ""
 "in the channel cannot send messages for everybody in the channel to see.  "
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  ამათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია. </p></p><b>N</b> გარედან შეტყობინებების გარეშე ნიშნავს, "
+"რომ მომხმარებლები, რომლებიც ამ არხზე არ არიან, შეტყობინებების ყველასთვის "
+"დასანახად გაგზავნა არ შეუძლიათ.  თითქმის ყველა არხს ეს ჩართული აქვს, რათა "
+"უცხო შეტყობინებები თავიდან აიცილოს.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -8977,6 +9217,11 @@ msgid ""
 "same channel will know that you are in this channel, if this mode is set.</"
 "p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია.</p><p><b>S</b> საიდუმლო არხი არხების სიაში არ გამოჩნდება "
+"და ვერავინ დაინახავს, რომ ამ არხზე ბრძანდებით <em>WHOIS</em> ან რამ მსგავსი "
+"ბრძანებით.  მხოლოდ ხალხს, რომლებიც იგივე არხზეა, ეცოდინება, რომ ამ არხზე "
+"ბრძანდებით, თუ ეს რეჟიმი ჩართულია.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:615
 #, kde-format
@@ -8987,6 +9232,11 @@ msgid ""
 "needs to issue the command <em>/invite nick</em> from within the channel.</"
 "p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია.</p><p><b>I</b> მხოლოდ მოსაწვევიანი არხი ნიშნავს, რომ "
+"ხალხს ამ სერვერზე შემოსვლა, მხოლოდ, მაშინ შეუძლიათ, თუ მათ მოიწვევენ.  "
+"ვინმეს მოსაწვევად არხის ოპერატორმა უნდა გაუშვას ბრძანება <em>/invite "
+"ფსევდონიმი</em> არხის ჩანართის შიგნიდან.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
@@ -8997,6 +9247,11 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em>აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია. </p><p><b>P</b> კონფიდენციალური არხი გამოჩნდება არხების "
+"სიაში, მაგრამ თემა არა.  მომხმარებლის <em>WHOIS</em> ბრძანებამ, IRC სერვერზე "
+"დამოკიდებულებით, შეიძლება აჩვენოს, არის თუ არა მომხმარებელი კონფიდენციალურ "
+"არხზე.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -9005,6 +9260,10 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია.</p><p><b>M</b> მოდერირებული არხები ისეთი არხებია, სადაც "
+"საუბარი, მხოლოდ, ოპერატორებს, ნახევრადოპებს და ხმის მქონეებს შეუძლიათ.</"
+"p><qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
@@ -9013,6 +9272,9 @@ msgid ""
 "change these.</p><p>A protected channel requires users to enter a password "
 "in order to join.</p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია. </p><p>დაცულ არხები ზედ შესასვლელად მომხმარებლისგან "
+"პაროლის შეყვანას მოითხოვს.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
@@ -9023,6 +9285,12 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
+"<qt><p>ესენი არხის <em>რეჟიმს</em> აკონტროლებენ.  მათი შეცვლა, მხოლოდ, "
+"ოპერატორს შეუძლია.</p><p>არხი, რომელსაც <b>L</b> შეზღუდვა გააჩნია ნიშნავს, "
+"რომ ზედ დროის ნებისმიერ მოცემულ მომენტში, მხოლოდ, მითითებული რაოდენობის "
+"მომხმარებელი შეიძლება, იმყოფებოდეს.  ზოგიერთ არხს ჰყავს ბოტი, რომელიც ამ "
+"ბიტებს აყენებს და ცვლის მათ იმაზე დამოკიდებულებით, რა დატვირთულია არხი.</p></"
+"qt>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
 #: src/viewer/channeloptionsui.ui:36
@@ -9230,6 +9498,11 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
+"<qt>აქ შეგიძლიათ ნახოთ, რას ნახავენ თქვენი შეტყობინების მკითხველები, თუ ამ "
+"ფერებს აირჩევთ.<br>\n"
+"<b>შენიშვნა: ამის მხარდაჭერა ბევრს კლიენტს არ აქვს და ზოგიერთმა "
+"მომხმარებელმა, შეიძლება, თქვენი ფერადი შეტყობინებების მიღება გამორთოს.</b>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:31
@@ -9255,6 +9528,11 @@ msgid ""
 "until you change the color again.<br>\n"
 "<b>Note:  Not all users turn on the option to see this.</b></qt>"
 msgstr ""
+"<qt>აქ შეგიძლიათ აირჩიოთ, რომელი ფერის გნებავთ იყოს შემდეგი შეტყობინების "
+"ტექსტი, რომელსაც გააგზავნით.  თუ აირჩევთ ფერს და 'დიახს' დააწვებით, "
+"მონიშნული ფერი შეყვანის ხაზში ჩაისმება.  ნებისმიერი ტექსტი, რომელსაც ამის "
+"შემდეგ აკრეფთ, მითითებული ფერით იქნება, სანამ ფერს ისევ არ შეცვლით.<br>\n"
+"<b>შენიშვნა:  ეს არც ისე ბევრ მომხმარებელს აქვს ჩართული.</b></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
@@ -9286,6 +9564,16 @@ msgid ""
 "<b>Note:  Not all clients support this, and not all users turn on the option "
 "to see this.</b></qt>"
 msgstr ""
+"<qt>აქ შეგიძლიათ აირჩიოთ, რა ფერის გნებავთ იყოს თქვენი შემდეგი შეტყობინების "
+"ფონის ფერი.\n"
+"თუ აირჩევთ ფერს და 'დიახს' დააწვებით, არჩეული ფერი შეყვანის ხაზში ჩაისმება.\n"
+"ნებისმიერი ტექსტი, რომელსაც ამის შემდეგ აკრეფთ, მითითებული ფონის ფერი "
+"ექნება, სანამ მას კიდევ ერთხელ არ შეცვლით.<br>\n"
+"თუ აირჩევთ ნაგულიხმევს \"<i>არაფერი</i>\", ის არ შეცვლის თქვენი შეტყობინების "
+"ფონს, ასე რომ თქვენი მკითხველები შეტყობინებებს ნორმალური ფონის ტექსტის ფერით "
+"ნახავენ.\n"
+"<b>შენიშვნა: ამის მხარდაჭერა ბევრ კლიენტს არ აქვს და რომელსაც აქვს, ბევრი "
+"შესაბამის პარამეტრს არ რთავს.</b></qt>"
 
 #: src/viewer/irccontextmenus.cpp:137
 #, kde-format
@@ -9505,6 +9793,20 @@ msgid ""
 "in.</td></tr></table><p>For more commands, see the Konversation Handbook.</"
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
+"<qt><p>შეყვანის ხაზი ადგილია, სადაც არხისთვის, პიროვნებისთვის თუ "
+"სერვერისთვის გასაგზავნი შეტყობინებები იკრიფება.  შეტყობინებას, რომელსაც "
+"არხზე აგზავნით, არხზე მყოფი ყველა დაინახავს მაშინ, როცა მოთხოვნის ფანჯარაში "
+"აკრეფილი ტექსტ მხოლოდ შესაბამისი მომხმარებელი.</p><p>კრეფისას ფსევდონიმების "
+"ავტომატურად დასასრულებლად Tab-ს დააჭირეთ. თუ კრეფა არ დაგიწყიათ, "
+"გამოყენებული იქნება ბოლო წარმატებულად დასრულებული ფსევდონიმი.</p><p>ასევე, "
+"შეგიძლიათ, სპეციალური ბრძანებები გააგზავნოთ:</p><table><tr><th>/me "
+"<i>ქმედება</i></th><td> გამოჩნდება როგორც ქმედება არხში ან პირადი საუბრის "
+"ჩანართში.  მაგალითად:  </em>/me მღერის სიმღერას</em> არხზე აჩვენებს "
+"'ფსევდონიმი უკრავს სიმღერას'.</td></tr><tr><th>/whois </i>ფსევდონიმი</"
+"i><th><td>აჩვენებს ინფორმაციას ამ პიროვნების შესახებ იმ არხების ჩათვლით, "
+"რომლებზეც ის იმყოფება.</td></tr></table><p>მეტი ბრძანებისთვის იხილეთ "
+"Konservation-ის სახელმძღვანელო.</p><p>შეტყობინება არ შეიძლება, ერთზე მეტ "
+"ხაზს შეიცავდეს.</p></qt>"
 
 #: src/viewer/ircinput.cpp:474
 #, kde-format
@@ -9785,6 +10087,18 @@ msgid ""
 "a synchronized edit field, undo back to the original text or close and "
 "reopen the dialog."
 msgstr ""
+"ეს თემების სიაა რომელიც ამ არხზე იყო დაყენებული, სანამ ეს ჩანართი ღია "
+"გქონდათ.\n"
+"\n"
+"თუ იგივე თემა დაყენებულია ბევრჯერ ერთი და იგივე პიროვნების მიერ, გამოჩნდება "
+"მხოლოდ უკანასკნელი.\n"
+"\n"
+"როცა აირჩევთ თემას ამ სიდან, ქვემოთ არსებული ჩასწორების ველი მის ტექსტს "
+"მიიღებს. როცა მის ჩასწორებას დაიწყებთ, სია გადაირთვება ჩვეულებრივ ჩანაწერის "
+"არჩევანის რეჟიმში, რომ საშუალება მოგცეთ, ტექსტი მონიშნოთ, თუ ახალ თემაში "
+"მათი ტექსტიც გნებავთ, ჩასვათ. ჩანაწერის არჩევის რეჟიმში დასაბრუნებლად და "
+"ჩასწორების ველის სინქრონიზაციისთვის დაბრუნდით ორიგინალ ტექსტზე ან დახურეთ და "
+"თავიდან გახსენით ეს დიალოგი."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
@@ -9853,6 +10167,8 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
+"იმისათვის, რომ იცოდეთ, რომელი სერვერისთვის გაჩვენოთ არხების სია, სიის "
+"გახსნა, მხოლოდ, მოთხოვნის, არხის ან სტატუსი ფანჯრიდან შეგიძლიათ."
 
 #: src/viewer/viewcontainer.cpp:3010
 #, kde-format
@@ -9861,6 +10177,9 @@ msgid ""
 "connection is not fast enough, it is possible that your client will be "
 "disconnected by the server."
 msgstr ""
+"ამ ფუნქციის გამოყენებამ შეიძლება ქსელის ტრაფიკის გადავსება გამოიწვიოს. თუ "
+"თქვენი მიერთება საკმარისად სწრაფი არაა, არის შანსი, რომ კლიენტი სერვერმა "
+"გათიშოს."
 
 #: src/viewer/viewcontainer.cpp:3014
 #, kde-format
