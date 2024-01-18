@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-09 20:14+0100\n"
+"PO-Revision-Date: 2024-01-18 00:37+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1111,9 +1111,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/config/dcc_configui.ui:179
-#, fuzzy, kde-format
+#, kde-format
 msgid "Buffer si&ze:"
-msgstr "Bufferraren tamaina:"
+msgstr "Bufferraren ne&urria:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/dcc_configui.ui:207
@@ -1143,32 +1143,32 @@ msgstr "Atakak"
 #: src/config/dcc_configui.ui:254
 #, kde-format
 msgid "Enable specific &ports for DCC transfer server:"
-msgstr ""
+msgstr "Gaitu DCC transferentzia zerbitzarirako berariazko a&takak:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
 #: src/config/dcc_configui.ui:279 src/config/dcc_configui.ui:332
 #, fuzzy, kde-format
 msgid "to"
-msgstr "hona:"
+msgstr "Honetara:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificChatPorts)
 #: src/config/dcc_configui.ui:307
 #, kde-format
 msgid "Enable specific p&orts for DCC chat:"
-msgstr ""
+msgstr "Gaitu DCC berriketarako berariazko ata&kak:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTextFont)
 #: src/config/fontappearance_config.ui:28
 #, kde-format
 msgid "Chat text:"
-msgstr ""
+msgstr "Berriketako testua:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomListFont)
 #: src/config/fontappearance_config.ui:45
-#, fuzzy, kde-format
+#, kde-format
 msgid "Nickname list:"
-msgstr "Goitizen-zerrenda"
+msgstr "Goitizen-zerrenda:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTabFont)
 #: src/config/fontappearance_config.ui:62
@@ -1180,19 +1180,19 @@ msgstr "Fitxa-barra:"
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr ""
+msgstr "Erakutsi MOTD (Eguneko mezua) mezua letra-tipo finkoan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr ""
+msgstr "Gaitu letra-tipo finkoa MOTD mezuetarako"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
 #, kde-format
 msgid "Show sender nicknames &bold in the chat view"
-msgstr ""
+msgstr "Erakutsi bidaltzaileen goitizenak lo&di berriketa ikuspegian"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowTrayIcon)
 #: src/config/generalbehavior_configui.ui:26
@@ -1204,7 +1204,7 @@ msgstr "Gaitu sistema-erretilua"
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr ""
+msgstr "Era&bili sistemaren erretilua mezu berriak jakinarazteko"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -1216,7 +1216,7 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:75
 #, kde-format
 msgid "Hide window on startup"
-msgstr ""
+msgstr "Ezkutatu leihoa abiatzean"
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
 #: src/config/generalbehavior_configui.ui:85
@@ -1240,13 +1240,13 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:110
 #, kde-format
 msgid "Shell-Like"
-msgstr ""
+msgstr "Oskolaren antzekoa"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
 #: src/config/generalbehavior_configui.ui:115
 #, kde-format
 msgid "Shell-Like with Completion Box"
-msgstr ""
+msgstr "Oskolaren antzeko osatzeko kaxarekin"
 
 #. i18n: ectx: property (text), widget (QLabel, startOfLineLabel)
 #: src/config/generalbehavior_configui.ui:123
@@ -1303,6 +1303,8 @@ msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
 "</qt>"
 msgstr ""
+"<qt>Hemen <b>CTCP <i>VERSION</i></b> eskaeretarako neurrira ipinitako "
+"erantzun bat ezar dezakezu.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
 #: src/config/generalbehavior_configui.ui:263
@@ -1524,6 +1526,7 @@ msgstr ""
 msgid ""
 "Enabling this will cause the input box to grow vertically when it fills up."
 msgstr ""
+"Hori gaituta, sarrerako laukia betetzen denean, bertikalki handituko da."
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:266
@@ -1535,7 +1538,7 @@ msgstr "Abiarazi ezkutatuko leiho-nagusiarekin"
 #: src/config/konversation.kcfg:305
 #, kde-format
 msgid "&Show real names next to nicknames"
-msgstr ""
+msgstr "Erakut&si benetako izenak goitizenen alboan"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
@@ -1567,13 +1570,13 @@ msgstr ""
 #: src/config/launcherentry_config.ui:45
 #, kde-format
 msgid "Count &mode:"
-msgstr ""
+msgstr "Zenbatzeko &modua:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Zenbatutako gertaerak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -1597,7 +1600,7 @@ msgstr "Mezu pribatua"
 #: src/config/tabnotifications_config.ui:166
 #, kde-format
 msgid "Current nick used"
-msgstr ""
+msgstr "Unean erabilitako goitizena"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseHighlights)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsHighlights)
@@ -1621,7 +1624,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:113
 #, kde-format
 msgid "Channel event"
-msgstr ""
+msgstr "Kanaleko gertaera"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1632,6 +1635,9 @@ msgid ""
 "Application events occur in Konsole tabs, the DCC Status tab and other "
 "application tabs not used directly for chatting."
 msgstr ""
+"Aplikazioaren gertaerak «Konsole»ren fitxetan, DCC egoera-fitxan eta "
+"zuzenean berriketarako erabiltzen ez diren beste aplikazioen fitxetan "
+"gertatzen dira."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseSystem)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsSystem)
@@ -1639,13 +1645,13 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:126
 #, kde-format
 msgid "Application event"
-msgstr ""
+msgstr "Aplikazio-gertaera"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_Log)
 #: src/config/log_config.ui:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Enable Logging"
-msgstr "Gaitu egunkarian erregistratzea"
+msgstr "&Gaitu egunkari-erregistroa"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrivateOnly)
 #: src/config/log_config.ui:33
@@ -1658,35 +1664,35 @@ msgstr ""
 #: src/config/log_config.ui:40
 #, kde-format
 msgid "Enable &lower case logfile names"
-msgstr ""
+msgstr "Gaitu letra &xeheko egunkari-fitxategi izenak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AddHostnameToLog)
 #: src/config/log_config.ui:47
 #, kde-format
 msgid "&Append hostname to logfile names"
-msgstr ""
+msgstr "&Erantsi ostalari-izena egunkari-fitxategien izenei"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/log_config.ui:54
 #, kde-format
 msgid "Logfile &path:"
-msgstr ""
+msgstr "Egunkari-fitxategiaren &bide-izena:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseExternalLogViewer)
 #: src/config/log_config.ui:77
 #, kde-format
 msgid "Use system text editor to open logs"
-msgstr ""
+msgstr "Erabili sistemako testu-editorea egunkariak irekitzeko"
 
 #: src/config/nicklistbehavior_config.cpp:45
 #, kde-format
 msgid "Normal Users"
-msgstr ""
+msgstr "Erabiltzaile arruntak"
 
 #: src/config/nicklistbehavior_config.cpp:46
 #, kde-format
 msgid "Voice (+v)"
-msgstr ""
+msgstr "Ahotsa (+v)"
 
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
@@ -1701,36 +1707,36 @@ msgstr "Operadoreak (+o)"
 #: src/config/nicklistbehavior_config.cpp:49
 #, kde-format
 msgid "Channel Admins (+p)"
-msgstr ""
+msgstr "Kanaletako administratzaileak (+p)"
 
 #: src/config/nicklistbehavior_config.cpp:50
 #, kde-format
 msgid "Channel Owners (+q)"
-msgstr ""
+msgstr "Kanalen jabeak (+q)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/nicklistbehavior_configui.ui:26
 #, kde-format
 msgid "&Command to be executed on double click:"
-msgstr ""
+msgstr "Klik bikoitza egiterakoan exekutatu beharreko &komandoa:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortCaseInsensitive)
 #: src/config/nicklistbehavior_configui.ui:39
 #, kde-format
 msgid "Sort case &insensitive"
-msgstr ""
+msgstr "Sailkatu maius./minus. bereizi gabe"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortByActivity)
 #: src/config/nicklistbehavior_configui.ui:46
 #, kde-format
 msgid "Sort by &activity"
-msgstr ""
+msgstr "Sailkatu &jardueraren arabera"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortByStatus)
 #: src/config/nicklistbehavior_configui.ui:59
 #, kde-format
 msgid "Sort b&y user status"
-msgstr ""
+msgstr "Sailkat&u erabiltzaile-egoeraren arabera"
 
 #. i18n: ectx: property (text), widget (QLabel, orderHintLabel)
 #: src/config/nicklistbehavior_configui.ui:72
@@ -1751,7 +1757,7 @@ msgstr "Modua"
 #: src/config/nicklistbehavior_configui.ui:103
 #, kde-format
 msgid "Explanation"
-msgstr ""
+msgstr "Azalpena"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseOSD)
 #: src/config/osd_configui.ui:35
@@ -1787,19 +1793,19 @@ msgstr "Erakutsi &OSD mezua"
 #: src/config/osd_configui.ui:141
 #, kde-format
 msgid "&If own nick appears in channel message"
-msgstr ""
+msgstr "Goitizen propioa kanaleko mezuan agertzen &den"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowChannel)
 #: src/config/osd_configui.ui:148
 #, kde-format
 msgid "On an&y channel message"
-msgstr ""
+msgstr "Kanaleko edo&zein mezutan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowQuery)
 #: src/config/osd_configui.ui:155
 #, kde-format
 msgid "On &query activity"
-msgstr ""
+msgstr "I&taun jardueran"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowChannelEvent)
 #: src/config/osd_configui.ui:162
@@ -1859,7 +1865,7 @@ msgstr "Lehenetsitako nortasuna"
 #: src/config/quickbuttons_configui.ui:20
 #, kde-format
 msgid "Available Placeholders"
-msgstr ""
+msgstr "Leku-marka erabilgarriak"
 
 #. i18n: ectx: property (text), widget (QLabel, placeholderHelpLabel)
 #: src/config/quickbuttons_configui.ui:45
@@ -1879,13 +1885,13 @@ msgstr ""
 #: src/config/quickbuttons_configui.ui:74
 #, kde-format
 msgid "Button Name"
-msgstr ""
+msgstr "Botoiaren izena"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, buttonListView)
 #: src/config/quickbuttons_configui.ui:79
 #, kde-format
 msgid "Button Action"
-msgstr ""
+msgstr "Botoiaren ekintza"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_delBtn)
 #. i18n: ectx: property (toolTip), widget (QPushButton, delBtn)
@@ -1900,13 +1906,13 @@ msgstr "Kendu"
 #: src/config/quickbuttons_configui.ui:126
 #, kde-format
 msgid "Button name:"
-msgstr ""
+msgstr "Botoiaren izena:"
 
 #. i18n: ectx: property (text), widget (QLabel, actionLabel)
 #: src/config/quickbuttons_configui.ui:152
 #, kde-format
 msgid "Button action:"
-msgstr ""
+msgstr "Botoiaren ekintza:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtonsInContextMenu)
 #: src/config/quickbuttons_configui.ui:177
@@ -2008,7 +2014,7 @@ msgstr "Ezikusi egin"
 #: src/config/settingsdialog.cpp:148
 #, fuzzy, kde-format
 msgid "Logging"
-msgstr "Erregistratzen"
+msgstr "Erregistratzea"
 
 #: src/config/settingsdialog.cpp:152
 #, kde-format
@@ -2991,9 +2997,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/dcc/transferdetailedinfopanelui.ui:83
-#, kde-format
+#, fuzzy, kde-format
 msgid "Self:"
-msgstr ""
+msgstr "Propioa"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel10)
 #: src/dcc/transferdetailedinfopanelui.ui:103
@@ -5365,9 +5371,9 @@ msgid "Server %1 (Version %2), User modes: %3, Channel modes: %4"
 msgstr ""
 
 #: src/irc/inputfilter.cpp:1200
-#, kde-format
+#, fuzzy, kde-format
 msgid "Support"
-msgstr ""
+msgstr "Euskarria"
 
 #: src/irc/inputfilter.cpp:1300
 #, kde-format
@@ -5672,8 +5678,8 @@ msgstr "%1 IRC operadorea da."
 #, fuzzy, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] "egun 1"
-msgstr[1] "%1 egun"
+msgstr[0] "Egun 1"
+msgstr[1] " egun"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
