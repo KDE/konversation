@@ -10064,6 +10064,3 @@ msgstr "Предупреждение на списъка с канали"
 #, fuzzy, kde-format
 msgid "Watched Nicks"
 msgstr "Наблюдавани псевдоними"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Редактор на маркери в Konversation"
