@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-18 19:40+0100\n"
+"PO-Revision-Date: 2024-01-20 14:07+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1107,7 +1107,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:156
 #, kde-format
 msgid "DCC send t&imeout:"
-msgstr ""
+msgstr "DCC(e)k &denbora-muga bidali du:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/config/dcc_configui.ui:179
@@ -3083,9 +3083,9 @@ msgstr "Transferentzia denbora:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:165
-#, fuzzy, kde-format
+#, kde-format
 msgid "Estimated time left:"
-msgstr "Geratzen den denbora:"
+msgstr "Kalkulatutako hondar-denbora:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:185
@@ -4929,12 +4929,12 @@ msgstr "%1(e)k %2(r)ekiko debeku-salbuespena kendu du."
 #: src/irc/channel.cpp:1771
 #, kde-format
 msgid "You set invitation mask %1."
-msgstr ""
+msgstr "%1 gonbidapen maskara ezarri duzu."
 
 #: src/irc/channel.cpp:1772
 #, kde-format
 msgid "%1 sets invitation mask %2."
-msgstr ""
+msgstr "%1(e)k %2 gonbidapen maskara ezartzen du."
 
 #: src/irc/channel.cpp:1776
 #, kde-format
@@ -5359,12 +5359,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #, kde-format
 msgid "-%1- %2"
-msgstr ""
+msgstr "-%1- %2"
 
 #: src/irc/inputfilter.cpp:681
 #, kde-format
 msgid "%1 invited you to channel %2."
-msgstr ""
+msgstr "%1(e)k %2 kanalera gonbidatu zaitu."
 
 #: src/irc/inputfilter.cpp:842
 #, kde-format
@@ -5374,17 +5374,17 @@ msgstr "Ahalmenak"
 #: src/irc/inputfilter.cpp:895
 #, kde-format
 msgid "You have set personal modes: %1"
-msgstr ""
+msgstr "Modu-pertsonalak ezarri dituzu: %1"
 
 #: src/irc/inputfilter.cpp:899
 #, kde-format
 msgid "%1 has changed your personal modes: %2"
-msgstr ""
+msgstr "%1(e)k zure modu pertsonalak aldatu ditu: %2"
 
 #: src/irc/inputfilter.cpp:918
 #, kde-format
 msgid "%1 sets mode: %2"
-msgstr ""
+msgstr "%1(e) modua ezartzen du: %2"
 
 #: src/irc/inputfilter.cpp:1167 src/irc/inputfilter.cpp:1175
 #, kde-format
@@ -5395,9 +5395,10 @@ msgstr "Ongi etorri"
 #, kde-format
 msgid "Server %1 (Version %2), User modes: %3, Channel modes: %4"
 msgstr ""
+"%1 zerbitzaria (%2 bertsioa), Erabiltzaile-moduak: %3, Kanal-moduak: %4"
 
 #: src/irc/inputfilter.cpp:1200
-#, fuzzy, kde-format
+#, kde-format
 msgid "Support"
 msgstr "Euskarria"
 
@@ -5415,8 +5416,8 @@ msgstr "Kanal-moduak:"
 #, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "erabiltzaile %1(e)ra mugatua"
+msgstr[1] "%1 erabiltzailera mugatua"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5546,7 +5547,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
 #, kde-format
 msgid "MOTD"
-msgstr ""
+msgstr "MOTD"
 
 #: src/irc/inputfilter.cpp:1632
 #, kde-format
@@ -5658,12 +5659,12 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1999
 #, kde-format
 msgid "%1 is a user on channels: %2"
-msgstr ""
+msgstr "%1 erabiltzailea da ondoko kanaletan: %2"
 
 #: src/irc/inputfilter.cpp:2006
 #, kde-format
 msgid "%1 has voice on channels: %2"
-msgstr ""
+msgstr "%1(e)k zeresana du ondoko kanaletan: %2"
 
 #: src/irc/inputfilter.cpp:2012
 #, kde-format
@@ -5678,22 +5679,22 @@ msgstr "%1 operadorea da kanal hauetan: %2"
 #: src/irc/inputfilter.cpp:2024
 #, kde-format
 msgid "%1 is owner of channels: %2"
-msgstr ""
+msgstr "%1 ondoko kanalen jabea da: %2"
 
 #: src/irc/inputfilter.cpp:2030
 #, kde-format
 msgid "%1 is admin on channels: %2"
-msgstr ""
+msgstr "%1 ondoko kanaletan administratzailea da: %2"
 
 #: src/irc/inputfilter.cpp:2056
 #, kde-format
 msgid "%1 is online via %2 (%3)."
-msgstr ""
+msgstr "%1 %2 bidez lerroan dago (%3)."
 
 #: src/irc/inputfilter.cpp:2071
 #, kde-format
 msgid "%1 is available for help."
-msgstr ""
+msgstr "%1 laguntzako erabilgarri dago."
 
 #: src/irc/inputfilter.cpp:2086
 #, kde-format
@@ -5701,11 +5702,11 @@ msgid "%1 is an IRC Operator."
 msgstr "%1 IRC operadorea da."
 
 #: src/irc/inputfilter.cpp:2126 src/statusbar.cpp:177
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
 msgstr[0] "Egun 1"
-msgstr[1] " egun"
+msgstr[1] "%1 egun"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
@@ -6681,7 +6682,7 @@ msgstr ""
 #: src/irc/server.cpp:929 src/irc/server.cpp:1037
 #, kde-format
 msgid "SSL Connection Error"
-msgstr ""
+msgstr "SSL konexio errorea"
 
 #: src/irc/server.cpp:930
 #, kde-format
@@ -6693,7 +6694,7 @@ msgstr ""
 #: src/irc/server.cpp:950
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
-msgstr ""
+msgstr "%1 zerbitzarirako konexioa (%2 ataka) galdu da: %3."
 
 #: src/irc/server.cpp:999
 #, kde-format
@@ -6705,7 +6706,7 @@ msgstr ""
 #: src/irc/server.cpp:1003
 #, kde-format
 msgid "SSL Connection Warning"
-msgstr ""
+msgstr "SSL konexioaren abisua"
 
 #: src/irc/server.cpp:1032
 #, kde-format
@@ -7409,6 +7410,8 @@ msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
+"Mantentzailea, Argitalpen kudeatzailea, Erabiltzaile-interfazea, Konexio "
+"kudeaketa, Protokolo kudeaketa, aldentze automatikoa"
 
 #: src/main.cpp:39
 #, kde-format
@@ -7418,7 +7421,7 @@ msgstr "Shintaro Matsuoka"
 #: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
-msgstr ""
+msgstr "DCC, Kodeketaren kudeaketa, OSD kokatzea"
 
 #: src/main.cpp:40
 #, kde-format
@@ -7428,7 +7431,7 @@ msgstr "Eli MacKenzie"
 #: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
-msgstr ""
+msgstr "Protokoloaren kudeaketa, Sarrera-lerroa"
 
 #: src/main.cpp:41
 #, kde-format
@@ -7439,6 +7442,8 @@ msgstr "İsmail Dönmez"
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
+"Blowfish, SSL euskarria, KNetwork eratortzea, Koloreztatutako goitizenak, "
+"Goitizen-zerrenden gaiak"
 
 #: src/main.cpp:42
 #, kde-format
@@ -7458,7 +7463,7 @@ msgstr "Bernd Buschinski"
 #: src/main.cpp:43
 #, kde-format
 msgid "DCC port to KDE 4, various DCC improvements"
-msgstr ""
+msgstr "DCC KDE 4ra eratortzea, DCCren hainbat hobekuntza"
 
 #: src/main.cpp:45
 #, kde-format
@@ -7486,9 +7491,10 @@ msgid "Christian Muehlhaeuser"
 msgstr "Christian Muehlhaeuser"
 
 #: src/main.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
-msgstr "Modu anizkoitzen hedapena, Itxi trepeta kokapena, OSD funtzionaltasuna"
+msgstr ""
+"Modu anizkoitzen hedapena, Trepetaren kokapena ixtea, OSD funtzionaltasuna"
 
 #: src/main.cpp:48
 #, kde-format
@@ -7697,7 +7703,7 @@ msgstr "Emil Obermayr"
 #: src/main.cpp:68
 #, kde-format
 msgid "Sysinfo script"
-msgstr ""
+msgstr "«sysinfo» gidoia"
 
 #: src/main.cpp:69
 #, kde-format
