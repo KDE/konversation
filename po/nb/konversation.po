@@ -10119,6 +10119,3 @@ msgstr "Kanalliste-advarsel"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Søkte kallenavn"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Konversation bokmerkeredigering"
