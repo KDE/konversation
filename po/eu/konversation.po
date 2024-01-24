@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-20 14:07+0100\n"
+"PO-Revision-Date: 2024-01-23 22:21+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -537,7 +537,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:72
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
-msgstr ""
+msgstr "Erakutsi modu gordineko karaktereak (adib. +o) deskribapenen ordez"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
 #. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
@@ -1069,19 +1069,19 @@ msgstr "Au&tomatikoki berrekin zama-jaistea"
 #: src/config/dcc_configui.ui:91
 #, kde-format
 msgid "Enable fast DCC send (Might &not work with all clients)"
-msgstr ""
+msgstr "Gaitu DCC bidalketa azkarra (baliteke bezero guztiekin e&z ibiltzea)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccPassiveSend)
 #: src/config/dcc_configui.ui:98
 #, kde-format
 msgid "Enable passive DCC send"
-msgstr ""
+msgstr "Gaitu DCC bidalketa pasiboa"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
 #, kde-format
 msgid "Automatically accept DCC chat offer"
-msgstr ""
+msgstr "Automatikoki onartu DCC berriketa eskaintzak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccUPnP)
 #: src/config/dcc_configui.ui:115
@@ -1288,7 +1288,7 @@ msgstr "Erabili norberak aukeratutako &arakatzailea:"
 #: src/config/generalbehavior_configui.ui:216
 #, kde-format
 msgid "Comman&d char:"
-msgstr ""
+msgstr "Koman&do karakterea:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
 #: src/config/generalbehavior_configui.ui:244
@@ -2321,7 +2321,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... switching a connection to a different server in the same network"
-msgstr ""
+msgstr "...konexio bat sare bereko beste zerbitzari batera aldatzen"
 
 #: src/config/warnings_config.cpp:158
 #, kde-format
@@ -2329,7 +2329,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... creating a new connection to an already connected network"
-msgstr ""
+msgstr "...konexio berri bat sortzen jada konektatutako sare batera"
 
 #: src/config/warnings_config.cpp:161
 #, kde-format
@@ -3205,64 +3205,67 @@ msgid "Queued - Transfer is waiting for you to accept or reject it"
 msgstr "Ilaran - Transferentzia zuk onartu edo errefusatzeko zain dago"
 
 #: src/dcc/transferlistmodel.cpp:511
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preparing - Transfer is checking for resumable files"
-msgstr "Prestatzen - Transferentzia "
+msgstr ""
+"Prestatzen - Transferentzia berrekin daitekeen fitxategirik dagoen "
+"egiaztatzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:513
 #, kde-format
 msgid "Preparing - Transfer is acquiring the data to send"
-msgstr ""
+msgstr "Prestatzen - Transferentzia bidaltzeko datuak eskuratzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:519
 #, kde-format
 msgid "Pending - Transfer is waiting for the partner to accept or reject it"
 msgstr ""
+"Egiteko zain - Transferentzia, kideak onartu edo errefusatu dezan zain dago"
 
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
 msgid "Connecting - Transfer is connecting to the partner"
-msgstr ""
+msgstr "Konektatzen - Transferentzia kidearekin konektatzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:526
 #, kde-format
 msgid "Receiving - Transfer is receiving data from the partner"
-msgstr ""
+msgstr "Jasotzen - Transferentzia kideagandiko datuak jasotzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:528
 #, kde-format
 msgid "Sending - Transfer is sending data to partner"
-msgstr ""
+msgstr "Bidaltzen - Transferentzia kideari datuak bidaltzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:534
 #, kde-format
 msgid "Done - Transfer has completed successfully"
-msgstr ""
+msgstr "Eginda - Transferentzia ondo burutu da"
 
 #: src/dcc/transferlistmodel.cpp:538
 #, kde-format
 msgid "Failed - Transfer failed with 'unknown reason'"
-msgstr ""
+msgstr "Huts egin du - Transferentziak 'arrazoi ezezaguna'rekin huts egin du"
 
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr ""
+msgstr "Huts egin du - Transferentziak '%1' arrazoiarekin huts egin du"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
 msgid "Aborted - Transfer was aborted by the User"
-msgstr ""
+msgstr "Bertan behera - Erabiltzaileak transferentzia bertan behera utzi du"
 
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
 msgid "Incoming Transfers"
-msgstr ""
+msgstr "Sarrerako transferentzia"
 
 #: src/dcc/transferlistmodel.cpp:641
 #, kde-format
 msgid "Outgoing Transfers"
-msgstr ""
+msgstr "Irteerako transferentzia"
 
 #: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2650
 #, kde-format
@@ -3272,12 +3275,12 @@ msgstr "DCC egoera"
 #: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
-msgstr ""
+msgstr "Au&keratu elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
-msgstr ""
+msgstr "Auke&ratu osatutako elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:76
 #, kde-format
@@ -3287,7 +3290,7 @@ msgstr "On&artu"
 #: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
-msgstr ""
+msgstr "Hasi jasotzen"
 
 #: src/dcc/transferpanel.cpp:78
 #, kde-format
@@ -3313,17 +3316,17 @@ msgstr "Gar&bitu"
 #: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
-msgstr ""
+msgstr "Garbitu aukeratutako elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
-msgstr ""
+msgstr "Garbitu osatutakoak"
 
 #: src/dcc/transferpanel.cpp:85
 #, kde-format
 msgid "Clear Completed Items"
-msgstr ""
+msgstr "Garbitu osatutako elementuak"
 
 #: src/dcc/transferpanel.cpp:87
 #, kde-format
@@ -3333,7 +3336,7 @@ msgstr "&Ireki fitxategia"
 #: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
-msgstr ""
+msgstr "Exekutatu fitxategia"
 
 #: src/dcc/transferpanel.cpp:89
 #, kde-format
@@ -3343,7 +3346,7 @@ msgstr "Ireki kokalekua"
 #: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
-msgstr ""
+msgstr "Ireki fitxategiaren kokalekua"
 
 #: src/dcc/transferpanel.cpp:423
 #, kde-format
@@ -3352,7 +3355,9 @@ msgid ""
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] ""
+"Exekutatzeko fitxategi %1 aukeratu duzu, ziur zaude jarraitu nahi duzula?"
 msgstr[1] ""
+"Exekutatzeko %1 fitxategi aukeratu dituzu, ziur zaude jarraitu nahi duzula?"
 
 #: src/dcc/transferpanel.cpp:427
 #, kde-format
@@ -3365,17 +3370,17 @@ msgstr[1] "Exekutatu %1 fitxategi"
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
 msgid "The admin has restricted the right to receive files"
-msgstr ""
+msgstr "Administratzaileak fitxategiak jasotzeko eskubidea murriztu du"
 
 #: src/dcc/transferrecv.cpp:204
 #, kde-format
 msgid "Invalid sender address (%1)"
-msgstr ""
+msgstr "Bidaltzaile-helbide baliogabea (%1)"
 
 #: src/dcc/transferrecv.cpp:211
 #, kde-format
 msgid "Unsupported negotiation (filesize=0)"
-msgstr ""
+msgstr "Euskarririk gabeko negoziazioa (fitxategineurria=0)"
 
 #: src/dcc/transferrecv.cpp:316
 #, kde-format
@@ -3383,16 +3388,18 @@ msgid ""
 "<b>Cannot create the folder or destination is not writable.</b><br/>Folder: "
 "%1<br/>"
 msgstr ""
+"<b>Ezin du karpeta sortu edo jomuga ezin da idatzi.</b><br/>Karpeta: %1<br/>"
 
 #: src/dcc/transferrecv.cpp:326
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr ""
+"<b>Fitxategia beste transferentzia batek erabiltzen du.</b><br/>%1<br/>"
 
 #: src/dcc/transferrecv.cpp:350
 #, kde-format
 msgid "Could not create a KIO instance"
-msgstr ""
+msgstr "Ezin izan du KIO instantzia bat sortu"
 
 #: src/dcc/transferrecv.cpp:449
 #, kde-format
@@ -3428,12 +3435,12 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
 msgid "Waiting for connection"
-msgstr ""
+msgstr "Konexioaren zain"
 
 #: src/dcc/transferrecv.cpp:602
 #, kde-format
 msgid "Waiting for remote host's acceptance"
-msgstr ""
+msgstr "Urrutiko ostalariak onartzeko zain"
 
 #: src/dcc/transferrecv.cpp:612
 #, kde-format
@@ -3444,22 +3451,22 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:637
 #, kde-format
 msgid "Unexpected response from remote host"
-msgstr ""
+msgstr "Urrutiko ostalariaren ezusteko erantzuna"
 
 #: src/dcc/transferrecv.cpp:697 src/dcc/transfersend.cpp:455
 #, kde-format
 msgid "Could not accept the connection (socket error)."
-msgstr ""
+msgstr "Ezin izan du konexioa onartu (hargune-errorea)."
 
 #: src/dcc/transferrecv.cpp:788
 #, kde-format
 msgid "Transfer error"
-msgstr ""
+msgstr "Transferentzia-errorea"
 
 #: src/dcc/transferrecv.cpp:804
 #, kde-format
 msgid "KIO error: %1"
-msgstr ""
+msgstr "KIO errorea: %1"
 
 #: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, kde-format
@@ -3469,7 +3476,7 @@ msgstr "Denbora-muga"
 #: src/dcc/transfersend.cpp:165
 #, kde-format
 msgid "The admin has restricted the right to send files"
-msgstr ""
+msgstr "Administratzaileak fitxategiak bidaltzeko eskubidea murriztu du"
 
 #: src/dcc/transfersend.cpp:187
 #, kde-format
@@ -3479,7 +3486,7 @@ msgstr "\"%1\" URLa ez da existitzen"
 #: src/dcc/transfersend.cpp:195
 #, kde-format
 msgid "Enter Filename"
-msgstr ""
+msgstr "Sartu fitxategi-izena"
 
 #: src/dcc/transfersend.cpp:196
 #, kde-format
@@ -3488,6 +3495,9 @@ msgid ""
 ">Please enter a filename to be presented to the receiver, or cancel the dcc "
 "transfer</qt>"
 msgstr ""
+"<qt><i>%1</i>(e)ri bidaltzen ari zaren fitxategi-izenak ez du fitxategi-"
+"izenik.<br/>Mesedez, sartu hartzaileari aurkezteko fitxategi-izena, edo utzi "
+"DCC transferentzia</qt>"
 
 #: src/dcc/transfersend.cpp:197
 #, kde-format
@@ -3497,17 +3507,17 @@ msgstr "ezezaguna"
 #: src/dcc/transfersend.cpp:202
 #, kde-format
 msgid "No filename was given"
-msgstr ""
+msgstr "Ez da fitxategi-izenik eman"
 
 #: src/dcc/transfersend.cpp:243
 #, kde-format
 msgid "Could not retrieve \"%1\""
-msgstr ""
+msgstr "Ezin izan du \"%1\" eskuratu"
 
 #: src/dcc/transfersend.cpp:264
 #, kde-format
 msgid "Unable to send a 0 byte file."
-msgstr ""
+msgstr "Ez da 0 byteko fitxategi bat bidaltzeko gai."
 
 #: src/dcc/transfersend.cpp:280
 #, kde-format
@@ -3523,6 +3533,8 @@ msgstr ""
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr ""
+"Eragiketa arrakastatsua. Ez litzateke sekula elkarrizketa-koadro batean "
+"gertatu behar"
 
 #: src/dcc/transfersend.cpp:605
 #, kde-format
@@ -3537,7 +3549,7 @@ msgstr "Ezin izan du \"%1\" fitxategian idatzi."
 #: src/dcc/transfersend.cpp:611
 #, kde-format
 msgid "A fatal unrecoverable error occurred."
-msgstr ""
+msgstr "Berreskuraezina den errore larri bat gertatu da."
 
 #: src/dcc/transfersend.cpp:614
 #, kde-format
@@ -3547,7 +3559,7 @@ msgstr "Ezin izan du '%1' fitxategia ireki."
 #: src/dcc/transfersend.cpp:623
 #, kde-format
 msgid "The operation was unexpectedly aborted."
-msgstr ""
+msgstr "Eragiketa ustekabean bertan behera utzi da."
 
 #: src/dcc/transfersend.cpp:626
 #, kde-format
@@ -3557,7 +3569,7 @@ msgstr "Eragiketak denbora-muga gainditu du."
 #: src/dcc/transfersend.cpp:629
 #, kde-format
 msgid "An unspecified error happened on close."
-msgstr ""
+msgstr "Ixterakoan ustekabeko errore bat gertatu da."
 
 #: src/dcc/transfersend.cpp:632
 #, kde-format
@@ -3573,115 +3585,115 @@ msgstr "Zutabeak"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr ""
+msgstr "Arbel-zuriko letra-tipo hautatzailea"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
 #, kde-format
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:60
 #, kde-format
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:65
 #, kde-format
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:70
 #, kde-format
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:75
 #, kde-format
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:80
 #, kde-format
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:85
 #, kde-format
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:90
 #, kde-format
 msgid "14"
-msgstr ""
+msgstr "14"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:95
 #, kde-format
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:100
 #, kde-format
 msgid "18"
-msgstr ""
+msgstr "18"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:105
 #, kde-format
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:110
 #, kde-format
 msgid "22"
-msgstr ""
+msgstr "22"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:115
 #, kde-format
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:120
 #, kde-format
 msgid "26"
-msgstr ""
+msgstr "26"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:125
 #, kde-format
 msgid "28"
-msgstr ""
+msgstr "28"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:130
 #, kde-format
 msgid "36"
-msgstr ""
+msgstr "36"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:135
 #, kde-format
 msgid "48"
-msgstr ""
+msgstr "48"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:140
 #, kde-format
 msgid "72"
-msgstr ""
+msgstr "72"
 
 #: src/dcc/whiteboardtoolbar.cpp:33
 #, kde-format
@@ -3696,12 +3708,12 @@ msgstr "Gorde honela..."
 #: src/dcc/whiteboardtoolbar.cpp:38
 #, kde-format
 msgid "Freehand Drawing"
-msgstr ""
+msgstr "Esku-hutsez marraztea"
 
 #: src/dcc/whiteboardtoolbar.cpp:44
 #, kde-format
 msgid "Draw a straight line"
-msgstr "Marraztu lerro zuzen bat"
+msgstr "Marraztu line zuzen bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:49
 #, kde-format
@@ -3711,12 +3723,12 @@ msgstr "Marraztu laukizuzen bat"
 #: src/dcc/whiteboardtoolbar.cpp:55
 #, kde-format
 msgid "Draw an ellipse"
-msgstr ""
+msgstr "Marraztu elipse bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:61
 #, kde-format
 msgid "Draw text"
-msgstr ""
+msgstr "Marraztu testua"
 
 #: src/dcc/whiteboardtoolbar.cpp:67
 #, kde-format
