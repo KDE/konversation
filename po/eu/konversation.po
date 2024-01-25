@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-23 22:24+0100\n"
+"PO-Revision-Date: 2024-01-24 22:38+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3522,12 +3522,13 @@ msgstr "Ez da 0 byteko fitxategi bat bidaltzeko gai."
 #: src/dcc/transfersend.cpp:280
 #, kde-format
 msgid "DCC SEND request was rejected"
-msgstr ""
+msgstr "DCC SEND eskaera errefusatu da"
 
 #: src/dcc/transfersend.cpp:307 src/dcc/transfersend.cpp:383
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr ""
+"Ezin izan dio IRC zerbitzariaren bidez kideari DCC SEND eskaera bat bidali."
 
 #: src/dcc/transfersend.cpp:602
 #, kde-format
@@ -3744,17 +3745,17 @@ msgstr "Borragoma"
 #: src/dcc/whiteboardtoolbar.cpp:77
 #, kde-format
 msgid "Fill a contiguous area with the foreground color"
-msgstr ""
+msgstr "Bete ondoko azalera aurrealdeko kolorearekin"
 
 #: src/dcc/whiteboardtoolbar.cpp:82
 #, kde-format
 msgid "Draw an arrow"
-msgstr ""
+msgstr "Marraztu gezi bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr ""
+msgstr "Hautatu irudiko kolore bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -3764,7 +3765,7 @@ msgstr "Gorde irudia"
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Images (*.png *.xpm *.jpg)"
-msgstr ""
+msgstr "Irudiak (*.png *.xpm *.jpg)"
 
 #: src/identitydialog.cpp:37
 #, kde-format
@@ -4194,7 +4195,7 @@ msgstr ""
 #: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
-msgstr ""
+msgstr "&Irteteko arrazoia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
 #: src/identitydialog.ui:605
@@ -4214,13 +4215,13 @@ msgstr "Konversation bukatu da."
 #: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
-msgstr ""
+msgstr "Al&de egiteko arrazoia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
 #: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
-msgstr ""
+msgstr "Kanal bat uzten duzun bakoitzean, mezu hori kanalera bidaltzen da."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
 #: src/identitydialog.ui:647
@@ -4242,12 +4243,12 @@ msgstr ""
 #: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
-msgstr ""
+msgstr "Erabiltzaileak bukatua."
 
 #: src/irc/channel.cpp:120
 #, kde-format
 msgid "Edit Channel Settings"
-msgstr ""
+msgstr "Editatu kanalaren ezarpenak"
 
 #: src/irc/channel.cpp:128
 #, kde-format
@@ -4262,7 +4263,7 @@ msgstr ""
 #: src/irc/channel.cpp:182
 #, kde-format
 msgid "Maximum users allowed in channel"
-msgstr ""
+msgstr "Kanalean gehienez baimendutako erabiltzaile kopurua"
 
 #: src/irc/channel.cpp:183
 #, kde-format
@@ -4297,17 +4298,17 @@ msgstr ""
 #: src/irc/channel.cpp:883
 #, kde-format
 msgid "Channel Password"
-msgstr "Kanaleko pasahitza:"
+msgstr "Kanaleko pasahitza"
 
 #: src/irc/channel.cpp:899
 #, kde-format
 msgid "Channel User Limit"
-msgstr ""
+msgstr "Kanalaren erabiltzaile muga"
 
 #: src/irc/channel.cpp:900
 #, kde-format
 msgid "Enter the new user limit for the channel:"
-msgstr ""
+msgstr "Sartu kanalaren erabiltzaile-muga berria:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
 #: src/irc/inputfilter.cpp:1560 src/irc/inputfilter.cpp:1581
@@ -4857,46 +4858,46 @@ msgstr "%1(e)k 'mintzagai babesa' itzali du."
 #: src/irc/channel.cpp:1715
 #, kde-format
 msgid "You set the channel key to '%1'."
-msgstr ""
+msgstr "Kanaleko gakoa '%1' ezarri duzu."
 
 #: src/irc/channel.cpp:1716
 #, kde-format
 msgid "%1 sets the channel key to '%2'."
-msgstr ""
+msgstr "%1(e)k kanala gakoa '%2' ezarri du."
 
 #: src/irc/channel.cpp:1720
 #, kde-format
 msgid "You remove the channel key."
-msgstr ""
+msgstr "Kanaleko gakoa ezabatu duzu."
 
 #: src/irc/channel.cpp:1721
 #, kde-format
 msgid "%1 removes the channel key."
-msgstr ""
+msgstr "%1(e)k kanaleko gakoa ezabatu du."
 
 #: src/irc/channel.cpp:1729
 #, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kanalaren muga goitizen 1ean ezarri duzu."
+msgstr[1] "Kanalaren muga %1 goitizenetan ezarri duzu."
 
 #: src/irc/channel.cpp:1730
 #, kde-format
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2(e)k kanalaren muga goitizen 1ean ezarri du."
+msgstr[1] "%2(e)k kanalaren muga %1 goitizenetan ezarri du."
 
 #: src/irc/channel.cpp:1734
 #, kde-format
 msgid "You remove the channel limit."
-msgstr ""
+msgstr "Kanalaren muga ezabatu duzu."
 
 #: src/irc/channel.cpp:1735
 #, kde-format
 msgid "%1 removes the channel limit."
-msgstr ""
+msgstr "%1(e)k kanalaren muga kendu du."
 
 #: src/irc/channel.cpp:1745
 #, kde-format
@@ -4951,52 +4952,52 @@ msgstr "%1(e)k %2 gonbidapen maskara ezartzen du."
 #: src/irc/channel.cpp:1776
 #, kde-format
 msgid "You remove the invitation mask %1."
-msgstr ""
+msgstr "%1 gonbidapen maskara kendu duzu."
 
 #: src/irc/channel.cpp:1777
 #, kde-format
 msgid "%1 removes the invitation mask %2."
-msgstr ""
+msgstr "%1(e)k %2 gonbidapen maskara kendu du."
 
 #: src/irc/channel.cpp:1785
 #, kde-format
 msgid "You set the channel mode '%1'."
-msgstr ""
+msgstr "'%1' kanal-modua ezarri duzu."
 
 #: src/irc/channel.cpp:1786
 #, kde-format
 msgid "%1 sets the channel mode '%2'."
-msgstr ""
+msgstr "%1(e)k '%2' kanal-modua ezarri du."
 
 #: src/irc/channel.cpp:1790
 #, kde-format
 msgid "You set channel mode +%1"
-msgstr ""
+msgstr "Kanal-modua +%1 ezarri duzu"
 
 #: src/irc/channel.cpp:1791
 #, kde-format
 msgid "%1 sets channel mode +%2"
-msgstr ""
+msgstr "%1(e)k '+%2' kanal-modua ezarri du"
 
 #: src/irc/channel.cpp:1798
 #, kde-format
 msgid "You remove the channel mode '%1'."
-msgstr ""
+msgstr "'%1' kanal-modua kendu duzu."
 
 #: src/irc/channel.cpp:1799
 #, kde-format
 msgid "%1 removes the channel mode '%2'."
-msgstr ""
+msgstr "%1(e)k '%2' kanal-modua kendu du."
 
 #: src/irc/channel.cpp:1803
 #, kde-format
 msgid "You set channel mode -%1"
-msgstr ""
+msgstr "-%1 kanal-modua ezarri duzu"
 
 #: src/irc/channel.cpp:1804
 #, kde-format
 msgid "%1 sets channel mode -%2"
-msgstr ""
+msgstr "%1(e)k -%2 kanal-modua ezarri du"
 
 #: src/irc/channel.cpp:2203
 #, kde-format
@@ -5011,7 +5012,7 @@ msgstr "Operadoreak bakarrik alda dezake kanaleko mintzagaia. %1"
 #: src/irc/channel.cpp:2206
 #, kde-format
 msgid "No messages to channel from clients on the outside.  %1"
-msgstr ""
+msgstr "Kanalera kanpoko bezeroetako mezurik ez. %1"
 
 #: src/irc/channel.cpp:2207
 #, kde-format
@@ -5278,7 +5279,7 @@ msgstr "Erdi-operadorea"
 #: src/irc/channelnick.cpp:191
 #, kde-format
 msgid "Has voice"
-msgstr ""
+msgstr "Ahotsa du"
 
 #: src/irc/inputfilter.cpp:245
 #, kde-format
@@ -5449,7 +5450,7 @@ msgstr "Sortua"
 #: src/irc/inputfilter.cpp:1370
 #, kde-format
 msgid "This channel was created on %1."
-msgstr ""
+msgstr "Kanala %1(e)an sortu zen."
 
 #. i18n("Whois"),parameterList.join(" ").section(QLatin1Char(' '),1)+' '+trailing);
 #. The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
@@ -5471,7 +5472,7 @@ msgstr "Whois"
 #: src/irc/inputfilter.cpp:1389
 #, kde-format
 msgid "%1 is logged in as %2."
-msgstr ""
+msgstr "%1 %2 gisa saio-hasita dago."
 
 #: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
 #, kde-format
@@ -5481,7 +5482,7 @@ msgstr "Izenak"
 #: src/irc/inputfilter.cpp:1440
 #, kde-format
 msgid "End of NAMES list."
-msgstr ""
+msgstr "NAMES zerrendaren bukaera."
 
 #: src/irc/inputfilter.cpp:1453
 #, kde-format
@@ -5511,27 +5512,27 @@ msgstr "%1(e)rako mintzagaia %2(e)k ezarri zuen %3(e)an."
 #: src/irc/inputfilter.cpp:1517
 #, kde-format
 msgid "%1 is actually using the host %2."
-msgstr ""
+msgstr "%1 benetan %2 ostalaria erabiltzen ari da."
 
 #: src/irc/inputfilter.cpp:1530
 #, kde-format
 msgid "%1: No such nick/channel."
-msgstr ""
+msgstr "%1: Ez dago halako goitizenik/kanalik."
 
 #: src/irc/inputfilter.cpp:1534
 #, kde-format
 msgid "No such nick: %1."
-msgstr ""
+msgstr "Ez dago halako goitizenik: %1."
 
 #: src/irc/inputfilter.cpp:1547
 #, kde-format
 msgid "%1: No such channel."
-msgstr ""
+msgstr "%1: Ez dago halako kanalik."
 
 #: src/irc/inputfilter.cpp:1560
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr ""
+msgstr "Goitizena jada erabiltzen dute, saiatu beste batekin."
 
 #: src/irc/inputfilter.cpp:1573
 #, kde-format
@@ -5539,21 +5540,23 @@ msgid ""
 "The nickname %1 was already in use, but the connection failed before you "
 "responded."
 msgstr ""
+"%1 goitizena jada erabiltzen dute, baina konexioak zure erantzunaren "
+"aurretik huts egin du."
 
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr ""
+msgstr "Goitizena jada erabiltzen dute. %1(e)kin saiatzen."
 
 #: src/irc/inputfilter.cpp:1610
 #, kde-format
 msgid "Erroneous nickname. Changing nick to %1."
-msgstr ""
+msgstr "Okerreko goitizena. Goitizena %1(e)ra aldatzen."
 
 #: src/irc/inputfilter.cpp:1621
 #, kde-format
 msgid "You are not on %1."
-msgstr ""
+msgstr "Ez zaude %1(e)(a)n."
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
 #: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:806
@@ -5564,12 +5567,12 @@ msgstr "MOTD"
 #: src/irc/inputfilter.cpp:1632
 #, kde-format
 msgid "Message of the day:"
-msgstr ""
+msgstr "Eguneko mezua:"
 
 #: src/irc/inputfilter.cpp:1650
 #, kde-format
 msgid "End of message of the day"
-msgstr ""
+msgstr "Eguneko mezuaren bukaera"
 
 #: src/irc/inputfilter.cpp:1674
 #, kde-format
@@ -5584,17 +5587,17 @@ msgstr "Zerbitzari honetan IRC operadorea zara orain."
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
-msgstr ""
+msgstr "'%1' orain zure ezkutuko ostalaria da (zerbitzuak ezarria)."
 
 #: src/irc/inputfilter.cpp:1700
 #, kde-format
 msgid "Current users on the network: %1"
-msgstr ""
+msgstr "Sareko uneko erabiltzaileak: %1"
 
 #: src/irc/inputfilter.cpp:1710
 #, kde-format
 msgid "Current users on %1: %2."
-msgstr ""
+msgstr "%1(e)(a)n uneko erabiltzaileak: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
 #: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
@@ -5752,42 +5755,42 @@ msgctxt ""
 "%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "%1 has been idle for %2, %3, %4, and %5."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, %3, %4, eta %5z."
 
 #: src/irc/inputfilter.cpp:2145
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "%1 has been idle for %2, %3, and %4."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, %3, eta %4z."
 
 #: src/irc/inputfilter.cpp:2155
 #, kde-format
 msgctxt "%1 = name of person, %2 = (x minutes), %3 = (x seconds)"
 msgid "%1 has been idle for %2 and %3."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, eta %3z."
 
 #: src/irc/inputfilter.cpp:2161
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 jardunik gabe egon da segundo 1ez."
+msgstr[1] "%2 jardunik gabe egon da %1 segundoz."
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
 msgid "%1 has been online since %2."
-msgstr ""
+msgstr "%1 lerroan egon da %2(e)tik."
 
 #: src/irc/inputfilter.cpp:2184
 #, kde-format
 msgid "End of WHOIS list."
-msgstr ""
+msgstr "WHOIS zerrendaren bukaera."
 
 #: src/irc/inputfilter.cpp:2223
 #, kde-format
 msgid "Userhost"
-msgstr ""
+msgstr "Erabiltzailearen ostalaria"
 
 #: src/irc/inputfilter.cpp:2224
 #, kde-format
@@ -5814,7 +5817,7 @@ msgstr "Zerrenda"
 #: src/irc/inputfilter.cpp:2246
 #, kde-format
 msgid "List of channels:"
-msgstr ""
+msgstr "Kanal-zerrenda:"
 
 #: src/irc/inputfilter.cpp:2258
 #, kde-format
@@ -5912,7 +5915,7 @@ msgstr "SASL autentifikazioa bertan behera utzi da."
 #: src/irc/invitedialog.cpp:22
 #, kde-format
 msgid "Channel Invites"
-msgstr ""
+msgstr "Kanalera gonbita"
 
 #: src/irc/invitedialog.cpp:168
 #, kde-format
@@ -6030,7 +6033,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:29
 #, kde-format
 msgid "Watched Nicks Online"
-msgstr ""
+msgstr "Goitizen gainbegiratuak lerroan"
 
 #: src/irc/nicksonline.cpp:34
 #, kde-format
@@ -6141,7 +6144,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:218
 #, kde-format
 msgid "Encoding Conflict Warning"
-msgstr ""
+msgstr "Kodeketa gatazkaren abisua"
 
 #: src/irc/outputfilter.cpp:323
 #, kde-format
@@ -6151,7 +6154,7 @@ msgstr "Gordina"
 #: src/irc/outputfilter.cpp:380
 #, kde-format
 msgid "Usage: %1JOIN <channel> [password]"
-msgstr ""
+msgstr "Erabilera: %1JOIN <kanala> [pasahitza]"
 
 #: src/irc/outputfilter.cpp:420
 #, kde-format
@@ -6204,7 +6207,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:655
 #, kde-format
 msgid "Usage: %1NOTICE <recipient> <message>"
-msgstr ""
+msgstr "Erabilera: %1NOTICE <hartzailea> <mezua>"
 
 #: src/irc/outputfilter.cpp:662
 #, kde-format
@@ -6220,7 +6223,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:741
 #, kde-format
 msgid "You need to specify a recipient."
-msgstr ""
+msgstr "Hartzaile bat zehaztu behar duzu."
 
 #: src/irc/outputfilter.cpp:746
 #, kde-format
@@ -6230,7 +6233,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:752
 #, kde-format
 msgid "You need to specify a message."
-msgstr ""
+msgstr "Mezu bat zehaztu behar duzu."
 
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
@@ -6280,22 +6283,22 @@ msgstr "\"%1\" fitxategia ez da existitzen."
 #: src/irc/outputfilter.cpp:981
 #, kde-format
 msgid "Usage: %1DCC [SEND [nickname [filename]]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [SEND [goitizena [fitxategi-izena]]]"
 
 #: src/irc/outputfilter.cpp:999
 #, kde-format
 msgid "Usage: %1DCC [GET [nickname [filename]]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [GET [goitizena [fitxategi-izena]]]"
 
 #: src/irc/outputfilter.cpp:1015
 #, kde-format
 msgid "Usage: %1DCC [CHAT [nickname]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [CHAT [goitizena]]"
 
 #: src/irc/outputfilter.cpp:1031
 #, kde-format
 msgid "Usage: %1DCC [WHITEBOARD [nickname]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [WHITEBOARD [goitizena]]"
 
 #: src/irc/outputfilter.cpp:1036
 #, kde-format
@@ -6307,7 +6310,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1186
 #, kde-format
 msgid "Usage: %1INVITE <nick> [channel]"
-msgstr ""
+msgstr "Erabilera: %1INVITE <goitizena> [kanala]"
 
 #: src/irc/outputfilter.cpp:1197
 #, kde-format
@@ -6317,12 +6320,12 @@ msgstr "%1INVITE kanal-izenik gabe, kanal baten barrutik baino ez dabil."
 #: src/irc/outputfilter.cpp:1206
 #, kde-format
 msgid "%1 is not a channel."
-msgstr ""
+msgstr "%1 ez da kanal bat."
 
 #: src/irc/outputfilter.cpp:1218
 #, kde-format
 msgid "Usage: %1EXEC [-SHOWPATH] <script> [parameter list]"
-msgstr ""
+msgstr "Erabilera: %1EXEC [-SHOWPATH] <gidoia> [parametro-zerrenda]"
 
 #: src/irc/outputfilter.cpp:1227
 #, kde-format
@@ -6447,11 +6450,15 @@ msgstr "Ezikusi"
 #, kde-format
 msgid "Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>"
 msgstr ""
+"Erabilera: %1IGNORE [ -ALL ] <erabiltzailea 1> <erabiltzailea 2> ... "
+"<erabiltzailea n>"
 
 #: src/irc/outputfilter.cpp:1560
 #, kde-format
 msgid "Usage: %1UNIGNORE <user 1> <user 2> ... <user n>"
 msgstr ""
+"Erabilera: %1UNIGNORE <erabiltzailea 1> <erabiltzailea 2> ... <erabiltzailea "
+"n>"
 
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
@@ -6468,17 +6475,17 @@ msgstr[1] ""
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
 msgid "Current encoding is: %1"
-msgstr ""
+msgstr "Uneko kodeketa: %1"
 
 #: src/irc/outputfilter.cpp:1659
 #, kde-format
 msgid "Switched to %1 encoding."
-msgstr ""
+msgstr "%1 kodeketara aldatuta."
 
 #: src/irc/outputfilter.cpp:1662
 #, kde-format
 msgid "%1 is not a valid encoding."
-msgstr ""
+msgstr "%1 ez da baliozko kodeketa."
 
 #: src/irc/outputfilter.cpp:1680
 #, kde-format
