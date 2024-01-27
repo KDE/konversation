@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-10 01:34+0000\n"
-"PO-Revision-Date: 2024-01-25 19:08+0100\n"
+"PO-Revision-Date: 2024-01-26 22:52+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -162,10 +162,10 @@ msgid ""
 "provider plugin. Diffie-Hellman key exchange support is usually provided by "
 "the qca-ossl plugin."
 msgstr ""
-"Zure Qt Zifratzeko Arkitekturak (QCA /Qt Cryptographic Architecture) ez du "
-"onartzen Diffie-Hellman gako trukatzea. Baliteke hornitzaile plugin osagarri "
-"bat instalatu behar izatea. Diffie-Hellman gako trukatzeko euskarria qca-"
-"ossl pluginak eman ohi du."
+"Zure Qt Kriptografia Arkitekturaen (QCA /Qt Cryptographic Architecture) "
+"instalazioak ez du onartzen Diffie-Hellman gako trukatzea. Baliteke "
+"hornitzaile plugin osagarri bat instalatu behar izatea. Diffie-Hellman gako "
+"trukerako euskarria «qca-ossl» pluginak eman ohi du."
 
 #: src/cipher.cpp:490
 #, kde-format
@@ -175,6 +175,11 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Zure Qt Kriptografia Arkitekturaren (QCA /Qt Cryptographic Architecture) "
+"instalazioak ez du «Blowfish», zifratutako blokeak kateatzeko (CBC / cipher-"
+"block chaining) moduan onartzen. Seguruenik QCArako hornitzaile plugin "
+"gehigarri bat instalatu beharko duzu. «Blowfish»erako euskarria «qca-ossl» "
+"pluginak hornitu ohi du."
 
 #: src/cipher.cpp:502
 #, kde-format
@@ -184,6 +189,11 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Zure Qt Kriptografia Arkitekturaren (QCA /Qt Cryptographic Architecture) "
+"instalazioak ez du «Blowfish», kode-liburu elektroniko (ECB / electronic "
+"codebook) moduan onartzen. Seguruenik QCArako hornitzaile plugin gehigarri "
+"bat instalatu beharko duzu. «Blowfish»erako euskarria «qca-ossl» pluginak "
+"hornitu ohi du."
 
 #: src/common.cpp:25
 #, kde-format
@@ -1276,7 +1286,7 @@ msgstr "Beste zenbait"
 #: src/config/generalbehavior_configui.ui:191
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr "Ezgaitu jakinarazpenak &kanpoan egon bitartean"
+msgstr "Ezgaitu jakinarazpenak &aldenduta egon bitartean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:200
@@ -2242,7 +2252,7 @@ msgstr "Erabiltzaile arruntetarako Ikonoa"
 #: src/config/theme_configui.ui:104
 #, kde-format
 msgid "Icon for away users"
-msgstr "Kanpoan dauden erabiltzaileen ikonoa"
+msgstr "Aldenduta dauden erabiltzaileen ikonoa"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel3)
 #: src/config/theme_configui.ui:120
@@ -3897,6 +3907,8 @@ msgstr "Nortasunak ez du zuriunerik izan behar."
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
+"Baliteke «NickServ» elkartze automatikoarekin ez ibiltzea; SASL gomendatzen "
+"da."
 
 #: src/identitydialog.cpp:471
 #, kde-format
@@ -3919,6 +3931,8 @@ msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
 "overriding any server settings."
 msgstr ""
+"Ziurtagirietan oinarritutako autentifikazioak konexiorako SSL gaitzea "
+"behartzen du, zerbitzariko edozein ezarpen gainidatziz."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/identitydialog.ui:37
@@ -3960,6 +3974,12 @@ msgid ""
 "all the nerds out there, but the PC you use can always be traced so you will "
 "never be truly anonymous."
 msgstr ""
+"Sartu zure benetako izena hemen. Ez da IRCren asmoa zu zure lagunengandik "
+"edo etsaiengandik ezkutuan mantentzea. Gogoan izan ezazu maltzurkeriaz "
+"jokatzeko tentazioa baduzu. Gezurrezko \"Benetako izen\" bat zure generoa "
+"gogaikarriengandik mozorrotzeko era ona izan daiteke, baina erabiltzen duzun "
+"ordenagailuaren arrastoaren jarraipena egin daiteke, beraz, sekula ez zara "
+"benetan anonimoa izango."
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
 #: src/identitydialog.ui:218 src/irc/invitedialog.cpp:172
@@ -3971,7 +3991,7 @@ msgstr "Goitizena"
 #: src/identitydialog.ui:234
 #, kde-format
 msgid "Auto Identify"
-msgstr ""
+msgstr "Identifikazio automatikoa"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservNicknameLabel)
 #: src/identitydialog.ui:256
@@ -3986,6 +4006,8 @@ msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
+"Zerbitzu-izena <b><i>nicksev</i></b> izan daiteke, edo sarearekiko menpekoa "
+"den izen bat <b><i>nickserv@services.dal.net</i></b> esaterako"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
 #: src/identitydialog.ui:273
@@ -4016,7 +4038,7 @@ msgstr "PEM fitxategia:"
 #, kde-format
 msgctxt "@title:tab"
 msgid "Away"
-msgstr "Kanpoan"
+msgstr "Aldenduta"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:333
@@ -4026,18 +4048,21 @@ msgid ""
 "horizontal line will appear in the channel, marking the point where you went "
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
+"Lauki hori markatzen baduzu, <b>/away</b> komando bat egiten duzun "
+"bakoitzean, kanalean lerro horizontal bat agertuko da, aldendu zaren puntua "
+"markatuz. IRCko beste erabiltzaileek ez dute lerro horizontal hori ikusten."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
-msgstr ""
+msgstr "Markatu aldentzerakoan berriketa leihoetako azken kokalekua"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr ""
+msgstr "Aldentze mezu lehenetsia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4047,12 +4072,16 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
+"Hemen sartzen duzun testua aldentze-mezu gisa erabiltzen da, <b>/away</b> "
+"edo <b>/aaway</b> komandoetan argumentu gisa mezurik sartzen ez denean, eta "
+"baita menu bidez edo teklatuko lasterbideen bidez Aldentze-globala "
+"txandakatzen denean."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
 #: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
-msgstr ""
+msgstr "Aldentze goitizena:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
@@ -4066,6 +4095,14 @@ msgid ""
 "will automatically change your nickname back to the original. If you do not "
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
+"Sartu aldendu zarela adierazten duen goitizen bat. Nortasun horrekin elkartu "
+"zaren edozein kanaletan <b>/away msg</b> komando bat egiten duzunean, "
+"«Konversation»ek automatikoki aldatuko du zure goitizena aldendutako "
+"goitizenarekin. Beste erabiltzaileek jakingo dute zure ordenagailutik "
+"aldendu zarela. Aldenduta gisa zauden edozein kanaletan <b>/away</b> komando "
+"bat egiten duzunean, «Konversation»ek zure goitizena atzera jatorrizkora "
+"aldatuko du. Aldentzen zarenean zure goitizena automatikoki aldatzea nahi ez "
+"baduzu, utzi hutsik."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:383
@@ -4080,19 +4117,19 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr ""
+msgstr "Aldentze automatikoa"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
-msgstr ""
+msgstr "Ezarri aldenduta erabiltzailearen"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
 #: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
-msgstr ""
+msgstr "ko jarduera ezaren ondoren"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:437
@@ -4124,19 +4161,19 @@ msgstr ""
 #: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
-msgstr ""
+msgstr "Aldentze-komandoak"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr ""
+msgstr "Aldentze-komandoa:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr ""
+msgstr "Itzultze-komandoa:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -5604,12 +5641,12 @@ msgstr "%1(e)(a)n uneko erabiltzaileak: %2."
 #: src/irc/server.cpp:4121
 #, kde-format
 msgid "Away"
-msgstr "Kanpoan"
+msgstr "Aldenduta"
 
 #: src/irc/inputfilter.cpp:1741
 #, kde-format
 msgid "%1 is away: %2"
-msgstr "%1 kanpoan da: %2"
+msgstr "%1 aldenduta dago: %2"
 
 #: src/irc/inputfilter.cpp:1752
 #, kde-format
@@ -5664,7 +5701,7 @@ msgstr "%1 %2@%3 (%4)%5 da"
 #: src/irc/inputfilter.cpp:1895
 #, kde-format
 msgid " (Away)"
-msgstr " (kanpoan)"
+msgstr " (Aldenduta)"
 
 #: src/irc/inputfilter.cpp:1916
 #, kde-format
@@ -5806,7 +5843,7 @@ msgstr " (IRC operadorea)"
 #: src/irc/inputfilter.cpp:2228
 #, kde-format
 msgid " (away)"
-msgstr " (kanpoan)"
+msgstr " (aldenduta)"
 
 #: src/irc/inputfilter.cpp:2246 src/irc/inputfilter.cpp:2259
 #: src/irc/inputfilter.cpp:2275
@@ -5998,9 +6035,9 @@ msgid "Hostmask:"
 msgstr "Ostalari-maskara:"
 
 #: src/irc/nickinfo.cpp:224
-#, fuzzy, kde-format
+#, kde-format
 msgid "Away&nbsp;Message:"
-msgstr "Kanpoan&nbsp;mezua:"
+msgstr "Aldentze&nbsp;mezua:"
 
 #: src/irc/nickinfo.cpp:228
 #, kde-format
@@ -6140,6 +6177,9 @@ msgid ""
 "current encoding. If you choose to continue anyway those characters will be "
 "replaced by a '?'."
 msgstr ""
+"Bidaltzen ari zaren mezuak, zure uneko kodeketak ez dituen karaktereak ditu. "
+"Edonola ere aurrera jarraitzea erabakitzen baduzu, karaktere horiek '?'rekin "
+"ordezkatuko dira."
 
 #: src/irc/outputfilter.cpp:218
 #, kde-format
@@ -6196,6 +6236,8 @@ msgid ""
 "%1NAMES with no target may disconnect you from the server. Specify '*' if "
 "you really want this."
 msgstr ""
+"%1NAMES jomugarik gabe, zerbitzaritik deskonekta zaitzake. Zehaztu '*' "
+"benetan hori nahi baduzu."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -6203,6 +6245,8 @@ msgid ""
 "Usage: %1close [window] closes the named channel or query tab, or the "
 "current tab if none specified."
 msgstr ""
+"Erabilera: %1close [leihoa] izendatutako kanal- edo itaun-fitxa ixten du, "
+"edo uneko fitxa batere zehazten ez bada."
 
 #: src/irc/outputfilter.cpp:655
 #, kde-format
@@ -6213,12 +6257,12 @@ msgstr "Erabilera: %1NOTICE <hartzailea> <mezua>"
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "\"%1\" oharpena %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
 msgid "%1ME only works from a channel, query or DCC chat tab."
-msgstr ""
+msgstr "%1ME kanal, itaun edo DCC berriketa fitxetatik baino ez dabil."
 
 #: src/irc/outputfilter.cpp:741
 #, kde-format
@@ -6238,7 +6282,7 @@ msgstr "Mezu bat zehaztu behar duzu."
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
 msgid "Sending CTCP-%1 request to %2."
-msgstr ""
+msgstr "CTCP-%1 eskaera %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:852
 #, kde-format
@@ -6258,7 +6302,7 @@ msgstr "Erabilera: %1OMSG testua"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "\"%1\" oharpena %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6306,6 +6350,8 @@ msgid ""
 "Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE, GET, "
 "WHITEBOARD."
 msgstr ""
+"Komando ezezaguna, %1DCC %2. Izan daitezkeen komandoak dira SEND, CHAT, "
+"CLOSE, GET, WHITEBOARD."
 
 #: src/irc/outputfilter.cpp:1186
 #, kde-format
@@ -6331,7 +6377,7 @@ msgstr "Erabilera: %1EXEC [-SHOWPATH] <gidoia> [parametro-zerrenda]"
 #, kde-format
 msgctxt "%2 is a filesystem path to the script file"
 msgid "The script file '%1' was found at: %2"
-msgstr ""
+msgstr "'%1' gidoi-fitxategia aurkitu da hemen: %2"
 
 #: src/irc/outputfilter.cpp:1234
 #, kde-format
@@ -6437,7 +6483,7 @@ msgstr "Erabilera: %1UNBAN [kanala] eredua"
 #: src/irc/outputfilter.cpp:1539
 #, kde-format
 msgid "Added %1 to your ignore list."
-msgstr ""
+msgstr "%1 gehitu da ezikusien zure zerrendara."
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
 #: src/viewer/irccontextmenus.cpp:438 src/viewer/irccontextmenus.cpp:595
@@ -6503,12 +6549,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1692
 #, kde-format
 msgid "Unable to set an encryption key for %1."
-msgstr ""
+msgstr "Ez da %1(e)rako gako bat ezartzeko gai."
 
 #: src/irc/outputfilter.cpp:1701
 #, kde-format
 msgid "The key for %1 has been set."
-msgstr ""
+msgstr "%1(e)rako gakoa ezarri da."
 
 #: src/irc/outputfilter.cpp:1704 src/irc/outputfilter.cpp:1729
 #, kde-format
@@ -6518,6 +6564,10 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
+"Zifratzeko gako bat ezartzeko, «Konversation», Qt Kriptografia "
+"Arkitekturaren (QCA / Qt Cryptographic Architecture) euskarriarekin eraikita "
+"egon behar da. Jar zaitez zure banatzailearekin harremanean, QCA euskarria "
+"duen «Konversation» pakete bati buruz, edo eraiki QCA duen «Konversation»."
 
 #: src/irc/outputfilter.cpp:1719
 #, kde-format
@@ -6931,27 +6981,27 @@ msgstr ""
 #: src/irc/server.cpp:4052
 #, kde-format
 msgid "Gone away for now"
-msgstr "Oraingoz alde egin du"
+msgstr "Oraingoz aldendu da"
 
 #: src/irc/server.cpp:4083
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
-msgstr "Ez duzu alde egindako marka (arrazoia: %1)."
+msgstr "Aldenduta egotearen marka duzu orain (arrazoia: %1)."
 
 #: src/irc/server.cpp:4085
 #, kde-format
 msgid "You are now marked as being away."
-msgstr "Alde egindako marka duzu orain."
+msgstr "Aldendu egotearen marka duzu orain."
 
 #: src/irc/server.cpp:4111
 #, kde-format
 msgid "You are no longer marked as being away."
-msgstr "Jada ez duzu alde egindako marka."
+msgstr "Jada ez duzu aldenduta egotearen marka."
 
 #: src/irc/server.cpp:4121
 #, kde-format
 msgid "You are not marked as being away."
-msgstr "Ez duzu alde egindako marka."
+msgstr "Ez duzu aldenduta egotearen marka."
 
 #: src/irc/server.cpp:4267
 #, kde-format
@@ -7956,7 +8006,7 @@ msgstr "&Nortasunak..."
 #: src/mainwindow.cpp:178
 #, kde-format
 msgid "Manage your nick, away and other identity settings"
-msgstr "Kudeatu zure goitizena, urrunaldia eta beste nortasun ezarpen batzuk"
+msgstr "Kudeatu zure goitizena, aldentzea eta beste nortasun ezarpen batzuk"
 
 #: src/mainwindow.cpp:183
 #, kde-format
@@ -8170,7 +8220,7 @@ msgstr "Garbitu irekita dauden fitxa guztietako edukia"
 #: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
-msgstr "Kanpoan globala"
+msgstr "Aldentze globala"
 
 #: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
@@ -8299,7 +8349,7 @@ msgstr "Txandakatu jakinarazpenak"
 #: src/mainwindow.cpp:840
 #, kde-format
 msgid "Toggle Away Globally"
-msgstr "Txandakatu Kanpoan globalki"
+msgstr "Txandakatu Aldenduta globalki"
 
 #: src/mainwindow.cpp:841
 #, kde-format
@@ -8324,7 +8374,7 @@ msgstr "&Kanal-zerrenda"
 #: src/mainwindow.cpp:856
 #, kde-format
 msgid "Set &Away Globally"
-msgstr "Ezarri &Kanpoan globalki"
+msgstr "Ezarri &Aldenduta globalki"
 
 #: src/mainwindow.cpp:871
 #, kde-format
@@ -8921,27 +8971,27 @@ msgstr ""
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
 msgid "(away)"
-msgstr "(kanpoan)"
+msgstr "(aldenduta)"
 
 #: src/viewer/awaylabel.cpp:19
 #, kde-format
 msgid "&Unaway"
-msgstr "E&z kanpoan"
+msgstr "E&z aldenduta"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr "&Aldatu urrunaldi mezua..."
+msgstr "Al&datu aldentze-mezua..."
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr "Aldatu urrunaldi mezua"
+msgstr "Aldatu aldentze-mezua"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Enter new away message:"
-msgstr "Sartu urrunaldi-mezu berria:"
+msgstr "Sartu aldentze-mezu berria:"
 
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
