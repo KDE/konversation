@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-07 03:00+0000\n"
-"PO-Revision-Date: 2024-01-20 14:07+0100\n"
+"PO-Revision-Date: 2024-01-26 22:57+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -180,6 +180,11 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Zure Qt Kriptografia Arkitekturaren (QCA /Qt Cryptographic Architecture) "
+"instalazioak ez du «Blowfish», zifratutako blokeak kateatzeko (CBC / cipher-"
+"block chaining) moduan onartzen. Seguruenik QCArako hornitzaile plugin "
+"gehigarri bat instalatu beharko duzu. «Blowfish»erako euskarria «qca-ossl» "
+"pluginak hornitu ohi du."
 
 #: src/cipher.cpp:502
 #, kde-format
@@ -189,6 +194,11 @@ msgid ""
 "install an additional provider plugin for QCA. Blowfish support is usually "
 "provided by the qca-ossl plugin."
 msgstr ""
+"Zure Qt Kriptografia Arkitekturaren (QCA /Qt Cryptographic Architecture) "
+"instalazioak ez du «Blowfish», kode-liburu elektroniko (ECB / electronic "
+"codebook) moduan onartzen. Seguruenik QCArako hornitzaile plugin gehigarri "
+"bat instalatu beharko duzu. «Blowfish»erako euskarria «qca-ossl» pluginak "
+"hornitu ohi du."
 
 #: src/common.cpp:25
 #, kde-format
@@ -542,7 +552,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:72
 #, kde-format
 msgid "Show raw mode characters (e.g. +o) instead of descriptions"
-msgstr ""
+msgstr "Erakutsi modu gordineko karaktereak (adib. +o) deskribapenen ordez"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, kcfg_ScrollbackMax)
 #. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
@@ -915,7 +925,7 @@ msgstr "Araztu"
 #: src/config/connectionbehavior_config.ui:93
 #, kde-format
 msgid "Show raw &log window when connecting"
-msgstr ""
+msgstr "Erakutsi e&gunkari gordinaren leihoa konektatzean"
 
 #. i18n: ectx: property (title), widget (QGroupBox, encryptionGBox)
 #: src/config/connectionbehavior_config.ui:103
@@ -1074,25 +1084,25 @@ msgstr "Au&tomatikoki berrekin zama-jaistea"
 #: src/config/dcc_configui.ui:91
 #, kde-format
 msgid "Enable fast DCC send (Might &not work with all clients)"
-msgstr ""
+msgstr "Gaitu DCC bidalketa azkarra (baliteke bezero guztiekin e&z ibiltzea)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccPassiveSend)
 #: src/config/dcc_configui.ui:98
 #, kde-format
 msgid "Enable passive DCC send"
-msgstr ""
+msgstr "Gaitu DCC bidalketa pasiboa"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
 #, kde-format
 msgid "Automatically accept DCC chat offer"
-msgstr ""
+msgstr "Automatikoki onartu DCC berriketa eskaintzak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccUPnP)
 #: src/config/dcc_configui.ui:115
 #, kde-format
 msgid "Enable UPnP for NAT traversal"
-msgstr ""
+msgstr "Gaitu UPnP, NAT zeharkatzeko"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:124
@@ -1155,7 +1165,7 @@ msgstr "Gaitu DCC transferentzia zerbitzarirako berariazko a&takak:"
 #: src/config/dcc_configui.ui:279 src/config/dcc_configui.ui:332
 #, fuzzy, kde-format
 msgid "to"
-msgstr "Honetara:"
+msgstr "hona:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificChatPorts)
 #: src/config/dcc_configui.ui:307
@@ -1293,7 +1303,7 @@ msgstr "Erabili norberak aukeratutako &arakatzailea:"
 #: src/config/generalbehavior_configui.ui:216
 #, kde-format
 msgid "Comman&d char:"
-msgstr ""
+msgstr "Koman&do karakterea:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
 #: src/config/generalbehavior_configui.ui:244
@@ -2326,7 +2336,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... switching a connection to a different server in the same network"
-msgstr ""
+msgstr "...konexio bat sare bereko beste zerbitzari batera aldatzen"
 
 #: src/config/warnings_config.cpp:158
 #, kde-format
@@ -2334,7 +2344,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... creating a new connection to an already connected network"
-msgstr ""
+msgstr "...konexio berri bat sortzen jada konektatutako sare batera"
 
 #: src/config/warnings_config.cpp:161
 #, kde-format
@@ -3054,7 +3064,7 @@ msgstr "Kokalekua:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:28
 #, kde-format
 msgid "Current position:"
-msgstr ""
+msgstr "Uneko kokalekua:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel21)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:48
@@ -3210,64 +3220,67 @@ msgid "Queued - Transfer is waiting for you to accept or reject it"
 msgstr "Ilaran - Transferentzia zuk onartu edo errefusatzeko zain dago"
 
 #: src/dcc/transferlistmodel.cpp:511
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preparing - Transfer is checking for resumable files"
-msgstr "Prestatzen - Transferentzia "
+msgstr ""
+"Prestatzen - Transferentzia berrekin daitekeen fitxategirik dagoen "
+"egiaztatzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:513
 #, kde-format
 msgid "Preparing - Transfer is acquiring the data to send"
-msgstr ""
+msgstr "Prestatzen - Transferentzia bidaltzeko datuak eskuratzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:519
 #, kde-format
 msgid "Pending - Transfer is waiting for the partner to accept or reject it"
 msgstr ""
+"Egiteko zain - Transferentzia, kideak onartu edo errefusatu dezan zain dago"
 
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
 msgid "Connecting - Transfer is connecting to the partner"
-msgstr ""
+msgstr "Konektatzen - Transferentzia kidearekin konektatzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:526
 #, kde-format
 msgid "Receiving - Transfer is receiving data from the partner"
-msgstr ""
+msgstr "Jasotzen - Transferentzia kideagandiko datuak jasotzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:528
 #, kde-format
 msgid "Sending - Transfer is sending data to partner"
-msgstr ""
+msgstr "Bidaltzen - Transferentzia kideari datuak bidaltzen ari da"
 
 #: src/dcc/transferlistmodel.cpp:534
 #, kde-format
 msgid "Done - Transfer has completed successfully"
-msgstr ""
+msgstr "Eginda - Transferentzia ondo burutu da"
 
 #: src/dcc/transferlistmodel.cpp:538
 #, kde-format
 msgid "Failed - Transfer failed with 'unknown reason'"
-msgstr ""
+msgstr "Huts egin du - Transferentziak 'arrazoi ezezaguna'rekin huts egin du"
 
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr ""
+msgstr "Huts egin du - Transferentziak '%1' arrazoiarekin huts egin du"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
 msgid "Aborted - Transfer was aborted by the User"
-msgstr ""
+msgstr "Bertan behera - Erabiltzaileak transferentzia bertan behera utzi du"
 
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
 msgid "Incoming Transfers"
-msgstr ""
+msgstr "Sarrerako transferentzia"
 
 #: src/dcc/transferlistmodel.cpp:641
 #, kde-format
 msgid "Outgoing Transfers"
-msgstr ""
+msgstr "Irteerako transferentzia"
 
 #: src/dcc/transferpanel.cpp:36 src/viewer/viewcontainer.cpp:2658
 #, kde-format
@@ -3277,12 +3290,12 @@ msgstr "DCC egoera"
 #: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
-msgstr ""
+msgstr "Au&keratu elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
-msgstr ""
+msgstr "Auke&ratu osatutako elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:76
 #, kde-format
@@ -3292,7 +3305,7 @@ msgstr "On&artu"
 #: src/dcc/transferpanel.cpp:77
 #, kde-format
 msgid "Start receiving"
-msgstr ""
+msgstr "Hasi jasotzen"
 
 #: src/dcc/transferpanel.cpp:78
 #, kde-format
@@ -3318,17 +3331,17 @@ msgstr "Gar&bitu"
 #: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
-msgstr ""
+msgstr "Garbitu aukeratutako elementu guztiak"
 
 #: src/dcc/transferpanel.cpp:84
 #, kde-format
 msgid "Clear Completed"
-msgstr ""
+msgstr "Garbitu osatutakoak"
 
 #: src/dcc/transferpanel.cpp:85
 #, kde-format
 msgid "Clear Completed Items"
-msgstr ""
+msgstr "Garbitu osatutako elementuak"
 
 #: src/dcc/transferpanel.cpp:87
 #, kde-format
@@ -3338,7 +3351,7 @@ msgstr "&Ireki fitxategia"
 #: src/dcc/transferpanel.cpp:88
 #, kde-format
 msgid "Run the file"
-msgstr ""
+msgstr "Exekutatu fitxategia"
 
 #: src/dcc/transferpanel.cpp:89
 #, kde-format
@@ -3348,7 +3361,7 @@ msgstr "Ireki kokalekua"
 #: src/dcc/transferpanel.cpp:90
 #, kde-format
 msgid "Open the file location"
-msgstr ""
+msgstr "Ireki fitxategiaren kokalekua"
 
 #: src/dcc/transferpanel.cpp:427
 #, kde-format
@@ -3357,7 +3370,9 @@ msgid ""
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] ""
+"Exekutatzeko fitxategi %1 aukeratu duzu, ziur zaude jarraitu nahi duzula?"
 msgstr[1] ""
+"Exekutatzeko %1 fitxategi aukeratu dituzu, ziur zaude jarraitu nahi duzula?"
 
 #: src/dcc/transferpanel.cpp:431
 #, kde-format
@@ -3370,17 +3385,17 @@ msgstr[1] "Exekutatu %1 fitxategi"
 #: src/dcc/transferrecv.cpp:194
 #, kde-format
 msgid "The admin has restricted the right to receive files"
-msgstr ""
+msgstr "Administratzaileak fitxategiak jasotzeko eskubidea murriztu du"
 
 #: src/dcc/transferrecv.cpp:201
 #, kde-format
 msgid "Invalid sender address (%1)"
-msgstr ""
+msgstr "Bidaltzaile-helbide baliogabea (%1)"
 
 #: src/dcc/transferrecv.cpp:208
 #, kde-format
 msgid "Unsupported negotiation (filesize=0)"
-msgstr ""
+msgstr "Euskarririk gabeko negoziazioa (fitxategineurria=0)"
 
 #: src/dcc/transferrecv.cpp:313
 #, kde-format
@@ -3388,16 +3403,18 @@ msgid ""
 "<b>Cannot create the folder or destination is not writable.</b><br/>Folder: "
 "%1<br/>"
 msgstr ""
+"<b>Ezin du karpeta sortu edo jomuga ezin da idatzi.</b><br/>Karpeta: %1<br/>"
 
 #: src/dcc/transferrecv.cpp:323
 #, kde-format
 msgid "<b>The file is used by another transfer.</b><br/>%1<br/>"
 msgstr ""
+"<b>Fitxategia beste transferentzia batek erabiltzen du.</b><br/>%1<br/>"
 
 #: src/dcc/transferrecv.cpp:347
 #, kde-format
 msgid "Could not create a KIO instance"
-msgstr ""
+msgstr "Ezin izan du KIO instantzia bat sortu"
 
 #: src/dcc/transferrecv.cpp:446
 #, kde-format
@@ -3433,12 +3450,12 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:590
 #, kde-format
 msgid "Waiting for connection"
-msgstr ""
+msgstr "Konexioaren zain"
 
 #: src/dcc/transferrecv.cpp:599
 #, kde-format
 msgid "Waiting for remote host's acceptance"
-msgstr ""
+msgstr "Urrutiko ostalariak onartzeko zain"
 
 #: src/dcc/transferrecv.cpp:609
 #, kde-format
@@ -3449,22 +3466,22 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:634
 #, kde-format
 msgid "Unexpected response from remote host"
-msgstr ""
+msgstr "Urrutiko ostalariaren ezusteko erantzuna"
 
 #: src/dcc/transferrecv.cpp:694 src/dcc/transfersend.cpp:453
 #, kde-format
 msgid "Could not accept the connection (socket error)."
-msgstr ""
+msgstr "Ezin izan du konexioa onartu (hargune-errorea)."
 
 #: src/dcc/transferrecv.cpp:785
 #, kde-format
 msgid "Transfer error"
-msgstr ""
+msgstr "Transferentzia-errorea"
 
 #: src/dcc/transferrecv.cpp:801
 #, kde-format
 msgid "KIO error: %1"
-msgstr ""
+msgstr "KIO errorea: %1"
 
 #: src/dcc/transferrecv.cpp:822 src/dcc/transfersend.cpp:590
 #, kde-format
@@ -3474,7 +3491,7 @@ msgstr "Denbora-muga"
 #: src/dcc/transfersend.cpp:163
 #, kde-format
 msgid "The admin has restricted the right to send files"
-msgstr ""
+msgstr "Administratzaileak fitxategiak bidaltzeko eskubidea murriztu du"
 
 #: src/dcc/transfersend.cpp:185
 #, kde-format
@@ -3484,7 +3501,7 @@ msgstr "\"%1\" URLa ez da existitzen"
 #: src/dcc/transfersend.cpp:193
 #, kde-format
 msgid "Enter Filename"
-msgstr ""
+msgstr "Sartu fitxategi-izena"
 
 #: src/dcc/transfersend.cpp:194
 #, kde-format
@@ -3493,6 +3510,9 @@ msgid ""
 ">Please enter a filename to be presented to the receiver, or cancel the dcc "
 "transfer</qt>"
 msgstr ""
+"<qt><i>%1</i>(e)ri bidaltzen ari zaren fitxategi-izenak ez du fitxategi-"
+"izenik.<br/>Mesedez, sartu hartzaileari aurkezteko fitxategi-izena, edo utzi "
+"DCC transferentzia</qt>"
 
 #: src/dcc/transfersend.cpp:195
 #, kde-format
@@ -3502,32 +3522,35 @@ msgstr "ezezaguna"
 #: src/dcc/transfersend.cpp:200
 #, kde-format
 msgid "No filename was given"
-msgstr ""
+msgstr "Ez da fitxategi-izenik eman"
 
 #: src/dcc/transfersend.cpp:241
 #, kde-format
 msgid "Could not retrieve \"%1\""
-msgstr ""
+msgstr "Ezin izan du \"%1\" eskuratu"
 
 #: src/dcc/transfersend.cpp:262
 #, kde-format
 msgid "Unable to send a 0 byte file."
-msgstr ""
+msgstr "Ez da 0 byteko fitxategi bat bidaltzeko gai."
 
 #: src/dcc/transfersend.cpp:278
 #, kde-format
 msgid "DCC SEND request was rejected"
-msgstr ""
+msgstr "DCC SEND eskaera errefusatu da"
 
 #: src/dcc/transfersend.cpp:305 src/dcc/transfersend.cpp:381
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
 msgstr ""
+"Ezin izan dio IRC zerbitzariaren bidez kideari DCC SEND eskaera bat bidali."
 
 #: src/dcc/transfersend.cpp:600
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr ""
+"Eragiketa arrakastatsua. Ez litzateke sekula elkarrizketa-koadro batean "
+"gertatu behar"
 
 #: src/dcc/transfersend.cpp:603
 #, kde-format
@@ -3542,7 +3565,7 @@ msgstr "Ezin izan du \"%1\" fitxategian idatzi."
 #: src/dcc/transfersend.cpp:609
 #, kde-format
 msgid "A fatal unrecoverable error occurred."
-msgstr ""
+msgstr "Berreskuraezina den errore larri bat gertatu da."
 
 #: src/dcc/transfersend.cpp:612
 #, kde-format
@@ -3552,7 +3575,7 @@ msgstr "Ezin izan du '%1' fitxategia ireki."
 #: src/dcc/transfersend.cpp:621
 #, kde-format
 msgid "The operation was unexpectedly aborted."
-msgstr ""
+msgstr "Eragiketa ustekabean bertan behera utzi da."
 
 #: src/dcc/transfersend.cpp:624
 #, kde-format
@@ -3562,7 +3585,7 @@ msgstr "Eragiketak denbora-muga gainditu du."
 #: src/dcc/transfersend.cpp:627
 #, kde-format
 msgid "An unspecified error happened on close."
-msgstr ""
+msgstr "Ixterakoan ustekabeko errore bat gertatu da."
 
 #: src/dcc/transfersend.cpp:630
 #, kde-format
@@ -3578,115 +3601,115 @@ msgstr "Zutabeak"
 #: src/dcc/whiteboardfontchooserui.ui:14
 #, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr ""
+msgstr "Arbel-zuriko letra-tipo hautatzailea"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
 #, kde-format
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:60
 #, kde-format
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:65
 #, kde-format
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:70
 #, kde-format
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:75
 #, kde-format
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:80
 #, kde-format
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:85
 #, kde-format
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:90
 #, kde-format
 msgid "14"
-msgstr ""
+msgstr "14"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:95
 #, kde-format
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:100
 #, kde-format
 msgid "18"
-msgstr ""
+msgstr "18"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:105
 #, kde-format
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:110
 #, kde-format
 msgid "22"
-msgstr ""
+msgstr "22"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:115
 #, kde-format
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:120
 #, kde-format
 msgid "26"
-msgstr ""
+msgstr "26"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:125
 #, kde-format
 msgid "28"
-msgstr ""
+msgstr "28"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:130
 #, kde-format
 msgid "36"
-msgstr ""
+msgstr "36"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:135
 #, kde-format
 msgid "48"
-msgstr ""
+msgstr "48"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:140
 #, kde-format
 msgid "72"
-msgstr ""
+msgstr "72"
 
 #: src/dcc/whiteboardtoolbar.cpp:33
 #, kde-format
@@ -3701,12 +3724,12 @@ msgstr "Gorde honela..."
 #: src/dcc/whiteboardtoolbar.cpp:38
 #, kde-format
 msgid "Freehand Drawing"
-msgstr ""
+msgstr "Esku-hutsez marraztea"
 
 #: src/dcc/whiteboardtoolbar.cpp:44
 #, kde-format
 msgid "Draw a straight line"
-msgstr "Marraztu lerro zuzen bat"
+msgstr "Marraztu line zuzen bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:49
 #, kde-format
@@ -3716,12 +3739,12 @@ msgstr "Marraztu laukizuzen bat"
 #: src/dcc/whiteboardtoolbar.cpp:55
 #, kde-format
 msgid "Draw an ellipse"
-msgstr ""
+msgstr "Marraztu elipse bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:61
 #, kde-format
 msgid "Draw text"
-msgstr ""
+msgstr "Marraztu testua"
 
 #: src/dcc/whiteboardtoolbar.cpp:67
 #, kde-format
@@ -3737,17 +3760,17 @@ msgstr "Borragoma"
 #: src/dcc/whiteboardtoolbar.cpp:77
 #, kde-format
 msgid "Fill a contiguous area with the foreground color"
-msgstr ""
+msgstr "Bete ondoko azalera aurrealdeko kolorearekin"
 
 #: src/dcc/whiteboardtoolbar.cpp:82
 #, kde-format
 msgid "Draw an arrow"
-msgstr ""
+msgstr "Marraztu gezi bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr ""
+msgstr "Hautatu irudiko kolore bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -3757,7 +3780,7 @@ msgstr "Gorde irudia"
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Images (*.png *.xpm *.jpg)"
-msgstr ""
+msgstr "Irudiak (*.png *.xpm *.jpg)"
 
 #: src/identitydialog.cpp:37
 #, kde-format
@@ -3889,6 +3912,8 @@ msgstr "Nortasunak ez du zuriunerik izan behar."
 #, kde-format
 msgid "NickServ may not function with auto join;  SASL is recommended."
 msgstr ""
+"Baliteke «NickServ» elkartze automatikoarekin ez ibiltzea; SASL gomendatzen "
+"da."
 
 #: src/identitydialog.cpp:475
 #, kde-format
@@ -3911,6 +3936,8 @@ msgid ""
 "Certificate-based authentication forces SSL to be enabled for a connection, "
 "overriding any server settings."
 msgstr ""
+"Ziurtagirietan oinarritutako autentifikazioak konexiorako SSL gaitzea "
+"behartzen du, zerbitzariko edozein ezarpen gainidatziz."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/identitydialog.ui:37
@@ -3952,6 +3979,12 @@ msgid ""
 "all the nerds out there, but the PC you use can always be traced so you will "
 "never be truly anonymous."
 msgstr ""
+"Sartu zure benetako izena hemen. Ez da IRCren asmoa zu zure lagunengandik "
+"edo etsaiengandik ezkutuan mantentzea. Gogoan izan ezazu maltzurkeriaz "
+"jokatzeko tentazioa baduzu. Gezurrezko \"Benetako izen\" bat zure generoa "
+"gogaikarriengandik mozorrotzeko era ona izan daiteke, baina erabiltzen duzun "
+"ordenagailuaren arrastoaren jarraipena egin daiteke, beraz, sekula ez zara "
+"benetan anonimoa izango."
 
 #. i18n: ectx: property (title), widget (QGroupBox, nickGroupBox)
 #: src/identitydialog.ui:218 src/irc/invitedialog.cpp:170
@@ -3963,7 +3996,7 @@ msgstr "Goitizena"
 #: src/identitydialog.ui:234
 #, kde-format
 msgid "Auto Identify"
-msgstr ""
+msgstr "Identifikazio automatikoa"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservNicknameLabel)
 #: src/identitydialog.ui:256
@@ -3978,6 +4011,8 @@ msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
+"Zerbitzu-izena <b><i>nicksev</i></b> izan daiteke, edo sarearekiko menpekoa "
+"den izen bat <b><i>nickserv@services.dal.net</i></b> esaterako"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
 #: src/identitydialog.ui:273
@@ -4018,18 +4053,21 @@ msgid ""
 "horizontal line will appear in the channel, marking the point where you went "
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
+"Lauki hori markatzen baduzu, <b>/away</b> komando bat egiten duzun "
+"bakoitzean, kanalean lerro horizontal bat agertuko da, aldendu zaren puntua "
+"markatuz. IRCko beste erabiltzaileek ez dute lerro horizontal hori ikusten."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:336
 #, kde-format
 msgid "Mark the last position in chat windows when going away"
-msgstr ""
+msgstr "Markatu aldentzerakoan berriketa leihoetako azken kokalekua"
 
 #. i18n: ectx: property (text), widget (QLabel, awayMessageLabel)
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr ""
+msgstr "Aldentze mezu lehenetsia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4039,12 +4077,16 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
+"Hemen sartzen duzun testua aldentze-mezu gisa erabiltzen da, <b>/away</b> "
+"edo <b>/aaway</b> komandoetan argumentu gisa mezurik sartzen ez denean, eta "
+"baita menu bidez edo teklatuko lasterbideen bidez Aldentze-globala "
+"txandakatzen denean."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
 #: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
-msgstr ""
+msgstr "Aldentze goitizena:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
@@ -4058,6 +4100,14 @@ msgid ""
 "will automatically change your nickname back to the original. If you do not "
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
+"Sartu aldendu zarela adierazten duen goitizen bat. Nortasun horrekin elkartu "
+"zaren edozein kanaletan <b>/away msg</b> komando bat egiten duzunean, "
+"«Konversation»ek automatikoki aldatuko du zure goitizena aldendutako "
+"goitizenarekin. Beste erabiltzaileek jakingo dute zure ordenagailutik "
+"aldendu zarela. Aldenduta gisa zauden edozein kanaletan <b>/away</b> komando "
+"bat egiten duzunean, «Konversation»ek zure goitizena atzera jatorrizkora "
+"aldatuko du. Aldentzen zarenean zure goitizena automatikoki aldatzea nahi ez "
+"baduzu, utzi hutsik."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:383
@@ -4072,19 +4122,19 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr ""
+msgstr "Aldentze automatikoa"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
 #, kde-format
 msgid "Set away after"
-msgstr ""
+msgstr "Ezarri aldenduta erabiltzailearen"
 
 #. i18n: ectx: property (text), widget (QLabel, timeOfUserInactivityLabel)
 #: src/identitydialog.ui:430
 #, kde-format
 msgid "of user inactivity"
-msgstr ""
+msgstr "ko jarduera ezaren ondoren"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:437
@@ -4116,19 +4166,19 @@ msgstr ""
 #: src/identitydialog.ui:459
 #, kde-format
 msgid "Away Commands"
-msgstr ""
+msgstr "Aldentze-komandoak"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr ""
+msgstr "Aldentze-komandoa:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr ""
+msgstr "Itzultze-komandoa:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -4187,7 +4237,7 @@ msgstr ""
 #: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
-msgstr ""
+msgstr "&Irteteko arrazoia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
 #: src/identitydialog.ui:605
@@ -4207,13 +4257,13 @@ msgstr "Konversation bukatu da."
 #: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
-msgstr ""
+msgstr "Al&de egiteko arrazoia:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
 #: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
-msgstr ""
+msgstr "Kanal bat uzten duzun bakoitzean, mezu hori kanalera bidaltzen da."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
 #: src/identitydialog.ui:647
@@ -4235,12 +4285,12 @@ msgstr ""
 #: src/identitydialog.ui:660
 #, kde-format
 msgid "User terminated."
-msgstr ""
+msgstr "Erabiltzaileak bukatua."
 
 #: src/irc/channel.cpp:120
 #, kde-format
 msgid "Edit Channel Settings"
-msgstr ""
+msgstr "Editatu kanalaren ezarpenak"
 
 #: src/irc/channel.cpp:128
 #, kde-format
@@ -4255,7 +4305,7 @@ msgstr ""
 #: src/irc/channel.cpp:182
 #, kde-format
 msgid "Maximum users allowed in channel"
-msgstr ""
+msgstr "Kanalean gehienez baimendutako erabiltzaile kopurua"
 
 #: src/irc/channel.cpp:183
 #, kde-format
@@ -4295,12 +4345,12 @@ msgstr "Kanaleko pasahitza:"
 #: src/irc/channel.cpp:899
 #, kde-format
 msgid "Channel User Limit"
-msgstr ""
+msgstr "Kanalaren erabiltzaile muga"
 
 #: src/irc/channel.cpp:900
 #, kde-format
 msgid "Enter the new user limit for the channel:"
-msgstr ""
+msgstr "Sartu kanalaren erabiltzaile-muga berria:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
 #: src/irc/inputfilter.cpp:1560 src/irc/inputfilter.cpp:1581
@@ -4850,46 +4900,46 @@ msgstr "%1(e)k 'mintzagai babesa' itzali du."
 #: src/irc/channel.cpp:1715
 #, kde-format
 msgid "You set the channel key to '%1'."
-msgstr ""
+msgstr "Kanaleko gakoa '%1' ezarri duzu."
 
 #: src/irc/channel.cpp:1716
 #, kde-format
 msgid "%1 sets the channel key to '%2'."
-msgstr ""
+msgstr "%1(e)k kanala gakoa '%2' ezarri du."
 
 #: src/irc/channel.cpp:1720
 #, kde-format
 msgid "You remove the channel key."
-msgstr ""
+msgstr "Kanaleko gakoa ezabatu duzu."
 
 #: src/irc/channel.cpp:1721
 #, kde-format
 msgid "%1 removes the channel key."
-msgstr ""
+msgstr "%1(e)k kanaleko gakoa ezabatu du."
 
 #: src/irc/channel.cpp:1729
 #, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Kanalaren muga goitizen 1ean ezarri duzu."
+msgstr[1] "Kanalaren muga %1 goitizenetan ezarri duzu."
 
 #: src/irc/channel.cpp:1730
 #, kde-format
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2(e)k kanalaren muga goitizen 1ean ezarri du."
+msgstr[1] "%2(e)k kanalaren muga %1 goitizenetan ezarri du."
 
 #: src/irc/channel.cpp:1734
 #, kde-format
 msgid "You remove the channel limit."
-msgstr ""
+msgstr "Kanalaren muga ezabatu duzu."
 
 #: src/irc/channel.cpp:1735
 #, kde-format
 msgid "%1 removes the channel limit."
-msgstr ""
+msgstr "%1(e)k kanalaren muga kendu du."
 
 #: src/irc/channel.cpp:1745
 #, kde-format
@@ -4944,52 +4994,52 @@ msgstr "%1(e)k %2 gonbidapen maskara ezartzen du."
 #: src/irc/channel.cpp:1776
 #, kde-format
 msgid "You remove the invitation mask %1."
-msgstr ""
+msgstr "%1 gonbidapen maskara kendu duzu."
 
 #: src/irc/channel.cpp:1777
 #, kde-format
 msgid "%1 removes the invitation mask %2."
-msgstr ""
+msgstr "%1(e)k %2 gonbidapen maskara kendu du."
 
 #: src/irc/channel.cpp:1785
 #, kde-format
 msgid "You set the channel mode '%1'."
-msgstr ""
+msgstr "'%1' kanal-modua ezarri duzu."
 
 #: src/irc/channel.cpp:1786
 #, kde-format
 msgid "%1 sets the channel mode '%2'."
-msgstr ""
+msgstr "%1(e)k '%2' kanal-modua ezarri du."
 
 #: src/irc/channel.cpp:1790
 #, kde-format
 msgid "You set channel mode +%1"
-msgstr ""
+msgstr "Kanal-modua +%1 ezarri duzu"
 
 #: src/irc/channel.cpp:1791
 #, kde-format
 msgid "%1 sets channel mode +%2"
-msgstr ""
+msgstr "%1(e)k '+%2' kanal-modua ezarri du"
 
 #: src/irc/channel.cpp:1798
 #, kde-format
 msgid "You remove the channel mode '%1'."
-msgstr ""
+msgstr "'%1' kanal-modua kendu duzu."
 
 #: src/irc/channel.cpp:1799
 #, kde-format
 msgid "%1 removes the channel mode '%2'."
-msgstr ""
+msgstr "%1(e)k '%2' kanal-modua kendu du."
 
 #: src/irc/channel.cpp:1803
 #, kde-format
 msgid "You set channel mode -%1"
-msgstr ""
+msgstr "-%1 kanal-modua ezarri duzu"
 
 #: src/irc/channel.cpp:1804
 #, kde-format
 msgid "%1 sets channel mode -%2"
-msgstr ""
+msgstr "%1(e)k -%2 kanal-modua ezarri du"
 
 #: src/irc/channel.cpp:2203
 #, kde-format
@@ -5004,7 +5054,7 @@ msgstr "Operadoreak bakarrik alda dezake kanaleko mintzagaia. %1"
 #: src/irc/channel.cpp:2206
 #, kde-format
 msgid "No messages to channel from clients on the outside.  %1"
-msgstr ""
+msgstr "Kanalera kanpoko bezeroetako mezurik ez. %1"
 
 #: src/irc/channel.cpp:2207
 #, kde-format
@@ -5271,7 +5321,7 @@ msgstr "Erdi-operadorea"
 #: src/irc/channelnick.cpp:191
 #, kde-format
 msgid "Has voice"
-msgstr ""
+msgstr "Ahotsa du"
 
 #: src/irc/inputfilter.cpp:245
 #, kde-format
@@ -5354,7 +5404,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:553
 #, kde-format
 msgid "Received DH1080_INIT from %1"
-msgstr ""
+msgstr "%1(e)ren DH1080_INIT jaso da"
 
 #: src/irc/inputfilter.cpp:558
 #, kde-format
@@ -5442,7 +5492,7 @@ msgstr "Sortua"
 #: src/irc/inputfilter.cpp:1370
 #, kde-format
 msgid "This channel was created on %1."
-msgstr ""
+msgstr "Kanala %1(e)an sortu zen."
 
 #. i18n("Whois"),parameterList.join(" ").section(QLatin1Char(' '),1)+' '+trailing);
 #. The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
@@ -5464,7 +5514,7 @@ msgstr "Whois"
 #: src/irc/inputfilter.cpp:1389
 #, kde-format
 msgid "%1 is logged in as %2."
-msgstr ""
+msgstr "%1 %2 gisa saio-hasita dago."
 
 #: src/irc/inputfilter.cpp:1423 src/irc/inputfilter.cpp:1440
 #, kde-format
@@ -5474,7 +5524,7 @@ msgstr "Izenak"
 #: src/irc/inputfilter.cpp:1440
 #, kde-format
 msgid "End of NAMES list."
-msgstr ""
+msgstr "NAMES zerrendaren bukaera."
 
 #: src/irc/inputfilter.cpp:1453
 #, kde-format
@@ -5504,27 +5554,27 @@ msgstr "%1(e)rako mintzagaia %2(e)k ezarri zuen %3(e)an."
 #: src/irc/inputfilter.cpp:1517
 #, kde-format
 msgid "%1 is actually using the host %2."
-msgstr ""
+msgstr "%1 benetan %2 ostalaria erabiltzen ari da."
 
 #: src/irc/inputfilter.cpp:1530
 #, kde-format
 msgid "%1: No such nick/channel."
-msgstr ""
+msgstr "%1: Ez dago halako goitizenik/kanalik."
 
 #: src/irc/inputfilter.cpp:1534
 #, kde-format
 msgid "No such nick: %1."
-msgstr ""
+msgstr "Ez dago halako goitizenik: %1."
 
 #: src/irc/inputfilter.cpp:1547
 #, kde-format
 msgid "%1: No such channel."
-msgstr ""
+msgstr "%1: Ez dago halako kanalik."
 
 #: src/irc/inputfilter.cpp:1560
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr ""
+msgstr "Goitizena jada erabiltzen dute, saiatu beste batekin."
 
 #: src/irc/inputfilter.cpp:1573
 #, kde-format
@@ -5532,21 +5582,23 @@ msgid ""
 "The nickname %1 was already in use, but the connection failed before you "
 "responded."
 msgstr ""
+"%1 goitizena jada erabiltzen dute, baina konexioak zure erantzunaren "
+"aurretik huts egin du."
 
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr ""
+msgstr "Goitizena jada erabiltzen dute. %1(e)kin saiatzen."
 
 #: src/irc/inputfilter.cpp:1610
 #, kde-format
 msgid "Erroneous nickname. Changing nick to %1."
-msgstr ""
+msgstr "Okerreko goitizena. Goitizena %1(e)ra aldatzen."
 
 #: src/irc/inputfilter.cpp:1621
 #, kde-format
 msgid "You are not on %1."
-msgstr ""
+msgstr "Ez zaude %1(e)(a)n."
 
 #: src/irc/inputfilter.cpp:1632 src/irc/inputfilter.cpp:1641
 #: src/irc/inputfilter.cpp:1650 src/viewer/ircview.cpp:814
@@ -5557,12 +5609,12 @@ msgstr "MOTD"
 #: src/irc/inputfilter.cpp:1632
 #, kde-format
 msgid "Message of the day:"
-msgstr ""
+msgstr "Eguneko mezua:"
 
 #: src/irc/inputfilter.cpp:1650
 #, kde-format
 msgid "End of message of the day"
-msgstr ""
+msgstr "Eguneko mezuaren bukaera"
 
 #: src/irc/inputfilter.cpp:1674
 #, kde-format
@@ -5577,17 +5629,17 @@ msgstr "Zerbitzari honetan IRC operadorea zara orain."
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
-msgstr ""
+msgstr "'%1' orain zure ezkutuko ostalaria da (zerbitzuak ezarria)."
 
 #: src/irc/inputfilter.cpp:1700
 #, kde-format
 msgid "Current users on the network: %1"
-msgstr ""
+msgstr "Sareko uneko erabiltzaileak: %1"
 
 #: src/irc/inputfilter.cpp:1710
 #, kde-format
 msgid "Current users on %1: %2."
-msgstr ""
+msgstr "%1(e)(a)n uneko erabiltzaileak: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
 #: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
@@ -5745,42 +5797,42 @@ msgctxt ""
 "%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "%1 has been idle for %2, %3, %4, and %5."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, %3, %4, eta %5z."
 
 #: src/irc/inputfilter.cpp:2145
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "%1 has been idle for %2, %3, and %4."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, %3, eta %4z."
 
 #: src/irc/inputfilter.cpp:2155
 #, kde-format
 msgctxt "%1 = name of person, %2 = (x minutes), %3 = (x seconds)"
 msgid "%1 has been idle for %2 and %3."
-msgstr ""
+msgstr "%1 jardunik gabe egon da %2, eta %3z."
 
 #: src/irc/inputfilter.cpp:2161
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 jardunik gabe egon da segundo 1ez."
+msgstr[1] "%2 jardunik gabe egon da %1 segundoz."
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
 msgid "%1 has been online since %2."
-msgstr ""
+msgstr "%1 lerroan egon da %2(e)tik."
 
 #: src/irc/inputfilter.cpp:2184
 #, kde-format
 msgid "End of WHOIS list."
-msgstr ""
+msgstr "WHOIS zerrendaren bukaera."
 
 #: src/irc/inputfilter.cpp:2223
 #, kde-format
 msgid "Userhost"
-msgstr ""
+msgstr "Erabiltzailearen ostalaria"
 
 #: src/irc/inputfilter.cpp:2224
 #, kde-format
@@ -5807,7 +5859,7 @@ msgstr "Zerrenda"
 #: src/irc/inputfilter.cpp:2246
 #, kde-format
 msgid "List of channels:"
-msgstr ""
+msgstr "Kanal-zerrenda:"
 
 #: src/irc/inputfilter.cpp:2258
 #, kde-format
@@ -5905,7 +5957,7 @@ msgstr "SASL autentifikazioa bertan behera utzi da."
 #: src/irc/invitedialog.cpp:22
 #, kde-format
 msgid "Channel Invites"
-msgstr ""
+msgstr "Kanalera gonbita"
 
 #: src/irc/invitedialog.cpp:166
 #, kde-format
@@ -5988,9 +6040,9 @@ msgid "Hostmask:"
 msgstr "Ostalari-maskara:"
 
 #: src/irc/nickinfo.cpp:224
-#, fuzzy, kde-format
+#, kde-format
 msgid "Away&nbsp;Message:"
-msgstr "Kanpoan&nbsp;mezua:"
+msgstr "Aldentze&nbsp;mezua:"
 
 #: src/irc/nickinfo.cpp:228
 #, kde-format
@@ -6023,7 +6075,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:29
 #, kde-format
 msgid "Watched Nicks Online"
-msgstr ""
+msgstr "Goitizen gainbegiratuak lerroan"
 
 #: src/irc/nicksonline.cpp:34
 #, kde-format
@@ -6130,11 +6182,14 @@ msgid ""
 "current encoding. If you choose to continue anyway those characters will be "
 "replaced by a '?'."
 msgstr ""
+"Bidaltzen ari zaren mezuak, zure uneko kodeketak ez dituen karaktereak ditu. "
+"Edonola ere aurrera jarraitzea erabakitzen baduzu, karaktere horiek '?'rekin "
+"ordezkatuko dira."
 
 #: src/irc/outputfilter.cpp:218
 #, kde-format
 msgid "Encoding Conflict Warning"
-msgstr ""
+msgstr "Kodeketa gatazkaren abisua"
 
 #: src/irc/outputfilter.cpp:323
 #, kde-format
@@ -6144,7 +6199,7 @@ msgstr "Gordina"
 #: src/irc/outputfilter.cpp:380
 #, kde-format
 msgid "Usage: %1JOIN <channel> [password]"
-msgstr ""
+msgstr "Erabilera: %1JOIN <kanala> [pasahitza]"
 
 #: src/irc/outputfilter.cpp:420
 #, kde-format
@@ -6186,6 +6241,8 @@ msgid ""
 "%1NAMES with no target may disconnect you from the server. Specify '*' if "
 "you really want this."
 msgstr ""
+"%1NAMES jomugarik gabe, zerbitzaritik deskonekta zaitzake. Zehaztu '*' "
+"benetan hori nahi baduzu."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -6193,27 +6250,29 @@ msgid ""
 "Usage: %1close [window] closes the named channel or query tab, or the "
 "current tab if none specified."
 msgstr ""
+"Erabilera: %1close [leihoa] izendatutako kanal- edo itaun-fitxa ixten du, "
+"edo uneko fitxa batere zehazten ez bada."
 
 #: src/irc/outputfilter.cpp:655
 #, kde-format
 msgid "Usage: %1NOTICE <recipient> <message>"
-msgstr ""
+msgstr "Erabilera: %1NOTICE <hartzailea> <mezua>"
 
 #: src/irc/outputfilter.cpp:662
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "\"%1\" oharpena %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
 msgid "%1ME only works from a channel, query or DCC chat tab."
-msgstr ""
+msgstr "%1ME kanal, itaun edo DCC berriketa fitxetatik baino ez dabil."
 
 #: src/irc/outputfilter.cpp:741
 #, kde-format
 msgid "You need to specify a recipient."
-msgstr ""
+msgstr "Hartzaile bat zehaztu behar duzu."
 
 #: src/irc/outputfilter.cpp:746
 #, kde-format
@@ -6223,12 +6282,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:752
 #, kde-format
 msgid "You need to specify a message."
-msgstr ""
+msgstr "Mezu bat zehaztu behar duzu."
 
 #: src/irc/outputfilter.cpp:835 src/irc/outputfilter.cpp:840
 #, kde-format
 msgid "Sending CTCP-%1 request to %2."
-msgstr ""
+msgstr "CTCP-%1 eskaera %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:852
 #, kde-format
@@ -6248,7 +6307,7 @@ msgstr "Erabilera: %1OMSG testua"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr ""
+msgstr "\"%1\" oharpena %2(e)ra bidaltzen."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6273,22 +6332,22 @@ msgstr "\"%1\" fitxategia ez da existitzen."
 #: src/irc/outputfilter.cpp:981
 #, kde-format
 msgid "Usage: %1DCC [SEND [nickname [filename]]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [SEND [goitizena [fitxategi-izena]]]"
 
 #: src/irc/outputfilter.cpp:999
 #, kde-format
 msgid "Usage: %1DCC [GET [nickname [filename]]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [GET [goitizena [fitxategi-izena]]]"
 
 #: src/irc/outputfilter.cpp:1015
 #, kde-format
 msgid "Usage: %1DCC [CHAT [nickname]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [CHAT [goitizena]]"
 
 #: src/irc/outputfilter.cpp:1031
 #, kde-format
 msgid "Usage: %1DCC [WHITEBOARD [nickname]]"
-msgstr ""
+msgstr "Erabilera: %1DCC [WHITEBOARD [goitizena]]"
 
 #: src/irc/outputfilter.cpp:1036
 #, kde-format
@@ -6296,11 +6355,13 @@ msgid ""
 "Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE, GET, "
 "WHITEBOARD."
 msgstr ""
+"Komando ezezaguna, %1DCC %2. Izan daitezkeen komandoak dira SEND, CHAT, "
+"CLOSE, GET, WHITEBOARD."
 
 #: src/irc/outputfilter.cpp:1186
 #, kde-format
 msgid "Usage: %1INVITE <nick> [channel]"
-msgstr ""
+msgstr "Erabilera: %1INVITE <goitizena> [kanala]"
 
 #: src/irc/outputfilter.cpp:1197
 #, kde-format
@@ -6310,18 +6371,18 @@ msgstr "%1INVITE kanal-izenik gabe, kanal baten barrutik baino ez dabil."
 #: src/irc/outputfilter.cpp:1206
 #, kde-format
 msgid "%1 is not a channel."
-msgstr ""
+msgstr "%1 ez da kanal bat."
 
 #: src/irc/outputfilter.cpp:1218
 #, kde-format
 msgid "Usage: %1EXEC [-SHOWPATH] <script> [parameter list]"
-msgstr ""
+msgstr "Erabilera: %1EXEC [-SHOWPATH] <gidoia> [parametro-zerrenda]"
 
 #: src/irc/outputfilter.cpp:1227
 #, kde-format
 msgctxt "%2 is a filesystem path to the script file"
 msgid "The script file '%1' was found at: %2"
-msgstr ""
+msgstr "'%1' gidoi-fitxategia aurkitu da hemen: %2"
 
 #: src/irc/outputfilter.cpp:1234
 #, kde-format
@@ -6427,7 +6488,7 @@ msgstr "Erabilera: %1UNBAN [kanala] eredua"
 #: src/irc/outputfilter.cpp:1539
 #, kde-format
 msgid "Added %1 to your ignore list."
-msgstr ""
+msgstr "%1 gehitu da ezikusien zure zerrendara."
 
 #: src/irc/outputfilter.cpp:1540 src/irc/outputfilter.cpp:1609
 #: src/viewer/irccontextmenus.cpp:442 src/viewer/irccontextmenus.cpp:599
@@ -6440,11 +6501,15 @@ msgstr "Ezikusi"
 #, kde-format
 msgid "Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>"
 msgstr ""
+"Erabilera: %1IGNORE [ -ALL ] <erabiltzailea 1> <erabiltzailea 2> ... "
+"<erabiltzailea n>"
 
 #: src/irc/outputfilter.cpp:1560
 #, kde-format
 msgid "Usage: %1UNIGNORE <user 1> <user 2> ... <user n>"
 msgstr ""
+"Erabilera: %1UNIGNORE <erabiltzailea 1> <erabiltzailea 2> ... <erabiltzailea "
+"n>"
 
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
@@ -6461,17 +6526,17 @@ msgstr[1] ""
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
 msgid "Current encoding is: %1"
-msgstr ""
+msgstr "Uneko kodeketa: %1"
 
 #: src/irc/outputfilter.cpp:1659
 #, kde-format
 msgid "Switched to %1 encoding."
-msgstr ""
+msgstr "%1 kodeketara aldatuta."
 
 #: src/irc/outputfilter.cpp:1662
 #, kde-format
 msgid "%1 is not a valid encoding."
-msgstr ""
+msgstr "%1 ez da baliozko kodeketa."
 
 #: src/irc/outputfilter.cpp:1680
 #, kde-format
@@ -6489,12 +6554,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1692
 #, kde-format
 msgid "Unable to set an encryption key for %1."
-msgstr ""
+msgstr "Ez da %1(e)rako gako bat ezartzeko gai."
 
 #: src/irc/outputfilter.cpp:1701
 #, kde-format
 msgid "The key for %1 has been set."
-msgstr ""
+msgstr "%1(e)rako gakoa ezarri da."
 
 #: src/irc/outputfilter.cpp:1704 src/irc/outputfilter.cpp:1729
 #, kde-format
@@ -6504,22 +6569,28 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
+"Zifratzeko gako bat ezartzeko, «Konversation», Qt Kriptografia "
+"Arkitekturaren (QCA / Qt Cryptographic Architecture) euskarriarekin eraikita "
+"egon behar da. Jar zaitez zure banatzailearekin harremanean, QCA euskarria "
+"duen «Konversation» pakete bati buruz, edo eraiki QCA duen «Konversation»."
 
 #: src/irc/outputfilter.cpp:1719
 #, kde-format
 msgid ""
 "Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target."
 msgstr ""
+"Erabilera: %1keyx <goitizena|kanala> jomugarekiko DH1080 gako-trukea "
+"eragiten du."
 
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
 msgid "Unable to request a key exchange from %1."
-msgstr ""
+msgstr "Ez da %1(e)tik gako-truke bat eskatzeko gai."
 
 #: src/irc/outputfilter.cpp:1726
 #, kde-format
 msgid "Beginning DH1080 key exchange with %1."
-msgstr ""
+msgstr "%1(e)kin DH1080 gako-trukea hasten."
 
 #: src/irc/outputfilter.cpp:1745
 #, kde-format
@@ -6527,61 +6598,63 @@ msgid ""
 "Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or "
 "channel"
 msgstr ""
+"Erabilera: %1delkey <goitizena> edo <kanala> goitizenerako edo kanalerako "
+"zifratzeko gakoa ezabatzen du"
 
 #: src/irc/outputfilter.cpp:1757
 #, kde-format
 msgid "The key for %1 has been deleted."
-msgstr ""
+msgstr "%1(e)rako gakoa ezabatu da."
 
 #: src/irc/outputfilter.cpp:1760 src/irc/outputfilter.cpp:1780
 #, kde-format
 msgid "No key has been set for %1."
-msgstr ""
+msgstr "Ez da ezarri %1(e)rako gakorik."
 
 #: src/irc/outputfilter.cpp:1777
 #, kde-format
 msgid "The key for %1 is \"%2\"."
-msgstr ""
+msgstr "%1(e)rako gakoa \"%2\" da."
 
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
 msgid "Blowfish"
-msgstr ""
+msgstr "Blowfish"
 
 #: src/irc/outputfilter.cpp:1790
 #, kde-format
 msgid "Usage: %1KILL <nick> [comment]"
-msgstr ""
+msgstr "Erabilera: %1KILL <goitizena> [iruzkina]"
 
 #: src/irc/outputfilter.cpp:1804
 #, kde-format
 msgid "Usage: %1DNS <nick>"
-msgstr ""
+msgstr "Erabilera: %1DNS <goitizena>"
 
 #: src/irc/outputfilter.cpp:1834
 #, kde-format
 msgid "Usage: %1queuetuner [on | off]"
-msgstr ""
+msgstr "Erabilera: %1queuetuner [on | off]"
 
 #: src/irc/outputfilter.cpp:1895
 #, kde-format
 msgid "%1CYCLE [-APP | -SERVER] [channel | nickname]"
-msgstr ""
+msgstr "%1CYCLE [-APP | -SERVER] [kanala | goitizena]"
 
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr ""
+msgstr "%1CLEAR [-ALL] [kanala | goitizena]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "Resolved %1 to: %2"
-msgstr ""
+msgstr "%1 honetara ebatzi da: %2"
 
 #: src/irc/outputfilterresolvejob.cpp:68
 #, kde-format
 msgid "Unable to resolve %1."
-msgstr ""
+msgstr "Ez da %1 ebazteko gai."
 
 #: src/irc/query.cpp:49
 #, kde-format
@@ -6595,12 +6668,12 @@ msgstr ""
 #: src/irc/query.cpp:410
 #, kde-format
 msgid "Do you want to close your query with %1?"
-msgstr ""
+msgstr "%1(r)ekiko itauna itxi nahi duzu?"
 
 #: src/irc/query.cpp:411
 #, kde-format
 msgid "Close Query"
-msgstr ""
+msgstr "Itxi Itauna"
 
 #: src/irc/query.cpp:453
 #, kde-format
@@ -6618,18 +6691,18 @@ msgstr "%1(e)k (%2) zerbitzari hau utzi du (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr ""
+msgstr "Konexio-aurreko oskol-komandoa exekutatzen..."
 
 #: src/irc/server.cpp:412
 #, kde-format
 msgid "Pre-shell command executed successfully!"
-msgstr ""
+msgstr "Oskol-aurreko komandoa behar bezala exekutatu da!"
 
 #: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
-msgstr ""
+msgstr "Komandoa exekutatzeko arazo bat egon da:"
 
 #: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
@@ -6639,17 +6712,17 @@ msgstr "Abisua"
 #: src/irc/server.cpp:475
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
-msgstr ""
+msgstr "%1 (%2 ataka) zerbitzariaren bila..."
 
 #: src/irc/server.cpp:682
 #, kde-format
 msgid "Server found, connecting..."
-msgstr ""
+msgstr "Zerbitzaria aurkitu da, konektatzen..."
 
 #: src/irc/server.cpp:717
 #, kde-format
 msgid "Negotiating capabilities with server..."
-msgstr ""
+msgstr "Zerbitzariarekin gaitasunak negoziatzen..."
 
 #: src/irc/server.cpp:760
 #, kde-format
@@ -6657,32 +6730,38 @@ msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
+"Zerbitzariak ez du onartzen %1, SASL autentifikazio mekanismo gisa, SASL "
+"autentifikazioa baztertzen."
 
 #: src/irc/server.cpp:781
 #, kde-format
 msgid "Requesting capabilities: %1"
-msgstr ""
+msgstr "Gaitasunak eskatzen: %1"
 
 #: src/irc/server.cpp:798
 #, kde-format
 msgid "Closing capabilities negotiation."
-msgstr ""
+msgstr "Gaitasun negoziazioa ixten."
 
 #: src/irc/server.cpp:806
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr ""
+"Gaitasunen negoziazioak huts egin du: Ematen du zerbitzariak ez duela "
+"onartzen."
 
 #: src/irc/server.cpp:816
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr ""
+"Zerbitzariak SASL gaitasuna duela aitortu du, SASL %1 autentifikazioa "
+"saiatzen..."
 
 #: src/irc/server.cpp:829
 #, kde-format
 msgid "SASL capability denied or not supported by server."
-msgstr ""
+msgstr "SASL gaitasuna ukatu da edo zerbitzariak ez du onartzen."
 
 #: src/irc/server.cpp:929 src/irc/server.cpp:1037
 #, kde-format
@@ -6695,6 +6774,9 @@ msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
+"%1 (%2 ataka) zerbitzariarekiko konexioa galdu egin da, SSL errore baten "
+"erabiltzailearen erantzunari itxoin bitartean. Automatikoki birkonektatuko "
+"da erroreari ezikusi egiten bazaio."
 
 #: src/irc/server.cpp:950
 #, kde-format
@@ -6724,12 +6806,12 @@ msgstr ""
 #: src/irc/server.cpp:1140
 #, kde-format
 msgid "Delayed connect aborted."
-msgstr ""
+msgstr "Atzeratutako konexioa bertan behera utzi da."
 
 #: src/irc/server.cpp:1170
 #, kde-format
 msgid "Disconnected from %1 (port %2)."
-msgstr ""
+msgstr "%1(e)tik (%2 ataka) deskonektatuta."
 
 #: src/irc/server.cpp:1328
 #, kde-format
@@ -6738,27 +6820,29 @@ msgid ""
 "\"%2\".\n"
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
+"\"%2\" konexioak ez du onartu \"%1\" nortasuneko goitizenik.\n"
+"Mesedez, sartu berri bat, edo sakatu Utzi deskonektatzeko:"
 
 #: src/irc/server.cpp:1329
 #, kde-format
 msgid "Nickname error"
-msgstr ""
+msgstr "Goitizen-errorea"
 
 #: src/irc/server.cpp:2172
 #, kde-format
 msgid "Select File(s) to Send to %1"
-msgstr ""
+msgstr "Hautatu %1(e)ri bidali beharreko fitxategia(k)"
 
 #: src/irc/server.cpp:2341
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
-msgstr ""
+msgstr "%1(e)tik DCC SEND eskaera baliogabea jaso da."
 
 #: src/irc/server.cpp:2373
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
-msgstr ""
+msgstr "%1(e)k zuri \"%2\" (%3) bidaltzea eskaini du..."
 
 #: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
 #: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
@@ -6770,23 +6854,23 @@ msgstr "neurri ezezaguna"
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
-msgstr ""
+msgstr "%1(e)gandik DCC CHAT eskaera baliogabe bat jaso da."
 
 #: src/irc/server.cpp:2503
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
-msgstr ""
+msgstr "%1(e)ri \"%2\"(e)ko (%3) zama-igoera onartzeko eskatzen..."
 
 #: src/irc/server.cpp:2515
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
-msgstr ""
+msgstr "%1(e)ri \"%2\"(e)ko (%3) zama-igoera pasiboa onartzeko eskatzen..."
 
 #: src/irc/server.cpp:2527
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
-msgstr ""
+msgstr "%1(e)ri %2 onartzeko eskatzen..."
 
 #: src/irc/server.cpp:2586
 #, kde-format
@@ -6938,6 +7022,8 @@ msgstr "Ezin du %1(r)rekin gako-trukea egin."
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr ""
+"%1(e)ren «DH1080_INIT»en sintaxi azterketak huts eign du. Gako-trukeak huts "
+"egin du."
 
 #: src/irc/server.cpp:4309
 #, kde-format
@@ -6945,11 +7031,13 @@ msgid ""
 "Your key is set and your messages will now be encrypted, sending "
 "DH1080_FINISH to %1."
 msgstr ""
+"Zure gakoa ezarri da eta zure mezuak orain zifratuko dira, DH1080_FINISH "
+"%1(e)ri bidaltzen."
 
 #: src/irc/server.cpp:4326
 #, kde-format
 msgid "Unable to complete key exchange with %1."
-msgstr ""
+msgstr "Ez da %1(e)kin gako-trukea egiteko gai."
 
 #: src/irc/server.cpp:4338
 #, kde-format
@@ -7124,6 +7212,8 @@ msgid ""
 "Enter the name of the Network here. You may create as many entries in the "
 "Server List screen with the same Network as you like."
 msgstr ""
+"Sartu sarearen izena hemen. Zerbitzari-zerrendan, sare beraren nahi beste "
+"sarrera sor ditzakezu."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/irc/servergroupdialogui.ui:108
@@ -7144,6 +7234,8 @@ msgid ""
 "Check here if you want Konversation to automatically connect to this network "
 "whenever you open Konversation."
 msgstr ""
+"Markatu hemen, «Konversation» irekitzen duzun aldiro, sare horretara "
+"automatikoki konektatzea nahi baduzu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:131
@@ -9513,6 +9605,9 @@ msgid ""
 "chat. This can cause connection resets or flood kills. Do you really want to "
 "continue?</qt>"
 msgstr ""
+"<qt>Berriketan testu zati handi bat itsasten saiatzen ari zara (%1 edo %2). "
+"Horrek eragin dezake konexioa berrezartzea, edo uholdeagatik akabatzea. "
+"Benetan jarraitu nahi duzu?</qt>"
 
 #: src/viewer/ircinput.cpp:488
 #, kde-format
