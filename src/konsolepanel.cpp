@@ -58,6 +58,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
 
     if (!k_part) return;
 
+    m_headerSplitter->addWidget(k_part->widget());
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(k_part->widget()), 1);
     k_part->widget()->setFocusPolicy(Qt::WheelFocus);
     setFocusProxy(k_part->widget());
