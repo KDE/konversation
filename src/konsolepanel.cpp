@@ -11,8 +11,7 @@
 #include "konversation_log.h"
 
 #include <KLocalizedString>
-#include <KService>
-#include <KPluginFactory>
+#include <KParts/PartLoader>
 #include <kde_terminal_interface.h>
 
 #include <QSplitter>
@@ -27,9 +26,27 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
     setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
 
+    TerminalInterface *terminal = nullptr;
+    KPluginMetaData part(QStringLiteral("kf6/parts/konsolepart"));
+    int valid = part.isValid();
+
     setContentsMargins(0, 0, 0, 0);
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
+
+    // TODO determine if instantiation can actually fail if the metadata was retrieved
+    if (valid)
+    {
+        k_part = KParts::PartLoader::instantiatePart<KParts::ReadOnlyPart>(part, m_headerSplitter).plugin;
+        if (k_part)
+        {
+            terminal = qobject_cast<TerminalInterface *>(k_part);
+            if (!terminal) // so we got a kpart with the right name but its not a TerminalInterface? How likely is this?
+                valid = -2;
+        }
+        else
+            valid = -1;
+    }
 
     auto* headerWidget = new QWidget(m_headerSplitter);
     auto* headerWidgetLayout = new QHBoxLayout(headerWidget);
@@ -48,15 +65,15 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
     headerWidgetLayout->addWidget(m_konsoleLabel);
     m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
-    const QString konsolePart = QStringLiteral("kf6/parts/konsolepart");
-    KPluginFactory *factory = KPluginFactory::loadFactory(konsolePart).plugin;
-    if (!factory) {
+    // TODO rather than abusing the button icon and label, lets have proper messages
+    if (valid <1)
+    {
+        m_profileButton->setIconSize(QSize(64,64));
+        m_profileButton->setEnabled(false);
+        m_konsoleLabel->setNum(valid);
+        m_profileButton->setIcon(QIcon::fromTheme(QStringLiteral("error")));
         return;
     }
-
-    k_part = factory->create<KParts::ReadOnlyPart>(m_headerSplitter);
-
-    if (!k_part) return;
 
     m_headerSplitter->addWidget(k_part->widget());
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(k_part->widget()), 1);
@@ -66,8 +83,6 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (nullptr)
 
     connect(k_part, &KParts::ReadOnlyPart::setWindowCaption, m_konsoleLabel, &QLabel::setText);
 
-    TerminalInterface *terminal = qobject_cast<TerminalInterface *>(k_part);
-    if (!terminal) return;
     terminal->showShellInDir(QDir::homePath());
 
     connect(k_part, &KParts::ReadOnlyPart::destroyed, this, &KonsolePanel::partDestroyed);
