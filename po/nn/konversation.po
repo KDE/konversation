@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"POT-Creation-Date: 2024-02-01 02:28+0000\n"
 "PO-Revision-Date: 2023-08-05 23:24+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -7591,13 +7591,13 @@ msgstr "Forfattar"
 msgid "Time"
 msgstr "Tid"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
 
-#: src/konsolepanel.cpp:42
+#: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
 msgstr "Handsam Konsole-profilar"
