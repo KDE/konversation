@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation 3.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"POT-Creation-Date: 2024-02-01 00:37+0000\n"
 "PO-Revision-Date: 2005-05-25 18:43-0600\n"
 "Last-Translator: Steve Murphy <murf@e-tools.com>\n"
 "Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
@@ -7431,13 +7431,13 @@ msgstr "urusobe"
 msgid "Time"
 msgstr "Kyarangije igihe"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
 
-#: src/konsolepanel.cpp:42
+#: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
 msgstr ""

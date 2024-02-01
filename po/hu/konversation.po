@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"POT-Creation-Date: 2024-02-01 00:37+0000\n"
 "PO-Revision-Date: 2021-12-06 10:50+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -7605,13 +7605,13 @@ msgstr "Szerző"
 msgid "Time"
 msgstr "Idő"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Parancsértelmező (Konsole)"
 
-#: src/konsolepanel.cpp:42
+#: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
 msgstr "Konsole profilok kezelése"

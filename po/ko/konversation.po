@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"POT-Creation-Date: 2024-02-01 00:37+0000\n"
 "PO-Revision-Date: 2023-07-23 21:52+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7476,13 +7476,13 @@ msgstr "작성자"
 msgid "Time"
 msgstr "시각"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
 
-#: src/konsolepanel.cpp:42
+#: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
 msgstr "Konsole 프로필 관리"

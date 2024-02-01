@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-10 01:34+0000\n"
+"POT-Creation-Date: 2024-02-01 00:37+0000\n"
 "PO-Revision-Date: 2023-04-02 16:22+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -7638,13 +7638,13 @@ msgstr "Tekijä"
 msgid "Time"
 msgstr "Aika"
 
-#: src/konsolepanel.cpp:27 src/viewer/viewcontainer.cpp:2607
+#: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
 #, kde-format
 msgid "Konsole"
 msgstr "Konsole"
 
-#: src/konsolepanel.cpp:42
+#: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
 msgstr "Hallitse Konsole-profiileja"
