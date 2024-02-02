@@ -100,17 +100,17 @@ class kde(Sensor):
             cmd = ['kde-config']
         elif kde and os.environ['KDE_SESSION_VERSION'] == '4':
             cmd = ['kde4-config']
-        elif kde and os.environ['KDE_SESSION_VERSION'] == '5':
+        elif kde and (os.environ['KDE_SESSION_VERSION'] == '5' or os.environ['KDE_SESSION_VERSION'] == '6'):
             cmd = ['plasmashell']
         else:
-            cmd = ['kconfig_compiler_kf5']
+            cmd = ['kconfig_compiler_kf6']
 
         cmd.append('--version')
 
         try:
             version = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
         except (OSError, subprocess.CalledProcessError):
-            self.data['version'] = "5"
+            self.data['version'] = "6"
             return
 
         for line in version.splitlines():
