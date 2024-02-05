@@ -19,6 +19,7 @@
   <name xml:lang="fi">Konversation</name>
   <name xml:lang="fr">Konversation</name>
   <name xml:lang="gl">Konversation</name>
+  <name xml:lang="he">Konversation</name>
   <name xml:lang="hu">Konversation</name>
   <name xml:lang="ia">Konversation</name>
   <name xml:lang="id">Konversation</name>
@@ -104,6 +105,7 @@
     <p xml:lang="fi">Konversation on KDE:n käyttäjäystävällinen IRC-asiakas (Internet Relay Chat), joka tarjoaa helpon pääsyn IRC-vakioverkkoihin kuten Liberaan, mistä löytyvät KDE:n IRC-kanavat.</p>
     <p xml:lang="fr">Konversation est un client IRC (Internet Relay Chat) convivial de KDE. Il fournit un accès facile aux réseaux IRC standards tels que Libera, où les canaux IRC de KDE se trouvent.</p>
     <p xml:lang="gl">Konversation é un cliente fácil de usar de Internet Relay Chat (IRC) de KDE. Facilita acceder a redes IRC estándar como Libera, onde pode atopar as canles de IRC de KDE.</p>
+    <p xml:lang="he">Konversation הוא לקוח Internet Relay Chat (IRC) ידידותי מבית KDE. הוא מספק גישה פשוטה לרשתות IRC כגון Libera, בה ניתן למצוא את ערוצי ה־IRC של KDE.</p>
     <p xml:lang="hu">A Konversation a KDE felhasználóbarát Internet Relay Chat (IRC) kliense. Könnyű hozzáférést biztosít a szabványos IRC hálózatokhoz, mint például a Libera, ahol a KDE IRC csatornák találhatók.</p>
     <p xml:lang="id">Konversation adalah klien Internet Relay Chat (IRC) yang mudah digunakan oleh KDE. Ini menyediakan akses mudah ke jaringan IRC standar seperti Libera, di mana saluran IRC KDE bisa ditemukan.</p>
     <p xml:lang="it">Konversation è un client per Internet Relay Chat (IRC) facile da usare sviluppato da KDE. Fornisce un acceso rapido alle reti IRC standard come Libera, dove si possono trovare i canali IRC di KDE.</p>
@@ -139,7 +141,7 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
-    <p xml:lang="he">תכונות:</p>
+    <p xml:lang="he">יכולות:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
@@ -181,7 +183,7 @@
       <li xml:lang="fi">IRCin vakio-ominaisuudet</li>
       <li xml:lang="fr">Fonctionnalités standards IRC</li>
       <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
-      <li xml:lang="he">תכונות IRC רגילות</li>
+      <li xml:lang="he">יכולות IRC רגילות</li>
       <li xml:lang="hu">Standard IRC szolgáltatások</li>
       <li xml:lang="ia">Characteristicas de RC Standard</li>
       <li xml:lang="id">Fitur IRC standar</li>
@@ -579,7 +581,7 @@
       <li xml:lang="fi">Kanavakohtainen merkistökoodaustuki</li>
       <li xml:lang="fr">Prise en charge de l'encodage par canal</li>
       <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
-      <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
+      <li xml:lang="he">תמיכה בקידוד נקודתי לכל ערוץ</li>
       <li xml:lang="hu">Csatornánkénti kódolási beállítások</li>
       <li xml:lang="ia">Supporto de codifica per canal</li>
       <li xml:lang="id">Dukungan pengenkodean per channel</li>
@@ -619,7 +621,7 @@
       <li xml:lang="fi">Teematuki tunnuskuvakkeille</li>
       <li xml:lang="fr">Prise en charge de thèmes pour les images de pseudonyme</li>
       <li xml:lang="gl">Funcionalidade de temas para iconas de alcumes.</li>
-      <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
+      <li xml:lang="he">תמיכה בערכות עיצוב לסמל הכינוי</li>
       <li xml:lang="hu">Tématámogatás a becenevek ikonjaihoz</li>
       <li xml:lang="id">Dukungan tema untuk ikon nick</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
@@ -658,7 +660,7 @@
       <li xml:lang="fi">Laajalti mukautettavissa</li>
       <li xml:lang="fr">Hautement configurable</li>
       <li xml:lang="gl">Altamente configurábel.</li>
-      <li xml:lang="he">הרבה אפשרויות הגדרה</li>
+      <li xml:lang="he">גמיש מאוד</li>
       <li xml:lang="hu">Számos beállítási lehetőség</li>
       <li xml:lang="ia">Altamente configurabile</li>
       <li xml:lang="id">Sangat dapat dikonfigurasi</li>
