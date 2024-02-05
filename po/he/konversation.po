@@ -4,19 +4,20 @@
 # Diego Iastrubni <elcuco@kde.org>, 2005, 2006, 2008, 2012.
 # kde4, 2009.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2017-05-16 06:48-0400\n"
-"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
-"Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2024-02-04 08:03+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 3.9.6\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -9509,17 +9510,17 @@ msgstr "הזהרת הדבקה גדולה"
 #: src/viewer/ircinput.cpp:485
 #, kde-format
 msgid "Paste"
-msgstr "הדבק"
+msgstr "הדבקה"
 
 #: src/viewer/ircview.cpp:2225
 #, kde-format
 msgid "Open a query with %1"
-msgstr "פתח שאילתה עם %1"
+msgstr "פתיחת שאילתה מול %1"
 
 #: src/viewer/ircview.cpp:2232 src/viewer/topiclabel.cpp:304
 #, kde-format
 msgid "Join the channel %1"
-msgstr "התחבר לחדר %1"
+msgstr "הצטרפות לחדר %1"
 
 #: src/viewer/logfilereader.cpp:30
 #, kde-format
@@ -9529,20 +9530,20 @@ msgstr "קובץ היומן של %1"
 #: src/viewer/logfilereader.cpp:39
 #, kde-format
 msgid "Reload"
-msgstr "רענן"
+msgstr "רענון"
 
 #: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, kde-format
 msgid "Clear Logfile"
-msgstr "נקה קובץ יומן"
+msgstr "פינוי קובץ יומן"
 
 #: src/viewer/logfilereader.cpp:42
 #, kde-format
 msgid "Show last:"
-msgstr "הצג את חלק האחרון של הקובץ:"
+msgstr "הצגת החלק האחרון של הקובץ:"
 
 #: src/viewer/logfilereader.cpp:48
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "Use this box to set the maximum size of the log file. This setting does not "
 "take effect until you restart Konversation. Each log file may have a "
@@ -9554,7 +9555,7 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:50
 #, kde-format
 msgid " KB"
-msgstr " ק\"ב"
+msgstr " ק״ב"
 
 #: src/viewer/logfilereader.cpp:57
 #, kde-format
@@ -9569,10 +9570,10 @@ msgstr ""
 #, kde-format
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
-msgstr "האם באמת ברצונך למחוק את כל רשומות היומן מקובץ זה?"
+msgstr "לנקות את כל פרטי היומן מהקובץ הזה?"
 
 #: src/viewer/logfilereader.cpp:149
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
@@ -9583,27 +9584,27 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:150
 #, kde-format
 msgid "Save Logfile"
-msgstr "שמור קובץ יומן"
+msgstr "שמירת קובץ יומן"
 
 #: src/viewer/logfilereader.cpp:154
 #, kde-format
 msgid "Choose Destination Folder"
-msgstr "בחר תיקיית היעד"
+msgstr "בחירת תיקיית היעד"
 
 #: src/viewer/osd.cpp:325
 #, kde-format
 msgid "OSD Preview - drag to reposition"
-msgstr "OSD - תצוגה על המסך - הזז למיקום מחדש"
+msgstr "OSD - תצוגה על המסך - הזזה למקום חדש"
 
 #: src/viewer/pasteeditor.cpp:23
 #, kde-format
 msgid "Edit Multiline Paste"
-msgstr "ערוך הדבקה בעלת שורות מרובות"
+msgstr "עריכת הדבקה עם כמה שורות"
 
 #: src/viewer/pasteeditor.cpp:28
 #, kde-format
 msgid "&Send"
-msgstr "&שלח"
+msgstr "&שליחה"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, PasteEditor)
 #: src/viewer/pasteeditor.ui:14
@@ -9615,7 +9616,7 @@ msgstr ""
 #: src/viewer/pasteeditor.ui:23
 #, kde-format
 msgid "Add &Quotation Indicators"
-msgstr "הוסף מירכאות &ציטוט"
+msgstr "הוספת מירכאות &ציטוט"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_removeNewlinesButton)
 #: src/viewer/pasteeditor.ui:43
@@ -9626,7 +9627,7 @@ msgstr "הסר ערכה"
 #: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, kde-format
 msgid "Raw Log"
-msgstr "יומן נקי"
+msgstr "יומן גולמי"
 
 #: src/viewer/searchbar.cpp:64
 #, kde-format
@@ -9642,7 +9643,7 @@ msgstr "מילים שלמות בלבד"
 #: src/viewer/searchbarbase.ui:55
 #, kde-format
 msgid "F&ind:"
-msgstr "&חפש:"
+msgstr "&איתור:"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:68
@@ -9654,7 +9655,7 @@ msgstr ""
 #: src/viewer/searchbarbase.ui:71
 #, kde-format
 msgid "&Next"
-msgstr "&הבא"
+msgstr "ה&בא"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:81
@@ -9666,7 +9667,7 @@ msgstr ""
 #: src/viewer/searchbarbase.ui:84
 #, kde-format
 msgid "&Previous"
-msgstr "&הקודם"
+msgstr "ה&קודם"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:110
@@ -9694,7 +9695,7 @@ msgstr ""
 #: src/viewer/statuspanel.cpp:226
 #, kde-format
 msgid "Close Tab"
-msgstr "סגור כרטיסייה"
+msgstr "סגירת לשונית"
 
 #: src/viewer/statuspanel.cpp:235
 #, fuzzy, kde-format
@@ -9710,12 +9711,12 @@ msgstr ""
 #: src/viewer/statuspanel.cpp:236
 #, kde-format
 msgid "Disconnect From Server"
-msgstr "התנתק מהשרת"
+msgstr "התנתקות מהשרת"
 
 #: src/viewer/statuspanel.cpp:237
 #, kde-format
 msgid "Disconnect"
-msgstr "התנתק"
+msgstr "ניתוק"
 
 #: src/viewer/topicedit.cpp:189
 #, fuzzy, kde-format
@@ -9759,12 +9760,12 @@ msgstr ""
 #: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Find Text..."
-msgstr "מצא טקסט..."
+msgstr "איתור טקסט…"
 
 #: src/viewer/viewcontainer.cpp:884
 #, kde-format
 msgid "Search for text in the current tab"
-msgstr "חפש עבור טקסט בכרטיסייה הנוכחית"
+msgstr "חיפוש אחר טקסט בלשונית הנוכחית"
 
 #: src/viewer/viewcontainer.cpp:902
 #, kde-format
@@ -9774,22 +9775,22 @@ msgstr "&רשימת החדרים עבור %1"
 #: src/viewer/viewcontainer.cpp:922
 #, kde-format
 msgid "&Open Logfile for %1"
-msgstr "&פתח קובץ־יומן עבור %1"
+msgstr "&פתיחת קובץ יומן עבור %1"
 
 #: src/viewer/viewcontainer.cpp:933
 #, kde-format
 msgid "&Channel Settings for %1..."
-msgstr "&אפשרויות חדר עבור %1..."
+msgstr "ה&גדרות החדר %1…"
 
 #: src/viewer/viewcontainer.cpp:2116
 #, kde-format
 msgid "Rename Tab"
-msgstr "שנה שם של כרטיסייה"
+msgstr "שינוי שם לשונית"
 
 #: src/viewer/viewcontainer.cpp:2117
 #, kde-format
 msgid "Enter new tab name:"
-msgstr "הכנס את השם החדש של הכרטיסייה:"
+msgstr "נא למלא שם חדש ללשונית:"
 
 #: src/viewer/viewcontainer.cpp:2189
 #, kde-format
@@ -9800,12 +9801,12 @@ msgstr "ברירת מחדל (%1)"
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
 msgid "&Rename Tab..."
-msgstr "שנה שם של כרטיסייה:"
+msgstr "&שינוי שם לשונית…"
 
 #: src/viewer/viewcontainer.cpp:2379
 #, kde-format
 msgid "You can only search in text fields."
-msgstr "אתה יכול לחפש רק בשדות טקסט."
+msgstr "אפשר לחפש רק בשדות טקסט."
 
 #: src/viewer/viewcontainer.cpp:2380
 #, kde-format
@@ -9830,12 +9831,12 @@ msgstr ""
 #: src/viewer/viewcontainer.cpp:3014
 #, kde-format
 msgid "Channel List Warning"
-msgstr "הזהרת רשימת חלונות"
+msgstr "הזהרת רשימת חדרים"
 
 #: src/viewer/viewcontainer.cpp:3044
 #, kde-format
 msgid "Watched Nicks"
-msgstr "כינויים בתצפית"
+msgstr "כינויים במעקב"
 
 #~ msgid "Konversation Bookmarks Editor"
 #~ msgstr "עורך הסימניות של Konversation"

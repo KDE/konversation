@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-01-26 22:52+0100\n"
+"PO-Revision-Date: 2024-02-04 16:00+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -406,7 +406,7 @@ msgstr "Erakutsi data-markatzailea data aldatzen denean"
 #: src/config/chatwindowappearance_config.ui:79
 #, kde-format
 msgid "Show &Backlog"
-msgstr ""
+msgstr "Erakutsi egunkari-at&zerakoa"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/chatwindowappearance_config.ui:88
@@ -586,6 +586,8 @@ msgstr ""
 #, kde-format
 msgid "Except for watched nicks and nicks active within the"
 msgstr ""
+"Gainbegiratutako edo adierazitako epean aktibo egon diren goitizenetarako "
+"salbu"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:155
@@ -719,7 +721,7 @@ msgstr "Ekint&za:"
 #: src/config/colorsappearance_config.ui:338
 #, kde-format
 msgid "Bac&klog:"
-msgstr ""
+msgstr "Egunkari-a&tzerakoa:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/config/colorsappearance_config.ui:351
@@ -2324,6 +2326,7 @@ msgctxt ""
 msgid ""
 "... an open query exists for a nickname that has just been marked as ignored"
 msgstr ""
+"... ezikusi gisa markatu berri den goitizen baterako irekitako itaun bat dago"
 
 #: src/config/warnings_config.cpp:155
 #, kde-format
@@ -2397,6 +2400,8 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a channel listing may cause disconnection due to the download size"
 msgstr ""
+"... kanalak zerrendatzea, zama-jaistekoaren neurriagatik, deskonexioa eragin "
+"dezake"
 
 #: src/config/warnings_config.cpp:182
 #, kde-format
@@ -2491,6 +2496,8 @@ msgid ""
 "<qt>When checked, the <b>Watched Nicks</b> window will be automatically "
 "opened when starting Konversation.</qt>"
 msgstr ""
+"<qt>Markatuta dagoenean, <b>Gainbegiratutako goitizenak</b> leihoa "
+"automatikoki irekiko da «Konversation» irekitzean.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:40
@@ -3059,7 +3066,7 @@ msgstr "Kokalekua:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:28
 #, kde-format
 msgid "Current position:"
-msgstr ""
+msgstr "Uneko kokalekua:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel21)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:48
@@ -3420,7 +3427,11 @@ msgid_plural ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: %1 bytes."
 "<br/>"
 msgstr[0] ""
+"<b>osatu gabeko fitxategi bat dago:</b><br/>%2<br/>Osatu gabeko "
+"fitxategiaren neurria: 1 byte."
 msgstr[1] ""
+"<b>osatu gabeko fitxategi bat dago:</b><br/>%2<br/>Osatu gabeko "
+"fitxategiaren neurria: %1 byte."
 
 #: src/dcc/transferrecv.cpp:482
 #, kde-format
@@ -3433,7 +3444,7 @@ msgstr ""
 #: src/dcc/transferrecv.cpp:491
 #, kde-format
 msgid "<b>Could not open the file.<br/>Error: %1</b><br/>%2<br/>"
-msgstr ""
+msgstr "<b>Fitxategia ezin izan du ireki.<br/>Errorea: %1</b><br/>%2<br/>"
 
 #: src/dcc/transferrecv.cpp:538 src/dcc/transferrecv.cpp:574
 #, kde-format
@@ -3867,11 +3878,14 @@ msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
+"Nortasun hori erabiltzen ari da, kentzen baduzu, hura erabiltzen duten "
+"sareko ezarpenak nortasun lehenetsia hartuko dute. Hala ere ezabatu beharko "
+"litzateke?"
 
 #: src/identitydialog.cpp:322
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
-msgstr ""
+msgstr "Ziur zaude nortasun horretarako informazio guztia ezabatu nahi duzula?"
 
 #: src/identitydialog.cpp:325
 #, kde-format
@@ -4330,7 +4344,7 @@ msgstr "Osatzea"
 #: src/irc/channel.cpp:566
 #, kde-format
 msgid "Possible completions: %1."
-msgstr ""
+msgstr "Osatze posibleak: %1."
 
 #: src/irc/channel.cpp:883
 #, kde-format
@@ -5419,7 +5433,7 @@ msgstr "%1(e)k %2 kanalera gonbidatu zaitu."
 #: src/irc/inputfilter.cpp:842
 #, kde-format
 msgid "Capabilities"
-msgstr "Ahalmenak"
+msgstr "Gaitasunak"
 
 #: src/irc/inputfilter.cpp:895
 #, kde-format
@@ -5928,6 +5942,8 @@ msgid ""
 "Cannot join %1: The channel is password-protected and either a wrong or no "
 "password was given."
 msgstr ""
+"Ezin du %1(e)ra elkartu: Kanala pasahitz bidez babestuta dago eta okerreko "
+"pasahitza eman da edo ez da pasahitzik eman."
 
 #: src/irc/inputfilter.cpp:2482
 #, kde-format
@@ -7101,6 +7117,8 @@ msgid ""
 "Check if you want to use the global proxy configuration to communicate with "
 "this server."
 msgstr ""
+"Markatu, zerbitzari horrekin komunikatzeko ordezkari globalaren "
+"konfigurazioa erabili nahi baduzu."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_proxyChBox)
 #: src/irc/serverdialogui.ui:108
@@ -7173,6 +7191,9 @@ msgid ""
 "or edit an existing one. The Identity will identify you and determine your "
 "nickname when you connect to the network."
 msgstr ""
+"Hautatu dauden nortasunen arteko bat, edo egin klik Editatu botoian nortasun "
+"berri bat gehitzeko, edo editatu daudenetako bat. Nortasunak identifikatuko "
+"zaitu eta sarera konektatzen zarenean zure goitizena zehaztuko du."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
@@ -7276,6 +7297,9 @@ msgid ""
 "once Konversation has connected to a server. You may leave this blank if you "
 "wish to not automatically join any channels."
 msgstr ""
+"Aukerakoa. Hau da, «Konversation» zerbitzari batera konektatu denean "
+"automatikoki elkartzeko kanalen zerrenda bat. Hori hutsik utzi dezakezu "
+"automatikoki inongo kanaletara elkartzea nahi ez baduzu."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addChannelButton)
 #: src/irc/servergroupdialogui.ui:239
@@ -7387,6 +7411,12 @@ msgid ""
 "Konversation is started for the first time, the Libera network and the "
 "<i>#kde</i> channel are already entered for you."
 msgstr ""
+"Honek, konfiguratutako IRC sareen zerrenda erakusten du. IRC sare bat "
+"elkarlanean ari diren zerbitzarien bilduma bat da. Sareko zerbitzari bakar "
+"batera besterik ez duzu konektatu behar IRC sare osoarekin konektatuta "
+"egoteko. Behin konektatuta, «Konversation» automatikoki konektatuko da "
+"erakutsitako kanaletara. «Konversation» lehen aldiz abiatzen denean, "
+"«Libera» sarea eta <i>#kde</i> kanala zuretzako automatikoki sartuta daude."
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:147
@@ -7545,7 +7575,7 @@ msgstr "John Tapsell"
 #: src/main.cpp:42
 #, kde-format
 msgid "Refactoring, KAddressBook/Kontact integration"
-msgstr ""
+msgstr "Kodea berrantolatzea, KAddressBook/Kontact bateratzea"
 
 #: src/main.cpp:43
 #, kde-format
@@ -8747,6 +8777,10 @@ msgid ""
 "The delay is the time it takes for messages from you to reach the server, "
 "and from the server back to you.</qt>"
 msgstr ""
+"<qt>Egoera-barrak hainbat mezu erakusten ditu, zerbitzarira konektatzeko "
+"arazo guztiak barne. Eskuin muturrean zerbitzariarekiko atzerapena erakusten "
+"du. Atzerapena, mezuek zugandik zerbitzarira iristeko, eta zerbitzariagandik "
+"atzera zugana iristeko hartzen duten denbora da.</qt>"
 
 #: src/statusbar.cpp:147
 #, kde-format
@@ -9026,6 +9060,9 @@ msgid ""
 "change these.</p><p>The <b>T</b>opic mode means that only the channel "
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
+"<qt><p>Horiek kanalaren <em>modua</em> agintzen dute. Operatzaile batek "
+"bakarrik alda ditzake.</p><p><b>M</b>intzagaia moduak esan nahi du kanaleko "
+"operatzaileak bakarrik alda dezakeela kanaleko mintzagaia.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
@@ -9066,6 +9103,11 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Horiek kanalaren <em>modua</em> agintzen dute. Operatzaile batek "
+"bakarrik alda ditzake.</p><p>Kanal <b>P</b>ribatu bat kanal guztien "
+"zerrendan erakusten da, mintzagaia ez ordea. Erabiltzailearen <em>WHOIS</em> "
+"batek, IRC zerbitzariaren arabera, erakuts diezaioke, edo ez, kanal pribatu "
+"batean dagoen.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -9074,6 +9116,10 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
+"<qt><p>Horiek kanalaren <em>modua</em> agintzen dute. Operatzaile batek "
+"bakarrik alda ditzake.</p><p><b>M</b>oderatutako kanal bat da operatzaile, "
+"erdi-operatzaile eta ahotsa dutenek bakarrik hitz egin dezaken kanala.</p></"
+"qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
@@ -9082,6 +9128,9 @@ msgid ""
 "change these.</p><p>A protected channel requires users to enter a password "
 "in order to join.</p></qt>"
 msgstr ""
+"<qt><p>Horiek kanalaren <em>modua</em> agintzen dute. Operatzaile batek "
+"bakarrik alda ditzake.</p><p>Babestutako kanal batek, elkartzeko, "
+"erabiltzaileak pasahitz bat sartzera behartzen ditu.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
@@ -9092,6 +9141,11 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
+"<qt><p>Horiek kanalaren <em>modua</em> agintzen dute. Operatzaile batek "
+"bakarrik alda ditzake.</p><p>Erabiltzaile <b>M</b>uga duen kanal baten "
+"esanahia da momentu oro kanalean egon daitekeen erabiltzaile kopuru gehienez "
+"hori dela. Kanal batzuek bot bat dute hori jardueraren arabera automatikoki "
+"aldatzeko.</p></qt>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
 #: src/viewer/channeloptionsui.ui:36
@@ -9576,6 +9630,19 @@ msgid ""
 "in.</td></tr></table><p>For more commands, see the Konversation Handbook.</"
 "p><p>A message cannot contain multiple lines.</p></qt>"
 msgstr ""
+"<qt><p>Sarrera-lerroa da kanal, itaun, edo zerbitzarira bidaltzeko mezuak "
+"tekleatzen dituzun lekua. Kanal batera bidalitako mezua kanal horretan "
+"dagoen edonork ikusten du, itaun bateko mezua berriz itaunean zurekin dagoen "
+"pertsonari bakarrik bidaltzen zaio.</p><p>Tekleatzen hasi zaren goitizena "
+"automatikoki osatzeko, sakatu Tab. Tekleatzen hasi ez bazara, arrakastaz "
+"osatuta azken goitizena erabiliko da.</p><p>Komando bereziak ere bidal "
+"ditzakezu:</p><table><tr><th>/me <i>ekintza</i></th><td>kanalean edo "
+"itaunean ekintza bat bezala erakusten da. Adibidez: <em>/me abesti bat "
+"abesten</em>, kanalean 'goitizena abesti bat abesten' gisa agertuko da.</"
+"td></tr><tr><th>/Whois <i>goitizena</i></th><td>pertsona horri buruzko "
+"informazioa erakusten du, zein kanaletan dagoen barne.</td></tr></"
+"table><p>Komando gehiagorako, begiratu «Konversation» eskuliburua.</"
+"p><p>Mezu batek ezin du lerro anizkoitzik izan.</p></qt>"
 
 #: src/viewer/ircinput.cpp:474
 #, kde-format
@@ -9652,6 +9719,9 @@ msgid ""
 "take effect until you restart Konversation. Each log file may have a "
 "separate setting."
 msgstr ""
+"Erabili lauki hori egunkari-fitxategiaren gehienezko neurria ezartzeko. "
+"Ezarpen hau ez da indarrean egongo «Konversation» berrabiatzen duzun arte. "
+"Egunkari-fitxategi bakoitzak ezarpen bereizia izan lezake."
 
 #: src/viewer/logfilereader.cpp:50
 #, kde-format
@@ -9839,7 +9909,7 @@ msgid "On %1 by %2"
 msgstr "%1(e)an %2(e)k egina"
 
 #: src/viewer/topichistoryview.cpp:208
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
 "tab was open.\n"
@@ -9855,6 +9925,14 @@ msgid ""
 "a synchronized edit field, undo back to the original text or close and "
 "reopen the dialog."
 msgstr ""
+"Hori da bere fitxa irekita zegoen bitartean kanal horretarako ezarri diren "
+"mintzagai guztien zerrenda bat.\n"
+"\n"
+"Inork mintzagai bera hainbat aldiz jarraian ezartzen badu, azken agerraldia "
+"erakusten da bakarrik.\n"
+"\n"
+"Zerrendako mintzagai bat hautatzen duzunean, haren beheko editatzeko eremuak "
+"jasoko du bere testua. Eremuaren edukia aldatzen hasten zareneanmintzagai"
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
