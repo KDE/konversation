@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-04 08:03+0200\n"
+"PO-Revision-Date: 2024-02-07 08:14+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -8354,7 +8354,7 @@ msgid "%1 changed nickname to %2"
 msgstr "המשתמש %1 שינה את הכינוי שלו אל %2"
 
 #: src/notificationhandler.cpp:272
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 wants to send a file to you"
 msgstr "המשתמש %1 רוצה לשלוח לך קובץ"
 
@@ -8388,12 +8388,12 @@ msgstr "המשתמש %1 התחיל שיחה (שאילתה) אתך."
 #: src/notificationhandler.cpp:378
 #, kde-format
 msgid "You are kicked by %1 from %2"
-msgstr "אתה נזרקת על ידי %1 מ־%2"
+msgstr "נודית על ידי %1 מ־%2"
 
 #: src/notificationhandler.cpp:393
 #, kde-format
 msgid "%1 started a DCC chat with you"
-msgstr "המשתמש %1 התחיל בשיחת DCC אתך"
+msgstr "המשתמש %1 פתח מולך העברה ישירה"
 
 #: src/notificationhandler.cpp:414
 #, kde-format
@@ -8420,12 +8420,12 @@ msgstr "ההתחברות אל %1 נכשלה"
 #: src/notificationhandler.cpp:457
 #, kde-format
 msgid "You have joined %1."
-msgstr "אתה הצטרפת אל %1‏‎."
+msgstr "הצטרפת אל %1‏‎."
 
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr "אפס..."
+msgstr "איפוס…"
 
 #: src/queuetuner.cpp:229
 #, kde-format
@@ -8442,7 +8442,7 @@ msgstr ""
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
 #, kde-format
 msgid "Close"
-msgstr "סגור"
+msgstr "סגירה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_slowBox)
 #: src/queuetunerbase.ui:96
@@ -8555,7 +8555,7 @@ msgstr "בתור"
 #: src/queuetunerbase.ui:632
 #, kde-format
 msgid "Received:"
-msgstr "מקבל:"
+msgstr "התקבלו:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel9)
 #: src/queuetunerbase.ui:662
@@ -8577,17 +8577,17 @@ msgstr "חיבור מהיר"
 #: src/quickconnectdialog.cpp:44
 #, kde-format
 msgid "&Server host:"
-msgstr "&שרת המארח:"
+msgstr "מ&ארח השרת:"
 
 #: src/quickconnectdialog.cpp:45
 #, kde-format
 msgid "Enter the host of the network here."
-msgstr "הכנס כאן את השם של הרשת."
+msgstr "נא למלא כאן את שם הרשת."
 
 #: src/quickconnectdialog.cpp:53
 #, kde-format
 msgid "The port that the IRC server is using."
-msgstr "היציאה ששרת ה־IRC משתמש."
+msgstr "הפתחה בה משתמש שרת ה־IRC."
 
 #: src/quickconnectdialog.cpp:60
 #, kde-format
@@ -8597,24 +8597,25 @@ msgstr "&כינוי:"
 #: src/quickconnectdialog.cpp:61
 #, kde-format
 msgid "The nick you want to use."
-msgstr "הכינוי שברצונך להשתמש."
+msgstr "הכינוי שישמש אותך."
 
 #: src/quickconnectdialog.cpp:68
 #, kde-format
 msgid "P&assword:"
-msgstr "&ססמה:"
+msgstr "&סיסמה:"
 
 #: src/quickconnectdialog.cpp:69
 #, kde-format
 msgid ""
 "If the IRC server requires a password, enter it here (most servers do not "
 "require a password.)"
-msgstr "אם שרת ה־IRC שלך דורש ססמה הכנס אותה כאן (רב השרתים לא מצריכים ססמה)."
+msgstr ""
+"אם שרת ה־IRC שלך דורש סיסמה נא למלא אותה כאן (רב השרתים לא דורשים סיסמה)."
 
 #: src/quickconnectdialog.cpp:79
 #, kde-format
 msgid "&Use SSL"
-msgstr "&השתמש ב־SSL"
+msgstr "לה&שתמש ב־SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
 #, fuzzy, kde-format
@@ -8641,8 +8642,7 @@ msgstr "פער: לא ידוע"
 msgid ""
 "All communication with the server is encrypted.  This makes it harder for "
 "someone to listen in on your communications."
-msgstr ""
-"כל התקשורת עם השרת מוצפנת. זה גורם לכמה אנשים קשה לקרוא את הקשורות שלך."
+msgstr "כל התקשורת עם השרת מוצפנת. זה מקשה על גורמים זרים להאזין לתקשורת שלך."
 
 #: src/statusbar.cpp:60
 #, kde-format
@@ -8656,12 +8656,12 @@ msgstr ""
 #: src/statusbar.cpp:147
 #, kde-format
 msgid "Lag: %1 ms"
-msgstr "פער: %1 מש'"
+msgstr "פער: %1 מ״ש"
 
 #: src/statusbar.cpp:149 src/statusbar.cpp:210
 #, kde-format
 msgid "Lag: %1 s"
-msgstr "פער: %1 ש'"
+msgstr "פער: %1 שנ׳"
 
 #: src/statusbar.cpp:181
 #, kde-format
@@ -8669,20 +8669,20 @@ msgctxt ""
 "%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "No answer from server %1 for more than %2, %3, %4, and %5."
-msgstr "אין תשובה מהשרת %1 יותר מ־%2 ימים, %3 שעות, %4 דקות ו־%5 שניות."
+msgstr "אין תשובה מהשרת %1 כבר יותר מ־%2 ימים, %3 שעות, %4 דקות ו־%5 שניות."
 
 #: src/statusbar.cpp:189
 #, kde-format
 msgctxt ""
 "%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "No answer from server %1 for more than %2, %3, and %4."
-msgstr "אין תשובה מהשרת %1 יותר מ־%2 שעות, %3 דקות ו־%4 שניות."
+msgstr "אין תשובה מהשרת %1 כבר יותר מ־%2 שעות, %3 דקות ו־%4 שניות."
 
 #: src/statusbar.cpp:196
 #, kde-format
 msgctxt "%1 = name of server, %2 = (x minutes), %3 = (x seconds)"
 msgid "No answer from server %1 for more than %2 and %3."
-msgstr "אין תשובה מהשרת %1 יותר מ־%2 דקות ו־%3 שניות."
+msgstr "אין תשובה מהשרת %1 כבר יותר מ־%2 דקות ו־%3 שניות."
 
 #: src/statusbar.cpp:201
 #, fuzzy, kde-format
@@ -8701,18 +8701,18 @@ msgstr "ההורדה של %1 נכשלה: %2"
 #: src/upnp/upnprouter.cpp:134
 #, kde-format
 msgid "Error parsing router description."
-msgstr "שגיאת בעת פיענוח של תיאור הנתב."
+msgstr "שגיאה בפענוח תיאור הנתב."
 
 #: src/urlcatcher.cpp:69 src/viewer/viewcontainer.cpp:2618
 #, kde-format
 msgid "URL Catcher"
-msgstr "תופס כתובות"
+msgstr "לוכד כתובות"
 
 #: src/urlcatcher.cpp:90
 #, kde-format
 msgctxt "open url"
 msgid "&Open"
-msgstr "&פתח"
+msgstr "&פתיחה"
 
 #: src/urlcatcher.cpp:93
 #, kde-format
@@ -8731,7 +8731,7 @@ msgstr ""
 #: src/urlcatcher.cpp:97
 #, kde-format
 msgid "&Save..."
-msgstr "&שמור..."
+msgstr "&שמירה…"
 
 #: src/urlcatcher.cpp:100
 #, kde-format
@@ -8741,18 +8741,18 @@ msgstr ""
 #: src/urlcatcher.cpp:103
 #, kde-format
 msgid "Add Bookmark..."
-msgstr "הוסף לסימניות..."
+msgstr "הוספה לסימניות…"
 
 #: src/urlcatcher.cpp:111
 #, kde-format
 msgctxt "copy url"
 msgid "&Copy"
-msgstr "&העתק"
+msgstr "ה&עתקה"
 
 #: src/urlcatcher.cpp:114
 #, kde-format
 msgid "Copy URLs to the clipboard."
-msgstr "העתק כתובות אל לוח העריכה"
+msgstr "העתקת כתובות ללוח הגזירים."
 
 #: src/urlcatcher.cpp:115
 #, kde-format
@@ -8765,7 +8765,7 @@ msgstr ""
 #, kde-format
 msgctxt "delete url"
 msgid "&Delete"
-msgstr "&מחק"
+msgstr "מ&חיקה"
 
 #: src/urlcatcher.cpp:121
 #, kde-format
@@ -8777,39 +8777,39 @@ msgstr ""
 #: src/urlcatcher.cpp:122
 #, kde-format
 msgid "Delete selected link."
-msgstr "מחק קישור נבחר."
+msgstr "מחיקת קישור נבחר."
 
 #: src/urlcatcher.cpp:128
 #, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
-msgstr "ש&מור רשימה..."
+msgstr "&שמירת הרשימה…"
 
 #: src/urlcatcher.cpp:130
 #, kde-format
 msgid "Save list."
-msgstr "שמור רשימה."
+msgstr "שמירת הרשימה."
 
 #: src/urlcatcher.cpp:131
 #, kde-format
 msgid "Click to save the entire list to a file."
-msgstr "לחץ לשמירת כל הרשימה אל קובץ."
+msgstr "לחיצה תשמור את כל הרשימה לקובץ."
 
 #: src/urlcatcher.cpp:134
 #, kde-format
 msgctxt "clear url list"
 msgid "&Clear List"
-msgstr "&נקה רשימה"
+msgstr "&פינוי הרשימה"
 
 #: src/urlcatcher.cpp:136
 #, kde-format
 msgid "Clear list."
-msgstr "נקה רשימה"
+msgstr "פינוי הרשימה."
 
 #: src/urlcatcher.cpp:137
 #, kde-format
 msgid "Click to erase the entire list."
-msgstr "לחץ למחיקת על הרשימה."
+msgstr "לחיצה תמחק את כל הרשימה."
 
 #: src/urlcatcher.cpp:155
 #, kde-format
@@ -8838,7 +8838,7 @@ msgstr ""
 #: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, kde-format
 msgid "Open URLs"
-msgstr "פתח כתובות"
+msgstr "פתיחת כתובות"
 
 #: src/urlcatcher.cpp:251
 #, kde-format
@@ -8850,12 +8850,12 @@ msgstr ""
 #: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
 msgid "Save link as"
-msgstr "שמור קישור בתור"
+msgstr "שמירת קישור בתור"
 
 #: src/urlcatcher.cpp:333
 #, kde-format
 msgid "Save URL List"
-msgstr "שמור את כתובת הרשימה"
+msgstr "שמירת רשימת כתובות"
 
 #: src/urlcatcher.cpp:360
 #, kde-format
@@ -8863,13 +8863,13 @@ msgid ""
 "Konversation URL List: %1\n"
 "\n"
 msgstr ""
-"רשימת כתובת של Konversation: %1\n"
+"רשימת כתובות של Konversation: %1\n"
 "\n"
 
 #: src/viewer/awaylabel.cpp:16
 #, kde-format
 msgid "(away)"
-msgstr "(מרוחק)"
+msgstr "(לא פה)"
 
 #: src/viewer/awaylabel.cpp:19
 #, fuzzy, kde-format
@@ -8879,22 +8879,22 @@ msgstr "(מרוחק)"
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr "&שנה הודעת לא נמצא..."
+msgstr "&עריכת הודעת היעדרות…"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Change away message"
-msgstr "שנה הודעת לא נמצא"
+msgstr "החלפת הודעת היעדרות"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
 msgid "Enter new away message:"
-msgstr "הנכס הודעת לא נמצא חדשה:"
+msgstr "נא למלא הודעת היעדרות חדשה:"
 
 #: src/viewer/channeloptionsdialog.cpp:34
 #, kde-format
 msgid "Channel Settings for %1"
-msgstr "אפשרויות חדר עבור %1"
+msgstr "הגדרות חדר עבור %1"
 
 #: src/viewer/channeloptionsdialog.cpp:218
 #, fuzzy, kde-format
@@ -8909,7 +8909,7 @@ msgstr "הצג מצבים &מתקדמים >>"
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
 msgid "Parameter"
-msgstr "פרמטר"
+msgstr "משתנה"
 
 #: src/viewer/channeloptionsdialog.cpp:320
 #, kde-format
@@ -9002,19 +9002,19 @@ msgstr "&נושא"
 #: src/viewer/channeloptionsui.ui:69 src/viewer/channeloptionsui.ui:266
 #, kde-format
 msgid "Search:"
-msgstr "חפש:"
+msgstr "חיפוש:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, modesPage)
 #: src/viewer/channeloptionsui.ui:111
 #, kde-format
 msgid "Mo&des"
-msgstr "&מצבים"
+msgstr "מ&צבים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, topicModeChBox)
 #: src/viewer/channeloptionsui.ui:117
 #, kde-format
 msgid "&Topic can only be changed by channel operators"
-msgstr "רק אופים יכולים לשנות את &נושא החדר"
+msgstr "רק מפקחים יכולים לשנות את &נושא החדר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, messageModeChBox)
 #: src/viewer/channeloptionsui.ui:124
@@ -9038,7 +9038,7 @@ msgstr "רק אנשים עם ה&זמנה יכולים להתחבר לחדר"
 #: src/viewer/channeloptionsui.ui:145
 #, kde-format
 msgid "&Moderated channel, only people with voice can write to the channel"
-msgstr "חדר &ממודר, רק אנשים עם קול יכולים לכתוב אל החדר"
+msgstr "חדר &ממודר, רק אנשים עם קול יכולים לכתוב לחדר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, userLimitChBox)
 #: src/viewer/channeloptionsui.ui:152
@@ -9050,13 +9050,13 @@ msgstr "ה&גבלת מספר משתמשים:"
 #: src/viewer/channeloptionsui.ui:188
 #, kde-format
 msgid "Channel &password:"
-msgstr "&ססמת החדר:"
+msgstr "&סיסמת החדר:"
 
 #. i18n: ectx: property (text), widget (QPushButton, toggleAdvancedModes)
 #: src/viewer/channeloptionsui.ui:202
 #, kde-format
 msgid "Show &Advanced Modes >>"
-msgstr "הצג מצבים &מתקדמים >>"
+msgstr "הצגת מצבים &מתקדמים >>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, TabPage)
 #: src/viewer/channeloptionsui.ui:252
@@ -9068,19 +9068,19 @@ msgstr "רשימת &נידויים"
 #: src/viewer/channeloptionsui.ui:288
 #, kde-format
 msgid "Hostmask"
-msgstr "שם מתחם"
+msgstr "מסכת מארח"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, banList)
 #: src/viewer/channeloptionsui.ui:293
 #, kde-format
 msgid "Set By"
-msgstr "נקבע על ידי"
+msgstr "הוגדר על ידי"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, banList)
 #: src/viewer/channeloptionsui.ui:298
 #, kde-format
 msgid "Time Set"
-msgstr "זמן הקביעה"
+msgstr "זמן ההגדרה"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, updateBan)
 #: src/viewer/channeloptionsui.ui:321
@@ -9092,13 +9092,13 @@ msgstr "תדירות עדכון:"
 #: src/viewer/channeloptionsui.ui:340
 #, kde-format
 msgid "Add Ban"
-msgstr "הוסף נידוי"
+msgstr "הוספת נידוי"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, removeBan)
 #: src/viewer/channeloptionsui.ui:359
 #, kde-format
 msgid "Remove Ban"
-msgstr "הסר נידוי"
+msgstr "הסרת נידוי"
 
 #: src/viewer/chatwindow.cpp:509
 #, kde-format
@@ -9109,14 +9109,14 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"*** קובץ היומן התחיל\n"
-"*** בתאריך %1\n"
+"*** התיעוד ביומן התחיל\n"
+"*** ב־%1\n"
 "\n"
 
 #: src/viewer/editnotifydialog.cpp:27
 #, kde-format
 msgid "Edit Watched Nickname"
-msgstr "ערוך רשימת כינויים בתצפית"
+msgstr "עריכת רשימת כינויים במעקב"
 
 #: src/viewer/editnotifydialog.cpp:46
 #, kde-format
@@ -9126,7 +9126,7 @@ msgstr "שם ה&רשת:"
 #: src/viewer/editnotifydialog.cpp:48
 #, kde-format
 msgid "Pick the server network you will connect to here."
-msgstr "אנא בחר את שרת הרשת שברצונך להתחבר אליה כאן."
+msgstr "נא לבחור כאן את רשת השרתים לחיבור."
 
 #: src/viewer/editnotifydialog.cpp:55
 #, kde-format
@@ -9137,7 +9137,7 @@ msgstr "&כינוי:"
 #, kde-format
 msgid ""
 "<qt>The nickname to watch for when connected to a server in the network.</qt>"
-msgstr "<qt> הכינוי בתצפית בעת בתחבורות לשרת ברשת. </qt>"
+msgstr "<qt>הכינוי למעקב בעת התחברות לשרת ברשת.</qt>"
 
 #: src/viewer/editnotifydialog.cpp:65
 #, kde-format
@@ -9147,27 +9147,27 @@ msgstr "כל הרשתות"
 #: src/viewer/editnotifydialog.cpp:78
 #, kde-format
 msgid "Change notify information"
-msgstr "שנה הגדרות של התרעות"
+msgstr "שינוי הגדרות התראה"
 
 #: src/viewer/ignorelistviewitem.cpp:41
 #, kde-format
 msgid "Exception"
-msgstr "יוצאים מן הכלל"
+msgstr "חריגות"
 
 #: src/viewer/insertchardialog.cpp:33
 #, kde-format
 msgid "Insert Character"
-msgstr "הוסף תו"
+msgstr "הוספת תו"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "&Insert"
-msgstr "&הוסף"
+msgstr "הו&ספה"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "Insert a character"
-msgstr "הוסף תו"
+msgstr "הוספת תו"
 
 #: src/viewer/irccolorchooser.cpp:18
 #, kde-format
@@ -9207,7 +9207,7 @@ msgstr "תצוגה מקדימה"
 #: src/viewer/irccolorchooserui.ui:50 src/viewer/irccolorchooserui.ui:67
 #, kde-format
 msgid "The chosen text color is added to the input line."
-msgstr "הצבע הנבחר הוסף אל שדה הקלט."
+msgstr "צבע הטקסט הנבחר נוסף לשדה הקלט."
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_fgColorCBox)
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_fgColorLbl)
@@ -9232,7 +9232,7 @@ msgstr "&צבע טקסט:"
 #: src/viewer/irccolorchooserui.ui:99 src/viewer/irccolorchooserui.ui:113
 #, kde-format
 msgid "The chosen text-background color is added to the input line."
-msgstr "צבע הרקע הנבחר הוסף אל שדה הקלט."
+msgstr "צבע הרקע הנבחר נוסף לשורת הקלט."
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (whatsThis), widget (QLabel, m_bgColorLbl)
@@ -9255,12 +9255,12 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:137
 #, kde-format
 msgid "Copy Link Address"
-msgstr "העתק כתובת הקישור"
+msgstr "העתקת כתובת הקישור"
 
 #: src/viewer/irccontextmenus.cpp:141
 #, kde-format
 msgid "Add to Bookmarks"
-msgstr "הוסף למועדפים"
+msgstr "הוספה לסימניות"
 
 #: src/viewer/irccontextmenus.cpp:142
 #, kde-format
@@ -9270,7 +9270,7 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:143
 #, kde-format
 msgid "Save Link As..."
-msgstr "שמור קישור בתור..."
+msgstr "שמירת קישור בתור…"
 
 #: src/viewer/irccontextmenus.cpp:283
 #, kde-format
@@ -9285,17 +9285,17 @@ msgstr ""
 #: src/viewer/irccontextmenus.cpp:333
 #, kde-format
 msgid "Get &topic"
-msgstr "קבל &נושא"
+msgstr "קבלת &נושא"
 
 #: src/viewer/irccontextmenus.cpp:334
 #, kde-format
 msgid "Get &user list"
-msgstr "קבל &רשימת משתמשים"
+msgstr "קבלת &רשימת משתמשים"
 
 #: src/viewer/irccontextmenus.cpp:379
 #, kde-format
 msgid "Open Query"
-msgstr "פתח שאילתה"
+msgstr "פתיחת שאילתה"
 
 #: src/viewer/irccontextmenus.cpp:391
 #, kde-format
@@ -9305,47 +9305,47 @@ msgstr "מצבים"
 #: src/viewer/irccontextmenus.cpp:392
 #, kde-format
 msgid "Give Op"
-msgstr "הענק אופ"
+msgstr "הענקת פיקוח"
 
 #: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Take Op"
-msgstr "הוצא אופ"
+msgstr "שלילת פיקוח"
 
 #: src/viewer/irccontextmenus.cpp:394
 #, kde-format
 msgid "Give HalfOp"
-msgstr "הענק אופ למחצה"
+msgstr "הענקת פיקוח למחצה"
 
 #: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Take HalfOp"
-msgstr "הוצא אופ למחצה"
+msgstr "שלילת פיקוח למחצה"
 
 #: src/viewer/irccontextmenus.cpp:396
 #, kde-format
 msgid "Give Voice"
-msgstr "הענק קול"
+msgstr "הענקת קול"
 
 #: src/viewer/irccontextmenus.cpp:397
 #, kde-format
 msgid "Take Voice"
-msgstr "הוצא קול"
+msgstr "שלילת קול"
 
 #: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick / Ban"
-msgstr "בעיטה / נידוי"
+msgstr "סילוק / נידוי"
 
 #: src/viewer/irccontextmenus.cpp:403
 #, kde-format
 msgid "Kickban"
-msgstr "בעיטה ונידוי"
+msgstr "סילוק ונידוי"
 
 #: src/viewer/irccontextmenus.cpp:404
 #, kde-format
 msgid "Ban Nickname"
-msgstr "נידוי של שם משתמש"
+msgstr "נידוי משתמש"
 
 #: src/viewer/irccontextmenus.cpp:406
 #, kde-format
@@ -9370,22 +9370,22 @@ msgstr "נידוי של ‎*!user@domain‬"
 #: src/viewer/irccontextmenus.cpp:411
 #, kde-format
 msgid "Kickban *!*@*.host"
-msgstr "העף ונדה את ‎*!*@*.host‬"
+msgstr "סילוק ונידוי של ‎*!*@*.host‬"
 
 #: src/viewer/irccontextmenus.cpp:412
 #, kde-format
 msgid "Kickban *!*@domain"
-msgstr "העף ונדה את ‎*!*@domain‬"
+msgstr "סילוק ונידוי של ‎*!*@domain‬"
 
 #: src/viewer/irccontextmenus.cpp:413
 #, kde-format
 msgid "Kickban *!user@*.host"
-msgstr "העף ונדה את ‎*!user@*.host‬"
+msgstr "סילוק ונידוי של ‎*!user@*.host‬"
 
 #: src/viewer/irccontextmenus.cpp:414
 #, kde-format
 msgid "Kickban *!user@domain"
-msgstr "העף ונדה את ‎*!user@domain‬"
+msgstr "סילוק ונידוי של ‎*!user@domain‬"
 
 #: src/viewer/irccontextmenus.cpp:432
 #, kde-format
@@ -9401,27 +9401,27 @@ msgstr "&פינג"
 #: src/viewer/irccontextmenus.cpp:626
 #, kde-format
 msgid "Unignore"
-msgstr "בטל התעלמות"
+msgstr "ביטול התעלמות"
 
 #: src/viewer/irccontextmenus.cpp:443
 #, kde-format
 msgid "Add to Watched Nicks"
-msgstr "הוסף לרשימת כינויים בתצפית"
+msgstr "הוספה לרשימת כינויים במעקב"
 
 #: src/viewer/irccontextmenus.cpp:445
 #, kde-format
 msgid "Remove From Watched Nicks"
-msgstr "הסר מרשימת כינויים בתצפית"
+msgstr "הסרת מרשימת כינויים במעקב"
 
 #: src/viewer/irccontextmenus.cpp:452
 #, kde-format
 msgid "Send &File..."
-msgstr "שלח &קובץ..."
+msgstr "שליחת &קובץ…"
 
 #: src/viewer/irccontextmenus.cpp:454
 #, kde-format
 msgid "Open DCC Chat"
-msgstr "פתח חלון שיחת DCC"
+msgstr "פתיחת חלון העברה ישירה"
 
 #: src/viewer/irccontextmenus.cpp:455
 #, fuzzy, kde-format
@@ -9431,22 +9431,22 @@ msgstr "פתח חלון &שיחת DCC"
 #: src/viewer/irccontextmenus.cpp:588
 #, kde-format
 msgid "Do you want to ignore %1?"
-msgstr "האם ברצונך להתעלם ממשתמש %1?"
+msgstr "להתעלם מהמשתמש %1?"
 
 #: src/viewer/irccontextmenus.cpp:590
 #, kde-format
 msgid "Do you want to ignore the selected users?"
-msgstr "האם באמת ברצונך להתעלם מהמשתמשים הנבחרים?"
+msgstr "להתעלם מהמשתמשים הנבחרים?"
 
 #: src/viewer/irccontextmenus.cpp:618
 #, kde-format
 msgid "Do you want to stop ignoring %1?"
-msgstr "האם ברצונך להפסיק להתעלם ממשתמש %1?"
+msgstr "להפסיק להתעלם מהמשתמש %1?"
 
 #: src/viewer/irccontextmenus.cpp:620
 #, kde-format
 msgid "Do you want to stop ignoring the selected users?"
-msgstr "האם באמת ברצונך להפסיק להתעלם מהמשתמשים הנבחרים?"
+msgstr "להפסיק להתעלם מהמשתמשים הנבחרים?"
 
 #: src/viewer/irccontextmenus.cpp:781
 #, kde-format
@@ -9490,7 +9490,7 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: src/viewer/ircinput.cpp:481
-#, kde-format
+#, fuzzy, kde-format
 msgctxt ""
 "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are "
 "localised (see the two previous messages)."
