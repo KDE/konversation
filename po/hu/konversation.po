@@ -5,13 +5,13 @@
 # Tóth Csanád <toth.csanad@kde.hu>, 2009.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2010, 2011, 2012, 2014, 2015.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
-# Kristof Kiszel <ulysses@fsf.hu>, 2021.
+# SPDX-FileCopyrightText: 2021, 2024 Kristof Kiszel <ulysses@fsf.hu>
 msgid ""
 msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 02:28+0000\n"
-"PO-Revision-Date: 2021-12-06 10:50+0100\n"
+"PO-Revision-Date: 2024-02-07 10:22+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.11.90\n"
+"X-Generator: Lokalize 24.01.95\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1571,17 +1571,16 @@ msgstr "Valódi nevek megjeleníté&se a beceneveknél"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
-#| msgid "All Queues"
+#, kde-format
 msgid "All events"
-msgstr "Összes kérés"
+msgstr "Minden esemény"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "Csatornák és beszélgetések eseményekkel"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:573
@@ -1594,19 +1593,19 @@ msgstr "Megfigyelt becenevek lapjának megnyitása indításkor"
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
 msgstr ""
+"A n&em látott események számlálásának megjelenítése az indítóbejegyzésen"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "Kiegészítés &módja:"
+msgstr "Számolás &módja:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "Számolt események"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -2075,7 +2074,7 @@ msgstr "OSD"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "Indítóbejegyzés"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -3408,9 +3407,7 @@ msgstr[0] "Ön kijelölt %1 fájlt futtatásra, biztosan folytatni szeretné?"
 msgstr[1] "Ön kijelölt %1 fájlt futtatásra, biztosan folytatni szeretné?"
 
 #: src/dcc/transferpanel.cpp:427
-#, fuzzy, kde-format
-#| msgid "Execute %1 file"
-#| msgid_plural "Execute %1 files"
+#, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
@@ -9780,11 +9777,10 @@ msgstr ""
 "Meg szeretné szüntetni a kiválasztott felhasználók figyelmen kívül hagyását?"
 
 #: src/viewer/irccontextmenus.cpp:781
-#, fuzzy, kde-format
-#| msgid "Query author"
+#, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr "Kérés szerzője"
+msgstr "Beszélgetés a szerzővel"
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
