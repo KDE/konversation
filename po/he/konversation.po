@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-07 08:14+0200\n"
+"PO-Revision-Date: 2024-02-08 15:29+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -36,7 +36,7 @@ msgstr "kde-l10n-he@kde.org"
 #, kde-format
 msgctxt "Menu title"
 msgid "&Insert"
-msgstr "&הוסף"
+msgstr "הו&ספה"
 
 #. i18n: ectx: Menu (windows)
 #: data/konversationui.rc:38
@@ -208,12 +208,12 @@ msgstr "ממודר"
 #: src/common.cpp:31 src/irc/inputfilter.cpp:1325
 #, kde-format
 msgid "password protected"
-msgstr "מוגן בססמה"
+msgstr "מוגן בסיסמה"
 
 #: src/common.cpp:32
 #, kde-format
 msgid "anonymous"
-msgstr "אנונימי"
+msgstr "אלמוני"
 
 #: src/common.cpp:33
 #, kde-format
@@ -257,7 +257,7 @@ msgstr "&חדש"
 #: src/config/ignore_configui.ui:137
 #, kde-format
 msgid "&Remove"
-msgstr "&הסר"
+msgstr "ה&סרה"
 
 #. i18n: ectx: property (text), widget (QLabel, aliasLabel)
 #: src/config/alias_configui.ui:88
@@ -269,7 +269,7 @@ msgstr "כינוי:"
 #: src/config/alias_configui.ui:108
 #, kde-format
 msgid "Replacement:"
-msgstr "מיקום מחדש:"
+msgstr "הצבה מחדש:"
 
 #: src/config/autoreplace_config.cpp:28
 #, kde-format
@@ -314,19 +314,19 @@ msgstr "ביטוי רגולרי"
 #: src/config/autoreplace_configui.ui:60
 #, kde-format
 msgid "Replace In"
-msgstr "החלף ב"
+msgstr "החלפה בתוך"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, patternListView)
 #: src/config/autoreplace_configui.ui:65
 #, kde-format
 msgid "Find"
-msgstr "חפש"
+msgstr "חיפוש"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, patternListView)
 #: src/config/autoreplace_configui.ui:70
 #, kde-format
 msgid "Replace With"
-msgstr "החלף בתוך"
+msgstr "החלפה עם"
 
 #. i18n: ectx: property (text), widget (QPushButton, newButton)
 #: src/config/autoreplace_configui.ui:80
@@ -338,31 +338,31 @@ msgstr "&חדש"
 #: src/config/autoreplace_configui.ui:87
 #, kde-format
 msgid "R&emove"
-msgstr "ה&סר"
+msgstr "ה&סרה"
 
 #. i18n: ectx: property (text), widget (QLabel, directionLabel)
 #: src/config/autoreplace_configui.ui:126
 #, kde-format
 msgid "Replace in:"
-msgstr "החלף ב:"
+msgstr "החלפה בתוך:"
 
 #. i18n: ectx: property (text), widget (QLabel, patternLabel)
 #: src/config/autoreplace_configui.ui:158
 #, kde-format
 msgid "Find:"
-msgstr "חפש:"
+msgstr "איתור:"
 
 #. i18n: ectx: property (text), widget (QLabel, replacementLabel)
 #: src/config/autoreplace_configui.ui:190
 #, kde-format
 msgid "Replace with:"
-msgstr "החלף עם:"
+msgstr "החלפה ב־:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_Timestamping)
 #: src/config/chatwindowappearance_config.ui:33
 #, kde-format
 msgid "Enable &Timestamps"
-msgstr "אפשר חתימות &זמן"
+msgstr "הפעלת חותמות &זמן"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/chatwindowappearance_config.ui:42
@@ -374,7 +374,7 @@ msgstr "&תבנית:"
 #: src/config/chatwindowappearance_config.ui:62
 #, kde-format
 msgid "Sho&w dates"
-msgstr "הצג &תאריכים"
+msgstr "הצגת &תאריכים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowDateLine)
 #: src/config/chatwindowappearance_config.ui:69
@@ -386,7 +386,7 @@ msgstr ""
 #: src/config/chatwindowappearance_config.ui:79
 #, kde-format
 msgid "Show &Backlog"
-msgstr "הצג יומן &אחרון"
+msgstr "הצגת יומן &עבר"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/chatwindowappearance_config.ui:88
@@ -398,61 +398,61 @@ msgstr "&שורות: "
 #: src/config/chatwindowappearance_config.ui:114
 #, kde-format
 msgid "&Layout"
-msgstr "&מראה"
+msgstr "&פריסה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTopic)
 #: src/config/chatwindowappearance_config.ui:120
 #, kde-format
 msgid "&Show channel topic"
-msgstr "&הצג את נושא החדר"
+msgstr "&הצגת נושא החדר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowModeButtons)
 #: src/config/chatwindowappearance_config.ui:127
 #, kde-format
 msgid "Show channel &mode buttons"
-msgstr "הצג כפתורי &מצב החדר"
+msgstr "הצגת כפתורי &מצב החדר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNickList)
 #: src/config/chatwindowappearance_config.ui:134
 #, kde-format
 msgid "Show channel &nick list and quick buttons"
-msgstr "הצג &רשימת כינויים וכפתורים מהירים"
+msgstr "הצגת &רשימת כינויים וכפתורים מהירים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoUserhost)
 #: src/config/chatwindowappearance_config.ui:162
 #, kde-format
 msgid "Show hostmas&ks in nickname list"
-msgstr "הצג את שמות המתחמים &ברשימת הכינויים"
+msgstr "הצגת מסכות המארחים &ברשימת הכינויים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowRealNames)
 #: src/config/chatwindowappearance_config.ui:192
 #, kde-format
 msgid "Show real names in nickname list"
-msgstr "הצג שמות אמתיים ברשימת הכינויים"
+msgstr "הצגת שמות אמיתיים ברשימת הכינויים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtons)
 #: src/config/chatwindowappearance_config.ui:222
 #, kde-format
 msgid "Show &quick buttons"
-msgstr "הצג &כפתורים מהירים"
+msgstr "הצגת &כפתורים מהירים"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowNicknameBox)
 #: src/config/chatwindowappearance_config.ui:231
 #, kde-format
 msgid "Show bo&x to change own nickname"
-msgstr "הצג &קופסה לשינוי הכינוי שלך"
+msgstr "הצגת &תיבה לשינוי הכינוי שלך"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowIRCViewScrollBar)
 #: src/config/chatwindowappearance_config.ui:238
 #, kde-format
 msgid "Show sc&rollbar"
-msgstr "הצג סרגל &גלילה"
+msgstr "הצגת סרגל &גלילה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowBackgroundImage)
 #: src/config/chatwindowappearance_config.ui:251
 #, kde-format
 msgid "Enable Back&ground Image"
-msgstr "אפשר תמונת &רקע"
+msgstr "הפעלת תמונת &רקע"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/chatwindowappearance_config.ui:260
@@ -8446,9 +8446,9 @@ msgstr "סגירה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_slowBox)
 #: src/queuetunerbase.ui:96
-#, fuzzy, kde-format
+#, kde-format
 msgid "Slow Queue"
-msgstr "בתור"
+msgstr "תור איטי"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_slowType)
 #. i18n: ectx: property (text), item, widget (KComboBox, m_normalType)
@@ -8535,21 +8535,21 @@ msgstr "בתים:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_normalBox)
 #: src/queuetunerbase.ui:267
-#, fuzzy, kde-format
+#, kde-format
 msgid "Normal Queue"
-msgstr "משתמשים רגילים"
+msgstr "תור רגיל"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_fastBox)
 #: src/queuetunerbase.ui:438
-#, fuzzy, kde-format
+#, kde-format
 msgid "Fast Queue"
-msgstr "בתור"
+msgstr "תור מהיר"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_globalBox)
 #: src/queuetunerbase.ui:612
-#, fuzzy, kde-format
+#, kde-format
 msgid "All Queues"
-msgstr "בתור"
+msgstr "כל התורים"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel13)
 #: src/queuetunerbase.ui:632
@@ -8559,9 +8559,9 @@ msgstr "התקבלו:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel9)
 #: src/queuetunerbase.ui:662
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bytes (Raw):"
-msgstr "בתים:"
+msgstr "בתים (גולמיים):"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
 #: src/queuetunerbase.ui:672
@@ -8618,10 +8618,9 @@ msgid "&Use SSL"
 msgstr "לה&שתמש ב־SSL"
 
 #: src/statusbar.cpp:36 src/statusbar.cpp:72 src/statusbar.cpp:140
-#, fuzzy, kde-format
-#| msgid "Ready."
+#, kde-format
 msgid "Ready"
-msgstr "מוכן."
+msgstr "מוכן"
 
 #: src/statusbar.cpp:42
 #, kde-format
@@ -8897,14 +8896,14 @@ msgid "Channel Settings for %1"
 msgstr "הגדרות חדר עבור %1"
 
 #: src/viewer/channeloptionsdialog.cpp:218
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Hide Advanced Modes <<"
-msgstr "&הסתר מצבים מתקדמים &gt; &gt;"
+msgstr "הסתרת מ&צבים מתקדמים <<"
 
 #: src/viewer/channeloptionsdialog.cpp:222
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Show Advanced Modes >>"
-msgstr "הצג מצבים &מתקדמים >>"
+msgstr "הצגת מ&צבים מתקדמים >>"
 
 #: src/viewer/channeloptionsdialog.cpp:313
 #, kde-format
@@ -9084,9 +9083,9 @@ msgstr "זמן ההגדרה"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, updateBan)
 #: src/viewer/channeloptionsui.ui:321
-#, fuzzy, kde-format
+#, kde-format
 msgid "Update Ban"
-msgstr "תדירות עדכון:"
+msgstr "עדכון נידוי"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, addBan)
 #: src/viewer/channeloptionsui.ui:340
@@ -9223,9 +9222,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Fore&ground color:"
-msgstr "&צבע טקסט:"
+msgstr "&צבע חזית:"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
@@ -9620,9 +9619,9 @@ msgstr "הוספת מירכאות &ציטוט"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_removeNewlinesButton)
 #: src/viewer/pasteeditor.ui:43
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Remove Newlines"
-msgstr "הסר ערכה"
+msgstr "הסרת שורות &חדשות"
 
 #: src/viewer/rawlog.cpp:17 src/viewer/viewcontainer.cpp:2743
 #, kde-format
@@ -9682,15 +9681,15 @@ msgid "&Options"
 msgstr "&אפשרויות"
 
 #: src/viewer/statuspanel.cpp:225
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Do you really want to close '%1'?\n"
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
-"האם ברצונך להתנתק מ־\"%1\"?\n"
+"לסגור את ‚%1’?\n"
 "\n"
-"כל הכרטיסיות המשוייכות ייסגרו גם כן."
+"כל הלשוניות הקשורות תיסגרנה גם כן."
 
 #: src/viewer/statuspanel.cpp:226
 #, kde-format
@@ -9698,15 +9697,15 @@ msgid "Close Tab"
 msgstr "סגירת לשונית"
 
 #: src/viewer/statuspanel.cpp:235
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Do you want to disconnect from '%1'?\n"
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
-"האם ברצונך להתנתק מ־\"%1\"?\n"
+"להתנתק מ־‚%1’?\n"
 "\n"
-"כל הכרטיסיות המשוייכות ייסגרו גם כן."
+"כל הלשוניות הקשורות תיסגרנה גם כן."
 
 #: src/viewer/statuspanel.cpp:236
 #, kde-format
@@ -9719,9 +9718,9 @@ msgid "Disconnect"
 msgstr "ניתוק"
 
 #: src/viewer/topicedit.cpp:189
-#, fuzzy, kde-format
+#, kde-format
 msgid "Delete excess text"
-msgstr "מחק זהות"
+msgstr "מחיקת טקסט עודף"
 
 #: src/viewer/topicedit.cpp:203
 #, kde-format
