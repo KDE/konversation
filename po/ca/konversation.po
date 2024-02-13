@@ -10257,6 +10257,3 @@ msgstr "Avís de llista de canals"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Sobrenoms vigilats"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Editor de punts del Konversation"
