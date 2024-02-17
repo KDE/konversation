@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-08 15:29+0200\n"
+"PO-Revision-Date: 2024-02-16 11:36+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -72,9 +72,8 @@ msgid "No running video players found."
 msgstr ""
 
 #: data/scripts/media:180
-#, fuzzy
 msgid "\"%1\" is not running."
-msgstr "השם %1 הוא לא חדר."
+msgstr "„%1” לא פעיל."
 
 #: data/scripts/media:182
 msgid "No running media players found."
@@ -542,9 +541,9 @@ msgstr "ללא הגבלה"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/chatwindowbehaviour_config.ui:101
-#, fuzzy, kde-format
+#, kde-format
 msgid "Scrollbac&k limit:"
-msgstr "הגדלת &גלילה:"
+msgstr "מגבלת &גלילה:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:135
@@ -1375,7 +1374,7 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
 #: src/config/highlight_configui.ui:326
-#, fuzzy, kde-format
+#, kde-format
 msgid "A&uto text:"
 msgstr "&טקסט אוטומטי:"
 
@@ -1396,9 +1395,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable &notifications:"
-msgstr "אפשר הודעות"
+msgstr "הפעלת ה&תראות:"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:45
@@ -1491,9 +1490,9 @@ msgstr "&הסר הכל"
 
 #. i18n: ectx: label, entry, group (Appearance)
 #: src/config/konversation.kcfg:217
-#, fuzzy, kde-format
+#, kde-format
 msgid "Hide the scrollbar"
-msgstr "הצג סרגל &גלילה"
+msgstr "הסתרת פס הגלילה"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:223
@@ -1524,9 +1523,9 @@ msgstr "&הצג שמות אמתיים ליד הכינויים"
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
 #: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
-#, fuzzy, kde-format
+#, kde-format
 msgid "All events"
-msgstr "בתור"
+msgstr "כל האירועים"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
@@ -1952,9 +1951,9 @@ msgid "Tabs"
 msgstr "כרטיסיות"
 
 #: src/config/settingsdialog.cpp:102
-#, fuzzy, kde-format
+#, kde-format
 msgid "General Behavior"
-msgstr "התנהגות"
+msgstr "התנהגות כללית"
 
 #: src/config/settingsdialog.cpp:107
 #, kde-format
@@ -1995,10 +1994,10 @@ msgid "Auto Replace"
 msgstr "החלפה אוטומטית"
 
 #: src/config/settingsdialog.cpp:139
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab"
 msgid "Ignore"
-msgstr "התעלם"
+msgstr "התעלמות"
 
 #: src/config/settingsdialog.cpp:148
 #, kde-format
@@ -2153,9 +2152,9 @@ msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
 msgstr ""
 
 #: src/config/theme_config.cpp:206
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unknown error (0)"
-msgstr "שגיאה לא מוכרת. קוד %1"
+msgstr "שגיאה לא מוכרת (0)"
 
 #: src/config/theme_config.cpp:210
 #, kde-format
@@ -2197,10 +2196,9 @@ msgstr "&התקן ערכת נושא..."
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "I&nstall from File..."
-msgstr "&התקן ערכת נושא..."
+msgstr "ה&תקנה מקובץ…"
 
 #. i18n: ectx: property (text), widget (QPushButton, removeButton)
 #: src/config/theme_configui.ui:45
@@ -2951,10 +2949,10 @@ msgid "%1 on %2"
 msgstr "משתמש %1 ב־%2"
 
 #: src/dcc/transferdetailedinfopanel.cpp:169
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr "המשתמש %1 עזב  את %2"
+msgstr "%1 (פתחה %2)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
@@ -3036,9 +3034,9 @@ msgstr "מהירות נוכחית:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "Average speed:"
-msgstr "מהירות נוכחית:"
+msgstr "מהירות ממוצעת:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:145
@@ -3054,9 +3052,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:185
-#, fuzzy, kde-format
+#, kde-format
 msgid "Offered at:"
-msgstr "החל ב:"
+msgstr "מוצע במסגרת:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:205
@@ -3469,9 +3467,9 @@ msgstr ""
 "הקובץ המוגש לצד השני, או בטל את העברת הקובץ. </qt>"
 
 #: src/dcc/transfersend.cpp:197
-#, fuzzy, kde-format
+#, kde-format
 msgid "unknown"
-msgstr "(לא יודע)"
+msgstr "לא ידוע"
 
 #: src/dcc/transfersend.cpp:202
 #, kde-format
@@ -3876,10 +3874,10 @@ msgid ""
 msgstr ""
 
 #: src/identitydialog.cpp:482
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
-msgstr "השלמה"
+msgstr "(רשות)"
 
 #: src/identitydialog.cpp:489
 #, kde-format
@@ -4305,10 +4303,10 @@ msgid "%1 is now known as %2."
 msgstr "המשתמש %1 ידוע כעת בתור %2."
 
 #: src/irc/channel.cpp:1083 src/irc/channel.cpp:1111 src/viewer/ircview.cpp:836
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message type"
 msgid "Join"
-msgstr "הצטרף"
+msgstr "הצטרפות"
 
 #: src/irc/channel.cpp:1084
 #, fuzzy, kde-format
@@ -5153,9 +5151,9 @@ msgid "Join Channel"
 msgstr "הצטרף אל חדר"
 
 #: src/irc/channellistpanel.cpp:459
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open URL"
-msgstr "פתח כתובות"
+msgstr "פתיחת כתובת"
 
 #: src/irc/channellistpanel.cpp:519
 #, kde-format
@@ -5537,9 +5535,9 @@ msgid "Nickname already in use. Trying %1."
 msgstr "הכינוי כבר בשימוש. מנסה את %1."
 
 #: src/irc/inputfilter.cpp:1610
-#, fuzzy, kde-format
+#, kde-format
 msgid "Erroneous nickname. Changing nick to %1."
-msgstr "כינוי לא תקני. משנה אל %1."
+msgstr "כינוי שגוי. הוא ישתנה לכינוי %1."
 
 #: src/irc/inputfilter.cpp:1621
 #, kde-format
@@ -5940,15 +5938,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:44
-#, fuzzy, kde-format
+#, kde-format
 msgid "Always Ask"
-msgstr "תמיד התעלם"
+msgstr "תמיד לבקש"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:49
-#, fuzzy, kde-format
+#, kde-format
 msgid "Always Join"
-msgstr "תמיד התעלם"
+msgstr "תמיד להצטרף"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:54
@@ -5970,16 +5968,14 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: src/irc/joinchanneldialog.cpp:216
-#, fuzzy, kde-format
-#| msgid "Are you sure you want to delete all information for this identity?"
+#, kde-format
 msgid "Are you sure you want to remove this channel from your history?"
-msgstr "האם אתה בטוח כי ברצונך למחוק את כל המידע אודות זהות זו?"
+msgstr "להסיר את החדר הזה מההיסטוריה שלך"
 
 #: src/irc/joinchanneldialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Remove Ban"
+#, kde-format
 msgid "Remove channel"
-msgstr "הסר נידוי"
+msgstr "הסרת חדר"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/irc/joinchannelui.ui:67
@@ -8053,9 +8049,9 @@ msgid "Join on Connect"
 msgstr "הצטרף בעת התחברות"
 
 #: src/mainwindow.cpp:395
-#, fuzzy, kde-format
+#, kde-format
 msgid "Connect at Startup"
-msgstr "&התחבר בעת הפעלת היישום"
+msgstr "התחברות עם הפעלת המערכת"
 
 #: src/mainwindow.cpp:400
 #, kde-format
@@ -8143,9 +8139,9 @@ msgid "&Join Channel..."
 msgstr "&הצטרף אל חדר..."
 
 #: src/mainwindow.cpp:484
-#, fuzzy, kde-format
+#, kde-format
 msgid "Join a new channel on this server"
-msgstr "הצג את רשימת על החדרים בשרת זה"
+msgstr "הצטרפות לחדר בשרת הזה"
 
 #: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
@@ -8296,42 +8292,42 @@ msgid "Server List"
 msgstr "רשימת שרתים"
 
 #: src/notificationhandler.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
-msgstr "ללא הודעות מבחוץ"
+msgstr "הודעה חדשה מאת %1 בחדר %2"
 
 #: src/notificationhandler.cpp:103
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
-msgstr "הנושא נקבע על ידי %1‎ בתאריך %2."
+msgstr "הכינוי של הוזכר על ידי %1 בחדר %2"
 
 #: src/notificationhandler.cpp:114
-#, fuzzy, kde-format
+#, kde-format
 msgid "[HighLight] (%1) <%2>"
-msgstr "[הדגשה] (%1) *** %2"
+msgstr "[הדגשה] (%1) <%2>"
 
 #: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
-#, fuzzy, kde-format
+#, kde-format
 msgid "[HighLight] (%1) <%2> %3"
-msgstr "[הדגשה] (%1) &lt;%2&gt; %3"
+msgstr "[הדגשה] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:153
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
-msgstr "הודעת &שאילתה:"
+msgstr "הודעת שאילתה חדשה מאת %1"
 
 #: src/notificationhandler.cpp:164
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Query] <%1>"
-msgstr "[שאילתא] &lt;%1&gt;"
+msgstr "[שאילתה] <%1>"
 
 #: src/notificationhandler.cpp:178
-#, fuzzy, kde-format
+#, kde-format
 msgid "[Query] <%1> %2"
-msgstr "[שאילתא] &lt;%1&gt; %2"
+msgstr "[שאילתה] <%1> %2"
 
 #: src/notificationhandler.cpp:212 src/notificationhandler.cpp:219
 #, kde-format
@@ -8370,10 +8366,10 @@ msgid "%1 File Transfer is complete"
 msgstr ""
 
 #: src/notificationhandler.cpp:302
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Opens the file from the finished dcc transfer"
 msgid "Open"
-msgstr "פתח"
+msgstr "פתיחה"
 
 #: src/notificationhandler.cpp:318
 #, fuzzy, kde-format
@@ -9264,7 +9260,7 @@ msgstr "הוספה לסימניות"
 #: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
-msgstr ""
+msgstr "פתיחה באמצעות…"
 
 #: src/viewer/irccontextmenus.cpp:143
 #, kde-format
@@ -9274,7 +9270,7 @@ msgstr "שמירת קישור בתור…"
 #: src/viewer/irccontextmenus.cpp:283
 #, kde-format
 msgid "Search for '%1' with"
-msgstr ""
+msgstr "חיפוש אחר ‚%1’ עם"
 
 #: src/viewer/irccontextmenus.cpp:297
 #, kde-format
@@ -9423,9 +9419,9 @@ msgid "Open DCC Chat"
 msgstr "פתיחת חלון העברה ישירה"
 
 #: src/viewer/irccontextmenus.cpp:455
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open DCC Whiteboard"
-msgstr "פתח חלון &שיחת DCC"
+msgstr "פתיחת לוח תכנון להעברה ישירה"
 
 #: src/viewer/irccontextmenus.cpp:588
 #, kde-format
@@ -9451,7 +9447,7 @@ msgstr "להפסיק להתעלם מהמשתמשים הנבחרים?"
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr ""
+msgstr "יוצר השאילתה"
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
@@ -9672,7 +9668,7 @@ msgstr "ה&קודם"
 #: src/viewer/searchbarbase.ui:110
 #, kde-format
 msgid "Modify search behavior"
-msgstr ""
+msgstr "שינוי התנהגות החיפוש"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_optionsButton)
 #: src/viewer/searchbarbase.ui:113
@@ -9754,7 +9750,7 @@ msgstr ""
 #: src/viewer/trayicon.cpp:23
 #, kde-format
 msgid "IRC Client"
-msgstr ""
+msgstr "לקוח IRC"
 
 #: src/viewer/viewcontainer.cpp:882
 #, kde-format
