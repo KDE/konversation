@@ -23,10 +23,9 @@ stable scripting interface.
 
 import subprocess
 import sys
+import os
 
-
-__all__ = ('info', 'error', 'say')
-
+__all__ = ('info', 'error', 'say', 'dbus_command')
 
 # Functions
 
@@ -83,4 +82,6 @@ except IndexError:
 
 default_message_prefix = ''
 
-_dbus_command = ('qdbus', 'org.kde.konversation', '/irc')
+dbus_command = os.environ.get("KONVERSATION_DBUS_BIN", "qdbus")
+
+_dbus_command = (dbus_command, 'org.kde.konversation', '/irc')
