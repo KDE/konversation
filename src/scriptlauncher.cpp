@@ -15,10 +15,13 @@
 #include <KProcess>
 #include <QStandardPaths>
 
+#include "konvi_qdbus.h"
 
 ScriptLauncher::ScriptLauncher(QObject* parent) : QObject(parent)
 {
     qputenv("KONVERSATION_LANG", QLocale().name().toLatin1());
+    if (!qEnvironmentVariableIsSet("KONVERSATION_DBUS_BIN"))
+        qputenv("KONVERSATION_DBUS_BIN", QDBUS_BIN);
 
     QStringList pythonPath(QProcessEnvironment::systemEnvironment().value(QStringLiteral("PYTHONPATH")).split(QLatin1Char(':'), Qt::SkipEmptyParts));
     pythonPath << QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QStringLiteral("konversation/scripting_support/python"),

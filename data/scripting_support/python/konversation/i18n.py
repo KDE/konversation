@@ -123,10 +123,10 @@ def locale_directories():
 
     """
 
-    dirs = ''
+    dirs = b''
 
     try:
-        dirs = subprocess.check_output(('qtpaths', '--locate-dirs', 'GenericDataLocation', 'locale'))
+        dirs = subprocess.check_output(('qtpaths6', '--locate-dirs', 'GenericDataLocation', 'locale'))
     except (OSError, subprocess.CalledProcessError):
         dbus.error("A problem occurred while looking for directories containing translation files. "
                    "The output of this script will not be translated.")

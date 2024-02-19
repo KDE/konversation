@@ -61,8 +61,8 @@ preferred_media = {
 # To list players and retrieve media metadata his script by default calls the
 # 'qdbus' command installed by Qt. If you need to you can change this here,
 # but beware that the output format of the alternate command has to match that
-# of 'qdbus'.
-dbus_command = 'qdbus'
+# of 'qdbus'. Pulled from the environment variable KONVERSATION_DBUS_BIN by default
+#dbus_command = 'qdbus-qt6'
 
 # If one of the title, album or artist metadata fields contains a character
 # listed in FIXUP_CHARS, or if a string matching the regular expression given
@@ -91,6 +91,7 @@ except ImportError:
 
 try:
     import konversation.dbus
+    from konversation.dbus import dbus_command
     konversation.dbus.default_message_prefix = 'media: '
 
     import konversation.i18n

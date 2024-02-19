@@ -3,6 +3,7 @@ Changes in Konversation v24.02
 * Out of date channel topics will no longer reappear during window manipulations
 * Fixed opening channels from the topic widget
 * Konversation can no longer migrate KDE4-era configs
+* Scripts now receive the full path of qdbus via an environment variable
 
 Changes in Konversation v23.08
 * Konversation will no longer hang if the server offers no CAPs that we're interested in

@@ -1,5 +1,7 @@
 Tue Jan 9 12:54:35 2024 UTC
 - Konversation now depends on KDE Frameworks 6.0.
+- Konversation has for a long time required qdbus at runtime,
+  this is now required at build time as well.
 
 Sun Nov 30 12:00:00 2011 CET
 - Konversation now depends on KDE Frameworks 5.2.0.

@@ -3,6 +3,19 @@ include_directories(config dcc irc viewer upnp)
 
 add_executable(konversation)
 
+#Does this disto use qdbus? qdbus6? qdbus-qt6? qdbus_qt6? qt6_dbus?
+#Is it even on the path, or do we need to specify something like /usr/lib64/qt6/bin/...?
+#Perhaps comes from the Qt6Tools package?
+include(ECMQueryQt)
+ecm_query_qt(QT_INSTALL_BINS QT_INSTALL_BINS)
+find_program(QDBUS_RUNTIME_BINARY_FULL_PATH
+        NAMES qdbus qdbus6 qdbus-qt6
+        REQUIRED
+        DOC "Used to allow the installed scripts to communicate with Konversation without requiring code in every script to adapt to the distribution."
+        HINTS ${QT_INSTALL_BINS}
+)
+configure_file(konvi_qdbus.h.in konvi_qdbus.h)
+
 target_sources(konversation PRIVATE
     #====================================
     #=== Application

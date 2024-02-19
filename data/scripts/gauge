@@ -9,11 +9,11 @@ shift
 PERCENTAGE=$1
 
 # special handling for qdbus variants
-_qdbus=qdbus-qt5
+_qdbus=${KONVERSATION_DBUS_BIN:-qdbus-qt6}
 if ! [ "$(which $_qdbus 2> /dev/null)" ]; then
     _qdbus=qdbus
     if ! [ "$(which $_qdbus 2> /dev/null)" ]; then
-        echo "Error: The qdbus (or qdbus-qt5) utility is missing."
+        echo "Error: The qdbus (or qdbus-qt6) utility is missing."
         exit 1
     fi
 fi

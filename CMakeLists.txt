@@ -33,6 +33,17 @@ include(CheckIncludeFile)
 include(FeatureSummary)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED Core Multimedia Network Widgets)
+
+#This is a RUNTIME dependency. I don't know of any way to indicate that the Tools
+#component of the Qt package is needed at runtime, so trying to do so with Qt6Tools
+#This hopefully provides the binary likely named /usr/lib64/qt6/bin/qdbus
+find_package(Qt6Tools ${QT_MIN_VERSION} CONFIG REQUIRED)
+set_package_properties(Qt6Tools PROPERTIES
+    DESCRIPTION "Provider of qdbus binary"
+    TYPE RUNTIME
+    PURPOSE "Allows scripts to communicate with Konversation"
+)
+
 find_package(Qt6Core5Compat ${QT_MIN_VERSION} CONFIG REQUIRED) # QTextCodec
 
 find_package(KF6 REQUIRED COMPONENTS

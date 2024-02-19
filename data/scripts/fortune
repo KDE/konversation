@@ -51,4 +51,5 @@ while (<FORTUNES>) {
     }
 }
 close(FORTUNES);
-exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, $MESSAGE;
+my $dbus_cmd = $ENV{'KONVERSATION_DBUS_BIN'} || 'qdbus';
+exec $dbus_cmd, 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, $MESSAGE;
