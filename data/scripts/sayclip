@@ -21,7 +21,7 @@ except ImportError:
     sys.exit("This script is intended to be run from within Konversation.")
 
 try:
-    clipboard = subprocess.check_output(('qdbus', 'org.kde.klipper', '/klipper', 'getClipboardContents'))
+    clipboard = subprocess.check_output((konversation.dbus.dbus_command, 'org.kde.klipper', '/klipper', 'getClipboardContents'))
 except subprocess.CalledProcessError:
     konversation.dbus.error(i18n("Unable to retrieve clipboard contents from Klipper."), exit=True)
 
