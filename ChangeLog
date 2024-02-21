@@ -1,3 +1,68 @@
+Changes in Konversation v24.02
+* Konversation has been ported to Qt6/KF6
+* Out of date channel topics will no longer reappear during window manipulations
+* Fixed opening channels from the topic widget
+* Konversation can no longer migrate KDE4-era configs
+
+Changes in Konversation v23.08
+* Konversation will no longer hang if the server offers no CAPs that we're interested in
+
+Changes in Konversation v23.04
+* Highlights sounds file picker: fix setting file filter by MIME types
+
+Changes in Konversation v22.08
+* Added icons to more dialog buttons
+
+Changes from Konversation v21.12.3 to v22.04.3
+* Added an optional badge to the task manager icon for showing count of unread messages
+* Ported audio support from Phono to Qt::Multimedia
+* Added support for ^Q (aka U+0011) code for monospace text formatting
+* Moved window state data to a separate config file in XDG_DATA_HOME
+
+Changes from Konversation v21.08.3 to v21.12.3:
+* Improved window management via systray
+* Improved GNOME shell's handling of Konversation's main window
+* Improved session  restoration (X11)
+* Reclaim the space left by disabling the tab bar close button
+* Fixed confirmation dialog after previous canceling of quit
+* Added support for ^S (aka U+0013) code for strikethrough text formatting
+* Fixed raising the main window from the system tray icon
+* Channel Settings "User limit" field now supports values up to 99999
+* Case sensitive nickname completion option now functions correctly
+* Default log location now uses XDG_DATA_HOME (with fallback to ~.local/share/konversation)
+* Menus no longer have window decorations on Wayland
+
+Changes from Konversation v21.04.3 to v21.08.3:
+* Fixes crash when handling messages from a now-offline user
+
+Changes from Konversation v21.04.0 to v21.04.3:
+* Default hard coded network changed to Libera.chat
+* Password fields now support revealing the password, with KDE Kiosk support
+
+Changes from Konversation v20.12.1 to v21.04.0:
+* Improved keyboard navigation in identiy dialog
+* Added support for CAP NOTIFY
+* Added support for chghost server command
+* Fixed joining channels whose names consist only of a prefix symbol
+* Improved URL handling in the IrcView
+
+Changes from Konversation v20.12.0 to v20.12.1:
+* The "gauge" and "tinyurl" scripts were updated to call qdbus-qt5
+* Fixed private message windows with nicknames containing a '\' character
+* Hard-coded default server configuration now uses SSL/TLS
+* Identity dialog no longer allows (unusable) spaces in nicknames and idents
+* Handling of irc:// links improved
+
+Changes from Konversation 1.7.7 to v20.12.0:
+* Fixed several potential memory leaks
+* Correct view in sidebar will be shown when selected via a notification click
+* Fixed URL redirections when a link will is opened via web browser
+* As Konversation is released via Release Service, version numbers will also
+  contain the KDE Gear version details
+* Removed the unusable "mail" script
+* The "tinyurl" script now uses HTTPS
+* Links in documentation updated to use HTTPS
+
 Changes from Konversation 1.7.6 to 1.7.7:
 Konversation v1.7.7 is a small translation update & bugfix release improving the
 icons in the nick list with SVG options for HiDPI support and a new variant of
