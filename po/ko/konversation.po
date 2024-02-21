@@ -1929,7 +1929,7 @@ msgstr "단추 동작:"
 #: src/config/quickbuttons_configui.ui:177
 #, kde-format
 msgid "Show quick buttons that operate on nicknames in nickname context menus"
-msgstr "대화명 콘텍스트 메뉴에 대화명에 대한 빠른 단추 표시"
+msgstr "대화명 상황에 맞는 메뉴에 대화명에 대한 빠른 단추 표시"
 
 #: src/config/settingsdialog.cpp:47
 #, kde-format
@@ -7847,7 +7847,7 @@ msgstr "Juan Carlos Torres"
 #: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
-msgstr "자동 입장 콘텍스트 메뉴"
+msgstr "자동 입장 상황에 맞는 메뉴"
 
 #: src/main.cpp:71
 #, kde-format
