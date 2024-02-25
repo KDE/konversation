@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-16 11:36+0200\n"
+"PO-Revision-Date: 2024-02-23 14:37+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6381,10 +6381,10 @@ msgstr "רשימת ההודעות הנוכחית: %1"
 
 #: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3159
 #: src/irc/server.cpp:3173
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message type"
 msgid "Notify"
-msgstr "הודעה"
+msgstr "התראה"
 
 #: src/irc/outputfilter.cpp:1331
 #, kde-format
@@ -7340,14 +7340,14 @@ msgid "&Show at application startup"
 msgstr "&הצג בעת הפעלת היישום"
 
 #: src/irc/topichistorymodel.cpp:28
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unknown"
 msgstr "לא ידוע"
 
 #: src/irc/topichistorymodel.cpp:172
-#, fuzzy, kde-format
+#, kde-format
 msgid "Text"
-msgstr "טקסט אוטומטי"
+msgstr "טקסט"
 
 #: src/irc/topichistorymodel.cpp:175
 #, kde-format
@@ -7355,9 +7355,9 @@ msgid "Author"
 msgstr "יוצר"
 
 #: src/irc/topichistorymodel.cpp:178
-#, fuzzy, kde-format
+#, kde-format
 msgid "Time"
-msgstr "זמן הקביעה"
+msgstr "זמן"
 
 #: src/konsolepanel.cpp:26 src/viewer/viewcontainer.cpp:2607
 #: src/viewer/viewcontainer.cpp:2608
@@ -7381,9 +7381,9 @@ msgid "A user-friendly IRC client"
 msgstr "לקוח IRC ידידותי למשתמש"
 
 #: src/main.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copyright 2002-%1 by the Konversation team"
-msgstr "כל הזכויות רשומת, על ידי צוות הפיתוח של Konversation (C)‎‏ 2002-2012"
+msgstr "כל הזכויות שמורות 2002‏-%1 צוות Konversation"
 
 #: src/main.cpp:32
 #, kde-format
@@ -7783,9 +7783,9 @@ msgid "Server to connect"
 msgstr "שרת להתחברות"
 
 #: src/main.cpp:85
-#, fuzzy, kde-format
+#, kde-format
 msgid "server"
-msgstr "&שרת:"
+msgstr "שרת"
 
 #: src/main.cpp:86
 #, kde-format
@@ -7793,9 +7793,9 @@ msgid "Port to use"
 msgstr "יציאה לשימוש"
 
 #: src/main.cpp:86
-#, fuzzy, kde-format
+#, kde-format
 msgid "port"
-msgstr "Support"
+msgstr "פתחה"
 
 #: src/main.cpp:87
 #, kde-format
@@ -7803,7 +7803,7 @@ msgid "Channel to join after connection"
 msgstr "חדר להצטרפות אחרי החיבור"
 
 #: src/main.cpp:87
-#, fuzzy, kde-format
+#, kde-format
 msgid "channel"
 msgstr "חדר"
 
@@ -7813,7 +7813,7 @@ msgid "Nickname to use"
 msgstr "כינוי לשימוש"
 
 #: src/main.cpp:88
-#, fuzzy, kde-format
+#, kde-format
 msgid "nickname"
 msgstr "כינוי"
 
@@ -7823,9 +7823,9 @@ msgid "Password for connection"
 msgstr "ססמה לחיבור"
 
 #: src/main.cpp:89
-#, fuzzy, kde-format
+#, kde-format
 msgid "password"
-msgstr "ססמה:"
+msgstr "סיסמה"
 
 #: src/main.cpp:90
 #, kde-format
