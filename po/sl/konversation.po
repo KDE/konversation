@@ -6,15 +6,15 @@
 # barko <barny13@siol.net>, 2003.
 # Gregor Rakar <gregor.rakar@kiss.si>, 2005.
 # Andrej Mernik <andrejm@ubuntu.si>, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
-# Jure Repinc <jlp@holodeck1.com>, 2012.
+# SPDX-FileCopyrightText: 2012, 2024 Jure Repinc <jlp@holodeck1.com>
 # SPDX-FileCopyrightText: 2020, 2021, 2022, 2023 Matjaž Jeran <matjaz.jeran@amis.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2023-11-28 10:26+0100\n"
-"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
+"PO-Revision-Date: 2024-02-24 23:41+0100\n"
+"Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -44,13 +44,13 @@ msgstr ""
 #, kde-format
 msgctxt "Menu title"
 msgid "&Insert"
-msgstr "Vstavi"
+msgstr "&Vstavi"
 
 #. i18n: ectx: Menu (windows)
 #: data/konversationui.rc:38
 #, kde-format
 msgid "&Window"
-msgstr "Okno"
+msgstr "&Okno"
 
 #: data/scripts/cmd:28
 msgid "You need to specify a command."
@@ -530,7 +530,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:55
 #, no-c-format, kde-format
 msgid "Disable variable (e.g. %C, %B, %G...) e&xpansion"
-msgstr "Onemogoči razširjanje spremenljivk (npr. %C, %B, %G ...)"
+msgstr "Onemogoči razširjanje spremenljivk (npr. %C, %B, %G …)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_RedirectServerAndAppMsgToStatusPane)
 #: src/config/chatwindowbehaviour_config.ui:62
@@ -898,10 +898,10 @@ msgstr "13:"
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] " sekunda"
-msgstr[1] " sekundi"
-msgstr[2] " sekunde"
-msgstr[3] " sekund"
+msgstr[0] " sekund"
+msgstr[1] " sekunda"
+msgstr[2] " sekundi"
+msgstr[3] " sekunde"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -1035,10 +1035,10 @@ msgstr "Geslo:"
 #, kde-format
 msgid " byte"
 msgid_plural " bytes"
-msgstr[0] " bajt"
-msgstr[1] " bajta"
-msgstr[2] " bajti"
-msgstr[3] " bajtov"
+msgstr[0] " bajtov"
+msgstr[1] " bajt"
+msgstr[2] " bajta"
+msgstr[3] " bajti"
 
 #: src/config/dcc_config.cpp:74
 #, kde-format
@@ -2028,19 +2028,19 @@ msgstr "Povezava"
 #, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] " vrstica"
-msgstr[1] " vrstici"
-msgstr[2] " vrstice"
-msgstr[3] " vrstic"
+msgstr[0] " vrstic"
+msgstr[1] " vrstica"
+msgstr[2] " vrstici"
+msgstr[3] " vrstice"
 
 #: src/config/settingsdialog.cpp:115
 #, kde-format
 msgid " nick"
 msgid_plural " nicks"
-msgstr[0] " vzdevek"
-msgstr[1] " vzdevka"
-msgstr[2] " vzdevki"
-msgstr[3] " vzdevkov"
+msgstr[0] " vzdevkov"
+msgstr[1] " vzdevek"
+msgstr[2] " vzdevka"
+msgstr[3] " vzdevki"
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2492,7 +2492,7 @@ msgstr "... ob zaprtju okna se bo pogovorno okno skrčilo v sistemsko vrstico"
 #: src/config/warnings_configui.ui:29
 #, kde-format
 msgid "Show a warning dialog when..."
-msgstr "Pokaži pogovorno okno opozorila, ko se zgodi naslednje ..."
+msgstr "Pokaži pogovorno okno opozorila, ko se zgodi naslednje …"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:24
@@ -2636,23 +2636,23 @@ msgstr "Omrežje ni dostopno, povezava bo samodejno ponovno vzpostavljena."
 #, kde-format
 msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
-msgstr[0] "Poizkus vzpostavitve povezave na %2 (vrata %3) v %1 sekundi."
-msgstr[1] "Poizkus vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
-msgstr[2] "Poizkus vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
-msgstr[3] "Poizkus vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
+msgstr[0] "Poizkus vzpostavitve povezave na %2 (vrata %3) čez %1 sekund."
+msgstr[1] "Poizkus vzpostavitve povezave na %2 (vrata %3) čez %1 sekundo."
+msgstr[2] "Poizkus vzpostavitve povezave na %2 (vrata %3) čez %1 sekundi."
+msgstr[3] "Poizkus vzpostavitve povezave na %2 (vrata %3) čez %1 sekunde."
 
 #: src/connectionmanager.cpp:262
 #, kde-format
 msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
 msgstr[0] ""
-"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) v %1 sekundi."
+"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) čez %1 sekund."
 msgstr[1] ""
-"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
+"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) čez %1 sekundo."
 msgstr[2] ""
-"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
+"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) čez %1 sekundi."
 msgstr[3] ""
-"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) v %1 sekundah."
+"Poizkus ponovne vzpostavitve povezave na %2 (vrata %3) čez %1 sekunde."
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -2736,7 +2736,7 @@ msgstr "Nastavitve istovetnosti"
 #: src/connectionmanager.cpp:593
 #, kde-format
 msgid "Edit Identity..."
-msgstr "Uredi istovetnost ..."
+msgstr "Uredi istovetnost …"
 
 #: src/dbus.cpp:150
 #, kde-format
@@ -2762,7 +2762,7 @@ msgstr "Pošiljanje zahteve DCC %1 družabniku prek strežnika IRC ni uspelo."
 #: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
 msgid "Awaiting acceptance by remote user..."
-msgstr "Čakanje na potrditev oddaljenega uporabnika ..."
+msgstr "Čakanje na potrditev oddaljenega uporabnika …"
 
 #: src/dcc/chat.cpp:148
 #, kde-format
@@ -2836,7 +2836,7 @@ msgstr "Odpiranje vtiča za poslušanje ni uspelo: %1"
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
-msgstr "Ponujanje povezave DCC %1 z %2 prek vrat %3 ..."
+msgstr "Ponujanje povezave DCC %1 z %2 prek vrat %3 …"
 
 #: src/dcc/chat.cpp:431
 #, kde-format
@@ -2855,7 +2855,7 @@ msgstr "Klepet"
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
-msgstr "Vzpostavljanje povezave DCC %1 z %2 (%3:%4) ..."
+msgstr "Vzpostavljanje povezave DCC %1 z %2 (%3:%4) …"
 
 #: src/dcc/chat.cpp:482
 #, kde-format
@@ -3424,23 +3424,23 @@ msgid ""
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
 msgstr[0] ""
-"Za izvajanje ste izbrali %1 datoteko, ste prepričani, da želite nadaljevati?"
-msgstr[1] ""
-"Za izvajanje ste izbrali %1 datoteki, ste prepričani, da želite nadaljevati?"
-msgstr[2] ""
-"Za izvajanje ste izbrali %1 datoteke, ste prepričani, da želite nadaljevati?"
-msgstr[3] ""
 "Za izvajanje ste izbrali %1 datotek, ste prepričani, da želite nadaljevati?"
+msgstr[1] ""
+"Za izvajanje ste izbrali %1 datoteko, ste prepričani, da želite nadaljevati?"
+msgstr[2] ""
+"Za izvajanje ste izbrali %1 datoteki, ste prepričani, da želite nadaljevati?"
+msgstr[3] ""
+"Za izvajanje ste izbrali %1 datoteke, ste prepričani, da želite nadaljevati?"
 
 #: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] "Izvedi %1 datoteko"
-msgstr[1] "Izvedi %1 datoteki"
-msgstr[2] "Izvedi %1 datoteke"
-msgstr[3] "Izvedi %1 datotek"
+msgstr[0] "Izvedi %1 datotek"
+msgstr[1] "Izvedi %1 datoteko"
+msgstr[2] "Izvedi %1 datoteki"
+msgstr[3] "Izvedi %1 datoteke"
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -3486,16 +3486,16 @@ msgid_plural ""
 "<br/>"
 msgstr[0] ""
 "<b>Delna datoteka že obstaja:</b><br/>%2<br/>Velikost delne datoteke: %1 "
-"bajt.<br/>"
+"bajtov.<br/>"
 msgstr[1] ""
 "<b>Delna datoteka že obstaja:</b><br/>%2<br/>Velikost delne datoteke: %1 "
-"bajta.<br/>"
+"bajt.<br/>"
 msgstr[2] ""
 "<b>Delna datoteka že obstaja:</b><br/>%2<br/>Velikost delne datoteke: %1 "
 "bajta.<br/>"
 msgstr[3] ""
 "<b>Delna datoteka že obstaja:</b><br/>%2<br/>Velikost delne datoteke: %1 "
-"bajtov.<br/>"
+"bajti.<br/>"
 
 #: src/dcc/transferrecv.cpp:482
 #, kde-format
@@ -3793,7 +3793,7 @@ msgstr "Počisti sliko"
 #: src/dcc/whiteboardtoolbar.cpp:35 src/viewer/logfilereader.cpp:38
 #, kde-format
 msgid "Save As..."
-msgstr "Shrani kot ..."
+msgstr "Shrani kot …"
 
 #: src/dcc/whiteboardtoolbar.cpp:38
 #, kde-format
@@ -3911,10 +3911,10 @@ msgstr "Potrdilo odjemalca SSL"
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
-msgstr[0] " minuta"
-msgstr[1] " minuti"
-msgstr[2] " minute"
-msgstr[3] " minut"
+msgstr[0] " minut"
+msgstr[1] " minuta"
+msgstr[2] " minuti"
+msgstr[3] " minute"
 
 #: src/identitydialog.cpp:115
 #, kde-format
@@ -4621,19 +4621,19 @@ msgstr "%2 je brcnil %1 iz kanala (%3)."
 #, kde-format
 msgid "%1 nick"
 msgid_plural "%1 nicks"
-msgstr[0] "%1 vzdevek"
-msgstr[1] "%1 vzdevka"
-msgstr[2] "%1 vzdevki"
-msgstr[3] "%1 vzdevkov"
+msgstr[0] "%1 vzdevkov"
+msgstr[1] "%1 vzdevek"
+msgstr[2] "%1 vzdevka"
+msgstr[3] "%1 vzdevki"
 
 #: src/irc/channel.cpp:1341
 #, kde-format
 msgid " (%1 op)"
 msgid_plural " (%1 ops)"
-msgstr[0] " (%1 operater)"
-msgstr[1] " (%1 operaterja)"
-msgstr[2] " (%1 operaterji)"
-msgstr[3] " (%1 operaterjev)"
+msgstr[0] " (%1 operaterjev)"
+msgstr[1] " (%1 operater)"
+msgstr[2] " (%1 operaterja)"
+msgstr[3] " (%1 operaterji)"
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
@@ -5041,19 +5041,19 @@ msgstr "%1 je odstranil ključ kanala."
 #, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
-msgstr[0] "Omejitev kanala ste nastavili na %1 vzdevek."
-msgstr[1] "Omejitev kanala ste nastavili na %1 vzdevka."
-msgstr[2] "Omejitev kanala ste nastavili na %1 vzdevke."
-msgstr[3] "Omejitev kanala ste nastavili na %1 vzdevkov."
+msgstr[0] "Omejitev kanala ste nastavili na %1 vzdevkov."
+msgstr[1] "Omejitev kanala ste nastavili na %1 vzdevek."
+msgstr[2] "Omejitev kanala ste nastavili na %1 vzdevka."
+msgstr[3] "Omejitev kanala ste nastavili na %1 vzdevke."
 
 #: src/irc/channel.cpp:1730
 #, kde-format
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
-msgstr[0] "%2 je nastavil omejitev kanala na %1 vzdevek."
-msgstr[1] "%2 je nastavil omejitev kanala na %1 vzdevka."
-msgstr[2] "%2 je nastavil omejitev kanala na %1 vzdevke."
-msgstr[3] "%2 je nastavil omejitev kanala na %1 vzdevkov."
+msgstr[0] "%2 je nastavil omejitev kanala na %1 vzdevkov."
+msgstr[1] "%2 je nastavil omejitev kanala na %1 vzdevek."
+msgstr[2] "%2 je nastavil omejitev kanala na %1 vzdevka."
+msgstr[3] "%2 je nastavil omejitev kanala na %1 vzdevke."
 
 #: src/irc/channel.cpp:1734
 #, kde-format
@@ -5271,7 +5271,7 @@ msgstr "Seznam kanalov"
 #, kde-format
 msgctxt "save list"
 msgid "Save &List..."
-msgstr "Shrani seznam ..."
+msgstr "Shrani seznam …"
 
 #: src/irc/channellistpanel.cpp:157
 #, kde-format
@@ -5521,10 +5521,10 @@ msgstr "-%1 na %2- %3"
 #, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] "sekunda"
-msgstr[1] "sekundi"
-msgstr[2] "sekunde"
-msgstr[3] "sekund"
+msgstr[0] "sekund"
+msgstr[1] "sekunda"
+msgstr[2] "sekundi"
+msgstr[3] "sekunde"
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5605,10 +5605,10 @@ msgstr "Načini kanala: "
 #, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
-msgstr[0] "omejen na %1 uporabnika"
+msgstr[0] "omejen na %1 uporabnikov"
 msgstr[1] "omejen na %1 uporabnika"
-msgstr[2] "omejen na %1 uporabnike"
-msgstr[3] "omejen na %1 uporabnikov"
+msgstr[2] "omejen na %1 uporabnika"
+msgstr[3] "omejen na %1 uporabnike"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5898,9 +5898,9 @@ msgstr "%1 je operater na IRCu."
 #, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] "%1 dan"
-msgstr[1] "%1 dni"
-msgstr[2] "%1 dni"
+msgstr[0] "%1 dni"
+msgstr[1] "%1 dan"
+msgstr[2] "%1 dneva"
 msgstr[3] "%1 dni"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
@@ -5908,10 +5908,10 @@ msgstr[3] "%1 dni"
 #, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] "%1 ura"
-msgstr[1] "%1 uri"
-msgstr[2] "%1 ure"
-msgstr[3] "%1 ur"
+msgstr[0] "%1 ur"
+msgstr[1] "%1 ura"
+msgstr[2] "%1 uri"
+msgstr[3] "%1 ure"
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
@@ -5919,10 +5919,10 @@ msgstr[3] "%1 ur"
 #, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] "%1 minuta"
-msgstr[1] "%1 minuti"
-msgstr[2] "%1 minute"
-msgstr[3] "%1 minut"
+msgstr[0] "%1 minut"
+msgstr[1] "%1 minuta"
+msgstr[2] "%1 minuti"
+msgstr[3] "%1 minute"
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
@@ -5930,10 +5930,10 @@ msgstr[3] "%1 minut"
 #, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "%1 sekunda"
-msgstr[1] "%1 sekundi"
-msgstr[2] "%1 sekunde"
-msgstr[3] "%1 sekund"
+msgstr[0] "%1 sekund"
+msgstr[1] "%1 sekunda"
+msgstr[2] "%1 sekundi"
+msgstr[3] "%1 sekunde"
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -5960,10 +5960,10 @@ msgstr "%1 je bil nedejaven %2 in %3."
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] "%2 je bil nedejaven %1 sekundo."
-msgstr[1] "%2 je bil nedejaven %1 sekundi."
-msgstr[2] "%2 je bil nedejaven %1 sekunde."
-msgstr[3] "%2 je bil nedejaven %1 sekund."
+msgstr[0] "%2 je bil nedejaven %1 sekund."
+msgstr[1] "%2 je bil nedejaven %1 sekundo."
+msgstr[2] "%2 je bil nedejaven %1 sekundi."
+msgstr[3] "%2 je bil nedejaven %1 sekunde."
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
@@ -6011,10 +6011,10 @@ msgstr "Seznam kanalov:"
 #, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] "%2 (%1 uporabnik): %3"
-msgstr[1] "%2 (%1 uporabnika): %3"
-msgstr[2] "%2 (%1 uporabniki): %3"
-msgstr[3] "%2 (%1 uporabnikov): %3"
+msgstr[0] "%2 (%1 uporabnikov): %3"
+msgstr[1] "%2 (%1 uporabnik): %3"
+msgstr[2] "%2 (%1 uporabnika): %3"
+msgstr[3] "%2 (%1 uporabniki): %3"
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -6242,7 +6242,7 @@ msgstr "Povezani opazovani vzdevki"
 #: src/irc/nicksonline.cpp:34
 #, kde-format
 msgid "&Add Nickname..."
-msgstr "Dod&aj vzdevek ..."
+msgstr "Dod&aj vzdevek …"
 
 #: src/irc/nicksonline.cpp:35
 #, kde-format
@@ -6667,13 +6667,12 @@ msgstr "Prezri"
 #: src/irc/outputfilter.cpp:1549
 #, kde-format
 msgid "Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>"
-msgstr ""
-"Uporaba: %1IGNORE [ -ALL ] <uporabnik 1> <uporabnik 2> ... <uporabnik n>"
+msgstr "Uporaba: %1IGNORE [ -ALL ] <uporabnik 1> <uporabnik 2> … <uporabnik n>"
 
 #: src/irc/outputfilter.cpp:1560
 #, kde-format
 msgid "Usage: %1UNIGNORE <user 1> <user 2> ... <user n>"
-msgstr "Uporaba: %1UNIGNORE <uporabnik 1> <uporabnik 2> ... <uporabnik n>"
+msgstr "Uporaba: %1UNIGNORE <uporabnik 1> <uporabnik 2> … <uporabnik n>"
 
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
@@ -6684,8 +6683,8 @@ msgstr "%1 je bil odstranjen iz seznama prezrtih."
 #, kde-format
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
-msgstr[0] "Ni takega prezrtega vzdevka: %2"
-msgstr[1] "Ni takih prezrtih vzdevkov: %2"
+msgstr[0] "Ni takih prezrtih vzdevkov: %2"
+msgstr[1] "Ni takega prezrtega vzdevka: %2"
 msgstr[2] "Ni takih prezrtih vzdevkov: %2"
 msgstr[3] "Ni takih prezrtih vzdevkov: %2"
 
@@ -6866,7 +6865,7 @@ msgstr "%1 (%2) je zapustil ta strežnik (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr "Zaganjanje lupinskega ukaza pred povezavo ..."
+msgstr "Zaganjanje lupinskega ukaza pred povezavo …"
 
 #: src/irc/server.cpp:412
 #, kde-format
@@ -6887,17 +6886,17 @@ msgstr "Opozorilo"
 #: src/irc/server.cpp:475
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
-msgstr "Iskanje strežnika %1 (vrata %2) ..."
+msgstr "Iskanje strežnika %1 (vrata %2) …"
 
 #: src/irc/server.cpp:682
 #, kde-format
 msgid "Server found, connecting..."
-msgstr "Strežnik je bil najden, povezovanje ..."
+msgstr "Strežnik je bil najden, povezovanje …"
 
 #: src/irc/server.cpp:717
 #, kde-format
 msgid "Negotiating capabilities with server..."
-msgstr "Pogajanja s strežnikom o njegovih zmožnostih ..."
+msgstr "Pogajanja s strežnikom o njegovih zmožnostih …"
 
 #: src/irc/server.cpp:760
 #, kde-format
@@ -6928,7 +6927,7 @@ msgstr "Pogajanja o zmožnostih so spodletela: strežnik tega najbrž ne podpira
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr ""
-"Zmožnost SASL je potrjena s strani strežnika, poskus overitve s SASL %1 ..."
+"Zmožnost SASL je potrjena s strani strežnika, poskus overitve s SASL %1 …"
 
 #: src/irc/server.cpp:829
 #, kde-format
@@ -7019,7 +7018,7 @@ msgstr "Prejeta neveljavna zahteva DCC SEND od %1."
 #: src/irc/server.cpp:2373
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
-msgstr "%1 vam želi poslati \"%2\" (%3) ..."
+msgstr "%1 vam želi poslati \"%2\" (%3) …"
 
 #: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
 #: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
@@ -7036,18 +7035,18 @@ msgstr "Prejeta neveljavna zahteva DCC CHAT od %1."
 #: src/irc/server.cpp:2503
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
-msgstr "Spraševanje %1, če želi sprejeti pošiljanje \"%2\" (%3) ..."
+msgstr "Spraševanje %1, če želi sprejeti pošiljanje \"%2\" (%3) …"
 
 #: src/irc/server.cpp:2515
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
-msgstr "Spraševanje %1, če želi sprejeti pasivno pošiljanje \"%2\" (%3) ..."
+msgstr "Spraševanje %1, če želi sprejeti pasivno pošiljanje \"%2\" (%3) …"
 
 #: src/irc/server.cpp:2527
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
-msgstr "Spraševanje %1, če želi sprejeti %2 ..."
+msgstr "Spraševanje %1, če želi sprejeti %2 …"
 
 #: src/irc/server.cpp:2586
 #, kde-format
@@ -7069,7 +7068,7 @@ msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
-msgstr "Nadaljevanje prejema \"%1\" iz %2 od %3 % od %4 naprej ..."
+msgstr "Nadaljevanje prejema \"%1\" iz %2 od %3 % od %4 naprej …"
 
 #: src/irc/server.cpp:2673
 #, kde-format
@@ -7083,7 +7082,7 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr "Nadaljevanje pošiljanja \"%1\" k %2 od %3 % od %4 naprej ..."
+msgstr "Nadaljevanje pošiljanja \"%1\" k %2 od %3 % od %4 naprej …"
 
 #: src/irc/server.cpp:2741
 #, kde-format
@@ -7131,7 +7130,7 @@ msgstr "Pošiljanje \"%1\" k %2 je spodletelo. Razlog: %3."
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr "Pošiljanje \"%1\" k %2 ..."
+msgstr "Pošiljanje \"%1\" k %2 …"
 
 #: src/irc/server.cpp:2830
 #, kde-format
@@ -7373,7 +7372,7 @@ msgstr ""
 #: src/viewer/ircinput.cpp:486
 #, kde-format
 msgid "&Edit..."
-msgstr "Ur&edi ..."
+msgstr "Ur&edi …"
 
 #. i18n: ectx: property (text), widget (QLabel, m_commandsLabel)
 #: src/irc/servergroupdialogui.ui:78
@@ -7455,13 +7454,13 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:151
 #, kde-format
 msgid "&Add..."
-msgstr "Dod&aj ..."
+msgstr "Dod&aj …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_changeServerButton)
 #: src/irc/servergroupdialogui.ui:161
 #, kde-format
 msgid "E&dit..."
-msgstr "Ure&di ..."
+msgstr "Ure&di …"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_removeServerButton)
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_removeChannelButton)
@@ -7486,13 +7485,13 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:239
 #, kde-format
 msgid "Add..."
-msgstr "Dodaj ..."
+msgstr "Dodaj …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_changeChannelButton)
 #: src/irc/servergroupdialogui.ui:249
 #, kde-format
 msgid "Ed&it..."
-msgstr "Ured&i ..."
+msgstr "Ured&i …"
 
 #: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
@@ -7541,11 +7540,11 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
-"Ne morete izbrisati izbranega strežnika.\n"
+"Ne morete izbrisati izbranih strežnikov.\n"
 "\n"
 "Omrežje %2 mora imeti vsaj en strežnik."
 msgstr[1] ""
-"Ne morete izbrisati izbranih strežnikov.\n"
+"Ne morete izbrisati izbranega strežnika.\n"
 "\n"
 "Omrežje %2 mora imeti vsaj en strežnik."
 msgstr[2] ""
@@ -7582,7 +7581,7 @@ msgstr ""
 #: src/irc/serverlistdialogui.ui:26
 #, kde-format
 msgid "&New..."
-msgstr "&Novo ..."
+msgstr "&Novo …"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_delButton)
 #: src/irc/serverlistdialogui.ui:48
@@ -8182,7 +8181,7 @@ msgstr "Končaj in znova zaženi program"
 #: src/mainwindow.cpp:142
 #, kde-format
 msgid "&Server List..."
-msgstr "Seznam &strežnikov ..."
+msgstr "Seznam &strežnikov …"
 
 #: src/mainwindow.cpp:145
 #, kde-format
@@ -8192,7 +8191,7 @@ msgstr "Urejaj omrežja in strežnike"
 #: src/mainwindow.cpp:150
 #, kde-format
 msgid "Quick &Connect..."
-msgstr "Hitro poveži ..."
+msgstr "Hitro poveži …"
 
 #: src/mainwindow.cpp:153
 #, kde-format
@@ -8222,7 +8221,7 @@ msgstr "Prekini povezavo s trenutnim strežnikom."
 #: src/mainwindow.cpp:175
 #, kde-format
 msgid "&Identities..."
-msgstr "&Istovetnosti ..."
+msgstr "&Istovetnosti …"
 
 #: src/mainwindow.cpp:178
 #, kde-format
@@ -8253,7 +8252,7 @@ msgstr "Odpre znano zgodovino za ta kanal v novem zavihku"
 #: src/mainwindow.cpp:209 src/viewer/viewcontainer.cpp:938
 #, kde-format
 msgid "&Channel Settings..."
-msgstr "Nastavitve kanala ..."
+msgstr "Nastavitve kanala …"
 
 #: src/mainwindow.cpp:212
 #, kde-format
@@ -8447,7 +8446,7 @@ msgstr "Splošna odsotnost"
 #: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
 msgid "&Join Channel..."
-msgstr "Pridruži se kanalu ..."
+msgstr "Pridruži se kanalu …"
 
 #: src/mainwindow.cpp:484
 #, kde-format
@@ -8478,7 +8477,7 @@ msgstr ""
 #: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, kde-format
 msgid "Special &Character..."
-msgstr "Posebni znak ..."
+msgstr "Posebni znak …"
 
 #: src/mainwindow.cpp:517
 #, kde-format
@@ -8576,12 +8575,12 @@ msgstr "Preklopi Splošno odsotnost"
 #: src/mainwindow.cpp:841
 #, kde-format
 msgid "Insert &IRC Color..."
-msgstr "Vstavi barvo &IRC ..."
+msgstr "Vstavi barvo &IRC …"
 
 #: src/mainwindow.cpp:842
 #, kde-format
 msgid "Insert Special &Character..."
-msgstr "Vstavi poseben znak ..."
+msgstr "Vstavi poseben znak …"
 
 #: src/mainwindow.cpp:843
 #, kde-format
@@ -8733,7 +8732,7 @@ msgstr "Pridružili ste se %1."
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr "Ponastavi ..."
+msgstr "Ponastavi …"
 
 #: src/queuetuner.cpp:229
 #, kde-format
@@ -9008,10 +9007,10 @@ msgstr "Ni odgovora s strežnika %1 že več kot %2 in %3."
 #, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] "Ni odgovora s strežnika %2 že več kot %1 sekundo."
-msgstr[1] "Ni odgovora s strežnika %2 že več kot %1 sekundi."
-msgstr[2] "Ni odgovora s strežnika %2 že več kot %1 sekund."
-msgstr[3] "Ni odgovora s strežnika %2 že več kot %1 sekund."
+msgstr[0] "Ni odgovora s strežnika %2 že več kot %1 sekund."
+msgstr[1] "Ni odgovora s strežnika %2 že več kot %1 sekundo."
+msgstr[2] "Ni odgovora s strežnika %2 že več kot %1 sekundi."
+msgstr[3] "Ni odgovora s strežnika %2 že več kot %1 sekunde."
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -9055,7 +9054,7 @@ msgstr ""
 #: src/urlcatcher.cpp:97
 #, kde-format
 msgid "&Save..."
-msgstr "&Shrani ..."
+msgstr "&Shrani …"
 
 #: src/urlcatcher.cpp:100
 #, kde-format
@@ -9065,7 +9064,7 @@ msgstr "Shrani izbrane URL-je na disk."
 #: src/urlcatcher.cpp:103
 #, kde-format
 msgid "Add Bookmark..."
-msgstr "Dodaj zaznamek ..."
+msgstr "Dodaj zaznamek …"
 
 #: src/urlcatcher.cpp:111
 #, kde-format
@@ -9111,7 +9110,7 @@ msgstr "Izbriši izbrano povezavo."
 #, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
-msgstr "&Shrani seznam ..."
+msgstr "&Shrani seznam …"
 
 #: src/urlcatcher.cpp:130
 #, kde-format
@@ -9212,7 +9211,7 @@ msgstr "Prisoten"
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
 msgid "&Change away message..."
-msgstr "Spremeni sporočilo ob odsotnosti ..."
+msgstr "Spremeni sporočilo ob odsotnosti …"
 
 #: src/viewer/awaylabel.cpp:33
 #, kde-format
@@ -9650,12 +9649,12 @@ msgstr "Dodaj med zaznamke"
 #: src/viewer/irccontextmenus.cpp:142
 #, kde-format
 msgid "Open With..."
-msgstr "Odpri z ..."
+msgstr "Odpri z …"
 
 #: src/viewer/irccontextmenus.cpp:143
 #, kde-format
 msgid "Save Link As..."
-msgstr "Shrani povezavo kot ..."
+msgstr "Shrani povezavo kot …"
 
 #: src/viewer/irccontextmenus.cpp:283
 #, kde-format
@@ -9665,7 +9664,7 @@ msgstr "Poišči »%1« z"
 #: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr "Nastavi spletne bližnjice ..."
+msgstr "Nastavi spletne bližnjice …"
 
 #: src/viewer/irccontextmenus.cpp:333
 #, kde-format
@@ -9801,7 +9800,7 @@ msgstr "Odstrani iz Opazovanih vzdevkov"
 #: src/viewer/irccontextmenus.cpp:452
 #, kde-format
 msgid "Send &File..."
-msgstr "Pošlji datoteko ..."
+msgstr "Pošlji datoteko …"
 
 #: src/viewer/irccontextmenus.cpp:454
 #, kde-format
@@ -9872,19 +9871,19 @@ msgstr ""
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
-msgstr[0] "%1 bajt"
-msgstr[1] "%1 bajta"
-msgstr[2] "%1 bajti"
-msgstr[3] "%1 bajtov"
+msgstr[0] "%1 bajtov"
+msgstr[1] "%1 bajt"
+msgstr[2] "%1 bajta"
+msgstr[3] "%1 bajti"
 
 #: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
-msgstr[0] "%1 vrstica"
-msgstr[1] "%1 vrstici"
-msgstr[2] "%1 vrstice"
-msgstr[3] "%1 vrstic"
+msgstr[0] "%1 vrstic"
+msgstr[1] "%1 vrstica"
+msgstr[2] "%1 vrstici"
+msgstr[3] "%1 vrstice"
 
 #: src/viewer/ircinput.cpp:481
 #, kde-format
@@ -10172,7 +10171,7 @@ msgstr "Odjemalec IRC"
 #: src/viewer/viewcontainer.cpp:882
 #, kde-format
 msgid "Find Text..."
-msgstr "Najdi besedilo ..."
+msgstr "Najdi besedilo …"
 
 #: src/viewer/viewcontainer.cpp:884
 #, kde-format
@@ -10192,7 +10191,7 @@ msgstr "&Odpri dnevniško datoteko za %1"
 #: src/viewer/viewcontainer.cpp:933
 #, kde-format
 msgid "&Channel Settings for %1..."
-msgstr "Nastavitve kanala za %1 ..."
+msgstr "Nastavitve kanala za %1 …"
 
 #: src/viewer/viewcontainer.cpp:2116
 #, kde-format
@@ -10213,7 +10212,7 @@ msgstr "Privzeto ( %1 )"
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
 msgid "&Rename Tab..."
-msgstr "P&reimenuj zavihek ..."
+msgstr "P&reimenuj zavihek …"
 
 #: src/viewer/viewcontainer.cpp:2379
 #, kde-format
