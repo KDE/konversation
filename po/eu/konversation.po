@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-23 02:21+0000\n"
-"PO-Revision-Date: 2024-02-04 16:00+0100\n"
+"PO-Revision-Date: 2024-03-01 23:16+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
-"Language-Team: Basque <kde-i18n-doc@kde.org>\n"
+"Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -542,6 +542,9 @@ msgid ""
 "translating them into human readable words. E.g. '*** Channel modes: no "
 "messages from outside' will become '*** Channel modes: n'"
 msgstr ""
+"Mantendu kanal-moduen karaktere-kateak karaktere konbinazio gisa haiek "
+"gizakientzako irakurgarriak diren hitzetara itzuli ordez. Adib. '*** Kanal "
+"moduak: kanpoko mezurik ez', '*** Kanal moduak: n' bihurtuko du"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseLiteralModes)
 #: src/config/chatwindowbehaviour_config.ui:72
@@ -831,6 +834,9 @@ msgid ""
 "in your chat window as colored text. You can add color codes to your "
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
+"Aukera hori gaituz gero, zure IRC mezuetan gehitutako kolore-kodeak zure "
+"berriketa-leihoan testu koloredun gisa azalduko dira. Zure mezuetan kolore-"
+"kodeak gehitzeko, hautatu Txertatu -> IRC kolorea"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:747
@@ -1108,6 +1114,8 @@ msgid ""
 "If this option enabled dcc transfers for IPv6 connections will be done over "
 "IPv4 interface set here"
 msgstr ""
+"Aukera hori gaituta badago, IPv6 konexioetarako DCC transferentziak hemen "
+"ezarritako IPv4 interfazearen bidez egingo dira"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccIPv4Fallback)
 #: src/config/dcc_configui.ui:127
@@ -3078,7 +3086,7 @@ msgstr "Fitxategiaren tamaina:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:68
 #, kde-format
 msgid "Resumed:"
-msgstr ""
+msgstr "Berrekinda:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:88
@@ -4197,9 +4205,9 @@ msgstr "Aurreratua"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
 #: src/identitydialog.ui:526
-#, kde-format
+#, fuzzy, kde-format
 msgid "&Pre-shell command:"
-msgstr ""
+msgstr "Oskol-&aurreko komandoa:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
 #: src/identitydialog.ui:536
@@ -4241,6 +4249,10 @@ msgid ""
 "you computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
+"Konektatzen zarenean, zerbitzari askok zure ordenagailua itauntzen dute "
+"IDENT erantzun bat lortzeko. Zure ordenagailuak IDENT zerbitzaririk ibiltzen "
+"ez badu, erantzun hori «Konversation»ek bidaliko du. Ez da zuriunerik "
+"onartzen."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
@@ -4310,6 +4322,11 @@ msgid ""
 "clicking the Edit Channel Properties button to the left of the topic.  You "
 "can also view the history of topics there.</p></qt>"
 msgstr ""
+"<qt><p>«IRC»ko kanal guztiek haiei lotutako mintzagai bat dute. Hori, "
+"guztiek ikus dezaketen mezu bat besterik ez da.</p><p>Operadore bat bazara, "
+"edo kanalaren <em>'T'</em> modua ezarri ez bada, mintzagaia alda dezakezu, "
+"mintzagaiaren ezkerreko Editatu Propietateak botoiari klik eginda. Leku "
+"berean mintzagaien historia ere ikus dezakezu.</p></qt>"
 
 #: src/irc/channel.cpp:182
 #, kde-format

@@ -14,13 +14,13 @@
 # Türker SEZER <turkersezer@tsdesign.info>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2013-2014, 2015, 2017.
 # Kaan Ozdincer <kaanozdincer@gmail.com>, 2014.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-23 02:21+0000\n"
-"PO-Revision-Date: 2023-11-27 17:27+0300\n"
+"PO-Revision-Date: 2024-03-01 16:04+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1401,7 +1401,7 @@ msgstr "Sohbet Pencereleri"
 #: src/config/highlight_configui.ui:222
 #, kde-format
 msgid "&Pattern:"
-msgstr "&Model:"
+msgstr "&Dizgi:"
 
 #. i18n: ectx: property (text), widget (QLabel, colorLabel)
 #: src/config/highlight_configui.ui:251
@@ -1455,7 +1455,7 @@ msgstr "&Bildirimleri etkinkeştir:"
 #: src/config/ignore_configui.ui:45
 #, kde-format
 msgid "Pattern"
-msgstr "Kalıp"
+msgstr "Dizgi"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, ignoreListView)
 #: src/config/ignore_configui.ui:50 src/dcc/transferlistmodel.cpp:44
@@ -1467,7 +1467,7 @@ msgstr "Tür"
 #: src/config/ignore_configui.ui:58
 #, kde-format
 msgid "Pattern:"
-msgstr "Kalıp:"
+msgstr "Dizgi:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, grpMessageTypes)
 #: src/config/ignore_configui.ui:77
@@ -6583,7 +6583,7 @@ msgstr "Kanal adı olmadığında, %1UNBAN yalnızca kanal içerisinde çalış�
 #: src/irc/outputfilter.cpp:1493
 #, kde-format
 msgid "Usage: %1UNBAN [channel] pattern"
-msgstr "Kullanım: %1UNBAN [kanal] desen"
+msgstr "Kullanım: %1UNBAN [kanal] dizgi"
 
 #: src/irc/outputfilter.cpp:1539
 #, kde-format
