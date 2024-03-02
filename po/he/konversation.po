@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-23 14:37+0200\n"
+"PO-Revision-Date: 2024-02-28 09:54+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6698,13 +6698,13 @@ msgid "SSL Connection Error"
 msgstr "שגיאת חיבור SSL"
 
 #: src/irc/server.cpp:930
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
-"החיבור אל שרת %1 (יציאה <numid>%2</numid>) אבדה בעת ההמתנה אל התשובה של "
-"המשתמש לשגיאת SSL. אם תתעלם מהשגיאה ייוצר חיבור חדש באופן אוטומטי."
+"החיבור לשרת %1 (פתחה <numid>%2</numid>) אבדה בעת המתנה לתגובת המשתמש לשגיאת "
+"SSL. התעלמות מהשגיאה תיצור חיבור חדש אוטומטית."
 
 #: src/irc/server.cpp:950
 #, fuzzy, kde-format
