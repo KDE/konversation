@@ -571,12 +571,12 @@ MainWindow::MainWindow() : KXmlGuiWindow(nullptr)
     new KonviBookmarkHandler(menu, this);
     actionCollection()->addAction(QStringLiteral("bookmarks") , action);
 
-    // decide whether to show the tray icon or not
-    updateTrayIcon();
-
     createGUI();
 
     setAutoSaveSettings();
+
+    // decide whether to show the tray icon or not
+    updateTrayIcon();
 
     // Apply menubar show/hide pref
     m_showMenuBarAction->setChecked(Preferences::self()->showMenuBar());
