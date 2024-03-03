@@ -1,5 +1,6 @@
 # translation of konversation.po to Galician
 #
+# SPDX-FileCopyrightText: 2024 Adrián Chaves (Gallaecio)
 # mvillarino <mvillarino@users.sourceforge.net>, 2006.
 # Xosé <xosecalvo@gmail.com>, 2009.
 # Marce Villarino <mvillarino@kde-espana.es>, 2009.
@@ -7,21 +8,20 @@
 # Marce Villarino <mvillarino@kde-espana.es>, 2012, 2013, 2014.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2012, 2015, 2017.
 # Miguel Branco <mgl.branco@gmail.com>, 2013.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2023-09-03 12:45+0200\n"
+"PO-Revision-Date: 2024-03-02 21:18+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1902,7 +1902,7 @@ msgstr "Identidade por omisión"
 #: src/config/quickbuttons_configui.ui:20
 #, kde-format
 msgid "Available Placeholders"
-msgstr "Metapalabras dispoñíbeis"
+msgstr "Marcadores de posición dispoñíbeis"
 
 #. i18n: ectx: property (text), widget (QLabel, placeholderHelpLabel)
 #: src/config/quickbuttons_configui.ui:45
@@ -4404,6 +4404,7 @@ msgstr ""
 msgid "Maximum users allowed in channel"
 msgstr "Número máximo de usuarios permitidos na canle"
 
+# well-spelled: ema
 #: src/irc/channel.cpp:183
 #, kde-format
 msgid ""
@@ -9221,6 +9222,7 @@ msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
 msgstr "%1 ( %2)"
 
+# well-spelled: ema
 #: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
 msgid ""
@@ -9232,6 +9234,7 @@ msgstr ""
 "</p><p>O modo <b>T</b>ema significa que só o operador da canle pode cambiar "
 "o tema da canle.</p></qt>"
 
+# well-spelled: saxes
 #: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
 msgid ""
@@ -9246,6 +9249,7 @@ msgstr ""
 "que estean na canle. Case todos os canles teñen isto activo para evitaren "
 "mensaxes molestas.</p></qt>"
 
+# well-spelled: ecreta
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
 msgid ""
@@ -9276,6 +9280,7 @@ msgstr ""
 "unirse á canle se fose convidada. Para convidar alguén, un operador da canle "
 "debe emitir a orde <em>/invite alcume</em> desde a canle.</p></qt>"
 
+# well-spelled: rivada
 #: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
 msgid ""
@@ -9290,6 +9295,7 @@ msgstr ""
 "pero o tema aparece. O <em>WHOIS</em> dun usuario pode ou non amosalo como "
 "que está nunha canle privada, dependendo do servidor de IRC.</p></qt>"
 
+# well-spelled: oderado
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
 msgid ""
@@ -9312,6 +9318,7 @@ msgstr ""
 "</p><p>Unha canle protexida necesita que os usuarios insiran un contrasinal "
 "para unirse.</p></qt>"
 
+# well-spelled: ímite
 #: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
 msgid ""
