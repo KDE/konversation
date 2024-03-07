@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-01 23:16+0100\n"
+"PO-Revision-Date: 2024-03-07 00:32+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -955,6 +955,13 @@ msgid ""
 "able to see what they are saying, but they will not be able to read what you "
 "are saying."
 msgstr ""
+"ECB («Electronic Codebook») modua, zifratze-bezero askok onartzen dute, hala "
+"nola «FiSH»ek eta «Mircryption»ek, baina, oro har uste da ez dela segurua.\n"
+"\n"
+"CBC («Cipher Block Chaining») modua ez du «FiSH»ek onartzen, «Mircryption»ek "
+"bai ordea. Gako trukea erabili behar baduzu, lehenik eta behin, zure kideak "
+"CBC erabili dezakeen bezero bat duen jakitea hobe duzu, bestela, zer esaten "
+"duen ikusi ahal izango duzu, baina hark ezingo ditu zuk esandakoak irakurri."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:122
@@ -1121,7 +1128,7 @@ msgstr ""
 #: src/config/dcc_configui.ui:127
 #, kde-format
 msgid "Fallback to an IPv&4 interface for DCC send:"
-msgstr ""
+msgstr "Erabili erreserbako IPv&4 interfaze aukera DCC bidalketarako:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: src/config/dcc_configui.ui:156
@@ -1168,9 +1175,9 @@ msgstr "Gaitu DCC transferentzia zerbitzarirako berariazko a&takak:"
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
 #: src/config/dcc_configui.ui:279 src/config/dcc_configui.ui:332
-#, fuzzy, kde-format
+#, kde-format
 msgid "to"
-msgstr "Honetara:"
+msgstr "->"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificChatPorts)
 #: src/config/dcc_configui.ui:307
@@ -1231,6 +1238,8 @@ msgstr "Era&bili sistemaren erretilua mezu berriak jakinarazteko"
 #, kde-format
 msgid "Only &notify when a highlight is triggered or your current nick is used"
 msgstr ""
+"&Jakinarazi bakarrik nabarmentze bat eragiten denean edo zure uneko gotizena "
+"erabiltzen denean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:75
@@ -1254,7 +1263,7 @@ msgstr "Osatze &modua:"
 #: src/config/generalbehavior_configui.ui:105
 #, kde-format
 msgid "Inline Cycle"
-msgstr ""
+msgstr "Lerro barruko zikloa"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
 #: src/config/generalbehavior_configui.ui:110
@@ -1272,7 +1281,7 @@ msgstr "Oskolaren antzeko osatzeko kaxarekin"
 #: src/config/generalbehavior_configui.ui:123
 #, kde-format
 msgid "Suffi&x at start of line:"
-msgstr ""
+msgstr "Atzi&zkia lerro hasieran:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/generalbehavior_configui.ui:141
@@ -3743,7 +3752,7 @@ msgstr "Esku-hutsez marraztea"
 #: src/dcc/whiteboardtoolbar.cpp:44
 #, kde-format
 msgid "Draw a straight line"
-msgstr "Marraztu line zuzen bat"
+msgstr "Marraztu lerro zuzen bat"
 
 #: src/dcc/whiteboardtoolbar.cpp:49
 #, kde-format
@@ -4217,6 +4226,9 @@ msgid ""
 "starts<br>If you have multiple servers in this identity this command will be "
 "executed for each server"
 msgstr ""
+"Hemen, zerbitzarirako konexioa hasi aurretik exekutatu beharreko komando bat "
+"sar dezakezu<br>Nortasun horretan zerbitzari anizkoitzak badituzu komandoa "
+"haietako bakoitzean exekutatuko da"
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
 #: src/identitydialog.ui:549
@@ -4234,6 +4246,11 @@ msgid ""
 "system. If you seem to be having trouble seeing other user's messages "
 "correctly, try changing this setting."
 msgstr ""
+"Ezarpen horrek, tekleatzen dituzun karaktereak zerbitzarira bidaltzeko nola "
+"kodetzen diren gainean eragiten du. Konversation irekitzen duzun aurreneko "
+"aldian, aukera horiek sistema eragiletik eskuratzen ditu. Beste "
+"erabiltzaileen mezuak ondo ikusteko arazoak somatzen badituzu, saia zaitez "
+"ezarpen hori aldatzen."
 
 #. i18n: ectx: property (text), widget (QLabel, loginLabel)
 #: src/identitydialog.ui:572
@@ -4341,6 +4358,10 @@ msgid ""
 "channel mode <b>T</b>opic (button to left) will automatically be set if set "
 "this.</p></qt>"
 msgstr ""
+"<qt><p>Hori da kanalaren erabiltzaile-muga - aldi berean kanalean gehienez "
+"egon daitekeen erabiltzaile-kopurua. Operadorea bazara, hori ezar dezakezu. "
+"Hori ezarriz gero, kanal moduaren Min<b>T</b>zagaia (ezkerreko botoia) "
+"automatikoki ezarriko da.</p></qt>"
 
 #: src/irc/channel.cpp:230 src/viewer/statuspanel.cpp:48
 #, kde-format
@@ -4566,22 +4587,22 @@ msgstr "%1(e)k kanalaren mintzagaia \"%2\" ezarri du."
 #: src/irc/channel.cpp:1429
 #, kde-format
 msgid "You set a quiet on %1."
-msgstr ""
+msgstr "%1(e)ren gainean isilik ezarri duzu."
 
 #: src/irc/channel.cpp:1430
 #, kde-format
 msgid "%1 sets a quiet on %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ren gainean isilik ezarri du."
 
 #: src/irc/channel.cpp:1434
 #, kde-format
 msgid "You remove the quiet on %1."
-msgstr ""
+msgstr "%1(e)ren gaineko isilik kendu duzu."
 
 #: src/irc/channel.cpp:1435
 #, kde-format
 msgid "%1 removes the quiet on %2."
-msgstr ""
+msgstr "%1(e)k %2(e)ren gaineko isilik kendu du."
 
 #: src/irc/channel.cpp:1444
 #, kde-format
@@ -5308,6 +5329,8 @@ msgid ""
 "You can limit the channel list to those channels with a minimum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
+"Kanalen zerrenda, gutxieneko erabiltzaile-kopurua bat duten kanaletara muga "
+"dezakezu hemen. \"Mugarik gabe\" aukeratzeak irizpide hori ezgaitzen du."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_maxUser)
@@ -5323,6 +5346,8 @@ msgid ""
 "You can limit the channel list to those channels with a maximum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
+"Kanalen zerrenda, gehieneko erabiltzaile-kopurua bat duten kanaletara muga "
+"dezakezu hemen. \"Mugarik gabe\" aukeratzeak irizpide hori ezgaitzen du."
 
 #: src/irc/channelnick.cpp:187
 #, kde-format
@@ -5353,57 +5378,58 @@ msgstr "Ahotsa du"
 #, kde-format
 msgid "Received CTCP-PING request from %1 to channel %2, sending answer."
 msgstr ""
+"%1(e)ren %2 kanalerarako CTCP-PING eskaera bat jaso da, erantzuna bidaltzen."
 
 #: src/irc/inputfilter.cpp:253 src/irc/inputfilter.cpp:430
 #: src/irc/inputfilter.cpp:441
 #, kde-format
 msgid "Received CTCP-%1 request from %2, sending answer."
-msgstr ""
+msgstr "%2(e)ren CTCP-%1 eskaera jaso da, erantzuna bidaltzen."
 
 #: src/irc/inputfilter.cpp:270
 #, kde-format
 msgid "Received Version request from %1 to channel %2."
-msgstr ""
+msgstr "%1(e)ren %2 kanalerako bertsio eskaera jaso da."
 
 #: src/irc/inputfilter.cpp:278
 #, kde-format
 msgid "Received Version request from %1."
-msgstr ""
+msgstr "%1(e)ren bertsio eskaera bat jaso da."
 
 #: src/irc/inputfilter.cpp:350
 #, kde-format
 msgid "Received invalid DCC SEND request from %1."
-msgstr ""
+msgstr "%1(e)ren DCC SEND eskaera baliogabe bat jaso da."
 
 #: src/irc/inputfilter.cpp:366
 #, kde-format
 msgid "Received invalid DCC ACCEPT request from %1."
-msgstr ""
+msgstr "%1(e)ren DCC ACCEPT eskaera baliogabe bat jaso da."
 
 #: src/irc/inputfilter.cpp:382
 #, kde-format
 msgid "Received invalid DCC RESUME request from %1."
-msgstr ""
+msgstr "%1(e)ren DCC RESUME eskaera baliogabe bat jaso da."
 
 #: src/irc/inputfilter.cpp:411
 #, kde-format
 msgid "Received invalid DCC CHAT request from %1."
-msgstr ""
+msgstr "%1(e)ren DCC CHAT eskaera baliogabe bat jaso da."
 
 #: src/irc/inputfilter.cpp:419
 #, kde-format
 msgid "Unknown DCC command %1 received from %2."
-msgstr ""
+msgstr "%2(e)ren %1 DCC komando ezezaguna jaso da."
 
 #: src/irc/inputfilter.cpp:457
 #, kde-format
 msgid "Received unknown CTCP-%1 request from %2 to Channel %3."
-msgstr ""
+msgstr "%2(r)en %3 kanalerako CTCP-%1 eskaera ezezaguna jaso da."
 
 #: src/irc/inputfilter.cpp:463
 #, kde-format
 msgid "Received unknown CTCP-%1 request from %2."
-msgstr ""
+msgstr "%2(r)en CTCP-%1 eskaera ezezaguna jaso da."
 
 #: src/irc/inputfilter.cpp:489
 #, kde-format
@@ -5420,12 +5446,12 @@ msgstr[1] "segundo"
 #: src/irc/inputfilter.cpp:512
 #, kde-format
 msgid "Received CTCP-PING reply from %1: %2 %3."
-msgstr ""
+msgstr "%1(e)ren CTCP-PING erantzuna jaso da: %2 %3."
 
 #: src/irc/inputfilter.cpp:540
 #, kde-format
 msgid "Received CTCP-%1 reply from %2: %3."
-msgstr ""
+msgstr "%2(e)ren CTCP-%1 erantzuna jaso da: %3."
 
 #: src/irc/inputfilter.cpp:553
 #, kde-format
@@ -5435,7 +5461,7 @@ msgstr "%1(e)ren DH1080_INIT jaso da"
 #: src/irc/inputfilter.cpp:558
 #, kde-format
 msgid "Received DH1080_FINISH from %1"
-msgstr ""
+msgstr "%1(e)ren DH1080_FINISH jaso da"
 
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #, kde-format
@@ -5737,7 +5763,7 @@ msgstr " (Aldenduta)"
 #: src/irc/inputfilter.cpp:1916
 #, kde-format
 msgid "End of /WHO list for %1"
-msgstr ""
+msgstr "%1(e)ren /WHO zerrendaren bukaera"
 
 #: src/irc/inputfilter.cpp:1999
 #, kde-format
@@ -6099,6 +6125,20 @@ msgid ""
 "their current status. See the Konversation Handbook for more information.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Horrek kanaleko pertsona guztiak erakusten ditu. Pertsona bakoitzaren "
+"goitizena erakusten da, bere egoera erakusten duen irudi batekin batera.<br /"
+"></p><table><tr><th>%1</th><td>Pertsona honek administratzaile pribilegioak "
+"ditu.</td></tr><tr><th>%2</th><td>Pertso hau kanal jabea da.</td></"
+"tr><tr><th>%3</th><td>Pertsona hau kanal-operadorea da.</td></tr><tr><th>%4</"
+"th><td> Pertsona hau kanal erdi-operadorea da.</td></tr><tr><th>%5</"
+"th><td>Pertsona horrek ahotsa du, hori dela eta moderatutako kanal batean "
+"hitz egin dezake.</td></tr><tr><th>%6</th><td>Pertsona honek ez du "
+"pribilegio berezirik.</td></tr><tr><th>%7</th><td>Hori, aurrekoen gainetik "
+"jarrita, pertsona hori aldendu dela adierazten du.</td></tr></"
+"table><p>Administratzaile, jabe eta erdi-operadorearen esanahia IRC "
+"zerbitzari ezberdinen artean aldatu egiten da.</p><p>Goitizenen gainetik "
+"iragatean haien egoera erakusten du. Informazio gehiago lortzeko, begiratu "
+"Konversation eskuliburua.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -9945,11 +9985,12 @@ msgstr ""
 "Hori da bere fitxa irekita zegoen bitartean kanal horretarako ezarri diren "
 "mintzagai guztien zerrenda bat.\n"
 "\n"
-"Inork mintzagai bera hainbat aldiz jarraian ezartzen badu, azken agerraldia "
+"Inork mintzagai bera hainbat aldiz jarraian ezarri badu, azken agerraldia "
 "erakusten da bakarrik.\n"
 "\n"
 "Zerrendako mintzagai bat hautatzen duzunean, haren beheko editatzeko eremuak "
-"jasoko du bere testua. Eremuaren edukia aldatzen hasten zareneanmintzagai"
+"bere testua jasoko du. Dena den, eremuaren edukia aldatzen hasten zarenean,  "
+"mintzagai"
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format

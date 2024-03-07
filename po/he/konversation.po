@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-02-28 09:54+0200\n"
+"PO-Revision-Date: 2024-03-06 23:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5369,7 +5369,7 @@ msgstr "המשתמש %1 הזמין אותך אל חדר %2."
 #: src/irc/inputfilter.cpp:842
 #, kde-format
 msgid "Capabilities"
-msgstr ""
+msgstr "יכולות"
 
 #: src/irc/inputfilter.cpp:895
 #, kde-format
@@ -5527,7 +5527,7 @@ msgstr "הכינוי כבר בשימוש. אנא נסה אחד אחר."
 msgid ""
 "The nickname %1 was already in use, but the connection failed before you "
 "responded."
-msgstr ""
+msgstr "הכינוי %1 כבר בשימוש, אך החיבור נכשל לפני שהגבת."
 
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
@@ -5703,45 +5703,45 @@ msgid "%1 is an IRC Operator."
 msgstr "המשתמש %1 הוא אופ."
 
 #: src/irc/inputfilter.cpp:2126 src/statusbar.cpp:177
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] "יום אחד"
-msgstr[1] "%1 ימים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "יום"
+msgstr[1] "יומיים"
+msgstr[2] "%1 יום"
+msgstr[3] "%1 ימים"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] "שעה אחת"
-msgstr[1] "%1 שעות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "שעה"
+msgstr[1] "שעתיים"
+msgstr[2] "%1 שעות"
+msgstr[3] "%1 שעות"
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
 #: src/statusbar.cpp:194
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] "דקה אחת"
-msgstr[1] "%1 דקות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "דקה"
+msgstr[1] "שתי דקות"
+msgstr[2] "%1 דקות"
+msgstr[3] "%1 דקות"
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
 #: src/statusbar.cpp:195
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] "שנייה אחת"
-msgstr[1] "%1 שניות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "שנייה"
+msgstr[1] "שתי שניות"
+msgstr[2] "%1 שניות"
+msgstr[3] "%1 שניות"
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -5934,7 +5934,7 @@ msgstr "..."
 msgid ""
 "You have received invites for the following channels. Select the channels "
 "you want to join:"
-msgstr ""
+msgstr "קיבלת הזמנות לערוצים הבאים. נא לבחור לאילו ערוצים להצטרף:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:44
