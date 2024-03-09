@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-01 16:04+0300\n"
+"PO-Revision-Date: 2024-03-08 20:00+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -6244,7 +6244,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:217
 #, kde-format
 msgid " online via %1"
-msgstr " %1 yoluyla çevrimiçi"
+msgstr " %1 ile çevrimiçi"
 
 #: src/irc/nicksonline.cpp:222
 #, kde-format
@@ -6341,8 +6341,8 @@ msgid ""
 "%1NAMES with no target may disconnect you from the server. Specify '*' if "
 "you really want this."
 msgstr ""
-"%1NAMES sunucu bağlantınızın kesilmesine neden olabilir. Gerçekten bunu "
-"istiyorsanız lütfen '*' ile belirtiniz."
+"%1NAMES sunucu bağlantınızın kesilmesine neden olabilir. Bunu gerçekten "
+"istiyorsanız lütfen '*' ile belirtin."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -9078,7 +9078,7 @@ msgstr "Bu oturumdaki Konversation pencerelerinde geçen URL'lerin listelesi."
 #: src/urlcatcher.cpp:168
 #, kde-format
 msgid "From"
-msgstr "Gönderen"
+msgstr "Kimden"
 
 #: src/urlcatcher.cpp:172
 #, kde-format
@@ -9828,7 +9828,7 @@ msgid ""
 "continue?</qt>"
 msgstr ""
 "<qt>Sohbete büyük bir metin parçası (%1 veya %2) kopyalamaya çalışıyorsunuz. "
-"Bu bağlantının kesilmesine neden olabilir. Gerçekten sürdürmek istiyor "
+"Bu bağlantının kesilmesine neden olabilir. Sürdürmeyi gerçekten istiyor "
 "musunuz?</qt>"
 
 #: src/viewer/ircinput.cpp:484
