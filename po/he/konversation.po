@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-06 23:07+0200\n"
+"PO-Revision-Date: 2024-03-14 12:03+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -629,7 +629,7 @@ msgstr "הצג שורת תזכורת בכל החדרים והשאילתות"
 #: src/config/chatwindowbehaviour_config.ui:255
 #, kde-format
 msgid "Enable Automatic User Information Look Up (/WHO)"
-msgstr "אפשר חיפוש מידע אוטומטי אודות משתמשים (/who)"
+msgstr "לאפשר חיפוש מידע אוטומטי על משתמשים (‎/WHO)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/chatwindowbehaviour_config.ui:267
@@ -886,13 +886,13 @@ msgstr "מספר ניסיונות לחיבור מחדש:"
 #: src/config/connectionbehavior_config.ui:87
 #, kde-format
 msgid "Debug"
-msgstr "דיבאג"
+msgstr "ניפוי תקלות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_RawLog)
 #: src/config/connectionbehavior_config.ui:93
 #, kde-format
 msgid "Show raw &log window when connecting"
-msgstr "הצג חלון &יומן נקי בעת החיבור"
+msgstr "הצגת חלון &יומן נקי בעת החיבור"
 
 #. i18n: ectx: property (title), widget (QGroupBox, encryptionGBox)
 #: src/config/connectionbehavior_config.ui:103
@@ -2636,7 +2636,7 @@ msgstr "ערוך זהות..."
 #: src/dbus.cpp:150
 #, kde-format
 msgid "Debug: %1"
-msgstr "דיבאג: %1"
+msgstr "ניפוי תקלות: %1"
 
 #: src/dbus.cpp:156
 #, kde-format
@@ -3724,7 +3724,7 @@ msgstr "בחר צבע מהתמונה"
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Save Image"
-msgstr "שמור תמונה"
+msgstr "שמירת תמונה"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -3768,7 +3768,7 @@ msgstr ""
 #: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
-msgstr "ססמת שרת"
+msgstr "סיסמת שרת"
 
 #: src/identitydialog.cpp:91
 #, kde-format
@@ -3787,7 +3787,7 @@ msgstr[3] ""
 #: src/identitydialog.cpp:115
 #, kde-format
 msgid "Change identity information"
-msgstr "שנה מידע אודות הזהות"
+msgstr "עריכת מידע על הזהות"
 
 #: src/identitydialog.cpp:116 src/irc/servergroupdialog.cpp:85
 #: src/viewer/editnotifydialog.cpp:79
@@ -3810,7 +3810,7 @@ msgstr "שם הזהות:"
 #: src/identitydialog.cpp:351
 #, kde-format
 msgid "You need to give the identity a name."
-msgstr "עליך לתת שם לזהות."
+msgstr "יש לתת שם לזהות."
 
 #: src/identitydialog.cpp:283
 #, kde-format
@@ -3829,7 +3829,7 @@ msgstr ""
 #: src/identitydialog.cpp:322
 #, kde-format
 msgid "Are you sure you want to delete all information for this identity?"
-msgstr "האם אתה בטוח כי ברצונך למחוק את כל המידע אודות זהות זו?"
+msgstr "למחוק את כל המידע על הזהות הזאת?"
 
 #: src/identitydialog.cpp:325
 #, kde-format
@@ -7040,7 +7040,7 @@ msgstr ""
 #: src/irc/servergroupdialog.cpp:84
 #, kde-format
 msgid "Change network information"
-msgstr "שנה מידע אודות הרשת"
+msgstr "שינוי פרטים על הרשת"
 
 #: src/irc/servergroupdialog.cpp:165
 #, kde-format
@@ -7523,7 +7523,7 @@ msgstr "תיעוד, שיפור רשימות תצפית, הרחבת דפדפן מ
 #: src/main.cpp:49
 #, kde-format
 msgid "Matthias Gierlings"
-msgstr "Matthias Gierlings"
+msgstr "מתיאס גירלינגס"
 
 #: src/main.cpp:49
 #, kde-format
@@ -7568,7 +7568,7 @@ msgstr "Michael Goettsche"
 #: src/main.cpp:53
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
-msgstr "חיבור מהיר, הסבה אל תצוגה על המסך חדשה, עוד שיפורים ותיקוני באגים"
+msgstr "חיבור מהיר, הסבה ל‚תצוגה על המסך’ חדשה, עוד שיפורים ותיקוני תקלות"
 
 #: src/main.cpp:54
 #, kde-format
@@ -7578,7 +7578,7 @@ msgstr "Benjamin Meyer"
 #: src/main.cpp:54
 #, kde-format
 msgid "A Handful of fixes and code cleanup"
-msgstr "הרבה תיקוני באגים, וניקוי קוד"
+msgstr "הרבה תיקוני תקלות וניקוי קוד"
 
 #: src/main.cpp:55
 #, kde-format
@@ -7638,7 +7638,7 @@ msgstr "Lucijan Busch"
 #: src/main.cpp:60 src/main.cpp:66 src/main.cpp:69
 #, kde-format
 msgid "Bug fixes"
-msgstr "תיקוני באגים"
+msgstr "תיקוני תקלות"
 
 #: src/main.cpp:61
 #, kde-format
@@ -7703,7 +7703,7 @@ msgstr "Ivor Hewitt"
 #: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
-msgstr "תיקוני באגים, תצוגת מסך, ניקוי נושאים"
+msgstr "תיקוני תקלות, תצוגה על המסך, הבהרת נושאים"
 
 #: src/main.cpp:68
 #, kde-format
@@ -7750,7 +7750,7 @@ msgstr "Modestas Vainius"
 #: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
-msgstr "תיקוני באגים ושיפורים."
+msgstr "תיקוני תקלות ושיפורים."
 
 #: src/main.cpp:73
 #, kde-format
@@ -7760,7 +7760,7 @@ msgstr "Abdurrahman AVCI"
 #: src/main.cpp:73
 #, kde-format
 msgid "Various bug fixes and enhancements."
-msgstr "תיקוני באגים ושיפורים."
+msgstr "תיקוני תקלות ושיפורים."
 
 #: src/main.cpp:74
 #, kde-format
