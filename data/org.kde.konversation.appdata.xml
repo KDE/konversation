@@ -520,7 +520,7 @@
       <li xml:lang="sr-ijekavian">екрански приказ за обавештења</li>
       <li xml:lang="sr-ijekavianlatin">ekranski prikaz za obaveštenja</li>
       <li xml:lang="sv">Visning av underrättelser på skärmen</li>
-      <li xml:lang="tr">Bildirimler için Ekran Gösterimleri</li>
+      <li xml:lang="tr">Bildirimler için Ekran Üzeri Görüntü</li>
       <li xml:lang="uk">Екранна панель для показу сповіщень</li>
       <li xml:lang="x-test">xxOnScreen Display for notificationsxx</li>
       <li xml:lang="zh-CN">屏显提示</li>
@@ -561,7 +561,7 @@
       <li xml:lang="sr-ijekavian">аутоматско откривање УТФ‑8</li>
       <li xml:lang="sr-ijekavianlatin">automatsko otkrivanje UTF‑8</li>
       <li xml:lang="sv">Automatisk detektering av UTF-8</li>
-      <li xml:lang="tr">Otomatik UTF-8 algılama</li>
+      <li xml:lang="tr">Otomatik UTF-8 algılaması</li>
       <li xml:lang="uk">Автоматичне виявлення UTF-8</li>
       <li xml:lang="x-test">xxAutomatic UTF-8 detectionxx</li>
       <li xml:lang="zh-CN">自动 UTF-8 检测</li>
