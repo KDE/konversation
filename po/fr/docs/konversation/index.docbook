@@ -673,7 +673,7 @@ revision history. (see installation appendix comment) -->
 > <command
 >IDENTIFY</command
 > <replaceable
->mot_de_passe</replaceable
+>mot-de-passe</replaceable
 ></userinput
 > au serveur. Si vous ne savez pas en quoi cela consiste, laissez ces champs vides.</para
 ></callout>
@@ -2321,7 +2321,7 @@ part of the listing.
 ><para
 >La fonctionnalité <guilabel
 >Pseudonymes surveillés</guilabel
-> fonctionne en requêtant périodiquement le serveur. Cette case définit à quel intervalle cela se produit. Évitez de mettre moins de 20 secondes car cela place une charge excessive sur le serveur.</para
+> fonctionne en faisant périodiquement une requête vers le serveur. Cette case définit à quel intervalle cela se produit. Évitez de mettre moins de 20 secondes car cela place une charge excessive sur le serveur.</para
 ></callout>
 
 </calloutlist>
@@ -2350,7 +2350,7 @@ part of the listing.
 
 <para
 ><computeroutput
->[17:52] [Notifier] paul est connecté (irc.kde.org).</computeroutput
+>[17:52] [Notifier] Paul est connecté (irc.kde.org).</computeroutput
 ></para>
 
 </sect1>
@@ -3728,14 +3728,14 @@ part of the listing.
 <para
 ><userinput
 ><replaceable
->/msg Eisfuchs J'ai besoin d'un peu d'aide avec la commande msg</replaceable
+>/msg Eisfuchs J'ai besoin d'un peu d'aide avec la commande « msg »</replaceable
 ></userinput
 ></para>
 
 <para
 ><userinput
 ><replaceable
->/msg #konversation Une nouvelle version de Konvi est disponible ! </replaceable
+>/msg #konversation Une nouvelle version de l'application est disponible ! </replaceable
 ></userinput
 ></para>
 
@@ -4045,7 +4045,7 @@ part of the listing.
 ></para>
 
 <para
->Envoie les numéros de versions de &konversation;, &Qt;, &kde-frameworks;  et &plasma; de votre système vers le canal.</para>
+>Envoie les numéros de versions de &konversation;, &Qt;, &kde-frameworks; et &plasma; de votre système vers le canal.</para>
 
 <para
 ><userinput
@@ -4497,7 +4497,7 @@ part of the listing.
 ></para>
 
 <para
->pour envoyer les numéros de versions de &konversation;, &Qt;, &kde-frameworks;  et &plasma; vers le canal.</para>
+>pour envoyer les numéros de versions de &konversation;, &Qt;, &kde-frameworks; et &plasma; vers le canal.</para>
 
 <para
 ><userinput
@@ -4606,7 +4606,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></term>
 <listitem>
   <para
->Ce script est utilisé pour ouvrir votre navigateur et chercher une chaîne ou un numéro de bogue sur le bugzilla de <ulink url="https://bugs.kde.org/"
+>Ce script est utilisé pour ouvrir votre navigateur et chercher une chaîne ou un numéro de bogue sur le Bugzilla de <ulink url="https://bugs.kde.org/"
 >&kde;</ulink
 >.</para>
 <para
@@ -4683,7 +4683,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></para>
 <para
 >Exemple de sortie : <replaceable
->Aléa de fortune : ne faites jamai d'erreurs. -- Anonyme, dans une discussion sur un forum concernant les rapport de bogue du noyau</replaceable
+>Aléa de fortune : ne faites jamais d'erreurs. -- Anonyme, dans une discussion sur un forum concernant les rapport de bogue du noyau</replaceable
 ></para>
 </listitem>
 </varlistentry>
@@ -4749,8 +4749,8 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></userinput
 ></para>
 <para
->Exemple d'affichage : <replaceable
->* user is listening to You Give Love A Bad Name by Bon Jovi on Slippery When Wet [AmaroK]</replaceable
+>Exemple de résultat : <replaceable
+>* L’utilisateur écoute « You Give Love A Bad Name de Bon Jovi sur « Slippery When Wet »] [AmaroK]</replaceable
 ></para>
 </listitem>
 </varlistentry>
@@ -4810,7 +4810,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></para>
 <para
 >Exemple d'affichage : <replaceable
->Sysinfo pour « user-desktop »: lancé dans KDE Plasma 5.6.5 avec Ubuntu 16.04.1 LTS (Xenial Xerus) équipé de Linux 4.4.0-47-generic, Processeur : Intel(R) Core(TM) i7-4910MQ Processeur @ 2.90GHz à 2996-3338/3900 MHz, RAM: 15795 / 15967 MB, Stockage : 1591/2281 GB, 406 procs, 47.59h depuis démarrage</replaceable
+>sysinfo pour « user-desktop »: lancé dans KDE Plasma 5.6.5 avec Ubuntu 16.04.1 LTS (Xenial Xerus) équipé de Linux 4.4.0-47-generic, Processeur : Intel(R) Core(TM) i7-4910MQ Processeur @ 2.90GHz à 2996-3338/3900 MHz, RAM: 15795 / 15967 Mo, Stockage : 1591/2281 GB, 406 procs, 47.59h depuis démarrage</replaceable
 ></para>
 </listitem>
 </varlistentry>
@@ -4828,7 +4828,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 </term>
 <listitem>
 <para
->Ce script utilise l'api de tinyurl pour transformer une clé donnée en une tinyurl envoyée dans l'onglet de canal actuel.</para>
+>Ce script utilise l'API « tinyurl » pour transformer une clé donnée en une « tinyurl » envoyée dans l'onglet de canal actuel.</para>
 <para
 >Exemple : pour donner à quelqu'un un lien court vers https://konversation.kde.org.</para>
 <para
@@ -4870,7 +4870,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></para>
 <para
 >Exemple d'affichage : <replaceable
->Uptime : 98 days, 15 hours and 2 minutes</replaceable
+>Durée de fonctionnement : 98 jours, 15 heures et 2 minutes</replaceable
 ></para>
 </listitem>
 </varlistentry>
