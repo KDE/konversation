@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-14 12:03+0200\n"
+"PO-Revision-Date: 2024-03-18 10:47+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -981,7 +981,7 @@ msgstr "שם משתמש:"
 #: src/config/connectionbehavior_config.ui:222
 #, kde-format
 msgid "Password:"
-msgstr "ססמה:"
+msgstr "סיסמה:"
 
 #: src/config/dcc_config.cpp:29
 #, fuzzy, kde-format
@@ -3060,7 +3060,7 @@ msgstr "מוצע במסגרת:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:205
 #, kde-format
 msgid "Started at:"
-msgstr "החל ב:"
+msgstr "החל ב־:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:225
@@ -3971,7 +3971,7 @@ msgstr "חשבון:"
 #: src/identitydialog.ui:299
 #, kde-format
 msgid "Pa&ssword:"
-msgstr "&ססמה:"
+msgstr "&סיסמה:"
 
 #. i18n: ectx: property (text), widget (QLabel, pemClientCertFileLabel)
 #: src/identitydialog.ui:313
@@ -4272,7 +4272,7 @@ msgstr "השלמות אפשריות: %1."
 #: src/irc/channel.cpp:883
 #, kde-format
 msgid "Channel Password"
-msgstr "ססמת החדר"
+msgstr "סיסמת החדר"
 
 #: src/irc/channel.cpp:899
 #, kde-format
@@ -5019,7 +5019,7 @@ msgstr "חדר ממודר. %1"
 #: src/irc/channel.cpp:2211
 #, kde-format
 msgid "Protect channel with a password."
-msgstr "הגן על החדר עם ססמה."
+msgstr "הגנה על החדר בסיסמה."
 
 #: src/irc/channel.cpp:2212
 #, kde-format
@@ -5051,7 +5051,7 @@ msgstr "זהות ברירת־המחדל (%1)"
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
 #, kde-format
 msgid "Pass&word:"
-msgstr "&ססמה:"
+msgstr "&סיסמה:"
 
 #. i18n: ectx: property (text), widget (QLabel, channelLabel)
 #. i18n: ectx: property (text), widget (QLabel, channelLbl)
@@ -5987,7 +5987,7 @@ msgstr "חיבור:"
 #: src/irc/joinchannelui.ui:80
 #, kde-format
 msgid "&Password:"
-msgstr "&ססמה:"
+msgstr "&סיסמה:"
 
 #. i18n: ectx: property (text), widget (QLabel, hostmaskLabel)
 #: src/irc/nickinfo.cpp:216 src/viewer/channeloptionsui.ui:308
@@ -6150,7 +6150,7 @@ msgstr "גלמי"
 #: src/irc/outputfilter.cpp:380
 #, kde-format
 msgid "Usage: %1JOIN <channel> [password]"
-msgstr "שימוש:  %1JOIN <ערוץ> [ססמה]"
+msgstr "שימוש:  %1JOIN <ערוץ> [סיסמה]"
 
 #: src/irc/outputfilter.cpp:420
 #, kde-format
@@ -6394,7 +6394,7 @@ msgstr "הכנס שם משתמש וססמה עבור הרשאות אופ של IR
 #: src/irc/outputfilter.cpp:1333
 #, kde-format
 msgid "IRC Operator Password"
-msgstr "ססמת אופ של IRC"
+msgstr "סיסמת מפעיל של IRC"
 
 #: src/irc/outputfilter.cpp:1396
 #, kde-format
@@ -6707,16 +6707,16 @@ msgstr ""
 "SSL. התעלמות מהשגיאה תיצור חיבור חדש אוטומטית."
 
 #: src/irc/server.cpp:950
-#, fuzzy, kde-format
+#, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
-msgstr "החיבור לשרת %1 (יצאה <numid>%2</numid>) נסגר: %3."
+msgstr "החיבור לשרת %1 (פתחה %2) נקטע: %3."
 
 #: src/irc/server.cpp:999
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
-msgstr "אישור ה־SSL של שרת %1 (יציאה <numid>%2</numid>) לא תקף."
+msgstr "אישור ה־SSL של השרת %1 (פתחה %2) לא עבר את בדיקת האמינות."
 
 #: src/irc/server.cpp:1003
 #, kde-format
@@ -6739,9 +6739,9 @@ msgid "Delayed connect aborted."
 msgstr "חיבור מושהה בוטל."
 
 #: src/irc/server.cpp:1170
-#, fuzzy, kde-format
+#, kde-format
 msgid "Disconnected from %1 (port %2)."
-msgstr "התנתקת מהשרת %1 (יציאה <numid>%2</numid>)."
+msgstr "נותקת מ־%1 (פתחה %2)."
 
 #: src/irc/server.cpp:1328
 #, kde-format
@@ -7820,7 +7820,7 @@ msgstr "כינוי"
 #: src/main.cpp:89
 #, kde-format
 msgid "Password for connection"
-msgstr "ססמה לחיבור"
+msgstr "סיסמה לחיבור"
 
 #: src/main.cpp:89
 #, kde-format
@@ -7838,10 +7838,10 @@ msgid "Disable auto-connecting to any IRC networks"
 msgstr "בטל חיבורים אוטומטיים אל רשתות כלשהן"
 
 #: src/main.cpp:92
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Delay D-Bus activity and UI creation by the specified amount of milliseconds"
-msgstr "השהה פעילות D-Bus ויצירה של ממשק משתמש במספר מילישניות"
+msgstr "השהיית פעילות D-Bus ויצירת ממשק משתמש בכמות המילישניות שנבחרה"
 
 #: src/main.cpp:92
 #, kde-format
@@ -8350,9 +8350,9 @@ msgid "%1 changed nickname to %2"
 msgstr "המשתמש %1 שינה את הכינוי שלו אל %2"
 
 #: src/notificationhandler.cpp:272
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 wants to send a file to you"
-msgstr "המשתמש %1 רוצה לשלוח לך קובץ"
+msgstr "%1 רוצה לשלוח לך קובץ"
 
 #: src/notificationhandler.cpp:283
 #, kde-format
@@ -8372,9 +8372,9 @@ msgid "Open"
 msgstr "פתיחה"
 
 #: src/notificationhandler.cpp:318
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 changed modes in %2: %3"
-msgstr "המשתמש %1 שינה את הכינוי שלו אל %2"
+msgstr "המצב של %1 השתנה ב־%2: %3"
 
 #: src/notificationhandler.cpp:334
 #, kde-format
