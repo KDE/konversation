@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-18 10:47+0200\n"
+"PO-Revision-Date: 2024-03-19 08:43+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3798,7 +3798,7 @@ msgstr "שכח מכל השינויים שנעשו"
 #: src/identitydialog.cpp:260
 #, kde-format
 msgid "Add Identity"
-msgstr "הוסף זהות"
+msgstr "הוספת זהות"
 
 #: src/identitydialog.cpp:260 src/identitydialog.cpp:283
 #: src/identitydialog.cpp:338
