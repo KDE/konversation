@@ -1,0 +1,6083 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>nickname</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Nickname</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>&konversation; Priročnik</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Matjaž</firstname
+><surname
+>Jeran</surname
+><affiliation
+><address
+><email
+>matjaz.jeran@amis.net</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>29.11.2016</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; je uporabniku prijazen &irc; odjemalec zgrajen na &Qt; in &kf5-full;. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>internet relay chat</keyword>
+<keyword
+>chat</keyword>
+<keyword
+>communications</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Uvod</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; je &irc; odjemalec zgrajen na &Qt; in &kf5-full;. Ponuja naslednje zmožnosti: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>SSL podpora.</para
+></listitem>
+<listitem
+><para
+>Uporabniku prijazen vmesnik z zavihki.</para
+></listitem>
+<listitem
+><para
+>Prilagodljivi hitri gumbi za pogosto uporabljene ukaze.</para
+></listitem>
+<listitem
+><para
+>Samodejna ponovna povezava in ponovna vključitev.</para
+></listitem>
+<listitem
+><para
+>DCC pošiljanje in sprejemanje.</para
+></listitem>
+<listitem
+><para
+>&i18n-Nickname; seznam spremljanja.</para
+></listitem>
+<listitem
+><para
+>Vizualna in zvočna obvestila o najrazličnejših dogodkih, kot so sporočila, ki vsebujejo vaš &i18n-nickname; ali &i18n-nickname;e na vašem seznamu za spremljanje, ki gredo v splet ali brez njega. </para
+></listitem>
+<listitem
+><para
+>Prilagodljivo označevanje sporočil od &i18n-nickname; ali po vzorcu regularnega izraza.</para
+></listitem>
+<listitem
+><para
+>&i18n-Nickname; dokončanje.</para
+></listitem>
+<listitem
+><para
+>Zajemite in shranite vse &URL;-je, ki se pojavljajo v sporočilih.</para
+></listitem>
+<listitem
+><para
+>Prikaz sporočil na zaslonu tudi ko je minimiziran.</para
+></listitem>
+<listitem
+><para
+>&i18n-Nickname; seznam prezrtih.</para
+></listitem>
+<listitem
+><para
+>Samodejno beleženje in upravljanje dnevnikov.</para
+></listitem>
+<listitem
+><para
+>Označevanje vrstic v dnevnikih.</para
+></listitem>
+<listitem
+><para
+>Skriptiranje.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>&konversation; spletno mesto je <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Dodatne informacije, kot so pogosta vprašanja ter nasveti in triki, najdete v <ulink url="https://userbase.kde.org/Konversation"
+>stran &konversation; UserBase</ulink
+>. </para>
+
+<para
+>Razvijalci za &konversation; z njimi lahko pogosto stopite v stik prek &irc; na <ulink url="irc://irc.libera.chat/konversation"
+>kanalu irc.libera.chat #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Uporaba &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Če še niste uporabljali &irc; prej...</title>
+
+<para
+>Preprosto povedano, &irc; je protokol za klepet, ki ga določajo uradni internetni standardi in vam lahko ukrade veliko ur življenja. Če želite uporabljati &irc;, se morate povezati s strežnikom in se nato pridružiti kanalu (enakovredno klepetalnici) ali samo sodelovati v zasebnih pogovorih.</para>
+
+<para
+>Za povezavo s strežnikom in kanalom odprite &konversation;. Prikaže se zaslon <guilabel
+>Seznam strežnikov</guilabel
+>.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Seznam strežnikov</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Seznam strežnikov</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>Seznam konfiguriranih &irc; <guilabel
+>Omrežja</guilabel
+> so navedena tukaj. &irc; omrežje je zbirka sodelujočih strežnikov. Povezati se morate z enim od strežnikov, če želite biti povezani s celotnim &irc; omrežjem. Ko je vzpostavljena povezava, se bo &konversation; samodejno pridružil prikazanim <guilabel
+>kanalom</guilabel
+>. Ko &konversation; zaženete prvič, sta omrežje <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> in kanal <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+> že vnesena. Kliknite na omrežje, da ga izberete.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Kliknite tukaj, da določite novo <guilabel
+>Omrežje</guilabel
+>, vključno s strežnikom za povezavo in <guilabel
+>Kanali</guilabel
+>, ki se jim samodejno pridružite, ko se vzpostavi povezava. Glejte <link linkend="serverlist"
+>Določanje novih omrežij, strežnikov in kanalov za samodejno pridružitev</link
+> za več informacij.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Kliknite tukaj za povezavo z izbranim &irc; omrežjem in kanalom.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>Ko kliknete gumb <guibutton
+>Poveži</guibutton
+>, ko prvič odprete &konversation;, boste morda videli naslednje sporočilo, ki vam pove, da vaša privzeta <guilabel
+>identiteta</guilabel
+> ni pravilno nastavljena.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Preveri identitete</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Preveri identitete</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Ko prvič odprete &konversation; od operacijskega sistema pridobi informacije o trenutnem uporabniku in izpolni privzete vrednosti za Identiteto. Če podatki o uporabniku operacijskega sistema niso popolni, na primer ni definirano polno ime, boste morda videli zgornje sporočilo. Če želite odpraviti to težavo, kliknite <guibutton
+>Uredi identiteto...</guibutton
+> in glejte <link linkend="identity"
+>Nastavitev vaše identitete</link
+> za več informacij.</para>
+</note>
+
+<para
+>Prikazal se bo <interface
+>Glavni</interface
+> zaslon, ki prikazuje sporočila, ki jih je strežnik poslal odjemalcu. (Če se &konversation; ne poveže s strežnikom, glejte <link linkend="faq"
+>Vprašanja in odgovori</link
+>.) Ko se sporočila strežnika končajo, se &konversation; se bo pridružil izbranemu kanalu ali kanalom. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Kanal.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Kanal</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>To se imenuje <interface
+>Vhodna vrstica</interface
+>. Če želite poslati sporočilo vsem v kanalu, vnesite sporočilo tukaj in pritisnite &Enter;. Vaše sporočilo in sporočila vseh ostalih se prikažejo v zgornjem drsniku kanalov. Pred vsakim sporočilom sta čas in uporabnikov &i18n-nickname;.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Lahko se pridružite dodatnim strežnikom in kanalom. Vsak strežnik, kanal, seznam kanalov in drugi zasloni tukaj dobijo ločen zavihek. Če želite prikazati seznam razpoložljivih kanalov, glejte <link linkend="list-channels"
+>Prikaz razpoložljivih kanalov</link
+>. Če se želite pridružiti kanalu, vnesite: <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+> v vnosno vrstico. (Potreben je <userinput
+>#</userinput
+>.) Vnesete lahko tudi <userinput
+><command
+>/j</command
+></userinput
+> kot okrajšavo za <userinput
+><command
+>/join</command
+> </userinput
+>. Če želite zapustiti kanal, vnesite <userinput
+><command
+>/part</command
+></userinput
+>. Če želite zaslon preklopiti na drug strežnik ali kanal, kliknite ustrezen zavihek. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>To se imenuje <interface
+>Plošča vzdevkov</interface
+>. V njem so navedeni vzdevki vseh uporabnikov, ki so se pridružili kanalu, vključno z vami.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>To je osnova, za podrobnejše informacije berite dalje...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Nastavitev vaše identitete</title>
+
+<para
+>Preden začnete uporabljati &konversation; redno morate nastaviti, kako boste prepoznani v omrežju.</para>
+
+<para
+>V glavnem meniju kliknite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Identitete</guisubmenu
+> </menuchoice
+>. <action
+>Pojavil se bo zaslon <guilabel
+>Identitete</guilabel
+>. Zaslon <guilabel
+>Identitete</guilabel
+> lahko prikažete tudi tako, da kliknete gumb <guibutton
+>Uredi</guibutton
+> na zaslonu <guilabel
+>Uredi omrežje</guilabel
+> ali <guilabel
+>Novo omrežje</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Identitete (zavihek Splošno)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Identitete (zavihek Splošno)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Kliknite tukaj, da izberete <guilabel
+>Identiteto</guilabel
+> za urejanje.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>S temi gumbi <guibutton
+>Dodaj</guibutton
+>, <guibutton
+>Podvoji</guibutton
+>, <guibutton
+>Preimenuj</guibutton
+> ali <guibutton
+>Odstrani</guibutton
+> <guilabel
+>Identitete</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Tukaj vnesite svoje pravo ime. &irc; ni namenjen temu, da bi vas skrili pred prijatelji ali sovražniki. Imejte to v mislih, če vas mika, da bi se obnašali zlonamerno. Lažno "pravo ime" je lahko dober način, da prikrijete svoj spol pred vsemi čudaki, vendar je računalnik, ki ga uporabljate, vedno mogoče izslediti, tako da nikoli ne boste zares anonimni.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>S temi gumbi <guibutton
+>Dodaj</guibutton
+> ali <guibutton
+>Odstrani</guibutton
+> &i18n-nickname;.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>To je vaš seznam &i18n-Nickname;-ov . &i18n-nickname; je ime, po katerem vas bodo drugi uporabniki poznali. Uporabite lahko poljubno ime. Prvi znak mora biti črka. Drugi znaki so lahko črke, številke ali posebni znaki <literal
+>-[]\\`_^{}|</literal
+>.</para>
+
+<para
+>Ker morajo biti  &i18n-nickname; edinstveni v celotnem &irc; omrežja, lahko strežnik zavrne vaše želeno ime, ker nekdo drug že uporablja ta &i18n-nickname;. Vnesite nadomestne vzdevke zase. Če vašo prvo izbiro strežnik zavrne, bo &konversation; poskusil z nadomestnimi  &i18n-nickname;. </para>
+
+<para
+>V skladu z RFC 2812 je največja dolžina &i18n-nickname; 9, vendar to dejansko določi strežnik. Če želite določiti največjo vrednost za strežnik, se povežite s strežnikom. V zavihku <interface
+>Server Messages</interface
+> poiščite sporočilo <computeroutput
+>[Support]</computeroutput
+>. Na primer:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>Parameter <computeroutput
+>NICKLEN</computeroutput
+> določa največjo dolžino &i18n-nickname;. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>S temi gumbi spremenite vrstni red &i18n-nickname;. Najvišji  &i18n-nickname;najprej poskusi, nato naslednji &i18n-nickname;, in tako naprej.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>Če ste registrirali svoj &i18n-nickname; z &irc; omrežjem, vnesite storitev in geslo za preverjanje pristnosti vašega &i18n-nickname;. Ko &konversation; vzpostavi povezavo, bo strežniku samodejno poslal <userinput
+><command
+>/msg</command
+> <replaceable
+>service</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>geslo</replaceable
+></userinput
+>. Če ne veste, kaj je to, pustite ta polja prazna.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Kliknite zavihek <guilabel
+>Odsoten</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identitete (zavihek Odsoten)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identitete (zavihek Odsoten)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Vnesite &i18n-nickname; ki pomeni, da ste odsotni. Kadarkoli izvedete ukaz <userinput
+><command
+>/away </command
+><replaceable
+>msg</replaceable
+></userinput
+> v katerem koli kanalu, ki je povezan s to <guilabel
+>Identiteto</guilabel
+>, bo &konversation; samodejno spremenil vaš &i18n-nickname; na <guilabel
+>vzdevek odsoten</guilabel
+>. Drugi uporabniki bodo lahko vedeli, da niste pri računalniku. Kadarkoli izvedete ukaz <userinput
+><command
+>/away</command
+></userinput
+> v katerem koli kanalu, v katerem ste odsotni, &konversation; bo samodejno spremenil vaš &i18n-nickname; nazaj na izvirnik. Če ne želite samodejno spremeniti svojega &i18n-nickname; ko ste odsotni, pustite prazno.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Če označite to polje, se bo vsakič, ko izvedete ukaz <userinput
+><command
+>/away</command
+></userinput
+>, v kanalu pojavila vodoravna črta, ki označuje točko, kjer ste odšli. Drugi &irc; uporabniki te vodoravne črte ne vidijo. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Če potrdite to polje, &konversation; samodejno pošlje <guilabel
+>ukaz Away</guilabel
+> vsem kanalom, ki so združeni s to <guilabel
+>Identiteto</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> je nadomeščen z <userinput
+><replaceable
+>msg</replaceable
+></userinput
+>. Kadarkoli izvedete ukaz <userinput
+><command
+>/away</command
+></userinput
+>, bo <guilabel
+>ukaz Return</guilabel
+> prikazan v vseh kanalih, ki so združeni s to <guilabel
+>Identiteto</guilabel
+>.</para>
+
+<note
+><para
+>Drugi uporabniki pogosto menijo, da so sporočila o odsotnosti moteča. To možnost uporabljajte previdno, upoštevajoč svoje kolege &irc; uporabnike. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Kliknite zavihek <guilabel
+>Napredno</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Identitete (zavihek Napredno)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Identitete (zavihek Napredno)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Tukaj lahko vnesete ukaz, ki bo izveden pred povezavo s strežnikom. Če se ta identiteta uporablja za več kot en strežnik, bo ukaz izveden za vsak strežnik.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Ta nastavitev vpliva na to, kako so znaki, ki jih vnesete, kodirani za pošiljanje v strežnik. Vpliva tudi na to, kako so sporočila prikazana. Ko prvič odprete &konversation;, samodejno pridobi to nastavitev iz operacijskega sistema. Če se zdi, da imate težave s pravilnim ogledom sporočil drugih uporabnikov, poskusite spremeniti to nastavitev.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Ko vzpostavite povezavo, veliko strežnikov od vašega računalnika zahteva odgovor IDENT. Če vaš računalnik ne izvaja strežnika IDENT, ta odgovor pošlje &konversation;. Presledki niso dovoljeni. Predlagano je vaše ime.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Kadarkoli zapustite kanal, se to sporočilo pošlje kanalu.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Kadarkoli vas vržejo iz kanala (običajno operater &irc;), se to sporočilo pošlje kanalu.</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Kliknite, da uveljavite svoje spremembe. Da bi vse spremembe stopile v veljavo, morate prekiniti povezavo s strežnikom in se znova povezati. Najlažji način za to je, da zaprete &konversation; in znova zaženete.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Definiranje novih omrežij, strežnikov in kanalov za samodejno pridružitev</title>
+
+<para
+>Zaslon <guilabel
+>Seznam strežnikov</guilabel
+> se prikaže, ko odpreteprogram &konversation;. Pojavi se tudi, ko izberete <menuchoice
+><guisubmenu
+>Datoteka</guisubmenu
+> <guisubmenu
+>Seznam strežnikov</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+><guilabel
+>Seznam strežnikov</guilabel
+></action
+> zaslon navaja vaše obstoječe definirane &irc; <guilabel
+>Omrežje</guilabel
+>s, razvrščenih po skupinah. An &irc; omrežje je zbirka sodelujočihstrežnikov. Ko se povežete s katerim koli strežnikom v omrežju, imate dostop do vsehkanalov omrežja. Primeri &irc; omrežja so<userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> in<userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Seznam strežnikov</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Seznam strežnikov</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Vaša obstoječa definirana <guilabel
+>omrežja</guilabel
+> so navedena tukaj skupaj z <guilabel
+>identiteto</guilabel
+>, ki se uporablja za povezavo z omrežjem, in <guilabel
+>kanali</guilabel
+>, ki se samodejno pridružijo, ko se povežete. Če ste določili skupino za svoja omrežja, so omrežja navedena z zamikom pod skupino. Kliknite omrežje, da ga izberete. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>S temi gumbi <guibutton
+>Dodaj</guibutton
+> novo omrežje, <guibutton
+>Uredi</guibutton
+> označeno omrežje ali <guibutton
+>Izbriši</guibutton
+> označeno omrežje. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Kliknite ta gumb, da se povežete z označenim <guilabel
+>Omrežjem</guilabel
+> in zaprete zaslon <guilabel
+>Seznam strežnikov</guilabel
+>. Če želite, lahko označite več kot eno omrežje, ki se bo povezalo z vsemi označenimi omrežji.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>S klikom na ta gumb ne zavržete sprememb, ki ste jih naredili. To samo pomeni, da se trenutno ne želite povezati z nobenim omrežjem.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>Ko kliknete gumb <guibutton
+>Novo</guibutton
+>, se prikaže zaslon <guilabel
+>Novo omrežje</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Novo omrežje</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Novo omrežje</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Tukaj vnesite <guilabel
+>Ime omrežja</guilabel
+>. Ustvarite lahko toliko vnosov na zaslonu <guilabel
+>Seznam strežnikov</guilabel
+> z istim <guilabel
+>Omrežjem</guilabel
+>, kot želite.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Izberite obstoječo <guilabel
+>Identiteto</guilabel
+> ali kliknite gumb <guibutton
+>Uredi</guibutton
+>, da dodate novo identiteto ali uredite obstoječo. <guilabel
+>Identiteta</guilabel
+> vas bo identificirala in določila vaš  &i18n-nickname; ko se povežete z omrežjem.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Neobvezno. Ta ukaz bo poslan strežniku po vzpostavitvi povezave. Primer: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Ta primer je za omrežje Libera, ki od uporabnikov zahteva, da registrirajo svoj &i18n-nickname; z geslom in prijavo ob povezovanju. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> je geslo za &i18n-nickname; podan v <guilabel
+>Identiteta</guilabel
+>. Vnesete lahko več kot en ukaz, tako da jih ločite s podpičji.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Tukaj označite, če želite &konversation; da se samodejno poveže s tem omrežjem vsakič, ko odprete &konversation;.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>To je seznam &irc; <guilabel
+>Strežniki</guilabel
+> v omrežju. Ko se povežete z omrežjem, &konversation; se bo najprej poskusil povezati z zgornjim strežnikom. Če to ne uspe, bo poskusil z drugim strežnikom. Če to ne uspe, bo poskusil tretjega in tako naprej. Določen mora biti vsaj en strežnik. Kliknite strežnik, da ga označite.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>S temi gumbi <guibutton
+>Dodaj</guibutton
+> strežnik, <guibutton
+>Uredi</guibutton
+> označeni strežnik ali <guibutton
+>Izbriši</guibutton
+> označeni strežnik. Prilagodite lahko tudi vrstni red seznama strežnikov in s tem vrstni red poskusov povezave.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Neobvezno. To je seznam kanalov, ki se bodo samodejno pridružili, ko se bo &konversation; povezal s strežnikom. To lahko pustite prazno, če se ne želite samodejno pridružiti nobenemu kanalu.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>S temi gumbi <guibutton
+>Dodajte</guibutton
+> kanal, <guibutton
+>Uredite</guibutton
+> označeni kanal ali <guibutton
+>Izbrišete</guibutton
+> označeni kanal. Prav tako lahko spremenite vrstni red združevanja kanalov. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Izogibajte se mešanju strežnikov na različnih &irc; omrežjih pod istim <guilabel
+>Omrežjem</guilabel
+>. Izogibajte se vstopu v isti strežnik pod dvema različnima <guilabel
+>omrežjema</guilabel
+>. V nasprotnem primeru <link linkend="nicksonline"
+>spremljanje spletnih &i18n-nickname;-ov</link
+> ne bo delovalo pravilno.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Ko kliknete gumb <guibutton
+>Dodaj</guibutton
+> v okviru <guilabel
+>Strežniki</guilabel
+>, se prikaže zaslon <guilabel
+>Dodaj strežnik</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Dodaj strežnik</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Dodaj strežnik</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Ime ali številka IP strežnika. irchelp.org vzdržuje <ulink url="https://www.irchelp.org/networks/"
+>seznam</ulink
+> strežnikov.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Vnesite številko vrat, potrebnih za povezavo s strežnikom. Za večino strežnikov bi to moralo biti <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Če strežnik zahteva geslo za povezavo, ga vnesite tukaj, sicer pustite prazno.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Preverite, ali želite za komunikacijo s strežnikom uporabljati protokol SSL (Secure Socket Layer). To ščiti zasebnost vaše komunikacije med vašim računalnikom in &irc; strežnik. Strežnik mora podpirati protokol SSL, da to deluje. V večini primerov povezava ne bo uspela, če strežnik ne podpira SSL.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Ko kliknete gumb <guibutton
+>Dodaj</guibutton
+> v okviru <guilabel
+>Samodejna pridružitev kanalom</guilabel
+>, se prikaže zaslon <guilabel
+>Dodaj kanal</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Dodaj kanal</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Dodaj kanal</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Vnesite ime kanala. Ne pozabite na začetni <userinput
+><replaceable
+>#</replaceable
+></userinput
+>. Če kanal zahteva geslo za pridružitev, ga vnesite, sicer pustite prazno. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Prikaz razpoložljivih kanalov</title>
+
+<para
+>Za prikaz seznama razpoložljivih kanalov izberite <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>Seznam kanalov</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Po opozorilnem zaslonu se ustvari nov zavihek, imenovan <guilabel
+>Seznam kanalov</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zavihek Seznam kanalov.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zavihek Seznam kanalov.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Tukaj vnesite niz filtra.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Tukaj lahko seznam kanalov omejite na tiste kanale z najmanjšim ali največjim številom uporabnikov. Če izberete <guilabel
+>Brez omejitev</guilabel
+>, onemogočite ustrezne kriterije.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Kliknite tukaj, da pridobite seznam kanalov s strežnika in uporabite filter.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>Tukaj je prikazan filtriran seznam kanalov. Upoštevajte, da če ne uporabljate regularnih izrazov, &konversation; prikaže vse kanale, katerih ime vsebuje niz filtra, ki ste ga vnesli. Ni nujno, da se ime kanala začne z nizom, ki ste ga vnesli.</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Izberite kanal, ki se mu želite pridružiti, tako da ga kliknete. Desni klik na kanal, da dobite seznam vseh spletnih naslovov, omenjenih v temi kanala.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Kliknite tukaj, da se pridružite kanalu. Za kanal je ustvarjen nov zavihek.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Včasih so na strežnikih "skrivni" kanali. Takšni kanali niso navedeni na <guilabel
+>Seznamu kanalov</guilabel
+>. Še vedno se lahko pridružite tem kanalom, če poznate njihovo ime. V katero koli <interface
+>Vnosno vrstico</interface
+> vnesite: <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+>. (Potreben je <userinput
+>#</userinput
+>.) Za kanal je ustvarjen nov zavihek. Če se pridružite kanalu in je na plošči z vzdevki prikazan samo vaš &i18n-nickname;, to pomeni, da kanal prej ni obstajal. Strežnik je ustvaril kanal in vi ste operater. V tem primeru boste verjetno želeli kanal zapreti tako, da vnesete: <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Predstavitev glavnega zaslona</title>
+
+<para
+>Naučimo se več o <interface
+>glavnem</interface
+> zaslonu. Spodaj je prikazan zaslon z izbranim zavihkom kanala.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Glavni zaslon.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Glavni zaslon</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>To se imenuje <interface
+>Vhodna vrstica</interface
+>. Pojavi se le, če je trenutni zavihek kanal. Če želite poslati sporočilo vsem v kanalu, vnesite sporočilo tukaj in pritisnite &Enter;. Vaše sporočilo in sporočila vseh ostalih se prikažejo v zgornjem drsniku kanalov. Pred vsakim sporočilom sta čas in uporabnikov &i18n-nickname;.</para>
+
+ <para
+>Prav tako lahko prilepite besedilo iz odložišča. Če ima prilepljeno besedilo več kot eno vrstico (nove vrstice), se prikaže pogovorno okno. Uredite besedilo po želji in kliknite <guibutton
+>V redu</guibutton
+>. </para>
+
+ <para
+>Če je prilepljeno besedilo daljše od 256 znakov ali vsebuje več kot eno vrstico, se prikaže opozorilo, ki vas obvešča, da lahko velike objave povzročijo ponastavitev povezave in poplavo. Še vedno lahko nadaljujete z vnosom, vendar je to slaba ideja, saj bo poplavljanje motilo druge uporabnike v kanalu ali pa boste morda odklopljeni od strežnika. Bolje je poslati sporočilo v krajših delih.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>Konvencija, ki se uporablja v mnogih kanalih, je, da se pred sporočili, namenjenimi enemu uporabniku, doda njihov &i18n-nickname;. &konversation; ponuja priročen &i18n-nickname; s funkcijo dokončanja. Začnite vnašati uporabnikov &i18n-nickname;, nato pritisnite &Tab;. &konversation; bo dopolnil preostali del uporabnikovega &i18n-nickname; sledi dvopičje. Če želite prilagoditi funkcijo dokončanja, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Vedenje</guilabel
+>, kliknite <guilabel 
+>Splošno</guilabel
+> in izberite <guilabel
+>Način dokončanja</guilabel
+>. </para>
+
+ <para
+>Vnesete lahko tudi &irc; ukaz tukaj tako, da najprej vnesete <userinput
+><command
+>/</command
+></userinput
+>, ki mu sledi veljaven &irc; ukaz. Glejte <link linkend="irc-cmds"
+>Pogosto uporabljeni ukazi &irc;</link
+>. Na nekaterih strežnikih lahko vnesete <userinput
+><command
+>/help</command
+></userinput
+> za seznam razpoložljivih ukazov ali <userinput
+><command
+>/help </command
+><replaceable
+>command</replaceable
+></userinput
+> za pomoč pri določenem ukazu. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Lahko se pridružite dodatnim strežnikom in kanalom. Vsak strežnik in vsak kanal tukaj dobi ločen zavihek. Če želite prikazati seznam razpoložljivih kanalov, glejte <link linkend="list-channels"
+>Prikaz razpoložljivih kanalov</link
+>. Če se želite pridružiti kanalu, vnesite: <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+> v vnosno vrstico. (Potreben je <userinput
+>#</userinput
+>.) Če želite zapustiti kanal, preprosto vnesite <userinput
+><command
+>/part</command
+></userinput
+>. Zavihki se tukaj prikažejo tudi, če odprete <link linkend="list-channels"
+>Seznam kanalov</link
+>, sodelujete v <link linkend="query"
+>zasebnem pogovoru (poizvedbi)</link
+>, odprete <link linkend="urlcatcher"
+>&URL; Catcher</link
+> ali odprite eno ali več <guilabel
+>Konzol</guilabel
+>. Če želite zaslon preklopiti na drug zaslon, kliknite ustrezen zavihek ali uporabite kolesce miške, da se premikate po zavihkih. </para>
+
+<para
+>Če želite nastaviti druge možnosti za zavihke, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Vmesnik</guilabel
+>, kliknite <guilabel
+>Zavihki</guilabel
+> ali razširite <guilabel
+>Obvestila</guilabel
+> in kliknite <guilabel
+>Zavihki</guilabel
+>. </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Te diode &led; bodo utripale, ko bo na tem zavihku nekaj, česar še niste videli. &led; utripa počasneje, ko so edina še ne videna sporočila <command
+>join</command
+>, <command
+>part</command
+>, <command
+>quit</command
+> ali &i18n-nickname; spremembe. Hitreje utripajo, če so redna še ne videna sporočila. Barve so naslednje: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kanal </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Sporočila strežnika</interface
+>, <link linkend="list-channels"
+>Seznam kanalov</link
+> ali <link linkend="urlcatcher"
+>&URL; lovilnik</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Konzola</guilabel
+> ali <link linkend="dcc"
+>Status DCC</link
+>. </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Zasebno sporočilo (poizvedba)</link
+>. </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Kliknite tukaj, da zaprete trenutni zavihek. Če zaprete zavihek <interface
+>Kanal</interface
+>, boste zapustili kanal. Če zaprete zavihek <interface
+>Sporočila strežnika</interface
+>, boste zapustili vse kanale, ki ste se jim pridružili, zaprli vse odprte poizvedbe na tem strežniku in prekinili povezavo s strežnikom.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Kliknite ta gumb, če želite spremeniti svoj &i18n-nickname;. Pojavi se le, če je trenutni zavihek kanal. Če želite skriti ta gumb, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Vmesnik</guilabel
+>, kliknite <guilabel
+> Okno za klepet</guilabel
+> in počistite polje <guilabel
+>Pokaži polje za spremembo lastnega vzdevka</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Tukaj je prikazana tema kanala. Če želite videti dolge teme, premaknite miško nad temo. Temo lahko spremenite s klikom na gumb levo od teme. Če želite skriti teme kanala, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Vmesnik</guilabel
+>, kliknite <guilabel
+> Okno za klepet</guilabel
+> in počistite polje <guilabel
+>Pokaži temo kanala</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Ti gumbi prikazujejo trenutno stanje kanalskih načinov. Gumb je spuščen, če je ta način vklopljen. Če imate ustrezne privilegije, lahko tudi spremenite načine kanala s klikom na te gumbe ali pa kliknete gumb na levi strani teme. Če želite skriti gumbe kanalskega načina, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Vmesnik</guilabel
+>, kliknite <guilabel 
+>Okno za klepet</guilabel
+> in počistite polje <guilabel
+>Pokaži gumbe načina kanala</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>To se imenuje <interface
+>Plošča vzdevkov</interface
+>. Prikaže se, kadar je trenutni zavihek kanal. V njem so navedeni vzdevki vseh uporabnikov, ki so se pridružili kanalu, vključno z vami. Kazalec miške premaknite nad &i18n-nickname; za prikaz dodatnih informacij o uporabniku. Spremenite lahko, kako so ikone prikazane poleg vsakega  &i18n-nickname; spremembo  &i18n-nickname;tema ikon. Glejte <link linkend="nickthemes"
+>Konfiguriranje &i18n-nickname; teme</link
+> za več informacij. <guilabel
+>Privzeta tema</guilabel
+>, kot je prikazano na zgornjem zaslonu, uporablja naslednje ikone: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> običajni uporabnik </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> glasovni uporabnik. Uporabnik lahko govori v moderiranem kanalu. </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> kanal halfop </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> operater kanala </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> lastnik kanala </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> skrbnik kanala </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Poleg tega, če je uporabnik odsoten, bo v kotu ikone narisana majhna ura. <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Kliknite z &RMB; na katerem koli  &i18n-nickname; za prikaz kontekstnega menija operacij, ki jih lahko izvedete s tem  &i18n-nickname;. Na primer, lahko <link linkend="dcc"
+>pošljete datoteko</link
+> na &i18n-nickname;. </para>
+
+<para
+>Če želite skriti <interface
+>Ploščo vzdevkov</interface
+>, v glavnem meniju izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Pokaži seznam vzdevkov</guisubmenu
+> </menuchoice
+>. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Ti se imenujejo <interface
+>hitri gumbi</interface
+>. Privzeto niso prikazani. Če jih želite prikazati, glejte <link linkend="quick-buttons"
+>Konfiguriranje hitrih gumbov</link
+>. Njihove definicije lahko prilagodite poljubnim ukazom.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Nadzirate lahko, kako so sporočila prikazana v drsenju sporočil na zavihkih kanala in poizvedbe. Spremenite lahko na primer barvo sporočil, predvajate zvok, ko prejmete sporočilo, ki vsebuje niz, ali samodejno odgovorite na sporočila. Za več informacij glejte <link linkend="highlighting"
+> Označevanje sporočil</link
+>. </para>
+</note>
+
+<note>
+<para
+>Imena kanalov se včasih začnejo z <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> ali <userinput
+>!</userinput
+>. Prvi znak imena kanala določa vrsto kanala (RFC 2811), kot sledi: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> - navadni kanali. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>!</userinput
+> - Navadni kanali. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&amp;</userinput
+> – lokalno. Kanali, ki se jim je mogoče pridružiti samo s strežnika, ki gosti kanal. Vsem drugim kanalom se je mogoče pridružiti s katerega koli strežnika v omrežju. </para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> – Kanali, ki ne podpirajo kanalskih načinov. To pomeni, da so vsi načini nenastavljeni, razen zastavice kanala 't', ki je nastavljena. </para
+></listitem
+> </itemizedlist
+> Imena kanalov so dolga do 50 znakov in lahko vsebujejo poljubne znake razen presledka, vejice in Ctrl-G (^G ali ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Hitra povezava</title>
+
+<para
+>Včasih se želite povezati s strežnikom, ne da bi imeli težave z ustvarjanjem novega strežnika na <link linkend="serverlist"
+>Seznamu strežnikov</link
+>. </para>
+
+<para
+>V glavnem meniju izberite <menuchoice
+> <guisubmenu
+>Datoteka</guisubmenu
+> <guisubmenu
+>Hitra povezava</guisubmenu
+> </menuchoice
+>. <action
+>Pojavil se bo zaslon <guilabel
+>Hitra povezava</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon za hitro povezavo.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Zaslon za hitro povezavo</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Vnesite naslov strežnika v polje <guilabel
+>Gostitelj strežnika</guilabel
+>, vaš želeni  &i18n-nickname; v polju <guilabel
+>Nick</guilabel
+> in kliknite gumb <guibutton
+>Poveži</guibutton
+>. Ko se je &konversation; povezal s strežnikom, vnesite ukaz <userinput
+><command
+>/join</command
+> <replaceable
+>#channelname</replaceable
+></userinput
+>, da se pridružite kanalu. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Pogosto uporabljeni &irc; ukazi</title>
+
+<para
+>Sledi kratek seznam pogosto uporabljenih &irc; ukazov. Glejte <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> za popoln seznam vseh ukazov ali obiščite <ulink url="https://www. irchelp.org/"
+>irchelp.org</ulink
+>. Za seznam ukazov, ki jih &konversation; posebej obravnava, glejte <link linkend="konvi-cmds"
+>&konversation; ukazi</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Navede ukaze, ki so na voljo na trenutnem strežniku. Ne podpirajo ga vsi strežniki.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Nudi pomoč za <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>. Ne podpirajo vsi strežniki.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#channel</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Pridruži se <userinput
+><replaceable
+>#channel</replaceable
+></userinput
+>. Če kanal še ne obstaja, je ustvarjen in vi ste operater kanala.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Zapusti trenutni kanal in zapre zavihek <interface
+>kanal</interface
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+> <replaceable
+>#channel</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Zapusti <userinput
+><replaceable
+>#channel</replaceable
+></userinput
+> in zapre ustrezen zavihek <interface
+>channel</interface
+>. Sinonim za <userinput
+><command
+>/leave</command
+></userinput
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> kanalu, pred katerim je vaš &i18n-nickname;. Na primer, če je vaš  &i18n-nickname; bil <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, tipkanje <userinput
+><replaceable
+>/me kuha skodelico čaja.</replaceable
+></userinput
+> prikaže sporočilo <interface
+>Tux kuha skodelico čaja.</interface
+> Razen če so filtrirali te vrste sporočil, ga vidijo vsi uporabniki. Tovrstno sporočilo se običajno uporablja za posredovanje neverbalnih informacij, kot je vaše trenutno čustveno stanje ali kaj fizično počnete. Če za kratek čas zapustite delovno postajo, namesto tega uporabite ukaz <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Če vam bo kdorkoli poskušal poslati zasebno sporočilo ali vas povabiti na kanal, bo z <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> obveščen, da ste odsotni od svoje delovne postaje.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Prekliče ukaz <userinput
+><command
+>/away </command
+> <replaceable
+>msg</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ustvari nov zavihek z uporabnikovim <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> za zasebni pogovor, splošno znan na &irc; kot <link linkend="query"
+>poizvedbo</link
+>. Vse, kar je tukaj napisano, je vidno samo vam in vašemu partnerju za poizvedbo.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> uporabniku z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>. Samo <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> vidi sporočilo. Uporabite <userinput
+><command
+>/query</command
+></userinput
+> za daljše pogovore.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Povabi uporabnika z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>, da se pridružite kanalu. Ta ukaz je še posebej uporaben, če je kanal na voljo samo za povabila.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Zasebni pogovori (vprašanja)</title>
+
+<para
+>Zasebni pogovor je tisti, ki ga lahko vidite samo vi in še ena oseba. Zasebni pogovori se v &konversation; imenujejo "poizvedbe". Če želite začeti zasebni pogovor, vnesite <userinput
+><command
+>/query </command
+><replaceable
+>nick</replaceable
+></userinput
+> v katero koli vnosno vrstico, kjer je <replaceable
+>nick</replaceable
+>  &i18n-nickname; osebe, s katero želite govoriti. Lahko tudi kliknete z &RMB; na  &i18n-nickname; osebe; v <interface
+>Plošči vzdevkov</interface
+> in izberite <menuchoice
+> <guisubmenu
+>Odpri poizvedbo</guisubmenu
+> </menuchoice
+>. <action
+>Ustvarjen bo nov zavihek.</action
+> Oglasite se tako, da pošljete sporočilo. </para>
+
+<para
+>Poizvedbe so podobne kanalom, le da lahko v kanalu sodelujete samo vi in druga oseba.</para>
+
+<para
+>Če želite zapustiti poizvedbo, preprosto zaprite zavihek. Upoštevajte pa, da se bo zavihek znova odprl, če vam druga oseba pošlje drugo sporočilo v poizvedbi.</para>
+
+<para
+>Če želite zapustiti vse poizvedbe, izberite <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>Zapri vse odprte poizvedbe</guisubmenu
+> </menuchoice
+> v glavnem meniju ali pritisnite tipko <keycap
+>F11</keycap
+>.</para>
+
+<para
+>Ko nekdo drug začne poizvedbo z vami, &konversation; ustvari nov zavihek s svojim  &i18n-nickname; Če ne želite govoriti z osebo, zaprite zavihek. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Nastavitev obvestil</title>
+
+<para
+><guilabel
+>Obvestila</guilabel
+> so dejanja, ki jih &konversation; se bo izvajal vsakič, ko se zgodi dogodek. Recimo, da imate &konversation; deluje, vendar je strnjen ali skrit za okni drugih aplikacij na namizju. Če nekdo želi komunicirati z vami ali se vaš prijatelj pridruži kanalu, bi želeli biti opozorjeni. Obvestila bodo to dosegla. </para>
+
+<para
+>Če želite konfigurirati obvestila, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj obvestila</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Nastavitve obvestil</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon z nastavitvami obvestil.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zaslon z nastavitvami obvestil</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Kliknite tukaj, da izberete dogodek.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Označite vrste obvestil, ki jih želite prejeti ob dogodku. (<guilabel
+>Označi vnos v opravilni vrstici</guilabel
+> povzroči, da vnos v opravilni vrstici utripa, ko pride do dogodka.)</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Ponovite tako, da izberete drug dogodek in označite želena obvestila. Ko nastavite vsa želena obvestila, kliknite gumb <guibutton
+>V redu</guibutton
+>.</para>
+
+<para
+>Ko nastavite obvestila, lahko omogočite ali onemogočite vsa obvestila z <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>Omogoči obvestila</guisubmenu
+> </menuchoice
+> v glavnem meniju. </para>
+
+<tip
+><para
+>Prav tako se lahko opozorite, ko nekdo omeni vaš &i18n-nickname; v sporočilu z &konversation; <link linkend="highlighting"
+>funkcijo označevanja</link
+>.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Spremljanje, kdo je na spletu</title>
+
+<para
+>&konversation; vas bo obveščal, ko bodo vaši prijatelji povezani z &irc; omrežjem ali ne. </para>
+
+<para
+>&irc; omrežje je zabeleženo, ker so  &i18n-nickname; edinstveni v enem &irc; omrežju. &i18n-nickname; v dveh različnih &irc; omrežij ni nujno ista oseba, ampak isti &i18n-nickname; na dveh različnih strežnikih znotraj istega &irc; omrežje pa je na splošno ista oseba.</para>
+
+<note
+><para
+>Zato je pomembno, da uporabite isto <guilabel
+>Omrežje</guilabel
+> za vse strežnike v istem &irc; omrežja, ko <link linkend="serverlist"
+> definirate omrežja, strežnike in kanale za samodejno pridružitev</link
+>.</para
+></note>
+
+<para
+>Če želite aktivirati  &i18n-nickname; funkcijo gledanja izberite <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>Ogledani vzdevki</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Ogledani vzdevki</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Opazovani vzdevki.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Opazovani vzdevki</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>&i18n-nickname; na vašem seznamu opazovanja so navedeni tukaj. Navedeni so pod povezanimi &irc; omrežji. Če na seznamu ni nobenega &i18n-nickname;, niste določili nobenega &i18n-nickname; za ogled ali pa morate aktivirati &i18n-nickname; funkcijo gledanja (glejte spodaj). Razširite vsak spletni &i18n-nickname; za ogled seznama kanalov &i18n-nickname; se je pridružil. Ikone poleg vsakega kanala so enake ikonam, ki se prikažejo v <interface
+>Plošči vzdevkov</interface
+> na zaslonih <link linkend="channel-screen-tour"
+>kanala</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>Znani podatki o  &i18n-nickname; je prikazano tukaj. Ko je zaslon <guilabel
+>Opazovani vzdevki</guilabel
+> prvič prikazan, so te informacije redke. Vsakih 20 sekund se en ukaz <userinput
+><command
+>WHOIS</command
+></userinput
+> samodejno pošlje strežniku, da zahteva informacije za  &i18n-nickname;, ki nimajo nobenih informacij. To se nadaljuje, dokler vsi vzdevki nimajo informacij. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Če želite dodati en  &i18n-nickname; za ogled odprite kontekstni meni v <guilabel
+>Seznamu vzdevkov</guilabel
+> tako, da kliknete z &RMB; na  &i18n-nickname; in izberite <guilabel
+>Dodaj med opazovane vzdevke</guilabel
+>. Če želite dodati več  &i18n-nickname; izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju, razširite <guilabel
+>Obvestila</guilabel
+> in kliknite na <guilabel
+>Ogledani vzdevki</guilabel
+>. Prikaže se zaslon <guilabel
+>Opazovani vzdevki</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Opazovani vzdevki</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Opazovani vzdevki</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Označite to polje, da aktivirate &i18n-nickname; funkcijo opazovalca.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Če želite, da se zaslon <guilabel
+>Opazovani vzdevki</guilabel
+> samodejno prikaže, ko odprete &konversation;, potrdite to polje.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>Na zaslonu <guilabel
+>Opazovani vzdevki</guilabel
+> lahko dvokliknete poljuben &i18n-nickname; in ta ukaz bo poslan strežniku. <userinput
+><command
+>%u</command
+></userinput
+> bo nadomeščen z &i18n-nickname;. <userinput
+><command
+>%n</command
+></userinput
+> je obvezen na koncu ukaza.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>Funkcija <guilabel
+>Opazovani vzdevki</guilabel
+> deluje tako, da občasno vpraša strežnik. To polje določa, kako pogosto se to zgodi. Izogibajte se številkam, krajšim od 20 sekund, ker pretirano obremenijo strežnik.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Kliknite gumb <guibutton
+>V redu</guibutton
+>, ko končate z dodajanjem ali odstranjevanjem vzdevkov.</para>
+
+<para
+><emphasis
+>Opomba: </emphasis
+>Kadar koli prikažete zaslon <guilabel
+>Opazovani vzdevki</guilabel
+>, lahko traja nekaj časa, preden se prikažejo vsi &i18n-nickname;-i, dokler ni &konversation;  vprašal strežnik. Običajno pustite zaslon <guilabel
+>Opazovani vzdevki</guilabel
+> odprt. </para>
+
+<para
+>&konversation; prav tako prikaže sporočilo v vseh <link linkend="channel-screen-tour"
+>kanalih</link
+> vsakič, ko se uporabnik na vašem seznamu <guilabel
+>Opazovanih vzdevkov</guilabel
+> poveže ali prekine povezavo s strežnikom. Sporočilo je videti takole: </para>
+
+<para
+><computeroutput
+>[17:52] [Obvesti] psn je na spletu (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Označevanje sporočil</title>
+
+<para
+>Nadzirate lahko, kako so sporočila prikazana na zaslonih kanalov in poizvedb.</para>
+
+<para
+>Če želite aktivirati zmožnost označevanja, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj &konversation;</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon za označevanje.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zaslon za označevanje</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Kliknite tukaj, da izberete zaslon <guilabel
+>Označi</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Kliknite tukaj, če želite dodati nov element na <guilabel
+>Seznam poudarkov</guilabel
+>. Ko je izbran element na seznamu, ga lahko uredite na spodnji plošči.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Tukaj vnesite vzorec niza. Vsako prejeto sporočilo, ki se ujema s tem vzorcem, kjer koli v sporočilu, bo aktiviralo označevanje sporočila. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Če je vzorec najden v sporočilu, bo celotno sporočilo prikazano v barvi, ki jo izberete tukaj.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>Če želite, &konversation; predvaja zvok, ko se vzorec ujema. Kliknite gumb, da izberete zvočno datoteko, ki jo želite predvajati. Kliknite gumb za testiranje, da slišite zvok.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Če želite za &konversation; za samodejno pošiljanje odgovora, ko se vzorec ujema, vnesite sporočilo tukaj. To funkcijo uporabljajte previdno, saj lahko motite &irc; uporabniki s preveč klepetanjem, če niso previdni. Vnesete lahko tudi &irc; ali &konversation; ukazi tukaj.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Če ste konfigurirali zvoke za katerega koli od svojih poudarkov, jih lahko vse onemogočite tako, da počistite to polje.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Ta poudarek se bo iskal samo v oknih za klepet, ki so tukaj navedena po imenu, ali v vseh oknih za klepet, če je polje prazno. Več imen je treba ločiti z vejicami.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Če označite to polje, vsakič, ko nekdo omeni vaš &i18n-nickname; v sporočilu bo sporočilo prikazano v barvi, ki jo izberete na desni.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>Običajno označevanje ne velja za sporočila, ki jih vnesete. Če želite označiti sporočila, ki jih vnesete, potrdite to polje in izberite barvo na desni.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Konfiguracija prikaza na zaslonu (&osd;)</title>
+
+<para
+><acronym
+>Zaslonski prikaz</acronym
+> (&osd;) je edinstvena funkcija &konversation;. Z &osd; vklopljeno, bodo sporočila kanala prikazana na namizju, tudi če je &konversation; strnjen. Tukaj je primer &osd; v akciji. Sporočilo v zgornjem levem delu zaslona je iz &konversation;, ki se izvaja pomanjšano v sistemskem pladnju.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Primer prikaza na zaslonu</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Primer prikaza na zaslonu</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Če želite aktivirati &osd;, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj &konversation;</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon na zaslonu.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zaslon na zaslonu</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Kliknite tukaj, da razširite element <guilabel
+>Obvestilo</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Kliknite tukaj, da izberete zaslon <guilabel
+>Zaslonski prikaz</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Označite to polje, da aktivirate &osd;.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Kliknite ta gumb, da izberete pisavo za &osd;. (<emphasis
+>Opomba: </emphasis
+> Vse pisave ne delujejo. Znano je, da delujeta Luxi Sans 22 in Impact 22.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Tukaj potrdite polja, da izberete vrste sporočil, ki jih želite prikazati na zaslonu.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Povlecite <interface
+>&osd; Predogled</interface
+> na želeni položaj, nato kliknite gumb <guibutton
+>Uporabi</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Pošiljanje barvitih sporočil</title>
+
+<para
+>Sporočilom, ki jih pošljete v katerem koli kanalu, lahko dodate barvo. V <interface
+>Vnosna vrstica</interface
+> katerega koli kanala začnite vnašati svoje sporočilo. Kliknite <inlinemediaobject
+> <imageobject
+> <imagedata fileref="format-text-color.png" format="PNG"/> </imageobject
+> <textobject
+> <phrase
+>Insert &irc; Gumb barva</phrase
+> </textobject
+> </inlinemediaobject
+> <guibutton
+>&irc; Barva</guibutton
+> gumb ali izberite <menuchoice
+> <guisubmenu
+>Vstavi</guisubmenu
+> <guisubmenu
+>&irc; Barva</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+><guilabel
+>&irc; Prikaže se zaslon za izbiro barve</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>&irc; zaslon za izbiro barv.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>&irc; zaslon za izbiro barv</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Izberite barvo in kliknite <guibutton
+>V redu</guibutton
+>. Nadaljujte s tipkanjem sporočila v <interface
+>Vnosna vrstica</interface
+>. Če želite znova spremeniti barvo, kliknite gumb <guibutton
+>&irc; Barva</guibutton
+>. Izberite drugo barvo in kliknite <guibutton
+>V redu</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Konfiguriranje &i18n-nickname; teme</title>
+
+<para
+>Spremenite lahko ikone, prikazane poleg  &i18n-nickname; v <interface
+>plošči vzdevkov</interface
+> zavihkov kanala. Če želite spremeniti vzdevek &i18n-nickname; temo izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> Kliknite <guilabel
+>Vmesnik</guilabel
+>, da ga razširite, nato kliknite <guilabel
+>Teme seznama nadomestkov</guilabel
+>, da prikažete <guilabel
+> Zaslon Teme</guilabel
+> s seznamom nadomestkov. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon Teme.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zaslon Teme</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Kliknite tukaj, da izberete zaslon <guilabel
+>Teme seznama nadomestkov</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Izberite temo.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Vzorci ikon so prikazani tukaj v izbrani temi.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Če ste temo vzdevka prenesli od drugod, kliknite, da jo namestite.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Konfiguriranje hitrih gumbov</title>
+
+<para
+>Omogočite lahko funkcijo za prikaz <interface
+>hitrih gumbov</interface
+> na <link linkend="channel-screen-tour"
+>glavnem</link
+> zaslonu, prikaže se osem <interface
+>hitrih gumbov</interface
+>. Za prikaz hitrih gumbov izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> Kliknite <guilabel
+>Vmesnik</guilabel
+>, da ga razširite, nato kliknite <guilabel
+>Okno za klepet</guilabel
+>. Označite polje <guilabel
+>Pokaži hitre gumbe</guilabel
+> in kliknite <guibutton
+>V redu</guibutton
+>. </para>
+
+<para
+>Gumbe lahko prilagodite svojim željam za izvajanje pogosto uporabljenih &irc; ukazi. Če želite prilagoditi <interface
+>Hitre gumbe</interface
+>, izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> Kliknite <guilabel
+>Vmesnik</guilabel
+>, da ga razširite, nato kliknite <guilabel
+>Hitre gumbe</guilabel
+>, da prikažete <guilabel
+> Zaslon s hitrimi gumbi</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zaslon hitrih gumbov</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Zaslon s hitrimi gumbi</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Obstaja 8 privzetih <interface
+>hitrih gumbov</interface
+>. Kliknite na vnos, da ga spremenite, ali uporabite gumbe na desni strani seznama, da dodate ali odstranite <interface
+>Hitre gumbe</interface
+>. Stolpec <guilabel
+>Ime gumba</guilabel
+> je ime, ki bo prikazano na gumbu na <link linkend="channel-screen-tour"
+>glavnem</link
+> zaslonu. Imena naj bodo kratka. Stolpec <guilabel
+>Dejanje gumba</guilabel
+> je dejanje, ki bo izvedeno, ko kliknete <interface
+>Hitri gumb</interface
+>. Nasveti za ustvarjanje dejanj so prikazani na zaslonu. </para>
+
+<para
+>Kliknite <guibutton
+>V redu</guibutton
+>, da dokončate spremembe. </para>
+
+<para
+>Primer:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Ime gumba</guilabel
+>: <userinput
+><replaceable
+>Sporočilo</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Dejanje gumba</guilabel
+>: <userinput
+><replaceable
+>Sporočilo %u </replaceable
+></userinput
+> (za <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> je presledek) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Za uporabo tega gumba na <link linkend="channel-screen-tour"
+>glavnem</link
+> zaslonu kliknite &i18n-nickname; v <interface
+>plošči vzdevkov</interface
+>, nato kliknite gumb. <computeroutput
+>/MSG </computeroutput
+> se prikaže v <interface
+>Vnosni vrstici</interface
+>, ki mu sledi izbrani &i18n-nickname;. Vnesite sporočilo, ki ga želite poslati tej osebi, in pritisnite &Enter;. Sporočilo bo poslano uporabniku. Samo ta uporabnik bo videl sporočilo. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Pošiljanje in prejemanje datotek</title>
+
+<para
+>Datoteke lahko pošiljate prek &irc; drugim uporabnikom na spletu ali vam lahko pošljejo datoteke. </para>
+
+<para>
+<emphasis
+>OPOZORILO: Nikoli ne odpirajte datoteke, ki vam jo nekdo pošlje, razen če je zaupanja vreden vir. Lahko je virus.</emphasis>
+</para>
+
+<para
+>Če želite poslati datoteko nekomu v kanalu, kliknite z &RMB; na &i18n-nickname; osebe v <interface
+>Plošči  vzdevkov</interface
+> na <link linkend="channel-screen-tour"
+>glavnem</link
+> zaslonu. Izberite <menuchoice
+> <guisubmenu
+>Pošlji datoteko</guisubmenu
+> </menuchoice
+> <action
+>. Prikaže se pogovorno okno, v katerem izberete datoteko za pošiljanje.</action
+> Nato se prikaže nov zavihek <guilabel
+>Status DCC</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zavihek Stanje DCC</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zavihek Stanje DCC</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>&i18n-nickname; prejemnika in ime datoteke sta prikazana tukaj.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>Stolpec <guilabel
+>Stanje</guilabel
+> označuje status poslane ali prejete datoteke, kot sledi:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Priprava</guilabel>
+		</term>
+		<listitem>
+			<para
+>Prejemni prenos preverja datoteke, ki jih je mogoče nadaljevati, ali pošiljajoči prenos pridobiva podatke za pošiljanje. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Povezovanje</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; poskuša vzpostaviti povezavo z drugim koncem. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Pošiljanje</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; pošilja datoteko na drugo stran. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Prejemanje</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; prejema datoteko z drugega konca. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Končano</guilabel>
+		</term>
+		<listitem>
+			<para
+>Datoteka je bila uspešno prenesena. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>V teku</guilabel>
+		</term>
+		<listitem>
+			<para
+>Nakazilo čaka, da ga partner sprejme ali zavrne. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Prekinjeno</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ali ste kliknili gumb <guibutton
+>Prekini</guibutton
+> ali pa je druga oseba prekinila prenos. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ni uspelo</guilabel>
+		</term>
+		<listitem>
+			<para
+>Prišlo je do napake in prenos ni bil uspešen. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>V čakalni vrsti</guilabel>
+		</term>
+		<listitem>
+			<para
+>Prenos čaka, da ga sprejmete ali zavrnete. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Nadaljevanje</guilabel>
+		</term>
+		<listitem>
+			<para
+>Ko se prenos začne, vendar datoteka že obstaja v uporabnikovem sistemu, bo uporabnik pozvan <interface
+>Datoteka že obstaja. Želite nadaljevati prenos?</interface
+> To stanje pomeni, da je uporabnik nadaljeval prenos. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Ko vam nekdo želi poslati datoteko, bo ustvarjen zavihek <guilabel
+>Status DCC</guilabel
+> (če še ni ustvarjen). Kliknite zavihek <guilabel
+>Status DCC</guilabel
+>, da ga prikažete. Kliknite datoteko, da jo izberete, nato kliknite ta gumb, da sprejmete datoteko in prenos se bo začel. <emphasis
+>Opomba: </emphasis
+>Lahko konfigurirate &konversation; za samodejno sprejemanje pošiljanj od drugih oseb z izbiro <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> v glavnem meniju. Kliknite <guilabel
+>Vedenje</guilabel
+>, da ga razširite, nato kliknite <guilabel
+>DCC</guilabel
+>, da prikažete zaslon <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Če imate težave pri pošiljanju ali prejemanju datotek, vaš požarni zid ali usmerjevalnik morda blokira vrata DCC. Glejte <link linkend="faq"
+>Vprašanja in odgovori</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Zajemanje &URL; iz sporočil</title>
+
+<para
+>V katerem koli <link linkend="channel-screen-tour"
+>kanalu</link
+> uporabniki včasih objavijo &URL;-je zanimivih spletnih mest ali drugih virov v spletu. Vsak tak &URL; lahko dvakrat kliknete. in &konversation; bo zagnal aplikacijo, povezano z &URL;. Zagnana aplikacija je odvisna od &MIME; vrsto &URL;. Na primer &URL; ki se začne z <interface
+>http:</interface
+>, bo aktiviral vaš privzeti spletni brskalnik in prikazal spletno stran. (Določite lahko tudi <link linkend="webbrowser"
+>spletni brskalnik</link
+> za uporabo.) Če &URL; pomakne z zaslona, boste morda imeli težave pri ponovnem iskanju. &konversation; lahko vodi priročen seznam vseh &URL;ov za vas. Če želite aktivirati to funkcijo, izberite <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>&URL; Lovilec</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Nov zavihek z imenom <guilabel
+>&URL; Lovilec</guilabel
+> je ustvarjen.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Zavihek &URL; lovilnik.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zavihek &URL; lovilnik.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>To je seznam videnih &URL;, odkar ste začeli &konversation;. Stolpec <guilabel
+>Od</guilabel
+> je &i18n-nickname;  osebe, ki je objavila &URL; ali ime kanala ali strežnika, kjer &URL; je bilo objavljeno. (URL-ji, ki se pojavljajo v sporočilih za pridružitev in zapuščanje, niso navedeni.) Kliknite na &URL; da ga izberete.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Kliknite tukaj, da aktivirate aplikacijo, povezano z izbranim &URL;. Zagnana aplikacija je odvisna od &MIME; vrsto &URL;. Na primer &URL; ki se začne z <interface
+>http:</interface
+>, bo aktiviral vaš privzeti spletni brskalnik in prikazal spletno stran. Za spletne strani lahko določite tudi <link linkend="webbrowser"
+>spletni brskalnik</link
+>, ki ga želite uporabiti.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Kliknite tukaj, če želite kopirati izbrani &URL; v odložišče.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Kliknite tukaj, če želite izbrisati izbrani &URL; s seznama.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Kliknite tukaj, če želite seznam &URL;s shraniti v datoteko.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Kliknite tukaj, da počistite seznam.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Nastavitev želenega spletnega brskalnika</title>
+
+<para
+>Ko kliknete označen &URL; kjer koli v &konversation;, bo zagnal privzeto aplikacijo, povezano z &MIME; vrsto &URL;. Na primer, ko kliknete na &URL; ki se začne z <interface
+>http</interface
+>, &konqueror; se zažene za prikaz spletne strani. Določite lahko aplikacijo, ki se razlikuje od modula <guilabel
+>Privzete aplikacije</guilabel
+> v &systemsettings;. Namesto tega lahko na primer uporabite <application
+>Firefox</application
+>. </para>
+
+<para
+>Če želite izbrati drug spletni brskalnik iz &konversation; izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj &konversation;</guisubmenu
+> </menuchoice
+> v glavnem meniju. <action
+>Pojavil se bo zaslon <guilabel
+>Konfiguriraj</guilabel
+>.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Zaslon Splošno</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Zaslon Splošno</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Kliknite tukaj za prikaz zaslona <guilabel
+>Splošno</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Kliknite tukaj, če želite določiti, da želite uporabljati spletni brskalnik po meri.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Vnesite ukaz za zagon želenega spletnega brskalnika. Ko kliknete na &URL; <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> bo zamenjan z &URL;.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Opomba: </emphasis
+>Nastavitve spletnega brskalnika ne veljajo za <interface
+>mailto:</interface
+> &URL;. <interface
+>mailto:</interface
+> &URL; vedno zažene privzeti poštni program. </para>
+
+<para
+>Kliknite <guibutton
+>Uporabi</guibutton
+>, da shranite spremembe. Za uveljavitev sprememb se morate znova povezati z vsakim strežnikom in kanalom. Najlažji način za to je, da zaprete in znova zaženete &konversation;. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Označevanje dnevnikov kanalov in poizvedb</title>
+
+<para
+>V zaslone <link linkend="channel-screen-tour"
+>kanala</link
+> in <link linkend="query"
+>poizvedbe</link
+> lahko vstavite oznako, ki vam pomaga hitro najti informacije. To storite tako, da v glavnem meniju izberete <menuchoice
+> <guisubmenu
+>Vstavi</guisubmenu
+> <guisubmenu
+>Črta označevanja</guisubmenu
+> </menuchoice
+> ali pritisnete <keycombo action="simul"
+>&Ctrl;<keycap
+>R </keycap
+></keycombo
+>. <action
+>Na dnu besedila na zaslonu se bo pojavila vrstica. Vrstica se bo premikala skupaj s preostalim besedilom na zaslonu.</action
+> </para>
+
+<para
+>Če želite, da se <interface
+>Črta označevanja</interface
+> vstavi v vse kanale in poizvedbe hkrati, v glavnem meniju izberite <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> </menuchoice
+> razširite <guilabel
+>Vedenje</guilabel
+>, kliknite <guilabel
+>Okno za klepet</guilabel
+> in potrdite polje <guilabel
+>Pokaži ročno vstavljene vrstice v vseh oknih za klepet</guilabel
+>. </para>
+
+<para
+>Če želite &konversation; samodejno vstavite <interface
+>Marker Line</interface
+> vsakič, ko naredite ukaz <userinput
+><command
+>/away</command
+> <replaceable
+>msg</replaceable
+></userinput
+>, glejte <link linkend="identity-away"
+>Nastavitev vaše identitete</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Beleženje dnevnikov</title>
+
+<para
+>Če je beleženje omogočeno, &konversation; vodi dnevnik vsakega <interface
+>strežnika</interface
+>, <link linkend="channel-screen-tour"
+>kanala</link
+> in <link linkend="query"
+>zasebnega pogovora (poizvedbe)</link
+> sejo. Vsaka seja je shranjena v dnevniški datoteki na disku. Ko ponovno odprete isto sejo, se &konversation; priloži dnevniku. </para>
+
+<para
+>Kadarkoli znova odprete sejo, se približno zadnjih 1024 znakov prejšnje seje prebere z repa dnevnika in prikaže na zaslonu. </para>
+
+<para
+>Ko se vaša seja nadaljuje, se sporočila pomaknejo z vrha zaslona. Za ogled teh sporočil se lahko pomaknete nazaj. Sčasoma se najstarejša sporočila zaradi varčevanja s pomnilnikom izločijo iz zvitka. To se imenuje <guilabel
+>Omejitev drsenja nazaj</guilabel
+>. Sporočila, ki izginejo iz prikaza zaradi <guilabel
+>Omejitve pomika nazaj</guilabel
+>, so še vedno na voljo v dnevniški datoteki, če je beleženje omogočeno.</para>
+
+<para
+>Če si želite ogledati dnevniško datoteko za sejo, kliknite zavihek za sejo, da postane trenutna seja, in v glavnem meniju izberite <menuchoice
+> <guisubmenu
+>Okno</guisubmenu
+> <guisubmenu
+>Odpri dnevniško datoteko</guisubmenu
+> </menuchoice
+> . <action
+>Prikaže se nov zavihek</action
+>, ki prikazuje dnevniško datoteko. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Dnevniška datoteka</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Dnevniška datoteka</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Tukaj so prikazana sporočila v dnevniški datoteki. Najstarejša sporočila so na vrhu, najnovejša pa na dnu.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Kliknite ta gumb, da shranite dnevniško datoteko v drugo datoteko.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Kliknite za osvežitev prikaza dnevniške datoteke. Medtem ko si ogledujete dnevniško datoteko, se novejša sporočila v ustrezni seji <emphasis
+>ne</emphasis
+> samodejno dodajo na prikaz dnevniške datoteke. S tem gumbom si lahko ogledate najnovejša sporočila.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Kliknite, da izbrišete prikaz dnevniške datoteke in dnevniško datoteko na disku.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>S tem poljem nastavite največjo velikost zvitka. Ta nastavitev velja le za na novo odprte zavihke dnevnika. Zadnja spremenjena vrednost velikosti drsnika bo uporabljena ob naslednjem zagonu &konversation;. Vsaka dnevniška datoteka ima lahko ločeno nastavitev.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+><guilabel
+>Omejitev drsenja nazaj</guilabel
+> lahko spremenite tako, da v glavnem meniju izberete <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj &konversation;</guisubmenu
+> </menuchoice
+> in nato razširite <guilabel
+> Vedenje</guilabel
+> in kliknite na <guilabel
+>Okno za klepet</guilabel
+>. Na tem zaslonu se prikaže polje <guilabel
+>Omejitev pomika nazaj</guilabel
+>. Če ga nastavite na <guilabel
+>Neomejeno</guilabel
+> (&ie;. nič), sporočila niso zavržena iz drsenja. </para>
+
+<para
+>Beleženje lahko omogočite ali onemogočite in nastavite druge možnosti beleženja tako, da v glavnem meniju izberete <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj &konversation;</guisubmenu
+> </menuchoice
+> in nato razširite <guilabel
+>Vedenje </guilabel
+> in kliknite na <guilabel
+>Beleženje</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>&konversation; ukazi</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Naslednje ukaze razlaga &konversation; in se lahko razlikujejo od standardnih &irc; ukazov. Elementi v oglatih oklepajih niso obvezni. Elementi, ločeni s črto (|), so nadomestne oblike ukaza. Ukazi, ki niso navedeni tukaj, se pošljejo na strežnik, kot so vneseni. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> kanalu, pred katerim je vaš &i18n-nickname;. Na primer, če je vaš  &i18n-nickname; bil <userinput
+><replaceable
+>Tux</replaceable
+></userinput
+>, tipkanje <userinput
+><replaceable
+>/me kuha skodelico čaja.</replaceable
+></userinput
+> prikaže sporočilo <interface
+>Tux kuha skodelico čaja.</interface
+> Razen če so filtrirali te vrste sporočil, ga vidijo vsi uporabniki. Tovrstno sporočilo se običajno uporablja za posredovanje neverbalnih informacij, kot je vaše trenutno čustveno stanje ali kaj fizično počnete. Če za kratek čas zapustite delovno postajo, namesto tega uporabite ukaz <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Tako kot zgornji ukaz <userinput
+><command
+>/me</command
+></userinput
+>, le da je sporočilo poslano vsem kanalom in poizvedbam, ki ste jih odprli na vseh strežnikih, ki ste jih povezali v &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>kanal</replaceable
+> <replaceable
+>[pwd]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pridruži se <userinput
+><replaceable
+>kanalu</replaceable
+></userinput
+>. Če strežnik to dovoli in če kanal še ne obstaja, se ustvari in vi ste operater kanala. Če kanal zahteva geslo za pridružitev, navedite kot <userinput
+><replaceable
+>pwd</replaceable
+></userinput
+>. Večina imen kanalov se začne z <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>channel</replaceable
+> <replaceable
+>[pwd]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Enako kot <userinput
+><command
+>/join</command
+></userinput
+> zgoraj.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[channel]</replaceable
+> <replaceable
+>[reason]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Zapusti <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> z <userinput
+><replaceable
+>razlogom</replaceable
+></userinput
+> in zapre ustrezen zavihek <interface
+>channel</interface
+>. Znotraj &konversation; zavihek kanala ali poizvedbe, lahko samo vnesete <userinput
+><command
+>/part</command
+></userinput
+>, ki zapre ta kanal ali poizvedbo z vašim privzetim razlogom, kot je naveden v <link linkend="identity"
+>Nastavitve</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[channel]</replaceable
+> <replaceable
+>[reason]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Enako kot <userinput
+><command
+>/part</command
+></userinput
+> zgoraj.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>Ko ga vnesete v kateri koli zavihek kanala, poizvedbe ali DCC, prekine povezavo z ustreznim strežnikom in zapre vse zavihke kanala, poizvedbe ali DCC, odprte na tem strežniku.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>nick|kanal</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> uporabniku z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> ali vsem v <userinput
+><replaceable
+>kanalu</replaceable
+></userinput
+>. Sledi primer tega, kar se vam prikaže na zavihku kanala</para>
+
+<para
+><computeroutput
+>[17:14] [Notice] Sending notice "I think I understand" to #konversation</computeroutput
+></para>
+
+<para
+>In to vidijo prejemniki</para>
+
+<para
+><computeroutput
+>[17:15] [Notice] -Eisfuchs- I think I understand</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ustvari nov zavihek z uporabnikovim <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> za zasebni pogovor, splošno znan na &irc; kot <link linkend="query"
+>poizvedbo</link
+>. Vse, kar je tukaj napisano, je vidno samo vam in vašemu partnerju za poizvedbo. Vnesete lahko več kot en &i18n-nickname; ločeni s presledki in za vsak &i18n-nickname; se bo odprl zavihek s poizvedbo. Vsak tak zavihek za poizvedbo bo zaseben med vami in partnerjem za poizvedbo.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>nick|channel</replaceable
+></userinput
+> <userinput
+><replaceable
+>message</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje zasebno sporočilo uporabniku z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> ali vsem uporabnikom v <userinput
+><replaceable
+>kanalu</replaceable
+></userinput
+>. Za razliko od <userinput
+><command
+>/query</command
+></userinput
+> ne odpre novega zavihka. Če se <userinput
+><replaceable
+>sporočilo</replaceable
+></userinput
+> začne z <userinput
+><command
+>/me </command
+></userinput
+>, je sporočilo oblikovano na enak način kot <userinput
+><command 
+>/me</command
+></userinput
+> ukaz.</para>
+
+<para
+>Primeri</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Potrebujem pomoč pri ukazu msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Nova različica Konvija je na spletu!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me trenutno sestavlja priročnik.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>nick|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>sporočilo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Enako kot <userinput
+><command
+>/msg</command
+></userinput
+> le da sporočilo ni prikazano na vašem zaslonu. To je uporabno, če želite preprečiti, da bi gesla in druge občutljive informacije ostale izpostavljene na vašem zaslonu ali bile zabeležene.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>nick|kanal</replaceable
+></userinput
+> <userinput
+><replaceable
+>sporočilo</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Tako kot zgornji ukaz <userinput
+><command
+>/msg</command
+></userinput
+>, le da je sporočilo poslano vsem kanalom in poizvedbam, ki ste jih odprli na vseh strežnikih, ki ste jih povezali v &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ko vstopi na zavihek kanala, poskuša dati <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> privilegij operaterja za kanal. Morda ne bo delovalo, če nimate dovolj privilegijev na kanalu (sami morate biti operater kanala). Vnesete lahko več kot en &i18n-nickname; ločene s presledki.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ko vnesete v zavihek kanala, odvzame privilegij operaterja kanala <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>. Vnesete lahko več kot en &i18n-nickname; ločen s presledki.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[nick]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Dodeli uporabniku z &i18n-nickname; <userinput
+><replaceable
+>vzdevkom</replaceable
+></userinput
+> &irc;-Op (skrbniški) privilegij. To deluje le, če je &i18n-nickname; je naveden v vrstici O: strežnika. &irc;-Ops imajo privilegij za <userinput
+><command
+>/kill</command
+></userinput
+> &i18n-nickname;<userinput
+><command
+>/connect</command
+></userinput
+> strežnike z &irc; omrežje in več. Če <userinput
+><replaceable
+>vzdevek</replaceable
+></userinput
+> ni vnesen, si poskuša dodeliti privilegij &irc;-Op. V obeh primerih boste morali vnesti svoje uporabniško ime &irc;-Op. in geslo.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Na določenih kanalih (z oznako +m) uporabniki ne morejo pošiljati sporočil, razen če imajo glasovne pravice. Ta ukaz poskuša <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> dati glasovni privilegij. Za izvedbo tega ukaza morate imeti privilegij kanalskega operaterja. Ta ukaz se večinoma uporablja, ko ste operater moderiranega kanala.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>nick</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Odvzema glasovne pravice <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> v kanalu.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[channel]</replaceable
+> <replaceable
+>[message]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Poskuša nastaviti temo <userinput
+><replaceable
+>kanala</replaceable
+></userinput
+> na <userinput
+><replaceable
+>sporočilo</replaceable
+></userinput
+>. Ko ga vnesete na zavihek kanala, je <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> morda izpuščen in privzeto nastavljen na kanal, ki je aktiven na zavihku. Če je <userinput
+><replaceable
+>sporočilo</replaceable
+></userinput
+> izpuščeno, prikaže trenutno temo kanala. Spreminjanje teme kanala morda ne bo uspelo, če nimate dovolj privilegijev.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>reason</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Če vam kdo poskuša poslati zasebno sporočilo ali vas povabiti na kanal, bo obveščen, da vas ni na vaši delovni postaji zaradi <userinput
+><replaceable
+>razloga</replaceable
+></userinput
+>. Če želite spremeniti svoje stanje nazaj v običajno, vnesite <userinput
+><command
+>/away</command
+></userinput
+> brez <userinput
+><replaceable
+>razloga</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>razlog</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Kot zgornji ukaz <userinput
+><command
+>/away</command
+></userinput
+>, le da je ukaz poslan vsem strežnikom, ki ste jih povezali v &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>[kanal]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Povabi uporabnika z &i18n-nickname;  <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> za pridružitev <userinput
+><replaceable
+>kanalu</replaceable
+></userinput
+>. Ta ukaz je še posebej uporaben, če je kanal na voljo samo za povabila. Ko ga vnesete na zavihek kanala, je <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> morda izpuščen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>skript</replaceable
+> <replaceable
+>[parametri]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Izvede lupinski skript, združljiv z &konversation;, imenovan <userinput
+><replaceable
+>script</replaceable
+></userinput
+>, ki mu posreduje <userinput
+><replaceable
+>parametre</replaceable
+></userinput
+>. Glejte <link linkend="scripting"
+>Skriptiranje</link
+> za več informacij o uporabi in pisanju skriptov.</para>
+<para
+>Primeri:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Pošlje vaš sistem &konversation;, &Qt;, &kde-frameworks; in &plasma; številke različice kanala.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Pošlje vaš &Linux; niz različice (izhod <quote
+>uname -a</quote
+>) v kanal.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[nick]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Doda ali odstrani <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> s seznama <link linkend="nicksonline"
+>Opazovanih vzdevkov</link
+>. Če je &i18n-nickname; že na seznamu, je odstranjen. Če ga ni na seznamu, se doda. Če je <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> izpuščen, prikaže trenutni seznam opazovanih &i18n-nickname;</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>razlog</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ko vstopi v zavihek kanala, poskuša brcniti uporabnika z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> iz kanala z <userinput
+><replaceable
+>razlogom</replaceable
+></userinput
+>. Če <userinput
+><replaceable
+>razlog</replaceable
+></userinput
+> ni vnesen, je privzeto nastavljen razlog v <link linkend="identity"
+>Nastavitve</link
+>. Ta ukaz se lahko uporablja samo na zavihku kanala.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[channel]</replaceable
+> <replaceable
+>user</replaceable
+>|<replaceable
+>mask</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Poskuša prepovedati <userinput
+><replaceable
+>uporabnika</replaceable
+></userinput
+> ali <userinput
+><replaceable
+>maske</replaceable
+></userinput
+> iz <userinput
+><replaceable
+>kanala</replaceable
+></userinput 
+>. Ko ga vnesete na zavihek kanala, je <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> morda izpuščen. Za več informacij o gostiteljih, domenah in maskah si oglejte dokumente na <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Če želite pridobiti trenutni seznam prepovedi za kanal, vnesite <userinput
+><command
+>/mode </command
+><replaceable
+>kanal</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[kanal]</replaceable
+> <replaceable
+>vzorec</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Razveljavi prejšnjo prepoved kanala. Ko ga vnesete na zavihek kanala, je <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+> morda izpuščen. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>nick</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Doda <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> na vaš seznam prezrtih. Določite lahko več kot en &i18n-nickname; ločeni s presledki. Sporočila kanala uporabnikov na vašem seznamu prezrtih niso prikazana. Poleg tega, če vnesete <userinput
+><command
+>-all</command
+></userinput
+>, so vse vrste sporočil (poizvedbe, obvestila, &CTCP;, DCC in izjeme) od uporabnika prezrte, kot tudi sporočila kanala. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>cmd</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Strežniku pošlje <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Ko vnesete na zavihek kanala, kanalu pošlje <userinput
+><replaceable
+>msg</replaceable
+></userinput
+>. To je enako kot vnos <userinput
+><replaceable
+>msg</replaceable
+></userinput
+> v kanal <interface
+>Input Line</interface
+>. Uporabno za pošiljanje &irc; ukazov, ko ukaza ne želite izvesti. Dva ukazna znaka (//) v vrsti naredita isto kot <userinput
+><command
+>/say</command
+></userinput
+>. Uporabljajo ga tudi <link linkend="scripting"
+>skripti</link
+> za pošiljanje sporočil. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Postavi dnevnik strežnika v neobdelani način (<command
+>open</command
+>) ali ustavi surovi način (<command
+>close</command
+>). Če ni vnesen niti ukaz <command
+>open</command
+> niti <command
+>close</command
+>, je privzeto <command
+>open</command
+>. V surovem načinu dnevnik prikaže vsako sporočilo, prejeto s strežnika v izvirnem &irc; formatu. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Odpre nov zavihek, v katerem se izvaja &konsole;. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[url]</replaceable
+> <replaceable
+>[pwd]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Povezuje se s strežnikom na naslovu <userinput
+><replaceable
+>url</replaceable
+></userinput
+>. Če je <userinput
+><replaceable
+>url</replaceable
+></userinput
+> izpuščen, se poveže s strežnikom, povezanim z zavihkom, kjer vnesete ukaz. To je uporabno za ponovno povezavo s strežnikom, ko je povezava prekinjena. Če strežnik zahteva geslo za povezavo z njim, ga vnesite za <userinput
+><replaceable
+>pwd</replaceable
+></userinput
+>. Če strežnik zahteva številko vrat, ki ni privzeta (6667), vnesite <userinput
+><replaceable
+>url</replaceable
+></userinput
+> takole: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>nick</replaceable
+> <replaceable
+>[filename]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje <userinput
+><replaceable
+>ime datoteke</replaceable
+></userinput
+> uporabniku z &i18n-nickname; <userinput
+><replaceable
+>nick</replaceable
+></userinput
+>. Če je <userinput
+><replaceable
+>ime datoteke</replaceable
+></userinput
+> izpuščeno, se prikaže pogovorno okno za izbiro datoteke. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Odpre zavihek <guilabel
+>Status DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>nick|channel</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Pošlje sporočilo PING na <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> ali <userinput
+><replaceable
+>kanal</replaceable
+></userinput
+>. To je uporabno za ugotavljanje, ali ima nekdo, s katerim se pogovarjate, visoko omrežno zakasnitev ali (ko je poslano na kanal), ali ima vaš sistem veliko zakasnitev. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>nick|kanal</replaceable
+> <replaceable
+>msg</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Pošlje sporočilo <userinput
+><replaceable
+>nick</replaceable
+></userinput
+> ali vsem uporabnikom v <userinput
+><replaceable
+>kanalu</replaceable
+></userinput
+>. To je podobno zgornjemu ukazu <userinput
+><command
+>/msg</command
+></userinput
+>, le da je sporočilo poslano z uporabo &CTCP; protokola. Odgovor na drugi strani je odvisen od &irc; odjemalskega programa, ki ga izvaja uporabnik. Na primer, ko se pogovarjate z drugim uporabnikom &konversation;, bo <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> vrnil sistemski čas na Eisfuchovem računalniku. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> bo vrnil številko različice &konversation; iz Eisfuchovega računalnika. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Skriptiranje</title>
+
+<para
+>&konversation; vsebuje nekaj priročnih skriptov, ki jih lahko zaženete iz programa. Če želite zagnati skript, v zavihku kanala, poizvedbe, DCC ali strežnika vnesite ukaz obrazca</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>skript</replaceable
+> [<replaceable
+>parametri</replaceable
+>]</userinput
+></para>
+
+<para
+>ki izvede skript z imenom <userinput
+><replaceable
+>script</replaceable
+></userinput
+> in mu posreduje (neobvezno) <userinput
+><replaceable
+>parametre</replaceable
+></userinput
+>.</para>
+
+<para
+>Na primer, v zavihek kanala vnesite naslednji ukaz</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>za pošiljanje vaših &konversation;, &Qt;, &kde-frameworks; in &plasma; številke različice kanala.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>izvede skript <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+> in mu posreduje <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. To pošlje vaš &Linux; niz različice v kanal.</para>
+
+<para
+>Če želite izvedeti več o skriptih, nameščenih s &konversation; glejte <link linkend="scripts_ref"
+>Referenčni vodnik po skriptih</link
+></para>
+
+<para
+>Če želite dobiti seznam vseh razpoložljivih skriptov, vnesite naslednji ukaz na &konversation; zaslon.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Nato poiščite mapo iz izhoda, da si ogledate seznam.</para>
+
+<para
+>Lahko pišete svoje lastne skripte. Skripti so lupinski skripti in jih je mogoče napisati v katerem koli lupinskem jeziku, kot je bash, perl ali python. Ko &konversation; zažene skript, sta prva dva parametra, poslana skriptu:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Naslov strežnika.</para
+></listitem>
+
+<listitem
+><para
+>Ime kanala.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Tukaj je vzorčni skript lupine (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Executes a command and prints the output into Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Upoštevajte, da skript uporablja qdbus za komunikacijo s &konversation;. Ukaz <computeroutput
+>say</computeroutput
+> povzroči, da se izhod pošlje kanalu kot običajno sporočilo. Če želite nekaj prikazati na zavihku, ne da bi to poslali drugim uporabnikom, namesto tega uporabite <computeroutput
+>info</computeroutput
+>. Oglejte si obstoječe skriptne datoteke za več primerov pisanja skriptov.</para>
+
+<para
+>Če želite zagnati skript, ki ste ga napisali, ga morate namestiti tako, da ga kopirate v <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. Datoteki morate dati tudi privilegij za izvajanje, na primer <userinput
+><replaceable
+>chmod a+x myscript</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Referenčni vodnik za skripte</title>
+
+<para
+>&konversation; prihaja z več skripti, ki so privzeto nameščeni, glejte ta priročnik, če želite izvedeti, kako jih uporabljati.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>Številka hrošča|Iskalni niz</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Ta skript se uporablja za odpiranje vašega brskalnika za iskanje danega niza ali številke hrošča na <ulink url="https://bugs.kde.org/"
+>&kde;'s Bugzilla</ulink
+>.</para>
+<para
+>Primer: Če želite odpreti brskalnik za iskanje napake 123456</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Primer dejanja: Privzeti brskalnik v &systemsettings; naj se odpre na <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>argumenti ukazne vrstice</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ta skript se uporablja za pisanje argumentov ukazne vrstice v vašem trenutnem kanalu.</para>
+<para
+>Primer: Če želite vsem v vašem trenutnem kanalu pokazati, katero različico &konversation; ste namestili.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Vzorec izpisa: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>OPOZORILO! Izhod celotnega ukaza je objavljen vsem na trenutnem zavihku kanala! Prosimo, uporabljajte previdno.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ta skript, ko se zažene, izpiše naključno bogastvo.</para>
+<para
+>Primer: Za izpis naključnega bogastva na zavihku vašega trenutnega kanala.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Vzorec izpisa: <replaceable
+>Random Fortune: Nikoli ne delajte nobenih napak. -- Anonimno, v e-poštni razpravi o poročilu o napaki v jedru</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>odstotek</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ta skript prikazuje preprosto besedilno vrstico napredka za podani odstotek.</para>
+<para
+>Primer: Za prikaz vrstice napredka s 50-odstotno dokončanostjo na zavihku trenutnega kanala.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Vzorec izpisa: <replaceable
+>Beer load [ | ] 50 %</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>avdio|video|{player}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>To je skript Now Playing za različne medijske predvajalnike. Vsebuje tudi metodo za prikaz informacij o tem, ki se trenutno predvajajo, samo za predvajalnike zvoka ali samo predvajalnike videa prek izbirnih ukaznih argumentov <replaceable
+>avdio</replaceable
+> in <replaceable
+>video</replaceable
+>. Poleg tega je mogoče določiti predstavnostni predvajalnik, ki ga želite poizvedovati.</para>
+<para
+>Podprti so naslednji medijski predvajalniki: Amarok (avdio), JuK (avdio), Kaffeine (video, avdio), KMPlayer (video, avdio), KPlayer (video, avdio), kdetv (video), Yammi (avdio), Audacious ( avdio), MPD (avdio).</para>
+<para
+>Primer: Za izpis vaše trenutno predvajane pesmi v Amaroku.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Primer izhoda: <replaceable
+>* uporabnik posluša You Give Love A Bad Name skupine Bon Jovi na Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ta skript prikaže nekaj podrobnih informacij o vašem sistemu tako, da združi rezultate več ukazov in jih ustrezno oblikuje.</para>
+<para
+>Primer: Za izpis nekaterih informacij o vašem sistemu na zavihku trenutnega kanala.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Vzorčni izhod: <replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>Naslov povezave</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Ta skript uporablja Tinyurlov API za pretvorbo dane povezave v tinyurl, ki se nato pošlje na zavihek trenutnega kanala.</para>
+<para
+>Primer: nekomu dati kratko povezavo do https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Primer izpisa: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Ta skript izpiše rezultat ukaza "uptime" in ga ustrezno oblikuje.</para>
+<para
+>Primer: če želite pokazati svojo zanesljivo delovanje v 98 dneh.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Vzorec izhoda: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Vsi ti skripti imajo vnaprej določene vzdevke ukazov. V pogovornem oknu z nastavitvami &konversation; izberite <menuchoice
+><guimenu
+>Behavior</guimenu
+> <guimenuitem
+>Command Aliases</guimenuitem
+></menuchoice
+> za ogled, dodajanje, odstranjevanje ali urejanje vzdevkov ukazov. </para>
+
+<para
+>Za več informacij o skriptiranju preberite  <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>Userbase Scripting guide</ulink
+> </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Referenca ukazov</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Glavno okno &konversation;</title>
+
+<sect2>
+<title
+>Meni Datoteka</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Seznam strežnikov</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Prikaže <link linkend="irc-basics"
+>seznam strežnikov in kanalov</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Hitra povezava</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Prikaže zaslon <link linkend="quickconnect"
+>Hitra povezava</link
+> za povezavo s strežnikom. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Prekini povezavo</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Prekine povezavo z vsemi strežniki. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Ponovna povezava</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Ponovno vzpostavi povezavo z vsemi strežniki, ki so bili prekinjeni zaradi omrežne napake ali druge težave. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Pridruži se kanalu</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Prikaže pogovorno okno za vnos imena kanala, ki se mu želite pridružiti. Deluje enako kot vnos <command
+>/join <userinput
+>#channelname</userinput
+></command
+> v zavihek kanala ali strežnika.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Globalno odsoten</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Spremeni vaš status &i18n-nickname; odsoten v vseh kanalih. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Datoteka</guimenu
+> <guimenuitem
+>Zapri</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Zapusti</action
+> &konversation;.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni Urejanje</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Poišči besedilo...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Išče besedilne nize na trenutnem zaslonu.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Najdi naslednjega</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ponovno išče besedilne nize na trenutnem zaslonu s prejšnjim iskalnim nizom.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Počisti okno</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Počisti trenutni zaslon.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Uredi</guimenu
+> <guimenuitem
+>Počisti vsa okna</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Počisti vse zaslone.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni Vstavi</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Vstavi</guimenu
+> <guimenuitem
+>&irc; Barva...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Glejte <link linkend="color-msgs"
+>Pošiljanje barvitih sporočil</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Vstavi</guimenu
+> <guimenuitem
+>Označevalna črta</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Glejte <link linkend="rememberlines"
+>Označevanje dnevnikov kanalov in poizvedb</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Vstavi</guimenu
+> <guimenuitem
+>Posebni znak ...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Uporablja se za vnos posebnih znakov, kot so tuji znaki.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni z zaznamki</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Dodaj zaznamek</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Zaznamki trenutnega omrežja &amp; kanal.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Dodaj zavihke kot mapo...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Doda</action
+> vse kanale v nov menijski element na koncu menija z zaznamki. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Nova mapa z zaznamki...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Ustvari novo mapo z zaznamki.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Zaznamki</guimenu
+> <guimenuitem
+>Urejanje zaznamkov...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Odpre urejevalnik zaznamkov.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni z nastavitvami</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Pokaži seznam vzdevkov</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Skrije (ali prikaže) ploščo &i18n-nickname; na zavihkih kanala. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Identitete...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Prikaže zaslon <link linkend="identity"
+>Identitete</link
+> za nastavitev vaših identifikacijskih podatkov. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni okna</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Prejšnji zavihek</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Prikaže zaslon, ki ustreza prejšnjemu zavihku.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Naslednji zavihek</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Prikaže zaslon, ki ustreza naslednjemu zavihku.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Zapri zavihek</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Zapre trenutni zaslon. Če zapre kanal, zapusti kanal. Če zaprete zavihek <interface
+>Sporočila strežnika</interface
+>, zaprete vse odprte kanale na tem strežniku in prekinete povezavo s strežnikom. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Zapri vse odprte poizvedbe</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Zapre vse <link linkend="query"
+>Zasebne pogovore (poizvedbe)</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Opazovani vzdevki</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže zaslon <guilabel
+>Opazovani vzdevki</guilabel
+>. Glejte <link linkend="nicksonline"
+>Spremljanje, kdo je na spletu</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>&URL; Lovilec</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže <link linkend="urlcatcher"
+>&URL; Zaslon lovilnika</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Status DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže zavihek <link linkend="dcc"
+>Status DCC</link
+> z informacijami o prenosih datotek.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Okno</guimenu
+> <guimenuitem
+>Nova konzola</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže terminalski zaslon. Odprete lahko poljubno število zavihkov <guilabel
+>Konsole</guilabel
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Seznam kanalov za</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže <link linkend="list-channels"
+>seznam kanalov</link
+>, ki so na voljo na strežniku.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Okno</guimenu
+> <guimenuitem
+>Odpri dnevniško datoteko za</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Prikaže zaslon z dnevnikom sporočil s trenutnega zavihka. Deluje samo za zavihke <interface
+>Kanal</interface
+>, <interface
+>Server Messages</interface
+> in <interface
+>Query</interface
+>. Beleženje mora biti omogočeno v <menuchoice
+> <guisubmenu
+>Nastavitve</guisubmenu
+> <guisubmenu
+>Konfiguriraj Konversation</guisubmenu
+> <guisubmenu
+>Vedenje</guisubmenu
+> <guisubmenu
+>Beleženje</guisubmenu
+> </menuchoice
+> v glavnem meniju. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Meni Pomoč</title>
+
+<para
+>&konversation; ima skupno &kde; Element menija <guimenu
+>Pomoč</guimenu
+>, za več informacij preberite razdelek o <ulink url="help:/fundamentals/menus.html#menus-help"
+>meniju Pomoč</ulink
+> programa &kde; Osnove. </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Vprašanja in odgovori</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Ko zaženem &konversation;, bi se rad povezal s strežnikom, ne da bi se pridružil kanalom. Kako to naredim?</para>
+</question>
+<answer>
+<para
+>Na zaslonu <link linkend="serverlist-addnetwork"
+>Urejanje strežnika</link
+> pustite okvir <guilabel
+>Kanali</guilabel
+> prazen.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; se ne bo povezal z nobenim strežnikom. Kaj je narobe?</para>
+</question>
+<answer>
+<para
+>Obstaja več stvari, ki bi lahko bile narobe.</para>
+<orderedlist>
+<listitem>
+<para
+>Prepričajte se, da ste vnesli pravilno <guilabel
+>Ime strežnika</guilabel
+> in pravilna <guilabel
+>Vrata</guilabel
+> na zaslonu <link linkend="serverlist-addserver"
+>Dodaj strežnik</link
+>. </para>
+</listitem>
+<listitem>
+<para
+>Preverite izpis na zaslonu <link linkend="channel-screen-tour"
+>Sporočila strežnika</link
+> za morebitna sporočila o napakah. Ali je strežnik zavrnil povezavo zaradi slabega gesla? Ali je strežnik zavrnil povezavo, ker zahteva <acronym
+>IDENTD</acronym
+>, vaš računalnik pa se ni odzval na zahtevo <acronym
+>IDENT</acronym
+>? Ali ste označili polje za protokol SSL, vendar strežnik ne podpira SSL? </para>
+</listitem>
+<listitem>
+<para
+>Če ste za požarnim zidom, se prepričajte, da so omogočena pravilna vrata. &konversation; potrebuje naslednja vrata omogočena: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Odhodni TCP 6667 (ali vrata strežnika, s katerim se povezujete)</para
+></listitem>
+<listitem
+><para
+>Dohodni TCP 113 (če strežnik zahteva IDENTD)</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Za več informacij o &irc; težave s povezavo, glejte <ulink url="https://github.com/irchelp/wio/blob/gh-pages/networks/connectprob.md"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Ko grem v <menuchoice
+> <guimenu
+>Okno</guimenu
+> <guisubmenu
+>Seznam kanalov</guisubmenu
+> </menuchoice
+>, ga ne morem izbrati. Zakaj?</para>
+</question>
+<answer>
+<para
+>Vnos v meniju <menuchoice
+> <guimenu
+>Okno</guimenu
+> <guisubmenu
+>Seznam kanalov</guisubmenu
+> </menuchoice
+> bo zatemnjen, če bo zavihek, ki ni kanal, &eg;. <guilabel
+>Opazovani vzdevki</guilabel
+>, je trenutno v ogledu. Če ga želite znova izbrati, se vrnite na zavihek kanala ali zavihek strežnika. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kako imam oznako odsoten, da me &konversation; samodejno označi kot odsoten po obdobju nedejavnosti? </para>
+</question>
+<answer
+><para
+>Sporočila o samodejni odsotnosti so konfigurirana glede na identiteto. Če želite omogočiti samodejno odsotnost, izberite <menuchoice
+><guimenu
+>Nastavitve</guimenu
+><guimenuitem
+>Identitete</guimenuitem
+></menuchoice
+>. Na spustnem seznamu na vrhu pogovornega okna izberite identiteto, za katero želite omogočiti samodejno odsotnost, in pojdite na zavihek <guilabel
+>Zdoma</guilabel
+>. Preverite možnost <guilabel
+>Samodejna odsotnost</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Kako se izogniti funkciji <guilabel
+>Samodejna zamenjava</guilabel
+> vmesnika <interface
+>Vnosna vrstica</interface
+>?</para>
+</question>
+<answer
+><para
+>Uporabite <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> namesto samo &Enter; da se izognete razčlenjevanju in samodejni zamenjavi besedila v <interface
+>Vnosni vrstici</interface
+> glede na možnosti na strani pogovornega okna z nastavitvami <menuchoice
+><guimenu
+>Vedenje</guimenu
+> <guimenuitem
+>Samodejna zamenjava</guimenuitem
+></menuchoice
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Kje lahko najdem skripte, vključene v &konversation;?</para>
+</question>
+<answer>
+<para
+>Zaženite ta ukaz v vnosni vrstici &konversation; (z uporabo medijske skripte kot primera, saj je priložen vsaki namestitvi &konversation;): </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Vzorčni rezultat: <replaceable
+>Skriptna datoteka 'media' je bila najdena na: /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Kako naredim svoje besedilo krepko/ležeče/podčrtano?</para>
+</question>
+<answer>
+<para
+>Primer: <userinput
+>To je moje besedilo %Bbold%B.</userinput
+></para>
+<para
+>Izhod: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Primer: <userinput
+>To je moje %Iležeče%I besedilo.</userinput
+></para>
+<para
+>Izhod: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Primer: <userinput
+>To je moje %Upodčrtano%U besedilo.</userinput
+></para>
+<para
+>Izhod: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Primer: <userinput
+>To je moje %Sprečrtano%S besedilo.</userinput
+></para>
+<para
+>Izhod: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Primer: <userinput
+>To je moje %Mmonospace%M besedilo.</userinput
+></para>
+<para
+>Izhod: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Zasluge in licenca</title>
+
+<para
+>&konversation; </para>
+<para
+>Program copyright 2002-2005 ekipa &konversation;. </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Sodelavci: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Zahvale: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Documentation Copyright &copy; 2003-2005 Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+> </para>
+
+<para
+>Prevod: Matjaž Jeran<email
+>matjaz.jeran@amis.net</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
