@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-07 00:32+0100\n"
+"PO-Revision-Date: 2024-03-26 22:13+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1323,7 +1323,7 @@ msgstr "Koman&do karakterea:"
 #: src/config/generalbehavior_configui.ui:244
 #, kde-format
 msgid "Use custom &version reply:"
-msgstr ""
+msgstr "Erabili neurrira ipinitako &bertsio-erantzuna:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
 #: src/config/generalbehavior_configui.ui:254
@@ -1438,6 +1438,9 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
+"Nabarmentze hori izenaren arabera zerrendatutako berriketetan baino ez da "
+"bilatuko, edo berriketa-leiho guztietan eremua hutsik uzten bada. Izen "
+"anitzek koma bidez bereizita egon behar dute."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
@@ -2400,7 +2403,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... a source for the channel list cannot be determined from the current tab"
-msgstr ""
+msgstr "... uneko fitxatik abiatuta ezin da kanal-zerrenda bat zehaztu"
 
 #: src/config/warnings_config.cpp:176
 #, kde-format
@@ -2499,6 +2502,14 @@ msgid ""
 "all the watched nicknames.</p>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p>\n"
+"Goitizen-begiralea piztuta dagoenean, <b>Gainbegiratutako Sareak/Goitizenak</"
+"b> zerrendan agertzen diren goitizenak lerroan agertzen direnean edo lerroz "
+"kanpo doazenean jakinaraziko zaizu.</p>\n"
+"<p><b>Gainbegiratutako goitizenen</b> leihoa ere ireki dezakezu "
+"gainbegiratutako goitizen guztien egoera ikusteko.</p>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:27
@@ -2949,7 +2960,7 @@ msgstr "Itxi leihoa aldaketarik gabe"
 #: src/dcc/resumedialog.cpp:48
 #, kde-format
 msgid "DCC Receive Question"
-msgstr ""
+msgstr "DCC jasotzeko galdera"
 
 #: src/dcc/resumedialog.cpp:96
 #, kde-format
@@ -3125,19 +3136,19 @@ msgstr "Kalkulatutako hondar-denbora:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:185
 #, kde-format
 msgid "Offered at:"
-msgstr ""
+msgstr "Eskaintza ordua:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:205
 #, kde-format
 msgid "Started at:"
-msgstr "Hasiera:"
+msgstr "Hasiera ordua:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:225
 #, kde-format
 msgid "Finished at:"
-msgstr ""
+msgstr "Bukaera ordua:"
 
 #: src/dcc/transferlistmodel.cpp:26
 #, kde-format
@@ -3457,6 +3468,8 @@ msgid ""
 "<b>The file already exists.</b><br/>%1 (%2)<br/>Sender reports file size of "
 "%3<br/>"
 msgstr ""
+"<b>Fitxategia jada badago.</b><br/>%1 (%2)<br/>Bidaltzaileak %3(e)ko "
+"fitxategi-neurriaren berri ematen du<br/>"
 
 #: src/dcc/transferrecv.cpp:491
 #, kde-format
@@ -3469,6 +3482,8 @@ msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
 "server."
 msgstr ""
+"Ezin izan dio kideari IRC zerbitzariaren bidez alderantzizko DCC SEND "
+"onarpena bidali."
 
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
@@ -3485,6 +3500,8 @@ msgstr "Urrutiko ostalariak onartzeko zain"
 msgid ""
 "Could not send DCC RECV resume request to the partner via the IRC server."
 msgstr ""
+"Ezin izan dio kideari IRC zerbitzariaren bidez berrekiteko DCC RECV eskaera "
+"bidali."
 
 #: src/dcc/transferrecv.cpp:637
 #, kde-format
@@ -3822,22 +3839,30 @@ msgid ""
 "that nickname. Enter alternate nicknames for yourself. If your first choice "
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
+"Hau da zure goitizenen zerrenda. Beste erabiltzaileek zu zein izenaren "
+"arabera ezagutzen zaituzten, hori da goitizen bat.\n"
+"\n"
+"Goitizenek IRC sare oso batean bakarrak izan behar dutenez, baliteke beste "
+"norbaitek jada erabiltzen duelako, zerbitzariak zuk nahi duzun izena "
+"errefusatzea. Sartu zuretzako ordezko goitizenak. Zerbitzariak zure "
+"aurreneko aukera errefusatzen badu, «Konversation» ordezko goitizenekin "
+"saiatuko da."
 
 #: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
-msgstr ""
+msgstr "SASL PLAIN"
 
 #: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
-msgstr ""
+msgstr "SASL EXTERNAL (Ziut)"
 
 #: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
-msgstr ""
+msgstr "NickServ estandarra"
 
 #: src/identitydialog.cpp:90
 #, kde-format
@@ -4214,7 +4239,7 @@ msgstr "Aurreratua"
 
 #. i18n: ectx: property (text), widget (QLabel, sCommandLabel)
 #: src/identitydialog.ui:526
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Pre-shell command:"
 msgstr "Oskol-&aurreko komandoa:"
 
@@ -6582,14 +6607,14 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
 msgid "Removed %1 from your ignore list."
-msgstr ""
+msgstr "%1 ezikusien zure zerrendatik kendu da."
 
 #: src/irc/outputfilter.cpp:1615
 #, kde-format
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ez dago halako ezikusitakorik: %2"
+msgstr[1] "Ez dago halako ezikusitakorik: %2"
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -6857,6 +6882,8 @@ msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr ""
+"%1 (%2 ataka) zerbitzariaren SSL ziurtagiriak egiazkotasun egiaztapenean "
+"huts egin du."
 
 #: src/irc/server.cpp:1003
 #, kde-format
