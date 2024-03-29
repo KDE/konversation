@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-01-04 19:44+0100\n"
+"PO-Revision-Date: 2024-03-28 10:37+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -1076,7 +1076,7 @@ msgstr "Aŭtomat&e akcepti elŝutan oferton"
 #: src/config/dcc_configui.ui:84
 #, kde-format
 msgid "Au&tomatically resume download"
-msgstr "Aŭtomate rekomenci elŝuton"
+msgstr "Aŭ&tomate rekomenci elŝuton"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccFastSend)
 #: src/config/dcc_configui.ui:91
@@ -1342,7 +1342,7 @@ msgstr "E&bligi sonon por kulminaĵoj"
 #: src/config/highlight_configui.ui:56
 #, kde-format
 msgid "Alwa&ys highlight own current nick:"
-msgstr "Ĉiam reliefigi propran aktualan kromnomon:"
+msgstr "Ĉiam relief&igi propran aktualan kromnomon:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HighlightOwnLines)
 #: src/config/highlight_configui.ui:63
