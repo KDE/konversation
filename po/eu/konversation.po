@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-26 22:13+0100\n"
+"PO-Revision-Date: 2024-03-31 22:54+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -588,9 +588,7 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:138
 #, kde-format
 msgid "Except for watched nicks and nicks active within the"
-msgstr ""
-"Gainbegiratutako edo adierazitako epean aktibo egon diren goitizenetarako "
-"salbu"
+msgstr "Zelatatutako eta ondoko denboran aktibo egon diren goitizenak salbu, "
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:155
@@ -606,7 +604,7 @@ msgstr "azken 10 min"
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last hour"
-msgstr "azken orduan"
+msgstr "azken ordua"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:165
@@ -614,7 +612,7 @@ msgstr "azken orduan"
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last day"
-msgstr "azken egunean"
+msgstr "azken eguna"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:170
@@ -622,7 +620,7 @@ msgstr "azken egunean"
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last week"
-msgstr "azken astean"
+msgstr "azken astea"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3_2)
 #: src/config/chatwindowbehaviour_config.ui:196
@@ -1590,7 +1588,7 @@ msgstr "Gertaerak dituzten kanalak eta itaunak"
 #: src/config/konversation.kcfg:573
 #, kde-format
 msgid "Open Watched Nicks tab at application startup"
-msgstr "Ireki gainbegiratutako goitizenen fitxa aplikazioa abiatzean"
+msgstr "Ireki zelatatutako goitizenen fitxa aplikazioa abiatzean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLauncherEntryCount)
 #: src/config/launcherentry_config.ui:29
@@ -2069,7 +2067,7 @@ msgstr "DCC"
 #: src/config/settingsdialog.cpp:170
 #, kde-format
 msgid "Watched Nicknames"
-msgstr "Gainbegiratutako goitizenak"
+msgstr "Zelatatutako goitizenak"
 
 #: src/config/settingsdialog.cpp:174
 #, kde-format
@@ -2504,11 +2502,11 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<p>\n"
-"Goitizen-begiralea piztuta dagoenean, <b>Gainbegiratutako Sareak/Goitizenak</"
-"b> zerrendan agertzen diren goitizenak lerroan agertzen direnean edo lerroz "
+"Goitizen-begiralea piztuta dagoenean, <b>Zelatatutako Sareak/Goitizenak</b> "
+"zerrendan agertzen diren goitizenak lerroan agertzen direnean edo lerroz "
 "kanpo doazenean jakinaraziko zaizu.</p>\n"
-"<p><b>Gainbegiratutako goitizenen</b> leihoa ere ireki dezakezu "
-"gainbegiratutako goitizen guztien egoera ikusteko.</p>\n"
+"<p><b>Zelatatutako goitizenen</b> leihoa ere ireki dezakezu Zelatatutako "
+"goitizen guztien egoera ikusteko.</p>\n"
 "</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
@@ -2524,14 +2522,14 @@ msgid ""
 "<qt>When checked, the <b>Watched Nicks</b> window will be automatically "
 "opened when starting Konversation.</qt>"
 msgstr ""
-"<qt>Markatuta dagoenean, <b>Gainbegiratutako goitizenak</b> leihoa "
-"automatikoki irekiko da «Konversation» irekitzean.</qt>"
+"<qt>Markatuta dagoenean, <b>Zelatatutako goitizenak</b> leihoa automatikoki "
+"irekiko da «Konversation» irekitzean.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:40
 #, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "Erakutsi gainbegiratutako goitizenen fitxa &aplikazioa abiatzean"
+msgstr "Erakutsi Zelatatutako goitizenen fitxa &aplikazioa abiatzean"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -2549,6 +2547,18 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p><b>Zelatatutako goitizenen</b> leihoko goitizen batean klik bikoitza "
+"egiten\n"
+"duzunean, komando hau ipintzen da zerbitzari leihoko <b>Sarrera lerroan</b>."
+"</p>\n"
+"<p>Komandoarekin ondoko ikurrak erabil daitezke:</p><ul>\n"
+"<li>%u: Klik bikoitza jaso duen goitizena.</li>\n"
+"<li>%K: Zerbitzariaren pasahitza.</li>\n"
+"<li>%n: Komandoa zuzenean zerbitzarira bidali sarrera lerrora egin ordez.</"
+"li>\"\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:69
@@ -2572,6 +2582,18 @@ msgid ""
 "</ul>\n"
 "</qt>"
 msgstr ""
+"<qt>\n"
+"<p><b>Zelatatutako goitizenen</b> leihoko goitizen batean klik bikoitza "
+"egiten\n"
+"duzunean, komando hau ipintzen da zerbitzari leihoko <b>Sarrera lerroan</b>."
+"</p>\n"
+"<p>Komandoarekin ondoko ikurrak erabil daitezke:</p><ul>\n"
+"<li>%u: Klik bikoitza jaso duen goitizena.</li>\n"
+"<li>%K: Zerbitzariaren pasahitza.</li>\n"
+"<li>%n: Komandoa zuzenean zerbitzarira bidali sarrera lerrora egin ordez.</"
+"li>\n"
+"</ul>\n"
+"</qt>"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyDelayLabel)
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_NotifyDelay)
@@ -6168,7 +6190,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:29
 #, kde-format
 msgid "Watched Nicks Online"
-msgstr "Goitizen gainbegiratuak lerroan"
+msgstr "Zelatatutako goitizenak lerroan"
 
 #: src/irc/nicksonline.cpp:34
 #, kde-format
@@ -6897,6 +6919,9 @@ msgid ""
 "does not support SSL (did you use the correct port?) or you rejected the "
 "certificate. %3"
 msgstr ""
+"Ezin izan du %1(e)ra (%2 ataka) konektatu SSL zifratzea erabiliz. "
+"Zerbitzariak ez du SSL (ataka egokia erabili duzu?) euskarririk edo "
+"ziurtagiria errefusatu duzu. %3"
 
 #: src/irc/server.cpp:1140
 #, kde-format
@@ -6971,7 +6996,7 @@ msgstr "%1(e)ri %2 onartzeko eskatzen..."
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
-msgstr ""
+msgstr "%1(r)engandik DCC berriketa pasibo onarpen mezu baliogabea jaso da."
 
 #: src/irc/server.cpp:2622
 #, kde-format
@@ -6979,6 +7004,8 @@ msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
 msgstr ""
+"%2(r)engandik \"%1\"(r)en DCC bidalketa pasibo onarpen mezu baliogabea jaso "
+"da."
 
 #: src/irc/server.cpp:2663
 #, kde-format
@@ -6987,12 +7014,13 @@ msgctxt ""
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr ""
+"\"%1\" %2(r)engandik zama-jaitsiera berrekiten, %4(e)tik %%3(e)an abiatzen..."
 
 #: src/irc/server.cpp:2673
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
-msgstr ""
+msgstr "%2(e)rengandik \"%1\" berrekiteko onarpen mezu baliogabea jaso da."
 
 #: src/irc/server.cpp:2719
 #, kde-format
@@ -7000,49 +7028,49 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr ""
+msgstr "\"%1\" %2(e)ri zama-igotzea berrekiten, %4(e)tik %%3(e)an abiatzen..."
 
 #: src/irc/server.cpp:2741
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
-msgstr ""
+msgstr "\"%1\" berrekiteko %2(r)en eskaera baliogabea jaso da."
 
 #: src/irc/server.cpp:2760
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
-msgstr ""
+msgstr "\"%1\" errefusatzeko %2(r)en eskaera baliogabea jaso da."
 
 #: src/irc/server.cpp:2776
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
-msgstr ""
+msgstr "Errefusatzeko %1(r)en eskaera baliogabea jaso da."
 
 #: src/irc/server.cpp:2789
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
-msgstr ""
+msgstr "%2(r)en \"%1\" zama-jaistea bukatu da."
 
 #: src/irc/server.cpp:2794
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
-msgstr ""
+msgstr "%2(r)en \"%1\" zama-jaistea huts egin du. Arrazoia: %3."
 
 #: src/irc/server.cpp:2806
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
-msgstr ""
+msgstr "\"%1\" %2(e)ri zama-igotzea bukatu da."
 
 #: src/irc/server.cpp:2809
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
-msgstr ""
+msgstr "\"%1\" %2(e)ri zama-igotzea huts egin du. Arrazoia: %3."
 
 #: src/irc/server.cpp:2823
 #, kde-format
@@ -7140,11 +7168,15 @@ msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
 "messages will now be encrypted."
 msgstr ""
+"%1(e)k bidalitako «DH1080_FINISH»ek azterketa gainditu du. Zure gakoa ezarri "
+"da eta mezuak, orain, zifratu egingo dira."
 
 #: src/irc/server.cpp:4342
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
+"%1(e)k bidalitako «DH1080_FINISH»ek ez du azterketa gainditu. Gako trukeak "
+"huts egin du."
 
 #. i18n: ectx: property (text), widget (QLabel, serverLbl)
 #: src/irc/serverdialogui.ui:26
@@ -7187,6 +7219,11 @@ msgid ""
 "support SSL protocol for this to work. In most cases, if the server does not "
 "support SSL, the connection will fail."
 msgstr ""
+"Markatu, zerbitzariarekin komunikatzeko SSL (Secure Socket Layer) protokoloa "
+"erabili nahi baduzu. Horrek zure ordenagailuaren eta IRC zerbitzariaren "
+"arteko zure komunikazioen pribatutasuna babesten du. Ibil dadin, "
+"zerbitzariak SSL protokoloaren euskarria izan behar du. Kasu gehienetan, "
+"zerbitzariak SSLren euskarririk ez badu, konexioak huts egingo du."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:98
@@ -7711,8 +7748,8 @@ msgstr "Gary Cramblitt"
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
-"Dokumentazioa, zelatatutako goitizenen hobekuntzak, Neurriko web arakatzaile "
-"hedapena"
+"Dokumentazioa, zelatatutako goitizenetan hobekuntzak, Neurriko web "
+"arakatzaile hedapena"
 
 #: src/main.cpp:49
 #, kde-format
@@ -8125,7 +8162,7 @@ msgstr "Kudeatu zure goitizena, aldentzea eta beste nortasun ezarpen batzuk"
 #: src/mainwindow.cpp:183
 #, kde-format
 msgid "&Watched Nicks"
-msgstr "&Gainbegiratutako goitizenak"
+msgstr "&Zelatatutako goitizenak"
 
 #: src/mainwindow.cpp:191
 #, kde-format
@@ -9379,7 +9416,7 @@ msgstr "Go&itizena:"
 msgid ""
 "<qt>The nickname to watch for when connected to a server in the network.</qt>"
 msgstr ""
-"<qt>Sareko zerbitzari batera konektatuta egotean gainbegiratu beharreko "
+"<qt>Sareko zerbitzari batera konektatuta egotean zelatatu beharreko "
 "goitizena.</qt>"
 
 #: src/viewer/editnotifydialog.cpp:65
@@ -9463,6 +9500,11 @@ msgid ""
 "until you change the color again.<br>\n"
 "<b>Note:  Not all users turn on the option to see this.</b></qt>"
 msgstr ""
+"<qt>Hemen, bidaliko duzun hurrengo mezuaren testuak izango duen kolorea "
+"hauta dezakezu. Kolore bat hautatu eta Ados klikatuz gero, hautatutako "
+"kolorea sarrerako lerroan gehitzen da. Horren ondoren idatzitako testu orok "
+"hautatutako kolorea izango du, kolorea berriz aldatzen duzun arte.<br>\n"
+"<b>Oharra: Erabiltzaile guztiek ez dute hau ikusteko aukera pizten.</b></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
@@ -9495,6 +9537,17 @@ msgid ""
 "<b>Note:  Not all clients support this, and not all users turn on the option "
 "to see this.</b></qt>"
 msgstr ""
+"<qt>Hemen, bidaliko duzun hurrengo mezuaren testuak izango duen hondo-"
+"kolorea hauta dezakezu.\n"
+"Kolore bat hautatu eta Ados klikatuz gero, hautatutako kolorea sarrerako "
+"lerroan gehitzen da.\n"
+"Horren ondoren idatzitako testu orok hautatutako kolorea izango du, kolorea "
+"berriz aldatzen duzun arte.<br>\n"
+"Lehenetsitako \"<i>Bat ere ez</i>\" hautatuta, zure mezuaren hondo-kolorea "
+"ez da aldatuko, eta irakurleek zure mezua haien testuaren hondo-kolore "
+"arruntarekin ikusiko dute.<br>\n"
+"<b>Oharra: Bezero guztiek ez dute honen euskarririk, eta erabiltzaile "
+"guztiek ez dute hau ikusteko aukera pizten.</b></qt>"
 
 #: src/viewer/irccontextmenus.cpp:137
 #, kde-format
@@ -9993,7 +10046,7 @@ msgid "On %1 by %2"
 msgstr "%1(e)an %2(e)k egina"
 
 #: src/viewer/topichistoryview.cpp:208
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "This is a list of all topics that have been set for this channel while its "
 "tab was open.\n"
@@ -10009,15 +10062,19 @@ msgid ""
 "a synchronized edit field, undo back to the original text or close and "
 "reopen the dialog."
 msgstr ""
-"Hori da bere fitxa irekita zegoen bitartean kanal horretarako ezarri diren "
-"mintzagai guztien zerrenda bat.\n"
+"Hori da, bere fitxa irekita egon den bitartean, kanal horretan ezarri diren "
+"mintzagai guztien zerrenda.\n"
 "\n"
-"Inork mintzagai bera hainbat aldiz jarraian ezarri badu, azken agerraldia "
-"erakusten da bakarrik.\n"
+"Norbaitek mintzagai bera hainbat aldiz jarraian ezarri badu, bakarrik azken "
+"agerraldia erakusten da.\n"
 "\n"
-"Zerrendako mintzagai bat hautatzen duzunean, haren beheko editatzeko eremuak "
-"bere testua jasoko du. Dena den, eremuaren edukia aldatzen hasten zarenean,  "
-"mintzagai"
+"Zerrendako mintzagai bat hautatzen duzunean, haren azpiko editatzeko eremuak "
+"bere testua jasoko du. Eremuaren edukia aldatzen hasten zarenean, ordea, "
+"zerrenda aldatu egingo da, sarrera hautatzeko modu arruntetik, mintzagai "
+"berrian haien testurik sartu nahi bazenu, sarreretako testu hautapenak "
+"egitea baimenduz,. Sarrera hautatzeko modura eta editatzeko eremu "
+"sinkronizatura itzultzeko, desegin atzera jatorrizko testura edo "
+"elkarrizketa-koadroa itxi eta berriz ireki."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
@@ -10107,7 +10164,7 @@ msgstr "Kanal-zerrendaren abisua"
 #: src/viewer/viewcontainer.cpp:3044
 #, kde-format
 msgid "Watched Nicks"
-msgstr "Gainbegiratutako goitizenak"
+msgstr "Zelatatutako goitizenak"
 
 #~ msgid "Konversation Bookmarks Editor"
 #~ msgstr "«Konversation» laster-marka editorea"
