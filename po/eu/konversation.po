@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-23 02:21+0000\n"
-"PO-Revision-Date: 2024-03-31 22:56+0200\n"
+"PO-Revision-Date: 2024-04-02 04:31+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -4190,6 +4190,10 @@ msgid ""
 "using this Identity away when the screensaver starts or after a period of "
 "user inactivity configured below."
 msgstr ""
+"Lauki hau markatzen baduzu, «Konversation»ek nortasun hori erabiltzen duten "
+"konexio guztietan aldenduta ezarriko du automatikoki pantaila-babeslea "
+"abiatzean edo behean konfiguratutako erabiltzailearen jarduerarik gabeko "
+"denbora-tarte baten ondoren."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:386
@@ -4217,6 +4221,9 @@ msgid ""
 "connections using this Identity when the screensaver stops or new user "
 "activity is detected."
 msgstr ""
+"Lauki hau markatzen baduzu, «Konversation»ek, nortasun hori erabiltzen duten "
+"konexio guztietatik aldentzea kenduko du pantaila-babeslea gelditzean edo "
+"erabiltzailearen jarduera berria antzematen denean."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:440
@@ -4234,6 +4241,11 @@ msgid ""
 "command. <b>%t</b> in the return command is replaced with the length of time "
 "you were away."
 msgstr ""
+"Lauki hau markatzen baduzu, «Konversation»ek nortasun hori erabiltzen duten "
+"fitxa guztietan aldenduta komandoa automatikoki exekutatuko du. Aldenduta "
+"komandoko <b>%s</b> aldentze mezuarekin ordezkatzen da. Itzultzen zarenean, "
+"itzultzeko komandoa exekutatuko du. Itzultzeko komandoko <b>%t</b> aldenduta "
+"egon zaren denbora iraupenarekin ordezkatzen da."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
@@ -4245,13 +4257,13 @@ msgstr "Aldentze-komandoak"
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr "Aldentze-komandoa:"
+msgstr "Aldentzeko komandoa:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr "Itzultze-komandoa:"
+msgstr "Itzultzeko komandoa:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -4420,6 +4432,12 @@ msgid ""
 "'Enter' at the end.</p><p>You can edit the alternative nicknames from the "
 "<em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"
 msgstr ""
+"<qt><p>Honek zure egungo goitizena, eta ezarri dituzun ordezkoak, "
+"erakustenditu. Beste goitizen bat hautatu edo tekleatzen baduzu, IRC "
+"zerbitzarira zure goitizena aldatzeko eskaera bat bidaliko da. Zerbitzariak "
+"baimentzen badu, goitizen berria hautatuko da. Goitizen berri bat tekleatzen "
+"baduzu, bukaeran 'Sartu' sakatu behar duzu.</p><p><em>Ezarpenak</em> menuko "
+"<em>Nortasunak</em> aukeran ordezko goitizenak editatu ditzakezu.</p></qt>"
 
 #: src/irc/channel.cpp:566
 #, kde-format
@@ -5338,6 +5356,12 @@ msgid ""
 "on it. Right click on the channel to get a list of all web addresses "
 "mentioned in the channel's topic."
 msgstr ""
+"Iragazitako kanalen zerrenda hemen erakusten da. Ohartu zaitez adierazpen "
+"erregularrik erabiltzen ez baduzu, «Konversation»ek, iragazteko sartu duzun "
+"katea izenean duten kanal guztiak zerrendatuko dituela. Kanalaren izenak ez "
+"du sartu duzun katearekin hasi beharrik.\\n\\nHautatu elkartu nahi duzun "
+"kanala, bertan klik eginda. Kanalean eskuineko klik, kanalaren mintzagaian "
+"aipatutako web-helbide guztien zerrenda bat lortzeko."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
@@ -6392,7 +6416,7 @@ msgstr "Hartzaile bat zehaztu behar duzu."
 #: src/irc/outputfilter.cpp:746
 #, kde-format
 msgid "You cannot open queries to channels."
-msgstr ""
+msgstr "Ezin dituzu kanaletarako itaunak ireki."
 
 #: src/irc/outputfilter.cpp:752
 #, kde-format
@@ -9475,6 +9499,11 @@ msgid ""
 "ignore your color changes.</b>\n"
 "</qt>"
 msgstr ""
+"<qt>Hau da, kolore horiek hautatzen badituzu, irakurleek zure mezua nola "
+"ikusiko duten.<br>\n"
+"<b>Oharra: Bezero guztiek ez dute honetarako euskarria, eta baliteke "
+"erabiltzaile batzuek zure kolore aldaketak ezikustea hautatu izana.</b>\n"
+"</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_previewLbl)
 #: src/viewer/irccolorchooserui.ui:31
