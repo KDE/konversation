@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-04-02 04:31+0200\n"
+"PO-Revision-Date: 2024-04-03 15:23+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -4229,7 +4229,7 @@ msgstr ""
 #: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
-msgstr ""
+msgstr "Itzuli jarduerara automatikoki"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:456
@@ -6278,6 +6278,14 @@ msgid ""
 "the network.</p><p>Right-click with the mouse on a nickname to perform "
 "additional functions.</p>"
 msgstr ""
+"<p>Hauek dira zure Goitizen-zelatatze zerrendako goitizen guztiak, "
+"konektatuta dauden zerbitzari-sarearen azpian zerrendatuta.</"
+"p><p><b>Informazio osagarria</b> zutabeak goitizen bakoitzaren informazio "
+"ezaguna erakusten du.</p><p>Goitizena elkartu zaien kanalak goitizen "
+"bakoitzaren azpian zerrendatzen dira.</p><p><b>lerroz kanpo</b> azpian "
+"agertzen diren goitizenak ez daude sareko zerbitzarietara konektatuta.</"
+"p><p>Egin saguaren eskuineko klik goitizen batean funtzio osagarriak egiteko."
+"</p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
@@ -6803,6 +6811,10 @@ msgid ""
 "<i>Konversation Handbook</i> for an explanation of what the hostmask is.</"
 "p></qt>"
 msgstr ""
+"<qt><p>Itaun honetan hitz egiten ari zaren pertsonari buruzko xehetasun "
+"batzuk barra honetan erakusten dira.</p><p>Begiratu <i>Konversation "
+"eskuliburua</i> ostalari-markak zer egiten duen gaineko azalpen baten bila.</"
+"p></qt>"
 
 #: src/irc/query.cpp:410
 #, kde-format
@@ -7414,6 +7426,11 @@ msgid ""
 "attempt the third, and so on. At least one server must be specified. Click a "
 "server to highlight it."
 msgstr ""
+"Hori da sareko IRC zerbitzarien zerrenda. Sarera konektatzean, Konversation "
+"maila goreneko zerbitzariarekin konektatzen saiatuko da aurrena. Horrek huts "
+"egiten badu, bigarren zerbitzariarekin saiatuko da. Horrek huts egiten badu, "
+"hirugarrenarekin saiatuko da, eta abar. Gutxienez zerbitzari bat zehatu "
+"behar da. Egin klik zerbitzari batean hura nabarmentzeko."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addServerButton)
 #: src/irc/servergroupdialogui.ui:151
