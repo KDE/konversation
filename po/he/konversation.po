@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-03-19 08:43+0200\n"
+"PO-Revision-Date: 2024-04-08 19:14+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1631,7 +1631,7 @@ msgstr "אירוע יישום"
 #: src/config/log_config.ui:24
 #, kde-format
 msgid "&Enable Logging"
-msgstr "&אפשר יומן"
+msgstr "הפעלת &תיעוד"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_PrivateOnly)
 #: src/config/log_config.ui:33
@@ -1643,13 +1643,13 @@ msgstr ""
 #: src/config/log_config.ui:40
 #, kde-format
 msgid "Enable &lower case logfile names"
-msgstr "אפשר קבצי־יומן באותיות &קטנות"
+msgstr "לאפשר שמות קובצי־יומן באותיות &קטנות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AddHostnameToLog)
 #: src/config/log_config.ui:47
 #, kde-format
 msgid "&Append hostname to logfile names"
-msgstr "&הוסף את שם המארח לשם קובץ היומן"
+msgstr "להו&סיף את שם המארח לשמות קובצי היומנים"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/log_config.ui:54
