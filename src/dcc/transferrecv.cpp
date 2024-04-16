@@ -8,13 +8,7 @@
     SPDX-FileCopyrightText: 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
-#include <QtGlobal>
-
-#ifdef Q_OS_WIN
-// Prevent windows system header files from defining min/max as macros.
-#define NOMINMAX 1
-#include <winsock2.h>
-#endif
+#include <QtSystemDetection>
 
 #include "transferrecv.h"
 #include "dcccommon.h"
@@ -36,6 +30,12 @@
 #include <KIO/StatJob>
 #include <KIO/MkdirJob>
 #include <KIO/StoredTransferJob>
+
+#ifdef Q_OS_WIN
+// Prevent windows system header files from defining min/max as macros.
+#define NOMINMAX 1
+#include <winsock2.h>
+#endif
 
 /*
  *flow chart*
