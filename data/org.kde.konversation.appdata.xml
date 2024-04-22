@@ -5,7 +5,6 @@
   <project_license>GPL-2.0+</project_license>
   <name>Konversation</name>
   <name xml:lang="ar">محادثك</name>
-  <name xml:lang="ast">Konversation</name>
   <name xml:lang="ca">Konversation</name>
   <name xml:lang="ca-valencia">Konversation</name>
   <name xml:lang="cs">Konversation</name>
@@ -20,7 +19,6 @@
   <name xml:lang="fi">Konversation</name>
   <name xml:lang="fr">Konversation</name>
   <name xml:lang="gl">Konversation</name>
-  <name xml:lang="he">Konversation</name>
   <name xml:lang="hu">Konversation</name>
   <name xml:lang="ia">Konversation</name>
   <name xml:lang="id">Konversation</name>
@@ -28,7 +26,6 @@
   <name xml:lang="it">Konversation</name>
   <name xml:lang="ka">Konversation</name>
   <name xml:lang="ko">Konversation</name>
-  <name xml:lang="lv">Konversation</name>
   <name xml:lang="nl">Konversation</name>
   <name xml:lang="nn">Konversation</name>
   <name xml:lang="pl">Konversation</name>
@@ -71,7 +68,6 @@
   <summary xml:lang="it">Client IRC</summary>
   <summary xml:lang="ka">IRC კლიენტი</summary>
   <summary xml:lang="ko">IRC 클라이언트</summary>
-  <summary xml:lang="lv">IRC klients</summary>
   <summary xml:lang="nl">IRC-client</summary>
   <summary xml:lang="nn">IRC-klient</summary>
   <summary xml:lang="pl">Klient IRC</summary>
@@ -108,13 +104,11 @@
     <p xml:lang="fi">Konversation on KDE:n käyttäjäystävällinen IRC-asiakas (Internet Relay Chat), joka tarjoaa helpon pääsyn IRC-vakioverkkoihin kuten Liberaan, mistä löytyvät KDE:n IRC-kanavat.</p>
     <p xml:lang="fr">Konversation est un client IRC (Internet Relay Chat) convivial de KDE. Il fournit un accès facile aux réseaux IRC standards tels que Libera, où les canaux IRC de KDE se trouvent.</p>
     <p xml:lang="gl">Konversation é un cliente fácil de usar de Internet Relay Chat (IRC) de KDE. Facilita acceder a redes IRC estándar como Libera, onde pode atopar as canles de IRC de KDE.</p>
-    <p xml:lang="he">Konversation הוא לקוח Internet Relay Chat (IRC) ידידותי מבית KDE. הוא מספק גישה פשוטה לרשתות IRC כגון Libera, בה ניתן למצוא את ערוצי ה־IRC של KDE.</p>
     <p xml:lang="hu">A Konversation a KDE felhasználóbarát Internet Relay Chat (IRC) kliense. Könnyű hozzáférést biztosít a szabványos IRC hálózatokhoz, mint például a Libera, ahol a KDE IRC csatornák találhatók.</p>
     <p xml:lang="id">Konversation adalah klien Internet Relay Chat (IRC) yang mudah digunakan oleh KDE. Ini menyediakan akses mudah ke jaringan IRC standar seperti Libera, di mana saluran IRC KDE bisa ditemukan.</p>
     <p xml:lang="it">Konversation è un client per Internet Relay Chat (IRC) facile da usare sviluppato da KDE. Fornisce un acceso rapido alle reti IRC standard come Libera, dove si possono trovare i canali IRC di KDE.</p>
     <p xml:lang="ka">Konversation მეგობრული IRC-ის კლიენტია KDE-სგან. ის წარმოგიდგენთ ადვილ წვდომას სტანდარტულ IRC ქსელებთან, როგორიცაა, მაგალითად, Libera, სადაც KDE-ის IRC არხებია განთავსებული.</p>
     <p xml:lang="ko">Konversaion은 KDE의 IRC 클라이언트입니다. KDE IRC 채널이 있는 Libera와 같은 IRC 네트워크에 쉽게 연결할 수 있습니다.</p>
-    <p xml:lang="lv">„Konversation“ ir KDE izstrādāts lietotājiem draudzīgs internetā retranslētas tērzēšanas (IRC) klients. Tas nodrošina vieglu piekļuvi standarta IRC tīkliem, piemēram, „Libera“, kurā atrodami KDE IRC kanāli.</p>
     <p xml:lang="nl">Konversation is een gebruikersvriendelijke Internet Relay Chat (IRC)-client door KDE. Het biedt gemakkelijk toegang tot standaard IRC-netwerken zoals Libera, waar de KDE IRC-kanalen zijn te vinden.</p>
     <p xml:lang="nn">Konversation er eit brukarvennleg prateprogram for IRC (Internet Relay Chat) frå KDE. Det gjev enkel tilgang til IRC-nettverk som Libera, der du finn IRC-kanalen for KDE.</p>
     <p xml:lang="pl">Konversation jest przyjaznym użytkownikowi programem do obsługi Internet Relay Chat (IRC) dla KDE. Zapewnia łatwy dostęp do standardowych sieci IRC, takich jak Libera, na których można znaleźć kanały IRC dla KDE.</p>
@@ -145,7 +139,7 @@
     <p xml:lang="fi">Ominaisuuksia:</p>
     <p xml:lang="fr">Fonctionnalités :</p>
     <p xml:lang="gl">Funcionalidades:</p>
-    <p xml:lang="he">יכולות:</p>
+    <p xml:lang="he">תכונות:</p>
     <p xml:lang="hu">Szolgáltatások:</p>
     <p xml:lang="ia">Characteristicas:</p>
     <p xml:lang="id">Fitur:</p>
@@ -153,7 +147,6 @@
     <p xml:lang="it">Funzionalità:</p>
     <p xml:lang="ka">თვისებები:</p>
     <p xml:lang="ko">기능:</p>
-    <p xml:lang="lv">Iespējas:</p>
     <p xml:lang="nl">Mogelijkheden:</p>
     <p xml:lang="nn">Funksjonar:</p>
     <p xml:lang="pl">Możliwości:</p>
@@ -188,14 +181,13 @@
       <li xml:lang="fi">IRCin vakio-ominaisuudet</li>
       <li xml:lang="fr">Fonctionnalités standards IRC</li>
       <li xml:lang="gl">Funcionalidades estándar de IRC.</li>
-      <li xml:lang="he">יכולות IRC רגילות</li>
+      <li xml:lang="he">תכונות IRC רגילות</li>
       <li xml:lang="hu">Standard IRC szolgáltatások</li>
       <li xml:lang="ia">Characteristicas de RC Standard</li>
       <li xml:lang="id">Fitur IRC standar</li>
       <li xml:lang="it">Funzionalità di base di IRC</li>
       <li xml:lang="ka">სტანდარტული IRC ფუნქციები</li>
       <li xml:lang="ko">표준 IRC 기능</li>
-      <li xml:lang="lv">Standarta IRC iespējas</li>
       <li xml:lang="nl">Standaard IRC-functies</li>
       <li xml:lang="nn">Standard IRC-funksjonar</li>
       <li xml:lang="pl">Standardowe możliwości IRC</li>
@@ -236,7 +228,6 @@
       <li xml:lang="it">Supporto per i server SSL</li>
       <li xml:lang="ka">SSL სერვერის მხარდაჭერა</li>
       <li xml:lang="ko">SSL 서버 지원</li>
-      <li xml:lang="lv">SSL servera atbalsts</li>
       <li xml:lang="nl">Ondersteuning voor SSL-server</li>
       <li xml:lang="nn">Støtte for SSL-tenarar</li>
       <li xml:lang="pl">Obsługa serwera SSL</li>
@@ -277,7 +268,6 @@
       <li xml:lang="it">Supporto per i segnalibri</li>
       <li xml:lang="ka">სანიშნეების მხარდაჭერა</li>
       <li xml:lang="ko">책갈피 지원</li>
-      <li xml:lang="lv">Grāmatzīmju atbalsts</li>
       <li xml:lang="nl">Ondersteuning voor bladwijzers</li>
       <li xml:lang="nn">Bokmerkestøtte</li>
       <li xml:lang="pl">Obsługa zakładek</li>
@@ -317,7 +307,6 @@
       <li xml:lang="it">Interfaccia grafica semplice da usare</li>
       <li xml:lang="ka">ადვილი მომხმარებლის გრაფიკული ინტერფეისი</li>
       <li xml:lang="ko">사용하기 쉬운 그래픽 사용자 인터페이스</li>
-      <li xml:lang="lv">Viegli lietojama grafiska saskarne</li>
       <li xml:lang="nl">Gemakkelijk te gebruiken grafische gebruikersinterface</li>
       <li xml:lang="nn">Brukarvennleg grafisk brukargrensesnitt</li>
       <li xml:lang="pl">Łatwy w użyciu interfejs graficzny</li>
@@ -357,7 +346,6 @@
       <li xml:lang="it">Diversi server e canali in un'unica finestra</li>
       <li xml:lang="ka">ბევრი სერვერი და არხი ერთ ფანჯარაში</li>
       <li xml:lang="ko">하나의 창에서 여러 서버와 채널 관리</li>
-      <li xml:lang="lv">Vairāki serveri un kanāli vienā logā</li>
       <li xml:lang="nl">Meerdere servers and kanalen in een enkel venster</li>
       <li xml:lang="nn">Støtte for fleire tenarar og kanalar i same vindauge</li>
       <li xml:lang="pl">Wiele serwerów i kanałów w pojedynczym oknie</li>
@@ -398,7 +386,6 @@
       <li xml:lang="it">Trasferimento file tramite DCC</li>
       <li xml:lang="ka">DCC ფაილის გადაცემა</li>
       <li xml:lang="ko">DCC 파일 전송</li>
-      <li xml:lang="lv">DCC datņu pārsūtīšana</li>
       <li xml:lang="nl">DCC Bestandsoverdracht</li>
       <li xml:lang="nn">Filoverføring via DCC</li>
       <li xml:lang="pl">Przesyłanie plików przez DCC</li>
@@ -438,7 +425,6 @@
       <li xml:lang="it">Identità multiple per i vari server</li>
       <li xml:lang="ka">ერთზე მეტი იდენტიფიკატორი სხვადასხვა სერვერისთვის</li>
       <li xml:lang="ko">개별 서버별 다중 프로필</li>
-      <li xml:lang="lv">Vairākas identitātes dažādiem serveriem</li>
       <li xml:lang="nl">Meerdere identiteiten voor verschillende servers</li>
       <li xml:lang="nn">Fleire identitetar for ulike tenarar</li>
       <li xml:lang="pl">Wiele tożsamości dla różnych serwerów</li>
@@ -480,7 +466,6 @@
       <li xml:lang="it">Decorazioni e colori per il testo</li>
       <li xml:lang="ka">ტექსტური დეკორაციები და ფერები</li>
       <li xml:lang="ko">텍스트 장식과 색상</li>
-      <li xml:lang="lv">Teksta noformējumi un krāsas</li>
       <li xml:lang="nl">Tekstdecoraties en kleuren</li>
       <li xml:lang="nn">Teksteffektar og fargar</li>
       <li xml:lang="pl">Ozdobny, kolorowy tekst </li>
@@ -520,7 +505,6 @@
       <li xml:lang="it">Notifiche a schermo (OnScreen Display)</li>
       <li xml:lang="ka">გაფრთხილებების ჩვენება მთელ ეკრანზე</li>
       <li xml:lang="ko">화면 디스플레이 알림</li>
-      <li xml:lang="lv">Paziņojumi virs citiem logiem</li>
       <li xml:lang="nl">Meldingen op het scherm tonen</li>
       <li xml:lang="nn">Vising av varslingar som skjermmeldingar</li>
       <li xml:lang="pl">Powiadomienia ekranowe</li>
@@ -562,7 +546,6 @@
       <li xml:lang="it">Rilevamento automatico di UTF-8</li>
       <li xml:lang="ka">UTF-8-ის ავტომატური ამოცნობა</li>
       <li xml:lang="ko">자동 UTF-8 감지</li>
-      <li xml:lang="lv">Automātiska UTF-8 atpazīšana</li>
       <li xml:lang="nl">Automatische detectie van UTF-8</li>
       <li xml:lang="nn">Automatisk UTF-8-oppdaging</li>
       <li xml:lang="pl">Samoczynne wykrywanie UTF-8</li>
@@ -596,14 +579,13 @@
       <li xml:lang="fi">Kanavakohtainen merkistökoodaustuki</li>
       <li xml:lang="fr">Prise en charge de l'encodage par canal</li>
       <li xml:lang="gl">Admite codificacións distintas en cada canle.</li>
-      <li xml:lang="he">תמיכה בקידוד נקודתי לכל ערוץ</li>
+      <li xml:lang="he">קידוד ספציפי לכל ערוץ</li>
       <li xml:lang="hu">Csatornánkénti kódolási beállítások</li>
       <li xml:lang="ia">Supporto de codifica per canal</li>
       <li xml:lang="id">Dukungan pengenkodean per channel</li>
       <li xml:lang="it">Supporto di codifiche per canale</li>
       <li xml:lang="ka">თითოეული არხისთვის განსხვავებული კოდირების მხარდაჭერა</li>
       <li xml:lang="ko">채널별 인코딩 지원</li>
-      <li xml:lang="lv">Kanālu kodēšanas atbalsts</li>
       <li xml:lang="nl">Ondersteuning voor codering per kanaal</li>
       <li xml:lang="nn">Støtte for ulike teiknkodingar for ulike kanalar</li>
       <li xml:lang="pl">Kodowanie zależne od kanału</li>
@@ -637,13 +619,12 @@
       <li xml:lang="fi">Teematuki tunnuskuvakkeille</li>
       <li xml:lang="fr">Prise en charge de thèmes pour les images de pseudonyme</li>
       <li xml:lang="gl">Funcionalidade de temas para iconas de alcumes.</li>
-      <li xml:lang="he">תמיכה בערכות עיצוב לסמל הכינוי</li>
+      <li xml:lang="he">תמיכה בערכות נושא לסמל הכינוי</li>
       <li xml:lang="hu">Tématámogatás a becenevek ikonjaihoz</li>
       <li xml:lang="id">Dukungan tema untuk ikon nick</li>
       <li xml:lang="it">Supporto di temi per le icone dei nick</li>
       <li xml:lang="ka">თემების მხარდაჭერა ფსევდონიმის ხატულებისთვის</li>
       <li xml:lang="ko">별명 아이콘 테마 지원</li>
-      <li xml:lang="lv">Motīvu atbalsts niku ikonām</li>
       <li xml:lang="nl">Ondersteuning van thema voor pictogrammen bij schermnamen.</li>
       <li xml:lang="nn">Temastøtte for deltakarikon</li>
       <li xml:lang="pl">Obsługa wystrojów dla ikon pseudonimów</li>
@@ -677,14 +658,13 @@
       <li xml:lang="fi">Laajalti mukautettavissa</li>
       <li xml:lang="fr">Hautement configurable</li>
       <li xml:lang="gl">Altamente configurábel.</li>
-      <li xml:lang="he">גמיש מאוד</li>
+      <li xml:lang="he">הרבה אפשרויות הגדרה</li>
       <li xml:lang="hu">Számos beállítási lehetőség</li>
       <li xml:lang="ia">Altamente configurabile</li>
       <li xml:lang="id">Sangat dapat dikonfigurasi</li>
       <li xml:lang="it">Altamente configurabile</li>
       <li xml:lang="ka">ბევრი პარამეტრის მქონე</li>
       <li xml:lang="ko">다양하게 설정 가능</li>
-      <li xml:lang="lv">Konfigurējams</li>
       <li xml:lang="nl">Hoog instelbaar</li>
       <li xml:lang="nn">Kan tilpassast på mange måtar</li>
       <li xml:lang="pl">Wysoce ustawialny</li>
