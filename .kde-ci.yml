@@ -29,3 +29,6 @@ Dependencies:
 - 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
   'require':
     'frameworks/kglobalaccel': '@latest-kf6'
+
+Options:
+  require-passing-tests-on: ['Linux', 'FreeBSD', 'Windows']
