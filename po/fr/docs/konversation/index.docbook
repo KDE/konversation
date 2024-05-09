@@ -4750,7 +4750,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></para>
 <para
 >Exemple de résultat : <replaceable
->* L’utilisateur écoute « You Give Love A Bad Name de Bon Jovi sur « Slippery When Wet »] [AmaroK]</replaceable
+>* L'utilisateur écoute « You Give Love A Bad Name » de Bon Jovi sur « Slippery When Wet » ][AmaroK]</replaceable
 ></para>
 </listitem>
 </varlistentry>
