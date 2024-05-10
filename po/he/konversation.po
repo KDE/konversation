@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-01 00:37+0000\n"
-"PO-Revision-Date: 2024-04-08 19:14+0300\n"
+"PO-Revision-Date: 2024-05-09 13:41+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -9538,14 +9538,14 @@ msgid "Show last:"
 msgstr "הצגת החלק האחרון של הקובץ:"
 
 #: src/viewer/logfilereader.cpp:48
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Use this box to set the maximum size of the log file. This setting does not "
 "take effect until you restart Konversation. Each log file may have a "
 "separate setting."
 msgstr ""
-"בתיבה זאת קובעים את גודל קובץ היומן. הקביעה הזאת תיכנס לתוקף רק בעת הפעלה "
-"מחדש של Konversation. לכל קובץ יומן יכול להיות הגדרה ייחודית."
+"בתיבה זאת ניתן להגדיר את גודל קובץ היומן. ההגדרה הזאת תיכנס לתוקף רק בעת "
+"הפעלה מחדש של Konversation. לכל קובץ יומן יכולה להיות הגדרה ייחודית."
 
 #: src/viewer/logfilereader.cpp:50
 #, kde-format
@@ -9568,13 +9568,13 @@ msgid ""
 msgstr "לנקות את כל פרטי היומן מהקובץ הזה?"
 
 #: src/viewer/logfilereader.cpp:149
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Note: By saving the logfile you will save all data in the file, not only the "
 "part you can see in this viewer."
 msgstr ""
-"הערה: בעת שמירת קובץ היומן, אתה תשמור גם את כל המידע בקובץ, לא רק את החלק "
-"שאתה רואה במציג זה."
+"לתשומת ליבך: שמירת קובץ היומן שומרת את כל הנתונים לקובץ, לא רק את מה שמופיע "
+"במציג הזה."
 
 #: src/viewer/logfilereader.cpp:150
 #, kde-format
