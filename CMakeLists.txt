@@ -76,7 +76,7 @@ if(NOT WIN32)
 endif()
 set(HAVE_KGLOBALACCEL ${KF6GlobalAccel_FOUND})
 
-if (UNIX AND NOT APPLE)
+if (UNIX AND NOT APPLE AND NOT HAIKU)
     set(HAVE_X11 TRUE)
 endif()
 
