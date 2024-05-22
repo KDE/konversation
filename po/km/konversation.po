@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2012-07-11 10:37+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer\n"
@@ -55,80 +55,80 @@ msgid ""
 "whitespace."
 msgstr "បាន​ប្រតិបត្តិ​ពាក្យ​បញ្ជា​ដោយ​ជោគជ័យ ប៉ុន្តែ​មិន​បាន​ត្រឡប់​លទ្ធផល​មួយ​ចំនួន​ ឬ​ចន្លោះ​មិន​ឃើញ ។"
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "ស្គ្រីប​មេឌៀ​ទាមទារ Python %1 ឬ​ខ្ពស់​ជាង ។"
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr "មាន​កំហុស ខណៈ​ពេល​សាកល្បង​រាយ​បញ្ជី​ដំណើរការ​កម្មវិធី​ចាក់​មេឌៀ ។"
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "រក​មិន​ឃើញ​ដំណើរការ​កម្មវិធី​ចាក់​អូឌីយ៉ូ​ឡើយ ។"
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "រក​មិន​ឃើញ​ដំណើរការ​កម្មវិធី​ចាក់​វីដេអូ​ឡើយ ។"
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "\"%1\" មិន​​កំពុង​ដំណើរការ​ឡើយ ។"
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "រក​មិន​ឃើញ​​ដំណើរការ​កម្មវិធី​ចាក់​មេឌៀ​ឡើយ"
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "គ្មាន​អ្វី​កំពុង​ចាក់​នៅ​ក្នុង %1 ឡើយ ។"
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "គ្មាន​កម្មវិធី​ចាក់​អូឌីយ៉ូ​ឡើយ (%1) កំពុង​តែ​ចាក់ ។"
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "គ្មាន​កម្មវិធី​ចាក់​វីដេអូ​ឡើយ (%1) កំពុង​តែ​ចាក់ ។"
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr "គ្មាន​កម្មវិធី​ចាក់​មេឌៀ​ឡើយ (%1) កំពុង​តែចាក់ ។"
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr "មាន​កំហុស​​ខណៈ​ពេល​ព្យាយាម​ទៅ​យក​ទិន្នន័យ​មេតា​ពី %1 ។"
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "មាន​បញ្ហា​ជាមួយ​កន្សោម​ធម្មតា​ដែល​បាន​បញ្ជាក់​នៅ​ក្នុង REGEX_FIXUP ។"
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr "%1 មិន​បាន​ធ្វើ​របាយការណ៍​ទិន្នន័យ​មេតា​ដែល​ត្រូវ​ការ​សារ​​លទ្ធផល​ឡើយ ។"
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "មាន​បញ្ហា​នៅ​ក្នុង​ទ្រង់ទ្រាយ​កំណត់​រចនាសម្ព័ន្ធ​លទ្ធផល ។"
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "Konversation​"
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "ការ​ប្រើ​​ ៖"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "\"/media\" - រាយការណ៍​អ្វី​ដែល​បាន​រក​ឃើញ​​នៅ​​ពេល​កំពុង​ចាក់ ។"
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
@@ -136,7 +136,7 @@ msgstr ""
 "\"/media [ 'audio' | 'video' ]\"  រាយការណ៍​អ្វី​ដែល​កំពុង​ចាក់​នៅ​ក្នុង​កម្មវិធី​វីដេអូ ឬ​អូឌីយ៉ូ​ដែល​​"
 "ស្គាល់ ។"
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."

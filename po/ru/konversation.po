@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2024-01-10 22:00+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -70,81 +70,81 @@ msgstr ""
 "Команда выполнена успешно, но не вернула никаких результатов (либо вернула "
 "только пробел)."
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "Сценарию команды /media требуется Python %1 или выше."
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr "При попытке получить список запущенных медиаплееров произошла ошибка."
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "Запущенные аудиоплееры не обнаружены."
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "Запущенные видеоплееры не обнаружены."
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "«%1» не запущен."
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "Запущенные медиаплееры не обнаружены."
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "В «%1» ничего не воспроизводится."
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "Ни один из запущенных аудиоплееров (%1) ничего не воспроизводит."
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "Ни один из запущенных видеоплееров (%1) ничего не воспроизводит."
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr "Ни один из запущенных медиаплееров (%1) ничего не воспроизводит."
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr ""
 "При попытке получить список метаданных медиаресурса от «%1» произошла ошибка."
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "В регулярном выражении, указанном в REGEX_FIXUP, есть ошибка."
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr "Плеер «%1» не передал метаданные, необходимые для вывода сообщения."
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "Ошибка в строке формата выводимых данных."
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "Сценарий media v%1 для Konversation."
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "Использование:"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "/media — сообщить, что воспроизводит первый найденный плеер."
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
@@ -152,7 +152,7 @@ msgstr ""
 "/media [ 'audio' | 'video' ] — сообщить, что воспроизводит известный аудио- "
 "или видеоплеер."
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."

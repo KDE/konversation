@@ -3295,7 +3295,7 @@ part of the listing.
 >Cada vegada que obriu una sessió una altra vegada, aproximadament els últims 1.024 caràcters de la sessió anterior seran llegits des del final del registre i es mostraran a la pantalla. </para>
 
 <para
->Atès que la vostra sessió continua, els missatges sortiran fora per la part superior de la pantalla. Podeu desplaçar cap enrere per a visualitzar aquests missatges. De manera eventual, per tal d'estalviar memòria, els missatges més antics es descartaran. Això s'anomena el <guilabel
+>Atès que la vostra sessió continua, els missatges sortiran fora per la part superior de la pantalla. Podeu desplaçar cap enrere per a visualitzar aquests missatges. De fet, per tal d'estalviar memòria, els missatges més antics es descartaran. Això s'anomena el <guilabel
 >Límit de l'historial</guilabel
 >. Els missatges que desapareixen de la pantalla a causa del <guilabel
 >Límit de l'historial</guilabel

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -51,87 +51,87 @@ msgid ""
 "whitespace."
 msgstr "命令成功执行，但没有返回任何输出或者仅有空白。"
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "媒体脚本需要 Python %1 或更高版本。"
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr "试图列出正在运行的媒体播放器时出错。"
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "未找到正在运行的音频播放器。"
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "未找到正在运行的视频播放器。"
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "\"%1\" 未运行."
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "未找到正在运行的媒体播放器。"
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "%1 中没有播放任何东西。"
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "没有正在播放的音频播放器 (%1)。"
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "没有正在播放的视频播放器 (%1)。"
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr "没有正在播放的媒体播放器 (%1)。"
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr "尝试获取媒体元数据时发生错误：%1."
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "REGEX_FIXUP 中指定的正则表达式有问题。"
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr "%1 并未返回输出信息所需的元数据。"
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "输出格式的配置存在问题。"
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "Konversation 媒体 v%1"
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "用法:"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "“/media”——发送第一个播放器正在播放的内容。"
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
 msgstr ""
 "“/media [ 'audio' | 'video' ]”——发送音频播放器或视频播放器中正在播放的内容。"
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."

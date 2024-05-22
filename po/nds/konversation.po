@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2014-08-17 17:40+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -54,81 +54,81 @@ msgstr ""
 "De Befehl wöör mit Spood utföhrt, man hett Nix oder bloots Freetekens "
 "utgeven."
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "Dat Medienskript bruukt Python %1 oder nieger."
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr "Dat geev en Fehler bi't Oplisten vun de lopen Medienafspelers."
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "As dat lett, löppt keen Klangafspelers."
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "As dat lett, löppt keen Videoafspelers."
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "„%1“ löppt nich."
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "As dat lett, löppt keen Medienafspelers."
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "%1 speelt nix af."
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "Keen vun de lopen Klangafspelers (%1) speelt wat af."
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "Keen vun de lopen Videoafspelers (%1) speelt wat af."
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr "Keen vun de lopen Medienafspelers (%1) speelt wat af."
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr "Dat geev en Fehler bi't Halen vun de Medienmetadaten ut %1."
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "Dat gifft en Problem mit den för REGEX_FIXUP angeven reguleer Utdruck."
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr ""
 "%1 hett de nödigen Metadaten för't Utgeven vun en Naricht nich angeven."
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "Dat gifft en Problem binnen de Utgaavformaat-Instellen."
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "Medium v%1 för Konversation"
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "Bruuk:"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "\"/media\" - utgeven, wat de toeerst funnen Afspeler weddergeven deit"
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
@@ -136,7 +136,7 @@ msgstr ""
 "\"/media [ 'audio' | 'video' ]\" - utgeven, wat en begäng Klang- oder "
 "Videoafspeler weddergeven deit"
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."

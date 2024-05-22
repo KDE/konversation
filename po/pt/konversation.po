@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2022-08-29 12:52+0100\n"
 "Last-Translator: Pedro Morais<morais@kde.org>\n"
 "Language-Team:  <pt@li.org>\n"
@@ -106,81 +106,81 @@ msgstr ""
 "O comando foi executado com sucesso, mas não devolveu qualquer resultado ou "
 "apenas texto em branco."
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "O programa multimédia necessita do Python %1 ou superior."
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr "Ocorreu um erro ao tentar enumerar os leitores multimédia em execução."
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "Não foram encontrados leitores de áudio em execução."
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "Não foram encontrados leitores de vídeo em execução."
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "O \"%1\" não está em execução."
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "Não foram encontrados leitores multimédia em execução."
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "Não está nada a tocar em %1."
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "Nenhum dos leitores de áudio (%1) em execução está a tocar nada."
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "Nenhum dos leitores de vídeo (%1) em execução está a reproduzir nada."
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr ""
 "Nenhum dos leitores multimédia (%1) em execução está a reproduzir nada."
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr "Ocorreu um erro ao tentar obter os meta-dados multimédia do %1."
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "Ocorreu um problema com a expressão regular indicada em REGEX_FIXUP."
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr "O %1 não devolveu os meta-dados necessários para mostrar uma mensagem."
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "Ocorreu um problema com a configuração do formato de destino."
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "conteúdo v%1 do Konversation."
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "Utilização:"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "\"/media\" - devolve o que o primeiro leitor encontrado está a tocar."
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
@@ -188,7 +188,7 @@ msgstr ""
 "\"/media [ 'audio' | 'vídeo' ]\" - devolve o que está a ser tocado num "
 "leitor de áudio ou vídeo suportado."
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:37+0000\n"
+"POT-Creation-Date: 2024-05-22 00:39+0000\n"
 "PO-Revision-Date: 2024-02-24 23:41+0100\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -64,84 +64,84 @@ msgstr ""
 "Ukaz se je uspešno izvedel, ampak ni vrnil nobenega izhoda ali samo "
 "presledne znake."
 
-#: data/scripts/media:102
+#: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
 msgstr "Ta predstavnostni skript zahteva Python %1 ali novejši."
 
-#: data/scripts/media:132
+#: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
 msgstr ""
 "Med ustvarjanjem seznama zagnanih predstavnostnih predvajalnikov je prišlo "
 "do napake."
 
-#: data/scripts/media:176
+#: data/scripts/media:177
 msgid "No running audio players found."
 msgstr "Ni bilo najdenih zagnanih predvajalnikov zvoka."
 
-#: data/scripts/media:178
+#: data/scripts/media:179
 msgid "No running video players found."
 msgstr "Ni bilo najdenih zagnanih predvajalnikov videa."
 
-#: data/scripts/media:180
+#: data/scripts/media:181
 msgid "\"%1\" is not running."
 msgstr "\"%1\" ni zagnan."
 
-#: data/scripts/media:182
+#: data/scripts/media:183
 msgid "No running media players found."
 msgstr "Ni bilo najdenih zagnanih predstavnostnih predvajalnikov."
 
-#: data/scripts/media:196
+#: data/scripts/media:197
 msgid "Nothing is playing in %1."
 msgstr "V %1 se ne predvaja nič."
 
-#: data/scripts/media:200
+#: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
 msgstr "Noben izmed zagnanih predvajalnikov zvoka (%1) ne predvaja nič."
 
-#: data/scripts/media:205
+#: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
 msgstr "Noben izmed zagnanih predvajalnikov videa (%1) ne predvaja nič."
 
-#: data/scripts/media:210
+#: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
 msgstr ""
 "Noben izmed zagnanih predstavnostnih predvajalnikov (%1) ne predvaja nič."
 
-#: data/scripts/media:218
+#: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
 msgstr ""
 "Med pridobivanjem predstavnostnih metapodatkov iz %1 je prišlo do napake."
 
-#: data/scripts/media:256
+#: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
 msgstr "V regularnem izrazu določenim v REGEX_FIXUP obstaja težava."
 
-#: data/scripts/media:265
+#: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
 msgstr "%1 ni izpisal metapodatkov, ki so zahtevani za izpis sporočila."
 
-#: data/scripts/media:281
+#: data/scripts/media:282
 msgid "There is a problem in the output format configuration."
 msgstr "Obstaja težava v nastavitvi vrste izhoda."
 
-#: data/scripts/media:301
+#: data/scripts/media:302
 msgid "media v%1 for Konversation."
 msgstr "predstavnost r%1 za Konversation."
 
-#: data/scripts/media:302
+#: data/scripts/media:303
 msgid "Usage:"
 msgstr "Uporaba:"
 
-#: data/scripts/media:303
+#: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
 msgstr "\"/media\" - poročajte kaj predvaja prvi najden predvajalnik."
 
-#: data/scripts/media:304
+#: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
 "or video player."
@@ -149,7 +149,7 @@ msgstr ""
 "\"/media [ 'audio' | 'video' ]\" - poročajte kaj se predvaja v znanem "
 "zvočnem ali video predvajalniku."
 
-#: data/scripts/media:305
+#: data/scripts/media:306
 msgid ""
 "\"/media { Player }\" - report what is playing in the specified player if it "
 "is found."
