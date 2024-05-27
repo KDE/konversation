@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-03-28 10:37+0100\n"
+"PO-Revision-Date: 2024-05-26 22:24+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -9437,7 +9437,7 @@ msgstr "Enmeti signon"
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "&Insert"
-msgstr "&Enmeti"
+msgstr "Enmet&i"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
