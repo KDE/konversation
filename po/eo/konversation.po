@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 02:31+0000\n"
-"PO-Revision-Date: 2024-03-28 10:37+0100\n"
+"PO-Revision-Date: 2024-05-26 22:24+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -33,7 +33,7 @@ msgstr "axel@esperanto-jeunes.org,olivermkellogg@gmail.com"
 #, kde-format
 msgctxt "Menu title"
 msgid "&Insert"
-msgstr "Enmet&i"
+msgstr "&Enmeti"
 
 #. i18n: ectx: Menu (windows)
 #: data/konversationui.rc:38
@@ -9437,7 +9437,7 @@ msgstr "Enmeti signon"
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "&Insert"
-msgstr "&Enmeti"
+msgstr "Enmet&i"
 
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
@@ -10162,12 +10162,3 @@ msgstr "Averto pri Kanala Listo"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Rigarditaj Kromnomoj"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Redaktilo pri Konversaciaj Legosignoj"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
