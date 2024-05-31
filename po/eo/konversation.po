@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-05-26 22:24+0200\n"
+"PO-Revision-Date: 2024-05-30 07:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -1753,7 +1753,7 @@ msgstr "Ordigi laŭ &aktiveco"
 #: src/config/nicklistbehavior_configui.ui:59
 #, kde-format
 msgid "Sort b&y user status"
-msgstr "Ordigi laŭ uzantostatuso"
+msgstr "Ord&igi laŭ uzantostatuso"
 
 #. i18n: ectx: property (text), widget (QLabel, orderHintLabel)
 #: src/config/nicklistbehavior_configui.ui:72
@@ -1816,7 +1816,7 @@ msgstr "&Se propra kromnomo aperas en kanala mesaĝo"
 #: src/config/osd_configui.ui:148
 #, kde-format
 msgid "On an&y channel message"
-msgstr "Sur iu kanala mesaĝo"
+msgstr "Sur &iu kanala mesaĝo"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowQuery)
 #: src/config/osd_configui.ui:155
@@ -6121,7 +6121,7 @@ msgstr "Gastiga masko:"
 #: src/irc/nickinfo.cpp:224
 #, kde-format
 msgid "Away&nbsp;Message:"
-msgstr "For-Mesaĝo:"
+msgstr "For&nbsp;Mesaĝo:"
 
 #: src/irc/nickinfo.cpp:228
 #, kde-format
