@@ -3,19 +3,20 @@
 #
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2006, 2007.
 # Yasen Pramatarov <yasen@lindeas.com>, 2009, 2011.
+# SPDX-FileCopyrightText: 2024 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 02:31+0000\n"
-"PO-Revision-Date: 2011-07-26 16:07+0300\n"
-"Last-Translator: Yasen Pramatarov <yasen@lindeas.com>\n"
-"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"PO-Revision-Date: 2024-05-30 16:57+0200\n"
+"Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -6315,7 +6316,7 @@ msgstr ""
 #: src/irc/outputfilter.cpp:655
 #, kde-format
 msgid "Usage: %1NOTICE <recipient> <message>"
-msgstr "Употреба: %1NOTICE (известие) <получател> <съобщение>"
+msgstr "Употреба: %1NOTICE (известие) <получател><съобщение>"
 
 #: src/irc/outputfilter.cpp:662
 #, kde-format
@@ -6558,12 +6559,12 @@ msgstr "Игнориране"
 #, kde-format
 msgid "Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>"
 msgstr ""
-"Употреба: %1IGNORE [ -ALL ] <потребител 1> <потребител 2> ... <потребител n>"
+"Употреба: %1IGNORE [ -ALL ] <потребител 1><потребител 2> ... <потребител n>"
 
 #: src/irc/outputfilter.cpp:1560
 #, kde-format
 msgid "Usage: %1UNIGNORE <user 1> <user 2> ... <user n>"
-msgstr "Употреба: %1UNIGNORE <потребител 1> <потребител 2> ... <потребител n>"
+msgstr "Употреба: %1UNIGNORE <потребител 1><потребител 2> ... <потребител n>"
 
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
