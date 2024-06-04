@@ -10,13 +10,13 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2009.
-# Kisaragi Hiu <mail@kisaragi-hiu.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2023-12-26 21:04+0900\n"
+"PO-Revision-Date: 2024-06-04 06:03+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8130,12 +8130,12 @@ msgstr "增加目前的字型大小"
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
-msgstr "重置字型大小"
+msgstr "重設字型大小"
 
 #: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "重置目前的字型大小為設定的值"
+msgstr "重設目前的字型大小為設定的值"
 
 #: src/mainwindow.cpp:447
 #, kde-format
@@ -8457,18 +8457,18 @@ msgstr "您已經加入了 %1。"
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr "重置..."
+msgstr "重設..."
 
 #: src/queuetuner.cpp:229
 #, kde-format
 msgid ""
 "This cannot be undone, are you sure you wish to reset to default values?"
-msgstr "這個動作無法復原。您確定要全部重置回預設值嗎？"
+msgstr "這個動作無法復原。您確定要全部重設回預設值嗎？"
 
 #: src/queuetuner.cpp:231
 #, kde-format
 msgid "Reset Values"
-msgstr "重置設定值"
+msgstr "重設設定值"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_closeButton)
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
@@ -9584,7 +9584,7 @@ msgid ""
 "chat. This can cause connection resets or flood kills. Do you really want to "
 "continue?</qt>"
 msgstr ""
-"<qt>您正試圖貼上一大段文字 (%1 或 %2)進入聊天欄，這可能引起連線重置或過量資訊"
+"<qt>您正試圖貼上一大段文字 (%1 或 %2)進入聊天欄，這可能引起連線重設或過量資訊"
 "傳送中止，您真要繼續嗎？</qt>"
 
 #: src/viewer/ircinput.cpp:484
