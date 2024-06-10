@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-05-26 09:09+0300\n"
+"PO-Revision-Date: 2024-06-09 06:50+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6629,9 +6629,9 @@ msgid "Running pre-connect shell command..."
 msgstr ""
 
 #: src/irc/server.cpp:412
-#, fuzzy, kde-format
+#, kde-format
 msgid "Pre-shell command executed successfully!"
-msgstr "הסתיים - העברה התסיימה בהצלחה"
+msgstr "פקודת טרום המעטפת הופעלה בהצלחה!"
 
 #: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
@@ -6645,9 +6645,9 @@ msgid "Warning"
 msgstr "אזהרה"
 
 #: src/irc/server.cpp:475
-#, fuzzy, kde-format
+#, kde-format
 msgid "Looking for server %1 (port %2)..."
-msgstr "מחפש את השרת %1 (יציאה <numid>%2</numid>)..."
+msgstr "איתור השרת %1 (פתחה %2)…"
 
 #: src/irc/server.cpp:682
 #, kde-format
@@ -6655,9 +6655,9 @@ msgid "Server found, connecting..."
 msgstr "השרת נמצא, מתחבר..."
 
 #: src/irc/server.cpp:717
-#, fuzzy, kde-format
+#, kde-format
 msgid "Negotiating capabilities with server..."
-msgstr "מוודא את יכולות השרת..."
+msgstr "משא ומתן על יכולות מול השרת…"
 
 #: src/irc/server.cpp:760
 #, kde-format
@@ -6667,9 +6667,9 @@ msgid ""
 msgstr ""
 
 #: src/irc/server.cpp:781
-#, fuzzy, kde-format
+#, kde-format
 msgid "Requesting capabilities: %1"
-msgstr "מבקש יכולת SASL..."
+msgstr "בקשת יכולות: %1"
 
 #: src/irc/server.cpp:798
 #, kde-format
