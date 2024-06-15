@@ -63,7 +63,7 @@ namespace Konversation
 
     void TrayIcon::updateAppearance()
     {
-        setIconByName(QStringLiteral("konversation"));
+        setIconByName(QStringLiteral("konversation-symbolic"));
         setAttentionIconByName(QStringLiteral("konv_message"));
         setOverlayIconByName(m_away ? QStringLiteral("user-away") : QString());
     }
