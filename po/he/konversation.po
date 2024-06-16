@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-06-09 06:50+0300\n"
+"PO-Revision-Date: 2024-06-14 16:32+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -117,9 +117,8 @@ msgid "There is a problem in the output format configuration."
 msgstr ""
 
 #: data/scripts/media:302
-#, fuzzy
 msgid "media v%1 for Konversation."
-msgstr "Konversation"
+msgstr "מדיה בגרסה %1 ל־Konversation"
 
 #: data/scripts/media:303
 msgid "Usage:"
@@ -609,9 +608,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticRememberLine)
 #: src/config/chatwindowbehaviour_config.ui:205
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark the last position in a chat window when it is hidden"
-msgstr "סמן את המקום האחרון בחלונות השיחה כאשר אתה במצב מרוחק"
+msgstr "סימון המקום האחרון בחלון הצ׳אט כשהוא מוסתר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutomaticRememberLineOnlyOnTextChange)
 #: src/config/chatwindowbehaviour_config.ui:236
@@ -621,9 +620,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_MarkerLineInAllViews)
 #: src/config/chatwindowbehaviour_config.ui:245
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show manually inserted lines in all chat windows"
-msgstr "הצג שורת תזכורת בכל החדרים והשאילתות"
+msgstr "הצגת שורות שנוספו ידנית בכל חלונות הצ׳אט"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoWhoContinuousEnabled)
 #: src/config/chatwindowbehaviour_config.ui:255
@@ -639,9 +638,9 @@ msgstr "מספר המשתמשים המרבי בחדר:"
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
-#, fuzzy, kde-format
+#, kde-format
 msgid "Update inter&val:"
-msgstr "תדירות עדכון:"
+msgstr "&תדירות עדכון:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/colorsappearance_config.ui:30
@@ -1005,7 +1004,7 @@ msgstr "תשובה מהשרת IRC"
 #: src/config/dcc_config.cpp:76
 #, kde-format
 msgid "Specify Manually"
-msgstr "קבע ידנית"
+msgstr "הגדרה ידנית"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DCC_ConfigUI)
 #: src/config/dcc_configui.ui:18
@@ -1057,9 +1056,9 @@ msgstr "אפשר מצב העברה מהירה, Fast DCC (ייתכן כי &לא �
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccPassiveSend)
 #: src/config/dcc_configui.ui:98
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable passive DCC send"
-msgstr "אפשר י&ציאות מסוימות עבור שליחות DCC:"
+msgstr "הפעלת שליחה סבילה בהעברה ישירה (DCC)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
@@ -1116,13 +1115,13 @@ msgstr "&שיטה לקבלת כתובת עצמית:"
 #: src/config/dcc_configui.ui:229
 #, kde-format
 msgid "O&wn IP:"
-msgstr "כתובת &עצמית:"
+msgstr "כתובת IP &עצמית:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/dcc_configui.ui:248
 #, kde-format
 msgid "Ports"
-msgstr "יציאות"
+msgstr "פתחות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificSendPorts)
 #: src/config/dcc_configui.ui:254
@@ -2005,7 +2004,7 @@ msgid "Logging"
 msgstr "יומן"
 
 #: src/config/settingsdialog.cpp:152
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab"
 msgid "DCC"
 msgstr "העברה ישירה (DCC)"
