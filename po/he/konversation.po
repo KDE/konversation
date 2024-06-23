@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-06-14 16:32+0300\n"
+"PO-Revision-Date: 2024-06-21 16:16+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1847,7 +1847,7 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, placeholderHelpLabel)
 #: src/config/quickbuttons_configui.ui:45
-#, fuzzy, no-c-format, kde-format
+#, no-c-format, kde-format
 msgid ""
 "%c: Current channel\n"
 "%i: Input box contents\n"
@@ -1859,10 +1859,13 @@ msgid ""
 "%u: List of selected nicknames"
 msgstr ""
 "%c: החדר הנוכחי\n"
-"%K: ססמת השרת\n"
-"%u: רשימת הכינויים הנבחרים\n"
-"%s<term>%:מילת הפרדה של כינויים ב־%u\n"
-"%n: שליחת פקודה ישירות לשרת במקום לשורת קלט"
+"%i: תוכן תיבת התוכן\n"
+"%k: מפתח חדר\n"
+"%K: סיסמת שרת\n"
+"%n: שליחת פקודה ישירות לשרת במקום לתיבת הקלט\n"
+"%o: כינוי נוכחי\n"
+"%s<term>%: ביטוי שמשמש להפרדת כינויים בתוך %u\n"
+"%u: רשימת הכינויים הנבחרים"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, buttonListView)
 #: src/config/quickbuttons_configui.ui:74
