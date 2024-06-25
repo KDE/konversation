@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-22 00:39+0000\n"
-"PO-Revision-Date: 2024-06-21 16:16+0300\n"
+"PO-Revision-Date: 2024-06-23 08:51+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -53,23 +53,23 @@ msgstr "עליך לתת שם לזהות."
 msgid ""
 "The command executed successfully, but did not return any output or only "
 "whitespace."
-msgstr ""
+msgstr "הפקודה הופעלה בהצלחה, אך לא החזירה פלט או רווחים."
 
 #: data/scripts/media:103
 msgid "The media script requires Python %1 or higher."
-msgstr ""
+msgstr "סקריפט המדיה דורש Python %1 ומעלה."
 
 #: data/scripts/media:133
 msgid "An error occurred while trying to list the running media players."
-msgstr ""
+msgstr "אירעה שגיאה בניסיון להאזין לנגני המדיה הפעילים."
 
 #: data/scripts/media:177
 msgid "No running audio players found."
-msgstr ""
+msgstr "לא נמצאי נגני שמע פעילים."
 
 #: data/scripts/media:179
 msgid "No running video players found."
-msgstr ""
+msgstr "לא נמצאי נגני וידאו פעילים."
 
 #: data/scripts/media:181
 msgid "\"%1\" is not running."
@@ -77,11 +77,11 @@ msgstr "„%1” לא פעיל."
 
 #: data/scripts/media:183
 msgid "No running media players found."
-msgstr ""
+msgstr "לא נמצאי נגני מדיה פעילים."
 
 #: data/scripts/media:197
 msgid "Nothing is playing in %1."
-msgstr ""
+msgstr "שום דבר לא מתנגן דרך %1."
 
 #: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
