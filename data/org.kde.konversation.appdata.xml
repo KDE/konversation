@@ -6,6 +6,7 @@
   <name>Konversation</name>
   <name xml:lang="ar">محادثك</name>
   <name xml:lang="ast">Konversation</name>
+  <name xml:lang="bg">Konversation</name>
   <name xml:lang="ca">Konversation</name>
   <name xml:lang="ca-valencia">Konversation</name>
   <name xml:lang="cs">Konversation</name>
@@ -49,6 +50,7 @@
   <name xml:lang="zh-TW">Konversation</name>
   <summary>IRC client</summary>
   <summary xml:lang="ar">عميل آي‌آرسي</summary>
+  <summary xml:lang="bg">IRC клиент</summary>
   <summary xml:lang="ca">Client d'IRC</summary>
   <summary xml:lang="ca-valencia">Client d'IRC</summary>
   <summary xml:lang="cs">Klient IRC</summary>
@@ -97,6 +99,7 @@
       where the KDE IRC channels can be found.
     </p>
     <p xml:lang="ar">محادثك هو عميل دردشة عبر الإنترنت سهلة الاستخدام (IRC) بواسطة كِيدِي. يوفر سهولة الوصول إلى شبكات IRC القياسية مثل Libera ، حيث يمكن العثور على قنوات كِيدِي IRC.</p>
+    <p xml:lang="bg">Konversation е удобен за потребителя Internet Relay Chat (IRC) клиент от KDE. Осигурява лесен достъп до стандартни IRC мрежи като Libera, където могат да бъдат намерени IRC каналите на KDE.</p>
     <p xml:lang="ca">El Konversation és un client fàcil d'emprar de l'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es poden trobar els canals IRC de KDE.</p>
     <p xml:lang="ca-valencia">Konversation és un client fàcil d'emprar d'Internet Relay Chat (IRC), creat per la comunitat KDE. Proporciona un accés senzill a les xarxes IRC estàndards, com Libera, a on es troben els canals IRC de KDE.</p>
     <p xml:lang="de">Konversation ist ein benutzerfreundliches Internet-Relay-Chat (IRC)-Programm von KDE. Es bietet einen einfachen Zugang zu Standard-IRC-Netzwerken wie Libera, wo die KDE-IRC-Kanäle zu finden sind.</p>
@@ -131,6 +134,7 @@
     <p xml:lang="zh-TW">Konversation 是一個來自 KDE 的友善 IRC 用戶端。它讓存取標準 IRC 網路變得簡單，包含 KDE 的 IRC 頻道所在的 Libera。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
+    <p xml:lang="bg">Функции:</p>
     <p xml:lang="ca">Característiques:</p>
     <p xml:lang="ca-valencia">Característiques:</p>
     <p xml:lang="cs">Vlastnosti:</p>
@@ -176,6 +180,7 @@
     <ul>
       <li>Standard IRC features</li>
       <li xml:lang="ar">ميزات آي‌آرسي القياسيّة</li>
+      <li xml:lang="bg">Стандартни IRC функции</li>
       <li xml:lang="ca">Característiques estàndard de l'IRC</li>
       <li xml:lang="ca-valencia">Característiques estàndard de l'IRC</li>
       <li xml:lang="da">Standard IRC-funktioner</li>
@@ -217,6 +222,7 @@
       <li xml:lang="zh-TW">標準 IRC 功能</li>
       <li>SSL server support</li>
       <li xml:lang="ar">دعم خواديم SSL</li>
+      <li xml:lang="bg">Поддръжка на SSL сървър</li>
       <li xml:lang="ca">Permet servidors SSL</li>
       <li xml:lang="ca-valencia">Permet servidors SSL</li>
       <li xml:lang="da">Understøttelse af SSL-server</li>
@@ -258,6 +264,7 @@
       <li xml:lang="zh-TW">支援 SSL 伺服器</li>
       <li>Bookmarking support</li>
       <li xml:lang="ar">دعم العلامات</li>
+      <li xml:lang="bg">Поддръжка на отметки</li>
       <li xml:lang="ca">Permet les adreces d'interès</li>
       <li xml:lang="ca-valencia">Permet les adreces d'interés</li>
       <li xml:lang="da">Understøttelse af bogmærker</li>
@@ -299,6 +306,7 @@
       <li xml:lang="zh-TW">支援書籤</li>
       <li>Easy to use graphical user interface</li>
       <li xml:lang="ar">واجهة مستخدم سهلة الاستخدام</li>
+      <li xml:lang="bg">Лесен за използване графичен потребителски интерфейс</li>
       <li xml:lang="ca">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="ca-valencia">Interfície gràfica d'usuari fàcil d'utilitzar</li>
       <li xml:lang="da">Brugervenlig grafisk brugerflade</li>
@@ -339,6 +347,7 @@
       <li xml:lang="zh-TW">易於使用的圖形化使用者介面</li>
       <li>Multiple servers and channels in one single window</li>
       <li xml:lang="ar">عدّة خواديم وقنوات في نافذة واحدة</li>
+      <li xml:lang="bg">Множество сървъри и канали в един прозорец</li>
       <li xml:lang="ca">Múltiples servidors i canals en una única finestra</li>
       <li xml:lang="ca-valencia">Múltiples servidors i canals en una única finestra</li>
       <li xml:lang="da">Flere servere og kanaler i et enkelt vindue</li>
@@ -379,6 +388,7 @@
       <li xml:lang="zh-TW">在單一視窗中查看多個伺服器與頻道</li>
       <li>DCC file transfer</li>
       <li xml:lang="ar">نقل الملفّات عبر DCC</li>
+      <li xml:lang="bg">DCC прехвърляне на файлове</li>
       <li xml:lang="ca">Transferència DCC de fitxers</li>
       <li xml:lang="ca-valencia">Transferència DCC de fitxers</li>
       <li xml:lang="da">DCC-filoverførsel</li>
@@ -420,6 +430,7 @@
       <li xml:lang="zh-TW">DCC 檔案傳輸</li>
       <li>Multiple identities for different servers</li>
       <li xml:lang="ar">عدّة هويّات لمختلف الخواديم</li>
+      <li xml:lang="bg">Множество самоличности за различни сървъри</li>
       <li xml:lang="ca">Múltiples identitats per a servidors diferents</li>
       <li xml:lang="ca-valencia">Múltiples identitats per a servidors diferents</li>
       <li xml:lang="da">Flere identiteter til forskellige servere</li>
@@ -460,6 +471,7 @@
       <li xml:lang="zh-TW">在不同伺服器可使用不同的憑證登入</li>
       <li>Text decorations and colors</li>
       <li xml:lang="ar">زخرفة النّصوص وتلوينها</li>
+      <li xml:lang="bg">Текстови декорации и цветове</li>
       <li xml:lang="ca">Decoracions i colors del text</li>
       <li xml:lang="ca-valencia">Decoracions i colors del text</li>
       <li xml:lang="da">Tekstdekorationer og farver</li>
@@ -502,6 +514,7 @@
       <li xml:lang="zh-TW">文字裝飾與色彩</li>
       <li>OnScreen Display for notifications</li>
       <li xml:lang="ar">عرض الإخطارات على الشّاشة</li>
+      <li xml:lang="bg">Показване на екранни известия</li>
       <li xml:lang="ca">Mostra les notificacions en pantalla</li>
       <li xml:lang="ca-valencia">Mostra les notificacions en pantalla</li>
       <li xml:lang="da">On-screen-display til bekendtgørelser</li>
@@ -542,6 +555,7 @@
       <li xml:lang="zh-TW">通知的 OSD 支援</li>
       <li>Automatic UTF-8 detection</li>
       <li xml:lang="ar">اكتشاف آليّ ل‍UTF-8</li>
+      <li xml:lang="bg">Автоматично откриване на UTF-8</li>
       <li xml:lang="ca">Detecció automàtica d'UTF-8</li>
       <li xml:lang="ca-valencia">Detecció automàtica d'UTF-8</li>
       <li xml:lang="da">Automatisk UTF-8-detektion</li>
@@ -584,6 +598,7 @@
       <li xml:lang="zh-TW">自動 UTF-8 偵測</li>
       <li>Per channel encoding support</li>
       <li xml:lang="ar">دعم التّرميزات لكلّ قناة على حدة</li>
+      <li xml:lang="bg">Поддръжка на отделно кодиране за всеки канал</li>
       <li xml:lang="ca">Permet codificació per canal</li>
       <li xml:lang="ca-valencia">Permet codificació per canal</li>
       <li xml:lang="da">Understøttelse af forskellige tegnsæt pr. kanal</li>
@@ -625,6 +640,7 @@
       <li xml:lang="zh-TW">每個頻道各自使用不同的編碼的支援</li>
       <li>Theme support for nick icons</li>
       <li xml:lang="ar">دعم السّمات لأيقونات المستخدمين</li>
+      <li xml:lang="bg">Поддръжка на тема за икони значки</li>
       <li xml:lang="ca">Permet temes per a les icones de sobrenom</li>
       <li xml:lang="ca-valencia">Permet temes per a les icones de sobrenom</li>
       <li xml:lang="da">Temaunderstøttelse for kaldenavn-ikoner</li>
@@ -665,6 +681,7 @@
       <li xml:lang="zh-TW">暱稱圖示的主題支援</li>
       <li>Highly configurable</li>
       <li xml:lang="ar">عال التّخصيص والضّبط</li>
+      <li xml:lang="bg">С множество възможности за настройване</li>
       <li xml:lang="ca">Altament configurable</li>
       <li xml:lang="ca-valencia">Altament configurable</li>
       <li xml:lang="da">Meget konfigurerbar</li>
