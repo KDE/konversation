@@ -720,6 +720,7 @@
     <binary>konversation</binary>
   </provides>
   <releases>
+    <release version="1.10.24052" date="2024-07-04"/>
     <release version="1.10.24051" date="2024-06-13"/>
     <release version="1.10.24050" date="2024-05-23"/>
     <release version="1.10.24022" date="2024-04-11"/>
