@@ -45,6 +45,7 @@
 #include <QStringListModel>
 #include <QInputDialog>
 #include <QNetworkProxy>
+#include <QSslKey>
 
 using namespace Konversation;
 
@@ -494,6 +495,11 @@ void Server::connectToIRCServer()
             {
                 m_socket->setLocalCertificate(getIdentity()->getPemClientCertFile().toLocalFile());
                 m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile());
+
+                if (m_socket->privateKey().isNull())
+                {
+                    m_socket->setPrivateKey(getIdentity()->getPemClientCertFile().toLocalFile(), QSsl::Ec);
+                }
             }
 
             m_socket->setProtocol(QSsl::SecureProtocols);
