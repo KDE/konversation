@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-22 00:39+0000\n"
+"POT-Creation-Date: 2024-06-30 00:38+0000\n"
 "PO-Revision-Date: 2023-01-07 13:34+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -152,8 +152,8 @@ msgstr ""
 "\"/media { Player }\" - αναφέρει τι αναπαράγεται στη δοσμένη εφαρμογή αν "
 "αυτή βρεθεί."
 
-#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
-#: src/irc/server.cpp:3841
+#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
@@ -1509,10 +1509,10 @@ msgstr "Κανάλι"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2372 src/irc/server.cpp:2502 src/irc/server.cpp:2514
-#: src/irc/server.cpp:2526 src/irc/server.cpp:2661 src/irc/server.cpp:2717
-#: src/irc/server.cpp:2788 src/irc/server.cpp:2793 src/irc/server.cpp:2805
-#: src/irc/server.cpp:2808 src/irc/server.cpp:2822 src/irc/server.cpp:2829
+#: src/irc/server.cpp:2378 src/irc/server.cpp:2508 src/irc/server.cpp:2520
+#: src/irc/server.cpp:2532 src/irc/server.cpp:2667 src/irc/server.cpp:2723
+#: src/irc/server.cpp:2794 src/irc/server.cpp:2799 src/irc/server.cpp:2811
+#: src/irc/server.cpp:2814 src/irc/server.cpp:2828 src/irc/server.cpp:2835
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1523,7 +1523,7 @@ msgstr "DCC"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4309 src/irc/server.cpp:4338
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4315 src/irc/server.cpp:4344
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2639,10 +2639,10 @@ msgstr "Διάστημα εν&ημέρωσης:"
 #: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1573
 #: src/irc/inputfilter.cpp:1690 src/irc/inputfilter.cpp:2482
 #: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
-#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:264 src/irc/server.cpp:412
-#: src/irc/server.cpp:475 src/irc/server.cpp:682 src/irc/server.cpp:717
-#: src/irc/server.cpp:781 src/irc/server.cpp:798 src/irc/server.cpp:816
-#: src/irc/server.cpp:1140 src/irc/server.cpp:1170
+#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:265 src/irc/server.cpp:413
+#: src/irc/server.cpp:476 src/irc/server.cpp:688 src/irc/server.cpp:723
+#: src/irc/server.cpp:787 src/irc/server.cpp:804 src/irc/server.cpp:822
+#: src/irc/server.cpp:1146 src/irc/server.cpp:1176
 #, kde-format
 msgid "Info"
 msgstr "Πληροφορίες"
@@ -2675,13 +2675,13 @@ msgstr[1] "Προσπάθεια επανασύνδεσης στο %2 (θύρα %
 #: src/irc/inputfilter.cpp:2435 src/irc/inputfilter.cpp:2443
 #: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
-#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:760
-#: src/irc/server.cpp:806 src/irc/server.cpp:829 src/irc/server.cpp:955
-#: src/irc/server.cpp:2340 src/irc/server.cpp:2411 src/irc/server.cpp:2584
-#: src/irc/server.cpp:2620 src/irc/server.cpp:2671 src/irc/server.cpp:2739
-#: src/irc/server.cpp:2758 src/irc/server.cpp:2774 src/irc/server.cpp:4267
-#: src/irc/server.cpp:4279 src/irc/server.cpp:4303 src/irc/server.cpp:4326
-#: src/irc/server.cpp:4342
+#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:766
+#: src/irc/server.cpp:812 src/irc/server.cpp:835 src/irc/server.cpp:961
+#: src/irc/server.cpp:2346 src/irc/server.cpp:2417 src/irc/server.cpp:2590
+#: src/irc/server.cpp:2626 src/irc/server.cpp:2677 src/irc/server.cpp:2745
+#: src/irc/server.cpp:2764 src/irc/server.cpp:2780 src/irc/server.cpp:4273
+#: src/irc/server.cpp:4285 src/irc/server.cpp:4309 src/irc/server.cpp:4332
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Error"
 msgstr "Σφάλμα"
@@ -5796,8 +5796,8 @@ msgid "Current users on %1: %2."
 msgstr "Τρέχοντες χρήστες στο %1: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4089 src/irc/server.cpp:4091 src/irc/server.cpp:4117
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "Away"
 msgstr "Απουσιάζει"
@@ -6608,8 +6608,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "Τρέχουσα λίστα ειδοποιήσεων: %1."
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3159
-#: src/irc/server.cpp:3173
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3165
+#: src/irc/server.cpp:3179
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -6875,44 +6875,44 @@ msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
 msgstr "Ο χρήστης %1 (%2) αποχώρησε από αυτόν τον εξυπηρετητή (%3)."
 
-#: src/irc/server.cpp:264
+#: src/irc/server.cpp:265
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
 msgstr "Εκτέλεση προ της σύνδεσης εντολής κελύφους..."
 
-#: src/irc/server.cpp:412
+#: src/irc/server.cpp:413
 #, kde-format
 msgid "Pre-shell command executed successfully!"
 msgstr "Η εντολή προ της σύνδεσης εντολής εκτελέστηκε με επιτυχία!"
 
-#: src/irc/server.cpp:415 src/irc/server.cpp:427
+#: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
 msgstr "Υπήρξε πρόβλημα με την εκτέλεση της εντολής: "
 
-#: src/irc/server.cpp:416 src/irc/server.cpp:428
+#: src/irc/server.cpp:417 src/irc/server.cpp:429
 #, kde-format
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: src/irc/server.cpp:475
+#: src/irc/server.cpp:476
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
 msgstr "Αναζήτηση για εξυπηρετητή %1 (θύρα %2)..."
 
-#: src/irc/server.cpp:682
+#: src/irc/server.cpp:688
 #, kde-format
 msgid "Server found, connecting..."
 msgstr "Ο εξυπηρετητής βρέθηκε, γίνεται σύνδεση..."
 
-#: src/irc/server.cpp:717
+#: src/irc/server.cpp:723
 #, kde-format
 msgid "Negotiating capabilities with server..."
 msgstr "Διαπραγμάτευση δυνατοτήτων με τον εξυπηρετητή..."
 
-#: src/irc/server.cpp:760
+#: src/irc/server.cpp:766
 #, kde-format
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
@@ -6921,24 +6921,24 @@ msgstr ""
 "Ο εξυπηρετητής δεν υποστηρίζει το %1 ως SASL μηχανισμό ταυτοποίησης, η "
 "ταυτοποίηση SASL παραλείπεται."
 
-#: src/irc/server.cpp:781
+#: src/irc/server.cpp:787
 #, kde-format
 msgid "Requesting capabilities: %1"
 msgstr "Αίτημα χαρακτηριστικών: %1"
 
-#: src/irc/server.cpp:798
+#: src/irc/server.cpp:804
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr "Κλείσιμο διαπραγμάτευσης δυνατοτήτων."
 
-#: src/irc/server.cpp:806
+#: src/irc/server.cpp:812
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr ""
 "Η διαπραγμάτευση δυνατοτήτων απέτυχε: Φαίνεται ότι δεν υποστηρίζεται από τον "
 "εξυπηρετητή."
 
-#: src/irc/server.cpp:816
+#: src/irc/server.cpp:822
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
@@ -6946,18 +6946,18 @@ msgstr ""
 "Το χαρακτηριστικό SASL αναγνωρίστηκε από τον εξυπηρετητή, επιχειρείται SASL "
 "%1 ταυτοποίηση..."
 
-#: src/irc/server.cpp:829
+#: src/irc/server.cpp:835
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr ""
 "Το χαρακτηριστικό SASL απορρίφθηκε ή δεν υποστηρίζεται από τον εξυπηρετητή."
 
-#: src/irc/server.cpp:929 src/irc/server.cpp:1037
+#: src/irc/server.cpp:935 src/irc/server.cpp:1043
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "Σφάλμα σύνδεσης SSL"
 
-#: src/irc/server.cpp:930
+#: src/irc/server.cpp:936
 #, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
@@ -6967,12 +6967,12 @@ msgstr ""
 "απάντηση του χρήστη σε ένα SSL σφάλμα. Θα γίνει αυτόματη επανασύνδεση αν το "
 "σφάλμα αγνοηθεί."
 
-#: src/irc/server.cpp:950
+#: src/irc/server.cpp:956
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "Η σύνδεση με τον εξυπηρετητή %1 (θύρα %2) χάθηκε: %3."
 
-#: src/irc/server.cpp:999
+#: src/irc/server.cpp:1005
 #, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
@@ -6981,12 +6981,12 @@ msgstr ""
 "Το SSL πιστοποιητικό για τον εξυπηρετητή %1 (θύρα %2) δεν πέρασε τον έλεγχο "
 "ταυτοποίησης."
 
-#: src/irc/server.cpp:1003
+#: src/irc/server.cpp:1009
 #, kde-format
 msgid "SSL Connection Warning"
 msgstr "Προειδοποίηση σύνδεσης SSL"
 
-#: src/irc/server.cpp:1032
+#: src/irc/server.cpp:1038
 #, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
@@ -6997,17 +6997,17 @@ msgstr ""
 "εξυπηρετητής να μην υποστηρίζει SSL (χρησιμοποιείτε τη σωστή θύρα;) ή "
 "απορρίψατε το πιστοποιητικό. %3"
 
-#: src/irc/server.cpp:1140
+#: src/irc/server.cpp:1146
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr "Η καθυστερημένη σύνδεση εγκαταλείφθηκε."
 
-#: src/irc/server.cpp:1170
+#: src/irc/server.cpp:1176
 #, kde-format
 msgid "Disconnected from %1 (port %2)."
 msgstr "Αποσύνδεση από %1 (θύρα %2)."
 
-#: src/irc/server.cpp:1328
+#: src/irc/server.cpp:1334
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -7018,62 +7018,62 @@ msgstr ""
 "\"%2\".\n"
 "Παρακαλώ δώστε ένα νέο ψευδώνυμο ή πατήστε Ακύρωση για να αποσυνδεθείτε:"
 
-#: src/irc/server.cpp:1329
+#: src/irc/server.cpp:1335
 #, kde-format
 msgid "Nickname error"
 msgstr "Σφάλμα ψευδώνυμου"
 
-#: src/irc/server.cpp:2172
+#: src/irc/server.cpp:2178
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "Επιλογή αρχείου(ων) για αποστολή σε %1"
 
-#: src/irc/server.cpp:2341
+#: src/irc/server.cpp:2347
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "Ελήφθη μη έγκυρη αίτηση DCC SEND από %1."
 
-#: src/irc/server.cpp:2373
+#: src/irc/server.cpp:2379
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "Ο χρήστης %1 προσφέρεται να σάς αποστείλει \"%2\" (%3)..."
 
-#: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
-#: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
+#: src/irc/server.cpp:2382 src/irc/server.cpp:2512 src/irc/server.cpp:2524
+#: src/irc/server.cpp:2673 src/irc/server.cpp:2729 src/irc/server.cpp:2838
 #, kde-format
 msgid "unknown size"
 msgstr "άγνωστο μέγεθος"
 
-#: src/irc/server.cpp:2412
+#: src/irc/server.cpp:2418
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "Ελήφθη μη έγκυρη αίτηση DCC CHAT από %1."
 
-#: src/irc/server.cpp:2503
+#: src/irc/server.cpp:2509
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "Ζητείται από %1 να αποδεχθεί την αποστολή του \"%2\" (%3)..."
 
-#: src/irc/server.cpp:2515
+#: src/irc/server.cpp:2521
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "Ζητείται από %1 να αποδεχθεί την παθητική αποστολή του \"%2\" (%3)..."
 
-#: src/irc/server.cpp:2527
+#: src/irc/server.cpp:2533
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "Ζητείται από %1 να αποδεχθεί %2..."
 
-#: src/irc/server.cpp:2586
+#: src/irc/server.cpp:2592
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "Ελήφθη μη έγκυρο παθητικό μήνυμα αποδοχής DCC συνομιλίας από %1."
 
-#: src/irc/server.cpp:2622
+#: src/irc/server.cpp:2628
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
@@ -7081,7 +7081,7 @@ msgid ""
 msgstr ""
 "Ελήφθη μη έγκυρο παθητικό μήνυμα αποδοχής DCC αποστολής για το \"%1\" από %2."
 
-#: src/irc/server.cpp:2663
+#: src/irc/server.cpp:2669
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -7089,13 +7089,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "Συνέχεια λήψης του \"%1\" από %2 ξεκινώντας από το %3% του %4..."
 
-#: src/irc/server.cpp:2673
+#: src/irc/server.cpp:2679
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "Ελήφθη μη έγκυρο μήνυμα αποδοχής συνέχισης για το \"%1\" από %2."
 
-#: src/irc/server.cpp:2719
+#: src/irc/server.cpp:2725
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -7104,124 +7104,124 @@ msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr ""
 "Συνέχεια αποστολής του \"%1\" στο χρήστη %2 ξεκινώντας από το %3% του %4..."
 
-#: src/irc/server.cpp:2741
+#: src/irc/server.cpp:2747
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "Ελήφθη μη έγκυρη αίτηση συνέχισης λήψης για το αρχείο \"%1\" από %2."
 
-#: src/irc/server.cpp:2760
+#: src/irc/server.cpp:2766
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "Ελήφθη μη έγκυρη αίτηση απόρριψης για το \"%1\" από %2."
 
-#: src/irc/server.cpp:2776
+#: src/irc/server.cpp:2782
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "Ελήφθη μη έγκυρη αίτηση απόρριψης από %1."
 
-#: src/irc/server.cpp:2789
+#: src/irc/server.cpp:2795
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "Η λήψη του αρχείου \"%1\" από το χρήστη %2 ολοκληρώθηκε."
 
-#: src/irc/server.cpp:2794
+#: src/irc/server.cpp:2800
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "Η λήψη του αρχείου \"%1\" από το χρήστη %2 απέτυχε. Αιτία: %3."
 
-#: src/irc/server.cpp:2806
+#: src/irc/server.cpp:2812
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "Η λήψη του \"%1\" από %2 ολοκληρώθηκε."
 
-#: src/irc/server.cpp:2809
+#: src/irc/server.cpp:2815
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "Η αποστολή του αρχείου \"%1\" στο χρήστη %2 απέτυχε. Αιτία: %3."
 
-#: src/irc/server.cpp:2823
+#: src/irc/server.cpp:2829
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "Αποστολή του \"%1\" στο χρήστη %2..."
 
-#: src/irc/server.cpp:2830
+#: src/irc/server.cpp:2836
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "Λήψη του \"%1\" (%2) από το χρήστη %3..."
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
+#: src/irc/server.cpp:3165 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "Ο χρήστης %1 είναι σε σύνδεση (%2)."
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
+#: src/irc/server.cpp:3179 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "Ο χρήστης %1 αποσυνδέθηκε (%2)."
 
-#: src/irc/server.cpp:3836
+#: src/irc/server.cpp:3842
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "Σφάλμα: Αδυναμία εύρεσης του σεναρίου \"%1\"."
 
-#: src/irc/server.cpp:3841
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr ""
 "Σφάλμα: Αδυναμία εκτέλεσης του σεναρίου \"%1\". Ελέγξτε τα δικαιώματα του "
 "αρχείου."
 
-#: src/irc/server.cpp:4052
+#: src/irc/server.cpp:4058
 #, kde-format
 msgid "Gone away for now"
 msgstr "Τώρα απουσιάζει"
 
-#: src/irc/server.cpp:4083
+#: src/irc/server.cpp:4089
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "Αυτή τη στιγμή σημειώθηκε ότι απουσιάζετε (αιτία: %1)."
 
-#: src/irc/server.cpp:4085
+#: src/irc/server.cpp:4091
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "Τώρα σημειώθηκε ότι απουσιάζετε."
 
-#: src/irc/server.cpp:4111
+#: src/irc/server.cpp:4117
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "Σημειώθηκε ότι δεν απουσιάζετε πλέον."
 
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "Σημειώθηκε ότι δεν απουσιάζετε."
 
-#: src/irc/server.cpp:4267
+#: src/irc/server.cpp:4273
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "Αποτυχία έναρξης ανταλλαγής κλειδιού με %1."
 
-#: src/irc/server.cpp:4279
+#: src/irc/server.cpp:4285
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "Αδυναμία πραγματοποίησης ανταλλαγής κλειδιού με %1."
 
-#: src/irc/server.cpp:4303
+#: src/irc/server.cpp:4309
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr ""
 "Αποτυχία ανάλυσης του DH1080_INIT του %1. Η ανταλλαγή κλειδιού απέτυχε."
 
-#: src/irc/server.cpp:4309
+#: src/irc/server.cpp:4315
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
@@ -7230,12 +7230,12 @@ msgstr ""
 "Το κλειδί σας έχει οριστεί και τα μηνύματά σας τώρα θα κρυπτογραφηθούν, "
 "αποστέλλεται DH1080_FINISH στο %1."
 
-#: src/irc/server.cpp:4326
+#: src/irc/server.cpp:4332
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "Αδυναμία ολοκλήρωσης της ανταλλαγής κλειδιού με %1."
 
-#: src/irc/server.cpp:4338
+#: src/irc/server.cpp:4344
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -7244,7 +7244,7 @@ msgstr ""
 "Επιτυχής ανάλυση του DH1080_FINISH που εστάλη από %1. Το κλειδί σας έχει "
 "οριστεί και τα μηνύματά σας τώρα θα κρυπτογραφηθούν."
 
-#: src/irc/server.cpp:4342
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""

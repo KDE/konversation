@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-22 00:39+0000\n"
+"POT-Creation-Date: 2024-06-30 00:38+0000\n"
 "PO-Revision-Date: 2024-06-23 08:51+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -140,8 +140,8 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
-#: src/irc/server.cpp:3841
+#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
@@ -1448,10 +1448,10 @@ msgstr "חדר"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2372 src/irc/server.cpp:2502 src/irc/server.cpp:2514
-#: src/irc/server.cpp:2526 src/irc/server.cpp:2661 src/irc/server.cpp:2717
-#: src/irc/server.cpp:2788 src/irc/server.cpp:2793 src/irc/server.cpp:2805
-#: src/irc/server.cpp:2808 src/irc/server.cpp:2822 src/irc/server.cpp:2829
+#: src/irc/server.cpp:2378 src/irc/server.cpp:2508 src/irc/server.cpp:2520
+#: src/irc/server.cpp:2532 src/irc/server.cpp:2667 src/irc/server.cpp:2723
+#: src/irc/server.cpp:2794 src/irc/server.cpp:2799 src/irc/server.cpp:2811
+#: src/irc/server.cpp:2814 src/irc/server.cpp:2828 src/irc/server.cpp:2835
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1462,7 +1462,7 @@ msgstr "העברה ישירה (DCC)"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4309 src/irc/server.cpp:4338
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4315 src/irc/server.cpp:4344
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2520,10 +2520,10 @@ msgstr "&תדירות עדכון:"
 #: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1573
 #: src/irc/inputfilter.cpp:1690 src/irc/inputfilter.cpp:2482
 #: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
-#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:264 src/irc/server.cpp:412
-#: src/irc/server.cpp:475 src/irc/server.cpp:682 src/irc/server.cpp:717
-#: src/irc/server.cpp:781 src/irc/server.cpp:798 src/irc/server.cpp:816
-#: src/irc/server.cpp:1140 src/irc/server.cpp:1170
+#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:265 src/irc/server.cpp:413
+#: src/irc/server.cpp:476 src/irc/server.cpp:688 src/irc/server.cpp:723
+#: src/irc/server.cpp:787 src/irc/server.cpp:804 src/irc/server.cpp:822
+#: src/irc/server.cpp:1146 src/irc/server.cpp:1176
 #, kde-format
 msgid "Info"
 msgstr "Info"
@@ -2559,13 +2559,13 @@ msgstr[3] ""
 #: src/irc/inputfilter.cpp:2435 src/irc/inputfilter.cpp:2443
 #: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
-#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:760
-#: src/irc/server.cpp:806 src/irc/server.cpp:829 src/irc/server.cpp:955
-#: src/irc/server.cpp:2340 src/irc/server.cpp:2411 src/irc/server.cpp:2584
-#: src/irc/server.cpp:2620 src/irc/server.cpp:2671 src/irc/server.cpp:2739
-#: src/irc/server.cpp:2758 src/irc/server.cpp:2774 src/irc/server.cpp:4267
-#: src/irc/server.cpp:4279 src/irc/server.cpp:4303 src/irc/server.cpp:4326
-#: src/irc/server.cpp:4342
+#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:766
+#: src/irc/server.cpp:812 src/irc/server.cpp:835 src/irc/server.cpp:961
+#: src/irc/server.cpp:2346 src/irc/server.cpp:2417 src/irc/server.cpp:2590
+#: src/irc/server.cpp:2626 src/irc/server.cpp:2677 src/irc/server.cpp:2745
+#: src/irc/server.cpp:2764 src/irc/server.cpp:2780 src/irc/server.cpp:4273
+#: src/irc/server.cpp:4285 src/irc/server.cpp:4309 src/irc/server.cpp:4332
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Error"
 msgstr "שגיאה"
@@ -5588,8 +5588,8 @@ msgid "Current users on %1: %2."
 msgstr "Current users on %1: %2."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4089 src/irc/server.cpp:4091 src/irc/server.cpp:4117
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "Away"
 msgstr "מרוחק"
@@ -6381,8 +6381,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "רשימת ההודעות הנוכחית: %1"
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3159
-#: src/irc/server.cpp:3173
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3165
+#: src/irc/server.cpp:3179
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -6624,82 +6624,82 @@ msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
 msgstr "המשתמש %1 עזב את השרת הזה (%2)."
 
-#: src/irc/server.cpp:264
+#: src/irc/server.cpp:265
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
 msgstr ""
 
-#: src/irc/server.cpp:412
+#: src/irc/server.cpp:413
 #, kde-format
 msgid "Pre-shell command executed successfully!"
 msgstr "פקודת טרום המעטפת הופעלה בהצלחה!"
 
-#: src/irc/server.cpp:415 src/irc/server.cpp:427
+#: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
 msgstr ""
 
-#: src/irc/server.cpp:416 src/irc/server.cpp:428
+#: src/irc/server.cpp:417 src/irc/server.cpp:429
 #, kde-format
 msgid "Warning"
 msgstr "אזהרה"
 
-#: src/irc/server.cpp:475
+#: src/irc/server.cpp:476
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
 msgstr "איתור השרת %1 (פתחה %2)…"
 
-#: src/irc/server.cpp:682
+#: src/irc/server.cpp:688
 #, kde-format
 msgid "Server found, connecting..."
 msgstr "השרת נמצא, מתחבר..."
 
-#: src/irc/server.cpp:717
+#: src/irc/server.cpp:723
 #, kde-format
 msgid "Negotiating capabilities with server..."
 msgstr "משא ומתן על יכולות מול השרת…"
 
-#: src/irc/server.cpp:760
+#: src/irc/server.cpp:766
 #, kde-format
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
 
-#: src/irc/server.cpp:781
+#: src/irc/server.cpp:787
 #, kde-format
 msgid "Requesting capabilities: %1"
 msgstr "בקשת יכולות: %1"
 
-#: src/irc/server.cpp:798
+#: src/irc/server.cpp:804
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr "סוגר את ניהול היכולות"
 
-#: src/irc/server.cpp:806
+#: src/irc/server.cpp:812
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr "ניהול היכולות כשל: כנראה לא נתמך על ידי השרת."
 
-#: src/irc/server.cpp:816
+#: src/irc/server.cpp:822
 #, fuzzy, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr "יכולת SASL אושרה על ידי השרת, מנסה אימות SASL PLAIN..."
 
-#: src/irc/server.cpp:829
+#: src/irc/server.cpp:835
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr "יכולת SASL נדחתה או לא נתמכת על ידי השרת."
 
-#: src/irc/server.cpp:929 src/irc/server.cpp:1037
+#: src/irc/server.cpp:935 src/irc/server.cpp:1043
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "שגיאת חיבור SSL"
 
-#: src/irc/server.cpp:930
+#: src/irc/server.cpp:936
 #, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
@@ -6708,24 +6708,24 @@ msgstr ""
 "החיבור לשרת %1 (פתחה <numid>%2</numid>) אבדה בעת המתנה לתגובת המשתמש לשגיאת "
 "SSL. התעלמות מהשגיאה תיצור חיבור חדש אוטומטית."
 
-#: src/irc/server.cpp:950
+#: src/irc/server.cpp:956
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "החיבור לשרת %1 (פתחה %2) נקטע: %3."
 
-#: src/irc/server.cpp:999
+#: src/irc/server.cpp:1005
 #, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr "אישור ה־SSL של השרת %1 (פתחה %2) לא עבר את בדיקת האמינות."
 
-#: src/irc/server.cpp:1003
+#: src/irc/server.cpp:1009
 #, kde-format
 msgid "SSL Connection Warning"
 msgstr "הזהרת חיבור SSL"
 
-#: src/irc/server.cpp:1032
+#: src/irc/server.cpp:1038
 #, fuzzy, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
@@ -6735,17 +6735,17 @@ msgstr ""
 "אין אפשרות להתחבר אל %1 (יצאה <numid>%2</numid>) באמצעות הצפנת SSL. אולי "
 "השרת לא תומך ב־SSL (אולי בחרת את היציאה הלא נכונה?) או אתה דחית את האישור %3"
 
-#: src/irc/server.cpp:1140
+#: src/irc/server.cpp:1146
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr "חיבור מושהה בוטל."
 
-#: src/irc/server.cpp:1170
+#: src/irc/server.cpp:1176
 #, kde-format
 msgid "Disconnected from %1 (port %2)."
 msgstr "נותקת מ־%1 (פתחה %2)."
 
-#: src/irc/server.cpp:1328
+#: src/irc/server.cpp:1334
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -6755,69 +6755,69 @@ msgstr ""
 "אף אחד מהכינויים בזהות \"%1\" מתקבלים על ידי החיבור \"%2\".\n"
 "אנא הכניס אחד חדש או לחץ בטל להתנתק:"
 
-#: src/irc/server.cpp:1329
+#: src/irc/server.cpp:1335
 #, kde-format
 msgid "Nickname error"
 msgstr "שגיאת כינוי"
 
-#: src/irc/server.cpp:2172
+#: src/irc/server.cpp:2178
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "בחר קובץ או קבצים לשליחה אל %1"
 
-#: src/irc/server.cpp:2341
+#: src/irc/server.cpp:2347
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "התקבלה בקשת DCC SEND לא תקנית מאת %1."
 
-#: src/irc/server.cpp:2373
+#: src/irc/server.cpp:2379
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "המשתמש %1 מבקש לשלוח לך את \"%2\" (%3)..."
 
-#: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
-#: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
+#: src/irc/server.cpp:2382 src/irc/server.cpp:2512 src/irc/server.cpp:2524
+#: src/irc/server.cpp:2673 src/irc/server.cpp:2729 src/irc/server.cpp:2838
 #, kde-format
 msgid "unknown size"
 msgstr "גודל לא יודע"
 
-#: src/irc/server.cpp:2412
+#: src/irc/server.cpp:2418
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "התקבלה בקשת DCC CHAT לא תקנית מאת %1."
 
-#: src/irc/server.cpp:2503
+#: src/irc/server.cpp:2509
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "מבקש מ־%1 לקבל את הקובץ \"%2\" לשליחה (%3)..."
 
-#: src/irc/server.cpp:2515
+#: src/irc/server.cpp:2521
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "מבקש מ־%1 לקבל באופן פאסיבי את הקובץ \"%2\" לשליחה (%3)..."
 
-#: src/irc/server.cpp:2527
+#: src/irc/server.cpp:2533
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "מבקש מ־%1 לקבל את %2..."
 
-#: src/irc/server.cpp:2586
+#: src/irc/server.cpp:2592
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "התקבלה הודעת אישור על DCC פאסיבי לא תקנית מאת %1."
 
-#: src/irc/server.cpp:2622
+#: src/irc/server.cpp:2628
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
 msgstr "התקבלה הודעת אישור על DCC פאסיבי לא תקנית עבור \"%1\" מאת %2."
 
-#: src/irc/server.cpp:2663
+#: src/irc/server.cpp:2669
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -6825,13 +6825,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "ממשיך את ההורדה של \"%1\" מ־%2 ממשיך ב־%3 מאת %4..."
 
-#: src/irc/server.cpp:2673
+#: src/irc/server.cpp:2679
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "התקבלה בקשת המשך לא תקינה עבור \"%1\" מאת %2."
 
-#: src/irc/server.cpp:2719
+#: src/irc/server.cpp:2725
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -6839,133 +6839,133 @@ msgctxt ""
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr "ממשיך את השליחה של \"%1\" אל %2 מתחיל ב־%3% מתוך %4..."
 
-#: src/irc/server.cpp:2741
+#: src/irc/server.cpp:2747
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "התקבלה בקשת המשך לא תקינה עבור \"%1\" מאת %2."
 
-#: src/irc/server.cpp:2760
+#: src/irc/server.cpp:2766
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "התקבלה בקשת דחייה לא תקינה עבור \"%1\" מאת %2."
 
-#: src/irc/server.cpp:2776
+#: src/irc/server.cpp:2782
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "התקבלה בקשת דחייה לא תקינה מאת %1."
 
-#: src/irc/server.cpp:2789
+#: src/irc/server.cpp:2795
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "ההורדה של \"%1\" מאת %2 הסתיימה."
 
-#: src/irc/server.cpp:2794
+#: src/irc/server.cpp:2800
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "ההורדה של \"%1\" מאת %2 נכשלה. סיבה: %3."
 
-#: src/irc/server.cpp:2806
+#: src/irc/server.cpp:2812
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "השליחה של \"%1\" אל %2 הסתיימה."
 
-#: src/irc/server.cpp:2809
+#: src/irc/server.cpp:2815
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "השליחה של \"%1\" אל %2 נכשלה. סיבה: %3."
 
-#: src/irc/server.cpp:2823
+#: src/irc/server.cpp:2829
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "שולח את \"%1\" אל %2..."
 
-#: src/irc/server.cpp:2830
+#: src/irc/server.cpp:2836
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "מוריד את \"%1\" (%2) מאת %3..."
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
+#: src/irc/server.cpp:3165 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "המשתמש %1 מחובר (%2)."
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
+#: src/irc/server.cpp:3179 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "המשתמש %1 כבר לא מחובר (%2)."
 
-#: src/irc/server.cpp:3836
+#: src/irc/server.cpp:3842
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "שגיאה: אין אפשרות למצוא את התסריט \"%1\"."
 
-#: src/irc/server.cpp:3841
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr "שגיאה: אין אפשרות להפעיל את התסריט \"%1\". אנא בדוק הרשאות."
 
-#: src/irc/server.cpp:4052
+#: src/irc/server.cpp:4058
 #, kde-format
 msgid "Gone away for now"
 msgstr "הלכתי לרגע קט"
 
-#: src/irc/server.cpp:4083
+#: src/irc/server.cpp:4089
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "אתה כעת מסומן בתור מרוחק (סיבה: %1)."
 
-#: src/irc/server.cpp:4085
+#: src/irc/server.cpp:4091
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "אתה כעת מסומן בתור מרוחק."
 
-#: src/irc/server.cpp:4111
+#: src/irc/server.cpp:4117
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "אתה כבר לא מסומן כמרוחק."
 
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "אתה לא מסומן בתור מרוחק."
 
-#: src/irc/server.cpp:4267
+#: src/irc/server.cpp:4273
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "העברת מפתחות ראשונית עם %1 כשלה."
 
-#: src/irc/server.cpp:4279
+#: src/irc/server.cpp:4285
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "אין אפשרות לבצע החלפת מפתחות ראשית עם %1."
 
-#: src/irc/server.cpp:4303
+#: src/irc/server.cpp:4309
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr "אין אפשרות לפענח את DH1080_INIT של %1. החלפת מפתחות כשלה."
 
-#: src/irc/server.cpp:4309
+#: src/irc/server.cpp:4315
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
 "DH1080_FINISH to %1."
 msgstr "המפתח נקבע וכל ההודעות שלך יוצפנו, שולח DH1080_FINISH אל %1."
 
-#: src/irc/server.cpp:4326
+#: src/irc/server.cpp:4332
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "אין אפשרות לסיים את החלפת המפתחות עם %1."
 
-#: src/irc/server.cpp:4338
+#: src/irc/server.cpp:4344
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -6974,7 +6974,7 @@ msgstr ""
 "פוענח בהצלחה חלק ה־DH1080_FINISH שנשלח על ידי %1. המפתח שלך נקבע וכל ההודעות "
 "שלך יוצפנו מעכשיו."
 
-#: src/irc/server.cpp:4342
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr "נכשלה הפענוח של DH1080_FINISH הנשלח על ידי %1. החלפת מפתחות כשלה."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-22 00:39+0000\n"
+"POT-Creation-Date: 2024-06-30 00:38+0000\n"
 "PO-Revision-Date: 2021-06-19 20:37+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -148,8 +148,8 @@ msgid ""
 "is found."
 msgstr ""
 
-#: src/application.cpp:383 src/irc/server.cpp:1803 src/irc/server.cpp:3836
-#: src/irc/server.cpp:3841
+#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"
 msgstr ""
@@ -1463,10 +1463,10 @@ msgstr "அலைவரிசை "
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2372 src/irc/server.cpp:2502 src/irc/server.cpp:2514
-#: src/irc/server.cpp:2526 src/irc/server.cpp:2661 src/irc/server.cpp:2717
-#: src/irc/server.cpp:2788 src/irc/server.cpp:2793 src/irc/server.cpp:2805
-#: src/irc/server.cpp:2808 src/irc/server.cpp:2822 src/irc/server.cpp:2829
+#: src/irc/server.cpp:2378 src/irc/server.cpp:2508 src/irc/server.cpp:2520
+#: src/irc/server.cpp:2532 src/irc/server.cpp:2667 src/irc/server.cpp:2723
+#: src/irc/server.cpp:2794 src/irc/server.cpp:2799 src/irc/server.cpp:2811
+#: src/irc/server.cpp:2814 src/irc/server.cpp:2828 src/irc/server.cpp:2835
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1477,7 +1477,7 @@ msgstr "DCC"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4309 src/irc/server.cpp:4338
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4315 src/irc/server.cpp:4344
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2542,10 +2542,10 @@ msgstr "இடைவெளியை புதுப்பி:"
 #: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1573
 #: src/irc/inputfilter.cpp:1690 src/irc/inputfilter.cpp:2482
 #: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
-#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:264 src/irc/server.cpp:412
-#: src/irc/server.cpp:475 src/irc/server.cpp:682 src/irc/server.cpp:717
-#: src/irc/server.cpp:781 src/irc/server.cpp:798 src/irc/server.cpp:816
-#: src/irc/server.cpp:1140 src/irc/server.cpp:1170
+#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:265 src/irc/server.cpp:413
+#: src/irc/server.cpp:476 src/irc/server.cpp:688 src/irc/server.cpp:723
+#: src/irc/server.cpp:787 src/irc/server.cpp:804 src/irc/server.cpp:822
+#: src/irc/server.cpp:1146 src/irc/server.cpp:1176
 #, kde-format
 msgid "Info"
 msgstr "தகவல்"
@@ -2577,13 +2577,13 @@ msgstr[1] "port %2 ல் உள்ள %1க்கு DCC அரட்டை இ
 #: src/irc/inputfilter.cpp:2435 src/irc/inputfilter.cpp:2443
 #: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
-#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:760
-#: src/irc/server.cpp:806 src/irc/server.cpp:829 src/irc/server.cpp:955
-#: src/irc/server.cpp:2340 src/irc/server.cpp:2411 src/irc/server.cpp:2584
-#: src/irc/server.cpp:2620 src/irc/server.cpp:2671 src/irc/server.cpp:2739
-#: src/irc/server.cpp:2758 src/irc/server.cpp:2774 src/irc/server.cpp:4267
-#: src/irc/server.cpp:4279 src/irc/server.cpp:4303 src/irc/server.cpp:4326
-#: src/irc/server.cpp:4342
+#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:766
+#: src/irc/server.cpp:812 src/irc/server.cpp:835 src/irc/server.cpp:961
+#: src/irc/server.cpp:2346 src/irc/server.cpp:2417 src/irc/server.cpp:2590
+#: src/irc/server.cpp:2626 src/irc/server.cpp:2677 src/irc/server.cpp:2745
+#: src/irc/server.cpp:2764 src/irc/server.cpp:2780 src/irc/server.cpp:4273
+#: src/irc/server.cpp:4285 src/irc/server.cpp:4309 src/irc/server.cpp:4332
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Error"
 msgstr ""
@@ -5629,8 +5629,8 @@ msgid "Current users on %1: %2."
 msgstr "%1 இல் தற்போது உபயோகிப்பவர்கள்: %2. "
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4083 src/irc/server.cpp:4085 src/irc/server.cpp:4111
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4089 src/irc/server.cpp:4091 src/irc/server.cpp:4117
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "Away"
 msgstr "தள்ளி"
@@ -6427,8 +6427,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "தற்போதுள்ள அறிவிப்புப் பட்டியல்:%1"
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3159
-#: src/irc/server.cpp:3173
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3165
+#: src/irc/server.cpp:3179
 #, fuzzy, kde-format
 #| msgid "Notify"
 msgctxt "Message type"
@@ -6672,109 +6672,109 @@ msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
 msgstr " (%2) இந்த சேவையகத்தை விட்டு வெளியேறிவிட்டார்கள் %1"
 
-#: src/irc/server.cpp:264
+#: src/irc/server.cpp:265
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
 msgstr ""
 
-#: src/irc/server.cpp:412
+#: src/irc/server.cpp:413
 #, kde-format
 msgid "Pre-shell command executed successfully!"
 msgstr ""
 
-#: src/irc/server.cpp:415 src/irc/server.cpp:427
+#: src/irc/server.cpp:416 src/irc/server.cpp:428
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
 msgstr ""
 
-#: src/irc/server.cpp:416 src/irc/server.cpp:428
+#: src/irc/server.cpp:417 src/irc/server.cpp:429
 #, fuzzy, kde-format
 #| msgid "Warning Dialogs"
 msgid "Warning"
 msgstr "எச்சரிக்கை உரையாடல்கள்"
 
-#: src/irc/server.cpp:475
+#: src/irc/server.cpp:476
 #, fuzzy, kde-format
 #| msgid "Looking for server %1:%2..."
 msgid "Looking for server %1 (port %2)..."
 msgstr " %1 சேவையகத்தை தேடிக்கொண்டிருக்கிறது: %2..."
 
-#: src/irc/server.cpp:682
+#: src/irc/server.cpp:688
 #, kde-format
 msgid "Server found, connecting..."
 msgstr "சேவையகம் கிடைத்து விட்டது, தொடர்பு கொள்ளப்படுகிறது..."
 
-#: src/irc/server.cpp:717
+#: src/irc/server.cpp:723
 #, kde-format
 msgid "Negotiating capabilities with server..."
 msgstr ""
 
-#: src/irc/server.cpp:760
+#: src/irc/server.cpp:766
 #, kde-format
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
 msgstr ""
 
-#: src/irc/server.cpp:781
+#: src/irc/server.cpp:787
 #, kde-format
 msgid "Requesting capabilities: %1"
 msgstr ""
 
-#: src/irc/server.cpp:798
+#: src/irc/server.cpp:804
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr ""
 
-#: src/irc/server.cpp:806
+#: src/irc/server.cpp:812
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr ""
 
-#: src/irc/server.cpp:816
+#: src/irc/server.cpp:822
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr ""
 
-#: src/irc/server.cpp:829
+#: src/irc/server.cpp:835
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr ""
 
-#: src/irc/server.cpp:929 src/irc/server.cpp:1037
+#: src/irc/server.cpp:935 src/irc/server.cpp:1043
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "SSL இணைப்பு பிழை"
 
-#: src/irc/server.cpp:930
+#: src/irc/server.cpp:936
 #, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
 
-#: src/irc/server.cpp:950
+#: src/irc/server.cpp:956
 #, fuzzy, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "சேவகன் %1 உடன் இணைக்க முடியவில்லை. %2"
 
-#: src/irc/server.cpp:999
+#: src/irc/server.cpp:1005
 #, fuzzy, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr "சேவகன் %1 உடன் இணைக்க முடியவில்லை. %2"
 
-#: src/irc/server.cpp:1003
+#: src/irc/server.cpp:1009
 #, fuzzy, kde-format
 #| msgid "SSL Connection Error"
 msgid "SSL Connection Warning"
 msgstr "SSL இணைப்பு பிழை"
 
-#: src/irc/server.cpp:1032
+#: src/irc/server.cpp:1038
 #, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
@@ -6782,17 +6782,17 @@ msgid ""
 "certificate. %3"
 msgstr ""
 
-#: src/irc/server.cpp:1140
+#: src/irc/server.cpp:1146
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr ""
 
-#: src/irc/server.cpp:1170
+#: src/irc/server.cpp:1176
 #, fuzzy, kde-format
 msgid "Disconnected from %1 (port %2)."
 msgstr "சேவகனில் இருந்து துண்டி"
 
-#: src/irc/server.cpp:1328
+#: src/irc/server.cpp:1334
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -6800,69 +6800,69 @@ msgid ""
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
 
-#: src/irc/server.cpp:1329
+#: src/irc/server.cpp:1335
 #, fuzzy, kde-format
 msgid "Nickname error"
 msgstr "புனை பெயர்"
 
-#: src/irc/server.cpp:2172
+#: src/irc/server.cpp:2178
 #, fuzzy, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "%1 க்கு அனுப்ப வேண்டிய கோப்பினை தேர்ந்தெடு"
 
-#: src/irc/server.cpp:2341
+#: src/irc/server.cpp:2347
 #, fuzzy, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2373
+#: src/irc/server.cpp:2379
 #, fuzzy, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "%1, %2 (%3)  உடனிகழ்"
 
-#: src/irc/server.cpp:2376 src/irc/server.cpp:2506 src/irc/server.cpp:2518
-#: src/irc/server.cpp:2667 src/irc/server.cpp:2723 src/irc/server.cpp:2832
+#: src/irc/server.cpp:2382 src/irc/server.cpp:2512 src/irc/server.cpp:2524
+#: src/irc/server.cpp:2673 src/irc/server.cpp:2729 src/irc/server.cpp:2838
 #, fuzzy, kde-format
 msgid "unknown size"
 msgstr "தெரியாத"
 
-#: src/irc/server.cpp:2412
+#: src/irc/server.cpp:2418
 #, fuzzy, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2503
+#: src/irc/server.cpp:2509
 #, fuzzy, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "%1, %2 (%3)  உடனிகழ்"
 
-#: src/irc/server.cpp:2515
+#: src/irc/server.cpp:2521
 #, fuzzy, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "%1, %2 (%3)  உடனிகழ்"
 
-#: src/irc/server.cpp:2527
+#: src/irc/server.cpp:2533
 #, fuzzy, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "%1, %2 (%3)  உடனிகழ்"
 
-#: src/irc/server.cpp:2586
+#: src/irc/server.cpp:2592
 #, fuzzy, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2622
+#: src/irc/server.cpp:2628
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2663
+#: src/irc/server.cpp:2669
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -6870,13 +6870,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr ""
 
-#: src/irc/server.cpp:2673
+#: src/irc/server.cpp:2679
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2719
+#: src/irc/server.cpp:2725
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -6884,142 +6884,142 @@ msgctxt ""
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr ""
 
-#: src/irc/server.cpp:2741
+#: src/irc/server.cpp:2747
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2760
+#: src/irc/server.cpp:2766
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2776
+#: src/irc/server.cpp:2782
 #, fuzzy, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "%1 இலிருந்து விருப்பத்தின் பெயரில் பதிப்பை பெற்றுக் கொண்டோம்."
 
-#: src/irc/server.cpp:2789
+#: src/irc/server.cpp:2795
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "DCC  கோப்பு இறக்கு\"%1\"  முடிவுற்றது."
 
-#: src/irc/server.cpp:2794
+#: src/irc/server.cpp:2800
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "DCC  கோப்பு இறக்கு\"%1\"  முடிவுற்றது. காரணம்: %2"
 
-#: src/irc/server.cpp:2806
+#: src/irc/server.cpp:2812
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr ""
 
-#: src/irc/server.cpp:2809
+#: src/irc/server.cpp:2815
 #, fuzzy, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "DCC கோப்பை ஏற்ற இயலவில்லை\"%1\". காரணம்: %2"
 
-#: src/irc/server.cpp:2823
+#: src/irc/server.cpp:2829
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr ""
 
-#: src/irc/server.cpp:2830
+#: src/irc/server.cpp:2836
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr ""
 
-#: src/irc/server.cpp:3159 src/notificationhandler.cpp:348
+#: src/irc/server.cpp:3165 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1தொடர்பில் உள்ளது  (%2)."
 
-#: src/irc/server.cpp:3173 src/notificationhandler.cpp:363
+#: src/irc/server.cpp:3179 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 தொடர்பற்று போனது . (%2)"
 
-#: src/irc/server.cpp:3836
+#: src/irc/server.cpp:3842
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "பிழை:எழுத்து வகையை கண்டுபிடிக்க முடியவில்லை\"%1\"."
 
-#: src/irc/server.cpp:3841
+#: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr "பிழை:எழுத்து வகையை இயக்க முடியவில்லை\"%1\".கோப்பிற்கு அனுமதியை சரிபார்க்கவும்."
 
-#: src/irc/server.cpp:4052
+#: src/irc/server.cpp:4058
 #, kde-format
 msgid "Gone away for now"
 msgstr ""
 
-#: src/irc/server.cpp:4083
+#: src/irc/server.cpp:4089
 #, fuzzy, kde-format
 #| msgid "You are now marked as being away."
 msgid "You are now marked as being away (reason: %1)."
 msgstr "தற்போது நீங்கள் தள்ளியுள்ளீர்கள் என்று குறிக்கப்பட்டுள்ளது."
 
-#: src/irc/server.cpp:4085
+#: src/irc/server.cpp:4091
 #, fuzzy, kde-format
 #| msgid "You are not marked as being away."
 msgid "You are now marked as being away."
 msgstr "தற்போது நீங்கள் தள்ளியுள்ளீர்கள் என்று குறிக்கவில்லை."
 
-#: src/irc/server.cpp:4111
+#: src/irc/server.cpp:4117
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "இதற்கு மேலும் நீங்க்ள் தள்ளி உள்ளீர்கள் என்று குறிப்பிடவில்லை."
 
-#: src/irc/server.cpp:4121
+#: src/irc/server.cpp:4127
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "தற்போது நீங்கள் தள்ளியுள்ளீர்கள் என்று குறிக்கவில்லை."
 
-#: src/irc/server.cpp:4267
+#: src/irc/server.cpp:4273
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr ""
 
-#: src/irc/server.cpp:4279
+#: src/irc/server.cpp:4285
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr ""
 
-#: src/irc/server.cpp:4303
+#: src/irc/server.cpp:4309
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr ""
 
-#: src/irc/server.cpp:4309
+#: src/irc/server.cpp:4315
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
 "DH1080_FINISH to %1."
 msgstr ""
 
-#: src/irc/server.cpp:4326
+#: src/irc/server.cpp:4332
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr ""
 
-#: src/irc/server.cpp:4338
+#: src/irc/server.cpp:4344
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
 "messages will now be encrypted."
 msgstr ""
 
-#: src/irc/server.cpp:4342
+#: src/irc/server.cpp:4348
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
