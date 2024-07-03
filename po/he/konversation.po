@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-06-23 08:51+0300\n"
+"PO-Revision-Date: 2024-07-02 22:38+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -3665,12 +3665,12 @@ msgstr "72"
 #: src/dcc/whiteboardtoolbar.cpp:33
 #, kde-format
 msgid "Clear Image"
-msgstr "נקה תמונה "
+msgstr "פינוי תמונה"
 
 #: src/dcc/whiteboardtoolbar.cpp:35 src/viewer/logfilereader.cpp:38
 #, kde-format
 msgid "Save As..."
-msgstr "שמור בתור..."
+msgstr "שמירה בתור…"
 
 #: src/dcc/whiteboardtoolbar.cpp:38
 #, kde-format
@@ -3680,22 +3680,22 @@ msgstr "ציור ביד חופשית"
 #: src/dcc/whiteboardtoolbar.cpp:44
 #, kde-format
 msgid "Draw a straight line"
-msgstr "צייר קו ישר"
+msgstr "ציור קו ישר"
 
 #: src/dcc/whiteboardtoolbar.cpp:49
 #, kde-format
 msgid "Draw a rectangle"
-msgstr "צייר מלבן"
+msgstr "ציור מלבן"
 
 #: src/dcc/whiteboardtoolbar.cpp:55
 #, kde-format
 msgid "Draw an ellipse"
-msgstr "צייר אליפסה"
+msgstr "ציור אליפסה"
 
 #: src/dcc/whiteboardtoolbar.cpp:61
 #, kde-format
 msgid "Draw text"
-msgstr "צייר טקסט"
+msgstr "ציור טקסט"
 
 #: src/dcc/whiteboardtoolbar.cpp:67
 #, kde-format
@@ -3711,17 +3711,17 @@ msgstr "מוחק"
 #: src/dcc/whiteboardtoolbar.cpp:77
 #, kde-format
 msgid "Fill a contiguous area with the foreground color"
-msgstr "מלא שטח רצי, בצבע החזית"
+msgstr "מילוי שטח רציף, בצבע החזית"
 
 #: src/dcc/whiteboardtoolbar.cpp:82
 #, kde-format
 msgid "Draw an arrow"
-msgstr "צייר חץ"
+msgstr "ציור חץ"
 
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr "בחר צבע מהתמונה"
+msgstr "בחירת צבע מהתמונה"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -3795,7 +3795,7 @@ msgstr "עריכת מידע על הזהות"
 #: src/viewer/editnotifydialog.cpp:79
 #, kde-format
 msgid "Discards all changes made"
-msgstr "שכח מכל השינויים שנעשו"
+msgstr "התעלמות מכל השינויים שנערכו"
 
 #: src/identitydialog.cpp:260
 #, kde-format
