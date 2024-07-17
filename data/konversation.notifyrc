@@ -1260,6 +1260,7 @@ Action=None
 [Event/notify]
 Name=Nick online
 Name[ar]=شخص متّصل
+Name[bg]=Псевдоним на линия
 Name[bs]=Nadimak na mreži
 Name[ca]=Sobrenom en línia
 Name[ca@valencia]=Sobrenom en línia

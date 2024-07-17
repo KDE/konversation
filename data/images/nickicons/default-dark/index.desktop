@@ -2,6 +2,7 @@
 Type=Theme
 Name=Default Theme (Dark variant)
 Name[ar]=السّمة المبدئية (تنويعة داكنة)
+Name[bg]=Стандартна тема(тъмен вариант)
 Name[ca]=Tema predeterminat (variant fosca)
 Name[ca@valencia]=Tema predeterminat (variant fosca)
 Name[cs]=Výchozí motiv (tmavá varianta)
@@ -39,6 +40,7 @@ Name[zh_CN]=默认主题 (深色版本)
 Name[zh_TW]=預設主題（暗色版本）
 Comment="Breeze" by Uri Herrera
 Comment[ar]="نسيم" لِـ Uri Herrera
+Comment[bg]="Breeze" by Uri Herrera
 Comment[ca]=«Brisa» per en Uri Herrera
 Comment[ca@valencia]=«Brisa» per en Uri Herrera
 Comment[cs]="Breeze" od Uri Herrera
