@@ -1024,7 +1024,7 @@ here, all the <guilabel
 > un servidor, <guibutton
 >Edita</guibutton
 > un servidor ressaltat o <guibutton
->Elimina</guibutton
+>Suprimeix</guibutton
 > un servidor ressaltat. També podeu ajustar l'ordre de la llista de servidors i, per tant, l'ordre dels intents de connexió.</para
 ></callout>
 <callout arearefs="pt-addnetwork-7"
@@ -3107,7 +3107,7 @@ part of the listing.
 
 <callout arearefs="pt-urlcatcher-4"
 ><para
->Feu clic aquí per a eliminar l'&URL; seleccionat de la llista.</para
+>Feu clic aquí per a suprimir l'&URL; seleccionat de la llista.</para
 ></callout>
 
 <callout arearefs="pt-urlcatcher-5"
