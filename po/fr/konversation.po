@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-05-02 16:29+0200\n"
+"PO-Revision-Date: 2024-09-01 17:06+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1248,7 +1248,7 @@ msgstr "Barre des onglets :"
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
 msgstr ""
-"Afficher le message « MOTD » (« Message Of The Day - Le Message du Jour ») "
+"Afficher le message « MOTD » (« Message Of The Day - Le Message Du Jour ») "
 "dans une police à chasse fixe"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
@@ -5694,7 +5694,7 @@ msgstr "Ce canal a été crée le %1."
 #: src/irc/inputfilter.cpp:2184
 #, kde-format
 msgid "Whois"
-msgstr "Whois"
+msgstr "whois"
 
 #: src/irc/inputfilter.cpp:1389
 #, kde-format
@@ -6309,7 +6309,7 @@ msgstr ""
 #: src/irc/nicksonline.cpp:39 src/viewer/irccontextmenus.cpp:431
 #, kde-format
 msgid "&Whois"
-msgstr "&Whois"
+msgstr "&whois"
 
 #: src/irc/nicksonline.cpp:40
 #, kde-format
@@ -6760,8 +6760,8 @@ msgid ""
 "Default Encryption Type, with the default for that setting being Electronic "
 "Codebook (ECB)."
 msgstr ""
-"Utilisation : %1setkey <pseudo|canal> <clé> règle la clé de chiffrement pour "
-"le pseudo ou le canal. %1setkey <clé> dans un onglet de canal ou de "
+"Utilisation : %1 setkey <pseudo|canal> <clé> règle la clé de chiffrement "
+"pour le pseudo ou le canal. %1setkey <clé> dans un onglet de canal ou de "
 "conversation règle la clé pour celui-ci. Le champ de clé reconnaît les "
 "préfixes « cbc: » et « ecb: » pour régler le mode de fonctionnement du bloc "
 "de chiffrement à soit « Cypher-Bloc Changing », soit à « Electronic "
