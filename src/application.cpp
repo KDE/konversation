@@ -54,6 +54,7 @@
 #include <QDesktopServices>
 #include <QCommandLineParser>
 #include <QNetworkInformation>
+#include <QCollator>
 
 using namespace Konversation;
 
@@ -398,13 +399,23 @@ void Application::readOptions()
     }
 
     // Identity list
-    const QStringList identityList=KSharedConfig::openConfig()->groupList().filter(
-                                            QRegularExpression(QStringLiteral("Identity [0-9]+")));
+    auto identKeys = QRegularExpression(QStringLiteral("Identity [0-9]+"));
+    // QList::filter(QRegularExpression) appears to return the matched
+    // keys in random order. Additionally, the list is saved in
+    // lexicographic order causing further shuffling.
+    QStringList identityList = KSharedConfig::openConfig()->groupList().filter(identKeys);
+
     if (!identityList.isEmpty())
     {
+        // Identity group names aren't localized, but we want to avoid
+        // the "C" locale. en_US is hopefully always available.
+        QCollator coll(QLocale(QStringLiteral("en_US")));
+        coll.setNumericMode(1);
+        std::sort(identityList.begin(), identityList.end(), coll);
+
         Preferences::clearIdentityList();
 
-        for (const QString& identityGroup : identityList) {
+        for (const QString& identityGroup : std::as_const(identityList)) {
             IdentityPtr newIdentity(new Identity());
             KConfigGroup cgIdentity(KSharedConfig::openConfig()->group(identityGroup));
 
