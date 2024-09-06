@@ -85,12 +85,6 @@ class ConnectionManager : public QObject
     private:
         void enlistConnection(int connectionId, Server* server);
 
-        void decodeIrcUrl(const QString& url, ConnectionSettings& settings);
-
-        void decodeAddress(const QString& address,
-                           ConnectionSettings& settings,
-                           bool checkIfServerGroup = true);
-
         bool reuseExistingConnection(ConnectionSettings& settings, bool interactive);
         bool validateIdentity(IdentityPtr identity, bool interactive = true);
 

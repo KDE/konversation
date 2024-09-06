@@ -17,6 +17,12 @@ class ConnectionSettings
 {
     public:
         explicit ConnectionSettings();
+        explicit ConnectionSettings(const QString& target,
+                                    const QString& port = QString(),
+                                    const QString& password = QString(),
+                                    const QString& nick = QString(),
+                                    const QString& channel = QString(),
+                                    bool useSSL = false);
 
         bool isValid() const;
 
@@ -43,6 +49,10 @@ class ConnectionSettings
 
 
     private:
+        void decodeIrcUrl(const QString& url);
+
+        void decodeAddress(const QString& address, bool checkIfServerGroup = true);
+
         Konversation::ServerSettings m_server;
         Konversation::ServerGroupSettingsPtr m_serverGroup;
 
