@@ -1,4 +1,6 @@
 find_package(Qt6Test ${QT_MIN_VERSION} CONFIG REQUIRED)
+find_package(Qt6Core5Compat ${QT_MIN_VERSION} CONFIG REQUIRED)
+
 
 include(ECMAddTests)
 
@@ -10,3 +12,5 @@ ecm_add_test(
     LINK_LIBRARIES KF6::I18n Qt::Test
 )
 target_include_directories(testcommon PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+add_subdirectory(testircurl)
