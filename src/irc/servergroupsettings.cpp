@@ -6,8 +6,7 @@
 */
 
 #include "servergroupsettings.h"
-#include "application.h"
-
+#include "preferences.h"
 
 namespace Konversation
 {
