@@ -7,6 +7,7 @@
 #include "quickconnectdialog.h"
 #include "application.h"
 
+#include <QLineEdit>
 #include <KLineEdit>
 #include <KPasswordLineEdit>
 #include <KAuthorized>
@@ -17,6 +18,7 @@
 #include <KGuiItem>
 #include <QVBoxLayout>
 
+#include "konversation_log.h"
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 :QDialog(parent)
@@ -45,6 +47,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QString hostNameWT = i18n("Enter the host of the network here.");
     hostNameLabel->setWhatsThis(hostNameWT);
     hostNameInput = new KLineEdit(page);
+    hostNameInput->setValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral(".+")), this));
     hostNameInput->setWhatsThis(hostNameWT);
     hostNameLabel->setBuddy(hostNameInput);
     hostNameLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -52,7 +55,9 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     auto* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
     portLabel->setWhatsThis(portWT);
-    portInput = new KLineEdit(QStringLiteral("6667"), page );
+    portInput = new QLineEdit(QString(), page );
+    portInput->setPlaceholderText(QStringLiteral("6667"));
+    portInput->setValidator(new QIntValidator(1, 65535, this));
     portInput->setWhatsThis(portWT);
     portLabel->setBuddy(portInput);
     portLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -61,6 +66,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QString nickWT = i18n("The nick you want to use.");
     nickLabel->setWhatsThis(nickWT);
     nickInput = new KLineEdit(Preferences::identityById(0)->getNickname(0), page);
+    nickInput->setValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral(".+")), this));
     nickInput->setWhatsThis(nickWT);
     nickLabel->setBuddy(nickInput);
     nickLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -95,6 +101,9 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     KGuiItem::assign(mOkButton, KGuiItem(i18n("C&onnect"),QStringLiteral("network-connect"),i18n("Connect to the server")));
 
     connect(hostNameInput, &KLineEdit::textChanged, this, &QuickConnectDialog::slotServerNameChanged);
+    connect(portInput, &QLineEdit::textChanged, this, &QuickConnectDialog::slotServerNameChanged);
+    connect(nickInput, &KLineEdit::textChanged, this, &QuickConnectDialog::slotServerNameChanged);
+    connect(sslCheckBox, &QCheckBox::stateChanged, this, &QuickConnectDialog::slotSSLChanged);
     slotServerNameChanged( hostNameInput->text() );
 }
 
@@ -102,9 +111,17 @@ QuickConnectDialog::~QuickConnectDialog()
 {
 }
 
-void QuickConnectDialog::slotServerNameChanged( const QString &text )
+void QuickConnectDialog::slotSSLChanged(int)
 {
-    mOkButton->setEnabled( !text.isEmpty() );
+    int x = sslCheckBox->checkState() == Qt::Checked ? 6697 : 6667;
+    portInput->setPlaceholderText(QString::number(x));
+}
+
+void QuickConnectDialog::slotServerNameChanged(const QString &)
+{
+    bool portOk = portInput->text().isEmpty() || portInput->hasAcceptableInput();
+    bool v = hostNameInput->hasAcceptableInput() && portOk && nickInput->hasAcceptableInput();
+    mOkButton->setEnabled(v);
 }
 
 void QuickConnectDialog::slotOk()

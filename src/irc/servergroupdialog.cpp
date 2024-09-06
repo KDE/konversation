@@ -430,7 +430,7 @@ namespace Konversation
     }
 
     ServerDialog::ServerDialog(const QString& title, QWidget *parent)
-    : QDialog(parent)
+    : QDialog(parent), m_spinChanged(false)
     {
         setWindowTitle(title);
         auto *mainWidget = new QWidget(this);
@@ -452,12 +452,29 @@ namespace Konversation
 
         connect(m_okButton, &QPushButton::clicked, this, &ServerDialog::slotOk);
         connect(m_mainWidget->m_serverEdit, &KLineEdit::textChanged, this, &ServerDialog::slotServerNameChanged);
+        connect(m_mainWidget->m_portSBox, &QSpinBox::valueChanged, this, &ServerDialog::slotPortSpinChanged);
+        connect(m_mainWidget->m_sslChBox, &QCheckBox::stateChanged, this, &ServerDialog::slotSSLChanged);
         slotServerNameChanged( m_mainWidget->m_serverEdit->text() );
     }
 
     ServerDialog::~ServerDialog()
     {
         delete m_mainWidget;
+    }
+
+    void ServerDialog::slotPortSpinChanged(int)
+    {
+        m_spinChanged = true;
+    }
+
+    void ServerDialog::slotSSLChanged(int)
+    {
+        if (m_spinChanged)
+            return;
+
+        int x = m_mainWidget->m_sslChBox->checkState() == Qt::Checked ? 6697 : 6667;
+        m_mainWidget->m_portSBox->setValue(x);
+        m_spinChanged = false;
     }
 
     void ServerDialog::slotServerNameChanged( const QString &text )

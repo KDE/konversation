@@ -15,6 +15,7 @@ class KPasswordLineEdit;
 class QCheckBox;
 class KLineEdit;
 class QPushButton;
+class QLineEdit;
 
 /**
  * Dialog for quick connection to an IRC network without adding a server in the Server List.
@@ -40,13 +41,14 @@ class QuickConnectDialog : public QDialog
     private Q_SLOTS:
         void slotOk();
         void slotServerNameChanged(const QString&);
+        void slotSSLChanged(int);
 
     private:
         void delayedDestruct();
 
     private:
         KLineEdit*      hostNameInput;
-        KLineEdit*      portInput;
+        QLineEdit*      portInput;
         KPasswordLineEdit* passwordInput;
         KLineEdit*      nickInput;
         QCheckBox*      sslCheckBox;
