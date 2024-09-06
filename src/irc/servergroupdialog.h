@@ -89,10 +89,13 @@ namespace Konversation
         private Q_SLOTS:
             void slotOk();
             void slotServerNameChanged( const QString& );
+            void slotPortSpinChanged(int);
+            void slotSSLChanged(int);
 
         private:
             Ui::ServerDialogUI* m_mainWidget;
             QPushButton *m_okButton;
+            bool m_spinChanged;
 
             Q_DISABLE_COPY(ServerDialog)
     };
