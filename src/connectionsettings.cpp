@@ -22,7 +22,8 @@ ConnectionSettings::ConnectionSettings(const QString& target, const QString& por
         decodeIrcUrl(target);
     else
     {
-        decodeAddress(target);
+        QString defaultPort = useSSL? QStringLiteral("6697") : QStringLiteral("6667");
+        decodeAddress(target, defaultPort);
 
         if (!port.isEmpty())
             m_server.setPort(port.toInt());
@@ -82,9 +83,11 @@ void ConnectionSettings::setOneShotChannelList(const Konversation::ChannelList& 
 
 void ConnectionSettings::decodeIrcUrl(const QString& url)
 {
-    if (!url.startsWith(QLatin1String("irc://")) && !url.startsWith(QLatin1String("ircs://")))
+    bool ssl_url = false;
+    if (!url.startsWith(QLatin1String("irc://")) && !(ssl_url=url.startsWith(QLatin1String("ircs://"))))
         return;
 
+    QString defaultPort = ssl_url? QStringLiteral("6697") : QStringLiteral("6667");
     QString mangledUrl = url;
 
     mangledUrl.remove(QRegularExpression(QStringLiteral("^ircs?:/+")));
@@ -108,10 +111,10 @@ void ConnectionSettings::decodeIrcUrl(const QString& url)
         if (!addressSegments.filter(QStringLiteral("isserver")).isEmpty())
             checkIfServerGroup = false;
 
-        decodeAddress(addressSegments[0], checkIfServerGroup);
+        decodeAddress(addressSegments[0], defaultPort, checkIfServerGroup);
     }
     else
-        decodeAddress(mangledUrlSegments[0]);
+        decodeAddress(mangledUrlSegments[0], defaultPort);
 
     QString channel;
     Konversation::ChannelSettings channelSettings;
@@ -171,10 +174,10 @@ void ConnectionSettings::decodeIrcUrl(const QString& url)
     }
 }
 
-void ConnectionSettings::decodeAddress(const QString& address, bool checkIfServerGroup)
+void ConnectionSettings::decodeAddress(const QString& address, const QString& defaultPort, bool checkIfServerGroup)
 {
     QString host;
-    QString port = QStringLiteral("6667");
+    QString port = defaultPort;
 
     // Full-length IPv6 address with port
     // Example: RFC 2732 notation:     [2001:0DB8:0000:0000:0000:0000:1428:57ab]:6666

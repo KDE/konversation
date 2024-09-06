@@ -51,7 +51,7 @@ class ConnectionSettings
     private:
         void decodeIrcUrl(const QString& url);
 
-        void decodeAddress(const QString& address, bool checkIfServerGroup = true);
+        void decodeAddress(const QString& address, const QString& defaultPort, bool checkIfServerGroup = true);
 
         Konversation::ServerSettings m_server;
         Konversation::ServerGroupSettingsPtr m_serverGroup;
