@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:38+0000\n"
+"POT-Creation-Date: 2024-09-07 00:39+0000\n"
 "PO-Revision-Date: 2024-06-04 06:03+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -145,7 +145,7 @@ msgid ""
 "is found."
 msgstr "\"/media { 播放器 }\" - 回報指定的播放器（若找到的話）正在播放什麼。"
 
-#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"

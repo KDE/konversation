@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-04-02 11:41+0300\n"
+"POT-Creation-Date: 2024-09-07 00:39+0000\n"
+"PO-Revision-Date: 2024-09-05 11:53+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -79,7 +79,7 @@ msgstr "Nav atrasti palaisti multivides atskaņotāji."
 
 #: data/scripts/media:197
 msgid "Nothing is playing in %1."
-msgstr "„%1“ nekas netiek atskaņots"
+msgstr "„%1“ neko neatskaņo."
 
 #: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
@@ -141,7 +141,7 @@ msgid ""
 msgstr ""
 "„/media { Player }“ — ziņo, ko atskaņo noteiktais atskaņotājs, ja ir atrasts."
 
-#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"
@@ -940,8 +940,7 @@ msgid ""
 "are saying."
 msgstr ""
 "ECB jeb elektroniskās kodu grāmatas režīmu atbalsta daudzi šifrēšanas "
-"klienti, piemēram, „FiSH“ un „Mircryption“, tomēr tas vispārīgi tiek "
-"uzskatīts par nedrošu.\n"
+"klienti, piemēram, „FiSH“ un „Mircryption“, tomēr to kopumā uzskata par.\n"
 "\n"
 "CBC jeb bloku šifra saķēdēšanas režīmu neatbalsta „FiSH“, bet to atbalsta "
 "„Mircryption“. Ja grasāties izmantot atslēgas apmaiņu, vislabāk ir vispirms "
@@ -1423,9 +1422,9 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
-"Šis izcēlums tiks meklēts tikai pēc nosaukuma te norādītajos tērzēšanas "
-"logos vai visos tērzēšanas logos, ja lauks tiek atstāts tukšs. Vairāki "
-"nosaukumi ir jāatdala ar komatiem."
+"Šo izcēlumu meklēs tikai pēc nosaukuma te norādītajos tērzēšanas logos vai "
+"visos tērzēšanas logos, ja lauku atstāj tukšu. Vairāki nosaukumi ir jāatdala "
+"ar komatiem."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
@@ -2530,8 +2529,8 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>Veicot dubultklikšķi uz segvārda <b>Skatīto segvārdu</b> logā, šī\n"
-"komanda tiek ievietota servera loga <b>Ievades rindā</b>.</p>\n"
+"<p>Veicot dubultklikšķi uz segvārda <b>Skatīto segvārdu</b> logā, šo\n"
+"komandu ievieto servera loga <b>Ievades rindā</b>.</p>\n"
 "<p>Komandā varat lietot šādus vietturus:</p><ul>\n"
 "<li>%u: uz segvārda ir veikts dubultklikšķis.</li>\n"
 "<li>%K: servera parole.</li>\n"
@@ -2563,8 +2562,8 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>\n"
-"<p>Veicot dubultklikšķi uz segvārda <b>Skatīto segvārdu</b> logā, šī\n"
-"komanda tiek ievietota servera loga <b>Ievades rindā</b>.</p>\n"
+"<p>Veicot dubultklikšķi uz segvārda <b>Skatīto segvārdu</b> logā, šo\n"
+"komandu ievieto servera loga <b>Ievades rindā</b>.</p>\n"
 "<p>Komandā varat lietot šādus vietturus:</p><ul>\n"
 "<li>%u: uz segvārda ir veikts dubultklikšķis.</li>\n"
 "<li>%K: servera parole.</li>\n"
@@ -2687,7 +2686,7 @@ msgstr "Aizpildiet savu <b>Ident</b>.<br/>"
 #: src/connectionmanager.cpp:580
 #, kde-format
 msgid "Please fill in your <b>Real name</b>.<br/>"
-msgstr "Aizpildiet savu <b>Īsto vārdu<b>.</br>"
+msgstr "Aizpildiet savu <b>Īsto vārdu<b>.<br/>"
 
 #: src/connectionmanager.cpp:583
 #, kde-format
@@ -3911,8 +3910,8 @@ msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
-"Šī identitāte tiek lietota, ja to noņemsiet, izmantotie tīkla iestatījumi "
-"atgriezīsies pie noklusējuma identitātes. Vai turpināt dzēst?"
+"Šo identitāti programma šobrīd lieto, ja to noņemsiet, izmantotie tīkla "
+"iestatījumi atgriezīsies pie noklusējuma identitātes. Vai turpināt dzēst?"
 
 #: src/identitydialog.cpp:322
 #, kde-format
@@ -4187,7 +4186,7 @@ msgid ""
 msgstr ""
 "Ja atzīmējāt šo lodziņu „Konversation“ automātiski atcels prombūtnes režīmu "
 "visiem savienojumiem, kas izmanto šo identitāti, kad ekrānsaudzētājs beidzas "
-"vai tiek konstatēta jauna lietotāja aktivitāte."
+"vai programma konstatē jaunu lietotāja aktivitāti."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:440
@@ -4268,9 +4267,9 @@ msgid ""
 "system. If you seem to be having trouble seeing other user's messages "
 "correctly, try changing this setting."
 msgstr ""
-"Šis iestatījums ietekmē jūsu ievadīto rakstzīmju kodējumu, kad tās tiek "
-"nosūtītas serverim. Tāpat tas ietekmē, kā tiek attēloti ziņojumi. Kad pirmo "
-"reizi atverat „Konversation“, tas automātiski iegūst iestatījumus no "
+"Šis iestatījums ietekmē jūsu ievadīto rakstzīmju kodējumu, kad programma tās "
+"nosūta serverim. Tāpat tas ietekmē, kā attēlojas ziņojumi. Kad pirmo reizi "
+"atverat „Konversation“, tas automātiski iegūst iestatījumus no "
 "operētājsistēmas. Ja jums rodas problēmas korekti redzēt citu cilvēku ziņas, "
 "mēģiniet mainīt šo iestatījumu."
 
@@ -4321,7 +4320,7 @@ msgstr "&Aiziešanas iemesls:"
 #: src/identitydialog.ui:631
 #, kde-format
 msgid "Whenever you leave a channel, this message is sent to the channel."
-msgstr "Ikreiz, kad atstājat kanālu, uz kanālu tiek nosūtīts šis ziņojums."
+msgstr "Ikreiz, kad atstājat kanālu, uz kanālu nosūta šo ziņu."
 
 #. i18n: ectx: property (text), widget (QLabel, kickLabel)
 #: src/identitydialog.ui:647
@@ -4336,8 +4335,8 @@ msgid ""
 "Whenever you are kicked from a channel (usually by an IRC operator), this "
 "message is sent to the channel."
 msgstr ""
-"Ikreiz, kad jūs izmet no kanāla (parasti IRC operators), uz kanālu tiek "
-"sūtīta šī ziņa."
+"Ikreiz, kad jūs izmet no kanāla (parasti IRC operators), uz kanālu nosūta šo "
+"ziņu."
 
 #. i18n: ectx: property (text), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:660
@@ -5661,7 +5660,7 @@ msgstr "%1: nav šāda kanāla."
 #: src/irc/inputfilter.cpp:1560
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr "Segvārds jau tiek izmantots, mēģiniet citu."
+msgstr "Segvārdu jau izmanto, mēģiniet citu."
 
 #: src/irc/inputfilter.cpp:1573
 #, kde-format
@@ -5675,7 +5674,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr "Segvārds jau tiek izmantots. Mēģina %1."
+msgstr "Segvārdu jau izmanto. Mēģina %1."
 
 #: src/irc/inputfilter.cpp:1610
 #, kde-format
@@ -6893,7 +6892,7 @@ msgid ""
 "SSL error. Will automatically reconnect if error is ignored."
 msgstr ""
 "Savienojums ar serveri %1 (ports %2) ir zudis, gaidot lietotāja atbildi uz "
-"SSL kļūdu. Ja kļūda tiek ignorēta, tas automātiski savienosies no jauna."
+"SSL kļūdu. Ja kļūdu ignorē, programma automātiski savienosies no jauna."
 
 #: src/irc/server.cpp:956
 #, kde-format
@@ -9886,8 +9885,7 @@ msgid ""
 "The messages in the log file are displayed here. The oldest messages are at "
 "the top and the most recent are at the bottom."
 msgstr ""
-"Te tiek parādītas ziņās žurnāla datnē. Vecākās ziņas ir augšā, bet jaunākā "
-"apakšā."
+"Te parāda ziņas žurnāla datnē. Vecākās ziņas ir augšā, bet jaunākā apakšā."
 
 #: src/viewer/logfilereader.cpp:135
 #, kde-format

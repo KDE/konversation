@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:38+0000\n"
+"POT-Creation-Date: 2024-09-07 00:39+0000\n"
 "PO-Revision-Date: 2022-11-10 12:45+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <kde-i18n-doc@kde.org>\n"
@@ -150,7 +150,7 @@ msgstr ""
 "«/media { Reproductor }» - raportar que es reproductet de un providet "
 "reproductor (si it es trovat)."
 
-#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"

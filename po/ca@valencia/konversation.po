@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:38+0000\n"
+"POT-Creation-Date: 2024-09-07 00:39+0000\n"
 "PO-Revision-Date: 2024-07-31 12:23+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -154,7 +154,7 @@ msgstr ""
 "«/media { Player }» - informa què està reproduint el reproductor indicat si "
 "s'ha trobat."
 
-#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"

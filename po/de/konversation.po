@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-30 00:38+0000\n"
+"POT-Creation-Date: 2024-09-07 00:39+0000\n"
 "PO-Revision-Date: 2023-04-03 16:31+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -154,7 +154,7 @@ msgstr ""
 "\"/media { Player }\" - Berichten, was der angegebene Medienspieler gerade "
 "spielt, sofern dieser unterstützt wird."
 
-#: src/application.cpp:383 src/irc/server.cpp:1809 src/irc/server.cpp:3842
+#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "D-Bus"
