@@ -868,18 +868,29 @@ void MainWindow::openServerList()
 {
     if (!m_serverListDialog)
     {
-        m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
+        using SLDialog = Konversation::ServerListDialog;
+        using Konversation::ConnectionFlag;
+
+        auto *dialog = new SLDialog(i18n("Server List"), this);
         Application* konvApp = Application::instance();
 
-        connect(m_serverListDialog, &Konversation::ServerListDialog::serverGroupsChanged,
+        connect(dialog, &SLDialog::serverGroupsChanged,
                 konvApp, &Application::serverGroupsChanged);
         connect(konvApp, &Application::serverGroupsChanged,
-                m_serverListDialog, &Konversation::ServerListDialog::updateServerList);
-        connect(m_serverListDialog, QOverload<Konversation::ConnectionFlag,int>::of(&Konversation::ServerListDialog::connectTo),
-                konvApp->getConnectionManager(), QOverload<Konversation::ConnectionFlag,int>::of(&ConnectionManager::connectTo));
-        connect(m_serverListDialog, QOverload<Konversation::ConnectionFlag, ConnectionSettings>::of(&Konversation::ServerListDialog::connectTo),
-                konvApp->getConnectionManager(), QOverload<Konversation::ConnectionFlag, ConnectionSettings>::of(&ConnectionManager::connectTo));
-        connect(konvApp->getConnectionManager(), &ConnectionManager::closeServerList, m_serverListDialog, &QDialog::reject);
+                dialog, &SLDialog::updateServerList);
+
+        auto byID = qOverload<ConnectionFlag, int>;
+        auto byCS = qOverload<ConnectionFlag, ConnectionSettings>;
+        auto *mgr = konvApp->getConnectionManager();
+
+        connect(dialog, byID(&SLDialog::connectTo),
+                mgr, byID(&ConnectionManager::connectTo));
+        connect(dialog, byCS(&SLDialog::connectTo),
+                mgr, byCS(&ConnectionManager::connectTo));
+        connect(mgr, &ConnectionManager::closeServerList,
+                dialog, &QDialog::reject);
+
+        m_serverListDialog = dialog;
     }
 
     m_serverListDialog->show();
