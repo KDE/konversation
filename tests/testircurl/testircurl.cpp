@@ -68,7 +68,6 @@ void TestIrcUrl::testBareCon()
     ConnectionSettings con(target, port, password, nick, channel, useSSL);
 
     QCOMPARE(result_host, con.server().host());
-    QEXPECT_FAIL("ssl-server", "ain't done been writ", Continue);
     QCOMPARE(result_port, con.server().port());
     QCOMPARE(result_useSSL, con.server().SSLEnabled());
 }
@@ -104,8 +103,6 @@ void TestIrcUrl::testIRCUrl()
     // qWarning() << con.server().host() << con.server().port();
 
     QCOMPARE(con.server().host(), host);
-    QEXPECT_FAIL("ircs-onlyserver", "unwritten", Continue);
-    QEXPECT_FAIL("ircs-onlyserver-slash", "unwritten", Continue);
     QCOMPARE(con.server().port(), port);
 }
 
