@@ -27,7 +27,7 @@ ConnectionBehavior_Config::ConnectionBehavior_Config(QWidget* parent)
 #endif
 
     kcfg_ReconnectDelay->setSuffix(ki18np(" second", " seconds"));
-    m_ProxyPassword->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+    m_ProxyPassword->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
     connect(m_ProxyPassword, &KPasswordLineEdit::passwordChanged, this, [this]() { setPasswordChanged(); });
 }
 

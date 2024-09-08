@@ -881,7 +881,7 @@ void Channel::modeButtonClicked(int id, bool on)
         {
             QPointer<KPasswordDialog> dlg = new KPasswordDialog(this);
             dlg->setPrompt(i18n("Channel Password"));
-            dlg->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+            dlg->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
             if (dlg->exec() && !dlg->password().isEmpty())
             {
                 args = dlg->password();

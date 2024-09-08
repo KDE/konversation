@@ -46,7 +46,7 @@ namespace Konversation
 
         mOkButton->setEnabled(false);
 
-        m_ui.passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+        m_ui.passwordEdit->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
 
         connect(m_ui.channelCombo, &KHistoryComboBox::editTextChanged, this, &JoinChannelDialog::slotChannelChanged);
 

@@ -69,7 +69,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
     passwordLabel->setWhatsThis(passwordWT);
     passwordInput = new KPasswordLineEdit(page);
-    passwordInput->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+    passwordInput->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
     passwordInput->setWhatsThis(passwordWT);
     passwordLabel->setBuddy(passwordInput);
     passwordLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);

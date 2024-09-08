@@ -446,7 +446,7 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerDialogUI();
         m_mainWidget->setupUi(mainWidget);
-        m_mainWidget->m_passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+        m_mainWidget->m_passwordEdit->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
 
         m_mainWidget->m_serverEdit->setFocus();
 
@@ -514,7 +514,7 @@ namespace Konversation
 
         m_mainWidget = new Ui::ChannelDialogUI();
         m_mainWidget->setupUi(mainWidget);
-        m_mainWidget->m_passwordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+        m_mainWidget->m_passwordEdit->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
 
         m_mainWidget->m_channelEdit->setFocus();
         connect(m_okButton, &QPushButton::clicked, this, &ChannelDialog::slotOk);

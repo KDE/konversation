@@ -102,7 +102,7 @@ namespace Konversation
         m_loginEdit->setValidator(validator);
         m_nicknameLBox->lineEdit()->setValidator(validator);
 
-        m_authPasswordEdit->setRevealPasswordAvailable(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password")));
+        m_authPasswordEdit->setRevealPasswordMode(KAuthorized::authorize(QStringLiteral("lineedit_reveal_password"))? KPassword::RevealMode::Always : KPassword::RevealMode::OnlyNew);
 
         m_pemClientCertFile->setNameFilter(QStringLiteral("*.pem"));
 
