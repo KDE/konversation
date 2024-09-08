@@ -509,6 +509,11 @@ void Server::connectToIRCServer()
         else
         {
             connect(m_socket, &QAbstractSocket::connected, this, &Server::socketConnected);
+            // TODO re-evaluate this, perhaps with a test case
+            // The comment below was added here in October of 2019, but it is a copy of
+            // a kdelibs commit from September 2008, describing Qt4 behavior.
+            // See https://invent.kde.org/unmaintained/kdelibs/-/commit/34a9fb1ca1a9e5442502f5baedffc8880ed8aa21
+            //
             // From KTcpSocket::connectToHost():
             // There are enough layers of buffers between us and the network, and there is a quirk
             // in QIODevice that can make it try to readData() twice per read() call if buffered and
