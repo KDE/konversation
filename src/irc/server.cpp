@@ -138,8 +138,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     if (getIdentity()->getShellCommand().isEmpty())
         connectSignals();
-    // TODO FIXME this disappeared in a merge, ensure it should have
-    updateConnectionState(Konversation::SSNeverConnected);
 
     m_nickInfoChangedTimer = new QTimer(this);
     m_nickInfoChangedTimer->setSingleShot(true);
