@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-07 00:39+0000\n"
+"POT-Creation-Date: 2024-09-09 00:39+0000\n"
 "PO-Revision-Date: 2023-07-23 21:52+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -143,8 +143,8 @@ msgid ""
 "is found."
 msgstr "\"/media { Player }\" - 지정한 재생기에서 재생 중인 항목을 보고합니다."
 
-#: src/application.cpp:384 src/irc/server.cpp:1809 src/irc/server.cpp:3842
-#: src/irc/server.cpp:3847
+#: src/application.cpp:384 src/irc/server.cpp:1812 src/irc/server.cpp:3845
+#: src/irc/server.cpp:3850
 #, kde-format
 msgid "D-Bus"
 msgstr "D-Bus"
@@ -1474,10 +1474,10 @@ msgstr "대화방"
 #: src/dcc/chatcontainer.cpp:130 src/irc/inputfilter.cpp:349
 #: src/irc/inputfilter.cpp:365 src/irc/inputfilter.cpp:381
 #: src/irc/inputfilter.cpp:410 src/irc/inputfilter.cpp:418
-#: src/irc/server.cpp:2378 src/irc/server.cpp:2508 src/irc/server.cpp:2520
-#: src/irc/server.cpp:2532 src/irc/server.cpp:2667 src/irc/server.cpp:2723
-#: src/irc/server.cpp:2794 src/irc/server.cpp:2799 src/irc/server.cpp:2811
-#: src/irc/server.cpp:2814 src/irc/server.cpp:2828 src/irc/server.cpp:2835
+#: src/irc/server.cpp:2381 src/irc/server.cpp:2511 src/irc/server.cpp:2523
+#: src/irc/server.cpp:2535 src/irc/server.cpp:2670 src/irc/server.cpp:2726
+#: src/irc/server.cpp:2797 src/irc/server.cpp:2802 src/irc/server.cpp:2814
+#: src/irc/server.cpp:2817 src/irc/server.cpp:2831 src/irc/server.cpp:2838
 #: src/viewer/ignorelistviewitem.cpp:39
 #, kde-format
 msgid "DCC"
@@ -1488,7 +1488,7 @@ msgstr "DCC"
 #: src/irc/inputfilter.cpp:553 src/irc/inputfilter.cpp:558
 #: src/irc/inputfilter.cpp:564 src/irc/inputfilter.cpp:783
 #: src/irc/inputfilter.cpp:1682 src/irc/outputfilter.cpp:659
-#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4315 src/irc/server.cpp:4344
+#: src/irc/outputfilter.cpp:894 src/irc/server.cpp:4318 src/irc/server.cpp:4347
 #: src/viewer/ignorelistviewitem.cpp:37
 #, kde-format
 msgid "Notice"
@@ -2567,10 +2567,10 @@ msgstr "업데이트 주기(&U):"
 #: src/connectionmanager.cpp:260 src/irc/inputfilter.cpp:1573
 #: src/irc/inputfilter.cpp:1690 src/irc/inputfilter.cpp:2482
 #: src/irc/inputfilter.cpp:2490 src/irc/inputfilter.cpp:2512
-#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:265 src/irc/server.cpp:413
-#: src/irc/server.cpp:476 src/irc/server.cpp:688 src/irc/server.cpp:723
-#: src/irc/server.cpp:787 src/irc/server.cpp:804 src/irc/server.cpp:822
-#: src/irc/server.cpp:1146 src/irc/server.cpp:1176
+#: src/irc/outputfilter.cpp:2011 src/irc/server.cpp:263 src/irc/server.cpp:411
+#: src/irc/server.cpp:474 src/irc/server.cpp:691 src/irc/server.cpp:726
+#: src/irc/server.cpp:790 src/irc/server.cpp:807 src/irc/server.cpp:825
+#: src/irc/server.cpp:1149 src/irc/server.cpp:1179
 #, kde-format
 msgid "Info"
 msgstr "정보"
@@ -2600,13 +2600,13 @@ msgstr[0] "%1초 후에 %2(포트 %3)에 다시 연결합니다."
 #: src/irc/inputfilter.cpp:2435 src/irc/inputfilter.cpp:2443
 #: src/irc/inputfilter.cpp:2451 src/irc/inputfilter.cpp:2475
 #: src/irc/inputfilter.cpp:2503 src/irc/outputfilter.cpp:2020
-#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:766
-#: src/irc/server.cpp:812 src/irc/server.cpp:835 src/irc/server.cpp:961
-#: src/irc/server.cpp:2346 src/irc/server.cpp:2417 src/irc/server.cpp:2590
-#: src/irc/server.cpp:2626 src/irc/server.cpp:2677 src/irc/server.cpp:2745
-#: src/irc/server.cpp:2764 src/irc/server.cpp:2780 src/irc/server.cpp:4273
-#: src/irc/server.cpp:4285 src/irc/server.cpp:4309 src/irc/server.cpp:4332
-#: src/irc/server.cpp:4348
+#: src/irc/outputfilterresolvejob.cpp:68 src/irc/server.cpp:769
+#: src/irc/server.cpp:815 src/irc/server.cpp:838 src/irc/server.cpp:964
+#: src/irc/server.cpp:2349 src/irc/server.cpp:2420 src/irc/server.cpp:2593
+#: src/irc/server.cpp:2629 src/irc/server.cpp:2680 src/irc/server.cpp:2748
+#: src/irc/server.cpp:2767 src/irc/server.cpp:2783 src/irc/server.cpp:4276
+#: src/irc/server.cpp:4288 src/irc/server.cpp:4312 src/irc/server.cpp:4335
+#: src/irc/server.cpp:4351
 #, kde-format
 msgid "Error"
 msgstr "오류"
@@ -5661,8 +5661,8 @@ msgid "Current users on %1: %2."
 msgstr "%1의 사용자 수: %2명."
 
 #: src/irc/inputfilter.cpp:1740 src/irc/nicksonline.cpp:207
-#: src/irc/server.cpp:4089 src/irc/server.cpp:4091 src/irc/server.cpp:4117
-#: src/irc/server.cpp:4127
+#: src/irc/server.cpp:4092 src/irc/server.cpp:4094 src/irc/server.cpp:4120
+#: src/irc/server.cpp:4130
 #, kde-format
 msgid "Away"
 msgstr "자리 비움"
@@ -6454,8 +6454,8 @@ msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
 msgstr "현재 알림 목록: %1."
 
-#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3165
-#: src/irc/server.cpp:3179
+#: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3168
+#: src/irc/server.cpp:3182
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
@@ -6714,44 +6714,44 @@ msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
 msgstr "%1(%2) 님이 이 서버를 떠났습니다(%3)."
 
-#: src/irc/server.cpp:265
+#: src/irc/server.cpp:263
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
 msgstr "사전 연결 셸 명령 실행 중..."
 
-#: src/irc/server.cpp:413
+#: src/irc/server.cpp:411
 #, kde-format
 msgid "Pre-shell command executed successfully!"
 msgstr "사전 셸 명령을 성공적으로 실행했습니다!"
 
-#: src/irc/server.cpp:416 src/irc/server.cpp:428
+#: src/irc/server.cpp:414 src/irc/server.cpp:426
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
 msgstr "명령을 실행하는 동안 문제가 발생했습니다: "
 
-#: src/irc/server.cpp:417 src/irc/server.cpp:429
+#: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
 msgid "Warning"
 msgstr "경고"
 
-#: src/irc/server.cpp:476
+#: src/irc/server.cpp:474
 #, kde-format
 msgid "Looking for server %1 (port %2)..."
 msgstr "%1 서버(포트 %2)를 찾는 중..."
 
-#: src/irc/server.cpp:688
+#: src/irc/server.cpp:691
 #, kde-format
 msgid "Server found, connecting..."
 msgstr "서버를 찾았습니다. 접속 중..."
 
-#: src/irc/server.cpp:723
+#: src/irc/server.cpp:726
 #, kde-format
 msgid "Negotiating capabilities with server..."
 msgstr "서버와 기능 협상 중..."
 
-#: src/irc/server.cpp:766
+#: src/irc/server.cpp:769
 #, kde-format
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
@@ -6759,38 +6759,38 @@ msgid ""
 msgstr ""
 "서버에서 SASL 인증 방식으로 %1을(를) 지원하지 않아서 SASL 인증을 건너뜁니다."
 
-#: src/irc/server.cpp:787
+#: src/irc/server.cpp:790
 #, kde-format
 msgid "Requesting capabilities: %1"
 msgstr "기능 요청 중: %1"
 
-#: src/irc/server.cpp:804
+#: src/irc/server.cpp:807
 #, kde-format
 msgid "Closing capabilities negotiation."
 msgstr "기능 협상이 종료되었습니다."
 
-#: src/irc/server.cpp:812
+#: src/irc/server.cpp:815
 #, kde-format
 msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr "기능 협상 실패: 서버에서 지원하지 않는 것 같습니다."
 
-#: src/irc/server.cpp:822
+#: src/irc/server.cpp:825
 #, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
 msgstr "서버에서 SASL 기능을 지원하여 SASL %1 인증을 시도하는 중..."
 
-#: src/irc/server.cpp:835
+#: src/irc/server.cpp:838
 #, kde-format
 msgid "SASL capability denied or not supported by server."
 msgstr "서버에서 SASL 기능을 거부했거나 지원하지 않습니다."
 
-#: src/irc/server.cpp:935 src/irc/server.cpp:1043
+#: src/irc/server.cpp:938 src/irc/server.cpp:1046
 #, kde-format
 msgid "SSL Connection Error"
 msgstr "SSL 연결 오류"
 
-#: src/irc/server.cpp:936
+#: src/irc/server.cpp:939
 #, kde-format
 msgid ""
 "Connection to server %1 (port %2) lost while waiting for user response to an "
@@ -6799,24 +6799,24 @@ msgstr ""
 "SSL 오류에 대한 사용자 응답을 기다리는 동안 %1 서버(포트 %2)로 향한 연결이 끊"
 "어졌습니다. 오류가 무시되면 자동으로 다시 연결합니다."
 
-#: src/irc/server.cpp:956
+#: src/irc/server.cpp:959
 #, kde-format
 msgid "Connection to server %1 (port %2) lost: %3."
 msgstr "%1 서버(포트 %2)로 향한 연결이 끊어졌습니다: %3."
 
-#: src/irc/server.cpp:1005
+#: src/irc/server.cpp:1008
 #, kde-format
 msgid ""
 "The SSL certificate for the server %1 (port %2) failed the authenticity "
 "check."
 msgstr "%1 서버(포트 %2)의 SSL 인증서가 유효성 검사에 실패했습니다."
 
-#: src/irc/server.cpp:1009
+#: src/irc/server.cpp:1012
 #, kde-format
 msgid "SSL Connection Warning"
 msgstr "SSL 연결 경고"
 
-#: src/irc/server.cpp:1038
+#: src/irc/server.cpp:1041
 #, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
@@ -6826,17 +6826,17 @@ msgstr ""
 "SSL 암호화를 사용하여 %1(포트 %2)에 연결할 수 없습니다. 서버가 SSL을 지원하"
 "지 않거나 인증서를 거부했습니다. 포트 번호가 올바른지 확인하십시오. %3"
 
-#: src/irc/server.cpp:1146
+#: src/irc/server.cpp:1149
 #, kde-format
 msgid "Delayed connect aborted."
 msgstr "지연된 연결이 중단되었습니다."
 
-#: src/irc/server.cpp:1176
+#: src/irc/server.cpp:1179
 #, kde-format
 msgid "Disconnected from %1 (port %2)."
 msgstr "%1(포트 %2)와(과)의 연결이 끊어졌습니다."
 
-#: src/irc/server.cpp:1334
+#: src/irc/server.cpp:1337
 #, kde-format
 msgid ""
 "No nicknames from the \"%1\" identity were accepted by the connection "
@@ -6846,62 +6846,62 @@ msgstr ""
 "\"%2\" 연결에서 \"%1\" 프로필에 정의한 모든 대화명을 사용할 수 없었습니다.\n"
 "새 대화명을 입력하거나 취소를 눌러서 연결을 끊으십시오."
 
-#: src/irc/server.cpp:1335
+#: src/irc/server.cpp:1338
 #, kde-format
 msgid "Nickname error"
 msgstr "대화명 오류"
 
-#: src/irc/server.cpp:2178
+#: src/irc/server.cpp:2181
 #, kde-format
 msgid "Select File(s) to Send to %1"
 msgstr "%1 님에게 보낼 파일 선택"
 
-#: src/irc/server.cpp:2347
+#: src/irc/server.cpp:2350
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC SEND request from %1."
 msgstr "%1 님으로부터 잘못된 DCC SEND 요청을 받았습니다."
 
-#: src/irc/server.cpp:2379
+#: src/irc/server.cpp:2382
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
 msgstr "%1 님이 \"%2\"(%3)을(를) 보내려고 합니다..."
 
-#: src/irc/server.cpp:2382 src/irc/server.cpp:2512 src/irc/server.cpp:2524
-#: src/irc/server.cpp:2673 src/irc/server.cpp:2729 src/irc/server.cpp:2838
+#: src/irc/server.cpp:2385 src/irc/server.cpp:2515 src/irc/server.cpp:2527
+#: src/irc/server.cpp:2676 src/irc/server.cpp:2732 src/irc/server.cpp:2841
 #, kde-format
 msgid "unknown size"
 msgstr "알 수 없는 크기"
 
-#: src/irc/server.cpp:2418
+#: src/irc/server.cpp:2421
 #, kde-format
 msgctxt "%1=nickname"
 msgid "Received invalid DCC CHAT request from %1."
 msgstr "%1 님으로부터 잘못된 DCC CHAT 요청을 받았습니다."
 
-#: src/irc/server.cpp:2509
+#: src/irc/server.cpp:2512
 #, kde-format
 msgid "Asking %1 to accept upload of \"%2\" (%3)..."
 msgstr "%1 님에게 \"%2\"(%3)의 업로드 수락을 요청하는 중..."
 
-#: src/irc/server.cpp:2521
+#: src/irc/server.cpp:2524
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
 msgstr "%1 님에게 \"%2\"(%3)의 수동적 업로드 수락을 요청하는 중..."
 
-#: src/irc/server.cpp:2533
+#: src/irc/server.cpp:2536
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
 msgstr "%1 님이 %2 요청을 수락하는 것을 기다리는 중..."
 
-#: src/irc/server.cpp:2592
+#: src/irc/server.cpp:2595
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
 msgstr "%1 님으로부터 잘못된 수동적 DCC CHAT 수락 메시지를 받았습니다."
 
-#: src/irc/server.cpp:2628
+#: src/irc/server.cpp:2631
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
@@ -6909,7 +6909,7 @@ msgid ""
 msgstr ""
 "%2 님으로부터 \"%1\"에 대한 잘못된 수동적 DCC SEND 수락 메시지를 받았습니다."
 
-#: src/irc/server.cpp:2669
+#: src/irc/server.cpp:2672
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
@@ -6917,13 +6917,13 @@ msgctxt ""
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
 msgstr "%2 님으로부터 \"%1\"의 다운로드를 %4의 %3%부터 다시 시작하는 중..."
 
-#: src/irc/server.cpp:2679
+#: src/irc/server.cpp:2682
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
 msgstr "%2 님으로부터 \"%1\"에 대한 잘못된 다시 시작 수락 메시지를 받았습니다."
 
-#: src/irc/server.cpp:2725
+#: src/irc/server.cpp:2728
 #, kde-format
 msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
@@ -6931,121 +6931,121 @@ msgctxt ""
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
 msgstr "%2 님에게 \"%1\"의 업로드를 %4의 %3%부터 다시 시작하는 중..."
 
-#: src/irc/server.cpp:2747
+#: src/irc/server.cpp:2750
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
 msgstr "%2 님으로부터 \"%1\"에 대한 잘못된 다시 시작 요청을 받았습니다."
 
-#: src/irc/server.cpp:2766
+#: src/irc/server.cpp:2769
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
 msgstr "%2 님으로부터 \"%1\"에 대한 잘못된 거부 요청을 받았습니다."
 
-#: src/irc/server.cpp:2782
+#: src/irc/server.cpp:2785
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
 msgstr "%1 님으로부터 잘못된 거부 요청을 받았습니다."
 
-#: src/irc/server.cpp:2795
+#: src/irc/server.cpp:2798
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
 msgstr "%2 님으로부터 \"%1\"의 다운로드를 완료했습니다."
 
-#: src/irc/server.cpp:2800
+#: src/irc/server.cpp:2803
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
 msgstr "%2 님으로부터 \"%1\"을(를) 다운로드하지 못했습니다. 이유: %3."
 
-#: src/irc/server.cpp:2812
+#: src/irc/server.cpp:2815
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
 msgstr "%2 님에게 \"%1\"을(를) 업로드했습니다."
 
-#: src/irc/server.cpp:2815
+#: src/irc/server.cpp:2818
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
 msgstr "%2 님에게 \"%1\"을(를) 업로드하지 못했습니다.이유: %3."
 
-#: src/irc/server.cpp:2829
+#: src/irc/server.cpp:2832
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
 msgstr "%2 님에게 \"%1\"을(를) 보내는 중..."
 
-#: src/irc/server.cpp:2836
+#: src/irc/server.cpp:2839
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
 msgstr "%3 님으로부터 \"%1\"(%2)을(를) 다운로드하는 중..."
 
-#: src/irc/server.cpp:3165 src/notificationhandler.cpp:348
+#: src/irc/server.cpp:3168 src/notificationhandler.cpp:348
 #, kde-format
 msgid "%1 is online (%2)."
 msgstr "%1 님이 온라인 상태입니다(%2)."
 
-#: src/irc/server.cpp:3179 src/notificationhandler.cpp:363
+#: src/irc/server.cpp:3182 src/notificationhandler.cpp:363
 #, kde-format
 msgid "%1 went offline (%2)."
 msgstr "%1 님이 접속을 끊었습니다(%2)."
 
-#: src/irc/server.cpp:3842
+#: src/irc/server.cpp:3845
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
 msgstr "오류: \"%1\" 스크립트를 찾을 수 없습니다."
 
-#: src/irc/server.cpp:3847
+#: src/irc/server.cpp:3850
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
 msgstr "오류: \"%1\" 스크립트를 실행할 수 없습니다. 파일 권한을 확인하십시오."
 
-#: src/irc/server.cpp:4058
+#: src/irc/server.cpp:4061
 #, kde-format
 msgid "Gone away for now"
 msgstr "지금은 부재 중"
 
-#: src/irc/server.cpp:4089
+#: src/irc/server.cpp:4092
 #, kde-format
 msgid "You are now marked as being away (reason: %1)."
 msgstr "이제 자리 비움으로 표시되었습니다(이유: %1)."
 
-#: src/irc/server.cpp:4091
+#: src/irc/server.cpp:4094
 #, kde-format
 msgid "You are now marked as being away."
 msgstr "이제 자리 비움으로 표시되었습니다."
 
-#: src/irc/server.cpp:4117
+#: src/irc/server.cpp:4120
 #, kde-format
 msgid "You are no longer marked as being away."
 msgstr "이제 더 이상 자리 비움으로 표시되지 않습니다."
 
-#: src/irc/server.cpp:4127
+#: src/irc/server.cpp:4130
 #, kde-format
 msgid "You are not marked as being away."
 msgstr "자리 비움으로 표시되지 않았습니다."
 
-#: src/irc/server.cpp:4273
+#: src/irc/server.cpp:4276
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
 msgstr "%1 님과의 키 교환을 시작하지 못했습니다."
 
-#: src/irc/server.cpp:4285
+#: src/irc/server.cpp:4288
 #, kde-format
 msgid "Unable to perform key exchange with %1."
 msgstr "%1 님과 키 교환을 수행할 수 없습니다."
 
-#: src/irc/server.cpp:4309
+#: src/irc/server.cpp:4312
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
 msgstr "%1 님의 DH1080_INIT를 해석하지 못했습니다. 키 교환에 실패했습니다."
 
-#: src/irc/server.cpp:4315
+#: src/irc/server.cpp:4318
 #, kde-format
 msgid ""
 "Your key is set and your messages will now be encrypted, sending "
@@ -7053,12 +7053,12 @@ msgid ""
 msgstr ""
 "키가 설정되고 메시지가 암호화됩니다. DH1080_FINISH를 %1 님에게 보냅니다."
 
-#: src/irc/server.cpp:4332
+#: src/irc/server.cpp:4335
 #, kde-format
 msgid "Unable to complete key exchange with %1."
 msgstr "%1 님과 키 교환을 완료할 수 없습니다."
 
-#: src/irc/server.cpp:4344
+#: src/irc/server.cpp:4347
 #, kde-format
 msgid ""
 "Successfully parsed DH1080_FINISH sent by %1. Your key is set and your "
@@ -7067,7 +7067,7 @@ msgstr ""
 "%1 님이 보낸 DH1080_FINISH를 해석했습니다. 키가 설정되고 메시지가 암호화됩니"
 "다."
 
-#: src/irc/server.cpp:4348
+#: src/irc/server.cpp:4351
 #, kde-format
 msgid "Failed to parse DH1080_FINISH sent by %1. Key exchange failed."
 msgstr ""
@@ -8403,7 +8403,7 @@ msgstr "대화방 목록(&C)"
 msgid "Set &Away Globally"
 msgstr "전체 자리 비움 설정(&A)"
 
-#: src/mainwindow.cpp:871
+#: src/mainwindow.cpp:874
 #, kde-format
 msgid "Server List"
 msgstr "서버 목록"
