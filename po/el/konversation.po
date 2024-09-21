@@ -5,22 +5,22 @@
 # Dimitrios Glentadakis <dglent@gmail.com>, 2011, 2012.
 # Stelios <sstavra@gmail.com>, 2011, 2012, 2016, 2017, 2020, 2021, 2023.
 # Petros Vidalis <pvidalis@gmail.com>, 2011.
-# Antonis Geralis <capoiosct@gmail.com>, 2011.
+# SPDX-FileCopyrightText: 2011, 2024 Antonis Geralis <capoiosct@gmail.com>
 # Dimitris Kardarakos <dimkard@gmail.com>, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2023-01-07 13:34+0200\n"
-"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"PO-Revision-Date: 2024-09-20 14:08+0300\n"
+"Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 24.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -546,7 +546,7 @@ msgid ""
 "messages from outside' will become '*** Channel modes: n'"
 msgstr ""
 "Η συμβολοσειρά λειτουργίας του καναλιού θα διατηρηθεί ως ένας συνδυασμός "
-"χαρακτήρων αντί της μετάφρασής της σε ευανάγνωστη μορφή. Π.χ. Το '*** "
+"χαρακτήρων αντί της μετάφρασης της σε ευανάγνωστη μορφή. Π.χ. Το '*** "
 "Λειτουργίες καναλιού: χωρίς εξωτερικά μηνύματα' θα γίνει '*** Λειτουργίες "
 "καναλιού: Χ'"
 
@@ -3881,7 +3881,7 @@ msgid ""
 "that nickname. Enter alternate nicknames for yourself. If your first choice "
 "is rejected by the server, Konversation will try the alternate nicknames."
 msgstr ""
-"Αυτή είναι η λίστα με τα ψευδώνυμά σας. Ένα ψευδώνυμο είναι το όνομα με το "
+"Αυτή είναι η λίστα με τα ψευδώνυμα σας. Ένα ψευδώνυμο είναι το όνομα με το "
 "οποίο θα σας γνωρίζουν οι άλλοι χρήστες. Μπορείτε να χρησιμοποιήσετε "
 "οποιοδήποτε όνομα επιθυμείτε. Ο πρώτος χαρακτήρας του πρέπει να είναι "
 "γράμμα.\n"
@@ -6833,7 +6833,7 @@ msgstr "%1CLEAR [-ALL] [κανάλι | ψευδώνυμο]"
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "Resolved %1 to: %2"
-msgstr "To %1 αναλύθηκε ως: %2"
+msgstr "Το %1 αναλύθηκε ως: %2"
 
 #: src/irc/outputfilterresolvejob.cpp:68
 #, kde-format
@@ -6856,7 +6856,7 @@ msgstr ""
 #: src/irc/query.cpp:410
 #, kde-format
 msgid "Do you want to close your query with %1?"
-msgstr "Επιθυμείτε το κλείσιμο του ερωτήματός σας με το %1;"
+msgstr "Επιθυμείτε το κλείσιμο του ερωτήματος σας με το %1;"
 
 #: src/irc/query.cpp:411
 #, kde-format
@@ -8436,7 +8436,7 @@ msgstr "Σμίκρυνση γραμματοσειράς"
 #: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
-msgstr "Ελάττωση του μεγέθους της τρέχουσας γραμματοειράς"
+msgstr "Ελάττωση του μεγέθους της τρέχουσας γραμματοσειράς"
 
 #: src/mainwindow.cpp:456
 #, kde-format
