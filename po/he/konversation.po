@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-07-02 22:38+0300\n"
+"PO-Revision-Date: 2024-10-11 14:42+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -45,9 +45,8 @@ msgid "&Window"
 msgstr "&חלון"
 
 #: data/scripts/cmd:28
-#, fuzzy
 msgid "You need to specify a command."
-msgstr "עליך לתת שם לזהות."
+msgstr "יש לציין פקודה."
 
 #: data/scripts/cmd:41
 msgid ""
@@ -632,9 +631,9 @@ msgstr "לאפשר חיפוש מידע אוטומטי על משתמשים (‎/W
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/chatwindowbehaviour_config.ui:267
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Max. number of users in a channel:"
-msgstr "מספר המשתמשים המרבי בחדר:"
+msgstr "מספר המשתמשים המ&רבי בחדר:"
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
@@ -1158,31 +1157,31 @@ msgstr "רשימת כינויים:"
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr "תצוגת כרטיסיות:"
+msgstr "סרגל לשוניות:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
 #, kde-format
 msgid "Show MOTD (Message Of The Day) message in fixed font"
-msgstr "הצג את הודעת היום (MOTD) בגופן ברוחב קבוע"
+msgstr "הצגת הודעת היום (MOTD) בגופן ברוחב קבוע"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:79
 #, kde-format
 msgid "Enable fi&xed font for MOTD messages"
-msgstr "אפשר גופן &קבוע רוחב עבור הודעות MOTD"
+msgstr "לאפשר גופן &קבוע רוחב להודעה היומית/MOTD"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseBoldNicks)
 #: src/config/fontappearance_config.ui:86
 #, kde-format
 msgid "Show sender nicknames &bold in the chat view"
-msgstr "הפוך את כינויי השולחים ל&מודגשים בתצוגת השיחה"
+msgstr "להפוך את כינויי השולחים למו&דגשים בתצוגת השיחה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowTrayIcon)
 #: src/config/generalbehavior_configui.ui:26
 #, kde-format
 msgid "Enable System Tray"
-msgstr "אפשר עגינה בלוח"
+msgstr "הפעלת עגינה ללוח"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotify)
 #: src/config/generalbehavior_configui.ui:38
@@ -1200,7 +1199,7 @@ msgstr "התרע רק כאשר מוקפצת הדגשה הכינוי שלך בש�
 #: src/config/generalbehavior_configui.ui:75
 #, kde-format
 msgid "Hide window on startup"
-msgstr "הסתר חלון בהפעלה"
+msgstr "הסתרת חלון בהפעלה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
 #: src/config/generalbehavior_configui.ui:85
@@ -1242,7 +1241,7 @@ msgstr "&רישא בתחילת השורה:"
 #: src/config/generalbehavior_configui.ui:141
 #, kde-format
 msgid "&Elsewhere:"
-msgstr "&מקום אחר:"
+msgstr "מקום א&חר:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
 #: src/config/generalbehavior_configui.ui:172
@@ -1260,13 +1259,13 @@ msgstr "שונות"
 #: src/config/generalbehavior_configui.ui:191
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr "בטל התראות כאשר במצב &מרוחק"
+msgstr "לכבות התראות כאשר במצב מ&רוחק"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:200
 #, kde-format
 msgid "Use custom web &browser:"
-msgstr "השתמש ב&דפדפן מותאם אישית:"
+msgstr "להשתמש ב&דפדפן מותאם אישית:"
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
 #: src/config/generalbehavior_configui.ui:216
@@ -1278,7 +1277,7 @@ msgstr "תו &פקודה:"
 #: src/config/generalbehavior_configui.ui:244
 #, kde-format
 msgid "Use custom &version reply:"
-msgstr "השתמש בתגובת &גרסה מותאמת אישית:"
+msgstr "להשתמש בתגובת &גרסה משלך:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
 #: src/config/generalbehavior_configui.ui:254
@@ -1297,7 +1296,7 @@ msgstr "תיבת הקלט מתרחבת עם הטקסט"
 #: src/config/highlight_config.cpp:31
 #, kde-format
 msgid "Select Sound File"
-msgstr "בחר את קובץ הצליל"
+msgstr "נא לבחור קובץ צליל"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HighlightSoundsEnabled)
 #: src/config/highlight_configui.ui:29
@@ -1547,10 +1546,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
-#, fuzzy, kde-format
-#| msgid "Completion &mode:"
+#, kde-format
 msgid "Count &mode:"
-msgstr "&שיטת השלמה:"
+msgstr "מ&צב ספירה:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, countedEventsGroupBox)
 #: src/config/launcherentry_config.ui:72
@@ -2191,10 +2189,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (KNSWidgets::Button, getButton)
 #: src/config/theme_configui.ui:28
-#, fuzzy, kde-format
-#| msgid "I&nstall Theme..."
+#, kde-format
 msgid "G&et New Themes..."
-msgstr "&התקן ערכת נושא..."
+msgstr "הו&רדת ערכות עיצוב חדשות…"
 
 #. i18n: ectx: property (text), widget (QPushButton, installButton)
 #: src/config/theme_configui.ui:35
@@ -2441,9 +2438,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:27
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable nic&kname watcher"
-msgstr "&השתמש בעוקב הכינויים"
+msgstr "הפעלת מ&משגיח כינויים"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:37
@@ -2939,10 +2936,10 @@ msgid "Unknown server"
 msgstr "שרת לא יודע"
 
 #: src/dcc/transferdetailedinfopanel.cpp:156
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort"
 msgid "%1 on %2, %3 (port %4)"
-msgstr "המשתמש %1 ב־%2, %3 (יציאה <numid>%4</numid>)"
+msgstr "%1 ב־%2, %3 (פתחה %4)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:162
 #, kde-format
@@ -3949,12 +3946,12 @@ msgstr "&שירות:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_nickservNicknameEdit)
 #: src/identitydialog.ui:266
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
-"שם השירות יכול להיות <b><i>nickserv</i></b> או שם התלוי ברשת כמו "
+"שם השירות יכול להיות <b><i>nickserv</i></b> או שם תלוי רשת כמו "
 "<b><i>nickserv@services.dal.net</i></b>"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
@@ -3983,7 +3980,7 @@ msgstr ""
 
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
 #: src/identitydialog.ui:327
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab"
 msgid "Away"
 msgstr "מרוחק"
@@ -4101,21 +4098,21 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
-#, fuzzy, kde-format
+#, kde-format
 msgid "Away Commands"
-msgstr "פקודות:"
+msgstr "פקודות התרחקות"
 
 #. i18n: ectx: property (text), widget (QLabel, awayLabel)
 #: src/identitydialog.ui:471
-#, fuzzy, kde-format
+#, kde-format
 msgid "Away command:"
-msgstr "פקודות:"
+msgstr "פקודת ריחוק:"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
-#, fuzzy, kde-format
+#, kde-format
 msgid "Return command:"
-msgstr "הודעת &חזרה:"
+msgstr "פקודת חזרה:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -5218,13 +5215,13 @@ msgstr "&ביטוי רגולרי"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, m_minUser)
 #: src/irc/channellistpanelui.ui:186
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You can limit the channel list to those channels with a minimum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"באפשרותך להגביל את רשימת החדרים עם מספר משתמשים מינימלי. בחירה ב־0 מבטלת את "
-"הקריטריון הזה."
+"אפשר להגביל את רשימת החדרים לאלו עם כמות החברים המזערית. בחירה ב־0 מבטלת את "
+"התנאי הזה."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_maxUser)
@@ -5235,13 +5232,13 @@ msgstr "ללא הגבלה"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, m_maxUser)
 #: src/irc/channellistpanelui.ui:205
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You can limit the channel list to those channels with a maximum number of "
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
-"באפשרותך להגביל את רשימת החדרים עם מספר משתמשים מרבי. בחירה ב־0 מבטלת את "
-"הקריטריון הזה."
+"אפשר להגביל את רשימת החדרים לאלו עם כמות החברים המרבית. בחירה ב־0 מבטלת את "
+"התנאי הזה."
 
 #: src/irc/channelnick.cpp:187
 #, kde-format
@@ -6358,28 +6355,28 @@ msgid "The notify list is currently empty."
 msgstr "רשימת ההודעות כרגע ריקה."
 
 #: src/irc/outputfilter.cpp:1298
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2)."
-msgstr "רשימת ההודעות הנוכחית: %1"
+msgstr "רשימת ההודעות הנוכחית: %1 ‏(%2 נוספו)."
 
 #: src/irc/outputfilter.cpp:1302
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (removed %2)."
-msgstr "רשימת ההודעות הנוכחית: %1"
+msgstr "רשימת ההודעות הנוכחית: %1 ‏(%2 הוסרו)."
 
 #: src/irc/outputfilter.cpp:1306
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1, %2 and %3 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2, removed %3)."
-msgstr "רשימת ההודעות הנוכחית: %1"
+msgstr "רשימת ההודעות הנוכחית: %1 ‏(%2 נוספו, %3 הוסרו)."
 
 #: src/irc/outputfilter.cpp:1310
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
-msgstr "רשימת ההודעות הנוכחית: %1"
+msgstr "רשימת ההודעות הנוכחית: %1."
 
 #: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3165
 #: src/irc/server.cpp:3179
@@ -7370,7 +7367,7 @@ msgstr "מסוף - Konsole"
 #: src/konsolepanel.cpp:59
 #, kde-format
 msgid "Manage Konsole Profiles"
-msgstr ""
+msgstr "ניהול פרופילים של Konsole"
 
 #: src/main.cpp:27 src/viewer/trayicon.cpp:23
 #, kde-format
@@ -7864,12 +7861,12 @@ msgstr ""
 #: src/mainwindow.cpp:135
 #, kde-format
 msgid "Restart"
-msgstr ""
+msgstr "התחלה מחדש"
 
 #: src/mainwindow.cpp:137
 #, kde-format
 msgid "Quit and restart the application"
-msgstr ""
+msgstr "יציאה והפעלת היישום מחדש"
 
 #: src/mainwindow.cpp:142
 #, kde-format
@@ -8000,7 +7997,7 @@ msgstr "סגור &כרטיסייה"
 #: src/mainwindow.cpp:292
 #, kde-format
 msgid "Last Focused Tab"
-msgstr ""
+msgstr "מעבר ללשונית האחרונה שהייתה במיקוד"
 
 #: src/mainwindow.cpp:299
 #, kde-format
@@ -8016,7 +8013,7 @@ msgstr "העבר כרטיסייה מעלה"
 #: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
 #, kde-format
 msgid "Move this tab"
-msgstr ""
+msgstr "העברת הלשונית הזאת"
 
 #: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
 #, kde-format
@@ -8083,17 +8080,17 @@ msgstr "נקה שורות &סימון"
 #: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
-msgstr ""
+msgstr "הגדלת הכתב"
 
 #: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
-msgstr ""
+msgstr "הגדלת גודל הגופן הנוכחי"
 
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
-msgstr ""
+msgstr "איפוס גודל כתב"
 
 #: src/mainwindow.cpp:442
 #, kde-format
@@ -8103,12 +8100,12 @@ msgstr ""
 #: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
-msgstr ""
+msgstr "הקטנת כתב"
 
 #: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
-msgstr ""
+msgstr "הקטנת גודל הגופן הנוכחי"
 
 #: src/mainwindow.cpp:456
 #, kde-format
@@ -8178,7 +8175,7 @@ msgstr "הכנס תו כלשהו אל הודעת ה־IRC שלך"
 #: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
-msgstr ""
+msgstr "התמקדות בתיבת קלט"
 
 #: src/mainwindow.cpp:535
 #, kde-format
@@ -8251,7 +8248,7 @@ msgstr ""
 #: src/mainwindow.cpp:807
 #, kde-format
 msgid "Hide menu bar"
-msgstr ""
+msgstr "הסתרת סרגל תפריטים"
 
 #: src/mainwindow.cpp:839
 #, kde-format
@@ -8365,7 +8362,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
-msgstr ""
+msgstr "העברת קבצים %1 הושלמה"
 
 #: src/notificationhandler.cpp:302
 #, kde-format
@@ -8434,7 +8431,7 @@ msgstr ""
 #: src/queuetuner.cpp:231
 #, kde-format
 msgid "Reset Values"
-msgstr ""
+msgstr "איפוס ערכים"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_closeButton)
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
@@ -8501,7 +8498,7 @@ msgstr ""
 #: src/queuetunerbase.ui:505
 #, kde-format
 msgid "Age:"
-msgstr ""
+msgstr "גיל:"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_4)
@@ -8565,7 +8562,7 @@ msgstr "בתים (גולמיים):"
 #: src/queuetunerbase.ui:672
 #, kde-format
 msgid "Bytes (Encoded):"
-msgstr ""
+msgstr "בתים (מקודד):"
 
 #: src/quickconnectdialog.cpp:36
 #, kde-format
@@ -8733,7 +8730,7 @@ msgstr "&שמירה…"
 #: src/urlcatcher.cpp:100
 #, kde-format
 msgid "Save selected URLs to the disk."
-msgstr ""
+msgstr "שמירת הכתובות הנבחרות לכונן:"
 
 #: src/urlcatcher.cpp:103
 #, kde-format
@@ -9277,7 +9274,7 @@ msgstr "חיפוש אחר ‚%1’ עם"
 #: src/viewer/irccontextmenus.cpp:297
 #, kde-format
 msgid "Configure Web Shortcuts..."
-msgstr ""
+msgstr "הגדרת קיצורי אינטרנט…"
 
 #: src/viewer/irccontextmenus.cpp:333
 #, kde-format
@@ -9469,22 +9466,22 @@ msgid ""
 msgstr ""
 
 #: src/viewer/ircinput.cpp:474
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
 msgstr[0] "בית אחד"
-msgstr[1] "%1 בתים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[1] "שני בתים"
+msgstr[2] "%1 בתים"
+msgstr[3] "%1 בתים"
 
 #: src/viewer/ircinput.cpp:475
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
-msgstr[0] "שורה אחת"
-msgstr[1] "%1 שורות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "שורה"
+msgstr[1] "שתי שורות"
+msgstr[2] "%1 שורות"
+msgstr[3] "%1 שורות"
 
 #: src/viewer/ircinput.cpp:481
 #, kde-format
@@ -9607,7 +9604,7 @@ msgstr "&שליחה"
 #: src/viewer/pasteeditor.ui:14
 #, kde-format
 msgid "Paste Editor"
-msgstr ""
+msgstr "עורך הדבקה"
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addQuotesButton)
 #: src/viewer/pasteeditor.ui:23
@@ -9629,7 +9626,7 @@ msgstr "יומן גולמי"
 #: src/viewer/searchbar.cpp:64
 #, kde-format
 msgid "Match Case"
-msgstr ""
+msgstr "התאמת רישיות"
 
 #: src/viewer/searchbar.cpp:67
 #, kde-format
@@ -9646,7 +9643,7 @@ msgstr "&איתור:"
 #: src/viewer/searchbarbase.ui:68
 #, kde-format
 msgid "Jump to next match"
-msgstr ""
+msgstr "דילוג לתוצאה הבאה"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findNextButton)
 #: src/viewer/searchbarbase.ui:71
@@ -9658,7 +9655,7 @@ msgstr "ה&בא"
 #: src/viewer/searchbarbase.ui:81
 #, kde-format
 msgid "Jump to previous match"
-msgstr ""
+msgstr "דילוג לתוצאה הקודמת"
 
 #. i18n: ectx: property (text), widget (QToolButton, m_findPreviousButton)
 #: src/viewer/searchbarbase.ui:84
@@ -9723,13 +9720,13 @@ msgstr "מחיקת טקסט עודף"
 #: src/viewer/topicedit.cpp:203
 #, kde-format
 msgid "Text past the server limit of %1 bytes is shown in color."
-msgstr ""
+msgstr "הטקסט שעבר את מגבלת השרת על סך %1 בתים מופיע בצבע."
 
 #: src/viewer/topichistoryview.cpp:36
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
-msgstr ""
+msgstr "ב־%1 מאת %2"
 
 #: src/viewer/topichistoryview.cpp:208
 #, kde-format
@@ -9816,6 +9813,8 @@ msgid ""
 "To know which server to display the channel list for, the list can only be "
 "opened from a query, channel or status window."
 msgstr ""
+"כדי לדעת לאיזה שרת להציג את רשימת החדרים, אפשר לפתוח את הרשימה רק משאילתה, "
+"חדר או חלון מצב."
 
 #: src/viewer/viewcontainer.cpp:3010
 #, kde-format
@@ -9824,6 +9823,8 @@ msgid ""
 "connection is not fast enough, it is possible that your client will be "
 "disconnected by the server."
 msgstr ""
+"השימוש בפונקציה הזאת יכול לגרור תעבורת רשת רבה. אם החיבור שלך לא מהיר מספיק, "
+"יכול להיות שהלקוח שלך ינותק על ידי השרת."
 
 #: src/viewer/viewcontainer.cpp:3014
 #, kde-format
