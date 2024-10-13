@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-10-11 14:42+0300\n"
+"PO-Revision-Date: 2024-10-12 07:47+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3762,7 +3762,7 @@ msgstr ""
 #: src/identitydialog.cpp:89
 #, kde-format
 msgid "Standard NickServ"
-msgstr ""
+msgstr "NickServ רגיל"
 
 #: src/identitydialog.cpp:90
 #, kde-format
@@ -3772,16 +3772,16 @@ msgstr "סיסמת שרת"
 #: src/identitydialog.cpp:91
 #, kde-format
 msgid "SSL Client Certificate"
-msgstr ""
+msgstr "אישור לקוח SSL"
 
 #: src/identitydialog.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " דקה"
 msgstr[1] " דקות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] " דקות"
+msgstr[3] " דקות"
 
 #: src/identitydialog.cpp:115
 #, kde-format
@@ -3848,7 +3848,7 @@ msgstr "עליך להוסיף לפחות כינוי אחד לזהות."
 #: src/identitydialog.cpp:393
 #, kde-format
 msgid "Nicks must not contain spaces."
-msgstr ""
+msgstr "כינויים לא יכולים להכיל רווחים."
 
 #: src/identitydialog.cpp:406
 #, kde-format
@@ -3858,7 +3858,7 @@ msgstr "אנא הכנס שם אמיתי."
 #: src/identitydialog.cpp:417
 #, kde-format
 msgid "Ident must not contain spaces."
-msgstr ""
+msgstr "זהות (Ident) לא יכולה להכיל רווחים."
 
 #: src/identitydialog.cpp:464
 #, kde-format
@@ -3976,7 +3976,7 @@ msgstr "&סיסמה:"
 #: src/identitydialog.ui:313
 #, kde-format
 msgid "PEM file:"
-msgstr ""
+msgstr "קובץ PEM:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
 #: src/identitydialog.ui:327
@@ -5038,7 +5038,7 @@ msgstr "עזוב חדר"
 #: src/irc/channel.cpp:2391
 #, kde-format
 msgid "Leave"
-msgstr ""
+msgstr "נטישה"
 
 #: src/irc/channel.cpp:2562 src/irc/query.cpp:400
 #: src/viewer/statuspanel.cpp:302
@@ -5327,13 +5327,13 @@ msgid "-%1 to %2- %3"
 msgstr "-%1 אל %2- %3"
 
 #: src/irc/inputfilter.cpp:509
-#, fuzzy, kde-format
+#, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] "שנייה אחת"
+msgstr[0] "שנייה"
 msgstr[1] "שניות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] "שניות"
+msgstr[3] "שניות"
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -6553,7 +6553,7 @@ msgstr "המפתח עבור %1 הוא \"%2\"."
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
 msgid "Blowfish"
-msgstr ""
+msgstr "Blowfish"
 
 #: src/irc/outputfilter.cpp:1790
 #, kde-format
@@ -6583,12 +6583,12 @@ msgstr ""
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
 msgid "Resolved %1 to: %2"
-msgstr ""
+msgstr "%1 נפתר לכדי: %2"
 
 #: src/irc/outputfilterresolvejob.cpp:68
 #, kde-format
 msgid "Unable to resolve %1."
-msgstr ""
+msgstr "לא ניתן לפתור את %1."
 
 #: src/irc/query.cpp:49
 #, kde-format
@@ -7845,7 +7845,7 @@ msgstr "השהיית פעילות D-Bus ויצירת ממשק משתמש בכמ�
 #: src/main.cpp:92
 #, kde-format
 msgid "msec"
-msgstr ""
+msgstr "מ״ש"
 
 #: src/main.cpp:93
 #, kde-format
@@ -8095,7 +8095,7 @@ msgstr "איפוס גודל כתב"
 #: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr ""
+msgstr "איפוס גודל הכתב הנוכחי לערכי ההגדרות"
 
 #: src/mainwindow.cpp:447
 #, kde-format
@@ -8356,7 +8356,7 @@ msgstr "%1 רוצה לשלוח לך קובץ"
 #: src/notificationhandler.cpp:283
 #, kde-format
 msgid "An error has occurred in a DCC transfer: %1"
-msgstr ""
+msgstr "אירעה שגיאה בהעברה ישירה (DCC): %1"
 
 #: src/notificationhandler.cpp:296 src/notificationhandler.cpp:301
 #, kde-format
@@ -8810,7 +8810,7 @@ msgstr "לחיצה תמחק את כל הרשימה."
 msgid ""
 "List of Uniform Resource Locators mentioned in any of the Konversation "
 "windows during this session."
-msgstr ""
+msgstr "רשימת כתובות שהוזכרו בחלונות כלשהם של Konversation במהלך ההפעלה הזאת."
 
 #: src/urlcatcher.cpp:168
 #, kde-format
@@ -8827,7 +8827,7 @@ msgstr "תאריך"
 msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
-msgstr ""
+msgstr "בחרת יותר מכתובת אחת. באמת לפתוח כמה כתובות ביחד?"
 
 #: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
 #, kde-format
@@ -8840,6 +8840,8 @@ msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
+"בחרת יותר מכתובת אחת. לכל אחת מהן תיפתח חלונית להגדרת היעד. באמת לפתוח כמה "
+"כתובות ביחד?"
 
 #: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
