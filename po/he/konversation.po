@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2024-10-12 07:47+0300\n"
+"PO-Revision-Date: 2024-10-12 14:15+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -563,7 +563,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last 10 min"
-msgstr ""
+msgstr "10 הדקות האחרונות"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:160
@@ -854,13 +854,13 @@ msgstr "13:"
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
-#, fuzzy, kde-format
+#, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] "שנייה אחת"
+msgstr[0] " שנייה"
 msgstr[1] " שניות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] " שניות"
+msgstr[3] " שניות"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -949,13 +949,13 @@ msgstr "סוג:"
 #: src/config/connectionbehavior_config.ui:161
 #, kde-format
 msgid "Socks v5"
-msgstr ""
+msgstr "Socks v5"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ProxyType)
 #: src/config/connectionbehavior_config.ui:166
 #, kde-format
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #. i18n: ectx: property (text), widget (QLabel, addressLabel)
 #: src/config/connectionbehavior_config.ui:174
@@ -982,13 +982,13 @@ msgid "Password:"
 msgstr "סיסמה:"
 
 #: src/config/dcc_config.cpp:29
-#, fuzzy, kde-format
+#, kde-format
 msgid " byte"
 msgid_plural " bytes"
-msgstr[0] " בית אחד"
+msgstr[0] " בית"
 msgstr[1] " בתים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] " בתים"
+msgstr[3] " בתים"
 
 #: src/config/dcc_config.cpp:74
 #, kde-format
@@ -1102,7 +1102,7 @@ msgstr "&גודל החוצץ:"
 #: src/config/dcc_configui.ui:207
 #, kde-format
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/config/dcc_configui.ui:213
@@ -1368,7 +1368,7 @@ msgstr "&צליל:"
 #: src/config/highlight_configui.ui:311
 #, kde-format
 msgid "Test sound"
-msgstr ""
+msgstr "בדיקת שמע"
 
 #. i18n: ectx: property (text), widget (QLabel, autoTextLabel)
 #: src/config/highlight_configui.ui:326
@@ -1510,7 +1510,7 @@ msgstr "כאשר תפעיל את האפשרות הזאת שדה הקלט יגד�
 #: src/config/konversation.kcfg:266
 #, kde-format
 msgid "Start with hidden main window"
-msgstr ""
+msgstr "לעלות עם חלון ראשי מוסתר"
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:305
@@ -1841,7 +1841,7 @@ msgstr "זהות ברירת־מחדל"
 #: src/config/quickbuttons_configui.ui:20
 #, kde-format
 msgid "Available Placeholders"
-msgstr ""
+msgstr "ממלאי מקום זמינים"
 
 #. i18n: ectx: property (text), widget (QLabel, placeholderHelpLabel)
 #: src/config/quickbuttons_configui.ui:45
@@ -1970,13 +1970,13 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: src/config/settingsdialog.cpp:115
-#, fuzzy, kde-format
+#, kde-format
 msgid " nick"
 msgid_plural " nicks"
 msgstr[0] " כינוי"
 msgstr[1] " כינויים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] " כינויים"
+msgstr[3] " כינויים"
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2023,7 +2023,7 @@ msgstr "תצוגה על המסך (OSD)"
 #: src/config/settingsdialog.cpp:180
 #, kde-format
 msgid "Launcher Entry"
-msgstr ""
+msgstr "רשומת משגר"
 
 #: src/config/settingsdialog.cpp:186
 #, kde-format
@@ -2149,7 +2149,7 @@ msgstr "בחר חבילת ערכת נושא"
 #: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
-msgstr ""
+msgstr "ערכות עיצוב של Konversation‏ (‎*.tar.gz‏ ‎*.tar.bz2‏ ‎*.tar‏ ‎*.zip)"
 
 #: src/config/theme_config.cpp:206
 #, kde-format
@@ -3047,7 +3047,7 @@ msgstr "זמן העברה:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:165
 #, kde-format
 msgid "Estimated time left:"
-msgstr ""
+msgstr "הזמן המשוערך שנותר:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:185
@@ -3728,7 +3728,7 @@ msgstr "שמירת תמונה"
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
 msgid "Images (*.png *.xpm *.jpg)"
-msgstr ""
+msgstr "תמונות (‎*.png‏ ‎*.xpm‏ ‎*.jpg)"
 
 #: src/identitydialog.cpp:37
 #, kde-format
@@ -3751,13 +3751,13 @@ msgstr ""
 #: src/identitydialog.cpp:87
 #, kde-format
 msgid "SASL PLAIN"
-msgstr ""
+msgstr "SASL PLAIN"
 
 #: src/identitydialog.cpp:88
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
-msgstr ""
+msgstr "SASL EXTERNAL (אישור)"
 
 #: src/identitydialog.cpp:89
 #, kde-format
