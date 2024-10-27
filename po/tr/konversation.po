@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2024-09-23 15:21+0300\n"
+"PO-Revision-Date: 2024-10-26 20:25+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -522,7 +522,7 @@ msgid ""
 "with '%'; for example, %B will expand to the characters needed to make a "
 "text bold."
 msgstr ""
-"Metni sunucuya gönderirken değişkenleri genişletme. Değişkenler ‘%’ ile "
+"Metni sunucuya gönderirken değişkenleri genişletme. Değişkenler “%” ile "
 "başlar; örneğin, %B, kalın yazmaya yarar."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableExpansion)
@@ -4357,8 +4357,8 @@ msgid ""
 msgstr ""
 "<qt><p>IRC’deki her kanalın kendisiyle ilişkili bir konu başlığı vardır. Bu "
 "herkesin görebileceği basit bir iletidir.</p><p>Operatör olmanız veya "
-"<em>‘T’</em> kanal kipinin ayarlanmamış olması durumunda konunun solunda "
-"bulunan Kanal Özelliklerini Düzenle düğmesine tıklayarak konuyu kolayca "
+"<em>“T”</em> kanal kipinin ayarlanmamış olması durumunda konunun solunda "
+"bulunan “Kanal Özelliklerini Düzenle” düğmesine tıklayarak konuyu kolayca "
 "değiştirebilirsiniz. Konu başlıklarının geçmişini de aynı yerde "
 "görüntüleyebilirsiniz.</p></qt>"
 
@@ -4392,7 +4392,7 @@ msgstr ""
 "<qt><p>Bu güncel takma adınızı ve ayarladığınız diğerlerini gösterir. Başka "
 "bir takma ad yazar veya seçerseniz IRC sunucusuna takma adınızı değiştirmek "
 "için bir istek gönderilir. Sunucu izin verirse yeni takma ad seçilebilir. "
-"Yeni bir takma ad yazarsanız sonunda ‘Giriş’ düğmesine basmanız gerekir.</"
+"Yeni bir takma ad yazarsanız sonunda “Giriş” düğmesine basmanız gerekir.</"
 "p><p>Diğer takma adlarınızı <em>Ayarlar</em> menüsündeki <em>Kimlikler</em> "
 "alanından düzenleyebilirsiniz.</p></qt>"
 
@@ -5357,7 +5357,7 @@ msgid ""
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
 "Kanal listesini, en az bu sayıda kullanıcıyı içeren kanalları içerecek "
-"biçimde sınırlayabilirsiniz. ‘Sınır yok’u seçmek, bu kriteri devre dışı "
+"biçimde sınırlayabilirsiniz. “Sınır yok”u seçmek, bu kriteri devre dışı "
 "bırakır."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
@@ -5375,7 +5375,7 @@ msgid ""
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
 "Kanal listesini, en çok bu sayıda kullanıcıyı içeren kanalları içerecek "
-"biçimde sınırlayabilirsiniz. ‘Sınır yok’u seçmek, bu kriteri devre dışı "
+"biçimde sınırlayabilirsiniz. “Sınır yok”u seçmek, bu kriteri devre dışı "
 "bırakır."
 
 #: src/irc/channelnick.cpp:187
@@ -6282,7 +6282,7 @@ msgid ""
 "replaced by a '?'."
 msgstr ""
 "Gönderdiğiniz ileti, geçerli kodlamızda bulunmayan karakterler içeriyor. "
-"Eğer yine de sürdürmeyi seçerseniz o karakterler ‘?’ ile değiştirilecekler."
+"Eğer yine de sürdürmeyi seçerseniz o karakterler “?” ile değiştirilecekler."
 
 #: src/irc/outputfilter.cpp:218
 #, kde-format
@@ -6340,7 +6340,7 @@ msgid ""
 "you really want this."
 msgstr ""
 "%1NAMES sunucu bağlantınızın kesilmesine neden olabilir. Bunu gerçekten "
-"istiyorsanız lütfen ‘*’ ile belirtin."
+"istiyorsanız lütfen “*” ile belirtin."
 
 #: src/irc/outputfilter.cpp:619
 #, kde-format
@@ -8976,7 +8976,7 @@ msgstr ""
 "<p>Aşağıdaki <b>URL</b>’lerden birini veya daha fazlasını seçin, daha sonra "
 "URL’nin MIME türü ile ilişkilendrilmiş uygulamayı açmak için bu düğmeyi "
 "tıklayın.</p>-<p>Web adresleri için özel bir tarayıcıyı <b>Genel</b> | "
-"<b>Davranış</b> altındaki <b>Ayarlar</b>bölümünden belirtebilirsiniz.</p>"
+"<b>Davranış</b> altındaki <b>Ayarlar</b> bölümünden belirtebilirsiniz.</p>"
 
 #: src/urlcatcher.cpp:97
 #, kde-format

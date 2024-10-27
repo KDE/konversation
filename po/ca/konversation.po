@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2024-07-31 12:23+0200\n"
+"PO-Revision-Date: 2024-10-26 18:44+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -4470,7 +4470,7 @@ msgstr "Límit d'usuaris del canal"
 #: src/irc/channel.cpp:900
 #, kde-format
 msgid "Enter the new user limit for the channel:"
-msgstr "Introduïu el nou límit d'usuaris del canal:"
+msgstr "Introduïu el límit d'usuaris nou del canal:"
 
 #: src/irc/channel.cpp:1057 src/irc/channel.cpp:1062
 #: src/irc/inputfilter.cpp:1560 src/irc/inputfilter.cpp:1581
@@ -9347,7 +9347,7 @@ msgid ""
 "busy the channel is.</p></qt>"
 msgstr ""
 "<qt><p>Això controla el <em>mode del canal</em>. Això només ho pot canviar "
-"un operador.</p><p>Un canal amb <b>L</b>ímit d'usuaris és aquell en el que "
+"un operador.</p><p>Un canal amb <b>L</b>ímit d'usuaris és aquell en el qual "
 "només poden entrar aquest nombre d'usuaris alhora. Alguns canals tenen un "
 "bot que canvia això automàticament depenent de la seva ocupació.</p></qt>"
 
