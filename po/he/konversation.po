@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2024-10-12 14:15+0300\n"
+"PO-Revision-Date: 2024-10-29 08:12+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3547,9 +3547,9 @@ msgstr "עמודות"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, WhiteBoardFontChooserUi)
 #: src/dcc/whiteboardfontchooserui.ui:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Whiteboard Font Chooser"
-msgstr "לוח לבן"
+msgstr "בורר גופנים ללוח תכנון"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_fontPointComboBox)
 #: src/dcc/whiteboardfontchooserui.ui:55
@@ -4308,16 +4308,16 @@ msgid "Join"
 msgstr "הצטרפות"
 
 #: src/irc/channel.cpp:1084
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = our hostmask, %2 = channel"
 msgid "You (%1) have joined the channel %2."
-msgstr "אתה הצטרפת אל החדר %1‏ (%2)."
+msgstr "(%1) הצטרפת לחדר %2."
 
 #: src/irc/channel.cpp:1112
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 is the nick joining and %2 the hostmask of that nick"
 msgid "%1 (%2) has joined this channel."
-msgstr "המשתמש %1 הצטרף אל החדר (%2)."
+msgstr "%1 (%2) הצטרף/פה לחדר."
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
@@ -4328,15 +4328,15 @@ msgid "Quit"
 msgstr ""
 
 #: src/irc/channel.cpp:1138
-#, fuzzy, kde-format
+#, kde-format
 msgid "You (%1) have left this server."
-msgstr "אתה יצאת מהשרת."
+msgstr "(%1) עזבת את השרת."
 
 #: src/irc/channel.cpp:1140
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = our hostmask, %2 = reason"
 msgid "You (%1) have left this server (%2)."
-msgstr "אתה יצאת מהשרת (%1)."
+msgstr "(%1) עזבת את השרת (%2)."
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
 #: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
@@ -4351,32 +4351,32 @@ msgid "You have left channel %1."
 msgstr "אתה עזבת את החדר %1."
 
 #: src/irc/channel.cpp:1149
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = our hostmask, %2 = channel, %3 = reason"
 msgid "You (%1) have left channel %2 (%3)."
-msgstr "אתה עזבת את החדר %1 (%2)."
+msgstr "(%1) עזבת את החדר %2 (%3)."
 
 #: src/irc/channel.cpp:1162
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 (%2) has left this server."
-msgstr "המשתמש %1 עזב את השרת."
+msgstr "%1 (%2) עזב/ה את השרת."
 
 #: src/irc/channel.cpp:1166
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = nick, %2 = hostname, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr "המשתמש %1 עזב את השרת הזה (%2)."
+msgstr "%1 (%2) עזב/ה את השרת (%3)."
 
 #: src/irc/channel.cpp:1171
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 (%2) has left this channel."
-msgstr "המשתמש %1 עזב את החדר הזה."
+msgstr "%1 (%2) עזב/ה את החדר."
 
 #: src/irc/channel.cpp:1175
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this channel (%3)."
-msgstr "המשתמש %1 עזב את החדר הזה (%2)."
+msgstr "%1 (%2) עזב/ה את החדר (%3)."
 
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
@@ -6610,16 +6610,16 @@ msgid "Close Query"
 msgstr "סגור את השאילתה הזאת"
 
 #: src/irc/query.cpp:453
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = nick, %2 = hostmask"
 msgid "%1 (%2) has left this server."
-msgstr "המשתמש %1 עזב את השרת."
+msgstr "%1 (%2) עזב/ה את השרת."
 
 #: src/irc/query.cpp:461
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr "המשתמש %1 עזב את השרת הזה (%2)."
+msgstr "%1 (%2) עזב/ה את השרת (%3)."
 
 #: src/irc/server.cpp:263
 #, kde-format
@@ -6681,10 +6681,10 @@ msgid "Capabilities negotiation failed: Appears not supported by server."
 msgstr "ניהול היכולות כשל: כנראה לא נתמך על ידי השרת."
 
 #: src/irc/server.cpp:825
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "SASL capability acknowledged by server, attempting SASL %1 authentication..."
-msgstr "יכולת SASL אושרה על ידי השרת, מנסה אימות SASL PLAIN..."
+msgstr "יכולת SASL אושרה על ידי השרת, מתבצע ניסיון אימות SASL %1…"
 
 #: src/irc/server.cpp:838
 #, kde-format
@@ -6723,14 +6723,14 @@ msgid "SSL Connection Warning"
 msgstr "הזהרת חיבור SSL"
 
 #: src/irc/server.cpp:1041
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Could not connect to %1 (port %2) using SSL encryption. Either the server "
 "does not support SSL (did you use the correct port?) or you rejected the "
 "certificate. %3"
 msgstr ""
-"אין אפשרות להתחבר אל %1 (יצאה <numid>%2</numid>) באמצעות הצפנת SSL. אולי "
-"השרת לא תומך ב־SSL (אולי בחרת את היציאה הלא נכונה?) או אתה דחית את האישור %3"
+"לא ניתן להתחבר אל %1 (port %2) עם הצפנת SSL. או שהשרת לא תומך ב־SSL (זאת "
+"הפתחה הנכונה?) או שדחית את האישור. %3"
 
 #: src/irc/server.cpp:1149
 #, kde-format
@@ -8489,7 +8489,7 @@ msgstr "בתים"
 #: src/queuetunerbase.ui:682 src/queuetunerbase.ui:692
 #, kde-format
 msgid "888"
-msgstr ""
+msgstr "888"
 
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2)
 #. i18n: ectx: property (text), widget (QLabel, m_textLabel3_2_3)
