@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-09 00:39+0000\n"
-"PO-Revision-Date: 2024-10-29 08:12+0200\n"
+"PO-Revision-Date: 2024-10-30 12:51+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -7398,17 +7398,17 @@ msgstr ""
 #: src/main.cpp:36
 #, kde-format
 msgid "Dario Abatianni"
-msgstr "Dario Abatianni"
+msgstr "דאריו אבאטיאני"
 
 #: src/main.cpp:36
 #, kde-format
 msgid "Original Author, Project Founder"
-msgstr "כותב מקורי, מקים הפרויקט"
+msgstr "יוצר מקורי, מייסד המיזם"
 
 #: src/main.cpp:37
 #, kde-format
 msgid "Peter Simonsson"
-msgstr "Peter Simonsson"
+msgstr "פיטר סימונסון"
 
 #: src/main.cpp:37
 #, kde-format
@@ -7418,7 +7418,7 @@ msgstr "מתחזק"
 #: src/main.cpp:38
 #, kde-format
 msgid "Eike Hein"
-msgstr "Eike Hein"
+msgstr "אייק היין"
 
 #: src/main.cpp:38
 #, kde-format
@@ -7440,7 +7440,7 @@ msgstr "תמיכה ב־DCC, שיפורי קידודים,  תצוגה על המס
 #: src/main.cpp:40
 #, kde-format
 msgid "Eli MacKenzie"
-msgstr "Eli MacKenzie"
+msgstr "אלי מקנזי"
 
 #: src/main.cpp:40
 #, kde-format
