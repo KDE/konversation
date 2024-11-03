@@ -265,6 +265,10 @@
       <default>false</default>
       <label>Start with hidden main window</label>
     </entry>
+    <entry key="TrayActivateNoWindow" type="Bool">
+      <default>false</default>
+      <label></label>
+    </entry>
     <entry key="ShowBackgroundImage" type="Bool">
       <default>false</default>
       <label></label>

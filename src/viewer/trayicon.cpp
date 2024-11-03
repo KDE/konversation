@@ -30,7 +30,8 @@ namespace Konversation
     void TrayIcon::hideWindow()
     {
         hideAssociatedWindow();
-        setStatus(Active);
+        if (Preferences::self()->trayActivateNoWindow())
+            setStatus(Active);
     }
 
     void TrayIcon::restoreWindow()

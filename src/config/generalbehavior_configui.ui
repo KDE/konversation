@@ -70,6 +70,16 @@ the Free Software Foundation; either version 2 of the License, or
        </layout>
       </item>
       <item>
+       <widget class="QCheckBox" name="kcfg_TrayActivateNoWindow">
+        <property name="toolTip">
+         <string>When the Konversation window is closed, the tray icon will be set to &quot;active&quot;, which will cause it to become visible in tray implementations that only offer access &quot;active&quot; icons.</string>
+        </property>
+        <property name="text">
+         <string>Tray icon becomes &quot;active&quot; when the window is closed</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="kcfg_HideToTrayOnStartup">
         <property name="text">
          <string>Hide window on startup</string>
