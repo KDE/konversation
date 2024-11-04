@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-09 00:39+0000\n"
+"POT-Creation-Date: 2024-11-04 00:39+0000\n"
 "PO-Revision-Date: 2024-09-17 08:02+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1210,92 +1210,107 @@ msgstr "為新訊息通知使用系統匣(&U)"
 msgid "Only &notify when a highlight is triggered or your current nick is used"
 msgstr "只有當突顯事件被觸發或您目前的暱稱被佔用時才通知(&N)"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:75
+#, kde-format
+msgid ""
+"When the Konversation window is closed, the tray icon will be set to \"active"
+"\", which will cause it to become visible in tray implementations that only "
+"offer access \"active\" icons."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
+#: src/config/generalbehavior_configui.ui:78
+#, kde-format
+msgid "Tray icon becomes \"active\" when the window is closed"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#: src/config/generalbehavior_configui.ui:85
 #, kde-format
 msgid "Hide window on startup"
 msgstr "啟動時隱藏視窗"
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
-#: src/config/generalbehavior_configui.ui:85
+#: src/config/generalbehavior_configui.ui:95
 #, kde-format
 msgid "Nickname Completion"
 msgstr "暱稱補齊"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
-#: src/config/generalbehavior_configui.ui:91
+#: src/config/generalbehavior_configui.ui:101
 #, kde-format
 msgid "Completion &mode:"
 msgstr "補齊模式(&M)："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:105
+#: src/config/generalbehavior_configui.ui:115
 #, kde-format
 msgid "Inline Cycle"
 msgstr "內含循環"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:110
+#: src/config/generalbehavior_configui.ui:120
 #, kde-format
 msgid "Shell-Like"
 msgstr "仿 Shell 外觀"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:115
+#: src/config/generalbehavior_configui.ui:125
 #, kde-format
 msgid "Shell-Like with Completion Box"
 msgstr "帶補齊方框的仿 Shell 外觀"
 
 #. i18n: ectx: property (text), widget (QLabel, startOfLineLabel)
-#: src/config/generalbehavior_configui.ui:123
+#: src/config/generalbehavior_configui.ui:133
 #, kde-format
 msgid "Suffi&x at start of line:"
 msgstr "列首(&X)："
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: src/config/generalbehavior_configui.ui:141
+#: src/config/generalbehavior_configui.ui:151
 #, kde-format
 msgid "&Elsewhere:"
 msgstr "別處(&E)："
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
-#: src/config/generalbehavior_configui.ui:172
+#: src/config/generalbehavior_configui.ui:182
 #, kde-format
 msgid "Case sensitive"
 msgstr "區分大小寫"
 
 #. i18n: ectx: property (title), widget (QGroupBox, miscGBox)
-#: src/config/generalbehavior_configui.ui:185
+#: src/config/generalbehavior_configui.ui:195
 #, kde-format
 msgid "Miscellaneous"
 msgstr "雜項"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
-#: src/config/generalbehavior_configui.ui:191
+#: src/config/generalbehavior_configui.ui:201
 #, kde-format
 msgid "Disable notifications while &away"
 msgstr "處於離開狀態時停用系統通知(&A)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
-#: src/config/generalbehavior_configui.ui:200
+#: src/config/generalbehavior_configui.ui:210
 #, kde-format
 msgid "Use custom web &browser:"
 msgstr "使用自訂瀏覽器(&B)："
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
-#: src/config/generalbehavior_configui.ui:216
+#: src/config/generalbehavior_configui.ui:226
 #, kde-format
 msgid "Comman&d char:"
 msgstr "命令字元(&D)："
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
-#: src/config/generalbehavior_configui.ui:244
+#: src/config/generalbehavior_configui.ui:254
 #, kde-format
 msgid "Use custom &version reply:"
 msgstr "自訂版本回復(&V)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
-#: src/config/generalbehavior_configui.ui:254
+#: src/config/generalbehavior_configui.ui:264
 #, kde-format
 msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
@@ -1303,7 +1318,7 @@ msgid ""
 msgstr "<qt>您可以在這裡為 <b>CTCP<i> 版本</i></b>請求設定自訂回復。</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
-#: src/config/generalbehavior_configui.ui:263
+#: src/config/generalbehavior_configui.ui:273
 #, kde-format
 msgid "Input box expands with text"
 msgstr "輸入盒隨著文字而擴展"
@@ -1530,27 +1545,27 @@ msgid "Start with hidden main window"
 msgstr "啟動時隱藏主視窗"
 
 #. i18n: ectx: label, entry, group (General Options)
-#: src/config/konversation.kcfg:305
+#: src/config/konversation.kcfg:309
 #, kde-format
 msgid "&Show real names next to nicknames"
 msgstr "在暱稱旁顯示真實姓名(&S)"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
+#: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
 #, kde-format
 msgid "All events"
 msgstr "所有事件"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
+#: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
 msgstr "有事件的頻道與對話"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
-#: src/config/konversation.kcfg:573
+#: src/config/konversation.kcfg:577
 #, kde-format
 msgid "Open Watched Nicks tab at application startup"
 msgstr "在程式啟動時自動開啟被監視的暱稱清單"

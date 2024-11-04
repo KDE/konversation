@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-09 00:39+0000\n"
+"POT-Creation-Date: 2024-11-04 00:39+0000\n"
 "PO-Revision-Date: 2024-09-06 14:01+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -1256,92 +1256,107 @@ msgstr ""
 "Alleen &melden wanneer iets wordt geaccentueerd of als uw huidige schermnaam "
 "wordt gebruikt"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:75
+#, kde-format
+msgid ""
+"When the Konversation window is closed, the tray icon will be set to \"active"
+"\", which will cause it to become visible in tray implementations that only "
+"offer access \"active\" icons."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
+#: src/config/generalbehavior_configui.ui:78
+#, kde-format
+msgid "Tray icon becomes \"active\" when the window is closed"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#: src/config/generalbehavior_configui.ui:85
 #, kde-format
 msgid "Hide window on startup"
 msgstr "Venster bij opstarten verbergen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
-#: src/config/generalbehavior_configui.ui:85
+#: src/config/generalbehavior_configui.ui:95
 #, kde-format
 msgid "Nickname Completion"
 msgstr "Schermnaamaanvulling"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
-#: src/config/generalbehavior_configui.ui:91
+#: src/config/generalbehavior_configui.ui:101
 #, kde-format
 msgid "Completion &mode:"
 msgstr "Aanvul&modus:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:105
+#: src/config/generalbehavior_configui.ui:115
 #, kde-format
 msgid "Inline Cycle"
 msgstr "Inline cyclus"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:110
+#: src/config/generalbehavior_configui.ui:120
 #, kde-format
 msgid "Shell-Like"
 msgstr "Shell-achtig"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:115
+#: src/config/generalbehavior_configui.ui:125
 #, kde-format
 msgid "Shell-Like with Completion Box"
 msgstr "Shell-achtig met aanvulvak"
 
 #. i18n: ectx: property (text), widget (QLabel, startOfLineLabel)
-#: src/config/generalbehavior_configui.ui:123
+#: src/config/generalbehavior_configui.ui:133
 #, kde-format
 msgid "Suffi&x at start of line:"
 msgstr "Achtervoegsel aan &begin van de regel:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: src/config/generalbehavior_configui.ui:141
+#: src/config/generalbehavior_configui.ui:151
 #, kde-format
 msgid "&Elsewhere:"
 msgstr "&Ergens anders:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
-#: src/config/generalbehavior_configui.ui:172
+#: src/config/generalbehavior_configui.ui:182
 #, kde-format
 msgid "Case sensitive"
 msgstr "Hoofdlettergevoelig"
 
 #. i18n: ectx: property (title), widget (QGroupBox, miscGBox)
-#: src/config/generalbehavior_configui.ui:185
+#: src/config/generalbehavior_configui.ui:195
 #, kde-format
 msgid "Miscellaneous"
 msgstr "Overig"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
-#: src/config/generalbehavior_configui.ui:191
+#: src/config/generalbehavior_configui.ui:201
 #, kde-format
 msgid "Disable notifications while &away"
 msgstr "Meldingen uitschakelen bij &afwezig"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
-#: src/config/generalbehavior_configui.ui:200
+#: src/config/generalbehavior_configui.ui:210
 #, kde-format
 msgid "Use custom web &browser:"
 msgstr "Andere web&browser gebruiken:"
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
-#: src/config/generalbehavior_configui.ui:216
+#: src/config/generalbehavior_configui.ui:226
 #, kde-format
 msgid "Comman&d char:"
 msgstr "Comman&doteken:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
-#: src/config/generalbehavior_configui.ui:244
+#: src/config/generalbehavior_configui.ui:254
 #, kde-format
 msgid "Use custom &version reply:"
 msgstr "Aangepast &version-antwoord:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
-#: src/config/generalbehavior_configui.ui:254
+#: src/config/generalbehavior_configui.ui:264
 #, kde-format
 msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
@@ -1351,7 +1366,7 @@ msgstr ""
 "i></b>-verzoeken.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
-#: src/config/generalbehavior_configui.ui:263
+#: src/config/generalbehavior_configui.ui:273
 #, kde-format
 msgid "Input box expands with text"
 msgstr "Invoerveld breidt uit met tekst"
@@ -1582,27 +1597,27 @@ msgid "Start with hidden main window"
 msgstr "Starten met verborgen hoofdvenster"
 
 #. i18n: ectx: label, entry, group (General Options)
-#: src/config/konversation.kcfg:305
+#: src/config/konversation.kcfg:309
 #, kde-format
 msgid "&Show real names next to nicknames"
 msgstr "Echte namen naa&st schermnamen tonen"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
+#: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
 #, kde-format
 msgid "All events"
 msgstr "Alle evenementen"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
+#: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
 msgstr "Kanalen en zoekopdrachten met evenementen"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
-#: src/config/konversation.kcfg:573
+#: src/config/konversation.kcfg:577
 #, kde-format
 msgid "Open Watched Nicks tab at application startup"
 msgstr "Gevolgde schermnamen die online zijn tonen bij opstarten"

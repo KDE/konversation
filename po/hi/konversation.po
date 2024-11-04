@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-09 00:39+0000\n"
+"POT-Creation-Date: 2024-11-04 00:39+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -1202,92 +1202,107 @@ msgstr "नये संदेश सूचनाओं में तंत्�
 msgid "Only &notify when a highlight is triggered or your current nick is used"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:75
+#, kde-format
+msgid ""
+"When the Konversation window is closed, the tray icon will be set to \"active"
+"\", which will cause it to become visible in tray implementations that only "
+"offer access \"active\" icons."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
+#: src/config/generalbehavior_configui.ui:78
+#, kde-format
+msgid "Tray icon becomes \"active\" when the window is closed"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
+#: src/config/generalbehavior_configui.ui:85
 #, kde-format
 msgid "Hide window on startup"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, middleLabel)
-#: src/config/generalbehavior_configui.ui:85
+#: src/config/generalbehavior_configui.ui:95
 #, fuzzy, kde-format
 msgid "Nickname Completion"
 msgstr "उपनाम पूर्णता (&N)"
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
-#: src/config/generalbehavior_configui.ui:91
+#: src/config/generalbehavior_configui.ui:101
 #, kde-format
 msgid "Completion &mode:"
 msgstr "पूर्णता विधि: (&m)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:105
+#: src/config/generalbehavior_configui.ui:115
 #, fuzzy, kde-format
 msgid "Inline Cycle"
 msgstr "आनलाइन तब से"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:110
+#: src/config/generalbehavior_configui.ui:120
 #, kde-format
 msgid "Shell-Like"
 msgstr "शेल-जैसा"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
-#: src/config/generalbehavior_configui.ui:115
+#: src/config/generalbehavior_configui.ui:125
 #, kde-format
 msgid "Shell-Like with Completion Box"
 msgstr "शेल-जैसा पूर्णता बक्सा सहित"
 
 #. i18n: ectx: property (text), widget (QLabel, startOfLineLabel)
-#: src/config/generalbehavior_configui.ui:123
+#: src/config/generalbehavior_configui.ui:133
 #, fuzzy, kde-format
 msgid "Suffi&x at start of line:"
 msgstr "पंक्ति के प्रारंभ में प्रत्यय: (&s)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
-#: src/config/generalbehavior_configui.ui:141
+#: src/config/generalbehavior_configui.ui:151
 #, kde-format
 msgid "&Elsewhere:"
 msgstr "कहींऔर: (&E)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
-#: src/config/generalbehavior_configui.ui:172
+#: src/config/generalbehavior_configui.ui:182
 #, kde-format
 msgid "Case sensitive"
 msgstr "केस सेंसिटिव"
 
 #. i18n: ectx: property (title), widget (QGroupBox, miscGBox)
-#: src/config/generalbehavior_configui.ui:185
+#: src/config/generalbehavior_configui.ui:195
 #, kde-format
 msgid "Miscellaneous"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableNotifyWhileAway)
-#: src/config/generalbehavior_configui.ui:191
+#: src/config/generalbehavior_configui.ui:201
 #, fuzzy, kde-format
 msgid "Disable notifications while &away"
 msgstr "सूचनाएँ सक्षम करें"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
-#: src/config/generalbehavior_configui.ui:200
+#: src/config/generalbehavior_configui.ui:210
 #, fuzzy, kde-format
 msgid "Use custom web &browser:"
 msgstr "मनपसंद वेब ब्राउज़र इस्तेमाल करें:"
 
 #. i18n: ectx: property (text), widget (QLabel, commandCharLabel)
-#: src/config/generalbehavior_configui.ui:216
+#: src/config/generalbehavior_configui.ui:226
 #, kde-format
 msgid "Comman&d char:"
 msgstr "कमांड अक्षर: (&d)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
-#: src/config/generalbehavior_configui.ui:244
+#: src/config/generalbehavior_configui.ui:254
 #, fuzzy, kde-format
 msgid "Use custom &version reply:"
 msgstr "मनपसंद संस्करण जवाब: (&v)"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_CustomVersionReply)
-#: src/config/generalbehavior_configui.ui:254
+#: src/config/generalbehavior_configui.ui:264
 #, kde-format
 msgid ""
 "<qt>Here you can set a custom reply for <b>CTCP <i>VERSION</i></b> requests."
@@ -1297,7 +1312,7 @@ msgstr ""
 "qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseMultiRowInputBox)
-#: src/config/generalbehavior_configui.ui:263
+#: src/config/generalbehavior_configui.ui:273
 #, kde-format
 msgid "Input box expands with text"
 msgstr ""
@@ -1523,27 +1538,27 @@ msgid "Start with hidden main window"
 msgstr ""
 
 #. i18n: ectx: label, entry, group (General Options)
-#: src/config/konversation.kcfg:305
+#: src/config/konversation.kcfg:309
 #, fuzzy, kde-format
 msgid "&Show real names next to nicknames"
 msgstr "उपनाम सूची में होस्टमास्क दिखाएँ (&i)"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:439 src/config/launcherentry_config.ui:56
+#: src/config/konversation.kcfg:443 src/config/launcherentry_config.ui:56
 #, fuzzy, kde-format
 msgid "All events"
 msgstr "क़तार-बद्ध"
 
 #. i18n: ectx: label, entry (LauncherEntryCountMode), group (LauncherEntry)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LauncherEntryCountMode)
-#: src/config/konversation.kcfg:442 src/config/launcherentry_config.ui:61
+#: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
 msgstr ""
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
-#: src/config/konversation.kcfg:573
+#: src/config/konversation.kcfg:577
 #, fuzzy, kde-format
 msgid "Open Watched Nicks tab at application startup"
 msgstr "प्रारंभ में देखे जा रहे उपनामों को दिखाएँ (&S)"
