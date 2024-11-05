@@ -1251,12 +1251,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Konversation penceresi kapatıldığında, tepsi simgesi “etkin” olarak "
+"ayarlanacağından, yalnızca “etkin” simgelere erişim izni veren tepsi "
+"çeşitlerinde görünür duruma gelecektir."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Pencere kapatıldığında tepsi simgesi “etkin” duruma gelir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
@@ -10197,6 +10200,3 @@ msgstr "Kanal Listesi Uyarısı"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "İzlenen Takma Adlar"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Konversation Yer İmi Düzenleyicisi"

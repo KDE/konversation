@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-02-24 23:41+0100\n"
-"Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
+"PO-Revision-Date: 2024-11-04 06:46+0100\n"
+"Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -44,13 +44,13 @@ msgstr ""
 #, kde-format
 msgctxt "Menu title"
 msgid "&Insert"
-msgstr "&Vstavi"
+msgstr "Vstav&i"
 
 #. i18n: ectx: Menu (windows)
 #: data/konversationui.rc:38
 #, kde-format
 msgid "&Window"
-msgstr "&Okno"
+msgstr "Okno"
 
 #: data/scripts/cmd:28
 msgid "You need to specify a command."
@@ -1255,12 +1255,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Ko je okno Konversation zaprto, bo ikona pladnja nastavljena na \"aktivno\", "
+"kar bo povzročilo, da bo vidna v implementacijah pladnja, ki ponujajo dostop "
+"samo do \"aktivnih\" ikon."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Ikona pladnja postane \"aktivna\", ko je okno zaprto"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
