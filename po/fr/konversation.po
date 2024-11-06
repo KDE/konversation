@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-09-01 17:06+0200\n"
+"PO-Revision-Date: 2024-11-05 07:28+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -30,9 +30,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1292,12 +1292,18 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Lorsque la fenêtre de Konversation est fermée, l'icône de la boîte à "
+"miniatures sera définie sur « Active », ce qui la rendra visible dans les "
+"implémentations de boîte à miniatures n'offrant l'accès qu'à des icônes "
+"« actives »."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
 msgstr ""
+"L'icône de la boîte à miniatures devient « Active » lorsque la fenêtre est "
+"fermée."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
