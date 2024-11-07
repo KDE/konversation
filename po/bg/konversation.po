@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-30 00:38+0000\n"
-"PO-Revision-Date: 2024-06-27 18:35+0200\n"
+"PO-Revision-Date: 2024-11-06 23:58+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -72,7 +72,7 @@ msgstr "Няма намерени работещи видео плейъри."
 
 #: data/scripts/media:181
 msgid "\"%1\" is not running."
-msgstr "\"%1\" не се изпълнява."
+msgstr "„%1“ не се изпълнява."
 
 #: data/scripts/media:183
 msgid "No running media players found."
@@ -2713,7 +2713,7 @@ msgstr "Моля, посочете поне един <b>Псевдоним</b>.<
 #: src/connectionmanager.cpp:591
 #, kde-format
 msgid "<qt>Your identity \"%1\" is not set up correctly:<br/>%2</qt>"
-msgstr "<qt>Вашата самоличност \"%1\" не е настроена правилно:<br/>%2</qt>"
+msgstr "<qt>Вашата самоличност „%1“ не е настроена правилно:<br/>%2</qt>"
 
 #: src/connectionmanager.cpp:592
 #, kde-format
@@ -3545,7 +3545,7 @@ msgstr "Администраторът е ограничил правото да
 #: src/dcc/transfersend.cpp:187
 #, kde-format
 msgid "The url \"%1\" does not exist"
-msgstr "Адресът \"%1\" не съществува"
+msgstr "Адресът „%1“ не съществува"
 
 #: src/dcc/transfersend.cpp:195
 #, kde-format
@@ -3576,7 +3576,7 @@ msgstr "Не беше зададено име на файл"
 #: src/dcc/transfersend.cpp:243
 #, kde-format
 msgid "Could not retrieve \"%1\""
-msgstr "Не може да се намери \"%1\""
+msgstr "Не може да се намери „%1“"
 
 #: src/dcc/transfersend.cpp:264
 #, kde-format
@@ -3603,12 +3603,12 @@ msgstr ""
 #: src/dcc/transfersend.cpp:605
 #, kde-format
 msgid "Could not read from file \"%1\"."
-msgstr "Не може да се чете от файл \"%1\"."
+msgstr "Не може да се чете от файл „%1“."
 
 #: src/dcc/transfersend.cpp:608
 #, kde-format
 msgid "Could not write to file \"%1\"."
-msgstr "Не може да се пише във файл \"%1\"."
+msgstr "Не може да се пише във файл „%1“."
 
 #: src/dcc/transfersend.cpp:611
 #, kde-format
@@ -3618,7 +3618,7 @@ msgstr "Възникна невъзстановима грешка."
 #: src/dcc/transfersend.cpp:614
 #, kde-format
 msgid "Could not open file \"%1\"."
-msgstr "Не може да се отвори файл \"%1\"."
+msgstr "Не може да се отвори файл „%1“."
 
 #: src/dcc/transfersend.cpp:623
 #, kde-format
@@ -4623,17 +4623,17 @@ msgstr "Тема"
 #: src/irc/channel.cpp:1359
 #, kde-format
 msgid "The channel topic is \"%1\"."
-msgstr "Темата на канала е \"%1\"."
+msgstr "Темата на канала е „%1“."
 
 #: src/irc/channel.cpp:1373
 #, kde-format
 msgid "You set the channel topic to \"%1\"."
-msgstr "Зададохте темата на канала да е \"%1\"."
+msgstr "Зададохте темата на канала да е „%1“."
 
 #: src/irc/channel.cpp:1375
 #, kde-format
 msgid "%1 sets the channel topic to \"%2\"."
-msgstr "%1 задава темата на канала да е \"%2\"."
+msgstr "%1 задава темата на канала да е „%2“."
 
 #: src/irc/channel.cpp:1429
 #, kde-format
@@ -5007,7 +5007,7 @@ msgstr "Задали сте ключа на канала на „%1“."
 #: src/irc/channel.cpp:1716
 #, kde-format
 msgid "%1 sets the channel key to '%2'."
-msgstr "%1 задава ключа на канала на '%2'."
+msgstr "%1 задава ключа на канала на „%2“."
 
 #: src/irc/channel.cpp:1720
 #, kde-format
@@ -5652,7 +5652,7 @@ msgstr "Каналът %1 още няма тема."
 #: src/irc/inputfilter.cpp:1474
 #, kde-format
 msgid "The channel topic for %1 is: \"%2\""
-msgstr "Темата на канала за %1 е \"%2\""
+msgstr "Темата на канала за %1 е „%2“"
 
 #: src/irc/inputfilter.cpp:1491
 #, kde-format
@@ -5742,7 +5742,7 @@ msgstr "Сега сте IRC оператор на този сървър."
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
 msgid "'%1' is now your hidden host (set by services)."
-msgstr "'%1' вече е вашият скрит хост (зададен от услугите)."
+msgstr "„%1“ вече е вашият скрит хост (зададен от услугите)."
 
 #: src/irc/inputfilter.cpp:1700
 #, kde-format
@@ -6397,7 +6397,7 @@ msgstr "Употреба: %1NOTICE (известие) <получател><съ�
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr "Изпращане на бележка \"%1\" до %2."
+msgstr "Изпращане на бележка „%1“ до %2."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
@@ -6442,7 +6442,7 @@ msgstr "Употреба: %1OMSG текст"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr "Изпращане на бележка \"%1\" до %2."
+msgstr "Изпращане на бележка „%1“ до %2."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6462,7 +6462,7 @@ msgstr "Употреба: %1SAY текст"
 #: src/irc/outputfilter.cpp:977
 #, kde-format
 msgid "File \"%1\" does not exist."
-msgstr "Файл \"%1\" не съществува."
+msgstr "Файл „%1“ не съществува."
 
 #: src/irc/outputfilter.cpp:981
 #, kde-format
@@ -6752,7 +6752,7 @@ msgstr "Не е зададен ключ за %1."
 #: src/irc/outputfilter.cpp:1777
 #, kde-format
 msgid "The key for %1 is \"%2\"."
-msgstr "Ключът за %1 е \"%2\"."
+msgstr "Ключът за %1 е „%2“."
 
 #: src/irc/outputfilter.cpp:1778
 #, kde-format
@@ -6967,7 +6967,7 @@ msgid ""
 "\"%2\".\n"
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
-"Нито един псевдоним на самоличност \"%1\" не бяха приети от връзка \"%2\".\n"
+"Нито един псевдоним на самоличност „%1“ не бяха приети от връзка „%2“.\n"
 "Моля, въведете нов или натиснете \"Отказ\" за прекъсване на връзката:"
 
 #: src/irc/server.cpp:1335
@@ -6989,7 +6989,7 @@ msgstr "Получена е невалидна DCC SEND заявка от %1."
 #: src/irc/server.cpp:2379
 #, kde-format
 msgid "%1 offers to send you \"%2\" (%3)..."
-msgstr "%1 предлага да ви изпрати \"%2\" (%3)..."
+msgstr "%1 предлага да ви изпрати „%2“ (%3)..."
 
 #: src/irc/server.cpp:2382 src/irc/server.cpp:2512 src/irc/server.cpp:2524
 #: src/irc/server.cpp:2673 src/irc/server.cpp:2729 src/irc/server.cpp:2838
@@ -7011,7 +7011,7 @@ msgstr "Молба към %1 да приеме качване на %2 (%3)..."
 #: src/irc/server.cpp:2521
 #, kde-format
 msgid "Asking %1 to accept passive upload of \"%2\" (%3)..."
-msgstr "%1 иска да приеме пасивно качване на \"%2\" (%3)..."
+msgstr "%1 иска да приеме пасивно качване на „%2“ (%3)..."
 
 #: src/irc/server.cpp:2533
 #, kde-format
@@ -7030,7 +7030,7 @@ msgstr "Получено невалидно съобщение за приема
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
-msgstr "Получено е съобщение за \"%1\" от %2."
+msgstr "Получено е съобщение за „%1“ от %2."
 
 #: src/irc/server.cpp:2669
 #, kde-format
@@ -7038,13 +7038,13 @@ msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
-msgstr "Продължение на свалянето на \"%1\" от %2, започвайки %3% на %4..."
+msgstr "Продължение на свалянето на „%1“ от %2, започвайки %3% на %4..."
 
 #: src/irc/server.cpp:2679
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
-msgstr "Получена е невалидно съобщение за продължаване на \"%1\" от %2."
+msgstr "Получена е невалидно съобщение за продължаване на „%1“ от %2."
 
 #: src/irc/server.cpp:2725
 #, kde-format
@@ -7052,19 +7052,19 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr "Продължение качването на \"%1\" на %2, започвайки с %3% на %4..."
+msgstr "Продължение качването на „%1“ на %2, започвайки с %3% на %4..."
 
 #: src/irc/server.cpp:2747
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
-msgstr "Получена е невалидна заявка за продължаване за \"%1\" от %2."
+msgstr "Получена е невалидна заявка за продължаване за „%1“ от %2."
 
 #: src/irc/server.cpp:2766
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
-msgstr "Получена невалидна заявка за отхвърляне за \"%1\" от %2."
+msgstr "Получена невалидна заявка за отхвърляне за „%1“ от %2."
 
 #: src/irc/server.cpp:2782
 #, kde-format
@@ -7076,37 +7076,37 @@ msgstr "Получена невалидна заявка за отхвърлян
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
-msgstr "Свалянето на \"%1\" от %2 завърши."
+msgstr "Свалянето на „%1“ от %2 завърши."
 
 #: src/irc/server.cpp:2800
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
-msgstr "Свалянето на \"%1\" от %2 беше неуспешно. Причина: %3."
+msgstr "Свалянето на „%1“ от %2 беше неуспешно. Причина: %3."
 
 #: src/irc/server.cpp:2812
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
-msgstr "Качването на \"%1\" на %2 приключи."
+msgstr "Качването на „%1“ на %2 приключи."
 
 #: src/irc/server.cpp:2815
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
-msgstr "Качването на \"%1\" на %2 беше неуспешно. Причина: %3."
+msgstr "Качването на „%1“ на %2 беше неуспешно. Причина: %3."
 
 #: src/irc/server.cpp:2829
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr "Изпращане \"%1\" на %2..."
+msgstr "Изпращане „%1“ на %2..."
 
 #: src/irc/server.cpp:2836
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
-msgstr "Сваляне на \"%1\" (%2) от %3..."
+msgstr "Сваляне на „%1“ (%2) от %3..."
 
 #: src/irc/server.cpp:3165 src/notificationhandler.cpp:348
 #, kde-format
@@ -7121,12 +7121,12 @@ msgstr "%1 е неактивен (%2)."
 #: src/irc/server.cpp:3842
 #, kde-format
 msgid "Error: Could not find script \"%1\"."
-msgstr "Грешка: не може да бъде открит скрипт \"%1\"."
+msgstr "Грешка: не може да бъде открит скрипт „%1“."
 
 #: src/irc/server.cpp:3847
 #, kde-format
 msgid "Error: Could not execute script \"%1\". Check file permissions."
-msgstr "Грешка: Не може да бъде изпълнен скрипт \"%1\". Проверете правата."
+msgstr "Грешка: Не може да бъде изпълнен скрипт „%1“. Проверете правата."
 
 #: src/irc/server.cpp:4058
 #, kde-format
@@ -9628,7 +9628,7 @@ msgstr "Запис на връзката като..."
 #: src/viewer/irccontextmenus.cpp:283
 #, kde-format
 msgid "Search for '%1' with"
-msgstr "Търсене за \"%1\" с"
+msgstr "Търсене за „%1“ с"
 
 #: src/viewer/irccontextmenus.cpp:297
 #, kde-format
