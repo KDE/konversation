@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-05-20 19:17+0100\n"
+"PO-Revision-Date: 2024-11-08 15:00+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1239,12 +1239,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"When the Konversation window is closed, the tray icon will be set to \"active"
+"\", which will cause it to become visible in tray implementations that only "
+"offer access \"active\" icons."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Tray icon becomes \"active\" when the window is closed"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
