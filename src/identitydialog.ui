@@ -579,7 +579,7 @@
        <item row="2" column="1">
         <widget class="KLineEdit" name="m_loginEdit">
          <property name="whatsThis">
-          <string>When you connect, many servers query your computer for an IDENT response. If you computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed.</string>
+          <string>When you connect, many servers query your computer for an IDENT response. If your computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed.</string>
          </property>
         </widget>
        </item>

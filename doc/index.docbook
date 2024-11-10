@@ -305,7 +305,7 @@ The <interface>Main</interface> screen will be displayed showing the messages se
 
 <callout arearefs="pt-first-channel-1"><para>This is called the <interface>Input Line</interface>.  To send a message to everyone in the channel, type the message here and press &Enter;.
  Your message, as well as everyone else's messages appear in the channel scroll above.
- Each message is preceded by the time and user's &i18n-nickname;.</para></callout>
+ Each message is preceded by the time and the user's &i18n-nickname;.</para></callout>
 
 <callout arearefs="pt-first-channel-2"><para>You may join additional servers and channels.  Each server, channel, channel list, and other screen gets a separate tab here.
 To display a list of available channels, see <link linkend="list-channels">Listing available channels</link>.
@@ -507,7 +507,7 @@ automatically retrieves this setting from the operating system.  If you
 seem to be having trouble seeing other user's messages correctly, try
 changing this setting.</para></callout>
 <callout arearefs="pt-identity-adv-3"><para>When you connect, many servers
-query your computer for an IDENT response.  If you computer is not running
+query your computer for an IDENT response.  If your computer is not running
 an IDENT server, this response is sent by &konversation;.  No spaces
 are allowed.  Your first name is suggested.</para></callout>
 <callout arearefs="pt-identity-adv-4"><para>Whenever you leave a channel,
@@ -864,7 +864,7 @@ The screen is shown below with a channel tab selected.</para>
 It appears only when the current tab is a channel.
 To send a message to everyone in the channel, type the message here and press &Enter;.
  Your message, as well as everyone else's messages appear in the channel scroll above.
- Each message is preceded by the time and user's &i18n-nickname;.</para>
+ Each message is preceded by the time and the user's &i18n-nickname;.</para>
 
  <para>You can also paste text from the clipboard.  If the pasted text has more than one line (newlines),
  a dialog box appears.  Edit the text as desired and click <guibutton>OK</guibutton>.
@@ -1171,7 +1171,7 @@ Synonym for <userinput><command>/leave</command></userinput></para></listitem>
 <varlistentry>
 <term><userinput><command>/me </command><replaceable>msg</replaceable></userinput></term>
 <listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &i18n-nickname;.  For example, if
-your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
+your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup of tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -1981,7 +1981,7 @@ websites or other resources on the web.  You can double-click any such &URL; and
 the application associated with the &URL;.
 The application launched depends upon the &MIME; type of the &URL;.
 For example, a &URL; beginning with
-<interface>http:</interface> will activate your default web browser and display the web page.
+<interface>https:</interface> will activate your default web browser and display the web page.
 (You can also specify the <link linkend="webbrowser">web browser</link> to use.)
 If the &URL; scrolls off the screen, you might have trouble finding it
 again.  &konversation; can keep a convenient list of all &URL;s for you.  To activate this feature, choose
@@ -2024,7 +2024,7 @@ are not listed.)  Click on a &URL; to select it.</para></callout>
 
 <callout arearefs="pt-urlcatcher-2"><para>Click here to activate the application associated with the selected &URL;.
 The application launched depends upon the &MIME; type of the &URL;.  For example, a &URL; beginning with
-<interface>http:</interface> will activate your default web browser and display the web page.  For web pages, you can
+<interface>https:</interface> will activate your default web browser and display the web page.  For web pages, you can
 also specify the <link linkend="webbrowser">web browser</link> to use.</para></callout>
 
 <callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the clipboard.</para></callout>
@@ -2047,7 +2047,7 @@ also specify the <link linkend="webbrowser">web browser</link> to use.</para></c
 
 <para>When you click on a highlighted &URL; anywhere in &konversation;, it will launch the default
 application associated with the &MIME; type of the &URL;.  For example, when clicking on
-a &URL; beginning with <interface>http</interface>, &konqueror; is launched to display the
+a &URL; beginning with <interface>https</interface>, &konqueror; is launched to display the
 web page.  You can specify an application different from the <guilabel>Default Applications</guilabel>
 module of the &systemsettings;.  For example, you can use <application>Firefox</application> instead.
 </para>
@@ -2119,7 +2119,7 @@ to help you quickly locate information.  To do this, choose
 </menuchoice>
 on the main menu, or press <keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>.
   <action>A line will appear at the bottom of the text on the screen.
- The line will scroll with the rest of the text in the screen.</action>
+ The line will scroll with the rest of the text on the screen.</action>
 </para>
 
 <para>To make the <interface>Maker Line</interface>
@@ -2249,7 +2249,7 @@ alternate forms of the command.  Commands not listed here are sent to the server
 <varlistentry>
 <term><userinput><command>/me</command> <replaceable>msg</replaceable></userinput></term>
 <listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &i18n-nickname;.  For example, if
-your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
+your &i18n-nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup of tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the <userinput><command>/away</command></userinput> command instead.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2286,7 +2286,7 @@ and closes all channel, query, or DCC tabs open on that server.</para></listitem
 </varlistentry>
 
 <varlistentry><term><userinput><command>/notice</command> <replaceable>nick|channel</replaceable> <replaceable>msg</replaceable></userinput></term>
-<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> or to everyone in <userinput><replaceable>channel</replaceable></userinput>.  The following is an example
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &i18n-nickname; <userinput><replaceable>nick</replaceable></userinput> or to everyone in the <userinput><replaceable>channel</replaceable></userinput>.  The following is an example
 of what appears to you in the channel tab</para>
 
 <para><computeroutput>[17:14] [Notice] Sending notice "I think I understand" to #konversation</computeroutput></para>
