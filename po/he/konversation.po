@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-10-30 12:51+0200\n"
+"PO-Revision-Date: 2024-11-11 08:01+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.1\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -85,27 +85,27 @@ msgstr "שום דבר לא מתנגן דרך %1."
 #: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
-msgstr ""
+msgstr "אף אחד מנגני השמע (%1) לא מנגנים משהו."
 
 #: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
-msgstr ""
+msgstr "אף אחד מנגני הווידאו (%1) לא מנגנים משהו."
 
 #: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
-msgstr ""
+msgstr "אף אחד מנגני המדיה (%1) לא מנגנים משהו."
 
 #: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
-msgstr ""
+msgstr "אירעה שגיאה בניסיון למשוך נתוני־על של מדיה מ־%1."
 
 #: data/scripts/media:257
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
-msgstr ""
+msgstr "יש בעיה בביטוי הרגולרי שצוין ב־REGEX_FIXUP."
 
 #: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
@@ -7059,7 +7059,7 @@ msgstr "שינוי פרטים על הרשת"
 #: src/irc/servergroupdialog.cpp:165
 #, kde-format
 msgid "Add Server"
-msgstr ""
+msgstr "הוספת שרת"
 
 #: src/irc/servergroupdialog.cpp:183
 #, kde-format
@@ -7079,12 +7079,12 @@ msgstr "ערוך חדר"
 #: src/irc/servergroupdialog.cpp:420
 #, kde-format
 msgid "The network name is required."
-msgstr ""
+msgstr "שם הרשת נחוץ."
 
 #: src/irc/servergroupdialog.cpp:424
 #, kde-format
 msgid "You need to add at least one server to the network."
-msgstr ""
+msgstr "יש להוסיף שרת אחד לפחות לרשת."
 
 #: src/irc/servergroupdialog.cpp:493
 #, kde-format
@@ -7116,6 +7116,8 @@ msgid ""
 "or edit an existing one. The Identity will identify you and determine your "
 "nickname when you connect to the network."
 msgstr ""
+"נא לבחור זהות קיימת או ללחוץ על כפתור העריכה כדי להוסיף זהות חדשה או לערוך "
+"זהות קיימת. הזהות תאפשר לזהות אותך ולקבוע את הכינוי שלך בעת התחברות לרשת."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_editButton)
 #. i18n: ectx: property (text), widget (QPushButton, m_editIdentityButton)
@@ -7150,6 +7152,8 @@ msgid ""
 "Enter the name of the Network here. You may create as many entries in the "
 "Server List screen with the same Network as you like."
 msgstr ""
+"נא למלא כאן את שם הרשת. אפשר ליצור כמה רשומות שצריך במסך רשימת השרתים באותה "
+"הרשת."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: src/irc/servergroupdialogui.ui:108
@@ -7170,6 +7174,8 @@ msgid ""
 "Check here if you want Konversation to automatically connect to this network "
 "whenever you open Konversation."
 msgstr ""
+"יש לסמן כאן כדי ש־Konversation יתחבר לרשת הזאת אוטומטית עם פתיחת "
+"Konversation."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:131
@@ -8694,13 +8700,13 @@ msgid "No answer from server %1 for more than %2 and %3."
 msgstr "אין תשובה מהשרת %1 כבר יותר מ־%2 דקות ו־%3 שניות."
 
 #: src/statusbar.cpp:201
-#, fuzzy, kde-format
+#, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] "אין תשובה מהשרת %2 למשך יותר משנייה אחת."
-msgstr[1] "אין תשובה מהשרת %2 יותר מ־%1 שניות."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "אין תשובה מהשרת %2 במשך יותר משנייה."
+msgstr[1] "אין תשובה מהשרת %2 במשך יותר משתי שניות."
+msgstr[2] "אין תשובה מהשרת %2 במשך יותר מ־%1 שניות."
+msgstr[3] "אין תשובה מהשרת %2 במשך יותר מ־%1 שניות."
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
