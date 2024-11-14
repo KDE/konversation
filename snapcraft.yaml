@@ -66,6 +66,8 @@ parts:
       craftctl default
       rsync -a --ignore-existing $CRAFT_PART_INSTALL/ /
   konversation:
+    after:
+      - qca
     parse-info:
       - usr/share/metainfo/org.kde.konversation.appdata.xml
     plugin: cmake
