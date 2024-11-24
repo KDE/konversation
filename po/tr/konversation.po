@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-11-22 14:34+0300\n"
+"PO-Revision-Date: 2024-11-23 14:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -66,7 +66,7 @@ msgid ""
 "The command executed successfully, but did not return any output or only "
 "whitespace."
 msgstr ""
-"Komut başarıyla çalıştırıldı; ancak herhangi bir çıktı veya beyaz boşluk "
+"Komut başarıyla yürütüldü; ancak herhangi bir çıktı veya boşluk karakteri "
 "döndürmedi."
 
 #: data/scripts/media:103
@@ -836,8 +836,8 @@ msgid ""
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
 "Bu özelliği etkinleştirseniz IRC iletilerinize eklenen renk kodları sohbet "
-"pencerenizde renkli metin olarak yansıyacaktır. Ekle → IRC Rengi’ni seçerek "
-"iletilerinize renk kodları ekleyebilirsiniz"
+"pencerenizde renkli metin olarak yansıyacaktır. “Ekle → IRC Rengi”ni seçerek "
+"iletilerinize renk kodları ekleyebilirsiniz."
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:747
@@ -1370,31 +1370,31 @@ msgstr "Ses Dosyası Seçin"
 #: src/config/highlight_configui.ui:29
 #, kde-format
 msgid "Ena&ble sound for highlights"
-msgstr "&Vurgulamalar için sesi etkinleştir"
+msgstr "&Vurgular için sesi etkinleştir"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HighlightNick)
 #: src/config/highlight_configui.ui:56
 #, kde-format
 msgid "Alwa&ys highlight own current nick:"
-msgstr "Her zaman &şu anki takma adımı belirginleştir:"
+msgstr "Her zaman &şu anki takma adımı vurgula:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HighlightOwnLines)
 #: src/config/highlight_configui.ui:63
 #, kde-format
 msgid "Always highlight own &lines:"
-msgstr "&Kendi satırlarını her zaman belirginleştir:"
+msgstr "&Kendi satırlarımı her zaman vurgula:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
 #: src/config/highlight_configui.ui:118
 #, kde-format
 msgid "Highlight List"
-msgstr "Belirginleştirme Listesi"
+msgstr "Vurgu Listesi"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:145
 #, kde-format
 msgid "Highlights"
-msgstr "Belirginleştirilenler"
+msgstr "Vurgular"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:150
@@ -1458,9 +1458,9 @@ msgid ""
 "name, or in all chat windows if the field is left empty. Multiple names have "
 "to be separated by commas."
 msgstr ""
-"Bu vurgu, yalnızca sohbet pencerelerinde ada göre listelenmiş olarak "
-"aranacak, ya da alan boş bırakılırsa tüm sohbet pencerelerinde. Çoklu adlar "
-"virgül ile ayrılmış olmalılar."
+"Bu vurgu yalnızca burada ada göre listelenen sohbet pencerelerinde veya alan "
+"boş bırakılırsa tüm sohbet pencerelerinde aranacaktır. Birden fazla ad "
+"virgülle ayrılmalıdır."
 
 #. i18n: ectx: property (text), widget (QLabel, enableNotificationsLabel)
 #: src/config/highlight_configui.ui:381
@@ -1657,7 +1657,7 @@ msgstr "Şu anda kullanılan takma ad"
 #: src/config/tabnotifications_config.ui:156
 #, kde-format
 msgid "Highlight"
-msgstr "Vurgulama"
+msgstr "Vurgu"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_LauncherEntryCountUseChannelEvents)
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsEvents)
@@ -1747,7 +1747,7 @@ msgstr "Ses (+v)"
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
 msgid "Halfops (+h)"
-msgstr "Yarı operatörler (+h)"
+msgstr "Yarı Operatörler (+h)"
 
 #: src/config/nicklistbehavior_config.cpp:48
 #, kde-format
@@ -1768,7 +1768,7 @@ msgstr "Kanal Sahipleri (+q)"
 #: src/config/nicklistbehavior_configui.ui:26
 #, kde-format
 msgid "&Command to be executed on double click:"
-msgstr "&Çift tıklamada çalıştırılacak komut:"
+msgstr "&Çift tıklamada yürütülecek komut:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SortCaseInsensitive)
 #: src/config/nicklistbehavior_configui.ui:39
@@ -1813,31 +1813,31 @@ msgstr "Açıklama"
 #: src/config/osd_configui.ui:35
 #, kde-format
 msgid "&Enable On Screen Display"
-msgstr "&Ekran üstü görüntüyü etkinleştir"
+msgstr "&Ekran üzeri görüntüyü etkinleştir"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/osd_configui.ui:45
 #, kde-format
 msgid "On &Screen Display"
-msgstr "Ekran Üstü &Görüntü"
+msgstr "Ekran Üzeri &Görüntü"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDDrawShadow)
 #: src/config/osd_configui.ui:54
 #, kde-format
 msgid "&Draw shadows"
-msgstr "Gölgeleri &Çiz"
+msgstr "Gölgeleri &çiz"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr "Ekran üstü görüntü yazıtipi:"
+msgstr "Ekran üzeri görüntü yazıtipi:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
 #, kde-format
 msgid "Show &OSD Message"
-msgstr "&Ekran üstü görüntü iletisini göster"
+msgstr "&Ekran üzeri görüntü iletisini göster"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowOwnNick)
 #: src/config/osd_configui.ui:141
@@ -1861,7 +1861,7 @@ msgstr "&Sohbet etkinliğinde"
 #: src/config/osd_configui.ui:162
 #, kde-format
 msgid "On &Join/Part events"
-msgstr "&Katılma/Ayrılma olaylarında"
+msgstr "&Katılma/ayrılma olaylarında"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_OSDUseCustomColors)
 #: src/config/osd_configui.ui:175
@@ -1949,7 +1949,7 @@ msgstr "Düğme Adı"
 #: src/config/quickbuttons_configui.ui:79
 #, kde-format
 msgid "Button Action"
-msgstr "Düğme Görevi"
+msgstr "Düğme Eylemi"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, m_delBtn)
 #. i18n: ectx: property (toolTip), widget (QPushButton, delBtn)
@@ -1970,7 +1970,7 @@ msgstr "Düğme adı:"
 #: src/config/quickbuttons_configui.ui:152
 #, kde-format
 msgid "Button action:"
-msgstr "Düğme görevi:"
+msgstr "Düğme eylemi:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtonsInContextMenu)
 #: src/config/quickbuttons_configui.ui:177
@@ -2090,7 +2090,7 @@ msgstr "İzlenen Takma Adlar"
 #: src/config/settingsdialog.cpp:174
 #, kde-format
 msgid "On Screen Display"
-msgstr "Ekran Üstü Görüntü"
+msgstr "Ekran Üzeri Görüntü"
 
 #: src/config/settingsdialog.cpp:180
 #, kde-format
@@ -2142,7 +2142,7 @@ msgstr ""
 #: src/config/tabnotifications_config.ui:211
 #, kde-format
 msgid "Give precedence to chat window highlight colors"
-msgstr "Sohbet penceresi vurgulama renklerine öncelik ver"
+msgstr "Sohbet penceresi vurgu renklerine öncelik ver"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, Tabs_PreferencesUI)
 #: src/config/tabs_configui.ui:17
@@ -2219,12 +2219,12 @@ msgstr "&Bir sekmeyi kapatmak için üzerine farenin orta düğmesiyle tıkla"
 #: src/config/theme_config.cpp:179
 #, kde-format
 msgid "Select Theme Package"
-msgstr "Tema Paketini Seç"
+msgstr "Tema Paketi Seç"
 
 #: src/config/theme_config.cpp:180
 #, kde-format
 msgid "Konversation Themes (*.tar.gz *.tar.bz2 *.tar *.zip)"
-msgstr "Konversation Temaları (*.tar.gz *.tar.bz2 *.tar *.zip)"
+msgstr "Konversation temaları (*.tar.gz *.tar.bz2 *.tar *.zip)"
 
 #: src/config/theme_config.cpp:206
 #, kde-format
@@ -2234,7 +2234,7 @@ msgstr "Bilinmeyen hata (0)"
 #: src/config/theme_config.cpp:210
 #, kde-format
 msgid "Failed to Download Theme"
-msgstr "Tema İndirmesi Başarısız"
+msgstr "Tema İndirilemedi"
 
 #: src/config/theme_config.cpp:235 src/config/theme_config.cpp:265
 #, kde-format
@@ -2244,7 +2244,7 @@ msgstr "Geçersiz tema arşivi."
 #: src/config/theme_config.cpp:236 src/config/theme_config.cpp:266
 #, kde-format
 msgid "Cannot Install Theme"
-msgstr "Tema Kurulamadı"
+msgstr "Tema Kurulamıyor"
 
 #: src/config/theme_config.cpp:290
 #, kde-format
@@ -2699,7 +2699,7 @@ msgid ""
 "You are presently connected to %1 via '%2' (port %3). Do you want to switch "
 "to '%4' (port %5) instead?"
 msgstr ""
-"Şu anda “%2” (kapı %3) üstünden şuraya bağlısınız: %1. Bunu “%4” (kapı %5) "
+"Şu anda “%2” (kapı %3) üzerinden şuraya bağlısınız: %1. Bunu “%4” (kapı %5) "
 "olarak değiştirmek istiyor musunuz?"
 
 #: src/connectionmanager.cpp:534
@@ -2740,7 +2740,7 @@ msgstr "Kimliği Düzenle…"
 #: src/dbus.cpp:150
 #, kde-format
 msgid "Debug: %1"
-msgstr "Hata ayıklama: %1"
+msgstr "Hata ayıkla: %1"
 
 #: src/dbus.cpp:156
 #, kde-format
@@ -2803,7 +2803,7 @@ msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
-msgstr "Ters DCC %1 isteği irc sunucu üstünden arkadaşınıza yollanamadı."
+msgstr "Ters DCC %1 isteği, IRC sunucusu üzerinden arkadaşınıza yollanamadı."
 
 #: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2811,7 +2811,8 @@ msgstr "Ters DCC %1 isteği irc sunucu üstünden arkadaşınıza yollanamadı."
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
-"%1 kapısını yönlendirme başarısız. Uzak kullanıcıya DCC isteği gönderiliyor."
+"%1 kapısını yönlendirme başarısız. Yine de uzak kullanıcıya DCC isteği "
+"gönderiliyor."
 
 #: src/dcc/chat.cpp:317
 #, kde-format
@@ -2819,7 +2820,7 @@ msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
-msgstr "Ters DCC %1 isteği irc sunucu üstünden arkadaşınıza yollanamadı."
+msgstr "Ters DCC %1 isteği, IRC sunucusu üzerinden arkadaşınıza yollanamadı."
 
 #: src/dcc/chat.cpp:359
 #, kde-format
@@ -2919,7 +2920,7 @@ msgstr "Kendi kendine konuşuyor"
 #, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr "Öntanımlı ( %1 )"
+msgstr "Öntanımlı (%1)"
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -3496,7 +3497,7 @@ msgstr "<b>Dosya açılamadı.<br/>Hata: %1</b><br/>%2<br/>"
 msgid ""
 "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC "
 "server."
-msgstr "Ters DCC isteği irc sunucu üstünden yollanamıyor."
+msgstr "Ters DCC isteği, IRC sunucusu üzerinden yollanamadı."
 
 #: src/dcc/transferrecv.cpp:593
 #, kde-format
@@ -4263,9 +4264,9 @@ msgid ""
 "starts<br>If you have multiple servers in this identity this command will be "
 "executed for each server"
 msgstr ""
-"Sunucuya bağlantı kurulmadan önce çalıştırılmasını istediğiniz komutları "
-"buraya yazın<br>Eğer birden çok sunucuya aynı anda bağlantı açılıyorsa "
-"komutlar her sunucu için tekrar tekrar çalıştırılır"
+"Sunucuya bağlantı kurulmadan önce yürütülmesini istediğiniz komutları buraya "
+"yazın.<br>Eğer birden çok sunucuya aynı anda bağlantı açılıyorsa komutlar "
+"her sunucu için yinelenerek çalıştırılır."
 
 #. i18n: ectx: property (text), widget (QLabel, codecLabel)
 #: src/identitydialog.ui:549
@@ -6814,18 +6815,18 @@ msgstr "%1 (%2), %3 sunucusundan ayrıldı."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr "Bağlantı öncesi kabuk komutunu çalıştırılıyor…"
+msgstr "Bağlantı öncesi kabuk komutu yürütülüyor…"
 
 #: src/irc/server.cpp:411
 #, kde-format
 msgid "Pre-shell command executed successfully!"
-msgstr "Kabuk öncesi komutu başarı ile çalıştı!"
+msgstr "Kabuk öncesi komutu başarı ile yürütüldü!"
 
 #: src/irc/server.cpp:414 src/irc/server.cpp:426
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
-msgstr "Komut çalıştırılırken bir sorun oluştu: "
+msgstr "Komut yürütülürken bir sorun oluştu: "
 
 #: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
@@ -7634,7 +7635,7 @@ msgid ""
 "Meet friends on the net, make new acquaintances and lose yourself in talk "
 "about your favorite subject."
 msgstr ""
-"Konversation IRC protokolü için bir istemcidir.\n"
+"Konversation, IRC protokolü için bir istemcidir.\n"
 "\n"
 "Arkadaşlarınızla internette buluşabilir, yeni bağlantılar kurabilir ve "
 "sevdiğiniz konu hakkında sohbet ederken kendinizi kaybedebilirsiniz."
@@ -7647,7 +7648,7 @@ msgstr "Dario Abatianni"
 #: src/main.cpp:36
 #, kde-format
 msgid "Original Author, Project Founder"
-msgstr "Asıl Yazar, Proje Kurucusu"
+msgstr "Özgün yazar, proje kurucusu"
 
 #: src/main.cpp:37
 #, kde-format
@@ -7657,7 +7658,7 @@ msgstr "Peter Simonsson"
 #: src/main.cpp:37
 #, kde-format
 msgid "Maintainer"
-msgstr "Geliştirici"
+msgstr "Bakımcı"
 
 #: src/main.cpp:38
 #, kde-format
@@ -7670,18 +7671,18 @@ msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
-"Geliştirici, Sürüm Yöneticisi, Kullanıcı arayüzü, Bağlantı yönetimi, "
-"Protokol işleme, Kendiliğinden uzakta"
+"Geliştirici, yayım yöneticisi, kullanıcı arayüzü, bağlantı yönetimi, "
+"protokol işleme, kendiliğinden uzakta özelliği"
 
 #: src/main.cpp:39
 #, kde-format
 msgid "Shintaro Matsuoka"
-msgstr "Shintaro Matsuoka"
+msgstr "Şintaro Matsuoka"
 
 #: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
-msgstr "DCC, kodlama işlemesi, ekran üstü görüntü konumlandırması"
+msgstr "DCC, kodlama işlemesi, ekran üzeri görüntü konumlandırması"
 
 #: src/main.cpp:40
 #, kde-format
@@ -7691,7 +7692,7 @@ msgstr "Eli MacKenzie"
 #: src/main.cpp:40
 #, kde-format
 msgid "Protocol handling, Input line"
-msgstr "Protokol işleme, Giriş satırı"
+msgstr "Protokol işleme, giriş satırı"
 
 #: src/main.cpp:41
 #, kde-format
@@ -7702,8 +7703,8 @@ msgstr "İsmail Dönmez"
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
-"Blowfish Desteği,SSL Desteği, KNetwork Uyarlaması, Renklendirilmiş Takma "
-"Adlar, Simge Teması Desteği"
+"Blowfish desteği, SSL desteği, KNetwork uyarlaması, renklendirilmiş takma "
+"adlar, simge teması desteği"
 
 #: src/main.cpp:42
 #, kde-format
@@ -7748,13 +7749,13 @@ msgstr "Web sayfası bakımı"
 #: src/main.cpp:47
 #, kde-format
 msgid "Christian Muehlhaeuser"
-msgstr "Christian Muehlhaeuser"
+msgstr "Christian Mühlhäuser"
 
 #: src/main.cpp:47
 #, kde-format
 msgid "Multiple modes extension, Close widget placement, OSD functionality"
 msgstr ""
-"Çoklu kipler eklentisi, kapatma araç takımı yerleştirmesi, ekran üstü "
+"Çoklu kipler eklentisi, kapatma araç takımı yerleştirmesi, ekran üzeri "
 "görüntü işlevselliği"
 
 #: src/main.cpp:48
@@ -7766,7 +7767,7 @@ msgstr "Gary Cramblitt"
 #, kde-format
 msgid "Documentation, Watched Nicks improvements, Custom web browser extension"
 msgstr ""
-"Belgelendirme, İzlenen Takma Adlar geliştirmesi, Özel web tarayıcısı "
+"Belgelendirme, izlenen takma adlar geliştirmesi, özel web tarayıcısı "
 "eklentileri"
 
 #: src/main.cpp:49
@@ -7777,7 +7778,7 @@ msgstr "Matthias Gierlings"
 #: src/main.cpp:49
 #, kde-format
 msgid "Color configurator, Highlight dialog"
-msgstr "Renk ayarlayıcısı, Belirginleştirme iletişim kutusu"
+msgstr "Renk yapılandırıcısı, vurgu iletişim kutusu"
 
 #: src/main.cpp:50
 #, kde-format
@@ -7792,12 +7793,12 @@ msgstr "DCOP arayüzü"
 #: src/main.cpp:51
 #, kde-format
 msgid "Stanislav Karchebny"
-msgstr "Stanislav Karchebny"
+msgstr "Stanislav Karçebniy"
 
 #: src/main.cpp:51
 #, kde-format
 msgid "Non-Latin1-Encodings"
-msgstr "Latin1 olmayan Kodlamalar"
+msgstr "Latin1 olmayan kodlamalar"
 
 #: src/main.cpp:52
 #, kde-format
@@ -7807,19 +7808,19 @@ msgstr "Mickael Marchand"
 #: src/main.cpp:52
 #, kde-format
 msgid "Konsole part view"
-msgstr "Konsole parçası görünümü"
+msgstr "Konsole Part görünümü"
 
 #: src/main.cpp:53
 #, kde-format
 msgid "Michael Goettsche"
-msgstr "Michael Goettsche"
+msgstr "Michael Göttsche"
 
 #: src/main.cpp:53
 #, kde-format
 msgid "Quick connect, Ported new OSD, other features and bugfixes"
 msgstr ""
-"Tez bağlan, uyarlanan yeni ekran üstü görüntü, diğer özellikler ve hata "
-"ayıklamaları"
+"Tez bağlan, uyarlanan yeni ekran üzeri görüntü, diğer özellikler ve hata "
+"düzeltmeleri"
 
 #: src/main.cpp:54
 #, kde-format
@@ -7839,7 +7840,7 @@ msgstr "Jakub Stachowski"
 #: src/main.cpp:55
 #, kde-format
 msgid "Drag&Drop improvements"
-msgstr "Sürükle&Bırak iyileştirmeleri"
+msgstr "Sürükle ve Bırak iyileştirmeleri"
 
 #: src/main.cpp:56
 #, kde-format
@@ -7849,7 +7850,7 @@ msgstr "Sebastian Sariego"
 #: src/main.cpp:56
 #, kde-format
 msgid "Artwork"
-msgstr "Görsel çalışma"
+msgstr "Görsel çalışmalar"
 
 #: src/main.cpp:57
 #, kde-format
@@ -7859,7 +7860,7 @@ msgstr "Renchi Raju"
 #: src/main.cpp:57
 #, kde-format
 msgid "Firefox style searchbar"
-msgstr "Firefox tipi arama çubuğu"
+msgstr "Firefox tarzı arama çubuğu"
 
 #: src/main.cpp:58
 #, kde-format
@@ -7869,7 +7870,7 @@ msgstr "Michael Kreitzer"
 #: src/main.cpp:58
 #, kde-format
 msgid "Raw modes, Tab grouping per server, Ban list"
-msgstr "Ham kip, sunucuya göre sekme sınıflandırması, yasakla listesi"
+msgstr "Ham kip, sunucuya göre sekme sınıflandırması, yasak listesi"
 
 #: src/main.cpp:59
 #, kde-format
@@ -7939,7 +7940,7 @@ msgstr "Ruud Nabben"
 #: src/main.cpp:65
 #, kde-format
 msgid "Option to enable IRC color filtering"
-msgstr "IRC renk süzgecini açma seçeneği"
+msgstr "IRC rengi süzgecini açma seçeneği"
 
 #: src/main.cpp:66
 #, kde-format
@@ -7954,7 +7955,7 @@ msgstr "Ivor Hewitt"
 #: src/main.cpp:67
 #, kde-format
 msgid "Bug fixes, OSD work, clearing topics"
-msgstr "Ekran üstü görüntü iyileştirmesi, düzeltmeler"
+msgstr "Ekran üzeri görüntü iyileştirmeleri, düzeltmeler"
 
 #: src/main.cpp:68
 #, kde-format
@@ -7990,9 +7991,7 @@ msgstr "Travis McHenry"
 #, kde-format
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
-msgstr ""
-"Çeşitli düzeltmeler, şifrelemeler QCA2’ye taşındı, DH1080 anahtar değişim "
-"desteği eklendi."
+msgstr "Çeşitli düzeltmeler, QCA2 şifrelemesi, DH1080 anahtar değişim desteği"
 
 #: src/main.cpp:72
 #, kde-format
@@ -8002,7 +8001,7 @@ msgstr "Modestas Vainius"
 #: src/main.cpp:72
 #, kde-format
 msgid "Bug fixes and enhancements."
-msgstr "Çeşitli düzeltmeler ve geliştirmeler."
+msgstr "Çeşitli düzeltmeler ve geliştirmeler"
 
 #: src/main.cpp:73
 #, kde-format
@@ -8012,7 +8011,7 @@ msgstr "Abdurrahman AVCI"
 #: src/main.cpp:73
 #, kde-format
 msgid "Various bug fixes and enhancements."
-msgstr "Çeşitli düzeltmeler ve geliştirmeler."
+msgstr "Çeşitli düzeltmeler ve geliştirmeler"
 
 #: src/main.cpp:74
 #, kde-format
@@ -8154,7 +8153,7 @@ msgstr "&Yeniden Bağlan"
 #: src/mainwindow.cpp:161
 #, kde-format
 msgid "Reconnect to the current server."
-msgstr "Şu an ki sunucuya yeniden bağlan."
+msgstr "Şu an ki sunucuya yeniden bağlan"
 
 #: src/mainwindow.cpp:167
 #, kde-format
@@ -8164,7 +8163,7 @@ msgstr "&Bağlantıyı Kes"
 #: src/mainwindow.cpp:170
 #, kde-format
 msgid "Disconnect from the current server."
-msgstr "Geçerli sunucu bağlantısını kes."
+msgstr "Geçerli sunucu bağlantısını kes"
 
 #: src/mainwindow.cpp:175
 #, kde-format
@@ -8454,7 +8453,7 @@ msgstr "Konversation’u Göster/Gizle"
 #: src/mainwindow.cpp:561
 #, kde-format
 msgid "Enable On Screen Display"
-msgstr "Ekran Üstü Görüntüsünü Etkinleştir"
+msgstr "Ekran Üzeri Görüntüyü Etkinleştir"
 
 #: src/mainwindow.cpp:568
 #, kde-format
@@ -8566,12 +8565,12 @@ msgstr "%2 içinde takma adınız %1 kişisi tarafından söylendi"
 #: src/notificationhandler.cpp:114
 #, kde-format
 msgid "[HighLight] (%1) <%2>"
-msgstr "[Belirginleştir] (%1) <%2>"
+msgstr "[Vurgu] (%1) <%2>"
 
 #: src/notificationhandler.cpp:128 src/notificationhandler.cpp:433
 #, kde-format
 msgid "[HighLight] (%1) <%2> %3"
-msgstr "[Vurgula] (%1) <%2> %3"
+msgstr "[Vurgu] (%1) <%2> %3"
 
 #: src/notificationhandler.cpp:153
 #, kde-format
@@ -8666,7 +8665,7 @@ msgstr "%1 içinde %2 tarafından vurgu tetiklendi"
 #: src/notificationhandler.cpp:430
 #, kde-format
 msgid "[HighLight] (%1) *** %2"
-msgstr "[Belirginleştir] (%1) *** %2"
+msgstr "[Vurgu] (%1) *** %2"
 
 #: src/notificationhandler.cpp:443
 #, kde-format
@@ -9481,12 +9480,12 @@ msgstr "&Ekle"
 #: src/viewer/insertchardialog.cpp:34
 #, kde-format
 msgid "Insert a character"
-msgstr "Bir karakter gir"
+msgstr "Bir karakter ekle"
 
 #: src/viewer/irccolorchooser.cpp:18
 #, kde-format
 msgid "IRC Color Chooser"
-msgstr "IRC Renk Seçicisi"
+msgstr "IRC Rengi Seçicisi"
 
 #: src/viewer/irccolorchooser.cpp:23
 #, kde-format
@@ -9943,7 +9942,7 @@ msgstr "Hedef Klasör Seç"
 #, kde-format
 msgid "OSD Preview - drag to reposition"
 msgstr ""
-"Ekran Üstü Görüntü Önizlemesi — yeniden konumlandırmak için fareyle "
+"Ekran Üzeri Görüntü Önizlemesi — yeniden konumlandırmak için fareyle "
 "sürükleyin"
 
 #: src/viewer/pasteeditor.cpp:23
