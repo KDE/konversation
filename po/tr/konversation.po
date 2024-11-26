@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-11-23 14:41+0300\n"
+"POT-Creation-Date: 2024-11-26 00:40+0000\n"
+"PO-Revision-Date: 2024-11-25 13:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -629,7 +629,7 @@ msgstr "geçen hafta"
 #: src/config/chatwindowbehaviour_config.ui:196
 #, kde-format
 msgid "Marker Lines"
-msgstr "İmleyici Satırlar"
+msgstr "İmleyici Çizgiler"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_AutomaticRememberLine)
 #: src/config/chatwindowbehaviour_config.ui:202
@@ -657,7 +657,7 @@ msgstr "Satırı yeni metin gösterilmek üzereyken hareket ettir"
 #: src/config/chatwindowbehaviour_config.ui:245
 #, kde-format
 msgid "Show manually inserted lines in all chat windows"
-msgstr "Elle girilen işaretleme çizgilerini tüm sohbet pencerelerinde göster"
+msgstr "Elle girilen çizgileri tüm sohbet pencerelerinde göster"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoWhoContinuousEnabled)
 #: src/config/chatwindowbehaviour_config.ui:255
@@ -2811,8 +2811,7 @@ msgstr "Ters DCC %1 isteği, IRC sunucusu üzerinden arkadaşınıza yollanamad�
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
-"%1 kapısını yönlendirme başarısız. Yine de uzak kullanıcıya DCC isteği "
-"gönderiliyor."
+"%1 kapısı yönlendirilemedi. Yine de uzak kullanıcıya DCC isteği gönderiliyor."
 
 #: src/dcc/chat.cpp:317
 #, kde-format
@@ -3220,7 +3219,7 @@ msgstr "%1/saniye"
 #: src/dcc/transferlistmodel.cpp:471
 #, kde-format
 msgid "Queued"
-msgstr "Sırada"
+msgstr "Kuyrukta"
 
 #: src/dcc/transferlistmodel.cpp:473
 #, kde-format
@@ -3269,7 +3268,7 @@ msgstr "İptal edildi"
 #: src/dcc/transferlistmodel.cpp:506
 #, kde-format
 msgid "Queued - Transfer is waiting for you to accept or reject it"
-msgstr "Kuyruğa eklendi — Aktarım kabul etmenizi veya reddetmenizi bekliyor"
+msgstr "Kuyrukta — Aktarım kabul etmenizi veya reddetmenizi bekliyor"
 
 #: src/dcc/transferlistmodel.cpp:511
 #, kde-format
@@ -3284,7 +3283,7 @@ msgstr "Hazırlanıyor — Aktarım göndermek için veri alıyor"
 #: src/dcc/transferlistmodel.cpp:519
 #, kde-format
 msgid "Pending - Transfer is waiting for the partner to accept or reject it"
-msgstr "Bekleniyor — Aktarım karşı tarafın kabul etmesini bekliyor"
+msgstr "Beklemede — Aktarım karşı tarafın kabul etmesini bekliyor"
 
 #: src/dcc/transferlistmodel.cpp:521
 #, kde-format
@@ -3309,17 +3308,17 @@ msgstr "Tamamlandı — Aktarım başarılı bir şekilde tamamlandı"
 #: src/dcc/transferlistmodel.cpp:538
 #, kde-format
 msgid "Failed - Transfer failed with 'unknown reason'"
-msgstr "Başarısız oldu — Aktarım, “bilinmeyen bir nedenle“ yapılamadı"
+msgstr "Başarısız — Aktarım, “bilinmeyen bir nedenle“ yapılamadı"
 
 #: src/dcc/transferlistmodel.cpp:542
 #, kde-format
 msgid "Failed - Transfer failed with reason '%1'"
-msgstr "Başarısız oldu — Aktarım, “%1” nedeniyle yapılamadı"
+msgstr "Başarısız — Aktarım, “%1” nedeniyle yapılamadı"
 
 #: src/dcc/transferlistmodel.cpp:545
 #, kde-format
 msgid "Aborted - Transfer was aborted by the User"
-msgstr "Sonlandırıldı — Aktarım kullanıcı tarafından sonlandırıldı"
+msgstr "İptal edildi — Aktarım kullanıcı tarafından sonlandırıldı"
 
 #: src/dcc/transferlistmodel.cpp:637
 #, kde-format
@@ -3359,7 +3358,7 @@ msgstr "Alma başlatılıyor"
 #: src/dcc/transferpanel.cpp:78
 #, kde-format
 msgid "A&bort"
-msgstr "&Çık"
+msgstr "İ&ptal Et"
 
 #: src/dcc/transferpanel.cpp:79
 #, kde-format
@@ -3624,7 +3623,7 @@ msgstr "“%1” dosyası açılamadı."
 #: src/dcc/transfersend.cpp:623
 #, kde-format
 msgid "The operation was unexpectedly aborted."
-msgstr "İşlem beklenmedik şekilde iptal edildi."
+msgstr "İşlem beklenmedik bir biçimde iptal edildi."
 
 #: src/dcc/transfersend.cpp:626
 #, kde-format
@@ -4108,9 +4107,9 @@ msgid ""
 "horizontal line will appear in the channel, marking the point where you went "
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
-"Eğer bu seçeneği işaretlerseniz her <b>Uzakta</b> durumuna geçtiğinizde, "
-"yatay bir çizgi sohbet penceresinde belirecek ve sizin kaldığınız yeri "
-"gösterecektir. Diğer IRC kullanıcıları bu çizgiyi görmez."
+"Bu kutuyu işaretlerseniz her <b>Uzakta</b> durumuna geçtiğinizde, yatay bir "
+"çizgi sohbet penceresinde belirecek ve sizin kaldığınız yeri gösterecektir. "
+"Diğer IRC kullanıcıları bu çizgiyi görmez."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_insertRememberLineOnAwayChBox)
 #: src/identitydialog.ui:336
@@ -4170,9 +4169,9 @@ msgid ""
 "using this Identity away when the screensaver starts or after a period of "
 "user inactivity configured below."
 msgstr ""
-"Eğer bu kutuyu işaretlerseniz Konversation ekran koruyucu başladığında veya "
+"Bu kutuyu işaretlerseniz Konversation, ekran koruyucu başladığında veya "
 "aşağıda yapılandırılan kullanıcının etkin olmadığı süreden sonra bu kimliği "
-"kullanarak tüm bağlantıları uzak konumuna alacaktır."
+"kullanarak tüm bağlantıları uzakta durumuna alacaktır."
 
 #. i18n: ectx: property (title), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:386
@@ -4200,7 +4199,7 @@ msgid ""
 "connections using this Identity when the screensaver stops or new user "
 "activity is detected."
 msgstr ""
-"Bu kutuyu işaretlediğinizde Konversation ekran koruyucu durduğunda veya yeni "
+"Bu kutuyu işaretlerseniz Konversation, ekran koruyucu durduğunda veya yeni "
 "kullanıcı etkinliği tespit edildiğinde tüm bağlantılar için uzakta durumunu "
 "iptal edecektir."
 
@@ -4221,7 +4220,7 @@ msgid ""
 "you were away."
 msgstr ""
 "Bu kutuyu işaretlerseniz Konversation, kendiliğinden bu kimliği kullanarak "
-"tüm kanal sekmelerinde uzakta komutunu çalıştıracaktır. <b>%s</b> uzakta "
+"tüm kanal sekmelerinde uzakta durumunu çalıştıracaktır. <b>%s</b> uzakta "
 "komutu uzakta iletisiyle değiştirilecektir. Geri döndüğünüzde geri dönme "
 "komutu çalıştırılır. <b>%t</b> dönüş komutu uzakta olduğunuz zamanın "
 "uzunluğuyla değiştirilecektir."
@@ -4297,10 +4296,14 @@ msgstr "T&anım:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "When you connect, many servers query your computer for an IDENT response. "
+#| "If you computer is not running an IDENT server, this response is sent by "
+#| "Konversation. No spaces are allowed."
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
-"you computer is not running an IDENT server, this response is sent by "
+"your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
 "Bağlandığınızda birçok sunucu bilgisayarınızı IDENT çağrısı ile sorgular. "
@@ -4311,7 +4314,7 @@ msgstr ""
 #: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
-msgstr "&Çıkma nedeni:"
+msgstr "&Çıkma gerekçesi:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
 #: src/identitydialog.ui:605
@@ -4330,7 +4333,7 @@ msgstr "Konversation sonlandırıldı."
 #: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
-msgstr "&Ayrılma nedeni:"
+msgstr "&Ayrılma gerekçesi:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
 #: src/identitydialog.ui:631
@@ -4342,7 +4345,7 @@ msgstr "Kanaldan her ayrılışınızda bu ileti kanala gönderilir."
 #: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
-msgstr "K&ovma nedeni:"
+msgstr "K&ovma gerekçesi:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:657
@@ -5137,32 +5140,32 @@ msgstr "Bu değiştirmek için operatör olmalısınız."
 #: src/irc/channel.cpp:2205
 #, kde-format
 msgid "Topic can be changed by channel operator only.  %1"
-msgstr "Konu yalnızca kanal operatörü tarafından değiştirilebilir.  %1"
+msgstr "Konu, yalnızca kanal operatörü tarafından değiştirilebilir. %1"
 
 #: src/irc/channel.cpp:2206
 #, kde-format
 msgid "No messages to channel from clients on the outside.  %1"
-msgstr "Kanal dışından bu kanala ileti yazılamaz.  %1"
+msgstr "Kanal dışından bu kanala ileti yazılamaz. %1"
 
 #: src/irc/channel.cpp:2207
 #, kde-format
 msgid "Secret channel.  %1"
-msgstr "Gizli kanal.  %1"
+msgstr "Gizli kanal. %1"
 
 #: src/irc/channel.cpp:2208
 #, kde-format
 msgid "Invite only channel.  %1"
-msgstr "Yalnızca davet edilenlerin girebileceği kanal.  %1"
+msgstr "Yalnızca davet edilenlerin girebileceği kanal. %1"
 
 #: src/irc/channel.cpp:2209
 #, kde-format
 msgid "Private channel.  %1"
-msgstr "Özel kanal.  %1"
+msgstr "Özel kanal %1"
 
 #: src/irc/channel.cpp:2210
 #, kde-format
 msgid "Moderated channel.  %1"
-msgstr "Denetlenen kanal.  %1"
+msgstr "Denetlenen kanal. %1"
 
 #: src/irc/channel.cpp:2211
 #, kde-format
@@ -6173,19 +6176,18 @@ msgid ""
 "their current status. See the Konversation Handbook for more information.</"
 "p></qt>"
 msgstr ""
-"<qt><p>Bu kanaldaki bütün kişileri gösterir.  Her kişi için durumunu "
-"belirten bir resimle birlikte takma adı de görüntülenir.<br /></"
-"p><table><tr><th>%1</th><td>Bu kullanıcı yönetici ayrıcalıklarına sahiptir.</"
-"td></tr><tr><th>%2</th><td>Bu kişi bir kanal sahibidir.</td></tr><tr><th>%3</"
-"th><td>Bu kullanıcı kanal operatörüdür.</td></tr><tr><th>%4</th><td>Bu "
-"kullanıcı yarı kanal operatörüdür.</td></tr><tr><th>%5</th><td>Bu kullanıcı "
-"yönetilen kanallarda konuşabilir.</td></tr><tr><th>%6</th><td>Bu "
-"kullanıcının özel bir ayrıcalığı yoktur.</td></tr><tr><th>%7</th><td>Bu, "
-"yukarıdakilerin üzerinde yer alarak, kullanıcının uzakta olduğunu gösterir.</"
-"td></tr></table><p>Yönetici, sahip ve yarı yöneticinin anlamı IRC sunucuları "
-"arasında değişiklik gösterir.</p><p>Bir takma adın üzerine gidince onun "
-"geçerli durumu görüntülenecektir. Daha fazla bilgi için Konversation El "
-"Kitabına bakabilirsiniz.</p></qt>"
+"<qt><p>Bu kanaldaki bütün kişileri gösterir. Her kişi için durumunu belirten "
+"bir resimle birlikte takma adı de görüntülenir.<br /></p><table><tr><th>%1</"
+"th><td>Bu kullanıcı yönetici ayrıcalıklarına sahiptir.</td></tr><tr><th>%2</"
+"th><td>Bu kişi bir kanal sahibidir.</td></tr><tr><th>%3</th><td>Bu kullanıcı "
+"kanal operatörüdür.</td></tr><tr><th>%4</th><td>Bu kullanıcı yarı kanal "
+"operatörüdür.</td></tr><tr><th>%5</th><td>Bu kullanıcı yönetilen kanallarda "
+"konuşabilir.</td></tr><tr><th>%6</th><td>Bu kullanıcının özel bir ayrıcalığı "
+"yoktur.</td></tr><tr><th>%7</th><td>Bu, yukarıdakilerin üzerinde yer alarak, "
+"kullanıcının uzakta olduğunu gösterir.</td></tr></table><p>Yönetici, sahip "
+"ve yarı yöneticinin anlamı IRC sunucuları arasında değişiklik gösterir.</"
+"p><p>Bir takma adın üzerine gidince onun geçerli durumu görüntülenecektir. "
+"Daha fazla bilgi için Konversation El Kitabına bakabilirsiniz.</p></qt>"
 
 #: src/irc/nicksonline.cpp:29
 #, kde-format
@@ -6322,7 +6324,7 @@ msgstr "Kullanım: %1JOIN <kanal> [parola]"
 #: src/irc/outputfilter.cpp:420
 #, kde-format
 msgid "Usage: %1KICK <nick> [reason]"
-msgstr "Kullanım: %1KICK <takmaad> [neden]"
+msgstr "Kullanım: %1KICK <takmaad> [gerekçe]"
 
 #: src/irc/outputfilter.cpp:434
 #, kde-format
@@ -6380,7 +6382,7 @@ msgstr "Kullanım: %1NOTICE <alıcı> <ileti>"
 #, kde-format
 msgctxt "%1 is the message, %2 the recipient nickname"
 msgid "Sending notice \"%1\" to %2."
-msgstr "“%1” duyurusu %2 kişisine gönderiliyor."
+msgstr "“%1” duyurusu şuraya gönderiliyor: %2."
 
 #: src/irc/outputfilter.cpp:674
 #, kde-format
@@ -6425,7 +6427,7 @@ msgstr "Kullanım: %1OMSG metin"
 #: src/irc/outputfilter.cpp:896
 #, kde-format
 msgid "Sending notice \"%1\" to %2."
-msgstr "“%1” duyurusu %2 kişisine gönderiliyor."
+msgstr "“%1” duyurusu şuraya gönderiliyor: %2."
 
 #: src/irc/outputfilter.cpp:899
 #, kde-format
@@ -6591,7 +6593,7 @@ msgid ""
 "<nickname | mask> [reason]"
 msgstr ""
 "Kullanım: %1KICKBAN [-İSTEMCİ | -ALAN | -KULLANICIİSTEMCİSİ | -"
-"KULLANICIALANI] [kanal] <takma ad | maske> [neden]"
+"KULLANICIALANI] [kanal] <takma ad | maske> [gerekçe]"
 
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
@@ -7071,7 +7073,7 @@ msgstr "“%1” dosyasının %2 kişisinden indirilmesi bitti."
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
-msgstr "“%1” dosyasının %2 kişisinden indirilmesi başarısız oldu. Gerekçe: %3."
+msgstr "“%1” dosyası %2 kişisinden indirilemedi. Gerekçe: %3."
 
 #: src/irc/server.cpp:2815
 #, kde-format
@@ -7083,7 +7085,7 @@ msgstr "“%1” dosyasının %2 kişisine yüklenmesi bitti."
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
-msgstr "“%1” dosyasının %2 kişisine yüklenmesi başarısız oldu. Gerekçe: %3."
+msgstr "“%1” dosyası %2 kişisine yüklenemedi. Gerekçe: %3."
 
 #: src/irc/server.cpp:2832
 #, kde-format
@@ -7145,7 +7147,7 @@ msgstr "“Uzakta” olarak imli değilsiniz."
 #: src/irc/server.cpp:4276
 #, kde-format
 msgid "Failed to initiate key exchange with %1."
-msgstr "%1 ile anahtar değişim başlatılması başarısız oldu."
+msgstr "%1 ile anahtar değişimi başlatılamadı."
 
 #: src/irc/server.cpp:4288
 #, kde-format
@@ -7155,7 +7157,7 @@ msgstr "%1 ile anahtar değişimi gerçekleşimi başarısız oldu."
 #: src/irc/server.cpp:4312
 #, kde-format
 msgid "Failed to parse the DH1080_INIT of %1. Key exchange failed."
-msgstr "%1 ile DH1080_INIT ayrıştırılamadı. Anahtar değişimi başarısız oldu."
+msgstr "%1 ile DH1080_INIT ayrıştırılamadı. Anahtar değişimi yapılamadı."
 
 #: src/irc/server.cpp:4318
 #, kde-format
@@ -8189,7 +8191,7 @@ msgstr "&DCC Durumu"
 #: src/viewer/viewcontainer.cpp:917
 #, kde-format
 msgid "&Open Logfile"
-msgstr "Günlük D&osyası Aç"
+msgstr "Günlük D&osyasını Aç"
 
 #: src/mainwindow.cpp:204
 #, kde-format
@@ -8327,12 +8329,12 @@ msgstr "%1 Sekmesine Git"
 #: src/mainwindow.cpp:421
 #, kde-format
 msgid "Clear &Marker Lines"
-msgstr "&İmleyici Satırları Temizle"
+msgstr "&İmleyici Çizgileri Temizle"
 
 #: src/mainwindow.cpp:424
 #, kde-format
 msgid "Clear marker lines in the current tab"
-msgstr "Geçerli sekmedeki imleyici satırları temizle"
+msgstr "Geçerli sekmedeki imleyici çizgileri temizle"
 
 #: src/mainwindow.cpp:429
 #, kde-format
@@ -8412,7 +8414,7 @@ msgstr "Şu anki IRC iletinizin rengini seçin"
 #: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, kde-format
 msgid "&Marker Line"
-msgstr "&İmleyici Satır"
+msgstr "&İmleyici Çizgi"
 
 #: src/mainwindow.cpp:508
 #, kde-format
@@ -8533,7 +8535,7 @@ msgstr "Özel &Karakter Ekle…"
 #: src/mainwindow.cpp:843
 #, kde-format
 msgid "Insert &Marker Line"
-msgstr "İ&mleyici Satır Ekle"
+msgstr "İ&mleyici Çizgi Ekle"
 
 #: src/mainwindow.cpp:845
 #, kde-format
@@ -9260,9 +9262,9 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
-"<qt><p>Bunlar kanalın <em>kip</em>ini denetler. Bunları yalnızca bir "
+"<qt><p>Bunlar kanalın <em>kipini</em> denetler. Bunları yalnızca bir "
 "operatör değiştirebilir.</p><p>Bir <b>G</b>izli kanal kanallar listesinde "
-"görüntülenir; ancak konusu gösterilmez.  Kullanıcının <em>WHOIS</em> "
+"görüntülenir; ancak konusu gösterilmez. Kullanıcının <em>WHOIS</em> "
 "bilgisinin gizli bir kanalda gösterilip gösterilmeyeceği IRC sunucusuna "
 "bağlıdır.</p></qt>"
 
@@ -9273,7 +9275,7 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
-"<qt><p>Bunlar kanalın <em>kip</em>ini denetler.  Bunları yalnızca bir "
+"<qt><p>Bunlar kanalın <em>kipini</em> denetler. Bunları yalnızca bir "
 "operatör değiştirebilir.</p><p>Bir <b>G</b>izli kanal yalnızca "
 "operatörlerin, yarı operatörlerin ve izni olanların konuşabildiği bir "
 "kanaldır.</p></qt>"
@@ -9298,10 +9300,10 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
-"<qt><p>Bunlar bir kanalın <em>kip</em>ini denetler. Bunları yalnızca bir "
+"<qt><p>Bunlar bir kanalın <em>kipini</em> denetler. Bunları yalnızca bir "
 "operatör değiştirebilir.</p><p>Bir kanalın kullanıcı <b>S</b>ınırı kanala "
 "aynı anda kaç kullanıcının bağlanabileceği anlamına gelir. Bazı kanallarda "
-"kanalın meşgullüğüne bağlı olarak bu sınırı kendiliğinden değiştiren botlar "
+"kanalın meşgulluğuna bağlı olarak bu sınırı kendiliğinden değiştiren botlar "
 "vardır.</p></qt>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
@@ -9423,7 +9425,7 @@ msgid ""
 msgstr ""
 "\n"
 "*** Günlük dosyası\n"
-"*** %1 zamanında başladı\n"
+"*** Başlangıç: %1\n"
 "\n"
 
 #: src/viewer/editnotifydialog.cpp:27
@@ -9908,8 +9910,8 @@ msgid ""
 "The messages in the log file are displayed here. The oldest messages are at "
 "the top and the most recent are at the bottom."
 msgstr ""
-"Günlük dosyasındaki iletiler burada gösterilir. En eski iletiler en üsteyken "
-"en güncel iletiler aşağıdadır."
+"Günlük dosyasındaki iletiler burada görüntülenir. En eski iletiler en üstte "
+"ve en yenileri en altta yer alır."
 
 #: src/viewer/logfilereader.cpp:135
 #, kde-format
@@ -9931,7 +9933,7 @@ msgstr ""
 #: src/viewer/logfilereader.cpp:150
 #, kde-format
 msgid "Save Logfile"
-msgstr "Günlük Dosyası Kaydet"
+msgstr "Günlük Dosyasını Kaydet"
 
 #: src/viewer/logfilereader.cpp:154
 #, kde-format

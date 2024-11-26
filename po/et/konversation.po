@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-04 00:39+0000\n"
+"POT-Creation-Date: 2024-11-26 00:40+0000\n"
 "PO-Revision-Date: 2020-10-25 17:37+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -4289,10 +4289,14 @@ msgstr "I&dent:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "When you connect, many servers query your computer for an IDENT response. "
+#| "If you computer is not running an IDENT server, this response is sent by "
+#| "Konversation. No spaces are allowed."
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
-"you computer is not running an IDENT server, this response is sent by "
+"your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
 "Ühendumisel esitavad paljud serverid sinu arvutile IDENT-päringu. Kui sinu "
