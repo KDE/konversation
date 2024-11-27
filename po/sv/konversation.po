@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-24 19:54+0100\n"
+"PO-Revision-Date: 2024-11-26 16:20+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -4306,19 +4306,15 @@ msgstr "I&dentifikation:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
-"När du ansluter frågar många servrar din dator om ett IDENT-svar. Om datorn "
-"inte kör en IDENT-server, skickas det här svaret av Konversation. Några "
-"mellanslag är inte tillåtna."
+"När du ansluter frågar många servrar din dator om ett IDENT-svar. Om din "
+"dator inte kör en IDENT-server, skickas det här svaret av Konversation. "
+"Några mellanslag är inte tillåtna."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595

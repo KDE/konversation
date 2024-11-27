@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-25 13:45+0300\n"
+"PO-Revision-Date: 2024-11-26 13:32+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -49,7 +49,7 @@ msgstr ""
 #, kde-format
 msgctxt "Menu title"
 msgid "&Insert"
-msgstr "&Ekle"
+msgstr "&Ekleme"
 
 #. i18n: ectx: Menu (windows)
 #: data/konversationui.rc:38
@@ -956,14 +956,13 @@ msgid ""
 "able to see what they are saying, but they will not be able to read what you "
 "are saying."
 msgstr ""
-"ECB(Electronic Codebook) kipi, FiSH ve Mircyption gibi birçok şifreleme "
-"istemcisi tarafından destekleniyor. Oysa ki hep güvenliksiz olarak göz önüne "
-"alınırlardı.\n"
+"ECB (Electronic Codebook) kipi, FiSH ve Mircyption gibi birçok şifreleme "
+"istemcisi tarafından desteklenir; ancak genelde güvenli olarak addedilmez.\n"
 "\n"
-"CBC(Chiper Block Chaining) kipi FiSH tarafında desteklenmiyor, ancak "
-"Mircyption tarafından destekleniyor. Eğer anahtar değişimi kullanacaksanız "
-"karşınızdaki CBC kullanabilen bir istemciye sahip mi diye denetleyin. Aksi "
-"takdirde siz onların ne konuştuğunu göreceksiniz, ancak onlar sizin ne "
+"CBC (Chiper Block Chaining) kipi FiSH tarafında desteklenmez; ancak "
+"Mircyption tarafından desteklenir. Eğer anahtar değişimi kullanacaksanız "
+"karşınızdaki CBC kullanabilen bir istemciye sahip mi diye bakın. Aksi "
+"takdirde siz onların ne konuştuğunu göreceksiniz; ancak onlar sizin ne "
 "konuştuğunuzu göremeyecek."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_EncryptionType)
@@ -2058,7 +2057,7 @@ msgstr "Takma Ad Listesi"
 #: src/config/settingsdialog.cpp:127
 #, kde-format
 msgid "Command Aliases"
-msgstr "Komut Kısaltmaları"
+msgstr "Komut Armaları"
 
 #: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
 #, kde-format
@@ -2407,7 +2406,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a DCC Chat tab"
-msgstr "… bir DCC Sohbet sekmesi kapatıldığında"
+msgstr "… bir DCC sohbeti sekmesi kapatıldığında"
 
 #: src/config/warnings_config.cpp:173
 #, kde-format
@@ -2416,7 +2415,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... a source for the channel list cannot be determined from the current tab"
-msgstr "… mevcut sekmeden kanal listesi için bir kaynak belirlenemediğinde"
+msgstr "… geçerlit sekmeden kanal listesi için bir kaynak belirlenemediğinde"
 
 #: src/config/warnings_config.cpp:176
 #, kde-format
@@ -2433,8 +2432,8 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a channel listing may cause disconnection due to the download size"
 msgstr ""
-"… kanal listelemesi indirilecek dosyanın boyutu yüzünden bağlantının "
-"kesilmesine neden olabilir"
+"… indirme boyutu nedeniyle bir kanal listelemesi bağlantının kesilmesine "
+"neden olabileceğinde"
 
 #: src/config/warnings_config.cpp:182
 #, kde-format
@@ -2450,7 +2449,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... quitting Konversation via the tray icon"
-msgstr "… tepsi simgesi üzerinden Konversation kapatılıyor"
+msgstr "… tepsi simgesi üzerinden Konversation kapatıldığında"
 
 #: src/config/warnings_config.cpp:188
 #, kde-format
@@ -2466,7 +2465,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... you have chosen to stop ignoring a nickname"
-msgstr "… bir takma adı yok saymaktan vazgeçmeyi seçtinizde"
+msgstr "… bir takma adı yok saymayı bıraktığınızda"
 
 #: src/config/warnings_config.cpp:194
 #, kde-format
@@ -2483,8 +2482,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... some characters in a message are incompatible with the active encoding"
-msgstr ""
-"… metin içerisinde, etkin kodlama ile uyumsuz bazı karakterler olduğunda"
+msgstr "… metinde etkin kodlama ile uyumsuz bazı karakterler olduğunda"
 
 #: src/config/warnings_config.cpp:200
 #, kde-format
@@ -2913,7 +2911,7 @@ msgstr "DCC %1 kapansın"
 #: src/dcc/chatcontainer.cpp:200 src/irc/query.cpp:437
 #, kde-format
 msgid "Talking to yourself"
-msgstr "Kendi kendine konuşuyor"
+msgstr "Kendi kendinize konuşuyorsunuz"
 
 #: src/dcc/chatcontainer.cpp:216
 #, kde-format
@@ -3379,7 +3377,7 @@ msgstr "&Temizle"
 #: src/dcc/transferpanel.cpp:83
 #, kde-format
 msgid "Clear all selected Items"
-msgstr "Seçili ögeleri temizle"
+msgstr "Tüm seçili ögeleri temizle"
 
 #: src/dcc/transferpanel.cpp:84
 #, kde-format
@@ -4065,8 +4063,8 @@ msgid ""
 "Service name can be <b><i>nickserv</i></b> or a network-dependent name such "
 "as <b><i>nickserv@services.dal.net</i></b>"
 msgstr ""
-"Hizmet adı <b><i>nickserv</i> olabilir</b> ya da <b><i>nickserv@services.dal."
-"net</i></b> gibi ağ bağımlı bir ad olabilir"
+"Hizmet adı <b><i>nickserv</i> olabilir</b> veya <b><i>nickserv@services.dal."
+"net</i></b> gibi ağa bağımlı bir ad olabilir"
 
 #. i18n: ectx: property (text), widget (QLabel, nickservCommandLabel)
 #: src/identitydialog.ui:273
@@ -4131,9 +4129,10 @@ msgid ""
 "entered as an argument to the <b>/away</b> or <b>/aaway</b> commands, and "
 "also when Global Away is toggled from the menu or via the keyboard shortcut."
 msgstr ""
-"<b>/away</b> ya da <b>/aaway</b> komutlarına bir parametre girilmediğinde, "
-"girdiğiniz metin uzakta iletisi olarak kullanılacak, ayrıca uzakta iletisi "
-"menüden veya klavye kısayolları ile ayarlanabilinecek."
+"Buraya girdiğiniz metin, <b>/away</b> veya <b>/aaway</b> komutlarına bir "
+"argüman olarak hiçbir ileti girilmediğinde ve ayrıca “Her Yerde Uzakta” "
+"menüden veya klavye kısayolundan açıldığında/kapatıldığında uzakta iletisi "
+"olarak kullanılır."
 
 #. i18n: ectx: property (text), widget (QLabel, awayNicknameLabel)
 #: src/identitydialog.ui:360
@@ -4177,7 +4176,7 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr "Kendiliğinden uzakta"
+msgstr "Kendiliğinden Uzakta"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
@@ -4296,19 +4295,15 @@ msgstr "T&anım:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
-"Bağlandığınızda birçok sunucu bilgisayarınızı IDENT çağrısı ile sorgular. "
-"Eğer bilgisayarınızda IDENT sunucu çalışmıyorsa bu çağrı Konversation "
-"tarafından yollanır. Boşluk karakterine izin verilmez."
+"Bağlandığınızda, birçok sunucu bilgisayarınızı bir IDENT yanıtı için "
+"sorgular. Bilgisayarınız bir IDENT sunucusu çalıştırmıyorsa bu yanıt "
+"Konversation tarafından gönderilir. Boşluk karakterine izin verilmez."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
@@ -5196,7 +5191,7 @@ msgstr "Ayrıl"
 #: src/viewer/statuspanel.cpp:302
 #, kde-format
 msgid "Identity Default ( %1 )"
-msgstr "Öntanımlı Kimlik ( %1 )"
+msgstr "Öntanımlı Kimlik (%1)"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLbl)
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
@@ -6787,14 +6782,15 @@ msgid ""
 "<i>Konversation Handbook</i> for an explanation of what the hostmask is.</"
 "p></qt>"
 msgstr ""
-"<qt><p>Konuştuğunuz kişi hakkında bazı detaylar bu çubukta yazıyor. Tam adı "
-"ve sunucu maskesi gösteriliyor.</p><p>Sunucu maskesinin anlamına öğrenmek "
-"için <i>Konversation El Kitabı</i>’na bir göz atın.</p></qt>"
+"<qt><p>Bu sohbette konuştuğunuz kişinin bazı ayrıntıları bu çubukta "
+"gösterilir. Tam adı ve makine maskesi bulunur.</p><p>Makine maskesinin ne "
+"olduğuna ilişkin bir açıklama için <i>Konversation El Kitabı</i>’na bir göz "
+"atın.</p></qt>"
 
 #: src/irc/query.cpp:410
 #, kde-format
 msgid "Do you want to close your query with %1?"
-msgstr "%1 ile konuşma pencerenizi kapatmak istediğinizden emin misiniz?"
+msgstr "%1 ile olan sohbet pencerenizi kapatmak istediğinizden emin misiniz?"
 
 #: src/irc/query.cpp:411
 #, kde-format
@@ -6950,7 +6946,7 @@ msgid ""
 "Please enter a new one or press Cancel to disconnect:"
 msgstr ""
 "“%1” kimliğindeki takma adlardan hiçbiri “%2” tarafından kabul edilmedi.\n"
-"Lütfen yeni bir takma ad girin veya bağlantıyı kesmek için İptal’e basın:"
+"Lütfen yeni bir takma ad girin veya bağlantıyı kesmek için “İptal”e basın:"
 
 #: src/irc/server.cpp:1338
 #, kde-format
@@ -8165,7 +8161,7 @@ msgstr "&Bağlantıyı Kes"
 #: src/mainwindow.cpp:170
 #, kde-format
 msgid "Disconnect from the current server."
-msgstr "Geçerli sunucu bağlantısını kes"
+msgstr "Geçerli sunucu bağlantısını kesin."
 
 #: src/mainwindow.cpp:175
 #, kde-format
@@ -8389,7 +8385,7 @@ msgstr "Tüm sekmelerin içeriğini temizle"
 #: src/mainwindow.cpp:472
 #, kde-format
 msgid "Global Away"
-msgstr "Uzakta Kipi"
+msgstr "Her Yerde Uzakta"
 
 #: src/mainwindow.cpp:480 src/viewer/irccontextmenus.cpp:330
 #, kde-format
@@ -8414,7 +8410,7 @@ msgstr "Şu anki IRC iletinizin rengini seçin"
 #: src/mainwindow.cpp:505 src/mainwindow.cpp:859
 #, kde-format
 msgid "&Marker Line"
-msgstr "&İmleyici Çizgi"
+msgstr "İ&mleyici Çizgi"
 
 #: src/mainwindow.cpp:508
 #, kde-format
@@ -9108,7 +9104,7 @@ msgid ""
 "You have selected more than one URL. Do you really want to open several URLs "
 "at once?"
 msgstr ""
-"Birden çok URL seçtiniz. Gerçekten aynı anda birkaç URL açmak istiyor "
+"Birden çok URL seçtiniz. Aynı anda birkaç URL açmayı gerçekten istiyor "
 "musunuz?"
 
 #: src/urlcatcher.cpp:231 src/urlcatcher.cpp:253
@@ -9129,12 +9125,12 @@ msgstr ""
 #: src/urlcatcher.cpp:266 src/viewer/irccontextmenus.cpp:762
 #, kde-format
 msgid "Save link as"
-msgstr "Bağlantıyı farklı kaydet"
+msgstr "Bağlantıyı Farklı Kaydet"
 
 #: src/urlcatcher.cpp:333
 #, kde-format
 msgid "Save URL List"
-msgstr "URL listesini kaydet"
+msgstr "URL Listesini Kaydet"
 
 #: src/urlcatcher.cpp:360
 #, kde-format
@@ -9881,7 +9877,7 @@ msgstr "Yeniden Yükle"
 #: src/viewer/logfilereader.cpp:40 src/viewer/logfilereader.cpp:136
 #, kde-format
 msgid "Clear Logfile"
-msgstr "Günlük dosyasını temizle"
+msgstr "Günlük Dosyasını Temizle"
 
 #: src/viewer/logfilereader.cpp:42
 #, kde-format
@@ -10055,14 +10051,14 @@ msgid ""
 "\n"
 "All associated tabs will be closed as well."
 msgstr ""
-"“%1” ile bağlantı koparılsın mı?\n"
+"“%1” bağlantısı kesilsin mi?\n"
 "\n"
 "İlişkili tüm sekmeler de kapatılacaktır."
 
 #: src/viewer/statuspanel.cpp:236
 #, kde-format
 msgid "Disconnect From Server"
-msgstr "Sunucu Bağlantısını Sonlandır"
+msgstr "Sunucu Bağlantısını Kes"
 
 #: src/viewer/statuspanel.cpp:237
 #, kde-format

@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-26 00:11+0900\n"
+"PO-Revision-Date: 2024-11-26 21:41+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -4209,11 +4209,7 @@ msgstr "身分(&D)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "

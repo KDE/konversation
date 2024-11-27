@@ -4196,18 +4196,12 @@ msgstr "身份(&D)："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
-"当您进行连接时，许多服务器会向您的电脑请求一个 IDENT 应答。如果您的电脑不是"
-"以 IDENT 服务器运行，此应答会由 Konversation 代为发送。此处不允许留空。"
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
