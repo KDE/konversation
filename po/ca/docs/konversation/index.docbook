@@ -1855,10 +1855,10 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 ></userinput
 >, en escriure <userinput
 ><replaceable
->/me Cervesa en una tassa de te.</replaceable
+>/me prepara una tassa de te.</replaceable
 ></userinput
 > es mostrarà el missatge <interface
->Cervesa en una tassa de te.</interface
+>Tux prepara una tassa de te.</interface
 > Llevat que hagin filtrat contra aquest tipus de missatges, el veuran tots els usuaris. Aquest tipus de missatges s'utilitza normalment per a transmetre informació no verbal, com el seu vostre estat emocional actual, o el que esteu fent físicament. Si deixeu el vostre lloc de treball per un temps curt, utilitzeu l'ordre <userinput
 ><command
 >/away</command
@@ -3431,10 +3431,10 @@ part of the listing.
 ></userinput
 >, en escriure <userinput
 ><replaceable
->/me Cervesa en una tassa de te.</replaceable
+>/me prepara una tassa de te.</replaceable
 ></userinput
 > es mostrarà el missatge <interface
->Cervesa en una tassa de te.</interface
+>Tux prepara una tassa de te.</interface
 > Llevat que hagin filtrat contra aquest tipus de missatges, el veuran tots els usuaris. Aquest tipus de missatges s'utilitza normalment per a transmetre informació no verbal, com el seu vostre estat emocional actual, o el que esteu fent físicament. Si deixeu el vostre lloc de treball per un temps curt, utilitzeu l'ordre <userinput
 ><command
 >/away</command
