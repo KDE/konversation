@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-09 08:19+0100\n"
+"PO-Revision-Date: 2024-11-28 20:10+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -4339,20 +4339,16 @@ msgstr "Nor&tasuna:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
 "Konektatzen zarenean, zerbitzari askok zure ordenagailua itauntzen dute "
-"IDENT erantzun bat lortzeko. Zure ordenagailuak IDENT zerbitzaririk ibiltzen "
-"ez badu, erantzun hori «Konversation»ek bidaliko du. Ez da zuriunerik "
-"onartzen."
+"IDENT erantzun bat lortzeko. Zure ordenagailuak IDENT zerbitzari bat "
+"ibiltzen ez badu, erantzun hori «Konversation»ek bidaliko du. Ez da "
+"zuriunerik onartzen."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595

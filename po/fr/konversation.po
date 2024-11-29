@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-05 07:28+0100\n"
+"PO-Revision-Date: 2024-11-27 09:54+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.11.80\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -4397,19 +4397,16 @@ msgstr "I&ndentation :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
 "Lors de la connexion, de nombreux serveurs interrogent votre ordinateur pour "
-"une réponse « IDENT ». Si vous ordinateur ne possède aucun serveur IDENT "
-"lancé, cette réponse sera envoyée par Konversation. Aucun espace autorisé."
+"une réponse « IDENT ». Si aucun serveur « IDENT » ne s'exécute sur votre "
+"ordinateur, cette réponse sera envoyée par Konversation. Aucun espace n'est "
+"autorisé."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
