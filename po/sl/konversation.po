@@ -7,13 +7,13 @@
 # Gregor Rakar <gregor.rakar@kiss.si>, 2005.
 # Andrej Mernik <andrejm@ubuntu.si>, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
 # SPDX-FileCopyrightText: 2012, 2024 Jure Repinc <jlp@holodeck1.com>
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023 Matjaž Jeran <matjaz.jeran@amis.net>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Matjaž Jeran <matjaz.jeran@amis.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-04 06:46+0100\n"
+"PO-Revision-Date: 2024-11-29 07:37+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4344,19 +4344,15 @@ msgstr "I&dent:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
-"Ko se povežete, mnogi strežniki pošljejo poizvedbo IDENT vašemu računalniku. "
-"Če na vašem računalniku ne teče strežnik IDENT, potem ta odgovor pošlje "
-"Konversation. Presledki niso dovoljeni."
+"Ko vzpostavite povezavo, veliko strežnikov od vašega računalnika zahteva "
+"odgovor IDENT. čevaš računalnik ne izvaja strežnika IDENT, ta odgovor "
+"pošljeKonversation. Presledki niso dovoljeni."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
 #: src/identitydialog.ui:595
