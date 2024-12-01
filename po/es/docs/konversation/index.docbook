@@ -3100,7 +3100,7 @@ part of the listing.
 >En cualquier <link linkend="channel-screen-tour"
 >canal</link
 >, los usuarios a veces publican las &URL; de sitios web interesantes u otros recursos de la web. Si se hace doble clic sobre cualquier de estas &URL;, &konversation; iniciará la aplicación asociada a la &URL;. Qué aplicación es iniciada es algo que depende del tipo &MIME; de la &URL;. Por ejemplo, una &URL; que comience con <interface
->http:</interface
+>https:</interface
 > activará el navegador web predeterminado y mostrará la página web. (También puede especificar el <link linkend="webbrowser"
 >navegador web</link
 > a usar). Si la &URL; se sale de la pantalla, puede tener problemas para localizarla de nuevo. &konversation; puede mantener por usted una lista de conveniencia de todas las &URL;. Para activar esta característica, seleccione <menuchoice
@@ -3154,7 +3154,7 @@ part of the listing.
 <callout arearefs="pt-urlcatcher-2"
 ><para
 >Pulse aquí para activar la aplicación asociada con la &URL; seleccionada. La aplicación que se lance dependerá del tipo &MIME; de la &URL;. Por ejemplo, una &URL; que comience con <interface
->http:</interface
+>https:</interface
 > activará su navegador web predeterminado y mostrará la página web. Para páginas web, también puede especificar que <link linkend="webbrowser"
 >navegador web</link
 > usar.</para
@@ -3193,7 +3193,7 @@ part of the listing.
 
 <para
 >Al pulsar sobre una &URL; resaltada en &konversation;, se iniciará la aplicación predeterminada asociada con el tipo &MIME; del &URL;. Por ejemplo, cuando se pulsa sobre una &URL; que comienza con <interface
->http</interface
+>https</interface
 >, se inicia &konqueror; para mostrar la página web. Puede especificar una aplicación diferente desde el módulo <guilabel
 >Aplicaciones predeterminadas</guilabel
 > de las &systemsettings;. Por ejemplo, podría usar <application

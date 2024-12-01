@@ -1,5 +1,5 @@
 # Translation of konversation to Spanish
-# This file is distributed under the same license as the Konversation package.
+# This file is distributed under the same license as the konversation package.
 #
 # SPDX-FileCopyrightText: 2009, 2010, 2013, 2014, 2015, 2018, 2019, 2024 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012 Enrique Matias Sanchez (aka Quique) <cronopios@gmail.com>
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-11-09 19:11+0100\n"
+"PO-Revision-Date: 2024-11-30 18:37+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -4373,11 +4373,7 @@ msgstr "I&dent.:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
