@@ -482,7 +482,7 @@ revision history. (see installation appendix comment) -->
 ><para
 >Questa è chiamata la <interface
 >Linea di input</interface
->. Per inviare un messaggio a tutti nel canale, scrivi qui il messaggio e premi &Enter;. Il tuo messaggio, come quelli di tutti gli altri, appare nella schermata del canale sopra. Ogni messaggio è preceduto dall'ora e dal nick dell'utente.</para
+>. Per inviare un messaggio a tutti nel canale, scrivi qui il messaggio e premi &Enter;. Il tuo messaggio, come quelli di tutti gli altri, appare nella schermata del canale sopra. Ogni messaggio è preceduto dall'ora e dal &i18n-nickname; dell'utente.</para
 ></callout>
 
 <callout arearefs="pt-first-channel-2"
@@ -1294,7 +1294,7 @@ depending upon your network bandwidth.  If your client is too slow, the server m
 ><para
 >Questa è chiamata la <interface
 >Linea di input</interface
->. Appare solo quando la scheda corrente è un canale. Per mandare un messaggio a tutti quelli che sono nel canale, scrivi qui il messaggio e premi &Enter;. Il tuo messaggio, come quello di chiunque altro, appare nella finestra del canale sovrastante. Ogni messaggio è preceduto dall'ora e dal nick dell'utente.</para>
+>. Appare solo quando la scheda corrente è un canale. Per mandare un messaggio a tutti quelli che sono nel canale, scrivi qui il messaggio e premi &Enter;. Il tuo messaggio, come quello di chiunque altro, appare nella finestra del canale sovrastante. Ogni messaggio è preceduto dall'ora e dal &i18n-nickname; dell'utente.</para>
 
  <para
 >Puoi anche incollare testo dagli appunti. Se il testo incollato ha più di una riga (ritorni a capo), apparirà una finestra di dialogo. Modifica il testo come desideri e fai clic su <guibutton
@@ -3034,7 +3034,7 @@ part of the listing.
 >In qualsiasi <link linkend="channel-screen-tour"
 >canale</link
 >, gli utenti a volte pubblicano gli &URL; di siti interessanti o altre risorse del Web. Puoi fare doppio clic su uno qualsiasi di questi &URL;, e &konversation; avvierà l'applicazione associata con l'&URL;. L'applicazione dipende dal tipo &MIME; dell'&URL;. Per esempio un &URL; che cominci per <interface
->http:</interface
+>https:</interface
 > attiverà il tuo browser Web predefinito e mostrerà la pagina web (Puoi anche specificare quale <link linkend="webbrowser"
 >browser Web</link
 > usare). Se l'&URL; scorre oltre la schermata, potresti aver problemi a ritrovarlo. &konversation; può tenerti un comodo elenco di tutti gli &URL;. Per attivare questa funzionalità, scegli <menuchoice
@@ -3088,7 +3088,7 @@ part of the listing.
 <callout arearefs="pt-urlcatcher-2"
 ><para
 >Fai clic qui per attivare l'applicazione associata con l'&URL; selezionato. L'applicazione avviata dipende dal tipo &MIME; dell'&URL;. Per esempio, un &URL; che comincia per <interface
->http:</interface
+>https:</interface
 > attiverà il tuo browser Web predefinito e mostrerà la pagina Web. Per le pagine Web, puoi anche specificare il <link linkend="webbrowser"
 >browser Web</link
 > da usare.</para
@@ -3127,7 +3127,7 @@ part of the listing.
 
 <para
 >Quando fai clic su un &URL; evidenziato da qualsiasi parte in &konversation;, verrà avviata l'applicazione predefinita associata al tipo &MIME; dell'&URL;. Per esempio, quando si fa clic su un &URL; che comincia per <interface
->http</interface
+>https</interface
 >, viene avviato &konqueror; per mostrare la pagina Web. Puoi specificare un'applicazione diversa dalle <guilabel
 >Applicazioni predefinite</guilabel
 > nelle &systemsettings;. Per esempio, puoi usare <application
@@ -3239,7 +3239,7 @@ part of the listing.
 >R</keycap
 ></keycombo
 >. <action
->Apparirà una riga in fondo al testo dello schermo. La riga scorrerà con il resto del testo nello schermo</action
+>Apparirà una riga in fondo al testo dello schermo. La riga scorrerà con il resto del testo sullo schermo</action
 >. </para>
 
 <para
