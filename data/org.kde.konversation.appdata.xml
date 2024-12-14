@@ -40,6 +40,7 @@
   <name xml:lang="pt">Konversation</name>
   <name xml:lang="pt-BR">Konversation</name>
   <name xml:lang="ru">Konversation</name>
+  <name xml:lang="sa">संवादः</name>
   <name xml:lang="sk">Konversation</name>
   <name xml:lang="sl">Konversation</name>
   <name xml:lang="sr">Конверзација</name>
@@ -84,6 +85,7 @@
   <summary xml:lang="pt">Cliente de IRC</summary>
   <summary xml:lang="pt-BR">Cliente IRC</summary>
   <summary xml:lang="ru">Клиент IRC</summary>
+  <summary xml:lang="sa">IRC ग्राहक</summary>
   <summary xml:lang="sk">IRC klient</summary>
   <summary xml:lang="sl">Odjemalec za IRC</summary>
   <summary xml:lang="sr">ИРЦ клијент</summary>
@@ -128,6 +130,7 @@
     <p xml:lang="pt">O Konversation é um cliente amigável de Internet Relay Chat (IRC) do KDE. Oferece um acesso rápido às redes-padrão de IRC, como o Libera - onde se encontram os canais de IRC do KDE.</p>
     <p xml:lang="pt-BR">O Konversation é um cliente de IRC (Internet Relay Chat) amigável do KDE. Ele fornece acesso fácil a redes IRC padrão, como Libera, onde os canais IRC do KDE podem ser encontrados.</p>
     <p xml:lang="ru">Konversation — клиент IRC с дружественным интерфейсом, разработанный KDE. Он обеспечивает доступ к стандартным сетям IRC (например, к Libera), где находятся IRC-каналы KDE.</p>
+    <p xml:lang="sa">Konversation KDE द्वारा उपयोक्तृ-अनुकूलः Internet Relay Chat (IRC) क्लायन्ट् अस्ति । एतत् Libera इत्यादिषु मानक IRC संजालेषु सुलभं प्रवेशं प्रदाति, यत्र KDE IRC चैनल्स् द्रष्टुं शक्यन्ते ।</p>
     <p xml:lang="sk">Konversation je používateľsky priateľský klient pre IRC od KDE. Poskytuje ľahký prístup ku štandardným IRC sieťam ako Libera, KDE sa dajú nájsť KDE IRC kanály.</p>
     <p xml:lang="sl">Konversation je uporabniku prijazen odjemalec Internet Relay Chat (IRC), ki ga izdelal KDE. To omogoča enostaven dostop do standardnih omrežij IRC, kot je Libera, kjer najdete lahko IRC kanale za KDE.</p>
     <p xml:lang="sv">Konversation är en användarvänlig IRC-klient (Internet Relay Chat) av KDE. Det erbjuder enkel åtkomst till vanliga IRC-nätverk såsom Libera, där KDE:s IRC-kanal finns.</p>
@@ -168,6 +171,7 @@
     <p xml:lang="pt">Funcionalidades:</p>
     <p xml:lang="pt-BR">Recursos:</p>
     <p xml:lang="ru">Возможности:</p>
+    <p xml:lang="sa">गुणाः:</p>
     <p xml:lang="sk">Funkcie:</p>
     <p xml:lang="sl">Zmožnosti:</p>
     <p xml:lang="sr">Могућности:</p>
@@ -212,6 +216,7 @@
       <li xml:lang="pt">Funcionalidades normais do IRC</li>
       <li xml:lang="pt-BR">Recursos padrão do IRC</li>
       <li xml:lang="ru">Стандартные возможности IRC</li>
+      <li xml:lang="sa">मानक IRC विशेषताः</li>
       <li xml:lang="sk">Štandardné funkcie IRC</li>
       <li xml:lang="sl">Običajne zmožnosti za IRC</li>
       <li xml:lang="sr">стандардне ИРЦ могућности</li>
@@ -254,6 +259,7 @@
       <li xml:lang="pt">Suporte para o servidor em SSL</li>
       <li xml:lang="pt-BR">Suporte a servidor SSL</li>
       <li xml:lang="ru">Поддержка серверов SSL</li>
+      <li xml:lang="sa">SSL सर्वर समर्थनम्</li>
       <li xml:lang="sk">Podpora SSL servera</li>
       <li xml:lang="sl">Podpora strežnikom SSL</li>
       <li xml:lang="sr">подршка за ССЛ сервере</li>
@@ -296,6 +302,7 @@
       <li xml:lang="pt">Suporte para favoritos</li>
       <li xml:lang="pt-BR">Suporte a favoritos</li>
       <li xml:lang="ru">Поддержка закладок</li>
+      <li xml:lang="sa">बुकमार्किंग् समर्थनम्</li>
       <li xml:lang="sk">Podpora záložiek</li>
       <li xml:lang="sl">Podpora zaznamkom</li>
       <li xml:lang="sr">подршка за обележиваче</li>
@@ -337,6 +344,7 @@
       <li xml:lang="pt">Interface de utilizador simples de usar</li>
       <li xml:lang="pt-BR">Interface gráfica fácil de usar</li>
       <li xml:lang="ru">Простой в использовании графический интерфейс пользователя</li>
+      <li xml:lang="sa">चित्रात्मकं उपयोक्तृ-अन्तरफलकं उपयोगाय सुलभम्</li>
       <li xml:lang="sk">Ľahko použiteľné používateľské rozhranie</li>
       <li xml:lang="sl">Enostaven grafični uporabniški vmesnik</li>
       <li xml:lang="sr">предусретљиво графичко корисничко сучеље</li>
@@ -378,6 +386,7 @@
       <li xml:lang="pt">Vários canais e servidores numa única janela</li>
       <li xml:lang="pt-BR">Múltiplos servidores e canais em uma única janela</li>
       <li xml:lang="ru">Показ нескольких серверов и каналов в одном окне</li>
+      <li xml:lang="sa">एकस्मिन् विण्डो मध्ये बहुविधाः सर्वराः, चैनल्स् च</li>
       <li xml:lang="sk">Viac serverov a kanálov v jednom okne</li>
       <li xml:lang="sl">Več strežnikov in kanalov v samo enem oknu</li>
       <li xml:lang="sr">више сервера и канала у једном прозору</li>
@@ -420,6 +429,7 @@
       <li xml:lang="pt">Transferência de ficheiros por DCC</li>
       <li xml:lang="pt-BR">Transferência de arquivos DCC</li>
       <li xml:lang="ru">Передача файлов DCC</li>
+      <li xml:lang="sa">DCC सञ्चिका स्थानान्तरणम्</li>
       <li xml:lang="sk">Prenos súborov DCC</li>
       <li xml:lang="sl">Prenos datotek preko DCC</li>
       <li xml:lang="sr">ДЦЦ пренос фајлова</li>
@@ -461,6 +471,7 @@
       <li xml:lang="pt">Várias identidades para diferentes servidores</li>
       <li xml:lang="pt-BR">Múltiplas identidades para servidores diferentes</li>
       <li xml:lang="ru">Несколько профилей для разных серверов</li>
+      <li xml:lang="sa">भिन्न-भिन्न-सर्वर-कृते बहुविध-परिचयः</li>
       <li xml:lang="sk">Viac identít pre rôzne servery</li>
       <li xml:lang="sl">Več istovetnosti za različne strežnike</li>
       <li xml:lang="sr">вишеструки идентитети за различите сервере</li>
@@ -504,6 +515,7 @@
       <li xml:lang="pt">Decorações e cores do texto</li>
       <li xml:lang="pt-BR">Decorações de textos e cores</li>
       <li xml:lang="ru">Оформление текста и цвета</li>
+      <li xml:lang="sa">पाठ अलङ्काराः वर्णाः च</li>
       <li xml:lang="sk">Dekorácie a farby textu</li>
       <li xml:lang="sl">Okraski in barve besedila</li>
       <li xml:lang="sr">декорације и бојење текста</li>
@@ -545,6 +557,7 @@
       <li xml:lang="pt">Visualização no ecrã para as notificações</li>
       <li xml:lang="pt-BR">Exibição na tela para notificações</li>
       <li xml:lang="ru">Индикатор уведомлений</li>
+      <li xml:lang="sa">सूचनानां कृते OnScreen प्रदर्शनम्</li>
       <li xml:lang="sk">OnScreen Display pre upozornenia</li>
       <li xml:lang="sl">Prikaz na zaslonu za obvestila</li>
       <li xml:lang="sr">екрански приказ за обавештења</li>
@@ -588,6 +601,7 @@
       <li xml:lang="pt">Detecção automática do UTF-8</li>
       <li xml:lang="pt-BR">Detecção automática de UTF-8</li>
       <li xml:lang="ru">Автоматическое определение UTF-8</li>
+      <li xml:lang="sa">स्वचालित UTF-8 अन्वेषण</li>
       <li xml:lang="sk">Automatická detekcia UTF-8</li>
       <li xml:lang="sl">Samodejna zaznava UTF-8</li>
       <li xml:lang="sr">аутоматско откривање УТФ‑8</li>
@@ -630,6 +644,7 @@
       <li xml:lang="pt">Suporte de codificações diferentes por canal</li>
       <li xml:lang="pt-BR">Suporte a codificação por canal</li>
       <li xml:lang="ru">Поддержка различных кодировок для каналов</li>
+      <li xml:lang="sa">प्रति चैनल एन्कोडिंग समर्थन</li>
       <li xml:lang="sk">Podpora kódovania pre každý kanál</li>
       <li xml:lang="sl">Podpora različnim kodiranjem na različnih kanalih</li>
       <li xml:lang="sr">подршка за кодирање по каналу</li>
@@ -671,6 +686,7 @@
       <li xml:lang="pt">Suporte de temas para os ícones das alcunhas</li>
       <li xml:lang="pt-BR">Suporte a temas para os ícones dos apelidos</li>
       <li xml:lang="ru">Поддержка тем значков пользователей</li>
+      <li xml:lang="sa">निक चिह्नानां कृते विषयसमर्थनम्</li>
       <li xml:lang="sk">Podpora tém pre ikony prezývok</li>
       <li xml:lang="sl">Podpora ikonam v vzdevkih</li>
       <li xml:lang="sr">тематска подршка за иконице надимака</li>
@@ -713,6 +729,7 @@
       <li xml:lang="pt">Extremamente configurável</li>
       <li xml:lang="pt-BR">Altamente configurável</li>
       <li xml:lang="ru">Широкие возможности настройки</li>
+      <li xml:lang="sa">अत्यन्तं विन्यासयोग्यम्</li>
       <li xml:lang="sk">Vysoko konfigurovateľné</li>
       <li xml:lang="sl">Veliko nastavitvenih možnosti</li>
       <li xml:lang="sr">висока подесивост</li>
