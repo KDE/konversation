@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-12-08 12:47+0100\n"
+"PO-Revision-Date: 2024-12-13 22:25+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -139,6 +139,7 @@ msgstr ""
 "«/media» - informar do que está a reproducir o primeiro reprodutor que se "
 "atope."
 
+# skip-rule: trasno-audio_reverse
 #: data/scripts/media:305
 msgid ""
 "\"/media [ 'audio' | 'video' ]\" - report what is playing in a known audio "
@@ -500,8 +501,7 @@ msgstr "Xeral"
 msgid ""
 "Sounds the system bell when you receive an ASCII BEL (0x07) control character"
 msgstr ""
-"Reproduce a campaíña do sistema cando recibe un carácter de control ASCII "
-"BEL (0x07)"
+"Tocar a campá do sistema cando recibe un carácter de control ASCII BEL (0x07)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Beep)
 #: src/config/chatwindowbehaviour_config.ui:38
@@ -3629,7 +3629,7 @@ msgstr ""
 #: src/dcc/transfersend.cpp:602
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
-msgstr "A operación tivo éxito. Nunca debería aparecer nunha xanela de erro."
+msgstr "A operación tivo éxito. Nunca debería aparecer nun diálogo de erro."
 
 #: src/dcc/transfersend.cpp:605
 #, kde-format
@@ -6235,6 +6235,7 @@ msgstr "Alcumes vixiados en liña"
 msgid "&Add Nickname..."
 msgstr "Eng&adir un alcume…"
 
+# skip-rule: trasno-window_reverse
 #: src/irc/nicksonline.cpp:35
 #, kde-format
 msgid ""
@@ -6248,6 +6249,7 @@ msgstr ""
 msgid "&Remove Nickname"
 msgstr "Elimina&r un alcume"
 
+# skip-rule: trasno-window_reverse
 #: src/irc/nicksonline.cpp:37
 #, kde-format
 msgid ""
@@ -9975,7 +9977,7 @@ msgid ""
 "part you can see in this viewer."
 msgstr ""
 "Nota: Ao gardar o ficheiro de rexistro gárdanse todos os datos no ficheiro, "
-"non só a parte que se ve nesta xanela."
+"non só a parte que se ve neste visor."
 
 #: src/viewer/logfilereader.cpp:150
 #, kde-format
