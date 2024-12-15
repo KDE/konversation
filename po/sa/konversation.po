@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-13 20:22+0530\n"
+"PO-Revision-Date: 2024-12-14 13:21+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
@@ -84,17 +84,17 @@ msgstr "%1 मध्ये किमपि न क्रीडति ।"
 #: data/scripts/media:201
 msgctxt "1 = Comma-separated list of audio players."
 msgid "None of the running audio players (%1) are playing anything."
-msgstr ""
+msgstr "चालितानां श्रव्यवादकानां (%1) कश्चन अपि किमपि न वादयति ।"
 
 #: data/scripts/media:206
 msgctxt "1 = Comma-separated list of video players."
 msgid "None of the running video players (%1) are playing anything."
-msgstr ""
+msgstr "धावन्तः कोऽपि विडियो प्लेयर् (%1) किमपि न वादयति ।"
 
 #: data/scripts/media:211
 msgctxt "1 = Comma-separated list of media players."
 msgid "None of the running media players (%1) are playing anything."
-msgstr ""
+msgstr "धावन्तः मीडियाप्लेयर् (%1) कोऽपि किमपि न क्रीडति ।"
 
 #: data/scripts/media:219
 msgid "An error occurred while trying to retrieve media metadata from %1."
@@ -104,7 +104,7 @@ msgstr "%1 तः मीडिया मेटाडाटा पुनः प�
 msgctxt "REGEX_FIXUP is the name of a config key in a config file."
 msgid ""
 "There is a problem with the regular expression specified in REGEX_FIXUP."
-msgstr ""
+msgstr "REGEX_FIXUP मध्ये निर्दिष्टस्य नियमितव्यञ्जनस्य समस्या अस्ति ।"
 
 #: data/scripts/media:266
 msgid "%1 did not report the metadata needed to output a message."
@@ -581,7 +581,7 @@ msgstr "व्यतिरिक्तं दृष्टानि निक्�
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last 10 min"
-msgstr ""
+msgstr "भारः १० मि"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:160
@@ -589,7 +589,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last hour"
-msgstr ""
+msgstr "गतघण्टा"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:165
@@ -597,7 +597,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last day"
-msgstr ""
+msgstr "अन्तिमदिने"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HideUnimportantEventsExcludeActiveThreshold)
 #: src/config/chatwindowbehaviour_config.ui:170
@@ -605,7 +605,7 @@ msgstr ""
 msgctxt ""
 "Is prefaced with: Except for watched nicks and nicks active within the"
 msgid "last week"
-msgstr ""
+msgstr "गतसप्ताहे"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3_2)
 #: src/config/chatwindowbehaviour_config.ui:196
@@ -878,8 +878,8 @@ msgstr "१३: १."
 #, kde-format
 msgid " second"
 msgid_plural " seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " क्षण"
+msgstr[1] " सेकण्ड्"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoReconnect)
 #: src/config/connectionbehavior_config.ui:26
@@ -1011,8 +1011,8 @@ msgstr "समाभाष्:"
 #, kde-format
 msgid " byte"
 msgid_plural " bytes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " बाइट्"
+msgstr[1] " बाइट्"
 
 #: src/config/dcc_config.cpp:74
 #, kde-format
@@ -2012,15 +2012,15 @@ msgstr "संबन्धः"
 #, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " पंक्ति"
+msgstr[1] " रेखाः"
 
 #: src/config/settingsdialog.cpp:115
 #, kde-format
 msgid " nick"
 msgid_plural " nicks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " निक्"
+msgstr[1] " निक्स्"
 
 #: src/config/settingsdialog.cpp:121
 #, kde-format
@@ -2305,7 +2305,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a channel invitation is received"
-msgstr ""
+msgstr "... एकं चैनलनिमन्त्रणं प्राप्यते"
 
 #: src/config/warnings_config.cpp:146
 #, kde-format
@@ -2313,7 +2313,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... saving a log file would save only the visible portion"
-msgstr ""
+msgstr "... लॉग् सञ्चिकां रक्षित्वा केवलं दृश्यमानं भागं रक्षितं भविष्यति"
 
 #: src/config/warnings_config.cpp:149
 #, kde-format
@@ -2321,7 +2321,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a log file is about to be deleted"
-msgstr ""
+msgstr "... एकः लॉग् सञ्चिका विलोपनीयः अस्ति"
 
 #: src/config/warnings_config.cpp:152
 #, kde-format
@@ -2330,7 +2330,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... an open query exists for a nickname that has just been marked as ignored"
-msgstr ""
+msgstr "... अधुना एव उपेक्षितम् इति चिह्नितस्य उपनामस्य कृते मुक्तप्रश्नः विद्यते"
 
 #: src/config/warnings_config.cpp:155
 #, kde-format
@@ -2338,7 +2338,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... switching a connection to a different server in the same network"
-msgstr ""
+msgstr "... एकस्मिन् संजाले भिन्नसर्वर प्रति संयोजनं परिवर्तयन्"
 
 #: src/config/warnings_config.cpp:158
 #, kde-format
@@ -2346,7 +2346,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... creating a new connection to an already connected network"
-msgstr ""
+msgstr "... पूर्वमेव संयोजितजालस्य नूतनं संयोजनं निर्माय"
 
 #: src/config/warnings_config.cpp:161
 #, kde-format
@@ -2354,7 +2354,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a server tab"
-msgstr ""
+msgstr "... सर्वर ट्याब् बन्दं कुर्वन्"
 
 #: src/config/warnings_config.cpp:164
 #, kde-format
@@ -2362,7 +2362,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a channel tab"
-msgstr ""
+msgstr "... एकं चैनल् ट्याब् बन्दं कुर्वन्"
 
 #: src/config/warnings_config.cpp:167
 #, kde-format
@@ -2370,7 +2370,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a query tab"
-msgstr ""
+msgstr "... क्वेरी ट्याब् बन्दं कुर्वन्"
 
 #: src/config/warnings_config.cpp:170
 #, kde-format
@@ -2378,7 +2378,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a DCC Chat tab"
-msgstr ""
+msgstr "... एकं DCC Chat ट्याब् बन्दं कुर्वन्"
 
 #: src/config/warnings_config.cpp:173
 #, kde-format
@@ -2387,7 +2387,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... a source for the channel list cannot be determined from the current tab"
-msgstr ""
+msgstr "... वर्तमान ट्याब् तः चैनल् सूचीयाः स्रोतः निर्धारयितुं न शक्यते"
 
 #: src/config/warnings_config.cpp:176
 #, kde-format
@@ -2395,7 +2395,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... you have chosen to hide the menu bar"
-msgstr ""
+msgstr "... भवता मेनू-पट्टिकां गोपयितुं चितम्"
 
 #: src/config/warnings_config.cpp:179
 #, kde-format
@@ -2403,7 +2403,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... a channel listing may cause disconnection due to the download size"
-msgstr ""
+msgstr "... एकस्य चैनलसूचीकरणेन डाउनलोड् आकारस्य कारणेन विच्छेदः भवितुम् अर्हति"
 
 #: src/config/warnings_config.cpp:182
 #, kde-format
@@ -2411,7 +2411,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... pasting large portions of text"
-msgstr ""
+msgstr "... पाठस्य बृहत् भागं चिनोति"
 
 #: src/config/warnings_config.cpp:185
 #, kde-format
@@ -2419,7 +2419,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... quitting Konversation via the tray icon"
-msgstr ""
+msgstr "... ट्रे चिह्नद्वारा Konversation त्यक्त्वा"
 
 #: src/config/warnings_config.cpp:188
 #, kde-format
@@ -2427,7 +2427,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... you have chosen to ignore a nickname"
-msgstr ""
+msgstr "... भवता उपनाम उपेक्षितुं चितम्"
 
 #: src/config/warnings_config.cpp:191
 #, kde-format
@@ -2435,7 +2435,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... you have chosen to stop ignoring a nickname"
-msgstr ""
+msgstr "... भवता उपनामस्य अवहेलनं त्यक्तुं चितम्"
 
 #: src/config/warnings_config.cpp:194
 #, kde-format
@@ -2443,7 +2443,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... quitting Konversation while DCC file transfers are active"
-msgstr ""
+msgstr "... DCC सञ्चिकास्थापनं सक्रियं भवति चेत् Konversation त्यक्त्वा"
 
 #: src/config/warnings_config.cpp:197
 #, kde-format
@@ -2452,7 +2452,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid ""
 "... some characters in a message are incompatible with the active encoding"
-msgstr ""
+msgstr "... सन्देशे केचन वर्णाः सक्रियसङ्केतनेन सह असङ्गताः भवन्ति"
 
 #: src/config/warnings_config.cpp:200
 #, kde-format
@@ -2460,7 +2460,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing the window will minimize to the system tray"
-msgstr ""
+msgstr "... विण्डो बन्दं कृत्वा सिस्टम् ट्रे यावत् न्यूनीकरोति"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, dialogListView)
 #: src/config/warnings_configui.ui:29
@@ -2596,15 +2596,15 @@ msgstr "नेटवर्क् डाउन अस्ति, यदा बै�
 #, kde-format
 msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 सेकेण्ड् मध्ये %2 (port %3) इत्यनेन सह सम्बद्धं कर्तुं प्रयतमानोऽस्मि ।"
+msgstr[1] "%1 सेकेण्ड् मध्ये %2 (port %3) इत्यनेन सह सम्बद्धं कर्तुं प्रयतते ।"
 
 #: src/connectionmanager.cpp:262
 #, kde-format
 msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 सेकेण्ड् मध्ये %2 (port %3) इत्यनेन सह पुनः संयोजितुं प्रयतमानोऽस्मि ।"
+msgstr[1] "%1 सेकण्ड् मध्ये %2 (port %3) इत्यनेन सह पुनः संयोजितुं प्रयतमानोऽस्मि ।"
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -2710,7 +2710,7 @@ msgstr "getNickname: सर्वर %1 न लभ्यते।"
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
-msgstr ""
+msgstr "IRC सर्वरद्वारा भागिनं प्रति DCC %1 अनुरोधं प्रेषयितुं न शक्तवान् ।"
 
 #: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
@@ -2721,13 +2721,13 @@ msgstr "दूरस्थप्रयोक्तृणां स्वीक�
 #, kde-format
 msgctxt "%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard"
 msgid "%1 (on %2) offers to DCC %3 with you"
-msgstr ""
+msgstr "%1 (%2 इत्यत्र) भवता सह DCC %3 इत्यस्मै प्रस्तावति"
 
 #: src/dcc/chat.cpp:149
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "DCC %1 offer from %2"
-msgstr ""
+msgstr "DCC %1 %2 तः प्रस्तावः"
 
 #: src/dcc/chat.cpp:150
 #, kde-format
@@ -2743,13 +2743,13 @@ msgstr "अस्वीकार"
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "You rejected the DCC %1 offer."
-msgstr ""
+msgstr "भवान् DCC %1 प्रस्तावम् अङ्गीकृतवान् ।"
 
 #: src/dcc/chat.cpp:196
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard"
 msgid "DCC %1 request was rejected"
-msgstr ""
+msgstr "DCC %1 अनुरोधः अङ्गीकृतः"
 
 #: src/dcc/chat.cpp:285
 #, kde-format
@@ -2757,7 +2757,7 @@ msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
-msgstr ""
+msgstr "IRC सर्वरेण भागीदाराय Reverse DCC %1 स्वीकृतिं प्रेषयितुं न शक्तवान् ।"
 
 #: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2772,7 +2772,7 @@ msgctxt "%1=extension like Chat or Whiteboard"
 msgid ""
 "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC "
 "server."
-msgstr ""
+msgstr "IRC सर्वरेण भागीदाराय Reverse DCC %1 स्वीकृतिं प्रेषयितुं न शक्तवान् ।"
 
 #: src/dcc/chat.cpp:359
 #, kde-format
@@ -2783,32 +2783,32 @@ msgstr "श्रवणार्थं सॉकेट् उद्घाटय�
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
-msgstr ""
+msgstr "%3 पोर्ट् मध्ये %2 कृते DCC %1 संयोजनं प्रदातुं..."
 
 #: src/dcc/chat.cpp:431
 #, kde-format
 msgctxt "DCC extension"
 msgid "Whiteboard"
-msgstr ""
+msgstr "श्वेतफलकम्"
 
 #: src/dcc/chat.cpp:434
 #, kde-format
 msgctxt "DCC extension"
 msgid "Chat"
-msgstr ""
+msgstr "संवाद"
 
 #: src/dcc/chat.cpp:465
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
-msgstr ""
+msgstr "%2 (%3:%4) इत्यनेन सह DCC %1 संयोजनं स्थापयति..."
 
 #: src/dcc/chat.cpp:482
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2 = partnerNick"
 msgid "Established DCC %1 connection to %2."
-msgstr ""
+msgstr "%2 इत्यनेन सह DCC %1 संयोजनं स्थापितं ।"
 
 #: src/dcc/chat.cpp:489 src/dcc/transfersend.cpp:570
 #, kde-format
@@ -2824,7 +2824,7 @@ msgstr "ग्राहकं स्वीकुर्वितुं न शक
 #, kde-format
 msgctxt "%1=dcc extension as Chat or Whiteboard, %2=partnerNick"
 msgid "Established DCC %1 connection to %2."
-msgstr ""
+msgstr "%2 इत्यनेन सह DCC %1 संयोजनं स्थापितं ।"
 
 #: src/dcc/chat.cpp:578
 #, kde-format
@@ -2835,33 +2835,33 @@ msgstr "संयोजनं बन्दम्।"
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port"
 msgid "DCC %1 with %2 on port %3."
-msgstr ""
+msgstr "%3 पोर्ट् इत्यत्र %2 इत्यनेन सह DCC %1 ।"
 
 #: src/dcc/chatcontainer.cpp:117
 #, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port"
 msgid "DCC %1 with %2 on %3:%4."
-msgstr ""
+msgstr "%3:%4 इत्यत्र %2 इत्यनेन सह DCC %1 ।"
 
 #: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
 #, kde-format
 msgctxt "Universal Plug and Play"
 msgid "UPnP"
-msgstr ""
+msgstr "UPnP"
 
 #: src/dcc/chatcontainer.cpp:178
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2=partnerNick"
 msgid "Do you want to close your DCC %1 with %2?"
-msgstr ""
+msgstr "किं भवान् स्वस्य DCC %1 %2 इत्यनेन पिधातुम् इच्छति?"
 
 #: src/dcc/chatcontainer.cpp:181
 #, kde-format
 msgctxt "%1=extension like Chat or Whiteboard"
 msgid "Close DCC %1"
-msgstr ""
+msgstr "DCC %1 बन्दं कुर्वन्तु"
 
 #: src/dcc/chatcontainer.cpp:200 src/irc/query.cpp:437
 #, kde-format
@@ -2872,7 +2872,7 @@ msgstr "स्वयमेव सम्भाषणं कुर्वन्"
 #, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr ""
+msgstr "पूर्वनिर्धारितम् ( %1 ) ."
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -2908,7 +2908,7 @@ msgstr "सॉकेटं उद्घाटयितुं न शक्तव
 #, kde-format
 msgctxt "passive dcc send"
 msgid "Passive Send"
-msgstr ""
+msgstr "निष्क्रिय प्रेषण"
 
 #: src/dcc/dccfiledialog.cpp:47 src/notificationhandler.cpp:79
 #: src/notificationhandler.cpp:132 src/notificationhandler.cpp:182
@@ -2996,37 +2996,37 @@ msgstr "अज्ञात सर्वर"
 #, kde-format
 msgctxt "%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort"
 msgid "%1 on %2, %3 (port %4)"
-msgstr ""
+msgstr "%1 %2 इत्यत्र, %3 (पोर्ट %4)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:162
 #, kde-format
 msgctxt "%1 = PartnerNick, %2 = Partner IRC Servername"
 msgid "%1 on %2"
-msgstr ""
+msgstr "%2 इत्यत्र %1"
 
 #: src/dcc/transferdetailedinfopanel.cpp:169
 #, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr ""
+msgstr "%1 (पोर्ट %2) २."
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
 msgctxt "%1=Transferstartposition"
 msgid "Yes, %1"
-msgstr ""
+msgstr "आम्, %1"
 
 #: src/dcc/transferdetailedinfopanel.cpp:179
 #, kde-format
 msgctxt "no - not a resumed transfer"
 msgid "No"
-msgstr ""
+msgstr "नहि"
 
 #: src/dcc/transferdetailedinfopanel.cpp:245
 #, kde-format
 msgctxt "less than 1 sec"
 msgid "&lt; 1sec"
-msgstr ""
+msgstr "&lt; १सेकण्ड्"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4)
 #: src/dcc/transferdetailedinfopanelui.ui:43
@@ -3183,13 +3183,13 @@ msgstr "सज्जीकरणम्"
 #, kde-format
 msgctxt "Transfer is waiting for the partner to accept or reject it"
 msgid "Pending"
-msgstr ""
+msgstr "विचाराधीनः"
 
 #: src/dcc/transferlistmodel.cpp:477
 #, kde-format
 msgctxt "Transfer is connecting to the partner"
 msgid "Connecting"
-msgstr ""
+msgstr "संयोजयन्"
 
 #: src/dcc/transferlistmodel.cpp:482
 #, kde-format
@@ -3205,13 +3205,13 @@ msgstr "प्रेषयन्"
 #, kde-format
 msgctxt "Transfer has completed successfully"
 msgid "Done"
-msgstr ""
+msgstr "कृतम्‌"
 
 #: src/dcc/transferlistmodel.cpp:492
 #, kde-format
 msgctxt "Transfer failed"
 msgid "Failed"
-msgstr ""
+msgstr "असफल"
 
 #: src/dcc/transferlistmodel.cpp:494
 #, kde-format
@@ -3327,7 +3327,7 @@ msgstr "पुनः प्रेषयतु"
 #, kde-format
 msgctxt "clear selected dcctransfer"
 msgid "&Clear"
-msgstr ""
+msgstr "&स्पष्टः"
 
 #: src/dcc/transferpanel.cpp:83
 #, kde-format
@@ -3370,16 +3370,16 @@ msgid ""
 "You have selected %1 file to execute, are you sure you want to continue?"
 msgid_plural ""
 "You have selected %1 files to execute, are you sure you want to continue?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "भवान् %1 सञ्चिकां निष्पादयितुं चिनोति, किं भवान् निश्चयेन निरन्तरं कर्तुम् इच्छति?"
+msgstr[1] "भवान् %1 सञ्चिकाः निष्पादयितुं चिनोति, किं भवान् निश्चयेन निरन्तरं कर्तुम् इच्छति?"
 
 #: src/dcc/transferpanel.cpp:427
 #, kde-format
 msgctxt "@action:button"
 msgid "Execute %1 File"
 msgid_plural "Execute %1 Files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 सञ्चिकां निष्पादयन्तु"
+msgstr[1] "%1 सञ्चिकाः निष्पादयन्तु"
 
 #: src/dcc/transferrecv.cpp:197
 #, kde-format
@@ -3422,7 +3422,10 @@ msgid_plural ""
 "<b>A partial file exists:</b><br/>%2<br/>Size of the partial file: %1 bytes."
 "<br/>"
 msgstr[0] ""
+"<b>आंशिकसञ्चिका विद्यते : १.</b><br/> %2<br/> आंशिकसञ्चिकायाः आकारः : १ बाइट् ।<br/>"
 msgstr[1] ""
+"<b>आंशिकसञ्चिका विद्यते : १.</b><br/> %2<br/> आंशिकसञ्चिकायाः आकारः : %1 बाइट् ।<br/"
+">"
 
 #: src/dcc/transferrecv.cpp:482
 #, kde-format
@@ -3431,6 +3434,8 @@ msgid ""
 "<b>The file already exists.</b><br/>%1 (%2)<br/>Sender reports file size of "
 "%3<br/>"
 msgstr ""
+"<b>सञ्चिका पूर्वमेव अस्ति ।</b><br/> %1 (%2) २.<br/> प्रेषकः %3 इत्यस्य सञ्चिकायाः "
+"आकारं प्रतिवेदयति<br/>"
 
 #: src/dcc/transferrecv.cpp:491
 #, kde-format
@@ -3743,7 +3748,7 @@ msgstr "पाठं आकर्षयन्तु"
 #, kde-format
 msgctxt "dcc whiteboard selection tool"
 msgid "Selection"
-msgstr ""
+msgstr "चयनम्"
 
 #: src/dcc/whiteboardtoolbar.cpp:72
 #, kde-format
@@ -3809,7 +3814,7 @@ msgstr "SASL PLAIN"
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
-msgstr ""
+msgstr "SASL बाह्य (प्रमाणपत्र) ९."
 
 #: src/identitydialog.cpp:89
 #, kde-format
@@ -3830,8 +3835,8 @@ msgstr "SSL क्लायन्ट् प्रमाणपत्रम्"
 #, kde-format
 msgid " minute"
 msgid_plural " minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " क्षणं"
+msgstr[1] " पन्चनिमेषः"
 
 #: src/identitydialog.cpp:115
 #, kde-format
@@ -3928,7 +3933,7 @@ msgstr "अत्र प्रविष्टः गुप्तशब्दः 
 #, kde-format
 msgctxt "Shown in unfilled line edit"
 msgid "(optional)"
-msgstr ""
+msgstr "(वैकल्पिक)"
 
 #: src/identitydialog.cpp:489
 #, kde-format
@@ -4410,13 +4415,13 @@ msgstr "आबन्धम्"
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = channel"
 msgid "You (%1) have joined the channel %2."
-msgstr ""
+msgstr "भवान् (%1) %2 इति चैनले सम्मिलितः अस्ति ।"
 
 #: src/irc/channel.cpp:1112
 #, kde-format
 msgctxt "%1 is the nick joining and %2 the hostmask of that nick"
 msgid "%1 (%2) has joined this channel."
-msgstr ""
+msgstr "%1 (%2) अस्मिन् चैनले सम्मिलितः अस्ति ।"
 
 #: src/irc/channel.cpp:1138 src/irc/channel.cpp:1140 src/irc/channel.cpp:1162
 #: src/irc/channel.cpp:1165 src/irc/query.cpp:453 src/irc/query.cpp:461
@@ -4424,7 +4429,7 @@ msgstr ""
 #, kde-format
 msgctxt "Message type"
 msgid "Quit"
-msgstr ""
+msgstr "परिजहातु"
 
 #: src/irc/channel.cpp:1138
 #, kde-format
@@ -4435,14 +4440,14 @@ msgstr "भवान् (%1) एतत् सर्वरं त्यक्त�
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = reason"
 msgid "You (%1) have left this server (%2)."
-msgstr ""
+msgstr "भवान् (%1) एतत् सर्वरं (%2) त्यक्तवान् ।"
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
 #: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
 #, kde-format
 msgctxt "Message type"
 msgid "Part"
-msgstr ""
+msgstr "भाग"
 
 #: src/irc/channel.cpp:1146
 #, kde-format
@@ -4453,7 +4458,7 @@ msgstr "भवता %1 इति चैनल् त्यक्तम् अ�
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = channel, %3 = reason"
 msgid "You (%1) have left channel %2 (%3)."
-msgstr ""
+msgstr "भवान् (%1) %2 (%3) इति चैनलं त्यक्तवान् ।"
 
 #: src/irc/channel.cpp:1162
 #, kde-format
@@ -4464,7 +4469,7 @@ msgstr "%1 (%2) इत्यनेन एतत् सर्वरं त्य�
 #, kde-format
 msgctxt "%1 = nick, %2 = hostname, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr ""
+msgstr "%1 (%2) इत्यनेन एतत् सर्वरं (%3) त्यक्तम् ।"
 
 #: src/irc/channel.cpp:1171
 #, kde-format
@@ -4475,7 +4480,7 @@ msgstr "%1 (%2) इत्यनेन एतत् चैनलं त्यक�
 #, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this channel (%3)."
-msgstr ""
+msgstr "%1 (%2) इत्यनेन एतत् चैनलं (%3) त्यक्तम् ।"
 
 #: src/irc/channel.cpp:1223 src/irc/channel.cpp:1225 src/irc/channel.cpp:1232
 #: src/irc/channel.cpp:1237 src/irc/channel.cpp:1258 src/irc/channel.cpp:1260
@@ -4494,19 +4499,19 @@ msgstr "भवान् %1 चैनलात् स्वयमेव पाद
 #, kde-format
 msgctxt "%1 adds the channel and %2 the reason"
 msgid "You have kicked yourself from channel %1 (%2)."
-msgstr ""
+msgstr "भवान् %1 (%2) चैनलात् स्वयमेव पादं कृतवान् ।"
 
 #: src/irc/channel.cpp:1233
 #, kde-format
 msgctxt "%1 adds the channel, %2 adds the kicker"
 msgid "You have been kicked from channel %1 by %2."
-msgstr ""
+msgstr "भवन्तः %1 द्वारा चैनल् तः %2 द्वारा किक्ड् कृताः सन्ति ।"
 
 #: src/irc/channel.cpp:1238
 #, kde-format
 msgctxt "%1 adds the channel, %2 the kicker and %3 the reason"
 msgid "You have been kicked from channel %1 by %2 (%3)."
-msgstr ""
+msgstr "भवन्तः %2 (%3) द्वारा चैनल् %1 तः किक्ड् कृताः सन्ति ।"
 
 #: src/irc/channel.cpp:1258
 #, kde-format
@@ -4517,33 +4522,33 @@ msgstr "भवता %1 इति चैनलात् किक् कृत�
 #, kde-format
 msgctxt "%1 adds the kicked nick and %2 the reason"
 msgid "You have kicked %1 from the channel (%2)."
-msgstr ""
+msgstr "भवता %1 इति चैनलात् (%2) किक् कृतम् ।"
 
 #: src/irc/channel.cpp:1268
 #, kde-format
 msgctxt "%1 adds the kicked nick, %2 adds the kicker"
 msgid "%1 has been kicked from the channel by %2."
-msgstr ""
+msgstr "%1 %2 द्वारा चैनलात् किक् कृतम् अस्ति ।"
 
 #: src/irc/channel.cpp:1273
 #, kde-format
 msgctxt "%1 adds the kicked nick, %2 the kicker and %3 the reason"
 msgid "%1 has been kicked from the channel by %2 (%3)."
-msgstr ""
+msgstr "%1 %2 (%3) द्वारा चैनलात् किक् कृतम् अस्ति ।"
 
 #: src/irc/channel.cpp:1340
 #, kde-format
 msgid "%1 nick"
 msgid_plural "%1 nicks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 निक्"
+msgstr[1] "%1 निक्स्"
 
 #: src/irc/channel.cpp:1341
 #, kde-format
 msgid " (%1 op)"
 msgid_plural " (%1 ops)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " (%1 उपरि) २."
+msgstr[1] " (%1 ऑप्स) २."
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
@@ -4951,15 +4956,15 @@ msgstr "%1 चैनल् कीलम् अपसारयति ।"
 #, kde-format
 msgid "You set the channel limit to 1 nick."
 msgid_plural "You set the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "भवान् चैनल् सीमां 1 nick इति सेट् करोति ।"
+msgstr[1] "भवान् चैनलसीमाम् %1 nicks इति सेट् करोति ।"
 
 #: src/irc/channel.cpp:1730
 #, kde-format
 msgid "%2 sets the channel limit to 1 nick."
 msgid_plural "%2 sets the channel limit to %1 nicks."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 चैनलसीमाम् 1 निक् इति सेट् करोति ।"
+msgstr[1] "%2 चैनलसीमाम् %1 निक्स् इति सेट् करोति ।"
 
 #: src/irc/channel.cpp:1734
 #, kde-format
@@ -5177,7 +5182,7 @@ msgstr "चैनलसूची"
 #, kde-format
 msgctxt "save list"
 msgid "Save &List..."
-msgstr ""
+msgstr "सहेजें &सूची..."
 
 #: src/irc/channellistpanel.cpp:157
 #, kde-format
@@ -5188,7 +5193,7 @@ msgstr "चैनलसूचीं रक्षितुं अत्र क्
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr ""
+msgstr "&ताजगी सूची"
 
 #: src/irc/channellistpanel.cpp:159
 #, kde-format
@@ -5426,8 +5431,8 @@ msgstr "-%1 तः %2- %3 पर्यन्तम्"
 #, kde-format
 msgid "second"
 msgid_plural "seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "क्षण"
+msgstr[1] "सेकण्ड्"
 
 #: src/irc/inputfilter.cpp:512
 #, kde-format
@@ -5508,8 +5513,8 @@ msgstr "चैनल् मोड्स् : १. "
 #, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%1 उपयोक्तृपर्यन्तं सीमितम्"
+msgstr[1] "%1 उपयोक्तृभ्यः सीमितम्"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5798,16 +5803,16 @@ msgstr "%1 एकः IRC संचालकः अस्ति ।"
 #, kde-format
 msgid "1 day"
 msgid_plural "%1 days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ दिवसे"
+msgstr[1] "%1 दिवसाः"
 
 #: src/irc/inputfilter.cpp:2127 src/irc/inputfilter.cpp:2140
 #: src/statusbar.cpp:178 src/statusbar.cpp:186
 #, kde-format
 msgid "1 hour"
 msgid_plural "%1 hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ घण्टा"
+msgstr[1] "%1 घण्टा"
 
 #: src/irc/inputfilter.cpp:2128 src/irc/inputfilter.cpp:2141
 #: src/irc/inputfilter.cpp:2151 src/statusbar.cpp:179 src/statusbar.cpp:187
@@ -5815,8 +5820,8 @@ msgstr[1] ""
 #, kde-format
 msgid "1 minute"
 msgid_plural "%1 minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ मिनिट्"
+msgstr[1] "%1 निमेषाः"
 
 #: src/irc/inputfilter.cpp:2129 src/irc/inputfilter.cpp:2142
 #: src/irc/inputfilter.cpp:2152 src/statusbar.cpp:180 src/statusbar.cpp:188
@@ -5824,8 +5829,8 @@ msgstr[1] ""
 #, kde-format
 msgid "1 second"
 msgid_plural "%1 seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ द्वितीयम्"
+msgstr[1] "%1 सेकण्ड्"
 
 #: src/irc/inputfilter.cpp:2133
 #, kde-format
@@ -5833,27 +5838,27 @@ msgctxt ""
 "%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "%1 has been idle for %2, %3, %4, and %5."
-msgstr ""
+msgstr "%1 %2, %3, %4, %5 च कृते निष्क्रियः अभवत् ।"
 
 #: src/irc/inputfilter.cpp:2145
 #, kde-format
 msgctxt ""
 "%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "%1 has been idle for %2, %3, and %4."
-msgstr ""
+msgstr "%1 %2, %3, %4 च कृते निष्क्रियः अभवत् ।"
 
 #: src/irc/inputfilter.cpp:2155
 #, kde-format
 msgctxt "%1 = name of person, %2 = (x minutes), %3 = (x seconds)"
 msgid "%1 has been idle for %2 and %3."
-msgstr ""
+msgstr "%1 %2 तथा %3 कृते निष्क्रियः अभवत् ।"
 
 #: src/irc/inputfilter.cpp:2161
 #, kde-format
 msgid "%2 has been idle for 1 second."
 msgid_plural "%2 has been idle for %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 १ सेकण्ड् यावत् निष्क्रियः अस्ति ।"
+msgstr[1] "%2 %1 सेकण्ड् यावत् निष्क्रियः अस्ति ।"
 
 #: src/irc/inputfilter.cpp:2167
 #, kde-format
@@ -5874,7 +5879,7 @@ msgstr "उपयोक्तृहोस्ट्"
 #, kde-format
 msgctxt "%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away"
 msgid "%1%2 is %3%4."
-msgstr ""
+msgstr "%1%2 %3%4 अस्ति ।"
 
 #: src/irc/inputfilter.cpp:2226
 #, kde-format
@@ -5901,8 +5906,8 @@ msgstr "चैनलानां सूचीः १."
 #, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%2 (%1 उपयोक्ता): %3"
+msgstr[1] "%2 (%1 उपयोक्तारः): %3"
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -5926,7 +5931,7 @@ msgstr "BanList:%1"
 #, kde-format
 msgctxt "BanList message: e.g. *!*@aol.com set by MrGrim on <date>"
 msgid "%1 set by %2 on %3"
-msgstr ""
+msgstr "%1 %3 इत्यत्र %2 इत्यनेन सेट् कृतम्"
 
 #: src/irc/inputfilter.cpp:2352
 #, kde-format
@@ -6047,7 +6052,7 @@ msgstr "इतः परं : १."
 #, kde-format
 msgctxt "network (nickname)"
 msgid "%1 (%2)"
-msgstr ""
+msgstr "%1 (%2) २."
 
 #: src/irc/joinchanneldialog.cpp:216
 #, kde-format
@@ -6431,7 +6436,7 @@ msgstr "उपयोगः : %1EXEC [-SHOWPATH] ।<script> [parameter list]"
 #, kde-format
 msgctxt "%2 is a filesystem path to the script file"
 msgid "The script file '%1' was found at: %2"
-msgstr ""
+msgstr "'%1' इति स्क्रिप्ट् सञ्चिका अत्र प्राप्ता: %2"
 
 #: src/irc/outputfilter.cpp:1234
 #, kde-format
@@ -6447,7 +6452,7 @@ msgstr "उपयोगः : %1RAW [OPEN | पिधानं करोतु]"
 #, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "The notify list has been emptied (removed %1)."
-msgstr ""
+msgstr "सूचनासूची रिक्तं कृतम् (%1 निष्कासितम्) ।"
 
 #: src/irc/outputfilter.cpp:1292
 #, kde-format
@@ -6458,32 +6463,32 @@ msgstr "सूचनासूची सम्प्रति रिक्ता 
 #, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2)."
-msgstr ""
+msgstr "वर्तमानसूचनासूची: %1 (%2 योजितम्)।"
 
 #: src/irc/outputfilter.cpp:1302
 #, kde-format
 msgctxt "%1 and %2 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (removed %2)."
-msgstr ""
+msgstr "वर्तमानसूचनासूची: %1 (%2 निष्कासितम्)।"
 
 #: src/irc/outputfilter.cpp:1306
 #, kde-format
 msgctxt "%1, %2 and %3 = Comma-separated lists of nicknames"
 msgid "Current notify list: %1 (added %2, removed %3)."
-msgstr ""
+msgstr "वर्तमानसूचनासूची: %1 (%2 योजितम्, %3 निष्कासितम्)।"
 
 #: src/irc/outputfilter.cpp:1310
 #, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "Current notify list: %1."
-msgstr ""
+msgstr "वर्तमानसूचनासूची: %1."
 
 #: src/irc/outputfilter.cpp:1315 src/irc/server.cpp:3168
 #: src/irc/server.cpp:3182
 #, kde-format
 msgctxt "Message type"
 msgid "Notify"
-msgstr ""
+msgstr "सूचयतु"
 
 #: src/irc/outputfilter.cpp:1331
 #, kde-format
@@ -6564,8 +6569,8 @@ msgstr "भवतः अवहेलनासूचिकातः %1 निष�
 #, kde-format
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "न तादृशः अवहेलना: %2"
+msgstr[1] "न तादृशः उपेक्षितः: %2"
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -6737,13 +6742,13 @@ msgstr "%1 (%2) इत्यनेन एतत् सर्वरं त्य�
 #, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr ""
+msgstr "%1 (%2) इत्यनेन एतत् सर्वरं (%3) त्यक्तम् ।"
 
 #: src/irc/server.cpp:263
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr ""
+msgstr "पूर्व-संयोजन-शेल्-आदेशं चालयन्..."
 
 #: src/irc/server.cpp:411
 #, kde-format
@@ -6754,7 +6759,7 @@ msgstr "पूर्व-शेल् आदेशः सफलतया नि�
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
-msgstr ""
+msgstr "आदेशस्य निष्पादनकाले समस्या आसीत् : "
 
 #: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
@@ -6918,20 +6923,20 @@ msgstr "%1 इत्यनेन \"%2\" (%3) इत्यस्य निष्�
 #, kde-format
 msgctxt "%1=name, %2=dcc extension, chat or wboard for example"
 msgid "Asking %1 to accept %2..."
-msgstr ""
+msgstr "%1 इत्यस्मै %2 स्वीकुर्वन्तु इति पृच्छन्..."
 
 #: src/irc/server.cpp:2595
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid passive DCC chat acceptance message from %1."
-msgstr ""
+msgstr "%1 तः अमान्यः निष्क्रियः DCC गपशपस्वीकारसन्देशः प्राप्तः ।"
 
 #: src/irc/server.cpp:2631
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid ""
 "Received invalid passive DCC send acceptance message for \"%1\" from %2."
-msgstr ""
+msgstr "अमान्यं निष्क्रियं DCC %2 तः \"%1\" कृते स्वीकृतिसन्देशं प्रेषयति ।"
 
 #: src/irc/server.cpp:2672
 #, kde-format
@@ -6939,13 +6944,13 @@ msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
-msgstr ""
+msgstr "%4 तः %3% तः आरभ्य %2 तः \"%1\" इत्यस्य पुनः डाउनलोड् आरभ्यते..."
 
 #: src/irc/server.cpp:2682
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume acceptance message for \"%1\" from %2."
-msgstr ""
+msgstr "%2 तः \"%1\" कृते अमान्यः पुनरारम्भस्वीकारसन्देशः प्राप्तः ।"
 
 #: src/irc/server.cpp:2728
 #, kde-format
@@ -6953,61 +6958,61 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr ""
+msgstr "%4 तः %3% तः आरभ्य %2 मध्ये \"%1\" इत्यस्य अपलोड् पुनः आरभ्यते..."
 
 #: src/irc/server.cpp:2750
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid resume request for \"%1\" from %2."
-msgstr ""
+msgstr "%2 तः \"%1\" कृते अमान्यः पुनरारम्भ-अनुरोधः प्राप्तः ।"
 
 #: src/irc/server.cpp:2769
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname"
 msgid "Received invalid reject request for \"%1\" from %2."
-msgstr ""
+msgstr "%2 तः \"%1\" इत्यस्य अमान्यं अस्वीकारानुरोधः प्राप्तः ।"
 
 #: src/irc/server.cpp:2785
 #, kde-format
 msgctxt "%1 = nickname"
 msgid "Received invalid reject request from %1."
-msgstr ""
+msgstr "%1 तः अमान्यं अस्वीकारानुरोधं प्राप्तम् ।"
 
 #: src/irc/server.cpp:2798
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 finished."
-msgstr ""
+msgstr "%2 तः \"%1\" इत्यस्य डाउनलोड् समाप्तम् ।"
 
 #: src/irc/server.cpp:2803
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of sender"
 msgid "Download of \"%1\" from %2 failed. Reason: %3."
-msgstr ""
+msgstr "%2 तः \"%1\" इत्यस्य डाउनलोड् विफलम् । कारणम् : %3."
 
 #: src/irc/server.cpp:2815
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 finished."
-msgstr ""
+msgstr "\"%1\" इत्यस्य %2 मध्ये अपलोड् समाप्तम् ।"
 
 #: src/irc/server.cpp:2818
 #, kde-format
 msgctxt "%1 = file name, %2 = nickname of recipient"
 msgid "Upload of \"%1\" to %2 failed. Reason: %3."
-msgstr ""
+msgstr "\"%1\" इत्यस्य %2 मध्ये अपलोड् विफलम् । कारणम् : %3."
 
 #: src/irc/server.cpp:2832
 #, kde-format
 msgctxt "%1 = file name, %2 nickname of recipient"
 msgid "Sending \"%1\" to %2..."
-msgstr ""
+msgstr "%2 - मध्ये \"%1\" प्रेषयन्..."
 
 #: src/irc/server.cpp:2839
 #, kde-format
 msgctxt "%1 = file name, %2 = file size, %3 = nickname of sender"
 msgid "Downloading \"%1\" (%2) from %3..."
-msgstr ""
+msgstr "%3 तः \"%1\" (%2) डाउनलोड् करणम्..."
 
 #: src/irc/server.cpp:3168 src/notificationhandler.cpp:348
 #, kde-format
@@ -7405,7 +7410,13 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
+"चयनितं सर्वरं विलोपयितुं न शक्नुथ ।\n"
+"\n"
+"%2 संजालस्य न्यूनातिन्यूनम् एकः सर्वरः आवश्यकः ।"
 msgstr[1] ""
+"चयनितसर्वर-विलोपनं कर्तुं न शक्नुथ ।\n"
+"\n"
+"%2 संजालस्य न्यूनातिन्यूनम् एकः सर्वरः आवश्यकः ।"
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -8439,13 +8450,13 @@ msgstr "सर्वर सूची"
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New message from %1 in %2"
-msgstr ""
+msgstr "%2 मध्ये %1 तः नूतनः सन्देशः"
 
 #: src/notificationhandler.cpp:103
 #, kde-format
 msgctxt "Notification title; see Event/nick in konversation.notifyrc"
 msgid "Your nick was mentioned by %1 in %2"
-msgstr ""
+msgstr "भवतः निकः %2 मध्ये %1 इत्यनेन उक्तः आसीत्"
 
 #: src/notificationhandler.cpp:114
 #, kde-format
@@ -8461,7 +8472,7 @@ msgstr "[उच्चप्रकाशः] (%1) <%2> %3"
 #, kde-format
 msgctxt "Notification title; see Event/message in konversation.notifyrc"
 msgid "New query message from %1"
-msgstr ""
+msgstr "%1 तः नूतनः प्रश्नसन्देशः"
 
 #: src/notificationhandler.cpp:164
 #, kde-format
@@ -8507,7 +8518,7 @@ msgstr "DCC स्थानान्तरणे त्रुटिः अभव
 #, kde-format
 msgctxt "%1 - filename"
 msgid "%1 File Transfer is complete"
-msgstr ""
+msgstr "%1 सञ्चिकास्थापनं सम्पन्नम्"
 
 #: src/notificationhandler.cpp:302
 #, kde-format
@@ -8539,13 +8550,13 @@ msgstr "%1 भवता सह DCC गपशपं आरब्धवान्"
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered in %1"
-msgstr ""
+msgstr "%1 मध्ये हाइलाइट् उत्प्रेरितम्"
 
 #: src/notificationhandler.cpp:419
 #, kde-format
 msgctxt "Notification title; see Event/highlight in konversation.notifyrc"
 msgid "Highlight triggered by %2 in %1"
-msgstr ""
+msgstr "%1 मध्ये %2 द्वारा प्रेरितम् हाइलाइट्"
 
 #: src/notificationhandler.cpp:430
 #, kde-format
@@ -8819,27 +8830,27 @@ msgctxt ""
 "%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "No answer from server %1 for more than %2, %3, %4, and %5."
-msgstr ""
+msgstr "%2, %3, %4, %5 इत्यस्मात् अधिकं कृते सर्वर %1 तः उत्तरं नास्ति ।"
 
 #: src/statusbar.cpp:189
 #, kde-format
 msgctxt ""
 "%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "No answer from server %1 for more than %2, %3, and %4."
-msgstr ""
+msgstr "%2, %3, %4 इत्यस्मात् अधिकस्य कृते %1 सर्वरात् उत्तरं नास्ति ।"
 
 #: src/statusbar.cpp:196
 #, kde-format
 msgctxt "%1 = name of server, %2 = (x minutes), %3 = (x seconds)"
 msgid "No answer from server %1 for more than %2 and %3."
-msgstr ""
+msgstr "%2 तथा %3 इत्यस्मात् अधिकस्य कृते %1 सर्वरात् उत्तरं नास्ति ।"
 
 #: src/statusbar.cpp:201
 #, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 सेकण्ड् अधिकं यावत् सर्वर %2 तः उत्तरं नास्ति ।"
+msgstr[1] "%1 सेकण्ड् अधिकं यावत् सर्वर %2 तः उत्तरं नास्ति ।"
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -8860,7 +8871,7 @@ msgstr "URL ग्रहणकर्ता"
 #, kde-format
 msgctxt "open url"
 msgid "&Open"
-msgstr ""
+msgstr "&उद्घाटित"
 
 #: src/urlcatcher.cpp:93
 #, kde-format
@@ -8898,7 +8909,7 @@ msgstr "बुकमार्कं योजयतु..."
 #, kde-format
 msgctxt "copy url"
 msgid "&Copy"
-msgstr ""
+msgstr "&प्रतिलिपि"
 
 #: src/urlcatcher.cpp:114
 #, kde-format
@@ -8937,7 +8948,7 @@ msgstr "चयनितं लिङ्कं विलोपयन्तु।"
 #, kde-format
 msgctxt "save url list"
 msgid "&Save List..."
-msgstr ""
+msgstr "&सूची सहेजें..."
 
 #: src/urlcatcher.cpp:130
 #, kde-format
@@ -8953,7 +8964,7 @@ msgstr "सम्पूर्णसूचीं सञ्चिकायां �
 #, kde-format
 msgctxt "clear url list"
 msgid "&Clear List"
-msgstr ""
+msgstr "&सूची स्पष्ट करें"
 
 #: src/urlcatcher.cpp:136
 #, kde-format
@@ -9075,7 +9086,7 @@ msgstr "पैरामीटर्"
 #, kde-format
 msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
-msgstr ""
+msgstr "%1 (%2) २."
 
 #: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
@@ -9655,7 +9666,7 @@ msgstr "चयनितप्रयोक्तृणां अवहेलन�
 #, kde-format
 msgctxt "Opens a query (private message) window with the author of the topic"
 msgid "Query author"
-msgstr ""
+msgstr "प्रश्न लेखक"
 
 #: src/viewer/ircinput.cpp:54
 #, kde-format
@@ -9688,15 +9699,15 @@ msgstr ""
 #, kde-format
 msgid "1 byte"
 msgid_plural "%1 bytes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ बाइट्"
+msgstr[1] "%1 बाइट्"
 
 #: src/viewer/ircinput.cpp:475
 #, kde-format
 msgid "1 line"
 msgid_plural "%1 lines"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "१ पङ्क्तिः"
+msgstr[1] "%1 पङ्क्तयः"
 
 #: src/viewer/ircinput.cpp:481
 #, kde-format
@@ -9708,6 +9719,8 @@ msgid ""
 "chat. This can cause connection resets or flood kills. Do you really want to "
 "continue?</qt>"
 msgstr ""
+"<qt>भवन्तः पाठस्य बृहत् भागं (%1 अथवा %2) गपशपस्य मध्ये चिनोतुम् प्रयतन्ते । एतेन कनेक्शन् "
+"रीसेट् अथवा फ्लड् किल्स् भवितुम् अर्हन्ति । किं भवन्तः तत्त्वतः अग्रे गन्तुं इच्छन्ति ?</qt>"
 
 #: src/viewer/ircinput.cpp:484
 #, kde-format
@@ -9941,7 +9954,7 @@ msgstr "%1 बाइट् इत्यस्य सर्वरसीमाय�
 #, kde-format
 msgctxt "%1 is a timestamp, %2 is the author's name"
 msgid "On %1 by %2"
-msgstr ""
+msgstr "%1 द्वारा %2 इत्यत्र"
 
 #: src/viewer/topichistoryview.cpp:208
 #, kde-format
@@ -10016,7 +10029,7 @@ msgstr "नूतनं ट्याब् नाम प्रविष्टं
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr ""
+msgstr "पूर्वनिर्धारितम् ( %1 ) ."
 
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
