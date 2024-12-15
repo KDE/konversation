@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-12-13 22:25+0100\n"
+"PO-Revision-Date: 2024-12-14 11:32+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -2648,8 +2648,7 @@ msgstr "Información"
 #, kde-format
 msgid "Network is down, will reconnect automatically when it is back up."
 msgstr ""
-"A rede está desactivada; conectarase de novo automaticamente cando estea "
-"activa."
+"A rede está caída; conectarase de novo automaticamente cando estea activa."
 
 #: src/connectionmanager.cpp:252
 #, kde-format
@@ -3959,8 +3958,8 @@ msgid ""
 "This identity is in use, if you remove it the network settings using it will "
 "fall back to the default identity. Should it be deleted anyway?"
 msgstr ""
-"Esta identidade está a ser usada; se a borra, as configuracións de rede que "
-"a usen utilizarán de novo a identidade predefinida. Desexa borrala aínda así?"
+"Esta identidade está en uso; se a elimina, as configuracións de rede que a "
+"usasen pasarán a usar a identidade predeterminada. Quere eliminala aínda así?"
 
 #: src/identitydialog.cpp:322
 #, kde-format
@@ -6767,7 +6766,7 @@ msgid ""
 "Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or "
 "channel"
 msgstr ""
-"Uso: %1delkey <alcume> ou <canle> borra a clave de cifrado do alcume ou da "
+"Uso: %1delkey <alcume> ou <canle> elimina a clave de cifrado do alcume ou da "
 "canle"
 
 #: src/irc/outputfilter.cpp:1757
@@ -7531,7 +7530,7 @@ msgid ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr ""
-"Non pode borrar %1.\n"
+"Non pode eliminar %1.\n"
 "\n"
 "A rede %2 necesita de cando menos un servidor."
 
@@ -7546,23 +7545,23 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
-"Non pode borrar o servidor escollido.\n"
+"Non pode eliminar o servidor escollido.\n"
 "\n"
 "A rede %2 necesita de cando menos un servidor."
 msgstr[1] ""
-"Non pode borrar os servidores escollidos.\n"
+"Non pode eliminar os servidores escollidos.\n"
 "\n"
 "A rede %2 necesita de cando menos un servidor."
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
 msgid "Do you really want to delete the selected entries?"
-msgstr "Seguro que quere borrar os elementos escollidos?"
+msgstr "Seguro que quere eliminar os elementos escollidos?"
 
 #: src/irc/serverlistdialog.cpp:221
 #, kde-format
 msgid "Do you really want to delete %1?"
-msgstr "Seguro que quere borrar «%1»?"
+msgstr "Seguro que quere eliminar «%1»?"
 
 #. i18n: ectx: property (whatsThis), widget (QPushButton, m_addButton)
 #: src/irc/serverlistdialogui.ui:23
@@ -9967,7 +9966,7 @@ msgstr ""
 msgid ""
 "Do you really want to permanently discard all log information of this file?"
 msgstr ""
-"Seguro que quere eliminar permanentemente toda a información de rexistro "
+"Seguro que quere desbotar permanentemente toda a información de rexistro "
 "deste ficheiro?"
 
 #: src/viewer/logfilereader.cpp:149
