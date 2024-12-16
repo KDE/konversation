@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-14 11:32+0100\n"
+"PO-Revision-Date: 2024-12-16 00:31+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1557,7 +1557,7 @@ msgstr "Convidar"
 #: src/config/ignore_configui.ui:144
 #, kde-format
 msgid "Remove &All"
-msgstr "Borrar &todo"
+msgstr "Retirar &todo"
 
 #. i18n: ectx: label, entry, group (Appearance)
 #: src/config/konversation.kcfg:217
@@ -1614,11 +1614,12 @@ msgstr "Canles e consultas con eventos"
 msgid "Open Watched Nicks tab at application startup"
 msgstr "Amosar o separador de alcumes vixiados no inicio da aplicación"
 
+# skip-rule: trasno-enable
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLauncherEntryCount)
 #: src/config/launcherentry_config.ui:29
 #, kde-format
 msgid "&Enable Display of Unseen Events Count On Launcher Entry"
-msgstr "Amosar o contador de &eventos sen ver na entrada do iniciador"
+msgstr "Amosar o contador de &eventos sen ver na entrada do iniciador."
 
 #. i18n: ectx: property (text), widget (QLabel, modeLbl)
 #: src/config/launcherentry_config.ui:45
@@ -2258,7 +2259,7 @@ msgstr "Quere realmente eliminar %1?"
 #: src/config/theme_config.cpp:291
 #, kde-format
 msgid "Remove Theme"
-msgstr "Borrar o tema"
+msgstr "Retirar o tema"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, Theme_ConfigUI)
 #: src/config/theme_configui.ui:14
@@ -2282,7 +2283,7 @@ msgstr "I&nstalar desde un ficheiro…"
 #: src/config/theme_configui.ui:45
 #, kde-format
 msgid "&Remove Theme"
-msgstr "&Borrar o tema"
+msgstr "&Retirar o tema"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, previewLabel1)
 #: src/config/theme_configui.ui:85
@@ -2747,7 +2748,7 @@ msgstr "Configuración da identidade"
 #: src/connectionmanager.cpp:593
 #, kde-format
 msgid "Edit Identity..."
-msgstr "Modificar a identidade…"
+msgstr "Editar a identidade…"
 
 #: src/dbus.cpp:150
 #, kde-format
@@ -5119,12 +5120,12 @@ msgstr "%1 definiu a máscara de convite %2."
 #: src/irc/channel.cpp:1776
 #, kde-format
 msgid "You remove the invitation mask %1."
-msgstr "Borrou a máscara de convite %1."
+msgstr "Retirou a máscara de convite %1."
 
 #: src/irc/channel.cpp:1777
 #, kde-format
 msgid "%1 removes the invitation mask %2."
-msgstr "%1 borrou a máscara de convite %2."
+msgstr "%1 retira a máscara de convite %2."
 
 #: src/irc/channel.cpp:1785
 #, kde-format
