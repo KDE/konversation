@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-14 13:21+0530\n"
+"PO-Revision-Date: 2024-12-19 21:41+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -400,7 +400,7 @@ msgstr "&Backlog दर्शयतु"
 #: src/config/chatwindowappearance_config.ui:88
 #, kde-format
 msgid "&Lines: "
-msgstr "&रेखाः : १. "
+msgstr "&रेखाः : "
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: src/config/chatwindowappearance_config.ui:114
@@ -5507,7 +5507,7 @@ msgstr "भवतः व्यक्तिगतगुणाः सन्ति 
 #: src/irc/inputfilter.cpp:1312 src/irc/inputfilter.cpp:1349
 #, kde-format
 msgid "Channel modes: "
-msgstr "चैनल् मोड्स् : १. "
+msgstr "चैनल् मोड्स् : "
 
 #: src/irc/inputfilter.cpp:1330
 #, kde-format

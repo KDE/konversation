@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-17 22:01+0100\n"
+"PO-Revision-Date: 2024-12-19 23:05+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -3026,7 +3026,7 @@ msgstr "Continua&r"
 #: src/dcc/resumedialog.cpp:170
 #, kde-format
 msgid "R&ename"
-msgstr "Mudar o nom&e"
+msgstr "R&enomear"
 
 #: src/dcc/transferdetailedinfopanel.cpp:32 src/dcc/transferlistmodel.cpp:40
 #, kde-format
@@ -3951,7 +3951,7 @@ msgstr "Débelle dar un nome á identidade."
 #: src/identitydialog.cpp:283
 #, kde-format
 msgid "Rename Identity"
-msgstr "Mudar o nome da identidade"
+msgstr "Renomear a identidade"
 
 #: src/identitydialog.cpp:317
 #, kde-format
@@ -4050,7 +4050,7 @@ msgstr "Duplicada"
 #: src/identitydialog.ui:139
 #, kde-format
 msgid "Rename"
-msgstr "Mudar o nome"
+msgstr "Renomear"
 
 #. i18n: ectx: property (text), widget (QLabel, realNameLabel)
 #: src/identitydialog.ui:199
@@ -9693,6 +9693,7 @@ msgstr "Modos"
 msgid "Give Op"
 msgstr "Dar Op"
 
+# skip-rule: trasno-remove_reverse
 #: src/viewer/irccontextmenus.cpp:393
 #, kde-format
 msgid "Take Op"
@@ -9703,6 +9704,7 @@ msgstr "Retirar Op"
 msgid "Give HalfOp"
 msgstr "Dar semioperador"
 
+# skip-rule: trasno-remove_reverse
 #: src/viewer/irccontextmenus.cpp:395
 #, kde-format
 msgid "Take HalfOp"
@@ -9713,6 +9715,7 @@ msgstr "Retirar semioperador"
 msgid "Give Voice"
 msgstr "Dar a voz"
 
+# skip-rule: trasno-remove_reverse
 #: src/viewer/irccontextmenus.cpp:397
 #, kde-format
 msgid "Take Voice"
@@ -10211,7 +10214,7 @@ msgstr "Por omisión (%1)"
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
 msgid "&Rename Tab..."
-msgstr "Cambia&r o nome do separador…"
+msgstr "&Renomear a lapela…"
 
 #: src/viewer/viewcontainer.cpp:2379
 #, kde-format
