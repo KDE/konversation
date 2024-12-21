@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-19 21:41+0530\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -120,7 +120,7 @@ msgstr "media v%1 for Conversation इति ।"
 
 #: data/scripts/media:303
 msgid "Usage:"
-msgstr "प्रयोगः : १."
+msgstr "प्रयोगः :"
 
 #: data/scripts/media:304
 msgid "\"/media\" - report what the first player found is playing."
@@ -271,13 +271,13 @@ msgstr "&अपाकरोति"
 #: src/config/alias_configui.ui:88
 #, kde-format
 msgid "Alias:"
-msgstr "उपनाम : १."
+msgstr "उपनाम :"
 
 #. i18n: ectx: property (text), widget (QLabel, replacementLabel)
 #: src/config/alias_configui.ui:108
 #, kde-format
 msgid "Replacement:"
-msgstr "प्रतिस्थापनम् : १."
+msgstr "प्रतिस्थापनम् :"
 
 #: src/config/autoreplace_config.cpp:28
 #, kde-format
@@ -352,7 +352,7 @@ msgstr "अपाकरोति"
 #: src/config/autoreplace_configui.ui:126
 #, kde-format
 msgid "Replace in:"
-msgstr "प्रतिस्थापनम् इत्यत्र : १."
+msgstr "प्रतिस्थापनम् इत्यत्र :"
 
 #. i18n: ectx: property (text), widget (QLabel, patternLabel)
 #: src/config/autoreplace_configui.ui:158
@@ -364,7 +364,7 @@ msgstr "अन्वेषय:"
 #: src/config/autoreplace_configui.ui:190
 #, kde-format
 msgid "Replace with:"
-msgstr "प्रतिस्थापनं कृत्वा : १."
+msgstr "प्रतिस्थापनं कृत्वा :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_Timestamping)
 #: src/config/chatwindowappearance_config.ui:33
@@ -376,7 +376,7 @@ msgstr "&Timestamps सक्षमं कुर्वन्तु"
 #: src/config/chatwindowappearance_config.ui:42
 #, kde-format
 msgid "&Format:"
-msgstr "&स्वरूपः : १."
+msgstr "&स्वरूपः :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowDate)
 #: src/config/chatwindowappearance_config.ui:62
@@ -557,7 +557,7 @@ msgstr "असीमित"
 #: src/config/chatwindowbehaviour_config.ui:101
 #, kde-format
 msgid "Scrollbac&k limit:"
-msgstr "स्क्रॉलबैक&k सीमा: १."
+msgstr "स्क्रॉलबैक&k सीमा:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_HideUnimportantEventsExcludeActive)
 #: src/config/chatwindowbehaviour_config.ui:135
@@ -651,7 +651,7 @@ msgstr "स्वचालितं उपयोक्तृसूचना ल�
 #: src/config/chatwindowbehaviour_config.ui:267
 #, kde-format
 msgid "&Max. number of users in a channel:"
-msgstr "&अधिकतम। एकस्मिन् चैनले उपयोक्तृणां संख्या : १."
+msgstr "&अधिकतम। एकस्मिन् चैनले उपयोक्तृणां संख्या :"
 
 #. i18n: ectx: property (text), widget (QLabel, whoIntervalLbl)
 #: src/config/chatwindowbehaviour_config.ui:299
@@ -693,7 +693,7 @@ msgstr "H&yperlink: ."
 #: src/config/colorsappearance_config.ui:312
 #, kde-format
 msgid "Channel &message:"
-msgstr "चैनल & सन्देश: १."
+msgstr "चैनल & सन्देश:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/colorsappearance_config.ui:325
@@ -711,25 +711,25 @@ msgstr "पृष्ठ&स्मार्ट:"
 #: src/config/colorsappearance_config.ui:351
 #, kde-format
 msgid "Comman&d message:"
-msgstr "आदेश&d सन्देशः : १."
+msgstr "आदेश&d सन्देशः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_8)
 #: src/config/colorsappearance_config.ui:364
 #, kde-format
 msgid "&Query message:"
-msgstr "&प्रश्नसन्देशः : १."
+msgstr "&प्रश्नसन्देशः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_9)
 #: src/config/colorsappearance_config.ui:377
 #, kde-format
 msgid "&Timestamp:"
-msgstr "&समयमुद्रिका: १."
+msgstr "&समयमुद्रिका:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_10)
 #: src/config/colorsappearance_config.ui:390
 #, kde-format
 msgid "A&lternate background:"
-msgstr "A&lternate पृष्ठभूमिः १."
+msgstr "A&lternate पृष्ठभूमिः"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_UseColoredNicks)
 #: src/config/colorsappearance_config.ui:409
@@ -743,7 +743,7 @@ msgstr "रंगीन निक"
 #: src/config/colorsappearance_config.ui:868
 #, kde-format
 msgid "5:"
-msgstr "५: १."
+msgstr "५:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_5)
@@ -751,7 +751,7 @@ msgstr "५: १."
 #: src/config/colorsappearance_config.ui:878
 #, kde-format
 msgid "4:"
-msgstr "४: १."
+msgstr "४:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_4)
@@ -759,7 +759,7 @@ msgstr "४: १."
 #: src/config/colorsappearance_config.ui:794
 #, kde-format
 msgid "3:"
-msgstr "३: १."
+msgstr "३:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_3)
@@ -767,7 +767,7 @@ msgstr "३: १."
 #: src/config/colorsappearance_config.ui:778
 #, kde-format
 msgid "2:"
-msgstr "२: १."
+msgstr "२:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_14)
@@ -775,7 +775,7 @@ msgstr "२: १."
 #: src/config/colorsappearance_config.ui:838
 #, kde-format
 msgid "0:"
-msgstr "०: १."
+msgstr "०:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_2)
@@ -783,7 +783,7 @@ msgstr "०: १."
 #: src/config/colorsappearance_config.ui:762
 #, kde-format
 msgid "1:"
-msgstr "१: १."
+msgstr "१:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel11)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_8)
@@ -791,7 +791,7 @@ msgstr "१: १."
 #: src/config/colorsappearance_config.ui:848
 #, kde-format
 msgid "7:"
-msgstr "७: १."
+msgstr "७:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel10)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_7)
@@ -799,13 +799,13 @@ msgstr "७: १."
 #: src/config/colorsappearance_config.ui:858
 #, kde-format
 msgid "6:"
-msgstr "६: १."
+msgstr "६:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/config/colorsappearance_config.ui:700
 #, kde-format
 msgid "&Own nick color:"
-msgstr "&स्वकीयः निकवर्णः : १."
+msgstr "&स्वकीयः निकवर्णः :"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, kcfg_AllowColorCodes)
 #: src/config/colorsappearance_config.ui:744
@@ -829,49 +829,49 @@ msgstr "&IRC सन्देशेषु रङ्गितपाठस्य �
 #: src/config/colorsappearance_config.ui:1051
 #, kde-format
 msgid "11:"
-msgstr "११: १."
+msgstr "११:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_10)
 #: src/config/colorsappearance_config.ui:1082
 #, kde-format
 msgid "9:"
-msgstr "९: १."
+msgstr "९:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_9)
 #: src/config/colorsappearance_config.ui:1092
 #, kde-format
 msgid "8:"
-msgstr "८: १."
+msgstr "८:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_11)
 #: src/config/colorsappearance_config.ui:1102
 #, kde-format
 msgid "10:"
-msgstr "१०: १."
+msgstr "१०:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_13)
 #: src/config/colorsappearance_config.ui:1183
 #, kde-format
 msgid "12:"
-msgstr "१२: १."
+msgstr "१२:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_16)
 #: src/config/colorsappearance_config.ui:1200
 #, kde-format
 msgid "15:"
-msgstr "१५: १."
+msgstr "१५:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_15)
 #: src/config/colorsappearance_config.ui:1224
 #, kde-format
 msgid "14:"
-msgstr "१४: १."
+msgstr "१४:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12)
 #: src/config/colorsappearance_config.ui:1234
 #, kde-format
 msgid "13:"
-msgstr "१३: १."
+msgstr "१३:"
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
@@ -891,13 +891,13 @@ msgstr "स्वचालितं पुनः संयोजनं सक्
 #: src/config/connectionbehavior_config.ui:35
 #, kde-format
 msgid "Reconnect delay:"
-msgstr "पुनर्संयोजनविलम्बः : १."
+msgstr "पुनर्संयोजनविलम्बः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/config/connectionbehavior_config.ui:48
 #, kde-format
 msgid "Reconnection attempts:"
-msgstr "पुनः संयोजनस्य प्रयासाः : १."
+msgstr "पुनः संयोजनस्य प्रयासाः :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, debugGBox)
 #: src/config/connectionbehavior_config.ui:87
@@ -921,7 +921,7 @@ msgstr "एन्क्रिप्शन"
 #: src/config/connectionbehavior_config.ui:109
 #, kde-format
 msgid "Default encryption type:"
-msgstr "पूर्वनिर्धारितगुप्तीकरणप्रकारः : १."
+msgstr "पूर्वनिर्धारितगुप्तीकरणप्रकारः :"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:118
@@ -999,7 +999,7 @@ msgstr "पोताश्रय:"
 #: src/config/connectionbehavior_config.ui:208
 #, kde-format
 msgid "Username:"
-msgstr "उपयोक्तृनाम : १."
+msgstr "उपयोक्तृनाम :"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLabel)
 #: src/config/connectionbehavior_config.ui:222
@@ -1170,19 +1170,19 @@ msgstr "DCC गपशपस्य कृते विशिष्टानि p&
 #: src/config/fontappearance_config.ui:28
 #, kde-format
 msgid "Chat text:"
-msgstr "गपशपपाठः : १."
+msgstr "गपशपपाठः :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomListFont)
 #: src/config/fontappearance_config.ui:45
 #, kde-format
 msgid "Nickname list:"
-msgstr "उपनामसूची : १."
+msgstr "उपनामसूची :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTabFont)
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr "ट्याब् बारः : १."
+msgstr "ट्याब् बारः :"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
@@ -1253,7 +1253,7 @@ msgstr "उपनाम समाप्ति"
 #: src/config/generalbehavior_configui.ui:101
 #, kde-format
 msgid "Completion &mode:"
-msgstr "समाप्ति &विधा: १."
+msgstr "समाप्ति &विधा:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_NickCompletionMode)
 #: src/config/generalbehavior_configui.ui:115
@@ -1277,13 +1277,13 @@ msgstr "समाप्तिपेटिका सह शेल-सदृशम
 #: src/config/generalbehavior_configui.ui:133
 #, kde-format
 msgid "Suffi&x at start of line:"
-msgstr "पङ्क्ति आरम्भे प्रत्यय&x : १."
+msgstr "पङ्क्ति आरम्भे प्रत्यय&x :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/generalbehavior_configui.ui:151
 #, kde-format
 msgid "&Elsewhere:"
-msgstr "&अन्यत्र : १."
+msgstr "&अन्यत्र :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_NickCompletionCaseSensitive)
 #: src/config/generalbehavior_configui.ui:182
@@ -1313,7 +1313,7 @@ msgstr "कस्टम् जाल &ब्राउजर् इत्यस�
 #: src/config/generalbehavior_configui.ui:226
 #, kde-format
 msgid "Comman&d char:"
-msgstr "आदेश&d char: १."
+msgstr "आदेश&d char:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomVersionReplyEnabled)
 #: src/config/generalbehavior_configui.ui:254
@@ -1424,7 +1424,7 @@ msgstr "अ&उतो पाठः ."
 #: src/config/highlight_configui.ui:349
 #, kde-format
 msgid "Chat windows:"
-msgstr "गपशपविण्डोः : १."
+msgstr "गपशपविण्डोः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, chatWindowsInput)
 #: src/config/highlight_configui.ui:371
@@ -1716,27 +1716,27 @@ msgstr "सामान्य उपयोक्तारः"
 #: src/config/nicklistbehavior_config.cpp:46
 #, kde-format
 msgid "Voice (+v)"
-msgstr "स्वर (+v) ९."
+msgstr "स्वर (+v)"
 
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
 msgid "Halfops (+h)"
-msgstr "अर्धफोप्स् (+ह) ९."
+msgstr "अर्धफोप्स् (+ह)"
 
 #: src/config/nicklistbehavior_config.cpp:48
 #, kde-format
 msgid "Operators (+o)"
-msgstr "संचालकाः (+o) ९."
+msgstr "संचालकाः (+o)"
 
 #: src/config/nicklistbehavior_config.cpp:49
 #, kde-format
 msgid "Channel Admins (+p)"
-msgstr "चैनलप्रशासकाः (+p) ९."
+msgstr "चैनलप्रशासकाः (+p)"
 
 #: src/config/nicklistbehavior_config.cpp:50
 #, kde-format
 msgid "Channel Owners (+q)"
-msgstr "चैनलस्वामिनः (+q) ९."
+msgstr "चैनलस्वामिनः (+q)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/nicklistbehavior_configui.ui:26
@@ -1805,7 +1805,7 @@ msgstr "&छाया आकर्षित करें"
 #: src/config/osd_configui.ui:67
 #, kde-format
 msgid "OSD font:"
-msgstr "OSD फ़ॉन्ट् : १."
+msgstr "OSD फ़ॉन्ट् :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/osd_configui.ui:135
@@ -1847,14 +1847,14 @@ msgstr "Custom Colors सक्षमं कुर्वन्तु"
 #: src/config/osd_configui.ui:187
 #, kde-format
 msgid "Te&xt color:"
-msgstr "Te&xt वर्णः १."
+msgstr "Te&xt वर्णः"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #. i18n: ectx: property (text), widget (QLabel, m_bgColorLbl)
 #: src/config/osd_configui.ui:200 src/viewer/irccolorchooserui.ui:123
 #, kde-format
 msgid "&Background color:"
-msgstr "&पृष्ठभूमि रंगः : १."
+msgstr "&पृष्ठभूमि रंगः :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox4)
 #: src/config/osd_configui.ui:233
@@ -1872,7 +1872,7 @@ msgstr "&अवधि:"
 #: src/config/osd_configui.ui:252
 #, kde-format
 msgid "S&creen:"
-msgstr "स&विश्वासः : १."
+msgstr "स&विश्वासः :"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_OSDDuration)
 #: src/config/osd_configui.ui:265
@@ -1938,13 +1938,13 @@ msgstr "अपाकरोति"
 #: src/config/quickbuttons_configui.ui:126
 #, kde-format
 msgid "Button name:"
-msgstr "बटननाम : १."
+msgstr "बटननाम :"
 
 #. i18n: ectx: property (text), widget (QLabel, actionLabel)
 #: src/config/quickbuttons_configui.ui:152
 #, kde-format
 msgid "Button action:"
-msgstr "बटन क्रिया : १."
+msgstr "बटन क्रिया :"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowQuickButtonsInContextMenu)
 #: src/config/quickbuttons_configui.ui:177
@@ -2125,7 +2125,7 @@ msgstr "TabBar_Config इति"
 #: src/config/tabs_configui.ui:34
 #, kde-format
 msgid "Placement:"
-msgstr "स्थापनम् : १."
+msgstr "स्थापनम् :"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TabPlacement)
 #: src/config/tabs_configui.ui:45
@@ -2200,7 +2200,7 @@ msgstr "वार्तालाप विषयाः (*.tar.gz *.tar.bz2 *.tar
 #: src/config/theme_config.cpp:206
 #, kde-format
 msgid "Unknown error (0)"
-msgstr "अज्ञातदोषः (०) २."
+msgstr "अज्ञातदोषः (०)"
 
 #: src/config/theme_config.cpp:210
 #, kde-format
@@ -2297,7 +2297,7 @@ msgstr "स्वामिविशेषाधिकारयुक्तान
 #: src/config/theme_configui.ui:209
 #, kde-format
 msgid "Preview:"
-msgstr "पूर्वावलोकनम् : १."
+msgstr "पूर्वावलोकनम् :"
 
 #: src/config/warnings_config.cpp:143
 #, kde-format
@@ -2572,7 +2572,7 @@ msgstr "Konversation अस्मिन् अन्तराले अधोल
 #: src/config/watchednicknames_configui.ui:112
 #, kde-format
 msgid "&Update interval:"
-msgstr "&अद्यतनान्तरम् : १."
+msgstr "&अद्यतनान्तरम् :"
 
 #. i18n, and in preShellCommandExited and preShellCommandError
 #: src/connectionmanager.cpp:217 src/connectionmanager.cpp:250
@@ -2984,7 +2984,7 @@ msgstr "DCC प्राप्त करें"
 #: src/dcc/transferdetailedinfopanel.cpp:130
 #, kde-format
 msgid " (Reverse DCC)"
-msgstr " (विपरीत DCC) ९."
+msgstr " (विपरीत DCC)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:147
 #: src/dcc/transferdetailedinfopanel.cpp:151
@@ -3008,7 +3008,7 @@ msgstr "%2 इत्यत्र %1"
 #, kde-format
 msgctxt "%1=ownIP, %2=ownPort"
 msgid "%1 (port %2)"
-msgstr "%1 (पोर्ट %2) २."
+msgstr "%1 (पोर्ट %2)"
 
 #: src/dcc/transferdetailedinfopanel.cpp:177
 #, kde-format
@@ -3032,7 +3032,7 @@ msgstr "&lt; १सेकण्ड्"
 #: src/dcc/transferdetailedinfopanelui.ui:43
 #, kde-format
 msgid "Filename:"
-msgstr "सञ्चिकानाम : १."
+msgstr "सञ्चिकानाम :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel23)
 #: src/dcc/transferdetailedinfopanelui.ui:63
@@ -3068,61 +3068,61 @@ msgstr "स्थानीय:"
 #: src/dcc/transferdetailedtimeinfopanelui.ui:28
 #, kde-format
 msgid "Current position:"
-msgstr "वर्तमान स्थितिः : १."
+msgstr "वर्तमान स्थितिः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel21)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:48
 #, kde-format
 msgid "File size:"
-msgstr "सञ्चिकायाः आकारः : १."
+msgstr "सञ्चिकायाः आकारः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel14)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:68
 #, kde-format
 msgid "Resumed:"
-msgstr "पुनः आरब्धम् : १."
+msgstr "पुनः आरब्धम् :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:88
 #, kde-format
 msgid "Current speed:"
-msgstr "वर्तमान वेगः : १."
+msgstr "वर्तमान वेगः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:108
 #, kde-format
 msgid "Average speed:"
-msgstr "औसतवेगः : १."
+msgstr "औसतवेगः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:145
 #, kde-format
 msgid "Transferring time:"
-msgstr "स्थानान्तरणसमयः : १."
+msgstr "स्थानान्तरणसमयः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:165
 #, kde-format
 msgid "Estimated time left:"
-msgstr "अवशिष्टः अनुमानितः समयः : १."
+msgstr "अवशिष्टः अनुमानितः समयः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:185
 #, kde-format
 msgid "Offered at:"
-msgstr "अत्र प्रस्तावितः : १."
+msgstr "अत्र प्रस्तावितः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6_2)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:205
 #, kde-format
 msgid "Started at:"
-msgstr "आरब्धम् : १."
+msgstr "आरब्धम् :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: src/dcc/transferdetailedtimeinfopanelui.ui:225
 #, kde-format
 msgid "Finished at:"
-msgstr "समाप्तम् : १."
+msgstr "समाप्तम् :"
 
 #: src/dcc/transferlistmodel.cpp:26
 #, kde-format
@@ -3814,7 +3814,7 @@ msgstr "SASL PLAIN"
 #, kde-format
 msgctxt "Cert = Certificate"
 msgid "SASL EXTERNAL (Cert)"
-msgstr "SASL बाह्य (प्रमाणपत्र) ९."
+msgstr "SASL बाह्य (प्रमाणपत्र)"
 
 #: src/identitydialog.cpp:89
 #, kde-format
@@ -3858,7 +3858,7 @@ msgstr "परिचयं योजयतु"
 #: src/identitydialog.cpp:338
 #, kde-format
 msgid "Identity name:"
-msgstr "परिचयनाम : १."
+msgstr "परिचयनाम :"
 
 #: src/identitydialog.cpp:274 src/identitydialog.cpp:292
 #: src/identitydialog.cpp:351
@@ -3972,7 +3972,7 @@ msgstr "पुनर्नाम"
 #: src/identitydialog.ui:199
 #, kde-format
 msgid "&Real name:"
-msgstr "&वास्तविक नाम : १."
+msgstr "&वास्तविक नाम :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_realNameEdit)
 #: src/identitydialog.ui:209
@@ -4040,7 +4040,7 @@ msgstr "समाभाष्:"
 #: src/identitydialog.ui:313
 #, kde-format
 msgid "PEM file:"
-msgstr "PEM सञ्चिका : १."
+msgstr "PEM सञ्चिका :"
 
 #. i18n: ectx: attribute (title), widget (QWidget, awayWidget)
 #: src/identitydialog.ui:327
@@ -4071,7 +4071,7 @@ msgstr "दूरं गच्छन् गपशपविण्डोषु अ
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "पूर्वनिर्धारितः दूरसन्देशः : १."
+msgstr "पूर्वनिर्धारितः दूरसन्देशः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4089,7 +4089,7 @@ msgstr ""
 #: src/identitydialog.ui:360
 #, kde-format
 msgid "Away nickname:"
-msgstr "दूर उपनाम : १."
+msgstr "दूर उपनाम :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
@@ -4183,13 +4183,13 @@ msgstr "दूरं आदेशाः"
 #: src/identitydialog.ui:471
 #, kde-format
 msgid "Away command:"
-msgstr "दूरं आदेशः : १."
+msgstr "दूरं आदेशः :"
 
 #. i18n: ectx: property (text), widget (QLabel, unAwayLabel)
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr "आदेशस्य प्रत्यागमनम् : १."
+msgstr "आदेशस्य प्रत्यागमनम् :"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -4201,7 +4201,7 @@ msgstr "उन्नतं"
 #: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
-msgstr "&Pre-shell आदेशः : १."
+msgstr "&Pre-shell आदेशः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
 #: src/identitydialog.ui:536
@@ -4219,7 +4219,7 @@ msgstr ""
 #: src/identitydialog.ui:549
 #, kde-format
 msgid "&Encoding:"
-msgstr "&एन्कोडिंग् : १."
+msgstr "&एन्कोडिंग् :"
 
 #. i18n: ectx: property (whatsThis), widget (KComboBox, m_codecCBox)
 #: src/identitydialog.ui:559
@@ -4259,7 +4259,7 @@ msgstr ""
 #: src/identitydialog.ui:595
 #, kde-format
 msgid "&Quit reason:"
-msgstr "&त्यागस्य कारणम् : १."
+msgstr "&त्यागस्य कारणम् :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_quitEdit)
 #: src/identitydialog.ui:605
@@ -4278,7 +4278,7 @@ msgstr "संभाषणं समाप्तम्।"
 #: src/identitydialog.ui:621
 #, kde-format
 msgid "&Part reason:"
-msgstr "&भागकारणम् : १."
+msgstr "&भागकारणम् :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_partEdit)
 #: src/identitydialog.ui:631
@@ -4291,7 +4291,7 @@ msgstr ""
 #: src/identitydialog.ui:647
 #, kde-format
 msgid "&Kick reason:"
-msgstr "&किक् कारणम् : १."
+msgstr "&किक् कारणम् :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_kickEdit)
 #: src/identitydialog.ui:657
@@ -4547,8 +4547,8 @@ msgstr[1] "%1 निक्स्"
 #, kde-format
 msgid " (%1 op)"
 msgid_plural " (%1 ops)"
-msgstr[0] " (%1 उपरि) २."
-msgstr[1] " (%1 ऑप्स) २."
+msgstr[0] " (%1 उपरि)"
+msgstr[1] " (%1 ऑप्स)"
 
 #: src/irc/channel.cpp:1359 src/irc/channel.cpp:1373 src/irc/channel.cpp:1375
 #: src/irc/inputfilter.cpp:1474 src/irc/inputfilter.cpp:1490
@@ -5153,7 +5153,7 @@ msgstr "समाभाष्:"
 #: src/irc/channeldialogui.ui:44 src/irc/joinchannelui.ui:35
 #, kde-format
 msgid "C&hannel:"
-msgstr "सी&व्यापारः : १."
+msgstr "सी&व्यापारः :"
 
 #: src/irc/channellistpanel.cpp:78
 #, kde-format
@@ -5259,13 +5259,13 @@ msgstr "%1 कृते चैनलसूची"
 #: src/irc/channellistpanelui.ui:35
 #, kde-format
 msgid "Ma&ximum users:"
-msgstr "अधिकतमाः उपयोक्तारः : १."
+msgstr "अधिकतमाः उपयोक्तारः :"
 
 #. i18n: ectx: property (text), widget (QLabel, m_lblMinuser)
 #: src/irc/channellistpanelui.ui:51
 #, kde-format
 msgid "&Minimum users:"
-msgstr "&न्यूनतम उपयोक्तारः : १."
+msgstr "&न्यूनतम उपयोक्तारः :"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
@@ -5502,7 +5502,7 @@ msgstr "समर्थनम्‌"
 #: src/irc/inputfilter.cpp:1300
 #, kde-format
 msgid "Your personal modes are:"
-msgstr "भवतः व्यक्तिगतगुणाः सन्ति : १."
+msgstr "भवतः व्यक्तिगतगुणाः सन्ति :"
 
 #: src/irc/inputfilter.cpp:1312 src/irc/inputfilter.cpp:1349
 #, kde-format
@@ -5650,7 +5650,7 @@ msgstr "एमओटीडी"
 #: src/irc/inputfilter.cpp:1632
 #, kde-format
 msgid "Message of the day:"
-msgstr "दिवसस्य सन्देशः : १."
+msgstr "दिवसस्य सन्देशः :"
 
 #: src/irc/inputfilter.cpp:1650
 #, kde-format
@@ -5884,7 +5884,7 @@ msgstr "%1%2 %3%4 अस्ति ।"
 #: src/irc/inputfilter.cpp:2226
 #, kde-format
 msgid " (IRC Operator)"
-msgstr " (IRC संचालक) ९."
+msgstr " (IRC संचालक)"
 
 #: src/irc/inputfilter.cpp:2228
 #, kde-format
@@ -5900,7 +5900,7 @@ msgstr "सूची"
 #: src/irc/inputfilter.cpp:2246
 #, kde-format
 msgid "List of channels:"
-msgstr "चैनलानां सूचीः १."
+msgstr "चैनलानां सूचीः"
 
 #: src/irc/inputfilter.cpp:2258
 #, kde-format
@@ -6045,14 +6045,14 @@ msgstr "सर्वदा अवहेलना कुर्वन्तु"
 #: src/irc/invitedialog.ui:78
 #, kde-format
 msgid "From now on:"
-msgstr "इतः परं : १."
+msgstr "इतः परं :"
 
 #: src/irc/joinchanneldialog.cpp:59 src/irc/joinchanneldialog.cpp:129
 #: src/irc/joinchanneldialog.cpp:151
 #, kde-format
 msgctxt "network (nickname)"
 msgid "%1 (%2)"
-msgstr "%1 (%2) २."
+msgstr "%1 (%2)"
 
 #: src/irc/joinchanneldialog.cpp:216
 #, kde-format
@@ -6068,7 +6068,7 @@ msgstr "चैनल निकालें"
 #: src/irc/joinchannelui.ui:67
 #, kde-format
 msgid "Connection:"
-msgstr "संयोजनम् : १."
+msgstr "संयोजनम् :"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLabel)
 #: src/irc/joinchannelui.ui:80
@@ -6080,12 +6080,12 @@ msgstr "&समाभाष्:"
 #: src/irc/nickinfo.cpp:216 src/viewer/channeloptionsui.ui:308
 #, kde-format
 msgid "Hostmask:"
-msgstr "कास मुखौटा : १."
+msgstr "कास मुखौटा :"
 
 #: src/irc/nickinfo.cpp:224
 #, kde-format
 msgid "Away&nbsp;Message:"
-msgstr "दूर&nbsp;सन्देशः: १."
+msgstr "दूर&nbsp;सन्देशः:"
 
 #: src/irc/nickinfo.cpp:228
 #, kde-format
@@ -6526,7 +6526,7 @@ msgid ""
 "<nickname | mask> [reason]"
 msgstr ""
 "उपयोगः : %1KICKBAN [-HOST | -डोमेन | -उपयोगकर्ता | -USERDOMAIN] [चैनल] <उपनाम | "
-"मुखौटा> [कारण] २."
+"मुखौटा> [कारण]"
 
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
@@ -6693,12 +6693,12 @@ msgstr "उपयोगः : %1queuetuner [पर | दूरे]"
 #: src/irc/outputfilter.cpp:1895
 #, kde-format
 msgid "%1CYCLE [-APP | -SERVER] [channel | nickname]"
-msgstr "%1CYCLE [-अनुप्रयोग | -SERVER] [चैनल | उपनाम] २."
+msgstr "%1CYCLE [-अनुप्रयोग | -SERVER] [चैनल | उपनाम]"
 
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr "%1CLEAR [-ALL] [चैनल | उपनाम] २."
+msgstr "%1CLEAR [-ALL] [चैनल | उपनाम]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
@@ -7106,7 +7106,7 @@ msgstr "%1 द्वारा प्रेषितं DH1080_FINISH विश�
 #: src/irc/serverdialogui.ui:26
 #, kde-format
 msgid "&Server:"
-msgstr "&सर्वरः : १."
+msgstr "&सर्वरः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_serverEdit)
 #: src/irc/serverdialogui.ui:39
@@ -7216,7 +7216,7 @@ msgstr "चैनलनाम आवश्यकम् अस्ति।"
 #: src/irc/servergroupdialogui.ui:20
 #, kde-format
 msgid "Network name:"
-msgstr "संजालस्य नाम : १."
+msgstr "संजालस्य नाम :"
 
 #. i18n: ectx: property (text), widget (QLabel, m_identityLabel)
 #: src/irc/servergroupdialogui.ui:36
@@ -7248,7 +7248,7 @@ msgstr "&सम्पादन..."
 #: src/irc/servergroupdialogui.ui:78
 #, kde-format
 msgid "Commands:"
-msgstr "आदेशाः : १."
+msgstr "आदेशाः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_commandEdit)
 #: src/irc/servergroupdialogui.ui:94
@@ -7281,13 +7281,13 @@ msgstr ""
 #: src/irc/servergroupdialogui.ui:108
 #, kde-format
 msgid "Servers:"
-msgstr "सर्वरः : १."
+msgstr "सर्वरः :"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: src/irc/servergroupdialogui.ui:118
 #, kde-format
 msgid "Auto Join Channels:"
-msgstr "स्वतः सम्मिलितं चैनल्स् : १."
+msgstr "स्वतः सम्मिलितं चैनल्स् :"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:128
@@ -8675,7 +8675,7 @@ msgstr "गणनां कारोतु:"
 #: src/queuetunerbase.ui:561 src/queuetunerbase.ui:702
 #, kde-format
 msgid "Lines:"
-msgstr "पङ्क्तयः : १."
+msgstr "पङ्क्तयः :"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
@@ -8684,7 +8684,7 @@ msgstr "पङ्क्तयः : १."
 #: src/queuetunerbase.ui:571
 #, kde-format
 msgid "Bytes:"
-msgstr "बाइट्स् : १."
+msgstr "बाइट्स् :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_normalBox)
 #: src/queuetunerbase.ui:267
@@ -8714,13 +8714,13 @@ msgstr "प्राप्तः:"
 #: src/queuetunerbase.ui:662
 #, kde-format
 msgid "Bytes (Raw):"
-msgstr "बाइट्स (कच्चा): १."
+msgstr "बाइट्स (कच्चा):"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
 #: src/queuetunerbase.ui:672
 #, kde-format
 msgid "Bytes (Encoded):"
-msgstr "बाइट्स् (एन्कोडेड) : १."
+msgstr "बाइट्स् (एन्कोडेड) :"
 
 #: src/quickconnectdialog.cpp:36
 #, kde-format
@@ -8745,7 +8745,7 @@ msgstr "IRC सर्वरः यत् पोर्ट् उपयुज्�
 #: src/quickconnectdialog.cpp:60
 #, kde-format
 msgid "&Nick:"
-msgstr "&निकः : १."
+msgstr "&निकः :"
 
 #: src/quickconnectdialog.cpp:61
 #, kde-format
@@ -9086,7 +9086,7 @@ msgstr "पैरामीटर्"
 #, kde-format
 msgctxt "<mode character> (<mode description>)"
 msgid "%1 (%2)"
-msgstr "%1 (%2) २."
+msgstr "%1 (%2)"
 
 #: src/viewer/channeloptionsdialog.cpp:609
 #, kde-format
@@ -9321,7 +9321,7 @@ msgstr "सम्पादयतु Watched उपनाम"
 #: src/viewer/editnotifydialog.cpp:46
 #, kde-format
 msgid "&Network name:"
-msgstr "&जालनाम : १."
+msgstr "&जालनाम :"
 
 #: src/viewer/editnotifydialog.cpp:48
 #, kde-format
@@ -9331,7 +9331,7 @@ msgstr "अत्र भवन्तः यत् सर्वर-जालं �
 #: src/viewer/editnotifydialog.cpp:55
 #, kde-format
 msgid "N&ickname:"
-msgstr "उपनाम : १."
+msgstr "उपनाम :"
 
 #: src/viewer/editnotifydialog.cpp:57
 #, kde-format
@@ -9432,7 +9432,7 @@ msgstr ""
 #: src/viewer/irccolorchooserui.ui:74
 #, kde-format
 msgid "Fore&ground color:"
-msgstr "अग्र&भूमिवर्णः १."
+msgstr "अग्र&भूमिवर्णः"
 
 #. i18n: ectx: property (toolTip), widget (KComboBox, m_bgColorCBox)
 #. i18n: ectx: property (toolTip), widget (QLabel, m_bgColorLbl)
