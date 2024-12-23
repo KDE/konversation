@@ -458,9 +458,8 @@ void NicksOnline::refreshAllServerOnlineLists()
         QTreeWidgetItem *child = m_nickListView->invisibleRootItem()->child(i);
         QString networkName = child->text(nlvcNetwork);
         QStringList serverNameList = child->text(nlvcAdditionalInfo).split(QLatin1Char(','), Qt::SkipEmptyParts);
-        QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
-        while (it != itEnd)
+        while (it != serverNameList.end())
         {
             QString serverName = *it;
             // Locate server in server list.
