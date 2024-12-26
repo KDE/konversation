@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-24 20:39+0530\n"
+"PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -2949,7 +2949,7 @@ msgstr "सुझाव &नवीन सञ्चिकानाम"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "नूतनं पूर्वनिर्धारितं डाउनलोड् फोल्डर् रूपेण उपयुज्यताम्"
+msgstr "नूतनं पूर्वनिर्धारितं डाउनलोड् समुच्चय रूपेण उपयुज्यताम्"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -3127,7 +3127,7 @@ msgstr "समाप्तम् :"
 #: src/dcc/transferlistmodel.cpp:26
 #, kde-format
 msgid "File"
-msgstr "संचिका"
+msgstr "सञ्चिका"
 
 #: src/dcc/transferlistmodel.cpp:28
 #, kde-format
@@ -7471,7 +7471,7 @@ msgstr ""
 #: src/irc/serverlistdialogui.ui:147
 #, kde-format
 msgid "Network"
-msgstr "जाल"
+msgstr "जालकृति"
 
 #. i18n: ectx: property (text), widget (ServerListView, m_serverList)
 #: src/irc/serverlistdialogui.ui:152
