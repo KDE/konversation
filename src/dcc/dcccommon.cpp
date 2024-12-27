@@ -107,7 +107,7 @@ namespace Konversation
             QHostAddress ip(address);
             if (ip.protocol() == QAbstractSocket::IPv6Protocol)
             {
-#ifndef Q_OS_WIN
+#if !defined(Q_OS_WIN) && !defined(Q_OS_HAIKU)
                 /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
                 struct ifreq ifr;
                 const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toLatin1();

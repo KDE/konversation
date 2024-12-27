@@ -71,7 +71,7 @@ find_package(KF6 REQUIRED COMPONENTS
     WindowSystem
 )
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT HAIKU)
     find_package(KF6 REQUIRED GlobalAccel)
 endif()
 set(HAVE_KGLOBALACCEL ${KF6GlobalAccel_FOUND})
