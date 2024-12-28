@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-05-30 07:49+0200\n"
+"PO-Revision-Date: 2024-12-27 10:42+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -4290,18 +4290,14 @@ msgstr "I&dento:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_loginEdit)
 #: src/identitydialog.ui:582
-#, fuzzy, kde-format
-#| msgid ""
-#| "When you connect, many servers query your computer for an IDENT response. "
-#| "If you computer is not running an IDENT server, this response is sent by "
-#| "Konversation. No spaces are allowed."
+#, kde-format
 msgid ""
 "When you connect, many servers query your computer for an IDENT response. If "
 "your computer is not running an IDENT server, this response is sent by "
 "Konversation. No spaces are allowed."
 msgstr ""
 "Kiam vi konektas, multaj serviloj demandas vian komputilon por IDENT-"
-"respondo. Se via komputilo ne funkcias IDENT-servilon, ĉi tiu respondo estas "
+"respondo. Se via komputilo ne rulas IDENT-servilon, ĉi tiu respondo estas "
 "sendita de Konversation. Neniuj spacoj estas permesitaj."
 
 #. i18n: ectx: property (text), widget (QLabel, quitLabel)
@@ -10181,12 +10177,3 @@ msgstr "Averto pri Kanala Listo"
 #, kde-format
 msgid "Watched Nicks"
 msgstr "Rigarditaj Kromnomoj"
-
-#~ msgid "Konversation Bookmarks Editor"
-#~ msgstr "Redaktilo pri Konversaciaj Legosignoj"
-
-#~ msgid "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-#~ msgstr "audio/x-wav audio/x-mp3 application/ogg audio/x-adpcm"
-
-#~ msgid "*.pem"
-#~ msgstr "*.pem"
