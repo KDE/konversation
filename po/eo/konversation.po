@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-27 10:42+0100\n"
+"PO-Revision-Date: 2024-12-28 17:41+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -821,7 +821,7 @@ msgid ""
 "in your chat window as colored text. You can add color codes to your "
 "messages, by selecting Insert -> IRC Color"
 msgstr ""
-"Ebligante ĉi tiun opcion, kolorkodoj aldonitaj al IRC-mesaĝoj estos "
+"Ebligante ĉi tiun elekteblon, kolorkodoj aldonitaj al IRC-mesaĝoj estos "
 "montrataj en via babilfenestro kiel kolora teksto. Vi povas aldoni "
 "kolorkodojn al viaj mesaĝoj, elektante Enmeti -> IRC Koloro"
 
@@ -1109,7 +1109,7 @@ msgid ""
 "If this option enabled dcc transfers for IPv6 connections will be done over "
 "IPv4 interface set here"
 msgstr ""
-"Se ĉi tiu opcio ebligis dcc-translokigojn por IPv6-konektoj, estos faritaj "
+"Se ĉi tiu opcio aktivas, dcc-translokigoj por IPv6-konektoj estos faritaj "
 "per IPv4-interfaco agordita ĉi tie"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccIPv4Fallback)
@@ -1235,12 +1235,15 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
+"Kiam la fenestro de Konversation estas fermita, la pleta piktogramo estos "
+"metata al \"aktiva\", kio igos ĝin videbliĝi en pleto-efektivigoj kiuj nur "
+"ofertas alirajn \"aktivajn\" piktogramojn."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:78
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
-msgstr ""
+msgstr "Pletpiktogramo iĝas \"aktiva\" kiam fenestro estas fermata"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
 #: src/config/generalbehavior_configui.ui:85
@@ -2107,7 +2110,7 @@ msgstr "Uzi kolorajn LED-ojn"
 #: src/config/tabnotifications_config.ui:202
 #, kde-format
 msgid "Options"
-msgstr "Opcioj"
+msgstr "Elektebloj"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_TabNotificationsOverride)
 #: src/config/tabnotifications_config.ui:208
@@ -4407,7 +4410,7 @@ msgstr ""
 "sendita al la IRC-servilo por ŝanĝi vian kromnomon. Se la servilo permesas "
 "ĝin, la nova kromnomo estos elektita. Se vi tajpas novan kromnomon, vi devas "
 "premi 'Enigi' ĉe la fino.</p><p>Vi povas redakti la alternativajn kromnomojn "
-"de la opcio <em>Identecoj</em> en la <em>Agordoj</em> menuo.</p></qt>"
+"de la elekteblo <em>Identecoj</em> en la menuo <em>Agordoj</em>.</p></qt>"
 
 #: src/irc/channel.cpp:566
 #, kde-format
@@ -7919,7 +7922,7 @@ msgstr "Ruud Nabben"
 #: src/main.cpp:65
 #, kde-format
 msgid "Option to enable IRC color filtering"
-msgstr "Opcio por ebligi IRC-kolorfiltradon"
+msgstr "Elekteblo por ebligi IRC-kolorfiltradon"
 
 #: src/main.cpp:66
 #, kde-format
@@ -9519,7 +9522,7 @@ msgstr ""
 "sekva mesaĝo, kiun vi sendas. Se vi elektas koloron kaj alklakas Ok, la "
 "elektita koloro estas aldonita al la Eniga Linio. Ajna teksto skribita post "
 "tio estos en la elektita koloro, ĝis vi denove ŝanĝos la koloron.<br>\n"
-"<b>Noto: Ne ĉiuj uzantoj ŝaltas la opcion por vidi ĉi tion.</b></qt>"
+"<b>Noto: Ne ĉiuj uzantoj ŝaltas la elekteblon por vidi ĉi tion.</b></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, m_fgColorLbl)
 #: src/viewer/irccolorchooserui.ui:74
@@ -9561,7 +9564,7 @@ msgstr ""
 "mesaĝo, do viaj legantoj rigardos vian mesaĝon per ilia normala "
 "fontekstokoloro.<br>\n"
 "<b>Noto: Ne ĉiuj klientoj subtenas ĉi tion, kaj ne ĉiuj uzantoj ŝaltas la "
-"opcion por vidi ĉi tion.</b></qt>"
+"elekteblon por vidi ĉi tion.</b></qt>"
 
 #: src/viewer/irccontextmenus.cpp:137
 #, kde-format
@@ -10001,7 +10004,7 @@ msgstr "Modifi serĉkonduton"
 #: src/viewer/searchbarbase.ui:113
 #, kde-format
 msgid "&Options"
-msgstr "&Opcioj"
+msgstr "Elektebl&oj"
 
 #: src/viewer/statuspanel.cpp:225
 #, kde-format
