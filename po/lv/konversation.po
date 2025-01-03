@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-01 21:32+0200\n"
+"PO-Revision-Date: 2024-12-30 17:39+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2699,12 +2699,12 @@ msgstr "Pārslēgt serveri"
 #: src/connectionmanager.cpp:577
 #, kde-format
 msgid "Please fill in your <b>Ident</b>.<br/>"
-msgstr "Aizpildiet savu <b>Ident</b>.<br/>"
+msgstr "Ierakstiet savu <b>Ident</b>.<br/>"
 
 #: src/connectionmanager.cpp:580
 #, kde-format
 msgid "Please fill in your <b>Real name</b>.<br/>"
-msgstr "Aizpildiet savu <b>Īsto vārdu<b>.<br/>"
+msgstr "Ierakstiet savu <b>Īsto vārdu</b>.<br/>"
 
 #: src/connectionmanager.cpp:583
 #, kde-format
