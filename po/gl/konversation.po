@@ -1,6 +1,6 @@
 # translation of konversation.po to Galician
 #
-# SPDX-FileCopyrightText: 2024 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2024, 2025 Adrián Chaves (Gallaecio)
 # mvillarino <mvillarino@users.sourceforge.net>, 2006.
 # Xosé <xosecalvo@gmail.com>, 2009.
 # Marce Villarino <mvillarino@kde-espana.es>, 2009.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2024-12-19 23:05+0100\n"
+"PO-Revision-Date: 2025-01-06 20:58+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -1867,7 +1867,7 @@ msgstr "Na actividade de &consulta"
 #: src/config/osd_configui.ui:162
 #, kde-format
 msgid "On &Join/Part events"
-msgstr "Nos eventos de u&nión/saída"
+msgstr "Nos eventos de u&nión/parte"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_OSDUseCustomColors)
 #: src/config/osd_configui.ui:175
@@ -4278,7 +4278,7 @@ msgstr "Orde de ausencia:"
 #: src/identitydialog.ui:484
 #, kde-format
 msgid "Return command:"
-msgstr "Orde de regreso:"
+msgstr "Orde de devolución:"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advancedWidget)
 #: src/identitydialog.ui:514
@@ -9724,7 +9724,7 @@ msgstr "Retirar a voz"
 #: src/viewer/irccontextmenus.cpp:401
 #, kde-format
 msgid "Kick / Ban"
-msgstr "Expulsar / Prohibir o acceso"
+msgstr "Botar / Expulsar"
 
 #: src/viewer/irccontextmenus.cpp:403
 #, kde-format
