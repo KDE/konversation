@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2025-01-06 20:58+0100\n"
+"PO-Revision-Date: 2025-01-12 17:28+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -7751,8 +7751,8 @@ msgstr "İsmail Dönmez"
 #, kde-format
 msgid "Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"
 msgstr ""
-"Soporte de Blowfish e SSL, Portou para KNetwork, Alcumes Coloridos, Temas "
-"dos alcumes"
+"Compatibilidade con Blowfish e SSL, adaptación a KNetwork, alcumes "
+"colorados, temas da lista de alcumes."
 
 #: src/main.cpp:42
 #, kde-format
@@ -8040,8 +8040,8 @@ msgstr "Travis McHenry"
 msgid ""
 "Various fixes, ported encryption to QCA2, added DH1080 key exchange support."
 msgstr ""
-"Varios arranxos, portou o cifrado a QCA2, engadiu o soporte para o "
-"intercambio de cadeas DH1080."
+"Varias correccións, adaptación da cifraxe a QCA2, compatibilidade co "
+"intercambio de chaves DH1080."
 
 #: src/main.cpp:72
 #, kde-format
