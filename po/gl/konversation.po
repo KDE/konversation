@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2025-01-12 17:28+0100\n"
+"PO-Revision-Date: 2025-01-19 12:19+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -5180,7 +5180,7 @@ msgstr "O tema só pode cambiarse polo operador da canle. %1"
 #: src/irc/channel.cpp:2206
 #, kde-format
 msgid "No messages to channel from clients on the outside.  %1"
-msgstr "Non se admiten mensaxes para a canle desde clientes exteriores. %1"
+msgstr "Non se permiten mensaxes para a canle desde clientes exteriores. %1"
 
 #: src/irc/channel.cpp:2207
 #, kde-format
