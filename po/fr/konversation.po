@@ -2,7 +2,7 @@
 # translation of konversation.po to
 # traduction de konversation.po en français
 #
-# SPDX-FileCopyrightText: 2012, 2020, 2021, 2022, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2012, 2020, 2021, 2022, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 # Nicolas Ternisien <nicolast@libertysurf.fr>, 2004, 2005.
 # Yann Verley <yann.verley@free.fr>, 2005.
 # Matthieu Robin <kde@macolu.org>, 2005.
@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-04 00:39+0000\n"
-"PO-Revision-Date: 2024-11-05 07:28+0100\n"
+"PO-Revision-Date: 2025-01-24 13:48+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 24.11.80\n"
+"X-Generator: Lokalize 24.12.1\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -4352,7 +4352,7 @@ msgstr "Avancé"
 #: src/identitydialog.ui:526
 #, kde-format
 msgid "&Pre-shell command:"
-msgstr "&Pré-ligne de commande :"
+msgstr "&Pré-ligne de commandes :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_sCommandEdit)
 #: src/identitydialog.ui:536
@@ -6936,7 +6936,7 @@ msgstr "%1 (%2) a quitté ce serveur (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr "Lancement de la ligne de commande de pré-connexion…"
+msgstr "Lancement de la ligne de commandes de préconnexion…"
 
 #: src/irc/server.cpp:411
 #, kde-format
