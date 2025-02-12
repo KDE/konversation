@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['Linux/Qt6', 'FreeBSD/Qt6', 'macOS/Qt6', 'Windows/Qt6']
+- 'on': ['Linux/Qt6', 'Linux/Qt6Next', 'FreeBSD/Qt6', 'macOS/Qt6', 'Windows/Qt6']
   'require':
     'frameworks/extra-cmake-modules': '@latest-kf6'
     'frameworks/karchive': '@latest-kf6'
@@ -26,7 +26,7 @@ Dependencies:
     'frameworks/kitemviews': '@latest-kf6'
     'frameworks/kstatusnotifieritem': '@latest-kf6'
 
-- 'on': ['Linux/Qt6', 'FreeBSD/Qt6']
+- 'on': ['Linux/Qt6', 'Linux/Qt6Next', 'FreeBSD/Qt6']
   'require':
     'frameworks/kglobalaccel': '@latest-kf6'
 
