@@ -787,7 +787,7 @@ user inactivity configured below.
 ></callout>
 <callout arearefs="pt-identity-adv-3"
 ><para
->Wanneer u een verbinding maakt, kunnen servers een IDENT-aanvraag doen. Wanneer uw computer geen IDENT-server heeft draaien zal &konversation; deze voor u beantwoorden. Er zijn geen spaties toegestaan. Het wordt aangeraden om hier gewoon uw voornaam in te vullen.</para
+>Wanneer u een verbinding maakt, kunnen servers een IDENT-aanvraag doen. Als uw computer geen IDENT-server heeft draaien zal &konversation; deze voor u beantwoorden. Er zijn geen spaties toegestaan. Het wordt aangeraden om hier gewoon uw voornaam in te vullen.</para
 ></callout>
 <callout arearefs="pt-identity-adv-4"
 ><para
@@ -3028,7 +3028,7 @@ part of the listing.
 >In een <link linkend="channel-screen-tour"
 >kanaal</link
 > kan het voorkomen dat een gebruiker een interessante &URL; doorgeeft. U kunt daarop dubbelklikken zodat &konversation; de juiste toepassing start voor die &URL;. Welke toepassing gestart zal worden hangt af van het &MIME;-type van het &URL;. Een &URL; die begint met <interface
->http:</interface
+>https:</interface
 > zal de standaard webbrowser starten en de pagina tonen. (U kunt ook een andere <link linkend="webbrowser"
 >webbrowser</link
 > opgeven.) Wanneer de &URL; van het scherm afschuift is het wat lastiger om die weer terug te vinden. &konversation; houdt een lijst bij van alle &URL;-adressen die voorbij gekomen zijn. Om deze optie te bekijken gaat u in het hoofdmenu naar <menuchoice
@@ -3082,7 +3082,7 @@ part of the listing.
 <callout arearefs="pt-urlcatcher-2"
 ><para
 >Klik hier om een toepassing te koppelen aan het geselecteerde &URL;. De uitgevoerde toepassing hangt af van het &MIME;-type van het &URL;. Wanneer u bijvoorbeeld een &URL; hebt dat begint met <interface
->http:</interface
+>https:</interface
 > zal het uw standaard webbrowser starten. U kunt bij webpagina's aangeven welke <link linkend="webbrowser"
 >webbrowser</link
 > u wilt gebruiken.</para
@@ -3121,7 +3121,7 @@ part of the listing.
 
 <para
 >Wanneer u op het geselecteerde &URL;-adres klikt in &konversation; zal het de standaard toepassing uitvoeren die gekoppeld is aan dat &MIME;-type. Wanneer u bijvoorbeeld klikt op een &URL; die begint met <interface
->http</interface
+>https</interface
 > zal &konqueror; uitgevoerd worden zodat de webpagina getoond wordt. U kunt ook een andere toepassing kiezen met de module <guilabel
 >Standaard toepassingen</guilabel
 > uit &systemsettings;. U kunt bijvoorbeeld in plaats daarvan <application
@@ -3586,7 +3586,11 @@ part of the listing.
 ><replaceable
 >schermnaam</replaceable
 ></userinput
-> of naar iedereen in het kanaal. Hier volgt een voorbeeld van wat er in het kanaaltabblad komt te staan</para>
+> of naar iedereen in het <userinput
+><replaceable
+>kanaal</replaceable
+></userinput
+>. Hier volgt een voorbeeld van wat er in het kanaaltabblad komt te staan</para>
 
 <para
 ><computeroutput
