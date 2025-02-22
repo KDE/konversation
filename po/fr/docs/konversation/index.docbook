@@ -496,7 +496,7 @@ revision history. (see installation appendix comment) -->
 ><para
 >Ceci est appelé la <interface
 >Ligne de saisie</interface
->. Pour envoyer un message à tout le monde dans le canal, saisissez-le ici et appuyez sur la touche &Entree;. Votre message, et ceux de tous les autres s'afficheront dans le défilement du canal situé au-dessus. Chaque message sera précédé par l'heure à laquelle il est envoyé et le &i18n-nickname; de l'utilisateur expéditeur.</para
+>. Pour envoyer un message à tout le monde dans le canal, veuillez le saisir ici et appuyer sur la touche &Entree;. Votre message, et ceux de tous les autres s'afficheront dans le cadre défilant au-dessus. Chaque message sera précédé par l'heure à laquelle il est envoyé et le &i18n-nickname; de l'utilisateur.</para
 ></callout>
 
 <callout arearefs="pt-first-channel-2"
@@ -819,7 +819,7 @@ user inactivity configured below.
 ></callout>
 <callout arearefs="pt-identity-adv-3"
 ><para
->Lorsque vous vous connectez, beaucoup de serveurs demandent à votre ordinateur une réponse IDENT. Si votre ordinateur n'a pas de serveur IDENT lancé, cette réponse est envoyée par &konversation;. Les espaces ne sont pas autorisés, nous vous suggérons d'utiliser votre prénom.</para
+>Lorsque vous vous connectez, beaucoup de serveurs demandent à votre ordinateur une réponse « IDENT ». Si votre ordinateur n'exécute aucun serveur « IDENT », cette réponse est envoyée par &konversation;. Les espaces ne sont pas autorisés. Nous vous suggérons d'utiliser votre prénom.</para
 ></callout>
 <callout arearefs="pt-identity-adv-4"
 ><para
@@ -1338,9 +1338,9 @@ depending upon your network bandwidth.  If your client is too slow, the server m
 
 <callout arearefs="pt-channeltour-1"
 ><para
->On appelle cela la <interface
+>Ceci est appelé la <interface
 >Ligne de saisie</interface
->. Elle n'est affichée que lorsque l'onglet actuel est un canal. Pour envoyer un message à tout le monde dans le canal, saisissez-le et appuyez sur &Entree;. Votre message apparaîtra, avec ceux de tout le monde dans le cadre défilant du canal situé au-dessus. Chaque message est précédé de l'heure de réception et du &i18n-nickname; de l'utilisateur.</para>
+>. Elle n'est affichée que lorsque l'onglet actuel est un canal. Pour envoyer un message à tout le monde dans le canal, veuillez le saisir et appuyer sur la touche &Entree;. Votre message apparaîtra, avec ceux de tout le monde dans le cadre défilant du canal situé au-dessus. Chaque message est précédé de l'heure de réception et du &i18n-nickname; de l'utilisateur.</para>
 
  <para
 >Vous pouvez aussi coller du texte depuis le presse-papiers. Si le texte collé contient plus d'une ligne, une boîte de dialogue est affichée. Éditez le texte comme vous le souhaitez et cliquez sur <guibutton
@@ -1889,13 +1889,13 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 ><replaceable
 >Tux</replaceable
 ></userinput
->, saisir <userinput
+>, la saisie de <userinput
 ><replaceable
->/me prépare un thé.</replaceable
+>/je prépare un thé.</replaceable
 ></userinput
 > affichera le message <interface
 >Tux prépare un thé.</interface
-> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre poste pour un court laps de temps, utilisez plutôt la commande <userinput
+> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre ordinateur un court laps de temps, veuillez plutôt utiliser la commande <userinput
 ><command
 >/away</command
 ></userinput
@@ -3077,11 +3077,11 @@ part of the listing.
 <para
 >Dans n'importe quel <link linkend="channel-screen-tour"
 >canal</link
->, les utilisateurs postent parfois des &URL; de sites web ou d'autres ressources intéressantes du Web. Vous pouvez double-cliquer sur n'importe quelle &URL; et &konversation; lancera l'application associée à l'&URL;. L'application dépend du type &MIME; de l'&URL;. Par exemple, une &URL; commençant par <interface
->http:</interface
-> activera le navigateur web par défaut et affichera la page web (vous pouvez aussi spécifier quel <link linkend="webbrowser"
->navigateur internet</link
-> utiliser). Si l'&URL; n'est plus dans l'historique du canal, vous pourriez avoir du mal à la retrouver. &konversation; peut conserver une liste pratique de toutes les &URL; pour vous. Pour activer cette fonctionnalité, choisissez <menuchoice
+>, les utilisateurs postent parfois des &URL; de sites Internet  ou d'autres ressources Internet intéressantes. Vous pouvez effectuer un double clic sur n'importe quelle &URL; et &konversation; lancera l'application associée à l'&URL;. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple, une &URL; commençant par <interface
+>https:</interface
+> activera le navigateur Internet par défaut et affichera la page Internet (Vous pouvez aussi spécifier quel <link linkend="webbrowser"
+>navigateur Internet</link
+> utiliser). Si l'&URL; défile en dehors de l'écran, vous pourriez avoir du mal à la retrouver. &konversation; peut conserver une liste pratique de toutes les &URL; pour vous. Pour activer cette fonctionnalité, veuillez sélectionner <menuchoice
 ><guisubmenu
 >Fenêtre</guisubmenu
 > <guisubmenu
@@ -3131,10 +3131,10 @@ part of the listing.
 
 <callout arearefs="pt-urlcatcher-2"
 ><para
->Cliquez ici pour activer l'application associée à l'&URL; sélectionnée. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple une &URL; commençant par <interface
->http : </interface
-> activera votre navigateur internet par défaut et affichera la page web. Pour les pages web, vous pouvez aussi spécifier quel <link linkend="webbrowser"
->navigateur internet</link
+>Veuillez cliquer ici pour activer l'application associée à l'&URL; sélectionnée. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple une &URL; commençant par <interface
+>https : </interface
+> activera votre navigateur Internet par défaut et affichera la page Internet. Pour les pages Internet, vous pouvez aussi spécifier quel <link linkend="webbrowser"
+>navigateur Internet</link
 > utiliser.</para
 ></callout>
 
@@ -3171,8 +3171,8 @@ part of the listing.
 
 <para
 >Lorsque vous cliquez sur une &URL; surlignée où que ce soit dans &konversation;, cela lancera l'application par défaut associée au type &MIME; de l'&URL;. Par exemple, lorsque vous cliquez sur une &URL; commençant par <interface
->http</interface
->, &konqueror; est lancé pour afficher la page web. Vous pouvez spécifier une application différente de l'<guilabel
+>https</interface
+>, &konqueror; est lancé pour afficher la page Internet. Vous pouvez spécifier une application différente de l'<guilabel
 >application par défaut</guilabel
 >. Vous pouvez par exemple utiliser <guilabel
 >Firefox</guilabel
@@ -3268,18 +3268,18 @@ part of the listing.
 >canal</link
 > et les écrans de <link linkend="query"
 >conversations</link
-> pour vous aider à localiser rapidement l'information. Pour faire cela, choisissez <menuchoice
+> pour vous aider à localiser rapidement les informations. Pour faire cela, veuillez sélectionner <menuchoice
 ><guisubmenu
 >Insérer</guisubmenu
 > <guisubmenu
->Ligne de marquage</guisubmenu
+>Ligne de marqueurs</guisubmenu
 ></menuchoice
-> depuis le menu principal ou appuyez sur la touche <keycombo action="simul"
+> depuis le menu principal ou appuyer sur la touche <keycombo action="simul"
 >&Ctrl;<keycap
 >R</keycap
 ></keycombo
 >. <action
->Une ligne apparaîtra à l'écran en bas du texte. La ligne remontera avec le reste du texte de l'écran.</action
+>Une ligne apparaîtra en bas du texte sur l'écran. La ligne pourra défiler avec le reste du texte de l'écran.</action
 > </para>
 
 <para
@@ -3467,13 +3467,13 @@ part of the listing.
 ><replaceable
 >Tux</replaceable
 ></userinput
->, saisir <userinput
+>, la saisie de <userinput
 ><replaceable
->/me prépare un thé.</replaceable
+>/je prépare un thé.</replaceable
 ></userinput
 > affichera le message <interface
 >Tux prépare un thé.</interface
-> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre poste pour un court laps de temps, utilisez plutôt la commande <userinput
+> À moins qu'ils n'aient filtré ce type de message, tous les utilisateurs le verront. Ce genre de message est en général utilisé pour transmettre des informations non-verbales, comme votre état émotionnel ou ce que vous faites physiquement. Si vous quittez votre ordinateur un court laps de temps, veuillez plutôt utiliser la commande <userinput
 ><command
 >/away</command
 ></userinput
@@ -3636,13 +3636,13 @@ part of the listing.
 ></userinput
 > à l'utilisateur portant le &i18n-nickname; <userinput
 ><replaceable
->pseudo</replaceable
+>pseudonyme</replaceable
 ></userinput
 > ou à n'importe qui dans le <userinput
 ><replaceable
 >canal</replaceable
 ></userinput
->. Ce qui suit est un exemple de ce qui se passe dans l'onglet du canal.</para>
+>. Ce qui suit est un exemple de ce qui se passe dans l'onglet de canal.</para>
 
 <para
 ><computeroutput
