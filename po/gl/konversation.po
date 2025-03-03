@@ -1207,7 +1207,7 @@ msgstr "Lista de alcumes:"
 #: src/config/fontappearance_config.ui:62
 #, kde-format
 msgid "Tab bar:"
-msgstr "Barra de lapelas:"
+msgstr "Barra de separadores:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_FixedMOTD)
 #: src/config/fontappearance_config.ui:76
@@ -2189,7 +2189,7 @@ msgstr "Amosar botón de &pechar nos separadores"
 #: src/config/tabs_configui.ui:88
 #, kde-format
 msgid "Show a close button on the &right side of the tab bar"
-msgstr "Amosar un botón de pechar á &dereita da barra de lapelas"
+msgstr "Amosar un botón de pechar á &dereita da barra de separadores"
 
 #. i18n: ectx: property (title), widget (QGroupBox, focusGBox)
 #: src/config/tabs_configui.ui:98
