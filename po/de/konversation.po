@@ -27,12 +27,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Deutsches KDE-Übersetzerteam,Frederik Schwarzer"
+msgstr "Deutsches KDE-Übersetzungsteam"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-i18n-de@kde.org,schwarzer@kde.org"
+msgstr "kde-i18n-de@kde.org"
 
 #. i18n: ectx: Menu (insert)
 #: data/konversationui.rc:26
