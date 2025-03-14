@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2025-03-07 23:41+0300\n"
+"PO-Revision-Date: 2025-03-13 15:54+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -7213,8 +7213,8 @@ msgid ""
 "Enter the port number required to connect to the server. For most servers, "
 "this should be <b>6667</b>."
 msgstr ""
-"Sunucuya bağlanmak için gerekli olan kapı numarasını girin. Çoğu sunucu "
-"için, bu <b>6667</b>’dir."
+"Sunucuya bağlanmak için gerekli olan kapı numarasını girin. Çoğu sunucu için "
+"bu <b>6667</b>’dir."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_sslChBox)
 #: src/irc/serverdialogui.ui:95
@@ -10107,7 +10107,7 @@ msgstr ""
 "Bir kere alanın içeriğini düzenlemeye başladığınızda, liste normal girdi "
 "seçimi kipinden girdilerin metinlerinden seçim yapmanıza izin veren kipe "
 "geçiş yapar. Girdi seçimi kipinden ve eşzamanlı düzenleme alanından geri "
-"dönmek için, özgün metine geri dönün veya pencereyi kapatıp yeniden açın."
+"dönmek için özgün metine geri dönün veya pencereyi kapatıp yeniden açın."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
