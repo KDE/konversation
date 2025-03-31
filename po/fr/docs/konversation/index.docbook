@@ -3077,7 +3077,7 @@ part of the listing.
 <para
 >Dans n'importe quel <link linkend="channel-screen-tour"
 >canal</link
->, les utilisateurs postent parfois des &URL; de sites Internet  ou d'autres ressources Internet intéressantes. Vous pouvez effectuer un double clic sur n'importe quelle &URL; et &konversation; lancera l'application associée à l'&URL;. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple, une &URL; commençant par <interface
+>, les utilisateurs postent parfois des &URL; de sites Internet ou d'autres ressources Internet intéressantes. Vous pouvez effectuer un double clic sur n'importe quelle &URL; et &konversation; lancera l'application associée à l'&URL;. L'application lancée dépend du type &MIME; de l'&URL;. Par exemple, une &URL; commençant par <interface
 >https:</interface
 > activera le navigateur Internet par défaut et affichera la page Internet (Vous pouvez aussi spécifier quel <link linkend="webbrowser"
 >navigateur Internet</link
