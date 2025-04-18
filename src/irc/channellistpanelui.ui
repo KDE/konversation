@@ -61,7 +61,7 @@
        <enum>Qt::CustomContextMenu</enum>
       </property>
       <property name="whatsThis">
-       <string>The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic.</string>
+       <string>&lt;p&gt;The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.&lt;/p&gt;&lt;p&gt;Select a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic.&lt;/p&gt;</string>
       </property>
       <property name="indentation">
        <number>0</number>
