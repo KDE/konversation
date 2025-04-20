@@ -10,13 +10,13 @@
 # Jeff Huang <s8321414@gmail.com>, 2016.
 # pan93412 <pan93412@gmail.com>, 2018, 2019, 2020.
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2009.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-11-26 21:41+0900\n"
+"PO-Revision-Date: 2025-04-19 14:58+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5224,14 +5224,7 @@ msgstr "最小使用者數(&M)："
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5240,10 +5233,10 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"這裡顯示的是過濾後的頻道清單，請注意如果您不使用正規運算式，Konversation 只會"
-"列出在名稱裡包含您所輸入的過濾字串的頻道，這些頻道的名稱不一定以您輸入的字串"
-"為起始。\\n\\n您點擊任一一個頻道即可加入它，滑鼠右擊頻道名稱可以獲取頻道話題"
-"中提及到的所有 Web 位址的清單。"
+"<p>這裡顯示的是過濾後的頻道清單，請注意如果您不使用正規運算式，Konversation "
+"只會列出在名稱裡包含您所輸入的過濾字串的頻道，這些頻道的名稱不一定以您輸入的"
+"字串為起始。</p><p>點擊任一頻道來加入它，滑鼠右鍵點擊頻道名稱可以獲取頻道話題"
+"中提及到的所有 Web 位址的清單。</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-11-29 07:37+0100\n"
+"PO-Revision-Date: 2025-04-19 07:37+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Poedit 3.6\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5377,14 +5377,7 @@ msgstr "Najmanj uporabnikov:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5393,11 +5386,11 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Tukaj je prikazan filtriran seznam kanalov. Če ne uporabite regularnih "
+"<p>Tukaj je prikazan filtriran seznam kanalov. Če ne uporabite regularnih "
 "izrazov, bo prikazan katerikoli kanal, ki vsebuje niz, ki ste ga vnesli. Za "
-"ime kanala ni nujno, da se začne z nizom, ki ste ga vnesli.\\n\\nIzberite "
+"ime kanala ni nujno, da se začne z nizom, ki ste ga vnesli.</p><p>Izberite "
 "kanal, ki se bi mu radi pridružili tako da nanj kliknete. Desno kliknite na "
-"kanal, da dobite seznam vseh spletnih naslovov v temi kanala."
+"kanal, da dobite seznam vseh spletnih naslovov v temi kanala.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92

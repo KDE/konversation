@@ -6,20 +6,20 @@
 # Joan Maspons <joanmaspons@gmail.com>, 2009, 2010.
 # Manuel Tortosa <manutortosa@gmail.com>, 2009.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
-# Josep M. Ferrer <txemaq@gmail.com>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-02-26 11:41+0100\n"
+"PO-Revision-Date: 2025-04-19 11:15+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -5374,14 +5374,7 @@ msgstr "&Mínim d'usuaris:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5390,12 +5383,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"La llista de canals filtrats es mostra aquí. S'avisa que si no useu "
-"expressions regulars, el Konversation mostrarà qualsevol nom que contingui "
-"la cadena que heu introduït. El nom del canal no pot començar amb la cadena "
-"que heu introduït.\\n\\nSeleccioneu el nom del canal al qual voleu afegir-"
-"vos prement sobre ell. Premeu el botó dret sobre el canal per a mostrar una "
-"llista d'adreces web mencionades al tipus de canal."
+"<p>Aquí es mostra la llista de canals filtrats. Tingueu en compte que si no "
+"useu expressions regulars, el Konversation mostrarà qualsevol nom que "
+"contingui la cadena que heu introduït. El nom del canal no pot començar amb "
+"la cadena que heu introduït.</p><p>Seleccioneu el nom del canal al qual "
+"voleu afegir-vos prement sobre seu. Premeu el botó dret sobre el canal per a "
+"mostrar una llista d'adreces web mencionades al tipus de canal.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-11-26 05:28+0100\n"
+"PO-Revision-Date: 2025-04-19 04:14+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5335,14 +5335,7 @@ msgstr "&მინიმალური მომხმარებლები:
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5351,12 +5344,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"გაფილტრული არხების სია აქ გამოჩნდება. დაიმახსოვრეთ, რომ თუ რეგულარულ "
+"<p>გაფილტრული არხების სია აქ გამოჩნდება. დაიმახსოვრეთ, რომ თუ რეგულარულ "
 "გამოსახულებებს არ იყენებთ, Konversation გაჩვენებთ ყველა არხს, რომლის სახელიც "
 "ფილტრში შეყვანილ სტრიქონს შეიცავს. არხის სახელი აუცილებელი არაა, შეყვანილი "
-"სტრიქონით იწყებოდეს.\\n\\nაირჩიეთ არხი, სადაც შესვლა გნებავთ, მასზე "
+"სტრიქონით იწყებოდეს.</p><p>აირჩიეთ არხი, სადაც შესვლა გნებავთ, მასზე "
 "დაწკაპუნებით. მარჯვენა წკაპი არხზე, რათა მიიღოთ სია ყველა ვებმისამართისა, "
-"რომელიც არხის თემაშია მითითებული."
+"რომელიც არხის თემაშია მითითებული.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
