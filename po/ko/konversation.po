@@ -4,7 +4,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Hye-Shik Chang <perky@FreeBSD.org>, 2003.
 # Cho Sung Jae <jachin@netian.com>, 2006.
-# SPDX-FileCopyrightText: 2009, 2010, 2014, 2015, 2019, 2020, 2021, 2022, 2023, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2009, 2010, 2014, 2015, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Shinjo Park <kde@peremen.name>
 # Jung Hee Lee <daemul72@gmail.com>, 2019, 2020.
 #
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-12-10 01:01+0100\n"
+"PO-Revision-Date: 2025-04-22 01:25+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5267,14 +5267,7 @@ msgstr "최소 사용자(&M):"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5283,11 +5276,11 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"필터를 적용한 대화방 목록입니다. 정규 표현식을 사용하지 않았다면 Konversation"
-"에서는 입력한 필터 문자열이 들어 있는 모든 대화방을 표시합니다. 대화방 이름"
-"은 입력한 문자열로 시작하지 않아도 됩니다.\\n\\n입장하려는 대화방을 클릭해서 "
-"선택하십시오. 대화방을 오른쪽 단추로 클릭하면 채널 주제에 언급된 모든 웹사이"
-"트 주소를 볼 수 있습니다."
+"<p>필터를 적용한 대화방 목록입니다. 정규 표현식을 사용하지 않았다면 "
+"Konversation에서는 입력한 필터 문자열이 들어 있는 모든 대화방을 표시합니다. "
+"대화방 이름은 입력한 문자열로 시작하지 않아도 됩니다.</p><p>입장하려는 대화방"
+"을 클릭해서 선택하십시오. 대화방을 오른쪽 단추로 클릭하면 채널 주제에 언급된 "
+"모든 웹사이트 주소를 볼 수 있습니다.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92

@@ -20,15 +20,15 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-03-13 15:54+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-04-21 10:49+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5321,14 +5321,7 @@ msgstr "&En az kullanıcı:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5337,12 +5330,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Süzülmüş kanal listesi burada görüntülenir. Düzenli ifadeler kullanmazsanız "
-"Konversation’un adı girdiğiniz süzgeç dizisini içeren tüm kanalları "
-"listelediğine dikkat edin. Kanal adının girdiğiniz diziyle başlaması "
-"gerekmez.\\n\\nKatılmak istediğiniz kanalı üzerine tıklayarak seçin. Kanalın "
-"konusunda belirtilen tüm web adreslerinin bir listesini almak için kanala "
-"sağ tıklayın."
+"<p>Süzülmüş kanal listesi burada görüntülenir. Düzenli ifadeler "
+"kullanmazsanız Konversation’un adı girdiğiniz süzgeç dizisini içeren tüm "
+"kanalları listelediğine dikkat edin. Kanal adının girdiğiniz diziyle "
+"başlaması gerekmez.</p><p>Katılmak istediğiniz kanalı üzerine tıklayarak "
+"seçin. Kanalın konusunda belirtilen tüm web adreslerinin bir listesini almak "
+"için kanala sağ tıklayın.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
