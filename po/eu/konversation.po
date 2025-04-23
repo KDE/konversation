@@ -1,16 +1,16 @@
 # Translation for konversation.po to Euskara/Basque (eu).
-# Copyright (C) 2022-2024 This file is copyright:
+# Copyright (C) 2022-2025 This file is copyright:
 # This file is distributed under the same license as the konversation package.
-# SPDX-FileCopyrightText: 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2024, 2025 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2022, 2023, 2024.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-11-28 20:10+0100\n"
+"PO-Revision-Date: 2025-04-22 10:47+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5367,14 +5367,7 @@ msgstr "Gut&xieneko erabiltzaileak:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5383,12 +5376,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Iragazitako kanalen zerrenda hemen erakusten da. Ohartu zaitez adierazpen "
-"erregularrik erabiltzen ez baduzu, «Konversation»ek, iragazteko sartu duzun "
-"katea izenean duten kanal guztiak zerrendatuko dituela. Kanalaren izenak ez "
-"du sartu duzun katearekin hasi beharrik.\\n\\nHautatu elkartu nahi duzun "
-"kanala, bertan klik eginda. Kanalean eskuineko klik, kanalaren mintzagaian "
-"aipatutako web-helbide guztien zerrenda bat lortzeko."
+"<p>Iragazitako kanalen zerrenda hemen erakusten da. Kontuan izan, adierazpen "
+"erregularrik erabiltzen ez baduzu, «Konversation»ek izenean iragazteko sartu "
+"duzun katea duten kanal guztiak zerrendatuko dituela. Kanalaren izenak ez du "
+"sartu duzun katearekin hasi behar.</p><p>Hautatu elkartu nahi duzun kanal "
+"bat, hartan klik eginez. Kanalean eskuineko klik egin, kanalaren mintzagaian "
+"aipatutako web-helbide guztien zerrenda bat lortzeko.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
