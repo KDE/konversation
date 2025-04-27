@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-02-02 14:53+0100\n"
+"PO-Revision-Date: 2025-04-26 22:23+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5340,14 +5340,7 @@ msgstr "&Minimális felhasználók:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5356,12 +5349,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Itt tekinthető meg a szűrt csatornalista. Reguláris kifejezések használata "
-"nélkül a Konversation kilistáz minden olyan csatornát, melyek nevében "
-"szerepel a megadott szűrési karaktersor. A csatorna nevének nem szükséges a "
-"megadott karakterekkel kezdődnie.\\n\\nA kívánt csatornába a nevére történő "
-"kattintással léphet be. A csatorna nevén jobb egérgombbal kattintva "
-"kilistázhatóak a témában felmerült weblapok címei."
+"<p>Itt tekinthető meg a szűrt csatornalista. Reguláris kifejezések "
+"használata nélkül a Konversation kilistáz minden olyan csatornát, melyek "
+"nevében szerepel a megadott szűrési karaktersor. A csatorna nevének nem "
+"szükséges a megadott karakterekkel kezdődnie.</p><p>nA kívánt csatornába a "
+"nevére történő kattintással léphet be. A csatorna nevén jobb egérgombbal "
+"kattintva kilistázhatóak a témában felmerült weblapok címei.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
