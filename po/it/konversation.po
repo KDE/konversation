@@ -4,7 +4,7 @@
 # Federico Zenith <federico.zenith@member.fsf.org>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011.
 # Giovanni Venturi <jumpyj@tiscali.it>, 2005.
 # Federico Zenith <federico.zenith@member.fsf.org>, 2008, 2012, 2013, 2014, 2015.
-# SPDX-FileCopyrightText: 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Luigi Toscano <luigi.toscano@tiscali.it>
+# SPDX-FileCopyrightText: 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Luigi Toscano <luigi.toscano@tiscali.it>
 # Vincenzo Reale <smart2128vr@gmail.com>, 2022.
 #
 msgid ""
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2024-11-27 01:07+0100\n"
+"PO-Revision-Date: 2025-04-27 14:47+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5376,14 +5376,7 @@ msgstr "&Minimo utenti:"
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5392,14 +5385,12 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"Qui viene visualizzato l'elenco filtrato di canali. Nota che se non usi le "
-"espressioni regolari, Konversation elenca ogni canale il cui nome contenga "
-"la stringa di filtraggio che hai inserito. Il nome del canale non deve per "
-"forza cominciare per la stringa che hai inserito.\n"
-"\n"
-"Seleziona un canale in cui vuoi entrare facendoci clic. Fai clic destro sul "
-"canale per avere un elenco di tutti gli indirizzi Web citati nel tema del "
-"canale."
+"<p>Qui viene visualizzato l'elenco filtrato di canali. Nota che se non usi "
+"le espressioni regolari, Konversation elenca ogni canale il cui nome "
+"contenga la stringa di filtraggio che hai inserito. Il nome del canale non "
+"deve per forza cominciare per la stringa che hai inserito.</p><p>Seleziona "
+"un canale in cui vuoi entrare facendoci clic. Fai clic destro sul canale per "
+"avere un elenco di tutti gli indirizzi Web citati nel tema del canale.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
