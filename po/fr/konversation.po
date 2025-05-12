@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-04-20 08:53+0200\n"
+"PO-Revision-Date: 2025-05-10 19:26+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.1\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -6936,7 +6936,7 @@ msgstr "%1 (%2) a quitté ce serveur (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr "Lancement de la ligne de commandes de préconnexion…"
+msgstr "Lancement de la ligne de commandes de pré-connexion…"
 
 #: src/irc/server.cpp:411
 #, kde-format
