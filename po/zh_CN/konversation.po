@@ -5209,14 +5209,7 @@ msgstr "最小用户数(&M)："
 
 #. i18n: ectx: property (whatsThis), widget (QTreeView, m_channelListView)
 #: src/irc/channellistpanelui.ui:64
-#, fuzzy, kde-format
-#| msgid ""
-#| "The filtered list of channels is displayed here. Notice that if you do "
-#| "not use regular expressions, Konversation lists any channel whose name "
-#| "contains the filter string you entered. The channel name does not have to "
-#| "start with the string you entered.\\n\\nSelect a channel you want to join "
-#| "by clicking on it. Right click on the channel to get a list of all web "
-#| "addresses mentioned in the channel's topic."
+#, kde-format
 msgid ""
 "<p>The filtered list of channels is displayed here. Notice that if you do "
 "not use regular expressions, Konversation lists any channel whose name "
@@ -5225,12 +5218,6 @@ msgid ""
 "by clicking on it. Right click on the channel to get a list of all web "
 "addresses mentioned in the channel's topic.</p>"
 msgstr ""
-"这里显示的是过滤后的频道列表，请注意如果您不使用正则表达式，Konversation 只会"
-"列出在名称里包含您所输入的过滤字符串的频道，这些频道的名称不一定以您输入的字"
-"符串为起始。\n"
-"\n"
-"您点击任一一个频道即可加入它，鼠标右击频道名可以获取频道话题中提及到的所有 "
-"Web 地址的列表。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
 #: src/irc/channellistpanelui.ui:92
