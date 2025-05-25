@@ -2234,7 +2234,7 @@ msgstr "Tanca la pestanya amb un clic del &mig"
 #: src/config/theme_config.cpp:179
 #, kde-format
 msgid "Select Theme Package"
-msgstr "Escolliu el paquet del tema"
+msgstr "Trieu el paquet del tema"
 
 #: src/config/theme_config.cpp:180
 #, kde-format
@@ -2597,7 +2597,7 @@ msgstr ""
 #: src/config/watchednicknames_configui.ui:69
 #, kde-format
 msgid "Command e&xecuted when nickname is double clicked:"
-msgstr "Ordre e&xecutada en fer doble clic en un sobrenom:"
+msgstr "Ordre e&xecutada en fer doble clic damunt d'un sobrenom:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, kcfg_NotifyDoubleClickAction)
 #: src/config/watchednicknames_configui.ui:99
@@ -4274,7 +4274,7 @@ msgstr ""
 "missatge absent a totes les pestanyes dels canals als quals vos heu afegit "
 "amb esta identitat. En l'ordre d'absència, <b>%s</b> serà reemplaçat amb el "
 "missatge d'absència. Quan torneu, enviarà l'ordre de retorn. En l'ordre de "
-"retorn, <b>%t</b> serà substituït pel temps que heu estat absent."
+"retorn, <b>%t</b> serà substituït pel temps que heu sigut absent."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
@@ -4427,9 +4427,9 @@ msgid ""
 msgstr ""
 "<qt><p>Cada canal de l'IRC té un tema associat. Açò és senzillament un "
 "missatge que tothom pot veure.</p><p>Si sou un operador, o no està establit "
-"el mode del canal <em>'T'</em>, llavors podeu canviar el tema clicant en el "
-"botó «Edita els paràmetres del canal» de l'esquerra del tema. També hi podeu "
-"veure l'historial dels temes allà.</p></qt>"
+"el mode del canal <em>'T'</em>, llavors podeu canviar el tema clicant damunt "
+"del botó «Edita els paràmetres del canal» de l'esquerra del tema. També hi "
+"podeu veure l'historial dels temes allà.</p></qt>"
 
 #: src/irc/channel.cpp:182
 #, kde-format
@@ -4609,13 +4609,13 @@ msgstr "Vos heu expulsat a vós mateix del canal %1 (%2)."
 #, kde-format
 msgctxt "%1 adds the channel, %2 adds the kicker"
 msgid "You have been kicked from channel %1 by %2."
-msgstr "Heu estat expulsat del canal %1 per %2."
+msgstr "Heu sigut expulsat del canal %1 per %2."
 
 #: src/irc/channel.cpp:1238
 #, kde-format
 msgctxt "%1 adds the channel, %2 the kicker and %3 the reason"
 msgid "You have been kicked from channel %1 by %2 (%3)."
-msgstr "Heu estat expulsat del canal %1 per %2 (%3)."
+msgstr "Heu sigut expulsat del canal %1 per %2 (%3)."
 
 #: src/irc/channel.cpp:1258
 #, kde-format
@@ -5314,7 +5314,7 @@ msgstr "&Entra al canal"
 #, kde-format
 msgid "Click here to join the channel. A new tab is created for the channel."
 msgstr ""
-"Per a unir-vos al canal, feu clic ací. Es crearà una pestanya nova per al "
+"Per a unir-vos al canal, cliqueu ací. Es crearà una pestanya nova per al "
 "canal."
 
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
@@ -5429,7 +5429,7 @@ msgid ""
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
 "Podeu limitar la llista de canals que es mostrarà als que continguen un "
-"nombre mínim d'usuaris. Si trieu «Sense límit» deixa este criteri sense "
+"nombre mínim d'usuaris. Si es tria «Sense límit» deixa este criteri sense "
 "efecte."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, m_minUser)
@@ -5447,7 +5447,7 @@ msgid ""
 "users here. Choosing \"No Limit\" disables this criterion."
 msgstr ""
 "Podeu limitar la llista de canals que es mostrarà als que continguen un "
-"nombre màxim d'usuaris. Si trieu «Sense límit» deixa este criteri sense "
+"nombre màxim d'usuaris. Si es tria «Sense límit» deixa este criteri sense "
 "efecte."
 
 #: src/irc/channelnick.cpp:187
@@ -6312,8 +6312,8 @@ msgstr ""
 "llistats davall la xarxa de servidors a la que estan connectats.</p><p>La "
 "columna <b>Informació addicional</b> mostra la informació coneguda de cada "
 "sobrenom.</p><p>Els sobrenoms que apareixen davall <b>Sense connexió</b> no "
-"estan connectats a cap dels servidors de la xarxa.</p><p>Dretacliqueu amb el "
-"ratolí en un sobrenom per a realitzar funcions addicionals.</p>"
+"estan connectats a cap dels servidors de la xarxa.</p><p>Cliqueu amb el botó "
+"dret del ratolí en un sobrenom per a realitzar funcions addicionals.</p>"
 
 #: src/irc/nicksonline.cpp:217
 #, kde-format
@@ -6750,7 +6750,7 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
-"L'establiment d'una clau d'encriptació requerix que Konversation haja estat "
+"L'establiment d'una clau d'encriptació requerix que Konversation haja sigut "
 "construït amb la biblioteca de l'arquitectura de xifratge de les Qt (QCA). "
 "Poseu-vos en contacte amb el distribuïdor sobre un paquet de Konversation "
 "amb el suport QCA, o reconstruïu Konversation amb QCA."
@@ -7021,7 +7021,7 @@ msgstr "Error al sobrenom"
 #: src/irc/server.cpp:2181
 #, kde-format
 msgid "Select File(s) to Send to %1"
-msgstr "Escolliu els fitxers que voleu enviar a %1"
+msgstr "Trieu els fitxers que voleu enviar a %1"
 
 #: src/irc/server.cpp:2350
 #, kde-format
@@ -7384,7 +7384,7 @@ msgid ""
 "or edit an existing one. The Identity will identify you and determine your "
 "nickname when you connect to the network."
 msgstr ""
-"Escolliu una identitat que existisca o feu clic en el botó Edita per a "
+"Trieu una identitat que existisca o cliqueu damunt del botó «Edita» per a "
 "afegir una identitat nova o editar-ne una d'existent. La identitat vos "
 "identificarà i determinarà el vostre sobrenom quan connecteu amb la xarxa."
 
@@ -7471,7 +7471,7 @@ msgstr ""
 "Esta és la llista de servidors IRC de la xarxa. En connectar-se amb una "
 "xarxa, Konversation intentarà connectar-se amb el primer servidor, si falla, "
 "amb el segon, després amb el tercer, etc. Com a mínim s'ha d'especificar un "
-"servidor. Cliqueu sobre un servidor per a ressaltar-lo."
+"servidor. Cliqueu damunt d'un servidor per a ressaltar-lo."
 
 #. i18n: ectx: property (text), widget (QPushButton, m_addServerButton)
 #: src/irc/servergroupdialogui.ui:151
@@ -7530,7 +7530,7 @@ msgstr "Connecta amb el servidor"
 #, kde-format
 msgid "Click here to connect to the selected IRC network and channel."
 msgstr ""
-"Feu clic ací per a connectar-vos amb la xarxa d'IRC i al canal seleccionat."
+"Cliqueu ací per a connectar-vos amb la xarxa d'IRC i al canal seleccionat."
 
 #: src/irc/serverlistdialog.cpp:121
 #, kde-format
@@ -8712,7 +8712,7 @@ msgstr "%1 ha iniciat una conversa amb vós."
 #: src/notificationhandler.cpp:378
 #, kde-format
 msgid "You are kicked by %1 from %2"
-msgstr "Heu estat expulsat de %1 per %2"
+msgstr "Heu sigut expulsat de %1 per %2"
 
 #: src/notificationhandler.cpp:393
 #, kde-format
@@ -9507,7 +9507,7 @@ msgstr "Nom de la &xarxa:"
 #: src/viewer/editnotifydialog.cpp:48
 #, kde-format
 msgid "Pick the server network you will connect to here."
-msgstr "Escolliu el servidor de xarxa al qual vos connectareu ací."
+msgstr "Trieu el servidor de xarxa al qual vos connectareu ací."
 
 #: src/viewer/editnotifydialog.cpp:55
 #, kde-format
@@ -9609,7 +9609,7 @@ msgid ""
 "<b>Note:  Not all users turn on the option to see this.</b></qt>"
 msgstr ""
 "<qt>Ací podeu seleccionar el color que voleu per al text en el pròxim "
-"missatge que envieu. Si escolliu un color i feu clic en Bé, el color "
+"missatge que envieu. Si trieu un color i cliqueu damunt «Bé», el color "
 "seleccionat s'afig a la línia d'entrada. Qualsevol text escrit després d'açò "
 "serà en el color seleccionat, fins que canvieu el color de nou.<br>\n"
 "<b>Nota: no tots els usuaris activen l'opció per a veure açò.</b></qt>"
@@ -9646,8 +9646,8 @@ msgid ""
 msgstr ""
 "<qt>Ací podeu seleccionar de quin color voleu el fons per al text en el "
 "pròxim missatge que envieu.\n"
-"Si seleccioneu un color i feu clic en Bé, el color seleccionat s'afig a la "
-"línia d'entrada.\n"
+"Si seleccioneu un color i cliqueu damunt «Bé», el color seleccionat s'afig a "
+"la línia d'entrada.\n"
 "Qualsevol text escrit després d'açò, tindrà el color seleccionat, fins que "
 "canvieu el color de nou.\n"
 "En escollir l'opció predeterminada «<i>Cap</i>» no canviarà el color de fons "
@@ -10012,7 +10012,7 @@ msgstr "Guarda el fitxer de registre"
 #: src/viewer/logfilereader.cpp:154
 #, kde-format
 msgid "Choose Destination Folder"
-msgstr "Escolliu la carpeta de destinació"
+msgstr "Trieu la carpeta de destinació"
 
 #: src/viewer/osd.cpp:325
 #, kde-format
