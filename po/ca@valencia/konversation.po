@@ -7736,7 +7736,7 @@ msgid ""
 "Maintainer, Release Manager, User interface, Connection management, Protocol "
 "handling, Auto-away"
 msgstr ""
-"Mantenidor, encarregat de les versions, interfície d'usuari, gestió de "
+"Mantenidor, encarregat dels llançaments, interfície d'usuari, gestió de "
 "connexions, gestió de protocol, absència automàtica"
 
 #: src/main.cpp:39
