@@ -387,7 +387,7 @@ revision history. (see installation appendix comment) -->
 
 <sect1 id="irc-basics">
 <title
->Si no ha usado &irc; antes ...</title>
+>Si no ha usado &irc; antes …</title>
 
 <para
 >Dicho rápidamente, &irc; es un protocolo de charla, que está definido por estándares oficiales de Internet, al que puede dedicarle muchas horas de su vida. Para usar &irc; debe conectarse a un servidor, y bien se une a un canal (equivalente a una sala de charla), o bien simplemente se dedica a conversaciones privadas.</para>
@@ -481,7 +481,7 @@ revision history. (see installation appendix comment) -->
 
 <para
 >La primera vez que abra &konversation; este obtendrá la información sobre el usuario actual del sistema operativo y rellanará los valores predeterminados para identificarle. Si la información del usuario proporcionada por el sistema operativo no está completa, por ejemplo, si no está definido el nombre completo, puede ver el mensaje superior. Para corregir este problema, pulse <guibutton
->Editar identidad...</guibutton
+>Editar identidad…</guibutton
 > y consulte <link linkend="identity"
 >Configurar su identidad</link
 > para obtener más información.</para>
@@ -565,7 +565,7 @@ revision history. (see installation appendix comment) -->
 </para>
 
 <para
->Esto es lo básico, para más información continúe leyendo ...</para>
+>Esto es lo básico, para más información continúe leyendo …</para>
 
 </sect1>
 
@@ -5103,7 +5103,7 @@ or menu bars. -->
 > <guimenu
 >Editar</guimenu
 > <guimenuitem
->Buscar texto...</guimenuitem
+>Buscar texto…</guimenuitem
 > </menuchoice
 ></term>
 		<listitem
@@ -5205,7 +5205,7 @@ Reset Font Size Ctrl+O
 > <guimenu
 >Insertar</guimenu
 > <guimenuitem
->Color de &irc;...</guimenuitem
+>Color de &irc;…</guimenuitem
 > </menuchoice
 ></term>
 		<listitem
@@ -5253,7 +5253,7 @@ Reset Font Size Ctrl+O
 > <guimenu
 >Insertar</guimenu
 > <guimenuitem
->Carácter especial...</guimenuitem
+>Carácter especial…</guimenuitem
 > </menuchoice
 ></term>
 		<listitem
@@ -5317,7 +5317,7 @@ Reset Font Size Ctrl+O
 ><guimenu
 >Marcadores</guimenu
 > <guimenuitem
->Nueva carpeta de marcadores...</guimenuitem
+>Nueva carpeta de marcadores…</guimenuitem
 > </menuchoice
 ></term>
 		<listitem
@@ -5333,7 +5333,7 @@ Reset Font Size Ctrl+O
 ><guimenu
 >Marcadores</guimenu
 > <guimenuitem
->Editar marcadores...</guimenuitem
+>Editar marcadores…</guimenuitem
 > </menuchoice
 ></term>
 		<listitem
@@ -6092,7 +6092,7 @@ distribution. -->
 > </para>
 
 <para
->Traducción hasta la versión 1.4 por Pablo Pita Leira<email
+>Traducción hasta la versión 1.4 por Pablo Pita Leira <email
 >pablo.pita@kdemail.net</email
 > y Santiago Fernández Sancho <email
 >santi@kde-es.org</email
@@ -6100,6 +6100,8 @@ distribution. -->
 > <para
 >Traducción a partir de la versión 1.5 por Raúl González<email
 >raulgf83@gmail.com</email
+> y Javier Viñal <email
+>fjvinal@gmail.com</email
 >.</para
 > &underFDL; &underGPL; </chapter>
 
