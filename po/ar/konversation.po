@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-26 00:40+0000\n"
-"PO-Revision-Date: 2025-02-26 17:54+0400\n"
+"PO-Revision-Date: 2025-06-28 17:28+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1869,7 +1869,7 @@ msgstr " مث"
 #: src/config/preferences.cpp:56
 #, kde-format
 msgid "Default Identity"
-msgstr "الهويّة الافتراضية"
+msgstr "الهويّة المبدئية"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
 #: src/config/quickbuttons_configui.ui:20
@@ -5174,12 +5174,12 @@ msgstr "انقر هنا لحفظ قائمة القنوات."
 #, kde-format
 msgctxt "refresh list"
 msgid "&Refresh List"
-msgstr "أن&عش القائمة"
+msgstr "&حدّث القائمة"
 
 #: src/irc/channellistpanel.cpp:159
 #, kde-format
 msgid "Click here to refresh the channel list."
-msgstr "انقر هنا لإنعاش قائمة القنوات."
+msgstr "انقر هنا لتحديث قائمة القنوات."
 
 #: src/irc/channellistpanel.cpp:161
 #, kde-format
@@ -5195,7 +5195,7 @@ msgstr "انقر هنا للانضمام إلى النقاة. سيُنشئ لس�
 #: src/irc/channellistpanel.cpp:230 src/irc/channellistpanel.cpp:328
 #, kde-format
 msgid "Refreshing."
-msgstr "ينعش."
+msgstr "يحدّث."
 
 #: src/irc/channellistpanel.cpp:345
 #, kde-format
