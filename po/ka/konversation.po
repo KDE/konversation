@@ -928,7 +928,7 @@ msgstr "დაშიფვრა"
 #: src/config/connectionbehavior_config.ui:109
 #, kde-format
 msgid "Default encryption type:"
-msgstr "შიფრაციის ნაგულისხმები ტიპი:"
+msgstr "შიფრაციის ნაგულისხმევი ტიპი:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:118
@@ -2920,7 +2920,7 @@ msgstr "საკუთარ თავთან საუბარი"
 #, kde-format
 msgctxt "%1=Encoding"
 msgid "Default ( %1 )"
-msgstr "ნაგულისხმები ( %1 )"
+msgstr "ნაგულისხმევი ( %1 )"
 
 #: src/dcc/chatcontainer.cpp:251 src/irc/outputfilter.cpp:2002
 #, kde-format
@@ -10162,7 +10162,7 @@ msgstr "ჩანართის ახალი სახელი:"
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr "ნაგულისხმები ( %1 )"
+msgstr "ნაგულისხმევი ( %1 )"
 
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
