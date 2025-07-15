@@ -263,7 +263,7 @@ void UrlCatcher::saveSelectedUrls()
         if (index.isValid())
         {
             QUrl url(index.data().toString());
-            QUrl targetUrl = QFileDialog::getSaveFileUrl(this, i18n("Save link as"), QUrl::fromLocalFile(url.fileName()));
+            QUrl targetUrl = QFileDialog::getSaveFileUrl(window(), i18n("Save link as"), QUrl::fromLocalFile(url.fileName()));
 
             if (targetUrl.isEmpty() || !targetUrl.isValid())
                 continue;
@@ -329,7 +329,7 @@ void UrlCatcher::deleteSelectedUrls()
 
 void UrlCatcher::saveUrlModel()
 {
-    QString target = QFileDialog::getSaveFileName(this,
+    QString target = QFileDialog::getSaveFileName(window(),
         i18n("Save URL List"));
 
     if (!target.isEmpty())

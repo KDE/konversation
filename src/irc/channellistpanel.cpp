@@ -350,7 +350,7 @@ void ChannelListPanel::saveList()
 {
     // Ask user for file name
     QString fileName = QFileDialog::getSaveFileName(
-        this,
+        window(),
         i18n("Save Channel List"));
 
     if (!fileName.isEmpty())
