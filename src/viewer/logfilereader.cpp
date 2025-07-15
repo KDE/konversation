@@ -151,7 +151,7 @@ void LogfileReader::saveLog()
         QStringLiteral("SaveLogfileNote"));
 
     QUrl logUrl = QUrl::fromLocalFile(fileName);
-    QUrl destination = QFileDialog::getSaveFileUrl(this, i18n("Choose Destination Folder"), logUrl);
+    QUrl destination = QFileDialog::getSaveFileUrl(window(), i18n("Choose Destination Folder"), logUrl);
     if(!destination.isEmpty())
     {
         KIO::Job* job = KIO::copy(logUrl, destination);
