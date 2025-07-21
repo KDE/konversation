@@ -55,7 +55,6 @@ find_package(KF6 REQUIRED COMPONENTS
     CoreAddons
     Crash
     DBusAddons
-    DocTools
     I18n
     IdleTime
     ItemViews
@@ -70,6 +69,15 @@ find_package(KF6 REQUIRED COMPONENTS
     WidgetsAddons
     WindowSystem
 )
+
+option(BUILD_DOC "Whether to build the documentation" ON)
+if(BUILD_DOC)
+    find_package(KF6DocTools)
+    set_package_properties(KF6DocTools PROPERTIES DESCRIPTION
+        "Tools to generate documentation"
+        TYPE REQUIRED
+    )
+endif()
 
 if(NOT WIN32 AND NOT HAIKU)
     find_package(KF6 REQUIRED GlobalAccel)
@@ -93,13 +101,16 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory(src)
 add_subdirectory(data)
-add_subdirectory(doc)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
 endif()
 
+if(BUILD_DOC)
+    add_subdirectory(doc)
+    kdoctools_install(po)
+endif()
+
 ki18n_install(po)
-kdoctools_install(po)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
