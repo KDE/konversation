@@ -1,0 +1,6095 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY irc "<acronym
+>IRC</acronym
+>">
+  <!ENTITY CTCP "<acronym
+>CTCP</acronym
+>">
+  <!ENTITY i18n-nickname "<acronym
+>ник</acronym
+>">
+  <!ENTITY i18n-Nickname "<acronym
+>Ник</acronym
+>">
+  <!ENTITY led "<acronym
+>LED</acronym
+>">
+  <!ENTITY osd "<acronym
+>OSD</acronym
+>">
+  <!ENTITY konviwebsite "https://konversation.kde.org">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE"
+> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book id="konversation" lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title
+>Руководство пользователя &konversation;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Gary</firstname
+> <othername
+>R.</othername
+> <surname
+>Cramblitt</surname
+> </personname
+> <email
+>garycramblitt@comcast.net</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Владимир</firstname
+><surname
+>Рычков</surname
+><affiliation
+><address
+><email
+>vvgtr2@mail.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Сергей</firstname
+><surname
+>Новгородов</surname
+><affiliation
+><address
+><email
+>ximen@tsu.tmb.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Алексей</firstname
+><surname
+>Опарин</surname
+><affiliation
+><address
+><email
+>opaleksej@yandex.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Олеся</firstname
+><surname
+>Герасименко</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Редактирование перевода на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year
+>2003-2005</year>
+<holder
+>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date
+>2016-11-29</date>
+<releaseinfo
+>&konversation; 1.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>&konversation; — это &irc;-клиент для KDE с дружественным интерфейсом. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>extragear</keyword>
+<keyword
+>Konversation</keyword>
+<keyword
+>irc</keyword>
+<keyword
+>интернет-чат</keyword>
+<keyword
+>чат</keyword>
+<keyword
+>связь</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics"
+>If you haven't used &irc; before...</link
+> for more information
+See <link linkend="identity"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-away"
+>Setting your identity</link
+> for more information
+See <link linkend="identity-advanced"
+>Setting your identity</link
+> for more information
+See <link linkend="serverlist"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addnetwork"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addserver"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="serverlist-addchannel"
+>Defining new networks, servers and auto join channels</link
+> for more information
+See <link linkend="list-channels"
+>Listing available channels</link
+> for more information
+See <link linkend="channel-screen-tour"
+>A tour of the main screen</link
+> for more information
+See <link linkend="quickconnect"
+>Quick Connect</link
+> for more information
+See <link linkend="irc-cmds"
+>Frequently-used &irc; commands</link
+> for more information
+See <link linkend="query"
+>Private conversations (queries)</link
+> for more information
+See <link linkend="cfg-notifications"
+>Setting notifications</link
+> for more information
+See <link linkend="nicksonline"
+>Monitoring who is online</link
+> for more information
+See <link linkend="highlighting"
+>Message highlighting</link
+> for more information
+See <link linkend="cfg-osd"
+>Configuring On Screen Display (&osd;)</link
+> for more information
+See <link linkend="color-msgs"
+>Sending colorful messages</link
+> for more information
+See <link linkend="nickthemes"
+>Configuring &i18n-nickname; themes</link
+> for more information.
+See <link linkend="quick-buttons"
+>Configuring Quick Buttons</link
+> for more information
+See <link linkend="dcc"
+>Sending and receiving files</link
+> for more information
+See <link linkend="urlcatcher"
+>Capturing &URL;s from messages.</link
+> for more information
+See <link linkend="webbrowser"
+>Setting your preferred web browser.</link
+> for more information
+See <link linkend="rememberlines"
+>Marking Channel and Query Logs</link
+> for more information
+See <link linkend="logging"
+>Logging</link
+> for more information
+See <link linkend="konvi-cmds"
+>&konversation; commands</link
+> for more information
+See <link linkend="scripting"
+>Scripting</link
+> for more information
+See <link linkend="kapp-mainwindow"
+>The main &konversation; window</link
+> for more information
+See <link linkend="getting-kapp"
+>How to obtain &konversation;</link
+> for more information
+See <link linkend="requirements"
+>Requirements</link
+> for more information
+
+-->
+
+<chapter id="introduction">
+<title
+>Введение</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para
+>&konversation; — это &irc;-клиент для KDE. Он предоставляет следующие возможности: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Поддержка SSL.</para
+></listitem>
+<listitem
+><para
+>Дружественный интерфейс с вкладками.</para
+></listitem>
+<listitem
+><para
+>Настраиваемые «быстрые кнопки» для часто используемых команд.</para
+></listitem>
+<listitem
+><para
+>Автоматическое возобновление подключения и вход в чат.</para
+></listitem>
+<listitem
+><para
+>Отправка и приём DCC.</para
+></listitem>
+<listitem
+><para
+>Наблюдение за статусом пользователей.</para
+></listitem>
+<listitem
+><para
+>Визуальные и звуковые уведомления для широкого спектра событий, таких как упоминание ника пользователя в сообщениях, вход или выход в сеть пользователя из списка наблюдения. </para
+></listitem>
+<listitem
+><para
+>Настраиваемая подсветка сообщений в зависимости от ника или в соответствии с шаблоном регулярного выражения.</para
+></listitem>
+<listitem
+><para
+>Автодополнение ников.</para
+></listitem>
+<listitem
+><para
+>Захват и сохранение всех &URL;, появляющихся в сообщениях.</para
+></listitem>
+<listitem
+><para
+>Вывод сообщений на экран даже при свёрнутом окне.</para
+></listitem>
+<listitem
+><para
+>Список игнорируемых пользователей.</para
+></listitem>
+<listitem
+><para
+>Автоматическое ведение журналов и управление ими.</para
+></listitem>
+<listitem
+><para
+>Пометка строк в журналах.</para
+></listitem>
+<listitem
+><para
+>Поддержка сценариев.</para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Веб-сайт &konversation;: <ulink url="&konviwebsite;"
+>&konviwebsite;</ulink
+>. Дополнительные сведения доступны на <ulink url="https://userbase.kde.org/Konversation"
+>странице &konversation; в пользовательской базе знаний KDE</ulink
+>. </para>
+
+<para
+>С разработчиками &konversation; возможно связаться с помощью &irc; на <ulink url="irc://irc.libera.chat/konversation"
+>канале irc.libera.chat #konversation</ulink
+>. </para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>Использование &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title
+>Начало работы с &irc;</title>
+
+<para
+>Простыми словами, &irc; — это протокол для онлайн-общения, определяемый официальными стандартами. Чтобы воспользоваться &irc;, сначала следует подключиться к серверу, после чего зайти на канал (аналог комнаты в чате) или просто вступить в личный разговор.</para>
+
+<para
+>Чтобы подключиться к серверу и каналу, откройте &konversation;. Появится окно <guilabel
+>Список серверов</guilabel
+>.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Список серверов</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Список серверов</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"
+><para
+>Здесь показан список настроенных <guilabel
+>Сетей</guilabel
+> &irc;. Сеть &irc; — это множество совместно работающих серверов, и чтобы подключиться к ней, достаточно войти на один сервер. Однажды подключившись, &konversation; будет автоматически входить на отображаемые <guilabel
+>Каналы</guilabel
+>. При первом запуске в &konversation; уже настроены сеть <userinput
+><replaceable
+> Libera</replaceable
+></userinput
+> и канал <userinput
+><replaceable
+>#kde</replaceable
+></userinput
+>. Чтобы выбрать сеть, щёлкните по ней мышью.</para
+></callout>
+<callout arearefs="pt-first-serverlist-2"
+><para
+>Нажмите здесь, чтобы указать параметры новой <guilabel
+>Сети</guilabel
+>, включая сервер и <guilabel
+>Каналы</guilabel
+> для автоматического входа при подключении. Более подробные сведения доступны в разделе <link linkend="serverlist"
+>Настройка новых сетей, серверов и каналов для автоматического входа</link
+>.</para
+></callout>
+<callout arearefs="pt-first-serverlist-3"
+><para
+>Нажмите здесь, чтобы подключиться к выбранной &irc;-сети и каналу.</para
+></callout>
+</calloutlist>
+</para>
+
+<note>
+<para
+>При нажатии кнопки <guibutton
+>Подключиться</guibutton
+> во время первого запуска &konversation; возможна выдача сообщения о том, что <guilabel
+>Профиль</guilabel
+> по умолчанию неправильно настроен.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Проверка профилей</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Проверка профилей</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>При первом запуске &konversation; получает информацию о текущем пользователе от операционной системы и заполняет поля профиля автоматически. Если информация в системе неполна (например, не введено полное имя), появится вышеупомянутое сообщение. Для решения этой проблемы нажмите кнопку <guibutton
+>Изменить профиль...</guibutton
+> (ознакомьтесь с разделом <link linkend="identity"
+>Настройка профиля пользователя</link
+> перед внесением изменений).</para>
+</note>
+
+<para
+>Появится <interface
+>главное</interface
+> окно, отображающее сообщения, отправляемые сервером клиенту (если &konversation; не подключается к серверу, смотрите раздел <link linkend="faq"
+>Вопросы и ответы</link
+>). Когда сообщения сервера перестанут появляться, &konversation; подключится к выбранному каналу или каналам. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Канал.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Канал</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"
+><para
+>Это <interface
+>cтрока ввода</interface
+>. Чтобы отправить сообщение, которое увидят все пользователи на канале, наберите его в этой строке и нажмите клавишу &Enter;. Сообщения появляются в окне канала. Перед каждым сообщением указаны время отправки и ник пользователя.</para
+></callout>
+
+<callout arearefs="pt-first-channel-2"
+><para
+>Возможно войти на дополнительные серверы и каналы. Каждый сервер, канал, список каналов и другие окна получают здесь по отдельной вкладке. Чтобы узнать, как просмотреть список доступных каналов, перейдите в раздел <link linkend="list-channels"
+>Список доступных каналов</link
+>. Чтобы зайти на канал, наберите <userinput
+><command
+>/join</command
+> <replaceable
+>#имя_канала</replaceable
+></userinput
+> в строке ввода (<userinput
+>#</userinput
+> вводить обязательно). Также возможно использовать <userinput
+><command
+>/j</command
+></userinput
+> как сокращение от <userinput
+><command
+>/join</command
+></userinput
+>. Чтобы покинуть канал, наберите <userinput
+><command
+>/part</command
+></userinput
+>. Чтобы перейти к другому серверу или каналу, нажмите на соответствующую вкладку. </para
+></callout>
+
+<callout arearefs="pt-first-channel-3"
+><para
+>Это <interface
+>панель пользователей</interface
+>. Здесь отображаются ники всех пользователей, вошедших на канал.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Это основные понятия. Более подробные сведения приведены далее...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title
+>Настройка профиля пользователя</title>
+
+<para
+>Перед тем, как начать регулярно использовать &konversation;, следует выбрать себе сетевое имя.</para>
+
+<para
+>Выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Профили...</guisubmenu
+></menuchoice
+>. <action
+>Появится окно <guilabel
+>Профили</guilabel
+>. Это окно также возможно открыть нажатием кнопки <guibutton
+>Изменить...</guibutton
+> в окне <guilabel
+>Изменить сеть</guilabel
+> или окне <guilabel
+>Добавить сеть</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Профили (вкладка «Общие»)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Профили (вкладка «Общие»)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"
+><para
+>Нажмите здесь, чтобы выбрать <guilabel
+>Профиль</guilabel
+> для редактирования.</para
+></callout>
+<callout arearefs="pt-identity-gen-2"
+><para
+>Используйте эти кнопки, чтобы <guibutton
+>добавить</guibutton
+>, <guibutton
+>продублировать</guibutton
+>, <guibutton
+>переименовать</guibutton
+> или <guibutton
+>удалить</guibutton
+> профиль.</para
+></callout>
+<callout arearefs="pt-identity-gen-3"
+><para
+>Введите здесь своё настоящее имя. &irc; не обеспечивает сохранение анонимности пользователя перед друзьями и врагами. Не забывайте об этом. Фальшивое «настоящее имя» позволит замаскировать пол пользователя, но используемый компьютер всё равно возможно отследить, поэтому полную анонимность обеспечить не удастся.</para
+></callout>
+<callout arearefs="pt-identity-gen-4"
+><para
+>Эти кнопки позволяют <guibutton
+>добавить</guibutton
+> или <guilabel
+>удалить</guilabel
+> ник.</para
+></callout>
+<callout arearefs="pt-identity-gen-5"
+><para
+>Это список ников пользователя. Ник — это имя, по которому пользователя будут узнавать другие пользователи. Возможно использовать любое имя, но первым символом должна быть буква. Остальными символами могут быть буквы, цифры или специальные символы: <literal
+>-[]\`_^{}|</literal
+>.</para>
+
+<para
+>Так как ник должен быть уникальным во всей сети &irc;, имя, выбранное пользователем, может быть отклонено сервером из-за того, что кто-то уже использует его. Для этого и нужны альтернативные имена. Если первый выбранный пользователем ник отклонён сервером, &konversation; будет пытаться использовать другие имена из списка по порядку. </para>
+
+<para
+>В соответствии с RFC 2812, максимальная длина ника — 9 символов, но на самом деле она определяется сервером. Чтобы определить максимальную длину, поддерживаемую сервером, подключитесь к нему. На вкладке <interface
+>cообщений сервера</interface
+> найдите сообщение <computeroutput
+>[Поддержка]</computeroutput
+>. Например:</para>
+
+<para>
+<computeroutput
+>[18:51] *Eisfuchs* [21:45] [Поддержка] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer </computeroutput>
+</para>
+
+<para
+>Параметр <computeroutput
+>NICKLEN</computeroutput
+> определяет максимальную длину ника. </para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"
+><para
+>Используйте эти кнопки для смены порядка (а значит, и приоритета) имён. Первым пробуется верхнее, затем следующее и так далее.</para
+></callout>
+<callout arearefs="pt-identity-gen-7"
+><para
+>После регистрации имени в сети &irc; введите службу и пароль, чтобы удостоверить его подлинность. При подключении к серверу &konversation; автоматически отправляет <userinput
+><command
+>/msg</command
+> <replaceable
+>служба</replaceable
+> <command
+>IDENTIFY</command
+> <replaceable
+>пароль</replaceable
+></userinput
+>. Если не знаете, что это такое, оставьте эти поля пустыми.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para
+>Перейдите на вкладку <guilabel
+>Отсутствие</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Профили (вкладка «Отсутствие»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Профили (вкладка «Отсутствие»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Automatik Away group missing
+If you check this box, Konversation will automatically set all connections
+using this Identity away when the screensaver starts or after a period of
+user inactivity configured below.
+-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"
+><para
+>Введите ник, который будет отображаться при отсутствии. При выполнении команды <userinput
+><command
+>/away </command
+><replaceable
+>сообщение</replaceable
+></userinput
+> на любом канале, для подключения к которому используется этот <guilabel
+>Профиль</guilabel
+>, &konversation; будет автоматически менять ник пользователя на ник, введённый в поле <guilabel
+>Ник во время отсутствия</guilabel
+>. Это позволяет сообщить, что пользователь отошёл от компьютера. Если выполнить команду <userinput
+><command
+>/away</command
+></userinput
+> на любом канале, уже отсутствуя, &konversation; автоматически заменит ник пользователя на оригинальный. Если не следует автоматически менять ник при неактивности, оставьте поле пустым.</para
+></callout>
+<callout arearefs="pt-identity-away-2"
+><para
+>Если установить этот флажок, каждый раз при выполнении команды <userinput
+><command
+>/away</command
+></userinput
+> на канале будет появляться горизонтальная линия, отмечающая место, с которого пользователь отсутствует. Другим пользователям &irc; эта линия не будет видна. </para
+></callout>
+<callout arearefs="pt-identity-away-3"
+><para
+>Если установить этот флажок, &konversation; будет автоматически отправлять <guilabel
+>Команду при отсутствии</guilabel
+> на все каналы, к которым пользователь подключён под этим <guilabel
+>Профилем</guilabel
+>. <userinput
+><replaceable
+>%s</replaceable
+></userinput
+> заменяется текстом <userinput
+><replaceable
+>сообщения</replaceable
+></userinput
+>. Если выполнить команду <userinput
+><command
+>/away</command
+></userinput
+>, <guilabel
+>Команда при возвращении</guilabel
+> появится на всех каналах, к которым пользователь подключён под этим <guilabel
+>Профилем</guilabel
+>.</para>
+
+<note
+><para
+>Многие пользователи &irc; считают сообщения об отсутствии надоедливыми. Используйте этот параметр с осторожностью. </para
+></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para
+>Перейдите на вкладку <guilabel
+>Дополнительно</guilabel
+>.</para>
+
+<para>
+	<screenshot>
+		<screeninfo
+>Профили (вкладка «Дополнительно»)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase
+>Профили (вкладка «Дополнительно»)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+<!-- Quit reason missing Whenever you leave a server this message is shown to others-->
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"
+><para
+>Здесь возможно ввести команду, которая будет выполняться перед подключением к серверу. Если этот профиль используется для нескольких серверов, команда будет выполнена для каждого их них.</para
+></callout>
+<callout arearefs="pt-identity-adv-2"
+><para
+>Этот параметр определяет кодировку и отображение отправляемых на сервер сообщений. При первом запуске &konversation; автоматически получает эти параметры от операционной системы. Если наблюдаются проблемы с отображением сообщений других пользователей, попробуйте изменить кодировку.</para
+></callout>
+<callout arearefs="pt-identity-adv-3"
+><para
+>Когда пользователь подключается, множество серверов отправляют запрос на компьютер пользователя для получения ответа IDENT. Если на компьютере не запущен IDENT-сервер, этот ответ отправляет &konversation;. Пробелы не разрешены. Рекомендуется использовать настоящее имя пользователя.</para
+></callout>
+<callout arearefs="pt-identity-adv-4"
+><para
+>Это сообщение отправляется на канал, когда пользователь покидает его.</para
+></callout>
+<callout arearefs="pt-identity-adv-5"
+><para
+>Это сообщение отправляется на канал, если пользователя выкинули с него (обычно это делает оператор &irc;).</para
+></callout>
+<callout arearefs="pt-identity-adv-6"
+><para
+>Нажмите, чтобы применить изменения. Чтобы все изменения вступили в силу, следует отключиться от сервера и подключиться заново. Простейший способ сделать это — перезапустить &konversation;.</para
+></callout>
+</calloutlist>
+</para>
+
+<!--
+<para
+>TODO:
+<itemizedlist>
+
+<listitem
+><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para
+></listitem>
+
+<listitem
+><para>
+Limits on Real Name and Ident?
+</para
+></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title
+>Настройка новых сетей, серверов и каналов для автоматического входа</title>
+
+<para
+>Окно <guilabel
+>Список серверов</guilabel
+> появляется при запуске &konversation; или при выборе пункта главного меню <menuchoice
+><guisubmenu
+>Файл</guisubmenu
+><guisubmenu
+>Список серверов...</guisubmenu
+></menuchoice
+>. <action
+>Окно <guilabel
+>Список серверов</guilabel
+></action
+> отображает существующие настроенные пользователем &irc; <guilabel
+>Сети</guilabel
+>. Сеть &irc; — это группа совместно работающих серверов. Подключившись к любому серверу какой-либо сети, пользователь получает доступ ко всем её каналам. Примеры сетей &irc;: <userinput
+><replaceable
+>Libera</replaceable
+></userinput
+> и <userinput
+><replaceable
+>Undernet</replaceable
+></userinput
+>. </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Список серверов</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Список серверов</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"
+><para
+>Здесь показаны существующие настроенные пользователем <guilabel
+>Сети</guilabel
+> вместе с <guilabel
+>Профилями</guilabel
+>, используемыми для подключения к сети, и <guilabel
+>Каналами</guilabel
+>, на которые осуществляется автоматический вход при подключении. Организованные пользователем группы сетей будут выделяться отступами. Для выделения сети щёлкните по ней мышью. </para
+></callout>
+<callout arearefs="pt-serverlist-2"
+><para
+>Используйте эти кнопки, чтобы <guibutton
+>добавить</guibutton
+> новую сеть, <guibutton
+>изменить</guibutton
+> или <guibutton
+>удалить</guibutton
+> выделенную. </para
+></callout>
+<callout arearefs="pt-serverlist-3"
+><para
+>Нажмите эту кнопку, чтобы подключиться к выбранной <guilabel
+>Сети</guilabel
+> и закрыть окно <guilabel
+>Список серверов</guilabel
+>. Если выделить несколько сетей, будет выполняться подключение ко всем этим сетям.</para
+></callout>
+<callout arearefs="pt-serverlist-4"
+><para
+>Нажатие этой кнопки не отменяет сделанных изменений. Оно просто означает, что в данный момент не следует подключаться ни к одной из сетей.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork"/>
+
+<para
+>При нажатии кнопки <guibutton
+>Добавить...</guibutton
+> появится окно <guilabel
+>Добавить сеть</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Добавить сеть</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Добавить сеть</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"
+><para
+>Укажите значение параметра <guilabel
+>Имя сети</guilabel
+>. В окне <guilabel
+>Список серверов</guilabel
+> возможно создать любое количество записей для одной и той же <guilabel
+>Сети</guilabel
+>.</para
+></callout>
+<!--callout arearefs="pt-addnetwork-2"
+><para
+>Optional.  If you enter something
+here, all the <guilabel
+>Network</guilabel
+>s with the same
+<guilabel
+>Group</guilabel
+> will be listed together in the
+<guilabel
+>Server List</guilabel
+> screen.</para
+></callout-->
+<callout arearefs="pt-addnetwork-2"
+><para
+>Выберите существующий <guilabel
+>Профиль</guilabel
+> или нажмите кнопку <guibutton
+>Изменить...</guibutton
+>, чтобы добавить новый профиль или отредактировать существующий. <guilabel
+>Профиль</guilabel
+> отождествляется с пользователем и будет определять ник при подключении пользователя к сети.</para
+></callout>
+<callout arearefs="pt-addnetwork-3"
+><para
+>Дополнительно. Эта команда будет передана на сервер после подключения. Например: <userinput
+>/msg NickServ IDENTIFY <replaceable
+>konvirocks</replaceable
+></userinput
+>. Это пример для сети Libera, для работы в которой пользователям необходимо зарегистрировать свои ники и пароли. <userinput
+><replaceable
+>konvirocks</replaceable
+></userinput
+> — это пароль для имени, указанного в <guilabel
+>Профиле</guilabel
+>. Возможно ввести несколько команд, разделяя их точкой с запятой.</para
+></callout>
+<callout arearefs="pt-addnetwork-4"
+><para
+>Установите этот флажок, если &konversation; следует автоматически подключаться к этой сети при каждом запуске.</para
+></callout>
+<callout arearefs="pt-addnetwork-5"
+><para
+>Это список &irc;-серверов. Для подключения к сети &konversation; будет последовательно, сверху вниз, перебирать серверы из списка (в списке должен быть указан как минимум один). Для выделения сервера щёлкните по нему левой кнопкой мыши.</para
+></callout>
+<callout arearefs="pt-addnetwork-6"
+><para
+>Используйте эти кнопки, чтобы <guibutton
+>добавить</guibutton
+> cервер, <guibutton
+>изменить</guibutton
+> или <guibutton
+>удалить</guibutton
+> выбранный сервер. Возможно изменить порядок серверов в списке и, следовательно, порядок попыток подключения.</para
+></callout>
+<callout arearefs="pt-addnetwork-7"
+><para
+>Дополнительно. Это список каналов, на которые &konversation; будет автоматически входить при подключении к серверу. Если это не требуется, оставьте его незаполненным.</para
+></callout>
+<callout arearefs="pt-addnetwork-8"
+><para
+>Используйте эти кнопки, чтобы <guibutton
+>добавить</guibutton
+> канал, <guibutton
+>изменить</guibutton
+> или <guibutton
+>удалить</guibutton
+> выбранный канал. Возможно изменить порядок входа на каналы. </para
+></callout>
+</calloutlist>
+</para>
+
+<note
+><para
+>Старайтесь не смешивать серверы из различных &irc;-сетей в одной <guilabel
+>Сети</guilabel
+>. Избегайте указания одних и тех же серверов в различных <guilabel
+>Сетях</guilabel
+>, иначе в &konversation; не будет работать <link linkend="nicksonline"
+>наблюдение за доступными пользователями</link
+>.</para>
+</note>
+
+<anchor id="serverlist-addserver"/>
+
+<para
+>Нажмите кнопку <guibutton
+>Добавить...</guibutton
+> в рамке <guilabel
+>Серверы</guilabel
+>: появится окно добавления сервера.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Добавить сервер</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Добавить сервер</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"
+><para
+>Имя или IP-адрес сервера. На веб-сайте irchelp.org доступен <ulink url="https://www.irchelp.org/irchelp/networks/"
+>список</ulink
+> серверов.</para
+></callout>
+<callout arearefs="pt-addserver-2"
+><para
+>Введите номер порта для подключения к серверу. Для большинства серверов — <userinput
+>6667</userinput
+>.</para
+></callout>
+<callout arearefs="pt-addserver-3"
+><para
+>Если серверу требуется пароль для подключения, введите его здесь, если нет — оставьте незаполненным.</para
+></callout>
+<callout arearefs="pt-addserver-4"
+><para
+>Установите этот флажок, если требуется использовать протокол SSL для связи с сервером. Это сохранит конфиденциальность сообщений между компьютером пользователя и &irc;-сервером, но для этого сервер должен поддерживать протокол SSL. В большинстве случаев, если сервер не поддерживает SSL, соединения не произойдёт.</para
+></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel"/>
+
+<para
+>Нажмите кнопку <guibutton
+>Добавить...</guibutton
+> в рамке <guilabel
+>Каналы для автоматического подключения</guilabel
+>: появится окно <guilabel
+>Добавить канал</guilabel
+>.</para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Добавить канал</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Добавить канал</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Введите имя канала. Не забудьте поставить <userinput
+><replaceable
+>#</replaceable
+></userinput
+> перед именем. Если каналу требуется пароль для подключения, введите его здесь, если нет — оставьте незаполненным. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title
+>Список доступных каналов</title>
+
+<para
+>Чтобы просмотреть список доступных каналов, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Список каналов</guisubmenu
+> </menuchoice
+>. <action
+>После вывода предупреждения будет создана новая вкладка под названием <guilabel
+>Список каналов</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка «Список каналов»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка «Список каналов»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"
+><para
+>Введите здесь строку фильтра.</para
+></callout>
+
+<callout arearefs="pt-channellist-2"
+><para
+>Возможно фильтровать список каналов по количеству пользователей на них. Установка значения <guilabel
+>Без ограничений</guilabel
+> отключает соответствующий критерий.</para
+></callout>
+
+<callout arearefs="pt-channellist-3"
+><para
+>Нажмите здесь, чтобы получить список каналов с сервера и применить фильтр.</para
+></callout>
+
+<callout arearefs="pt-channellist-4"
+><para
+>Здесь отображается отфильтрованный список каналов. Если пользователь не использовал регулярные выражения, &konversation; покажет все каналы, содержащие в названиях строку фильтра (при этом имя канала не обязательно будет начинаться с этой строки).</para
+></callout>
+
+<callout arearefs="pt-channellist-5"
+><para
+>Чтобы зайти на канал, нажмите на него. Щёлкните по каналу правой кнопкой мыши для просмотра списка всех веб-адресов, упомянутых в теме канала.</para
+></callout>
+
+<callout arearefs="pt-channellist-6"
+><para
+>Нажмите здесь, чтобы войти на канал. Для него будет создана новая вкладка.</para
+></callout>
+
+</calloutlist>
+</para>
+<!--
+<para
+>You should avoid clicking the <guibutton
+>Refresh List</guibutton
+> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+-->
+<para
+>Иногда на серверах бывают «секретные» каналы. Они не отображаются в <guilabel
+>Списке каналов</guilabel
+>, но, если знать названия, входить на них можно. В любой <interface
+>строке ввода</interface
+> введите <userinput
+><command
+>/join</command
+> <replaceable
+>#имя_канала</replaceable
+></userinput
+> (<userinput
+>#</userinput
+> обязательно). Для канала будет выделена новая вкладка. Если на панели пользователей нет других пользователей, это значит, что канал до этого не существовал. В таком случае возможно закрыть канал, набрав <userinput
+><command
+>/part</command
+></userinput
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title
+>Обзор главного окна</title>
+
+<para
+>Рассмотрим <interface
+>главное</interface
+> окно подробнее. Вот так оно выглядит при выделенной вкладке канала.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Главное окно</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Главное окно</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"
+><para
+>Это <interface
+>строка ввода</interface
+>. Она становится доступной, если выделена вкладка канала. Чтобы отправить сообщение всем пользователям этого канала, наберите его здесь и нажмите клавишу &Enter;. Набранное сообщение пользователя, как и все остальные, отображается в расположенной выше области прокрутки канала. В начале каждого сообщения указаны время отправки и ник отправителя.</para>
+
+ <para
+>Возможно вставлять и текст из буфера обмена. Если вставляемый текст содержит более одной строки, открывается диалоговое окно. Отредактируйте текст и нажмите кнопку <guibutton
+>ОК</guibutton
+>. </para>
+
+ <para
+>Если вставленный из буфера обмена текст окажется длиннее 256 символов (или содержит более одной строки), появится предупреждение о том, что отправка слишком больших сообщений может привести к сбросу соединения и захламлению канала. Возможно проигнорировать это предупреждение и всё равно отправить сообщение, но этого не рекомендуется делать, так как флуд (захламление канала большим числом сообщений) может помешать общению других пользователей, и пользователь будет отключён от сервера. Поэтому лучше отправлять сообщения небольшими частями.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ I this implemented now?
+ -->
+
+ <para
+>На большинстве каналов существует соглашение о том, что сообщение, адресованное одному конкретному пользователю, должно начинаться с его ника. &konversation; имеет очень удобную функцию автодополнения ника пользователя. Начните набирать ник и нажмите клавишу &Tab;. &konversation; допишет оставшуюся часть ника. Чтобы настроить автодополнение, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Настроить Konversation...</guisubmenu
+></menuchoice
+>, разверните группу параметров <guilabel
+>Поведение</guilabel
+>, выберите пункт <guilabel
+>Общее поведение</guilabel
+> и укажите значение параметра <guilabel
+>Режим дополнения</guilabel
+>. </para>
+
+ <para
+>В строке ввода также возможно ввести &irc;-команду: сначала введите символ <userinput
+><command
+>/</command
+></userinput
+>, а за ним — саму &irc;-команду. Список наиболее часто используемых команд доступен в разделе <link linkend="irc-cmds"
+>Часто используемые команды &irc;</link
+>. Некоторые серверы позволяют пользоваться командой <userinput
+><command
+>/help</command
+></userinput
+> для просмотра списка доступных команд; также возможно ввести <userinput
+><command
+>/help </command
+><replaceable
+>команда</replaceable
+></userinput
+> для просмотра информации по конкретной команде. </para
+></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para
+>Пользователь может входить на дополнительные серверы и каналы. Каждый сервер и канал получает отдельную вкладку. Сведения о просмотре списка доступных каналов доступны в разделе <link linkend="list-channels"
+>Список доступных каналов</link
+>. Чтобы зайти на канал, наберите в строке ввода <userinput
+><command
+>/join</command
+> <replaceable
+>#имя_канала</replaceable
+></userinput
+> (<userinput
+>#</userinput
+> вводить обязательно). Также возможно использовать <userinput
+><command
+>/j</command
+></userinput
+> как сокращение от <userinput
+><command
+>/join</command
+></userinput
+>. Для выхода с канала наберите <userinput
+><command
+>/part</command
+></userinput
+>. Кроме того, отдельные вкладки открываются для <link linkend="list-channels"
+>списка каналов</link
+>, <link linkend="query"
+>личных разговоров</link
+>, <link linkend="urlcatcher"
+>сборщика ссылок</link
+> и сеансов терминала. Для перехода по вкладкам щёлкайте по ним мышью или прокручивайте её колесо. </para>
+
+<para
+>Чтобы настроить другие параметры вкладок, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. Затем разверните группу параметров <guilabel
+>Интерфейс</guilabel
+> и выберите пункт <guilabel
+>Вкладки</guilabel
+> (либо разверните группу параметров <guilabel
+>Уведомления</guilabel
+> и выберите пункт <guilabel
+>Вкладки</guilabel
+>). </para>
+
+</callout>
+<!--
+Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to be activated
+-->
+<callout arearefs="pt-channeltour-3"
+><para
+>Этот индикатор мигает, когда на вкладке есть что-то новое. Если это невидимые сообщения (<command
+>join</command
+> — вход на канал, <command
+>part</command
+> — выход с канала, <command
+>quit</command
+> — выход из приложения) или изменение ника, то индикатор мигает медленно. Мигание учащается при появлении новых обычных сообщений. Используются следующие цвета: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_green_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Канал </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_blue_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <interface
+>Сообщения сервера</interface
+>, <link linkend="list-channels"
+>Список каналов</link
+> или <link linkend="urlcatcher"
+>Сборщик ссылок</link
+> </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_yellow_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <guilabel
+>Терминал</guilabel
+> или <link linkend="dcc"
+>Состояние DCC</link
+> </para>
+</listitem>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="led_red_on.png" format="PNG"/></imageobject
+></inlinemediaobject
+> <link linkend="query"
+>Личное сообщение (на очереди)</link
+> </para>
+</listitem>
+</itemizedlist>
+</para
+></callout>
+
+<callout arearefs="pt-channeltour-4"
+><para
+>Нажмите здесь, чтобы закрыть текущую вкладку. Закрыв вкладку <interface
+>канала</interface
+>, пользователь автоматически покинет его. При закрытии вкладки <interface
+>сообщений сервера</interface
+> &konversation; покинет все каналы, к которым подключился пользователь, закроет все запросы и отключится от сервера.</para
+></callout>
+
+<callout arearefs="pt-channeltour-5"
+><para
+>Эта кнопка позволяет изменить ник пользователя. Она доступна только в том случае, если текущая вкладка является вкладкой канала. Чтобы скрыть эту кнопку, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. Затем разверните группу параметров <guilabel
+>Интерфейс</guilabel
+>, выберите пункт <guilabel
+>Окно разговора</guilabel
+> и снимите флажок <guilabel
+>Показывать поле для смены вашего ника</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-6"
+><para
+>Здесь отображается тема канала. Полный текст темы отобразится при наведении на название курсора мыши. Чтобы отредактировать название, нажмите кнопку, расположенную слева от него. Чтобы скрыть тему канала, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. Затем разверните группу параметров <guilabel
+>Внешний вид</guilabel
+>, выберите пункт <guilabel
+>Окно разговора</guilabel
+> и снимите флажок <guilabel
+>Показывать тему канала</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-7"
+><para
+>Эти кнопки отображают текущее состояние режимов канала. Если кнопка нажата, это означает, что режим включён. Имея достаточно прав, пользователь сможет менять режимы канала, нажимая эти кнопки или кнопки, расположенные слева от темы канала. Чтобы скрыть кнопки режимов канала, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. Затем разверните группу параметров <guilabel
+>Интерфейс</guilabel
+>, выберите пункт <guilabel
+>Окно разговора</guilabel
+> и снимите флажок <guilabel
+>Показывать кнопки режимов канала</guilabel
+>. </para
+></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para
+>Это <interface
+>панель пользователей</interface
+>. Она отображается на вкладках каналов и содержит ники всех пользователей канала. Наведите курсор на интересующий ник, чтобы получить дополнительную информацию об этом пользователе. Вид значков, расположенных рядом с никами, возможно изменить. Более подробные сведения доступны в разделе <link linkend="nickthemes"
+>Настройка тем списка пользователей</link
+>. На приведённом ранее снимке экрана показано <guilabel
+>Оформление по умолчанию</guilabel
+>, в котором используются следующие значки: <itemizedlist>
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_normal.png" format="PNG"/></imageobject
+></inlinemediaobject
+> обычный пользователь </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_voice.png" format="PNG"/></imageobject
+></inlinemediaobject
+> пользователь с правом голоса (может отправлять сообщения в модерируемый канал) </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_halfop.png" format="PNG"/></imageobject
+></inlinemediaobject
+> полуоператор канала, привилегированный пользователь </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_op.png" format="PNG"/></imageobject
+></inlinemediaobject
+> оператор канала </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_owner.png" format="PNG"/></imageobject
+></inlinemediaobject
+> владелец канала </para>
+</listitem>
+
+<listitem>
+<para
+><inlinemediaobject
+><imageobject
+><imagedata fileref="irc_admin.png" format="PNG"/></imageobject
+></inlinemediaobject
+> администратор канала </para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para
+>Если пользователь недоступен, в углу значка появляется маленький циферблат: <inlinemediaobject
+><imageobject
+><imagedata fileref="irc_away.png" format="PNG"/></imageobject
+></inlinemediaobject
+></para>
+
+<para
+>Щёлкните правой кнопкой мыши по нику пользователя для отображения контекстного меню. Например, возможно <link linkend="dcc"
+>отправить файл</link
+> этому пользователю. </para>
+
+<para
+>Чтобы скрыть <interface
+>панель пользователей</interface
+>, снимите в главном меню флажок <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Показать список ников</guisubmenu
+></menuchoice
+>. </para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"
+><para
+>Это <interface
+>быстрые кнопки</interface
+>. По умолчанию они не видны. Сведения об их отображении доступны в разделе <link linkend="quick-buttons"
+>Настройка быстрых кнопок</link
+>. Возможно назначать им любые команды по своему усмотрению.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<note>
+<para
+>Возможно управлять тем, как сообщения выглядят в области прокрутки канала и на вкладках личных разговоров (приватов). Например, возможно изменять цвет сообщений, воспроизводить звук при получении сообщения с определённой строкой или автоматически отвечать на сообщения. Более подробные сведения доступны в разделе <link linkend="highlighting"
+>Подсветка сообщений</link
+>. </para>
+</note>
+
+<note>
+<para
+>Названия каналов иногда начинаются с <userinput
+>&amp;</userinput
+>, <userinput
+>&plus;</userinput
+> или <userinput
+>!</userinput
+>. Согласно RFC 2811, первый символ имени определяет тип канала: <itemizedlist
+> <listitem
+><para
+> <userinput
+>#</userinput
+> — обычные каналы.</para
+></listitem
+> <listitem
+><para
+><userinput
+>!</userinput
+> — обычные каналы.</para
+></listitem
+><listitem
+><para
+> <userinput
+>&amp;</userinput
+> — локальные (каналы, к которым можно присоединиться только с того сервера, где работает канал). Все остальные каналы доступны для подключения из сети.</para
+></listitem
+> <listitem
+><para
+> <userinput
+>&plus;</userinput
+> — каналы, которые не поддерживают режимы канала. Это означает, что на канале отключены все режимы, кроме флага t.</para
+></listitem
+></itemizedlist
+> Максимальная длина имени канала составляет 50 символов. Имя канала может содержать любые символы, кроме пробела, запятой и Ctrl-G (^G или ASCII 7). </para>
+</note>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title
+>Быстрое подключение</title>
+
+<para
+>Иногда требуется подключиться к серверу как можно быстрее, не проходя всю процедуру добавления нового сервера в <link linkend="serverlist"
+>Список серверов</link
+>. </para>
+
+<para
+>Выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Файл</guisubmenu
+><guisubmenu
+>Быстрое подключение</guisubmenu
+></menuchoice
+>. <action
+> Появится окно <guilabel
+>Быстрое подключение</guilabel
+></action
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Быстрое подключение»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Окно «Быстрое подключение»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Введите адрес сервера в поле <guilabel
+>Сервер</guilabel
+>, ник в поле <guilabel
+>Ник</guilabel
+>, нажмите кнопку <guibutton
+>Подключиться</guibutton
+>. А когда &konversation; подключится к серверу, введите команду <userinput
+><command
+>/join</command
+> <replaceable
+>#имя_канала</replaceable
+></userinput
+>, чтобы войти на канал. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title
+>Часто используемые команды &irc;</title>
+
+<para
+>Далее привёден краткий список наиболее часто используемых &irc;-команд. Полный список доступен на веб-странице стандарта <ulink url="http://www.faqs.org/rfcs/rfc2812.html"
+>RFC 2812</ulink
+> или на веб-сайте <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Перечень команд, адаптированных специально для &konversation;, приводится в разделе <link linkend="konvi-cmds"
+>Команды &konversation;</link
+>. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help</command
+></userinput
+></term>
+<listitem
+><para
+>Отображает все доступные на сервере команды. Поддерживается не всеми серверами.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/help </command
+><replaceable
+>команда</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отображает справочную информацию для <userinput
+><replaceable
+>команды</replaceable
+></userinput
+>. Поддерживается не всеми серверами.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join <replaceable
+>#канал</replaceable
+></command
+></userinput
+></term>
+<listitem
+><para
+>Подключает к <userinput
+><replaceable
+>#каналу</replaceable
+></userinput
+>. Если канала с таким именем нет, он будет создан, и создавший его пользователь станет его оператором.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+></userinput
+></term>
+<listitem
+><para
+>Отключает пользователя от текущего <interface
+>канала</interface
+>, соответствующая вкладка закрывается.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part </command
+><replaceable
+>#канал</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отключает пользователя от текущего <userinput
+><replaceable
+>#канала</replaceable
+></userinput
+>, соответствующая вкладка закрывается. Синоним <userinput
+><command
+>/leave</command
+></userinput
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me </command
+><replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет на канал <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>, в начале которого стоит ник пользователя. Например, если ник пользователя — <userinput
+> <replaceable
+>Pingvin</replaceable
+></userinput
+>, а сообщение — <userinput
+><replaceable
+>/me пьёт ароматный чай</replaceable
+></userinput
+>, то на канале сообщение будет выглядеть так: <interface
+>Pingvin пьёт ароматный чай</interface
+>. Все пользователи увидят это сообщение (если, конечно, такой тип сообщений не фильтруется). Эти сообщения дают возможность передать невербальную информацию, например настроение или то, чем пользователь сейчас занят. Но если требуется ненадолго отойти от компьютера, лучше воспользуйтесь командой <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Если кто-либо попытается отправить пользователю личное сообщение или пригласить на канал, он увидит, что в данный момент пользователь отошёл от компьютера и оставил специальное <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away</command
+></userinput
+></term>
+<listitem
+><para
+>Отменяет действие предыдущей команды <userinput
+><command
+>/away</command
+> <replaceable
+>сообщение</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Открывает новую вкладку с <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> пользователя для двустороннего общения, в &irc; более известного как <link linkend="query"
+>личный разговор (приват)</link
+>. Всё, что вводится в этой вкладке, будет показано только пользователю и его собеседнику.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>ник</replaceable
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет одиночное <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+> пользователю с именем <userinput
+><replaceable
+>ник</replaceable
+></userinput
+>. Только пользователь с именем <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> увидит это сообщение. Для более продолжительных переговоров удобно пользоваться командой <userinput
+><command
+>/query</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Приглашает пользователя под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> присоединиться к каналу. Команда особенно полезна для тех каналов, на которые возможно войти только по приглашению (invite-only).</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title
+>Личные разговоры (приваты)</title>
+
+<para
+>В личном разговоре участвует только пользователь и его собеседник. Такие разговоры в &konversation; называются «приваты». Начать приватную беседу возможно, набрав в любой строке ввода команду <userinput
+><command
+>/query </command
+><replaceable
+>ник</replaceable
+></userinput
+>, где <replaceable
+>ник</replaceable
+> — ник пользователя, с которым требуется пообщаться. Также возможно щёлкнуть правой кнопкой мыши по нику пользователя на <guilabel
+>панели пользователей</guilabel
+> и выбрать в контекстном меню пункт <menuchoice
+><guisubmenu
+>Открыть окно привата</guisubmenu
+> </menuchoice
+>. <action
+>Откроется новая вкладка.</action
+> Теперь возможно начать личный разговор. </para>
+
+<para
+>Личные разговоры — это те же каналы, с тем отличием, что в них общаются всего два человека.</para>
+
+<para
+>Чтобы закончить личный разговор, просто закройте его вкладку. Однако учтите, что если собеседник снова отправит сообщение, вкладка опять откроется.</para>
+
+<para
+>Чтобы завершить все приваты, выберите в главном меню пункт<menuchoice
+><guisubmenu
+>Окно</guisubmenu
+><guisubmenu
+>Закрыть все личные разговоры</guisubmenu
+></menuchoice
+> или просто нажмите клавишу <keycap
+>F11</keycap
+>.</para>
+
+<para
+>Если какой-либо пользователь начнёт приватный разговор, &konversation; создаст новую вкладку с его ником. При нежелании разговаривать с этим пользователем просто закройте вкладку. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title
+>Настройка уведомлений</title>
+
+<para
+><guilabel
+>Уведомления</guilabel
+> — это действия, которые &konversation; будет осуществлять при наступлении при какого-либо события. Допустим, &konversation; работает, но окно свёрнуто или оказалось скрыто за другими окнами. Если кто-либо попытается связаться с пользователем или его друг подключится к каналу, пользователю, вероятно, потребуется сразу об этом узнать. В этом случае и будут полезны уведомления. </para>
+
+<para
+>Чтобы настроить уведомления, выберите в главном меню пункт: <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Настроить уведомления...</guisubmenu
+></menuchoice
+>. <action
+>Появится окно <guilabel
+>Настройка уведомлений</guilabel
+></action
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Настройка уведомлений»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Окно «Настройка уведомлений»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"
+><para
+>Нажмите здесь для выбора события.</para
+></callout>
+
+<callout arearefs="pt-notification-2"
+><para
+>Отметьте типы уведомлений при наступлении выбранных событий (<guilabel
+>Выделить программу в панели задач</guilabel
+> — заставляет окно программы на панели задач мигать при наступлении события).</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Отметьте таким образом все интересующие события и задайте способы уведомления о них. После этого нажмите кнопку <guibutton
+>Применить</guibutton
+>.</para>
+
+<para
+>Чтобы скрывать или показывать все уведомления, снимите или установите в главном меню флажок <menuchoice
+> <guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Уведомления</guisubmenu
+> </menuchoice
+>. </para>
+
+<tip
+><para
+>Возможно настроить &konversation; на выделение ника пользователя в сообщениях других пользователей, используя <link linkend="highlighting"
+>подсветку</link
+>.</para
+></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title
+>Наблюдение за подключёнными пользователями</title>
+
+<para
+>&konversation; позволяет пользователю быть в курсе того, кто из его друзей подключён к сети &irc;. </para>
+
+<para
+>Возможно установить связи между сетевыми никами и соответствующими строками адресной книги. После этого ник и &irc;-сеть, к которой он подключён, будут записаны в адресной книге. &irc;-сеть записывается потому, что ники уникальны только в пределах одной &irc;-сети. Одинаковые ники в двух разных &irc;-сетях совсем необязательно принадлежат одному и тому же человеку. Но одинаковые ники на разных серверах одной и той же &irc;-сети, как правило, представляют одного и того же человека.</para>
+
+<note
+><para
+>Именно по этой причине важно использовать одну и ту же <guilabel
+>Сеть</guilabel
+> для всех серверов в &irc;-сети при <link linkend="serverlist"
+>настройке новых сетей, серверов и каналов для автоматического входа</link
+>.</para
+></note>
+
+<para
+>Чтобы включить функцию наблюдения за никами, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Наблюдаемые ники</guisubmenu
+></menuchoice
+>. <action
+>Появится окно <guilabel
+>Наблюдаемые ники</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+	<screeninfo
+>Наблюдаемые ники</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Наблюдаемые ники</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"
+><para
+>Список содержит все ники из списка наблюдения пользователя и все ники, связанные с элементами адресной книги. Для всех ников указаны соответствующие &irc;-сети. Если список пуст, это означает, что в него не вносились ники или не включена функция слежения за пользователями (смотрите далее). Чтобы просмотреть все каналы, к которым подключён пользователь, разверните его ник. Значки рядом с каждым из каналов совпадают с теми, которые появляются на <interface
+>панели пользователей</interface
+> в окнах <link linkend="channel-screen-tour"
+>каналов</link
+>. </para
+></callout>
+<callout arearefs="pt-nicksonline-2"
+><para
+>Здесь отображается вся известная информация о нике. При первом открытии окна <guilabel
+>Наблюдаемые ники</guilabel
+> информации будет мало. Каждые 20 секунд на сервер отправляется команда <userinput
+><command
+>WHOIS</command
+></userinput
+> для получения недостающей информации о пользователях. Это продолжается до тех пор, пока не будут получены сведения обо всех пользователях. </para
+></callout>
+<!--callout arearefs="pt-nicksonline-3"
+><para
+>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel
+>Offline</guilabel>
+part of the listing.
+</para
+></callout-->
+</calloutlist>
+</para>
+
+<para
+>Чтобы добавить для наблюдения один ник, щёлкните правой кнопкой мыши по этому нику в <guilabel
+>списке пользователей</guilabel
+> и выберите в контекстном меню пункт <guilabel
+>Наблюдать за пользователем</guilabel
+>. Чтобы добавить несколько ников, выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>, разверните группу параметров <guilabel
+>Уведомления</guilabel
+> и выберите пункт <guilabel
+>Наблюдаемые ники</guilabel
+>. Появится окно <guilabel
+>Наблюдаемые ники</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Наблюдаемые ники</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Наблюдаемые ники</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"
+><para
+>Установите этот флажок для активации функции наблюдения за пользователями.</para
+></callout>
+
+<callout arearefs="pt-notifylist-2"
+><para
+>Чтобы список <guilabel
+>Наблюдаемые ники</guilabel
+> открывался при запуске &konversation;, установите этот флажок.</para
+></callout>
+
+<callout arearefs="pt-notifylist-3"
+><para
+>Сделайте двойной щелчок по нику пользователя в окне<guilabel
+>Наблюдаемые ники</guilabel
+>, чтобы отправить на сервер команду вида <userinput
+><command
+>%u</command
+></userinput
+>, где %u будет заменено на ник. Завершать команду необходимо символом <userinput
+><command
+>%n</command
+></userinput
+>.</para
+></callout>
+
+<callout arearefs="pt-notifylist-4"
+><para
+>Список <guilabel
+>Наблюдаемые ники</guilabel
+> обновляется путем периодического опроса сервера. Это поле определяет частоту таких запросов. Не вводите значения менее 20 секунд, так как это может привести к перегрузке сервера.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+>Когда в список пользователей будут внесены все необходимые изменения, нажмите кнопку <guibutton
+>ОК</guibutton
+>.</para>
+
+<para
+><emphasis
+>Примечание:</emphasis
+> после открытия списка <guilabel
+>Наблюдаемые ники</guilabel
+> пройдет ещё некоторое время до появления ников подключённых пользователей, ведь на опрос сервера необходимо некоторое время. Обычно список <guilabel
+>Наблюдаемые ники</guilabel
+> следует оставлять открытым. </para>
+
+<para
+>На всех <link linkend="channel-screen-tour"
+>каналах </link
+> &konversation; отображает сообщение о подключении или отключении от сервера пользователей из списка<guilabel
+>Наблюдаемые ники</guilabel
+>. Сообщение выглядит так: </para>
+
+<para
+><computeroutput
+>[17:52] [Уведомление] psn в сети (irc.kde.org).</computeroutput
+></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title
+>Подсветка сообщений</title>
+
+<para
+>Возможно управлять отображением сообщений в окнах каналов и личных разговоров.</para>
+
+<para
+>Чтобы активировать подсветку сообщений, выберите в главном меню пункт: <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+> Настроить &konversation;...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>настройки параметров</guilabel
+></action
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Подсветка»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+				<area id="pt-highlight-10" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Окно «Подсветка»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"
+><para
+>Нажмите здесь для выбора окна <guilabel
+>Подсветка</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-highlight-2"
+><para
+>Нажмите здесь для добавления нового элемента в <guilabel
+>Список подсвечивания</guilabel
+>. Когда элемент в списке выбран, возможно изменить его свойства на панели, которая расположена под этим элементом.</para
+></callout>
+<callout arearefs="pt-highlight-3"
+><para
+>Введите шаблон здесь. Если в содержании любого полученного сообщения обнаружится этот шаблон, будет подсвечено всё сообщение. </para
+></callout>
+<callout arearefs="pt-highlight-4"
+><para
+>Всё сообщение, содержащее указанный шаблон, будет выделено выбранным здесь цветом.</para
+></callout>
+<callout arearefs="pt-highlight-5"
+><para
+>&konversation; поддерживает воспроизведение звука при появлении заданного шаблона в каком-либо сообщении. Для выбора звукового файла и проверки звучания нажмите соответствующие кнопки.</para
+></callout>
+<callout arearefs="pt-highlight-6"
+><para
+>Здесь возможно ввести текст, который будет автоматически отправляться приложением &konversation; в ответ на сообщения, которые соответствуют заданному шаблону. Используйте эту функцию с осторожностью, так как отправка слишком большого количества ответных сообщений может раздражать других пользователей &irc;. Кроме того, здесь возможно вводить команды &irc; или &konversation;.</para
+></callout>
+<callout arearefs="pt-highlight-8"
+><para
+>Снятие этого флажка отключает все настроенные звуки.</para
+></callout>
+<callout arearefs="pt-highlight-7"
+><para
+>Эта фраза будет подсвечена только в тех окнах разговоров, которые указаны здесь, или же во всех окнах, если поле пусто. Имена чатов должны быть разделены запятыми.</para
+></callout>
+<callout arearefs="pt-highlight-9"
+><para
+>Установка этого флажка означает автоматическое выделение цветом всех сообщений, содержащих ник пользователя. Цвет возможно выбрать справа.</para
+></callout>
+<callout arearefs="pt-highlight-10"
+><para
+>По умолчанию подсветка не распространяется на сообщения, написанные пользователем. Но если требуется выделять и их, установите этот флажок и выберите цвет справа.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title
+>Настройка индикатора (&osd;)</title>
+
+<para
+><acronym
+>&osd; (On Screen Display, индикатор)</acronym
+> — это уникальная функция &konversation;. С включённым параметром &osd; сообщения из канала будут появляться на рабочем столе, даже если приложение &konversation; свёрнуто. Вот пример работы &osd;. Сообщение в левой верхней части экрана поступило от приложения &konversation;, которое работает, но в данный момент свёрнуто до значка в системном лотке.</para>
+
+<para>
+<screenshot>
+<screeninfo
+>Пример индикатора</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/><!--new screenshot -->
+		</imageobject>
+		<textobject>
+			<phrase
+>Пример индикатора</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Чтобы активировать &osd;, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+> Настроить &konversation;...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>настройки параметров</guilabel
+></action
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Индикатор»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+				<area id="pt-osd-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Окно «Индикатор»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"
+><para
+>Нажмите здесь, чтобы развернуть группу параметров <guilabel
+>Уведомление</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-2"
+><para
+>Нажмите здесь, чтобы выбрать окно <guilabel
+>Индикатор</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-osd-3"
+><para
+>Для активации &osd; установите этот флажок.</para
+></callout>
+
+<callout arearefs="pt-osd-4"
+><para
+>Нажмите эту кнопку, чтобы выбрать шрифт &osd;. (<emphasis
+>Примечание:</emphasis
+> работают не все шрифты, но Luxi Sans 22 и Impact 22 проверены.)</para
+></callout>
+
+<callout arearefs="pt-osd-5"
+><para
+>Установите соответствующие флажки для выбора типов сообщений, которые следует отображать на экране.</para
+></callout>
+
+<callout arearefs="pt-osd-6"
+><para
+>Перетащите <interface
+>Образец индикатора</interface
+> на требуемую позицию и нажмите кнопку <guibutton
+>Применить</guibutton
+>.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title
+>Отправка сообщений с выделением цветом</title>
+
+<para
+>Возможно выделять цветом сообщения, отправляемые на каналы. Начните набирать сообщение в <interface
+>строке ввода</interface
+> любого канала. Нажмите кнопку <guibutton
+>Цвет &irc;...</guibutton
+>, чтобы добавить цвет, или выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Вставка</guisubmenu
+><guisubmenu
+>Цвет &irc;...</guisubmenu
+> </menuchoice
+>. Появится окно<action
+><guilabel
+>Выбор цвета</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Выбор цвета»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Окно «Выбор цвета»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Выберите нужный цвет и нажмите кнопку <guibutton
+>ОК</guibutton
+>. Продолжите набирать сообщение в <interface
+>строке ввода</interface
+>. Чтобы снова сменить цвет, нажмите кнопку <guibutton
+>Цвет IRC...</guibutton
+>. Выберите другой цвет и нажмите кнопку <guibutton
+>ОК</guibutton
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title
+>Настройка тем списка пользователей</title>
+
+<para
+>Возможно изменять значки, отображаемые рядом с никами на <interface
+>панели пользователей</interface
+> на вкладках каналов. Для изменения темы отображения ников выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+><guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>параметров настройки</guilabel
+></action
+>. Разверните группу параметров <guilabel
+>Интерфейс</guilabel
+> и выберите пункт <guilabel
+>Темы списка пользователей</guilabel
+>. Появится окно <guilabel
+>Темы списка пользователей</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Темы списка пользователей»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Окно «Темы списка пользователей»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"
+><para
+>Нажмите здесь, чтобы открыть окно <guilabel
+>Темы списка пользователей</guilabel
+>.</para
+></callout>
+<callout arearefs="pt-themes-2"
+><para
+>Выберите тему.</para
+></callout>
+<callout arearefs="pt-themes-3"
+><para
+>Здесь показаны образцы значков с учётом выбранной темы.</para
+></callout>
+<callout arearefs="pt-themes-4"
+><para
+>Если тема отображения ников была загружена из другого источника, нажмите здесь для её установки.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title
+>Настройка быстрых кнопок</title>
+
+<para
+>Если включить функцию отображения <interface
+>быстрых кнопок</interface
+>, в <link linkend="channel-screen-tour"
+>главном</link
+> окне появятся восемь <interface
+>быстрых кнопок</interface
+>. Чтобы включить эту функцию, выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>настройки параметров</guilabel
+>.</action
+> Разверните группу параметров <guilabel
+>Интерфейс</guilabel
+> и выберите пункт <guilabel
+>Окно разговора</guilabel
+>. Установите флажок <guilabel
+>Показывать быстрые кнопки</guilabel
+> и нажмите кнопку <guibutton
+>ОК</guibutton
+>. </para>
+
+<para
+>Кнопки возможно настроить на исполнение наиболее часто используемых команд &irc;. Чтобы настроить <interface
+>быстрые кнопки</interface
+>, выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>настройки параметров</guilabel
+></action
+>. Разверните группу параметров <guilabel
+>Интерфейс</guilabel
+> и выберите пункт <guilabel
+>Быстрые кнопки</guilabel
+>. Появится окно <guilabel
+>Быстрые кнопки</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Окно «Быстрые кнопки»</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase
+>Окно «Быстрые кнопки»</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para
+>Имеется восемь <interface
+>быстрых кнопок</interface
+> по умолчанию. Выберите быструю кнопку в списке, чтобы отредактировать её. Чтобы добавить или удалить <interface
+>быструю кнопку</interface
+>, воспользуйтесь кнопками, которые расположены справа от списка быстрых кнопок. Столбец <guilabel
+>Имя кнопки</guilabel
+> — это название, которое будет отображаться в <link linkend="channel-screen-tour"
+>главном</link
+> окне. Постарайтесь давать кнопкам короткие имена. Столбец <guilabel
+>Действие кнопки</guilabel
+> — это действие, происходящее при нажатии <interface
+>быстрой кнопки</interface
+>. В окне отображаются советы по назначению кнопкам различных действий. </para>
+
+<para
+>Нажмите кнопку <guibutton
+>ОК</guibutton
+> для завершения изменений. </para>
+
+<para
+>Пример:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><guilabel
+>Имя кнопки</guilabel
+>: <userinput
+><replaceable
+>Сбщ</replaceable
+></userinput
+> </term>
+		<listitem>
+			<para
+><guilabel
+>Действие кнопки</guilabel
+>: <userinput
+><replaceable
+>Msg %u </replaceable
+></userinput
+> (после <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> стоит пробел) </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para
+>Чтобы использовать эту кнопку в <link linkend="channel-screen-tour"
+>главном</link
+> окне, выберите ник на <interface
+>панели пользователей</interface
+> и нажмите кнопку. В <interface
+>строке ввода</interface
+> появится текст <computeroutput
+>/MSG </computeroutput
+>, а после него — выбранный ник. Наберите сообщение и нажмите клавишу &Enter;. Сообщение будет отправлено, и получит его только тот, кому оно предназначено. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title
+>Отправка и получение файлов</title>
+
+<para
+>По &irc; возможно обмениваться файлами с подключёнными пользователями. </para>
+
+<para>
+<emphasis
+>ВНИМАНИЕ: никогда не открывайте файлы, полученные из незнакомого источника. В них могут содержаться вирусы.</emphasis>
+</para>
+
+<para
+>Чтобы отправить кому-либо на канале файл, щёлкните правой кнопкой мыши по его нику на <interface
+>панели пользователей</interface
+><link linkend="channel-screen-tour"
+> главного</link
+> окна. Выберите в контекстном меню пункт <menuchoice
+><guisubmenu
+>Передать файл...</guisubmenu
+></menuchoice
+>. <action
+>Появится диалог выбора файла для отправки.</action
+> Затем появится вкладка <guilabel
+>Состояние DCC</guilabel
+>. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка «Cостояние DCC»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/><!--new screenshot -->
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка «Состояние DCC»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"
+><para
+>Здесь отображаются ник получателя и имя файла.</para
+></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para
+>В столбце <guilabel
+>Состояние</guilabel
+> показано состояние отправки или получения файла:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel
+>Подготовка</guilabel>
+		</term>
+		<listitem>
+			<para
+>Получатель проверяет возобновляемые файлы или отправитель получает данные для отправки. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Подключение</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; пытается установить соединение с другой стороной. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Отправка</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; отправляет файл. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Получение</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; получает файл. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Завершено</guilabel>
+		</term>
+		<listitem>
+			<para
+>Файл был успешно передан. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ожидание</guilabel>
+		</term>
+		<listitem>
+			<para
+>Партнёр должен принять или отклонить передачу. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Отменено</guilabel>
+		</term>
+		<listitem>
+			<para
+>Пользователь или получатель нажали кнопку <guibutton
+>Прекратить</guibutton
+>. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>Ошибка</guilabel>
+		</term>
+		<listitem>
+			<para
+>Передача была прервана из-за ошибки. </para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel
+>В очереди</guilabel>
+		</term>
+		<listitem>
+			<para
+>Пользователь должен принять или отклонить передачу. </para>
+		</listitem>
+	</varlistentry>
+	<!--varlistentry>
+		<term>
+			<guilabel
+>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para
+>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry-->
+	<varlistentry>
+		<term>
+			<guilabel
+>Продолжение</guilabel>
+		</term>
+		<listitem>
+			<para
+>Если во время передачи было обнаружено, что на принимающей стороне такой файл уже существует, пользователю будет выдан запрос <interface
+>Такой файл уже существует. Продолжить передачу?</interface
+>. Такое состояние отображается, если пользователь продолжит передачу. </para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para
+>Если кто-либо пытается отправить пользователю файл, появится вкладка <guilabel
+>Состояние DCC</guilabel
+> (если она не была создана ранее). Нажмите на вкладку <guilabel
+>Состояние DCC</guilabel
+>, чтобы открыть её. Выберите файл и нажмите эту кнопку для его приёма. Начнётся передача файла. <emphasis
+>Примечание:</emphasis
+> возможно настроить &konversation; на автоматический приём файлов, отправленных другими пользователями. Для этого выберите в главном меню пункт <menuchoice
+><guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+></menuchoice
+>. Разверните группу параметров  <guilabel
+>Поведение</guilabel
+> и выберите пункт <guilabel
+>DCC</guilabel
+>. Появится окно <guilabel
+>DCC</guilabel
+>. </para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para
+>Если имеются затруднения при отправке/получении файлов, возможно, сетевой экран или маршрутизатор блокирует DCC-порты. Смотрите раздел <link linkend="faq"
+>Вопросы и ответы</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title
+>Перехват &URL; из сообщений</title>
+
+<para
+>Во время общения на <link linkend="channel-screen-tour"
+>каналах</link
+> пользователи часто отправляют друг другу &URL; интересных веб-сайтов и других интернет-ресурсов. При двойном щелчке на подобном &URL; &konversation; автоматически запустит приложение, связанное с этим &URL;. Запускаемое приложение зависит от &MIME;-типа &URL;. Например, если &URL; начинается с <interface
+>https:</interface
+>, то запускается штатный веб-браузер KDE и отображает веб-страницу (возможно также указать, какой <link linkend="webbrowser"
+>веб-браузер</link
+> следует запустить). Если во время прокручивания текста &URL; ушёл с экрана, иногда бывает трудно отыскать его. &konversation; позволяет вести удобный журнал &URL;. Чтобы включить эту функцию, установите в главном меню флажок <menuchoice
+> <guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Сборщик ссылок</guisubmenu
+> </menuchoice
+>. <action
+>Будет создана новая вкладка под названием <guilabel
+>Сборщик ссылок</guilabel
+>.</action
+> </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Вкладка «Сборщик ссылок»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Вкладка «Сборщик ссылок»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"
+><para
+>Это список всех &URL;, захваченных со времени запуска &konversation;. В столбце <guilabel
+>От</guilabel
+> отображается ник отправителя &URL; или имя канала или сервера, на котором был размещён этот &URL;. (&URL; из сообщений о входе и выходе не отображаются). Чтобы выбрать &URL;, нажмите на него.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-2"
+><para
+>Нажмите здесь для запуска приложения, связанного с выбранным &URL;. Запускаемое приложение зависит от &MIME;-типа &URL;. Например, для обработки &URL;, начинающегося с <interface
+>https:</interface
+>, будет запущен штатный веб-браузер, который отобразит запрашиваемую страницу. Для веб-страниц возможно также указать, какой <link linkend="webbrowser"
+>веб-браузер</link
+> следует запускать.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-3"
+><para
+>Нажмите здесь для копирования выбранного &URL; в буфер обмена &kde;.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-4"
+><para
+>Нажмите здесь для удаления выбранного &URL; из списка.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-5"
+><para
+>Нажмите здесь, чтобы сохранить список &URL; в файле.</para
+></callout>
+
+<callout arearefs="pt-urlcatcher-6"
+><para
+>Нажмите здесь, чтобы очистить список.</para
+></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title
+>Выбор предпочитаемого веб-браузера</title>
+
+<para
+>При нажатии на &URL; в любом месте &konversation; запустится приложение KDE, связанное с &MIME;-типом этого &URL;. Например, нажатие на адрес, начинающийся с <interface
+>https</interface
+>, вызовет запуск веб-браузера &konqueror; и отображение в нём соответствующей страницы. В параметрах системы (<guilabel
+>Приложения по умолчанию</guilabel
+>) в качестве штатного возможно указать другой веб-браузер, например <application
+>Firefox</application
+>. </para>
+
+<para
+>Для смены штатного веб-браузера выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить &konversation;...</guisubmenu
+> </menuchoice
+>. <action
+>Появится окно <guilabel
+>настройки параметров</guilabel
+>.</action
+> </para>
+
+ <para>
+<screenshot>
+<screeninfo
+>Окно «Общее поведение»</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Окно «Общее поведение»</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"
+><para
+>Нажмите здесь для отображения параметров <guilabel
+>Общего поведения</guilabel
+>.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-2"
+><para
+>Нажмите здесь, чтобы указать свой веб-браузер.</para
+></callout>
+
+<callout arearefs="pt-webbrowser-3"
+><para
+>Введите команду для запуска нужного веб-браузера. При нажатии на &URL; вместо <userinput
+><replaceable
+>%u</replaceable
+></userinput
+> будет подставлен реальный адрес.</para
+></callout>
+
+</calloutlist>
+</para>
+
+<para
+><emphasis
+>Примечание: </emphasis
+>настройка веб-браузера не влияет на почтовые &URL; (<interface
+>mailto:</interface
+>), они всегда обрабатываются штатным почтовым приложением. </para>
+
+<para
+>Для сохранения сделанных изменений нажмите кнопку <guibutton
+>Применить</guibutton
+>. Чтобы изменения вступили в силу, необходимо заново подключиться к каждому серверу и каналу. Простейший способ добиться этого — это перезапуск &konversation;. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title
+>Пометки в журналах каналов и личных разговоров</title>
+
+<para
+>Для облегчения и ускорения поиска нужной информации возможно делать пометки в окнах <link linkend="channel-screen-tour"
+>каналов</link
+> и <link linkend="query"
+>личных разговоров</link
+>. Для этого выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Вставка</guisubmenu
+> <guisubmenu
+>Линия запоминания</guisubmenu
+> </menuchoice
+> или воспользуйтесь комбинацией клавиш <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+>. <action
+>Линия появится под текстом и станет его частью.</action
+> </para>
+
+<para
+>Чтобы вставить <interface
+>Линию запоминания</interface
+> сразу во все каналы и приваты, выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> </menuchoice
+>, разверните группу параметров <guilabel
+>Поведение</guilabel
+>, выберите пункт <guilabel
+>Окно разговора</guilabel
+> и установите флажок <guilabel
+>Показывать линии запоминания во всех каналах/личных разговорах</guilabel
+>. </para>
+
+<para
+>Сведения о том, как настроить &konversation; на автоматическую вставку <interface
+>Линии запоминания</interface
+> при вводе команды <userinput
+><command
+>/away </command
+> <replaceable
+>сообщение</replaceable
+></userinput
+>, доступны в разделе <link linkend="identity-away"
+>Настройка профиля пользователя</link
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title
+>Журналирование</title>
+
+<para
+>Если журналирование включено, то &konversation; в течение сеанса сохраняет данные о каждом <interface
+>сервере</interface
+>, <link linkend="channel-screen-tour"
+>канале</link
+> и <link linkend="query"
+>личном разговоре</link
+>. Данные каждого сеанса сохраняются в виде файла на диске. Если открыть тот же сеанс снова, то запись журнала будет продолжена. </para>
+
+<para
+>Когда сеанс будет открыт снова, из журнала будут прочитаны и показаны на экране последние 1024 символа. </para>
+
+<para
+>Во время сеанса сообщения передвигаются наверх. Для просмотра сообщений возможно прокрутить их назад. Время от времени, для экономии памяти, самые старые сообщения удаляются. Это регулируется параметром <guilabel
+>Предел обратной прокрутки</guilabel
+>. Если ведение журнала включено, то сообщения, которые были удалены с экрана по достижении <guilabel
+>Предела обратной прокрутки</guilabel
+>, возможно просмотреть в журнале.</para>
+
+<para
+>Для просмотра журнала сеанса перейдите на вкладку этого сеанса и выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Открыть журнал</guisubmenu
+> </menuchoice
+>. <action
+>Появится новая вкладка</action
+>, отображающая журнал. </para>
+
+<para>
+<screenshot>
+<screeninfo
+>Файл журнала</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase
+>Файл журнала</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"
+><para
+>Здесь отображены сообщения журнала. Самые старые из них находятся сверху, а самые новые — снизу.</para
+></callout>
+<callout arearefs="pt-logviewer-2"
+><para
+>Нажмите здесь, чтобы сохранить журнал в другом файле.</para
+></callout>
+<callout arearefs="pt-logviewer-3"
+><para
+>Нажмите здесь для обновления журнала. Во время просмотра журнала новые сообщения <emphasis
+>не</emphasis
+> добавляются в журнал автоматически. Для просмотра последних сообщений воспользуйтесь этой кнопкой.</para
+></callout>
+<callout arearefs="pt-logviewer-4"
+><para
+>Нажмите здесь, чтобы удалить файл журнала с диска.</para
+></callout>
+<callout arearefs="pt-logviewer-5"
+><para
+>Это поле позволяет установить максимальный размер отображаемой в окне части журнала. Этот параметр будет применяться только к новым открытым вкладкам журналов. При следующем запуске &konversation; будет применено последнее установленное значение этого параметра. Его возможно настроить отдельно для каждого файла журнала.</para
+></callout>
+</calloutlist>
+</para>
+
+<para
+><guilabel
+>Предел обратной прокрутки</guilabel
+> возможно изменить. Для этого выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить &konversation;...</guisubmenu
+> </menuchoice
+>, затем разверните группу параметров <guilabel
+>Поведение</guilabel
+> и выберите пункт <guilabel
+>Окно разговора</guilabel
+>. В открывшемся окне доступно поле <guilabel
+>Предел обратной прокрутки</guilabel
+>. Если установить его в значение <guilabel
+>Без ограничений</guilabel
+>, то старые сообщения удаляться не будут. </para>
+
+<para
+>Возможно включить или отключить журналирование и установить его параметры. Для этого выберите в главном меню пункт <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить &konversation;...</guisubmenu
+> </menuchoice
+>, затем разверните группу параметров <guilabel
+>Поведение</guilabel
+> и выберите пункт <guilabel
+>Журналирование</guilabel
+>. </para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title
+>Команды &konversation;</title>
+<!--FIXME commands in src/irc/outputfilter.[h|cpp]-->
+<para
+>Следующие команды обрабатываются &konversation; и могут отличаться от обычных команд &irc;. Значения внутри квадратных скобок необязательны. Значения, разделённые вертикальной чертой (|), являются альтернативными вариантами. Те команды, которые не описаны здесь, при вводе поступают на сервер. </para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/me</command
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет на канал <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>, в начале которого стоит ник пользователя. Например, если ник пользователя — <userinput
+> <replaceable
+>Pingvin</replaceable
+></userinput
+>, а сообщение — <userinput
+><replaceable
+>/me пьёт ароматный чай</replaceable
+></userinput
+>, то на канале сообщение будет выглядеть так: <interface
+>Pingvin пьёт ароматный чай</interface
+>. Все пользователи увидят это сообщение (если, конечно, такой тип сообщений не фильтруется). Эти сообщения дают возможность передать невербальную информацию, например настроение или то, чем пользователь сейчас занят. Но если требуется ненадолго отойти от компьютера, лучше воспользуйтесь командой <userinput
+><command
+>/away</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ame</command
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Похожа на команду <userinput
+><command
+>/me</command
+></userinput
+>, приведённую выше, только сообщение рассылается на все каналы и всем приватам на всех серверах, к которым пользователь подключён в &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/join</command
+> <replaceable
+>канал</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подключает к указанному <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+>. Если это допускается сервером и канал ещё не существует, то он будет создан ипользователь станет его оператором. Если для подключения к каналу требуется пароль, укажите его при вводе команды (параметр <userinput
+><replaceable
+>пароль</replaceable
+></userinput
+>). Большинство названий каналов начинается с <userinput
+><replaceable
+>#</replaceable
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/j</command
+> <replaceable
+>канал</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>То же самое, что <userinput
+><command
+>/join</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/part</command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>[причина]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Приводит к выходу с <userinput
+><replaceable
+>канала</replaceable
+></userinput
+> с указанием <userinput
+><replaceable
+>причины</replaceable
+></userinput
+> и закрывает вкладку соответствующего <interface
+>канала</interface
+>. Чтобы закрыть вкладку канала или привата &konversation;, возможно просто ввести на ней команду <userinput
+><command
+>/part</command
+></userinput
+> с причиной по умолчанию, заданной соответствующим параметром меню <link linkend="identity"
+>Настройка</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/leave</command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>[причина]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>То же самое, что <userinput
+><command
+>/part</command
+></userinput
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/quit</command
+></userinput
+></term>
+<listitem
+><para
+>После ввода на любом канале, в привате или на DCC-вкладке, отключает соответствующий сервер и закрывает все каналы, приваты и DCC-вкладки, открытые на этом сервере.</para
+></listitem>
+</varlistentry>
+
+<varlistentry
+><term
+><userinput
+><command
+>/notice</command
+> <replaceable
+>ник|канал</replaceable
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+> пользователю с именем <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> или всем на <userinput
+><replaceable
+>канале</replaceable
+></userinput
+>. Далее приведён пример того, что отображается для пользователя на вкладке канала:</para>
+
+<para
+><computeroutput
+>[17:14] [Сообщение] Отправка уведомления «Понял вас» для #konversation</computeroutput
+></para>
+
+<para
+>А вот что увидят получатели:</para>
+
+<para
+><computeroutput
+>[17:15] [Сообщение] -Eisfuchs- Понял вас</computeroutput
+></para>
+
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/query </command
+><replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Создаёт новую вкладку для частного разговора с пользователем под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+>. Частный разговор в &irc; также часто называется <link linkend="query"
+>Приват</link
+>. Всё, что написано здесь, будет видеть только пользователь и его собеседник. Возможно ввести несколько ников, разделённых пробелами, и для каждого из них будет открыта новая вкладка. Все они будут частными для пользователя и его собеседников.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/msg </command
+><replaceable
+>ник|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет личное сообщение пользователю под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> или пользователям указанного <userinput
+><replaceable
+>канала</replaceable
+></userinput
+>. В отличие от команды <userinput
+><command
+>/query</command
+></userinput
+>, не приводит к открытию новой вкладки. Если <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+> начинается с команды <userinput
+><command
+>/me </command
+></userinput
+>, то текст форматируется так же, как в команде <userinput
+><command
+>/me</command
+></userinput
+>.</para>
+
+<para
+>Примеры</para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs Мне нужна помощь по команде msg</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg #konversation Появилась новая версия Konvi!</replaceable
+></userinput
+></para>
+
+<para
+><userinput
+><replaceable
+>/msg Eisfuchs /me компилирую руководство пользователя.</replaceable
+></userinput
+></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/smsg </command
+><replaceable
+>ник|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>То же самое, что <userinput
+><command
+>/msg</command
+></userinput
+>, с той разницей, что сообщение не отображается на экране. Может пригодиться, если пользователь опасается выдать пароль или другую секретную информацию.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/amsg </command
+><replaceable
+>ник|канал</replaceable
+></userinput
+> <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Похожа на <userinput
+><command
+>/msg</command
+></userinput
+>, только сообщение будет разослано на все каналы и во все приваты, открытые на всех серверах, к которым пользователь подключён в &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/op </command
+> <replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>При вводе этой команды на вкладке канала выполняется попытка предоставить пользователю под указанным<userinput
+><replaceable
+>ником</replaceable
+></userinput
+> права оператора канала. Может не сработать, если у вводившего команду пользователя недостаточно прав на этом канале (он сам должен быть оператором). Возможно ввести несколько ников, разделив их пробелами.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/deop </command
+><replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>При вводе этой команды на вкладке канала пользователь под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> утрачивает права оператора. Возможно ввести несколько ников, разделив их пробелами.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/oper </command
+><replaceable
+>[ник]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Наделяет пользователя с именем <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> правами оператора &irc; (администратора). Команда будет иметь эффект только в том случае, если этот пользователь указан в строке O: сервера. Оператор &irc; может использовать команду <userinput
+><command
+>/kill</command
+></userinput
+> в отношении пользователей, подключать серверы к сети &irc; и совершать другие ответственные действия. Если <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> не указан, то программа выполняет попытку предоставить права оператора &irc; текущему пользователю. Запрос на ввод имени и пароля оператора &irc; поступит в любом случае.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/voice </command
+> <replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>На некоторых каналах (с флагом +m), пользователи не могут отправлять сообщения, если у них нет права голоса. Эта команда — попытка предоставить такое право. Для выполнения этой команды у пользователя должны быть права оператора. В основном используется операторами модерируемых каналов.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unvoice </command
+> <replaceable
+>ник</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Лишает права голоса пользователя под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/topic </command
+><replaceable
+>[канал]</replaceable
+> <replaceable
+>[сообщение]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Выполняет попытку установить в качестве темы <userinput
+><replaceable
+>канала</replaceable
+></userinput
+> введённое <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>. Когда команда вводится на вкладке канала, часть <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> может быть опущена, и в этом случае команда будет применяться к активному каналу вкладки. Если опущена часть <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>, то отображается текущая тема канала. Если у пользователя недостаточно прав, то смена темы канала может и не произойти.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/away </command
+> <replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Тому, кто отправит пользователю личное сообщение или пригласит его на канал, поступит сообщение об отсутствии пользователя за компьютером по указанной <userinput
+><replaceable
+>причине</replaceable
+></userinput
+>. Чтобы обозначить возвращение за компьютер, наберите <userinput
+><command
+>/away</command
+></userinput
+> без указания причины.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/aaway </command
+><replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Аналогично команде <userinput
+><command
+>/away</command
+></userinput
+>, только рассылается на все серверы, к которым пользователь подключён в &konversation;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/invite </command
+><replaceable
+>ник</replaceable
+> <replaceable
+>[канал]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Приглашает пользователя под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> подключиться к <userinput
+><replaceable
+>каналу</replaceable
+></userinput
+>. Особенно полезна эта команда для тех каналов, доступ на которые возможен только по приглашению. Если команда вводится на вкладке канала, то часть <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> возможно опустить.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+><replaceable
+>имя_файла</replaceable
+> <replaceable
+>[параметры]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Исполняет сценарий оболочки под названием <userinput
+><replaceable
+>имя_файла</replaceable
+></userinput
+>, передавая ему указанные <userinput
+><replaceable
+>параметры</replaceable
+></userinput
+>. Более подробно эта тема рассмотрена в разделе <link linkend="scripting"
+>Поддержка сценариев</link
+>.</para>
+<para
+>Примеры:</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>Отправляет на канал номера текущих версий &konversation;, &Qt;, &kde-frameworks; и &plasma;.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>Отправляет на канал строку с текущей версией &Linux; (вывод <quote
+>uname -a</quote
+>).</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/notify </command
+><replaceable
+>[ник]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Добавляет <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> в список <link linkend="nicksonline"
+>Наблюдаемые ники</link
+> или удаляет его из списка. Если ник уже есть в списке, то он удаляется, а если его нет — добавляется. Если конкретный <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> не указан, то отображается весь список наблюдаемых пользователей.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/kick </command
+><replaceable
+>ник</replaceable
+> <replaceable
+>причина</replaceable
+></userinput
+></term>
+<listitem
+><para
+>При вводе команды на вкладке канала предпринимается попытка выкинуть с канала пользователя под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> по указанной <userinput
+><replaceable
+>причине</replaceable
+></userinput
+>. Если <userinput
+><replaceable
+>причина</replaceable
+></userinput
+> не указана, то по умолчанию применяется параметр, заданный в меню <link linkend="identity"
+>Настройка</link
+>. Эта команда используется только на вкладке канала.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ban </command
+> [<command
+>-host</command
+>|<command
+>-domain</command
+>| <command
+>-userhost</command
+>|<command
+>-userdomain</command
+>] <replaceable
+>[канал]</replaceable
+> <replaceable
+>пользователь</replaceable
+>|<replaceable
+>маска</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Выполняется попытка удалить <userinput
+><replaceable
+>пользователя</replaceable
+></userinput
+> или <userinput
+><replaceable
+>маску</replaceable
+></userinput
+> с <userinput
+><replaceable
+>канала</replaceable
+></userinput
+>. Если команда вводится на вкладке канала, то <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можно опустить. Более подробные сведения о хостах, доменах и масках доступны в документации на веб-сайте <ulink url="https://www.irchelp.org/"
+>irchelp.org</ulink
+>. Чтобы просмотреть текущий список удалённых с канала пользователей, введите команду <userinput
+><command
+>/mode </command
+><replaceable
+>канал</replaceable
+> <command
+>b</command
+></userinput
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/unban </command
+> <replaceable
+>[канал]</replaceable
+> <replaceable
+>шаблон</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отменяет прежнее удаление с канала. Если команда введена на вкладке канала, то часть <userinput
+><replaceable
+>канал</replaceable
+></userinput
+> можно опустить. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ignore </command
+> [<command
+>-all</command
+>] <replaceable
+>ник</replaceable
+> </userinput
+></term>
+<listitem
+><para
+>Добавляет <userinput
+><replaceable
+>ник</replaceable
+></userinput
+> в список игнорируемых. Возможно указать несколько ников, разделив их пробелами. Сообщения пользователей из этого списка на канале не отображаются. Кроме того, если введена команда <userinput
+><command
+>-all</command
+></userinput
+>, то не отображаются не только сообщения на канал, но и все остальные типы сообщений (приватные, уведомления, &CTCP;, DCC и исключения). </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/quote </command
+> <replaceable
+>команда</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет <userinput
+><replaceable
+>команду</replaceable
+></userinput
+> на сервер. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/say </command
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>При вводе этой команды на вкладке канала на канал будет отправлено <userinput
+><replaceable
+>сообщение</replaceable
+></userinput
+>. Аналогично вводу <userinput
+><replaceable
+>сообщения</replaceable
+></userinput
+> в <interface
+>строке ввода</interface
+> канала. Удобно для отправки &irc;-команд, если их исполнение нежелательно. Два управляющих символа (//) подряд дают тот же результат, что и команда <userinput
+><command
+>/say</command
+></userinput
+>. Также используется в <link linkend="scripting"
+>сценариях</link
+> для отправки сообщений. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/raw </command
+> [<command
+>open</command
+>|<command
+>close</command
+>]</userinput
+></term>
+<listitem
+><para
+>Переводит журнал сервера в режим без обработки (<command
+>open</command
+>) или отменяет режим без обработки (<command
+>close</command
+>). Если ни <command
+>open</command
+>, ни <command
+>close</command
+> не введены, то по умолчанию используется <command
+>open</command
+>. В режиме без обработки все сообщения в журнале отображаются в собственном &irc;-формате. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/konsole </command
+></userinput
+></term>
+<listitem
+><para
+>Открывает новую вкладку с запущенным эмулятором терминала KDE. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/server </command
+> <replaceable
+>[адрес]</replaceable
+> <replaceable
+>[пароль]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Подключает к серверу по указанному адресу. Если адрес не указан, то выполняется подключение к серверу, связанному с вкладкой, где вводится команда. Удобно для подключения к серверу при разрыве связи. Если для входа на сервер требуется пароль, то укажите его в части <userinput
+><replaceable
+>пароль</replaceable
+></userinput
+>. Если для подключения к серверу используется не обычный (6667) порт, то адрес следует набирать таким образом: <replaceable
+>irc.kde.org:6665</replaceable
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+> <command
+>SEND </command
+><replaceable
+>ник</replaceable
+> <replaceable
+>[имя_файла]</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет файл с названием <userinput
+><replaceable
+>имя_файла</replaceable
+></userinput
+> пользователю с именем <userinput
+><replaceable
+>ник</replaceable
+></userinput
+>. Если имя файла не указано, то появится диалоговое окно выбора файла. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/dcc </command
+></userinput
+></term>
+<listitem
+><para
+>Открывает вкладку <guilabel
+>Состояние DCC</guilabel
+>. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>ник|канал</replaceable
+> <command
+>ping</command
+></userinput
+></term>
+<listitem
+><para
+>Отправляет PING-сообщение пользователю под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> или на указанный <userinput
+><replaceable
+>канал</replaceable
+></userinput
+>. Позволяет определить, велика ли задержка передачи данных по сети со стороны собеседника или (если команда направляется на канал) со стороны системы самого пользователя. </para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/ctcp </command
+><replaceable
+>ник|канал</replaceable
+> <replaceable
+>сообщение</replaceable
+></userinput
+></term>
+<listitem
+><para
+>Отправляет сообщение пользователю под указанным <userinput
+><replaceable
+>ником</replaceable
+></userinput
+> или всем пользователям на указанном <userinput
+><replaceable
+>канале</replaceable
+></userinput
+>. Похоже на команду <userinput
+><command
+>/msg</command
+></userinput
+>, только сообщение отправляется с использованием протокола &CTCP;. Ответ противоположной стороны зависит от того, какой клиент &irc; там запущен. Например, если открыт разговор с другим пользователем &konversation;, то команда <userinput
+><replaceable
+>/ctcp Eisfuchs TIME</replaceable
+></userinput
+> вернёт системное время компьютера Eisfuchs. <userinput
+><replaceable
+>/ctcp Eisfuchs VERSION</replaceable
+></userinput
+> вернёт номер версии &konversation;, установленной на компьютере Eisfuchs. </para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title
+>Поддержка сценариев</title>
+
+<para
+>&konversation; поставляется с удобными сценариями, которые возможно запускать из программы. Для запуска сценария на канале, в привате, DCC или на вкладке сервера следует набрать команду вида</para>
+
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>имя_файла</replaceable
+> [<replaceable
+>параметры</replaceable
+>]</userinput
+></para>
+
+<para
+>— эта команда исполнит сценарий под названием <userinput
+><replaceable
+>имя_файла</replaceable
+></userinput
+>, передав ему (необязательные) <userinput
+><replaceable
+>параметры</replaceable
+></userinput
+>.</para>
+
+<para
+>Например, введите следующую команду на вкладке канала</para>
+
+<para
+><userinput
+><replaceable
+>/sayversion</replaceable
+></userinput
+></para>
+
+<para
+>— она передаст на канал номера версий &konversation;, &Qt;, &kde-frameworks; и &plasma;, установленных в системе.</para>
+
+<para
+><userinput
+><replaceable
+>/exec cmd uname -a</replaceable
+></userinput
+></para>
+
+<para
+>— эта команда исполняет сценарий <userinput
+><replaceable
+>cmd</replaceable
+></userinput
+>, передав ему параметр <userinput
+><replaceable
+>uname -a</replaceable
+></userinput
+>. На канал будет передана строка с версией &Linux;, установленной в системе.</para>
+
+<para
+>Более подробные сведения о сценариях, установленных в &konversation;, доступны в <link linkend="scripts_ref"
+>Справочном руководстве по сценариям</link
+>.</para>
+
+<para
+>Чтобы посмотреть список доступных сценариев, наберите в &konversation; следующую команду.</para>
+
+<para
+><userinput
+>/exec --showpath media</userinput
+></para>
+
+<para
+>Затем перейдите к папке из вывода для просмотра списка.</para>
+
+<para
+>Возможно писать собственные сценарии на любом языке оболочки (bash, perl или python). При исполнении сценария в &konversation; первыми ему передаются следующие два параметра:</para>
+
+<itemizedlist>
+
+<listitem
+><para
+>Адрес сервера.</para
+></listitem>
+
+<listitem
+><para
+>Название канала.</para
+></listitem>
+
+</itemizedlist>
+
+<para
+>Пример сценария (cmd).</para>
+
+<para>
+<programlisting
+>#!/bin/sh
+
+# Исполняет команду и отображает вывод в Konversation.
+
+SERVER=$1;
+TARGET=$2;
+shift;shift;
+
+$@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para
+>Обратите внимание, что для связи с &konversation; сценарий использует qdbus. При использовании команды <computeroutput
+>say</computeroutput
+> вывод будет отправлен на канал как обычное сообщение. Чтобы отобразить что-либо на вкладке, не отправляя это другим пользователям, используйте команду <computeroutput
+>info</computeroutput
+>. Взглянув на существующие файлы сценариев, возможно получить более полное представление о них.</para>
+
+<para
+>Чтобы получить возможность запустить собственный сценарий, следует скопировать его в <filename class="directory"
+>$(qtpaths --paths GenericDataLocation)/konversation/scripts</filename
+>. Необходимо также предоставить ему права на исполнение, например таким образом: <userinput
+><replaceable
+>chmod a+x имя_файла</replaceable
+></userinput
+>.</para>
+
+</sect1>
+
+<sect1 id="scripts_ref">
+<title
+>Справочное руководство по сценариям</title>
+
+<para
+>В &konversation; по умолчанию предустановлены несколько сценариев. Это руководство позволит узнать, как их использовать.</para>
+<!--FIXME in data/scripts-->
+<variablelist>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>bug</replaceable
+> [<replaceable
+>номер ошибки|поисковой запрос</replaceable
+>]</userinput
+></term>
+<listitem>
+  <para
+>Этот сценарий открывает веб-браузер для поиска ошибки в <ulink url="https://bugs.kde.org/"
+>системе отслеживания ошибок &kde; Bugzilla</ulink
+>.</para>
+<para
+>Пример: открыть браузер для поиска ошибки 123456.</para>
+<para
+><userinput
+><command
+>/exec</command
+> <replaceable
+>bug 123456</replaceable
+></userinput
+></para>
+<para
+>Пример действия: браузер, установленный по умолчанию, должен открыть сайт <replaceable
+>https://bugs.kde.org/show_bug.cgi?id=123456</replaceable
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd</replaceable
+> [<replaceable
+>аргументы командной строки</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Этот сценарий позволяет отобразить вывод аргументов командной строки на текущем канале.</para>
+<para
+>Пример: показать всем пользователям на текущем канале, какая версия &konversation; установлена в системе.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>cmd konversation --version</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Konversation: 1.6</replaceable
+></para>
+<para
+>ВНИМАНИЕ! Результат команды публикуется для всех на текущей вкладке канала! Пожалуйста, будьте внимательны при использовании.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Эта команда выведет на экран случайную фразу.</para>
+<para
+>Пример: вывести случайную фразу на текущую вкладку канала.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>fortune</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Random Fortune: Never make any mistaeks. -- Anonymous, in a mail discussion about to a kernel bug report</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge</replaceable
+> [<replaceable
+>проценты</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Этот сценарий создаёт простой текстовый индикатор для отображения заданного процента.</para>
+<para
+>Пример: отобразить индикатор со значением 50% на текущей вкладке канала.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>gauge 50</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Beer load [ | ] 50%</replaceable
+></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media</replaceable
+> [<replaceable
+>audio|video|{проигрыватель}</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Это сценарий для отображения информации о том, что воспроизводится в проигрывателе в данный момент. Возможно показать информацию только по аудиопроигрывателям или только по видеопроигрывателям, в зависимости от аргументов команды: <replaceable
+>audio</replaceable
+> или <replaceable
+>video</replaceable
+>. Кроме того, возможно указать конкретный проигрыватель.</para>
+<para
+>Поддерживаются следующие проигрыватели: Amarok (аудио), JuK (аудио), Kaffeine (видео, аудио), KMPlayer (видео, аудио), KPlayer (видео, аудио), kdetv (видео), Yammi (аудио), Audacious (аудио), MPD (аудио).</para>
+<para
+>Пример: вывести текущую песню, воспроизводящуюся в Amarok.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>media amarok</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>* user is listening to You Give Love A Bad Name by Bon Jovi on Slippery When Wet [Amarok]</replaceable
+></para>
+</listitem>
+</varlistentry>
+<!--FIXME Error: Unable to retrieve clipboard contents from Klipper.
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip</replaceable
+> [<replaceable
+>Optional Delay</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>This script outputs the contents of klipper to the current channel tab with a delay to provide flood protection.</para>
+<para
+>Example: To output the contents of klipper with a 1 second delay.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sayclip 1s</replaceable
+></userinput
+></para>
+<para
+>Sample output: <replaceable
+>Konversation sure is awesome!</replaceable
+></para>
+</listitem>
+</varlistentry>
+-->
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Этот сценарий отображает подробные сведения о системе пользователя, собирая вывод нескольких команд и форматируя его надлежащим образом.</para>
+<para
+>Пример: вывести информацию о системе на текущую вкладку канала.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>sysinfo</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Sysinfo for 'user-desktop': Running inside KDE Plasma 5.6.5 on Ubuntu 16.04.1 LTS (Xenial Xerus) powered by Linux 4.4.0-47-generic, CPU: Intel(R) Core(TM) i7-4910MQ CPU @ 2.90GHz at 2996-3338/3900 MHz, RAM: 15795/15967 MB, Storage: 1591/2281 GB, 406 procs, 47.59h up</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl</replaceable
+> [<replaceable
+>адрес ссылки</replaceable
+>]</userinput>
+</term>
+<listitem>
+<para
+>Этот сценарий использует прикладной интерфейс Tinyurl для того, чтобы преобразовать &URL; в сокращённую ссылку «tinyurl» и отправить её на текущую вкладку канала.</para>
+<para
+>Пример: опубликовать сокращённую ссылку на https://konversation.kde.org</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>tinyurl https://konversation.kde.org</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>https://tinyurl.com/y4rk8wa3</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput>
+</term>
+<listitem>
+<para
+>Этот сценарий выводит надлежащим образом отформатированный результат выполнения команды «uptime».</para>
+<para
+>Пример: продемонстрировать безотказную работу системы в течение 98 дней.</para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>uptime</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Uptime: 98 days, 15 hours and 2 minutes</replaceable
+></para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Все эти сценарии имеют предопределённые псевдонимы команд. В окне настройки &konversation; выберите <menuchoice
+><guimenu
+>Поведение</guimenu
+> <guimenuitem
+>Псевдонимы команд</guimenuitem
+></menuchoice
+>, чтобы просмотреть, добавить, удалить или изменить псевдонимы команд. </para>
+
+<para
+>Более подробные сведения доступны в <ulink url="https://userbase.kde.org/Konversation/Scripts/Scripting_guide"
+>руководстве по сценариям в пользовательской базе знаний KDE</ulink
+>. </para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title
+>Список команд</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title
+>Главное окно &konversation;</title>
+
+<sect2>
+<title
+>Меню «Файл»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F2</keycap
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Список серверов...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Отображает <link linkend="irc-basics"
+>список серверов и каналов</link
+>. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F7</keycap
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Быстрое подключение...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Открывает окно <link linkend="quickconnect"
+>Быстрое подключение</link
+> для подключения к серверу. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Отключиться</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Отключает от всех серверов. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Переподключиться</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Возобновляет подключение ко всем серверам в случае неожиданного разрыва связи. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зайти на канал...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Открывает диалог ввода названия канала для подключения. Аналогично вводу <command
+>/join <userinput
+>#имя_канала</userinput
+></command
+> на вкладке канала или сервера.</action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Глобальное отсутствие</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Состояние ника пользователя указывает всем на его отсутствие за компьютером. </action
+></para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Выход</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Закрывает</action
+> &konversation;.</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Правка»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Правка</guimenu
+> <guimenuitem
+>Найти текст...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Поиск текстовой строки в текущем окне.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F3</keycap
+> </shortcut
+> <guimenu
+>Правка</guimenu
+> <guimenuitem
+>Продолжить поиск</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Повторяет поиск текстовой строки в текущем окне с использованием результатов предыдущего поиска.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!-- missing
+Find Previous Shift F3
+Clear Marker Lines Ctrl Shift R
+Enlarge Font Size Ctrl++
+Shrink Font Size Ctrl+-
+Reset Font Size Ctrl+O
+-->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Правка</guimenu
+> <guimenuitem
+>Очистить окно</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Очищает текущее окно.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl; &Shift;<keycap
+>L</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Правка</guimenu
+> <guimenuitem
+>Очистить все окна</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Очищает все окна.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Вставка»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>K</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Цвет &irc;...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Смотрите раздел <link linkend="color-msgs"
+>Отправка сообщений с выделением цветом</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Линия запоминания</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Смотрите раздел <link linkend="rememberlines"
+>Пометки в журналах каналов и личных разговоров</link
+>.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt; &Shift;<keycap
+>C</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Вставка</guimenu
+> <guimenuitem
+>Вставить символ...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Используется для вставки особых символов (например, иностранных букв).</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Закладки»</title
+><!--FIXME Copy to fundamentals + link?-->
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>B</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Добавить закладку</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+		    <action
+>Добавляет закладку на текущие сеть и канал.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Создать папку для всех открытых вкладок...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Добавляет</action
+> все каналы в новый пункт подменю в меню закладок. </para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Создать папку закладок...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Создаёт новую папку для закладок.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Закладки</guimenu
+> <guimenuitem
+>Изменить закладки...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Открывает редактор закладок.</action>
+			</para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Настройка»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Показать список ников</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Скрывает или отображает панель ников на вкладке канала. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+><keycap
+>F8</keycap
+></shortcut
+> <guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Профили...</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para
+><action
+>Открывает окно <link linkend="identity"
+>Профили</link
+> для настройки персональных данных. </action
+></para
+></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Окно»</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Предыдущая вкладка</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Открывает окно, связанное с предыдущей вкладкой.</action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Следующая вкладка</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Открывает окно, связанное со следующей вкладкой.</action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Next Active Tab Ctrl Alt Space
+Move Tab Left Alt Shift Left
+Move Tab Right Alt Shift Right
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Закрыть вкладку</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Закрывает текущее окно. Если закрывается вкладка канала, то происходит отключение от него. Если закрывается вкладка <interface
+>сообщений сервера</interface
+>, то происходит отключение от всех каналов этого сервера и от самого сервера. </action>
+			</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F11</keycap
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Закрыть все личные разговоры</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+				<action
+>Закрывает все <link linkend="query"
+>личные разговоры</link
+>. </action>
+			</para
+></listitem>
+	</varlistentry>
+<!--
+Enable Notifications
+Set Encoding
+  -->
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F4</keycap
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Наблюдаемые ники</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает окно <guilabel
+>Наблюдаемые ники</guilabel
+>. Смотрите раздел <link linkend="nicksonline"
+>Наблюдение за подключёнными пользователями</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F6</keycap
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Сборщик ссылок</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает окно <link linkend="urlcatcher"
+>Сборщика ссылок</link
+>.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F9</keycap
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Состояние DCC</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает вкладку <link linkend="identity"
+>Состояние DCC</link
+> с информацией о переданных файлах.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><guimenu
+>Окно</guimenu
+> <guimenuitem
+>Открыть эмулятор терминала</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает терминал. Можно открыть столько вкладок, сколько необходимо.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Список каналов для</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает <link linkend="list-channels"
+>список каналов</link
+>, доступных на сервере.</action>
+		</para
+></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Окно</guimenu
+> <guimenuitem
+>Открыть журнал для</guimenuitem
+> </menuchoice
+></term>
+		<listitem
+><para>
+			<action
+>Открывает окно с журналом сообщений текущей вкладки. Действует только для вкладок <interface
+>каналов</interface
+>, <interface
+>сообщений сервера</interface
+> и <interface
+>приватов</interface
+>. Необходимо включить ведение журнала с помощью главного меню: <menuchoice
+> <guisubmenu
+>Настройка</guisubmenu
+> <guisubmenu
+>Настроить Konversation...</guisubmenu
+> <guisubmenu
+>Поведение</guisubmenu
+> <guisubmenu
+>Журналирование</guisubmenu
+> </menuchoice
+>. </action>
+		</para
+></listitem>
+	</varlistentry>
+<!-- Channel Settings -->
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title
+>Меню «Справка»</title>
+
+<para
+>В &konversation; содержится стандартное для всех приложений &kde; меню <guimenu
+>Справка</guimenu
+>. Более подробные сведения доступны в «Основах &kde;» (раздел <ulink url="help:/fundamentals/menus.html#menus-help"
+>Меню «Справка»</ulink
+>). </para>
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title
+>Вопросы и ответы</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+<qandaset id="faqlist">
+    <!--FIXME https://userbase.kde.org/Konversation/FAQ -->
+<qandaentry>
+<question>
+<para
+>Как сделать так, чтобы при запуске &konversation; выполнялось подключение к серверу без входа на какой-либо канал?</para>
+</question>
+<answer>
+<para
+>В окне <link linkend="serverlist-addnetwork"
+>настройки сети</link
+> оставьте поле со списком <guilabel
+>каналов</guilabel
+> пустым.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>&konversation; не подключается ни к одному серверу. В чём причина?</para>
+</question>
+<answer>
+<para
+>Возможных причин несколько.</para>
+<orderedlist>
+<listitem>
+<para
+>Убедитесь, что в окне <link linkend="serverlist-addserver"
+>Добавить сервер</link
+> указаны верные <guilabel
+>имя сервера</guilabel
+> и <guilabel
+>номер порта</guilabel
+>. </para>
+</listitem>
+<listitem>
+<para
+>Просмотрите вывод в окне <link linkend="channel-screen-tour"
+>Сообщения сервера</link
+> на предмет сообщений об ошибках. Не отказал ли сервер в подключении из-за неверного пароля? Не было ли отказа в подключении из-за того, что сервером отправлен запрос <acronym
+>IDENTD</acronym
+> (идентификации), а  компьютер не ответил на него? Возможно, используется протокол SSL, а сервер его не поддерживает? </para>
+</listitem>
+<listitem>
+<para
+>Если установлен сетевой экран, то следует убедиться, что доступны следующие порты: </para>
+
+<para>
+<itemizedlist>
+<listitem
+><para
+>Исходящий TCP 6667 (или порт сервера, к которому выполняется подключение)</para
+></listitem>
+<listitem
+><para
+>Входящий TCP 113 (если сервером запрашивается IDENTD (идентификация))</para
+></listitem>
+<!-- <listitem
+><para
+>TODO (Incoming port numbers?)</para
+></listitem
+> -->
+</itemizedlist>
+</para>
+
+<para
+>Более подробные сведения о проблемах подключения &irc; доступны на веб-сайте <ulink url="http://www.irchelp.org/irchelp/networks/connectprob.html"
+>irchelp.org</ulink
+>. </para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Пункт меню <menuchoice
+> <guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Список каналов</guisubmenu
+> </menuchoice
+> недоступен для выбора. Почему?</para>
+</question>
+<answer>
+<para
+>Пункт меню <menuchoice
+> <guisubmenu
+>Окно</guisubmenu
+> <guisubmenu
+>Список каналов</guisubmenu
+> </menuchoice
+> может стать серым (неактивным) в том случае, если открыта вкладка без каналов (например, вкладка <guilabel
+>Наблюдаемые ники</guilabel
+>). Чтобы вернуть возможность выбора пункта, следует вернуться на вкладку канала или сервера. </para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Как настроить автоматическое отсутствие во время неактивности? </para>
+</question>
+<answer
+><para
+>Автоматические сообщения об отсутствии настраиваются отдельно для каждого профиля. Чтобы включить автоматические сообщения об отсутствии, выберите в главном меню пункт <menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Профили...</guimenuitem
+></menuchoice
+>. Выберите в списке, расположенном в верхней части окна, тот профиль, для которого следует включить автоматические сообщения об отсутствии, и перейдите на вкладку <guilabel
+>Отсутствие</guilabel
+>. Установите флажок <guilabel
+>Автоотсутствие</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Как отключить функцию автозамены в строке ввода?</para>
+</question>
+<answer
+><para
+>Используйте комбинацию клавиш <keycombo action="simul"
+>&Ctrl;&Enter;</keycombo
+> вместо &Enter;, чтобы в строке ввода не срабатывала автозамена, настроенная в соответствующем диалоговом окне (<menuchoice
+><guimenu
+>Поведение</guimenu
+> <guimenuitem
+>Автозамена</guimenuitem
+></menuchoice
+>). </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Где находится список сценариев, интегрированных в &konversation;?</para>
+</question>
+<answer>
+<para
+>Запустите эту команду в строке ввода &konversation; (в качестве примера используется сценарий media, так как он предустановлен в любой версии &konversation;). </para>
+<para
+><userinput
+><command
+>/exec </command
+> <replaceable
+>--showpath media</replaceable
+></userinput
+></para>
+<para
+>Пример вывода: <replaceable
+>Файл сценария «media» найден в /usr/share/konversation/scripts/media</replaceable
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para
+>Как выделить текст полужирным, курсивом или подчёркиванием?</para>
+</question>
+<answer>
+<para
+>Пример: <userinput
+>Это мой %Bполужирный%B текст.</userinput
+></para>
+<para
+>Результат: <inlinemediaobject
+> <imageobject
+><imagedata fileref="bold-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Пример: <userinput
+>Это мой текст %Iкурсивом%I.</userinput
+></para>
+<para
+>Результат: <inlinemediaobject
+> <imageobject
+><imagedata fileref="italic-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Пример: <userinput
+>Это мой %Uподчёркнутый%U текст.</userinput
+></para>
+<para
+>Результат: <inlinemediaobject
+> <imageobject
+><imagedata fileref="underline-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Пример: <userinput
+>Это мой %Sзачёркнутый%S текст.</userinput
+></para>
+<para
+>Результат: <inlinemediaobject
+> <imageobject
+><imagedata fileref="struck-out-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+<para
+>Пример: <userinput
+>Это мой %Mмоноширинный%M текст.</userinput
+></para>
+<para
+>Результат: <inlinemediaobject
+> <imageobject
+><imagedata fileref="monospace-text.png" format="PNG"/></imageobject>
+</inlinemediaobject>
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>Авторские права и лицензия</title>
+
+<para
+>&konversation; </para>
+<para
+>Авторские права на программу: &copy; команда разработчиков &konversation;, 2002—2005 </para>
+<para
+><ulink url="&konviwebsite;"
+>&konviwebsite;</ulink>
+</para>
+<para
+>Участники: <itemizedlist>
+<listitem
+><para
+>Dario Abatianni <email
+>eisfuchs@tigress.com</email
+></para
+></listitem>
+<listitem
+><para
+>Peter Simonsson <email
+>psn@linux.se</email
+></para
+></listitem>
+<listitem
+><para
+>Christian Muehlhaeuser <email
+>chris@chris.de</email
+></para
+></listitem>
+<listitem
+><para
+>John Tapsel <email
+>john@geola.geo.uk</email
+></para
+></listitem>
+<listitem
+><para
+>Ismail Donmez <email
+>ismail.donmez@boun.edu.tr</email
+></para
+></listitem>
+<listitem
+><para
+>Shintaro Matsuoka <email
+>shin@shoegazed.org</email
+></para
+></listitem>
+<listitem
+><para
+>Gary Cramblitt <email
+>garycramblitt@comcast.net</email
+></para
+></listitem>
+<listitem
+><para
+>Matthias Gierlings <email
+>gismore@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>&Alex.Zepeda; <email
+>garbanzo@hooked.net</email
+></para
+></listitem>
+<listitem
+><para
+>Stanislav Karchebny <email
+>berkus@users.sourceforge.net</email
+></para
+></listitem>
+<listitem
+><para
+>Mickael Marchand <email
+>marchand@kde.org</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Благодарности: <itemizedlist>
+<listitem
+><para
+>Michael Goettsche <email
+>michael.goettsche@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Benjamin Meyer <email
+>ben+konversation@kdemail.net</email
+></para
+></listitem>
+<listitem
+><para
+>Jacub Stachowski <email
+>qbast@go2.pl</email
+></para
+></listitem>
+<listitem
+><para
+>Sabastian Sariego <email
+>segfault@kde.cl</email
+></para
+></listitem>
+<listitem
+><para
+>Olivier Bedard <email
+>www.konversation.org hosting</email
+></para
+></listitem>
+<listitem
+><para
+>Frauke Oster <email
+>frauke@frsv.de</email
+></para
+></listitem>
+<listitem
+><para
+>Lucijan Busch <email
+>lucijan@kde.org</email
+></para
+></listitem>
+<listitem
+><para
+>Sascha Cunz <email
+>mail@sacu.de</email
+></para
+></listitem>
+<listitem
+><para
+>Steve Wollkind <email
+>steve@njord.org</email
+></para
+></listitem>
+<listitem
+><para
+>Thomas Nagy <email
+>thomas.nagy@eleve.emn.fr</email
+></para
+></listitem>
+<listitem
+><para
+>Tobias Olry <email
+>tobias.olry@web.de</email
+></para
+></listitem>
+<listitem
+><para
+>Ruud Nabben <email
+>r.nabben@gawab.com</email
+></para
+></listitem>
+</itemizedlist>
+</para>
+
+<para
+>Авторские права на документацию: &copy; Gary R. Cramblitt <email
+>garycramblitt@comcast.net</email
+>, 2003—2005 </para>
+
+<para
+>Перевод на русский язык: Владимир Рычков <email
+>vvgtr2@mail.ru</email
+>, Сергей Новгородов <email
+>ximen@tsu.tmb.ru</email
+>, Алексей Опарин <email
+>opaleksej@yandex.ru</email
+>, Мария Шикунова <email
+>translation-team@basealt.ru</email
+>, Олеся Герасименко <email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
