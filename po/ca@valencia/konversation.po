@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-04-19 11:15+0200\n"
+"PO-Revision-Date: 2025-07-23 23:10+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2669,15 +2669,15 @@ msgstr ""
 #, kde-format
 msgid "Trying to connect to %2 (port %3) in 1 second."
 msgid_plural "Trying to connect to %2 (port %3) in %1 seconds."
-msgstr[0] "S'intentarà connectar a %2 (port %3) en 1 segon."
-msgstr[1] "S'intentarà connectar a %2 (port %3) en %1 segons."
+msgstr[0] "S'intentarà connectar a %2 (port %3) d'ací a 1 segon."
+msgstr[1] "S'intentarà connectar a %2 (port %3) d'ací a %1 segons."
 
 #: src/connectionmanager.cpp:262
 #, kde-format
 msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
-msgstr[0] "S'intentarà tornar a connectar a %2 (port %3) en 1 segon."
-msgstr[1] "S'intentarà tornar a connectar a %2 (port %3) en %1 segons."
+msgstr[0] "S'intentarà tornar a connectar a %2 (port %3) d'ací a 1 segon."
+msgstr[1] "S'intentarà tornar a connectar a %2 (port %3) d'ací a %1 segons."
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -3028,7 +3028,7 @@ msgstr "S&uggerix un nom de fitxer nou"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "Utilitza com a nova carpeta de baixades per defecte"
+msgstr "Utilitza com a carpeta nova de baixades predeterminada"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -4170,7 +4170,7 @@ msgstr "Marqueu l'última posició en la finestra de xat quan éreu fora"
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "Missatge d'absència per defecte:"
+msgstr "Missatge d'absència predeterminat:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
