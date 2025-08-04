@@ -991,7 +991,7 @@ msgstr "اسم المستخدِم:"
 #: src/config/connectionbehavior_config.ui:222
 #, kde-format
 msgid "Password:"
-msgstr "كلمة المرور:"
+msgstr "كلمة السر:"
 
 #: src/config/dcc_config.cpp:29
 #, kde-format
@@ -1541,7 +1541,7 @@ msgstr "تمكين هذا يسبّب بمربع الإدخال التوسّع ر
 #: src/config/konversation.kcfg:266
 #, kde-format
 msgid "Start with hidden main window"
-msgstr "ابدأ بنافذة رئيسية مخفية"
+msgstr "ابدأ بنافذة رئيسة مخفية"
 
 #. i18n: ectx: label, entry, group (General Options)
 #: src/config/konversation.kcfg:309
@@ -3935,7 +3935,7 @@ msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
-"كلمة المرور المُدخَلة هنا ستتجاوز التي عُيِّنت في إعدادات الخادوم، إن عُيِّنت واحدة."
+"كلمة السر المُدخَلة هنا ستتجاوز التي عُيِّنت في إعدادات الخادوم، إن عُيِّنت واحدة."
 
 #: src/identitydialog.cpp:482
 #, kde-format
@@ -4037,7 +4037,7 @@ msgstr "الحساب:"
 #: src/identitydialog.ui:299
 #, kde-format
 msgid "Pa&ssword:"
-msgstr "&كلمة المرور:"
+msgstr "&كلمة السر:"
 
 #. i18n: ectx: property (text), widget (QLabel, pemClientCertFileLabel)
 #: src/identitydialog.ui:313
@@ -5127,7 +5127,7 @@ msgstr "الهويّة الافتراضية (%1)"
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
 #, kde-format
 msgid "Pass&word:"
-msgstr "&كلمة المرور:"
+msgstr "&كلمة السر:"
 
 #. i18n: ectx: property (text), widget (QLabel, channelLabel)
 #. i18n: ectx: property (text), widget (QLabel, channelLbl)
@@ -5989,8 +5989,8 @@ msgid ""
 "Cannot join %1: The channel is password-protected and either a wrong or no "
 "password was given."
 msgstr ""
-"تعذّر الانضمام إلى %1: القناة محميّة بكلمة مرور وإما كلمة المرور لم تُعطى أو "
-"أنها خاطئة."
+"تعذّر الانضمام إلى %1: القناة محميّة بكلمة مرور وإما كلمة السر لم تُعطى أو أنها "
+"خاطئة."
 
 #: src/irc/inputfilter.cpp:2482
 #, kde-format
@@ -6090,7 +6090,7 @@ msgstr "الاتصال:"
 #: src/irc/joinchannelui.ui:80
 #, kde-format
 msgid "&Password:"
-msgstr "&كلمة المرور:"
+msgstr "&كلمة السر:"
 
 #. i18n: ectx: property (text), widget (QLabel, hostmaskLabel)
 #: src/irc/nickinfo.cpp:216 src/viewer/channeloptionsui.ui:308
@@ -8676,7 +8676,7 @@ msgstr "اللقب الذي تريد استخدامه."
 #: src/quickconnectdialog.cpp:68
 #, kde-format
 msgid "P&assword:"
-msgstr "&كلمة المرور:"
+msgstr "&كلمة السر:"
 
 #: src/quickconnectdialog.cpp:69
 #, kde-format
