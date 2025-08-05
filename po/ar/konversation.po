@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-06-28 17:28+0400\n"
+"PO-Revision-Date: 2025-08-04 18:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -394,7 +394,7 @@ msgstr "الأس&طر: "
 #: src/config/chatwindowappearance_config.ui:114
 #, kde-format
 msgid "&Layout"
-msgstr "الت&صميم"
+msgstr "الت&خطيط"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowTopic)
 #: src/config/chatwindowappearance_config.ui:120
@@ -632,7 +632,7 @@ msgstr "أظهر الخطوط المُدرجَة يدويًا في كلّ نوا
 #: src/config/chatwindowbehaviour_config.ui:255
 #, kde-format
 msgid "Enable Automatic User Information Look Up (/WHO)"
-msgstr "مكّن البحث عن معلومات المستخدِم آليًا (‎/WHO)"
+msgstr "مكّن البحث عن معلومات المستخدِم آليًّا (‎/WHO)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: src/config/chatwindowbehaviour_config.ui:267
@@ -878,7 +878,7 @@ msgstr[5] " ثانية"
 #: src/config/connectionbehavior_config.ui:26
 #, kde-format
 msgid "Enable Automatic Reconnect"
-msgstr "مكّن إعادة الاتصال الآلية"
+msgstr "مكّن إعادة الاتصال الآليّة"
 
 #. i18n: ectx: property (text), widget (QLabel, reconnectDelayLabel)
 #: src/config/connectionbehavior_config.ui:35
@@ -914,7 +914,7 @@ msgstr "التعمية"
 #: src/config/connectionbehavior_config.ui:109
 #, kde-format
 msgid "Default encryption type:"
-msgstr "نوع التعمية الافتراضي:"
+msgstr "نوع التعمية المبدئي:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_EncryptionType)
 #: src/config/connectionbehavior_config.ui:118
@@ -1059,7 +1059,7 @@ msgstr "اقبل آ&ليًا عرض التنزيل"
 #: src/config/dcc_configui.ui:84
 #, kde-format
 msgid "Au&tomatically resume download"
-msgstr "استكمل التن&زيل آليًا"
+msgstr "استكمل التن&زيل آليًّا"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccFastSend)
 #: src/config/dcc_configui.ui:91
@@ -1200,7 +1200,7 @@ msgstr "مكّن صينية النظام"
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr "ا&ستخدم صينية النظام لإخطارات الرسائل الجديدة"
+msgstr "ا&ستخدم صينية النظام لإشعارات الرسائل الجديدة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -1287,7 +1287,7 @@ msgstr "متنوّع"
 #: src/config/generalbehavior_configui.ui:201
 #, kde-format
 msgid "Disable notifications while &away"
-msgstr "عطّل الإخطارات وأنا &غائب"
+msgstr "عطّل الإشعارات وأنا &غائب"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_UseCustomBrowser)
 #: src/config/generalbehavior_configui.ui:210
@@ -1367,7 +1367,7 @@ msgstr "الصوت"
 #: src/config/highlight_configui.ui:155
 #, kde-format
 msgid "Auto Text"
-msgstr "النصّ الآلي"
+msgstr "النصّ الآليّ"
 
 #. i18n: ectx: property (text), widget (HighlightTreeWidget, highlightListView)
 #: src/config/highlight_configui.ui:160
@@ -1403,7 +1403,7 @@ msgstr "اختبر الصوت"
 #: src/config/highlight_configui.ui:326
 #, kde-format
 msgid "A&uto text:"
-msgstr "ال&نصّ الآلي:"
+msgstr "ال&نصّ الآليّ:"
 
 #. i18n: ectx: property (text), widget (QLabel, chatWindowsLabel)
 #: src/config/highlight_configui.ui:349
@@ -1954,7 +1954,7 @@ msgstr "السلوك"
 #: src/config/settingsdialog.cpp:55 src/config/tabnotifications_config.ui:55
 #, kde-format
 msgid "Notifications"
-msgstr "الإخطارات"
+msgstr "الإشعارات"
 
 #: src/config/settingsdialog.cpp:68 src/config/settingsdialog.cpp:117
 #, kde-format
@@ -2031,7 +2031,7 @@ msgstr ""
 #: src/config/settingsdialog.cpp:133 src/mainwindow.cpp:522
 #, kde-format
 msgid "Auto Replace"
-msgstr "الاستبدال الآلي"
+msgstr "الاستبدال الآليّ"
 
 #: src/config/settingsdialog.cpp:139
 #, kde-format
@@ -2497,7 +2497,7 @@ msgid ""
 "<qt>When checked, the <b>Watched Nicks</b> window will be automatically "
 "opened when starting Konversation.</qt>"
 msgstr ""
-"<qt>عند تعليمه، نافذة <b>الأسماء المستعارة المُراقَبة</b> ستُفتح آليًا عند بدأ "
+"<qt>عند تعليمه، نافذة <b>الأسماء المستعارة المُراقَبة</b> ستُفتح آليًّا عند بدأ "
 "محادثك.</qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
@@ -2945,7 +2945,7 @@ msgstr "اقترح ا&سم ملف جديد"
 #: src/dcc/resumedialog.cpp:111
 #, kde-format
 msgid "Use as new default download folder"
-msgstr "استخدم كمجلد التنزيل الافتراضي"
+msgstr "استخدم كمجلد التنزيل المبدئي"
 
 #: src/dcc/resumedialog.cpp:122
 #, kde-format
@@ -4073,7 +4073,7 @@ msgstr "علّم آخر موقع من نوافذ المحادثة عندما أ�
 #: src/identitydialog.ui:343
 #, kde-format
 msgid "Default away message:"
-msgstr "رسالة الغياب الافتراضية:"
+msgstr "رسالة الغياب المبدئية:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayMessageEdit)
 #: src/identitydialog.ui:353
@@ -4106,10 +4106,10 @@ msgid ""
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
 "أدخِل اسمًا مستعارًا يعرّف أنّك غائب. متى ما أجريت أمر <b>‎/away msg</b> (حيث msg "
-"هي رسالة الغياب) في أيّ قناة انضممت إليها بهذه الهويّة، سيغيّر محادثك آليًا اسمك "
+"هي رسالة الغياب) في أيّ قناة انضممت إليها بهذه الهويّة، سيغيّر محادثك آليًّا اسمك "
 "المستعار إلى اسم الغياب المستعار. يمكن للمستخدِمين الآخرين أن يقولوا أنّك بعيد "
 "عن الحاسوب (أي غائب). بأيّ حال عندما تجري أمر <b>‎/away</b> في أيّ قناة أنت "
-"فيها غائب، سيغيّر محادثك الاسم المستعار إلى الأصلي آليًا. إن لم ترد تغيير اسمك "
+"فيها غائب، سيغيّر محادثك الاسم المستعار إلى الأصلي آليًّا. إن لم ترد تغيير اسمك "
 "المستعار وأنت غائب، اترك الحقل فارغًا."
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
@@ -4125,7 +4125,7 @@ msgstr ""
 #: src/identitydialog.ui:386
 #, kde-format
 msgid "Automatic Away"
-msgstr "الغياب الآلي"
+msgstr "الغياب الآليّ"
 
 #. i18n: ectx: property (text), widget (QLabel, setAwayAfterLabel)
 #: src/identitydialog.ui:404
@@ -4152,7 +4152,7 @@ msgstr ""
 #: src/identitydialog.ui:440
 #, kde-format
 msgid "Automatically return on activity"
-msgstr "ارجع آليًا عند نشاطي"
+msgstr "ارجع آليًّا عند نشاطي"
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:456
@@ -5121,7 +5121,7 @@ msgstr "اترك"
 #: src/viewer/statuspanel.cpp:302
 #, kde-format
 msgid "Identity Default ( %1 )"
-msgstr "الهويّة الافتراضية (%1)"
+msgstr "الهويّة المبدئية (%1)"
 
 #. i18n: ectx: property (text), widget (QLabel, passwordLbl)
 #: src/irc/channeldialogui.ui:31 src/irc/serverdialogui.ui:78
@@ -7233,7 +7233,7 @@ msgstr "الخواديم:"
 #: src/irc/servergroupdialogui.ui:118
 #, kde-format
 msgid "Auto Join Channels:"
-msgstr "انضمّ آليًا إلى القنوات:"
+msgstr "انضمّ آليًّا إلى القنوات:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_autoConnectCBox)
 #: src/irc/servergroupdialogui.ui:128
@@ -7809,7 +7809,7 @@ msgstr ""
 #: src/main.cpp:70
 #, kde-format
 msgid "Auto-join context menu"
-msgstr "قائمة سياق الانضمام الآلي"
+msgstr "قائمة سياق الانضمام الآليّ"
 
 #: src/main.cpp:71
 #, kde-format
@@ -7916,7 +7916,7 @@ msgstr "استخدم SSL للاتصال"
 #: src/main.cpp:91
 #, kde-format
 msgid "Disable auto-connecting to any IRC networks"
-msgstr "عطّل الاتصال الآلي لأيّ شبكات IRC"
+msgstr "عطّل الاتصال الآليّ لأيّ شبكات IRC"
 
 #: src/main.cpp:92
 #, kde-format
@@ -8122,7 +8122,7 @@ msgstr "أعد الانضمام إلى القناة"
 #: src/mainwindow.cpp:384 src/mainwindow.cpp:855
 #, kde-format
 msgid "Enable Notifications"
-msgstr "مكّن الإخطارات"
+msgstr "مكّن الإشعارات"
 
 #: src/mainwindow.cpp:390
 #, kde-format
@@ -8137,7 +8137,7 @@ msgstr "اتّصل عند البدء"
 #: src/mainwindow.cpp:400
 #, kde-format
 msgid "Default"
-msgstr "الافتراضي"
+msgstr "المبدئي"
 
 #: src/mainwindow.cpp:405
 #, kde-format
@@ -8499,18 +8499,18 @@ msgstr "انضممت إلى %1."
 #: src/queuetuner.cpp:224
 #, kde-format
 msgid "Reset..."
-msgstr "أعد التعيين..."
+msgstr "صفّر..."
 
 #: src/queuetuner.cpp:229
 #, kde-format
 msgid ""
 "This cannot be undone, are you sure you wish to reset to default values?"
-msgstr "لا يمكن التراجع عن هذا، أتريد حقًّا إعادة التعيين إلى القيم الافتراضية؟"
+msgstr "لا يمكن التراجع عن هذا، أتريد حقًّا إعادة التعيين إلى القيم المبدئية؟"
 
 #: src/queuetuner.cpp:231
 #, kde-format
 msgid "Reset Values"
-msgstr "أعد تعيين القيم"
+msgstr "صفّر القيم"
 
 #. i18n: ectx: property (toolTip), widget (QToolButton, m_closeButton)
 #: src/queuetunerbase.ui:59 src/viewer/searchbarbase.ui:42
@@ -9865,7 +9865,7 @@ msgstr "أدِخل اسم اللسان الجديد:"
 #, kde-format
 msgctxt "Default encoding"
 msgid "Default ( %1 )"
-msgstr "الافتراضي ( %1 )"
+msgstr "المبدئي ( %1 )"
 
 #: src/viewer/viewcontainer.cpp:2230
 #, kde-format
