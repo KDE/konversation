@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-08-05 20:38+0400\n"
+"PO-Revision-Date: 2025-08-09 21:58+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -199,12 +199,12 @@ msgstr "خاصّة"
 #: src/common.cpp:30
 #, kde-format
 msgid "moderated"
-msgstr ""
+msgstr "خاضعة للإشراف"
 
 #: src/common.cpp:31 src/irc/inputfilter.cpp:1325
 #, kde-format
 msgid "password protected"
-msgstr "محميّة بكلمة مرور"
+msgstr "محميّة بكلمة سر"
 
 #: src/common.cpp:32
 #, kde-format
@@ -732,7 +732,7 @@ msgstr "أسماء مستعارة ملوّنة"
 #: src/config/colorsappearance_config.ui:868
 #, kde-format
 msgid "5:"
-msgstr ""
+msgstr "5:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel8)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_5)
@@ -740,7 +740,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:878
 #, kde-format
 msgid "4:"
-msgstr ""
+msgstr "4:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_4)
@@ -748,7 +748,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:794
 #, kde-format
 msgid "3:"
-msgstr ""
+msgstr "3:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel6)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_3)
@@ -756,7 +756,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:778
 #, kde-format
 msgid "2:"
-msgstr ""
+msgstr "2:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_14)
@@ -764,7 +764,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:838
 #, kde-format
 msgid "0:"
-msgstr ""
+msgstr "0:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_2)
@@ -772,7 +772,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:762
 #, kde-format
 msgid "1:"
-msgstr ""
+msgstr "1:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel11)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_8)
@@ -780,7 +780,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:848
 #, kde-format
 msgid "7:"
-msgstr ""
+msgstr "7:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel10)
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_7)
@@ -788,7 +788,7 @@ msgstr ""
 #: src/config/colorsappearance_config.ui:858
 #, kde-format
 msgid "6:"
-msgstr ""
+msgstr "6:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
 #: src/config/colorsappearance_config.ui:700
@@ -818,49 +818,49 @@ msgstr "ا&سمح للنصوص الملوّنة في رسائل IRC"
 #: src/config/colorsappearance_config.ui:1051
 #, kde-format
 msgid "11:"
-msgstr ""
+msgstr "11:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_10)
 #: src/config/colorsappearance_config.ui:1082
 #, kde-format
 msgid "9:"
-msgstr ""
+msgstr "9:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_9)
 #: src/config/colorsappearance_config.ui:1092
 #, kde-format
 msgid "8:"
-msgstr ""
+msgstr "8:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_11)
 #: src/config/colorsappearance_config.ui:1102
 #, kde-format
 msgid "10:"
-msgstr ""
+msgstr "10:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_13)
 #: src/config/colorsappearance_config.ui:1183
 #, kde-format
 msgid "12:"
-msgstr ""
+msgstr "12:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_16)
 #: src/config/colorsappearance_config.ui:1200
 #, kde-format
 msgid "15:"
-msgstr ""
+msgstr "15:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12_15)
 #: src/config/colorsappearance_config.ui:1224
 #, kde-format
 msgid "14:"
-msgstr ""
+msgstr "14:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12)
 #: src/config/colorsappearance_config.ui:1234
 #, kde-format
 msgid "13:"
-msgstr ""
+msgstr "13:"
 
 #: src/config/connectionbehavior_config.cpp:29 src/config/dcc_config.cpp:30
 #: src/config/settingsdialog.cpp:116
@@ -946,7 +946,7 @@ msgstr ""
 #: src/config/connectionbehavior_config.ui:138
 #, kde-format
 msgid "Proxy"
-msgstr "الوسيط"
+msgstr "الوكيل"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel12)
 #. i18n: ectx: property (text), widget (QLabel, authTypeLabel)
@@ -1893,7 +1893,7 @@ msgstr ""
 "%c: القناة الحالية\n"
 "%i: محتويات مربع الإدخال\n"
 "%k: مفتاح القناة\n"
-"%K: كلمة مرور الخادوم\n"
+"%K: كلمة سر الخادوم\n"
 "%n: أرسل الأمر مباشرةً إلى الخادوم بدلًا من مربع الإدخال\n"
 "%o: الاسم المستعار الحالي\n"
 "%s<مصطلح>%: المصطلح المستخدَم لفصل الأسماء المستعارة في ‎%u\n"
@@ -3831,7 +3831,7 @@ msgstr "NickServ القياسي"
 #: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
-msgstr "كلمة مرور الخادوم"
+msgstr "كلمة سر الخادوم"
 
 #: src/identitydialog.cpp:91
 #, kde-format
@@ -4340,7 +4340,7 @@ msgstr ""
 #: src/irc/channel.cpp:883
 #, kde-format
 msgid "Channel Password"
-msgstr "كلمة مرور القناة"
+msgstr "كلمة سر القناة"
 
 #: src/irc/channel.cpp:899
 #, kde-format
@@ -5095,7 +5095,7 @@ msgstr ""
 #: src/irc/channel.cpp:2211
 #, kde-format
 msgid "Protect channel with a password."
-msgstr "احمِ القناة بكلمة مرور."
+msgstr "احمِ القناة بكلمة سر."
 
 #: src/irc/channel.cpp:2212
 #, kde-format
@@ -5989,7 +5989,7 @@ msgid ""
 "Cannot join %1: The channel is password-protected and either a wrong or no "
 "password was given."
 msgstr ""
-"تعذّر الانضمام إلى %1: القناة محميّة بكلمة مرور وإما كلمة السر لم تُعطى أو أنها "
+"تعذّر الانضمام إلى %1: القناة محميّة بكلمة سر وإما كلمة السر لم تُعطى أو أنها "
 "خاطئة."
 
 #: src/irc/inputfilter.cpp:2482
@@ -7901,7 +7901,7 @@ msgstr "الاسم المستعار"
 #: src/main.cpp:89
 #, kde-format
 msgid "Password for connection"
-msgstr "كلمة مرور الاتصال"
+msgstr "كلمة سر الاتصال"
 
 #: src/main.cpp:89
 #, kde-format
@@ -8684,7 +8684,7 @@ msgid ""
 "If the IRC server requires a password, enter it here (most servers do not "
 "require a password.)"
 msgstr ""
-"إن كان خادوم IRC يطلب كلمة مرور أدخلها هنا (أغلب الخواديم لا تطلب كلمة مرور.)"
+"إن كان خادوم IRC يطلب كلمة سر أدخلها هنا (أغلب الخوادم لا تطلب كلمة سر.)"
 
 #: src/quickconnectdialog.cpp:79
 #, kde-format
