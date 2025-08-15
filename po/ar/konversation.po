@@ -2340,7 +2340,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... creating a new connection to an already connected network"
-msgstr "... إنشاء اتصال جديد لشبكة متّصل بها بالفعل"
+msgstr "... إنشاء اتصال جديد لشبكة متّصل بها فعلًا"
 
 #: src/config/warnings_config.cpp:161
 #, kde-format
@@ -2631,12 +2631,12 @@ msgstr ""
 #, kde-format
 msgid ""
 "You are already connected to %1. Do you want to open another connection?"
-msgstr "أنت متّصل بالفعل بـ %1. أتريد فتح اتصال آخر؟"
+msgstr "أنت متّصل فعلًا بـ %1. أتريد فتح اتصال آخر؟"
 
 #: src/connectionmanager.cpp:512 src/connectionmanager.cpp:533
 #, kde-format
 msgid "Already connected to %1"
-msgstr "متّصل بالفعل بـ %1"
+msgstr "متّصل فعلًا بـ %1"
 
 #: src/connectionmanager.cpp:513
 #, kde-format
@@ -3808,7 +3808,7 @@ msgstr ""
 "الآخرين.  يمكنك استخدام أيّ اسم ترغب به. المحرف الأول يجب أن يكون حرفًا.\n"
 "\n"
 "لمّا أنّ الأسماء المستعارة يجب أن تكون فيردة في شبكة IRC بالكامل، قد يرفض "
-"الخادوم اسمك الذي ترغب به لأنّ هناك أحد غيرك يستخدمه بالفعل. أدخِل الأسماء "
+"الخادوم اسمك الذي ترغب به لأنّ هناك أحد غيرك يستخدمه فعلًا. أدخِل الأسماء "
 "المستعارة البديلة لك. إن رُفِض الاختيار اﻷول، سيحاول محادثك مع الأسماء "
 "المستعارة البديلة."
 
@@ -5608,7 +5608,7 @@ msgstr "لا قناة كهذه: %1."
 #: src/irc/inputfilter.cpp:1560
 #, kde-format
 msgid "Nickname already in use, try a different one."
-msgstr "الاسم المستعار مستخدَم بالفعل، جرّب واحدًا آخر."
+msgstr "الاسم المستعار مستخدَم فعلًا، جرّب واحدًا آخر."
 
 #: src/irc/inputfilter.cpp:1573
 #, kde-format
@@ -5620,7 +5620,7 @@ msgstr ""
 #: src/irc/inputfilter.cpp:1581
 #, kde-format
 msgid "Nickname already in use. Trying %1."
-msgstr "الاسم المستعار مستخدَم بالفعل. يجرّب %1."
+msgstr "الاسم المستعار مستخدَم فعلًا. يجرّب %1."
 
 #: src/irc/inputfilter.cpp:1610
 #, kde-format
