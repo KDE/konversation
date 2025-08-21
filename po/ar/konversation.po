@@ -492,7 +492,7 @@ msgid ""
 "with '%'; for example, %B will expand to the characters needed to make a "
 "text bold."
 msgstr ""
-"لا توسّع المتغيّرات عند إرسال النصّ إلى الخادوم. المتغيّر الذي يبدأ بـ '%' -مثلًا"
+"لا توسّع المتغيّرات عند إرسال النصّ إلى الخادم. المتغيّر الذي يبدأ بـ '%' -مثلًا"
 " ‎%B- سيوسَّع إلى المحارف المطلوبة لجعل النصّ ثخينًا."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableExpansion)
@@ -505,7 +505,7 @@ msgstr "عطّل توسيع المتغيّرات (مثل ‎%C،‏ ‎%B، ‏%
 #: src/config/chatwindowbehaviour_config.ui:62
 #, kde-format
 msgid "&Redirect status messages to the server status window"
-msgstr "أ&عد توجيه رسائل الحالة إلى نافذة حالة الخادوم"
+msgstr "أ&عد توجيه رسائل الحالة إلى نافذة حالة الخادم"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseLiteralModes)
 #: src/config/chatwindowbehaviour_config.ui:69
@@ -1012,7 +1012,7 @@ msgstr "واجهة الشبكة"
 #: src/config/dcc_config.cpp:75
 #, kde-format
 msgid "Reply From IRC Server"
-msgstr "الردّ من خادوم IRC"
+msgstr "الردّ من خادم IRC"
 
 #: src/config/dcc_config.cpp:76
 #, kde-format
@@ -1139,7 +1139,7 @@ msgstr "المنافذ"
 #: src/config/dcc_configui.ui:254
 #, kde-format
 msgid "Enable specific &ports for DCC transfer server:"
-msgstr "مكّن منا&فذ محدّدة لخادوم نقل DCC:"
+msgstr "مكّن منا&فذ محدّدة لخادم نقل DCC:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
@@ -1893,8 +1893,8 @@ msgstr ""
 "%c: القناة الحالية\n"
 "%i: محتويات مربع الإدخال\n"
 "%k: مفتاح القناة\n"
-"%K: كلمة سر الخادوم\n"
-"%n: أرسل الأمر مباشرةً إلى الخادوم بدلًا من مربع الإدخال\n"
+"%K: كلمة سر الخادم\n"
+"%n: أرسل الأمر مباشرةً إلى الخادم بدلًا من مربع الإدخال\n"
 "%o: الاسم المستعار الحالي\n"
 "%s<مصطلح>%: المصطلح المستخدَم لفصل الأسماء المستعارة في ‎%u\n"
 "%u: قائمة الأسماء المستعارة المحدّدة"
@@ -2332,7 +2332,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... switching a connection to a different server in the same network"
-msgstr "... تبديل الاتصال إلى خادوم مختلف في نفس الشبكة"
+msgstr "... تبديل الاتصال إلى خادم مختلف في نفس الشبكة"
 
 #: src/config/warnings_config.cpp:158
 #, kde-format
@@ -2348,7 +2348,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing a server tab"
-msgstr "... إغلاق لسان خادوم"
+msgstr "... إغلاق لسان خادم"
 
 #: src/config/warnings_config.cpp:164
 #, kde-format
@@ -2655,7 +2655,7 @@ msgstr ""
 #: src/connectionmanager.cpp:534
 #, kde-format
 msgid "Switch Server"
-msgstr "بدّل الخادوم"
+msgstr "بدّل الخادم"
 
 #: src/connectionmanager.cpp:577
 #, kde-format
@@ -2700,13 +2700,13 @@ msgstr "خطأ: %1"
 #: src/dbus.cpp:176
 #, kde-format
 msgid "getNickname: Server %1 is not found."
-msgstr "getNickname: لم يُعثر على الخادوم %1."
+msgstr "getNickname: لم يُعثر على الخادم %1."
 
 #: src/dcc/chat.cpp:98
 #, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard"
 msgid "Could not send a DCC %1 request to the partner via the IRC server."
-msgstr "تعّر إرسال طلب DCC ‏%1 إلى الزميل عبر خادوم IRC."
+msgstr "تعّر إرسال طلب DCC ‏%1 إلى الزميل عبر خادم IRC."
 
 #: src/dcc/chat.cpp:119 src/dcc/transfersend.cpp:374
 #, kde-format
@@ -2986,7 +2986,7 @@ msgstr ""
 #: src/dcc/transferdetailedinfopanel.cpp:151
 #, kde-format
 msgid "Unknown server"
-msgstr "خادوم مجهول"
+msgstr "خادم مجهول"
 
 #: src/dcc/transferdetailedinfopanel.cpp:156
 #, fuzzy, kde-format
@@ -3550,7 +3550,7 @@ msgstr "رُفِض طلب إرسال DCC ‏"
 #: src/dcc/transfersend.cpp:307 src/dcc/transfersend.cpp:383
 #, kde-format
 msgid "Could not send a DCC SEND request to the partner via the IRC server."
-msgstr "تعّر إرسال طلب إرسال DCC ‏ إلى الزميل عبر خادوم IRC."
+msgstr "تعّر إرسال طلب إرسال DCC ‏ إلى الزميل عبر خادم IRC."
 
 #: src/dcc/transfersend.cpp:602
 #, kde-format
@@ -3808,7 +3808,7 @@ msgstr ""
 "الآخرين.  يمكنك استخدام أيّ اسم ترغب به. المحرف الأول يجب أن يكون حرفًا.\n"
 "\n"
 "لمّا أنّ الأسماء المستعارة يجب أن تكون فيردة في شبكة IRC بالكامل، قد يرفض "
-"الخادوم اسمك الذي ترغب به لأنّ هناك أحد غيرك يستخدمه فعلًا. أدخِل الأسماء "
+"الخادم اسمك الذي ترغب به لأنّ هناك أحد غيرك يستخدمه فعلًا. أدخِل الأسماء "
 "المستعارة البديلة لك. إن رُفِض الاختيار اﻷول، سيحاول محادثك مع الأسماء "
 "المستعارة البديلة."
 
@@ -3831,7 +3831,7 @@ msgstr "NickServ القياسي"
 #: src/identitydialog.cpp:90
 #, kde-format
 msgid "Server Password"
-msgstr "كلمة سر الخادوم"
+msgstr "كلمة سر الخادم"
 
 #: src/identitydialog.cpp:91
 #, kde-format
@@ -3935,7 +3935,7 @@ msgid ""
 "The password entered here will override the one set in the server settings, "
 "if any."
 msgstr ""
-"كلمة السر المُدخَلة هنا ستتجاوز التي عُيِّنت في إعدادات الخادوم، إن عُيِّنت واحدة."
+"كلمة السر المُدخَلة هنا ستتجاوز التي عُيِّنت في إعدادات الخادم، إن عُيِّنت واحدة."
 
 #: src/identitydialog.cpp:482
 #, kde-format
@@ -4399,13 +4399,13 @@ msgstr "خروج"
 #: src/irc/channel.cpp:1138
 #, kde-format
 msgid "You (%1) have left this server."
-msgstr "غادرت (%1) الخادوم هذا."
+msgstr "غادرت (%1) الخادم هذا."
 
 #: src/irc/channel.cpp:1140
 #, kde-format
 msgctxt "%1 = our hostmask, %2 = reason"
 msgid "You (%1) have left this server (%2)."
-msgstr "غادرت (%1) الخادوم هذا (%2)."
+msgstr "غادرت (%1) الخادم هذا (%2)."
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
 #: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
@@ -4428,13 +4428,13 @@ msgstr "غادرت (%1) القناة %2 ‏(%3)."
 #: src/irc/channel.cpp:1162
 #, kde-format
 msgid "%1 (%2) has left this server."
-msgstr "غادر %1 (%2) هذا الخادوم."
+msgstr "غادر %1 (%2) هذا الخادم."
 
 #: src/irc/channel.cpp:1166
 #, kde-format
 msgctxt "%1 = nick, %2 = hostname, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr "غادر %1 (%2) هذا الخادوم (%3)."
+msgstr "غادر %1 (%2) هذا الخادم (%3)."
 
 #: src/irc/channel.cpp:1171
 #, kde-format
@@ -5480,7 +5480,7 @@ msgstr "مرحبًا"
 #: src/irc/inputfilter.cpp:1176
 #, kde-format
 msgid "Server %1 (Version %2), User modes: %3, Channel modes: %4"
-msgstr "الخادوم %1 (الإصدار %2)، أوضاع المستخدِمين: %3، أوضاع القناة: %4"
+msgstr "الخادم %1 (الإصدار %2)، أوضاع المستخدِمين: %3، أوضاع القناة: %4"
 
 #: src/irc/inputfilter.cpp:1200
 #, kde-format
@@ -5656,7 +5656,7 @@ msgstr "عليك أن تكون مُعامِل قناة في %1 لتفعل ذلك
 #: src/irc/inputfilter.cpp:1682
 #, kde-format
 msgid "You are now an IRC operator on this server."
-msgstr "أنت الآن مُعامِل IRC في هذا الخادوم."
+msgstr "أنت الآن مُعامِل IRC في هذا الخادم."
 
 #: src/irc/inputfilter.cpp:1690
 #, kde-format
@@ -5956,7 +5956,7 @@ msgstr "نهاية قائمة الحظر."
 #: src/irc/inputfilter.cpp:2388
 #, kde-format
 msgid "No such server: %1."
-msgstr "لا خادوم كهذا: %1."
+msgstr "لا خادم كهذا: %1."
 
 #: src/irc/inputfilter.cpp:2398
 #, kde-format
@@ -6710,13 +6710,13 @@ msgstr ""
 #, kde-format
 msgctxt "%1 = nick, %2 = hostmask"
 msgid "%1 (%2) has left this server."
-msgstr "%1 (%2) غادر الخادوم."
+msgstr "%1 (%2) غادر الخادم."
 
 #: src/irc/query.cpp:461
 #, kde-format
 msgctxt "%1 = nick, %2 = hostmask, %3 = reason"
 msgid "%1 (%2) has left this server (%3)."
-msgstr "%1 (%2) غادر الخادوم (%3)."
+msgstr "%1 (%2) غادر الخادم (%3)."
 
 #: src/irc/server.cpp:263
 #, kde-format
@@ -7069,7 +7069,7 @@ msgstr ""
 #: src/irc/serverdialogui.ui:26
 #, kde-format
 msgid "&Server:"
-msgstr "ال&خادوم:"
+msgstr "ال&خادم:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_serverEdit)
 #: src/irc/serverdialogui.ui:39
@@ -7131,12 +7131,12 @@ msgstr ""
 #: src/irc/servergroupdialog.cpp:165
 #, kde-format
 msgid "Add Server"
-msgstr "أضف خادومًا"
+msgstr "أضف خادمًا"
 
 #: src/irc/servergroupdialog.cpp:183
 #, kde-format
 msgid "Edit Server"
-msgstr "حرّر الخادوم"
+msgstr "حرّر الخادم"
 
 #: src/irc/servergroupdialog.cpp:288
 #, kde-format
@@ -7156,12 +7156,12 @@ msgstr "اسم الشبكة مطلوب."
 #: src/irc/servergroupdialog.cpp:424
 #, kde-format
 msgid "You need to add at least one server to the network."
-msgstr "عليك إضافة خادوم واحد إلى الشبكة على الأقل."
+msgstr "عليك إضافة خادم واحد إلى الشبكة على الأقل."
 
 #: src/irc/servergroupdialog.cpp:493
 #, kde-format
 msgid "The server address is required."
-msgstr "عنوان الخادوم مطلوب."
+msgstr "عنوان الخادم مطلوب."
 
 #: src/irc/servergroupdialog.cpp:554
 #, kde-format
@@ -7308,7 +7308,7 @@ msgstr "اتّ&صل"
 #: src/irc/serverlistdialog.cpp:52 src/quickconnectdialog.cpp:95
 #, kde-format
 msgid "Connect to the server"
-msgstr "اتّصل بالخادوم"
+msgstr "اتّصل بالخادم"
 
 #: src/irc/serverlistdialog.cpp:53
 #, kde-format
@@ -7334,7 +7334,7 @@ msgid ""
 msgstr ""
 "لا يمكنك حذف %1.\n"
 "\n"
-"الشبكة %2 يجب أن تملك خادومًا واحدًا على الأقل."
+"الشبكة %2 يجب أن تملك خادمًا واحدًا على الأقل."
 
 #: src/irc/serverlistdialog.cpp:203
 #, kde-format
@@ -7860,7 +7860,7 @@ msgstr ""
 #: src/main.cpp:85
 #, kde-format
 msgid "Server to connect"
-msgstr "الخادوم للاتصال به"
+msgstr "الخادم للاتصال به"
 
 #: src/main.cpp:85
 #, kde-format
@@ -7968,7 +7968,7 @@ msgstr "اتصال &سريع..."
 #: src/mainwindow.cpp:153
 #, kde-format
 msgid "Type in the address of a new IRC server to connect to"
-msgstr "اطبع عنوان خادوم IRC الجديد للاتصال به"
+msgstr "اطبع عنوان خادم IRC الجديد للاتصال به"
 
 #: src/mainwindow.cpp:158
 #, kde-format
@@ -7988,7 +7988,7 @@ msgstr "ا&قطع الاتصال"
 #: src/mainwindow.cpp:170
 #, kde-format
 msgid "Disconnect from the current server."
-msgstr "اقطع اتصال الخادوم الحالي."
+msgstr "اقطع اتصال الخادم الحالي."
 
 #: src/mainwindow.cpp:175
 #, kde-format
@@ -8039,7 +8039,7 @@ msgstr "قا&ئمة القنوات"
 #: src/mainwindow.cpp:221
 #, kde-format
 msgid "Show a list of all the known channels on this server"
-msgstr "أظهر قائمة لكلّ القنوات المعروفة في هذا الخادوم"
+msgstr "أظهر قائمة لكلّ القنوات المعروفة في هذا الخادم"
 
 #: src/mainwindow.cpp:226
 #, kde-format
@@ -8222,7 +8222,7 @@ msgstr "ا&نضمّ إلى قناة..."
 #: src/mainwindow.cpp:484
 #, kde-format
 msgid "Join a new channel on this server"
-msgstr "انضمّ إلى قناة جديدة في هذا الخادوم"
+msgstr "انضمّ إلى قناة جديدة في هذا الخادم"
 
 #: src/mainwindow.cpp:496 src/mainwindow.cpp:857
 #, kde-format
@@ -8651,7 +8651,7 @@ msgstr "اتصال سريع"
 #: src/quickconnectdialog.cpp:44
 #, kde-format
 msgid "&Server host:"
-msgstr "مضيف ال&خادوم:"
+msgstr "مضيف ال&خادم:"
 
 #: src/quickconnectdialog.cpp:45
 #, kde-format
@@ -8661,7 +8661,7 @@ msgstr "أدخِل مضيف الشبكة هنا."
 #: src/quickconnectdialog.cpp:53
 #, kde-format
 msgid "The port that the IRC server is using."
-msgstr "المنفذ الذي يستخدمه خادوم IRC."
+msgstr "المنفذ الذي يستخدمه خادم IRC."
 
 #: src/quickconnectdialog.cpp:60
 #, kde-format
@@ -8684,7 +8684,7 @@ msgid ""
 "If the IRC server requires a password, enter it here (most servers do not "
 "require a password.)"
 msgstr ""
-"إن كان خادوم IRC يطلب كلمة سر أدخلها هنا (أغلب الخوادم لا تطلب كلمة سر.)"
+"إن كان خادم IRC يطلب كلمة سر أدخلها هنا (أغلب الخوادم لا تطلب كلمة سر.)"
 
 #: src/quickconnectdialog.cpp:79
 #, kde-format
@@ -8742,31 +8742,31 @@ msgctxt ""
 "%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = "
 "(x seconds)"
 msgid "No answer from server %1 for more than %2, %3, %4, and %5."
-msgstr "لا استجابة من الخادوم %1 منذ أكثر من %2، و%3، و%4 و%5."
+msgstr "لا استجابة من الخادم %1 منذ أكثر من %2، و%3، و%4 و%5."
 
 #: src/statusbar.cpp:189
 #, kde-format
 msgctxt ""
 "%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)"
 msgid "No answer from server %1 for more than %2, %3, and %4."
-msgstr "لا استجابة من الخادوم %1 منذ أكثر من %2، و%3 و%4."
+msgstr "لا استجابة من الخادم %1 منذ أكثر من %2، و%3 و%4."
 
 #: src/statusbar.cpp:196
 #, kde-format
 msgctxt "%1 = name of server, %2 = (x minutes), %3 = (x seconds)"
 msgid "No answer from server %1 for more than %2 and %3."
-msgstr "لا استجابة من الخادوم %1 منذ أكثر من %2 و%3."
+msgstr "لا استجابة من الخادم %1 منذ أكثر من %2 و%3."
 
 #: src/statusbar.cpp:201
 #, kde-format
 msgid "No answer from server %2 for more than 1 second."
 msgid_plural "No answer from server %2 for more than %1 seconds."
-msgstr[0] "لا استجابة من الخادوم %2 منذ أكثر من ثانية واحدة."
-msgstr[1] "لا استجابة من الخادوم %2 منذ أكثر من ثانية واحدة."
-msgstr[2] "لا استجابة من الخادوم %2 منذ أكثر من ثانيتين."
-msgstr[3] "لا استجابة من الخادوم %2 منذ أكثر من %1 ثوان."
-msgstr[4] "لا استجابة من الخادوم %2 منذ أكثر من %1 ثانية."
-msgstr[5] "لا استجابة من الخادوم %2 منذ أكثر من %1 ثانية."
+msgstr[0] "لا استجابة من الخادم %2 منذ أكثر من ثانية واحدة."
+msgstr[1] "لا استجابة من الخادم %2 منذ أكثر من ثانية واحدة."
+msgstr[2] "لا استجابة من الخادم %2 منذ أكثر من ثانيتين."
+msgstr[3] "لا استجابة من الخادم %2 منذ أكثر من %1 ثوان."
+msgstr[4] "لا استجابة من الخادم %2 منذ أكثر من %1 ثانية."
+msgstr[5] "لا استجابة من الخادم %2 منذ أكثر من %1 ثانية."
 
 #: src/upnp/upnprouter.cpp:123
 #, kde-format
@@ -9205,7 +9205,7 @@ msgstr "اسم ال&شبكة:"
 #: src/viewer/editnotifydialog.cpp:48
 #, kde-format
 msgid "Pick the server network you will connect to here."
-msgstr "انتقِ شبكة خادوم تريد الاتصال بها."
+msgstr "انتقِ شبكة خادم تريد الاتصال بها."
 
 #: src/viewer/editnotifydialog.cpp:55
 #, kde-format
