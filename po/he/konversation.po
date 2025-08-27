@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-08-02 21:44+0300\n"
+"PO-Revision-Date: 2025-08-26 13:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1976,13 +1976,13 @@ msgid "Connection"
 msgstr "חיבור"
 
 #: src/config/settingsdialog.cpp:114
-#, fuzzy, kde-format
+#, kde-format
 msgid " line"
 msgid_plural " lines"
-msgstr[0] "שורה אחת"
+msgstr[0] " שורה"
 msgstr[1] " שורות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[2] " שורות"
+msgstr[3] " שורות"
 
 #: src/config/settingsdialog.cpp:115
 #, kde-format
@@ -4896,47 +4896,47 @@ msgstr "אתה מסיר את הגבלת הערוץ."
 #: src/irc/channel.cpp:1735
 #, kde-format
 msgid "%1 removes the channel limit."
-msgstr ""
+msgstr "%1 מסיר את מגבלת הערוץ."
 
 #: src/irc/channel.cpp:1745
 #, kde-format
 msgid "You set a ban on %1."
-msgstr ""
+msgstr "הגדרת חסימה מעל %1."
 
 #: src/irc/channel.cpp:1746
 #, kde-format
 msgid "%1 sets a ban on %2."
-msgstr ""
+msgstr "%1 הגדיר/ה חסימה מעל %2."
 
 #: src/irc/channel.cpp:1750
 #, kde-format
 msgid "You remove the ban on %1."
-msgstr ""
+msgstr "הסרת את החסימה מעל %1."
 
 #: src/irc/channel.cpp:1751
 #, kde-format
 msgid "%1 removes the ban on %2."
-msgstr ""
+msgstr "%1 הסיר/ה את החסימה מעל %2."
 
 #: src/irc/channel.cpp:1758
 #, kde-format
 msgid "You set a ban exception on %1."
-msgstr ""
+msgstr "הגדרת חריגת חסימה מעל %1."
 
 #: src/irc/channel.cpp:1759
 #, kde-format
 msgid "%1 sets a ban exception on %2."
-msgstr ""
+msgstr "%1 הגדיר/ה חריגת חסימה מעל %2."
 
 #: src/irc/channel.cpp:1763
 #, kde-format
 msgid "You remove the ban exception on %1."
-msgstr ""
+msgstr "הסרת את חריגת החסימה מעל %1."
 
 #: src/irc/channel.cpp:1764
 #, kde-format
 msgid "%1 removes the ban exception on %2."
-msgstr ""
+msgstr "%1 הסיר/ה את חריגת החסימה מעל %2."
 
 #: src/irc/channel.cpp:1771
 #, kde-format
@@ -5429,13 +5429,13 @@ msgid "Channel modes: "
 msgstr "מצבי חדר: "
 
 #: src/irc/inputfilter.cpp:1330
-#, fuzzy, kde-format
+#, kde-format
 msgid "limited to %1 user"
 msgid_plural "limited to %1 users"
-msgstr[0] "מוגבל אל המשתמש %1"
-msgstr[1] "מוגבל %1 למשתמשים"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "מוגבל למשתמש"
+msgstr[1] "מוגבל לשני משתמשים"
+msgstr[2] "מוגבל ל־%1 משתמשים"
+msgstr[3] "מוגבל ל־%1 משתמשים"
 
 #: src/irc/inputfilter.cpp:1358 src/urlcatcher.cpp:170
 #, kde-format
@@ -5833,13 +5833,13 @@ msgid "List of channels:"
 msgstr "List of channels:"
 
 #: src/irc/inputfilter.cpp:2258
-#, fuzzy, kde-format
+#, kde-format
 msgid "%2 (%1 user): %3"
 msgid_plural "%2 (%1 users): %3"
-msgstr[0] "%2 (%1 משתמש): %3"
-msgstr[1] "%2 (%1 משתמשים): %3"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "%2 (משתמש): %3"
+msgstr[1] "%2 (שני משתמשים): %3"
+msgstr[2] "%2 (%1 משתמשים): %3"
+msgstr[3] "%2 (%1 משתמשים): %3"
 
 #: src/irc/inputfilter.cpp:2275
 #, kde-format
@@ -6429,6 +6429,8 @@ msgid ""
 "Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <nickname "
 "| mask>"
 msgstr ""
+"שימוש: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [ערוץ] <כינוי | "
+"מסכה>"
 
 #: src/irc/outputfilter.cpp:1437
 #, kde-format
@@ -6436,6 +6438,8 @@ msgid ""
 "Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] "
 "<nickname | mask> [reason]"
 msgstr ""
+"שימוש: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [ערוץ] <כינוי | "
+"מסכה> [סיבה]"
 
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
@@ -6539,12 +6543,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
 msgid "Unable to request a key exchange from %1."
-msgstr ""
+msgstr "לא ניתן לבקש החלפת מפתחות מול %1."
 
 #: src/irc/outputfilter.cpp:1726
 #, kde-format
 msgid "Beginning DH1080 key exchange with %1."
-msgstr ""
+msgstr "מתחילה החלפת מפתחות DH1080 מול %1."
 
 #: src/irc/outputfilter.cpp:1745
 #, kde-format
@@ -6576,27 +6580,27 @@ msgstr "Blowfish"
 #: src/irc/outputfilter.cpp:1790
 #, kde-format
 msgid "Usage: %1KILL <nick> [comment]"
-msgstr ""
+msgstr "שימוש: %1KILL <כינוי> [הערה]"
 
 #: src/irc/outputfilter.cpp:1804
 #, kde-format
 msgid "Usage: %1DNS <nick>"
-msgstr ""
+msgstr "שימוש: %1DNS <כינוי>"
 
 #: src/irc/outputfilter.cpp:1834
 #, kde-format
 msgid "Usage: %1queuetuner [on | off]"
-msgstr ""
+msgstr "שימוש: %1queuetuner [on | off]"
 
 #: src/irc/outputfilter.cpp:1895
 #, kde-format
 msgid "%1CYCLE [-APP | -SERVER] [channel | nickname]"
-msgstr ""
+msgstr "%1CYCLE [-APP | -SERVER] [ערוץ | כינוי]"
 
 #: src/irc/outputfilter.cpp:1926
 #, kde-format
 msgid "%1CLEAR [-ALL] [channel | nickname]"
-msgstr ""
+msgstr "%1CLEAR [-ALL] [ערוץ | כינוי]"
 
 #: src/irc/outputfilterresolvejob.cpp:66
 #, kde-format
@@ -8735,7 +8739,7 @@ msgstr "&פתיחה"
 #: src/urlcatcher.cpp:93
 #, kde-format
 msgid "Open URLs in external browser."
-msgstr ""
+msgstr "פתיחת כתובות בדפדפן חיצוני."
 
 #: src/urlcatcher.cpp:94
 #, kde-format
@@ -8745,6 +8749,9 @@ msgid ""
 "<b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a "
 "custom web browser for web URLs.</p>"
 msgstr ""
+"<p>נא לבחור <b>כתובת</b> אחת או יותר להלן, ואז ללחוץ על הכפתור הזה כדי "
+"להפעיל את היישום שמשויך עם סוג התוכן של הכתובת.</p>-<p>ב<b>הגדרות</b>, תחת "
+"<b>התנהגות</b> | <b>כללי</b>, אפשר לציין דפדפן משלך לכתובות של אתרים.</p>"
 
 #: src/urlcatcher.cpp:97
 #, kde-format
@@ -8778,6 +8785,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
+"נא לבחור <b>כתובת</b> אחת או יותר ואז ללחוץ על הכפתור הזה כדי להעתיק אותן "
+"ללוח הגזירים."
 
 #: src/urlcatcher.cpp:118
 #, kde-format
@@ -8791,6 +8800,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
 "them from the list."
 msgstr ""
+"נא לבחור <b>כתובת</b> אחת או יותר ואז ללחוץ על הכפתור הזה כדי למחוק אותן "
+"מהרשימה."
 
 #: src/urlcatcher.cpp:122
 #, kde-format
@@ -8944,6 +8955,9 @@ msgid ""
 "change these.</p><p>The <b>T</b>opic mode means that only the channel "
 "operator can change the topic for the channel.</p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>משמעות מצב <b>T</b> (נושא) היא שרק מפעילי הערוץ יכולים לשנות את נושא "
+"הערוץ.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:611
 #, kde-format
@@ -8953,6 +8967,10 @@ msgid ""
 "in the channel cannot send messages for everybody in the channel to see.  "
 "Almost all channels have this set to prevent nuisance messages.</p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>המשמעות של <b>N</b> (אסור הודעות) היא שמשתמשים שאינם בערוץ לא יכולים "
+"לשלוח הודעות שגלויות לכל חברי הערוץ. זה מוגדר כמעט בכל הערוצים כדי למנוע "
+"הודעות טורדניות.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:613
 #, kde-format
@@ -8964,6 +8982,11 @@ msgid ""
 "same channel will know that you are in this channel, if this mode is set.</"
 "p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ שמוגדר עם <b>S</b> (סודי) לא יופיע ברשימת הערוצים, וגם אף אחד "
+"מהמשתמשים לא יוכלו לראות את החברות שלך בערוץ עם הפקודה <em>WHOIS</em> או כל "
+"דבר דומה. רק מי שאיתך באותו הערוץ ידע על החברות שלך בערוץ, אם המצב הזה מוגדר."
+"</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:615
 #, kde-format
@@ -8974,6 +8997,10 @@ msgid ""
 "needs to issue the command <em>/invite nick</em> from within the channel.</"
 "p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ שמוגדר עם <b>I</b> (הזמנה בלבד) משמעותו שמשתמשים יוכלו להצטרף "
+"לערוץ רק אם הוזמנו. כדי להזמין, מפעיל ערוץ צריך להפעיל את הפקודה <em>‎/invite "
+"nick (כינוי)</em> מתוך הערוץ</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:617
 #, kde-format
@@ -8984,6 +9011,10 @@ msgid ""
 "not show them as being in a private channel depending on the IRC server.</"
 "p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ <b>P</b> (פרטי) מופיע בתצוגה של כל הערוצים אבל הנושא לא מופיע. "
+"<em>WHOIS</em> של משתמש עשוי להראות או לא שהם חברים בערוץ פרטי כתלות בסוג "
+"שרת ה־IRC.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:619
 #, kde-format
@@ -8992,6 +9023,9 @@ msgid ""
 "change these.</p><p>A <b>M</b>oderated channel is one where only operators, "
 "half-operators and those with voice can talk.</p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ שמוגדר עם <b>M</b> (מפוקח) הוא ערוץ שבו רק מפעילים, מפעילים למחצה "
+"ובעלי קול יכולים לשוחח.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:621
 #, kde-format
@@ -9000,6 +9034,8 @@ msgid ""
 "change these.</p><p>A protected channel requires users to enter a password "
 "in order to join.</p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ מוגן דורש מהמשתמשים למלא סיסמה כדי להצטרף.</p></qt>"
 
 #: src/viewer/channeloptionsdialog.cpp:623
 #, kde-format
@@ -9010,6 +9046,10 @@ msgid ""
 "bot that sits in the channel and changes this automatically depending on how "
 "busy the channel is.</p></qt>"
 msgstr ""
+"<qt><p>אלו שולטים ב<em>מצב</em> (mode) ערוץ.  רק מפעילים יכולים לשנות אותם.</"
+"p><p>ערוץ שיש עליו <b>L</b> (מגבלה) משמעו שרק כמות כזאת של משתמשים יכולים "
+"להיות בערוץ בכל זמן נתון. לחלק מהערוצים יש בוטים שיושבים בערוץ ומשנים את זה "
+"אוטומטית לפי כמה עמוס הערוץ.</p></qt>"
 
 #. i18n: ectx: attribute (title), widget (QWidget, topicTab)
 #: src/viewer/channeloptionsui.ui:36
