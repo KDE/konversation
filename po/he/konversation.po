@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-08-26 13:54+0300\n"
+"PO-Revision-Date: 2025-08-30 20:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1499,13 +1499,13 @@ msgstr "הזמנה"
 #: src/config/ignore_configui.ui:144
 #, kde-format
 msgid "Remove &All"
-msgstr "&הסר הכל"
+msgstr "הס&רה של הכול"
 
 #. i18n: ectx: label, entry, group (Appearance)
 #: src/config/konversation.kcfg:217
 #, kde-format
 msgid "Hide the scrollbar"
-msgstr "הסתרת פס הגלילה"
+msgstr "הסתרת שורת הגלילה"
 
 #. i18n: ectx: whatsthis, entry, group (General Options)
 #: src/config/konversation.kcfg:223
@@ -1683,12 +1683,12 @@ msgstr "משתמשים רגילים"
 #: src/config/nicklistbehavior_config.cpp:46
 #, kde-format
 msgid "Voice (+v)"
-msgstr "קול (V+)"
+msgstr "קול (v+)"
 
 #: src/config/nicklistbehavior_config.cpp:47
 #, kde-format
 msgid "Halfops (+h)"
-msgstr "אופ למחצה (h+)"
+msgstr "אופים למחצה (h+)"
 
 #: src/config/nicklistbehavior_config.cpp:48
 #, kde-format
@@ -1698,12 +1698,12 @@ msgstr "אופים (o+)"
 #: src/config/nicklistbehavior_config.cpp:49
 #, kde-format
 msgid "Channel Admins (+p)"
-msgstr "מנהלי החדר (+p)"
+msgstr "מנהלי החדר (‎+p)"
 
 #: src/config/nicklistbehavior_config.cpp:50
 #, kde-format
 msgid "Channel Owners (+q)"
-msgstr "בעלי החדר (+q)"
+msgstr "בעלי החדר (‎+q)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: src/config/nicklistbehavior_configui.ui:26
