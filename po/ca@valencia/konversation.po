@@ -1376,7 +1376,7 @@ msgstr "El quadro d'entrada s'expandix amb el text"
 #: src/config/highlight_config.cpp:31
 #, kde-format
 msgid "Select Sound File"
-msgstr "Selecciona el fitxer de so"
+msgstr "Tria el fitxer de so"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HighlightSoundsEnabled)
 #: src/config/highlight_configui.ui:29
@@ -2149,7 +2149,7 @@ msgid ""
 "If you select this, the colors you chose in the Highlights preferences page "
 "will override the colors for \"Current nick used\" and \"Highlight\"."
 msgstr ""
-"Si seleccioneu açò, els colors que trieu en la pàgina de preferències del "
+"Si trieu açò, els colors que trieu en la pàgina de preferències del "
 "ressaltat substituiran els colors per a «Sobrenom utilitzat actualment» i "
 "«Ressaltat»."
 
@@ -2998,12 +2998,12 @@ msgstr "Obri"
 #: src/dcc/recipientdialog.cpp:32
 #, kde-format
 msgid "Select Recipient"
-msgstr "Seleccioneu el destinatari"
+msgstr "Trieu el destinatari"
 
 #: src/dcc/recipientdialog.cpp:55
 #, kde-format
 msgid "Select nickname and close the window"
-msgstr "Seleccioneu el sobrenom i tanca la finestra"
+msgstr "Trieu el sobrenom i tanca la finestra"
 
 #: src/dcc/recipientdialog.cpp:60
 #, kde-format
@@ -3375,12 +3375,12 @@ msgstr "Estat DCC"
 #: src/dcc/transferpanel.cpp:73
 #, kde-format
 msgid "&Select All Items"
-msgstr "&Selecciona tots els elements"
+msgstr "&Tria tots els elements"
 
 #: src/dcc/transferpanel.cpp:74
 #, kde-format
 msgid "S&elect All Completed Items"
-msgstr "Selecciona tots els elements &completats"
+msgstr "Tria tots els elements &completats"
 
 #: src/dcc/transferpanel.cpp:76
 #, kde-format
@@ -3864,7 +3864,7 @@ msgstr "Dibuixa una fletxa"
 #: src/dcc/whiteboardtoolbar.cpp:87
 #, kde-format
 msgid "Select a color from the image"
-msgstr "Selecciona un color de la imatge"
+msgstr "Tria un color de la imatge"
 
 #: src/dcc/whiteboardtoolbar.cpp:228
 #, kde-format
@@ -4220,7 +4220,7 @@ msgid ""
 "using this Identity away when the screensaver starts or after a period of "
 "user inactivity configured below."
 msgstr ""
-"Si seleccioneu esta casella, Konversation posarà totes les connexions amb la "
+"Si trieu esta casella, Konversation posarà totes les connexions amb la "
 "identitat d'absent quan el protector de pantalla s'inicie després del "
 "període d'inactivitat configurat davall."
 
@@ -4250,9 +4250,9 @@ msgid ""
 "connections using this Identity when the screensaver stops or new user "
 "activity is detected."
 msgstr ""
-"Si seleccioneu esta casella, Konversation cancel·larà l'estat d'absent per a "
-"totes les connexions utilitzant esta identitat quan el protector de pantalla "
-"es pare o es detecte un usuari nou."
+"Si trieu esta casella, Konversation cancel·larà l'estat d'absent per a totes "
+"les connexions utilitzant esta identitat quan el protector de pantalla es "
+"pare o es detecte un usuari nou."
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_automaticUnawayChBox)
 #: src/identitydialog.ui:440
@@ -4270,11 +4270,11 @@ msgid ""
 "command. <b>%t</b> in the return command is replaced with the length of time "
 "you were away."
 msgstr ""
-"Si seleccioneu esta casella, Konversation enviarà de forma automàtica el "
-"missatge absent a totes les pestanyes dels canals als quals vos heu afegit "
-"amb esta identitat. En l'ordre d'absència, <b>%s</b> serà reemplaçat amb el "
-"missatge d'absència. Quan torneu, enviarà l'ordre de retorn. En l'ordre de "
-"retorn, <b>%t</b> serà substituït pel temps que heu sigut absent."
+"Si trieu esta casella, Konversation enviarà de forma automàtica el missatge "
+"absent a totes les pestanyes dels canals als quals vos heu afegit amb esta "
+"identitat. En l'ordre d'absència, <b>%s</b> serà reemplaçat amb el missatge "
+"d'absència. Quan torneu, enviarà l'ordre de retorn. En l'ordre de retorn, <b>"
+"%t</b> serà substituït pel temps que heu sigut absent."
 
 #. i18n: ectx: property (title), widget (QGroupBox, awayCommandsGroup)
 #: src/identitydialog.ui:459
@@ -4460,7 +4460,7 @@ msgid ""
 "<em>Identities</em> option in the <em>Settings</em> menu.</p></qt>"
 msgstr ""
 "<qt><p>Mostra el vostre sobrenom actual, i els alternatius que heu "
-"configurat. Si seleccioneu o escriviu un sobrenom diferent, s'enviarà una "
+"configurat. Si trieu o escriviu un sobrenom diferent, s'enviarà una "
 "sol·licitud al servidor d'IRC per a canviar-lo. Si el servidor ho permet, se "
 "seleccionarà el nou sobrenom. Si escriviu un nou sobrenom, heu de prémer "
 "«Retorn» en acabar.</p><p>Podeu canviar-lo per un sobrenom alternatiu des de "
@@ -5387,8 +5387,8 @@ msgstr ""
 "<p>Ací es mostra la llista de canals filtrats. Cal tindre en compte que si "
 "no utilitzeu expressions regulars, Konversation mostrarà qualsevol nom que "
 "continga la cadena que heu introduït. El nom del canal no pot començar amb "
-"la cadena que heu introduït.</p><p>Seleccioneu el nom del canal al qual "
-"voleu afegir-vos prement sobre seu. Premeu el botó dret sobre el canal per a "
+"la cadena que heu introduït.</p><p>Trieu el nom del canal al qual voleu "
+"afegir-vos prement sobre seu. Premeu el botó dret sobre el canal per a "
 "mostrar una llista d'adreces web mencionades al tipus de canal.</p>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, m_channelBox)
@@ -5904,7 +5904,7 @@ msgstr "%1 està connectat a través de %2 (%3)."
 #: src/irc/inputfilter.cpp:2071
 #, kde-format
 msgid "%1 is available for help."
-msgstr "%1 està disponible per a ajudar."
+msgstr "%1 està disponible per ajudar."
 
 #: src/irc/inputfilter.cpp:2086
 #, kde-format
@@ -6132,8 +6132,8 @@ msgid ""
 "You have received invites for the following channels. Select the channels "
 "you want to join:"
 msgstr ""
-"Heu rebut invitacions per als canals següents. Seleccioneu els canals als "
-"quals voleu entrar:"
+"Heu rebut invitacions per als canals següents. Trieu els canals als quals "
+"voleu entrar:"
 
 #. i18n: ectx: property (text), item, widget (KComboBox, m_joinPreferences)
 #: src/irc/invitedialog.ui:44
@@ -6358,8 +6358,8 @@ msgid ""
 "replaced by a '?'."
 msgstr ""
 "El missatge que esteu enviant inclou caràcters que no existixen en la "
-"codificació actual. Si seleccioneu continuar, estos caràcters seran "
-"substituïts per un «?»."
+"codificació actual. Si trieu continuar, estos caràcters seran substituïts "
+"per un «?»."
 
 #: src/irc/outputfilter.cpp:218
 #, kde-format
@@ -9063,8 +9063,8 @@ msgid ""
 "<b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a "
 "custom web browser for web URLs.</p>"
 msgstr ""
-"<p>Seleccioneu un o més <b>URL</b> de davall, llavors premeu el botó per a "
-"iniciar l'aplicació associada amb el tipus MIME de l'URL.</p>-<p>Als "
+"<p>Trieu un o més <b>URL</b> de davall, llavors premeu el botó per a iniciar "
+"l'aplicació associada amb el tipus MIME de l'URL.</p>-<p>Als "
 "<b>Configuracions</b>, davall <b>Comportament</b> i <b>General</b>, podeu "
 "especificar un navegador web personalitzat per als URL web.</p>"
 
@@ -9100,8 +9100,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to copy them "
 "to the clipboard."
 msgstr ""
-"Seleccioneu un o més <b>URL</b> a dalt, llavors premeu este botó per a "
-"copiar-los a dins del porta-retalls."
+"Trieu un o més <b>URL</b> a dalt, llavors premeu este botó per a copiar-los "
+"a dins del porta-retalls."
 
 #: src/urlcatcher.cpp:118
 #, kde-format
@@ -9115,8 +9115,8 @@ msgid ""
 "Select one or several <b>URLs</b> above, then click this button to delete "
 "them from the list."
 msgstr ""
-"Seleccioneu un o més <b>URL</b> a dalt, llavors premeu este botó per a "
-"suprimir-los de la llista."
+"Trieu un o més <b>URL</b> a dalt, llavors premeu este botó per a suprimir-"
+"los de la llista."
 
 #: src/urlcatcher.cpp:122
 #, kde-format
@@ -9579,7 +9579,7 @@ msgid ""
 "</qt>"
 msgstr ""
 "<qt>Açò és una vista prèvia de com els lectors podrien veure el missatge si "
-"seleccioneu estos colors.<br>\n"
+"trieu estos colors.<br>\n"
 "<b>Nota: no tots els clients admeten açò, i alguns usuaris poden haver "
 "decidit ignorar els canvis de color.</b>\n"
 "</qt>"
@@ -9646,8 +9646,8 @@ msgid ""
 msgstr ""
 "<qt>Ací podeu seleccionar de quin color voleu el fons per al text en el "
 "pròxim missatge que envieu.\n"
-"Si seleccioneu un color i cliqueu damunt «Bé», el color seleccionat s'afig a "
-"la línia d'entrada.\n"
+"Si trieu un color i cliqueu damunt «Bé», el color seleccionat s'afig a la "
+"línia d'entrada.\n"
 "Qualsevol text escrit després d'açò, tindrà el color seleccionat, fins que "
 "canvieu el color de nou.\n"
 "En escollir l'opció predeterminada «<i>Cap</i>» no canviarà el color de fons "
