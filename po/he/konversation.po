@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-08-30 20:05+0300\n"
+"PO-Revision-Date: 2025-09-01 08:13+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1061,9 +1061,9 @@ msgstr "הפעלת שליחה סבילה בהעברה ישירה (DCC)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccChatAutoAccept)
 #: src/config/dcc_configui.ui:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "Automatically accept DCC chat offer"
-msgstr "קבל קבצים להורדה באופן א&וטומטי"
+msgstr "לקבל הצעת צ׳אט העברה ישירה (DCC) אוטומטית"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccUPnP)
 #: src/config/dcc_configui.ui:115
@@ -6359,7 +6359,7 @@ msgstr "שם התסריט לא יכול להכיל ‎\"../\"‎."
 #: src/irc/outputfilter.cpp:1249
 #, kde-format
 msgid "Usage: %1RAW [OPEN | CLOSE]"
-msgstr ""
+msgstr "שימוש: %1RAW [OPEN | CLOSE]"
 
 #: src/irc/outputfilter.cpp:1289
 #, kde-format
@@ -6479,13 +6479,13 @@ msgid "Removed %1 from your ignore list."
 msgstr "המשתמש %1 הוסר מרשימת ההתעלמות שלך."
 
 #: src/irc/outputfilter.cpp:1615
-#, fuzzy, kde-format
+#, kde-format
 msgid "No such ignore: %2"
 msgid_plural "No such ignores: %2"
-msgstr[0] "אין כזה כינוי: %1."
-msgstr[1] "אין כזה כינוי: %1."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "אין כזאת התעלמות: %2"
+msgstr[1] "אין כאלו התעלמויות: %2"
+msgstr[2] "אין כאלו התעלמויות: %2"
+msgstr[3] "אין כאלו התעלמויות: %2"
 
 #: src/irc/outputfilter.cpp:1648
 #, kde-format
@@ -6647,7 +6647,7 @@ msgstr "%1 (%2) עזב/ה את השרת (%3)."
 #, kde-format
 msgctxt "The command mentioned is executed in a shell prior to connecting."
 msgid "Running pre-connect shell command..."
-msgstr ""
+msgstr "הרצת פקודת מעטפת טרום התחברות…"
 
 #: src/irc/server.cpp:411
 #, kde-format
@@ -6658,7 +6658,7 @@ msgstr "פקודת טרום המעטפת הופעלה בהצלחה!"
 #, kde-format
 msgctxt "An error message from KDE or Qt is appended."
 msgid "There was a problem while executing the command: "
-msgstr ""
+msgstr "אירעה תקלה בהרצת הפקודה: "
 
 #: src/irc/server.cpp:415 src/irc/server.cpp:427
 #, kde-format
@@ -6685,7 +6685,7 @@ msgstr "משא ומתן על יכולות מול השרת…"
 msgid ""
 "Server does not support %1 as SASL authentication mechanism, skipping SASL "
 "authentication."
-msgstr ""
+msgstr "השרת לא תומך ב־%1 כמנגנון אימות SASL, נדלג על אימות SASL."
 
 #: src/irc/server.cpp:790
 #, kde-format
@@ -7278,7 +7278,7 @@ msgstr ""
 "הרשת %2 צריכה להכיל לפחות שרת אחד."
 
 #: src/irc/serverlistdialog.cpp:203
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You cannot delete the selected server.\n"
 "\n"
@@ -7288,15 +7288,21 @@ msgid_plural ""
 "\n"
 "The network %2 needs to have at least one server."
 msgstr[0] ""
-"אין באפשרותך למחוק את השרת נבחר.\n"
+"לא ניתן למחוק את השרת הנבחר.\n"
 "\n"
-"הרשת %2 צריכה להכיל לפחות שרת אחד."
+"לרשת %2 דרוש שרת אחד לפחות."
 msgstr[1] ""
-"אין באפשרותך למחוק את השרתים הנבחרים.\n"
+"לא ניתן למחוק את השרתים הנבחרים.\n"
 "\n"
-"הרשת %2 צריכה להכיל לפחות שרת אחד."
+"לרשת %2 דרוש שרת אחד לפחות."
 msgstr[2] ""
+"לא ניתן למחוק את השרתים הנבחרים.\n"
+"\n"
+"לרשת %2 דרוש שרת אחד לפחות."
 msgstr[3] ""
+"לא ניתן למחוק את השרתים הנבחרים.\n"
+"\n"
+"לרשת %2 דרוש שרת אחד לפחות."
 
 #: src/irc/serverlistdialog.cpp:219
 #, kde-format
@@ -7885,6 +7891,8 @@ msgstr "יוצא ומפעיל מחדש את Konversation (אם מופעל, אח�
 msgid ""
 "Sets KUniqueApplication::NonUniqueInstance (debug only, use with caution)"
 msgstr ""
+"הגדרת KUniqueApplication::NonUniqueInstance (ניפוי שגיאות בלבד, לנקוט במשנה "
+"זהירות)"
 
 #: src/mainwindow.cpp:135
 #, kde-format
