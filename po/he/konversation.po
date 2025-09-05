@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-09-01 08:13+0300\n"
+"PO-Revision-Date: 2025-09-04 10:01+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -483,7 +483,7 @@ msgstr "השמע צפצוף &מערכת בעץ קבלת פעמון ASCII"
 #: src/config/chatwindowbehaviour_config.ui:45
 #, kde-format
 msgid "Hide &Join/Part/Nick events"
-msgstr "הסתר אירועים של &כניסה/יציאה/כינויים"
+msgstr "הסתרת אירועים של &כניסה/עזיבה/כינויים"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_DisableExpansion)
 #: src/config/chatwindowbehaviour_config.ui:52
@@ -1124,9 +1124,9 @@ msgstr "פתחות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DccSpecificSendPorts)
 #: src/config/dcc_configui.ui:254
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable specific &ports for DCC transfer server:"
-msgstr "אפשר י&ציאות מסוימות עבור שליחות DCC:"
+msgstr "לאפשר &פתחות מסוימות לשרת העברות DCC:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
@@ -1139,7 +1139,7 @@ msgstr "אל"
 #: src/config/dcc_configui.ui:307
 #, kde-format
 msgid "Enable specific p&orts for DCC chat:"
-msgstr "אפשר &יציאות מסוימות עבור שיחות DCC:"
+msgstr "לאפשר &פתחות מסוימות עבור שיחות DCC:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CustomTextFont)
 #: src/config/fontappearance_config.ui:28
@@ -1545,7 +1545,7 @@ msgstr "כל האירועים"
 #: src/config/konversation.kcfg:446 src/config/launcherentry_config.ui:61
 #, kde-format
 msgid "Channels and queries with events"
-msgstr ""
+msgstr "ערוצים ושאילתות עם אירועים"
 
 #. i18n: ectx: label, entry (OpenWatchedNicksAtStartup), group (Notify List)
 #: src/config/konversation.kcfg:577
@@ -1569,7 +1569,7 @@ msgstr "מ&צב ספירה:"
 #: src/config/launcherentry_config.ui:72
 #, kde-format
 msgid "Counted Events"
-msgstr ""
+msgstr "אירועים שנספרו"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LauncherEntryCountUseMsgs)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TabNotificationsMsgs)
@@ -1649,7 +1649,7 @@ msgstr "הפעלת &תיעוד"
 #: src/config/log_config.ui:33
 #, kde-format
 msgid "Only log private conversations (queries, DCC chats)"
-msgstr ""
+msgstr "לתעד דיונים אישיים בלבד (שאילתות, שיחות DCC)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_LowerLog)
 #: src/config/log_config.ui:40
@@ -2388,7 +2388,7 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... quitting Konversation via the tray icon"
-msgstr "... יציאה מ־Konversation דרך לוח העגינה"
+msgstr "… יציאה מ־Konversation דרך סמל שורת המשימות"
 
 #: src/config/warnings_config.cpp:188
 #, kde-format
@@ -2738,10 +2738,10 @@ msgid "Could not open a socket for listening: %1"
 msgstr "לא יכול לפתוח שקע (socket) להאזנה: %1"
 
 #: src/dcc/chat.cpp:370
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port"
 msgid "Offering DCC %1 connection to %2 on port %3..."
-msgstr "מציע שיחת DCC %1 אל %2 ביציאה <numid>%3</numid>..."
+msgstr "מוצעת שיחת DCC %1 מול %2 דרך הפתחה %3…"
 
 #: src/dcc/chat.cpp:431
 #, kde-format
@@ -2756,11 +2756,11 @@ msgid "Chat"
 msgstr "שיחה"
 
 #: src/dcc/chat.cpp:465
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port"
 msgid "Establishing DCC %1 connection to %2 (%3:%4)..."
-msgstr "יוצר שיחת %1 DCC עם %2 (בכתובת %3:<numid>%4</numid>)..."
+msgstr "נוצרת שיחת %1 DCC מול %2 (%3:%4)…"
 
 #: src/dcc/chat.cpp:482
 #, kde-format
@@ -2790,17 +2790,17 @@ msgid "Connection closed."
 msgstr "החיבור נסגר."
 
 #: src/dcc/chatcontainer.cpp:110
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port"
 msgid "DCC %1 with %2 on port %3."
-msgstr "שיחת DCC %1 עם %2 ביציאה <numid>%3</numid>."
+msgstr "שיחת DCC %1 מול %2 דרך פתחה %3."
 
 #: src/dcc/chatcontainer.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port"
 msgid "DCC %1 with %2 on %3:%4."
-msgstr "שיחת DCC %1 עם %2 בכתובת %3:<numid>%4</numid>."
+msgstr "שיחת DCC %1 מול %2 דרך %3:%4."
 
 #: src/dcc/chatcontainer.cpp:139 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
@@ -2855,7 +2855,7 @@ msgstr "התקבלה בקשת CTCO-%1 בלתי ידועה מאת %2"
 #: src/dcc/dcccommon.cpp:152
 #, kde-format
 msgid "No vacant port"
-msgstr "אין יציאה זמינה"
+msgstr "אין פתחה זמינה"
 
 #: src/dcc/dcccommon.cpp:163
 #, kde-format
@@ -7015,7 +7015,7 @@ msgstr "כתובת השרת, או מספר ה־IP של השרת. irchelp.org מ�
 #: src/irc/serverdialogui.ui:46 src/quickconnectdialog.cpp:52
 #, kde-format
 msgid "&Port:"
-msgstr "&יציאה:"
+msgstr "&פתחה:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, m_portSBox)
 #: src/irc/serverdialogui.ui:56
@@ -7024,7 +7024,7 @@ msgid ""
 "Enter the port number required to connect to the server. For most servers, "
 "this should be <b>6667</b>."
 msgstr ""
-"הכנס את מספר היציאה הנדרשת לחיבור לשרת. עבור רב השרתים זה צריך להיות "
+"נא למלא את מספר הפתחה הנדרשת לחיבור לשרת. עבור רוב השרתים זה אמור להיות "
 "<b>6667</b>."
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, m_sslChBox)
@@ -7823,7 +7823,7 @@ msgstr "שרת"
 #: src/main.cpp:86
 #, kde-format
 msgid "Port to use"
-msgstr "יציאה לשימוש"
+msgstr "פתחה לשימוש"
 
 #: src/main.cpp:86
 #, kde-format

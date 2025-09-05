@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: extragear-network-kde4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-04-21 10:49+0300\n"
+"PO-Revision-Date: 2025-09-04 15:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8335,32 +8335,32 @@ msgstr "Geçerli sekmedeki imleyici çizgileri temizle"
 #: src/mainwindow.cpp:429
 #, kde-format
 msgid "Enlarge Font Size"
-msgstr "Yazıtipi Boyutunu Büyüt"
+msgstr "Yazıtipi Puntosunu Büyüt"
 
 #: src/mainwindow.cpp:433
 #, kde-format
 msgid "Increase the current font size"
-msgstr "Geçerli yazıtipi boyutunu artır"
+msgstr "Geçerli yazıtipi puntosunu artır"
 
 #: src/mainwindow.cpp:438
 #, kde-format
 msgid "Reset Font Size"
-msgstr "Yazıtipi Boyutunu Sıfırla"
+msgstr "Yazıtipi Puntosunu Sıfırla"
 
 #: src/mainwindow.cpp:442
 #, kde-format
 msgid "Reset the current font size to settings values"
-msgstr "Geçerli yazıtipi boyutunu ayar değerlerine sıfırla"
+msgstr "Geçerli yazıtipi puntosunu ayar değerlerine sıfırla"
 
 #: src/mainwindow.cpp:447
 #, kde-format
 msgid "Shrink Font Size"
-msgstr "Yazıtipi Boyutunu Küçült"
+msgstr "Yazıtipi Puntosunu Küçült"
 
 #: src/mainwindow.cpp:451
 #, kde-format
 msgid "Decrease the current font size"
-msgstr "Geçerli yazıtipi boyutunu azalt"
+msgstr "Geçerli yazıtipi puntosunu azalt"
 
 #: src/mainwindow.cpp:456
 #, kde-format
