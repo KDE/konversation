@@ -1879,7 +1879,11 @@ void InputFilter::parseNumeric(const QString &prefix, int command, QStringList &
 
                     if(m_server->capabilities() & Server::WHOX && m_server->capabilities() & Server::ExtendedJoin)
                     {
-                        nickInfo->setAccount(parameterList.value(8));
+                        // Where extjoin uses '*', WHOX uses '0'
+                        auto account = parameterList.value(8);
+                        if (account == QLatin1Char('0'))
+                            account.clear();
+                        nickInfo->setAccount(account);
                     }
                 }
                 // Display message only if this was not an automatic request.
