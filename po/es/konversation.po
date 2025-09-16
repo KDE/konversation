@@ -7113,7 +7113,7 @@ msgctxt ""
 "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = "
 "file size"
 msgid "Resuming download of \"%1\" from %2 starting at %3% of %4..."
-msgstr "Reanudando la descarga de «%1» de %2 empezando en el %3% de %4…"
+msgstr "Reanudando la descarga de «%1» de %2 empezando en el %3 % de %4…"
 
 #: src/irc/server.cpp:2682
 #, kde-format
@@ -7129,7 +7129,7 @@ msgctxt ""
 "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 "
 "= file size"
 msgid "Resuming upload of \"%1\" to %2 starting at %3% of %4..."
-msgstr "Reanudando el envío de «%1» a %2 empezando en el %3% de %4…"
+msgstr "Reanudando el envío de «%1» a %2 empezando en el %3 % de %4…"
 
 #: src/irc/server.cpp:2750
 #, kde-format
