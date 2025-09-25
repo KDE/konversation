@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-09-04 10:01+0300\n"
+"PO-Revision-Date: 2025-09-24 15:00+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2467,9 +2467,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OpenWatchedNicksAtStartup)
 #: src/config/watchednicknames_configui.ui:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show Watched Nicks tab on &application startup"
-msgstr "&הצג כינויים ברשימת התצפית בכרטיסייה בעת הפעלת היישום"
+msgstr "הצגת לשונית &כינויים במעקב עם הפעלת היישום"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, notifyActionLabel)
 #: src/config/watchednicknames_configui.ui:66
@@ -2717,12 +2717,11 @@ msgstr "אין אפשרות לשלוח אישור Reverse DCC SEND %1 אל הצ�
 
 #: src/dcc/chat.cpp:303 src/dcc/chat.cpp:335 src/dcc/transferrecv.cpp:589
 #: src/dcc/transfersend.cpp:396
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Failed to forward port %1. Sending DCC request to remote user regardless."
 msgstr ""
-"העברה של יציאה <numid>%1</numid> נכשלה. מעביר ישירה אל המשתמשים המרוחק בכל "
-"מקרה."
+"העברת הפתחה %1 נכשלה. נשלחת בקשת DCC (העברה ישירה) למשתמש המרוחק ללא קשר."
 
 #: src/dcc/chat.cpp:317
 #, kde-format
@@ -4043,7 +4042,7 @@ msgstr "כינוי מרוחק:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, m_awayNickEdit)
 #: src/identitydialog.ui:370
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Enter a nickname that indicates you are away. Whenever you perform an <b>/"
 "away msg</b> command in any channel joined with this Identity, Konversation "
@@ -4053,9 +4052,6 @@ msgid ""
 "will automatically change your nickname back to the original. If you do not "
 "wish to automatically change your nickname when going away, leave blank."
 msgstr ""
-"הכנס כינוי המראה שאתה במצב מרוחק, או לא זמין. כאשר אתה מבצע פקודת <b>/away "
-"XXX</b> בשדה הקלט בכל חדר מחובר בזהות הזאת, Konversation ישנה את הכינוי שלך "
-"לכינוי המרוחק שלך. "
 
 #. i18n: ectx: property (whatsThis), widget (QGroupBox, automaticAwayGroup)
 #: src/identitydialog.ui:383
@@ -4358,10 +4354,10 @@ msgstr "(%1) עזבת את השרת (%2)."
 
 #: src/irc/channel.cpp:1146 src/irc/channel.cpp:1148 src/irc/channel.cpp:1171
 #: src/irc/channel.cpp:1174 src/viewer/ircview.cpp:841
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message type"
 msgid "Part"
-msgstr "עזב"
+msgstr "עזיבה"
 
 #: src/irc/channel.cpp:1146
 #, kde-format
