@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-09-24 15:00+0300\n"
+"PO-Revision-Date: 2025-10-05 12:32+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2555,13 +2555,13 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: src/connectionmanager.cpp:262
-#, fuzzy, kde-format
+#, kde-format
 msgid "Trying to reconnect to %2 (port %3) in 1 second."
 msgid_plural "Trying to reconnect to %2 (port %3) in %1 seconds."
-msgstr[0] "מנסה להתחבר מחדש אל %2 (יציאה <numid>%3ֵ</numid>) בתוך שנייה אחת."
-msgstr[1] "מנסה להתחבר מחדש אל %2  (יציאה <numid>%3</numid>) בתוך %1 שניות."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "מתבצע ניסיון להתחבר מחדש אל %2 (פתחה %3) בתוך שנייה."
+msgstr[1] "מתבצע ניסיון להתחבר מחדש אל %2 (פתחה %3) בתוך שתי שניות."
+msgstr[2] "מתבצע ניסיון להתחבר מחדש אל %2 (פתחה %3) בתוך %1 שניות."
+msgstr[3] "מתבצע ניסיון להתחבר מחדש אל %2 (פתחה %3) בתוך %1 שניות."
 
 #: src/connectionmanager.cpp:275 src/dcc/chatcontainer.cpp:264
 #: src/irc/inputfilter.cpp:1530 src/irc/inputfilter.cpp:1534
@@ -3447,7 +3447,7 @@ msgstr "שגיאת העברה"
 #: src/dcc/transferrecv.cpp:804
 #, kde-format
 msgid "KIO error: %1"
-msgstr "שגיאת: KIO: ‏  %1"
+msgstr "שגיאת KIO‏: %1"
 
 #: src/dcc/transferrecv.cpp:825 src/dcc/transfersend.cpp:592
 #, kde-format
@@ -5923,7 +5923,7 @@ msgstr "אימות SASL נכשל."
 #: src/irc/inputfilter.cpp:2512
 #, kde-format
 msgid "SASL authentication aborted."
-msgstr "אימות  ְSASL בוטל."
+msgstr "אימות SASL בוטל."
 
 #: src/irc/invitedialog.cpp:22
 #, kde-format
@@ -6163,12 +6163,12 @@ msgstr "גלמי"
 #: src/irc/outputfilter.cpp:380
 #, kde-format
 msgid "Usage: %1JOIN <channel> [password]"
-msgstr "שימוש:  %1JOIN <ערוץ> [סיסמה]"
+msgstr "שימוש: %1JOIN <ערוץ> [סיסמה]"
 
 #: src/irc/outputfilter.cpp:420
 #, kde-format
 msgid "Usage: %1KICK <nick> [reason]"
-msgstr "שימוש:  %1KICK <כינוי> [סיבה]"
+msgstr "שימוש: %1KICK <כינוי> [סיבה]"
 
 #: src/irc/outputfilter.cpp:434
 #, kde-format
@@ -7465,7 +7465,7 @@ msgstr "Shintaro Matsuoka"
 #: src/main.cpp:39
 #, kde-format
 msgid "DCC, Encoding handling, OSD positioning"
-msgstr "תמיכה ב־DCC, שיפורי קידודים,  תצוגה על המסך"
+msgstr "תמיכה ב־DCC, שיפורי קידודים, תצוגה על המסך"
 
 #: src/main.cpp:40
 #, kde-format
@@ -8368,7 +8368,7 @@ msgstr "המשתמש %1 הצטרף אל %2"
 #: src/notificationhandler.cpp:231 src/notificationhandler.cpp:238
 #, kde-format
 msgid "%1 parted %2"
-msgstr "המשתמש %1 עזב  את %2"
+msgstr "המשתמש %1 עזב את %2"
 
 #: src/notificationhandler.cpp:250
 #, kde-format
@@ -9563,8 +9563,8 @@ msgid ""
 "chat. This can cause connection resets or flood kills. Do you really want to "
 "continue?</qt>"
 msgstr ""
-"<qt>ניסית להדביק כמות גדולה של טקסט (%1 או %2) לחלון השיחה. זה יכול "
-"לגרוםלאיפוס החיבור או לניתוק הצפה. להמשיך?</qt>"
+"<qt>ניסית להדביק כמות גדולה של טקסט (%1 או %2) לחלון השיחה. זה יכול לגרום "
+"לאיפוס החיבור או לניתוק הצפה. להמשיך?</qt>"
 
 #: src/viewer/ircinput.cpp:484
 #, kde-format
