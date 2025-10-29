@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-10-05 12:32+0300\n"
+"PO-Revision-Date: 2025-10-28 17:13+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6361,7 +6361,7 @@ msgstr "שימוש: %1RAW [OPEN | CLOSE]"
 #, kde-format
 msgctxt "%1 = Comma-separated list of nicknames"
 msgid "The notify list has been emptied (removed %1)."
-msgstr ""
+msgstr "רשימת ההתראות התרוקנה (הוסרו %1)."
 
 #: src/irc/outputfilter.cpp:1292
 #, kde-format
@@ -6412,12 +6412,12 @@ msgstr "סיסמת מפעיל של IRC"
 #: src/irc/outputfilter.cpp:1396
 #, kde-format
 msgid "%1BAN without channel name works only from inside a channel."
-msgstr ""
+msgstr "%1BAN בלי שם ערוץ עובד רק מתוך ערוץ."
 
 #: src/irc/outputfilter.cpp:1399
 #, kde-format
 msgid "%1KICKBAN without channel name works only from inside a channel."
-msgstr ""
+msgstr "%1KICKBAN בלי שם ערוץ עובד רק מתוך ערוץ."
 
 #: src/irc/outputfilter.cpp:1434
 #, kde-format
@@ -6440,12 +6440,12 @@ msgstr ""
 #: src/irc/outputfilter.cpp:1479
 #, kde-format
 msgid "%1UNBAN without channel name works only from inside a channel."
-msgstr ""
+msgstr "%1UNBAN בלי שם ערוץ עובד רק מתוך ערוץ."
 
 #: src/irc/outputfilter.cpp:1493
 #, kde-format
 msgid "Usage: %1UNBAN [channel] pattern"
-msgstr ""
+msgstr "שימוש: %1UNBAN [ערוץ] תבנית"
 
 #: src/irc/outputfilter.cpp:1539
 #, kde-format
@@ -6462,12 +6462,12 @@ msgstr "התעלם"
 #: src/irc/outputfilter.cpp:1549
 #, kde-format
 msgid "Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>"
-msgstr ""
+msgstr "שימוש: %1IGNORE [ -ALL ] <משתמש 1> <משתמש 2> … <משתמש n>"
 
 #: src/irc/outputfilter.cpp:1560
 #, kde-format
 msgid "Usage: %1UNIGNORE <user 1> <user 2> ... <user n>"
-msgstr ""
+msgstr "שימוש: %1UNIGNORE <משתמש 1> <משתמש 2> … <משתמש n>"
 
 #: src/irc/outputfilter.cpp:1608
 #, kde-format
@@ -6529,12 +6529,15 @@ msgid ""
 "distributor about a Konversation package with QCA support, or rebuild "
 "Konversation with QCA present."
 msgstr ""
+"הגדרת מפתח הצפנה דורשת ש־Konversation ייבנה עם תמיכה בספריית ארכיטקטורת "
+"הקריפטוגרפיה של Qt ‏(QCA). נא ליצור קשר עם מפיץ החבילה בנוגע לחבילת "
+"Konversation עם QCA או לבנות את Konversation מחדש עם QCA."
 
 #: src/irc/outputfilter.cpp:1719
 #, kde-format
 msgid ""
 "Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target."
-msgstr ""
+msgstr "שימוש: %1keyx <כינוי|ערוץ> מזניק החלפת מפתח DH1080 עם היעד."
 
 #: src/irc/outputfilter.cpp:1722
 #, kde-format
@@ -6552,6 +6555,7 @@ msgid ""
 "Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or "
 "channel"
 msgstr ""
+"שימוש: %1delkey <כינוי> או <ערוץ> מוחק את מפתח ההצפנה מול כינוי או ערוץ"
 
 #: src/irc/outputfilter.cpp:1757
 #, kde-format
