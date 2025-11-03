@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-10-28 17:13+0200\n"
+"PO-Revision-Date: 2025-11-02 11:08+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1191,9 +1191,9 @@ msgstr "&השתמש במגש המערכת עבור הודעות חדשות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
-#, fuzzy, kde-format
+#, kde-format
 msgid "Only &notify when a highlight is triggered or your current nick is used"
-msgstr "התרע רק כאשר מוקפצת הדגשה הכינוי שלך בשימוש"
+msgstr "להודיע רק כאשר ה&"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_TrayActivateNoWindow)
 #: src/config/generalbehavior_configui.ui:75
@@ -2604,13 +2604,12 @@ msgid "Create connection"
 msgstr "צור חיבור"
 
 #: src/connectionmanager.cpp:527
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You are presently connected to %1 via '%2' (port %3). Do you want to switch "
 "to '%4' (port %5) instead?"
 msgstr ""
-"אתה כבר מחובר אל %1 באמצעות \"%2\" (יציאה %3). האם ברצונך להחליף את החיבור "
-"אל \"%4\" (יציאה <numid>%5</numid>) במקום?"
+"כרגע יש לך חיבור מול %1 דרך ‚%2’ (פתחה %3). להחליף אל ‚%4’ (פתחה %5) במקום?"
 
 #: src/connectionmanager.cpp:534
 #, kde-format
@@ -8911,9 +8910,9 @@ msgid "(away)"
 msgstr "(לא פה)"
 
 #: src/viewer/awaylabel.cpp:19
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Unaway"
-msgstr "(מרוחק)"
+msgstr "&ביטול ריחוק"
 
 #: src/viewer/awaylabel.cpp:22
 #, kde-format
