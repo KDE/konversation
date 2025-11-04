@@ -569,7 +569,7 @@ msgid ""
 "translating them into human readable words. E.g. '*** Channel modes: no "
 "messages from outside' will become '*** Channel modes: n'"
 msgstr ""
-"Conserver la chaîne de description du mode du canal comme une combinaison de "
+"Conserver la chaine de description du mode du canal comme une combinaison de "
 "caractères plutôt que de les traduire en mots compréhensibles. Par exemple, "
 "« *** Modes du canal : aucun message de l'extérieur n'est autorisé » devient "
 "« *** Modes du canal : n »"
@@ -721,7 +721,7 @@ msgstr "Couleurs personnalisées"
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
 msgstr ""
-"&Utiliser des couleurs personnalisées pour la boîte de saisie, la liste des "
+"&Utiliser des couleurs personnalisées pour la boite de saisie, la liste des "
 "pseudos et la liste des onglets"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
@@ -1268,13 +1268,13 @@ msgstr ""
 #: src/config/generalbehavior_configui.ui:26
 #, kde-format
 msgid "Enable System Tray"
-msgstr "Activer l'incrustation dans la boîte à miniatures"
+msgstr "Activer l'incrustation dans la boite à miniatures"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotify)
 #: src/config/generalbehavior_configui.ui:38
 #, kde-format
 msgid "&Use system tray for new message notification"
-msgstr "&Utiliser la boîte à miniatures pour notifier de nouveaux messages"
+msgstr "&Utiliser la boite à miniatures pour notifier de nouveaux messages"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayNotifyOnlyOwnNick)
 #: src/config/generalbehavior_configui.ui:66
@@ -1292,9 +1292,9 @@ msgid ""
 "\", which will cause it to become visible in tray implementations that only "
 "offer access \"active\" icons."
 msgstr ""
-"Lorsque la fenêtre de Konversation est fermée, l'icône de la boîte à "
+"Lorsque la fenêtre de Konversation est fermée, l'icône de la boite à "
 "miniatures sera définie sur « Active », ce qui la rendra visible dans les "
-"implémentations de boîte à miniatures n'offrant l'accès qu'à des icônes "
+"implémentations de boite à miniatures n'offrant l'accès qu'à des icônes "
 "« actives »."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_TrayActivateNoWindow)
@@ -1302,7 +1302,7 @@ msgstr ""
 #, kde-format
 msgid "Tray icon becomes \"active\" when the window is closed"
 msgstr ""
-"L'icône de la boîte à miniatures devient « Active » lorsque la fenêtre est "
+"L'icône de la boite à miniatures devient « Active » lorsque la fenêtre est "
 "fermée."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideToTrayOnStartup)
@@ -1339,7 +1339,7 @@ msgstr "Comme un interpréteur"
 #: src/config/generalbehavior_configui.ui:125
 #, kde-format
 msgid "Shell-Like with Completion Box"
-msgstr "Comme un interpréteur avec une boîte d'auto-complément"
+msgstr "Comme un interpréteur avec une boite d'auto-complément"
 
 #. i18n: ectx: property (text), widget (QLabel, startOfLineLabel)
 #: src/config/generalbehavior_configui.ui:133
@@ -1622,7 +1622,7 @@ msgstr ""
 msgid ""
 "Enabling this will cause the input box to grow vertically when it fills up."
 msgstr ""
-"L'activation de ceci entraînera l'agrandissement vertical de la boîte de "
+"L'activation de ceci entraînera l'agrandissement vertical de la boite de "
 "saisie au fur et à mesure de son remplissage."
 
 #. i18n: ectx: label, entry, group (General Options)
@@ -1893,7 +1893,7 @@ msgstr "Afficher les me&ssages à l'écran"
 #: src/config/osd_configui.ui:141
 #, kde-format
 msgid "&If own nick appears in channel message"
-msgstr "S&i mon pseudo apparaît dans les messages du canal"
+msgstr "S&i mon pseudo apparait dans les messages du canal"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_OSDShowChannel)
 #: src/config/osd_configui.ui:148
@@ -2509,7 +2509,7 @@ msgctxt ""
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... quitting Konversation via the tray icon"
 msgstr ""
-"… terminaison de Konversation à partir de l'icône de la boîte à miniature"
+"… terminaison de Konversation à partir de l'icône de la boite à miniature"
 
 #: src/config/warnings_config.cpp:188
 #, kde-format
@@ -2553,13 +2553,13 @@ msgctxt ""
 "@item:inlistbox Checkbox item, determines whether warning dialog is shown; "
 "concludes sentence \"Show a warning dialog when...\""
 msgid "... closing the window will minimize to the system tray"
-msgstr "… la fermeture de la fenêtre la minimisera dans la boîte à miniature"
+msgstr "… la fermeture de la fenêtre la minimisera dans la boite à miniature"
 
 #. i18n: ectx: property (text), widget (QTreeWidget, dialogListView)
 #: src/config/warnings_configui.ui:29
 #, kde-format
 msgid "Show a warning dialog when..."
-msgstr "Afficher une boîte de dialogue d'avertissement quand…"
+msgstr "Afficher une boite de dialogue d'avertissement quand…"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseNotify)
 #: src/config/watchednicknames_configui.ui:24
@@ -3686,7 +3686,7 @@ msgstr ""
 #, kde-format
 msgid "The operation was successful. Should never happen in an error dialog."
 msgstr ""
-"L'opération a réussi. Ne devrait jamais arriver dans une boîte de dialogue "
+"L'opération a réussi. Ne devrait jamais arriver dans une boite de dialogue "
 "d'erreur."
 
 #: src/dcc/transfersend.cpp:605
@@ -4202,7 +4202,7 @@ msgid ""
 "away. Other IRC users do not see this horizontal line."
 msgstr ""
 "Avec cette option cochée, lorsque vous utiliserez la commande <b>/away</b>, "
-"une ligne horizontale apparaîtra dans le canal, marquant le moment auquel "
+"une ligne horizontale apparaitra dans le canal, marquant le moment auquel "
 "vous vous êtes absenté. Les autres utilisateurs du réseau « IRC » ne verront "
 "pas cette ligne horizontale."
 
@@ -5440,8 +5440,8 @@ msgid ""
 msgstr ""
 "<p>La liste filtrée des canaux est affichée ici. Veuillez noter que si vous "
 "n'utilisez pas d'expressions rationnelles, Konversation affichera dans la "
-"liste tout canal dont le nom contiendra la chaîne de filtrage saisie. Le nom "
-"du canal n'a pas besoin de commencer par la chaîne que vous avez saisie.</"
+"liste tout canal dont le nom contiendra la chaine de filtrage saisie. Le nom "
+"du canal n'a pas besoin de commencer par la chaine que vous avez saisie.</"
 "p><p>Veuillez sélectionner le canal que vous souhaitez rejoindre en cliquant "
 "dessus. Un clic droit sur un canal vous permettra d'obtenir une liste de "
 "toutes les adresses Internet mentionnées dans le sujet du canal."
@@ -5462,7 +5462,7 @@ msgstr "Suje&t"
 #: src/irc/channellistpanelui.ui:121
 #, kde-format
 msgid "Enter a filter string here."
-msgstr "Saisissez une chaîne de filtrage ici."
+msgstr "Saisissez une chaine de filtrage ici."
 
 #. i18n: ectx: property (placeholderText), widget (KLineEdit, m_filterLine)
 #: src/irc/channellistpanelui.ui:127 src/urlcatcher.cpp:147
@@ -7905,7 +7905,7 @@ msgstr "Matthias Gierlings"
 #: src/main.cpp:49
 #, kde-format
 msgid "Color configurator, Highlight dialog"
-msgstr "Configuration des couleurs, boîte de dialogue « Surlignement »"
+msgstr "Configuration des couleurs, boite de dialogue « Surlignement »"
 
 #: src/main.cpp:50
 #, kde-format
@@ -8007,7 +8007,7 @@ msgstr "Frauke Oster"
 #: src/main.cpp:59
 #, kde-format
 msgid "System tray patch"
-msgstr "Correctif de l'intégration dans la boîte à miniatures"
+msgstr "Correctif de l'intégration dans la boite à miniatures"
 
 #: src/main.cpp:60
 #, kde-format
@@ -8336,7 +8336,7 @@ msgstr "Paramètres du &canal…"
 #: src/mainwindow.cpp:212
 #, kde-format
 msgid "Open the channel settings dialog for this tab"
-msgstr "Ouvrir la boîte de dialogue des paramètres du canal pour cet onglet"
+msgstr "Ouvrir la boite de dialogue des paramètres du canal pour cet onglet"
 
 #: src/mainwindow.cpp:217 src/viewer/viewcontainer.cpp:908
 #, kde-format
@@ -8567,7 +8567,7 @@ msgstr "Insérer un caractère quelconque dans votre message IRC actuel"
 #: src/mainwindow.cpp:528
 #, kde-format
 msgid "Focus Input Box"
-msgstr "Se placer dans la boîte de saisie"
+msgstr "Se placer dans la boite de saisie"
 
 #: src/mainwindow.cpp:535
 #, kde-format
@@ -8621,13 +8621,13 @@ msgid ""
 "application.</p>"
 msgstr ""
 "<p>La fermeture de la fenêtre principale conservera Konversation lancé dans "
-"la boîte à miniatures. Utiliser le bouton <b>Quitter</b> du menu de "
+"la boite à miniatures. Utiliser le bouton <b>Quitter</b> du menu de "
 "<b>Konversation</b> pour quitter l'application.</p>"
 
 #: src/mainwindow.cpp:662
 #, kde-format
 msgid "Docking in System Tray"
-msgstr "Incrustation dans la boîte à miniatures"
+msgstr "Incrustation dans la boite à miniatures"
 
 #: src/mainwindow.cpp:806
 #, kde-format
@@ -9257,7 +9257,7 @@ msgid ""
 "You have selected more than one URL. A file dialog to set the destination "
 "will open for each. Do you really want to save several URLs at once?"
 msgstr ""
-"Vous avez sélectionné plus d'une URL. Une boîte de dialogue de fichiers "
+"Vous avez sélectionné plus d'une URL. Une boite de dialogue de fichiers "
 "permettant de choisir la destination s'ouvrira pour chaque URL. Voulez-vous "
 "vraiment les enregistrer toutes à la fois ?"
 
@@ -10040,7 +10040,7 @@ msgid ""
 "take effect until you restart Konversation. Each log file may have a "
 "separate setting."
 msgstr ""
-"Utilisez cette boîte pour définir la taille maximale de l'historique. Ce "
+"Utilisez cette boite pour définir la taille maximale de l'historique. Ce "
 "paramètre ne prendra effet qu'au prochain démarrage de Konversation. Chaque "
 "fichier d'historique peut avoir une configuration différente."
 
@@ -10261,7 +10261,7 @@ msgstr ""
 "saisies au cas ou vous souhaiteriez inclure certains de leurs textes dans "
 "votre nouveau sujet. Pour revenir à la sélection des saisies classique et "
 "obtenir un champ d'édition synchronisé, revenez au texte original ou fermez "
-"puis rouvrez cette boîte de dialogue."
+"puis rouvrez cette boite de dialogue."
 
 #: src/viewer/trayicon.cpp:23
 #, kde-format
