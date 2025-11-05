@@ -367,7 +367,7 @@ revision history. (see installation appendix comment) -->
 <para
 >Pour vous connecter à un serveur et à un canal, ouvrez &konversation;. La fenêtre <guilabel
 >Liste des serveurs</guilabel
-> apparaît.</para>
+> apparait.</para>
 
 <para>
 <screenshot>
@@ -868,7 +868,7 @@ Limits on Real Name and Ident?
 <para
 >La <guilabel
 >Liste des serveurs</guilabel
-> apparaît lors de l'ouverture de l'application &konversation;. Elle apparaît aussi lorsque vous sélectionnez <menuchoice
+> apparait lors de l'ouverture de l'application &konversation;. Elle apparait aussi lorsque vous sélectionnez <menuchoice
 ><guisubmenu
 >Fichier</guisubmenu
 ><guisubmenu
@@ -958,7 +958,7 @@ Limits on Real Name and Ident?
 >Nouveau</guibutton
 >, l'écran <guilabel
 >Nouveau réseau</guilabel
-> apparaît.</para>
+> apparait.</para>
 
 <para>
 <screenshot>
@@ -1231,7 +1231,7 @@ here, all the <guilabel
 
 <callout arearefs="pt-channellist-1"
 ><para
->Saisissez une chaîne de filtrage ici.</para
+>Saisissez une chaine de filtrage ici.</para
 ></callout>
 
 <callout arearefs="pt-channellist-2"
@@ -1248,7 +1248,7 @@ here, all the <guilabel
 
 <callout arearefs="pt-channellist-4"
 ><para
->La liste filtrée des canaux est affichée ici. Notez que si vous n'utilisez pas les expressions rationnelles, &konversation; listera tous les canaux dont le nom contient la chaîne de filtrage que vous avez saisie. Le nom du canal n'a pas besoin de commencer par la chaîne saisie.</para
+>La liste filtrée des canaux est affichée ici. Notez que si vous n'utilisez pas les expressions rationnelles, &konversation; listera tous les canaux dont le nom contient la chaine de filtrage que vous avez saisie. Le nom du canal n'a pas besoin de commencer par la chaine saisie.</para
 ></callout>
 
 <callout arearefs="pt-channellist-5"
@@ -1340,10 +1340,10 @@ depending upon your network bandwidth.  If your client is too slow, the server m
 ><para
 >Ceci est appelé la <interface
 >Ligne de saisie</interface
->. Elle n'est affichée que lorsque l'onglet actuel est un canal. Pour envoyer un message à tout le monde dans le canal, veuillez le saisir et appuyer sur la touche &Entree;. Votre message apparaîtra, avec ceux de tout le monde dans le cadre défilant du canal situé au-dessus. Chaque message est précédé de l'heure de réception et du &i18n-nickname; de l'utilisateur.</para>
+>. Elle n'est affichée que lorsque l'onglet actuel est un canal. Pour envoyer un message à tout le monde dans le canal, veuillez le saisir et appuyer sur la touche &Entree;. Votre message apparaitra, avec ceux de tout le monde dans le cadre défilant du canal situé au-dessus. Chaque message est précédé de l'heure de réception et du &i18n-nickname; de l'utilisateur.</para>
 
  <para
->Vous pouvez aussi coller du texte depuis le presse-papiers. Si le texte collé contient plus d'une ligne, une boîte de dialogue est affichée. Éditez le texte comme vous le souhaitez et cliquez sur <guibutton
+>Vous pouvez aussi coller du texte depuis le presse-papiers. Si le texte collé contient plus d'une ligne, une boite de dialogue est affichée. Éditez le texte comme vous le souhaitez et cliquez sur <guibutton
 >Ok</guibutton
 >. </para>
 
@@ -1506,7 +1506,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 
 <callout arearefs="pt-channeltour-5"
 ><para
->Cliquez sur ce bouton pour changer votre propre &i18n-nickname;. Il n'apparaîtra que si l'onglet actuel est un canal. Pour cacher ce bouton, choisissez <menuchoice
+>Cliquez sur ce bouton pour changer votre propre &i18n-nickname;. Il n'apparaitra que si l'onglet actuel est un canal. Pour cacher ce bouton, choisissez <menuchoice
 ><guisubmenu
 >Configuration</guisubmenu
 > <guisubmenu
@@ -1660,7 +1660,7 @@ Settings->Configure Konversation->Notifications->Tabs->Use colored LEDs needs to
 
 <note>
 <para
->Vous pouvez contrôler la façon dont les messages sont affichés dans le panneau défilant des messages pour les canaux et les conversations. Par exemple, vous pouvez changer la couleur des messages, jouer un son lorsqu'un message contient une certaine chaîne de caractères, ou répondre automatiquement aux messages. Consultez la rubrique sur le <link linkend="highlighting"
+>Vous pouvez contrôler la façon dont les messages sont affichés dans le panneau défilant des messages pour les canaux et les conversations. Par exemple, vous pouvez changer la couleur des messages, jouer un son lorsqu'un message contient une certaine chaine de caractères, ou répondre automatiquement aux messages. Consultez la rubrique sur le <link linkend="highlighting"
 >Mise en évidence de messages</link
 > pour plus d'informations. </para>
 </note>
@@ -2424,7 +2424,7 @@ part of the listing.
 ></callout>
 <callout arearefs="pt-highlight-3"
 ><para
->Saisissez un modèle de chaîne de caractères ici. Tout message reçu correspondant à ce modèle, où que ce soit dans le message, activera le surlignement du message. </para
+>Saisissez un modèle de chaine de caractères ici. Tout message reçu correspondant à ce modèle, où que ce soit dans le message, activera le surlignement du message. </para
 ></callout>
 <callout arearefs="pt-highlight-4"
 ><para
@@ -2469,7 +2469,7 @@ part of the listing.
 <para
 ><acronym
 >L'affichage à l'écran</acronym
-> (&osd;) est une fonctionnalité unique de &konversation;. Avec l'&osd;, les messages envoyés sur les canaux apparaîtront sur votre écran, même si &konversation; est minimisé. Voici un exemple d'&osd; en action. Le message dans le coin en haut à gauche de l'écran vient de &konversation; qui est lancé mais minimisé dans la barre des tâches.</para>
+> (&osd;) est une fonctionnalité unique de &konversation;. Avec l'&osd;, les messages envoyés sur les canaux apparaitront sur votre écran, même si &konversation; est minimisé. Voici un exemple d'&osd; en action. Le message dans le coin en haut à gauche de l'écran vient de &konversation; qui est lancé mais minimisé dans la barre des tâches.</para>
 
 <para>
 <screenshot>
@@ -2557,7 +2557,7 @@ part of the listing.
 
 <callout arearefs="pt-osd-5"
 ><para
->Cochez les cases ici pour sélectionner le type de messages que vous souhaitez voir apparaître à l'écran.</para
+>Cochez les cases ici pour sélectionner le type de messages que vous souhaitez voir apparaitre à l'écran.</para
 ></callout>
 
 <callout arearefs="pt-osd-6"
@@ -2789,7 +2789,7 @@ part of the listing.
 >boutons rapides</interface
 >. La colonne <guilabel
 >Nom du bouton</guilabel
-> est le nom qui apparaîtra sur le bouton dans l'écran <link linkend="channel-screen-tour"
+> est le nom qui apparaitra sur le bouton dans l'écran <link linkend="channel-screen-tour"
 >principal</link
 >. Conservez des noms courts. La colonne <guilabel
 >Action du bouton</guilabel
@@ -3279,7 +3279,7 @@ part of the listing.
 >R</keycap
 ></keycombo
 >. <action
->Une ligne apparaîtra en bas du texte sur l'écran. La ligne pourra défiler avec le reste du texte de l'écran.</action
+>Une ligne apparaitra en bas du texte sur l'écran. La ligne pourra défiler avec le reste du texte de l'écran.</action
 > </para>
 
 <para
@@ -3417,7 +3417,7 @@ part of the listing.
 >Fenêtre de Discussion</guilabel
 >. La case <guilabel
 >Limite pour le défilement vers le haut</guilabel
-> apparaît sur cet écran. Si vous la mettez à <guilabel
+> apparait sur cet écran. Si vous la mettez à <guilabel
 >Illimité</guilabel
 > (zéro), les messages ne disparaissent pas du défilement. </para>
 
@@ -4606,7 +4606,7 @@ $@ | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "
 ></term>
 <listitem>
   <para
->Ce script est utilisé pour ouvrir votre navigateur et chercher une chaîne ou un numéro de bogue sur le Bugzilla de <ulink url="https://bugs.kde.org/"
+>Ce script est utilisé pour ouvrir votre navigateur et chercher une chaine ou un numéro de bogue sur le Bugzilla de <ulink url="https://bugs.kde.org/"
 >&kde;</ulink
 >.</para>
 <para
@@ -5091,7 +5091,7 @@ or menu bars. -->
 		<listitem
 ><para>
 				<action
->Cherche une chaîne texte dans l'écran actuel.</action>
+>Cherche une chaine texte dans l'écran actuel.</action>
 			</para
 ></listitem>
 	</varlistentry>
@@ -5111,7 +5111,7 @@ or menu bars. -->
 		<listitem
 ><para>
 				<action
->Cherche de nouveau les chaînes de caractères de l'écran actuel en utilisant la chaîne texte précédemment saisie.</action>
+>Cherche de nouveau les chaines de caractères de l'écran actuel en utilisant la chaine texte précédemment saisie.</action>
 			</para
 ></listitem>
 	</varlistentry>
