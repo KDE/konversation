@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: konversation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-19 00:41+0000\n"
-"PO-Revision-Date: 2025-11-02 11:08+0200\n"
+"PO-Revision-Date: 2025-11-04 15:06+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -471,13 +471,13 @@ msgstr "כללי"
 #, kde-format
 msgid ""
 "Sounds the system bell when you receive an ASCII BEL (0x07) control character"
-msgstr "השמע את צליל המערכת כאשר מתקבל אצלך צלצול אסקיי (תו 0x07)"
+msgstr "השמעת צפצוף המערכת כאשר מתקבל אצלך צפצוף ASCII (תו 0x07)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Beep)
 #: src/config/chatwindowbehaviour_config.ui:38
 #, kde-format
 msgid "Enable s&ystem bell on incoming ASCII BEL"
-msgstr "השמע צפצוף &מערכת בעץ קבלת פעמון ASCII"
+msgstr "השמעת צפצוף &מערכת בעץ קבלת פעמון ASCII"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUnimportantEvents)
 #: src/config/chatwindowbehaviour_config.ui:45
@@ -498,13 +498,13 @@ msgstr ""
 #: src/config/chatwindowbehaviour_config.ui:55
 #, no-c-format, kde-format
 msgid "Disable variable (e.g. %C, %B, %G...) e&xpansion"
-msgstr "בטל &הרחבת משתנים (למשל %C, %B, %G...) "
+msgstr "ביטול &הרחבת משתנים (למשל ‎%C,‏ ‎%B,‏ ‎%G…)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_RedirectServerAndAppMsgToStatusPane)
 #: src/config/chatwindowbehaviour_config.ui:62
 #, kde-format
 msgid "&Redirect status messages to the server status window"
-msgstr "&נתב את כל הודעות המצב אל חלון מצב השרת"
+msgstr "ה&פניית כל הודעות המצב אל חלון מצב השרת"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_UseLiteralModes)
 #: src/config/chatwindowbehaviour_config.ui:69
@@ -651,7 +651,7 @@ msgstr "צבעים מותאמים אישית"
 #: src/config/colorsappearance_config.ui:36
 #, kde-format
 msgid "&Use custom colors for input box, nickname list and tab list"
-msgstr "&השתמש בצבעים מותאמים אישית עבור שדה הקלט, שם הכינוי ורשימת הכרטיסיות"
+msgstr "לה&שתמש בצבעים מותאמים אישית עבור שדה הקלט, שם הכינוי ורשימת הלשוניות"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel3)
 #: src/config/colorsappearance_config.ui:273
@@ -8022,12 +8022,12 @@ msgstr "&כרטיסייה הבאה"
 #: src/mainwindow.cpp:276
 #, kde-format
 msgid "&Previous Tab"
-msgstr "&כרטיסייה קודמת"
+msgstr "&לשונית קודמת"
 
 #: src/mainwindow.cpp:284
 #, kde-format
 msgid "Close &Tab"
-msgstr "סגור &כרטיסייה"
+msgstr "סגירת &לשונית"
 
 #: src/mainwindow.cpp:292
 #, kde-format
@@ -8037,12 +8037,12 @@ msgstr "מעבר ללשונית האחרונה שהייתה במיקוד"
 #: src/mainwindow.cpp:299
 #, kde-format
 msgid "Next Active Tab"
-msgstr "כרטיסייה פעילה הבאה"
+msgstr "הלשונית הפעילה הבאה"
 
 #: src/mainwindow.cpp:312 src/viewer/viewcontainer.cpp:296
 #, kde-format
 msgid "Move Tab Up"
-msgstr "העבר כרטיסייה מעלה"
+msgstr "העברת למשונית למעלה"
 
 #: src/mainwindow.cpp:316 src/mainwindow.cpp:321 src/mainwindow.cpp:338
 #: src/mainwindow.cpp:347 src/mainwindow.cpp:359 src/mainwindow.cpp:368
@@ -8053,19 +8053,19 @@ msgstr "העברת הלשונית הזאת"
 #: src/mainwindow.cpp:323 src/viewer/viewcontainer.cpp:304
 #, kde-format
 msgid "Move Tab Down"
-msgstr "העבר כרטיסייה מטה"
+msgstr "העברת לשונית למטה"
 
 #: src/mainwindow.cpp:334 src/mainwindow.cpp:364
 #: src/viewer/viewcontainer.cpp:350
 #, kde-format
 msgid "Move Tab Right"
-msgstr "העבר כרטיסייה ימינה"
+msgstr "העברת לשונית ימינה"
 
 #: src/mainwindow.cpp:343 src/mainwindow.cpp:355
 #: src/viewer/viewcontainer.cpp:342
 #, kde-format
 msgid "Move Tab Left"
-msgstr "העבר כרטיסייה שמאלה"
+msgstr "העברת לשונית שמאלה"
 
 #: src/mainwindow.cpp:378
 #, kde-format
@@ -8100,7 +8100,7 @@ msgstr "קבע קידוד"
 #: src/mainwindow.cpp:414
 #, kde-format
 msgid "Go to Tab %1"
-msgstr "עבור אל כרטיסייה %1"
+msgstr "מעבר ללשונית %1"
 
 #: src/mainwindow.cpp:421
 #, kde-format
@@ -8150,7 +8150,7 @@ msgstr "&נקה חלון"
 #: src/mainwindow.cpp:459
 #, kde-format
 msgid "Clear the contents of the current tab"
-msgstr "נקה את התוכן של הכרטיסייה הנוכחית"
+msgstr "פינוי תוכן הלשונית הנוכחית"
 
 #: src/mainwindow.cpp:464
 #, kde-format
@@ -8160,7 +8160,7 @@ msgstr "נקה את &כל החלונות"
 #: src/mainwindow.cpp:467
 #, kde-format
 msgid "Clear the contents of all open tabs"
-msgstr "נקה את התוכן של כל הכרטיסיות הפתוחות"
+msgstr "פינוי תוכן כל הלשוניות הפתוחות"
 
 #: src/mainwindow.cpp:472
 #, kde-format
@@ -8195,7 +8195,7 @@ msgstr "&שורת סימון"
 #: src/mainwindow.cpp:508
 #, kde-format
 msgid "Insert a horizontal line into the current tab that only you can see"
-msgstr "הוסף קו אופקי בכרטיסייה הנוכחית שרק אתה יכול לראות"
+msgstr "הוספת קו אופקי בלשונית הנוכחית שמופיע רק אצלך"
 
 #: src/mainwindow.cpp:513 src/mainwindow.cpp:858
 #, kde-format
